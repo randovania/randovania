@@ -1,50 +1,46 @@
 {
-    "rooms": {
-        "TempleHub/01_Temple_LandingSite": {
-            "locations": {
-                "ship": {
-                    "paths": {
-                        "door_a": [
-                            {},
-                        ],
-                        "door_b": [
-                            {
-                                "requirements": ["light_beam", "space_jump"]
-                            },
-                            {
-                                "requirements": ["bsj"]
-                            },
-                        ]
-                    }
-                },
-                "door_a": {
-                    "door_to": "TempleHub/0a_temple_hall",
-                    "paths": {
-                        "ship": [
-                            {},
-                        ],
-                        "door_b": [
-                            {
-                                "requirements": ["light_beam", "space_jump"]
-                            },
-                            {
-                                "requirements": ["bsj"]
-                            },
-                        ]
-                    }
-                },
-                "door_b": {
-                    "door_to": "TempleHub/0q_temple_hall",
-                    "paths": {
-                        "ship": [
-                            {},
-                        ],
-                        "door_a": [
-                            {}
-                        ]
-                    }
-                }
-            }
+  "rooms": {
+    "TempleHub/01_Temple_LandingSite": {
+      "pretty_name": "Landing Site",
+      "locations": {
+        "ship": {
+          "type": "samus_ship",
+          "paths": {
+            "door_a": [
+              { "requirements": [] }
+            ],
+            "door_b": [
+              { "requirements": [ "light_beam", "space_jump" ] },
+              { "requirements": [ "bsj" ] }
+            ]
+          }
+        },
+        "door_a": {
+          "type": "blue_door",
+          "connects_to": "TempleHub/0a_temple_hall",
+          "paths": {
+            "ship": [
+              { "requirements": [] },
+            ],
+            "door_b": [
+              { "requirements": [ "light_beam", "space_jump" ] },
+              { "requirements": [ "bsj" ] },
+            ]
+          }
+        },
+        "door_b": {
+          "type": "blue_door",
+          "connects_to": "TempleHub/0q_temple_hall",
+          "paths": {
+            "ship": [
+              { "requirements": [] }
+            ],
+            "door_a": [
+              { "requirements": [] }
+            ]
+          }
         }
+      }
     }
+  }
 }
