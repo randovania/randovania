@@ -1,0 +1,50 @@
+{
+    "rooms": {
+        "TempleHub/01_Temple_LandingSite": {
+            "locations": {
+                "ship": {
+                    "paths": {
+                        "door_a": [
+                            {},
+                        ],
+                        "door_b": [
+                            {
+                                "requirements": ["light_beam"]
+                            },
+                            {
+                                "requirements": ["bsj"]
+                            },
+                        ]
+                    }
+                },
+                "door_a": {
+                    "door_to": "TempleHub/0a_temple_hall",
+                    "paths": {
+                        "ship": [
+                            {},
+                        ],
+                        "door_b": [
+                            {
+                                "requirements": ["light_beam"]
+                            },
+                            {
+                                "requirements": ["bsj"]
+                            },
+                        ]
+                    }
+                },
+                "door_b": {
+                    "door_to": "TempleHub/0q_temple_hall",
+                    "paths": {
+                        "ship": [
+                            {},
+                        ],
+                        "door_a": [
+                            {}
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
