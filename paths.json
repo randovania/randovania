@@ -41,6 +41,41 @@
           }
         }
       }
+    },
+    "TempleHub/0a_temple_hall": {
+      "pretty_name": "Hive Access Tunnel",
+      "locations": {
+        "door_a": {
+          "type": "blue_door",
+          "connects_to": "TempleHub/01_Temple_LandingSite",
+          "paths": {
+            "hole": [
+              { "requirements": [] }
+            ],
+            "door_b": [
+              { "requirements": [ "violet_translator" ] }
+            ]
+          }
+        },
+        "door_b": {
+          "type": "blue_door",
+          "connects_to": "TempleHub/0u_temple_hall",
+          "paths": {
+            "hole": [
+              { "requirements": [ "violet_translator" ] }
+            ],
+            "door_a": [
+              { "requirements": [ "violet_translator" ] }
+            ]
+          }
+        },
+        "hole": {
+          "type": "cutscene",
+          "connects_to": "TempleHub/01_temple_hive01",
+          "paths": {
+          }
+        }
+      }
     }
   }
 }
