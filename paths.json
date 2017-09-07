@@ -17,20 +17,20 @@
         },
         "door_a": {
           "type": "blue_door",
-          "connects_to": "TempleHub/0a_temple_hall",
+          "connects_to": "TempleHub/0a_temple_hall/door_a",
           "paths": {
             "ship": [
-              { "requirements": [] },
+              { "requirements": [] }
             ],
             "door_b": [
               { "requirements": [ "light_beam", "space_jump" ] },
-              { "requirements": [ "bsj" ] },
+              { "requirements": [ "bsj" ] }
             ]
           }
         },
         "door_b": {
           "type": "blue_door",
-          "connects_to": "TempleHub/0q_temple_hall",
+          "connects_to": "TempleHub/0q_temple_hall/TODO",
           "paths": {
             "ship": [
               { "requirements": [] }
@@ -47,7 +47,7 @@
       "locations": {
         "door_a": {
           "type": "blue_door",
-          "connects_to": "TempleHub/01_Temple_LandingSite",
+          "connects_to": "TempleHub/01_Temple_LandingSite/door_a",
           "paths": {
             "hole": [
               { "requirements": [] }
@@ -59,7 +59,7 @@
         },
         "door_b": {
           "type": "blue_door",
-          "connects_to": "TempleHub/0u_temple_hall",
+          "connects_to": "TempleHub/0u_temple_hall/TODO",
           "paths": {
             "hole": [
               { "requirements": [ "violet_translator" ] }
@@ -71,8 +71,38 @@
         },
         "hole": {
           "type": "cutscene",
-          "connects_to": "TempleHub/01_temple_hive01",
+          "connects_to": "TempleHub/01_temple_hive01/hole",
           "paths": {
+          }
+        }
+      }
+    },
+    "TempleHub/01_temple_hive01": {
+      "pretty_name": "Hive Chamber A",
+      "locations": {
+        "hole": {
+          "paths": {
+            "door_a": [
+              { "requirements": [] }
+            ],
+            "dark_missile_trooper": [
+              { "requirements": [ "dark_missile_trooper_TODO" ] }
+            ]
+          }
+        },
+        "door_a": {
+          "paths": {
+            "door_a": [
+              { "requirements": [] }
+            ]
+          }
+        },
+        "dark_missile_trooper": {
+          "items": ["missile-1"],
+          "paths": {
+            "hole": [
+              { "requirements": [] }
+            ]
           }
         }
       }
