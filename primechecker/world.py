@@ -11,14 +11,20 @@ requirement_for_connection_type = {
 }
 
 
+def item_for_slot(item_slot):
+    return item_slot
+
+
 class World:
     def __init__(self, points_of_interest, starting_point):
+        if starting_point not in points_of_interest:
+            raise Exception("Starting point is not a valid point of interest.")
         self.points_of_interest = points_of_interest
         self.starting_point = starting_point
 
     @classmethod
-    def from_file(cls, filepath):
-        with open(filepath) as f:
+    def from_file(cls, game_data_file):
+        with open(game_data_file) as f:
             data = json.load(f)
 
         points = {}
@@ -38,10 +44,13 @@ class World:
                     ))
                 points["{}/{}".format(room_name, location_name)] = PointOfInterest(
                     paths,
-                    frozenset(location.get("items", []))
+                    frozenset([
+                        item_for_slot(item_slot)
+                        for item_slot in location.get("items", [])
+                    ])
                 )
 
-        return cls(points, "TempleHub/01_Temple_LandingSite/ship")
+        return cls(points, data["starting_point"])
 
     def paths_for_point(self, point):
         return self.points_of_interest[point].paths
