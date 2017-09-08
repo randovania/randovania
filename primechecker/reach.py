@@ -1,8 +1,9 @@
+import collections
 
 
-def expand_reach(world, items, current_reach):
+def calculate_reach(world, items, origin):
     items = frozenset(items)
-    points_to_check = set(current_reach)
+    points_to_check = {origin}
     checked_rooms = set()
 
     while points_to_check:
@@ -19,8 +20,11 @@ def expand_reach(world, items, current_reach):
 
 
 def accessible_items(world, reach):
-    items = set()
+    items = collections.defaultdict(set)
     for point in reach:
-        items |= set(world.items_for_point(point))
-    return items
-
+        for item in world.items_for_point(point):
+            items[item] |= {point}
+    return {
+        item: frozenset(points)
+        for item, points in items.items()
+    }
