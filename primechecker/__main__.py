@@ -1,6 +1,6 @@
 import argparse
 
-from primechecker import log_parser
+from primechecker import log_parser, impossible_check
 
 
 def main():
@@ -14,7 +14,8 @@ def main():
     if args.game == "auto":
         args.game = log_parser.deduce_game(log)
 
-    print("NYI")
+    if args.game == "prime2":
+        impossible_check.echoes(log)
 
 
 
