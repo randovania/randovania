@@ -1,9 +1,20 @@
-import collections
+import typing
 import re
 
 RANDOMIZER_VERSION = "3.2"
-RandomizerLog = collections.namedtuple("RandomizerLog", ["version", "seed", "excluded_pickups", "item_entries"])
-ItemEntry = collections.namedtuple("ItemEntry", ["world", "room", "item"])
+
+
+class ItemEntry(typing.NamedTuple):
+    world: str
+    room: str
+    item: str
+
+
+class RandomizerLog(typing.NamedTuple):
+    version: str
+    seed: str
+    excluded_pickups: str
+    item_entries: typing.List[ItemEntry]
 
 
 class InvalidLogFileException(Exception):
