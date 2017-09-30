@@ -1,4 +1,3 @@
-import pprint
 import struct
 from typing import List
 
@@ -185,7 +184,7 @@ def parse_file(x) -> RandomizerFileData:
     format_version = read_uint(x)
     if format_version != 5:
         raise Exception("Unsupported format version: {}, expected 5".format(format_version))
-    
+
     game = read_byte(x)
     game_name = read_string(x)
 
@@ -226,10 +225,10 @@ def parse_file(x) -> RandomizerFileData:
 
 def read(path):
     with open(path, "rb") as x:
-        parse_file(x)
-
+        return parse_file(x)
 
 
 if __name__ == "__main__":
     import sys
+
     read(sys.argv[1])
