@@ -87,3 +87,18 @@ class World(NamedTuple):
     name: str
     world_asset_id: int
     areas: List[Area]
+
+
+class RandomizerFileData(NamedTuple):
+    game: int
+    game_name: str
+    item_requirement_info: List[RequirementInfo]
+    event_requirement_info: List[RequirementInfo]
+    trick_requirement_info: List[RequirementInfo]
+    damage_requirement_info: List[DamageRequirementInfo]
+    version_requirement_info: List[RequirementInfo]
+    misc_requirement_info: List[RequirementInfo]
+    difficulty_requirement_info: List[RequirementInfo]
+    door_dock_weakness: List[DockWeakness]
+    portal_dock_weakness: List[DockWeakness]
+    worlds: List[World]
