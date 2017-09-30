@@ -1,13 +1,13 @@
 from setuptools import setup
 
 setup(
-    name='prime-checker',
+    name='randovania',
     version='0.0.1',
     author='Henrique Gemignani',
     url='https://github.com/henriquegemignani/prime-checker',
     description='A randomizer validator for the Metroid Prime series.',
     packages=[
-        'primechecker',
+        'randovania',
     ],
     scripts=[
     ],

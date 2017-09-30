@@ -1,7 +1,7 @@
 import py
 import pytest
 
-from primechecker import log_parser
+from randovania import log_parser
 
 
 @pytest.fixture()

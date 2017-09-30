@@ -2,7 +2,7 @@ from typing import List, Dict
 
 import re
 
-from primechecker import log_parser
+from randovania import log_parser
 
 echoes_ing_cache_locations = [
     "Battleground",

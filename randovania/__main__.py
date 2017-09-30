@@ -1,6 +1,6 @@
 import argparse
 
-from primechecker import log_parser, impossible_check
+from randovania import log_parser, impossible_check
 
 
 def main():
