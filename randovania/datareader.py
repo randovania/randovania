@@ -3,7 +3,8 @@ import struct
 from typing import List
 
 from randovania.game_description import DamageReduction, RequirementInfo, DamageRequirementInfo, IndividualRequirement, \
-    DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
+    DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+    RandomizerFileData
 
 
 def read_byte(file) -> int:
@@ -108,6 +109,7 @@ def read_node(x) -> Node:
     node_type = read_byte(x)
 
     if node_type == 0:
+        x.read(2)  # Throw 2 bytes away
         return GenericNode(name, heal)
 
     elif node_type == 1:
@@ -116,22 +118,25 @@ def read_node(x) -> Node:
         connected_dock_index = read_byte(x)
         dock_type = read_byte(x)
         dock_weakness_index = read_byte(x)
-        x.read(3)  # Throw 3 bytes away
+        x.read(5)  # Throw 5 bytes away
         return DockNode(name, heal, dock_index, connected_area_asset_id, connected_dock_index, dock_type,
                         dock_weakness_index)
 
     elif node_type == 2:
         pickup_index = read_byte(x)
+        x.read(2)  # Throw 2 bytes away
         return PickupNode(name, heal, pickup_index)
 
     elif node_type == 3:
         destination_world_asset_id = read_uint(x)
         destination_area_asset_id = read_uint(x)
         teleporter_instance_id = read_uint(x)
+        x.read(2)  # Throw 2 bytes away
         return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id, teleporter_instance_id)
 
     elif node_type == 4:
         event_index = read_byte(x)
+        x.read(2)  # Throw 2 bytes away
         return EventNode(name, heal, event_index)
 
     else:
@@ -173,54 +178,58 @@ def read_world_list(x) -> List[World]:
     return read_array(x, read_world)
 
 
+def parse_file(x) -> RandomizerFileData:
+    if x.read(4) != b"Req.":
+        raise Exception("Invalid file format.")
+
+    format_version = read_uint(x)
+    if format_version != 5:
+        raise Exception("Unsupported format version: {}, expected 5".format(format_version))
+    
+    game = read_byte(x)
+    game_name = read_string(x)
+
+    items = read_requirement_info_array(x)
+    events = read_requirement_info_array(x)
+    tricks = read_requirement_info_array(x)
+    damage = read_damagerequirement_info_array(x)
+    difficulty = read_requirement_info_array(x)
+
+    # File seems to have a mistake here.
+    read_byte(x)
+    read_string(x)
+    read_string(x)
+    # misc = read_requirement_info_array(x))
+
+    versions = read_requirement_info_array(x)
+
+    door_types = read_dock_weakness_list(x)
+    portal_types = read_dock_weakness_list(x)
+
+    worlds = read_world_list(x)
+
+    return RandomizerFileData(
+        game=game,
+        game_name=game_name,
+        item_requirement_info=items,
+        event_requirement_info=events,
+        trick_requirement_info=tricks,
+        damage_requirement_info=damage,
+        version_requirement_info=versions,
+        misc_requirement_info=[],
+        difficulty_requirement_info=difficulty,
+        door_dock_weakness=door_types,
+        portal_dock_weakness=portal_types,
+        worlds=worlds
+    )
+
+
 def read(path):
     with open(path, "rb") as x:
-        if x.read(4) != b"Req.":
-            raise Exception("Invalid file format.")
+        parse_file(x)
 
-        format_version, game = struct.unpack("!IB", x.read(5))
-        game_name = read_string(x)
-
-        print("Format Version: {}\nGame: {}\nGame Name: {}".format(
-            format_version, game, game_name
-        ))
-
-        items = read_requirement_info_array(x)
-        events = read_requirement_info_array(x)
-        tricks = read_requirement_info_array(x)
-        damage = read_damagerequirement_info_array(x)
-        difficulty = read_requirement_info_array(x)
-        # File seems to have a mistake here.
-        read_byte(x)
-        read_string(x)
-        read_string(x)
-        # misc = read_requirement_info_array(x))
-        versions = read_requirement_info_array(x)
-
-        # pprint.pprint(items)
-        # pprint.pprint(events)
-        # pprint.pprint(tricks)
-        # pprint.pprint(damage)
-        # pprint.pprint(versions)
-        # pprint.pprint(misc)
-        # pprint.pprint(difficulty)
-
-        door_types = read_dock_weakness_list(x)
-        portal_types = read_dock_weakness_list(x)
-
-        # pprint.pprint(door_types)
-        # pprint.pprint(portal_types)
-
-        worlds = read_world_list(x)
-        pprint.pprint(worlds)
-
-        print(x.read(80))
-        print(x.read(80))
-        print(x.read(80))
-        print(x.read(80))
 
 
 if __name__ == "__main__":
     import sys
-
     read(sys.argv[1])
