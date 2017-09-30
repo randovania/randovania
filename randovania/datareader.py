@@ -1,38 +1,9 @@
 import pprint
 import struct
-import typing
 from typing import List
 
-
-class RequirementInfo(typing.NamedTuple):
-    index: int
-    long_name: str
-    short_name: str
-
-
-class DamageReduction(typing.NamedTuple):
-    inventory_index: int
-    damage_multiplier: float
-
-
-class DamageRequirementInfo(typing.NamedTuple):
-    index: int
-    long_name: str
-    short_name: str
-    reductions: List[DamageReduction]
-
-
-class IndividualRequirement(typing.NamedTuple):
-    requirement_type: int
-    requirement_index: int
-    amount: int
-    negate: bool
-
-
-class DockWeakness(typing.NamedTuple):
-    index: int
-    name: str
-    requirements_set: List[List[IndividualRequirement]]
+from randovania.game_description import DamageReduction, RequirementInfo, DamageRequirementInfo, IndividualRequirement, \
+    DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
 
 
 def read_byte(file) -> int:
@@ -41,6 +12,10 @@ def read_byte(file) -> int:
 
 def read_short(file) -> int:
     return struct.unpack("!H", file.read(2))[0]
+
+
+def read_uint(file) -> int:
+    return struct.unpack("!I", file.read(4))[0]
 
 
 def read_float(file) -> float:
@@ -112,19 +87,90 @@ def read_requirement_list(x) -> List[IndividualRequirement]:
     return read_array(x, read_individual_requirement)
 
 
-def read_requirement_set(x) -> List[List[IndividualRequirement]]:
-    return read_array(x, read_requirement_list)
+def read_requirement_set(x) -> RequirementSet:
+    return RequirementSet(read_array(x, read_requirement_list))
 
 
 def read_dock_weakness(x) -> DockWeakness:
     index = read_byte(x)
     name = read_string(x)
     requirement_set = read_requirement_set(x)
-    return DockWeakness(index, name, requirement_set)
+    return DockWeakness(index, name, False, requirement_set)
 
 
 def read_dock_weakness_list(x) -> List[DockWeakness]:
     return read_array(x, read_dock_weakness)
+
+
+def read_node(x) -> Node:
+    name = read_string(x)
+    heal = read_bool(x)
+    node_type = read_byte(x)
+
+    if node_type == 0:
+        return GenericNode(name, heal)
+
+    elif node_type == 1:
+        dock_index = read_byte(x)
+        connected_area_asset_id = read_uint(x)
+        connected_dock_index = read_byte(x)
+        dock_type = read_byte(x)
+        dock_weakness_index = read_byte(x)
+        x.read(3)  # Throw 3 bytes away
+        return DockNode(name, heal, dock_index, connected_area_asset_id, connected_dock_index, dock_type,
+                        dock_weakness_index)
+
+    elif node_type == 2:
+        pickup_index = read_byte(x)
+        return PickupNode(name, heal, pickup_index)
+
+    elif node_type == 3:
+        destination_world_asset_id = read_uint(x)
+        destination_area_asset_id = read_uint(x)
+        teleporter_instance_id = read_uint(x)
+        return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id, teleporter_instance_id)
+
+    elif node_type == 4:
+        event_index = read_byte(x)
+        return EventNode(name, heal, event_index)
+
+    else:
+        raise Exception("Unknown node type: {}".format(node_type))
+
+
+def read_area(x) -> Area:
+    name = read_string(x)
+    asset_id = read_uint(x)
+    node_count = read_byte(x)
+    default_node_index = read_byte(x)
+    nodes = [
+        read_node(x)
+        for _ in range(node_count)
+    ]
+    connections = {
+        source: {
+            target: read_requirement_set(x)
+            for target in range(node_count)
+            if source != target
+        }
+        for source in range(node_count)
+    }
+    return Area(name, asset_id, default_node_index, nodes, connections)
+
+
+def read_area_list(x) -> List[Area]:
+    return read_array(x, read_area)
+
+
+def read_world(x) -> World:
+    name = read_string(x)
+    asset_id = read_uint(x)
+    areas = read_area_list(x)
+    return World(name, asset_id, areas)
+
+
+def read_world_list(x) -> List[World]:
+    return read_array(x, read_world)
 
 
 def read(path):
@@ -165,6 +211,9 @@ def read(path):
         # pprint.pprint(door_types)
         # pprint.pprint(portal_types)
 
+        worlds = read_world_list(x)
+        pprint.pprint(worlds)
+
         print(x.read(80))
         print(x.read(80))
         print(x.read(80))
@@ -173,4 +222,5 @@ def read(path):
 
 if __name__ == "__main__":
     import sys
+
     read(sys.argv[1])
