@@ -28,11 +28,11 @@ class DamageResourceInfo(NamedTuple):
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo]
 
 
-def _find_requirement_info_with_id(info_list: List[ResourceInfo], index: int):
+def _find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
     for info in info_list:
         if info.index == index:
             return info
-    raise ValueError("Requirement with index {} not found in {}".format(index, info_list))
+    raise ValueError("Resource with index {} not found in {}".format(index, info_list))
 
 
 @unique
@@ -83,7 +83,7 @@ class IndividualRequirement(NamedTuple):
     def with_data(cls, database: ResourceDatabase,
                   resource_type: ResourceType, requirement_index: int,
                   amount: int, negate: bool) -> "IndividualRequirement":
-        resource = _find_requirement_info_with_id(database.get_by_type(resource_type), requirement_index)
+        resource = _find_resource_info_with_id(database.get_by_type(resource_type), requirement_index)
         return cls(resource, amount, negate)
 
     def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
