@@ -79,7 +79,6 @@ def read_damagerequirement_info_array(x) -> List[DamageResourceInfo]:
 
 class RequirementSetReader:
     resource_database: ResourceDatabase
-    dock_weakness_database: DockWeaknessDatabase
 
     def __init__(self, database: ResourceDatabase):
         self.resource_database = database
@@ -98,14 +97,31 @@ class RequirementSetReader:
     def read_requirement_set(self, x) -> RequirementSet:
         return RequirementSet(read_array(x, self.read_requirement_list))
 
-    def read_dock_weakness(self, x) -> DockWeakness:
+
+def read_dock_weakness_database(x, requirement_set_reader: RequirementSetReader) -> DockWeaknessDatabase:
+    def read_dock_weakness(x) -> DockWeakness:
         index = read_byte(x)
         name = read_string(x)
-        requirement_set = self.read_requirement_set(x)
+        requirement_set = requirement_set_reader.read_requirement_set(x)
         return DockWeakness(index, name, False, requirement_set)
 
-    def read_dock_weakness_list(self, x) -> List[DockWeakness]:
-        return read_array(x, self.read_dock_weakness)
+    door_types = read_array(x, read_dock_weakness)
+    portal_types = read_array(x, read_dock_weakness)
+    return DockWeaknessDatabase(
+        door=door_types,
+        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet([[]]))],
+        other=[DockWeakness(0, "Other Door", False, RequirementSet([[]]))],
+        portal=portal_types
+    )
+
+
+class WorldReader:
+    requirement_set_reader: RequirementSetReader
+    dock_weakness_database: DockWeaknessDatabase
+
+    def __init__(self, requirement_set_reader: RequirementSetReader, dock_weakness_database: DockWeaknessDatabase):
+        self.requirement_set_reader = requirement_set_reader
+        self.dock_weakness_database = dock_weakness_database
 
     def read_node(self, x) -> Node:
         name = read_string(x)
@@ -158,7 +174,7 @@ class RequirementSetReader:
         ]
         connections = {
             source: {
-                target: self.read_requirement_set(x)
+                target: self.requirement_set_reader.read_requirement_set(x)
                 for target in range(node_count)
                 if source != target
             }
@@ -203,18 +219,10 @@ def parse_file(x) -> RandomizerFileData:
                                          misc=misc, difficulty=difficulty)
 
     reader = RequirementSetReader(resource_database)
-    door_types = reader.read_dock_weakness_list(x)
-    portal_types = reader.read_dock_weakness_list(x)
+    dock_weakness_database = read_dock_weakness_database(x, reader)
 
-    dock_weakness_database = DockWeaknessDatabase(
-        door=door_types,
-        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet([[]]))],
-        other=[DockWeakness(0, "Other Door", False, RequirementSet([[]]))],
-        portal=portal_types
-    )
-
-    reader.dock_weakness_database = dock_weakness_database
-    worlds = reader.read_world_list(x)
+    world_reader = WorldReader(reader, dock_weakness_database)
+    worlds = world_reader.read_world_list(x)
 
     return RandomizerFileData(
         game=game,
