@@ -56,26 +56,26 @@ def read_damage_reductions(x) -> List[DamageReduction]:
     return read_array(x, read_damage_reduction)
 
 
-def read_requirement_info(x) -> SimpleResourceInfo:
+def read_resource_info(x) -> SimpleResourceInfo:
     index = read_byte(x)
     long_name = read_string(x)
     short_name = read_string(x)
     return SimpleResourceInfo(index, long_name, short_name)
 
 
-def read_requirement_info_array(x) -> List[SimpleResourceInfo]:
-    return read_array(x, read_requirement_info)
+def read_resource_info_array(x) -> List[SimpleResourceInfo]:
+    return read_array(x, read_resource_info)
 
 
-def read_damagerequirement_info(x) -> DamageResourceInfo:
+def read_damage_resource_info(x) -> DamageResourceInfo:
     index = read_byte(x)
     long_name = read_string(x)
     short_name = read_string(x)
     return DamageResourceInfo(index, long_name, short_name, read_damage_reductions(x))
 
 
-def read_damagerequirement_info_array(x) -> List[DamageResourceInfo]:
-    return read_array(x, read_damagerequirement_info)
+def read_damage_resource_info_array(x) -> List[DamageResourceInfo]:
+    return read_array(x, read_damage_resource_info)
 
 
 # Requirement
@@ -207,14 +207,14 @@ def parse_file(x) -> RandomizerFileData:
     game = read_byte(x)
     game_name = read_string(x)
 
-    items = read_requirement_info_array(x)
-    events = read_requirement_info_array(x)
-    tricks = read_requirement_info_array(x)
-    damage = read_damagerequirement_info_array(x)
-    misc = read_requirement_info_array(x)
+    items = read_resource_info_array(x)
+    events = read_resource_info_array(x)
+    tricks = read_resource_info_array(x)
+    damage = read_damage_resource_info_array(x)
+    misc = read_resource_info_array(x)
     # File seems to have a mistake here: no count for difficulty.
     difficulty = [SimpleResourceInfo(read_byte(x), read_string(x), read_string(x))]
-    versions = read_requirement_info_array(x)
+    versions = read_resource_info_array(x)
 
     resource_database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
                                          misc=misc, difficulty=difficulty)
