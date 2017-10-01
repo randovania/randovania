@@ -2,7 +2,7 @@ import argparse
 
 import os
 
-from randovania import log_parser, impossible_check, datareader
+from randovania import log_parser, impossible_check, datareader, resolver
 from randovania.log_parser import Game
 
 
@@ -16,8 +16,9 @@ def main():
 
     game = log_parser.resolve_game_argument(args.game, log)
     if game == Game.PRIME2:
-        data = datareader.read(os.path.join(os.path.dirname(__file__), "data", "prime2.bin"), log.pickup_entries)
-        print(data)
+        game_description = datareader.read(os.path.join(os.path.dirname(__file__), "data", "prime2.bin"),
+                                           log.pickup_entries)
+        resolver.resolve(game_description)
 
 
 if __name__ == "__main__":
