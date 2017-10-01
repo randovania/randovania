@@ -1,4 +1,5 @@
 from functools import partial
+from pprint import pprint
 from typing import List, Callable, TypeVar, BinaryIO, Tuple
 
 from randovania import log_parser
@@ -79,8 +80,9 @@ def read_dock_weakness_database(source: BinarySource, resource_database: Resourc
     def read_dock_weakness(source: BinarySource) -> DockWeakness:
         index = source.read_byte()
         name = source.read_string()
+        is_blast_door = source.read_bool()
         requirement_set = read_requirement_set(source, resource_database)
-        return DockWeakness(index, name, False, requirement_set)
+        return DockWeakness(index, name, is_blast_door, requirement_set)
 
     door_types = read_array(source, read_dock_weakness)
     portal_types = read_array(source, read_dock_weakness)
@@ -110,7 +112,6 @@ class WorldReader:
         node_type = source.read_byte()
 
         if node_type == 0:
-            source.skip(2)
             self.generic_index += 1
             return GenericNode(name, heal, self.generic_index)
 
@@ -120,26 +121,23 @@ class WorldReader:
             connected_dock_index = source.read_byte()
             dock_type = DockType(source.read_byte())
             dock_weakness_index = source.read_byte()
-            source.skip(5)
+            source.skip(3)
             return DockNode(name, heal, dock_index, connected_area_asset_id, connected_dock_index,
                             self.dock_weakness_database.get_by_type_and_index(dock_type, dock_weakness_index))
 
         elif node_type == 2:
             pickup_index = source.read_byte()
-            source.skip(2)
             return PickupNode(name, heal, self.pickup_entries[pickup_index])
 
         elif node_type == 3:
             destination_world_asset_id = source.read_uint()
             destination_area_asset_id = source.read_uint()
             teleporter_instance_id = source.read_uint()
-            source.skip(2)
             return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id,
                                   teleporter_instance_id)
 
         elif node_type == 4:
             event_index = source.read_byte()
-            source.skip(2)
             return EventNode(name, heal,
                              self.resource_database.get_by_type_and_index(ResourceType.EVENT, event_index))
 
@@ -191,7 +189,7 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     source = BinarySource(x)
 
     format_version = source.read_uint()
-    if format_version != 5:
+    if format_version != 6:
         raise Exception("Unsupported format version: {}, expected 5".format(format_version))
 
     game = source.read_byte()
@@ -201,10 +199,10 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     events = read_resource_info_array(source)
     tricks = read_resource_info_array(source)
     damage = read_damage_resource_info_array(source)
-    misc = read_resource_info_array(source)
-    # File seems to have a mistake here: no count for difficulty.
-    difficulty = [SimpleResourceInfo(source.read_byte(), source.read_string(), source.read_string())]
     versions = read_resource_info_array(source)
+    misc = read_resource_info_array(source)
+    source.skip(1)  # Undocumented null byte
+    difficulty = read_resource_info_array(source)
 
     resource_database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
                                          misc=misc, difficulty=difficulty)
