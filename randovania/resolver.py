@@ -1,8 +1,9 @@
 import copy
-from typing import Set, Iterator, Tuple
+from typing import Set, Iterator, Tuple, List
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
-    RequirementSet, Area, EventNode, resolve_dock_node, resolve_teleporter_node
+    RequirementSet, Area, EventNode, resolve_dock_node, resolve_teleporter_node, PickupNode, ResourceInfo
+from randovania.log_parser import PickupEntry
 
 default_items = {
     (ResourceType.MISC, 0): 1,  # "No Requirements"
@@ -27,6 +28,17 @@ _gd = None  # type: GameDescription
 
 def _n(node: Node) -> str:
     return "{}/{}".format(_gd.nodes_to_area[node].name, node.name)
+
+
+class State:
+    resources: CurrentResources
+    pickups: Set[PickupEntry]
+
+    def has_pickup(self, pickup: PickupEntry) -> bool:
+        return pickup in self.pickups
+
+    def event_triggered(self, event: ResourceInfo) -> bool:
+        return self.resources.get(event, 0) > 0
 
 
 def potential_nodes_from(node: Node,
@@ -65,7 +77,7 @@ def calculate_reach(current_reach: Reach, game_description: GameDescription,
     new_reach = set()
 
     checked_nodes = set()
-    nodes_to_check = copy.copy(current_reach)
+    nodes_to_check = [node for node in current_reach]
 
     while nodes_to_check:
         node = nodes_to_check.pop()
@@ -75,17 +87,31 @@ def calculate_reach(current_reach: Reach, game_description: GameDescription,
         print("> Checking paths from {}".format(_n(node)))
 
         for target_node, requirements in potential_nodes_from(node, game_description, current_resources):
-            if target_node in checked_nodes:
+            if target_node in checked_nodes or target_node in nodes_to_check:
                 print("Not checking {} again.".format(_n(target_node)))
                 continue
 
             if requirements.satisfied(current_resources):
                 print("Requirements for {} satisfied.".format(_n(target_node)))
-                nodes_to_check.add(target_node)
+                nodes_to_check.append(target_node)
             else:
                 print("Requirements for {} _fails_.".format(_n(target_node)))
 
     return new_reach
+
+
+def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
+    # First, try picking items
+    for node in current_reach:
+        if isinstance(node, PickupNode):
+            if not state.has_pickup(node.pickup):
+                yield None  # TODO
+
+    # Then, we try triggering an event
+    for node in current_reach:
+        if isinstance(node, EventNode):
+            if not state.event_triggered(node.event):
+                yield None  # TODO
 
 
 def pretty_print_area(area: Area):
