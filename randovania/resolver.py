@@ -24,7 +24,7 @@ items_lost_to_item_loss = {
     (ResourceType.ITEM, 44): 5,  # "Missile"
 }
 
-Reach = Set[Node]
+Reach = List[Node]
 _gd = None  # type: GameDescription
 
 
@@ -106,20 +106,19 @@ def potential_nodes_from(node: Node,
         yield target_node, requirements
 
 
-def calculate_reach(current_reach: Reach, game_description: GameDescription,
-                    current_state: State) -> Reach:
-    new_reach = set()
-
+def calculate_reach(starting_node: Node, game_description: GameDescription,
+                    current_state: State) -> Iterator[Node]:
     checked_nodes = set()
-    nodes_to_check = [node for node in current_reach]
+    nodes_to_check = [starting_node]
 
     while nodes_to_check:
         node = nodes_to_check.pop()
         checked_nodes.add(node)
-        new_reach.add(node)
+
+        if node != starting_node:
+            yield node
 
         print("> Checking paths from {}".format(_n(node)))
-
         for target_node, requirements in potential_nodes_from(node, game_description, current_state):
             if target_node in checked_nodes or target_node in nodes_to_check:
                 print("Not checking {} again.".format(_n(target_node)))
@@ -130,8 +129,6 @@ def calculate_reach(current_reach: Reach, game_description: GameDescription,
                 nodes_to_check.append(target_node)
             else:
                 print("Requirements for {} _fails_.".format(_n(target_node)))
-
-    return new_reach
 
 
 def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
@@ -182,10 +179,8 @@ def resolve(game_description: GameDescription):
         current_state = starting_state.collect_pickup(PickupEntry(None, None, "_ItemLossItems"),
                                                       game_description.resource_database)
 
-    reach = {
-        starting_node
-    }
-    new_reach = calculate_reach(reach, game_description, current_state)
+    for new_node in calculate_reach(starting_node, game_description, current_state):
+        pass
     #
     # print("====")
     # for node in new_reach:

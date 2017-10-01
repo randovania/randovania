@@ -26,6 +26,9 @@ class DamageResourceInfo(NamedTuple):
     short_name: str
     reductions: Tuple[DamageReduction, ...]
 
+    def __str__(self):
+        return "Damage {}".format(self.long_name)
+
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo]
 CurrentResources = Dict[ResourceInfo, int]
