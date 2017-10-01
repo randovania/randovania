@@ -1,9 +1,8 @@
 import copy
-from pprint import pprint
 from typing import Set, Iterator, Tuple
 
-from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, ResourceDatabase, \
-    DockNode, TeleporterNode, RequirementSet, Area, EventNode, resolve_dock_node, resolve_teleporter_node
+from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
+    RequirementSet, Area, EventNode, resolve_dock_node, resolve_teleporter_node
 
 default_items = {
     (ResourceType.MISC, 0): 1,  # "No Requirements"
@@ -51,7 +50,7 @@ def potential_nodes_from(node: Node,
 
     if isinstance(node, TeleporterNode):
         try:
-            yield resolve_teleporter_node(node), RequirementSet.empty()
+            yield resolve_teleporter_node(node, game_description), RequirementSet.empty()
         except IndexError:
             # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
             pass
@@ -93,7 +92,7 @@ def pretty_print_area(area: Area):
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))
-        for target_node, requirements in potential_nodes_from(node, _gd):
+        for target_node, requirements in potential_nodes_from(node, _gd, {}):
             print(" >", _n(target_node))
             for r in requirements.alternatives:
                 print("  ", ", ".join(map(str, r)))
