@@ -212,9 +212,9 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     worlds = world_reader.read_world_list(source)
 
     final_boss = [event for event in events if event.long_name == "Emperor Ing"][0]
-    victory_condition = RequirementSet(tuple(
-        tuple(IndividualRequirement(final_boss, 1, False))
-    ))
+    victory_condition = RequirementSet(tuple([
+        tuple([IndividualRequirement(final_boss, 1, False)])
+    ]))
 
     nodes_to_area = {}
     nodes_to_world = {}
