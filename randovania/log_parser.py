@@ -4,7 +4,7 @@ import re
 RANDOMIZER_VERSION = "3.2"
 
 
-class ItemEntry(typing.NamedTuple):
+class PickupEntry(typing.NamedTuple):
     world: str
     room: str
     item: str
@@ -14,7 +14,7 @@ class RandomizerLog(typing.NamedTuple):
     version: str
     seed: str
     excluded_pickups: str
-    item_entries: typing.List[ItemEntry]
+    pickup_entries: typing.List[PickupEntry]
 
 
 class InvalidLogFileException(Exception):
@@ -34,7 +34,7 @@ def extract_with_regexp(logfile, f, regex, invalid_reason):
         raise InvalidLogFileException(logfile, invalid_reason)
 
 
-def parse_log(logfile):
+def parse_log(logfile: str) -> RandomizerLog:
     with open(logfile) as f:
         version = extract_with_regexp(logfile, f, r"Randomizer V(\d+\.\d+)", "Could not find Randomizer version")
         if version != RANDOMIZER_VERSION:
@@ -45,13 +45,13 @@ def parse_log(logfile):
         excluded_pickups = extract_with_regexp(logfile, f, r"^Excluded pickups: (\d+)$",
                                                "Could not find excluded pickups")
 
-        items = []
+        pickups = []
         for line in f:
             m = re.match(r"^([^-]+)(?:\s-)+([^-]+)(?:\s-)+([^-]+)$", line)
             if m:
-                items.append(ItemEntry(*map(str.strip, m.group(1, 2, 3))))
+                pickups.append(PickupEntry(*map(str.strip, m.group(1, 2, 3))))
 
-        return RandomizerLog(version, seed, excluded_pickups, items)
+        return RandomizerLog(version, seed, excluded_pickups, pickups)
 
 
 prime2_worlds = {
