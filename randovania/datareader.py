@@ -1,5 +1,6 @@
 import pprint
 import struct
+from functools import partial
 from typing import List
 
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
@@ -77,32 +78,32 @@ def read_damagerequirement_info_array(x) -> List[DamageResourceInfo]:
     return read_array(x, read_damagerequirement_info)
 
 
-class RequirementSetReader:
-    resource_database: ResourceDatabase
+# Requirement
 
-    def __init__(self, database: ResourceDatabase):
-        self.resource_database = database
-
-    def read_individual_requirement(self, x) -> IndividualRequirement:
-        requirement_type = ResourceType(read_byte(x))
-        requirement_index = read_byte(x)
-        amount = read_short(x)
-        negate = read_bool(x)
-        return IndividualRequirement.with_data(self.resource_database, requirement_type, requirement_index, amount,
-                                               negate)
-
-    def read_requirement_list(self, x) -> List[IndividualRequirement]:
-        return read_array(x, self.read_individual_requirement)
-
-    def read_requirement_set(self, x) -> RequirementSet:
-        return RequirementSet(read_array(x, self.read_requirement_list))
+def read_individual_requirement(x, resource_database: ResourceDatabase) -> IndividualRequirement:
+    requirement_type = ResourceType(read_byte(x))
+    requirement_index = read_byte(x)
+    amount = read_short(x)
+    negate = read_bool(x)
+    return IndividualRequirement.with_data(resource_database, requirement_type, requirement_index, amount,
+                                           negate)
 
 
-def read_dock_weakness_database(x, requirement_set_reader: RequirementSetReader) -> DockWeaknessDatabase:
+def read_requirement_list(x, resource_database: ResourceDatabase) -> List[IndividualRequirement]:
+    return read_array(x, partial(read_individual_requirement, resource_database=resource_database))
+
+
+def read_requirement_set(x, resource_database: ResourceDatabase) -> RequirementSet:
+    return RequirementSet(read_array(x, partial(read_requirement_list, resource_database=resource_database)))
+
+
+# Dock Weakness
+
+def read_dock_weakness_database(x, resource_database: ResourceDatabase) -> DockWeaknessDatabase:
     def read_dock_weakness(x) -> DockWeakness:
         index = read_byte(x)
         name = read_string(x)
-        requirement_set = requirement_set_reader.read_requirement_set(x)
+        requirement_set = read_requirement_set(x, resource_database)
         return DockWeakness(index, name, False, requirement_set)
 
     door_types = read_array(x, read_dock_weakness)
@@ -116,11 +117,11 @@ def read_dock_weakness_database(x, requirement_set_reader: RequirementSetReader)
 
 
 class WorldReader:
-    requirement_set_reader: RequirementSetReader
+    resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
 
-    def __init__(self, requirement_set_reader: RequirementSetReader, dock_weakness_database: DockWeaknessDatabase):
-        self.requirement_set_reader = requirement_set_reader
+    def __init__(self, resource_database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase):
+        self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
 
     def read_node(self, x) -> Node:
@@ -174,7 +175,7 @@ class WorldReader:
         ]
         connections = {
             source: {
-                target: self.requirement_set_reader.read_requirement_set(x)
+                target: read_requirement_set(x, self.resource_database)
                 for target in range(node_count)
                 if source != target
             }
@@ -218,10 +219,8 @@ def parse_file(x) -> RandomizerFileData:
     resource_database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
                                          misc=misc, difficulty=difficulty)
 
-    reader = RequirementSetReader(resource_database)
-    dock_weakness_database = read_dock_weakness_database(x, reader)
-
-    world_reader = WorldReader(reader, dock_weakness_database)
+    dock_weakness_database = read_dock_weakness_database(x, resource_database)
+    world_reader = WorldReader(resource_database, dock_weakness_database)
     worlds = world_reader.read_world_list(x)
 
     return RandomizerFileData(
