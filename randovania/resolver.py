@@ -7,23 +7,6 @@ from randovania.game_description import GameDescription, ResourceType, Node, Cur
 from randovania.log_parser import PickupEntry
 from randovania.pickup_database import pickup_name_to_resource_gain
 
-default_items = {
-    (ResourceType.MISC, 0): 1,  # "No Requirements"
-    (ResourceType.ITEM, 0): 1,  # "Power Beam"
-    (ResourceType.ITEM, 8): 1,  # "Combat Visor"
-    (ResourceType.ITEM, 9): 1,  # "Scan Visor"
-    (ResourceType.ITEM, 12): 1,  # "Varia Suit"
-    (ResourceType.ITEM, 15): 1,  # "Morph Ball"
-    (ResourceType.ITEM, 22): 1,  # "Charge Beam"
-}
-items_lost_to_item_loss = {
-    (ResourceType.ITEM, 16): 1,  # "Boost Ball"
-    (ResourceType.ITEM, 17): 1,  # "Spider Ball"
-    (ResourceType.ITEM, 18): 1,  # "Morph Ball Bomb"
-    (ResourceType.ITEM, 24): 1,  # "Space Jump Boots"
-    (ResourceType.ITEM, 44): 5,  # "Missile"
-}
-
 Reach = List[Node]
 _gd = None  # type: GameDescription
 
@@ -35,15 +18,17 @@ def _n(node: Node) -> str:
 class State:
     resources: CurrentResources
     pickups: Set[PickupEntry]
+    node: Node
 
-    def __init__(self, resources: CurrentResources, pickups: Set[PickupEntry]):
+    def __init__(self, resources: CurrentResources, pickups: Set[PickupEntry], node: Node):
         self.resources = resources
         self.pickups = pickups
+        self.node = node
 
     def has_pickup(self, pickup: PickupEntry) -> bool:
         return pickup in self.pickups
 
-    def event_triggered(self, event: ResourceInfo) -> bool:
+    def is_event_triggered(self, event: ResourceInfo) -> bool:
         return self.resources.get(event, 0) > 0
 
     def collect_pickup(self, pickup: PickupEntry, resource_database: ResourceDatabase) -> "State":
@@ -58,17 +43,27 @@ class State:
             new_resources[resource] = new_resources.get(resource, 0)
             new_resources[resource] += quantity
 
-        return State(new_resources, new_pickups)
+        return State(new_resources, new_pickups, self.node)
 
     def trigger_event(self, event: ResourceInfo) -> "State":
-        if self.event_triggered(event):
+        if self.is_event_triggered(event):
             raise ValueError("Trying to trigger already triggered event '{}'".format(event))
 
         new_resources = copy.copy(self.resources)
         new_pickups = copy.copy(self.pickups)
 
         new_resources[event] = 1
-        return State(new_resources, new_pickups)
+        return State(new_resources, new_pickups, self.node)
+
+    def act_on_node(self, node: Node, resource_database: ResourceDatabase) -> "State":
+        if isinstance(node, PickupNode):
+            new_state = self.collect_pickup(node.pickup, resource_database)
+        elif isinstance(node, EventNode):
+            new_state = self.trigger_event(node.event)
+        else:
+            raise ValueError("Can't act on Node of type {}".format(type(node)))
+        new_state.node = node
+        return new_state
 
 
 def potential_nodes_from(node: Node,
@@ -76,7 +71,7 @@ def potential_nodes_from(node: Node,
                          current_state: State) -> Iterator[Tuple[Node, RequirementSet]]:
     if isinstance(node, EventNode):
         # You can't walk through an event node until you've already triggered it
-        if not current_state.event_triggered(node.event):
+        if not current_state.is_event_triggered(node.event):
             return
 
     if isinstance(node, PickupNode):
@@ -106,16 +101,16 @@ def potential_nodes_from(node: Node,
         yield target_node, requirements
 
 
-def calculate_reach(starting_node: Node, game_description: GameDescription,
-                    current_state: State) -> Iterator[Node]:
+def calculate_reach(current_state: State,
+                    game_description: GameDescription) -> Iterator[Node]:
     checked_nodes = set()
-    nodes_to_check = [starting_node]
+    nodes_to_check = [current_state.node]
 
     while nodes_to_check:
         node = nodes_to_check.pop()
         checked_nodes.add(node)
 
-        if node != starting_node:
+        if node != current_state.node:
             yield node
 
         print("> Checking paths from {}".format(_n(node)))
@@ -136,24 +131,38 @@ def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
     for node in current_reach:
         if isinstance(node, PickupNode):
             if not state.has_pickup(node.pickup):
-                yield None  # TODO
+                yield node  # TODO
 
     # Then, we try triggering an event
     for node in current_reach:
         if isinstance(node, EventNode):
-            if not state.event_triggered(node.event):
-                yield None  # TODO
+            if not state.is_event_triggered(node.event):
+                yield node  # TODO
 
 
 def pretty_print_area(area: Area):
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))
-        for target_node, requirements in potential_nodes_from(node, _gd, State({}, set())):
+        for target_node, requirements in potential_nodes_from(node, _gd, State({}, set(), node)):
             print(" >", _n(target_node))
             for r in requirements.alternatives:
                 print("  ", ", ".join(map(str, r)))
         print()
+
+
+def advance(state: State, game: GameDescription):
+    if game.victory_condition.satisfied(state.resources):
+        return True
+
+    reach = list(calculate_reach(state, game))
+
+    for action in actions_with_reach(reach, state):
+        if advance(state.act_on_node(action, game.resource_database),
+                   game):
+            return True
+
+    return False
 
 
 def resolve(game_description: GameDescription):
@@ -171,7 +180,7 @@ def resolve(game_description: GameDescription):
     starting_state = State({
         # "No Requirements"
         game_description.resource_database.get_by_type_and_index(ResourceType.MISC, 0): 1
-    }, set())
+    }, set(), starting_node)
 
     current_state = starting_state.collect_pickup(PickupEntry(None, None, "_StartingItems"),
                                                   game_description.resource_database)
@@ -179,11 +188,10 @@ def resolve(game_description: GameDescription):
         current_state = starting_state.collect_pickup(PickupEntry(None, None, "_ItemLossItems"),
                                                       game_description.resource_database)
 
-    for new_node in calculate_reach(starting_node, game_description, current_state):
-        pass
-    #
-    # print("====")
-    # for node in new_reach:
-    #     print(_n(node))
-    # print("====")
-    # pretty_print_area(starting_world.areas[2])
+    print(advance(current_state, game_description))
+        #
+        # print("====")
+        # for node in new_reach:
+        #     print(_n(node))
+        # print("====")
+        # pretty_print_area(starting_world.areas[2])
