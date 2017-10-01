@@ -115,6 +115,33 @@ class DockWeakness(NamedTuple):
     requirements: RequirementSet
 
 
+@unique
+class DockType(Enum):
+    DOOR = 0
+    MORPH_BALL_DOOR = 1
+    OTHER = 2
+    PORTAL = 3
+
+
+class DockWeaknessDatabase(NamedTuple):
+    door: List[DockWeakness]
+    morph_ball: List[DockWeakness]
+    other: List[DockWeakness]
+    portal: List[DockWeakness]
+
+    def get_by_type(self, dock_type: DockType) -> List[DockWeakness]:
+        if dock_type == ResourceType.ITEM:
+            return self.door
+        elif dock_type == ResourceType.EVENT:
+            return self.morph_ball
+        elif dock_type == ResourceType.TRICK:
+            return self.other
+        elif dock_type == ResourceType.DAMAGE:
+            return self.portal
+        else:
+            raise ValueError("Invalid dock_type: {}".format(dock_type))
+
+
 class GenericNode(NamedTuple):
     name: str
     heal: bool
@@ -126,7 +153,7 @@ class DockNode(NamedTuple):
     dock_index: int
     connected_area_asset_id: int
     connected_dock_index: int
-    dock_type: int
+    dock_type: DockType
     dock_weakness_index: int
 
 
@@ -170,7 +197,6 @@ class World(NamedTuple):
 class RandomizerFileData(NamedTuple):
     game: int
     game_name: str
-    database: ResourceDatabase
-    door_dock_weakness: List[DockWeakness]
-    portal_dock_weakness: List[DockWeakness]
+    resource_database: ResourceDatabase
+    dock_weakness_database: DockWeaknessDatabase
     worlds: List[World]
