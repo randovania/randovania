@@ -210,9 +210,15 @@ class World(NamedTuple):
     areas: List[Area]
 
 
-class RandomizerFileData(NamedTuple):
+class GameDescription(NamedTuple):
     game: int
     game_name: str
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
     worlds: List[World]
+
+    def world_by_asset_id(self, asset_id: int) -> World:
+        for world in self.worlds:
+            if world.world_asset_id == asset_id:
+                return world
+        raise KeyError("Unknown asset_id: {}".format(asset_id))

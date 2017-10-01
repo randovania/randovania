@@ -6,7 +6,7 @@ from randovania.binary_file_reader import BinarySource
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    RandomizerFileData, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase
+    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase
 from randovania.log_parser import PickupEntry
 
 X = TypeVar('X')
@@ -180,7 +180,7 @@ class WorldReader:
         return read_array(source, self.read_world)
 
 
-def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> RandomizerFileData:
+def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescription:
     if x.read(4) != b"Req.":
         raise Exception("Invalid file format.")
 
@@ -209,7 +209,7 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> RandomizerFile
     world_reader = WorldReader(resource_database, dock_weakness_database, pickup_entries)
     worlds = world_reader.read_world_list(source)
 
-    return RandomizerFileData(
+    return GameDescription(
         game=game,
         game_name=game_name,
         resource_database=resource_database,
@@ -229,7 +229,7 @@ def main(game_data_file: str, randomizer_log_file: str):
 
     # world = data.worlds[1]
     import pprint
-     
+
     # pprint.pprint(data.resource_database.item)
 
     # for i in range(5):
