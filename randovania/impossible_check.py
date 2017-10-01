@@ -1,7 +1,5 @@
 from typing import List, Dict
 
-import re
-
 from randovania import log_parser
 
 echoes_ing_cache_locations = [
@@ -40,6 +38,7 @@ sky_temple_grounds = [
 dark_torvus_bog = [
 
 ]
+
 
 def items_in_caches(item_entries: List[log_parser.ItemEntry]) -> Dict[str, str]:
     items = {}

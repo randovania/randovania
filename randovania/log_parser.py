@@ -31,7 +31,7 @@ def extract_with_regexp(logfile, f, regex, invalid_reason):
     if match:
         return match.group(1)
     else:
-        raise InvalidLogFileException(logfile, "Could not find Randomizer version")
+        raise InvalidLogFileException(logfile, invalid_reason)
 
 
 def parse_log(logfile):
@@ -57,6 +57,7 @@ def parse_log(logfile):
 prime2_worlds = {
     "Temple Grounds",
 }
+
 
 def deduce_game(log):
     if log.item_entries[0].world == "Temple Grounds":

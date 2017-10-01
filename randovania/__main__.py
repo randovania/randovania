@@ -18,6 +18,5 @@ def main():
         impossible_check.echoes(log)
 
 
-
 if __name__ == "__main__":
     main()
