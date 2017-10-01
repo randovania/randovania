@@ -28,6 +28,7 @@ class DamageResourceInfo(NamedTuple):
 
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo]
+CurrentResources = Dict[ResourceInfo, int]
 
 
 def _find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
@@ -90,7 +91,7 @@ class IndividualRequirement(NamedTuple):
                   amount: int, negate: bool) -> "IndividualRequirement":
         return cls(database.get_by_type_and_index(resource_type, requirement_index), amount, negate)
 
-    def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
+    def satisfied(self, current_resources: CurrentResources) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
         has_amount = current_resources.get(self.requirement, 0) >= self.amount
         if self.negate:
@@ -105,7 +106,7 @@ class IndividualRequirement(NamedTuple):
 class RequirementSet(NamedTuple):
     alternatives: Tuple[Tuple[IndividualRequirement, ...], ...]
 
-    def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
+    def satisfied(self, current_resources: CurrentResources) -> bool:
         return any(
             all(requirement.satisfied(current_resources) for requirement in requirement_list)
             for requirement_list in self.alternatives
@@ -222,6 +223,8 @@ class GameDescription(NamedTuple):
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
     worlds: List[World]
+    nodes_to_area: Dict[Node, Area]
+    nodes_to_world: Dict[Node, World]
 
     def world_by_asset_id(self, asset_id: int) -> World:
         for world in self.worlds:

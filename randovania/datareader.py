@@ -211,12 +211,22 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     world_reader = WorldReader(resource_database, dock_weakness_database, pickup_entries)
     worlds = world_reader.read_world_list(source)
 
+    nodes_to_area = {}
+    nodes_to_world = {}
+    for world in worlds:
+        for area in world.areas:
+            for node in area.nodes:
+                nodes_to_area[node] = area
+                nodes_to_world[node] = world
+
     return GameDescription(
         game=game,
         game_name=game_name,
         resource_database=resource_database,
         dock_weakness_database=dock_weakness_database,
-        worlds=worlds
+        worlds=worlds,
+        nodes_to_area=nodes_to_area,
+        nodes_to_world=nodes_to_world
     )
 
 
