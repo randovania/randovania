@@ -20,7 +20,8 @@ def main():
         game_description = datareader.read(os.path.join(os.path.dirname(__file__), "data", "prime2.bin"),
                                            log.pickup_entries)
 
-        # pprint.pprint(consistency_check(game_description))
+        # for x in consistency_check(game_description):
+        #     print(x)
         resolver.resolve(game_description)
 
 

@@ -1,7 +1,7 @@
 """Classes that describes the raw data of a game world."""
 
 from enum import Enum, unique
-from typing import NamedTuple, List, Dict, Union, Tuple
+from typing import NamedTuple, List, Dict, Union, Tuple, Iterator
 
 from randovania.log_parser import PickupEntry
 
@@ -264,8 +264,7 @@ def resolve_teleporter_node(node: TeleporterNode, game: GameDescription) -> Node
     return area.nodes[area.default_node_index]
 
 
-def consistency_check(game: GameDescription) -> List[str]:
-    errors = []  # type: List[str]
+def consistency_check(game: GameDescription) -> Iterator[str]:
     for world in game.worlds:
         for area in world.areas:
             for node in area.nodes:
@@ -273,13 +272,10 @@ def consistency_check(game: GameDescription) -> List[str]:
                     try:
                         resolve_dock_node(node, game)
                     except IndexError as e:
-                        errors.append(
-                            "{}/{}/{} (Dock) does not connect due to {}".format(world.name, area.name, node.name, e))
+                        yield "{}/{}/{} (Dock) does not connect due to {}".format(world.name, area.name, node.name, e)
                 elif isinstance(node, TeleporterNode):
                     try:
                         resolve_teleporter_node(node, game)
                     except IndexError as e:
-                        errors.append(
-                            "{}/{}/{} (Teleporter) does not connect due to {}".format(world.name, area.name, node.name,
-                                                                                      e))
-    return errors
+                        yield "{}/{}/{} (Teleporter) does not connect due to {}".format(
+                            world.name, area.name, node.name, e)
