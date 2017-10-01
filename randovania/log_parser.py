@@ -74,5 +74,5 @@ def resolve_game_argument(game: str, log: RandomizerLog) -> Game:
     raise UnknownGameException("Could not decide the game based on this logfile.")
 
 
-def generate_game_choices():
+def generate_game_choices() -> typing.List[str]:
     return [game.name.lower() for game in Game] + ["auto"]
