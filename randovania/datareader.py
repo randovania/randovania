@@ -194,13 +194,9 @@ def parse_file(x) -> RandomizerFileData:
     tricks = read_requirement_info_array(x)
     damage = read_damagerequirement_info_array(x)
     misc = read_requirement_info_array(x)
-
-    # File seems to have a mistake here.
+    # File seems to have a mistake here: no count for difficulty.
     difficulty = [SimpleResourceInfo(read_byte(x), read_string(x), read_string(x))]
-
     versions = read_requirement_info_array(x)
-
-    pprint.pprint(versions)
 
     database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
                                 misc=misc, difficulty=difficulty)
