@@ -24,7 +24,7 @@ class DamageResourceInfo(NamedTuple):
     index: int
     long_name: str
     short_name: str
-    reductions: List[DamageReduction]
+    reductions: Tuple[DamageReduction, ...]
 
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo]
@@ -106,6 +106,10 @@ class IndividualRequirement(NamedTuple):
 class RequirementSet(NamedTuple):
     alternatives: Tuple[Tuple[IndividualRequirement, ...], ...]
 
+    @classmethod
+    def empty(cls):
+        return cls(tuple(tuple()))
+
     def satisfied(self, current_resources: CurrentResources) -> bool:
         return any(
             all(requirement.satisfied(current_resources) for requirement in requirement_list)
@@ -163,6 +167,7 @@ class DockWeaknessDatabase(NamedTuple):
 class GenericNode(NamedTuple):
     name: str
     heal: bool
+    index: int
 
 
 class DockNode(NamedTuple):
@@ -203,6 +208,12 @@ class Area(NamedTuple):
     default_node_index: int
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, RequirementSet]]
+
+    def node_with_dock_index(self, dock_index: int) -> DockNode:
+        for node in self.nodes:
+            if isinstance(node, DockNode) and node.dock_index == dock_index:
+                return node
+        raise ValueError("No DockNode found with dock_index {}".format(dock_index))
 
 
 class World(NamedTuple):
