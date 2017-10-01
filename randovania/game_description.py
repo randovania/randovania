@@ -96,6 +96,9 @@ class IndividualRequirement(NamedTuple):
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
+        if isinstance(self.requirement, DamageResourceInfo):
+            # TODO: actually implement the damage resources
+            return True
         has_amount = current_resources.get(self.requirement, 0) >= self.amount
         if self.negate:
             return not has_amount
