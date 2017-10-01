@@ -26,8 +26,8 @@ def read_damage_reduction(source: BinarySource) -> DamageReduction:
     return DamageReduction(index, multiplier)
 
 
-def read_damage_reductions(source: BinarySource) -> List[DamageReduction]:
-    return read_array(source, read_damage_reduction)
+def read_damage_reductions(source: BinarySource) -> Tuple[DamageReduction, ...]:
+    return tuple(read_array(source, read_damage_reduction))
 
 
 def read_resource_info(source: BinarySource) -> SimpleResourceInfo:
@@ -86,8 +86,8 @@ def read_dock_weakness_database(source: BinarySource, resource_database: Resourc
     portal_types = read_array(source, read_dock_weakness)
     return DockWeaknessDatabase(
         door=door_types,
-        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet(tuple(tuple())))],
-        other=[DockWeakness(0, "Other Door", False, RequirementSet(tuple(tuple())))],
+        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet.empty())],
+        other=[DockWeakness(0, "Other Door", False, RequirementSet.empty())],
         portal=portal_types
     )
 
@@ -96,6 +96,7 @@ class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
     pickup_entries: List[PickupEntry]
+    generic_index: int = 0
 
     def __init__(self, resource_database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase,
                  pickup_entries: List[PickupEntry]):
@@ -110,7 +111,8 @@ class WorldReader:
 
         if node_type == 0:
             source.skip(2)
-            return GenericNode(name, heal)
+            self.generic_index += 1
+            return GenericNode(name, heal, self.generic_index)
 
         elif node_type == 1:
             dock_index = source.read_byte()
@@ -216,6 +218,10 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     for world in worlds:
         for area in world.areas:
             for node in area.nodes:
+                if node in nodes_to_area:
+                    raise ValueError("Trying to map {} to {}, but already mapped to {}".format(
+                        node, area, nodes_to_area[node]
+                    ))
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
