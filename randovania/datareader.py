@@ -1,11 +1,13 @@
 from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO
 
+from randovania import log_parser
 from randovania.binary_file_reader import BinarySource
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     RandomizerFileData, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase
+from randovania.log_parser import PickupEntry
 
 X = TypeVar('X')
 
@@ -91,10 +93,13 @@ def read_dock_weakness_database(source: BinarySource, resource_database: Resourc
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
+    pickup_entries: List[PickupEntry]
 
-    def __init__(self, resource_database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase):
+    def __init__(self, resource_database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase,
+                 pickup_entries: List[PickupEntry]):
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
+        self.pickup_entries = pickup_entries
 
     def read_node(self, source: BinarySource) -> Node:
         name = source.read_string()
@@ -118,7 +123,7 @@ class WorldReader:
         elif node_type == 2:
             pickup_index = source.read_byte()
             source.skip(2)
-            return PickupNode(name, heal, pickup_index)
+            return PickupNode(name, heal, self.pickup_entries[pickup_index])
 
         elif node_type == 3:
             destination_world_asset_id = source.read_uint()
@@ -146,6 +151,12 @@ class WorldReader:
             self.read_node(source)
             for _ in range(node_count)
         ]
+        for node in nodes:  # type: PickupNode
+            if isinstance(node, PickupNode):
+                if node.pickup.room != name:
+                    raise ValueError(
+                        "Pickup at {}/{} has area name mismatch ({})".format(name, node.name, node.pickup.room))
+
         connections = {
             origin: {
                 target: read_requirement_set(source, self.resource_database)
@@ -169,7 +180,7 @@ class WorldReader:
         return read_array(source, self.read_world)
 
 
-def parse_file(x: BinaryIO) -> RandomizerFileData:
+def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> RandomizerFileData:
     if x.read(4) != b"Req.":
         raise Exception("Invalid file format.")
 
@@ -193,9 +204,9 @@ def parse_file(x: BinaryIO) -> RandomizerFileData:
 
     resource_database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
                                          misc=misc, difficulty=difficulty)
-
     dock_weakness_database = read_dock_weakness_database(source, resource_database)
-    world_reader = WorldReader(resource_database, dock_weakness_database)
+
+    world_reader = WorldReader(resource_database, dock_weakness_database, pickup_entries)
     worlds = world_reader.read_world_list(source)
 
     return RandomizerFileData(
@@ -207,24 +218,28 @@ def parse_file(x: BinaryIO) -> RandomizerFileData:
     )
 
 
-def read(path):
+def read(path, pickup_entries: List[PickupEntry]):
     with open(path, "rb") as x:  # type: BinaryIO
-        return parse_file(x)
+        return parse_file(x, pickup_entries)
 
 
-def main(path):
-    data = read(path)
-    world = data.worlds[1]
+def main(game_data_file: str, randomizer_log_file: str):
+    randomizer_log = log_parser.parse_log(randomizer_log_file)
+    data = read(game_data_file, randomizer_log.pickup_entries)
+
+    # world = data.worlds[1]
     import pprint
+     
+    # pprint.pprint(data.resource_database.item)
 
-    for i in range(5):
-        area = world.areas[i]
-        print(area.name)
-        pprint.pprint(area.nodes)
-        print()
+    # for i in range(5):
+    #     area = world.areas[i]
+    #     print(area.name)
+    #     pprint.pprint(area.nodes)
+    #     print()
 
 
 if __name__ == "__main__":
     import sys
 
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
