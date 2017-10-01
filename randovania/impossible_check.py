@@ -40,7 +40,7 @@ dark_torvus_bog = [
 ]
 
 
-def items_in_caches(item_entries: List[log_parser.ItemEntry]) -> Dict[str, str]:
+def items_in_caches(item_entries: List[log_parser.PickupEntry]) -> Dict[str, str]:
     items = {}
     for entry in item_entries:
         if entry.room in echoes_ing_cache_locations:
@@ -51,7 +51,7 @@ def items_in_caches(item_entries: List[log_parser.ItemEntry]) -> Dict[str, str]:
 
 
 def echoes(log: log_parser.RandomizerLog):
-    items = items_in_caches(log.item_entries)
+    items = items_in_caches(log.pickup_entries)
 
     impossible = False
     has_dark_visor = any(map(lambda x: x == "Dark Visor", items.values()))
