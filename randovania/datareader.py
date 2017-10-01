@@ -5,7 +5,7 @@ from typing import List
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    RandomizerFileData, ResourceType, ResourceDatabase
+    RandomizerFileData, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase
 
 
 def read_byte(file) -> int:
@@ -90,7 +90,7 @@ def read_node(x) -> Node:
         dock_index = read_byte(x)
         connected_area_asset_id = read_uint(x)
         connected_dock_index = read_byte(x)
-        dock_type = read_byte(x)
+        dock_type = DockType(read_byte(x))
         dock_weakness_index = read_byte(x)
         x.read(5)  # Throw 5 bytes away
         return DockNode(name, heal, dock_index, connected_area_asset_id, connected_dock_index, dock_type,
@@ -119,17 +119,18 @@ def read_node(x) -> Node:
 
 
 class RequirementSetReader:
-    database: ResourceDatabase
+    resource_database: ResourceDatabase
+    dock_weakness_database: DockWeaknessDatabase
 
     def __init__(self, database: ResourceDatabase):
-        self.database = database
+        self.resource_database = database
 
     def read_individual_requirement(self, x) -> IndividualRequirement:
         requirement_type = ResourceType(read_byte(x))
         requirement_index = read_byte(x)
         amount = read_short(x)
         negate = read_bool(x)
-        return IndividualRequirement.with_data(self.database, requirement_type, requirement_index, amount, negate)
+        return IndividualRequirement.with_data(self.resource_database, requirement_type, requirement_index, amount, negate)
 
     def read_requirement_list(self, x) -> List[IndividualRequirement]:
         return read_array(x, self.read_individual_requirement)
@@ -198,20 +199,28 @@ def parse_file(x) -> RandomizerFileData:
     difficulty = [SimpleResourceInfo(read_byte(x), read_string(x), read_string(x))]
     versions = read_requirement_info_array(x)
 
-    database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
-                                misc=misc, difficulty=difficulty)
+    resource_database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
+                                         misc=misc, difficulty=difficulty)
 
-    reader = RequirementSetReader(database)
+    reader = RequirementSetReader(resource_database)
     door_types = reader.read_dock_weakness_list(x)
     portal_types = reader.read_dock_weakness_list(x)
+
+    dock_weakness_database = DockWeaknessDatabase(
+        door=door_types,
+        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet([[]]))],
+        other=[DockWeakness(0, "Other Door", False, RequirementSet([[]]))],
+        portal=portal_types
+    )
+
+    reader.dock_weakness_database = dock_weakness_database
     worlds = reader.read_world_list(x)
 
     return RandomizerFileData(
         game=game,
         game_name=game_name,
-        database=database,
-        door_dock_weakness=door_types,
-        portal_dock_weakness=portal_types,
+        resource_database=resource_database,
+        dock_weakness_database=dock_weakness_database,
         worlds=worlds
     )
 
@@ -223,12 +232,14 @@ def read(path):
 
 def main(path):
     data = read(path)
-    world = data.worlds[0]
-    area = world.areas[0]
+    world = data.worlds[1]
     import pprint
-    print(area.name)
-    pprint.pprint(area.nodes)
-    pprint.pprint(area.connections)
+
+    for i in range(5):
+        area = world.areas[i]
+        print(area.name)
+        pprint.pprint(area.nodes)
+        print()
 
 
 if __name__ == "__main__":
