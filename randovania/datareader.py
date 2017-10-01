@@ -1,9 +1,11 @@
+import pprint
 import struct
 from typing import List
 
-from randovania.game_description import DamageReduction, RequirementInfo, DamageRequirementInfo, IndividualRequirement, \
+from randovania.game_description import DamageReduction, SimpleRequirementInfo, DamageRequirementInfo, \
+    IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    RandomizerFileData
+    RandomizerFileData, RequirementType, RequirementInfoDatabase
 
 
 def read_byte(file) -> int:
@@ -53,14 +55,14 @@ def read_damage_reductions(x) -> List[DamageReduction]:
     return read_array(x, read_damage_reduction)
 
 
-def read_requirement_info(x) -> RequirementInfo:
+def read_requirement_info(x) -> SimpleRequirementInfo:
     index = read_byte(x)
     long_name = read_string(x)
     short_name = read_string(x)
-    return RequirementInfo(index, long_name, short_name)
+    return SimpleRequirementInfo(index, long_name, short_name)
 
 
-def read_requirement_info_array(x) -> List[RequirementInfo]:
+def read_requirement_info_array(x) -> List[SimpleRequirementInfo]:
     return read_array(x, read_requirement_info)
 
 
@@ -73,33 +75,6 @@ def read_damagerequirement_info(x) -> DamageRequirementInfo:
 
 def read_damagerequirement_info_array(x) -> List[DamageRequirementInfo]:
     return read_array(x, read_damagerequirement_info)
-
-
-def read_individual_requirement(x) -> IndividualRequirement:
-    requirement_type = read_byte(x)
-    requirement_index = read_byte(x)
-    amount = read_short(x)
-    negate = read_bool(x)
-    return IndividualRequirement(requirement_type, requirement_index, amount, negate)
-
-
-def read_requirement_list(x) -> List[IndividualRequirement]:
-    return read_array(x, read_individual_requirement)
-
-
-def read_requirement_set(x) -> RequirementSet:
-    return RequirementSet(read_array(x, read_requirement_list))
-
-
-def read_dock_weakness(x) -> DockWeakness:
-    index = read_byte(x)
-    name = read_string(x)
-    requirement_set = read_requirement_set(x)
-    return DockWeakness(index, name, False, requirement_set)
-
-
-def read_dock_weakness_list(x) -> List[DockWeakness]:
-    return read_array(x, read_dock_weakness)
 
 
 def read_node(x) -> Node:
@@ -131,7 +106,8 @@ def read_node(x) -> Node:
         destination_area_asset_id = read_uint(x)
         teleporter_instance_id = read_uint(x)
         x.read(2)  # Throw 2 bytes away
-        return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id, teleporter_instance_id)
+        return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id,
+                              teleporter_instance_id)
 
     elif node_type == 4:
         event_index = read_byte(x)
@@ -142,39 +118,64 @@ def read_node(x) -> Node:
         raise Exception("Unknown node type: {}".format(node_type))
 
 
-def read_area(x) -> Area:
-    name = read_string(x)
-    asset_id = read_uint(x)
-    node_count = read_byte(x)
-    default_node_index = read_byte(x)
-    nodes = [
-        read_node(x)
-        for _ in range(node_count)
-    ]
-    connections = {
-        source: {
-            target: read_requirement_set(x)
-            for target in range(node_count)
-            if source != target
+class RequirementSetReader:
+    database: RequirementInfoDatabase
+
+    def __init__(self, database: RequirementInfoDatabase):
+        self.database = database
+
+    def read_individual_requirement(self, x) -> IndividualRequirement:
+        requirement_type = RequirementType(read_byte(x))
+        requirement_index = read_byte(x)
+        amount = read_short(x)
+        negate = read_bool(x)
+        return IndividualRequirement.with_data(self.database, requirement_type, requirement_index, amount, negate)
+
+    def read_requirement_list(self, x) -> List[IndividualRequirement]:
+        return read_array(x, self.read_individual_requirement)
+
+    def read_requirement_set(self, x) -> RequirementSet:
+        return RequirementSet(read_array(x, self.read_requirement_list))
+
+    def read_dock_weakness(self, x) -> DockWeakness:
+        index = read_byte(x)
+        name = read_string(x)
+        requirement_set = self.read_requirement_set(x)
+        return DockWeakness(index, name, False, requirement_set)
+
+    def read_dock_weakness_list(self, x) -> List[DockWeakness]:
+        return read_array(x, self.read_dock_weakness)
+
+    def read_area(self, x) -> Area:
+        name = read_string(x)
+        asset_id = read_uint(x)
+        node_count = read_byte(x)
+        default_node_index = read_byte(x)
+        nodes = [
+            read_node(x)
+            for _ in range(node_count)
+        ]
+        connections = {
+            source: {
+                target: self.read_requirement_set(x)
+                for target in range(node_count)
+                if source != target
+            }
+            for source in range(node_count)
         }
-        for source in range(node_count)
-    }
-    return Area(name, asset_id, default_node_index, nodes, connections)
+        return Area(name, asset_id, default_node_index, nodes, connections)
 
+    def read_area_list(self, x) -> List[Area]:
+        return read_array(x, self.read_area)
 
-def read_area_list(x) -> List[Area]:
-    return read_array(x, read_area)
+    def read_world(self, x) -> World:
+        name = read_string(x)
+        asset_id = read_uint(x)
+        areas = self.read_area_list(x)
+        return World(name, asset_id, areas)
 
-
-def read_world(x) -> World:
-    name = read_string(x)
-    asset_id = read_uint(x)
-    areas = read_area_list(x)
-    return World(name, asset_id, areas)
-
-
-def read_world_list(x) -> List[World]:
-    return read_array(x, read_world)
+    def read_world_list(self, x) -> List[World]:
+        return read_array(x, self.read_world)
 
 
 def parse_file(x) -> RandomizerFileData:
@@ -192,31 +193,27 @@ def parse_file(x) -> RandomizerFileData:
     events = read_requirement_info_array(x)
     tricks = read_requirement_info_array(x)
     damage = read_damagerequirement_info_array(x)
-    difficulty = read_requirement_info_array(x)
+    misc = read_requirement_info_array(x)
 
     # File seems to have a mistake here.
-    read_byte(x)
-    read_string(x)
-    read_string(x)
-    # misc = read_requirement_info_array(x))
+    difficulty = [SimpleRequirementInfo(read_byte(x), read_string(x), read_string(x))]
 
     versions = read_requirement_info_array(x)
 
-    door_types = read_dock_weakness_list(x)
-    portal_types = read_dock_weakness_list(x)
+    pprint.pprint(versions)
 
-    worlds = read_world_list(x)
+    database = RequirementInfoDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
+                                       misc=misc, difficulty=difficulty)
+
+    reader = RequirementSetReader(database)
+    door_types = reader.read_dock_weakness_list(x)
+    portal_types = reader.read_dock_weakness_list(x)
+    worlds = reader.read_world_list(x)
 
     return RandomizerFileData(
         game=game,
         game_name=game_name,
-        item_requirement_info=items,
-        event_requirement_info=events,
-        trick_requirement_info=tricks,
-        damage_requirement_info=damage,
-        version_requirement_info=versions,
-        misc_requirement_info=[],
-        difficulty_requirement_info=difficulty,
+        database=database,
         door_dock_weakness=door_types,
         portal_dock_weakness=portal_types,
         worlds=worlds
@@ -228,7 +225,17 @@ def read(path):
         return parse_file(x)
 
 
+def main(path):
+    data = read(path)
+    world = data.worlds[0]
+    area = world.areas[0]
+    import pprint
+    print(area.name)
+    pprint.pprint(area.nodes)
+    pprint.pprint(area.connections)
+
+
 if __name__ == "__main__":
     import sys
 
-    read(sys.argv[1])
+    main(sys.argv[1])
