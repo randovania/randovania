@@ -3,6 +3,8 @@
 from enum import Enum, unique
 from typing import NamedTuple, List, Dict, Union
 
+from randovania.log_parser import PickupEntry
+
 
 class SimpleResourceInfo(NamedTuple):
     index: int
@@ -174,7 +176,7 @@ class DockNode(NamedTuple):
 class PickupNode(NamedTuple):
     name: str
     heal: bool
-    pickup_index: int
+    pickup: PickupEntry
 
 
 class TeleporterNode(NamedTuple):
