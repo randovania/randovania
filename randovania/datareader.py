@@ -77,47 +77,6 @@ def read_damagerequirement_info_array(x) -> List[DamageResourceInfo]:
     return read_array(x, read_damagerequirement_info)
 
 
-def read_node(x) -> Node:
-    name = read_string(x)
-    heal = read_bool(x)
-    node_type = read_byte(x)
-
-    if node_type == 0:
-        x.read(2)  # Throw 2 bytes away
-        return GenericNode(name, heal)
-
-    elif node_type == 1:
-        dock_index = read_byte(x)
-        connected_area_asset_id = read_uint(x)
-        connected_dock_index = read_byte(x)
-        dock_type = DockType(read_byte(x))
-        dock_weakness_index = read_byte(x)
-        x.read(5)  # Throw 5 bytes away
-        return DockNode(name, heal, dock_index, connected_area_asset_id, connected_dock_index, dock_type,
-                        dock_weakness_index)
-
-    elif node_type == 2:
-        pickup_index = read_byte(x)
-        x.read(2)  # Throw 2 bytes away
-        return PickupNode(name, heal, pickup_index)
-
-    elif node_type == 3:
-        destination_world_asset_id = read_uint(x)
-        destination_area_asset_id = read_uint(x)
-        teleporter_instance_id = read_uint(x)
-        x.read(2)  # Throw 2 bytes away
-        return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id,
-                              teleporter_instance_id)
-
-    elif node_type == 4:
-        event_index = read_byte(x)
-        x.read(2)  # Throw 2 bytes away
-        return EventNode(name, heal, event_index)
-
-    else:
-        raise Exception("Unknown node type: {}".format(node_type))
-
-
 class RequirementSetReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
@@ -130,7 +89,8 @@ class RequirementSetReader:
         requirement_index = read_byte(x)
         amount = read_short(x)
         negate = read_bool(x)
-        return IndividualRequirement.with_data(self.resource_database, requirement_type, requirement_index, amount, negate)
+        return IndividualRequirement.with_data(self.resource_database, requirement_type, requirement_index, amount,
+                                               negate)
 
     def read_requirement_list(self, x) -> List[IndividualRequirement]:
         return read_array(x, self.read_individual_requirement)
@@ -147,13 +107,53 @@ class RequirementSetReader:
     def read_dock_weakness_list(self, x) -> List[DockWeakness]:
         return read_array(x, self.read_dock_weakness)
 
+    def read_node(self, x) -> Node:
+        name = read_string(x)
+        heal = read_bool(x)
+        node_type = read_byte(x)
+
+        if node_type == 0:
+            x.read(2)  # Throw 2 bytes away
+            return GenericNode(name, heal)
+
+        elif node_type == 1:
+            dock_index = read_byte(x)
+            connected_area_asset_id = read_uint(x)
+            connected_dock_index = read_byte(x)
+            dock_type = DockType(read_byte(x))
+            dock_weakness_index = read_byte(x)
+            x.read(5)  # Throw 5 bytes away
+            return DockNode(name, heal, dock_index, connected_area_asset_id, connected_dock_index,
+                            self.dock_weakness_database.get_by_type_and_index(dock_type, dock_weakness_index))
+
+        elif node_type == 2:
+            pickup_index = read_byte(x)
+            x.read(2)  # Throw 2 bytes away
+            return PickupNode(name, heal, pickup_index)
+
+        elif node_type == 3:
+            destination_world_asset_id = read_uint(x)
+            destination_area_asset_id = read_uint(x)
+            teleporter_instance_id = read_uint(x)
+            x.read(2)  # Throw 2 bytes away
+            return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id,
+                                  teleporter_instance_id)
+
+        elif node_type == 4:
+            event_index = read_byte(x)
+            x.read(2)  # Throw 2 bytes away
+            return EventNode(name, heal, event_index)
+
+        else:
+            raise Exception("Unknown node type: {}".format(node_type))
+
     def read_area(self, x) -> Area:
         name = read_string(x)
         asset_id = read_uint(x)
         node_count = read_byte(x)
         default_node_index = read_byte(x)
         nodes = [
-            read_node(x)
+            self.read_node(x)
             for _ in range(node_count)
         ]
         connections = {
