@@ -211,6 +211,11 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     world_reader = WorldReader(resource_database, dock_weakness_database, pickup_entries)
     worlds = world_reader.read_world_list(source)
 
+    final_boss = [event for event in events if event.long_name == "Emperor Ing"][0]
+    victory_condition = RequirementSet(tuple(
+        tuple(IndividualRequirement(final_boss, 1, False))
+    ))
+
     nodes_to_area = {}
     nodes_to_world = {}
     for world in worlds:
@@ -230,7 +235,8 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
         dock_weakness_database=dock_weakness_database,
         worlds=worlds,
         nodes_to_area=nodes_to_area,
-        nodes_to_world=nodes_to_world
+        nodes_to_world=nodes_to_world,
+        victory_condition=victory_condition
     )
 
 
