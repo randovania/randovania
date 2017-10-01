@@ -2,10 +2,10 @@ import pprint
 import struct
 from typing import List
 
-from randovania.game_description import DamageReduction, SimpleRequirementInfo, DamageRequirementInfo, \
+from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    RandomizerFileData, RequirementType, RequirementInfoDatabase
+    RandomizerFileData, ResourceType, ResourceDatabase
 
 
 def read_byte(file) -> int:
@@ -55,25 +55,25 @@ def read_damage_reductions(x) -> List[DamageReduction]:
     return read_array(x, read_damage_reduction)
 
 
-def read_requirement_info(x) -> SimpleRequirementInfo:
+def read_requirement_info(x) -> SimpleResourceInfo:
     index = read_byte(x)
     long_name = read_string(x)
     short_name = read_string(x)
-    return SimpleRequirementInfo(index, long_name, short_name)
+    return SimpleResourceInfo(index, long_name, short_name)
 
 
-def read_requirement_info_array(x) -> List[SimpleRequirementInfo]:
+def read_requirement_info_array(x) -> List[SimpleResourceInfo]:
     return read_array(x, read_requirement_info)
 
 
-def read_damagerequirement_info(x) -> DamageRequirementInfo:
+def read_damagerequirement_info(x) -> DamageResourceInfo:
     index = read_byte(x)
     long_name = read_string(x)
     short_name = read_string(x)
-    return DamageRequirementInfo(index, long_name, short_name, read_damage_reductions(x))
+    return DamageResourceInfo(index, long_name, short_name, read_damage_reductions(x))
 
 
-def read_damagerequirement_info_array(x) -> List[DamageRequirementInfo]:
+def read_damagerequirement_info_array(x) -> List[DamageResourceInfo]:
     return read_array(x, read_damagerequirement_info)
 
 
@@ -119,13 +119,13 @@ def read_node(x) -> Node:
 
 
 class RequirementSetReader:
-    database: RequirementInfoDatabase
+    database: ResourceDatabase
 
-    def __init__(self, database: RequirementInfoDatabase):
+    def __init__(self, database: ResourceDatabase):
         self.database = database
 
     def read_individual_requirement(self, x) -> IndividualRequirement:
-        requirement_type = RequirementType(read_byte(x))
+        requirement_type = ResourceType(read_byte(x))
         requirement_index = read_byte(x)
         amount = read_short(x)
         negate = read_bool(x)
@@ -196,14 +196,14 @@ def parse_file(x) -> RandomizerFileData:
     misc = read_requirement_info_array(x)
 
     # File seems to have a mistake here.
-    difficulty = [SimpleRequirementInfo(read_byte(x), read_string(x), read_string(x))]
+    difficulty = [SimpleResourceInfo(read_byte(x), read_string(x), read_string(x))]
 
     versions = read_requirement_info_array(x)
 
     pprint.pprint(versions)
 
-    database = RequirementInfoDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
-                                       misc=misc, difficulty=difficulty)
+    database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
+                                misc=misc, difficulty=difficulty)
 
     reader = RequirementSetReader(database)
     door_types = reader.read_dock_weakness_list(x)
