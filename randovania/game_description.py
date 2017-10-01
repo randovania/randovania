@@ -1,7 +1,10 @@
+"""Classes that describes the raw data of a game world."""
+
+from enum import Enum, unique
 from typing import NamedTuple, List, Dict, Union
 
 
-class RequirementInfo(NamedTuple):
+class SimpleRequirementInfo(NamedTuple):
     index: int
     long_name: str
     short_name: str
@@ -19,15 +22,85 @@ class DamageRequirementInfo(NamedTuple):
     reductions: List[DamageReduction]
 
 
+RequirementInfo = Union[SimpleRequirementInfo, DamageRequirementInfo]
+
+
+def _find_requirement_info_with_id(info_list: List[RequirementInfo], index: int):
+    for info in info_list:
+        if info.index == index:
+            return info
+    raise ValueError("Requirement with index {} not found in {}".format(index, info_list))
+
+
+@unique
+class RequirementType(Enum):
+    ITEM = 0
+    EVENT = 1
+    TRICK = 2
+    DAMAGE = 3
+    VERSION = 4
+    MISC = 5
+    DIFFICULTY = 6
+
+
+class RequirementInfoDatabase(NamedTuple):
+    item: List[SimpleRequirementInfo]
+    event: List[SimpleRequirementInfo]
+    trick: List[SimpleRequirementInfo]
+    damage: List[DamageRequirementInfo]
+    version: List[SimpleRequirementInfo]
+    misc: List[SimpleRequirementInfo]
+    difficulty: List[SimpleRequirementInfo]
+
+    def get_by_type(self, requirement_type: RequirementType) -> List[RequirementInfo]:
+        if requirement_type == RequirementType.ITEM:
+            return self.item
+        elif requirement_type == RequirementType.EVENT:
+            return self.event
+        elif requirement_type == RequirementType.TRICK:
+            return self.trick
+        elif requirement_type == RequirementType.DAMAGE:
+            return self.damage
+        elif requirement_type == RequirementType.VERSION:
+            return self.version
+        elif requirement_type == RequirementType.MISC:
+            return self.misc
+        elif requirement_type == RequirementType.DIFFICULTY:
+            return self.difficulty
+        else:
+            raise ValueError("Invalid requirement_type: {}".format(requirement_type))
+
+
 class IndividualRequirement(NamedTuple):
-    requirement_type: int
-    requirement_index: int
+    requirement: RequirementInfo
     amount: int
     negate: bool
 
+    @classmethod
+    def with_data(cls, database: RequirementInfoDatabase,
+                  requirement_type: RequirementType, requirement_index: int,
+                  amount: int, negate: bool) -> "IndividualRequirement":
+        requirement = _find_requirement_info_with_id(database.get_by_type(requirement_type), requirement_index)
+        return cls(requirement, amount, negate)
+
+    def satisfied(self, current_resources: Dict[RequirementInfo, int]) -> bool:
+        """Checks if a given resources dict satisfies this requirement"""
+        has_amount = current_resources.get(self.requirement, 0) >= self.amount
+        if self.negate:
+            return not has_amount
+        else:
+            return has_amount
+
 
 class RequirementSet(NamedTuple):
-    alternatives: List[IndividualRequirement]
+    alternatives: List[List[IndividualRequirement]]
+
+    def satisfied(self, current_resources: Dict[RequirementInfo, int]) -> bool:
+        return False
+        # return any(
+        #     True
+        #     for
+        # )
 
 
 class DockWeakness(NamedTuple):
@@ -92,13 +165,7 @@ class World(NamedTuple):
 class RandomizerFileData(NamedTuple):
     game: int
     game_name: str
-    item_requirement_info: List[RequirementInfo]
-    event_requirement_info: List[RequirementInfo]
-    trick_requirement_info: List[RequirementInfo]
-    damage_requirement_info: List[DamageRequirementInfo]
-    version_requirement_info: List[RequirementInfo]
-    misc_requirement_info: List[RequirementInfo]
-    difficulty_requirement_info: List[RequirementInfo]
+    database: RequirementInfoDatabase
     door_dock_weakness: List[DockWeakness]
     portal_dock_weakness: List[DockWeakness]
     worlds: List[World]
