@@ -211,17 +211,23 @@ class Area(NamedTuple):
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, RequirementSet]]
 
+    def __repr__(self):
+        return "Area[{}]".format(self.name)
+
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         for node in self.nodes:
             if isinstance(node, DockNode) and node.dock_index == dock_index:
                 return node
-        raise ValueError("No DockNode found with dock_index {}".format(dock_index))
+        raise IndexError("No DockNode found with dock_index {} in {}".format(dock_index, self.name))
 
 
 class World(NamedTuple):
     name: str
     world_asset_id: int
     areas: List[Area]
+
+    def __repr__(self):
+        return "World[{}]".format(self.name)
 
     def area_by_asset_id(self, asset_id: int) -> Area:
         for area in self.areas:
@@ -244,3 +250,36 @@ class GameDescription(NamedTuple):
             if world.world_asset_id == asset_id:
                 return world
         raise KeyError("Unknown asset_id: {}".format(asset_id))
+
+
+def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:
+    world = game.nodes_to_world[node]
+    area = world.area_by_asset_id(node.connected_area_asset_id)
+    return area.node_with_dock_index(node.connected_dock_index)
+
+
+def resolve_teleporter_node(node: TeleporterNode, game: GameDescription) -> Node:
+    world = game.world_by_asset_id(node.destination_world_asset_id)
+    area = world.area_by_asset_id(node.destination_area_asset_id)
+    return area.nodes[area.default_node_index]
+
+
+def consistency_check(game: GameDescription) -> List[str]:
+    errors = []  # type: List[str]
+    for world in game.worlds:
+        for area in world.areas:
+            for node in area.nodes:
+                if isinstance(node, DockNode):
+                    try:
+                        resolve_dock_node(node, game)
+                    except IndexError as e:
+                        errors.append(
+                            "{}/{}/{} (Dock) does not connect due to {}".format(world.name, area.name, node.name, e))
+                elif isinstance(node, TeleporterNode):
+                    try:
+                        resolve_teleporter_node(node, game)
+                    except IndexError as e:
+                        errors.append(
+                            "{}/{}/{} (Teleporter) does not connect due to {}".format(world.name, area.name, node.name,
+                                                                                      e))
+    return errors
