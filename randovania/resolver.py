@@ -23,6 +23,11 @@ items_lost_to_item_loss = {
 }
 
 Reach = Set[Node]
+_gd = None  # type: GameDescription
+
+
+def _n(node: Node) -> str:
+    return "{}/{}".format(_gd.nodes_to_area[node].name, node.name)
 
 
 def potential_nodes_from(node: Node,
@@ -56,18 +61,28 @@ def calculate_reach(current_reach: Reach, game_description: GameDescription,
         checked_nodes.add(node)
         new_reach.add(node)
 
+        print("> Checking paths from {}".format(_n(node)))
+
         for target_node, requirements in potential_nodes_from(node, game_description):
-            if target_node not in checked_nodes and requirements.satisfied(current_resources):
+            if target_node in checked_nodes:
+                print("Not checking {} again.".format(_n(target_node)))
+                continue
+
+            if requirements.satisfied(current_resources):
+                print("Requirements for {} satisfied.".format(_n(target_node)))
                 nodes_to_check.add(target_node)
+            else:
+                print("Requirements for {} _fails_.".format(_n(target_node)))
 
     return new_reach
 
 
 def pretty_print_area(area: Area):
-    for node, x in area.connections.items():
-        print(node.name)
-        for target_node, requirements in x.items():
-            print(">", target_node.name)
+    print(area.name)
+    for node in area.nodes:
+        print(">", node.name, type(node))
+        for target_node, requirements in potential_nodes_from(node, _gd):
+            print(" >", _n(target_node))
             for r in requirements.alternatives:
                 print("  ", ", ".join(map(str, r)))
         print()
@@ -77,6 +92,9 @@ def resolve(game_description: GameDescription):
     starting_world_asset_id = 1006255871
     starting_area_asset_id = 1655756413
     item_loss_skip = True
+
+    global _gd
+    _gd = game_description
 
     starting_world = game_description.world_by_asset_id(starting_world_asset_id)
     starting_area = starting_world.area_by_asset_id(starting_area_asset_id)
@@ -96,7 +114,8 @@ def resolve(game_description: GameDescription):
     }
     new_reach = calculate_reach(reach, game_description, current_resources)
 
-    pprint(new_reach)
+    # pprint(new_reach)
+    print("====")
     pretty_print_area(starting_world.areas[2])
 
 
