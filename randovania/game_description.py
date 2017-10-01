@@ -4,7 +4,7 @@ from enum import Enum, unique
 from typing import NamedTuple, List, Dict, Union
 
 
-class SimpleRequirementInfo(NamedTuple):
+class SimpleResourceInfo(NamedTuple):
     index: int
     long_name: str
     short_name: str
@@ -15,17 +15,17 @@ class DamageReduction(NamedTuple):
     damage_multiplier: float
 
 
-class DamageRequirementInfo(NamedTuple):
+class DamageResourceInfo(NamedTuple):
     index: int
     long_name: str
     short_name: str
     reductions: List[DamageReduction]
 
 
-RequirementInfo = Union[SimpleRequirementInfo, DamageRequirementInfo]
+ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo]
 
 
-def _find_requirement_info_with_id(info_list: List[RequirementInfo], index: int):
+def _find_requirement_info_with_id(info_list: List[ResourceInfo], index: int):
     for info in info_list:
         if info.index == index:
             return info
@@ -33,7 +33,7 @@ def _find_requirement_info_with_id(info_list: List[RequirementInfo], index: int)
 
 
 @unique
-class RequirementType(Enum):
+class ResourceType(Enum):
     ITEM = 0
     EVENT = 1
     TRICK = 2
@@ -43,47 +43,47 @@ class RequirementType(Enum):
     DIFFICULTY = 6
 
 
-class RequirementInfoDatabase(NamedTuple):
-    item: List[SimpleRequirementInfo]
-    event: List[SimpleRequirementInfo]
-    trick: List[SimpleRequirementInfo]
-    damage: List[DamageRequirementInfo]
-    version: List[SimpleRequirementInfo]
-    misc: List[SimpleRequirementInfo]
-    difficulty: List[SimpleRequirementInfo]
+class ResourceDatabase(NamedTuple):
+    item: List[SimpleResourceInfo]
+    event: List[SimpleResourceInfo]
+    trick: List[SimpleResourceInfo]
+    damage: List[DamageResourceInfo]
+    version: List[SimpleResourceInfo]
+    misc: List[SimpleResourceInfo]
+    difficulty: List[SimpleResourceInfo]
 
-    def get_by_type(self, requirement_type: RequirementType) -> List[RequirementInfo]:
-        if requirement_type == RequirementType.ITEM:
+    def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
+        if resource_type == ResourceType.ITEM:
             return self.item
-        elif requirement_type == RequirementType.EVENT:
+        elif resource_type == ResourceType.EVENT:
             return self.event
-        elif requirement_type == RequirementType.TRICK:
+        elif resource_type == ResourceType.TRICK:
             return self.trick
-        elif requirement_type == RequirementType.DAMAGE:
+        elif resource_type == ResourceType.DAMAGE:
             return self.damage
-        elif requirement_type == RequirementType.VERSION:
+        elif resource_type == ResourceType.VERSION:
             return self.version
-        elif requirement_type == RequirementType.MISC:
+        elif resource_type == ResourceType.MISC:
             return self.misc
-        elif requirement_type == RequirementType.DIFFICULTY:
+        elif resource_type == ResourceType.DIFFICULTY:
             return self.difficulty
         else:
-            raise ValueError("Invalid requirement_type: {}".format(requirement_type))
+            raise ValueError("Invalid requirement_type: {}".format(resource_type))
 
 
 class IndividualRequirement(NamedTuple):
-    requirement: RequirementInfo
+    requirement: ResourceInfo
     amount: int
     negate: bool
 
     @classmethod
-    def with_data(cls, database: RequirementInfoDatabase,
-                  requirement_type: RequirementType, requirement_index: int,
+    def with_data(cls, database: ResourceDatabase,
+                  resource_type: ResourceType, requirement_index: int,
                   amount: int, negate: bool) -> "IndividualRequirement":
-        requirement = _find_requirement_info_with_id(database.get_by_type(requirement_type), requirement_index)
-        return cls(requirement, amount, negate)
+        resource = _find_requirement_info_with_id(database.get_by_type(resource_type), requirement_index)
+        return cls(resource, amount, negate)
 
-    def satisfied(self, current_resources: Dict[RequirementInfo, int]) -> bool:
+    def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
         has_amount = current_resources.get(self.requirement, 0) >= self.amount
         if self.negate:
@@ -95,7 +95,7 @@ class IndividualRequirement(NamedTuple):
 class RequirementSet(NamedTuple):
     alternatives: List[List[IndividualRequirement]]
 
-    def satisfied(self, current_resources: Dict[RequirementInfo, int]) -> bool:
+    def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
         return False
         # return any(
         #     True
@@ -165,7 +165,7 @@ class World(NamedTuple):
 class RandomizerFileData(NamedTuple):
     game: int
     game_name: str
-    database: RequirementInfoDatabase
+    database: ResourceDatabase
     door_dock_weakness: List[DockWeakness]
     portal_dock_weakness: List[DockWeakness]
     worlds: List[World]
