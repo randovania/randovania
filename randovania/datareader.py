@@ -131,7 +131,8 @@ class WorldReader:
         elif node_type == 4:
             event_index = source.read_byte()
             source.skip(2)
-            return EventNode(name, heal, event_index)
+            return EventNode(name, heal,
+                             self.resource_database.get_by_type_and_index(ResourceType.EVENT, event_index))
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))

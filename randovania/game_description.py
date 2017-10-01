@@ -73,6 +73,9 @@ class ResourceDatabase(NamedTuple):
         else:
             raise ValueError("Invalid requirement_type: {}".format(resource_type))
 
+    def get_by_type_and_index(self, resource_type: ResourceType, index: int) -> ResourceInfo:
+        return _find_resource_info_with_id(self.get_by_type(resource_type), index)
+
 
 class IndividualRequirement(NamedTuple):
     requirement: ResourceInfo
@@ -83,8 +86,7 @@ class IndividualRequirement(NamedTuple):
     def with_data(cls, database: ResourceDatabase,
                   resource_type: ResourceType, requirement_index: int,
                   amount: int, negate: bool) -> "IndividualRequirement":
-        resource = _find_resource_info_with_id(database.get_by_type(resource_type), requirement_index)
-        return cls(resource, amount, negate)
+        return cls(database.get_by_type_and_index(resource_type, requirement_index), amount, negate)
 
     def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
@@ -186,7 +188,7 @@ class TeleporterNode(NamedTuple):
 class EventNode(NamedTuple):
     name: str
     heal: bool
-    event_index: int
+    event: ResourceInfo
 
 
 Node = Union[GenericNode, DockNode, PickupNode, TeleporterNode, EventNode]
