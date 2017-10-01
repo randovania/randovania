@@ -1,7 +1,7 @@
 """Classes that describes the raw data of a game world."""
 
 from enum import Enum, unique
-from typing import NamedTuple, List, Dict, Union
+from typing import NamedTuple, List, Dict, Union, Tuple
 
 from randovania.log_parser import PickupEntry
 
@@ -103,7 +103,7 @@ class IndividualRequirement(NamedTuple):
 
 
 class RequirementSet(NamedTuple):
-    alternatives: List[List[IndividualRequirement]]
+    alternatives: Tuple[Tuple[IndividualRequirement, ...], ...]
 
     def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
         return any(
@@ -201,13 +201,19 @@ class Area(NamedTuple):
     area_asset_id: int
     default_node_index: int
     nodes: List[Node]
-    connections: Dict[int, Dict[int, RequirementSet]]
+    connections: Dict[Node, Dict[Node, RequirementSet]]
 
 
 class World(NamedTuple):
     name: str
     world_asset_id: int
     areas: List[Area]
+
+    def area_by_asset_id(self, asset_id: int) -> Area:
+        for area in self.areas:
+            if area.area_asset_id == asset_id:
+                return area
+        raise KeyError("Unknown asset_id: {}".format(asset_id))
 
 
 class GameDescription(NamedTuple):

@@ -1,5 +1,5 @@
 from functools import partial
-from typing import List, Callable, TypeVar, BinaryIO
+from typing import List, Callable, TypeVar, BinaryIO, Tuple
 
 from randovania import log_parser
 from randovania.binary_file_reader import BinarySource
@@ -63,12 +63,14 @@ def read_individual_requirement(source: BinarySource, resource_database: Resourc
                                            negate)
 
 
-def read_requirement_list(source: BinarySource, resource_database: ResourceDatabase) -> List[IndividualRequirement]:
-    return read_array(source, partial(read_individual_requirement, resource_database=resource_database))
+def read_requirement_list(source: BinarySource,
+                          resource_database: ResourceDatabase) -> Tuple[IndividualRequirement, ...]:
+    return tuple(read_array(source, partial(read_individual_requirement, resource_database=resource_database)))
 
 
 def read_requirement_set(source: BinarySource, resource_database: ResourceDatabase) -> RequirementSet:
-    return RequirementSet(read_array(source, partial(read_requirement_list, resource_database=resource_database)))
+    return RequirementSet(
+        tuple(read_array(source, partial(read_requirement_list, resource_database=resource_database))))
 
 
 # Dock Weakness
@@ -84,8 +86,8 @@ def read_dock_weakness_database(source: BinarySource, resource_database: Resourc
     portal_types = read_array(source, read_dock_weakness)
     return DockWeaknessDatabase(
         door=door_types,
-        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet([[]]))],
-        other=[DockWeakness(0, "Other Door", False, RequirementSet([[]]))],
+        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet(tuple(tuple())))],
+        other=[DockWeakness(0, "Other Door", False, RequirementSet(tuple(tuple())))],
         portal=portal_types
     )
 
@@ -160,10 +162,10 @@ class WorldReader:
         connections = {
             origin: {
                 target: read_requirement_set(source, self.resource_database)
-                for target in range(node_count)
+                for target in nodes
                 if origin != target
             }
-            for origin in range(node_count)
+            for origin in nodes
         }
         return Area(name, asset_id, default_node_index, nodes, connections)
 
@@ -218,7 +220,7 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     )
 
 
-def read(path, pickup_entries: List[PickupEntry]):
+def read(path, pickup_entries: List[PickupEntry]) -> GameDescription:
     with open(path, "rb") as x:  # type: BinaryIO
         return parse_file(x, pickup_entries)
 
