@@ -9,6 +9,9 @@ class SimpleResourceInfo(NamedTuple):
     long_name: str
     short_name: str
 
+    def __str__(self):
+        return self.long_name
+
 
 class DamageReduction(NamedTuple):
     inventory_index: int
@@ -91,16 +94,18 @@ class IndividualRequirement(NamedTuple):
         else:
             return has_amount
 
+    def __repr__(self):
+        return "{} {} {}".format(self.requirement, "<" if self.negate else ">=", self.amount)
+
 
 class RequirementSet(NamedTuple):
     alternatives: List[List[IndividualRequirement]]
 
     def satisfied(self, current_resources: Dict[ResourceInfo, int]) -> bool:
-        return False
-        # return any(
-        #     True
-        #     for
-        # )
+        return any(
+            all(requirement.satisfied(current_resources) for requirement in requirement_list)
+            for requirement_list in self.alternatives
+        )
 
 
 class DockWeakness(NamedTuple):
