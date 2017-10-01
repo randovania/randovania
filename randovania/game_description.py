@@ -111,6 +111,8 @@ class RequirementSet(NamedTuple):
         return cls(tuple(tuple()))
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
+        if not self.alternatives:
+            return True
         return any(
             all(requirement.satisfied(current_resources) for requirement in requirement_list)
             for requirement_list in self.alternatives
