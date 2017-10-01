@@ -1,7 +1,5 @@
-import pprint
-import struct
 from functools import partial
-from typing import List
+from typing import List, Callable, TypeVar, BinaryIO
 
 from randovania.binary_file_reader import BinarySource
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
@@ -9,8 +7,10 @@ from randovania.game_description import DamageReduction, SimpleResourceInfo, Dam
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     RandomizerFileData, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase
 
+X = TypeVar('X')
 
-def read_array(source: BinarySource, item_reader):
+
+def read_array(source: BinarySource, item_reader: Callable[[BinarySource], X]) -> List[X]:
     count = source.read_byte()
     return [
         item_reader(source)
@@ -168,10 +168,10 @@ class WorldReader:
         return read_array(source, self.read_world)
 
 
-def parse_file(x) -> RandomizerFileData:
+def parse_file(x: BinaryIO) -> RandomizerFileData:
     if x.read(4) != b"Req.":
         raise Exception("Invalid file format.")
-    
+
     source = BinarySource(x)
 
     format_version = source.read_uint()
@@ -207,7 +207,7 @@ def parse_file(x) -> RandomizerFileData:
 
 
 def read(path):
-    with open(path, "rb") as x:
+    with open(path, "rb") as x:  # type: BinaryIO
         return parse_file(x)
 
 

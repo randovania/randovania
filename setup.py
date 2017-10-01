@@ -20,7 +20,7 @@ setup(
         'Topic :: Games/Entertainment',
     ],
     install_requires=[
-        'py', 'pytest',],
+        'py', 'pytest', ],
     entry_points={
         'console_scripts': [
         ]
