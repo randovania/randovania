@@ -3,7 +3,7 @@ from pprint import pprint
 from typing import Set, Iterator, Tuple
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, ResourceDatabase, \
-    DockNode, TeleporterNode, RequirementSet, Area
+    DockNode, TeleporterNode, RequirementSet, Area, EventNode, resolve_dock_node, resolve_teleporter_node
 
 default_items = {
     (ResourceType.MISC, 0): 1,  # "No Requirements"
@@ -31,18 +31,30 @@ def _n(node: Node) -> str:
 
 
 def potential_nodes_from(node: Node,
-                         game_description: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
+                         game_description: GameDescription,
+                         current_resources: CurrentResources) -> Iterator[Tuple[Node, RequirementSet]]:
+
+    if isinstance(node, EventNode):
+        # You can't walk through an event node until you've already triggered it
+        if current_resources.get(node.event, 0) == 0:
+            return
+
     if isinstance(node, DockNode):
-        world = game_description.nodes_to_world[node]
-        area = world.area_by_asset_id(node.connected_area_asset_id)
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
         # Includes opening form behind with different criteria
-        yield area.node_with_dock_index(node.connected_dock_index), node.dock_weakness.requirements
+        try:
+            target_node = resolve_dock_node(node, game_description)
+            yield target_node, node.dock_weakness.requirements
+        except IndexError:
+            # TODO: fix data to not having docks pointing to nothing
+            pass
 
     if isinstance(node, TeleporterNode):
-        world = game_description.world_by_asset_id(node.destination_world_asset_id)
-        area = world.area_by_asset_id(node.destination_area_asset_id)
-        yield area.nodes[area.default_node_index], RequirementSet.empty()
+        try:
+            yield resolve_teleporter_node(node), RequirementSet.empty()
+        except IndexError:
+            # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
+            pass
 
     area = game_description.nodes_to_area[node]
     for target_node, requirements in area.connections[node].items():
@@ -63,7 +75,7 @@ def calculate_reach(current_reach: Reach, game_description: GameDescription,
 
         print("> Checking paths from {}".format(_n(node)))
 
-        for target_node, requirements in potential_nodes_from(node, game_description):
+        for target_node, requirements in potential_nodes_from(node, game_description, current_resources):
             if target_node in checked_nodes:
                 print("Not checking {} again.".format(_n(target_node)))
                 continue
@@ -108,14 +120,15 @@ def resolve(game_description: GameDescription):
         game_description.resource_database.get_by_type_and_index(resource_type, index): quantity
         for ((resource_type, index), quantity) in starting_items.items()
     }
-
     reach = {
         starting_node
     }
     new_reach = calculate_reach(reach, game_description, current_resources)
-
-    # pprint(new_reach)
-    print("====")
-    pretty_print_area(starting_world.areas[2])
+    #
+    # print("====")
+    # for node in new_reach:
+    #     print(_n(node))
+    # print("====")
+    # pretty_print_area(starting_world.areas[2])
 
 
