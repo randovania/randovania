@@ -1,21 +1,23 @@
 import argparse
 
-from randovania import log_parser, impossible_check
+import os
+
+from randovania import log_parser, impossible_check, datareader
+from randovania.log_parser import Game
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("logfile", help="Path to the log file of a Randomizer run.")
-    parser.add_argument("--game", choices=("prime2", "auto"), default="auto",
+    parser.add_argument("--game", choices=log_parser.generate_game_choices(), default="auto",
                         help="The game to check. Auto will try to decide based on zone names in the log.")
     args = parser.parse_args()
     log = log_parser.parse_log(args.logfile)
 
-    if args.game == "auto":
-        args.game = log_parser.deduce_game(log)
-
-    if args.game == "prime2":
-        impossible_check.echoes(log)
+    game = log_parser.resolve_game_argument(args.game, log)
+    if game == Game.PRIME2:
+        data = datareader.read(os.path.join(os.path.dirname(__file__), "data", "prime2.bin"), log.pickup_entries)
+        print(data)
 
 
 if __name__ == "__main__":

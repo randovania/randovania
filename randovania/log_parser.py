@@ -1,7 +1,12 @@
 import typing
 import re
+from enum import Enum
 
 RANDOMIZER_VERSION = "3.2"
+
+
+class Game(Enum):
+    PRIME2 = "prime2"
 
 
 class PickupEntry(typing.NamedTuple):
@@ -59,8 +64,15 @@ prime2_worlds = {
 }
 
 
-def deduce_game(log):
-    if log.item_entries[0].world == "Temple Grounds":
-        return "prime2"
+def resolve_game_argument(game: str, log: RandomizerLog) -> Game:
+    if game != "auto":
+        return Game(game)
+
+    if log.pickup_entries[0].world == "Temple Grounds":
+        return Game.PRIME2
 
     raise UnknownGameException("Could not decide the game based on this logfile.")
+
+
+def generate_game_choices():
+    return [game.name.lower() for game in Game] + ["auto"]
