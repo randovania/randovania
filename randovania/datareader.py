@@ -3,7 +3,7 @@ from pprint import pprint
 from typing import List, Callable, TypeVar, BinaryIO, Tuple
 
 from randovania import log_parser
-from randovania.binary_file_reader import BinarySource
+from randovania.binary_source import BinarySource
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
