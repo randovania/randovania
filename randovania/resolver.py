@@ -141,7 +141,12 @@ def pretty_print_area(area: Area):
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))
-        for target_node, requirements in potential_nodes_from(node, _gd, State({}, set(), node)):
+        state = State({}, set(), node)
+        try:
+            state = state.act_on_node(node, _gd.resource_database)
+        except ValueError:
+            pass
+        for target_node, requirements in potential_nodes_from(node, _gd, state):
             print(" >", _n(target_node))
             for r in requirements.alternatives:
                 print("  ", ", ".join(map(str, r)))
