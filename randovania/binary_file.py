@@ -35,3 +35,30 @@ class BinarySource:
     def skip(self, n: int):
         """Skips n bytes"""
         self.file.read(n)
+
+
+class BinaryWriter:
+    file: BinaryIO
+
+    def __init__(self, file: BinaryIO):
+        self.file = file
+
+    def write_byte(self, byte: int):
+        self.file.write(struct.pack("!B", byte))
+
+    def write_short(self, short: int):
+        self.file.write(struct.pack("!H", short))
+
+    def write_uint(self, uint: int):
+        self.file.write(struct.pack("!I", uint))
+
+    def write_float(self, n: float):
+        self.file.write(struct.pack("!f", n))
+
+    def write_bool(self, b: bool):
+        self.file.write(struct.pack("!?", b))
+
+    def write_string(self, s: str):
+        """Writes a string encoded as UTF-8, NULL terminated"""
+        self.file.write(s.encode("UTF-8"))
+        self.write_byte(0)
