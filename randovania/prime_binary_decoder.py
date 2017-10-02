@@ -1,6 +1,6 @@
 from typing import List, Callable, TypeVar, BinaryIO, Dict
 
-from randovania.binary_source import BinarySource
+from randovania.binary_file import BinarySource
 
 X = TypeVar('X')
 
