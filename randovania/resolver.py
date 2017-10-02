@@ -1,4 +1,5 @@
 import copy
+from pprint import pprint
 from typing import Set, Iterator, Tuple, List
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
@@ -94,6 +95,7 @@ def potential_nodes_from(node: Node,
             yield resolve_teleporter_node(node, game_description), RequirementSet.empty()
         except IndexError:
             # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
+            print("Teleporter is broken!", node)
             pass
 
     area = game_description.nodes_to_area[node]
@@ -113,17 +115,12 @@ def calculate_reach(current_state: State,
         if node != current_state.node:
             yield node
 
-        print("> Checking paths from {}".format(_n(node)))
         for target_node, requirements in potential_nodes_from(node, game_description, current_state):
             if target_node in checked_nodes or target_node in nodes_to_check:
-                print("Not checking {} again.".format(_n(target_node)))
                 continue
 
             if requirements.satisfied(current_state.resources):
-                print("Requirements for {} satisfied.".format(_n(target_node)))
                 nodes_to_check.append(target_node)
-            else:
-                print("Requirements for {} _fails_.".format(_n(target_node)))
 
 
 def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
@@ -155,13 +152,22 @@ def advance(state: State, game: GameDescription):
     if game.victory_condition.satisfied(state.resources):
         return True
 
+    print("Now on", _n(state.node))
     reach = list(calculate_reach(state, game))
+    actions = list(actions_with_reach(reach, state))
 
-    for action in actions_with_reach(reach, state):
+    for action in actions:
         if advance(state.act_on_node(action, game.resource_database),
                    game):
             return True
 
+    print("Will rollback.")
+    # print("=====")
+    # print("Rollback! Current reach is:")
+    # for node in reach:
+    #     print("{}/{}".format(game.nodes_to_world[node].name, _n(node)))
+    # print("Items")
+    # pprint(state.resources)
     return False
 
 
@@ -189,9 +195,3 @@ def resolve(game_description: GameDescription):
                                                       game_description.resource_database)
 
     print(advance(current_state, game_description))
-        #
-        # print("====")
-        # for node in new_reach:
-        #     print(_n(node))
-        # print("====")
-        # pretty_print_area(starting_world.areas[2])

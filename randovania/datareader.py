@@ -149,6 +149,11 @@ class WorldReader:
         asset_id = source.read_uint()
         node_count = source.read_byte()
         default_node_index = source.read_byte()
+
+        # TODO: patching data adhoc
+        if asset_id == 3136899603:
+            default_node_index = 2
+
         nodes = [
             self.read_node(source)
             for _ in range(node_count)
@@ -243,25 +248,3 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
 def read(path, pickup_entries: List[PickupEntry]) -> GameDescription:
     with open(path, "rb") as x:  # type: BinaryIO
         return parse_file(x, pickup_entries)
-
-
-def main(game_data_file: str, randomizer_log_file: str):
-    randomizer_log = log_parser.parse_log(randomizer_log_file)
-    data = read(game_data_file, randomizer_log.pickup_entries)
-
-    # world = data.worlds[1]
-    import pprint
-
-    # pprint.pprint(data.resource_database.item)
-
-    # for i in range(5):
-    #     area = world.areas[i]
-    #     print(area.name)
-    #     pprint.pprint(area.nodes)
-    #     print()
-
-
-if __name__ == "__main__":
-    import sys
-
-    main(sys.argv[1], sys.argv[2])
