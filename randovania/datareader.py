@@ -150,7 +150,8 @@ class WorldReader:
         node_count = source.read_byte()
         default_node_index = source.read_byte()
 
-        # TODO: patching data adhoc
+        # TODO: hardcoded data fix
+        # Aerie Transport Station has default_node_index not set
         if asset_id == 3136899603:
             default_node_index = 2
 
@@ -172,6 +173,15 @@ class WorldReader:
             }
             for origin in nodes
         }
+        # TODO: hardcoded data fix
+        # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
+        if asset_id == 3968294891:
+            connections[nodes[1]][nodes[2]] = RequirementSet(tuple([
+                tuple([
+                    IndividualRequirement.with_data(self.resource_database, ResourceType.ITEM, 38 + i, 1, False)
+                    for i in range(3)
+                ])
+            ]))
         return Area(name, asset_id, default_node_index, nodes, connections)
 
     def read_area_list(self, source: BinarySource) -> List[Area]:
