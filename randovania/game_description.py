@@ -258,6 +258,12 @@ class GameDescription(NamedTuple):
                 return world
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
+    def all_nodes(self) -> Iterator[Node]:
+        for world in self.worlds:
+            for area in world.areas:
+                for node in area.nodes:
+                    yield node
+
 
 def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:
     world = game.nodes_to_world[node]
