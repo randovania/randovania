@@ -8,6 +8,30 @@ ResourceGain = List[Tuple[ResourceInfo, int]]
 
 pickup_name_to_resource = {}  # type: Dict[str, List[Tuple[ResourceInfo, int]]]
 
+
+percent_less_items = {
+    "Dark Agon Key 1",
+    "Dark Agon Key 2",
+    "Dark Agon Key 3",
+    "Dark Torvus Key 1",
+    "Dark Torvus Key 2",
+    "Dark Torvus Key 3",
+    "Ing Hive Key 1",
+    "Ing Hive Key 2",
+    "Ing Hive Key 3",
+    "Sky Temple Key 1",
+    "Sky Temple Key 2",
+    "Sky Temple Key 3",
+    "Sky Temple Key 4",
+    "Sky Temple Key 5",
+    "Sky Temple Key 6",
+    "Sky Temple Key 7",
+    "Sky Temple Key 8",
+    "Sky Temple Key 9",
+    "_ItemLossItems",
+    "_StartingItems",
+}
+
 direct_name = {
     "Amber Translator": 1,
     "Annihilator Beam": 1,
@@ -90,10 +114,11 @@ custom_mapping = {
         "Charge Beam": 1,
     },
     "_ItemLossItems": {
-        "Boost Ball": 1,
-        "Spider Ball": 1,
+        # TODO: lose items when reaching the item loss spot
+        # "Boost Ball": 1,
+        # "Spider Ball": 1,
         "Morph Ball Bomb": 1,
-        "Space Jump Boots": 1,
+        # "Space Jump Boots": 1,
         "Missile": 5,
     },
 }
@@ -102,19 +127,25 @@ custom_mapping = {
 def pickup_name_to_resource_gain(name: str, database: ResourceDatabase) -> ResourceGain:
     infos = database.get_by_type(ResourceType.ITEM)
 
+    result = []
+    if name not in percent_less_items:
+        result.append((database.get_by_type_and_index(ResourceType.ITEM, 47), 1))
+
     if name in direct_name:
         for info in infos:
             if info.long_name == name:
-                return [(info, direct_name[name])]
+                return result + [
+                    (info, direct_name[name])
+                ]
         raise ValueError("Pickup '{}' not found in database.".format(name))
     else:
         for pattern, values in custom_mapping.items():
             if re.match(pattern, name):
-                result = []
+                starting_size = len(result)
                 for info in infos:
                     if info.long_name in values:
                         result.append((info, values[info.long_name]))
-                if len(result) != len(values):
+                if len(result) - starting_size != len(values):
                     raise ValueError(
                         "Pattern '{}' (matched by '{}') have resource not found in database. Found {}".format(
                             pattern, name, result
