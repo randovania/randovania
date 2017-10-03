@@ -1,10 +1,10 @@
 import copy
 from collections import defaultdict
-from typing import Set, Iterator, Tuple, List
+from typing import Set, Iterator, Tuple, List, Dict
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
     RequirementSet, Area, EventNode, resolve_dock_node, resolve_teleporter_node, PickupNode, ResourceInfo, \
-    ResourceDatabase
+    ResourceDatabase, RequirementList
 from randovania.log_parser import PickupEntry
 from randovania.pickup_database import pickup_name_to_resource_gain
 
@@ -104,7 +104,7 @@ def potential_nodes_from(node: Node,
 
 
 def calculate_reach(current_state: State,
-                    game_description: GameDescription) -> List[Node]:
+                    game_description: GameDescription) -> Tuple[List[Node], Dict[Node, List[RequirementList]]]:
     checked_nodes = set()
     nodes_to_check = [current_state.node]
 
@@ -130,12 +130,14 @@ def calculate_reach(current_state: State,
                         current_state.resources,
                         game_description.available_resources
                     ))
+                if not requirements_by_node[target_node]:
+                    requirements_by_node.pop(target_node)
 
     # Discard satisfiable requirements of nodes reachable by other means
     for node in set(resulting_nodes).intersection(requirements_by_node.keys()):
         requirements_by_node.pop(node)
 
-    return resulting_nodes
+    return resulting_nodes, requirements_by_node
 
 
 def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
@@ -177,7 +179,10 @@ def advance(state: State, game: GameDescription):
         return True
 
     print("Now on", _n(state.node))
-    reach = calculate_reach(state, game)
+    reach, requirements_by_node = calculate_reach(state, game)
+    # print("Item alternatives:")
+    # for node, l in requirements_by_node.items():
+    #     print("  > {}: {}".format(_n(node), l))
     actions = list(actions_with_reach(reach, state))
 
     for action in actions:
