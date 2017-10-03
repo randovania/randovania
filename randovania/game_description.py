@@ -131,13 +131,13 @@ class RequirementSet(NamedTuple):
 
     def satisfiable_requirements(self, current_resources: CurrentResources,
                                  available_resources: CurrentResources) -> Iterator[Tuple[IndividualRequirement, ...]]:
-        for alternative in self.alternatives:
+        for requirement_list in self.alternatives:
             # Don't list satisfied sets as satisfiable
-            if all(requirement.satisfied(current_resources) for requirement in alternative):
+            if requirement_list.satisfied(current_resources):
                 continue
 
-            if all(requirement.satisfied(available_resources) for requirement in alternative):
-                yield alternative
+            if requirement_list.satisfied(available_resources):
+                yield requirement_list
 
 
 class DockWeakness(NamedTuple):
