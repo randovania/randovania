@@ -5,7 +5,7 @@ from randovania import prime_binary_decoder
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase
+    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList
 from randovania.log_parser import PickupEntry
 
 X = TypeVar('X')
@@ -57,7 +57,7 @@ def read_individual_requirement(data: Dict, resource_database: ResourceDatabase)
 
 def read_requirement_list(data: List[Dict],
                           resource_database: ResourceDatabase) -> Tuple[IndividualRequirement, ...]:
-    return tuple(read_array(data, partial(read_individual_requirement, resource_database=resource_database)))
+    return RequirementList(read_array(data, partial(read_individual_requirement, resource_database=resource_database)))
 
 
 def read_requirement_set(data: List[List[Dict]], resource_database: ResourceDatabase) -> RequirementSet:
@@ -187,7 +187,7 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
 
     final_boss = [event for event in resource_database.event if event.long_name == "Emperor Ing"][0]
     victory_condition = RequirementSet(tuple([
-        tuple([IndividualRequirement(final_boss, 1, False)])
+        RequirementList([IndividualRequirement(final_boss, 1, False)])
     ]))
 
     nodes_to_area = {}
