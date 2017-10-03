@@ -129,11 +129,6 @@ def read_area(source: BinarySource) -> Dict:
     node_count = source.read_byte()
     default_node_index = source.read_byte()
 
-    # TODO: hardcoded data fix
-    # Aerie Transport Station has default_node_index not set
-    if asset_id == 3136899603:
-        default_node_index = 2
-
     nodes = [
         read_node(source)
         for _ in range(node_count)
@@ -146,18 +141,7 @@ def read_area(source: BinarySource) -> Dict:
         ]
         for origin in range(node_count)
     ]
-    # TODO: hardcoded data fix
-    # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
-    if asset_id == 3968294891:
-        connections[1][2] = [[
-            {
-                "requirement_type": 0,
-                "requirement_index": 38 + i,
-                "amount": 1,
-                "negate": False,
-            }
-            for i in range(3)
-        ]]
+
     return {
         "name": name,
         "asset_id": asset_id,
@@ -341,3 +325,23 @@ def encode(data: Dict, x: BinaryIO):
         write_array(_writer, item["areas"], write_area)
 
     write_array(writer, data["worlds"], write_world)
+
+
+def patch_data(data: Dict):
+    for world in data["worlds"]:
+        for area in world["areas"]:
+            # Aerie Transport Station has default_node_index not set
+            if area["asset_id"] == 3136899603:
+                area["default_node_index"] = 2
+
+            # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
+            if area["asset_id"] == 3968294891:
+                area["connections"][1][2] = [[
+                    {
+                        "requirement_type": 0,
+                        "requirement_index": 38 + i,
+                        "amount": 1,
+                        "negate": False,
+                    }
+                    for i in range(3)
+                ]]
