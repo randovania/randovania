@@ -1,9 +1,7 @@
 from functools import partial
-from pprint import pprint
-from typing import List, Callable, TypeVar, BinaryIO, Tuple
+from typing import List, Callable, TypeVar, BinaryIO, Tuple, Dict
 
-from randovania import log_parser
-from randovania.binary_file import BinarySource
+from randovania import prime_binary_decoder
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
@@ -11,81 +9,71 @@ from randovania.game_description import DamageReduction, SimpleResourceInfo, Dam
 from randovania.log_parser import PickupEntry
 
 X = TypeVar('X')
+Y = TypeVar('Y')
 
 
-def read_array(source: BinarySource, item_reader: Callable[[BinarySource], X]) -> List[X]:
-    count = source.read_byte()
+def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
     return [
-        item_reader(source)
-        for _ in range(count)
+        item_reader(item)
+        for item in data
     ]
 
 
-def read_damage_reduction(source: BinarySource) -> DamageReduction:
-    index = source.read_byte()
-    multiplier = source.read_float()
-    return DamageReduction(index, multiplier)
+def read_damage_reduction(data: Dict) -> DamageReduction:
+    return DamageReduction(data["index"], data["multiplier"])
 
 
-def read_damage_reductions(source: BinarySource) -> Tuple[DamageReduction, ...]:
-    return tuple(read_array(source, read_damage_reduction))
+def read_damage_reductions(data: List[Dict]) -> Tuple[DamageReduction, ...]:
+    return tuple(read_array(data, read_damage_reduction))
 
 
-def read_resource_info(source: BinarySource) -> SimpleResourceInfo:
-    index = source.read_byte()
-    long_name = source.read_string()
-    short_name = source.read_string()
-    return SimpleResourceInfo(index, long_name, short_name)
+def read_resource_info(data: Dict) -> SimpleResourceInfo:
+    return SimpleResourceInfo(data["index"], data["long_name"], data["short_name"])
 
 
-def read_resource_info_array(source: BinarySource) -> List[SimpleResourceInfo]:
-    return read_array(source, read_resource_info)
+def read_resource_info_array(data: List[Dict]) -> List[SimpleResourceInfo]:
+    return read_array(data, read_resource_info)
 
 
-def read_damage_resource_info(source: BinarySource) -> DamageResourceInfo:
-    index = source.read_byte()
-    long_name = source.read_string()
-    short_name = source.read_string()
-    return DamageResourceInfo(index, long_name, short_name, read_damage_reductions(source))
+def read_damage_resource_info(data: Dict) -> DamageResourceInfo:
+    return DamageResourceInfo(data["index"], data["long_name"], data["short_name"],
+                              read_damage_reductions(data["reductions"]))
 
 
-def read_damage_resource_info_array(source: BinarySource) -> List[DamageResourceInfo]:
-    return read_array(source, read_damage_resource_info)
+def read_damage_resource_info_array(data: List[Dict]) -> List[DamageResourceInfo]:
+    return read_array(data, read_damage_resource_info)
 
 
 # Requirement
 
-def read_individual_requirement(source: BinarySource, resource_database: ResourceDatabase) -> IndividualRequirement:
-    requirement_type = ResourceType(source.read_byte())
-    requirement_index = source.read_byte()
-    amount = source.read_short()
-    negate = source.read_bool()
-    return IndividualRequirement.with_data(resource_database, requirement_type, requirement_index, amount,
-                                           negate)
+def read_individual_requirement(data: Dict, resource_database: ResourceDatabase) -> IndividualRequirement:
+    return IndividualRequirement.with_data(
+        resource_database,
+        ResourceType(data["requirement_type"]),
+        data["requirement_index"],
+        data["amount"],
+        data["negate"])
 
 
-def read_requirement_list(source: BinarySource,
+def read_requirement_list(data: List[Dict],
                           resource_database: ResourceDatabase) -> Tuple[IndividualRequirement, ...]:
-    return tuple(read_array(source, partial(read_individual_requirement, resource_database=resource_database)))
+    return tuple(read_array(data, partial(read_individual_requirement, resource_database=resource_database)))
 
 
-def read_requirement_set(source: BinarySource, resource_database: ResourceDatabase) -> RequirementSet:
+def read_requirement_set(data: List[List[Dict]], resource_database: ResourceDatabase) -> RequirementSet:
     return RequirementSet(
-        tuple(read_array(source, partial(read_requirement_list, resource_database=resource_database))))
+        tuple(read_array(data, partial(read_requirement_list, resource_database=resource_database))))
 
 
 # Dock Weakness
 
-def read_dock_weakness_database(source: BinarySource, resource_database: ResourceDatabase) -> DockWeaknessDatabase:
-    def read_dock_weakness(source: BinarySource) -> DockWeakness:
-        index = source.read_byte()
-        name = source.read_string()
-        is_blast_door = source.read_bool()
-        requirement_set = read_requirement_set(source, resource_database)
-        return DockWeakness(index, name, is_blast_door, requirement_set)
+def read_dock_weakness_database(data: Dict, resource_database: ResourceDatabase) -> DockWeaknessDatabase:
+    def read_dock_weakness(item: Dict) -> DockWeakness:
+        return DockWeakness(item["index"], item["name"], item["is_blast_door"],
+                            read_requirement_set(item["requirement_set"], resource_database))
 
-    door_types = read_array(source, read_dock_weakness)
-    portal_types = read_array(source, read_dock_weakness)
+    door_types = read_array(data["door"], read_dock_weakness)
+    portal_types = read_array(data["portal"], read_dock_weakness)
     return DockWeaknessDatabase(
         door=door_types,
         morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet.empty())],
@@ -106,127 +94,98 @@ class WorldReader:
         self.dock_weakness_database = dock_weakness_database
         self.pickup_entries = pickup_entries
 
-    def read_node(self, source: BinarySource) -> Node:
-        name = source.read_string()
-        heal = source.read_bool()
-        node_type = source.read_byte()
+    def read_node(self, data: Dict) -> Node:
+        name = data["name"]
+        heal = data["heal"]
+        node_type = data["node_type"]
 
         if node_type == 0:
             self.generic_index += 1
             return GenericNode(name, heal, self.generic_index)
 
         elif node_type == 1:
-            dock_index = source.read_byte()
-            connected_area_asset_id = source.read_uint()
-            connected_dock_index = source.read_byte()
-            dock_type = DockType(source.read_byte())
-            dock_weakness_index = source.read_byte()
-            source.skip(3)
-            return DockNode(name, heal, dock_index, connected_area_asset_id, connected_dock_index,
-                            self.dock_weakness_database.get_by_type_and_index(dock_type, dock_weakness_index))
+            return DockNode(name,
+                            heal,
+                            data["dock_index"],
+                            data["connected_area_asset_id"],
+                            data["connected_dock_index"],
+                            self.dock_weakness_database.get_by_type_and_index(
+                                DockType(data["dock_type"]),
+                                data["dock_weakness_index"]))
 
         elif node_type == 2:
-            pickup_index = source.read_byte()
-            return PickupNode(name, heal, self.pickup_entries[pickup_index])
+            return PickupNode(name, heal, self.pickup_entries[data["pickup_index"]])
 
         elif node_type == 3:
-            destination_world_asset_id = source.read_uint()
-            destination_area_asset_id = source.read_uint()
-            teleporter_instance_id = source.read_uint()
-            return TeleporterNode(name, heal, destination_world_asset_id, destination_area_asset_id,
-                                  teleporter_instance_id)
+            return TeleporterNode(name, heal,
+                                  data["destination_world_asset_id"],
+                                  data["destination_area_asset_id"],
+                                  data["teleporter_instance_id"])
 
         elif node_type == 4:
-            event_index = source.read_byte()
             return EventNode(name, heal,
-                             self.resource_database.get_by_type_and_index(ResourceType.EVENT, event_index))
+                             self.resource_database.get_by_type_and_index(
+                                 ResourceType.EVENT,
+                                 data["event_index"]))
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))
 
-    def read_area(self, source: BinarySource) -> Area:
-        name = source.read_string()
-        asset_id = source.read_uint()
-        node_count = source.read_byte()
-        default_node_index = source.read_byte()
+    def read_area(self, data: Dict) -> Area:
+        name = data["name"]
+        nodes = read_array(data["nodes"], self.read_node)
 
-        # TODO: hardcoded data fix
-        # Aerie Transport Station has default_node_index not set
-        if asset_id == 3136899603:
-            default_node_index = 2
-
-        nodes = [
-            self.read_node(source)
-            for _ in range(node_count)
-        ]
         for node in nodes:  # type: PickupNode
             if isinstance(node, PickupNode):
                 if node.pickup.room != name:
                     raise ValueError(
                         "Pickup at {}/{} has area name mismatch ({})".format(name, node.name, node.pickup.room))
 
-        connections = {
-            origin: {
-                target: read_requirement_set(source, self.resource_database)
-                for target in nodes
-                if origin != target
-            }
-            for origin in nodes
-        }
-        # TODO: hardcoded data fix
-        # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
-        if asset_id == 3968294891:
-            connections[nodes[1]][nodes[2]] = RequirementSet(tuple([
-                tuple([
-                    IndividualRequirement.with_data(self.resource_database, ResourceType.ITEM, 38 + i, 1, False)
-                    for i in range(3)
-                ])
-            ]))
-        return Area(name, asset_id, default_node_index, nodes, connections)
+        connections = {}
+        for i, origin in enumerate(data["connections"]):
+            connections[nodes[i]] = {}
+            for j, target in enumerate(origin):
+                if target:
+                    connections[nodes[i]][nodes[j]] = read_requirement_set(
+                        target, self.resource_database)
 
-    def read_area_list(self, source: BinarySource) -> List[Area]:
-        return read_array(source, self.read_area)
+        return Area(name, data["asset_id"], data["default_node_index"],
+                    nodes, connections)
 
-    def read_world(self, source: BinarySource) -> World:
-        name = source.read_string()
-        asset_id = source.read_uint()
-        areas = self.read_area_list(source)
-        return World(name, asset_id, areas)
+    def read_area_list(self, data: List[Dict]) -> List[Area]:
+        return read_array(data, self.read_area)
 
-    def read_world_list(self, source: BinarySource) -> List[World]:
-        return read_array(source, self.read_world)
+    def read_world(self, data: Dict) -> World:
+        return World(data["name"], data["asset_id"],
+                     self.read_area_list(data["areas"]))
+
+    def read_world_list(self, data: List[Dict]) -> List[World]:
+        return read_array(data, self.read_world)
 
 
-def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescription:
-    if x.read(4) != b"Req.":
-        raise Exception("Invalid file format.")
+def read_resource_database(data: Dict) -> ResourceDatabase:
+    return ResourceDatabase(
+        item=read_resource_info_array(data["items"]),
+        event=read_resource_info_array(data["events"]),
+        trick=read_resource_info_array(data["tricks"]),
+        damage=read_damage_resource_info_array(data["damage"]),
+        version=read_resource_info_array(data["versions"]),
+        misc=read_resource_info_array(data["misc"]),
+        difficulty=read_resource_info_array(data["difficulty"]))
 
-    source = BinarySource(x)
 
-    format_version = source.read_uint()
-    if format_version != 6:
-        raise Exception("Unsupported format version: {}, expected 5".format(format_version))
+def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescription:
+    game = data["game"]
+    game_name = data["game_name"]
 
-    game = source.read_byte()
-    game_name = source.read_string()
-
-    items = read_resource_info_array(source)
-    events = read_resource_info_array(source)
-    tricks = read_resource_info_array(source)
-    damage = read_damage_resource_info_array(source)
-    versions = read_resource_info_array(source)
-    misc = read_resource_info_array(source)
-    source.skip(1)  # Undocumented null byte
-    difficulty = read_resource_info_array(source)
-
-    resource_database = ResourceDatabase(item=items, event=events, trick=tricks, damage=damage, version=versions,
-                                         misc=misc, difficulty=difficulty)
-    dock_weakness_database = read_dock_weakness_database(source, resource_database)
+    resource_database = read_resource_database(data["resource_database"])
+    dock_weakness_database = read_dock_weakness_database(
+        data["dock_weakness_database"], resource_database)
 
     world_reader = WorldReader(resource_database, dock_weakness_database, pickup_entries)
-    worlds = world_reader.read_world_list(source)
+    worlds = world_reader.read_world_list(data["worlds"])
 
-    final_boss = [event for event in events if event.long_name == "Emperor Ing"][0]
+    final_boss = [event for event in resource_database.event if event.long_name == "Emperor Ing"][0]
     victory_condition = RequirementSet(tuple([
         tuple([IndividualRequirement(final_boss, 1, False)])
     ]))
@@ -255,6 +214,30 @@ def parse_file(x: BinaryIO, pickup_entries: List[PickupEntry]) -> GameDescriptio
     )
 
 
+def patch_data(data: Dict):
+    for world in data["worlds"]:
+        for area in world["areas"]:
+            # Aerie Transport Station has default_node_index not set
+            if area["asset_id"] == 3136899603:
+                area["default_node_index"] = 2
+
+            # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
+            if area["asset_id"] == 3968294891:
+                area["connections"][1][2] = [[
+                    {
+                        "requirement_type": 0,
+                        "requirement_index": 38 + i,
+                        "amount": 1,
+                        "negate": False,
+                    }
+                    for i in range(3)
+                ]]
+
+
 def read(path, pickup_entries: List[PickupEntry]) -> GameDescription:
     with open(path, "rb") as x:  # type: BinaryIO
-        return parse_file(x, pickup_entries)
+        data = prime_binary_decoder.decode(x)
+
+    patch_data(data)
+
+    return decode_data(data, pickup_entries)

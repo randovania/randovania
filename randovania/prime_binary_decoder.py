@@ -73,12 +73,12 @@ def read_requirement_set(source: BinarySource) -> List[List[Dict]]:
 # Dock Weakness
 
 def read_dock_weakness_database(source: BinarySource) -> Dict:
-    def read_dock_weakness(source: BinarySource) -> Dict:
+    def read_dock_weakness(_source: BinarySource) -> Dict:
         return {
-            "index": source.read_byte(),
-            "name": source.read_string(),
-            "is_blast_door": source.read_bool(),
-            "requirement_set": read_requirement_set(source),
+            "index": _source.read_byte(),
+            "name": _source.read_string(),
+            "is_blast_door": _source.read_bool(),
+            "requirement_set": read_requirement_set(_source),
         }
 
     return {
@@ -210,7 +210,7 @@ def decode(x: BinaryIO) -> Dict:
     }
 
 
-def decode_filepath(path) -> Dict:
+def decode_file_path(path) -> Dict:
     with open(path, "rb") as x:  # type: BinaryIO
         return decode(x)
 
@@ -325,23 +325,3 @@ def encode(data: Dict, x: BinaryIO):
         write_array(_writer, item["areas"], write_area)
 
     write_array(writer, data["worlds"], write_world)
-
-
-def patch_data(data: Dict):
-    for world in data["worlds"]:
-        for area in world["areas"]:
-            # Aerie Transport Station has default_node_index not set
-            if area["asset_id"] == 3136899603:
-                area["default_node_index"] = 2
-
-            # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
-            if area["asset_id"] == 3968294891:
-                area["connections"][1][2] = [[
-                    {
-                        "requirement_type": 0,
-                        "requirement_index": 38 + i,
-                        "amount": 1,
-                        "negate": False,
-                    }
-                    for i in range(3)
-                ]]
