@@ -1,6 +1,8 @@
 from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Tuple, Dict
 
+from collections import defaultdict
+
 from randovania import prime_binary_decoder
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
@@ -191,7 +193,7 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
         RequirementList([IndividualRequirement(final_boss, 1, False)])
     ]))
 
-    available_resources = {}
+    available_resources = defaultdict(int)
 
     nodes_to_area = {}
     nodes_to_world = {}
@@ -207,8 +209,9 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
 
                 if isinstance(node, PickupNode):
                     for resource, quantity in pickup_name_to_resource_gain(node.pickup.item, resource_database):
-                        available_resources[resource] = available_resources.get(resource, 0)
                         available_resources[resource] += quantity
+                elif isinstance(node, EventNode):
+                    available_resources[node.event] += 1
 
     return GameDescription(
         game=game,
