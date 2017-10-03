@@ -137,7 +137,8 @@ class RequirementSet(NamedTuple):
                 continue
 
             if requirement_list.satisfied(available_resources):
-                yield requirement_list
+                yield tuple(requirement for requirement in requirement_list
+                            if not requirement.satisfied(current_resources))
 
 
 class DockWeakness(NamedTuple):
