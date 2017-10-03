@@ -155,6 +155,10 @@ def pretty_print_area(area: Area):
 
 def advance(state: State, game: GameDescription):
     if game.victory_condition.satisfied(state.resources):
+        item_percentage = state.resources.get(
+            game.resource_database.get_by_type_and_index(
+                ResourceType.ITEM, 47), 0)
+        print("Victory with {}% of the items.".format(item_percentage))
         return True
 
     print("Now on", _n(state.node))
@@ -195,8 +199,7 @@ def resolve(game_description: GameDescription):
 
     current_state = starting_state.collect_pickup(PickupEntry(None, None, "_StartingItems"),
                                                   game_description.resource_database)
-    if item_loss_skip:
-        current_state = starting_state.collect_pickup(PickupEntry(None, None, "_ItemLossItems"),
-                                                      game_description.resource_database)
+    current_state = current_state.collect_pickup(PickupEntry(None, None, "_ItemLossItems"),
+                                                 game_description.resource_database)
 
     print(advance(current_state, game_description))
