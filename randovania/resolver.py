@@ -104,12 +104,12 @@ def potential_nodes_from(node: Node,
 
 
 def calculate_reach(current_state: State,
-                    game_description: GameDescription) -> Tuple[List[Node], Dict[Node, List[RequirementList]]]:
+                    game_description: GameDescription) -> Tuple[List[Node], Dict[Node, Set[RequirementList]]]:
     checked_nodes = set()
     nodes_to_check = [current_state.node]
 
     resulting_nodes = []
-    requirements_by_node = defaultdict(list)
+    requirements_by_node = defaultdict(set)
 
     while nodes_to_check:
         node = nodes_to_check.pop()
@@ -125,7 +125,7 @@ def calculate_reach(current_state: State,
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
             else:
-                requirements_by_node[target_node].extend(
+                requirements_by_node[target_node].update(
                     requirements.satisfiable_requirements(
                         current_state.resources,
                         game_description.available_resources
@@ -180,10 +180,15 @@ def advance(state: State, game: GameDescription):
 
     print("Now on", _n(state.node))
     reach, requirements_by_node = calculate_reach(state, game)
+    actions = list(actions_with_reach(reach, state))
+
     # print("Item alternatives:")
     # for node, l in requirements_by_node.items():
     #     print("  > {}: {}".format(_n(node), l))
-    actions = list(actions_with_reach(reach, state))
+    # print("Actions:")
+    # for action in actions:
+    #     print("  > {} for {}".format(_n(action), getattr(action, "pickup", None) or getattr(action, "event")))
+    # print()
 
     for action in actions:
         if advance(state.act_on_node(action, game.resource_database),
