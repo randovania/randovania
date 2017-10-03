@@ -1,5 +1,5 @@
 import copy
-from pprint import pprint
+from collections import defaultdict
 from typing import Set, Iterator, Tuple, List
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
@@ -104,16 +104,19 @@ def potential_nodes_from(node: Node,
 
 
 def calculate_reach(current_state: State,
-                    game_description: GameDescription) -> Iterator[Node]:
+                    game_description: GameDescription) -> List[Node]:
     checked_nodes = set()
     nodes_to_check = [current_state.node]
+
+    resulting_nodes = []
+    requirements_by_node = defaultdict(list)
 
     while nodes_to_check:
         node = nodes_to_check.pop()
         checked_nodes.add(node)
 
         if node != current_state.node:
-            yield node
+            resulting_nodes.append(node)
 
         for target_node, requirements in potential_nodes_from(node, game_description, current_state):
             if target_node in checked_nodes or target_node in nodes_to_check:
@@ -122,7 +125,17 @@ def calculate_reach(current_state: State,
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
             else:
-                pass
+                requirements_by_node[target_node].extend(
+                    requirements.satisfiable_requirements(
+                        current_state.resources,
+                        game_description.available_resources
+                    ))
+
+    # Discard satisfiable requirements of nodes reachable by other means
+    for node in set(resulting_nodes).intersection(requirements_by_node.keys()):
+        requirements_by_node.pop(node)
+
+    return resulting_nodes
 
 
 def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
@@ -164,7 +177,7 @@ def advance(state: State, game: GameDescription):
         return True
 
     print("Now on", _n(state.node))
-    reach = list(calculate_reach(state, game))
+    reach = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
     for action in actions:
