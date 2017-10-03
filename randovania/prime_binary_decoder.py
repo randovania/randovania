@@ -1,8 +1,10 @@
+from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Dict
 
-from randovania.binary_file import BinarySource
+from randovania.binary_file import BinarySource, BinaryWriter
 
 X = TypeVar('X')
+current_format_version = 6
 
 
 def read_array(source: BinarySource, item_reader: Callable[[BinarySource], X]) -> List[X]:
@@ -188,8 +190,9 @@ def decode(x: BinaryIO) -> Dict:
     source = BinarySource(x)
 
     format_version = source.read_uint()
-    if format_version != 6:
-        raise Exception("Unsupported format version: {}, expected 6".format(format_version))
+    if format_version != current_format_version:
+        raise Exception("Unsupported format version: {}, expected {}".format(
+            format_version, current_format_version))
 
     game = source.read_byte()
     game_name = source.read_string()
@@ -226,3 +229,115 @@ def decode(x: BinaryIO) -> Dict:
 def decode_filepath(path) -> Dict:
     with open(path, "rb") as x:  # type: BinaryIO
         return decode(x)
+
+
+def write_array(writer: BinaryWriter, array: List[X], item_writer: Callable[[BinaryWriter, X], None]):
+    writer.write_byte(len(array))
+    for item in array:
+        item_writer(writer, item)
+
+
+def encode(data: Dict, x: BinaryIO):
+    writer = BinaryWriter(x)
+    x.write(b"Req.")
+    writer.write_uint(current_format_version)
+    writer.write_byte(data["game"])
+    writer.write_string(data["game_name"])
+
+    def write_resource_info(_writer, item: Dict):
+        _writer.write_byte(item["index"])
+        _writer.write_string(item["long_name"])
+        _writer.write_string(item["short_name"])
+
+    def write_damage_reduction(_writer, item: Dict):
+        _writer.write_byte(item["index"])
+        _writer.write_float(item["multiplier"])
+
+    def write_damage_resource_info(_writer, item: Dict):
+        write_resource_info(_writer, item)
+        write_array(_writer, item["reductions"], write_damage_reduction)
+
+    def write_individual_requirement(_writer, item: Dict):
+        _writer.write_byte(item["requirement_type"])
+        _writer.write_byte(item["requirement_index"])
+        _writer.write_short(item["amount"])
+        _writer.write_bool(item["negate"])
+
+    def write_requirement_set(_writer, item: List[List[Dict]]):
+        write_array(_writer, item, partial(write_array,
+                                           item_writer=write_individual_requirement))
+
+    # Resource Info database
+    write_array(writer, data["resource_database"]["items"], write_resource_info)
+    write_array(writer, data["resource_database"]["events"], write_resource_info)
+    write_array(writer, data["resource_database"]["tricks"], write_resource_info)
+    write_array(writer, data["resource_database"]["damage"], write_damage_resource_info)
+    write_array(writer, data["resource_database"]["versions"], write_resource_info)
+    write_array(writer, data["resource_database"]["misc"], write_resource_info)
+    writer.write_byte(0)  # Undocumented null byte
+    write_array(writer, data["resource_database"]["difficulty"], write_resource_info)
+
+    # Dock Weakness Database
+    def write_dock_weakness(_writer, item: Dict):
+        _writer.write_byte(item["index"])
+        _writer.write_string(item["name"])
+        _writer.write_bool(item["is_blast_door"])
+        write_requirement_set(_writer, item["requirement_set"])
+
+    write_array(writer, data["dock_weakness_database"]["door"], write_dock_weakness)
+    write_array(writer, data["dock_weakness_database"]["portal"], write_dock_weakness)
+
+    # Worlds List
+    def write_node(_writer: BinaryWriter, node: Dict):
+        _writer.write_string(node["name"])
+        _writer.write_bool(node["heal"])
+        _writer.write_byte(node["node_type"])
+
+        node_type = node["node_type"]
+
+        if node_type == 0:
+            pass
+
+        elif node_type == 1:
+            _writer.write_byte(node["dock_index"])
+            _writer.write_uint(node["connected_area_asset_id"])
+            _writer.write_byte(node["connected_dock_index"])
+            _writer.write_byte(node["dock_type"])
+            _writer.write_byte(node["dock_weakness_index"])
+            _writer.write_byte(0)
+            _writer.write_byte(0)
+            _writer.write_byte(0)
+
+        elif node_type == 2:
+            _writer.write_byte(node["pickup_index"])
+
+        elif node_type == 3:
+            _writer.write_uint(node["destination_world_asset_id"])
+            _writer.write_uint(node["destination_area_asset_id"])
+            _writer.write_uint(node["teleporter_instance_id"])
+
+        elif node_type == 4:
+            _writer.write_byte(node["event_index"])
+
+        else:
+            raise Exception("Unknown node type: {}".format(node_type))
+
+    def write_area(_writer: BinaryWriter, item: Dict):
+        _writer.write_string(item["name"])
+        _writer.write_uint(item["asset_id"])
+        _writer.write_byte(len(item["nodes"]))
+        _writer.write_byte(item["default_node_index"])
+        for node in item["nodes"]:
+            write_node(_writer, node)
+
+        for outer in item["connections"]:
+            for inner in outer:
+                if inner is not None:
+                    write_requirement_set(_writer, inner)
+
+    def write_world(_writer: BinaryWriter, item: Dict):
+        _writer.write_string(item["name"])
+        _writer.write_uint(item["asset_id"])
+        write_array(_writer, item["areas"], write_area)
+
+    write_array(writer, data["worlds"], write_world)
