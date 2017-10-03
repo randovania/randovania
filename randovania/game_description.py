@@ -109,20 +109,35 @@ class IndividualRequirement(NamedTuple):
         return "{} {} {}".format(self.requirement, "<" if self.negate else ">=", self.amount)
 
 
+class RequirementList(tuple):
+    def satisfied(self, current_resources: CurrentResources) -> bool:
+        return all(requirement.satisfied(current_resources) for requirement in self)
+
+
 class RequirementSet(NamedTuple):
-    alternatives: Tuple[Tuple[IndividualRequirement, ...], ...]
+    alternatives: Tuple[RequirementList, ...]
 
     @classmethod
     def empty(cls):
-        return cls(tuple(tuple()))
+        return cls(tuple(RequirementList()))
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         if not self.alternatives:
             return True
         return any(
-            all(requirement.satisfied(current_resources) for requirement in requirement_list)
+            requirement_list.satisfied(current_resources)
             for requirement_list in self.alternatives
         )
+
+    def satisfiable_requirements(self, current_resources: CurrentResources,
+                                 available_resources: CurrentResources) -> Iterator[Tuple[IndividualRequirement, ...]]:
+        for alternative in self.alternatives:
+            # Don't list satisfied sets as satisfiable
+            if all(requirement.satisfied(current_resources) for requirement in alternative):
+                continue
+
+            if all(requirement.satisfied(available_resources) for requirement in alternative):
+                yield alternative
 
 
 class DockWeakness(NamedTuple):

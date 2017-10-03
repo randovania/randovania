@@ -121,6 +121,8 @@ def calculate_reach(current_state: State,
 
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
+            else:
+                pass
 
 
 def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
