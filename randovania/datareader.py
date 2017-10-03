@@ -7,6 +7,7 @@ from randovania.game_description import DamageReduction, SimpleResourceInfo, Dam
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList
 from randovania.log_parser import PickupEntry
+from randovania.pickup_database import pickup_name_to_resource_gain
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -190,6 +191,8 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
         RequirementList([IndividualRequirement(final_boss, 1, False)])
     ]))
 
+    available_resources = {}
+
     nodes_to_area = {}
     nodes_to_world = {}
     for world in worlds:
@@ -202,6 +205,11 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
+                if isinstance(node, PickupNode):
+                    for resource, quantity in pickup_name_to_resource_gain(node.pickup.item, resource_database):
+                        available_resources[resource] = available_resources.get(resource, 0)
+                        available_resources[resource] += quantity
+
     return GameDescription(
         game=game,
         game_name=game_name,
@@ -210,6 +218,7 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
         worlds=worlds,
         nodes_to_area=nodes_to_area,
         nodes_to_world=nodes_to_world,
+        available_resources=available_resources,
         victory_condition=victory_condition
     )
 

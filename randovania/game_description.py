@@ -265,6 +265,7 @@ class GameDescription(NamedTuple):
     worlds: List[World]
     nodes_to_area: Dict[Node, Area]
     nodes_to_world: Dict[Node, World]
+    available_resources: CurrentResources
     victory_condition: RequirementSet
 
     def world_by_asset_id(self, asset_id: int) -> World:
