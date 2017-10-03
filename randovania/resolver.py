@@ -182,6 +182,10 @@ def advance(state: State, game: GameDescription):
     reach, requirements_by_node = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
+    satisfiable_requirements = set()
+    for requirements in requirements_by_node.values():
+        satisfiable_requirements.update(requirements)
+
     # print("Item alternatives:")
     # for node, l in requirements_by_node.items():
     #     print("  > {}: {}".format(_n(node), l))
@@ -191,9 +195,12 @@ def advance(state: State, game: GameDescription):
     # print()
 
     for action in actions:
-        if advance(state.act_on_node(action, game.resource_database),
-                   game):
-            return True
+        new_state = state.act_on_node(action, game.resource_database)
+        # Only try advancing if doing this action solves at least one missing requirements
+        # TODO: this breaks if entering the pickup/event node is necessary just for navigation needs
+        if True or any(requirements.satisfied(new_state.resources) for requirements in satisfiable_requirements):
+            if advance(new_state, game):
+                return True
 
     print("Will rollback.")
     # print("=====")
