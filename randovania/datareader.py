@@ -153,13 +153,16 @@ class WorldReader:
         connections = {}
         for i, origin in enumerate(data["connections"]):
             connections[nodes[i]] = {}
+            extra_requirement = None
+            if isinstance(nodes[i], ResourceNode):
+                extra_requirement = IndividualRequirement(nodes[i].resource, 1, False)
             for j, target in enumerate(origin):
                 if target:
                     the_set = read_requirement_set(target, self.resource_database)
-                    if isinstance(origin, ResourceNode):
-                        the_set = add_requirement_to_set(the_set, origin.resource)
+                    if extra_requirement is not None:
+                        the_set = add_requirement_to_set(the_set, extra_requirement)
                     connections[nodes[i]][nodes[j]] = the_set
-    
+
         return Area(name, data["asset_id"], data["default_node_index"],
                     nodes, connections)
 
