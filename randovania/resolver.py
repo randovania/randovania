@@ -28,25 +28,24 @@ class State:
     def has_resource(self, resource: ResourceInfo) -> bool:
         return self.resources.get(resource, 0) > 0
 
-    def collect_resource(self, resource: ResourceInfo, resource_database: ResourceDatabase) -> "State":
+    def collect_resource_node(self, node: ResourceNode, resource_database: ResourceDatabase) -> "State":
+        resource = node.resource
+
         if self.has_resource(resource):
             raise ValueError("Trying to collect an already collected resource '{}'".format(resource))
 
         new_resources = copy.copy(self.resources)
-
-        new_resources[resource] = 1
-        if isinstance(resource, PickupEntry):
-            for pickup_resource, quantity in pickup_name_to_resource_gain(resource.item, resource_database):
-                new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
-                new_resources[pickup_resource] += quantity
+        for pickup_resource, quantity in node.resource_gain_on_collect(resource_database):
+            new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
+            new_resources[pickup_resource] += quantity
 
         return State(new_resources, self.node)
 
-    def act_on_node(self, node: Node, resource_database: ResourceDatabase) -> "State":
-        if isinstance(node, ResourceNode):
-            new_state = self.collect_resource(node.resource, resource_database)
-        else:
+    def act_on_node(self, node: ResourceNode, resource_database: ResourceDatabase) -> "State":
+        if not isinstance(node, ResourceNode):
             raise ValueError("Can't act on Node of type {}".format(type(node)))
+
+        new_state = self.collect_resource_node(node, resource_database)
         new_state.node = node
         return new_state
 
@@ -174,7 +173,7 @@ def advance(state: State, game: GameDescription):
             new_reach, _ = calculate_reach(new_state, game)
             return set(new_reach) - set(reach)
 
-        if satisfies_a_requirement:
+        if satisfies_a_requirement or reaches_new_nodes():
             if advance(new_state, game):
                 return True
 
@@ -199,9 +198,13 @@ def resolve(game_description: GameDescription):
         game_description.resource_database.get_by_type_and_index(ResourceType.MISC, 0): 1
     }, starting_node)
 
-    current_state = starting_state.collect_resource(PickupEntry(None, None, "_StartingItems"),
-                                                    game_description.resource_database)
-    current_state = current_state.collect_resource(PickupEntry(None, None, "_ItemLossItems"),
-                                                   game_description.resource_database)
+    def add_resources_from(name: str):
+        for pickup_resource, quantity in pickup_name_to_resource_gain(name,
+                                                                      game_description.resource_database):
+            starting_state.resources[pickup_resource] = starting_state.resources.get(pickup_resource, 0)
+            starting_state.resources[pickup_resource] += quantity
 
-    print(advance(current_state, game_description))
+    add_resources_from("_StartingItems")
+    add_resources_from("_ItemLossItems")
+
+    print(advance(starting_state, game_description))
