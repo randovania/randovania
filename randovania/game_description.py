@@ -110,8 +110,11 @@ class IndividualRequirement(NamedTuple):
 
 
 class RequirementList(tuple):
+    def amount_unsatisfied(self, current_resources: CurrentResources) -> bool:
+        return sum(not requirement.satisfied(current_resources) for requirement in self)
+
     def satisfied(self, current_resources: CurrentResources) -> bool:
-        return all(requirement.satisfied(current_resources) for requirement in self)
+        return self.amount_unsatisfied(current_resources) == 0
 
 
 class RequirementSet(NamedTuple):
