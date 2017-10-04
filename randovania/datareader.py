@@ -1,12 +1,11 @@
+from collections import defaultdict
 from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Tuple, Dict
-
-from collections import defaultdict
 
 from randovania import prime_binary_decoder
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
-    DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+    DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, ResourceNode, \
     GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList
 from randovania.log_parser import PickupEntry
 from randovania.pickup_database import pickup_name_to_resource_gain
@@ -117,7 +116,7 @@ class WorldReader:
                                 data["dock_weakness_index"]))
 
         elif node_type == 2:
-            return PickupNode(name, heal, self.pickup_entries[data["pickup_index"]])
+            return ResourceNode(name, heal, self.pickup_entries[data["pickup_index"]])
 
         elif node_type == 3:
             return TeleporterNode(name, heal,
@@ -126,10 +125,10 @@ class WorldReader:
                                   data["teleporter_instance_id"])
 
         elif node_type == 4:
-            return EventNode(name, heal,
-                             self.resource_database.get_by_type_and_index(
-                                 ResourceType.EVENT,
-                                 data["event_index"]))
+            return ResourceNode(name, heal,
+                                self.resource_database.get_by_type_and_index(
+                                    ResourceType.EVENT,
+                                    data["event_index"]))
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))
@@ -139,10 +138,10 @@ class WorldReader:
         nodes = read_array(data["nodes"], self.read_node)
 
         for node in nodes:  # type: PickupNode
-            if isinstance(node, PickupNode):
-                if node.pickup.room != name:
+            if isinstance(node, ResourceNode) and isinstance(node.resource, PickupEntry):
+                if node.resource.room != name:
                     raise ValueError(
-                        "Pickup at {}/{} has area name mismatch ({})".format(name, node.name, node.pickup.room))
+                        "Pickup at {}/{} has area name mismatch ({})".format(name, node.name, node.resource.room))
 
         connections = {}
         for i, origin in enumerate(data["connections"]):
@@ -207,11 +206,11 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
-                if isinstance(node, PickupNode):
-                    for resource, quantity in pickup_name_to_resource_gain(node.pickup.item, resource_database):
-                        available_resources[resource] += quantity
-                elif isinstance(node, EventNode):
-                    available_resources[node.event] += 1
+                if isinstance(node, ResourceNode):
+                    available_resources[node.resource] += 1
+                    if isinstance(node.resource, PickupEntry):
+                        for resource, quantity in pickup_name_to_resource_gain(node.resource.item, resource_database):
+                            available_resources[resource] += quantity
 
     return GameDescription(
         game=game,

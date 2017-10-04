@@ -203,12 +203,6 @@ class DockNode(NamedTuple):
     dock_weakness: DockWeakness
 
 
-class PickupNode(NamedTuple):
-    name: str
-    heal: bool
-    pickup: PickupEntry
-
-
 class TeleporterNode(NamedTuple):
     name: str
     heal: bool
@@ -217,13 +211,13 @@ class TeleporterNode(NamedTuple):
     teleporter_instance_id: int
 
 
-class EventNode(NamedTuple):
+class ResourceNode(NamedTuple):
     name: str
     heal: bool
-    event: ResourceInfo
+    resource: ResourceInfo
 
 
-Node = Union[GenericNode, DockNode, PickupNode, TeleporterNode, EventNode]
+Node = Union[GenericNode, DockNode, TeleporterNode, ResourceNode]
 
 
 class Area(NamedTuple):
