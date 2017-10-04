@@ -224,6 +224,9 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
                         for resource, quantity in pickup_name_to_resource_gain(node.resource.item, resource_database):
                             available_resources[resource] += quantity
 
+    # Add the No Requirements
+    available_resources[resource_database.get_by_type_and_index(ResourceType.MISC, 0)] = 1
+
     return GameDescription(
         game=game,
         game_name=game_name,
