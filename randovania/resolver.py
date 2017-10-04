@@ -118,7 +118,7 @@ def calculate_reach(current_state: State,
     return resulting_nodes, requirements_by_node
 
 
-def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
+def actions_with_reach(current_reach: Reach, state: State) -> Iterator[ResourceNode]:
     for node in current_reach:
         if isinstance(node, ResourceNode):
             if not state.has_resource(node.resource):
@@ -157,12 +157,15 @@ def advance(state: State, game: GameDescription):
     for requirements in requirements_by_node.values():
         satisfiable_requirements.update(requirements)
 
+    # print("Reach:")
+    # for node in reach:
+    #     print("  > {}".format(_n(node)))
     # print("Item alternatives:")
     # for node, l in requirements_by_node.items():
     #     print("  > {}: {}".format(_n(node), l))
     # print("Actions:")
     # for action in actions:
-    #     print("  > {} for {}".format(_n(action), getattr(action, "pickup", None) or getattr(action, "event")))
+    #     print("  > {} for {}".format(_n(action), action.resource))
     # print()
 
     for action in actions:
