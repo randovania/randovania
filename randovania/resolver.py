@@ -142,9 +142,10 @@ def advance(state: State, game: GameDescription):
     reach, requirements_by_node = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
-    satisfiable_requirements = set()
-    for requirements in requirements_by_node.values():
-        satisfiable_requirements.update(requirements)
+    satisfiable_requirements = {
+        requirements: requirements.amount_unsatisfied(state.resources)
+        for requirements in set.union(*requirements_by_node.values())
+    }
 
     def debug_print():
         print("Reach:")
@@ -161,21 +162,21 @@ def advance(state: State, game: GameDescription):
     if _IS_DEBUG:
         debug_print()
 
-    for action in actions:
+    def amount_unsatisfied_with(requirements: RequirementList, action: ResourceNode):
+        return requirements.amount_unsatisfied(state.act_on_node(action, game.resource_database).resources)
+
+    # This is broke due to requirements with negate
+    actions_with_satisfaction = [
+        action for action in actions
+        if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
+               for requirements in satisfiable_requirements)
+    ]
+
+    for action in actions_with_satisfaction:
         new_state = state.act_on_node(action, game.resource_database)
 
-        # Only try advancing if doing this action solves at least one missing requirements
-        # TODO: this breaks if entering the pickup/event node is necessary just for navigation needs
-        satisfies_a_requirement = any(requirements.satisfied(new_state.resources)
-                                      for requirements in satisfiable_requirements)
-
-        def reaches_new_nodes():
-            new_reach, _ = calculate_reach(new_state, game)
-            return set(new_reach) - set(reach)
-
-        if satisfies_a_requirement or reaches_new_nodes():
-            if advance(new_state, game):
-                return True
+        if advance(new_state, game):
+            return True
 
     print("Will rollback.")
     return False
