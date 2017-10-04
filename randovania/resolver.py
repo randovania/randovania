@@ -18,49 +18,34 @@ def _n(node: Node) -> str:
 
 class State:
     resources: CurrentResources
-    pickups: Set[PickupEntry]
     node: Node
 
-    def __init__(self, resources: CurrentResources, pickups: Set[PickupEntry], node: Node):
+    def __init__(self, resources: CurrentResources, node: Node):
         self.resources = resources
-        self.pickups = pickups
         self.node = node
 
-    def has_pickup(self, pickup: PickupEntry) -> bool:
-        return pickup in self.pickups
+    def has_resource(self, resource: ResourceInfo) -> bool:
+        return self.resources.get(resource, 0) > 0
 
-    def is_event_triggered(self, event: ResourceInfo) -> bool:
-        return self.resources.get(event, 0) > 0
-
-    def collect_pickup(self, pickup: PickupEntry, resource_database: ResourceDatabase) -> "State":
-        if pickup in self.pickups:
-            raise ValueError("Trying to collect an already collected pickup '{}'".format(pickup))
+    def collect_resource(self, resource: ResourceInfo, resource_database: ResourceDatabase) -> "State":
+        if self.has_resource(resource):
+            raise ValueError("Trying to collect an already collected resource '{}'".format(resource))
 
         new_resources = copy.copy(self.resources)
-        new_pickups = copy.copy(self.pickups)
 
-        new_pickups.add(pickup)
-        for resource, quantity in pickup_name_to_resource_gain(pickup.item, resource_database):
-            new_resources[resource] = new_resources.get(resource, 0)
-            new_resources[resource] += quantity
+        new_resources[resource] = 1
+        if isinstance(resource, PickupEntry):
+            for pickup_resource, quantity in pickup_name_to_resource_gain(resource.item, resource_database):
+                new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
+                new_resources[pickup_resource] += quantity
 
-        return State(new_resources, new_pickups, self.node)
-
-    def trigger_event(self, event: ResourceInfo) -> "State":
-        if self.is_event_triggered(event):
-            raise ValueError("Trying to trigger already triggered event '{}'".format(event))
-
-        new_resources = copy.copy(self.resources)
-        new_pickups = copy.copy(self.pickups)
-
-        new_resources[event] = 1
-        return State(new_resources, new_pickups, self.node)
+        return State(new_resources, self.node)
 
     def act_on_node(self, node: Node, resource_database: ResourceDatabase) -> "State":
         if isinstance(node, PickupNode):
-            new_state = self.collect_pickup(node.pickup, resource_database)
+            new_state = self.collect_resource(node.pickup, resource_database)
         elif isinstance(node, EventNode):
-            new_state = self.trigger_event(node.event)
+            new_state = self.collect_resource(node.event, resource_database)
         else:
             raise ValueError("Can't act on Node of type {}".format(type(node)))
         new_state.node = node
@@ -72,12 +57,12 @@ def potential_nodes_from(node: Node,
                          current_state: State) -> Iterator[Tuple[Node, RequirementSet]]:
     if isinstance(node, EventNode):
         # You can't walk through an event node until you've already triggered it
-        if not current_state.is_event_triggered(node.event):
+        if not current_state.has_resource(node.event):
             return
 
     if isinstance(node, PickupNode):
         # You need to get the pickup to pass by a pickup node
-        if not current_state.has_pickup(node.pickup):
+        if not current_state.has_resource(node.pickup):
             return
 
     if isinstance(node, DockNode):
@@ -144,13 +129,13 @@ def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
     # First, try picking items
     for node in current_reach:
         if isinstance(node, PickupNode):
-            if not state.has_pickup(node.pickup):
+            if not state.has_resource(node.pickup):
                 yield node  # TODO
 
     # Then, we try triggering an event
     for node in current_reach:
         if isinstance(node, EventNode):
-            if not state.is_event_triggered(node.event):
+            if not state.has_resource(node.event):
                 yield node  # TODO
 
 
@@ -158,7 +143,7 @@ def pretty_print_area(area: Area):
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))
-        state = State({}, set(), node)
+        state = State({}, node)
         try:
             state = state.act_on_node(node, _gd.resource_database)
         except ValueError:
@@ -235,11 +220,11 @@ def resolve(game_description: GameDescription):
     starting_state = State({
         # "No Requirements"
         game_description.resource_database.get_by_type_and_index(ResourceType.MISC, 0): 1
-    }, set(), starting_node)
+    }, starting_node)
 
-    current_state = starting_state.collect_pickup(PickupEntry(None, None, "_StartingItems"),
-                                                  game_description.resource_database)
-    current_state = current_state.collect_pickup(PickupEntry(None, None, "_ItemLossItems"),
-                                                 game_description.resource_database)
+    current_state = starting_state.collect_resource(PickupEntry(None, None, "_StartingItems"),
+                                                    game_description.resource_database)
+    current_state = current_state.collect_resource(PickupEntry(None, None, "_ItemLossItems"),
+                                                   game_description.resource_database)
 
     print(advance(current_state, game_description))
