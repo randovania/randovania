@@ -10,6 +10,7 @@ from randovania.pickup_database import pickup_name_to_resource_gain
 
 Reach = List[Node]
 _gd = None  # type: GameDescription
+_IS_DEBUG = False
 
 
 def _n(node: Node) -> str:
@@ -146,16 +147,20 @@ def advance(state: State, game: GameDescription):
     for requirements in requirements_by_node.values():
         satisfiable_requirements.update(requirements)
 
-    # print("Reach:")
-    # for node in reach:
-    #     print("  > {}".format(_n(node)))
-    # print("Item alternatives:")
-    # for node, l in requirements_by_node.items():
-    #     print("  > {}: {}".format(_n(node), l))
-    # print("Actions:")
-    # for action in actions:
-    #     print("  > {} for {}".format(_n(action), action.resource))
-    # print()
+    def debug_print():
+        print("Reach:")
+        for node in reach:
+            print("  > {}".format(_n(node)))
+        print("Item alternatives:")
+        for node, l in requirements_by_node.items():
+            print("  > {}: {}".format(_n(node), l))
+        print("Actions:")
+        for _action in actions:
+            print("  > {} for {}".format(_n(_action), _action.resource))
+        print()
+
+    if _IS_DEBUG:
+        debug_print()
 
     for action in actions:
         new_state = state.act_on_node(action, game.resource_database)
@@ -169,17 +174,11 @@ def advance(state: State, game: GameDescription):
             new_reach, _ = calculate_reach(new_state, game)
             return set(new_reach) - set(reach)
 
-        if satisfies_a_requirement or reaches_new_nodes():
+        if satisfies_a_requirement:
             if advance(new_state, game):
                 return True
 
     print("Will rollback.")
-    # print("=====")
-    # print("Rollback! Current reach is:")
-    # for node in reach:
-    #     print("{}/{}".format(game.nodes_to_world[node].name, _n(node)))
-    # print("Items")
-    # pprint(state.resources)
     return False
 
 
