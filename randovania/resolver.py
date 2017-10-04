@@ -50,13 +50,7 @@ class State:
         return new_state
 
 
-def potential_nodes_from(node: Node,
-                         game_description: GameDescription,
-                         current_state: State) -> Iterator[Tuple[Node, RequirementSet]]:
-    if isinstance(node, ResourceNode):
-        # You can't walk through an resource node until you've already triggered it
-        if not current_state.has_resource(node.resource):
-            return
+def potential_nodes_from(node: Node, game_description: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
 
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
@@ -96,7 +90,7 @@ def calculate_reach(current_state: State,
         if node != current_state.node:
             resulting_nodes.append(node)
 
-        for target_node, requirements in potential_nodes_from(node, game_description, current_state):
+        for target_node, requirements in potential_nodes_from(node, game_description):
             if target_node in checked_nodes or target_node in nodes_to_check:
                 continue
 
@@ -129,12 +123,7 @@ def pretty_print_area(area: Area):
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))
-        state = State({}, node)
-        try:
-            state = state.act_on_node(node, _gd.resource_database)
-        except ValueError:
-            pass
-        for target_node, requirements in potential_nodes_from(node, _gd, state):
+        for target_node, requirements in potential_nodes_from(node, _gd):
             print(" >", _n(target_node))
             for r in requirements.alternatives:
                 print("  ", ", ".join(map(str, r)))
