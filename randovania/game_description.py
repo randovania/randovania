@@ -216,6 +216,14 @@ class ResourceNode(NamedTuple):
     heal: bool
     resource: ResourceInfo
 
+    def resource_gain_on_collect(self, resource_database: ResourceDatabase) -> Iterator[Tuple[ResourceInfo, int]]:
+        from randovania.pickup_database import pickup_name_to_resource_gain
+
+        yield self.resource, 1
+        if isinstance(self.resource, PickupEntry):
+            for pickup_resource, quantity in pickup_name_to_resource_gain(self.resource.item, resource_database):
+                yield pickup_resource, quantity
+
 
 Node = Union[GenericNode, DockNode, TeleporterNode, ResourceNode]
 
