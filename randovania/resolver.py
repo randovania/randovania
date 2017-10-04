@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Dict
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
-    RequirementSet, Area, EventNode, resolve_dock_node, resolve_teleporter_node, PickupNode, ResourceInfo, \
+    RequirementSet, Area, ResourceNode, resolve_dock_node, resolve_teleporter_node, ResourceInfo, \
     ResourceDatabase, RequirementList
 from randovania.log_parser import PickupEntry
 from randovania.pickup_database import pickup_name_to_resource_gain
@@ -42,10 +42,8 @@ class State:
         return State(new_resources, self.node)
 
     def act_on_node(self, node: Node, resource_database: ResourceDatabase) -> "State":
-        if isinstance(node, PickupNode):
-            new_state = self.collect_resource(node.pickup, resource_database)
-        elif isinstance(node, EventNode):
-            new_state = self.collect_resource(node.event, resource_database)
+        if isinstance(node, ResourceNode):
+            new_state = self.collect_resource(node.resource, resource_database)
         else:
             raise ValueError("Can't act on Node of type {}".format(type(node)))
         new_state.node = node
@@ -55,14 +53,9 @@ class State:
 def potential_nodes_from(node: Node,
                          game_description: GameDescription,
                          current_state: State) -> Iterator[Tuple[Node, RequirementSet]]:
-    if isinstance(node, EventNode):
-        # You can't walk through an event node until you've already triggered it
-        if not current_state.has_resource(node.event):
-            return
-
-    if isinstance(node, PickupNode):
-        # You need to get the pickup to pass by a pickup node
-        if not current_state.has_resource(node.pickup):
+    if isinstance(node, ResourceNode):
+        # You can't walk through an resource node until you've already triggered it
+        if not current_state.has_resource(node.resource):
             return
 
     if isinstance(node, DockNode):
@@ -126,16 +119,9 @@ def calculate_reach(current_state: State,
 
 
 def actions_with_reach(current_reach: Reach, state: State) -> Iterator:
-    # First, try picking items
     for node in current_reach:
-        if isinstance(node, PickupNode):
-            if not state.has_resource(node.pickup):
-                yield node  # TODO
-
-    # Then, we try triggering an event
-    for node in current_reach:
-        if isinstance(node, EventNode):
-            if not state.has_resource(node.event):
+        if isinstance(node, ResourceNode):
+            if not state.has_resource(node.resource):
                 yield node  # TODO
 
 
