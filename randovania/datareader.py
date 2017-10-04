@@ -144,7 +144,7 @@ class WorldReader:
         name = data["name"]
         nodes = read_array(data["nodes"], self.read_node)
 
-        for node in nodes:  # type: PickupNode
+        for node in nodes:
             if isinstance(node, ResourceNode) and isinstance(node.resource, PickupEntry):
                 if node.resource.room != name:
                     raise ValueError(
@@ -155,9 +155,11 @@ class WorldReader:
             connections[nodes[i]] = {}
             for j, target in enumerate(origin):
                 if target:
-                    connections[nodes[i]][nodes[j]] = read_requirement_set(
-                        target, self.resource_database)
-
+                    the_set = read_requirement_set(target, self.resource_database)
+                    if isinstance(origin, ResourceNode):
+                        the_set = add_requirement_to_set(the_set, origin.resource)
+                    connections[nodes[i]][nodes[j]] = the_set
+    
         return Area(name, data["asset_id"], data["default_node_index"],
                     nodes, connections)
 
