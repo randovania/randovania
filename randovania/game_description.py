@@ -30,7 +30,7 @@ class DamageResourceInfo(NamedTuple):
         return "Damage {}".format(self.long_name)
 
 
-ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo]
+ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupEntry]
 CurrentResources = Dict[ResourceInfo, int]
 
 
