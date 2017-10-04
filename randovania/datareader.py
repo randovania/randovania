@@ -6,7 +6,7 @@ from randovania import prime_binary_decoder
 from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, ResourceNode, \
-    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList
+    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, ResourceInfo
 from randovania.log_parser import PickupEntry
 from randovania.pickup_database import pickup_name_to_resource_gain
 
@@ -65,6 +65,13 @@ def read_requirement_list(data: List[Dict],
 def read_requirement_set(data: List[List[Dict]], resource_database: ResourceDatabase) -> RequirementSet:
     return RequirementSet(
         tuple(read_array(data, partial(read_requirement_list, resource_database=resource_database))))
+
+
+def add_requirement_to_set(requirement_set: RequirementSet, new_requirement: IndividualRequirement) -> RequirementSet:
+    return RequirementSet(tuple([
+        RequirementList(requirement_list + (new_requirement,))
+        for requirement_list in requirement_set.alternatives
+    ]))
 
 
 # Dock Weakness
