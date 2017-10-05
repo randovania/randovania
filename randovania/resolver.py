@@ -4,7 +4,7 @@ from typing import Set, Iterator, Tuple, List, Dict
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
     RequirementSet, Area, ResourceNode, resolve_dock_node, resolve_teleporter_node, ResourceInfo, \
-    ResourceDatabase, RequirementList
+    ResourceDatabase, RequirementList, IndividualRequirement
 from randovania.log_parser import PickupEntry
 from randovania.pickup_database import pickup_name_to_resource_gain
 
@@ -50,8 +50,19 @@ class State:
         return new_state
 
 
-def potential_nodes_from(node: Node, game_description: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
+def impossible_requirement_set(game_description: GameDescription) -> RequirementSet:
+    requirement = IndividualRequirement(
+        game_description.resource_database.get_by_type_and_index(
+            ResourceType.MISC, 1
+        ),
+        1,
+        False)
+    return RequirementSet(tuple([
+        RequirementList([requirement])
+    ]))
 
+
+def potential_nodes_from(node: Node, game_description: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
         # Includes opening form behind with different criteria
@@ -60,7 +71,7 @@ def potential_nodes_from(node: Node, game_description: GameDescription) -> Itera
             yield target_node, node.dock_weakness.requirements
         except IndexError:
             # TODO: fix data to not having docks pointing to nothing
-            pass
+            yield None, impossible_requirement_set(game_description)
 
     if isinstance(node, TeleporterNode):
         try:
@@ -68,7 +79,7 @@ def potential_nodes_from(node: Node, game_description: GameDescription) -> Itera
         except IndexError:
             # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
             print("Teleporter is broken!", node)
-            pass
+            yield None, impossible_requirement_set(game_description)
 
     area = game_description.nodes_to_area[node]
     for target_node, requirements in area.connections[node].items():
@@ -96,7 +107,7 @@ def calculate_reach(current_state: State,
 
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
-            else:
+            elif target_node:
                 requirements_by_node[target_node].update(
                     requirements.satisfiable_requirements(
                         current_state.resources,
@@ -130,7 +141,8 @@ def pretty_print_area(area: Area):
         print()
 
 
-def calculate_satisfiable_actions(state: State, game: GameDescription) -> List[ResourceNode]:
+def calculate_satisfiable_actions(state: State, game: GameDescription) -> Tuple[
+    List[ResourceNode], Set[RequirementList]]:
     reach, requirements_by_node = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
@@ -160,10 +172,10 @@ def calculate_satisfiable_actions(state: State, game: GameDescription) -> List[R
 
     # This is broke due to requirements with negate
     return [
-        action for action in actions
-        if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
-               for requirements in satisfiable_requirements)
-    ]
+               action for action in actions
+               if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
+                      for requirements in satisfiable_requirements)
+           ], set(satisfiable_requirements.keys())
 
 
 def advance_breadth(initial_state: State, game: GameDescription) -> bool:
@@ -180,7 +192,8 @@ def advance_breadth(initial_state: State, game: GameDescription) -> bool:
             print("Victory with {}% of the items.".format(item_percentage))
             return True
 
-        for action in calculate_satisfiable_actions(state, game):
+        actions, satisfiable_requirements = calculate_satisfiable_actions(state, game)
+        for action in actions:
             operation_queue.append(state.act_on_node(action, game.resource_database))
 
     return False
@@ -194,9 +207,9 @@ def advance_depth(state: State, game: GameDescription) -> bool:
         print("Victory with {}% of the items.".format(item_percentage))
         return True
 
-    actions = calculate_satisfiable_actions(state, game)
+    actions, satisfiable_requirements = calculate_satisfiable_actions(state, game)
     print("Checking {}, has {} actions".format(_n(state.node), len(actions)))
-    
+
     for action in actions:
         if advance_depth(state.act_on_node(action, game.resource_database),
                          game):
