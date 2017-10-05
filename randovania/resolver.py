@@ -130,15 +130,7 @@ def pretty_print_area(area: Area):
         print()
 
 
-def advance(state: State, game: GameDescription):
-    if game.victory_condition.satisfied(state.resources):
-        item_percentage = state.resources.get(
-            game.resource_database.get_by_type_and_index(
-                ResourceType.ITEM, 47), 0)
-        print("Victory with {}% of the items.".format(item_percentage))
-        return True
-
-    print("Now on", _n(state.node))
+def calculate_satisfiable_actions(state: State, game: GameDescription) -> List[ResourceNode]:
     reach, requirements_by_node = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
@@ -148,6 +140,7 @@ def advance(state: State, game: GameDescription):
     }
 
     def debug_print():
+        print("Now on", _n(state.node))
         print("Reach:")
         for node in reach:
             print("  > {}".format(_n(node)))
@@ -166,19 +159,49 @@ def advance(state: State, game: GameDescription):
         return requirements.amount_unsatisfied(state.act_on_node(action, game.resource_database).resources)
 
     # This is broke due to requirements with negate
-    actions_with_satisfaction = [
+    return [
         action for action in actions
         if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
                for requirements in satisfiable_requirements)
     ]
 
-    for action in actions_with_satisfaction:
-        new_state = state.act_on_node(action, game.resource_database)
 
-        if advance(new_state, game):
+def advance_breadth(initial_state: State, game: GameDescription) -> bool:
+    operation_queue = [initial_state]
+
+    while operation_queue:
+        state = operation_queue.pop(0)
+        print("Checking", _n(state.node))
+
+        if game.victory_condition.satisfied(state.resources):
+            item_percentage = state.resources.get(
+                game.resource_database.get_by_type_and_index(
+                    ResourceType.ITEM, 47), 0)
+            print("Victory with {}% of the items.".format(item_percentage))
             return True
 
-    print("Will rollback.")
+        for action in calculate_satisfiable_actions(state, game):
+            operation_queue.append(state.act_on_node(action, game.resource_database))
+
+    return False
+
+
+def advance_depth(state: State, game: GameDescription) -> bool:
+    if game.victory_condition.satisfied(state.resources):
+        item_percentage = state.resources.get(
+            game.resource_database.get_by_type_and_index(
+                ResourceType.ITEM, 47), 0)
+        print("Victory with {}% of the items.".format(item_percentage))
+        return True
+
+    actions = calculate_satisfiable_actions(state, game)
+    print("Checking {}, has {} actions".format(_n(state.node), len(actions)))
+    
+    for action in actions:
+        if advance_depth(state.act_on_node(action, game.resource_database),
+                         game):
+            return True
+
     return False
 
 
@@ -208,4 +231,4 @@ def resolve(game_description: GameDescription):
     add_resources_from("_StartingItems")
     add_resources_from("_ItemLossItems")
 
-    print(advance(starting_state, game_description))
+    print(advance_depth(starting_state, game_description))
