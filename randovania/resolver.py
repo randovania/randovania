@@ -63,6 +63,10 @@ def impossible_requirement_set(game_description: GameDescription) -> Requirement
 
 
 def potential_nodes_from(node: Node, game_description: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
+    additional_requirements = game_description.additional_requirements.get(node)
+    if additional_requirements is None:
+        additional_requirements = RequirementSet.empty()
+
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
         # Includes opening form behind with different criteria
@@ -105,6 +109,10 @@ def calculate_reach(current_state: State,
             if target_node in checked_nodes or target_node in nodes_to_check:
                 continue
 
+            # additional_requirements = game_description.additional_requirements.get(target_node)
+            # if additional_requirements is not None:
+            #     requirements = requirements.merge(additional_requirements)
+
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
             elif target_node:
@@ -141,8 +149,8 @@ def pretty_print_area(area: Area):
         print()
 
 
-def calculate_satisfiable_actions(state: State, game: GameDescription) -> Tuple[
-    List[ResourceNode], Set[RequirementList]]:
+def calculate_satisfiable_actions(state: State,
+                                  game: GameDescription) -> Tuple[List[ResourceNode], Set[RequirementList]]:
     reach, requirements_by_node = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
@@ -171,11 +179,12 @@ def calculate_satisfiable_actions(state: State, game: GameDescription) -> Tuple[
         return requirements.amount_unsatisfied(state.act_on_node(action, game.resource_database).resources)
 
     # This is broke due to requirements with negate
-    return [
-               action for action in actions
-               if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
-                      for requirements in satisfiable_requirements)
-           ], set(satisfiable_requirements.keys())
+    satisfiable_actions = [
+        action for action in actions
+        if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
+               for requirements in satisfiable_requirements)
+    ]
+    return satisfiable_actions, set(satisfiable_requirements.keys())
 
 
 def advance_breadth(initial_state: State, game: GameDescription) -> bool:
@@ -215,6 +224,11 @@ def advance_depth(state: State, game: GameDescription) -> bool:
                          game):
             return True
 
+    # game.additional_requirements[state.node] = RequirementSet(tuple(
+    #     requirement_list
+    #     for _, requirement_list in potential_nodes_from(state.node, game)
+    # ))
+    print("Rollback to {}".format(_n(state.node)))
     return False
 
 
