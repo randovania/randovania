@@ -149,8 +149,6 @@ class RequirementSet:
         ])
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
-        if not self.alternatives:
-            return True
         return any(
             requirement_list.satisfied(current_resources)
             for requirement_list in self.alternatives
