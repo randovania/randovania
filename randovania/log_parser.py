@@ -24,7 +24,8 @@ class RandomizerLog(typing.NamedTuple):
 
 class InvalidLogFileException(Exception):
     def __init__(self, logfile, reason):
-        super().__init__("File '{}' is not a valid Randomizer log: {}".format(logfile, reason))
+        super().__init__("File '{}' is not a valid Randomizer log: {}".format(
+            logfile, reason))
 
 
 class UnknownGameException(Exception):
@@ -41,14 +42,18 @@ def extract_with_regexp(logfile, f, regex, invalid_reason):
 
 def parse_log(logfile: str) -> RandomizerLog:
     with open(logfile) as f:
-        version = extract_with_regexp(logfile, f, r"Randomizer V(\d+\.\d+)", "Could not find Randomizer version")
+        version = extract_with_regexp(logfile, f, r"Randomizer V(\d+\.\d+)",
+                                      "Could not find Randomizer version")
         if version != RANDOMIZER_VERSION:
-            raise InvalidLogFileException(logfile, "Unexpected version {}, expected {}".format(version,
-                                                                                               RANDOMIZER_VERSION))
+            raise InvalidLogFileException(
+                logfile, "Unexpected version {}, expected {}".format(
+                    version, RANDOMIZER_VERSION))
 
-        seed = extract_with_regexp(logfile, f, r"^Seed: (\d+)$", "Could not find Seed")
-        excluded_pickups = extract_with_regexp(logfile, f, r"^Excluded pickups: (\d+)$",
-                                               "Could not find excluded pickups")
+        seed = extract_with_regexp(logfile, f, r"^Seed: (\d+)$",
+                                   "Could not find Seed")
+        excluded_pickups = extract_with_regexp(
+            logfile, f, r"^Excluded pickups: (\d+)$",
+            "Could not find excluded pickups")
 
         pickups = []
         for line in f:
@@ -71,7 +76,8 @@ def resolve_game_argument(game: str, log: RandomizerLog) -> Game:
     if log.pickup_entries[0].world == "Temple Grounds":
         return Game.PRIME2
 
-    raise UnknownGameException("Could not decide the game based on this logfile.")
+    raise UnknownGameException(
+        "Could not decide the game based on this logfile.")
 
 
 def generate_game_choices() -> typing.List[str]:

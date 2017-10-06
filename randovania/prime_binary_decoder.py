@@ -7,12 +7,10 @@ X = TypeVar('X')
 current_format_version = 6
 
 
-def read_array(source: BinarySource, item_reader: Callable[[BinarySource], X]) -> List[X]:
+def read_array(source: BinarySource,
+               item_reader: Callable[[BinarySource], X]) -> List[X]:
     count = source.read_byte()
-    return [
-        item_reader(source)
-        for _ in range(count)
-    ]
+    return [item_reader(source) for _ in range(count)]
 
 
 def read_damage_reduction(source: BinarySource) -> Dict:
@@ -53,6 +51,7 @@ def read_damage_resource_info_array(source: BinarySource) -> List[Dict]:
 
 # Requirement
 
+
 def read_individual_requirement(source: BinarySource) -> Dict:
     return {
         "requirement_type": source.read_byte(),
@@ -71,6 +70,7 @@ def read_requirement_set(source: BinarySource) -> List[List[Dict]]:
 
 
 # Dock Weakness
+
 
 def read_dock_weakness_database(source: BinarySource) -> Dict:
     def read_dock_weakness(_source: BinarySource) -> Dict:
@@ -129,18 +129,12 @@ def read_area(source: BinarySource) -> Dict:
     node_count = source.read_byte()
     default_node_index = source.read_byte()
 
-    nodes = [
-        read_node(source)
-        for _ in range(node_count)
-    ]
+    nodes = [read_node(source) for _ in range(node_count)]
 
-    connections = [
-        [
-            read_requirement_set(source) if origin != target else None
-            for target in range(node_count)
-        ]
-        for origin in range(node_count)
-    ]
+    connections = [[
+        read_requirement_set(source) if origin != target else None
+        for target in range(node_count)
+    ] for origin in range(node_count)]
 
     return {
         "name": name,
@@ -215,7 +209,8 @@ def decode_file_path(path) -> Dict:
         return decode(x)
 
 
-def write_array(writer: BinaryWriter, array: List[X], item_writer: Callable[[BinaryWriter, X], None]):
+def write_array(writer: BinaryWriter, array: List[X],
+                item_writer: Callable[[BinaryWriter, X], None]):
     writer.write_byte(len(array))
     for item in array:
         item_writer(writer, item)
@@ -248,18 +243,25 @@ def encode(data: Dict, x: BinaryIO):
         _writer.write_bool(item["negate"])
 
     def write_requirement_set(_writer, item: List[List[Dict]]):
-        write_array(_writer, item, partial(write_array,
-                                           item_writer=write_individual_requirement))
+        write_array(_writer, item,
+                    partial(
+                        write_array, item_writer=write_individual_requirement))
 
     # Resource Info database
-    write_array(writer, data["resource_database"]["items"], write_resource_info)
-    write_array(writer, data["resource_database"]["events"], write_resource_info)
-    write_array(writer, data["resource_database"]["tricks"], write_resource_info)
-    write_array(writer, data["resource_database"]["damage"], write_damage_resource_info)
-    write_array(writer, data["resource_database"]["versions"], write_resource_info)
+    write_array(writer, data["resource_database"]["items"],
+                write_resource_info)
+    write_array(writer, data["resource_database"]["events"],
+                write_resource_info)
+    write_array(writer, data["resource_database"]["tricks"],
+                write_resource_info)
+    write_array(writer, data["resource_database"]["damage"],
+                write_damage_resource_info)
+    write_array(writer, data["resource_database"]["versions"],
+                write_resource_info)
     write_array(writer, data["resource_database"]["misc"], write_resource_info)
     writer.write_byte(0)  # Undocumented null byte
-    write_array(writer, data["resource_database"]["difficulty"], write_resource_info)
+    write_array(writer, data["resource_database"]["difficulty"],
+                write_resource_info)
 
     # Dock Weakness Database
     def write_dock_weakness(_writer, item: Dict):
@@ -268,8 +270,10 @@ def encode(data: Dict, x: BinaryIO):
         _writer.write_bool(item["is_blast_door"])
         write_requirement_set(_writer, item["requirement_set"])
 
-    write_array(writer, data["dock_weakness_database"]["door"], write_dock_weakness)
-    write_array(writer, data["dock_weakness_database"]["portal"], write_dock_weakness)
+    write_array(writer, data["dock_weakness_database"]["door"],
+                write_dock_weakness)
+    write_array(writer, data["dock_weakness_database"]["portal"],
+                write_dock_weakness)
 
     # Worlds List
     def write_node(_writer: BinaryWriter, node: Dict):

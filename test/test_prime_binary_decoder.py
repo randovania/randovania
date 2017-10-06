@@ -45,17 +45,17 @@ def test_complex_encode(test_files_dir):
     prime_binary_decoder.encode(data, b_io)
 
     # Assert
-    assert test_files_dir.join("prime_data_as_binary.bin").read_binary() == b.getvalue()
+    assert test_files_dir.join(
+        "prime_data_as_binary.bin").read_binary() == b.getvalue()
 
 
 def test_complex_decode(test_files_dir):
     # Run
-    decoded_data = prime_binary_decoder.decode_file_path(str(test_files_dir.join("prime_data_as_binary.bin")))
+    decoded_data = prime_binary_decoder.decode_file_path(
+        str(test_files_dir.join("prime_data_as_binary.bin")))
 
     # Assert
     with test_files_dir.join("prime_data_as_json.json").open("r") as data_file:
         saved_data = json.load(data_file)
 
     assert decoded_data == saved_data
-
-

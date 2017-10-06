@@ -38,7 +38,8 @@ def _find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
     for info in info_list:
         if info.index == index:
             return info
-    raise ValueError("Resource with index {} not found in {}".format(index, info_list))
+    raise ValueError(
+        "Resource with index {} not found in {}".format(index, info_list))
 
 
 @unique
@@ -77,10 +78,13 @@ class ResourceDatabase(NamedTuple):
         elif resource_type == ResourceType.DIFFICULTY:
             return self.difficulty
         else:
-            raise ValueError("Invalid requirement_type: {}".format(resource_type))
+            raise ValueError(
+                "Invalid requirement_type: {}".format(resource_type))
 
-    def get_by_type_and_index(self, resource_type: ResourceType, index: int) -> ResourceInfo:
-        return _find_resource_info_with_id(self.get_by_type(resource_type), index)
+    def get_by_type_and_index(self, resource_type: ResourceType,
+                              index: int) -> ResourceInfo:
+        return _find_resource_info_with_id(
+            self.get_by_type(resource_type), index)
 
     def trivial_resource(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.MISC, 0)
@@ -95,10 +99,12 @@ class IndividualRequirement(NamedTuple):
     negate: bool
 
     @classmethod
-    def with_data(cls, database: ResourceDatabase,
-                  resource_type: ResourceType, requirement_index: int,
-                  amount: int, negate: bool) -> "IndividualRequirement":
-        return cls(database.get_by_type_and_index(resource_type, requirement_index), amount, negate)
+    def with_data(cls, database: ResourceDatabase, resource_type: ResourceType,
+                  requirement_index: int, amount: int,
+                  negate: bool) -> "IndividualRequirement":
+        return cls(
+            database.get_by_type_and_index(resource_type, requirement_index),
+            amount, negate)
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
@@ -112,17 +118,20 @@ class IndividualRequirement(NamedTuple):
             return has_amount
 
     def __repr__(self):
-        return "{} {} {}".format(self.requirement, "<" if self.negate else ">=", self.amount)
+        return "{} {} {}".format(self.requirement, "<"
+                                 if self.negate else ">=", self.amount)
 
 
 class RequirementList(frozenset):
     def amount_unsatisfied(self, current_resources: CurrentResources) -> bool:
-        return sum(not requirement.satisfied(current_resources) for requirement in self)
+        return sum(not requirement.satisfied(current_resources)
+                   for requirement in self)
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         return self.amount_unsatisfied(current_resources) == 0
 
-    def simplify(self, static_resources: CurrentResources, database: ResourceDatabase) -> Optional["RequirementList"]:
+    def simplify(self, static_resources: CurrentResources,
+                 database: ResourceDatabase) -> Optional["RequirementList"]:
         items = []
         for item in self:  # type: IndividualRequirement
             if item.requirement == database.impossible_resource():
@@ -142,7 +151,8 @@ class RequirementSet:
         self.alternatives = frozenset(alternatives)
 
     def __eq__(self, other):
-        return isinstance(other, RequirementSet) and self.alternatives == other.alternatives
+        return isinstance(
+            other, RequirementSet) and self.alternatives == other.alternatives
 
     def __hash__(self):
         return hash(self.alternatives)
@@ -153,9 +163,7 @@ class RequirementSet:
     @classmethod
     def trivial(cls) -> "RequirementSet":
         # empty RequirementList.satisfied is True
-        return cls([
-            RequirementList([])
-        ])
+        return cls([RequirementList([])])
 
     @classmethod
     def impossible(cls) -> "RequirementSet":
@@ -165,37 +173,34 @@ class RequirementSet:
     def satisfied(self, current_resources: CurrentResources) -> bool:
         return any(
             requirement_list.satisfied(current_resources)
-            for requirement_list in self.alternatives
-        )
+            for requirement_list in self.alternatives)
 
     def satisfiable_requirements(self, current_resources: CurrentResources,
-                                 available_resources: CurrentResources) -> Iterator[RequirementList]:
+                                 available_resources: CurrentResources
+                                 ) -> Iterator[RequirementList]:
         for requirement_list in self.alternatives:
             # Don't list satisfied sets as satisfiable
             if requirement_list.satisfied(current_resources):
                 continue
 
             # Doing requirement_list.satisfied(available_resources) breaks with negate requirements
-            yield RequirementList(requirement for requirement in requirement_list
-                                  if not requirement.satisfied(current_resources))
+            yield RequirementList(
+                requirement for requirement in requirement_list
+                if not requirement.satisfied(current_resources))
 
-    def simplify(self, static_resources: CurrentResources, database: ResourceDatabase) -> "RequirementSet":
+    def simplify(self, static_resources: CurrentResources,
+                 database: ResourceDatabase) -> "RequirementSet":
         new_alternatives = [
             alternative.simplify(static_resources, database)
             for alternative in self.alternatives
         ]
-        return RequirementSet(
-            alternative
-            for alternative in new_alternatives
-            if alternative is not None
-        )
+        return RequirementSet(alternative for alternative in new_alternatives
+                              if alternative is not None)
 
     def merge(self, other: "RequirementSet") -> "RequirementSet":
         return RequirementSet(
             RequirementList(a.union(b))
-            for a in self.alternatives
-            for b in other.alternatives
-        )
+            for a in self.alternatives for b in other.alternatives)
 
 
 class DockWeakness(NamedTuple):
@@ -208,11 +213,13 @@ class DockWeakness(NamedTuple):
         return self.name
 
 
-def _find_dock_weakness_with_id(info_list: List[DockWeakness], index: int) -> DockWeakness:
+def _find_dock_weakness_with_id(info_list: List[DockWeakness],
+                                index: int) -> DockWeakness:
     for info in info_list:
         if info.index == index:
             return info
-    raise ValueError("Dock weakness with index {} not found in {}".format(index, info_list))
+    raise ValueError(
+        "Dock weakness with index {} not found in {}".format(index, info_list))
 
 
 @unique
@@ -241,8 +248,10 @@ class DockWeaknessDatabase(NamedTuple):
         else:
             raise ValueError("Invalid dock_type: {}".format(dock_type))
 
-    def get_by_type_and_index(self, dock_type: DockType, weakness_index: int) -> DockWeakness:
-        return _find_dock_weakness_with_id(self.get_by_type(dock_type), weakness_index)
+    def get_by_type_and_index(self, dock_type: DockType,
+                              weakness_index: int) -> DockWeakness:
+        return _find_dock_weakness_with_id(
+            self.get_by_type(dock_type), weakness_index)
 
 
 class GenericNode(NamedTuple):
@@ -273,12 +282,14 @@ class ResourceNode(NamedTuple):
     heal: bool
     resource: ResourceInfo
 
-    def resource_gain_on_collect(self, resource_database: ResourceDatabase) -> Iterator[Tuple[ResourceInfo, int]]:
+    def resource_gain_on_collect(self, resource_database: ResourceDatabase
+                                 ) -> Iterator[Tuple[ResourceInfo, int]]:
         from randovania.pickup_database import pickup_name_to_resource_gain
 
         yield self.resource, 1
         if isinstance(self.resource, PickupEntry):
-            for pickup_resource, quantity in pickup_name_to_resource_gain(self.resource.item, resource_database):
+            for pickup_resource, quantity in pickup_name_to_resource_gain(
+                    self.resource.item, resource_database):
                 yield pickup_resource, quantity
 
 
@@ -299,7 +310,8 @@ class Area(NamedTuple):
         for node in self.nodes:
             if isinstance(node, DockNode) and node.dock_index == dock_index:
                 return node
-        raise IndexError("No DockNode found with dock_index {} in {}".format(dock_index, self.name))
+        raise IndexError("No DockNode found with dock_index {} in {}".format(
+            dock_index, self.name))
 
 
 class World(NamedTuple):
@@ -348,7 +360,8 @@ def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:
     return area.node_with_dock_index(node.connected_dock_index)
 
 
-def resolve_teleporter_node(node: TeleporterNode, game: GameDescription) -> Node:
+def resolve_teleporter_node(node: TeleporterNode,
+                            game: GameDescription) -> Node:
     world = game.world_by_asset_id(node.destination_world_asset_id)
     area = world.area_by_asset_id(node.destination_area_asset_id)
     return area.nodes[area.default_node_index]
@@ -362,7 +375,8 @@ def consistency_check(game: GameDescription) -> Iterator[str]:
                     try:
                         resolve_dock_node(node, game)
                     except IndexError as e:
-                        yield "{}/{}/{} (Dock) does not connect due to {}".format(world.name, area.name, node.name, e)
+                        yield "{}/{}/{} (Dock) does not connect due to {}".format(
+                            world.name, area.name, node.name, e)
                 elif isinstance(node, TeleporterNode):
                     try:
                         resolve_teleporter_node(node, game)
