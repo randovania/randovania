@@ -115,7 +115,7 @@ class IndividualRequirement(NamedTuple):
         return "{} {} {}".format(self.requirement, "<" if self.negate else ">=", self.amount)
 
 
-class RequirementList(tuple):
+class RequirementList(frozenset):
     def amount_unsatisfied(self, current_resources: CurrentResources) -> bool:
         return sum(not requirement.satisfied(current_resources) for requirement in self)
 
@@ -140,24 +140,26 @@ class RequirementSet:
     def __init__(self, alternatives: Iterator[RequirementList]):
         self.alternatives = frozenset(alternatives)
 
+    def __eq__(self, other):
+        return isinstance(other, RequirementSet) and self.alternatives == other.alternatives
+
     def __hash__(self):
         return hash(self.alternatives)
 
+    def __repr__(self):
+        return repr(self.alternatives)
+
     @classmethod
-    def trivial(cls, database: ResourceDatabase) -> "RequirementSet":
+    def trivial(cls) -> "RequirementSet":
+        # empty RequirementList.satisfied is True
         return cls([
-            RequirementList([
-                IndividualRequirement(database.trivial_resource(), 1, False)
-            ])
+            RequirementList([])
         ])
 
     @classmethod
-    def impossible(cls, database: ResourceDatabase) -> "RequirementSet":
-        return cls([
-            RequirementList([
-                IndividualRequirement(database.impossible_resource(), 1, False)
-            ])
-        ])
+    def impossible(cls) -> "RequirementSet":
+        # No alternatives makes satisfied always return False
+        return cls([])
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         return any(
@@ -185,6 +187,13 @@ class RequirementSet:
             alternative
             for alternative in new_alternatives
             if alternative is not None
+        )
+
+    def merge(self, other: "RequirementSet") -> "RequirementSet":
+        return RequirementSet(
+            RequirementList(a.union(b))
+            for a in self.alternatives
+            for b in other.alternatives
         )
 
 

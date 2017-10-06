@@ -51,11 +51,9 @@ class State:
 
 
 def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
-    resources = game.resource_database
-
     additional_requirements = game.additional_requirements.get(node)
     if additional_requirements is None:
-        additional_requirements = RequirementSet.trivial(resources)
+        additional_requirements = RequirementSet.trivial()
 
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
@@ -65,15 +63,15 @@ def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[No
             yield target_node, node.dock_weakness.requirements
         except IndexError:
             # TODO: fix data to not having docks pointing to nothing
-            yield None, RequirementSet.impossible(resources)
+            yield None, RequirementSet.impossible()
 
     if isinstance(node, TeleporterNode):
         try:
-            yield resolve_teleporter_node(node, game), RequirementSet.trivial(resources)
+            yield resolve_teleporter_node(node, game), RequirementSet.trivial()
         except IndexError:
             # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
             print("Teleporter is broken!", node)
-            yield None, RequirementSet.impossible(resources)
+            yield None, RequirementSet.impossible()
 
     area = game.nodes_to_area[node]
     for target_node, requirements in area.connections[node].items():
@@ -226,6 +224,11 @@ def resolve(game_description: GameDescription):
     starting_world_asset_id = 1006255871
     starting_area_asset_id = 1655756413
     item_loss_skip = True
+
+    # import pprint
+    # pprint.pprint(game_description.resource_database.trick)
+    # pprint.pprint(game_description.resource_database.difficulty)
+    # raise SystemExit
 
     # global state for easy printing functions
     global _gd

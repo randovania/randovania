@@ -68,7 +68,7 @@ def read_requirement_set(data: List[List[Dict]], resource_database: ResourceData
 
 def add_requirement_to_set(requirement_set: RequirementSet, new_requirement: IndividualRequirement) -> RequirementSet:
     return RequirementSet(
-        RequirementList(requirement_list + (new_requirement,))
+        RequirementList(requirement_list.union([new_requirement]))
         for requirement_list in requirement_set.alternatives
     )
 
@@ -84,8 +84,8 @@ def read_dock_weakness_database(data: Dict, resource_database: ResourceDatabase)
     portal_types = read_array(data["portal"], read_dock_weakness)
     return DockWeaknessDatabase(
         door=door_types,
-        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet.trivial(resource_database))],
-        other=[DockWeakness(0, "Other Door", False, RequirementSet.trivial(resource_database))],
+        morph_ball=[DockWeakness(0, "Morph Ball Door", False, RequirementSet.trivial())],
+        other=[DockWeakness(0, "Other Door", False, RequirementSet.trivial())],
         portal=portal_types
     )
 
