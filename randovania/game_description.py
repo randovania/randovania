@@ -293,6 +293,20 @@ class GameDescription(NamedTuple):
                 for node in area.nodes:
                     yield node
 
+    def trivial_requirement_set(self) -> RequirementSet:
+        return RequirementSet([
+            RequirementList([
+                IndividualRequirement(self.resource_database.get_by_type_and_index(ResourceType.MISC, 0), 1, False)
+            ])
+        ])
+
+    def impossible_requirement_set(self) -> RequirementSet:
+        return RequirementSet([
+            RequirementList([
+                IndividualRequirement(self.resource_database.get_by_type_and_index(ResourceType.MISC, 1), 1, False)
+            ])
+        ])
+
 
 def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:
     world = game.nodes_to_world[node]

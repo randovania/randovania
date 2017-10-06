@@ -50,22 +50,10 @@ class State:
         return new_state
 
 
-def impossible_requirement_set(game_description: GameDescription) -> RequirementSet:
-    requirement = IndividualRequirement(
-        game_description.resource_database.get_by_type_and_index(
-            ResourceType.MISC, 1
-        ),
-        1,
-        False)
-    return RequirementSet(tuple([
-        RequirementList([requirement])
-    ]))
-
-
 def potential_nodes_from(node: Node, game_description: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
     additional_requirements = game_description.additional_requirements.get(node)
     if additional_requirements is None:
-        additional_requirements = RequirementSet.empty()
+        additional_requirements = game_description.trivial_requirement_set()
 
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
@@ -75,15 +63,15 @@ def potential_nodes_from(node: Node, game_description: GameDescription) -> Itera
             yield target_node, node.dock_weakness.requirements
         except IndexError:
             # TODO: fix data to not having docks pointing to nothing
-            yield None, impossible_requirement_set(game_description)
+            yield None, game_description.impossible_requirement_set()
 
     if isinstance(node, TeleporterNode):
         try:
-            yield resolve_teleporter_node(node, game_description), RequirementSet.empty()
+            yield resolve_teleporter_node(node, game_description), game_description.trivial_requirement_set()
         except IndexError:
             # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
             print("Teleporter is broken!", node)
-            yield None, impossible_requirement_set(game_description)
+            yield None, game_description.impossible_requirement_set()
 
     area = game_description.nodes_to_area[node]
     for target_node, requirements in area.connections[node].items():
@@ -248,6 +236,11 @@ def resolve(game_description: GameDescription):
         # "No Requirements"
         game_description.resource_database.get_by_type_and_index(ResourceType.MISC, 0): 1
     }, starting_node)
+    
+    # pretty_print_area(starting_area)
+    # from pprint import pprint
+    # pprint(game_description.resource_database.misc)
+    # raise SystemExit
 
     def add_resources_from(name: str):
         for pickup_resource, quantity in pickup_name_to_resource_gain(name,
