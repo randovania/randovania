@@ -4,7 +4,7 @@ setup(
     name='randovania',
     version='0.0.1',
     author='Henrique Gemignani',
-    url='https://github.com/henriquegemignani/prime-checker',
+    url='https://github.com/henriquegemignani/randovania',
     description='A randomizer validator for the Metroid Prime series.',
     packages=[
         'randovania',
