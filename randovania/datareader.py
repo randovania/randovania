@@ -63,15 +63,14 @@ def read_requirement_list(data: List[Dict],
 
 
 def read_requirement_set(data: List[List[Dict]], resource_database: ResourceDatabase) -> RequirementSet:
-    return RequirementSet(
-        tuple(read_array(data, partial(read_requirement_list, resource_database=resource_database))))
+    return RequirementSet(read_array(data, partial(read_requirement_list, resource_database=resource_database)))
 
 
 def add_requirement_to_set(requirement_set: RequirementSet, new_requirement: IndividualRequirement) -> RequirementSet:
-    return RequirementSet(tuple([
+    return RequirementSet(
         RequirementList(requirement_list + (new_requirement,))
         for requirement_list in requirement_set.alternatives
-    ]))
+    )
 
 
 # Dock Weakness
