@@ -32,15 +32,24 @@ def main():
         "Enable trick usage in the validation. " 
         "Currently, there's no way to control which individual tricks gets enabled."
     )
+    parser.add_argument(
+        "--data-file",
+        type=str,
+        help="Path to the game description file. Defaults to a provided file based on game."
+    )
     args = parser.parse_args()
     log = log_parser.parse_log(args.logfile)
 
     game = log_parser.resolve_game_argument(args.game, log)
-    if game == Game.PRIME2:
-        game_description = datareader.read(
-            os.path.join(os.path.dirname(__file__), "data", "prime2.bin"),
-            log.pickup_entries)
-        resolver.resolve(args.difficulty, args.enable_tricks, game_description)
+    if args.data_file is None:
+        if game == Game.PRIME2:
+            args.data_file = os.path.join(os.path.dirname(__file__), "data", "prime2.bin")
+
+    game_description = datareader.read(args.data_file, log.pickup_entries)
+    possible = resolver.resolve(args.difficulty, args.enable_tricks, game_description)
+    print("Game is possible: ", possible)
+    if not possible:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

@@ -256,4 +256,4 @@ def resolve(difficulty_level: int, enable_tricks: bool, game_description: GameDe
     add_resources_from("_StartingItems")
     add_resources_from("_ItemLossItems")
 
-    print(advance_depth(starting_state, game_description))
+    return advance_depth(starting_state, game_description)
