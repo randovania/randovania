@@ -27,20 +27,26 @@ class State:
     def has_resource(self, resource: ResourceInfo) -> bool:
         return self.resources.get(resource, 0) > 0
 
-    def collect_resource_node(self, node: ResourceNode, resource_database: ResourceDatabase) -> "State":
+    def collect_resource_node(self, node: ResourceNode,
+                              resource_database: ResourceDatabase) -> "State":
         resource = node.resource
 
         if self.has_resource(resource):
-            raise ValueError("Trying to collect an already collected resource '{}'".format(resource))
+            raise ValueError(
+                "Trying to collect an already collected resource '{}'".format(
+                    resource))
 
         new_resources = copy.copy(self.resources)
-        for pickup_resource, quantity in node.resource_gain_on_collect(resource_database):
-            new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
+        for pickup_resource, quantity in node.resource_gain_on_collect(
+                resource_database):
+            new_resources[pickup_resource] = new_resources.get(
+                pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
         return State(new_resources, self.node)
 
-    def act_on_node(self, node: ResourceNode, resource_database: ResourceDatabase) -> "State":
+    def act_on_node(self, node: ResourceNode,
+                    resource_database: ResourceDatabase) -> "State":
         if not isinstance(node, ResourceNode):
             raise ValueError("Can't act on Node of type {}".format(type(node)))
 
@@ -49,15 +55,18 @@ class State:
         return new_state
 
 
-def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
-    additional_requirements = game.additional_requirements.get(node, RequirementSet.trivial())
+def potential_nodes_from(node: Node, game: GameDescription
+                         ) -> Iterator[Tuple[Node, RequirementSet]]:
+    additional_requirements = game.additional_requirements.get(
+        node, RequirementSet.trivial())
 
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
         # Includes opening form behind with different criteria
         try:
             target_node = resolve_dock_node(node, game)
-            yield target_node, node.dock_weakness.requirements.merge(additional_requirements)
+            yield target_node, node.dock_weakness.requirements.merge(
+                additional_requirements)
         except IndexError:
             # TODO: fix data to not having docks pointing to nothing
             yield None, RequirementSet.impossible()
@@ -75,8 +84,8 @@ def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[No
         yield target_node, requirements.merge(additional_requirements)
 
 
-def calculate_reach(current_state: State,
-                    game_description: GameDescription) -> Tuple[List[Node], Dict[Node, Set[RequirementList]]]:
+def calculate_reach(current_state: State, game_description: GameDescription
+                    ) -> Tuple[List[Node], Dict[Node, Set[RequirementList]]]:
     checked_nodes = set()
     nodes_to_check = [current_state.node]
 
@@ -90,7 +99,8 @@ def calculate_reach(current_state: State,
         if node != current_state.node:
             resulting_nodes.append(node)
 
-        for target_node, requirements in potential_nodes_from(node, game_description):
+        for target_node, requirements in potential_nodes_from(
+                node, game_description):
             if target_node in checked_nodes or target_node in nodes_to_check:
                 continue
 
@@ -101,7 +111,8 @@ def calculate_reach(current_state: State,
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
             elif target_node:
-                requirements_by_node[target_node].update(requirements.alternatives)
+                requirements_by_node[target_node].update(
+                    requirements.alternatives)
 
     # Discard satisfiable requirements of nodes reachable by other means
     for node in set(resulting_nodes).intersection(requirements_by_node.keys()):
@@ -110,7 +121,8 @@ def calculate_reach(current_state: State,
     return resulting_nodes, requirements_by_node
 
 
-def actions_with_reach(current_reach: Reach, state: State) -> Iterator[ResourceNode]:
+def actions_with_reach(current_reach: Reach,
+                       state: State) -> Iterator[ResourceNode]:
     for node in current_reach:
         if isinstance(node, ResourceNode):
             if not state.has_resource(node.resource):
@@ -128,9 +140,9 @@ def pretty_print_area(area: Area):
         print()
 
 
-def calculate_satisfiable_actions(state: State,
-                                  game: GameDescription) -> Tuple[List[ResourceNode],
-                                                                  Dict[Node, Set[RequirementList]]]:
+def calculate_satisfiable_actions(
+        state: State, game: GameDescription
+) -> Tuple[List[ResourceNode], Dict[Node, Set[RequirementList]]]:
     reach, requirements_by_node = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
@@ -155,14 +167,18 @@ def calculate_satisfiable_actions(state: State,
     if _IS_DEBUG:
         debug_print()
 
-    def amount_unsatisfied_with(requirements: RequirementList, action: ResourceNode):
-        return requirements.amount_unsatisfied(state.act_on_node(action, game.resource_database).resources)
+    def amount_unsatisfied_with(requirements: RequirementList,
+                                action: ResourceNode):
+        return requirements.amount_unsatisfied(
+            state.act_on_node(action, game.resource_database).resources)
 
     # This is broke due to requirements with negate
     satisfiable_actions = [
         action for action in actions
-        if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
-               for requirements in satisfiable_requirements)
+        if any(
+            amount_unsatisfied_with(requirements, action) <
+            satisfiable_requirements[requirements]
+            for requirements in satisfiable_requirements)
     ]
     return satisfiable_actions, requirements_by_node
 
@@ -178,13 +194,12 @@ def advance_depth(state: State, game: GameDescription) -> bool:
     actions, requirements_by_node = calculate_satisfiable_actions(state, game)
 
     for action in actions:
-        if advance_depth(state.act_on_node(action, game.resource_database),
-                         game):
+        if advance_depth(
+                state.act_on_node(action, game.resource_database), game):
             return True
 
-    game.additional_requirements[state.node] = RequirementSet(frozenset().union(
-        *requirements_by_node.values()
-    ))
+    game.additional_requirements[state.node] = RequirementSet(
+        frozenset().union(*requirements_by_node.values()))
     return False
 
 
@@ -207,15 +222,21 @@ def resolve(game_description: GameDescription):
         for area in world.areas:
             for connections in area.connections.values():
                 for target, value in connections.items():
-                    connections[target] = value.simplify(static_resources, game_description.resource_database)
+                    connections[target] = value.simplify(
+                        static_resources, game_description.resource_database)
 
-    starting_world = game_description.world_by_asset_id(starting_world_asset_id)
+    starting_world = game_description.world_by_asset_id(
+        starting_world_asset_id)
     starting_area = starting_world.area_by_asset_id(starting_area_asset_id)
     starting_node = starting_area.nodes[starting_area.default_node_index]
-    starting_state = State({
-        # "No Requirements"
-        game_description.resource_database.get_by_type_and_index(ResourceType.MISC, 0): 1
-    }, starting_node)
+    starting_state = State(
+        {
+            # "No Requirements"
+            game_description.resource_database.get_by_type_and_index(
+                ResourceType.MISC, 0):
+            1
+        },
+        starting_node)
 
     # pretty_print_area(starting_area)
     # from pprint import pprint
@@ -223,9 +244,11 @@ def resolve(game_description: GameDescription):
     # raise SystemExit
 
     def add_resources_from(name: str):
-        for pickup_resource, quantity in pickup_name_to_resource_gain(name,
-                                                                      game_description.resource_database):
-            starting_state.resources[pickup_resource] = starting_state.resources.get(pickup_resource, 0)
+        for pickup_resource, quantity in pickup_name_to_resource_gain(
+                name, game_description.resource_database):
+            starting_state.resources[
+                pickup_resource] = starting_state.resources.get(
+                    pickup_resource, 0)
             starting_state.resources[pickup_resource] += quantity
 
     add_resources_from("_StartingItems")

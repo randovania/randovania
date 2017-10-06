@@ -8,7 +8,6 @@ ResourceGain = List[Tuple[ResourceInfo, int]]
 
 pickup_name_to_resource = {}  # type: Dict[str, List[Tuple[ResourceInfo, int]]]
 
-
 percent_less_items = {
     "Dark Agon Key 1",
     "Dark Agon Key 2",
@@ -104,7 +103,6 @@ custom_mapping = {
         "Dark Beam": 1,
         "Dark Ammo": 50,
     },
-
     "_StartingItems": {
         "Power Beam": 1,
         "Combat Visor": 1,
@@ -124,19 +122,19 @@ custom_mapping = {
 }
 
 
-def pickup_name_to_resource_gain(name: str, database: ResourceDatabase) -> ResourceGain:
+def pickup_name_to_resource_gain(name: str,
+                                 database: ResourceDatabase) -> ResourceGain:
     infos = database.get_by_type(ResourceType.ITEM)
 
     result = []
     if name not in percent_less_items:
-        result.append((database.get_by_type_and_index(ResourceType.ITEM, 47), 1))
+        result.append((database.get_by_type_and_index(ResourceType.ITEM, 47),
+                       1))
 
     if name in direct_name:
         for info in infos:
             if info.long_name == name:
-                return result + [
-                    (info, direct_name[name])
-                ]
+                return result + [(info, direct_name[name])]
         raise ValueError("Pickup '{}' not found in database.".format(name))
     else:
         for pattern, values in custom_mapping.items():
@@ -147,9 +145,8 @@ def pickup_name_to_resource_gain(name: str, database: ResourceDatabase) -> Resou
                         result.append((info, values[info.long_name]))
                 if len(result) - starting_size != len(values):
                     raise ValueError(
-                        "Pattern '{}' (matched by '{}') have resource not found in database. Found {}".format(
-                            pattern, name, result
-                        ))
+                        "Pattern '{}' (matched by '{}') have resource not found in database. Found {}".
+                        format(pattern, name, result))
                 return result
 
     raise ValueError("'{}' is unknown by pickup_database".format(name))
