@@ -143,6 +143,10 @@ class RequirementList(frozenset):
                 items.append(item)
         return RequirementList(items)
 
+    def values(self) -> Set[IndividualRequirement]:
+        the_set = self  # type: Set[IndividualRequirement]
+        return the_set
+
 
 class RequirementSet:
     alternatives: Set[RequirementList]

@@ -203,7 +203,7 @@ def advance_depth(state: State, game: GameDescription) -> bool:
     return False
 
 
-def resolve(game_description: GameDescription):
+def resolve(difficulty_level: int, enable_tricks: bool, game_description: GameDescription):
     starting_world_asset_id = 1006255871
     starting_area_asset_id = 1655756413
     item_loss_skip = True
@@ -212,11 +212,13 @@ def resolve(game_description: GameDescription):
     global _gd
     _gd = game_description
 
+    trick_level = 1 if enable_tricks else 0
+
     static_resources = {}
     for trick in game_description.resource_database.trick:
-        static_resources[trick] = 0
+        static_resources[trick] = trick_level
     for difficulty in game_description.resource_database.difficulty:
-        static_resources[difficulty] = 0
+        static_resources[difficulty] = difficulty_level
 
     for world in game_description.worlds:
         for area in world.areas:
