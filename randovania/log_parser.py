@@ -81,4 +81,4 @@ def resolve_game_argument(game: str, log: RandomizerLog) -> Game:
 
 
 def generate_game_choices() -> typing.List[str]:
-    return [game.name.lower() for game in Game] + ["auto"]
+    return ["auto"] + [game.name.lower() for game in Game]
