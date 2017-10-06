@@ -225,14 +225,21 @@ def resolve(game_description: GameDescription):
     starting_area_asset_id = 1655756413
     item_loss_skip = True
 
-    # import pprint
-    # pprint.pprint(game_description.resource_database.trick)
-    # pprint.pprint(game_description.resource_database.difficulty)
-    # raise SystemExit
-
     # global state for easy printing functions
     global _gd
     _gd = game_description
+
+    static_resources = {}
+    for trick in game_description.resource_database.trick:
+        static_resources[trick] = 0
+    for difficulty in game_description.resource_database.difficulty:
+        static_resources[difficulty] = 0
+
+    for world in game_description.worlds:
+        for area in world.areas:
+            for connections in area.connections.values():
+                for target, value in connections.items():
+                    connections[target] = value.simplify(static_resources, game_description.resource_database)
 
     starting_world = game_description.world_by_asset_id(starting_world_asset_id)
     starting_area = starting_world.area_by_asset_id(starting_area_asset_id)
