@@ -1,7 +1,7 @@
 """Classes that describes the raw data of a game world."""
 
 from enum import Enum, unique
-from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set
+from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
 
 from randovania.log_parser import PickupEntry
 
@@ -122,6 +122,17 @@ class RequirementList(tuple):
     def satisfied(self, current_resources: CurrentResources) -> bool:
         return self.amount_unsatisfied(current_resources) == 0
 
+    def simplify(self, static_resources: CurrentResources) -> Optional["RequirementList"]:
+        items = []
+        for item in self:  # type: IndividualRequirement
+            if item.requirement in static_resources:
+                if not item.satisfied(static_resources):
+                    print("Dropping requirement", self)
+                    return None
+            else:
+                items.append(item)
+        return RequirementList(items)
+
 
 class RequirementSet:
     alternatives: Set[RequirementList]
@@ -165,8 +176,16 @@ class RequirementSet:
             yield RequirementList(requirement for requirement in requirement_list
                                   if not requirement.satisfied(current_resources))
 
-    def simplify(self, available_resources: CurrentResources) -> "RequirementSet":
-        return RequirementSet([])
+    def simplify(self, static_resources: CurrentResources) -> "RequirementSet":
+        new_alternatives = [
+            alternative.simplify(static_resources)
+            for alternative in self.alternatives
+        ]
+        return RequirementSet(
+            alternative
+            for alternative in new_alternatives
+            if alternative is not None
+        )
 
 
 class DockWeakness(NamedTuple):
