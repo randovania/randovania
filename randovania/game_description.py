@@ -82,6 +82,12 @@ class ResourceDatabase(NamedTuple):
     def get_by_type_and_index(self, resource_type: ResourceType, index: int) -> ResourceInfo:
         return _find_resource_info_with_id(self.get_by_type(resource_type), index)
 
+    def trivial_resource(self) -> ResourceInfo:
+        return self.get_by_type_and_index(ResourceType.MISC, 0)
+
+    def impossible_resource(self) -> ResourceInfo:
+        return self.get_by_type_and_index(ResourceType.MISC, 1)
+
 
 class IndividualRequirement(NamedTuple):
     requirement: ResourceInfo
@@ -120,15 +126,27 @@ class RequirementList(tuple):
 class RequirementSet:
     alternatives: Tuple[RequirementList, ...]
 
-    @classmethod
-    def empty(cls):
-        return cls(tuple(RequirementList()))
-
     def __init__(self, alternatives: Iterator[RequirementList]):
         self.alternatives = tuple(alternatives)
 
     def __hash__(self):
         return hash(self.alternatives)
+
+    @classmethod
+    def trivial(cls, database: ResourceDatabase) -> "RequirementSet":
+        return cls([
+            RequirementList([
+                IndividualRequirement(database.trivial_resource(), 1, False)
+            ])
+        ])
+
+    @classmethod
+    def impossible(cls, database: ResourceDatabase) -> "RequirementSet":
+        return cls([
+            RequirementList([
+                IndividualRequirement(database.impossible_resource(), 1, False)
+            ])
+        ])
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         if not self.alternatives:
@@ -148,6 +166,9 @@ class RequirementSet:
             # Doing requirement_list.satisfied(available_resources) breaks with negate requirements
             yield RequirementList(requirement for requirement in requirement_list
                                   if not requirement.satisfied(current_resources))
+
+    def simplify(self, available_resources: CurrentResources) -> "RequirementSet":
+        return RequirementSet([])
 
 
 class DockWeakness(NamedTuple):
@@ -292,20 +313,6 @@ class GameDescription(NamedTuple):
             for area in world.areas:
                 for node in area.nodes:
                     yield node
-
-    def trivial_requirement_set(self) -> RequirementSet:
-        return RequirementSet([
-            RequirementList([
-                IndividualRequirement(self.resource_database.get_by_type_and_index(ResourceType.MISC, 0), 1, False)
-            ])
-        ])
-
-    def impossible_requirement_set(self) -> RequirementSet:
-        return RequirementSet([
-            RequirementList([
-                IndividualRequirement(self.resource_database.get_by_type_and_index(ResourceType.MISC, 1), 1, False)
-            ])
-        ])
 
 
 def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:
