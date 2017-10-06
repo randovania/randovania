@@ -4,8 +4,7 @@ from typing import Set, Iterator, Tuple, List, Dict
 
 from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
     RequirementSet, Area, ResourceNode, resolve_dock_node, resolve_teleporter_node, ResourceInfo, \
-    ResourceDatabase, RequirementList, IndividualRequirement
-from randovania.log_parser import PickupEntry
+    ResourceDatabase, RequirementList
 from randovania.pickup_database import pickup_name_to_resource_gain
 
 Reach = List[Node]
@@ -51,23 +50,21 @@ class State:
 
 
 def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
-    additional_requirements = game.additional_requirements.get(node)
-    if additional_requirements is None:
-        additional_requirements = RequirementSet.trivial()
+    additional_requirements = game.additional_requirements.get(node, RequirementSet.trivial())
 
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
         # Includes opening form behind with different criteria
         try:
             target_node = resolve_dock_node(node, game)
-            yield target_node, node.dock_weakness.requirements
+            yield target_node, node.dock_weakness.requirements.merge(additional_requirements)
         except IndexError:
             # TODO: fix data to not having docks pointing to nothing
             yield None, RequirementSet.impossible()
 
     if isinstance(node, TeleporterNode):
         try:
-            yield resolve_teleporter_node(node, game), RequirementSet.trivial()
+            yield resolve_teleporter_node(node, game), additional_requirements
         except IndexError:
             # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
             print("Teleporter is broken!", node)
@@ -75,7 +72,7 @@ def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[No
 
     area = game.nodes_to_area[node]
     for target_node, requirements in area.connections[node].items():
-        yield target_node, requirements
+        yield target_node, requirements.merge(additional_requirements)
 
 
 def calculate_reach(current_state: State,
@@ -104,13 +101,7 @@ def calculate_reach(current_state: State,
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
             elif target_node:
-                requirements_by_node[target_node].update(
-                    requirements.satisfiable_requirements(
-                        current_state.resources,
-                        game_description.available_resources
-                    ))
-                if not requirements_by_node[target_node]:
-                    requirements_by_node.pop(target_node)
+                requirements_by_node[target_node].update(requirements.alternatives)
 
     # Discard satisfiable requirements of nodes reachable by other means
     for node in set(resulting_nodes).intersection(requirements_by_node.keys()):
@@ -138,14 +129,15 @@ def pretty_print_area(area: Area):
 
 
 def calculate_satisfiable_actions(state: State,
-                                  game: GameDescription) -> Tuple[List[ResourceNode], Set[RequirementList]]:
+                                  game: GameDescription) -> Tuple[List[ResourceNode],
+                                                                  Dict[Node, Set[RequirementList]]]:
     reach, requirements_by_node = calculate_reach(state, game)
     actions = list(actions_with_reach(reach, state))
 
     satisfiable_requirements = {
         requirements: requirements.amount_unsatisfied(state.resources)
         for requirements in set.union(*requirements_by_node.values())
-    }
+    } if requirements_by_node else {}
 
     def debug_print():
         print("Now on", _n(state.node))
@@ -172,28 +164,7 @@ def calculate_satisfiable_actions(state: State,
         if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
                for requirements in satisfiable_requirements)
     ]
-    return satisfiable_actions, set(satisfiable_requirements.keys())
-
-
-def advance_breadth(initial_state: State, game: GameDescription) -> bool:
-    operation_queue = [initial_state]
-
-    while operation_queue:
-        state = operation_queue.pop(0)
-        print("Checking", _n(state.node))
-
-        if game.victory_condition.satisfied(state.resources):
-            item_percentage = state.resources.get(
-                game.resource_database.get_by_type_and_index(
-                    ResourceType.ITEM, 47), 0)
-            print("Victory with {}% of the items.".format(item_percentage))
-            return True
-
-        actions, satisfiable_requirements = calculate_satisfiable_actions(state, game)
-        for action in actions:
-            operation_queue.append(state.act_on_node(action, game.resource_database))
-
-    return False
+    return satisfiable_actions, requirements_by_node
 
 
 def advance_depth(state: State, game: GameDescription) -> bool:
@@ -204,19 +175,16 @@ def advance_depth(state: State, game: GameDescription) -> bool:
         print("Victory with {}% of the items.".format(item_percentage))
         return True
 
-    actions, satisfiable_requirements = calculate_satisfiable_actions(state, game)
-    print("Checking {}, has {} actions".format(_n(state.node), len(actions)))
+    actions, requirements_by_node = calculate_satisfiable_actions(state, game)
 
     for action in actions:
         if advance_depth(state.act_on_node(action, game.resource_database),
                          game):
             return True
 
-    # game.additional_requirements[state.node] = RequirementSet(tuple(
-    #     requirement_list
-    #     for _, requirement_list in potential_nodes_from(state.node, game)
-    # ))
-    print("Rollback to {}".format(_n(state.node)))
+    game.additional_requirements[state.node] = RequirementSet(frozenset().union(
+        *requirements_by_node.values()
+    ))
     return False
 
 
