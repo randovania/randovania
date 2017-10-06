@@ -122,14 +122,15 @@ class RequirementList(frozenset):
     def satisfied(self, current_resources: CurrentResources) -> bool:
         return self.amount_unsatisfied(current_resources) == 0
 
-    def simplify(self, static_resources: CurrentResources) -> Optional["RequirementList"]:
+    def simplify(self, static_resources: CurrentResources, database: ResourceDatabase) -> Optional["RequirementList"]:
         items = []
         for item in self:  # type: IndividualRequirement
+            if item.requirement == database.impossible_resource():
+                return None
             if item.requirement in static_resources:
                 if not item.satisfied(static_resources):
-                    print("Dropping requirement", self)
                     return None
-            else:
+            elif item.requirement != database.trivial_resource():
                 items.append(item)
         return RequirementList(items)
 
@@ -178,9 +179,9 @@ class RequirementSet:
             yield RequirementList(requirement for requirement in requirement_list
                                   if not requirement.satisfied(current_resources))
 
-    def simplify(self, static_resources: CurrentResources) -> "RequirementSet":
+    def simplify(self, static_resources: CurrentResources, database: ResourceDatabase) -> "RequirementSet":
         new_alternatives = [
-            alternative.simplify(static_resources)
+            alternative.simplify(static_resources, database)
             for alternative in self.alternatives
         ]
         return RequirementSet(
