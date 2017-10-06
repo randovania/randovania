@@ -117,12 +117,18 @@ class RequirementList(tuple):
         return self.amount_unsatisfied(current_resources) == 0
 
 
-class RequirementSet(NamedTuple):
+class RequirementSet:
     alternatives: Tuple[RequirementList, ...]
 
     @classmethod
     def empty(cls):
         return cls(tuple(RequirementList()))
+
+    def __init__(self, alternatives: Iterator[RequirementList]):
+        self.alternatives = tuple(alternatives)
+
+    def __hash__(self):
+        return hash(self.alternatives)
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         if not self.alternatives:
