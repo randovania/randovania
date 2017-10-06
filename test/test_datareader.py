@@ -11,13 +11,13 @@ def test_add_requirement_to_set():
     id_req_b = IndividualRequirement(req_b, 1, False)
     id_req_c = IndividualRequirement(req_c, 1, False)
 
-    the_set = RequirementSet(tuple([
+    the_set = RequirementSet([
         RequirementList([id_req_a]),
         RequirementList([id_req_b]),
-    ]))
+    ])
     new_set = add_requirement_to_set(the_set, id_req_c)
 
     assert the_set != new_set
-    for i in range(2):
-        assert the_set.alternatives[i] + (id_req_c,) == new_set.alternatives[i]
+    for the_set_list, new_set_list in zip(the_set.alternatives, new_set.alternatives):
+        assert the_set_list + (id_req_c,) == new_set_list
 

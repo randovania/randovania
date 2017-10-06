@@ -1,7 +1,7 @@
 """Classes that describes the raw data of a game world."""
 
 from enum import Enum, unique
-from typing import NamedTuple, List, Dict, Union, Tuple, Iterator
+from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set
 
 from randovania.log_parser import PickupEntry
 
@@ -124,10 +124,10 @@ class RequirementList(tuple):
 
 
 class RequirementSet:
-    alternatives: Tuple[RequirementList, ...]
+    alternatives: Set[RequirementList]
 
     def __init__(self, alternatives: Iterator[RequirementList]):
-        self.alternatives = tuple(alternatives)
+        self.alternatives = frozenset(alternatives)
 
     def __hash__(self):
         return hash(self.alternatives)
