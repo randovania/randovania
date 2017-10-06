@@ -26,7 +26,24 @@ def test_simplify_requirement_set():
     simple_3 = the_set.simplify({req_a: 1, req_b: 1})
 
     assert simple_1.alternatives == frozenset()
-    assert simple_2.alternatives == frozenset([tuple()])
-    assert simple_3.alternatives == frozenset([tuple()])
-ws
+    assert simple_2.alternatives == frozenset([RequirementList()])
+    assert simple_3.alternatives == frozenset([RequirementList()])
 
+
+def test_trivial_merge():
+    trivial = RequirementSet.trivial()
+    impossible = RequirementSet.impossible()
+
+    req_a = SimpleResourceInfo(0, "A", "A")
+    id_req_a = IndividualRequirement(req_a, 1, False)
+    the_set = RequirementSet([
+        RequirementList([id_req_a]),
+    ])
+
+    assert trivial.merge(trivial) == trivial
+    assert trivial.merge(the_set) == the_set
+    assert the_set.merge(trivial) == the_set
+    assert trivial.merge(impossible) == impossible
+    assert impossible.merge(the_set) == impossible
+    assert the_set.merge(impossible) == impossible
+    assert the_set.merge(the_set) == the_set
