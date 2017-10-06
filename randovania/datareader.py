@@ -236,7 +236,8 @@ def decode_data(data: Dict, pickup_entries: List[PickupEntry]) -> GameDescriptio
         nodes_to_area=nodes_to_area,
         nodes_to_world=nodes_to_world,
         available_resources=available_resources,
-        victory_condition=victory_condition
+        victory_condition=victory_condition,
+        additional_requirements={}
     )
 
 
