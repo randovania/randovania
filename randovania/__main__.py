@@ -8,8 +8,12 @@ from randovania.games.prime import log_parser
 
 def main():
     parser = argparse.ArgumentParser()
-    cli.create_subparsers(parser.add_subparsers())
+    cli.create_subparsers(parser.add_subparsers(dest="game"))
     args = parser.parse_args()
+    if args.game is None:
+        parser.print_help()
+        raise SystemExit(1)
+
     args.func(args)
 
 
