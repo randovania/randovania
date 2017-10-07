@@ -5,7 +5,7 @@ A randomizer validator for the Metroid Prime series.
 
 With a Python 3.6 installation:
 
-`python3 -m pip install randovania`
+`python3 -m pip install --upgrade randovania`
  
 ### Usage
 
