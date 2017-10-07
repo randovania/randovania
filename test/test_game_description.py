@@ -1,4 +1,4 @@
-from randovania.game_description import RequirementSet, SimpleResourceInfo, IndividualRequirement, RequirementList
+from randovania.resolver.game_description import RequirementSet, SimpleResourceInfo, IndividualRequirement, RequirementList
 
 
 def test_empty_requirement_set():

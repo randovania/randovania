@@ -2,7 +2,7 @@ import io
 import json
 from typing import BinaryIO
 
-from randovania import prime_binary_decoder
+from randovania.games.prime import binary_data
 
 
 def test_simple_round_trip():
@@ -27,10 +27,10 @@ def test_simple_round_trip():
 
     b = io.BytesIO()
     b_io = b  # type: BinaryIO
-    prime_binary_decoder.encode(sample_data, b_io)
+    binary_data.encode(sample_data, b_io)
 
     b.seek(0)
-    decoded = prime_binary_decoder.decode(b_io)
+    decoded = binary_data.decode(b_io)
 
     assert sample_data == decoded
 
@@ -42,7 +42,7 @@ def test_complex_encode(test_files_dir):
     b_io = b  # type: BinaryIO
 
     # Run
-    prime_binary_decoder.encode(data, b_io)
+    binary_data.encode(data, b_io)
 
     # Assert
     assert test_files_dir.join(
@@ -51,7 +51,7 @@ def test_complex_encode(test_files_dir):
 
 def test_complex_decode(test_files_dir):
     # Run
-    decoded_data = prime_binary_decoder.decode_file_path(
+    decoded_data = binary_data.decode_file_path(
         str(test_files_dir.join("prime_data_as_binary.bin")))
 
     # Assert

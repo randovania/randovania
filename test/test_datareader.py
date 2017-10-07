@@ -1,5 +1,5 @@
-from randovania.datareader import add_requirement_to_set
-from randovania.game_description import RequirementSet, RequirementList, IndividualRequirement, SimpleResourceInfo
+from randovania.resolver.data_reader import add_requirement_to_set
+from randovania.resolver.game_description import RequirementSet, RequirementList, IndividualRequirement, SimpleResourceInfo
 
 
 def test_add_requirement_to_set():

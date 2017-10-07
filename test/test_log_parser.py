@@ -1,7 +1,7 @@
 import py
 import pytest
 
-from randovania import log_parser
+from randovania.games.prime import log_parser
 
 
 @pytest.fixture()

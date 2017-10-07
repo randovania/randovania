@@ -3,7 +3,7 @@
 from enum import Enum, unique
 from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
 
-from randovania.log_parser import PickupEntry
+from randovania.games.prime.log_parser import PickupEntry
 
 
 class SimpleResourceInfo(NamedTuple):
