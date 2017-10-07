@@ -2,13 +2,13 @@ from collections import defaultdict
 from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Tuple, Dict
 
-from randovania import prime_binary_decoder
-from randovania.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
+from randovania.games.prime import binary_data
+from randovania.games.prime.log_parser import PickupEntry
+from randovania.pickup_database import pickup_name_to_resource_gain
+from randovania.resolver.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, ResourceNode, \
     GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList
-from randovania.log_parser import PickupEntry
-from randovania.pickup_database import pickup_name_to_resource_gain
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -283,7 +283,7 @@ def patch_data(data: Dict):
 
 def read(path, pickup_entries: List[PickupEntry]) -> GameDescription:
     with open(path, "rb") as x:  # type: BinaryIO
-        data = prime_binary_decoder.decode(x)
+        data = binary_data.decode(x)
 
     patch_data(data)
 

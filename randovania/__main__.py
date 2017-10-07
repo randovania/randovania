@@ -1,8 +1,10 @@
 import argparse
 import os
 
-from randovania import log_parser, datareader, resolver
-from randovania.log_parser import Game
+from randovania import resolver
+from randovania.games.prime import log_parser
+from randovania.games.prime.log_parser import Game
+from randovania.resolver import data_reader
 
 
 def main():
@@ -45,7 +47,7 @@ def main():
         if game == Game.PRIME2:
             args.data_file = os.path.join(os.path.dirname(__file__), "data", "prime2.bin")
 
-    game_description = datareader.read(args.data_file, log.pickup_entries)
+    game_description = data_reader.read(args.data_file, log.pickup_entries)
     possible = resolver.resolve(args.difficulty, args.enable_tricks, game_description)
     print("Game is possible: ", possible)
     if not possible:

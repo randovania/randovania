@@ -1,8 +1,7 @@
+import re
 from typing import Dict, List, Tuple
 
-import re
-
-from randovania.game_description import ResourceInfo, ResourceDatabase, ResourceType
+from randovania.resolver.game_description import ResourceInfo, ResourceDatabase, ResourceType
 
 ResourceGain = List[Tuple[ResourceInfo, int]]
 

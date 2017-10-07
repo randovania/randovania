@@ -2,10 +2,11 @@ import copy
 from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Dict
 
-from randovania.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, TeleporterNode, \
+from randovania.pickup_database import pickup_name_to_resource_gain
+from randovania.resolver.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, \
+    TeleporterNode, \
     RequirementSet, Area, ResourceNode, resolve_dock_node, resolve_teleporter_node, ResourceInfo, \
     ResourceDatabase, RequirementList
-from randovania.pickup_database import pickup_name_to_resource_gain
 
 Reach = List[Node]
 _gd = None  # type: GameDescription
