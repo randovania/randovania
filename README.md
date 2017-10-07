@@ -24,6 +24,12 @@ no matter how difficult. This does not include going out of bounds.
 It will also print the order of pickups taken and events triggered in
 order to finish the game.
 
+`python3 -m randovania echoes randomize --randomizer-binary
+D:\Randomizer\Randomizer.exe --remove-hud-memo-popup --enable-tricks
+--difficulty 3 --skip-item-loss D:\MetroidPrime2-Rando\files`
+
+Generate a new seed and validate it until a possible seed is found.
+
 ### Limitations
 
 * Item Loss is not properly implemented. If `--skip-item-loss`, the
