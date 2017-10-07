@@ -11,12 +11,11 @@ def echoes_log_a():
 
 
 def test_parse_log(echoes_log_a):
-    print(echoes_log_a)
     log = log_parser.parse_log(str(echoes_log_a))
     assert log.version == "3.2"
     assert log.seed == "1145919247"
-    assert log.excluded_pickups == "23"
-    assert log.pickup_entries == [
+    assert log.excluded_pickups == [23]
+    assert log.pickup_database.entries == [
         randovania.resolver.game_description.PickupEntry("Temple Grounds", "Hive Chamber A",
                                "Power Bomb"),
         randovania.resolver.game_description.PickupEntry("Temple Grounds", "Hall of Honored Dead",
