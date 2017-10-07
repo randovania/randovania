@@ -33,6 +33,32 @@ def add_data_file_argument(parser: ArgumentParser):
     )
 
 
+def add_difficulty_arguments(parser):
+    parser.add_argument(
+        "--difficulty",
+        type=int,
+        default=0,
+        choices=range(6),
+        help=
+        "The difficulty level to check with. Higher numbers implies in harder tricks."
+    )
+    parser.add_argument(
+        "--enable-tricks",
+        action="store_const",
+        const=True,
+        help=
+        "Enable trick usage in the validation. "
+        "Currently, there's no way to control which individual tricks gets enabled."
+    )
+    parser.add_argument(
+        "--skip-item-loss",
+        action="store_const",
+        const=True,
+        help=
+        "Assumes the Item Loss trigger is disabled."
+    )
+
+
 def patch_data(data: Dict):
     for world in data["worlds"]:
         for area in world["areas"]:
@@ -59,30 +85,7 @@ def create_validate_command(sub_parsers):
     parser.add_argument(
         "logfile",
         help="Path to the log file of a Randomizer run.")
-    parser.add_argument(
-        "--difficulty",
-        type=int,
-        default=0,
-        choices=range(6),
-        help=
-        "The difficulty level to check with. Higher numbers implies in harder tricks."
-    )
-    parser.add_argument(
-        "--enable-tricks",
-        action="store_const",
-        const=True,
-        help=
-        "Enable trick usage in the validation. "
-        "Currently, there's no way to control which individual tricks gets enabled."
-    )
-    parser.add_argument(
-        "--skip-item-loss",
-        action="store_const",
-        const=True,
-        help=
-        "Enable trick usage in the validation. "
-        "Currently, there's no way to control which individual tricks gets enabled."
-    )
+    add_difficulty_arguments(parser)
     parser.add_argument(
         "--print-final-path",
         action="store_const",
