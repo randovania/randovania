@@ -214,7 +214,12 @@ class RequirementSet:
     alternatives: Set[RequirementList]
 
     def __init__(self, alternatives: Iterator[RequirementList]):
-        self.alternatives = frozenset(alternatives)
+        input_set = frozenset(alternatives)
+        self.alternatives = frozenset(
+            requirement
+            for requirement in input_set
+            if not any(other < requirement for other in input_set)
+        )
 
     def __eq__(self, other):
         return isinstance(
