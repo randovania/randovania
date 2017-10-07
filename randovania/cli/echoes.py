@@ -131,5 +131,12 @@ def create_subparsers(sub_parsers):
         help="Actions regarding Metroid Prime 2: Echoes"
     )  # type: ArgumentParser
 
-    command_subparser = parser.add_subparsers()
+    command_subparser = parser.add_subparsers(dest="command")
     create_validate_command(command_subparser)
+
+    def check_command(args):
+        if args.command is None:
+            parser.print_help()
+            raise SystemExit(1)
+
+    parser.set_defaults(func=check_command)
