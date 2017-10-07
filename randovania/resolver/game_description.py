@@ -1,9 +1,9 @@
 """Classes that describes the raw data of a game world."""
-
+import typing
 from enum import Enum, unique
 from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
 
-from randovania.games.prime.log_parser import PickupEntry
+import re
 
 
 class SimpleResourceInfo(NamedTuple):
@@ -30,7 +30,14 @@ class DamageResourceInfo(NamedTuple):
         return "Damage {}".format(self.long_name)
 
 
+class PickupEntry(typing.NamedTuple):
+    world: str
+    room: str
+    item: str
+
+
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupEntry]
+ResourceGain = List[Tuple[ResourceInfo, int]]
 CurrentResources = Dict[ResourceInfo, int]
 
 
@@ -92,6 +99,55 @@ class ResourceDatabase(NamedTuple):
     def impossible_resource(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.MISC, 1)
 
+    def item_percentage(self) -> ResourceInfo:
+        return self.get_by_type_and_index(ResourceType.ITEM, 47)
+
+
+class PickupDatabase:
+    percent_less_items: Set[str]
+    direct_name: Dict[str, int]
+    custom_mapping: Dict[str, Dict[str, int]]
+    entries: List[PickupEntry]
+
+    def __init__(self,
+                 percent_less_items: Set[str],
+                 direct_name: Dict[str, int],
+                 custom_mapping: Dict[str, Dict[str, int]],
+                 entries: List[PickupEntry]) -> None:
+        self.percent_less_items = percent_less_items
+        self.direct_name = direct_name
+        self.custom_mapping = custom_mapping
+        self.entries = entries
+
+    def pickup_name_to_resource_gain(self,
+                                     name: str,
+                                     database: ResourceDatabase) -> ResourceGain:
+        item_database = database.get_by_type(ResourceType.ITEM)
+
+        result = []
+        if name not in self.percent_less_items:
+            result.append((database.item_percentage(), 1))
+
+        if name in self.direct_name:
+            for info in item_database:
+                if info.long_name == name:
+                    return result + [(info, self.direct_name[name])]
+            raise ValueError("Pickup '{}' not found in database.".format(name))
+        else:
+            for pattern, values in self.custom_mapping.items():
+                if re.match(pattern, name):
+                    starting_size = len(result)
+                    for info in item_database:
+                        if info.long_name in values:
+                            result.append((info, values[info.long_name]))
+                    if len(result) - starting_size != len(values):
+                        raise ValueError(
+                            "Pattern '{}' (matched by '{}') have resource not found in database. Found {}".
+                                format(pattern, name, result))
+                    return result
+
+        raise ValueError("'{}' is unknown by pickup_database".format(name))
+
 
 class IndividualRequirement(NamedTuple):
     requirement: ResourceInfo
@@ -119,7 +175,7 @@ class IndividualRequirement(NamedTuple):
 
     def __repr__(self):
         return "{} {} {}".format(self.requirement, "<"
-                                 if self.negate else ">=", self.amount)
+        if self.negate else ">=", self.amount)
 
 
 class RequirementList(frozenset):
@@ -286,13 +342,13 @@ class ResourceNode(NamedTuple):
     heal: bool
     resource: ResourceInfo
 
-    def resource_gain_on_collect(self, resource_database: ResourceDatabase
+    def resource_gain_on_collect(self,
+                                 resource_database: ResourceDatabase,
+                                 pickup_database: PickupDatabase
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
-        from randovania.pickup_database import pickup_name_to_resource_gain
-
         yield self.resource, 1
         if isinstance(self.resource, PickupEntry):
-            for pickup_resource, quantity in pickup_name_to_resource_gain(
+            for pickup_resource, quantity in pickup_database.pickup_name_to_resource_gain(
                     self.resource.item, resource_database):
                 yield pickup_resource, quantity
 
@@ -337,6 +393,7 @@ class GameDescription(NamedTuple):
     game: int
     game_name: str
     resource_database: ResourceDatabase
+    pickup_database: PickupDatabase
     dock_weakness_database: DockWeaknessDatabase
     worlds: List[World]
     nodes_to_area: Dict[Node, Area]

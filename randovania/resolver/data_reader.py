@@ -3,12 +3,11 @@ from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Tuple, Dict
 
 from randovania.games.prime import binary_data
-from randovania.games.prime.log_parser import PickupEntry
-from randovania.pickup_database import pickup_name_to_resource_gain
 from randovania.resolver.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, ResourceNode, \
-    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList
+    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
+    PickupEntry
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -205,8 +204,7 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
         difficulty=read_resource_info_array(data["difficulty"]))
 
 
-def decode_data(data: Dict,
-                pickup_entries: List[PickupEntry]) -> GameDescription:
+def decode_data(data: Dict, pickup_database: PickupDatabase) -> GameDescription:
     game = data["game"]
     game_name = data["game_name"]
 
@@ -215,7 +213,7 @@ def decode_data(data: Dict,
         data["dock_weakness_database"], resource_database)
 
     world_reader = WorldReader(resource_database, dock_weakness_database,
-                               pickup_entries)
+                               pickup_database.entries)
     worlds = world_reader.read_world_list(data["worlds"])
 
     final_boss = [
@@ -243,7 +241,7 @@ def decode_data(data: Dict,
                 if isinstance(node, ResourceNode):
                     available_resources[node.resource] += 1
                     if isinstance(node.resource, PickupEntry):
-                        for resource, quantity in pickup_name_to_resource_gain(
+                        for resource, quantity in pickup_database.pickup_name_to_resource_gain(
                                 node.resource.item, resource_database):
                             available_resources[resource] += quantity
 
@@ -255,6 +253,7 @@ def decode_data(data: Dict,
         game=game,
         game_name=game_name,
         resource_database=resource_database,
+        pickup_database=pickup_database,
         dock_weakness_database=dock_weakness_database,
         worlds=worlds,
         nodes_to_area=nodes_to_area,
@@ -281,10 +280,10 @@ def patch_data(data: Dict):
                 } for i in range(3)]]
 
 
-def read(path, pickup_entries: List[PickupEntry]) -> GameDescription:
+def read(path, pickup_database: PickupDatabase) -> GameDescription:
     with open(path, "rb") as x:  # type: BinaryIO
         data = binary_data.decode(x)
 
     patch_data(data)
 
-    return decode_data(data, pickup_entries)
+    return decode_data(data, pickup_database)
