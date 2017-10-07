@@ -5,6 +5,7 @@ from typing import Dict, BinaryIO
 
 from randovania.games.prime import binary_data, log_parser
 from randovania.resolver import resolver, data_reader
+from randovania.resolver.debug import _n
 
 
 def decode_data_file(args) -> Dict:
@@ -82,6 +83,13 @@ def create_validate_command(sub_parsers):
         "Enable trick usage in the validation. "
         "Currently, there's no way to control which individual tricks gets enabled."
     )
+    parser.add_argument(
+        "--print-final-path",
+        action="store_const",
+        const=True,
+        help=
+        "If seed is possible, print the sequence of events/pickups taken to reach the ending."
+    )
     add_data_file_argument(parser)
 
     def logic(args):
@@ -91,9 +99,27 @@ def create_validate_command(sub_parsers):
         randomizer_log = log_parser.parse_log(args.logfile)
 
         game_description = data_reader.decode_data(data, randomizer_log.pickup_database)
-        possible = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
-        print("Game is possible: ", possible)
-        if not possible:
+        final_state = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
+        if final_state:
+            print("Game is possible!")
+
+            item_percentage = final_state.resources.get(game_description.resource_database.item_percentage(), 0)
+            print("Victory with {}% of the items.".format(item_percentage))
+
+            if args.print_final_path:
+                states = []
+
+                state = final_state
+                while state:
+                    states.append(state)
+                    state = state.previous_state
+
+                print("Path taken:")
+                for state in reversed(states):
+                    print("> {}".format(_n(state.node)))
+
+        else:
+            print("Impossible.")
             raise SystemExit(1)
 
     parser.set_defaults(func=logic)

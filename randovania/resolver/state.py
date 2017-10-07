@@ -1,4 +1,5 @@
 import copy
+from typing import Optional
 
 from randovania.resolver.game_description import CurrentResources, Node, ResourceInfo, ResourceNode, ResourceDatabase, \
     PickupDatabase
@@ -7,10 +8,12 @@ from randovania.resolver.game_description import CurrentResources, Node, Resourc
 class State:
     resources: CurrentResources
     node: Node
+    previous_state: Optional["State"]
 
-    def __init__(self, resources: CurrentResources, node: Node):
+    def __init__(self, resources: CurrentResources, node: Node, previous: Optional["State"]):
         self.resources = resources
         self.node = node
+        self.previous_state = previous
 
     def has_resource(self, resource: ResourceInfo) -> bool:
         return self.resources.get(resource, 0) > 0
@@ -32,7 +35,7 @@ class State:
                 pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
-        return State(new_resources, self.node)
+        return State(new_resources, self.node, self)
 
     def act_on_node(self,
                     node: ResourceNode,
