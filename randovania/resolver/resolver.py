@@ -5,7 +5,8 @@ import randovania.resolver.debug
 from randovania.resolver.debug import _n
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
-    RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources
+    RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources, \
+    ResourceInfo
 from randovania.resolver.state import State
 
 Reach = List[Node]
@@ -60,10 +61,6 @@ def calculate_reach(current_state: State, game_description: GameDescription
             if target_node in checked_nodes or target_node in nodes_to_check:
                 continue
 
-            # additional_requirements = game_description.additional_requirements.get(target_node)
-            # if additional_requirements is not None:
-            #     requirements = requirements.merge(additional_requirements)
-
             if requirements.satisfied(current_state.resources):
                 nodes_to_check.append(target_node)
             elif target_node:
@@ -89,30 +86,36 @@ def calculate_satisfiable_actions(state: State,
                                   reach: Reach,
                                   requirements_by_node: Dict[Node, Set[RequirementList]],
                                   game: GameDescription) -> Iterator[ResourceNode]:
-    # print(" > Calculating Satisfiable Actions")
     if requirements_by_node:
+        interesting_resources = set()  # type: Set[ResourceInfo]
+
+        # print(" > satisfiable_requirements from {} nodes".format(len(requirements_by_node)))
         satisfiable_requirements = {
             requirements: requirements.amount_unsatisfied(state.resources)
             for requirements in set.union(*requirements_by_node.values())
-        }
-        for action in actions_with_reach(reach, state):
-            def amount_unsatisfied_with(requirements: RequirementList,
-                                        action: ResourceNode):
-                return requirements.amount_unsatisfied(
-                    state.act_on_node(action, game.resource_database, game.pickup_database).resources)
+        }  # type: Dict[RequirementList, int]
 
-            # print(" > Validating action", _n(action))
-            if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
-                   for requirements in satisfiable_requirements):
-                # print("   > Valid")
-                yield action
+        # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
+        for requirement, amount in satisfiable_requirements.items():
+            if amount > 0:
+                for indv in requirement.values():
+                    if indv.requirement not in interesting_resources and not indv.negate and not indv.satisfied(
+                            state.resources):
+                        interesting_resources.add(indv.requirement)
+
+        # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
+        for action in actions_with_reach(reach, state):
+            for resource, amount in action.resource_gain_on_collect(game.resource_database, game.pickup_database):
+                if resource in interesting_resources:
+                    yield action
+                    break
 
 
 def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     if game.victory_condition.satisfied(state.resources):
         return state
 
-    # print("Now on", _n(state.node))
+    print("Now on", _n(state.node))
     reach, requirements_by_node = calculate_reach(state, game)
 
     for action in calculate_satisfiable_actions(state, reach, requirements_by_node, game):
@@ -121,7 +124,7 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
         if new_state:
             return new_state
 
-    # print("Rollback on", _n(state.node))
+    print("Rollback on", _n(state.node))
     game.additional_requirements[state.node] = RequirementSet(
         frozenset().union(*requirements_by_node.values()))
     # print("> Rollback finished.")
