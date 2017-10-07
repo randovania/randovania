@@ -11,6 +11,9 @@ setup(
     ],
     scripts=[
     ],
+    package_data={
+        "randovania": ["data/*"]
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
