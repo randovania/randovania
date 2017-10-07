@@ -30,6 +30,7 @@ order to finish the game.
 validator assumes you start with missiles and bombs.
 * There's no way to choose each trick individually.
 * The data set does not include out of bounds movement.
+* Dark World damage requirements, while mapped are not verified.
 
 ### Options
 
