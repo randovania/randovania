@@ -1,5 +1,5 @@
 import re
-import typing
+from typing import NamedTuple, List, Dict
 
 from randovania.resolver.game_description import PickupEntry, PickupDatabase
 
@@ -124,11 +124,12 @@ custom_mapping = {
 }
 
 
-class RandomizerLog(typing.NamedTuple):
+class RandomizerLog(NamedTuple):
     version: str
     seed: str
-    excluded_pickups: typing.List[int]
+    excluded_pickups: List[int]
     pickup_database: PickupDatabase
+    elevators: Dict[str, str]
 
 
 class InvalidLogFileException(Exception):
@@ -166,6 +167,17 @@ def parse_log(logfile: str) -> RandomizerLog:
             m = re.match(r"^([^-]+)(?:\s-)+([^-]+)(?:\s-)+([^-]+)$", line)
             if m:
                 pickups.append(PickupEntry(*map(str.strip, m.group(1, 2, 3))))
+            else:
+                break
+
+        elevators = {}
+        if f.readline().strip() == "Elevators:":
+            for line in f:
+                split = line.strip().split("<>")
+                if len(split) == 2:
+                    elevators[split[0]] = elevators[split[1]]
+                else:
+                    break
 
         database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickups)
-        return RandomizerLog(version, seed, excluded_pickups, database)
+        return RandomizerLog(version, seed, excluded_pickups, database, elevators)
