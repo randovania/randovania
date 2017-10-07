@@ -115,7 +115,7 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     if game.victory_condition.satisfied(state.resources):
         return state
 
-    print("Now on", _n(state.node))
+    # print("Now on", _n(state.node))
     reach, requirements_by_node = calculate_reach(state, game)
 
     for action in calculate_satisfiable_actions(state, reach, requirements_by_node, game):
@@ -124,11 +124,22 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
         if new_state:
             return new_state
 
-    print("Rollback on", _n(state.node))
+    # print("Rollback on", _n(state.node))
+    new_requirements = frozenset().union(*requirements_by_node.values())
     game.additional_requirements[state.node] = RequirementSet(
-        frozenset().union(*requirements_by_node.values()))
+        requirement
+        for requirement in new_requirements
+        if not any(other < requirement for other in new_requirements)
+    )
     # print("> Rollback finished.")
     return None
+
+
+def sorted_requirementset_print(new_requirements: Set[RequirementList]):
+    to_print = []
+    for requirement in new_requirements:
+        to_print.append(", ".join(str(item) for item in sorted(requirement.values())))
+    print("\n".join(x for x in sorted(to_print)))
 
 
 def resolve(difficulty_level: int,
