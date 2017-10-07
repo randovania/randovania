@@ -127,7 +127,7 @@ custom_mapping = {
 class RandomizerLog(typing.NamedTuple):
     version: str
     seed: str
-    excluded_pickups: str
+    excluded_pickups: typing.List[int]
     pickup_database: PickupDatabase
 
 
@@ -156,9 +156,10 @@ def parse_log(logfile: str) -> RandomizerLog:
 
         seed = extract_with_regexp(logfile, f, r"^Seed: (\d+)$",
                                    "Could not find Seed")
-        excluded_pickups = extract_with_regexp(
-            logfile, f, r"^Excluded pickups: (\d+)$",
+        excluded_pickups_str = extract_with_regexp(
+            logfile, f, r"^Excluded pickups:\s+((?:\d+\s?)+)$",
             "Could not find excluded pickups")
+        excluded_pickups = [int(pickup_str) for pickup_str in excluded_pickups_str.split(" ")]
 
         pickups = []
         for line in f:
