@@ -26,7 +26,7 @@ order to finish the game.
 
 ### Limitations
 
-* Item Loss is not properly implemented. If --skip-item-loss, the
+* Item Loss is not properly implemented. If `--skip-item-loss`, the
 validator assumes you start with missiles and bombs.
 * There's no way to choose each trick individually.
 * The data set does not include out of bounds movement.
