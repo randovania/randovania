@@ -261,29 +261,3 @@ def decode_data(data: Dict, pickup_database: PickupDatabase) -> GameDescription:
         available_resources=available_resources,
         victory_condition=victory_condition,
         additional_requirements={})
-
-
-def patch_data(data: Dict):
-    for world in data["worlds"]:
-        for area in world["areas"]:
-            # Aerie Transport Station has default_node_index not set
-            if area["asset_id"] == 3136899603:
-                area["default_node_index"] = 2
-
-            # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
-            if area["asset_id"] == 3968294891:
-                area["connections"][1][2] = [[{
-                    "requirement_type": 0,
-                    "requirement_index": 38 + i,
-                    "amount": 1,
-                    "negate": False,
-                } for i in range(3)]]
-
-
-def read(path, pickup_database: PickupDatabase) -> GameDescription:
-    with open(path, "rb") as x:  # type: BinaryIO
-        data = binary_data.decode(x)
-
-    patch_data(data)
-
-    return decode_data(data, pickup_database)
