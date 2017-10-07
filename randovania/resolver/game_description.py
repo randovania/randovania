@@ -35,6 +35,9 @@ class PickupEntry(typing.NamedTuple):
     room: str
     item: str
 
+    def __str__(self):
+        return "Pickup {}".format(self.item)
+
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupEntry]
 ResourceGain = List[Tuple[ResourceInfo, int]]
@@ -177,6 +180,9 @@ class IndividualRequirement(NamedTuple):
         return "{} {} {}".format(self.requirement, "<"
         if self.negate else ">=", self.amount)
 
+    def __lt__(self, other: "IndividualRequirement") -> bool:
+        return str(self.requirement) < str(other.requirement)
+
 
 class RequirementList(frozenset):
     def amount_unsatisfied(self, current_resources: CurrentResources) -> bool:
@@ -234,19 +240,6 @@ class RequirementSet:
         return any(
             requirement_list.satisfied(current_resources)
             for requirement_list in self.alternatives)
-
-    def satisfiable_requirements(self, current_resources: CurrentResources,
-                                 available_resources: CurrentResources
-                                 ) -> Iterator[RequirementList]:
-        for requirement_list in self.alternatives:
-            # Don't list satisfied sets as satisfiable
-            if requirement_list.satisfied(current_resources):
-                continue
-
-            # Doing requirement_list.satisfied(available_resources) breaks with negate requirements
-            yield RequirementList(
-                requirement for requirement in requirement_list
-                if not requirement.satisfied(current_resources))
 
     def simplify(self, static_resources: CurrentResources,
                  database: ResourceDatabase) -> "RequirementSet":
