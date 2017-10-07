@@ -1,3 +1,5 @@
+import cProfile
+from line_profiler import LineProfiler
 from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Dict, Optional
 
@@ -12,8 +14,7 @@ from randovania.resolver.state import State
 Reach = List[Node]
 
 
-def potential_nodes_from(node: Node, game: GameDescription
-                         ) -> Iterator[Tuple[Node, RequirementSet]]:
+def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
     additional_requirements = game.additional_requirements.get(
         node, RequirementSet.trivial())
 
@@ -56,8 +57,7 @@ def calculate_reach(current_state: State, game_description: GameDescription
         if node != current_state.node:
             resulting_nodes.append(node)
 
-        for target_node, requirements in potential_nodes_from(
-                node, game_description):
+        for target_node, requirements in potential_nodes_from(node, game_description):
             if target_node in checked_nodes or target_node in nodes_to_check:
                 continue
 
