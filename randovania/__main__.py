@@ -1,23 +1,14 @@
 import argparse
 import os
 
-from randovania import resolver
+from randovania.resolver import resolver, data_reader
 from randovania.games.prime import log_parser
-from randovania.games.prime.log_parser import Game
-from randovania.resolver import data_reader
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "logfile", help="Path to the log file of a Randomizer run.")
-    parser.add_argument(
-        "--game",
-        choices=log_parser.generate_game_choices(),
-        default="auto",
-        help=
-        "The game to check. Auto will try to decide based on zone names in the log."
-    )
     parser.add_argument(
         "--difficulty",
         type=int,
@@ -40,14 +31,12 @@ def main():
         help="Path to the game description file. Defaults to a provided file based on game."
     )
     args = parser.parse_args()
-    log = log_parser.parse_log(args.logfile)
+    randomizer_log = log_parser.parse_log(args.logfile)
 
-    game = log_parser.resolve_game_argument(args.game, log)
     if args.data_file is None:
-        if game == Game.PRIME2:
-            args.data_file = os.path.join(os.path.dirname(__file__), "data", "prime2.bin")
+        args.data_file = os.path.join(os.path.dirname(__file__), "data", "prime2.bin")
 
-    game_description = data_reader.read(args.data_file, log.pickup_entries)
+    game_description = data_reader.read(args.data_file, randomizer_log.pickup_database)
     possible = resolver.resolve(args.difficulty, args.enable_tricks, game_description)
     print("Game is possible: ", possible)
     if not possible:

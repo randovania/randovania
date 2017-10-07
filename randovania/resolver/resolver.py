@@ -2,11 +2,10 @@ import copy
 from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Dict
 
-from randovania.pickup_database import pickup_name_to_resource_gain
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, \
     TeleporterNode, \
     RequirementSet, Area, ResourceNode, resolve_dock_node, resolve_teleporter_node, ResourceInfo, \
-    ResourceDatabase, RequirementList
+    ResourceDatabase, RequirementList, PickupDatabase
 
 Reach = List[Node]
 _gd = None  # type: GameDescription
@@ -29,7 +28,8 @@ class State:
         return self.resources.get(resource, 0) > 0
 
     def collect_resource_node(self, node: ResourceNode,
-                              resource_database: ResourceDatabase) -> "State":
+                              resource_database: ResourceDatabase,
+                              pickup_database: PickupDatabase) -> "State":
         resource = node.resource
 
         if self.has_resource(resource):
@@ -39,19 +39,21 @@ class State:
 
         new_resources = copy.copy(self.resources)
         for pickup_resource, quantity in node.resource_gain_on_collect(
-                resource_database):
+                resource_database, pickup_database):
             new_resources[pickup_resource] = new_resources.get(
                 pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
         return State(new_resources, self.node)
 
-    def act_on_node(self, node: ResourceNode,
-                    resource_database: ResourceDatabase) -> "State":
+    def act_on_node(self,
+                    node: ResourceNode,
+                    resource_database: ResourceDatabase,
+                    pickup_database: PickupDatabase) -> "State":
         if not isinstance(node, ResourceNode):
             raise ValueError("Can't act on Node of type {}".format(type(node)))
 
-        new_state = self.collect_resource_node(node, resource_database)
+        new_state = self.collect_resource_node(node, resource_database, pickup_database)
         new_state.node = node
         return new_state
 
@@ -171,7 +173,7 @@ def calculate_satisfiable_actions(
     def amount_unsatisfied_with(requirements: RequirementList,
                                 action: ResourceNode):
         return requirements.amount_unsatisfied(
-            state.act_on_node(action, game.resource_database).resources)
+            state.act_on_node(action, game.resource_database, game.pickup_database).resources)
 
     # This is broke due to requirements with negate
     satisfiable_actions = [
@@ -196,7 +198,7 @@ def advance_depth(state: State, game: GameDescription) -> bool:
 
     for action in actions:
         if advance_depth(
-                state.act_on_node(action, game.resource_database), game):
+                state.act_on_node(action, game.resource_database, game.pickup_database), game):
             return True
 
     game.additional_requirements[state.node] = RequirementSet(
@@ -204,40 +206,40 @@ def advance_depth(state: State, game: GameDescription) -> bool:
     return False
 
 
-def resolve(difficulty_level: int, enable_tricks: bool, game_description: GameDescription):
+def resolve(difficulty_level: int, enable_tricks: bool, game: GameDescription):
     starting_world_asset_id = 1006255871
     starting_area_asset_id = 1655756413
     item_loss_skip = True
 
     # global state for easy printing functions
     global _gd
-    _gd = game_description
+    _gd = game
 
     trick_level = 1 if enable_tricks else 0
 
     static_resources = {}
-    for trick in game_description.resource_database.trick:
+    for trick in game.resource_database.trick:
         static_resources[trick] = trick_level
-    for difficulty in game_description.resource_database.difficulty:
+    for difficulty in game.resource_database.difficulty:
         static_resources[difficulty] = difficulty_level
 
-    for world in game_description.worlds:
+    for world in game.worlds:
         for area in world.areas:
             for connections in area.connections.values():
                 for target, value in connections.items():
                     connections[target] = value.simplify(
-                        static_resources, game_description.resource_database)
+                        static_resources, game.resource_database)
 
-    starting_world = game_description.world_by_asset_id(
+    starting_world = game.world_by_asset_id(
         starting_world_asset_id)
     starting_area = starting_world.area_by_asset_id(starting_area_asset_id)
     starting_node = starting_area.nodes[starting_area.default_node_index]
     starting_state = State(
         {
             # "No Requirements"
-            game_description.resource_database.get_by_type_and_index(
+            game.resource_database.get_by_type_and_index(
                 ResourceType.MISC, 0):
-            1
+                1
         },
         starting_node)
 
@@ -247,14 +249,14 @@ def resolve(difficulty_level: int, enable_tricks: bool, game_description: GameDe
     # raise SystemExit
 
     def add_resources_from(name: str):
-        for pickup_resource, quantity in pickup_name_to_resource_gain(
-                name, game_description.resource_database):
+        for pickup_resource, quantity in game.pickup_database.pickup_name_to_resource_gain(
+                name, game.resource_database):
             starting_state.resources[
                 pickup_resource] = starting_state.resources.get(
-                    pickup_resource, 0)
+                pickup_resource, 0)
             starting_state.resources[pickup_resource] += quantity
 
     add_resources_from("_StartingItems")
     add_resources_from("_ItemLossItems")
 
-    return advance_depth(starting_state, game_description)
+    return advance_depth(starting_state, game)
