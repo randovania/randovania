@@ -126,11 +126,7 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
 
     # print("Rollback on", _n(state.node))
     new_requirements = frozenset().union(*requirements_by_node.values())
-    game.additional_requirements[state.node] = RequirementSet(
-        requirement
-        for requirement in new_requirements
-        if not any(other < requirement for other in new_requirements)
-    )
+    game.additional_requirements[state.node] = RequirementSet(new_requirements)
     # print("> Rollback finished.")
     return None
 
