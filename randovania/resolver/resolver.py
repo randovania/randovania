@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Dict, Optional
 
 import randovania.resolver.debug
-from randovania.resolver.debug import debug_print_advance_step, _IS_DEBUG
+from randovania.resolver.debug import _n
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
     RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources
@@ -85,50 +85,46 @@ def actions_with_reach(current_reach: Reach,
                 yield node  # TODO
 
 
-def calculate_satisfiable_actions(
-        state: State, game: GameDescription
-) -> Tuple[List[ResourceNode], Dict[Node, Set[RequirementList]]]:
-    reach, requirements_by_node = calculate_reach(state, game)
-    actions = list(actions_with_reach(reach, state))
+def calculate_satisfiable_actions(state: State,
+                                  reach: Reach,
+                                  requirements_by_node: Dict[Node, Set[RequirementList]],
+                                  game: GameDescription) -> Iterator[ResourceNode]:
+    # print(" > Calculating Satisfiable Actions")
+    if requirements_by_node:
+        satisfiable_requirements = {
+            requirements: requirements.amount_unsatisfied(state.resources)
+            for requirements in set.union(*requirements_by_node.values())
+        }
+        for action in actions_with_reach(reach, state):
+            def amount_unsatisfied_with(requirements: RequirementList,
+                                        action: ResourceNode):
+                return requirements.amount_unsatisfied(
+                    state.act_on_node(action, game.resource_database, game.pickup_database).resources)
 
-    satisfiable_requirements = {
-        requirements: requirements.amount_unsatisfied(state.resources)
-        for requirements in set.union(*requirements_by_node.values())
-    } if requirements_by_node else {}
-
-    if _IS_DEBUG:
-        debug_print_advance_step(state, reach, requirements_by_node, actions)
-
-    def amount_unsatisfied_with(requirements: RequirementList,
-                                action: ResourceNode):
-        return requirements.amount_unsatisfied(
-            state.act_on_node(action, game.resource_database, game.pickup_database).resources)
-
-    # This is broke due to requirements with negate
-    satisfiable_actions = [
-        action for action in actions
-        if any(
-            amount_unsatisfied_with(requirements, action) <
-            satisfiable_requirements[requirements]
-            for requirements in satisfiable_requirements)
-    ]
-    return satisfiable_actions, requirements_by_node
+            # print(" > Validating action", _n(action))
+            if any(amount_unsatisfied_with(requirements, action) < satisfiable_requirements[requirements]
+                   for requirements in satisfiable_requirements):
+                # print("   > Valid")
+                yield action
 
 
 def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     if game.victory_condition.satisfied(state.resources):
         return state
 
-    actions, requirements_by_node = calculate_satisfiable_actions(state, game)
+    # print("Now on", _n(state.node))
+    reach, requirements_by_node = calculate_reach(state, game)
 
-    for action in actions:
+    for action in calculate_satisfiable_actions(state, reach, requirements_by_node, game):
         new_state = advance_depth(
             state.act_on_node(action, game.resource_database, game.pickup_database), game)
         if new_state:
             return new_state
 
+    # print("Rollback on", _n(state.node))
     game.additional_requirements[state.node] = RequirementSet(
         frozenset().union(*requirements_by_node.values()))
+    # print("> Rollback finished.")
     return None
 
 
