@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Set, Iterator, Tuple, List, Dict
+from typing import Set, Iterator, Tuple, List, Dict, Optional
 
 import randovania.resolver.debug
 from randovania.resolver.debug import debug_print_advance_step, _IS_DEBUG
@@ -115,30 +115,27 @@ def calculate_satisfiable_actions(
     return satisfiable_actions, requirements_by_node
 
 
-def advance_depth(state: State, game: GameDescription) -> bool:
+def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     if game.victory_condition.satisfied(state.resources):
-        item_percentage = state.resources.get(
-            game.resource_database.get_by_type_and_index(
-                ResourceType.ITEM, 47), 0)
-        print("Victory with {}% of the items.".format(item_percentage))
-        return True
+        return state
 
     actions, requirements_by_node = calculate_satisfiable_actions(state, game)
 
     for action in actions:
-        if advance_depth(
-                state.act_on_node(action, game.resource_database, game.pickup_database), game):
-            return True
+        new_state = advance_depth(
+            state.act_on_node(action, game.resource_database, game.pickup_database), game)
+        if new_state:
+            return new_state
 
     game.additional_requirements[state.node] = RequirementSet(
         frozenset().union(*requirements_by_node.values()))
-    return False
+    return None
 
 
 def resolve(difficulty_level: int,
             enable_tricks: bool,
             disable_item_loss: bool,
-            game: GameDescription):
+            game: GameDescription) -> Optional[State]:
     starting_world_asset_id = 1006255871
     starting_area_asset_id = 1655756413
 
@@ -157,7 +154,9 @@ def resolve(difficulty_level: int,
             # "No Requirements"
             game.resource_database.trivial_resource(): 1
         },
-        starting_node)
+        starting_node,
+        None
+    )
 
     def add_resources_from(name: str):
         for pickup_resource, quantity in game.pickup_database.pickup_name_to_resource_gain(
