@@ -1,61 +1,14 @@
-import copy
 from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Dict
 
-from randovania.resolver.game_description import GameDescription, ResourceType, Node, CurrentResources, DockNode, \
+import randovania.resolver.debug
+from randovania.resolver.debug import debug_print_advance_step, _IS_DEBUG
+from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
-    RequirementSet, Area, ResourceNode, resolve_dock_node, resolve_teleporter_node, ResourceInfo, \
-    ResourceDatabase, RequirementList, PickupDatabase
+    RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList
+from randovania.resolver.state import State
 
 Reach = List[Node]
-_gd = None  # type: GameDescription
-_IS_DEBUG = False
-
-
-def _n(node: Node) -> str:
-    return "{}/{}".format(_gd.nodes_to_area[node].name, node.name)
-
-
-class State:
-    resources: CurrentResources
-    node: Node
-
-    def __init__(self, resources: CurrentResources, node: Node):
-        self.resources = resources
-        self.node = node
-
-    def has_resource(self, resource: ResourceInfo) -> bool:
-        return self.resources.get(resource, 0) > 0
-
-    def collect_resource_node(self, node: ResourceNode,
-                              resource_database: ResourceDatabase,
-                              pickup_database: PickupDatabase) -> "State":
-        resource = node.resource
-
-        if self.has_resource(resource):
-            raise ValueError(
-                "Trying to collect an already collected resource '{}'".format(
-                    resource))
-
-        new_resources = copy.copy(self.resources)
-        for pickup_resource, quantity in node.resource_gain_on_collect(
-                resource_database, pickup_database):
-            new_resources[pickup_resource] = new_resources.get(
-                pickup_resource, 0)
-            new_resources[pickup_resource] += quantity
-
-        return State(new_resources, self.node)
-
-    def act_on_node(self,
-                    node: ResourceNode,
-                    resource_database: ResourceDatabase,
-                    pickup_database: PickupDatabase) -> "State":
-        if not isinstance(node, ResourceNode):
-            raise ValueError("Can't act on Node of type {}".format(type(node)))
-
-        new_state = self.collect_resource_node(node, resource_database, pickup_database)
-        new_state.node = node
-        return new_state
 
 
 def potential_nodes_from(node: Node, game: GameDescription
@@ -132,17 +85,6 @@ def actions_with_reach(current_reach: Reach,
                 yield node  # TODO
 
 
-def pretty_print_area(area: Area):
-    print(area.name)
-    for node in area.nodes:
-        print(">", node.name, type(node))
-        for target_node, requirements in potential_nodes_from(node, _gd):
-            print(" >", _n(target_node))
-            for r in requirements.alternatives:
-                print("  ", ", ".join(map(str, r)))
-        print()
-
-
 def calculate_satisfiable_actions(
         state: State, game: GameDescription
 ) -> Tuple[List[ResourceNode], Dict[Node, Set[RequirementList]]]:
@@ -154,21 +96,8 @@ def calculate_satisfiable_actions(
         for requirements in set.union(*requirements_by_node.values())
     } if requirements_by_node else {}
 
-    def debug_print():
-        print("Now on", _n(state.node))
-        print("Reach:")
-        for node in reach:
-            print("  > {}".format(_n(node)))
-        print("Item alternatives:")
-        for node, l in requirements_by_node.items():
-            print("  > {}: {}".format(_n(node), l))
-        print("Actions:")
-        for _action in actions:
-            print("  > {} for {}".format(_n(_action), _action.resource))
-        print()
-
     if _IS_DEBUG:
-        debug_print()
+        debug_print_advance_step(state, reach, requirements_by_node, actions)
 
     def amount_unsatisfied_with(requirements: RequirementList,
                                 action: ResourceNode):
@@ -214,11 +143,9 @@ def resolve(difficulty_level: int,
     starting_area_asset_id = 1655756413
 
     # global state for easy printing functions
-    global _gd
-    _gd = game
+    randovania.resolver.debug._gd = game
 
     trick_level = 1 if enable_tricks else 0
-
     static_resources = {}
     for trick in game.resource_database.trick:
         static_resources[trick] = trick_level
