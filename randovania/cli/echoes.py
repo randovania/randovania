@@ -60,6 +60,12 @@ def add_difficulty_arguments(parser):
         action="store_true",
         help="Assumes the Item Loss trigger is disabled."
     )
+    parser.add_argument(
+        "--print-final-path",
+        action="store_true",
+        help=
+        "If seed is possible, print the sequence of events/pickups taken to reach the ending."
+    )
 
 
 def patch_data(data: Dict):
@@ -123,12 +129,6 @@ def create_validate_command(sub_parsers):
         type=str,
         help="Path to the log file of a Randomizer run.")
     add_difficulty_arguments(parser)
-    parser.add_argument(
-        "--print-final-path",
-        action="store_true",
-        help=
-        "If seed is possible, print the sequence of events/pickups taken to reach the ending."
-    )
     add_data_file_argument(parser)
 
     parser.set_defaults(func=validate_command_logic)
