@@ -5,7 +5,7 @@ import randovania.resolver.debug
 from randovania.resolver.debug import debug_print_advance_step, _IS_DEBUG
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
-    RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList
+    RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources
 from randovania.resolver.state import State
 
 Reach = List[Node]
@@ -145,19 +145,8 @@ def resolve(difficulty_level: int,
     # global state for easy printing functions
     randovania.resolver.debug._gd = game
 
-    trick_level = 1 if enable_tricks else 0
-    static_resources = {}
-    for trick in game.resource_database.trick:
-        static_resources[trick] = trick_level
-    for difficulty in game.resource_database.difficulty:
-        static_resources[difficulty] = difficulty_level
-
-    for world in game.worlds:
-        for area in world.areas:
-            for connections in area.connections.values():
-                for target, value in connections.items():
-                    connections[target] = value.simplify(
-                        static_resources, game.resource_database)
+    static_resources = build_static_resources(difficulty_level, enable_tricks, game)
+    simplify_connections(game, static_resources)
 
     starting_world = game.world_by_asset_id(
         starting_world_asset_id)
@@ -185,3 +174,22 @@ def resolve(difficulty_level: int,
         add_resources_from("_ItemLossItemsTEMPORARY")
 
     return advance_depth(starting_state, game)
+
+
+def simplify_connections(game: GameDescription, static_resources: CurrentResources) -> None:
+    for world in game.worlds:
+        for area in world.areas:
+            for connections in area.connections.values():
+                for target, value in connections.items():
+                    connections[target] = value.simplify(
+                        static_resources, game.resource_database)
+
+
+def build_static_resources(difficulty_level: int, enable_tricks: bool, game: GameDescription) -> CurrentResources:
+    trick_level = 1 if enable_tricks else 0
+    static_resources = {}
+    for trick in game.resource_database.trick:
+        static_resources[trick] = trick_level
+    for difficulty in game.resource_database.difficulty:
+        static_resources[difficulty] = difficulty_level
+    return static_resources
