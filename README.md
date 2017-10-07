@@ -9,7 +9,7 @@ With a Python 3.6 installation:
  
 ### Usage
 
-`python3 -m randovania path/to/randomizer.log`
+`python3 -m randovania echoes validate path/to/randomizer.log`
 
 ### Options
 
