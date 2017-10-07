@@ -206,10 +206,12 @@ def advance_depth(state: State, game: GameDescription) -> bool:
     return False
 
 
-def resolve(difficulty_level: int, enable_tricks: bool, game: GameDescription):
+def resolve(difficulty_level: int,
+            enable_tricks: bool,
+            disable_item_loss: bool,
+            game: GameDescription):
     starting_world_asset_id = 1006255871
     starting_area_asset_id = 1655756413
-    item_loss_skip = True
 
     # global state for easy printing functions
     global _gd
@@ -237,16 +239,9 @@ def resolve(difficulty_level: int, enable_tricks: bool, game: GameDescription):
     starting_state = State(
         {
             # "No Requirements"
-            game.resource_database.get_by_type_and_index(
-                ResourceType.MISC, 0):
-                1
+            game.resource_database.trivial_resource(): 1
         },
         starting_node)
-
-    # pretty_print_area(starting_area)
-    # from pprint import pprint
-    # pprint(game_description.resource_database.misc)
-    # raise SystemExit
 
     def add_resources_from(name: str):
         for pickup_resource, quantity in game.pickup_database.pickup_name_to_resource_gain(
@@ -257,6 +252,9 @@ def resolve(difficulty_level: int, enable_tricks: bool, game: GameDescription):
             starting_state.resources[pickup_resource] += quantity
 
     add_resources_from("_StartingItems")
-    add_resources_from("_ItemLossItems")
+    if disable_item_loss:
+        add_resources_from("_ItemLossItems")
+    else:
+        add_resources_from("_ItemLossItemsTEMPORARY")
 
     return advance_depth(starting_state, game)
