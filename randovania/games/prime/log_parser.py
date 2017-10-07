@@ -110,13 +110,17 @@ custom_mapping = {
         "Charge Beam": 1,
     },
     "_ItemLossItems": {
-        # TODO: lose items when reaching the item loss spot
-        # "Boost Ball": 1,
-        # "Spider Ball": 1,
+        "Boost Ball": 1,
+        "Spider Ball": 1,
         "Morph Ball Bomb": 1,
-        # "Space Jump Boots": 1,
+        "Space Jump Boots": 1,
         "Missile": 5,
     },
+    # TODO: lose items when reaching the item loss spot
+    "_ItemLossItemsTEMPORARY": {
+        "Morph Ball Bomb": 1,
+        "Missile": 5,
+    }
 }
 
 

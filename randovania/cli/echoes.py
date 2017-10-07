@@ -74,6 +74,14 @@ def create_validate_command(sub_parsers):
         "Enable trick usage in the validation. "
         "Currently, there's no way to control which individual tricks gets enabled."
     )
+    parser.add_argument(
+        "--skip-item-loss",
+        action="store_const",
+        const=True,
+        help=
+        "Enable trick usage in the validation. "
+        "Currently, there's no way to control which individual tricks gets enabled."
+    )
     add_data_file_argument(parser)
 
     def logic(args):
@@ -83,7 +91,7 @@ def create_validate_command(sub_parsers):
         randomizer_log = log_parser.parse_log(args.logfile)
 
         game_description = data_reader.decode_data(data, randomizer_log.pickup_database)
-        possible = resolver.resolve(args.difficulty, args.enable_tricks, game_description)
+        possible = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
         print("Game is possible: ", possible)
         if not possible:
             raise SystemExit(1)
