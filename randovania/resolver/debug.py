@@ -1,6 +1,4 @@
-from randovania.resolver.game_description import Node, Area
-from randovania.resolver.resolver import potential_nodes_from
-
+from randovania.resolver.game_description import Node, Area, GameDescription
 
 _gd = None  # type: GameDescription
 
@@ -10,6 +8,7 @@ def _n(node: Node) -> str:
 
 
 def pretty_print_area(area: Area):
+    from randovania.resolver.resolver import potential_nodes_from
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))

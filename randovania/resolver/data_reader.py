@@ -216,6 +216,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase) -> GameDescription:
                                pickup_database.entries)
     worlds = world_reader.read_world_list(data["worlds"])
 
+    # TODO: more echoes specific code
     final_boss = [
         event for event in resource_database.event
         if event.long_name == "Emperor Ing"
@@ -223,9 +224,10 @@ def decode_data(data: Dict, pickup_database: PickupDatabase) -> GameDescription:
     victory_condition = RequirementSet(
         tuple([RequirementList([IndividualRequirement(final_boss, 1, False)])
                ]))
+    starting_world_asset_id = 1006255871
+    starting_area_asset_id = 1655756413
 
     available_resources = defaultdict(int)
-
     nodes_to_area = {}
     nodes_to_world = {}
     for world in worlds:
@@ -234,7 +236,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase) -> GameDescription:
                 if node in nodes_to_area:
                     raise ValueError(
                         "Trying to map {} to {}, but already mapped to {}".
-                        format(node, area, nodes_to_area[node]))
+                            format(node, area, nodes_to_area[node]))
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
@@ -246,8 +248,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase) -> GameDescription:
                             available_resources[resource] += quantity
 
     # Add the No Requirements
-    available_resources[resource_database.get_by_type_and_index(
-        ResourceType.MISC, 0)] = 1
+    available_resources[resource_database.impossible_resource()] = 1
 
     return GameDescription(
         game=game,
@@ -260,4 +261,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase) -> GameDescription:
         nodes_to_world=nodes_to_world,
         available_resources=available_resources,
         victory_condition=victory_condition,
-        additional_requirements={})
+        additional_requirements={},
+        starting_world_asset_id=starting_world_asset_id,
+        starting_area_asset_id=starting_area_asset_id
+    )
