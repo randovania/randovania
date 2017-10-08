@@ -9,6 +9,7 @@ from randovania.games.prime import binary_data, log_parser
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.resolver import resolver, data_reader, debug
 from randovania.resolver.debug import _n
+from randovania.resolver.game_description import consistency_check
 from randovania.resolver.state import State
 
 
@@ -76,12 +77,7 @@ def create_convert_database_command(sub_parsers):
 
 
 def view_area_command_logic(args):
-    data = decode_data_file(args)
-    logfile = os.path.join(os.path.dirname(__file__), "..", "data", "prime2_original_log.txt")
-    randomizer_log = log_parser.parse_log(logfile)
-
-    gd = data_reader.decode_data(data, randomizer_log.pickup_database)
-    debug._gd = gd
+    gd = load_game_description(args)
 
     if args.simplify:
         resolver.simplify_connections(gd, {})
@@ -105,6 +101,15 @@ def view_area_command_logic(args):
         "\n".join(" " + world.name for world in sorted(gd.worlds, key=lambda x: x.name))
     ))
     raise SystemExit(1)
+
+
+def load_game_description(args):
+    data = decode_data_file(args)
+    logfile = os.path.join(os.path.dirname(__file__), "..", "data", "prime2_original_log.txt")
+    randomizer_log = log_parser.parse_log(logfile)
+    gd = data_reader.decode_data(data, randomizer_log.pickup_database)
+    debug._gd = gd
+    return gd
 
 
 def view_area_command(sub_parsers):
@@ -133,6 +138,23 @@ def view_area_command(sub_parsers):
     parser.set_defaults(func=view_area_command_logic)
 
 
+def consistency_check_command_logic(args):
+    gd = load_game_description(args)
+
+    for node, warning in consistency_check(gd):
+        print("> {}:\n{}\n".format(_n(node), warning))
+
+
+def consistency_check_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "consistency-check",
+        help="Check if all docks and teleporters are valid.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+    add_data_file_argument(parser)
+    parser.set_defaults(func=consistency_check_command_logic)
+
+
 def create_subparsers(sub_parsers):
     parser = sub_parsers.add_parser(
         "database",
@@ -142,6 +164,9 @@ def create_subparsers(sub_parsers):
     command_subparser = parser.add_subparsers(dest="database_command")
     create_convert_database_command(command_subparser)
     view_area_command(command_subparser)
+    consistency_check_command(command_subparser)
+
+
 
     def check_command(args):
         if args.database_command is None:
