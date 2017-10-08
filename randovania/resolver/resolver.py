@@ -168,8 +168,7 @@ def resolve(difficulty_level: int,
         for pickup_resource, quantity in game.pickup_database.pickup_name_to_resource_gain(
                 name, game.resource_database):
             starting_state.resources[
-                pickup_resource] = starting_state.resources.get(
-                pickup_resource, 0)
+                pickup_resource] = starting_state.resources.get(pickup_resource, 0)
             starting_state.resources[pickup_resource] += quantity
 
     add_resources_from("_StartingItems")
