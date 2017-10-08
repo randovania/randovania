@@ -13,9 +13,12 @@ def pretty_print_area(area: Area):
     for node in area.nodes:
         print(">", node.name, type(node))
         for target_node, requirements in potential_nodes_from(node, _gd):
-            print(" >", _n(target_node))
-            for r in requirements.alternatives:
-                print("  ", ", ".join(map(str, r)))
+            if target_node is None:
+                print(" > None?")
+            else:
+                print(" >", _n(target_node))
+                for r in requirements.alternatives:
+                    print("  ", ", ".join(map(str, r)))
         print()
 
 
