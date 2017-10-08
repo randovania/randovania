@@ -13,11 +13,11 @@ from randovania.resolver.state import State
 
 
 def decode_data_file(args) -> Dict:
-    if args.json_data_file is not None:
-        with open(args.json_data_file) as data_file:
+    if args.json_database is not None:
+        with open(args.json_database) as data_file:
             return json.load(data_file)
 
-    data_file_path = args.binary_data_file
+    data_file_path = args.binary_database
     if data_file_path is None:
         data_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prime2.bin")
 
@@ -28,14 +28,14 @@ def decode_data_file(args) -> Dict:
 def add_data_file_argument(parser: ArgumentParser):
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
-        "--binary-data-file",
+        "--binary-database",
         type=str,
-        help="Path to the binary encoded data file.",
+        help="Path to the binary encoded database.",
     )
     group.add_argument(
-        "--json-data-file",
+        "--json-database",
         type=str,
-        help="Path to the JSON decoded data file.",
+        help="Path to the JSON encoded database.",
     )
 
 
@@ -225,6 +225,42 @@ def create_randomize_command(sub_parsers):
     parser.set_defaults(func=randomize_command_logic)
 
 
+def convert_database_command_logic(args):
+    data = decode_data_file(args)
+
+    if args.output_binary is not None:
+        with open(args.output_binary, "wb") as x:  # type: BinaryIO
+            binary_data.encode(data, x)
+    elif args.output_json is not None:
+        with open(args.output_json, "w") as x:  # type: BinaryIO
+            json.dump(data, x, indent=4)
+    else:
+        raise ValueError("Neither binary nor JSON set. Argparse is broken?")
+
+
+def create_convert_database_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "convert-database",
+        help="Converts a database file between JSON and binary encoded formats. Input defaults to embeded database.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+    add_data_file_argument(parser)
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "--output-binary",
+        type=str,
+        help="Export as a binary file.",
+    )
+    group.add_argument(
+        "--output-json",
+        type=str,
+        help="Export as a JSON file.",
+    )
+
+    parser.set_defaults(func=convert_database_command_logic)
+
+
 def create_subparsers(sub_parsers):
     parser = sub_parsers.add_parser(
         "echoes",
@@ -234,6 +270,7 @@ def create_subparsers(sub_parsers):
     command_subparser = parser.add_subparsers(dest="command")
     create_validate_command(command_subparser)
     create_randomize_command(command_subparser)
+    create_convert_database_command(command_subparser)
 
     def check_command(args):
         if args.command is None:
