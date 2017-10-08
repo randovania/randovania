@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Set, Iterator, Tuple, List, Dict, Optional
+from typing import Set, Iterator, Tuple, List, Optional
 
 import randovania.resolver.debug
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
@@ -10,15 +10,6 @@ from randovania.resolver.state import State
 
 Reach = List[Node]
 SatisfiableRequirements = Set[RequirementList]
-# count = 0
-#
-#
-# def increment_attempts():
-#     global count
-#     count += 1
-#     print("Attempt", count)
-#     if count > 1500:
-#         raise SystemExit
 
 
 def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
@@ -45,7 +36,6 @@ def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[No
         yield target_node, requirements
 
 
-# @profile
 def calculate_reach(current_state: State,
                     game: GameDescription) -> Tuple[Reach, SatisfiableRequirements]:
     checked_nodes = set()
@@ -103,12 +93,6 @@ def calculate_satisfiable_actions(state: State,
     if satisfiable_requirements:
         interesting_resources = set()  # type: Set[ResourceInfo]
 
-        # print(" > satisfiable_requirements from {} nodes".format(len(requirements_by_node)))
-        # satisfiable_requirements = {
-        #     requirements: requirements.amount_unsatisfied(state.resources)
-        #     for requirements in frozenset.union(*requirements_by_node.values())
-        # }  # type: Dict[RequirementList, int]
-
         # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
         for requirement in satisfiable_requirements:
             if not requirement.satisfied(state.resources):
@@ -125,13 +109,11 @@ def calculate_satisfiable_actions(state: State,
                     break
 
 
-# @profile
 def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     if game.victory_condition.satisfied(state.resources):
         return state
 
-    # increment_attempts()
-
+    # randovania.resolver.debug.increment_attempts()
     # print("Now on", _n(state.node))
     reach, satisfiable_requirements = calculate_reach(state, game)
 
