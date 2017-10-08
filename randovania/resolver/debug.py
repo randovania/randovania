@@ -1,4 +1,6 @@
-from randovania.resolver.game_description import Node, Area, GameDescription
+from typing import Set
+
+from randovania.resolver.game_description import Node, Area, GameDescription, RequirementList
 
 _gd = None  # type: GameDescription
 
@@ -36,3 +38,10 @@ def debug_print_advance_step(state, reach, requirements_by_node, actions):
 
 
 _IS_DEBUG = False
+
+
+def sorted_requirementset_print(new_requirements: Set[RequirementList]):
+    to_print = []
+    for requirement in new_requirements:
+        to_print.append(", ".join(str(item) for item in sorted(requirement.values())))
+    print("\n".join(x for x in sorted(to_print)))

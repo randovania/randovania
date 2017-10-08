@@ -1,10 +1,7 @@
-import cProfile
-from line_profiler import LineProfiler
 from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Dict, Optional
 
 import randovania.resolver.debug
-from randovania.resolver.debug import _n
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
     RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources, \
@@ -12,6 +9,7 @@ from randovania.resolver.game_description import GameDescription, ResourceType, 
 from randovania.resolver.state import State
 
 Reach = List[Node]
+RequirementsByNode = Dict[Node, Set[RequirementList]]
 
 
 def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
@@ -42,8 +40,8 @@ def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[No
         yield target_node, requirements.merge(additional_requirements)
 
 
-def calculate_reach(current_state: State, game_description: GameDescription
-                    ) -> Tuple[List[Node], Dict[Node, Set[RequirementList]]]:
+def calculate_reach(current_state: State,
+                    game: GameDescription) -> Tuple[Reach, RequirementsByNode]:
     checked_nodes = set()
     nodes_to_check = [current_state.node]
 
@@ -57,7 +55,7 @@ def calculate_reach(current_state: State, game_description: GameDescription
         if node != current_state.node:
             resulting_nodes.append(node)
 
-        for target_node, requirements in potential_nodes_from(node, game_description):
+        for target_node, requirements in potential_nodes_from(node, game):
             if target_node in checked_nodes or target_node in nodes_to_check:
                 continue
 
@@ -84,7 +82,7 @@ def actions_with_reach(current_reach: Reach,
 
 def calculate_satisfiable_actions(state: State,
                                   reach: Reach,
-                                  requirements_by_node: Dict[Node, Set[RequirementList]],
+                                  requirements_by_node: RequirementsByNode,
                                   game: GameDescription) -> Iterator[ResourceNode]:
     if requirements_by_node:
         interesting_resources = set()  # type: Set[ResourceInfo]
@@ -131,11 +129,22 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     return None
 
 
-def sorted_requirementset_print(new_requirements: Set[RequirementList]):
-    to_print = []
-    for requirement in new_requirements:
-        to_print.append(", ".join(str(item) for item in sorted(requirement.values())))
-    print("\n".join(x for x in sorted(to_print)))
+def simplify_connections(game: GameDescription, static_resources: CurrentResources) -> None:
+    for world in game.worlds:
+        for area in world.areas:
+            for connections in area.connections.values():
+                for target, value in connections.items():
+                    connections[target] = value.simplify(static_resources, game.resource_database)
+
+
+def build_static_resources(difficulty_level: int, enable_tricks: bool, game: GameDescription) -> CurrentResources:
+    trick_level = 1 if enable_tricks else 0
+    static_resources = {}
+    for trick in game.resource_database.trick:
+        static_resources[trick] = trick_level
+    for difficulty in game.resource_database.difficulty:
+        static_resources[difficulty] = difficulty_level
+    return static_resources
 
 
 def resolve(difficulty_level: int,
@@ -181,21 +190,3 @@ def resolve(difficulty_level: int,
             starting_state.resources[resource] = 1
 
     return advance_depth(starting_state, game)
-
-
-def simplify_connections(game: GameDescription, static_resources: CurrentResources) -> None:
-    for world in game.worlds:
-        for area in world.areas:
-            for connections in area.connections.values():
-                for target, value in connections.items():
-                    connections[target] = value.simplify(static_resources, game.resource_database)
-
-
-def build_static_resources(difficulty_level: int, enable_tricks: bool, game: GameDescription) -> CurrentResources:
-    trick_level = 1 if enable_tricks else 0
-    static_resources = {}
-    for trick in game.resource_database.trick:
-        static_resources[trick] = trick_level
-    for difficulty in game.resource_database.difficulty:
-        static_resources[difficulty] = difficulty_level
-    return static_resources
