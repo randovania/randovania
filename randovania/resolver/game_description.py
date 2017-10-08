@@ -1,6 +1,7 @@
 """Classes that describes the raw data of a game world."""
 import typing
 from enum import Enum, unique
+from functools import lru_cache
 from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
 
 import re
@@ -244,11 +245,13 @@ class RequirementSet:
             print(indent + line)
 
     @classmethod
+    @lru_cache()
     def trivial(cls) -> "RequirementSet":
         # empty RequirementList.satisfied is True
         return cls([RequirementList([])])
 
     @classmethod
+    @lru_cache()
     def impossible(cls) -> "RequirementSet":
         # No alternatives makes satisfied always return False
         return cls([])
@@ -270,7 +273,8 @@ class RequirementSet:
     def merge(self, other: "RequirementSet") -> "RequirementSet":
         return RequirementSet(
             RequirementList(a.union(b))
-            for a in self.alternatives for b in other.alternatives)
+            for a in self.alternatives
+            for b in other.alternatives)
 
 
 class DockWeakness(NamedTuple):
