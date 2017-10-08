@@ -112,6 +112,7 @@ class PickupDatabase:
     direct_name: Dict[str, int]
     custom_mapping: Dict[str, Dict[str, int]]
     entries: List[PickupEntry]
+    cache: Dict[str, ResourceGain]
 
     def __init__(self,
                  percent_less_items: Set[str],
@@ -122,12 +123,15 @@ class PickupDatabase:
         self.direct_name = direct_name
         self.custom_mapping = custom_mapping
         self.entries = entries
+        self.cache = {}
 
     def pickup_name_to_resource_gain(self,
                                      name: str,
                                      database: ResourceDatabase) -> ResourceGain:
-        item_database = database.get_by_type(ResourceType.ITEM)
+        if name in self.cache:
+            return self.cache[name]
 
+        item_database = database.get_by_type(ResourceType.ITEM)
         result = []
         if name not in self.percent_less_items:
             result.append((database.item_percentage(), 1))
@@ -135,7 +139,9 @@ class PickupDatabase:
         if name in self.direct_name:
             for info in item_database:
                 if info.long_name == name:
-                    return result + [(info, self.direct_name[name])]
+                    result.append((info, self.direct_name[name]))
+                    self.cache[name] = result
+                    return result
             raise ValueError("Pickup '{}' not found in database.".format(name))
         else:
             for pattern, values in self.custom_mapping.items():
@@ -148,6 +154,7 @@ class PickupDatabase:
                         raise ValueError(
                             "Pattern '{}' (matched by '{}') have resource not found in database. Found {}".
                                 format(pattern, name, result))
+                    self.cache[name] = result
                     return result
 
         raise ValueError("'{}' is unknown by pickup_database".format(name))
