@@ -1,16 +1,12 @@
 import argparse
 import json
 import os
-import subprocess
 from argparse import ArgumentParser
-from typing import Dict, BinaryIO, Set, Optional
+from typing import Dict, BinaryIO
 
 from randovania.games.prime import binary_data, log_parser
-from randovania.games.prime.log_parser import RandomizerLog
 from randovania.resolver import resolver, data_reader, debug
-from randovania.resolver.debug import _n
 from randovania.resolver.game_description import consistency_check
-from randovania.resolver.state import State
 
 
 def decode_data_file(args) -> Dict:
@@ -142,7 +138,7 @@ def consistency_check_command_logic(args):
     gd = load_game_description(args)
 
     for node, warning in consistency_check(gd):
-        print("> {}:\n{}\n".format(_n(node), warning))
+        print("> {}:\n{}\n".format(debug.n(node), warning))
 
 
 def consistency_check_command(sub_parsers):
@@ -165,8 +161,6 @@ def create_subparsers(sub_parsers):
     create_convert_database_command(command_subparser)
     view_area_command(command_subparser)
     consistency_check_command(command_subparser)
-
-
 
     def check_command(args):
         if args.database_command is None:
