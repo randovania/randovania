@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Set, Iterator, Tuple, List, Optional
 
-import randovania.resolver.debug
+from randovania.resolver import debug
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
     RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources, \
@@ -113,8 +113,8 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     if game.victory_condition.satisfied(state.resources):
         return state
 
-    # randovania.resolver.debug.increment_attempts()
-    # print("Now on", _n(state.node))
+    # debug.increment_attempts()
+    # print("Now on", debug.n(state.node))
     reach, satisfiable_requirements = calculate_reach(state, game)
 
     for action in calculate_satisfiable_actions(state, reach, satisfiable_requirements, game):
@@ -123,7 +123,7 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
         if new_state:
             return new_state
 
-    # print("Rollback on", _n(state.node))
+    # print("Rollback on", debug.n(state.node))
     game.additional_requirements[state.node] = RequirementSet(satisfiable_requirements.__iter__())
     # print("> Rollback finished.")
     return None
@@ -155,7 +155,7 @@ def resolve(difficulty_level: int,
     starting_area_asset_id = 1655756413
 
     # global state for easy printing functions
-    randovania.resolver.debug._gd = game
+    debug._gd = game
 
     static_resources = build_static_resources(difficulty_level, enable_tricks, game)
     simplify_connections(game, static_resources)

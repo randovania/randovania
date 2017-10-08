@@ -7,8 +7,7 @@ from typing import Dict, Set, Optional
 from randovania.cli import prime_database
 from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
-from randovania.resolver import resolver, data_reader
-from randovania.resolver.debug import _n
+from randovania.resolver import resolver, data_reader, debug
 from randovania.resolver.state import State
 
 
@@ -60,7 +59,7 @@ def run_resolver(args, data: Dict, randomizer_log: RandomizerLog) -> Optional[St
 
             print("Path taken:")
             for state in reversed(states):
-                print("> {}".format(_n(state.node)))
+                print("> {}".format(debug.n(state.node)))
     return final_state
 
 

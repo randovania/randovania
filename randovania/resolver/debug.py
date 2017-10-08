@@ -7,7 +7,7 @@ count = 0
 _gd = None  # type: GameDescription
 
 
-def _n(node: Node) -> str:
+def n(node: Node) -> str:
     return "{}/{}".format(_gd.nodes_to_area[node].name, node.name)
 
 
@@ -20,22 +20,22 @@ def pretty_print_area(area: Area):
             if target_node is None:
                 print("  > None?")
             else:
-                print("  >", _n(target_node))
+                print("  >", n(target_node))
                 requirements.pretty_print("      ")
         print()
 
 
 def debug_print_advance_step(state, reach, requirements_by_node, actions):
-    print("Now on", _n(state.node))
+    print("Now on", n(state.node))
     print("Reach:")
     for node in reach:
-        print("  > {}".format(_n(node)))
+        print("  > {}".format(n(node)))
     print("Item alternatives:")
     for node, l in requirements_by_node.items():
-        print("  > {}: {}".format(_n(node), l))
+        print("  > {}: {}".format(n(node), l))
     print("Actions:")
     for _action in actions:
-        print("  > {} for {}".format(_n(_action), _action.resource))
+        print("  > {} for {}".format(n(_action), _action.resource))
     print()
 
 
@@ -50,5 +50,5 @@ def increment_attempts():
     global count
     count += 1
     print("Attempt", count)
-    if count > 1500:
-        raise SystemExit
+    # if count > 1500:
+    #     raise SystemExit
