@@ -430,6 +430,9 @@ class GameDescription(NamedTuple):
                 for node in area.nodes:
                     yield node
 
+    def get_additional_requirements(self, node: Node) -> RequirementSet:
+        return self.additional_requirements.get(node, RequirementSet.trivial())
+
 
 def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:
     world = game.nodes_to_world[node]
