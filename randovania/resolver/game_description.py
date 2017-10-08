@@ -198,7 +198,8 @@ class RequirementList(frozenset):
                    for requirement in self)
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
-        return self.amount_unsatisfied(current_resources) == 0
+        return all(requirement.satisfied(current_resources)
+                   for requirement in self)
 
     def simplify(self, static_resources: CurrentResources,
                  database: ResourceDatabase) -> Optional["RequirementList"]:
