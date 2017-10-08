@@ -79,10 +79,12 @@ def calculate_reach(current_state: State,
 
 
 def actions_with_reach(current_reach: Reach,
-                       state: State) -> Iterator[ResourceNode]:
+                       state: State,
+                       game: GameDescription) -> Iterator[ResourceNode]:
     for node in current_reach:
         if isinstance(node, ResourceNode):
-            if not state.has_resource(node.resource):
+            if not state.has_resource(node.resource) and \
+                    game.get_additional_requirements(node).satisfied(state.resources):
                 yield node  # TODO
 
 
@@ -102,7 +104,7 @@ def calculate_satisfiable_actions(state: State,
                         interesting_resources.add(indv.requirement)
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
-        for action in actions_with_reach(reach, state):
+        for action in actions_with_reach(reach, state, game):
             for resource, amount in action.resource_gain_on_collect(game.resource_database, game.pickup_database):
                 if resource in interesting_resources:
                     yield action
