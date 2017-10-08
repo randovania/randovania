@@ -116,11 +116,6 @@ custom_mapping = {
         "Space Jump Boots": 1,
         "Missile": 5,
     },
-    # TODO: lose items when reaching the item loss spot
-    "_ItemLossItemsTEMPORARY": {
-        "Morph Ball Bomb": 1,
-        "Missile": 5,
-    }
 }
 
 

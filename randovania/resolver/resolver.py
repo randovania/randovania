@@ -165,17 +165,20 @@ def resolve(difficulty_level: int,
     )
 
     def add_resources_from(name: str):
-        for pickup_resource, quantity in game.pickup_database.pickup_name_to_resource_gain(
-                name, game.resource_database):
-            starting_state.resources[
-                pickup_resource] = starting_state.resources.get(pickup_resource, 0)
+        for pickup_resource, quantity in game.pickup_database.pickup_name_to_resource_gain(name, game.resource_database):
+            starting_state.resources[pickup_resource] = starting_state.resources.get(pickup_resource, 0)
             starting_state.resources[pickup_resource] += quantity
 
     add_resources_from("_StartingItems")
     if disable_item_loss:
         add_resources_from("_ItemLossItems")
     else:
-        add_resources_from("_ItemLossItemsTEMPORARY")
+        # TODO: not hardcode this data here.
+        # TODO: actually lose the items when trigger the Item Loss cutscene
+        # These ids are all events you trigger before reaching the IL cutscene in echoes
+        for event_id in (71, 78, 2, 4):
+            resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
+            starting_state.resources[resource] = 1
 
     return advance_depth(starting_state, game)
 
