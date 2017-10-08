@@ -185,8 +185,7 @@ def simplify_connections(game: GameDescription, static_resources: CurrentResourc
         for area in world.areas:
             for connections in area.connections.values():
                 for target, value in connections.items():
-                    connections[target] = value.simplify(
-                        static_resources, game.resource_database)
+                    connections[target] = value.simplify(static_resources, game.resource_database)
 
 
 def build_static_resources(difficulty_level: int, enable_tricks: bool, game: GameDescription) -> CurrentResources:

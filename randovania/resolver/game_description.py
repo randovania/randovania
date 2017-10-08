@@ -231,6 +231,18 @@ class RequirementSet:
     def __repr__(self):
         return repr(self.alternatives)
 
+    def pretty_print(self, indent=""):
+        to_print = []
+        if self == RequirementSet.impossible():
+            to_print.append("Impossible")
+        elif self == RequirementSet.trivial():
+            to_print.append("Trivial")
+        else:
+            for alternative in self.alternatives:
+                to_print.append(", ".join(map(str, sorted(alternative))))
+        for line in sorted(to_print):
+            print(indent + line)
+
     @classmethod
     def trivial(cls) -> "RequirementSet":
         # empty RequirementList.satisfied is True
