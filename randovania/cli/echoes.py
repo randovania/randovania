@@ -64,6 +64,7 @@ def run_resolver(args, data: Dict, randomizer_log: RandomizerLog) -> Optional[St
 
 
 def validate_command_logic(args):
+    debug._DEBUG_LEVEL = args.debug
     data = prime_database.decode_data_file(args)
     randomizer_log = log_parser.parse_log(args.logfile)
     if not run_resolver(args, data, randomizer_log):
@@ -83,6 +84,12 @@ def create_validate_command(sub_parsers):
         help="Path to the log file of a Randomizer run.")
     add_difficulty_arguments(parser)
     prime_database.add_data_file_argument(parser)
+    parser.add_argument(
+        "--debug",
+        choices=(0, 1),
+        type=int,
+        default=0,
+        help="The level of debug logging to print.")
 
     parser.set_defaults(func=validate_command_logic)
 

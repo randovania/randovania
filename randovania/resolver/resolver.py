@@ -115,9 +115,8 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
     if game.victory_condition.satisfied(state.resources):
         return state
 
-    # debug.increment_attempts()
-    # print("Now on", debug.n(state.node))
     reach, satisfiable_requirements = calculate_reach(state, game)
+    debug.log_new_advance(state, reach)
 
     for action in calculate_satisfiable_actions(state, reach, satisfiable_requirements, game):
         new_state = advance_depth(
@@ -125,7 +124,7 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
         if new_state:
             return new_state
 
-    # print("Rollback on", debug.n(state.node))
+    debug.log_rollback(state)
     game.additional_requirements[state.node] = RequirementSet(satisfiable_requirements.__iter__())
     # print("> Rollback finished.")
     return None
