@@ -32,11 +32,9 @@ Generate a new seed and validate it until a possible seed is found.
 
 ### Limitations
 
-* Item Loss is not properly implemented. If `--skip-item-loss`, the
-validator assumes you start with missiles and bombs.
 * There's no way to choose each trick individually.
 * The data set does not include out of bounds movement.
-* Dark World damage requirements, while mapped are not verified.
+* Dark World damage requirements, while mapped, are not verified.
 * Elevator randomizer is not supported.
 
 ### Options
