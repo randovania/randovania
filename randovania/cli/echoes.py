@@ -1,42 +1,15 @@
 import argparse
-import json
 import os
 import subprocess
 from argparse import ArgumentParser
-from typing import Dict, BinaryIO, Set, Optional
+from typing import Dict, Set, Optional
 
-from randovania.games.prime import binary_data, log_parser
+from randovania.cli import prime_database
+from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.resolver import resolver, data_reader
 from randovania.resolver.debug import _n
 from randovania.resolver.state import State
-
-
-def decode_data_file(args) -> Dict:
-    if args.json_database is not None:
-        with open(args.json_database) as data_file:
-            return json.load(data_file)
-
-    data_file_path = args.binary_database
-    if data_file_path is None:
-        data_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prime2.bin")
-
-    with open(data_file_path, "rb") as x:  # type: BinaryIO
-        return binary_data.decode(x)
-
-
-def add_data_file_argument(parser: ArgumentParser):
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument(
-        "--binary-database",
-        type=str,
-        help="Path to the binary encoded database.",
-    )
-    group.add_argument(
-        "--json-database",
-        type=str,
-        help="Path to the JSON encoded database.",
-    )
 
 
 def add_difficulty_arguments(parser):
@@ -68,23 +41,6 @@ def add_difficulty_arguments(parser):
     )
 
 
-def patch_data(data: Dict):
-    for world in data["worlds"]:
-        for area in world["areas"]:
-            # Aerie Transport Station has default_node_index not set
-            if area["asset_id"] == 3136899603:
-                area["default_node_index"] = 2
-
-            # Hive Temple Access has incorrect requirements for unlocking Hive Temple gate
-            if area["asset_id"] == 3968294891:
-                area["connections"][1][2] = [[{
-                    "requirement_type": 0,
-                    "requirement_index": 38 + i,
-                    "amount": 1,
-                    "negate": False,
-                } for i in range(3)]]
-
-
 def run_resolver(args, data: Dict, randomizer_log: RandomizerLog) -> Optional[State]:
     game_description = data_reader.decode_data(data, randomizer_log.pickup_database)
     final_state = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
@@ -109,9 +65,7 @@ def run_resolver(args, data: Dict, randomizer_log: RandomizerLog) -> Optional[St
 
 
 def validate_command_logic(args):
-    data = decode_data_file(args)
-    patch_data(data)
-
+    data = prime_database.decode_data_file(args)
     randomizer_log = log_parser.parse_log(args.logfile)
     if not run_resolver(args, data, randomizer_log):
         print("Impossible.")
@@ -129,7 +83,7 @@ def create_validate_command(sub_parsers):
         type=str,
         help="Path to the log file of a Randomizer run.")
     add_difficulty_arguments(parser)
-    add_data_file_argument(parser)
+    prime_database.add_data_file_argument(parser)
 
     parser.set_defaults(func=validate_command_logic)
 
@@ -162,9 +116,7 @@ def list_logs_in(log_dir: str) -> Set[str]:
 
 
 def randomize_command_logic(args):
-    data = decode_data_file(args)
-    patch_data(data)
-
+    data = prime_database.decode_data_file(args)
     if not os.path.isfile(args.randomizer_binary):
         raise ValueError("Randomizer binary '{}' does not exist.".format(args.randomizer_binary))
 
@@ -197,7 +149,7 @@ def create_randomize_command(sub_parsers):
     )  # type: ArgumentParser
 
     add_difficulty_arguments(parser)
-    add_data_file_argument(parser)
+    prime_database.add_data_file_argument(parser)
     parser.add_argument(
         "--randomizer-binary",
         type=str,
@@ -225,42 +177,6 @@ def create_randomize_command(sub_parsers):
     parser.set_defaults(func=randomize_command_logic)
 
 
-def convert_database_command_logic(args):
-    data = decode_data_file(args)
-
-    if args.output_binary is not None:
-        with open(args.output_binary, "wb") as x:  # type: BinaryIO
-            binary_data.encode(data, x)
-    elif args.output_json is not None:
-        with open(args.output_json, "w") as x:  # type: BinaryIO
-            json.dump(data, x, indent=4)
-    else:
-        raise ValueError("Neither binary nor JSON set. Argparse is broken?")
-
-
-def create_convert_database_command(sub_parsers):
-    parser = sub_parsers.add_parser(
-        "convert-database",
-        help="Converts a database file between JSON and binary encoded formats. Input defaults to embeded database.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
-    add_data_file_argument(parser)
-
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument(
-        "--output-binary",
-        type=str,
-        help="Export as a binary file.",
-    )
-    group.add_argument(
-        "--output-json",
-        type=str,
-        help="Export as a JSON file.",
-    )
-
-    parser.set_defaults(func=convert_database_command_logic)
-
-
 def create_subparsers(sub_parsers):
     parser = sub_parsers.add_parser(
         "echoes",
@@ -270,7 +186,7 @@ def create_subparsers(sub_parsers):
     command_subparser = parser.add_subparsers(dest="command")
     create_validate_command(command_subparser)
     create_randomize_command(command_subparser)
-    create_convert_database_command(command_subparser)
+    prime_database.create_subparsers(command_subparser)
 
     def check_command(args):
         if args.command is None:
