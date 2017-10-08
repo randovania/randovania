@@ -192,4 +192,6 @@ def resolve(difficulty_level: int,
             resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
             starting_state.resources[resource] = 1
 
+    simplify_connections(game, starting_state.resources)
+
     return advance_depth(starting_state, game)
