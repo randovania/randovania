@@ -437,10 +437,12 @@ def resolve_teleporter_node(node: TeleporterNode,
                             game: GameDescription) -> Node:
     world = game.world_by_asset_id(node.destination_world_asset_id)
     area = world.area_by_asset_id(node.destination_area_asset_id)
+    if area.default_node_index == 255:
+        raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
     return area.nodes[area.default_node_index]
 
 
-def consistency_check(game: GameDescription) -> Iterator[str]:
+def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
     for world in game.worlds:
         for area in world.areas:
             for node in area.nodes:
@@ -448,11 +450,9 @@ def consistency_check(game: GameDescription) -> Iterator[str]:
                     try:
                         resolve_dock_node(node, game)
                     except IndexError as e:
-                        yield "{}/{}/{} (Dock) does not connect due to {}".format(
-                            world.name, area.name, node.name, e)
+                        yield node, "Invalid dock connection: {}".format(e)
                 elif isinstance(node, TeleporterNode):
                     try:
                         resolve_teleporter_node(node, game)
                     except IndexError as e:
-                        yield "{}/{}/{} (Teleporter) does not connect due to {}".format(
-                            world.name, area.name, node.name, e)
+                        yield node, "Invalid teleporter connection: {}".format(e)
