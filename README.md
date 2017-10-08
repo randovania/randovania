@@ -36,6 +36,8 @@ Generate a new seed and validate it until a possible seed is found.
 * The data set does not include out of bounds movement.
 * Dark World damage requirements, while mapped, are not verified.
 * Elevator randomizer is not supported.
+* Opening Blast Shield doors from a side does not consider the other side
+as unlocked.
 
 ### Options
 
