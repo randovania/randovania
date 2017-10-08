@@ -1,8 +1,9 @@
 from typing import Set
 
 from randovania.resolver.game_description import Node, Area, GameDescription, RequirementList
+from randovania.resolver.state import State
 
-_IS_DEBUG = False
+_DEBUG_LEVEL = 0
 count = 0
 _gd = None  # type: GameDescription
 
@@ -25,20 +26,6 @@ def pretty_print_area(area: Area):
         print()
 
 
-def debug_print_advance_step(state, reach, requirements_by_node, actions):
-    print("Now on", n(state.node))
-    print("Reach:")
-    for node in reach:
-        print("  > {}".format(n(node)))
-    print("Item alternatives:")
-    for node, l in requirements_by_node.items():
-        print("  > {}: {}".format(n(node), l))
-    print("Actions:")
-    for _action in actions:
-        print("  > {} for {}".format(n(_action), _action.resource))
-    print()
-
-
 def sorted_requirementset_print(new_requirements: Set[RequirementList]):
     to_print = []
     for requirement in new_requirements:
@@ -49,6 +36,16 @@ def sorted_requirementset_print(new_requirements: Set[RequirementList]):
 def increment_attempts():
     global count
     count += 1
-    print("Attempt", count)
     # if count > 1500:
     #     raise SystemExit
+
+
+def log_new_advance(state: State, reach):
+    increment_attempts()
+    if _DEBUG_LEVEL > 0:
+        print("[{0: >5}] Now on {1}".format(count, n(state.node)))
+
+
+def log_rollback(state):
+    if _DEBUG_LEVEL > 0:
+        print("        > Rollback on {1}".format(count, n(state.node)))
