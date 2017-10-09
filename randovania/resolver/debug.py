@@ -6,6 +6,7 @@ from randovania.resolver.state import State
 _DEBUG_LEVEL = 0
 count = 0
 _gd = None  # type: GameDescription
+_current_indent = 0
 
 
 def n(node: Node) -> str:
@@ -40,12 +41,25 @@ def increment_attempts():
     #     raise SystemExit
 
 
+def _indent(offset=0):
+    return " " * (_current_indent - offset)
+
+
 def log_new_advance(state: State, reach):
+    global _current_indent
     increment_attempts()
+    _current_indent += 1
     if _DEBUG_LEVEL > 0:
-        print("[{0: >5}] Now on {1}".format(count, n(state.node)))
+        print("{}> {} for {}".format(_indent(1), n(state.node), getattr(state.node, "resource", None)))
 
 
 def log_rollback(state):
-    if _DEBUG_LEVEL > 0:
-        print("        > Rollback on {1}".format(count, n(state.node)))
+    global _current_indent
+    if _DEBUG_LEVEL > 1:
+        print("{}* Rollback {}".format(_indent(), n(state.node)))
+    _current_indent -= 1
+
+
+def log_skip_action_missing_requirement(node: Node, game: GameDescription):
+    if _DEBUG_LEVEL > 1:
+        print("{}* Skip {}, missing additional".format(_indent(), n(node)))
