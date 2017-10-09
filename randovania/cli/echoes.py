@@ -1,5 +1,6 @@
 import argparse
 import os
+import random
 import subprocess
 from argparse import ArgumentParser
 from typing import Dict, Set, Optional
@@ -72,7 +73,7 @@ def validate_command_logic(args):
         raise SystemExit(1)
 
 
-def create_validate_command(sub_parsers):
+def add_validate_command(sub_parsers):
     parser = sub_parsers.add_parser(
         "validate",
         help="Validate a randomizer log."
@@ -147,7 +148,7 @@ def randomize_command_logic(args):
         print("Seed was impossible, retrying.\n\n")
 
 
-def create_randomize_command(sub_parsers):
+def add_randomize_command(sub_parsers):
     parser = sub_parsers.add_parser(
         "randomize",
         help="Randomize until a valid seed is found.",
@@ -183,6 +184,51 @@ def create_randomize_command(sub_parsers):
     parser.set_defaults(func=randomize_command_logic)
 
 
+def generate_seed_command_logic(args):
+    data = prime_database.decode_data_file(args)
+
+    while True:
+        print("Generating seed...")
+        seed = random.randint(0, 2147483647)
+        randomizer_log = log_parser.generate_log(seed, args.exclude_pickups)
+
+        print("Validating...")
+        if run_resolver(args, data, randomizer_log):
+            print("== Successful seed: {}".format(seed))
+            break
+
+        print("Seed was impossible, retrying.\n")
+
+
+def add_generate_seed_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "generate-seed",
+        help="Generates a valid seed with the given conditions.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+
+    add_difficulty_arguments(parser)
+    parser.add_argument(
+        "--exclude-pickups",
+        nargs='+',
+        type=int,
+        default=[],
+        help="Pickups to exclude from the randomization."
+    )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Generate no output, other than the final seed."
+    )
+    parser.add_argument(
+        "--limit-multi-threading",
+        type=int,
+        help="Limit the seed generation to the given process count. If unsure, leave default."
+    )
+    prime_database.add_data_file_argument(parser)
+    parser.set_defaults(func=generate_seed_command_logic)
+
+
 def create_subparsers(sub_parsers):
     parser = sub_parsers.add_parser(
         "echoes",
@@ -190,8 +236,9 @@ def create_subparsers(sub_parsers):
     )  # type: ArgumentParser
 
     command_subparser = parser.add_subparsers(dest="command")
-    create_validate_command(command_subparser)
-    create_randomize_command(command_subparser)
+    add_validate_command(command_subparser)
+    add_randomize_command(command_subparser)
+    add_generate_seed_command(command_subparser)
     prime_database.create_subparsers(command_subparser)
 
     def check_command(args):
