@@ -217,13 +217,18 @@ def generate_seed_command_logic(args):
         for _ in range(cpu_count)
     ]
 
+    initial_seed = random.randint(0, 2147483647)
     seed_count = 0
 
     def generate_seed():
-        return random.randint(0, 2147483647)
+        global seed_count
+        seed_count += 1
+        new_seed = initial_seed + seed_count
+        if new_seed > 2147483647:
+            new_seed -= 2147483647
+        return new_seed
 
     for _ in range(cpu_count):
-        seed_count += 1
         input_queue.put_nowait(generate_seed())
 
     for process in process_list:
@@ -234,10 +239,9 @@ def generate_seed_command_logic(args):
         if valid:
             break
         else:
-            seed_count += 1
-            if not args.quiet and seed_count % (1000 * cpu_count) == 0:
-                print("Total seed count so far: {}".format(seed_count))
             input_queue.put_nowait(generate_seed())
+            if not args.quiet and seed_count % (100 * cpu_count) == 0:
+                print("Total seed count so far: {}".format(seed_count))
 
     for process in process_list:
         process.terminate()
