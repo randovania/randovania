@@ -1,3 +1,5 @@
+import io
+
 import py
 import pytest
 
@@ -254,3 +256,16 @@ def test_generator(test_files_dir, log_name):
     log = log_parser.parse_log(str(test_files_dir.join(log_name)))
     generated_log = log_parser.generate_log(log.seed, log.excluded_pickups)
     assert log == generated_log
+
+
+@pytest.mark.parametrize("log_name", [
+    "echoes_log_a.txt",
+    "echoes_log_recursion_heavy.txt",
+])
+def test_write(test_files_dir: py.path.local, log_name):
+    input_file = test_files_dir.join(log_name)
+    log = log_parser.parse_log(str(input_file))
+    output = io.StringIO()
+    log.write(output)
+
+    assert output.getvalue().split() == input_file.read_text("utf-8").split()

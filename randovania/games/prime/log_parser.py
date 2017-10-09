@@ -1,6 +1,6 @@
 import os
 import re
-from typing import NamedTuple, List, Dict
+from typing import NamedTuple, List, Dict, TextIO
 
 from randovania import get_data_path
 from randovania.games.prime import random
@@ -121,12 +121,31 @@ custom_mapping = {
 }
 
 
+def _add_hyphens(s, rest):
+    if len(s) % 2 == rest:
+        s += " "
+    return s + (" -" * 15)
+
+
 class RandomizerLog(NamedTuple):
     version: str
     seed: int
     excluded_pickups: List[int]
     pickup_database: PickupDatabase
     elevators: Dict[str, str]
+
+    def write(self, output_file: TextIO):
+        output_file.write("Randomizer V{}\n".format(self.version))
+        output_file.write("Seed: {}\n".format(self.seed))
+        output_file.write("Excluded pickups: {}\n".format(
+            " ".join(str(pickup) for pickup in self.excluded_pickups)))
+
+        for entry in self.pickup_database.entries:
+            output_file.write("{:.20} {:.29} {}\n".format(
+                _add_hyphens(entry.world, 1),
+                _add_hyphens(entry.room, 0),
+                entry.item
+            ))
 
 
 class InvalidLogFileException(Exception):
@@ -152,12 +171,15 @@ def parse_log(logfile: str) -> RandomizerLog:
                 logfile, "Unexpected version {}, expected {}".format(
                     version, RANDOMIZER_VERSION))
 
-        seed = int(extract_with_regexp(logfile, f, r"^Seed: (\d+)$",
+        seed = int(extract_with_regexp(logfile, f, r"^Seed: (\d+)",
                                        "Could not find Seed"))
         excluded_pickups_str = extract_with_regexp(
-            logfile, f, r"^Excluded pickups:\s+((?:\d+\s?)+)$",
+            logfile, f, r"^Excluded pickups:\s*((?:\d+\s?)*)$",
             "Could not find excluded pickups")
-        excluded_pickups = [int(pickup_str) for pickup_str in excluded_pickups_str.split(" ")]
+        if excluded_pickups_str:
+            excluded_pickups = [int(pickup_str) for pickup_str in excluded_pickups_str.split(" ")]
+        else:
+            excluded_pickups = []
 
         pickups = []
         for line in f:
