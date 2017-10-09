@@ -249,7 +249,7 @@ def generate_seed_command_logic(args):
     if args.quiet:
         print(seed)
     else:
-        print("== Successful seed: {}. \nTotal seed count: {}".format(seed, seed_count))
+        print("== Successful seed: {} \nTotal seed count: {}".format(seed, seed_count))
 
 
 def add_generate_seed_command(sub_parsers):
