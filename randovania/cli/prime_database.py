@@ -4,6 +4,7 @@ import os
 from argparse import ArgumentParser
 from typing import Dict, BinaryIO
 
+from randovania import get_data_path
 from randovania.games.prime import binary_data, log_parser
 from randovania.resolver import resolver, data_reader, debug
 from randovania.resolver.game_description import consistency_check
@@ -16,7 +17,7 @@ def decode_data_file(args) -> Dict:
 
     data_file_path = args.binary_database
     if data_file_path is None:
-        data_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prime2.bin")
+        data_file_path = os.path.join(get_data_path(), "prime2.bin")
 
     with open(data_file_path, "rb") as x:  # type: BinaryIO
         return binary_data.decode(x)

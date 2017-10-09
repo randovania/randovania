@@ -1,10 +1,12 @@
+import os
 import re
 from typing import NamedTuple, List, Dict
 
+from randovania import get_data_path
+from randovania.games.prime import random
 from randovania.resolver.game_description import PickupEntry, PickupDatabase
 
 RANDOMIZER_VERSION = "3.2"
-
 
 percent_less_items = {
     "Dark Agon Key 1",
@@ -176,3 +178,42 @@ def parse_log(logfile: str) -> RandomizerLog:
 
         database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickups)
         return RandomizerLog(version, seed, excluded_pickups, database, elevators)
+
+
+def generate_log(seed, excluded_pickups):
+    """Reference implementation:
+    https://github.com/EthanArmbrust/new-prime-seed-generator/blob/master/src/logChecker.cpp#L4458-L4505"""
+    original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
+    original_size = len(original_log.pickup_database.entries)
+
+    randomized_items = [""] * original_size
+
+    # add all items from originalList to orderedItems in order
+    ordered_items = [
+        entry.item
+        for entry in original_log.pickup_database.entries
+    ]
+
+    # fill addedItems with ordered integers
+    items_to_add = list(range(original_size))
+
+    # take the excluded items and set them in the randomizedItems list
+    for excluded in excluded_pickups:
+        randomized_items[excluded] = ordered_items[excluded]
+
+    # remove the excluded items from orderedItems list and the addedItems list
+    for i, excluded in enumerate(excluded_pickups):
+        ordered_items.pop(excluded - i)
+        items_to_add.pop(excluded - i)
+
+    # begin Randomizing
+    randomizer = random.Random(seed)
+    while ordered_items:
+        # grabs a random int between 0 and the size of itemsToAdd
+        number = randomizer.next_with_max(len(items_to_add))
+
+        # take the first item from orderedItems and add it to randomizedItems at the "number"th int from itemsToAdd
+        randomized_items[items_to_add.pop(number)] = ordered_items.pop(0)
+
+    import pprint
+    pprint.pprint(randomized_items)
