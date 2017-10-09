@@ -5,13 +5,8 @@ import randovania.resolver.game_description
 from randovania.games.prime import log_parser
 
 
-@pytest.fixture()
-def echoes_log_a():
-    return py.path.local(__file__).dirpath("test_files", "echoes_log_a.txt")
-
-
-def test_parse_log(echoes_log_a):
-    log = log_parser.parse_log(str(echoes_log_a))
+def test_parse_log(test_files_dir):
+    log = log_parser.parse_log(str(test_files_dir.join("echoes_log_a.txt")))
     assert log.version == "3.2"
     assert log.seed == 1145919247
     assert log.excluded_pickups == [23]
@@ -251,8 +246,11 @@ def test_parse_log(echoes_log_a):
     ]
 
 
-def test_generator(echoes_log_a):
-    log = log_parser.parse_log(str(echoes_log_a))
+@pytest.mark.parametrize("log_name", [
+    "echoes_log_a.txt",
+    "echoes_log_recursion_heavy.txt",
+])
+def test_generator(test_files_dir, log_name):
+    log = log_parser.parse_log(str(test_files_dir.join(log_name)))
     generated_log = log_parser.generate_log(log.seed, log.excluded_pickups)
-
     assert log == generated_log
