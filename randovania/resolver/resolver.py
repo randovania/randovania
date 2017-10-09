@@ -83,9 +83,11 @@ def actions_with_reach(current_reach: Reach,
                        game: GameDescription) -> Iterator[ResourceNode]:
     for node in current_reach:
         if isinstance(node, ResourceNode):
-            if not state.has_resource(node.resource) and \
-                    game.get_additional_requirements(node).satisfied(state.resources):
-                yield node  # TODO
+            if not state.has_resource(node.resource):
+                if game.get_additional_requirements(node).satisfied(state.resources):
+                    yield node
+                else:
+                    debug.log_skip_action_missing_requirement(node, game)
 
 
 def calculate_satisfiable_actions(state: State,
