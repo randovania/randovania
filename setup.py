@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='randovania',
-    version='0.4.1',
+    version='0.4.2',
     author='Henrique Gemignani',
     url='https://github.com/henriquegemignani/randovania',
     description='A randomizer validator for the Metroid Prime series.',
@@ -24,6 +24,7 @@ setup(
         'py', 'pytest', ],
     entry_points={
         'console_scripts': [
+            "randovania = randovania.__main__:main"
         ]
     },
 )
