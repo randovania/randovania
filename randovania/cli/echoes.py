@@ -221,7 +221,7 @@ def generate_seed_command_logic(args):
     seed_count = 0
 
     def generate_seed():
-        global seed_count
+        nonlocal seed_count
         seed_count += 1
         new_seed = initial_seed + seed_count
         if new_seed > 2147483647:
