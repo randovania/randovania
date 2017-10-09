@@ -1,55 +1,68 @@
+from typing import List
+
+
+class Int32:
+    def __init__(self, value):
+        # Wrap value into [-2**31, 2**31-1]
+        self.value = (value + 2 ** 31) % 2 ** 32 - 2 ** 31
+
+    def __int__(self):
+        return self.value
+
+    def __add__(self, other):
+        return Int32(self.value + other.value)
+
+    def __sub__(self, other):
+        return Int32(self.value - other.value)
+
+
 # consts
-MBIG = 0x7fffffff
-MSEED = 0x9a4ec86
+MBIG = Int32(0x7fffffff)
+MSEED = Int32(0x9a4ec86)
 MZ = 0
 
 
 class Random:
+    """Reference implementation:
+    https://github.com/EthanArmbrust/new-prime-seed-generator/blob/master/src/Random.cpp"""
+
     def __init__(self, seed):
-        self.SeedArray = [0] * 56
+        self.SeedArray = [Int32(0)] * 56  # type: List[Int32]
+
+        if seed < 0:
+            raise ValueError("Invalid seed: must be >= 0")
+
+        if seed > 0x7fffffff:
+            raise ValueError("Invalid seed: must be <= 0x7fffffff (2147483647)")
 
         # Initialize our Seed array.
         # This algorithm comes from Numerical Recipes in C (2nd Ed.)
-        if seed == -2147483648:
-            subtraction = 0x7fffffff
-        else:
-            subtraction = abs(seed)
-        mj = MSEED - subtraction
+        mj = MSEED - Int32(seed)
         self.SeedArray[55] = mj
-        mk = 1
+        mk = Int32(1)
         # Apparently the range [1..55] is special (Knuth) and so we're wasting the 0'th position.
         for i in range(1, 55):
             ii = (21 * i) % 55
             self.SeedArray[ii] = mk
             mk = mj - mk
-            if mk < 0:
+            if mk.value < 0:
                 mk += MBIG
             mj = self.SeedArray[ii]
+
         for k in range(1, 5):
             for i in range(1, 56):
-                self.SeedArray[i] -= self.SeedArray[1 + (i + 30) % 55]
-                if self.SeedArray[i] < 0:
+                idx = 1 + (i + 30) % 55
+                self.SeedArray[i] -= self.SeedArray[idx]
+                if self.SeedArray[i].value < 0:
                     self.SeedArray[i] += MBIG
 
         self.inext = 0
         self.inextp = 21
 
-    def next_with_max(self, max_value):
+    def next_with_max(self, max_value: int) -> int:
         return int(self.sample() * max_value)
 
-    def next_with_min_max(self, min_value, max_value):
-        num = max_value - min_value
-        if num <= 0x7fffffff:
-            return int(self.sample() * num) + min_value
-        return int(self.get_sample_for_large_range() * num) + min_value
-
-    def get_sample_for_large_range(self):
-        num = self._internal_sample()
-        if self._internal_sample() % 2 == 0:
-            num = -num
-        return (num + 2147483646.0) / 4294967293
-
-    def _internal_sample(self):
+    def _internal_sample(self) -> Int32:
         inext = self.inext
         inextp = self.inextp
 
@@ -62,15 +75,16 @@ class Random:
             inextp = 1
 
         num = self.SeedArray[inext] - self.SeedArray[inextp]
-        if num == 0x7fffffff:
+        if num == MBIG:
             num -= 1
-        if num < 0:
-            num += 0x7fffffff
+        if num.value < 0:
+            num += MBIG
 
         self.SeedArray[inext] = num
         self.inext = inext
         self.inextp = inextp
         return num
 
-    def sample(self):
-        return self._internal_sample() * 4.6566128752457969E-10
+    def sample(self) -> float:
+        return self._internal_sample().value / MBIG.value
+
