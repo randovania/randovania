@@ -1,4 +1,5 @@
 import argparse
+import multiprocessing
 import os
 import random
 import subprocess
@@ -41,14 +42,16 @@ def add_difficulty_arguments(parser):
     )
 
 
-def run_resolver(args, data: Dict, randomizer_log: RandomizerLog) -> Optional[State]:
+def run_resolver(args, data: Dict, randomizer_log: RandomizerLog, verbose=True) -> Optional[State]:
     game_description = data_reader.decode_data(data, randomizer_log.pickup_database)
     final_state = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
     if final_state:
-        print("Game is possible!")
+        if verbose:
+            print("Game is possible!")
 
         item_percentage = final_state.resources.get(game_description.resource_database.item_percentage(), 0)
-        print("Victory with {}% of the items.".format(item_percentage))
+        if verbose:
+            print("Victory with {}% of the items.".format(item_percentage))
 
         if args.print_final_path:
             states = []
@@ -184,20 +187,60 @@ def add_randomize_command(sub_parsers):
     parser.set_defaults(func=randomize_command_logic)
 
 
+def generate_and_validate(args,
+                          data,
+                          input_queue: multiprocessing.Queue,
+                          output_queue: multiprocessing.Queue):
+
+    while True:
+        seed = input_queue.get()
+        randomizer_log = log_parser.generate_log(seed, args.exclude_pickups)
+        output_queue.put((seed, run_resolver(args, data, randomizer_log, False) is not None))
+
+
 def generate_seed_command_logic(args):
     data = prime_database.decode_data_file(args)
 
+    input_queue = multiprocessing.Queue()
+    output_queue = multiprocessing.Queue()
+
+    cpu_count = args.limit_multi_threading
+    if cpu_count is None:
+        cpu_count = multiprocessing.cpu_count()
+
+    process_list = [
+        multiprocessing.Process(
+            target=generate_and_validate,
+            args=(args, data, input_queue, output_queue)
+        )
+        for _ in range(cpu_count)
+    ]
+
+    def generate_seed():
+        return random.randint(0, 2147483647)
+
+    for _ in range(cpu_count):
+        input_queue.put_nowait(generate_seed())
+
+    for process in process_list:
+        process.start()
+
     while True:
-        print("Generating seed...")
-        seed = random.randint(0, 2147483647)
-        randomizer_log = log_parser.generate_log(seed, args.exclude_pickups)
-
-        print("Validating...")
-        if run_resolver(args, data, randomizer_log):
-            print("== Successful seed: {}".format(seed))
+        seed, valid = output_queue.get()
+        if valid:
             break
+        else:
+            if not args.quiet:
+                print("Invalid seed detected, generating new one.")
+            input_queue.put_nowait(generate_seed())
 
-        print("Seed was impossible, retrying.\n")
+    for process in process_list:
+        process.terminate()
+
+    if args.quiet:
+        print(seed)
+    else:
+        print("== Successful seed: {}".format(seed))
 
 
 def add_generate_seed_command(sub_parsers):
