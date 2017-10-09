@@ -3,6 +3,7 @@ import multiprocessing
 import os
 import random
 import subprocess
+import sys
 from argparse import ArgumentParser
 from typing import Dict, Set, Optional
 
@@ -272,6 +273,32 @@ def add_generate_seed_command(sub_parsers):
     parser.set_defaults(func=generate_seed_command_logic)
 
 
+def generate_seed_log_command_logic(args):
+    log_parser.generate_log(args.seed, args.exclude_pickups).write(sys.stdout)
+
+
+def add_generate_seed_log_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "generate-seed-log",
+        help="Generates a logfile for the given seed.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+
+    parser.add_argument(
+        "seed",
+        type=int,
+        help="The seed."
+    )
+    parser.add_argument(
+        "--exclude-pickups",
+        nargs='+',
+        type=int,
+        default=[],
+        help="Pickups to exclude from the randomization."
+    )
+    parser.set_defaults(func=generate_seed_log_command_logic)
+
+
 def create_subparsers(sub_parsers):
     parser = sub_parsers.add_parser(
         "echoes",
@@ -282,6 +309,7 @@ def create_subparsers(sub_parsers):
     add_validate_command(command_subparser)
     add_randomize_command(command_subparser)
     add_generate_seed_command(command_subparser)
+    add_generate_seed_log_command(command_subparser)
     prime_database.create_subparsers(command_subparser)
 
     def check_command(args):
