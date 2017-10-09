@@ -123,7 +123,7 @@ custom_mapping = {
 
 class RandomizerLog(NamedTuple):
     version: str
-    seed: str
+    seed: int
     excluded_pickups: List[int]
     pickup_database: PickupDatabase
     elevators: Dict[str, str]
@@ -152,8 +152,8 @@ def parse_log(logfile: str) -> RandomizerLog:
                 logfile, "Unexpected version {}, expected {}".format(
                     version, RANDOMIZER_VERSION))
 
-        seed = extract_with_regexp(logfile, f, r"^Seed: (\d+)$",
-                                   "Could not find Seed")
+        seed = int(extract_with_regexp(logfile, f, r"^Seed: (\d+)$",
+                                       "Could not find Seed"))
         excluded_pickups_str = extract_with_regexp(
             logfile, f, r"^Excluded pickups:\s+((?:\d+\s?)+)$",
             "Could not find excluded pickups")
@@ -180,7 +180,7 @@ def parse_log(logfile: str) -> RandomizerLog:
         return RandomizerLog(version, seed, excluded_pickups, database, elevators)
 
 
-def generate_log(seed, excluded_pickups):
+def generate_log(seed: int, excluded_pickups: List[int]) -> RandomizerLog:
     """Reference implementation:
     https://github.com/EthanArmbrust/new-prime-seed-generator/blob/master/src/logChecker.cpp#L4458-L4505"""
     original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
@@ -215,5 +215,10 @@ def generate_log(seed, excluded_pickups):
         # take the first item from orderedItems and add it to randomizedItems at the "number"th int from itemsToAdd
         randomized_items[items_to_add.pop(number)] = ordered_items.pop(0)
 
-    import pprint
-    pprint.pprint(randomized_items)
+    pickups = [
+        PickupEntry(original_entry.world, original_entry.room, randomized_item)
+        for randomized_item, original_entry in zip(randomized_items, original_log.pickup_database.entries)
+    ]
+
+    database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickups)
+    return RandomizerLog(RANDOMIZER_VERSION, seed, excluded_pickups, database, {})
