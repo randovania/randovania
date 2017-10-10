@@ -1,12 +1,12 @@
 import argparse
-import os
+import multiprocessing
 
 from randovania import cli
-from randovania.resolver import resolver, data_reader
-from randovania.games.prime import log_parser
 
 
 def main():
+    multiprocessing.freeze_support()
+
     parser = argparse.ArgumentParser()
     cli.create_subparsers(parser.add_subparsers(dest="game"))
     args = parser.parse_args()

@@ -1,4 +1,4 @@
-from . import echoes
+from randovania.cli import echoes
 
 games = [echoes]
 
