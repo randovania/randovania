@@ -126,68 +126,6 @@ def list_logs_in(log_dir: str) -> Set[str]:
     return set()
 
 
-def randomize_command_logic(args):
-    data = prime_database.decode_data_file(args)
-    if not os.path.isfile(args.randomizer_binary):
-        raise ValueError("Randomizer binary '{}' does not exist.".format(args.randomizer_binary))
-
-    while True:
-        log_dir = os.path.join(os.path.dirname(args.randomizer_binary), "logs")
-        previous_logs = list_logs_in(log_dir)
-        invoke_randomizer(args)
-        new_logs = list_logs_in(log_dir)
-        difference = new_logs - previous_logs
-        if len(difference) != 1:
-            raise RuntimeError("Could not find the new randomizer log, found this log difference: {}".format(difference))
-
-        log_file = difference.pop()
-        full_log_file = os.path.join(log_dir, log_file)
-
-        randomizer_log = log_parser.parse_log(full_log_file)
-        print("Randomizer finished succesfuly with log {}.".format(full_log_file))
-        print("Validating...")
-        if run_resolver(args, data, randomizer_log):
-            break
-
-        print("Seed was impossible, retrying.\n\n")
-
-
-def add_randomize_command(sub_parsers):
-    parser = sub_parsers.add_parser(
-        "randomize",
-        help="Randomize until a valid seed is found.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
-
-    add_difficulty_arguments(parser)
-    prime_database.add_data_file_argument(parser)
-    parser.add_argument(
-        "--randomizer-binary",
-        type=str,
-        required=True,
-        help="Path to the randomizer executable."
-    )
-    parser.add_argument(
-        "game_folder",
-        type=str,
-        help="Folder to pass to the randomizer executable."
-    )
-    parser.add_argument(
-        "--exclude-pickups",
-        nargs='*',
-        type=int,
-        default=[23],
-        help="Pickups to exclude from the randomization."
-    )
-    parser.add_argument(
-        "--remove-hud-memo-popup",
-        action="store_true",
-        help="Changes the type of HUD Memo used for pickups, to remove the popup."
-    )
-
-    parser.set_defaults(func=randomize_command_logic)
-
-
 def generate_and_validate(args,
                           data,
                           input_queue: multiprocessing.Queue,
@@ -315,7 +253,6 @@ def create_subparsers(sub_parsers):
 
     command_subparser = parser.add_subparsers(dest="command")
     add_validate_command(command_subparser)
-    add_randomize_command(command_subparser)
     add_generate_seed_command(command_subparser)
     add_generate_seed_log_command(command_subparser)
     prime_database.create_subparsers(command_subparser)
