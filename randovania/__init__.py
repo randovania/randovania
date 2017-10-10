@@ -1,5 +1,11 @@
 import os
 
+import sys
+
 
 def get_data_path():
-    return os.path.join(os.path.dirname(__file__), "data")
+    if getattr(sys, "frozen", False):
+        file_dir = getattr(sys, "_MEIPASS")
+    else:
+        file_dir = os.path.dirname(__file__)
+    return os.path.join(file_dir, "data")

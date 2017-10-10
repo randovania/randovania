@@ -102,7 +102,7 @@ def view_area_command_logic(args):
 
 def load_game_description(args):
     data = decode_data_file(args)
-    logfile = os.path.join(os.path.dirname(__file__), "..", "data", "prime2_original_log.txt")
+    logfile = os.path.join(get_data_path(), "prime2_original_log.txt")
     randomizer_log = log_parser.parse_log(logfile)
     gd = data_reader.decode_data(data, randomizer_log.pickup_database)
     debug._gd = gd
