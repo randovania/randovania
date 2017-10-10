@@ -2,7 +2,6 @@ import argparse
 import multiprocessing
 import os
 import random
-import subprocess
 import sys
 from argparse import ArgumentParser
 from typing import Dict, Set, Optional
@@ -12,6 +11,8 @@ from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.resolver import resolver, data_reader, debug
 from randovania.resolver.state import State
+
+__all__ = ["create_subparsers"]
 
 
 def add_difficulty_arguments(parser):
@@ -99,23 +100,6 @@ def add_validate_command(sub_parsers):
     parser.set_defaults(func=validate_command_logic)
 
 
-def invoke_randomizer(args):
-    subprocess_argument = [
-        args.randomizer_binary,
-        args.game_folder,
-        "-g", "MP2",
-        "-e", ",".join(str(pickup) for pickup in args.exclude_pickups),
-    ]
-    if args.remove_hud_memo_popup:
-        subprocess_argument.append("-h")
-    if args.skip_item_loss:
-        subprocess_argument.append("-i")
-
-    print("Invoking Randomizer with {}.".format(subprocess_argument))
-    print("=== You will need to press Enter when it finishes to proceed ===\n")
-    subprocess.run(subprocess_argument, check=True)
-
-
 def list_logs_in(log_dir: str) -> Set[str]:
     if os.path.isdir(log_dir):
         return {
@@ -130,7 +114,6 @@ def generate_and_validate(args,
                           data,
                           input_queue: multiprocessing.Queue,
                           output_queue: multiprocessing.Queue):
-
     while True:
         seed = input_queue.get()
         randomizer_log = log_parser.generate_log(seed, args.exclude_pickups)
@@ -231,12 +214,11 @@ def generate_seed_log_command_logic(args):
 
 
 def add_generate_seed_log_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "generate-seed-log",
         help="Generates a logfile for the given seed.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
-
+    )
     parser.add_argument(
         "seed",
         type=int,
@@ -253,11 +235,10 @@ def add_generate_seed_log_command(sub_parsers):
 
 
 def create_subparsers(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "echoes",
         help="Actions regarding Metroid Prime 2: Echoes"
-    )  # type: ArgumentParser
-
+    )
     command_subparser = parser.add_subparsers(dest="command")
     add_validate_command(command_subparser)
     add_generate_seed_command(command_subparser)
