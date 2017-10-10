@@ -1,13 +1,22 @@
 # randovania
 A randomizer validator for the Metroid Prime series.
 
-### Installation
+## Installation
 
+### Windows
+
+Check the [releases page](https://github.com/henriquegemignani/randovania/releases).
+When using this executable, replace `python3 -m randovania` on all instructions with
+`randovania.exe`.
+
+Please note that all binary releases will be for 64-bit Windows only.
+
+### Python Package
 With a Python 3.6 installation:
 
 `python3 -m pip install --upgrade randovania`
  
-### Usage
+## Usage
 
 `python3 -m randovania echoes validate path/to/randomizer.log`
 
@@ -38,7 +47,7 @@ When finished, it will output the seed number. Use this number with the
 Echoes Randomizer as usual. Be sure to remember to pass the correct 
 exclusion list. (The default for this operation is _no_ exclusions.)
 
-### Limitations
+## Limitations
 
 * There's no way to choose each trick individually.
 * The data set does not include out of bounds movement.
@@ -47,12 +56,12 @@ exclusion list. (The default for this operation is _no_ exclusions.)
 * Opening Blast Shield doors from a side does not consider the other side
 as unlocked.
 
-### Options
+## Options
 
 See `python3 -m randovania --help`.
 
 
-### Credits
+## Credits
 
 Many thanks to [Claris Robyn](https://www.twitch.tv/clarisrobyn) for
 making the Echoes Randomizer and both collecting and providing this
