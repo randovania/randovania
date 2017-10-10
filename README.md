@@ -24,11 +24,19 @@ no matter how difficult. This does not include going out of bounds.
 It will also print the order of pickups taken and events triggered in
 order to finish the game.
 
-`python3 -m randovania echoes randomize --randomizer-binary
-D:\Randomizer\Randomizer.exe --remove-hud-memo-popup --enable-tricks
---difficulty 3 --skip-item-loss D:\MetroidPrime2-Rando\files`
+`python3 -m randovania echoes generate-seed --enable-tricks
+--difficulty 3 --skip-item-loss`
 
-Generate a new seed and validate it until a possible seed is found.
+Generate a new seed and validate it until a possible seed is found. Please
+not that this is a very CPU intensive operation, and your computer can be
+non-responsive while it runs.
+
+Dropping the difficulty, or disabling `--skip-item-loss` may cause this
+operation to take even hours to finish, depending on your CPU.
+
+When finished, it will output the seed number. Use this number with the
+Echoes Randomizer as usual. Be sure to remember to pass the correct 
+exclusion list. (The default for this operation is _no_ exclusions.)
 
 ### Limitations
 
