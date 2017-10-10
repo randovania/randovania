@@ -155,7 +155,9 @@ def generate_seed_command_logic(args):
         for _ in range(cpu_count)
     ]
 
-    initial_seed = random.randint(0, 2147483647)
+    initial_seed = args.start_on_seed
+    if initial_seed is None:
+        initial_seed = random.randint(0, 2147483647)
     seed_count = 0
 
     def generate_seed():
@@ -214,6 +216,11 @@ def add_generate_seed_command(sub_parsers):
         "--limit-multi-threading",
         type=int,
         help="Limit the seed generation to the given process count. If unsure, leave default."
+    )
+    parser.add_argument(
+        "--start-on-seed",
+        type=int,
+        help="Starts checking with the given seed number. Defaults to a random value."
     )
     prime_database.add_data_file_argument(parser)
     parser.set_defaults(func=generate_seed_command_logic)
