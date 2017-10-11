@@ -21,7 +21,7 @@ With a Python 3.6 installation:
 `python3 -m randovania echoes validate path/to/randomizer.log`
 
 Checks if the given [Metroid Prime 2: Echoes Randomizer](
-https://m2k2.taigaforum.com/post/echoes_randomizer.html) seed is beatable
+https://m2k2.taigaforum.com/post/randomizer_release.html) seed is beatable
 by a casual player.
 
 `python3 -m randovania echoes validate --difficulty 5
