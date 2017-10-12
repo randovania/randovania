@@ -149,6 +149,34 @@ custom_mapping = {
 }
 
 
+class ElevatorData(NamedTuple):
+    instance_id: int
+    world_asset_id: int
+    area_asset_id: int
+
+
+room_name_to_elevator_instance_id: Dict[str, ElevatorData] = {
+    "Temple Grounds - Temple Transport C": ElevatorData(589851, 1006255871, 2918020398),
+    "Temple Grounds - Transport to Agon Wastes": ElevatorData(1572998, 1006255871, 1660916974),
+    "Temple Grounds - Transport to Torvus Bog": ElevatorData(1966093, 1006255871, 2889020216),
+    "Temple Grounds - Temple Transport B": ElevatorData(2097251, 1006255871, 1287880522),
+    "Temple Grounds - Transport to Sanctuary Fortress": ElevatorData(3342446, 1006255871, 3455543403),
+    "Temple Grounds - Temple Transport A": ElevatorData(3538975, 1006255871, 1345979968),
+    "Great Temple - Temple Transport A": ElevatorData(152, 2252328306, 408633584),
+    "Great Temple - Temple Transport C": ElevatorData(393260, 2252328306, 2556480432),
+    "Great Temple - Temple Transport B": ElevatorData(524321, 2252328306, 2399252740),
+    "Agon Wastes - Transport to Temple Grounds": ElevatorData(122, 1119434212, 1473133138),
+    "Agon Wastes - Transport to Torvus Bog": ElevatorData(1245307, 1119434212, 2806956034),
+    "Agon Wastes - Transport to Sanctuary Fortress": ElevatorData(2949235, 1119434212, 3331021649),
+    "Torvus Bog - Transport to Temple Grounds": ElevatorData(129, 1039999561, 1868895730),
+    "Torvus Bog - Transport to Agon Wastes": ElevatorData(2162826, 1039999561, 3479543630),
+    "Torvus Bog - Transport to Sanctuary Fortress": ElevatorData(4522032, 1039999561, 3205424168),
+    "Sanctuary Fortress - Transport to Temple Grounds": ElevatorData(38, 464164546, 3528156989),
+    "Sanctuary Fortress - Transport to Agon Wastes": ElevatorData(1245332, 464164546, 900285955),
+    "Sanctuary Fortress - Transport to Torvus Bog": ElevatorData(1638535, 464164546, 3145160350),
+}
+
+
 def _add_hyphens(s, rest):
     if len(s) % 2 == rest:
         s += " "
@@ -160,7 +188,7 @@ class RandomizerLog(NamedTuple):
     seed: int
     excluded_pickups: List[int]
     pickup_database: PickupDatabase
-    elevators: Dict[str, str]
+    elevators: Dict[int, ElevatorData]
 
     def write(self, output_file: TextIO):
         output_file.write("Randomizer V{}\n".format(self.version))
@@ -217,12 +245,13 @@ def parse_log(logfile: str) -> RandomizerLog:
             else:
                 break
 
-        elevators = {}
+        elevators: Dict[int, ElevatorData] = {}
         if f.readline().strip() == "Elevators:":
             for line in f:
                 split = line.strip().split("<>")
                 if len(split) == 2:
-                    elevators[split[0].strip()] = split[1].strip()
+                    target = room_name_to_elevator_instance_id[split[1].strip()]
+                    elevators[room_name_to_elevator_instance_id[split[0].strip()].instance_id] = target
                 else:
                     break
         database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickup_importance, pickups)
