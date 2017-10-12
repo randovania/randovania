@@ -26,6 +26,14 @@ def add_difficulty_arguments(parser):
         "The difficulty level to check with. Higher numbers implies in harder tricks."
     )
     parser.add_argument(
+        "--minimum-difficulty",
+        type=int,
+        default=0,
+        choices=range(6),
+        help=
+        "Also check if the seed needs the given difficulty."
+    )
+    parser.add_argument(
         "--enable-tricks",
         action="store_true",
         help=
@@ -49,6 +57,11 @@ def run_resolver(args, data: Dict, randomizer_log: RandomizerLog, verbose=True) 
     game_description = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
     final_state = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
     if final_state:
+        if args.minimum_difficulty > 0:
+            if resolver.resolve(args.minimum_difficulty - 1, args.enable_tricks, args.skip_item_loss, game_description):
+                print("Game is beatable using a lower difficulty!")
+                return None
+
         if verbose:
             print("Game is possible!")
 
