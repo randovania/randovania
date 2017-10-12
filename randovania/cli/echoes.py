@@ -46,7 +46,7 @@ def add_difficulty_arguments(parser):
 
 
 def run_resolver(args, data: Dict, randomizer_log: RandomizerLog, verbose=True) -> Optional[State]:
-    game_description = data_reader.decode_data(data, randomizer_log.pickup_database)
+    game_description = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
     final_state = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
     if final_state:
         if verbose:

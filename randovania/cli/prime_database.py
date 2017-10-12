@@ -104,7 +104,7 @@ def load_game_description(args):
     data = decode_data_file(args)
     logfile = os.path.join(get_data_path(), "prime2_original_log.txt")
     randomizer_log = log_parser.parse_log(logfile)
-    gd = data_reader.decode_data(data, randomizer_log.pickup_database)
+    gd = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
     debug._gd = gd
     return gd
 
