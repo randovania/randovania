@@ -93,7 +93,7 @@ def add_validate_command(sub_parsers):
     prime_database.add_data_file_argument(parser)
     parser.add_argument(
         "--debug",
-        choices=(0, 1, 2),
+        choices=range(4),
         type=int,
         default=0,
         help="The level of debug logging to print.")

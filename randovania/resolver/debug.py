@@ -51,6 +51,9 @@ def log_new_advance(state: State, reach):
     _current_indent += 1
     if _DEBUG_LEVEL > 0:
         print("{}> {} for {}".format(_indent(1), n(state.node), getattr(state.node, "resource", None)))
+        if _DEBUG_LEVEL >= 3:
+            for node in reach:
+                print("{}: {}".format(_indent(), n(node)))
 
 
 def log_rollback(state):
