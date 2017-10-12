@@ -59,7 +59,8 @@ def run_resolver(args, data: Dict, randomizer_log: RandomizerLog, verbose=True) 
     if final_state:
         if args.minimum_difficulty > 0:
             if resolver.resolve(args.minimum_difficulty - 1, args.enable_tricks, args.skip_item_loss, game_description):
-                print("Game is beatable using a lower difficulty!")
+                if verbose:
+                    print("Game is beatable using a lower difficulty!")
                 return None
 
         if verbose:
