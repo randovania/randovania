@@ -111,6 +111,7 @@ class PickupDatabase:
     percent_less_items: Set[str]
     direct_name: Dict[str, int]
     custom_mapping: Dict[str, Dict[str, int]]
+    pickup_importance: Dict[str, int]
     entries: List[PickupEntry]
     cache: Dict[str, ResourceGain]
 
@@ -118,10 +119,12 @@ class PickupDatabase:
                  percent_less_items: Set[str],
                  direct_name: Dict[str, int],
                  custom_mapping: Dict[str, Dict[str, int]],
+                 pickup_importance: Dict[str, int],
                  entries: List[PickupEntry]) -> None:
         self.percent_less_items = percent_less_items
         self.direct_name = direct_name
         self.custom_mapping = custom_mapping
+        self.pickup_importance = pickup_importance
         self.entries = entries
         self.cache = {}
 
