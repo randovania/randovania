@@ -154,18 +154,14 @@ def resolve(difficulty_level: int,
             enable_tricks: bool,
             disable_item_loss: bool,
             game: GameDescription) -> Optional[State]:
-    starting_world_asset_id = 1006255871
-    starting_area_asset_id = 1655756413
-
     # global state for easy printing functions
     debug._gd = game
 
     static_resources = build_static_resources(difficulty_level, enable_tricks, game)
     simplify_connections(game, static_resources)
 
-    starting_world = game.world_by_asset_id(
-        starting_world_asset_id)
-    starting_area = starting_world.area_by_asset_id(starting_area_asset_id)
+    starting_world = game.world_by_asset_id(game.starting_world_asset_id)
+    starting_area = starting_world.area_by_asset_id(game.starting_area_asset_id)
     starting_node = starting_area.nodes[starting_area.default_node_index]
     starting_state = State(
         {
