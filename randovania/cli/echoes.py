@@ -4,6 +4,7 @@ import os
 import random
 import sys
 from argparse import ArgumentParser
+from collections import defaultdict
 from typing import Dict, Set, Optional
 
 from randovania.cli import prime_database
@@ -210,7 +211,12 @@ def add_generate_seed_command(sub_parsers):
 
 
 def generate_seed_log_command_logic(args):
-    log_parser.generate_log(args.seed, args.exclude_pickups).write(sys.stdout)
+    if args.output_file:
+        out = open(args.output_file, "w")
+    else:
+        out = sys.stdout
+    log_parser.generate_log(args.seed, args.exclude_pickups).write(out)
+    out.close()
 
 
 def add_generate_seed_log_command(sub_parsers):
@@ -231,7 +237,47 @@ def add_generate_seed_log_command(sub_parsers):
         default=[],
         help="Pickups to exclude from the randomization."
     )
+    parser.add_argument(
+        "--output-file",
+        type=str,
+        help="Where to write output to. Defaults to standard output."
+    )
     parser.set_defaults(func=generate_seed_log_command_logic)
+
+
+def analyze_seed_log_command_logic(args):
+    randomizer_log = log_parser.parse_log(args.logfile)
+
+    major_pickups_per_world = defaultdict(int)
+    world_importance = defaultdict(int)
+
+    pickup_database = randomizer_log.pickup_database
+    for entry in pickup_database.entries:
+        if entry.item in pickup_database.pickup_importance:
+            major_pickups_per_world[entry.world] += 1
+            world_importance[entry.world] += pickup_database.pickup_importance[entry.item]
+
+    print("World Major Pickup Count:")
+    for world, count in major_pickups_per_world.items():
+        print(world, count)
+    print()
+
+    print("World Importance Count:")
+    for world, count in world_importance.items():
+        print(world, count)
+
+
+def add_analyze_seed_log_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "analyze-seed-log",
+        help="Analyzes how the major pickups are distributed in a given seed.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.add_argument(
+        "logfile",
+        type=str,
+        help="Path to the log file of a Randomizer run.")
+    parser.set_defaults(func=analyze_seed_log_command_logic)
 
 
 def create_subparsers(sub_parsers):
@@ -239,11 +285,12 @@ def create_subparsers(sub_parsers):
         "echoes",
         help="Actions regarding Metroid Prime 2: Echoes"
     )
-    command_subparser = parser.add_subparsers(dest="command")
-    add_validate_command(command_subparser)
-    add_generate_seed_command(command_subparser)
-    add_generate_seed_log_command(command_subparser)
-    prime_database.create_subparsers(command_subparser)
+    sub_parsers = parser.add_subparsers(dest="command")
+    add_validate_command(sub_parsers)
+    add_generate_seed_command(sub_parsers)
+    add_generate_seed_log_command(sub_parsers)
+    add_analyze_seed_log_command(sub_parsers)
+    prime_database.create_subparsers(sub_parsers)
 
     def check_command(args):
         if args.command is None:
