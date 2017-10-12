@@ -222,10 +222,9 @@ def parse_log(logfile: str) -> RandomizerLog:
             for line in f:
                 split = line.strip().split("<>")
                 if len(split) == 2:
-                    elevators[split[0]] = elevators[split[1]]
+                    elevators[split[0].strip()] = split[1].strip()
                 else:
                     break
-
         database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickup_importance, pickups)
         return RandomizerLog(version, seed, excluded_pickups, database, elevators)
 
