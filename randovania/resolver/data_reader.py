@@ -56,8 +56,8 @@ def read_individual_requirement(data: Dict, resource_database: ResourceDatabase
         data["amount"], data["negate"])
 
 
-def read_requirement_list(data: List[Dict], resource_database: ResourceDatabase
-                          ) -> Tuple[IndividualRequirement, ...]:
+def read_requirement_list(data: List[Dict],
+                          resource_database: ResourceDatabase) -> RequirementList:
     return RequirementList(
         read_array(data,
                    partial(
@@ -65,9 +65,8 @@ def read_requirement_list(data: List[Dict], resource_database: ResourceDatabase
                        resource_database=resource_database)))
 
 
-def read_requirement_set(
-        data: List[List[Dict]],
-        resource_database: ResourceDatabase) -> RequirementSet:
+def read_requirement_set(data: List[List[Dict]],
+                         resource_database: ResourceDatabase) -> RequirementSet:
     return RequirementSet(
         read_array(data,
                    partial(
@@ -86,8 +85,8 @@ def add_requirement_to_set(
 # Dock Weakness
 
 
-def read_dock_weakness_database(data: Dict, resource_database: ResourceDatabase
-                                ) -> DockWeaknessDatabase:
+def read_dock_weakness_database(data: Dict,
+                                resource_database: ResourceDatabase) -> DockWeaknessDatabase:
     def read_dock_weakness(item: Dict) -> DockWeakness:
         return DockWeakness(item["index"], item["name"], item["is_blast_door"],
                             read_requirement_set(item["requirement_set"],
