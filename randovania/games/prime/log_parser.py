@@ -31,6 +31,34 @@ percent_less_items = {
     "_StartingItems",
 }
 
+pickup_importance = {
+    "Violet Translator": 2,
+    "Amber Translator": 2,
+    "Emerald Translator": 1,
+    "Cobalt Translator": 1,
+
+    "Dark Beam": 3,
+    "Light Beam": 3,
+    "Annihilator Beam": 2,
+
+    "Boost Ball": 1,
+    "Spider Ball": 1,
+    "Morph Ball Bomb": 1,
+
+    "Dark Visor": 2,
+    "Echo Visor": 1,
+
+    "Grapple Beam": 1,
+    "Gravity Boost": 1,
+    "Space Jump Boots": 1,
+    "Super Missile": 2,
+    "Seeker Launcher": 2,
+    "Screw Attack": 3,
+
+    "Dark Suit": 1,
+    "Light Suit": 3,
+}
+
 direct_name = {
     "Amber Translator": 1,
     "Annihilator Beam": 1,
@@ -198,7 +226,7 @@ def parse_log(logfile: str) -> RandomizerLog:
                 else:
                     break
 
-        database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickups)
+        database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickup_importance, pickups)
         return RandomizerLog(version, seed, excluded_pickups, database, elevators)
 
 
@@ -242,5 +270,5 @@ def generate_log(seed: int, excluded_pickups: List[int]) -> RandomizerLog:
         for randomized_item, original_entry in zip(randomized_items, original_log.pickup_database.entries)
     ]
 
-    database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickups)
+    database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickup_importance, pickups)
     return RandomizerLog(RANDOMIZER_VERSION, seed, excluded_pickups, database, {})
