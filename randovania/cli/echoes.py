@@ -136,7 +136,7 @@ def generate_and_validate(args,
                           output_queue: multiprocessing.Queue):
     while True:
         seed = input_queue.get()
-        randomizer_log = log_parser.generate_log(args.seed, args.exclude_pickups, args.randomize_elevators)
+        randomizer_log = log_parser.generate_log(seed, args.exclude_pickups, args.randomize_elevators)
         output_queue.put((seed, run_resolver(args, data, randomizer_log, False) is not None))
 
 
