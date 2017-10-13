@@ -115,14 +115,19 @@ def add_validate_command(sub_parsers):
     parser.set_defaults(func=validate_command_logic)
 
 
-def list_logs_in(log_dir: str) -> Set[str]:
-    if os.path.isdir(log_dir):
-        return {
-            log_name
-            for log_name in os.listdir(log_dir)
-            if "Randomizer_Log" in log_name
-        }
-    return set()
+def add_seed_generation_arguments(parser):
+    parser.add_argument(
+        "--exclude-pickups",
+        nargs='+',
+        type=int,
+        default=[],
+        help="Pickups to exclude from the randomization."
+    )
+    parser.add_argument(
+        "--randomize-elevators",
+        action="store_true",
+        help="Randomize elevators as well."
+    )
 
 
 def generate_and_validate(args,
@@ -131,7 +136,7 @@ def generate_and_validate(args,
                           output_queue: multiprocessing.Queue):
     while True:
         seed = input_queue.get()
-        randomizer_log = log_parser.generate_log(seed, args.exclude_pickups)
+        randomizer_log = log_parser.generate_log(args.seed, args.exclude_pickups, args.randomize_elevators)
         output_queue.put((seed, run_resolver(args, data, randomizer_log, False) is not None))
 
 
@@ -198,13 +203,7 @@ def add_generate_seed_command(sub_parsers):
     )  # type: ArgumentParser
 
     add_difficulty_arguments(parser)
-    parser.add_argument(
-        "--exclude-pickups",
-        nargs='+',
-        type=int,
-        default=[],
-        help="Pickups to exclude from the randomization."
-    )
+    add_seed_generation_arguments(parser)
     parser.add_argument(
         "--quiet",
         action="store_true",
@@ -244,22 +243,11 @@ def add_generate_seed_log_command(sub_parsers):
         type=int,
         help="The seed."
     )
-    parser.add_argument(
-        "--exclude-pickups",
-        nargs='+',
-        type=int,
-        default=[],
-        help="Pickups to exclude from the randomization."
-    )
+    add_seed_generation_arguments(parser)
     parser.add_argument(
         "--output-file",
         type=str,
         help="Where to write output to. Defaults to standard output."
-    )
-    parser.add_argument(
-        "--randomize-elevators",
-        action="store_true",
-        help="Randomize elevators as well."
     )
     parser.set_defaults(func=generate_seed_log_command_logic)
 
