@@ -1,9 +1,8 @@
 from collections import defaultdict
 from functools import partial
-from typing import List, Callable, TypeVar, BinaryIO, Tuple, Dict
+from typing import List, Callable, TypeVar, Tuple, Dict
 
-from randovania.games.prime import binary_data
-from randovania.games.prime.log_parser import ElevatorData
+from randovania.games.prime.log_parser import Elevator
 from randovania.resolver.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, ResourceNode, \
@@ -108,18 +107,21 @@ class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
     pickup_entries: List[PickupEntry]
-    elevators: Dict[int, ElevatorData]
+    elevators: Dict[int, Elevator]
     generic_index: int = 0
 
     def __init__(self,
                  resource_database: ResourceDatabase,
                  dock_weakness_database: DockWeaknessDatabase,
                  pickup_entries: List[PickupEntry],
-                 elevators: Dict[int, ElevatorData]):
+                 elevators: List[Elevator]):
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
         self.pickup_entries = pickup_entries
-        self.elevators = elevators
+        self.elevators = {
+            elevator.instance_id: elevator
+            for elevator in elevators
+        }
 
     def read_node(self, data: Dict) -> Node:
         name = data["name"]
@@ -144,9 +146,9 @@ class WorldReader:
         elif node_type == 3:
             instance_id = data["teleporter_instance_id"]
             if instance_id in self.elevators:
-                elevator_data = self.elevators[instance_id]
-                destination_world_asset_id = elevator_data.world_asset_id
-                destination_area_asset_id = elevator_data.area_asset_id
+                elevator = self.elevators[instance_id]
+                destination_world_asset_id = elevator.connected_elevator.world_asset_id
+                destination_area_asset_id = elevator.connected_elevator.area_asset_id
             else:
                 destination_world_asset_id = data["destination_world_asset_id"]
                 destination_area_asset_id = data["destination_area_asset_id"]
@@ -217,7 +219,7 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
         difficulty=read_resource_info_array(data["difficulty"]))
 
 
-def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: Dict[int, ElevatorData]) -> GameDescription:
+def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Elevator]) -> GameDescription:
     game = data["game"]
     game_name = data["game_name"]
 
@@ -263,15 +265,6 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: Dict[int
 
     # Add the No Requirements
     available_resources[resource_database.impossible_resource()] = 1
-
-    for world in worlds:
-        for area in world.areas:
-            name = "{} - {}".format(world.name, area.name)
-            if name in elevators:
-                for node in area.nodes:
-                    if isinstance(node, TeleporterNode):
-                        instance = node.teleporter_instance_id
-                print('"{} - {}": ElevatorData({}, {}, {}),'.format(world.name, area.name, instance, world.world_asset_id, area.area_asset_id))
 
     return GameDescription(
         game=game,

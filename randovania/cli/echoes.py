@@ -229,7 +229,7 @@ def generate_seed_log_command_logic(args):
         out = open(args.output_file, "w")
     else:
         out = sys.stdout
-    log_parser.generate_log(args.seed, args.exclude_pickups).write(out)
+    log_parser.generate_log(args.seed, args.exclude_pickups, args.randomize_elevators).write(out)
     out.close()
 
 
@@ -255,6 +255,11 @@ def add_generate_seed_log_command(sub_parsers):
         "--output-file",
         type=str,
         help="Where to write output to. Defaults to standard output."
+    )
+    parser.add_argument(
+        "--randomize-elevators",
+        action="store_true",
+        help="Randomize elevators as well."
     )
     parser.set_defaults(func=generate_seed_log_command_logic)
 
