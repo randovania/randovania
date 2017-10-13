@@ -52,7 +52,6 @@ exclusion list. (The default for this operation is _no_ exclusions.)
 * There's no way to choose each trick individually.
 * The data set does not include out of bounds movement.
 * Dark World damage requirements, while mapped, are not verified.
-* Elevator randomizer is not supported.
 * Opening Blast Shield doors from a side does not consider the other side
 as unlocked.
 
