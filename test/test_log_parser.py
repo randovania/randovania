@@ -254,7 +254,7 @@ def test_parse_log(test_files_dir):
 ])
 def test_generator(test_files_dir, log_name):
     log = log_parser.parse_log(str(test_files_dir.join(log_name)))
-    generated_log = log_parser.generate_log(log.seed, log.excluded_pickups)
+    generated_log = log_parser.generate_log(log.seed, log.excluded_pickups, False)
     assert log == generated_log
 
 

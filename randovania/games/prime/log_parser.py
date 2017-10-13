@@ -409,7 +409,7 @@ def generate_log(seed: int,
         # take the first item from orderedItems and add it to randomizedItems at the "number"th int from itemsToAdd
         randomized_items[items_to_add.pop(number)] = ordered_items.pop(0)
 
-    elevators: List[Elevator] = {}
+    elevators: List[Elevator] = []
     if randomize_elevators:
         while not elevators:
             elevators = try_randomize_elevators(randomizer)
