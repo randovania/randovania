@@ -152,7 +152,7 @@ def build_static_resources(difficulty_level: int, enable_tricks: bool, game: Gam
 
 def resolve(difficulty_level: int,
             enable_tricks: bool,
-            disable_item_loss: bool,
+            item_loss: bool,
             game: GameDescription) -> Optional[State]:
     # global state for easy printing functions
     debug._gd = game
@@ -179,15 +179,15 @@ def resolve(difficulty_level: int,
             starting_state.resources[pickup_resource] += quantity
 
     add_resources_from("_StartingItems")
-    if disable_item_loss:
-        add_resources_from("_ItemLossItems")
-    else:
+    if item_loss:
         # TODO: not hardcode this data here.
         # TODO: actually lose the items when trigger the Item Loss cutscene
         # These ids are all events you trigger before reaching the IL cutscene in echoes
         for event_id in (71, 78, 2, 4):
             resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
             starting_state.resources[resource] = 1
+    else:
+        add_resources_from("_ItemLossItems")
 
     simplify_connections(game, starting_state.resources)
 

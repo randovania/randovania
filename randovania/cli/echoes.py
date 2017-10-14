@@ -1,22 +1,29 @@
 import argparse
 import multiprocessing
-import os
 import random
 import sys
 from argparse import ArgumentParser
 from collections import defaultdict
-from typing import Dict, Set, Optional
 
 from randovania.cli import prime_database
 from randovania.games.prime import log_parser
-from randovania.games.prime.log_parser import RandomizerLog
-from randovania.resolver import resolver, data_reader, debug
-from randovania.resolver.state import State
+from randovania.resolver import debug
+from randovania.resolver.echoes import run_resolver, search_seed, RandomizerConfiguration, \
+    ResolverConfiguration
 
 __all__ = ["create_subparsers"]
 
 
-def add_difficulty_arguments(parser):
+def build_resolver_configuration(args):
+    return ResolverConfiguration(
+        args.difficulty,
+        args.minimum_difficulty,
+        args.enable_tricks,
+        not args.skip_item_loss
+    )
+
+
+def add_resolver_config_arguments(parser):
     parser.add_argument(
         "--difficulty",
         type=int,
@@ -53,69 +60,14 @@ def add_difficulty_arguments(parser):
     )
 
 
-def run_resolver(args, data: Dict, randomizer_log: RandomizerLog, verbose=True) -> Optional[State]:
-    game_description = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
-    final_state = resolver.resolve(args.difficulty, args.enable_tricks, args.skip_item_loss, game_description)
-    if final_state:
-        if args.minimum_difficulty > 0:
-            if resolver.resolve(args.minimum_difficulty - 1, args.enable_tricks, args.skip_item_loss, game_description):
-                if verbose:
-                    print("Game is beatable using a lower difficulty!")
-                return None
-
-        if verbose:
-            print("Game is possible!")
-
-        item_percentage = final_state.resources.get(game_description.resource_database.item_percentage(), 0)
-        if verbose:
-            print("Victory with {}% of the items.".format(item_percentage))
-
-        if args.print_final_path:
-            states = []
-
-            state = final_state
-            while state:
-                states.append(state)
-                state = state.previous_state
-
-            print("Path taken:")
-            for state in reversed(states):
-                print("> {}".format(debug.n(state.node)))
-    return final_state
+def build_randomizer_configuration(args):
+    return RandomizerConfiguration(
+        args.exclude_pickups,
+        args.randomize_elevators
+    )
 
 
-def validate_command_logic(args):
-    debug._DEBUG_LEVEL = args.debug
-    data = prime_database.decode_data_file(args)
-    randomizer_log = log_parser.parse_log(args.logfile)
-    if not run_resolver(args, data, randomizer_log):
-        print("Impossible.")
-        raise SystemExit(1)
-
-
-def add_validate_command(sub_parsers):
-    parser = sub_parsers.add_parser(
-        "validate",
-        help="Validate a randomizer log."
-    )  # type: ArgumentParser
-
-    parser.add_argument(
-        "logfile",
-        type=str,
-        help="Path to the log file of a Randomizer run.")
-    add_difficulty_arguments(parser)
-    prime_database.add_data_file_argument(parser)
-    parser.add_argument(
-        "--debug",
-        choices=range(4),
-        type=int,
-        default=0,
-        help="The level of debug logging to print.")
-
-    parser.set_defaults(func=validate_command_logic)
-
-
-def add_seed_generation_arguments(parser):
+def add_randomizer_configuration_arguments(parser):
     parser.add_argument(
         "--exclude-pickups",
         nargs='+',
@@ -130,65 +82,51 @@ def add_seed_generation_arguments(parser):
     )
 
 
-def generate_and_validate(args,
-                          data,
-                          input_queue: multiprocessing.Queue,
-                          output_queue: multiprocessing.Queue):
-    while True:
-        seed = input_queue.get()
-        randomizer_log = log_parser.generate_log(seed, args.exclude_pickups, args.randomize_elevators)
-        output_queue.put((seed, run_resolver(args, data, randomizer_log, False) is not None))
+def validate_command_logic(args):
+    debug._DEBUG_LEVEL = args.debug
+    data = prime_database.decode_data_file(args)
+    randomizer_log = log_parser.parse_log(args.logfile)
+    resolver_config = build_resolver_configuration(args)
+
+    if not run_resolver(data, randomizer_log, resolver_config):
+        print("Impossible.")
+        raise SystemExit(1)
+
+
+def add_validate_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "validate",
+        help="Validate a randomizer log."
+    )  # type: ArgumentParser
+
+    parser.add_argument(
+        "logfile",
+        type=str,
+        help="Path to the log file of a Randomizer run.")
+    add_resolver_config_arguments(parser)
+    prime_database.add_data_file_argument(parser)
+    parser.add_argument(
+        "--debug",
+        choices=range(4),
+        type=int,
+        default=0,
+        help="The level of debug logging to print.")
+    parser.set_defaults(func=validate_command_logic)
 
 
 def generate_seed_command_logic(args):
     data = prime_database.decode_data_file(args)
+    randomizer_config = build_randomizer_configuration(args)
+    resolver_config = build_resolver_configuration(args)
 
-    input_queue = multiprocessing.Queue()
-    output_queue = multiprocessing.Queue()
-
-    cpu_count = args.limit_multi_threading
-    if cpu_count is None:
-        cpu_count = multiprocessing.cpu_count()
-
-    process_list = [
-        multiprocessing.Process(
-            target=generate_and_validate,
-            args=(args, data, input_queue, output_queue)
-        )
-        for _ in range(cpu_count)
-    ]
-
-    initial_seed = args.start_on_seed
-    if initial_seed is None:
-        initial_seed = random.randint(0, 2147483647)
-    seed_count = 0
-
-    def generate_seed():
-        nonlocal seed_count
-        seed_count += 1
-        new_seed = initial_seed + seed_count
-        if new_seed > 2147483647:
-            new_seed -= 2147483647
-        return new_seed
-
-    for _ in range(cpu_count):
-        input_queue.put_nowait(generate_seed())
-
-    for process in process_list:
-        process.start()
-
-    while True:
-        seed, valid = output_queue.get()
-        if valid:
-            break
-        else:
-            input_queue.put_nowait(generate_seed())
-            if not args.quiet and seed_count % (100 * cpu_count) == 0:
-                print("Total seed count so far: {}".format(seed_count))
-
-    for process in process_list:
-        process.terminate()
-
+    seed, seed_count = search_seed(
+        data,
+        randomizer_config,
+        resolver_config,
+        args.minimum_difficulty,
+        args.quiet,
+        args.start_on_seed
+    )
     if args.quiet:
         print(seed)
     else:
@@ -202,8 +140,8 @@ def add_generate_seed_command(sub_parsers):
         formatter_class=argparse.MetavarTypeHelpFormatter
     )  # type: ArgumentParser
 
-    add_difficulty_arguments(parser)
-    add_seed_generation_arguments(parser)
+    add_resolver_config_arguments(parser)
+    add_randomizer_configuration_arguments(parser)
     parser.add_argument(
         "--quiet",
         action="store_true",
@@ -243,7 +181,7 @@ def add_generate_seed_log_command(sub_parsers):
         type=int,
         help="The seed."
     )
-    add_seed_generation_arguments(parser)
+    add_randomizer_configuration_arguments(parser)
     parser.add_argument(
         "--output-file",
         type=str,
