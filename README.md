@@ -6,8 +6,6 @@ A randomizer validator for the Metroid Prime series.
 ### Windows
 
 Check the [releases page](https://github.com/henriquegemignani/randovania/releases).
-When using this executable, replace `python3 -m randovania` on all instructions with
-`randovania.exe`.
 
 Please note that all binary releases will be for 64-bit Windows only.
 
@@ -18,14 +16,19 @@ With a Python 3.6 installation:
  
 ## Usage
 
-`python3 -m randovania echoes validate path/to/randomizer.log`
+`randovania interactive`
+
+This will open an interactive shell where you can generate a seed.
+The included `iteractive_randovania.bat` is a shortcut for this.
+
+`randovania echoes validate path/to/randomizer.log`
 
 Checks if the given [Metroid Prime 2: Echoes Randomizer](
 https://m2k2.taigaforum.com/post/randomizer_release.html) seed is beatable
 by a casual player.
 
-`python3 -m randovania echoes validate --difficulty 5
---enable-tricks --skip-item-loss --print-final-path path/to/randomizer.log`
+`randovania echoes validate --difficulty 5 --skip-item-loss
+--print-final-path path/to/randomizer.log`
 
 Check if the seed if the given seed is beatable using every known trick,
 no matter how difficult. This does not include going out of bounds.
@@ -33,8 +36,7 @@ no matter how difficult. This does not include going out of bounds.
 It will also print the order of pickups taken and events triggered in
 order to finish the game.
 
-`python3 -m randovania echoes generate-seed --enable-tricks
---difficulty 3 --skip-item-loss`
+`randovania echoes generate-seed --difficulty 3 --skip-item-loss`
 
 Generate a new seed and validate it until a possible seed is found. Please
 not that this is a very CPU intensive operation, and your computer can be
@@ -57,7 +59,7 @@ as unlocked.
 
 ## Options
 
-See `python3 -m randovania --help`.
+See `randovania --help`.
 
 
 ## Credits
