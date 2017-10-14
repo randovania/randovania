@@ -1,6 +1,6 @@
 import multiprocessing
 import random
-from typing import Dict, Optional, NamedTuple, List
+from typing import Dict, Optional, NamedTuple, List, Tuple
 
 from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
@@ -72,18 +72,17 @@ def generate_and_validate(data: Dict,
         final_state = run_resolver(data,
                                    randomizer_log,
                                    resolver_config,
-                                   True)
+                                   False)
         output_queue.put((seed, final_state))
 
 
 def search_seed(data: Dict,
                 randomizer_config: RandomizerConfiguration,
                 resolver_config: ResolverConfiguration,
-                minimum_difficulty: int,
                 quiet: bool = False,
                 start_on_seed: Optional[int] = None,
                 cpu_count: Optional[int] = None
-                ):
+                ) -> Tuple[int, int]:
     input_queue = multiprocessing.Queue()
     output_queue = multiprocessing.Queue()
 
