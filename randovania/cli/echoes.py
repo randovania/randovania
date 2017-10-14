@@ -18,7 +18,7 @@ def build_resolver_configuration(args):
     return ResolverConfiguration(
         args.difficulty,
         args.minimum_difficulty,
-        args.enable_tricks,
+        args.tricks,
         not args.skip_item_loss
     )
 
@@ -40,13 +40,24 @@ def add_resolver_config_arguments(parser):
         help=
         "Also check if the seed needs the given difficulty."
     )
-    parser.add_argument(
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
         "--enable-tricks",
         action="store_true",
+        dest="tricks",
+        default=True,
         help=
         "Enable trick usage in the validation. "
         "Currently, there's no way to control which individual tricks gets enabled."
     )
+    group.add_argument(
+        "--disable-tricks",
+        action="store_false",
+        dest="tricks",
+        default=True,
+        help="Disable all tricks."
+    )
+
     parser.add_argument(
         "--skip-item-loss",
         action="store_true",
@@ -87,6 +98,9 @@ def validate_command_logic(args):
     data = prime_database.decode_data_file(args)
     randomizer_log = log_parser.parse_log(args.logfile)
     resolver_config = build_resolver_configuration(args)
+
+    print(args)
+    raise SystemExit
 
     if not run_resolver(data, randomizer_log, resolver_config):
         print("Impossible.")
