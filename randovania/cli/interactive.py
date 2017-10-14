@@ -1,6 +1,6 @@
-from argparse import ArgumentParser
-
 import os
+import subprocess
+from argparse import ArgumentParser
 from typing import BinaryIO, List
 
 from randovania import get_data_path
@@ -24,6 +24,10 @@ def value_parser_bool(s: str) -> bool:
     return s in true_values
 
 
+def value_parser_str(s: str) -> str:
+    return s
+
+
 def value_parser_int_array(s: str) -> List[int]:
     if s.lower() == "none":
         return []
@@ -35,14 +39,41 @@ def value_parser_int_array(s: str) -> List[int]:
 value_parsers = {
     int: value_parser_int,
     bool: value_parser_bool,
+    str: value_parser_str,
     list: value_parser_int_array,
 }
 
 
-def try_apply_seed(randomizer_config, item_loss, seed):
-    if not os.path.isfile("Randomizer.exe"):
-        print("* Randomizer.exe not found in the current directory, cannot automatically apply the seed.")
-        return False
+def has_randomizer_binary():
+    return os.path.isfile("Randomizer.exe")
+
+
+def apply_seed(randomizer_config: RandomizerConfiguration,
+               seed: int,
+               item_loss: bool,
+               hud_memo_popup_removal: bool,
+               game_files: str):
+
+    if not os.path.isdir(game_files):
+        print("Cannot apply seed: '{}' is not a dir.".format(game_files))
+        print("Enter the path to the game:")
+        game_files = input("> ")
+
+    args = [
+        "Randomizer.exe",
+        game_files,
+        "-s", seed,
+        "-e", ",".join(str(pickup) for pickup in randomizer_config.exclude_pickups) or "none",
+    ]
+    if not item_loss:
+        args.append("-i")
+    if hud_memo_popup_removal:
+        args.append("-h")
+    if randomizer_config.randomize_elevators:
+        args.append("-v")
+
+    print("Running the Randomizer with: " + args)
+    subprocess.run(args, check=True)
 
 
 def interactive_shell(args):
@@ -59,7 +90,9 @@ def interactive_shell(args):
         "item_loss": False,
         "tricks": True,
         "exclude_pickups": [],
-        "randomize_elevators": False
+        "randomize_elevators": False,
+        "hud_memo_popup_removal": True,
+        "game_files": "./game/files",
     }
 
     def print_config():
@@ -68,6 +101,8 @@ def interactive_shell(args):
               "Item Loss Enabled? {item_loss}; Tricks Enabled? {tricks}\n"
               "Exclude Pickups: {exclude_pickups}\n"
               "Randomize Elevators? {randomize_elevators}\n"
+              "Hud Memo Popup Removal? {hud_memo_popup_removal}\n"
+              "Game files path: {game_files}"
               "".format(**options))
 
     def quit_shell():
@@ -102,6 +137,9 @@ def interactive_shell(args):
     commands["help"] = print_help
     print_help()
     print_config()
+    if not has_randomizer_binary():
+        print("== WARNING ==\n"
+              "Randomizer.exe not found in the current directory, cannot automatically apply the seed.\n")
 
     while parsing_commands:
         command = input("> ").split(" ", 1)
@@ -131,8 +169,11 @@ def interactive_shell(args):
     print("A seed was found with the given configuration after {} attempts.".format(seed_count))
     print("\n=== Seed: {}".format(seed))
 
-    if not try_apply_seed(randomizer_config, options["item_loss"], seed):
-        input("Press anything to exit.")
+    if has_randomizer_binary():
+        apply_seed(randomizer_config, seed,
+                   options["item_loss"], options["hud_memo_popup_removal"], options["game_files"])
+
+    input("Press anything to exit.")
 
 
 def create_subparsers(sub_parsers):
