@@ -62,7 +62,7 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
     args = [
         "Randomizer.exe",
         game_files,
-        "-s", seed,
+        "-s", str(seed),
         "-e", ",".join(str(pickup) for pickup in randomizer_config.exclude_pickups) or "none",
     ]
     if not item_loss:
@@ -81,7 +81,19 @@ def interactive_shell(args):
     with open(data_file_path, "rb") as x:  # type: BinaryIO
         data = binary_data.decode(x)
 
-    print("Welcome to randovania interactive shell!")
+    print("""
+ _______  _______  _        ______   _______           _______  _       _________ _______ 
+(  ____ )(  ___  )( (    /|(  __  \ (  ___  )|\     /|(  ___  )( (    /|\__   __/(  ___  )
+| (    )|| (   ) ||  \  ( || (  \  )| (   ) || )   ( || (   ) ||  \  ( |   ) (   | (   ) |
+| (____)|| (___) ||   \ | || |   ) || |   | || |   | || (___) ||   \ | |   | |   | (___) |
+|     __)|  ___  || (\ \) || |   | || |   | |( (   ) )|  ___  || (\ \) |   | |   |  ___  |
+| (\ (   | (   ) || | \   || |   ) || |   | | \ \_/ / | (   ) || | \   |   | |   | (   ) |
+| ) \ \__| )   ( || )  \  || (__/  )| (___) |  \   /  | )   ( || )  \  |___) (___| )   ( |
+|/   \__/|/     \||/    )_)(______/ (_______)   \_/   |/     \||/    )_)\_______/|/     \|
+
+    ===  Welcome to the randovania interactive shell!
+    
+""")
 
     parsing_commands = True
     options = {
@@ -96,13 +108,15 @@ def interactive_shell(args):
     }
 
     def print_config():
-        print("Current seed generation config:\n"
-              "Max Difficulty: {max_difficulty}; Min Difficulty: {min_difficulty}; "
-              "Item Loss Enabled? {item_loss}; Tricks Enabled? {tricks}\n"
-              "Exclude Pickups: {exclude_pickups}\n"
-              "Randomize Elevators? {randomize_elevators}\n"
-              "Hud Memo Popup Removal? {hud_memo_popup_removal}\n"
-              "Game files path: {game_files}"
+        print("        === Current configuration ===\n"
+              "         Max Difficulty  {max_difficulty}\n"
+              "         Min Difficulty  {min_difficulty}\n"
+              "     Item Loss Enabled?  {item_loss}\n"
+              "        Tricks Enabled?  {tricks}\n"
+              "       Exclude Pickups:  {exclude_pickups}\n"
+              "   Randomize Elevators?  {randomize_elevators}\n"
+              "Hud Memo Popup Removal?  {hud_memo_popup_removal}\n"
+              "       Game files path:  {game_files}\n"
               "".format(**options))
 
     def quit_shell():
@@ -115,6 +129,7 @@ def interactive_shell(args):
     commands = {
         "view_config": print_config,
         "quit": quit_shell,
+        "exit": quit_shell,
         "generate": stop_parsing_commands,
     }
 
@@ -135,14 +150,19 @@ def interactive_shell(args):
                         commands=", ".join(command for command in sorted(commands.keys()))))
 
     commands["help"] = print_help
-    print_help()
     print_config()
+
     if not has_randomizer_binary():
         print("== WARNING ==\n"
               "Randomizer.exe not found in the current directory, cannot automatically apply the seed.\n")
 
+    print("Please enter your commands. If in doubt, type 'help'.\n")
+
     while parsing_commands:
-        command = input("> ").split(" ", 1)
+        try:
+            command = input("> ").split(" ", 1)
+        except EOFError:
+            quit_shell()
         first_part = command[0]
 
         if first_part in options:
@@ -156,8 +176,11 @@ def interactive_shell(args):
         elif first_part in commands:
             commands[first_part]()
 
-        else:
-            print("Unknown command '{}'. If in doubt, type 'help'.".format(command))
+        elif first_part == '\x04':
+            quit_shell()
+
+        elif first_part:
+            print("Unknown command '{}'. If in doubt, type 'help'.".format(first_part))
 
     randomizer_config = RandomizerConfiguration(options["exclude_pickups"], options["randomize_elevators"])
     resolver_config = ResolverConfiguration(options["max_difficulty"],
@@ -165,9 +188,9 @@ def interactive_shell(args):
                                             options["tricks"],
                                             options["item_loss"])
 
-    print("Starting search for a valid seed with the following config:")
+    print("\n== Will now search for a seed!")
     print_config()
-    print("* This may take a while, and your computer may not respond correctly while running.")
+    print("\n* This may take a while, and your computer may not respond correctly while running.")
 
     seed, seed_count = search_seed(data, randomizer_config, resolver_config)
     print("A seed was found with the given configuration after {} attempts.".format(seed_count))
