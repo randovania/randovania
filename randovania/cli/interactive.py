@@ -72,7 +72,7 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
     if randomizer_config.randomize_elevators:
         args.append("-v")
 
-    print("Running the Randomizer with: " + args)
+    print("Running the Randomizer with: ", args)
     subprocess.run(args, check=True)
 
 
@@ -164,6 +164,10 @@ def interactive_shell(args):
                                             options["min_difficulty"],
                                             options["tricks"],
                                             options["item_loss"])
+
+    print("Starting search for a valid seed with the following config:")
+    print_config()
+    print("* This may take a while, and your computer may not respond correctly while running.")
 
     seed, seed_count = search_seed(data, randomizer_config, resolver_config)
     print("A seed was found with the given configuration after {} attempts.".format(seed_count))
