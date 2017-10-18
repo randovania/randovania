@@ -1,3 +1,3 @@
 @echo off
-py -m randovania interactive
+randovania interactive
 pause
