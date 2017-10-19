@@ -202,6 +202,10 @@ def interactive_shell(args):
             print("{0:>{spacing}}  {1}".format(option_name, value, spacing=spacing))
         print()
 
+    def change_option(key, value):
+        options[key] = value
+        save_options(options)
+
     def quit_shell():
         raise SystemExit(0)
 
@@ -219,7 +223,7 @@ def interactive_shell(args):
         seed, seed_count = search_seed(data, randomizer_config, resolver_config)
         print("A seed was found with the given configuration after {} attempts.".format(seed_count))
         print("\n=== Seed: {}".format(seed))
-        options["seed"] = seed
+        change_option("seed", seed)
         print("Try the 'randomize' command to use this seed.")
 
     def randomize():
@@ -277,8 +281,7 @@ def interactive_shell(args):
                 the_value = value_parsers[type(options[first_part])](command[1])
                 if first_part in options_validation:
                     options_validation[first_part](the_value, options)
-                options[first_part] = the_value
-                save_options(options)
+                change_option(first_part, the_value)
             except ValueError as e:
                 print("'{}' is an invalid value for '{}': {}".format(command[1], first_part, e))
             except IndexError:
