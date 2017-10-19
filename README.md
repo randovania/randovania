@@ -19,7 +19,7 @@ With a Python 3.6 installation:
 `randovania interactive`
 
 This will open an interactive shell where you can generate a seed.
-The included `iteractive_randovania.bat` is a shortcut for this.
+The included `interactive_randovania.bat` is a shortcut for this.
 
 `randovania echoes validate path/to/randomizer.log`
 
