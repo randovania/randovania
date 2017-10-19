@@ -1,8 +1,11 @@
 import argparse
+import csv
 import json
 import os
 from argparse import ArgumentParser
 from typing import Dict, BinaryIO
+
+import sys
 
 from randovania import get_data_path
 from randovania.games.prime import binary_data, log_parser
@@ -152,16 +155,43 @@ def consistency_check_command(sub_parsers):
     parser.set_defaults(func=consistency_check_command_logic)
 
 
+def export_areas_command_logic(args):
+    gd = load_game_description(args)
+
+    with open(args.output_file, "w", newline='') as output:
+        writer = csv.writer(output)
+        writer.writerow(("World", "Area", "Node", "Can go back in bounds",
+                         "Interact while OOB and go back in bounds",
+                         "Interact while OOB and stay out of bounds",
+                         "Requirements for going OOB"))
+        for world in gd.worlds:
+            for area in world.areas:
+                for node in area.nodes:
+                    writer.writerow((world.name, area.name, node.name, False, False, False))
+
+
+def export_areas_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "export-areas",
+        help="Export a CSV with the areas of the game.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+    add_data_file_argument(parser)
+    parser.add_argument("output_file")
+    parser.set_defaults(func=export_areas_command_logic)
+
+
 def create_subparsers(sub_parsers):
     parser = sub_parsers.add_parser(
         "database",
         help="Actions for database manipulation"
     )  # type: ArgumentParser
 
-    command_subparser = parser.add_subparsers(dest="database_command")
-    create_convert_database_command(command_subparser)
-    view_area_command(command_subparser)
-    consistency_check_command(command_subparser)
+    sub_parsers = parser.add_subparsers(dest="database_command")
+    create_convert_database_command(sub_parsers)
+    view_area_command(sub_parsers)
+    consistency_check_command(sub_parsers)
+    export_areas_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:
