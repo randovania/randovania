@@ -10,5 +10,4 @@ def get_data_path():
         file_dir = os.path.dirname(__file__)
     return os.path.join(file_dir, "data")
 
-
-VERSION = "0.8.0"
+VERSION = "0.8.1"
