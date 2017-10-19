@@ -122,25 +122,25 @@ def interactive_shell(args):
     options = {
         "max_difficulty": 3,
         "min_difficulty": 0,
-        "item_loss": False,
-        "tricks": True,
-        "exclude_pickups": [],
+        "item_loss_enabled": False,
+        "tricks_enabled": True,
+        "excluded_pickups": [],
         "randomize_elevators": False,
         "hud_memo_popup_removal": True,
-        "game_files": "./game/files",
+        "game_files": "",
     }
     load_options_to(options)
 
     def print_config():
         print("        === Current configuration ===\n"
-              "         Max Difficulty  {max_difficulty}\n"
-              "         Min Difficulty  {min_difficulty}\n"
-              "     Item Loss Enabled?  {item_loss}\n"
-              "        Tricks Enabled?  {tricks}\n"
-              "       Exclude Pickups:  {exclude_pickups}\n"
-              "   Randomize Elevators?  {randomize_elevators}\n"
-              "Hud Memo Popup Removal?  {hud_memo_popup_removal}\n"
-              "       Game files path:  {game_files}\n"
+              "         max_difficulty  {max_difficulty}\n"
+              "         min_difficulty  {min_difficulty}\n"
+              "      item_loss_enabled  {item_loss_enabled}\n"
+              "         tricks_enabled  {tricks_enabled}\n"
+              "       excluded_pickups  {excluded_pickups}\n"
+              "    randomize_elevators  {randomize_elevators}\n"
+              " hud_memo_popup_removal  {hud_memo_popup_removal}\n"
+              "        game_files_path  {game_files_path}\n"
               "".format(**options))
 
     def quit_shell():
@@ -207,11 +207,11 @@ def interactive_shell(args):
         elif first_part:
             print("Unknown command '{}'. If in doubt, type 'help'.".format(first_part))
 
-    randomizer_config = RandomizerConfiguration(options["exclude_pickups"], options["randomize_elevators"])
+    randomizer_config = RandomizerConfiguration(options["excluded_pickups"], options["randomize_elevators"])
     resolver_config = ResolverConfiguration(options["max_difficulty"],
                                             options["min_difficulty"],
-                                            options["tricks"],
-                                            options["item_loss"])
+                                            options["tricks_enabled"],
+                                            options["item_loss_enabled"])
 
     print("\n== Will now search for a seed!")
     print_config()
