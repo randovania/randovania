@@ -1,11 +1,34 @@
+import json
 import os
 import subprocess
 from argparse import ArgumentParser
 from typing import BinaryIO, List
 
+import py
+
 from randovania import get_data_path
 from randovania.games.prime import binary_data
 from randovania.resolver.echoes import search_seed, RandomizerConfiguration, ResolverConfiguration
+
+
+def load_options_to(current_options):
+    try:
+        with open(os.path.expanduser("~/.config/randovania.json")) as options_file:
+            new_options = json.load(options_file)
+
+        for option_name in current_options.keys():
+            if option_name in new_options:
+                current_options[option_name] = new_options[option_name]
+
+    except FileNotFoundError:
+        pass
+
+
+def save_options(options):
+    config_folder = py.path.local(os.path.expanduser("~/.config"))
+    config_folder.ensure_dir()
+    with config_folder.join("randovania.json").open("w") as options_file:
+        json.dump(options, options_file)
 
 
 def value_parser_int(s: str) -> int:
@@ -106,6 +129,7 @@ def interactive_shell(args):
         "hud_memo_popup_removal": True,
         "game_files": "./game/files",
     }
+    load_options_to(options)
 
     def print_config():
         print("        === Current configuration ===\n"
@@ -168,6 +192,7 @@ def interactive_shell(args):
         if first_part in options:
             try:
                 options[first_part] = value_parsers[type(options[first_part])](command[1])
+                save_options(options)
             except ValueError as e:
                 print("Invalid value for '{}': {}".format(first_part, e))
             except IndexError:
