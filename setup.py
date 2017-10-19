@@ -1,8 +1,10 @@
 from setuptools import setup, find_packages
 
+from randovania import VERSION
+
 setup(
     name='randovania',
-    version='0.7.1',
+    version=VERSION,
     author='Henrique Gemignani',
     url='https://github.com/henriquegemignani/randovania',
     description='A randomizer validator for the Metroid Prime series.',
@@ -21,7 +23,10 @@ setup(
         'Topic :: Games/Entertainment',
     ],
     install_requires=[
-        'py', 'pytest', ],
+        'py', ],
+    setup_requires=[
+        'pytest', 'markdown', 'PyInstaller',
+    ],
     entry_points={
         'console_scripts': [
             "randovania = randovania.__main__:main"
