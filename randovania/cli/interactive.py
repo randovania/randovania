@@ -234,7 +234,7 @@ def interactive_shell(args):
 
         randomizer_config = RandomizerConfiguration(options["excluded_pickups"], options["randomize_elevators"])
         apply_seed(randomizer_config, options["seed"],
-                   options["item_loss"], options["hud_memo_popup_removal"], options["game_files_path"])
+                   options["item_loss_enabled"], options["hud_memo_popup_removal"], options["game_files_path"])
 
     commands = {
         "view_config": print_config,
