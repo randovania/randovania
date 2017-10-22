@@ -181,6 +181,41 @@ def export_areas_command(sub_parsers):
     parser.set_defaults(func=export_areas_command_logic)
 
 
+def list_paths_with_difficulty_logic(args):
+    gd = load_game_description(args)
+    difficulty_requirement = gd.resource_database.difficulty[0]
+    count = 0
+
+    for world in gd.worlds:
+        for area in world.areas:
+            for source, connection in area.connections.items():
+                for target, requirements in connection.items():
+                    for alternative in requirements.alternatives:
+                        if any(requirement.requirement == difficulty_requirement
+                               and requirement.amount == args.difficulty
+                               for requirement in alternative.values()):
+                            print("At {}/{}, from {} to {}:\n{}\n".format(
+                                world.name, area.name, source.name, target.name,
+                                sorted(individual for individual in alternative.values()
+                                       if individual.requirement != difficulty_requirement)
+                            ))
+                            count += 1
+
+    print("Total routes: {}".format(count))
+
+
+
+def list_paths_with_difficulty_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "list-difficulty-usage",
+        help="List all connections that needs the difficulty.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+    add_data_file_argument(parser)
+    parser.add_argument("difficulty", type=int)
+    parser.set_defaults(func=list_paths_with_difficulty_logic)
+
+
 def create_subparsers(sub_parsers):
     parser = sub_parsers.add_parser(
         "database",
@@ -192,6 +227,7 @@ def create_subparsers(sub_parsers):
     view_area_command(sub_parsers)
     consistency_check_command(sub_parsers)
     export_areas_command(sub_parsers)
+    list_paths_with_difficulty_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:
