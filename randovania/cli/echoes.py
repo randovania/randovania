@@ -9,7 +9,7 @@ from randovania.cli import prime_database
 from randovania.games.prime import log_parser
 from randovania.resolver import debug
 from randovania.resolver.echoes import run_resolver, search_seed, RandomizerConfiguration, \
-    ResolverConfiguration
+    ResolverConfiguration, print_path_for_state
 
 __all__ = ["create_subparsers"]
 
@@ -99,7 +99,11 @@ def validate_command_logic(args):
     randomizer_log = log_parser.parse_log(args.logfile)
     resolver_config = build_resolver_configuration(args)
 
-    if not run_resolver(data, randomizer_log, resolver_config):
+    final_state = run_resolver(data, randomizer_log, resolver_config)
+    if final_state:
+        if args.print_final_path:
+            print_path_for_state(final_state)
+    else:
         print("Impossible.")
         raise SystemExit(1)
 
