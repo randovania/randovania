@@ -55,7 +55,7 @@ def print_path_for_state(final_state):
         state = state.previous_state
     print("Path taken:")
     for state in reversed(states):
-        print("> {}".format(debug.n(state.node)))
+        print("> {}".format(debug.n(state.node, with_world=True)))
 
 
 def generate_and_validate(data: Dict,

@@ -9,8 +9,9 @@ _gd = None  # type: GameDescription
 _current_indent = 0
 
 
-def n(node: Node) -> str:
-    return "{}/{}".format(_gd.nodes_to_area[node].name, node.name)
+def n(node: Node, with_world=False) -> str:
+    prefix = "{}/".format(_gd.nodes_to_world[node].name) if with_world else ""
+    return "{}{}/{}".format(prefix, _gd.nodes_to_area[node].name, node.name)
 
 
 def pretty_print_area(area: Area):
