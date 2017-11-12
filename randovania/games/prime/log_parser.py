@@ -336,12 +336,13 @@ def parse_log(logfile: str) -> RandomizerLog:
         seed = int(extract_with_regexp(logfile, f, r"^Seed: (\d+)",
                                        "Could not find Seed"))
         excluded_pickups_str = extract_with_regexp(
-            logfile, f, r"^Excluded pickups:\s*((?:\d+\s?)*)$",
+            logfile, f, r"^Excluded pickups:\s*((?:(?:\d+\s?)*)|None)$",
             "Could not find excluded pickups")
-        if excluded_pickups_str:
-            excluded_pickups = [int(pickup_str) for pickup_str in excluded_pickups_str.split(" ")]
-        else:
+
+        if excluded_pickups_str == "None":
             excluded_pickups = []
+        else:
+            excluded_pickups = [int(pickup_str) for pickup_str in excluded_pickups_str.split(" ")]
 
         pickups = []
         for line in f:
