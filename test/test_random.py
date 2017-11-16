@@ -1,6 +1,6 @@
 import pprint
 
-import randovania.games.prime.random as rng
+import randovania.games.prime.claris_random as rng
 
 
 def test_random_a():

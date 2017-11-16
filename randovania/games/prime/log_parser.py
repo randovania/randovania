@@ -5,7 +5,7 @@ from collections import defaultdict
 from typing import NamedTuple, List, Dict, TextIO, Optional
 
 from randovania import get_data_path
-from randovania.games.prime import random
+from randovania.games.prime import claris_random
 from randovania.resolver.game_description import PickupEntry, PickupDatabase
 
 RANDOMIZER_VERSION = "3.2"
@@ -202,7 +202,7 @@ echoes_elevators = [
 ]
 
 
-def try_randomize_elevators(randomizer: random.Random) -> Optional[List[Elevator]]:
+def try_randomize_elevators(randomizer: claris_random.Random) -> Optional[List[Elevator]]:
     elevator_database: List[Elevator] = copy.deepcopy(echoes_elevators)
 
     elevator_list = copy.copy(elevator_database)
@@ -402,7 +402,7 @@ def generate_log(seed: int,
         items_to_add.pop(excluded - i)
 
     # begin Randomizing
-    randomizer = random.Random(seed)
+    randomizer = claris_random.Random(seed)
     while ordered_items:
         # grabs a random int between 0 and the size of itemsToAdd
         number = randomizer.next_with_max(len(items_to_add))

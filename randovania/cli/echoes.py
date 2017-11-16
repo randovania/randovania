@@ -7,6 +7,7 @@ from collections import defaultdict
 
 from randovania.cli import prime_database
 from randovania.games.prime import log_parser
+from randovania.interface_common.options import MAX_DIFFICULTY
 from randovania.resolver import debug
 from randovania.resolver.echoes import run_resolver, search_seed, RandomizerConfiguration, \
     ResolverConfiguration, print_path_for_state
@@ -28,7 +29,7 @@ def add_resolver_config_arguments(parser):
         "--difficulty",
         type=int,
         default=0,
-        choices=range(6),
+        choices=range(MAX_DIFFICULTY + 1),
         help=
         "The difficulty level to check with. Higher numbers implies in harder tricks."
     )
