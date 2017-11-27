@@ -99,9 +99,6 @@ def validate_command_logic(args):
     randomizer_log = log_parser.parse_log(args.logfile)
     resolver_config = build_resolver_configuration(args)
 
-    print(args)
-    raise SystemExit
-
     if not run_resolver(data, randomizer_log, resolver_config):
         print("Impossible.")
         raise SystemExit(1)
