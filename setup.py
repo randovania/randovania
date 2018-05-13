@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+from pyqt_distutils.build_ui import build_ui
+cmdclass = {"build_ui": build_ui}
+
 from randovania import VERSION
 
 setup(
@@ -9,6 +12,7 @@ setup(
     url='https://github.com/henriquegemignani/randovania',
     description='A randomizer validator for the Metroid Prime series.',
     packages=find_packages(),
+    cmdclass=cmdclass,
     scripts=[
     ],
     package_data={
@@ -23,9 +27,9 @@ setup(
         'Topic :: Games/Entertainment',
     ],
     install_requires=[
-        'py', ],
+        'py', 'PyQt5', ],
     setup_requires=[
-        'pytest', 'markdown', 'PyInstaller',
+        'pytest', 'markdown', 'PyInstaller', 'pyqt-distutils'
     ],
     entry_points={
         'console_scripts': [
