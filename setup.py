@@ -37,7 +37,7 @@ setup(
         'Topic :: Games/Entertainment',
     ],
     install_requires=[
-        'py', 'PyQt5', ],
+        'py', 'PyQt5', 'appdirs', ],
     setup_requires=[
         'pytest', 'markdown', 'PyInstaller', 'pyqt-distutils'
     ],

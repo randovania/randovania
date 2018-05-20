@@ -1,47 +1,38 @@
 import sys
-
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from argparse import ArgumentParser
 
-from .randomize_window import RandomizeWindow
-from .mainwindow_ui import Ui_MainWindow
-from .manage_game_window_ui import Ui_ManageGameWindow
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.gui.manage_game_window import ManageGameWindow
+from randovania.gui.randomize_window import RandomizeWindow
+from randovania.interface_common.options import default_options, load_options_to
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton.clicked.connect(self.yell_pressed)
-        self.pushButton_2.clicked.connect(self.cra_pressed)
 
-    def yell_pressed(self):
         self.manage_game_window = ManageGameWindow()
-        self.setCentralWidget(self.manage_game_window.centralWidget)
-
-    def cra_pressed(self):
         self.randomize_window = RandomizeWindow()
-        self.setCentralWidget(self.randomize_window.centralWidget)
 
+        _translate = QtCore.QCoreApplication.translate
 
-class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-        self.loadIsoButton.clicked.connect(self.load_iso)
-        self.packageIsoButton.clicked.connect(self.package_iso)
-        self.progressBar.sizePolicy().setRetainSizeWhenHidden(True)
-        self.progressBar.setHidden(True)
+        self.fileTab = self.manage_game_window.centralWidget
+        self.tabWidget.addTab(self.fileTab, _translate("MainWindow", "Game Management"))
 
-    def load_iso(self):
-        QFileDialog.getOpenFileName(self, filter="*.iso")
-
-    def package_iso(self):
-        self.progressBar.setHidden(False)
+        self.configurationTab = self.randomize_window.centralWidget
+        self.tabWidget.addTab(self.configurationTab, _translate("MainWindow", "Configuration"))
 
 
 def run(args):
     app = QApplication(sys.argv)
+
+    app.options = default_options()
+    load_options_to(app.options)
+
     main_window = MainWindow()
     main_window.show()
     sys.exit(app.exec_())
