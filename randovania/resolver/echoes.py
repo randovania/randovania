@@ -130,8 +130,8 @@ def search_seed(data: Dict,
         if valid:
             break
         else:
-            input_queue.put_nowait(generate_seed())
             seed_report(seed_count)
+            input_queue.put_nowait(generate_seed())
 
     for process in process_list:
         process.terminate()
