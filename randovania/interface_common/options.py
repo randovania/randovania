@@ -1,4 +1,5 @@
 import json
+import math
 import os
 from collections import OrderedDict
 from enum import IntEnum
@@ -17,6 +18,19 @@ class CpuUsage(IntEnum):
     HIGH = 2
     BALANCED = 3
     MINIMAL = 4
+
+    def num_cpu_for_count(self: "CpuUsage", cpu_count: int) -> int:
+        if self == CpuUsage.FULL:
+            result = cpu_count
+        elif self == CpuUsage.HIGH:
+            result = cpu_count - 1
+        elif self == CpuUsage.BALANCED:
+            result = math.floor(cpu_count / 2)
+        elif self == CpuUsage.MINIMAL:
+            result = 1
+        else:
+            raise ValueError("Unknown CpuUsage: {}".format(self))
+        return max(1, min(result, cpu_count))
 
 
 class Options:

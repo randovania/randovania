@@ -1,9 +1,7 @@
-import pprint
 from typing import Optional
 
 import multiprocessing
 
-import math
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
@@ -11,20 +9,6 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from randovania.gui import application_options
 from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
 from randovania.interface_common.options import CpuUsage
-
-
-def _num_cpu_for_usage_with_count(cpu_usage: CpuUsage, cpu_count: int) -> int:
-    if cpu_usage == CpuUsage.FULL:
-        result = cpu_count
-    elif cpu_usage == CpuUsage.HIGH:
-        result = cpu_count - 1
-    elif cpu_usage == CpuUsage.BALANCED:
-        result = math.floor(cpu_count / 2)
-    elif cpu_usage == CpuUsage.MINIMAL:
-        result = 1
-    else:
-        raise ValueError("Unknown CpuUsage: {}".format(cpu_usage))
-    return max(1, min(result, cpu_count))
 
 
 class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
@@ -104,7 +88,7 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
         usages = list(sorted(self.options_by_cpu_usage.keys()))
         for usage in usages:
-            this_count = _num_cpu_for_usage_with_count(usage, cpu_count)
+            this_count = usage.num_cpu_for_count(cpu_count)
             self.options_by_cpu_usage[usage].setEnabled(this_count != previous_count)
             previous_count = this_count
 
