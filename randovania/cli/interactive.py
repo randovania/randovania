@@ -5,8 +5,7 @@ from typing import BinaryIO
 
 from randovania import get_data_path
 from randovania.games.prime import binary_data
-from randovania.interface_common.options import load_options_to, save_options, value_parsers, default_options, \
-    options_validation
+from randovania.interface_common.options import value_parsers, options_validation, Options
 from randovania.resolver.echoes import search_seed, RandomizerConfiguration, ResolverConfiguration
 
 
@@ -60,8 +59,8 @@ def interactive_shell(args):
 """)
 
     parsing_commands = True
-    options = default_options()
-    load_options_to(options)
+    options = Options()
+    options.load_from_disk()
 
     def print_config():
         print("        === Current configuration ===")
@@ -72,7 +71,7 @@ def interactive_shell(args):
 
     def change_option(key, value):
         options[key] = value
-        save_options(options)
+        options.save_to_disk()
 
     def quit_shell():
         raise SystemExit(0)

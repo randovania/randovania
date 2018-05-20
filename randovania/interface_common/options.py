@@ -6,7 +6,63 @@ from typing import List, Dict, Any
 import py
 
 
-def default_options() -> Dict[str, Any]:
+class Options:
+    def __init__(self):
+        self.raw_data = _default_options()
+
+    def load_from_disk(self):
+        try:
+            with open(os.path.expanduser("~/.config/randovania.json")) as options_file:
+                new_options = json.load(options_file)["options"]
+
+            for option_name in self.raw_data.keys():
+                if option_name in new_options:
+                    self.raw_data[option_name] = new_options[option_name]
+
+        except FileNotFoundError:
+            pass
+
+    def save_to_disk(self):
+        config_folder = py.path.local(os.path.expanduser("~/.config"))
+        config_folder.ensure_dir()
+        with config_folder.join("randovania.json").open("w") as options_file:
+            json.dump({
+                "version": 1,
+                "options": self.raw_data
+            }, options_file)
+
+    @property
+    def minimum_difficulty(self) -> int:
+        return self.raw_data["min_difficulty"]
+
+    @minimum_difficulty.setter
+    def minimum_difficulty(self, value: int):
+        validate_min_difficulty(value, self.raw_data)
+        self.raw_data["min_difficulty"] = value
+
+    @property
+    def maximum_difficulty(self) -> int:
+        return self.raw_data["max_difficulty"]
+
+    @maximum_difficulty.setter
+    def maximum_difficulty(self, value: int):
+        validate_max_difficulty(value, self.raw_data)
+        self.raw_data["max_difficulty"] = value
+
+    def __getitem__(self, item):
+        return self.raw_data[item]
+
+    def __setitem__(self, key, value):
+        self.raw_data[key] = value
+
+    def keys(self):
+        return self.raw_data.keys()
+
+    def items(self):
+        return self.raw_data.items()
+
+
+def _default_options() -> Dict[str, Any]:
     options: Dict[str, Any] = OrderedDict()
     options["max_difficulty"] = 3
     options["min_difficulty"] = 0
@@ -19,29 +75,6 @@ def default_options() -> Dict[str, Any]:
     options["game_files_path"] = ""
     options["seed"] = 0
     return options
-
-
-def load_options_to(current_options):
-    try:
-        with open(os.path.expanduser("~/.config/randovania.json")) as options_file:
-            new_options = json.load(options_file)["options"]
-
-        for option_name in current_options.keys():
-            if option_name in new_options:
-                current_options[option_name] = new_options[option_name]
-
-    except FileNotFoundError:
-        pass
-
-
-def save_options(options):
-    config_folder = py.path.local(os.path.expanduser("~/.config"))
-    config_folder.ensure_dir()
-    with config_folder.join("randovania.json").open("w") as options_file:
-        json.dump({
-            "version": 1,
-            "options": options
-        }, options_file)
 
 
 def value_parser_int(s: str) -> int:
