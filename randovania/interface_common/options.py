@@ -242,7 +242,7 @@ def validate_iso_path(iso_path: str, options):
         raise ValueError("Does not end in '.iso'")
 
 
-def validate_game_files_path(game_files_path: str, options):
+def validate_game_files_path(game_files_path: str):
     if not os.path.isdir(game_files_path):
         raise ValueError("Not a directory")
 
@@ -262,6 +262,5 @@ options_validation = {
     "min_difficulty": validate_min_difficulty,
     "excluded_pickups": validate_pickup_list,
     "iso_path": validate_iso_path,
-    "game_files_path": validate_game_files_path,
 }
 MAX_DIFFICULTY = 5

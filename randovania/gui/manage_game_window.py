@@ -6,10 +6,11 @@ import multiprocessing
 import os
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 from randovania import get_data_path
 from randovania.games.prime import binary_data
+from randovania.games.prime.claris_randomizer import apply_seed
 from randovania.gui import application_options
 from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
 from randovania.interface_common.options import CpuUsage
@@ -54,6 +55,8 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
         # Seed
         self.currentSeedEdit.setValidator(QIntValidator(0, 2147483647))
+        self.currentSeedEdit.textChanged.connect(self.on_new_seed)
+        self.applySeedButton.setEnabled(False)
         self.applySeedButton.clicked.connect(self.apply_seed)
 
         # ISO Packing
@@ -150,8 +153,17 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         options.save_to_disk()
 
     # Seed
+    def on_new_seed(self):
+        self.applySeedButton.setEnabled(True)
+
     def apply_seed(self):
-        pass
+        options = application_options()
+        try:
+            apply_seed(RandomizerConfiguration.from_options(options),
+                       int(self.currentSeedEdit.text()),
+                       options.remove_item_loss, options.hud_memo_popup_removal, options.game_files_path)
+        except Exception as e:
+            QMessageBox.critical(self, "Randomizer Error", "Error calling Randomizer.exe:\n{}".format(e))
 
     # ISO Packing
     def load_iso(self):
