@@ -15,7 +15,7 @@ from randovania.resolver.game_description import SimpleResourceInfo
 
 def _map_set_checked(iterable: Iterable[QtWidgets.QCheckBox], new_status: bool):
     for checkbox in iterable:
-        checkbox.setChecked(True)
+        checkbox.setChecked(new_status)
 
 
 def _persist_bool_option(attribute_name: str):
@@ -63,6 +63,7 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         self.exclude_checkboxes: List[QtWidgets.QCheckBox] = [None] * len(self.original_log.pickup_database.entries)
         self.create_exclusion_checkboxes()
         self.clearExcludedPickups.clicked.connect(self.unselect_all_exclusions)
+        self.filterPickupsEdit.textChanged.connect(self.update_exclusion_filter)
 
     def on_min_difficulty_changed(self, new_value: int):
         options = application_options()
@@ -113,3 +114,10 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
 
     def unselect_all_exclusions(self):
         _map_set_checked(self.exclude_checkboxes, False)
+
+    def update_exclusion_filter(self, value: str):
+        for checkbox in self.exclude_checkboxes:
+            if value:
+                checkbox.setHidden(value not in checkbox.text())
+            else:
+                checkbox.setHidden(False)
