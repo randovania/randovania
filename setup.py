@@ -26,7 +26,7 @@ setup(
     scripts=[
     ],
     package_data={
-        "randovania": ["data/*"]
+        "randovania": ["data/*", "data/ClarisPrimeRandomizer/*"]
     },
     classifiers=[
         'Development Status :: 4 - Beta',
