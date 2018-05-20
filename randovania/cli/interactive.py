@@ -3,6 +3,8 @@ import subprocess
 from argparse import ArgumentParser
 from typing import BinaryIO
 
+import multiprocessing
+
 from randovania import get_data_path
 from randovania.games.prime import binary_data
 from randovania.interface_common.options import value_parsers, options_validation, Options
@@ -79,12 +81,14 @@ def interactive_shell(args):
     def generate():
         randomizer_config = RandomizerConfiguration.from_options(options)
         resolver_config = ResolverConfiguration.from_options(options)
+        cpu_count = options.cpu_usage.num_cpu_for_count(multiprocessing.cpu_count())
 
-        print("\n== Will now search for a seed!")
+        print("\n== Will now search for a seed with {} cpu cores!".format(cpu_count))
         print_config()
         print("\n* This may take a while, and your computer may not respond correctly while running.")
 
-        seed, seed_count = search_seed(data, randomizer_config, resolver_config)
+        seed, seed_count = search_seed(data, randomizer_config, resolver_config,
+                                       cpu_count=cpu_count)
         print("A seed was found with the given configuration after {} attempts.".format(seed_count))
         print("\n=== Seed: {}".format(seed))
         change_option("seed", seed)

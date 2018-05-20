@@ -92,15 +92,12 @@ def generate_and_validate(data: Dict,
 def search_seed(data: Dict,
                 randomizer_config: RandomizerConfiguration,
                 resolver_config: ResolverConfiguration,
+                cpu_count: int,
                 quiet: bool = False,
                 start_on_seed: Optional[int] = None,
-                cpu_count: Optional[int] = None
                 ) -> Tuple[int, int]:
     input_queue = multiprocessing.Queue()
     output_queue = multiprocessing.Queue()
-
-    if cpu_count is None:
-        cpu_count = multiprocessing.cpu_count()
 
     process_list = [
         multiprocessing.Process(
