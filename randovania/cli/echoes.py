@@ -134,15 +134,17 @@ def generate_seed_command_logic(args):
     data = prime_database.decode_data_file(args)
     randomizer_config = build_randomizer_configuration(args)
     resolver_config = build_resolver_configuration(args)
+    cpu_count = multiprocessing.cpu_count()
 
-    seed, seed_count = search_seed(
-        data,
-        randomizer_config,
-        resolver_config,
-        args.minimum_difficulty,
-        args.quiet,
-        args.start_on_seed
-    )
+    if args.quiet:
+        seed_report = id
+    else:
+        def seed_report(seed_count_so_far: int):
+            if seed_count_so_far % (100 * cpu_count) == 0:
+                print("Total seed count so far: {}".format(seed_count_so_far))
+
+    seed, seed_count = search_seed(data=data, randomizer_config=randomizer_config, resolver_config=resolver_config,
+                                   cpu_count=cpu_count, seed_report=seed_report, start_on_seed=args.start_on_seed)
     if args.quiet:
         print(seed)
     else:
