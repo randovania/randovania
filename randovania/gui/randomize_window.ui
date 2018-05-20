@@ -23,19 +23,6 @@
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="removeItemLoss">
-        <property name="toolTip">
-         <string>When checked, you don't lose your items when entering Hive Chamber B for the first time.</string>
-        </property>
-        <property name="text">
-         <string>Remove Item Loss</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="1">
        <widget class="QCheckBox" name="randomizeElevators">
         <property name="text">
@@ -43,7 +30,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="3" column="1">
        <widget class="QCheckBox" name="outOfBounds">
         <property name="enabled">
          <bool>false</bool>
@@ -59,7 +46,20 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="removeItemLoss">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, you don't lose your items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;p&gt;Seeds with this unchecked are rare and may just have many items in the beggining.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Remove Item Loss</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
        <widget class="QGroupBox" name="excludedPickupsBox">
         <property name="title">
          <string>Excluded Pickups</string>
@@ -89,7 +89,7 @@
               <x>0</x>
               <y>0</y>
               <width>349</width>
-              <height>156</height>
+              <height>113</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -103,7 +103,7 @@
         </layout>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="QGroupBox" name="allowedTricksBox">
         <property name="title">
          <string>Allowed Tricks</string>
@@ -129,6 +129,15 @@
          </item>
          <item row="1" column="0">
           <widget class="QScrollArea" name="tricksScrollArea">
+           <property name="minimumSize">
+            <size>
+             <width>230</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
@@ -138,7 +147,7 @@
               <x>0</x>
               <y>0</y>
               <width>366</width>
-              <height>154</height>
+              <height>111</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -152,7 +161,17 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="removeHudPopup">
+        <property name="toolTip">
+         <string>The &quot;HUD Popup&quot; is the popup that appears after you collect an item</string>
+        </property>
+        <property name="text">
+         <string>Remove HUD popup</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" rowspan="4">
        <widget class="QGroupBox" name="difficultyBox">
         <property name="title">
          <string>Difficulty</string>
@@ -164,32 +183,11 @@
          <bool>false</bool>
         </property>
         <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="0">
-          <widget class="QLabel" name="minimumDifficultyLabel">
-           <property name="text">
-            <string>Minimum Difficulty</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="maximumDifficultyLabel">
-           <property name="text">
-            <string>Maximum Difficulty</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QSlider" name="minimumDifficulty">
-           <property name="maximum">
-            <number>5</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="QSlider" name="maximumDifficulty">
+           <property name="minimum">
+            <number>0</number>
+           </property>
            <property name="maximum">
             <number>5</number>
            </property>
@@ -198,6 +196,52 @@
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksBelow</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="minimumDifficultyLabel">
+           <property name="text">
+            <string>Minimum</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSlider" name="minimumDifficulty">
+           <property name="maximum">
+            <number>5</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="maximumDifficultyLabel">
+           <property name="text">
+            <string>Maximum</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <widget class="QLabel" name="label">
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Each trick usage in every room of the game is rated with a difficulty level from 1 to 5. For reference, the Grand Abyss jump is level 4.&lt;/p&gt;&lt;p&gt;Be careful when setting minimum difficulty to 4 or 5, and maximum difficulty to 0 or 1: these seeds are rare and will take a while to find.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

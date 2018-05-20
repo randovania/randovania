@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.manage_game_window import ManageGameWindow
 from randovania.gui.randomize_window import RandomizeWindow
-from randovania.interface_common.options import default_options, load_options_to
+from randovania.interface_common.options import Options
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -30,8 +30,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 def run(args):
     app = QApplication(sys.argv)
 
-    app.options = default_options()
-    load_options_to(app.options)
+    app.options = Options()
+    app.options.load_from_disk()
 
     main_window = MainWindow()
     main_window.show()
