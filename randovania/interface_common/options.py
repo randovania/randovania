@@ -1,11 +1,22 @@
 import json
 import os
 from collections import OrderedDict
-from typing import List, Dict, Any, Set, Iterable
+from enum import IntEnum
+from typing import List, Dict, Any, Set, Iterable, Optional
 
 import py
+from appdirs import AppDirs
 
 from randovania.resolver.game_description import SimpleResourceInfo
+
+dirs = AppDirs("Randovania", False)
+
+
+class CpuUsage(IntEnum):
+    FULL = 1
+    HIGH = 2
+    BALANCED = 3
+    MINIMAL = 4
 
 
 class Options:
@@ -94,6 +105,25 @@ class Options:
             for trick in value
         }))
 
+    @property
+    def game_files_path(self) -> str:
+        result = self.raw_data["game_files_path"]
+        if result is None:
+            return default_files_location()
+        return result
+
+    @game_files_path.setter
+    def game_files_path(self, value: Optional[str]):
+        self.raw_data["game_files_path"] = value
+
+    @property
+    def cpu_usage(self) -> CpuUsage:
+        return CpuUsage(self.raw_data["cpu_usage"])
+
+    @cpu_usage.setter
+    def cpu_usage(self, value: CpuUsage):
+        self.raw_data["cpu_usage"] = value
+
     def __getitem__(self, item):
         return self.raw_data[item]
 
@@ -118,9 +148,14 @@ def _default_options() -> Dict[str, Any]:
     options["randomize_elevators"] = False
     options["hud_memo_popup_removal"] = True
     options["iso_path"] = ""
-    options["game_files_path"] = ""
+    options["game_files_path"] = None
+    options["cpu_usage"] = CpuUsage.FULL
     options["seed"] = 0
     return options
+
+
+def default_files_location() -> str:
+    return os.path.join(dirs.user_data_dir, "extracted_game")
 
 
 def value_parser_int(s: str) -> int:
