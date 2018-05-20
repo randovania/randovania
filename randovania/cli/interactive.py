@@ -87,8 +87,12 @@ def interactive_shell(args):
         print_config()
         print("\n* This may take a while, and your computer may not respond correctly while running.")
 
-        seed, seed_count = search_seed(data, randomizer_config, resolver_config,
-                                       cpu_count=cpu_count)
+        def seed_report(seed_count_so_far: int):
+            if seed_count_so_far % (100 * cpu_count) == 0:
+                print("Total seed count so far: {}".format(seed_count_so_far))
+
+        seed, seed_count = search_seed(data, randomizer_config, resolver_config, cpu_count=cpu_count,
+                                       seed_report=seed_report)
         print("A seed was found with the given configuration after {} attempts.".format(seed_count))
         print("\n=== Seed: {}".format(seed))
         change_option("seed", seed)

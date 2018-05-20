@@ -1,6 +1,6 @@
 import multiprocessing
 import random
-from typing import Dict, Optional, NamedTuple, List, Tuple, Set
+from typing import Dict, Optional, NamedTuple, List, Tuple, Set, Callable
 
 from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
@@ -82,10 +82,10 @@ def generate_and_validate(data: Dict,
                                                  randomizer_config.exclude_pickups,
                                                  randomizer_config.randomize_elevators)
 
-        final_state = run_resolver(data,
-                                   randomizer_log,
-                                   resolver_config,
-                                   False)
+        final_state = run_resolver(data=data,
+                                   randomizer_log=randomizer_log,
+                                   resolver_config=resolver_config,
+                                   verbose=False)
         output_queue.put((seed, final_state))
 
 
@@ -93,9 +93,8 @@ def search_seed(data: Dict,
                 randomizer_config: RandomizerConfiguration,
                 resolver_config: ResolverConfiguration,
                 cpu_count: int,
-                quiet: bool = False,
-                start_on_seed: Optional[int] = None,
-                ) -> Tuple[int, int]:
+                seed_report: Callable[[int], None],
+                start_on_seed: Optional[int] = None) -> Tuple[int, int]:
     input_queue = multiprocessing.Queue()
     output_queue = multiprocessing.Queue()
 
@@ -132,8 +131,7 @@ def search_seed(data: Dict,
             break
         else:
             input_queue.put_nowait(generate_seed())
-            if not quiet and seed_count % (100 * cpu_count) == 0:
-                print("Total seed count so far: {}".format(seed_count))
+            seed_report(seed_count)
 
     for process in process_list:
         process.terminate()
