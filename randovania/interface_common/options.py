@@ -142,12 +142,10 @@ def _default_options() -> Dict[str, Any]:
     options["max_difficulty"] = 3
     options["min_difficulty"] = 0
     options["item_loss_enabled"] = False
-    options["tricks_enabled"] = True
     options["enabled_tricks"] = []
     options["excluded_pickups"] = []
     options["randomize_elevators"] = False
     options["hud_memo_popup_removal"] = True
-    options["iso_path"] = ""
     options["game_files_path"] = None
     options["cpu_usage"] = CpuUsage.FULL
     options["seed"] = 0

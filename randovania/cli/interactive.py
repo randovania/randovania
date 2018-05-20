@@ -77,11 +77,8 @@ def interactive_shell(args):
         raise SystemExit(0)
 
     def generate():
-        randomizer_config = RandomizerConfiguration(options["excluded_pickups"], options["randomize_elevators"])
-        resolver_config = ResolverConfiguration(options["max_difficulty"],
-                                                options["min_difficulty"],
-                                                options["tricks_enabled"],
-                                                options["item_loss_enabled"])
+        randomizer_config = RandomizerConfiguration.from_options(options)
+        resolver_config = ResolverConfiguration.from_options(options)
 
         print("\n== Will now search for a seed!")
         print_config()
@@ -143,7 +140,7 @@ def interactive_shell(args):
             quit_shell()
         first_part = command[0]
 
-        if first_part in options:
+        if first_part in options.keys():
             try:
                 the_value = value_parsers[type(options[first_part])](command[1])
                 if first_part in options_validation:

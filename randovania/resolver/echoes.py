@@ -1,9 +1,10 @@
 import multiprocessing
 import random
-from typing import Dict, Optional, NamedTuple, List, Tuple
+from typing import Dict, Optional, NamedTuple, List, Tuple, Set
 
 from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
+from randovania.interface_common.options import Options
 from randovania.resolver import data_reader, resolver, debug
 from randovania.resolver.state import State
 
@@ -11,13 +12,25 @@ from randovania.resolver.state import State
 class ResolverConfiguration(NamedTuple):
     difficulty: int
     minimum_difficulty: int
-    enable_tricks: bool
+    enabled_tricks: Set[int]
     item_loss: bool
+
+    @classmethod
+    def from_options(cls, options: Options) -> "ResolverConfiguration":
+        return ResolverConfiguration(options.maximum_difficulty,
+                                     options.minimum_difficulty,
+                                     options.enabled_tricks,
+                                     not options.remove_item_loss)
 
 
 class RandomizerConfiguration(NamedTuple):
     exclude_pickups: List[int]
     randomize_elevators: bool
+
+    @classmethod
+    def from_options(cls, options: Options) -> "RandomizerConfiguration":
+        return RandomizerConfiguration(list(options.excluded_pickups),
+                                       options.randomize_elevators)
 
 
 def run_resolver(data: Dict,
@@ -26,12 +39,12 @@ def run_resolver(data: Dict,
                  verbose=True) -> Optional[State]:
     game_description = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
     final_state = resolver.resolve(resolver_config.difficulty,
-                                   resolver_config.enable_tricks,
+                                   resolver_config.enabled_tricks,
                                    resolver_config.item_loss, game_description)
     if final_state:
         if resolver_config.minimum_difficulty > 0:
             if resolver.resolve(resolver_config.minimum_difficulty - 1,
-                                resolver_config.enable_tricks,
+                                resolver_config.enabled_tricks,
                                 resolver_config.item_loss,
                                 game_description):
                 if verbose:
