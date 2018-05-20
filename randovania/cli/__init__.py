@@ -19,6 +19,5 @@ def run_cli():
 
     args = parser.parse_args()
     if args.game is None:
-        parser.print_help()
-        raise SystemExit(1)
+        args.func = qt.run
     args.func(args)
