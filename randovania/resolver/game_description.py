@@ -130,9 +130,9 @@ class PickupDatabase:
 
     def __eq__(self, other: "PickupDatabase") -> bool:
         return self.percent_less_items == other.percent_less_items and (
-            self.direct_name == other.direct_name and
-            self.custom_mapping == other.custom_mapping and
-            self.entries == other.entries
+                self.direct_name == other.direct_name and
+                self.custom_mapping == other.custom_mapping and
+                self.entries == other.entries
         )
 
     def pickup_name_to_resource_gain(self,

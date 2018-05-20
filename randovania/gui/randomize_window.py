@@ -1,7 +1,8 @@
 import os
-from typing import Dict, Iterable, List, BinaryIO
+from typing import Dict, Iterable, BinaryIO
 
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
 
 from randovania import get_data_path
@@ -30,6 +31,7 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self._on_bulk_change = False
 
         data_file_path = os.path.join(get_data_path(), "prime2.bin")
         with open(data_file_path, "rb") as x:  # type: BinaryIO
@@ -86,24 +88,46 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
             self.maximumDifficulty.setValue(options.maximum_difficulty)
 
     def create_trick_checkboxes(self):
-        for trick in sorted(self.resource_database.trick, key=lambda x: x.long_name):
-            trick_checkbox = QtWidgets.QCheckBox(self.tricksContents)
-            trick_checkbox.setChecked(True)
-            trick_checkbox.setCheckable(True)
-            self.tricksContentLayout.addWidget(trick_checkbox)
+        enabled_tricks = application_options().enabled_tricks
 
-            trick_checkbox.setText(QtCore.QCoreApplication.translate(
+        for trick in sorted(self.resource_database.trick, key=lambda x: x.long_name):
+            checkbox = QtWidgets.QCheckBox(self.tricksContents)
+            checkbox.setChecked(trick.index in enabled_tricks)
+            checkbox.setCheckable(True)
+            self.tricksContentLayout.addWidget(checkbox)
+
+            checkbox.setText(QtCore.QCoreApplication.translate(
                 "EchoesDatabase", trick.long_name, "trick"))
-            self.trick_checkboxes[trick] = trick_checkbox
+            checkbox.stateChanged.connect(self.on_trick_checked_changed)
+            self.trick_checkboxes[trick] = checkbox
+
+    def on_trick_checked_changed(self):
+        if self._on_bulk_change:
+            return
+
+        options = application_options()
+        options.enabled_tricks = {
+            trick
+            for trick, checkbox in self.trick_checkboxes.items()
+            if checkbox.isChecked()
+        }
+        options.save_to_disk()
 
     def select_all_tricks(self):
+        self._on_bulk_change = True
         _map_set_checked(self.trick_checkboxes.values(), True)
+        self._on_bulk_change = False
+        self.on_trick_checked_changed()
 
     def unselect_all_tricks(self):
+        self._on_bulk_change = True
         _map_set_checked(self.trick_checkboxes.values(), False)
+        self._on_bulk_change = False
+        self.on_trick_checked_changed()
 
     def create_exclusion_checkboxes(self):
         excluded_pickups = application_options().excluded_pickups
+        self.excludedItemsContentLayout.setAlignment(Qt.AlignTop)
 
         for entry in self.original_log.pickup_database.entries:
             checkbox = QtWidgets.QCheckBox(self.excludedItemsContents)
@@ -120,6 +144,9 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
             self.exclude_checkboxes[entry] = checkbox
 
     def on_exclusion_list_changed(self):
+        if self._on_bulk_change:
+            return
+
         options = application_options()
         options.excluded_pickups = {
             self.exclusion_indices[entry]
@@ -129,7 +156,10 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         options.save_to_disk()
 
     def unselect_all_exclusions(self):
+        self._on_bulk_change = True
         _map_set_checked(self.exclude_checkboxes.values(), False)
+        self._on_bulk_change = False
+        self.on_exclusion_list_changed()
 
     def update_exclusion_filter(self, value: str):
         for checkbox in self.exclude_checkboxes.values():
