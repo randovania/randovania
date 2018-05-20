@@ -11,4 +11,4 @@ def get_data_path():
     return os.path.join(file_dir, "data")
 
 
-VERSION = "0.8.2"
+VERSION = "0.9.0"
