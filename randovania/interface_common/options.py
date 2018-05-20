@@ -1,7 +1,7 @@
 import json
 import os
 from collections import OrderedDict
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Set, Iterable
 
 import py
 
@@ -72,6 +72,14 @@ class Options:
     @hud_memo_popup_removal.setter
     def hud_memo_popup_removal(self, value: bool):
         self.raw_data["hud_memo_popup_removal"] = value
+
+    @property
+    def excluded_pickups(self) -> Set[int]:
+        return set(self.raw_data["excluded_pickups"])
+
+    @excluded_pickups.setter
+    def excluded_pickups(self, value: Iterable[int]):
+        self.raw_data["excluded_pickups"] = list(sorted(set(value)))
 
     def __getitem__(self, item):
         return self.raw_data[item]
