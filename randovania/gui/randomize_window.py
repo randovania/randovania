@@ -43,6 +43,7 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
     def create_trick_checkboxes(self):
         for trick in sorted(self.resource_database.trick, key=lambda x: x.long_name):
             trick_checkbox = QtWidgets.QCheckBox(self.tricksContents)
+            trick_checkbox.setChecked(True)
             trick_checkbox.setCheckable(True)
             self.tricksContentLayout.addWidget(trick_checkbox)
 
@@ -71,5 +72,4 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
             self.exclude_checkboxes[i] = checkbox
 
     def unselect_all_exclusions(self):
-        pass
-        # _map_set_checked(self.exclude_checkboxes, False)
+        _map_set_checked(self.exclude_checkboxes, False)

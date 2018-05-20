@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>589</width>
-    <height>325</height>
+    <width>802</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,16 +36,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QSlider" name="minimumDifficulty">
-        <property name="maximum">
-         <number>5</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="1">
        <widget class="QCheckBox" name="randomizeElevators">
         <property name="text">
@@ -69,120 +59,149 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
-       <widget class="QScrollArea" name="tricksScrollArea">
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="tricksContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>279</width>
-           <height>139</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <layout class="QVBoxLayout" name="tricksContentLayout"/>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="tricksLabel">
-        <property name="text">
-         <string>Allowed Tricks</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="excludedItemsLabel">
-        <property name="text">
+      <item row="5" column="0">
+       <widget class="QGroupBox" name="excludedPickupsBox">
+        <property name="title">
          <string>Excluded Pickups</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSlider" name="maximumDifficulty">
-        <property name="maximum">
-         <number>5</number>
-        </property>
-        <property name="value">
-         <number>3</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QScrollArea" name="excludedItemsScrollArea">
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOn</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::AdjustToContents</enum>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="excludedItemsContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>263</width>
-           <height>139</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <layout class="QVBoxLayout" name="excludedItemsContentLayout"/>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="maximumDifficultyLabel">
-        <property name="text">
-         <string>Maximum Difficulty</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="minimumDifficultyLabel">
-        <property name="text">
-         <string>Minimum Difficulty</string>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="clearExcludedPickups">
+           <property name="text">
+            <string>Deselect all</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QScrollArea" name="excludedItemsScrollArea">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOn</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="excludedItemsContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>349</width>
+              <height>156</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <layout class="QVBoxLayout" name="excludedItemsContentLayout"/>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item row="5" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QPushButton" name="selectNoTricks">
-          <property name="text">
-           <string>Select None</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="selectAllTricks">
-          <property name="text">
-           <string>Select All</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="5" column="0">
-       <widget class="QPushButton" name="clearExcludedPickups">
-        <property name="text">
-         <string>Select None</string>
+       <widget class="QGroupBox" name="allowedTricksBox">
+        <property name="title">
+         <string>Allowed Tricks</string>
         </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="selectNoTricks">
+             <property name="text">
+              <string>Deselect all</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="selectAllTricks">
+             <property name="text">
+              <string>Select all</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QScrollArea" name="tricksScrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="tricksContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>366</width>
+              <height>154</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <layout class="QVBoxLayout" name="tricksContentLayout"/>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QGroupBox" name="difficultyBox">
+        <property name="title">
+         <string>Difficulty</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0">
+          <widget class="QLabel" name="minimumDifficultyLabel">
+           <property name="text">
+            <string>Minimum Difficulty</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="maximumDifficultyLabel">
+           <property name="text">
+            <string>Maximum Difficulty</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QSlider" name="minimumDifficulty">
+           <property name="maximum">
+            <number>5</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSlider" name="maximumDifficulty">
+           <property name="maximum">
+            <number>5</number>
+           </property>
+           <property name="value">
+            <number>3</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -194,7 +213,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>589</width>
+     <width>802</width>
      <height>21</height>
     </rect>
    </property>
