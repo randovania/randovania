@@ -1,12 +1,13 @@
 from setuptools import setup, find_packages
+from setuptools.command.build_py import build_py
+
+from pyqt_distutils.build_ui import build_ui
 
 
-try:
-    from pyqt_distutils.build_ui import build_ui
-    cmdclass = {"build_ui": build_ui}
-except ImportError:
-    build_ui = None  # user won't have pyqt_distutils when deploying
-    cmdclass = {}
+class custom_build_py(build_py):
+    def run(self):
+        self.run_command('build_ui')
+        super().run()
 
 
 from randovania import VERSION
@@ -18,7 +19,10 @@ setup(
     url='https://github.com/henriquegemignani/randovania',
     description='A randomizer validator for the Metroid Prime series.',
     packages=find_packages(),
-    cmdclass=cmdclass,
+    cmdclass={
+        "build_ui": build_ui,
+        "build_py": custom_build_py
+    },
     scripts=[
     ],
     package_data={

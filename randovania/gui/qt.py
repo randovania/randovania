@@ -1,8 +1,9 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from argparse import ArgumentParser
 
+from .randomize_window import RandomizeWindow
 from .mainwindow_ui import Ui_MainWindow
 from .manage_game_window_ui import Ui_ManageGameWindow
 
@@ -12,12 +13,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.pushButton.clicked.connect(self.yell_pressed)
+        self.pushButton_2.clicked.connect(self.cra_pressed)
 
     def yell_pressed(self):
-        print("AEHOOOOOOOOOOOOOOOOOOOOOO")
         self.manage_game_window = ManageGameWindow()
         self.setCentralWidget(self.manage_game_window.centralWidget)
 
+    def cra_pressed(self):
+        self.randomize_window = RandomizeWindow()
+        self.setCentralWidget(self.randomize_window.centralWidget)
 
 
 class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
@@ -34,6 +38,7 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
     def package_iso(self):
         self.progressBar.setHidden(False)
+
 
 def run(args):
     app = QApplication(sys.argv)
