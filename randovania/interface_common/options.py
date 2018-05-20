@@ -5,6 +5,8 @@ from typing import List, Dict, Any, Set, Iterable
 
 import py
 
+from randovania.resolver.game_description import SimpleResourceInfo
+
 
 class Options:
     def __init__(self):
@@ -81,6 +83,17 @@ class Options:
     def excluded_pickups(self, value: Iterable[int]):
         self.raw_data["excluded_pickups"] = list(sorted(set(value)))
 
+    @property
+    def enabled_tricks(self) -> Set[int]:
+        return set(self.raw_data["enabled_tricks"])
+
+    @enabled_tricks.setter
+    def enabled_tricks(self, value: Iterable[SimpleResourceInfo]):
+        self.raw_data["enabled_tricks"] = list(sorted({
+            trick.index
+            for trick in value
+        }))
+
     def __getitem__(self, item):
         return self.raw_data[item]
 
@@ -100,6 +113,7 @@ def _default_options() -> Dict[str, Any]:
     options["min_difficulty"] = 0
     options["item_loss_enabled"] = False
     options["tricks_enabled"] = True
+    options["enabled_tricks"] = []
     options["excluded_pickups"] = []
     options["randomize_elevators"] = False
     options["hud_memo_popup_removal"] = True

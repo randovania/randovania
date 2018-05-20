@@ -50,6 +50,9 @@
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
            <widget class="QWidget" name="tricksContents">
             <property name="geometry">
              <rect>
@@ -248,6 +251,9 @@
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
            <widget class="QWidget" name="excludedItemsContents">
             <property name="geometry">
              <rect>
@@ -259,7 +265,11 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
-              <layout class="QVBoxLayout" name="excludedItemsContentLayout"/>
+              <layout class="QVBoxLayout" name="excludedItemsContentLayout">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+              </layout>
              </item>
             </layout>
            </widget>
