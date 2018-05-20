@@ -49,6 +49,30 @@ class Options:
         validate_max_difficulty(value, self.raw_data)
         self.raw_data["max_difficulty"] = value
 
+    @property
+    def remove_item_loss(self) -> bool:
+        return not self.raw_data["item_loss_enabled"]
+
+    @remove_item_loss.setter
+    def remove_item_loss(self, value: bool):
+        self.raw_data["item_loss_enabled"] = not value
+
+    @property
+    def randomize_elevators(self) -> bool:
+        return self.raw_data["randomize_elevators"]
+
+    @randomize_elevators.setter
+    def randomize_elevators(self, value: bool):
+        self.raw_data["randomize_elevators"] = value
+
+    @property
+    def hud_memo_popup_removal(self) -> bool:
+        return self.raw_data["hud_memo_popup_removal"]
+
+    @hud_memo_popup_removal.setter
+    def hud_memo_popup_removal(self, value: bool):
+        self.raw_data["hud_memo_popup_removal"] = value
+
     def __getitem__(self, item):
         return self.raw_data[item]
 

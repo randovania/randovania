@@ -18,6 +18,14 @@ def _map_set_checked(iterable: Iterable[QtWidgets.QCheckBox], new_status: bool):
         checkbox.setChecked(True)
 
 
+def _persist_bool_option(attribute_name: str):
+    def callback(value: bool):
+        options = application_options()
+        setattr(options, attribute_name, value)
+        options.save_to_disk()
+    return callback
+
+
 class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
     def __init__(self):
         super().__init__()
@@ -29,12 +37,21 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         self.resource_database = read_resource_database(data["resource_database"])
         self.original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
 
-        # Difficulty
         options = application_options()
+
+        # Difficulty
         self.minimumDifficulty.setValue(options.minimum_difficulty)
         self.maximumDifficulty.setValue(options.maximum_difficulty)
         self.minimumDifficulty.valueChanged.connect(self.on_min_difficulty_changed)
         self.maximumDifficulty.valueChanged.connect(self.on_max_difficulty_changed)
+
+        # Checkers
+        self.removeItemLoss.setChecked(options.remove_item_loss)
+        self.removeItemLoss.stateChanged.connect(_persist_bool_option("remove_item_loss"))
+        self.randomizeElevators.setChecked(options.randomize_elevators)
+        self.randomizeElevators.stateChanged.connect(_persist_bool_option("randomize_elevators"))
+        self.removeHudPopup.setChecked(options.hud_memo_popup_removal)
+        self.removeHudPopup.stateChanged.connect(_persist_bool_option("hud_memo_popup_removal"))
 
         # Trick Selection
         self.trick_checkboxes: Dict[SimpleResourceInfo, QtWidgets.QCheckBox] = {}
@@ -47,18 +64,18 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         self.create_exclusion_checkboxes()
         self.clearExcludedPickups.clicked.connect(self.unselect_all_exclusions)
 
-    def on_min_difficulty_changed(self):
+    def on_min_difficulty_changed(self, new_value: int):
         options = application_options()
         try:
-            options.minimum_difficulty = self.minimumDifficulty.value()
+            options.minimum_difficulty = new_value
             options.save_to_disk()
         except ValueError:
             self.minimumDifficulty.setValue(options.minimum_difficulty)
 
-    def on_max_difficulty_changed(self):
+    def on_max_difficulty_changed(self, new_value: int):
         options = application_options()
         try:
-            options.maximum_difficulty = self.maximumDifficulty.value()
+            options.maximum_difficulty = new_value
             options.save_to_disk()
         except ValueError:
             self.maximumDifficulty.setValue(options.maximum_difficulty)

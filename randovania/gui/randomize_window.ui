@@ -30,103 +30,12 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QCheckBox" name="outOfBounds">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="toolTip">
-         <string>Currently we have no data to allow this feature</string>
-        </property>
-        <property name="text">
-         <string>Require Out-of-Bounds</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QCheckBox" name="removeItemLoss">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, you don't lose your items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;p&gt;Seeds with this unchecked are rare and may just have many items in the beggining.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Remove Item Loss</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QGroupBox" name="excludedPickupsBox">
-        <property name="title">
-         <string>Excluded Pickups</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="clearExcludedPickups">
-           <property name="text">
-            <string>Deselect all</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QScrollArea" name="excludedItemsScrollArea">
-           <property name="verticalScrollBarPolicy">
-            <enum>Qt::ScrollBarAlwaysOn</enum>
-           </property>
-           <property name="sizeAdjustPolicy">
-            <enum>QAbstractScrollArea::AdjustToContents</enum>
-           </property>
-           <property name="widgetResizable">
-            <bool>true</bool>
-           </property>
-           <widget class="QWidget" name="excludedItemsContents">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>349</width>
-              <height>113</height>
-             </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <layout class="QVBoxLayout" name="excludedItemsContentLayout"/>
-             </item>
-            </layout>
-           </widget>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item row="6" column="1">
        <widget class="QGroupBox" name="allowedTricksBox">
         <property name="title">
          <string>Allowed Tricks</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
-            <widget class="QPushButton" name="selectNoTricks">
-             <property name="text">
-              <string>Deselect all</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="selectAllTricks">
-             <property name="text">
-              <string>Select all</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
          <item row="1" column="0">
           <widget class="QScrollArea" name="tricksScrollArea">
            <property name="minimumSize">
@@ -158,7 +67,54 @@
            </widget>
           </widget>
          </item>
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="selectNoTricks">
+             <property name="text">
+              <string>Deselect all</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="selectAllTricks">
+             <property name="text">
+              <string>Select all</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
         </layout>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="outOfBounds">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Currently we have no data to allow this feature</string>
+        </property>
+        <property name="text">
+         <string>Require Out-of-Bounds</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="removeItemLoss">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, you don't lose your items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;p&gt;Seeds with this unchecked are rare and may just have many items in the beggining.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Remove Item Loss</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="4" column="1">
@@ -183,6 +139,26 @@
          <bool>false</bool>
         </property>
         <layout class="QGridLayout" name="gridLayout_6">
+         <item row="1" column="1">
+          <widget class="QSlider" name="minimumDifficulty">
+           <property name="maximum">
+            <number>5</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksAbove</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="minimumDifficultyLabel">
+           <property name="text">
+            <string>Minimum</string>
+           </property>
+          </widget>
+         </item>
          <item row="2" column="1">
           <widget class="QSlider" name="maximumDifficulty">
            <property name="minimum">
@@ -202,26 +178,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="minimumDifficultyLabel">
-           <property name="text">
-            <string>Minimum</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSlider" name="minimumDifficulty">
-           <property name="maximum">
-            <number>5</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::TicksAbove</enum>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="maximumDifficultyLabel">
            <property name="text">
@@ -233,7 +189,7 @@
           <widget class="QLabel" name="label">
            <property name="maximumSize">
             <size>
-             <width>400</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -243,6 +199,70 @@
            <property name="wordWrap">
             <bool>true</bool>
            </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QGroupBox" name="excludedPickupsBox">
+        <property name="title">
+         <string>Excluded Pickups</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="filterPickupsEdit">
+           <property name="statusTip">
+            <string/>
+           </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhNone</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="clearExcludedPickups">
+           <property name="text">
+            <string>Deselect all</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="toolTip">
+            <string>Enter text to the right to filter the list below</string>
+           </property>
+           <property name="text">
+            <string>Filter:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QScrollArea" name="excludedItemsScrollArea">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOn</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="excludedItemsContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>349</width>
+              <height>113</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <layout class="QVBoxLayout" name="excludedItemsContentLayout"/>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
