@@ -206,7 +206,11 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLineEdit" name="currentSeedEdit"/>
+           <widget class="QLineEdit" name="currentSeedEdit">
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="applySeedButton">

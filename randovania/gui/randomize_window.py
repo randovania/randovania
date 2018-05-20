@@ -1,5 +1,5 @@
 import os
-from typing import Dict, Iterable, List
+from typing import Dict, Iterable, List, BinaryIO
 
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QMainWindow
@@ -10,7 +10,7 @@ from randovania.games.prime.log_parser import parse_log
 from randovania.gui import application_options
 from randovania.gui.randomize_window_ui import Ui_RandomizeWindow
 from randovania.resolver.data_reader import read_resource_database
-from randovania.resolver.game_description import SimpleResourceInfo
+from randovania.resolver.game_description import SimpleResourceInfo, PickupEntry
 
 
 def _map_set_checked(iterable: Iterable[QtWidgets.QCheckBox], new_status: bool):
@@ -60,7 +60,11 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         self.selectAllTricks.clicked.connect(self.select_all_tricks)
 
         # Exclusion Selection
-        self.exclude_checkboxes: List[QtWidgets.QCheckBox] = [None] * len(self.original_log.pickup_database.entries)
+        self.exclusion_indices = {
+            entry: i
+            for i, entry in enumerate(self.original_log.pickup_database.entries)
+        }
+        self.exclude_checkboxes: Dict[PickupEntry, QtWidgets.QCheckBox] = {}
         self.create_exclusion_checkboxes()
         self.clearExcludedPickups.clicked.connect(self.unselect_all_exclusions)
         self.filterPickupsEdit.textChanged.connect(self.update_exclusion_filter)
@@ -99,25 +103,37 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         _map_set_checked(self.trick_checkboxes.values(), False)
 
     def create_exclusion_checkboxes(self):
-        for i, entry in enumerate(self.original_log.pickup_database.entries):
+        excluded_pickups = application_options().excluded_pickups
+
+        for entry in self.original_log.pickup_database.entries:
             checkbox = QtWidgets.QCheckBox(self.excludedItemsContents)
             checkbox.setCheckable(True)
+            checkbox.setChecked(self.exclusion_indices[entry] in excluded_pickups)
             self.excludedItemsContentLayout.addWidget(checkbox)
 
-            lol = "{} - {} - {}".format(
+            checkbox.setText("{} - {} - {}".format(
                 QtCore.QCoreApplication.translate("EchoesDatabase", entry.world, "world"),
                 QtCore.QCoreApplication.translate("EchoesDatabase", entry.room, "room"),
                 QtCore.QCoreApplication.translate("EchoesDatabase", entry.item, "item")
-            )
-            checkbox.setText(lol)
-            self.exclude_checkboxes[i] = checkbox
+            ))
+            checkbox.stateChanged.connect(self.on_exclusion_list_changed)
+            self.exclude_checkboxes[entry] = checkbox
+
+    def on_exclusion_list_changed(self):
+        options = application_options()
+        options.excluded_pickups = {
+            self.exclusion_indices[entry]
+            for entry, checkbox in self.exclude_checkboxes.items()
+            if checkbox.isChecked()
+        }
+        options.save_to_disk()
 
     def unselect_all_exclusions(self):
-        _map_set_checked(self.exclude_checkboxes, False)
+        _map_set_checked(self.exclude_checkboxes.values(), False)
 
     def update_exclusion_filter(self, value: str):
-        for checkbox in self.exclude_checkboxes:
+        for checkbox in self.exclude_checkboxes.values():
             if value:
-                checkbox.setHidden(value not in checkbox.text())
+                checkbox.setHidden(value.lower() not in checkbox.text().lower())
             else:
                 checkbox.setHidden(False)
