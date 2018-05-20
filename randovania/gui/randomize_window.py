@@ -2,12 +2,13 @@ import os
 from typing import Dict, Iterable, List
 
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from randovania import get_data_path
 from randovania.games.prime import binary_data
 from randovania.games.prime.log_parser import parse_log
 from randovania.gui.randomize_window_ui import Ui_RandomizeWindow
+from randovania.interface_common.options import save_options
 from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.game_description import SimpleResourceInfo
 
@@ -28,6 +29,13 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         self.resource_database = read_resource_database(data["resource_database"])
         self.original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
 
+        # Difficulty
+        options = QApplication.instance().options
+        self.minimumDifficulty.setValue(options["min_difficulty"])
+        self.maximumDifficulty.setValue(options["max_difficulty"])
+        self.minimumDifficulty.valueChanged.connect(self.on_difficulty_changed)
+        self.maximumDifficulty.valueChanged.connect(self.on_difficulty_changed)
+
         # Trick Selection
         self.trick_checkboxes: Dict[SimpleResourceInfo, QtWidgets.QCheckBox] = {}
         self.create_trick_checkboxes()
@@ -39,6 +47,11 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         self.create_exclusion_checkboxes()
         self.clearExcludedPickups.clicked.connect(self.unselect_all_exclusions)
 
+    def on_difficulty_changed(self):
+        options = QApplication.instance().options
+        options["min_difficulty"] = self.minimumDifficulty.value()
+        options["max_difficulty"] = self.maximumDifficulty.value()
+        save_options(options)
 
     def create_trick_checkboxes(self):
         for trick in sorted(self.resource_database.trick, key=lambda x: x.long_name):
