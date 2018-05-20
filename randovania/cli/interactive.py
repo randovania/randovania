@@ -1,46 +1,13 @@
+import multiprocessing
 import os
-import subprocess
 from argparse import ArgumentParser
 from typing import BinaryIO
 
-import multiprocessing
-
 from randovania import get_data_path
 from randovania.games.prime import binary_data
+from randovania.games.prime.claris_randomizer import has_randomizer_binary, apply_seed
 from randovania.interface_common.options import value_parsers, options_validation, Options
 from randovania.resolver.echoes import search_seed, RandomizerConfiguration, ResolverConfiguration
-
-
-def has_randomizer_binary():
-    return os.path.isfile("Randomizer.exe")
-
-
-def apply_seed(randomizer_config: RandomizerConfiguration,
-               seed: int,
-               item_loss: bool,
-               hud_memo_popup_removal: bool,
-               game_files: str):
-
-    if not os.path.isdir(game_files):
-        print("Cannot apply seed: '{}' is not a dir.".format(game_files))
-        print("Enter the path to the game:")
-        game_files = input("> ")
-
-    args = [
-        "Randomizer.exe",
-        game_files,
-        "-s", str(seed),
-        "-e", ",".join(str(pickup) for pickup in randomizer_config.exclude_pickups) or "none",
-    ]
-    if not item_loss:
-        args.append("-i")
-    if hud_memo_popup_removal:
-        args.append("-h")
-    if randomizer_config.randomize_elevators:
-        args.append("-v")
-
-    print("Running the Randomizer with: ", args)
-    subprocess.run(args, check=True)
 
 
 def interactive_shell(args):
@@ -108,9 +75,9 @@ def interactive_shell(args):
             print("game_files_path is not set, no game to randomize.")
             return
 
-        randomizer_config = RandomizerConfiguration(options["excluded_pickups"], options["randomize_elevators"])
-        apply_seed(randomizer_config, options["seed"],
-                   options["item_loss_enabled"], options["hud_memo_popup_removal"], options["game_files_path"])
+        apply_seed(RandomizerConfiguration.from_options(options),
+                   options["seed"],
+                   options.remove_item_loss, options.hud_memo_popup_removal, options.game_files_path)
 
     commands = {
         "view_config": print_config,
