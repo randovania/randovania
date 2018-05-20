@@ -140,24 +140,28 @@ def simplify_connections(game: GameDescription, static_resources: CurrentResourc
                     connections[target] = value.simplify(static_resources, game.resource_database)
 
 
-def build_static_resources(difficulty_level: int, enable_tricks: bool, game: GameDescription) -> CurrentResources:
-    trick_level = 1 if enable_tricks else 0
+def build_static_resources(difficulty_level: int, tricks_enabled: Set[int], game: GameDescription) -> CurrentResources:
     static_resources = {}
+
     for trick in game.resource_database.trick:
-        static_resources[trick] = trick_level
+        if trick.index in tricks_enabled:
+            static_resources[trick] = 1
+        else:
+            static_resources[trick] = 0
+
     for difficulty in game.resource_database.difficulty:
         static_resources[difficulty] = difficulty_level
     return static_resources
 
 
 def resolve(difficulty_level: int,
-            enable_tricks: bool,
+            tricks_enabled: Set[int],
             item_loss: bool,
             game: GameDescription) -> Optional[State]:
     # global state for easy printing functions
     debug._gd = game
 
-    static_resources = build_static_resources(difficulty_level, enable_tricks, game)
+    static_resources = build_static_resources(difficulty_level, tricks_enabled, game)
     simplify_connections(game, static_resources)
 
     starting_world = game.world_by_asset_id(game.starting_world_asset_id)
