@@ -23,14 +23,7 @@
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="randomizeElevators">
-        <property name="text">
-         <string>Randomize Elevators</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
+      <item row="5" column="1">
        <widget class="QGroupBox" name="allowedTricksBox">
         <property name="title">
          <string>Allowed Tricks</string>
@@ -58,8 +51,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>366</width>
-              <height>111</height>
+              <width>362</width>
+              <height>68</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -91,46 +84,7 @@
         </layout>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QCheckBox" name="outOfBounds">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="toolTip">
-         <string>Currently we have no data to allow this feature</string>
-        </property>
-        <property name="text">
-         <string>Require Out-of-Bounds</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QCheckBox" name="removeItemLoss">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, you don't lose your items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;p&gt;Seeds with this unchecked are rare and may just have many items in the beggining.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Remove Item Loss</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QCheckBox" name="removeHudPopup">
-        <property name="toolTip">
-         <string>The &quot;HUD Popup&quot; is the popup that appears after you collect an item</string>
-        </property>
-        <property name="text">
-         <string>Remove HUD popup</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" rowspan="4">
+      <item row="2" column="0" rowspan="2">
        <widget class="QGroupBox" name="difficultyBox">
         <property name="title">
          <string>Difficulty</string>
@@ -207,7 +161,7 @@
         </layout>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="5" column="0">
        <widget class="QGroupBox" name="excludedPickupsBox">
         <property name="title">
          <string>Excluded Pickups</string>
@@ -259,8 +213,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>349</width>
-              <height>113</height>
+              <width>348</width>
+              <height>70</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -269,6 +223,61 @@
              </item>
             </layout>
            </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="1" rowspan="2">
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QCheckBox" name="removeHudPopup">
+           <property name="toolTip">
+            <string>The &quot;HUD Popup&quot; is the popup that appears after you collect an item</string>
+           </property>
+           <property name="text">
+            <string>Remove HUD popup</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="outOfBounds">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Currently we have no data to allow this feature</string>
+           </property>
+           <property name="text">
+            <string>Require Out-of-Bounds</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="randomizeElevators">
+           <property name="text">
+            <string>Randomize Elevators</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="removeItemLoss">
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, you don't lose your items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;p&gt;Seeds with this unchecked are rare and may just have many items in the beggining.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="text">
+            <string>Remove Item Loss</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
