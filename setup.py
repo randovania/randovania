@@ -1,7 +1,7 @@
+from pyqt_distutils.build_ui import build_ui
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
-
-from pyqt_distutils.build_ui import build_ui
+from randovania import VERSION
 
 
 class custom_build_py(build_py):
@@ -10,7 +10,8 @@ class custom_build_py(build_py):
         super().run()
 
 
-from randovania import VERSION
+with open("README.md") as readme_file:
+    long_description = readme_file.read()
 
 setup(
     name='randovania',
@@ -18,6 +19,8 @@ setup(
     author='Henrique Gemignani',
     url='https://github.com/henriquegemignani/randovania',
     description='A randomizer validator for the Metroid Prime series.',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     cmdclass={
         "build_ui": build_ui,
@@ -28,6 +31,7 @@ setup(
     package_data={
         "randovania": ["data/*", "data/ClarisPrimeRandomizer/*"]
     },
+    license='License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -39,7 +43,10 @@ setup(
     install_requires=[
         'py', 'PyQt5', 'appdirs', ],
     setup_requires=[
-        'pytest', 'markdown', 'PyInstaller', 'pyqt-distutils'
+        'pytest', 'markdown', 'PyInstaller', 'pyqt-distutils',
+        'setuptools>=38.6.0',
+        'twine>=1.11.0',
+        'wheel>=0.31.0',
     ],
     entry_points={
         'console_scripts': [
