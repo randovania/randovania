@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from collections import defaultdict
 
 from randovania.cli import prime_database
-from randovania.games.prime import log_parser
+from randovania.games.prime import log_parser, iso_packager
 from randovania.interface_common.options import MAX_DIFFICULTY
 from randovania.resolver import debug
 from randovania.resolver.echoes import run_resolver, search_seed, RandomizerConfiguration, \
@@ -243,6 +243,33 @@ def add_analyze_seed_log_command(sub_parsers):
     parser.set_defaults(func=analyze_seed_log_command_logic)
 
 
+def extract_iso_command_logic(args):
+    def progress_update(status: int):
+        print("Status update: {}".format(status))
+
+    iso_packager.unpack_iso(
+        iso=args.iso_path,
+        game_files_path=args.extract_path,
+        progress_update=progress_update)
+
+
+def add_extract_iso_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "extract-iso",
+        help="Extracts files from an ISO, in order to run the Randomizer.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.add_argument(
+        "iso_path",
+        type=str,
+        help="Path to the ISO file to extract.")
+    parser.add_argument(
+        "extract_path",
+        type=str,
+        help="Path to where the ISO will be extracted.")
+    parser.set_defaults(func=extract_iso_command_logic)
+
+
 def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "echoes",
@@ -253,6 +280,7 @@ def create_subparsers(sub_parsers):
     add_generate_seed_command(sub_parsers)
     add_generate_seed_log_command(sub_parsers)
     add_analyze_seed_log_command(sub_parsers)
+    add_extract_iso_command(sub_parsers)
     prime_database.create_subparsers(sub_parsers)
 
     def check_command(args):

@@ -4,13 +4,17 @@ from typing import Optional, BinaryIO
 import multiprocessing
 
 import os
+
+import nod
 from PyQt5 import QtCore
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QApplication
 
 from randovania import get_data_path
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import apply_seed
+from randovania.games.prime.iso_packager import unpack_iso
 from randovania.gui import application_options
 from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
 from randovania.interface_common.options import CpuUsage
@@ -21,14 +25,37 @@ class AbortGeneration(Exception):
     pass
 
 
+def _disc_extract_process(status_queue, input_file: str, output_directory: str):
+    def progress_callback(path, progress):
+        status_queue.put_nowait((False, int(progress * 100)))
+
+    def _helper():
+        result = nod.open_disc_from_image(input_file)
+        if not result:
+            return True, "Could not open file '{}'".format(input_file)
+
+        disc, is_wii = result
+        data_partition = disc.get_data_partition()
+        if not data_partition:
+            return True, "Could not find a data partition in '{}'.\nIs it a valid Metroid Prime 2 ISO?".format(input_file)
+
+        context = nod.ExtractionContext()
+        context.set_progress_callback(progress_callback)
+        return True, data_partition.extract_to_directory(output_directory, context)
+
+    status_queue.put_nowait(_helper())
+
+
 class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
     current_files_location: str
+    _progressBarUpdateSignal = pyqtSignal(int)
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.seed_search_thread = None
+        self._background_thread = None
         self.abort_seed_generation_requested = None
+        self._progressBarUpdateSignal.connect(self.progressBar.setValue)
 
         options = application_options()
 
@@ -62,7 +89,11 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         # ISO Packing
         self.loadIsoButton.clicked.connect(self.load_iso)
         self.packageIsoButton.clicked.connect(self.package_iso)
-        self.progressBar.setHidden(True)
+
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self.generateSeedButton.setEnabled(value)
+        self.loadIsoButton.setEnabled(value)
+        self.packageIsoButton.setEnabled(value)
 
     # File Location
     def prompt_new_files_location(self):
@@ -86,7 +117,10 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         ))
 
     def generate_new_seed(self):
-        self.generateSeedButton.setEnabled(False)
+        if self._background_thread:
+            return
+
+        self.enable_buttons_with_background_tasks(False)
         self.abortGenerateButton.setEnabled(True)
         self.abort_seed_generation_requested = None
 
@@ -121,12 +155,12 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
                 self.generationStatusLabel.setText(QtCore.QCoreApplication.translate(
                     "ManageGameWindow", "Seed generation aborted."))
 
-            self.generateSeedButton.setEnabled(True)
+            self.enable_buttons_with_background_tasks(True)
             self.abortGenerateButton.setEnabled(False)
 
-        self.seed_search_thread = threading.Thread(target=gui_seed_searcher)
+        self._background_thread = threading.Thread(target=gui_seed_searcher)
         seed_report(0)
-        self.seed_search_thread.start()
+        self._background_thread.start()
 
     def abort_seed_generation(self):
         self.abort_seed_generation_requested = True
@@ -167,7 +201,40 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
     # ISO Packing
     def load_iso(self):
-        QFileDialog.getOpenFileName(self, filter="*.iso")
+        open_result = QFileDialog.getOpenFileName(self, filter="*.iso")
+        if not open_result or open_result == ("", ""):
+            return
+
+        iso, extension = open_result
+        game_files_path = application_options().game_files_path
+        try:
+            os.makedirs(game_files_path, exist_ok=True)
+        except OSError as e:
+            QMessageBox.critical(self, "Randomizer Error", "Unable to create files dir {}:\n{}".format(
+                game_files_path, e))
+            return
+
+        self.enable_buttons_with_background_tasks(False)
+        QApplication.instance().main_window.setEnabled(False)
+        self._progressBarUpdateSignal.emit(0)
+
+        def thread():
+            try:
+                unpack_iso(
+                    iso=iso,
+                    game_files_path=game_files_path,
+                    progress_update=self._progressBarUpdateSignal.emit
+                )
+                self._progressBarUpdateSignal.emit(100)
+            except RuntimeError as e:
+                QMessageBox.warning(self, "File Error", str(e))
+
+            self.enable_buttons_with_background_tasks(True)
+            QApplication.instance().main_window.setEnabled(True)
+            self._background_thread = None
+
+        self._background_thread = threading.Thread(target=thread)
+        self._background_thread.start()
 
     def package_iso(self):
         self.progressBar.setHidden(False)
