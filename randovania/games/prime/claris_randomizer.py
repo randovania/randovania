@@ -18,7 +18,8 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
                seed: int,
                remove_item_loss: bool,
                hud_memo_popup_removal: bool,
-               game_files: str):
+               game_root: str):
+    game_files = os.path.join(game_root, "files")
     validate_game_files_path(game_files)
 
     args = [

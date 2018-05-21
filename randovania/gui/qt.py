@@ -37,6 +37,7 @@ def run(args):
     app.options.load_from_disk()
 
     main_window = MainWindow()
+    app.main_window = main_window
     main_window.show()
     sys.exit(app.exec_())
 
