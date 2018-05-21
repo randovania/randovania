@@ -187,8 +187,8 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         options.save_to_disk()
 
     # Seed
-    def on_new_seed(self):
-        self.applySeedButton.setEnabled(True)
+    def on_new_seed(self, value):
+        self.applySeedButton.setEnabled(bool(value))
 
     def apply_seed(self):
         options = application_options()
