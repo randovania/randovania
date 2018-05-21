@@ -28,6 +28,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 def run(args):
+    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     app = QApplication(sys.argv)
 
     app.options = Options()
