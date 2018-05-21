@@ -21,10 +21,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         _translate = QtCore.QCoreApplication.translate
 
         self.fileTab = self.manage_game_window.centralWidget
-        self.tabWidget.addTab(self.fileTab, _translate("MainWindow", "Game Management"))
+        self.tabWidget.insertTab(0, self.fileTab, _translate("MainWindow", "Game Management"))
 
         self.configurationTab = self.randomize_window.centralWidget
-        self.tabWidget.addTab(self.configurationTab, _translate("MainWindow", "Configuration"))
+        self.tabWidget.insertTab(1, self.configurationTab, _translate("MainWindow", "Configuration"))
+
+        self.tabWidget.setCurrentIndex(0)
 
 
 def run(args):
