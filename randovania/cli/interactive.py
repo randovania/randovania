@@ -11,9 +11,7 @@ from randovania.resolver.echoes import search_seed, RandomizerConfiguration, Res
 
 
 def interactive_shell(args):
-    data_file_path = os.path.join(get_data_path(), "prime2.bin")
-    with open(data_file_path, "rb") as x:  # type: BinaryIO
-        data = binary_data.decode(x)
+    data = binary_data.decode_default_prime2()
 
     print("""
                      _                       _       

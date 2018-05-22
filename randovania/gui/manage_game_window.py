@@ -15,7 +15,7 @@ from randovania import get_data_path
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import apply_seed
 from randovania.games.prime.iso_packager import unpack_iso
-from randovania.gui import application_options
+from randovania.gui import application_options, lock_application
 from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
 from randovania.interface_common.options import CpuUsage
 from randovania.resolver.echoes import RandomizerConfiguration, ResolverConfiguration, search_seed
@@ -37,7 +37,8 @@ def _disc_extract_process(status_queue, input_file: str, output_directory: str):
         disc, is_wii = result
         data_partition = disc.get_data_partition()
         if not data_partition:
-            return True, "Could not find a data partition in '{}'.\nIs it a valid Metroid Prime 2 ISO?".format(input_file)
+            return True, "Could not find a data partition in '{}'.\nIs it a valid Metroid Prime 2 ISO?".format(
+                input_file)
 
         context = nod.ExtractionContext()
         context.set_progress_callback(progress_callback)
@@ -49,6 +50,8 @@ def _disc_extract_process(status_queue, input_file: str, output_directory: str):
 class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
     current_files_location: str
     _progressBarUpdateSignal = pyqtSignal(int)
+    _backgroundTasksButtonLockSignal = pyqtSignal(bool)
+    _fullApplicationLockSignal = pyqtSignal(bool)
 
     def __init__(self):
         super().__init__()
@@ -56,6 +59,8 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         self._background_thread = None
         self.abort_seed_generation_requested = None
         self._progressBarUpdateSignal.connect(self.progressBar.setValue)
+        self._backgroundTasksButtonLockSignal.connect(self.enable_buttons_with_background_tasks)
+        self._fullApplicationLockSignal.connect(lock_application)
 
         options = application_options()
 
@@ -135,9 +140,7 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
                 raise AbortGeneration()
 
         def gui_seed_searcher():
-            data_file_path = os.path.join(get_data_path(), "prime2.bin")
-            with open(data_file_path, "rb") as x:  # type: BinaryIO
-                data = binary_data.decode(x)
+            data = binary_data.decode_default_prime2()
 
             try:
                 seed, seed_count = search_seed(data=data,
@@ -207,34 +210,29 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
         iso, extension = open_result
         game_files_path = application_options().game_files_path
-        try:
-            os.makedirs(game_files_path, exist_ok=True)
-        except OSError as e:
-            QMessageBox.critical(self, "Randomizer Error", "Unable to create files dir {}:\n{}".format(
-                game_files_path, e))
-            return
 
-        self.enable_buttons_with_background_tasks(False)
-        QApplication.instance().main_window.setEnabled(False)
         self._progressBarUpdateSignal.emit(0)
-
-        def thread():
-            try:
-                unpack_iso(
-                    iso=iso,
-                    game_files_path=game_files_path,
-                    progress_update=self._progressBarUpdateSignal.emit
-                )
-                self._progressBarUpdateSignal.emit(100)
-            except RuntimeError as e:
-                QMessageBox.warning(self, "File Error", str(e))
-
-            self.enable_buttons_with_background_tasks(True)
-            QApplication.instance().main_window.setEnabled(True)
-            self._background_thread = None
-
-        self._background_thread = threading.Thread(target=thread)
-        self._background_thread.start()
+        self.run_in_background_thread(
+            unpack_iso,
+            kwargs={
+                "iso": iso,
+                "game_files_path": game_files_path,
+                "progress_update": self._progressBarUpdateSignal.emit
+            }
+        )
 
     def package_iso(self):
-        self.progressBar.setHidden(False)
+        QMessageBox.warning(self, "Sorry", "Not yet implemented")
+
+    def run_in_background_thread(self, target, args=(), kwargs=None):
+        def thread(*_args, **_kwargs):
+            try:
+                target(*_args, **_kwargs)
+            except RuntimeError as e:
+                QMessageBox.warning(self, "File Error", str(e))
+            self._fullApplicationLockSignal.emit(True)
+            self._background_thread = None
+
+        self._fullApplicationLockSignal.emit(False)
+        self._background_thread = threading.Thread(target=thread, args=args, kwargs=kwargs)
+        self._background_thread.start()
