@@ -1,24 +1,20 @@
-import threading
-from typing import Optional, BinaryIO
-
 import multiprocessing
-
-import os
+import threading
+from typing import Optional
 
 import nod
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QApplication
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
-from randovania import get_data_path
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import apply_seed
 from randovania.games.prime.iso_packager import unpack_iso
 from randovania.gui import application_options, lock_application
 from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
 from randovania.interface_common.options import CpuUsage
-from randovania.resolver.echoes import RandomizerConfiguration, ResolverConfiguration, search_seed
+from randovania.resolver.echoes import RandomizerConfiguration, search_seed_with_options
 
 
 class AbortGeneration(Exception):
@@ -125,14 +121,8 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         if self._background_thread:
             return
 
-        self.enable_buttons_with_background_tasks(False)
-        self.abortGenerateButton.setEnabled(True)
         self.abort_seed_generation_requested = None
-
         options = application_options()
-        randomizer_config = RandomizerConfiguration.from_options(options)
-        resolver_config = ResolverConfiguration.from_options(options)
-        cpu_count = options.cpu_usage.num_cpu_for_count(multiprocessing.cpu_count())
 
         def seed_report(seed_count: int):
             self.update_num_seeds(seed_count)
@@ -140,14 +130,10 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
                 raise AbortGeneration()
 
         def gui_seed_searcher():
-            data = binary_data.decode_default_prime2()
-
             try:
-                seed, seed_count = search_seed(data=data,
-                                               randomizer_config=randomizer_config,
-                                               resolver_config=resolver_config,
-                                               cpu_count=cpu_count,
-                                               seed_report=seed_report)
+                seed, seed_count = search_seed_with_options(data=binary_data.decode_default_prime2(),
+                                                            options=options,
+                                                            seed_report=seed_report)
 
                 self.generationStatusLabel.setText(QtCore.QCoreApplication.translate(
                     "ManageGameWindow", "Seed '{}' found after %n seed(s).", n=seed_count
@@ -158,12 +144,12 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
                 self.generationStatusLabel.setText(QtCore.QCoreApplication.translate(
                     "ManageGameWindow", "Seed generation aborted."))
 
-            self.enable_buttons_with_background_tasks(True)
-            self.abortGenerateButton.setEnabled(False)
-
-        self._background_thread = threading.Thread(target=gui_seed_searcher)
         seed_report(0)
-        self._background_thread.start()
+        self.run_in_background_thread(
+            gui_seed_searcher,
+            should_lock_application=False,
+            should_lock_background_buttons=True
+        )
 
     def abort_seed_generation(self):
         self.abort_seed_generation_requested = True
@@ -224,15 +210,24 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
     def package_iso(self):
         QMessageBox.warning(self, "Sorry", "Not yet implemented")
 
-    def run_in_background_thread(self, target, args=(), kwargs=None):
+    def run_in_background_thread(self, target,
+                                 should_lock_application=True,
+                                 should_lock_background_buttons=False,
+                                 args=(), kwargs=None):
         def thread(*_args, **_kwargs):
             try:
                 target(*_args, **_kwargs)
             except RuntimeError as e:
                 QMessageBox.warning(self, "File Error", str(e))
-            self._fullApplicationLockSignal.emit(True)
+            if should_lock_application:
+                self._fullApplicationLockSignal.emit(True)
+            if should_lock_background_buttons:
+                self._backgroundTasksButtonLockSignal.emit(True)
             self._background_thread = None
 
-        self._fullApplicationLockSignal.emit(False)
+        if should_lock_application:
+            self._fullApplicationLockSignal.emit(False)
+        if should_lock_background_buttons:
+            self._backgroundTasksButtonLockSignal.emit(False)
         self._background_thread = threading.Thread(target=thread, args=args, kwargs=kwargs)
         self._background_thread.start()

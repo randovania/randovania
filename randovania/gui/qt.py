@@ -2,7 +2,7 @@ import sys
 from argparse import ArgumentParser
 
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.manage_game_window import ManageGameWindow
@@ -29,9 +29,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tabWidget.setCurrentIndex(0)
 
 
+def catch_exceptions(t, val, tb):
+    QMessageBox.critical(None,
+                         "An exception was raised",
+                         "An unhandled Exception occurred:\n{}".format(val))
+    old_hook(t, val, tb)
+
+
+old_hook = sys.excepthook
+
+
 def run(args):
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     app = QApplication(sys.argv)
+
+    sys.excepthook = catch_exceptions
 
     app.options = Options()
     app.options.load_from_disk()
