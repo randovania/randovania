@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import apply_seed
-from randovania.games.prime.iso_packager import unpack_iso
+from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui import application_options, lock_application
 from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
 from randovania.interface_common.options import CpuUsage
@@ -48,6 +48,7 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
     _progressBarUpdateSignal = pyqtSignal(int)
     _backgroundTasksButtonLockSignal = pyqtSignal(bool)
     _fullApplicationLockSignal = pyqtSignal(bool)
+    _warningPopupSignal = pyqtSignal(str, str)
 
     def __init__(self):
         super().__init__()
@@ -57,6 +58,7 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         self._progressBarUpdateSignal.connect(self.progressBar.setValue)
         self._backgroundTasksButtonLockSignal.connect(self.enable_buttons_with_background_tasks)
         self._fullApplicationLockSignal.connect(lock_application)
+        self._warningPopupSignal.connect(self.show_warning_popup)
 
         options = application_options()
 
@@ -95,6 +97,9 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         self.generateSeedButton.setEnabled(value)
         self.loadIsoButton.setEnabled(value)
         self.packageIsoButton.setEnabled(value)
+
+    def show_warning_popup(self, title: str, message: str):
+        QMessageBox.warning(self, title, message)
 
     # File Location
     def prompt_new_files_location(self):
@@ -208,7 +213,22 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         )
 
     def package_iso(self):
-        QMessageBox.warning(self, "Sorry", "Not yet implemented")
+        open_result = QFileDialog.getSaveFileName(self, filter="*.iso")
+        if not open_result or open_result == ("", ""):
+            return
+
+        iso, extension = open_result
+        game_files_path = application_options().game_files_path
+
+        self._progressBarUpdateSignal.emit(0)
+        self.run_in_background_thread(
+            pack_iso,
+            kwargs={
+                "iso": iso,
+                "game_files_path": game_files_path,
+                "progress_update": self._progressBarUpdateSignal.emit
+            }
+        )
 
     def run_in_background_thread(self, target,
                                  should_lock_application=True,
@@ -218,12 +238,13 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
             try:
                 target(*_args, **_kwargs)
             except RuntimeError as e:
-                QMessageBox.warning(self, "File Error", str(e))
-            if should_lock_application:
-                self._fullApplicationLockSignal.emit(True)
-            if should_lock_background_buttons:
-                self._backgroundTasksButtonLockSignal.emit(True)
-            self._background_thread = None
+                self._warningPopupSignal.emit("File Error", str(e))
+            finally:
+                if should_lock_application:
+                    self._fullApplicationLockSignal.emit(True)
+                if should_lock_background_buttons:
+                    self._backgroundTasksButtonLockSignal.emit(True)
+                self._background_thread = None
 
         if should_lock_application:
             self._fullApplicationLockSignal.emit(False)
