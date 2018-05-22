@@ -2,6 +2,7 @@ import multiprocessing
 from typing import Callable
 
 import nod
+import os
 
 
 def _disc_extract_process(status_queue, input_file: str, output_directory: str):
@@ -27,6 +28,12 @@ def _disc_extract_process(status_queue, input_file: str, output_directory: str):
 
 
 def unpack_iso(iso: str, game_files_path: str, progress_update: Callable[[int], None]):
+    try:
+        os.makedirs(game_files_path, exist_ok=True)
+    except OSError as e:
+        raise RuntimeError("Unable to create files dir {}:\n{}".format(
+            game_files_path, e))
+
     output_queue = multiprocessing.Queue()
 
     process = multiprocessing.Process(
@@ -43,3 +50,5 @@ def unpack_iso(iso: str, game_files_path: str, progress_update: Callable[[int], 
 
     if isinstance(message, str):
         raise RuntimeError(message)
+
+    progress_update(100)

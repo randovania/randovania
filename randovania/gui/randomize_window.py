@@ -33,9 +33,7 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         self.setupUi(self)
         self._on_bulk_change = False
 
-        data_file_path = os.path.join(get_data_path(), "prime2.bin")
-        with open(data_file_path, "rb") as x:  # type: BinaryIO
-            data = binary_data.decode(x)
+        data = binary_data.decode_default_prime2()
         self.resource_database = read_resource_database(data["resource_database"])
         self.original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
 
