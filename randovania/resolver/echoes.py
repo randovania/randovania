@@ -137,3 +137,19 @@ def search_seed(data: Dict,
         process.terminate()
 
     return seed, seed_count
+
+
+def search_seed_with_options(data: Dict,
+                             options: Options,
+                             seed_report: Callable[[int], None],
+                             start_on_seed: Optional[int] = None) -> Tuple[int, int]:
+
+    randomizer_config = RandomizerConfiguration.from_options(options)
+    resolver_config = ResolverConfiguration.from_options(options)
+    cpu_count = options.cpu_usage.num_cpu_for_count(multiprocessing.cpu_count())
+    return search_seed(data=data,
+                       randomizer_config=randomizer_config,
+                       resolver_config=resolver_config,
+                       cpu_count=cpu_count,
+                       seed_report=seed_report,
+                       start_on_seed=start_on_seed)
