@@ -1,8 +1,10 @@
 import multiprocessing
+import os
 from typing import Callable
 
 import nod
-import os
+
+from randovania.interface_common.options import validate_game_files_path
 
 
 def _disc_extract_process(status_queue, input_file: str, output_directory: str):
@@ -50,5 +52,23 @@ def unpack_iso(iso: str, game_files_path: str, progress_update: Callable[[int], 
 
     if isinstance(message, str):
         raise RuntimeError(message)
+
+    progress_update(100)
+
+
+def pack_iso(iso: str, game_files_path: str, progress_update: Callable[[int], None]):
+    validate_game_files_path(os.path.join(game_files_path, "files"))
+
+    if nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) == -1:
+        raise RuntimeError("Image built with given directory would pass the maximum size.")
+
+    def fprogress_callback(progress: float, name: str, bytes: int):
+        progress_update(int(progress * 100))
+
+    disc_builder = nod.DiscBuilderGCN(iso, fprogress_callback)
+    ret = disc_builder.build_from_directory(game_files_path)
+
+    if ret != nod.BuildResult.Success:
+        raise RuntimeError("Failure building the image: code {}".format(ret))
 
     progress_update(100)
