@@ -36,4 +36,4 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
         args.append("-v")
 
     print("Running the Randomizer with: ", args)
-    subprocess.run(args, check=True)
+    subprocess.run(args, shell=True, check=True)
