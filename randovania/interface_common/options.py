@@ -8,6 +8,8 @@ from typing import List, Dict, Any, Set, Iterable, Optional
 import py
 from appdirs import AppDirs
 
+from randovania.games.prime import binary_data
+from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.game_description import SimpleResourceInfo
 
 dirs = AppDirs("Randovania", False)
@@ -39,7 +41,7 @@ class Options:
 
     def load_from_disk(self):
         try:
-            with open(os.path.expanduser("~/.config/randovania.json")) as options_file:
+            with open(os.path.join(dirs.user_data_dir, "config.json")) as options_file:
                 new_options = json.load(options_file)["options"]
 
             for option_name in self.raw_data.keys():
@@ -50,9 +52,9 @@ class Options:
             pass
 
     def save_to_disk(self):
-        config_folder = py.path.local(os.path.expanduser("~/.config"))
+        config_folder = py.path.local(dirs.user_data_dir)
         config_folder.ensure_dir()
-        with config_folder.join("randovania.json").open("w") as options_file:
+        with config_folder.join("config.json").open("w") as options_file:
             json.dump({
                 "version": 1,
                 "options": self.raw_data
@@ -156,7 +158,10 @@ def _default_options() -> Dict[str, Any]:
     options["max_difficulty"] = 3
     options["min_difficulty"] = 0
     options["item_loss_enabled"] = False
-    options["enabled_tricks"] = []
+    options["enabled_tricks"] = [
+        trick.index
+        for trick in read_resource_database(binary_data.decode_default_prime2()["resource_database"]).trick
+    ]
     options["excluded_pickups"] = []
     options["randomize_elevators"] = False
     options["hud_memo_popup_removal"] = True
