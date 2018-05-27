@@ -1,6 +1,9 @@
 from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Dict
 
+import os
+
+from randovania import get_data_path
 from randovania.binary_file import BinarySource, BinaryWriter
 
 X = TypeVar('X')
@@ -329,3 +332,9 @@ def encode(data: Dict, x: BinaryIO):
         write_array(_writer, item["areas"], write_area)
 
     write_array(writer, data["worlds"], write_world)
+
+
+def decode_default_prime2():
+    data_file_path = os.path.join(get_data_path(), "prime2.bin")
+    with open(data_file_path, "rb") as x:  # type: BinaryIO
+        return decode(x)
