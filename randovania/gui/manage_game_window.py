@@ -89,9 +89,11 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
                                  starting_message: str,
                                  kwargs=None):
         def status_update(message: str, progress: int):
-            self._progressUpdateSignal.emit(message, progress)
             if self.abort_background_task_requested:
+                self._progressUpdateSignal.emit("{} - Aborted".format(message), progress)
                 raise AbortBackgroundTask()
+            else:
+                self._progressUpdateSignal.emit(message, progress)
 
         def thread(**_kwargs):
             try:
