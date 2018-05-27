@@ -124,17 +124,18 @@ def search_seed(data: Dict,
 
     for process in process_list:
         process.start()
+    try:
+        while True:
+            seed, valid = output_queue.get()
+            if valid:
+                break
+            else:
+                seed_report(seed_count)
+                input_queue.put_nowait(generate_seed())
 
-    while True:
-        seed, valid = output_queue.get()
-        if valid:
-            break
-        else:
-            seed_report(seed_count)
-            input_queue.put_nowait(generate_seed())
-
-    for process in process_list:
-        process.terminate()
+    finally:
+        for process in process_list:
+            process.terminate()
 
     return seed, seed_count
 

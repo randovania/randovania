@@ -41,9 +41,11 @@ setup(
         'Topic :: Games/Entertainment',
     ],
     install_requires=[
-        'py', 'PyQt5', 'appdirs', 'nod', ],
+        'py', 'PyQt5>=5.8', 'appdirs', 'nod>=1.0.0', ],
     setup_requires=[
-        'pytest', 'markdown', 'PyInstaller', 'pyqt-distutils',
+        'pytest',
+        'PyInstaller',
+        'pyqt-distutils',
         'setuptools>=38.6.0',
         'twine>=1.11.0',
         'wheel>=0.31.0',
