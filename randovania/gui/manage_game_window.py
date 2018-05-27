@@ -1,8 +1,7 @@
 import multiprocessing
 import threading
-from typing import Optional
+from typing import Optional, Callable
 
-import nod
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
@@ -11,54 +10,38 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import apply_seed
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
-from randovania.gui import application_options, lock_application
+from randovania.gui import application_options
 from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
 from randovania.interface_common.options import CpuUsage
 from randovania.resolver.echoes import RandomizerConfiguration, search_seed_with_options
 
 
-class AbortGeneration(Exception):
+class AbortBackgroundTask(Exception):
     pass
 
 
-def _disc_extract_process(status_queue, input_file: str, output_directory: str):
-    def progress_callback(path, progress):
-        status_queue.put_nowait((False, int(progress * 100)))
-
-    def _helper():
-        result = nod.open_disc_from_image(input_file)
-        if not result:
-            return True, "Could not open file '{}'".format(input_file)
-
-        disc, is_wii = result
-        data_partition = disc.get_data_partition()
-        if not data_partition:
-            return True, "Could not find a data partition in '{}'.\nIs it a valid Metroid Prime 2 ISO?".format(
-                input_file)
-
-        context = nod.ExtractionContext()
-        context.set_progress_callback(progress_callback)
-        return True, data_partition.extract_to_directory(output_directory, context)
-
-    status_queue.put_nowait(_helper())
+def _translate(message, n=None):
+    return QtCore.QCoreApplication.translate(
+        "ManageGameWindow", message, n=n
+    )
 
 
 class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
     current_files_location: str
-    _progressBarUpdateSignal = pyqtSignal(int)
+    _progressUpdateSignal = pyqtSignal(str, int)
     _backgroundTasksButtonLockSignal = pyqtSignal(bool)
-    _fullApplicationLockSignal = pyqtSignal(bool)
-    _warningPopupSignal = pyqtSignal(str, str)
+    _background_thread: threading.Thread
+    abort_background_task_requested: bool = False
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self._background_thread = None
-        self.abort_seed_generation_requested = None
-        self._progressBarUpdateSignal.connect(self.progressBar.setValue)
         self._backgroundTasksButtonLockSignal.connect(self.enable_buttons_with_background_tasks)
-        self._fullApplicationLockSignal.connect(lock_application)
-        self._warningPopupSignal.connect(self.show_warning_popup)
+
+        # Progress
+        self._progressUpdateSignal.connect(self.update_progress)
+        self.stopBackgroundProcessButton.clicked.connect(self.stop_background_process)
 
         options = application_options()
 
@@ -69,7 +52,6 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
         # Seed Generation
         self.generateSeedButton.clicked.connect(self.generate_new_seed)
-        self.abortGenerateButton.clicked.connect(self.abort_seed_generation)
 
         # CPU Usage
         self.options_by_cpu_usage = {
@@ -95,15 +77,48 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.generateSeedButton.setEnabled(value)
+        self.stopBackgroundProcessButton.setEnabled(not value)
         self.loadIsoButton.setEnabled(value)
         self.packageIsoButton.setEnabled(value)
 
-    def show_warning_popup(self, title: str, message: str):
-        QMessageBox.warning(self, title, message)
+    def stop_background_process(self):
+        self.abort_background_task_requested = True
+
+    def run_in_background_thread(self,
+                                 target,
+                                 starting_message: str,
+                                 kwargs=None):
+        def status_update(message: str, progress: int):
+            self._progressUpdateSignal.emit(message, progress)
+            if self.abort_background_task_requested:
+                raise AbortBackgroundTask()
+
+        def thread(**_kwargs):
+            try:
+                target(status_update=status_update, **_kwargs)
+            except AbortBackgroundTask:
+                pass
+            except RuntimeError as e:
+                status_update("Error: {}".format(e), -1)
+            finally:
+                self._backgroundTasksButtonLockSignal.emit(True)
+                self._background_thread = None
+
+        if self._background_thread:
+            raise RuntimeError("Trying to start a new background thread while one exists already.")
+        self.abort_background_task_requested = False
+        status_update(starting_message, 0)
+        self._backgroundTasksButtonLockSignal.emit(False)
+        self._background_thread = threading.Thread(target=thread, kwargs=kwargs)
+        self._background_thread.start()
+
+    def closeEvent(self, event):
+        self.abort_background_task_requested = True
+        super().closeEvent(event)
 
     # File Location
     def prompt_new_files_location(self):
-        result = QFileDialog.getExistingDirectory()
+        result = QFileDialog.getExistingDirectory(directory=application_options().game_files_path)
         if result:
             self.set_current_files_location(result)
 
@@ -117,47 +132,27 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         self.set_current_files_location(None)
 
     # Seed Generation
-    def update_num_seeds(self, seed_count: int):
-        self.generationStatusLabel.setText(QtCore.QCoreApplication.translate(
-            "ManageGameWindow", "Generating %n seed(s) so far...", n=seed_count
-        ))
-
     def generate_new_seed(self):
-        if self._background_thread:
-            return
-
-        self.abort_seed_generation_requested = None
         options = application_options()
 
-        def seed_report(seed_count: int):
-            self.update_num_seeds(seed_count)
-            if self.abort_seed_generation_requested:
-                raise AbortGeneration()
+        def gui_seed_searcher(status_update: Callable[[str, int], None]):
+            def seed_report(seed_count: int):
+                status_update(_translate("Generating %n seed(s) so far...", n=seed_count),
+                              -1)
 
-        def gui_seed_searcher():
-            try:
-                seed, seed_count = search_seed_with_options(data=binary_data.decode_default_prime2(),
-                                                            options=options,
-                                                            seed_report=seed_report)
+            seed, final_seed_count = search_seed_with_options(data=binary_data.decode_default_prime2(),
+                                                              options=options,
+                                                              seed_report=seed_report)
+            status_update(
+                _translate("Seed '{}' found after %n seed(s).", n=final_seed_count).format(seed),
+                100
+            )
+            self.currentSeedEdit.setText(str(seed))
 
-                self.generationStatusLabel.setText(QtCore.QCoreApplication.translate(
-                    "ManageGameWindow", "Seed '{}' found after %n seed(s).", n=seed_count
-                ).format(seed))
-                self.currentSeedEdit.setText(str(seed))
-
-            except AbortGeneration:
-                self.generationStatusLabel.setText(QtCore.QCoreApplication.translate(
-                    "ManageGameWindow", "Seed generation aborted."))
-
-        seed_report(0)
         self.run_in_background_thread(
             gui_seed_searcher,
-            should_lock_application=False,
-            should_lock_background_buttons=True
+            _translate("Generating %n seed(s) so far...", n=0)
         )
-
-    def abort_seed_generation(self):
-        self.abort_seed_generation_requested = True
 
     # CPU Usage
     def enable_cpu_options_by_cpu_count(self):
@@ -202,15 +197,14 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         iso, extension = open_result
         game_files_path = application_options().game_files_path
 
-        self._progressBarUpdateSignal.emit(0)
-        self.run_in_background_thread(
-            unpack_iso,
-            kwargs={
-                "iso": iso,
-                "game_files_path": game_files_path,
-                "progress_update": self._progressBarUpdateSignal.emit
-            }
-        )
+        def work(status_update):
+            unpack_iso(
+                iso=iso,
+                game_files_path=game_files_path,
+                progress_update=status_update,
+            )
+
+        self.run_in_background_thread(work, "Will unpack ISO")
 
     def package_iso(self):
         open_result = QFileDialog.getSaveFileName(self, filter="*.iso")
@@ -220,35 +214,19 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         iso, extension = open_result
         game_files_path = application_options().game_files_path
 
-        self._progressBarUpdateSignal.emit(0)
-        self.run_in_background_thread(
-            pack_iso,
-            kwargs={
-                "iso": iso,
-                "game_files_path": game_files_path,
-                "progress_update": self._progressBarUpdateSignal.emit
-            }
-        )
+        def work(status_update):
+            pack_iso(
+                iso=iso,
+                game_files_path=game_files_path,
+                progress_update=status_update,
+            )
 
-    def run_in_background_thread(self, target,
-                                 should_lock_application=True,
-                                 should_lock_background_buttons=False,
-                                 args=(), kwargs=None):
-        def thread(*_args, **_kwargs):
-            try:
-                target(*_args, **_kwargs)
-            except RuntimeError as e:
-                self._warningPopupSignal.emit("File Error", str(e))
-            finally:
-                if should_lock_application:
-                    self._fullApplicationLockSignal.emit(True)
-                if should_lock_background_buttons:
-                    self._backgroundTasksButtonLockSignal.emit(True)
-                self._background_thread = None
+        self.run_in_background_thread(work, "Will pack ISO")
 
-        if should_lock_application:
-            self._fullApplicationLockSignal.emit(False)
-        if should_lock_background_buttons:
-            self._backgroundTasksButtonLockSignal.emit(False)
-        self._background_thread = threading.Thread(target=thread, args=args, kwargs=kwargs)
-        self._background_thread.start()
+    def update_progress(self, message: str, percentage: int):
+        self.progressLabel.setText(message)
+        if percentage >= 0:
+            self.progressBar.setRange(0, 100)
+            self.progressBar.setValue(percentage)
+        else:
+            self.progressBar.setRange(0, 0)

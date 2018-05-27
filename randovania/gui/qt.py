@@ -28,6 +28,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.tabWidget.setCurrentIndex(0)
 
+    def closeEvent(self, event):
+        self.manage_game_window.closeEvent(event)
+        super().closeEvent(event)
+
 
 def catch_exceptions(t, val, tb):
     QMessageBox.critical(None,

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>562</width>
-    <height>498</height>
+    <width>830</width>
+    <height>607</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,46 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="1" rowspan="2">
+     <widget class="QGroupBox" name="cpuUsageBox">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how many CPU cores the generation will use.&lt;/p&gt;&lt;p&gt;Certain options may be disabled based on the CPU count of your system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="title">
+       <string>CPU Usage</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QRadioButton" name="maxUsageRadio">
+         <property name="text">
+          <string>100% - Fastest, but disrupts all usage</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="highUsageRadio">
+         <property name="text">
+          <string>High - Shouldn't disrupt basic system usage</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="balancedUsageRadio">
+         <property name="text">
+          <string>Balanced - Should have low impact on other applications</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="minialUsageRadio">
+         <property name="text">
+          <string>Minimal - Slowest, but has almost no disruption to usage</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="1" column="0" colspan="2">
      <widget class="QGroupBox" name="filesBox">
       <property name="maximumSize">
@@ -74,7 +114,53 @@
       </layout>
      </widget>
     </item>
-    <item row="4" column="0" colspan="2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to be able to modify the contents of a Metroid Prime 2 ISO, it must be on an extracted format.&lt;/p&gt;&lt;p&gt;By default, Randovania utilizes a system provided application directory but you can customize that.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="seedBox">
+      <property name="title">
+       <string>Seed</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="currentSeedEdit">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="applySeedButton">
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QPushButton" name="generateSeedButton">
+         <property name="text">
+          <string>Generate new Seed</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="3" column="0">
      <widget class="QGroupBox" name="isoBox">
       <property name="maximumSize">
        <size>
@@ -96,7 +182,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="0">
         <widget class="QPushButton" name="packageIsoButton">
          <property name="toolTip">
           <string>Creates an ISO based on the contents of the current files location</string>
@@ -110,37 +196,23 @@
      </widget>
     </item>
     <item row="5" column="0" colspan="2">
-     <widget class="QProgressBar" name="progressBar">
-      <property name="value">
-       <number>0</number>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to be able to modify the contents of a Metroid Prime 2 ISO, it must be on an extracted format.&lt;/p&gt;&lt;p&gt;By default, Randovania utilizes a system provided application directory but you can customize that.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
      <widget class="QGroupBox" name="seedGenerationBox">
       <property name="title">
-       <string>Seed Generation</string>
+       <string>Progress</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="generateSeedButton">
-         <property name="text">
-          <string>Generate new Seed</string>
+       <item row="0" column="0" colspan="2">
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value">
+          <number>0</number>
+         </property>
+         <property name="invertedAppearance">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="abortGenerateButton">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="stopBackgroundProcessButton">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -155,73 +227,19 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QLabel" name="generationStatusLabel">
+       <item row="1" column="1">
+        <widget class="QLabel" name="progressLabel">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QGroupBox" name="seedBox">
-      <property name="title">
-       <string>Seed</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLineEdit" name="currentSeedEdit">
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="applySeedButton">
-         <property name="text">
-          <string>Apply</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="1" rowspan="2">
-     <widget class="QGroupBox" name="cpuUsageBox">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how many CPU cores the generation will use.&lt;/p&gt;&lt;p&gt;Certain options may be disabled based on the CPU count of your system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="title">
-       <string>CPU Usage</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QRadioButton" name="maxUsageRadio">
-         <property name="text">
-          <string>100% - Fastest, but disrupts all usage</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="highUsageRadio">
-         <property name="text">
-          <string>High - Shouldn't disrupt basic system usage</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="balancedUsageRadio">
-         <property name="text">
-          <string>Balanced - Should have low impact on other applications</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="minialUsageRadio">
-         <property name="text">
-          <string>Minimal - Slowest, but has almost no disruption to usage</string>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -235,7 +253,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>562</width>
+     <width>830</width>
      <height>21</height>
     </rect>
    </property>
