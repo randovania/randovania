@@ -30,7 +30,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if preview:
             self.dataEditorTab = self.data_editor_window.centralWidget
-            self.tabWidget.insertTab(3, self.dataEditorTab, _translate("MainWindow", "Data Editor"))
+            self.tabWidget.insertTab(2, self.dataEditorTab, _translate("MainWindow", "Data Editor"))
 
         self.tabWidget.setCurrentIndex(0)
 
