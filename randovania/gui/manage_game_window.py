@@ -1,4 +1,6 @@
 import multiprocessing
+import os
+import shutil
 import threading
 from typing import Optional, Callable
 
@@ -49,6 +51,7 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
         self.filesLocation.setText(options.game_files_path)
         self.changeFilesLocationButton.clicked.connect(self.prompt_new_files_location)
         self.resetFilesLocationButton.clicked.connect(self.reset_files_location)
+        self.deleteFilesButton.clicked.connect(self.delete_files_location)
 
         # Seed Generation
         self.generateSeedButton.clicked.connect(self.generate_new_seed)
@@ -132,6 +135,11 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
     def reset_files_location(self):
         self.set_current_files_location(None)
+
+    def delete_files_location(self):
+        game_files_path = application_options().game_files_path
+        if os.path.exists(game_files_path):
+            shutil.rmtree(game_files_path)
 
     # Seed Generation
     def generate_new_seed(self):
