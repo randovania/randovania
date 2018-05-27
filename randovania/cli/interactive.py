@@ -1,51 +1,17 @@
+import multiprocessing
 import os
-import subprocess
 from argparse import ArgumentParser
 from typing import BinaryIO
 
 from randovania import get_data_path
 from randovania.games.prime import binary_data
-from randovania.interface_common.options import load_options_to, save_options, value_parsers, default_options, \
-    options_validation
+from randovania.games.prime.claris_randomizer import has_randomizer_binary, apply_seed
+from randovania.interface_common.options import value_parsers, options_validation, Options
 from randovania.resolver.echoes import search_seed, RandomizerConfiguration, ResolverConfiguration
 
 
-def has_randomizer_binary():
-    return os.path.isfile("Randomizer.exe")
-
-
-def apply_seed(randomizer_config: RandomizerConfiguration,
-               seed: int,
-               item_loss: bool,
-               hud_memo_popup_removal: bool,
-               game_files: str):
-
-    if not os.path.isdir(game_files):
-        print("Cannot apply seed: '{}' is not a dir.".format(game_files))
-        print("Enter the path to the game:")
-        game_files = input("> ")
-
-    args = [
-        "Randomizer.exe",
-        game_files,
-        "-s", str(seed),
-        "-e", ",".join(str(pickup) for pickup in randomizer_config.exclude_pickups) or "none",
-    ]
-    if not item_loss:
-        args.append("-i")
-    if hud_memo_popup_removal:
-        args.append("-h")
-    if randomizer_config.randomize_elevators:
-        args.append("-v")
-
-    print("Running the Randomizer with: ", args)
-    subprocess.run(args, check=True)
-
-
 def interactive_shell(args):
-    data_file_path = os.path.join(get_data_path(), "prime2.bin")
-    with open(data_file_path, "rb") as x:  # type: BinaryIO
-        data = binary_data.decode(x)
+    data = binary_data.decode_default_prime2()
 
     print("""
                      _                       _       
@@ -60,8 +26,8 @@ def interactive_shell(args):
 """)
 
     parsing_commands = True
-    options = default_options()
-    load_options_to(options)
+    options = Options()
+    options.load_from_disk()
 
     def print_config():
         print("        === Current configuration ===")
@@ -72,23 +38,26 @@ def interactive_shell(args):
 
     def change_option(key, value):
         options[key] = value
-        save_options(options)
+        options.save_to_disk()
 
     def quit_shell():
         raise SystemExit(0)
 
     def generate():
-        randomizer_config = RandomizerConfiguration(options["excluded_pickups"], options["randomize_elevators"])
-        resolver_config = ResolverConfiguration(options["max_difficulty"],
-                                                options["min_difficulty"],
-                                                options["tricks_enabled"],
-                                                options["item_loss_enabled"])
+        randomizer_config = RandomizerConfiguration.from_options(options)
+        resolver_config = ResolverConfiguration.from_options(options)
+        cpu_count = options.cpu_usage.num_cpu_for_count(multiprocessing.cpu_count())
 
-        print("\n== Will now search for a seed!")
+        print("\n== Will now search for a seed with {} cpu cores!".format(cpu_count))
         print_config()
         print("\n* This may take a while, and your computer may not respond correctly while running.")
 
-        seed, seed_count = search_seed(data, randomizer_config, resolver_config)
+        def seed_report(seed_count_so_far: int):
+            if seed_count_so_far % (100 * cpu_count) == 0:
+                print("Total seed count so far: {}".format(seed_count_so_far))
+
+        seed, seed_count = search_seed(data, randomizer_config, resolver_config, cpu_count=cpu_count,
+                                       seed_report=seed_report)
         print("A seed was found with the given configuration after {} attempts.".format(seed_count))
         print("\n=== Seed: {}".format(seed))
         change_option("seed", seed)
@@ -104,9 +73,9 @@ def interactive_shell(args):
             print("game_files_path is not set, no game to randomize.")
             return
 
-        randomizer_config = RandomizerConfiguration(options["excluded_pickups"], options["randomize_elevators"])
-        apply_seed(randomizer_config, options["seed"],
-                   options["item_loss_enabled"], options["hud_memo_popup_removal"], options["game_files_path"])
+        apply_seed(RandomizerConfiguration.from_options(options),
+                   options["seed"],
+                   options.remove_item_loss, options.hud_memo_popup_removal, options.game_files_path)
 
     commands = {
         "view_config": print_config,
@@ -144,7 +113,7 @@ def interactive_shell(args):
             quit_shell()
         first_part = command[0]
 
-        if first_part in options:
+        if first_part in options.keys():
             try:
                 the_value = value_parsers[type(options[first_part])](command[1])
                 if first_part in options_validation:

@@ -20,10 +20,10 @@ def decode_data_file(args) -> Dict:
 
     data_file_path = args.binary_database
     if data_file_path is None:
-        data_file_path = os.path.join(get_data_path(), "prime2.bin")
-
-    with open(data_file_path, "rb") as x:  # type: BinaryIO
-        return binary_data.decode(x)
+        return binary_data.decode_default_prime2()
+    else:
+        with open(data_file_path, "rb") as x:  # type: BinaryIO
+            return binary_data.decode(x)
 
 
 def add_data_file_argument(parser: ArgumentParser):
