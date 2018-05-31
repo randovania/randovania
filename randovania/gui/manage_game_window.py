@@ -191,12 +191,25 @@ class ManageGameWindow(QMainWindow, Ui_ManageGameWindow):
 
     def apply_seed(self):
         options = application_options()
-        try:
-            apply_seed(RandomizerConfiguration.from_options(options),
-                       int(self.currentSeedEdit.text()),
-                       options.remove_item_loss, options.hud_memo_popup_removal, options.game_files_path)
-        except Exception as e:
-            QMessageBox.critical(self, "Randomizer Error", "Error calling Randomizer.exe:\n{}".format(e))
+
+        def gui_seed_searcher(status_update: Callable[[str, int], None]):
+            def randomizer_update(message: str):
+                if message == "Randomized!":
+                    status_update(message, 100)
+                else:
+                    status_update(message, -1)
+
+            apply_seed(randomizer_config=RandomizerConfiguration.from_options(options),
+                       seed=int(self.currentSeedEdit.text()),
+                       remove_item_loss=options.remove_item_loss,
+                       hud_memo_popup_removal=options.hud_memo_popup_removal,
+                       game_root=options.game_files_path,
+                       status_update=randomizer_update)
+
+        self.run_in_background_thread(
+            gui_seed_searcher,
+            _translate("Generating %n seed(s) so far...", n=0)
+        )
 
     # ISO Packing
     def load_iso(self):

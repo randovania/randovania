@@ -73,9 +73,12 @@ def interactive_shell(args):
             print("game_files_path is not set, no game to randomize.")
             return
 
-        apply_seed(RandomizerConfiguration.from_options(options),
-                   options["seed"],
-                   options.remove_item_loss, options.hud_memo_popup_removal, options.game_files_path)
+        apply_seed(randomizer_config=RandomizerConfiguration.from_options(options),
+                   seed=options["seed"],
+                   remove_item_loss=options.remove_item_loss,
+                   hud_memo_popup_removal=options.hud_memo_popup_removal,
+                   game_root=options.game_files_path,
+                   status_update=lambda x: print(x))
 
     commands = {
         "view_config": print_config,

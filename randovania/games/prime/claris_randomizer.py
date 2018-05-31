@@ -1,5 +1,6 @@
 import os
 import subprocess
+from typing import Callable
 
 from randovania import get_data_path
 from randovania.interface_common.options import validate_game_files_path
@@ -18,7 +19,8 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
                seed: int,
                remove_item_loss: bool,
                hud_memo_popup_removal: bool,
-               game_root: str):
+               game_root: str,
+               status_update: Callable[[str], None]):
     game_files = os.path.join(game_root, "files")
     validate_game_files_path(game_files)
 
@@ -36,4 +38,15 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
         args.append("-v")
 
     print("Running the Randomizer with: ", args)
-    subprocess.run(args, shell=True, check=True)
+    finished_updates = False
+    with subprocess.Popen(args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
+        try:
+            for line in process.stdout:
+                x = line.strip()
+                if x and not finished_updates:
+                    status_update(x)
+                    finished_updates = x == "Randomized!"
+        except Exception:
+            process.kill()
+            raise
+
