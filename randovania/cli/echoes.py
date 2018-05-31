@@ -19,7 +19,7 @@ def build_resolver_configuration(args):
     return ResolverConfiguration(
         args.difficulty,
         args.minimum_difficulty,
-        args.tricks,
+        set(),
         not args.skip_item_loss
     )
 
