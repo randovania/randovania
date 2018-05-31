@@ -48,15 +48,7 @@ def add_resolver_config_arguments(parser):
         dest="tricks",
         default=True,
         help=
-        "Enable trick usage in the validation. "
-        "Currently, there's no way to control which individual tricks gets enabled."
-    )
-    group.add_argument(
-        "--disable-tricks",
-        action="store_false",
-        dest="tricks",
-        default=True,
-        help="Disable all tricks."
+        "Enable trick usage in the validation. This is always on. Use the GUI otherwise."
     )
 
     parser.add_argument(

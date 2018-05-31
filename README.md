@@ -14,12 +14,7 @@ With a Python 3.6 installation:
 
 `python3 -m pip install --upgrade randovania`
  
-## Usage
-
-`randovania interactive`
-
-This will open an interactive shell where you can generate a seed.
-The included `interactive_randovania.bat` is a shortcut for this.
+## Command Line Usage
 
 `randovania echoes validate path/to/randomizer.log`
 
@@ -51,7 +46,7 @@ exclusion list. (The default for this operation is _no_ exclusions.)
 
 ## Limitations
 
-* There's no way to choose each trick individually.
+* There's no way to choose each trick individually via CLI.
 * The data set does not include out of bounds movement.
 * Dark World damage requirements, while mapped, are not verified.
 * Opening Blast Shield doors from a side does not consider the other side
