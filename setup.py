@@ -1,6 +1,7 @@
 from pyqt_distutils.build_ui import build_ui
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
+
 from randovania import VERSION
 
 
@@ -41,8 +42,13 @@ setup(
         'Topic :: Games/Entertainment',
     ],
     install_requires=[
-        'py', 'PyQt5>=5.8', 'appdirs', 'nod>=1.0.0', ],
+        'py',
+        'PyQt5>=5.8',
+        'appdirs',
+        'nod>=1.0.0'
+    ],
     setup_requires=[
+        'markdown',
         'pytest',
         'PyInstaller',
         'pyqt-distutils',
