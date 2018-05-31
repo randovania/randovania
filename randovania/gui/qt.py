@@ -58,7 +58,7 @@ def run(args):
     app.options = Options()
     app.options.load_from_disk()
 
-    main_window = MainWindow(args.preview)
+    main_window = MainWindow(getattr(args, "preview", False))
     app.main_window = main_window
     main_window.show()
     sys.exit(app.exec_())
