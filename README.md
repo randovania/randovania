@@ -64,6 +64,6 @@ See `randovania --help`.
 
 ## Credits
 
-Many thanks to [Claris Robyn](https://www.twitch.tv/clarisrobyn) for
+Many thanks to [Claris](https://www.twitch.tv/claris) for
 making the Echoes Randomizer and both collecting and providing this
 incredible set of data which powers this validator.
