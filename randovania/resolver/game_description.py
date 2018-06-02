@@ -1,10 +1,9 @@
 """Classes that describes the raw data of a game world."""
+import re
 import typing
 from enum import Enum, unique
 from functools import lru_cache
 from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
-
-import re
 
 
 class SimpleResourceInfo(NamedTuple):
@@ -138,34 +137,51 @@ class PickupDatabase:
     def pickup_name_to_resource_gain(self,
                                      name: str,
                                      database: ResourceDatabase) -> ResourceGain:
+        """Collecting a pickup of a given name implies into gaining multiple resources.
+        :param name: The name of the pickup we're collecting
+        :param database: The database of all resources.
+        :return:
+        """
+
         if name in self.cache:
             return self.cache[name]
 
+        def do_return(value: List[Tuple[ResourceInfo, int]]) -> ResourceGain:
+            self.cache[name] = value
+            return value
+
         item_database = database.get_by_type(ResourceType.ITEM)
+
         result = []
         if name not in self.percent_less_items:
             result.append((database.item_percentage(), 1))
 
         if name in self.direct_name:
+            # This means this pickup gives a resource of the same name.
             for info in item_database:
                 if info.long_name == name:
                     result.append((info, self.direct_name[name]))
-                    self.cache[name] = result
-                    return result
+                    return do_return(result)
+
             raise ValueError("Pickup '{}' not found in database.".format(name))
         else:
+            # Check if we have a regular expression that matches the pickup name
             for pattern, values in self.custom_mapping.items():
                 if re.match(pattern, name):
                     starting_size = len(result)
+
+                    # values is a mapping of resource names it gives on pickup.
                     for info in item_database:
                         if info.long_name in values:
                             result.append((info, values[info.long_name]))
+
+                    # Check if some resource name was unknown
                     if len(result) - starting_size != len(values):
                         raise ValueError(
-                            "Pattern '{}' (matched by '{}') have resource not found in database. Found {}".
-                                format(pattern, name, result))
-                    self.cache[name] = result
-                    return result
+                            "Pattern '{}' (matched by '{}') has resource not found in database. Found {}".format(
+                                pattern, name, result))
+
+                    return do_return(result)
 
         raise ValueError("'{}' is unknown by pickup_database".format(name))
 
@@ -176,12 +192,16 @@ class IndividualRequirement(NamedTuple):
     negate: bool
 
     @classmethod
-    def with_data(cls, database: ResourceDatabase, resource_type: ResourceType,
-                  requirement_index: int, amount: int,
+    def with_data(cls,
+                  database: ResourceDatabase,
+                  resource_type: ResourceType,
+                  requirement_index: int,
+                  amount: int,
                   negate: bool) -> "IndividualRequirement":
         return cls(
             database.get_by_type_and_index(resource_type, requirement_index),
-            amount, negate)
+            amount,
+            negate)
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
@@ -195,8 +215,10 @@ class IndividualRequirement(NamedTuple):
             return has_amount
 
     def __repr__(self):
-        return "{} {} {}".format(self.requirement, "<"
-        if self.negate else ">=", self.amount)
+        return "{} {} {}".format(
+            self.requirement,
+            "<" if self.negate else ">=",
+            self.amount)
 
     def __lt__(self, other: "IndividualRequirement") -> bool:
         return str(self.requirement) < str(other.requirement)
