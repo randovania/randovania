@@ -4,8 +4,8 @@ from typing import Set, Iterator, Tuple, List, Optional
 from randovania.resolver import debug
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
-    RequirementSet, ResourceNode, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources, \
-    ResourceInfo
+    RequirementSet, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources, \
+    ResourceInfo, ResourceNode
 from randovania.resolver.state import State
 
 Reach = List[Node]
@@ -82,12 +82,14 @@ def actions_with_reach(current_reach: Reach,
                        state: State,
                        game: GameDescription) -> Iterator[ResourceNode]:
     for node in current_reach:
-        if isinstance(node, ResourceNode):
-            if not state.has_resource(node.resource):
-                if game.get_additional_requirements(node).satisfied(state.resources):
-                    yield node
-                else:
-                    debug.log_skip_action_missing_requirement(node, game)
+        if not hasattr(node, "resource"):
+            continue
+
+        if not state.has_resource(node.resource(game.resource_database, game.pickup_database)):
+            if game.get_additional_requirements(node).satisfied(state.resources):
+                yield node
+            else:
+                debug.log_skip_action_missing_requirement(node, game)
 
 
 def calculate_satisfiable_actions(state: State,

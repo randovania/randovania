@@ -21,7 +21,7 @@ class State:
     def collect_resource_node(self, node: ResourceNode,
                               resource_database: ResourceDatabase,
                               pickup_database: PickupDatabase) -> "State":
-        resource = node.resource
+        resource = node.resource(resource_database, pickup_database)
 
         if self.has_resource(resource):
             raise ValueError(
@@ -41,9 +41,6 @@ class State:
                     node: ResourceNode,
                     resource_database: ResourceDatabase,
                     pickup_database: PickupDatabase) -> "State":
-        if not isinstance(node, ResourceNode):
-            raise ValueError("Can't act on Node of type {}".format(type(node)))
-
         new_state = self.collect_resource_node(node, resource_database, pickup_database)
         new_state.node = node
         return new_state
