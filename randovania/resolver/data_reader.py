@@ -242,9 +242,9 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
         event for event in resource_database.event
         if event.long_name == "Emperor Ing"
     ][0]
-    victory_condition = RequirementSet(
-        tuple([RequirementList([IndividualRequirement(final_boss, 1, False)])
-               ]))
+    victory_condition = RequirementSet([
+        RequirementList([IndividualRequirement(final_boss, 1, False)])
+    ])
     starting_world_asset_id = 1006255871
     starting_area_asset_id = 1655756413
 
@@ -261,7 +261,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
-                if isinstance(node, PickupNode) or isinstance(node, EventNode):
+                if isinstance(node, (PickupNode, EventNode)):
                     for resource, quantity in node.resource_gain_on_collect(resource_database, pickup_database):
                         available_resources[resource] += quantity
 

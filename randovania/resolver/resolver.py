@@ -74,7 +74,7 @@ def calculate_reach(current_state: State,
 
     if requirements_by_node:
         satisfiable_requirements = frozenset.union(
-            *[RequirementSet(iter(requirements)).merge(game.get_additional_requirements(node)).alternatives
+            *[RequirementSet(requirements).merge(game.get_additional_requirements(node)).alternatives
               for node, requirements in requirements_by_node.items()])
     else:
         satisfiable_requirements = frozenset()
@@ -143,7 +143,7 @@ def advance_depth(state: State, game: GameDescription) -> Optional[State]:
             return new_state
 
     debug.log_rollback(state)
-    game.additional_requirements[state.node] = RequirementSet(satisfiable_requirements.__iter__())
+    game.additional_requirements[state.node] = RequirementSet(satisfiable_requirements)
     # print("> Rollback finished.")
     return None
 
