@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Set, Iterator, Tuple, List, Optional
+from typing import Set, Iterator, Tuple, List, Optional, FrozenSet, Dict
 
 from randovania.resolver import debug
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
@@ -9,7 +9,7 @@ from randovania.resolver.game_description import GameDescription, ResourceType, 
 from randovania.resolver.state import State
 
 Reach = List[Node]
-SatisfiableRequirements = Set[RequirementList]
+SatisfiableRequirements = FrozenSet[RequirementList]
 
 
 def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
@@ -41,8 +41,8 @@ def calculate_reach(current_state: State,
     checked_nodes = set()
     nodes_to_check = [current_state.node]
 
-    reach = []  # type: Reach
-    requirements_by_node = defaultdict(set)
+    reach: Reach = []
+    requirements_by_node: Dict[Node, Set[RequirementList]] = defaultdict(set)
 
     while nodes_to_check:
         node = nodes_to_check.pop()
@@ -55,13 +55,17 @@ def calculate_reach(current_state: State,
             if target_node in checked_nodes or target_node in nodes_to_check:
                 continue
 
+            # Check if the normal requirements to reach that node is satisfied
             satisfied = requirements.satisfied(current_state.resources)
             if satisfied:
+                # If it is, check if we additional requirements figured out by backtracking is satisfied
                 satisfied = game.get_additional_requirements(node).satisfied(current_state.resources)
 
             if satisfied:
                 nodes_to_check.append(target_node)
             elif target_node:
+                # If we can't go to this node, store the reason in order to build the satisfiable requirements.
+                # Note we ignore the 'additional requirements' here because it'll be added on the end.
                 requirements_by_node[target_node].update(requirements.alternatives)
 
     # Discard satisfiable requirements of nodes reachable by other means
@@ -70,7 +74,7 @@ def calculate_reach(current_state: State,
 
     if requirements_by_node:
         satisfiable_requirements = frozenset.union(
-            *[RequirementSet(requirements).merge(game.get_additional_requirements(node)).alternatives
+            *[RequirementSet(iter(requirements)).merge(game.get_additional_requirements(node)).alternatives
               for node, requirements in requirements_by_node.items()])
     else:
         satisfiable_requirements = frozenset()
@@ -97,15 +101,8 @@ def calculate_satisfiable_actions(state: State,
                                   satisfiable_requirements: SatisfiableRequirements,
                                   game: GameDescription) -> Iterator[ResourceNode]:
     if satisfiable_requirements:
-        interesting_resources = set()  # type: Set[ResourceInfo]
-
         # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
-        for requirement in satisfiable_requirements:
-            if not requirement.satisfied(state.resources):
-                for indv in requirement.values():
-                    if indv.requirement not in interesting_resources and not indv.negate and not indv.satisfied(
-                            state.resources):
-                        interesting_resources.add(indv.requirement)
+        interesting_resources = _calculate_interesting_resources(satisfiable_requirements, state)
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action in actions_with_reach(reach, state, game):
@@ -113,6 +110,23 @@ def calculate_satisfiable_actions(state: State,
                 if resource in interesting_resources:
                     yield action
                     break
+
+
+def _calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
+                                     state: State) -> Set[ResourceInfo]:
+    """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList """
+
+    interesting_resources: Set[ResourceInfo] = set()
+
+    for requirement in satisfiable_requirements:
+        # For each possible requirement list
+        if not requirement.satisfied(state.resources):
+            # If it's not yet satisfied
+            for indv in requirement.values():
+                if indv.requirement not in interesting_resources and not indv.negate and not indv.satisfied(
+                        state.resources):
+                    interesting_resources.add(indv.requirement)
+    return interesting_resources
 
 
 def advance_depth(state: State, game: GameDescription) -> Optional[State]:
