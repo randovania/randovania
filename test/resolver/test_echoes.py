@@ -1,8 +1,10 @@
 from unittest.mock import patch, MagicMock, call
 
+import pytest
+
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.resolver import echoes
-from randovania.resolver.echoes import ResolverConfiguration
+from randovania.resolver.echoes import ResolverConfiguration, RandomizerConfiguration
 
 
 @patch("randovania.resolver.resolver.resolve", autospec=True)
@@ -98,3 +100,34 @@ def test_run_resolver_failure_due_to_minimum_difficulty(
              resolver_config.item_loss, mock_decode_data.return_value),
     ])
     mock_decode_data.assert_called_once_with(data, randomizer_log.pickup_database, randomizer_log.elevators)
+
+
+@patch("randovania.resolver.echoes.run_resolver", autospec=True)
+@patch("randovania.games.prime.log_parser.generate_log", autospec=True)
+def test_generate_and_validate(mock_generate_log: MagicMock,
+                               mock_run_resolver: MagicMock):
+    data = MagicMock()
+    randomizer_config = MagicMock(spec=RandomizerConfiguration)
+    resolver_config = MagicMock(spec=ResolverConfiguration)
+    input_queue = MagicMock()
+    output_queue = MagicMock()
+    seed = MagicMock()
+    input_queue.get.side_effect = [seed, None]
+
+    with pytest.raises(RuntimeError) as e:
+        echoes.generate_and_validate(data,
+                                     randomizer_config,
+                                     resolver_config,
+                                     input_queue,
+                                     output_queue)
+        assert e == "generate_and_validate got None from input queue"
+
+    # Asserts
+    mock_generate_log.assert_called_once_with(seed,
+                                              randomizer_config.exclude_pickups,
+                                              randomizer_config.randomize_elevators)
+    mock_run_resolver(data=data,
+                      randomizer_log=mock_generate_log.return_value,
+                      resolver_config=resolver_config,
+                      verbose=False)
+    output_queue.put.assert_called_once_with((seed, mock_run_resolver.return_value))

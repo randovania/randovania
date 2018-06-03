@@ -78,6 +78,8 @@ def generate_and_validate(data: Dict,
                           output_queue: multiprocessing.Queue):
     while True:
         seed = input_queue.get()
+        if seed is None:
+            raise RuntimeError("generate_and_validate got None from input queue")
         randomizer_log = log_parser.generate_log(seed,
                                                  randomizer_config.exclude_pickups,
                                                  randomizer_config.randomize_elevators)
