@@ -108,17 +108,16 @@ def search_seed(data: Dict,
         for _ in range(cpu_count)
     ]
 
-    initial_seed = start_on_seed
-    if initial_seed is None:
-        initial_seed = random.randint(0, 2147483647)
-    seed_count = 0
+    next_seed = start_on_seed
+    if next_seed is None:
+        next_seed = random.randint(0, 2147483647)
 
     def generate_seed():
-        nonlocal seed_count
-        seed_count += 1
-        new_seed = initial_seed + seed_count
-        if new_seed > 2147483647:
-            new_seed -= 2147483647
+        nonlocal next_seed
+        new_seed = next_seed
+        next_seed += 1
+        if next_seed > 2147483647:
+            next_seed -= 2147483647
         return new_seed
 
     for _ in range(cpu_count):
@@ -127,8 +126,10 @@ def search_seed(data: Dict,
     for process in process_list:
         process.start()
     try:
+        seed_count = 0
         while True:
             seed, valid = output_queue.get()
+            seed_count += 1
             if valid:
                 break
             else:
