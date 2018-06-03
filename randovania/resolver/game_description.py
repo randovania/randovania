@@ -434,6 +434,10 @@ ResourceNode = Union[PickupNode, EventNode]
 Node = Union[GenericNode, DockNode, TeleporterNode, ResourceNode]
 
 
+def is_resource_node(node: Node):
+    return isinstance(node, (PickupNode, EventNode))
+
+
 class Area(NamedTuple):
     name: str
     area_asset_id: int

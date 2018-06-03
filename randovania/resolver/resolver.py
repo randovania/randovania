@@ -5,7 +5,7 @@ from randovania.resolver import debug
 from randovania.resolver.game_description import GameDescription, ResourceType, Node, DockNode, \
     TeleporterNode, \
     RequirementSet, resolve_dock_node, resolve_teleporter_node, RequirementList, CurrentResources, \
-    ResourceInfo, ResourceNode
+    ResourceInfo, ResourceNode, is_resource_node
 from randovania.resolver.state import State
 
 Reach = List[Node]
@@ -86,7 +86,7 @@ def actions_with_reach(current_reach: Reach,
                        state: State,
                        game: GameDescription) -> Iterator[ResourceNode]:
     for node in current_reach:
-        if not hasattr(node, "resource"):
+        if not is_resource_node(node):
             continue
 
         if not state.has_resource(node.resource(game.resource_database, game.pickup_database)):

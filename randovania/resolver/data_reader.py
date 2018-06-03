@@ -5,9 +5,9 @@ from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
 from randovania.games.prime.log_parser import Elevator
 from randovania.resolver.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
-    DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, ResourceNode, \
-    GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
-    PickupEntry, EventNode, PickupNode
+    DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, GameDescription, \
+    ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
+    EventNode, PickupNode, is_resource_node
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -174,7 +174,7 @@ class WorldReader:
             connections[nodes[i]] = {}
             extra_requirement = None
 
-            if hasattr(nodes[i], "resource"):
+            if is_resource_node(nodes[i]):
                 extra_requirement = IndividualRequirement(
                     nodes[i].resource(self.resource_database, self.pickup_database),
                     1,
@@ -261,7 +261,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
-                if isinstance(node, (PickupNode, EventNode)):
+                if is_resource_node(node):
                     for resource, quantity in node.resource_gain_on_collect(resource_database, pickup_database):
                         available_resources[resource] += quantity
 
