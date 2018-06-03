@@ -1,6 +1,7 @@
 """Classes that describes the raw data of a game world."""
 import re
 import typing
+from abc import abstractmethod
 from enum import Enum, unique
 from functools import lru_cache
 from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
@@ -391,22 +392,46 @@ class TeleporterNode(NamedTuple):
     teleporter_instance_id: int
 
 
-class ResourceNode(NamedTuple):
+class PickupNode(NamedTuple):
     name: str
     heal: bool
-    resource: ResourceInfo
+    pickup_index: int
+
+    def resource(self,
+                 resource_database: ResourceDatabase,
+                 pickup_database: PickupDatabase
+                 ) -> ResourceInfo:
+        return pickup_database.entries[self.pickup_index]
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
                                  pickup_database: PickupDatabase
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
-        yield self.resource, 1
-        if isinstance(self.resource, PickupEntry):
-            for pickup_resource, quantity in pickup_database.pickup_name_to_resource_gain(
-                    self.resource.item, resource_database):
-                yield pickup_resource, quantity
+        pickup = self.resource(resource_database, pickup_database)
+        yield pickup, 1
+        for resource, quantity in pickup_database.pickup_name_to_resource_gain(pickup.item, resource_database):
+            yield resource, quantity
 
 
+class EventNode(NamedTuple):
+    name: str
+    heal: bool
+    event_index: int
+
+    def resource(self,
+                 resource_database: ResourceDatabase,
+                 pickup_database: PickupDatabase
+                 ) -> ResourceInfo:
+        return resource_database.get_by_type_and_index(ResourceType.EVENT, self.event_index)
+
+    def resource_gain_on_collect(self,
+                                 resource_database: ResourceDatabase,
+                                 pickup_database: PickupDatabase
+                                 ) -> Iterator[Tuple[ResourceInfo, int]]:
+        yield self.resource(resource_database, pickup_database), 1
+
+
+ResourceNode = Union[PickupNode, EventNode]
 Node = Union[GenericNode, DockNode, TeleporterNode, ResourceNode]
 
 

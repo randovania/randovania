@@ -32,7 +32,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         world_reader = WorldReader(resource_database,
                                    dock_weakness_database,
-                                   original_log.pickup_database.entries,
+                                   original_log.pickup_database,
                                    original_log.elevators)
         self.worlds = world_reader.read_world_list(data["worlds"])
 

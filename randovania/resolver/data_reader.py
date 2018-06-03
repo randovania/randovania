@@ -1,13 +1,13 @@
 from collections import defaultdict
 from functools import partial
-from typing import List, Callable, TypeVar, Tuple, Dict
+from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
 
 from randovania.games.prime.log_parser import Elevator
 from randovania.resolver.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, ResourceNode, \
     GameDescription, ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
-    PickupEntry
+    PickupEntry, EventNode, PickupNode
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -106,18 +106,18 @@ def read_dock_weakness_database(data: Dict,
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    pickup_entries: List[PickupEntry]
+    pickup_database: PickupDatabase
     elevators: Dict[int, Elevator]
     generic_index: int = 0
 
     def __init__(self,
                  resource_database: ResourceDatabase,
                  dock_weakness_database: DockWeaknessDatabase,
-                 pickup_entries: List[PickupEntry],
+                 pickup_database: PickupDatabase,
                  elevators: List[Elevator]):
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
-        self.pickup_entries = pickup_entries
+        self.pickup_database = pickup_database
         self.elevators = {
             elevator.instance_id: elevator
             for elevator in elevators
@@ -140,8 +140,7 @@ class WorldReader:
                     DockType(data["dock_type"]), data["dock_weakness_index"]))
 
         elif node_type == 2:
-            return ResourceNode(name, heal,
-                                self.pickup_entries[data["pickup_index"]])
+            return PickupNode(name, heal, data["pickup_index"])
 
         elif node_type == 3:
             instance_id = data["teleporter_instance_id"]
@@ -159,9 +158,7 @@ class WorldReader:
                                   instance_id)
 
         elif node_type == 4:
-            return ResourceNode(name, heal,
-                                self.resource_database.get_by_type_and_index(
-                                    ResourceType.EVENT, data["event_index"]))
+            return EventNode(name, heal, data["event_index"])
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))
@@ -170,21 +167,19 @@ class WorldReader:
         name = data["name"]
         nodes = read_array(data["nodes"], self.read_node)
 
-        for node in nodes:
-            if isinstance(node, ResourceNode) and isinstance(
-                    node.resource, PickupEntry):
-                if node.resource.room != name:
-                    raise ValueError(
-                        "Pickup at {}/{} has area name mismatch ({})".format(
-                            name, node.name, node.resource.room))
+        _validate_pickup_nodes(self.pickup_database, name, nodes)
 
         connections = {}
         for i, origin in enumerate(data["connections"]):
             connections[nodes[i]] = {}
             extra_requirement = None
-            if isinstance(nodes[i], ResourceNode):
+
+            if hasattr(nodes[i], "resource"):
                 extra_requirement = IndividualRequirement(
-                    nodes[i].resource, 1, False)
+                    nodes[i].resource(self.resource_database, self.pickup_database),
+                    1,
+                    False)
+
             for j, target in enumerate(origin):
                 if target:
                     the_set = read_requirement_set(target,
@@ -208,6 +203,16 @@ class WorldReader:
         return read_array(data, self.read_world)
 
 
+def _validate_pickup_nodes(pickup_database: PickupDatabase, name: str, nodes: Iterable[Node]):
+    for node in nodes:
+        if isinstance(node, PickupNode):
+            pickup = pickup_database.entries[node.pickup_index]
+            if pickup.room != name:
+                raise ValueError(
+                    "Pickup at {}/{} has area name mismatch ({})".format(
+                        name, node.name, pickup.room))
+
+
 def read_resource_database(data: Dict) -> ResourceDatabase:
     return ResourceDatabase(
         item=read_resource_info_array(data["items"]),
@@ -228,7 +233,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
 
     world_reader = WorldReader(resource_database,
                                dock_weakness_database,
-                               pickup_database.entries,
+                               pickup_database,
                                elevators)
     worlds = world_reader.read_world_list(data["worlds"])
 
@@ -256,12 +261,9 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
-                if isinstance(node, ResourceNode):
-                    available_resources[node.resource] += 1
-                    if isinstance(node.resource, PickupEntry):
-                        for resource, quantity in pickup_database.pickup_name_to_resource_gain(
-                                node.resource.item, resource_database):
-                            available_resources[resource] += quantity
+                if isinstance(node, PickupNode) or isinstance(node, EventNode):
+                    for resource, quantity in node.resource_gain_on_collect(resource_database, pickup_database):
+                        available_resources[resource] += quantity
 
     # Add the No Requirements
     available_resources[resource_database.impossible_resource()] = 1
