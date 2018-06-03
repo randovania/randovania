@@ -1,7 +1,6 @@
 """Classes that describes the raw data of a game world."""
 import re
 import typing
-from abc import abstractmethod
 from enum import Enum, unique
 from functools import lru_cache
 from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
@@ -255,7 +254,7 @@ class RequirementList(frozenset):
 class RequirementSet:
     alternatives: Set[RequirementList]
 
-    def __init__(self, alternatives: Iterator[RequirementList]):
+    def __init__(self, alternatives: typing.Iterable[RequirementList]):
         input_set = frozenset(alternatives)
         self.alternatives = frozenset(
             requirement
