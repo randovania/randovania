@@ -88,7 +88,7 @@ def actions_with_reach(current_reach: Reach,
         if not is_resource_node(node):
             continue
 
-        if not state.has_resource(node.resource(game.resource_database, game.pickup_database)):
+        if not state.has_resource(node.resource(game.resource_database)):
             if game.get_additional_requirements(node).satisfied(state.resources):
                 yield node
             else:

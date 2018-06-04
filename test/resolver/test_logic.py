@@ -33,7 +33,7 @@ def test_actions_with_reach_with_event():
 
     # Assert
     assert options == [event]
-    event.resource.assert_called_once_with(game.resource_database, game.pickup_database)
+    event.resource.assert_called_once_with(game.resource_database)
     state.has_resource.assert_called_once_with(event.resource.return_value)
     game.get_additional_requirements.assert_called_once_with(event)
     game.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources)

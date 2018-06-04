@@ -21,8 +21,8 @@ class State:
     def collect_resource_node(self, node: ResourceNode,
                               resource_database: ResourceDatabase,
                               pickup_database: PickupDatabase) -> "State":
-        resource = node.resource(resource_database, pickup_database)
 
+        resource = node.resource(resource_database)
         if self.has_resource(resource):
             raise ValueError(
                 "Trying to collect an already collected resource '{}'".format(
@@ -31,8 +31,7 @@ class State:
         new_resources = copy.copy(self.resources)
         for pickup_resource, quantity in node.resource_gain_on_collect(
                 resource_database, pickup_database):
-            new_resources[pickup_resource] = new_resources.get(
-                pickup_resource, 0)
+            new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
         return State(new_resources, self.node, self)

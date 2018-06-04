@@ -176,7 +176,7 @@ class WorldReader:
 
             if is_resource_node(nodes[i]):
                 extra_requirement = IndividualRequirement(
-                    nodes[i].resource(self.resource_database, self.pickup_database),
+                    nodes[i].resource(self.resource_database),
                     1,
                     False)
 
