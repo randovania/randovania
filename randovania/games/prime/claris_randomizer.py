@@ -28,6 +28,7 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
         _get_randomizer_path(),
         game_files,
         "-s", str(seed),
+        "-r",  # disable read key when finished, since it would crash
         "-e", ",".join(str(pickup) for pickup in randomizer_config.exclude_pickups) or "none",
     ]
     if remove_item_loss:
