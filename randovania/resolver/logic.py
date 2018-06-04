@@ -81,18 +81,27 @@ def calculate_reach(current_state: State,
     return reach, satisfiable_requirements
 
 
-def actions_with_reach(current_reach: Reach,
-                       state: State,
-                       game: GameDescription) -> Iterator[ResourceNode]:
+def uncollected_resource_nodes(current_reach: Reach,
+                               state: State,
+                               game: GameDescription) -> Iterator[ResourceNode]:
     for node in current_reach:
         if not is_resource_node(node):
             continue
 
         if not state.has_resource(node.resource(game.resource_database)):
-            if game.get_additional_requirements(node).satisfied(state.resources):
-                yield node
-            else:
-                debug.log_skip_action_missing_requirement(node, game)
+            yield node
+
+
+def actions_with_reach(current_reach: Reach,
+                       state: State,
+                       game: GameDescription) -> Iterator[ResourceNode]:
+    for node in uncollected_resource_nodes(current_reach,
+                                           state,
+                                           game):
+        if game.get_additional_requirements(node).satisfied(state.resources):
+            yield node
+        else:
+            debug.log_skip_action_missing_requirement(node, game)
 
 
 def calculate_satisfiable_actions(state: State,
@@ -146,7 +155,6 @@ def build_static_resources(difficulty_level: int,
 
 def calculate_starting_state(item_loss: bool,
                              game: GameDescription) -> State:
-
     starting_world = game.world_by_asset_id(game.starting_world_asset_id)
     starting_area = starting_world.area_by_asset_id(game.starting_area_asset_id)
     starting_node = starting_area.nodes[starting_area.default_node_index]

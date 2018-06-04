@@ -120,7 +120,7 @@ class PickupDatabase:
     custom_mapping: Dict[str, Dict[str, int]]
     pickup_importance: Dict[str, int]
     entries: List[PickupEntry]
-    cache: Dict[str, ResourceGain]
+    _cache: Dict[str, ResourceGain]
 
     def __init__(self,
                  percent_less_items: Set[str],
@@ -133,13 +133,21 @@ class PickupDatabase:
         self.custom_mapping = custom_mapping
         self.pickup_importance = pickup_importance
         self.entries = entries
-        self.cache = {}
+        self._cache = {}
 
     def __eq__(self, other: "PickupDatabase") -> bool:
         return self.percent_less_items == other.percent_less_items and (
                 self.direct_name == other.direct_name and
                 self.custom_mapping == other.custom_mapping and
                 self.entries == other.entries
+        )
+
+    def pickup_index_to_resource_gain(self,
+                                      index: int,
+                                      database: ResourceDatabase) -> ResourceGain:
+        return self.pickup_name_to_resource_gain(
+            self.entries[index].item,
+            database
         )
 
     def pickup_name_to_resource_gain(self,
@@ -151,11 +159,11 @@ class PickupDatabase:
         :return:
         """
 
-        if name in self.cache:
-            return self.cache[name]
+        if name in self._cache:
+            return self._cache[name]
 
         def do_return(value: List[Tuple[ResourceInfo, int]]) -> ResourceGain:
-            self.cache[name] = value
+            self._cache[name] = value
             return value
 
         item_database = database.get_by_type(ResourceType.ITEM)
@@ -412,9 +420,8 @@ class PickupNode(NamedTuple):
                                  pickup_database: PickupDatabase
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
         yield self.resource(resource_database), 1
-        pickup = pickup_database.entries[self.pickup_index]
-        for resource, quantity in pickup_database.pickup_name_to_resource_gain(pickup.item, resource_database):
-            yield resource, quantity
+        yield from pickup_database.pickup_index_to_resource_gain(
+            self.pickup_index, resource_database)
 
 
 class EventNode(NamedTuple):
