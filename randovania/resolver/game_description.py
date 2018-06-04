@@ -30,6 +30,14 @@ class DamageResourceInfo(NamedTuple):
         return "Damage {}".format(self.long_name)
 
 
+class PickupIndex(typing.NamedTuple):
+    node: "PickupNode"
+    index: int
+
+    def __str__(self):
+        return "PickupIndex {}".format(self.index)
+
+
 class PickupEntry(typing.NamedTuple):
     world: str
     room: str
@@ -39,7 +47,7 @@ class PickupEntry(typing.NamedTuple):
         return "Pickup {}".format(self.item)
 
 
-ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupEntry]
+ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]
 ResourceGain = List[Tuple[ResourceInfo, int]]
 CurrentResources = Dict[ResourceInfo, int]
 
@@ -396,18 +404,15 @@ class PickupNode(NamedTuple):
     heal: bool
     pickup_index: int
 
-    def resource(self,
-                 resource_database: ResourceDatabase,
-                 pickup_database: PickupDatabase
-                 ) -> ResourceInfo:
-        return pickup_database.entries[self.pickup_index]
+    def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
+        return PickupIndex(self, self.pickup_index)
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
                                  pickup_database: PickupDatabase
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
-        pickup = self.resource(resource_database, pickup_database)
-        yield pickup, 1
+        yield self.resource(resource_database), 1
+        pickup = pickup_database.entries[self.pickup_index]
         for resource, quantity in pickup_database.pickup_name_to_resource_gain(pickup.item, resource_database):
             yield resource, quantity
 
@@ -417,17 +422,14 @@ class EventNode(NamedTuple):
     heal: bool
     event_index: int
 
-    def resource(self,
-                 resource_database: ResourceDatabase,
-                 pickup_database: PickupDatabase
-                 ) -> ResourceInfo:
+    def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
         return resource_database.get_by_type_and_index(ResourceType.EVENT, self.event_index)
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
                                  pickup_database: PickupDatabase
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
-        yield self.resource(resource_database, pickup_database), 1
+        yield self.resource(resource_database), 1
 
 
 ResourceNode = Union[PickupNode, EventNode]
