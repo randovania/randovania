@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 
-from randovania.resolver import resolver
+import randovania.resolver.logic
 from randovania.resolver.game_description import EventNode
 
 
@@ -8,7 +8,7 @@ def test_actions_with_reach_empty():
     state = MagicMock()
     game = MagicMock()
 
-    options = list(resolver.actions_with_reach([], state, game))
+    options = list(randovania.resolver.logic.actions_with_reach([], state, game))
 
     assert options == []
 
@@ -17,7 +17,7 @@ def test_actions_with_reach_no_resources():
     state = MagicMock()
     game = MagicMock()
 
-    options = list(resolver.actions_with_reach([MagicMock(), MagicMock()], state, game))
+    options = list(randovania.resolver.logic.actions_with_reach([MagicMock(), MagicMock()], state, game))
 
     assert options == []
 
@@ -29,7 +29,7 @@ def test_actions_with_reach_with_event():
     state.has_resource.return_value = False
 
     # Run
-    options = list(resolver.actions_with_reach([event], state, game))
+    options = list(randovania.resolver.logic.actions_with_reach([event], state, game))
 
     # Assert
     assert options == [event]
