@@ -5,8 +5,6 @@ import os
 from argparse import ArgumentParser
 from typing import Dict, BinaryIO
 
-import sys
-
 from randovania import get_data_path
 from randovania.games.prime import binary_data, log_parser
 from randovania.resolver import resolver, data_reader, debug
