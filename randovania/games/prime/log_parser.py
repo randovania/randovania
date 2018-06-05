@@ -348,7 +348,9 @@ def parse_log(logfile: str) -> RandomizerLog:
         for line in f:
             m = re.match(r"^([^-]+)(?:\s-)+([^-]+)(?:\s-)+([^-]+)$", line)
             if m:
-                pickups.append(PickupEntry(*map(str.strip, m.group(1, 2, 3))))
+                args: list = list(map(str.strip, m.group(1, 2, 3)))
+                args.append({})  # TODO
+                pickups.append(PickupEntry(*args))
             else:
                 break
 

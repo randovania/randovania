@@ -42,6 +42,7 @@ class PickupEntry(typing.NamedTuple):
     world: str
     room: str
     item: str
+    resources: Dict[str, int]
 
     def __str__(self):
         return "Pickup {}".format(self.item)

@@ -10,7 +10,7 @@ import sys
 from randovania import get_data_path
 from randovania.games.prime import binary_data, log_parser
 from randovania.resolver import resolver, data_reader, debug
-from randovania.resolver.game_description import consistency_check
+from randovania.resolver.game_description import consistency_check, GameDescription
 
 
 def decode_data_file(args) -> Dict:
@@ -105,7 +105,7 @@ def view_area_command_logic(args):
     raise SystemExit(1)
 
 
-def load_game_description(args):
+def load_game_description(args) -> GameDescription:
     data = decode_data_file(args)
     logfile = os.path.join(get_data_path(), "prime2_original_log.txt")
     randomizer_log = log_parser.parse_log(logfile)

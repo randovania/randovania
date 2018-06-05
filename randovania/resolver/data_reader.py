@@ -241,16 +241,9 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
                                elevators)
     worlds = world_reader.read_world_list(data["worlds"])
 
-    # TODO: more echoes specific code
-    final_boss = [
-        event for event in resource_database.event
-        if event.long_name == "Emperor Ing"
-    ][0]
-    victory_condition = RequirementSet([
-        RequirementList([IndividualRequirement(final_boss, 1, False)])
-    ])
-    starting_world_asset_id = 1006255871
-    starting_area_asset_id = 1655756413
+    starting_world_asset_id = data["starting_world_asset_id"]
+    starting_area_asset_id = data["starting_area_asset_id"]
+    victory_condition = read_requirement_set(data["victory_condition"], resource_database)
 
     available_resources = defaultdict(int)
     nodes_to_area = {}
