@@ -22,8 +22,10 @@ def decode_data_file(args) -> Dict:
     if data_file_path is None:
         return binary_data.decode_default_prime2()
     else:
-        with open(data_file_path, "rb") as x:  # type: BinaryIO
-            return binary_data.decode(x)
+        return binary_data.decode_file_path(
+            data_file_path,
+            os.path.join(get_data_path(), "prime2_extra.json")
+        )
 
 
 def add_data_file_argument(parser: ArgumentParser):
@@ -54,11 +56,11 @@ def convert_database_command_logic(args):
 
 
 def create_convert_database_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "convert-database",
-        help="Converts a database file between JSON and binary encoded formats. Input defaults to embeded database.",
+        help="Converts a database file between JSON and binary encoded formats. Input defaults to embedded database.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
 
     group = parser.add_mutually_exclusive_group(required=True)
@@ -107,17 +109,18 @@ def load_game_description(args):
     data = decode_data_file(args)
     logfile = os.path.join(get_data_path(), "prime2_original_log.txt")
     randomizer_log = log_parser.parse_log(logfile)
+
     gd = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
     debug._gd = gd
     return gd
 
 
 def view_area_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "view-area",
         help="View information about an area.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.add_argument(
         "--simplify",
@@ -146,11 +149,11 @@ def consistency_check_command_logic(args):
 
 
 def consistency_check_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "consistency-check",
         help="Check if all docks and teleporters are valid.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.set_defaults(func=consistency_check_command_logic)
 
@@ -171,11 +174,11 @@ def export_areas_command_logic(args):
 
 
 def export_areas_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "export-areas",
         help="Export a CSV with the areas of the game.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.add_argument("output_file")
     parser.set_defaults(func=export_areas_command_logic)

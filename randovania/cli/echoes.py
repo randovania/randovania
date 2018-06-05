@@ -1,6 +1,5 @@
 import argparse
 import multiprocessing
-import random
 import sys
 from argparse import ArgumentParser
 from collections import defaultdict
