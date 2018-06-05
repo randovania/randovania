@@ -489,9 +489,7 @@ class GameDescription(NamedTuple):
     worlds: List[World]
     nodes_to_area: Dict[Node, Area]
     nodes_to_world: Dict[Node, World]
-    available_resources: CurrentResources
     victory_condition: RequirementSet
-    additional_requirements: Dict[Node, RequirementSet]
     starting_world_asset_id: int
     starting_area_asset_id: int
 
@@ -506,9 +504,6 @@ class GameDescription(NamedTuple):
             for area in world.areas:
                 for node in area.nodes:
                     yield node
-
-    def get_additional_requirements(self, node: Node) -> RequirementSet:
-        return self.additional_requirements.get(node, RequirementSet.trivial())
 
 
 def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:

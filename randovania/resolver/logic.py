@@ -11,6 +11,14 @@ Reach = List[Node]
 SatisfiableRequirements = FrozenSet[RequirementList]
 
 
+class LogicMemory:
+    """Extra information that persists even after a backtrack, to prevent irrelevant backtracking."""
+    additional_requirements: Dict[Node, RequirementSet] = {}
+
+    def get_additional_requirements(self, node: Node) -> RequirementSet:
+        return self.additional_requirements.get(node, RequirementSet.trivial())
+
+
 def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
     if isinstance(node, DockNode):
         # TODO: respect is_blast_shield: if already opened once, no requirement needed.
@@ -36,6 +44,7 @@ def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[No
 
 
 def calculate_reach(current_state: State,
+                    memory: LogicMemory,
                     game: GameDescription) -> Tuple[Reach, SatisfiableRequirements]:
     checked_nodes = set()
     nodes_to_check = [current_state.node]
@@ -58,7 +67,7 @@ def calculate_reach(current_state: State,
             satisfied = requirements.satisfied(current_state.resources)
             if satisfied:
                 # If it is, check if we additional requirements figured out by backtracking is satisfied
-                satisfied = game.get_additional_requirements(node).satisfied(current_state.resources)
+                satisfied = memory.get_additional_requirements(node).satisfied(current_state.resources)
 
             if satisfied:
                 nodes_to_check.append(target_node)
@@ -73,7 +82,7 @@ def calculate_reach(current_state: State,
 
     if requirements_by_node:
         satisfiable_requirements = frozenset.union(
-            *[RequirementSet(requirements).merge(game.get_additional_requirements(node)).alternatives
+            *[RequirementSet(requirements).merge(memory.get_additional_requirements(node)).alternatives
               for node, requirements in requirements_by_node.items()])
     else:
         satisfiable_requirements = frozenset()
@@ -94,26 +103,28 @@ def uncollected_resource_nodes(current_reach: Reach,
 
 def actions_with_reach(current_reach: Reach,
                        state: State,
+                       memory: LogicMemory,
                        game: GameDescription) -> Iterator[ResourceNode]:
     for node in uncollected_resource_nodes(current_reach,
                                            state,
                                            game):
-        if game.get_additional_requirements(node).satisfied(state.resources):
+        if memory.get_additional_requirements(node).satisfied(state.resources):
             yield node
         else:
             debug.log_skip_action_missing_requirement(node, game)
 
 
-def calculate_satisfiable_actions(state: State,
-                                  reach: Reach,
+def calculate_satisfiable_actions(reach: Reach,
                                   satisfiable_requirements: SatisfiableRequirements,
+                                  state: State,
+                                  memory: LogicMemory,
                                   game: GameDescription) -> Iterator[ResourceNode]:
     if satisfiable_requirements:
         # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
         interesting_resources = calculate_interesting_resources(satisfiable_requirements, state.resources)
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
-        for action in actions_with_reach(reach, state, game):
+        for action in actions_with_reach(reach, state, memory, game):
             for resource, amount in action.resource_gain_on_collect(game.resource_database, game.pickup_database):
                 if resource in interesting_resources:
                     yield action
