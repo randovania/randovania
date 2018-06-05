@@ -16,6 +16,9 @@ class PickupEntry(typing.NamedTuple):
     item: str
     resources: Dict[str, int]
 
+    def __hash__(self):
+        return hash(self.item)
+
     def resource_gain(self,
                       database: "ResourceDatabase") -> ResourceGain:
 

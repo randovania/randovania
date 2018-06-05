@@ -25,15 +25,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.verticalLayout.setAlignment(Qt.AlignTop)
 
         data = binary_data.decode_default_prime2()
-        original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
 
         resource_database = read_resource_database(data["resource_database"])
         dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
         world_reader = WorldReader(resource_database,
                                    dock_weakness_database,
-                                   original_log.pickup_database,
-                                   original_log.elevators)
+                                   [])
         self.worlds = world_reader.read_world_list(data["worlds"])
 
         for world in sorted(self.worlds, key=lambda x: x.name):
