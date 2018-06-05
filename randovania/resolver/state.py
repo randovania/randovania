@@ -1,8 +1,9 @@
 import copy
 from typing import Optional
 
-from randovania.resolver.game_description import CurrentResources, Node, ResourceInfo, ResourceNode, ResourceDatabase, \
+from randovania.resolver.game_description import Node, ResourceNode, ResourceDatabase, \
     PickupDatabase
+from randovania.resolver.resources import ResourceInfo, CurrentResources
 
 
 class State:

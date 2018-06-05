@@ -10,7 +10,7 @@ from appdirs import AppDirs
 
 from randovania.games.prime import binary_data
 from randovania.resolver.data_reader import read_resource_database
-from randovania.resolver.game_description import SimpleResourceInfo
+from randovania.resolver.resources import SimpleResourceInfo
 
 dirs = AppDirs("Randovania", False)
 
