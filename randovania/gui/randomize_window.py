@@ -36,7 +36,6 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
 
         data = binary_data.decode_default_prime2()
         self.resource_database = read_resource_database(data["resource_database"])
-        self.original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
 
         options = application_options()
 
@@ -63,7 +62,7 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         # Exclusion Selection
         self.exclusion_indices = {
             entry: i
-            for i, entry in enumerate(self.original_log.pickup_database.entries)
+            for i, entry in enumerate(self.resource_database.pickups)
         }
         self.exclude_checkboxes: Dict[PickupEntry, QtWidgets.QCheckBox] = {}
         self.create_exclusion_checkboxes()
@@ -128,7 +127,7 @@ class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
         excluded_pickups = application_options().excluded_pickups
         self.excludedItemsContentLayout.setAlignment(Qt.AlignTop)
 
-        for entry in self.original_log.pickup_database.entries:
+        for entry in self.resource_database.pickups:
             checkbox = QtWidgets.QCheckBox(self.excludedItemsContents)
             checkbox.setCheckable(True)
             checkbox.setChecked(self.exclusion_indices[entry] in excluded_pickups)
