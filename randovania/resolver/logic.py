@@ -110,7 +110,7 @@ def calculate_satisfiable_actions(state: State,
                                   game: GameDescription) -> Iterator[ResourceNode]:
     if satisfiable_requirements:
         # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
-        interesting_resources = _calculate_interesting_resources(satisfiable_requirements, state)
+        interesting_resources = calculate_interesting_resources(satisfiable_requirements, state.resources)
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action in actions_with_reach(reach, state, game):
@@ -120,21 +120,23 @@ def calculate_satisfiable_actions(state: State,
                     break
 
 
-def _calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
-                                     state: State) -> Set[ResourceInfo]:
+def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
+                                    resources: CurrentResources) -> FrozenSet[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList """
 
-    interesting_resources: Set[ResourceInfo] = set()
-
-    for requirement in satisfiable_requirements:
+    def helper():
         # For each possible requirement list
-        if not requirement.satisfied(state.resources):
-            # If it's not yet satisfied
-            for indv in requirement.values():
-                if indv.requirement not in interesting_resources and not indv.negate and not indv.satisfied(
-                        state.resources):
-                    interesting_resources.add(indv.requirement)
-    return interesting_resources
+        for requirement_list in satisfiable_requirements:
+            # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
+            if not requirement_list.satisfied(resources):
+
+                for individual in requirement_list.values():
+                    # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
+                    # Finally, if it's not satisfied then we're interested in collecting it
+                    if not individual.negate and not individual.satisfied(resources):
+                        yield individual.resource
+
+    return frozenset(helper())
 
 
 def build_static_resources(difficulty_level: int,

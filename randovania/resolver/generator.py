@@ -3,7 +3,7 @@ from typing import List, Set
 from randovania.resolver import debug
 from randovania.resolver.game_description import GameDescription
 from randovania.resolver.logic import build_static_resources, calculate_starting_state, calculate_reach, \
-    _calculate_interesting_resources, uncollected_resource_nodes
+    calculate_interesting_resources, uncollected_resource_nodes
 from randovania.resolver.resolver import simplify_connections
 
 
@@ -25,7 +25,7 @@ def generate_list(
 
     while True:
         reach, satisfiable_requirements = calculate_reach(state, game)
-        interesting_resources = _calculate_interesting_resources(satisfiable_requirements, state)
+        interesting_resources = calculate_interesting_resources(satisfiable_requirements, state.resources)
         potential_pickups = pickups_that_provides_a_resource(pickup_pool, interesting_resources)
 
         if not potential_pickups:
