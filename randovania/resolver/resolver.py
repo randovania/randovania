@@ -1,7 +1,8 @@
 from typing import Set, Optional
 
 from randovania.resolver import debug
-from randovania.resolver.game_description import GameDescription, RequirementSet, CurrentResources
+from randovania.resolver.game_description import GameDescription, RequirementSet
+from randovania.resolver.resources import CurrentResources
 from randovania.resolver.logic import calculate_reach, calculate_satisfiable_actions, build_static_resources, \
     calculate_starting_state, LogicMemory
 from randovania.resolver.state import State

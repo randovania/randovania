@@ -3,8 +3,8 @@ from typing import List, FrozenSet, Iterator, Tuple, Dict, Set
 
 from randovania.resolver import debug
 from randovania.resolver.game_description import Node, RequirementList, GameDescription, RequirementSet, DockNode, \
-    resolve_dock_node, TeleporterNode, resolve_teleporter_node, ResourceNode, is_resource_node, ResourceInfo, \
-    CurrentResources, ResourceType
+    resolve_dock_node, TeleporterNode, resolve_teleporter_node, ResourceNode, is_resource_node, ResourceType
+from randovania.resolver.resources import ResourceInfo, CurrentResources
 from randovania.resolver.state import State
 
 Reach = List[Node]

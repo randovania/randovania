@@ -11,7 +11,8 @@ from randovania.games.prime.log_parser import parse_log
 from randovania.gui import application_options
 from randovania.gui.randomize_window_ui import Ui_RandomizeWindow
 from randovania.resolver.data_reader import read_resource_database
-from randovania.resolver.game_description import SimpleResourceInfo, PickupEntry
+from randovania.resolver.game_description import PickupEntry
+from randovania.resolver.resources import SimpleResourceInfo
 
 
 def _map_set_checked(iterable: Iterable[QtWidgets.QCheckBox], new_status: bool):

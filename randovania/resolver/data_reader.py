@@ -2,11 +2,11 @@ from functools import partial
 from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
 
 from randovania.games.prime.log_parser import Elevator
-from randovania.resolver.game_description import DamageReduction, SimpleResourceInfo, DamageResourceInfo, \
-    IndividualRequirement, \
+from randovania.resolver.game_description import IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, GameDescription, \
     ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
     EventNode, PickupNode, is_resource_node, PickupEntry
+from randovania.resolver.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo
 
 X = TypeVar('X')
 Y = TypeVar('Y')
