@@ -1,5 +1,6 @@
+import json
 from functools import partial
-from typing import List, Callable, TypeVar, BinaryIO, Dict
+from typing import List, Callable, TypeVar, BinaryIO, Dict, TextIO
 
 import os
 
@@ -164,11 +165,12 @@ def read_world_list(source: BinarySource) -> List[Dict]:
     return read_array(source, read_world)
 
 
-def decode(x: BinaryIO) -> Dict:
-    if x.read(4) != b"Req.":
+def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
+    if binary_io.read(4) != b"Req.":
         raise Exception("Invalid file format.")
 
-    source = BinarySource(x)
+    source = BinarySource(binary_io)
+    extra = json.load(extra_io)
 
     format_version = source.read_uint()
     if format_version != current_format_version:
@@ -201,15 +203,17 @@ def decode(x: BinaryIO) -> Dict:
             "versions": versions,
             "misc": misc,
             "difficulty": difficulty,
+            "pickups": extra["pickups"]
         },
         "dock_weakness_database": dock_weakness_database,
         "worlds": worlds,
     }
 
 
-def decode_file_path(path) -> Dict:
-    with open(path, "rb") as x:  # type: BinaryIO
-        return decode(x)
+def decode_file_path(binary_file_path: str, extra_file_path: str) -> Dict:
+    with open(binary_file_path, "rb") as binary_io:  # type: BinaryIO
+        with open(extra_file_path, "r") as extra:
+            return decode(binary_io, extra)
 
 
 def write_array(writer: BinaryWriter, array: List[X],
@@ -335,6 +339,7 @@ def encode(data: Dict, x: BinaryIO):
 
 
 def decode_default_prime2():
-    data_file_path = os.path.join(get_data_path(), "prime2.bin")
-    with open(data_file_path, "rb") as x:  # type: BinaryIO
-        return decode(x)
+    return decode_file_path(
+        os.path.join(get_data_path(), "prime2.bin"),
+        os.path.join(get_data_path(), "prime2_extra.json")
+    )
