@@ -7,7 +7,7 @@ from randovania.resolver.game_description import DamageReduction, SimpleResource
     IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, GameDescription, \
     ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
-    EventNode, PickupNode, is_resource_node
+    EventNode, PickupNode, is_resource_node, PickupEntry
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -40,10 +40,12 @@ def read_damage_resource_info(data: Dict) -> DamageResourceInfo:
                               read_damage_reductions(data["reductions"]))
 
 
-def read_damage_resource_info_array(
-        data: List[Dict]) -> List[DamageResourceInfo]:
+def read_damage_resource_info_array(data: List[Dict]) -> List[DamageResourceInfo]:
     return read_array(data, read_damage_resource_info)
 
+
+def read_pickup_info_array(data: List[Dict]) -> List[PickupEntry]:
+    return read_array(data, lambda pickup: PickupEntry(**pickup))
 
 # Requirement
 
@@ -221,7 +223,9 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
         damage=read_damage_resource_info_array(data["damage"]),
         version=read_resource_info_array(data["versions"]),
         misc=read_resource_info_array(data["misc"]),
-        difficulty=read_resource_info_array(data["difficulty"]))
+        difficulty=read_resource_info_array(data["difficulty"]),
+        pickups=read_pickup_info_array(data["pickups"])
+    )
 
 
 def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Elevator]) -> GameDescription:
@@ -256,8 +260,8 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
             for node in area.nodes:
                 if node in nodes_to_area:
                     raise ValueError(
-                        "Trying to map {} to {}, but already mapped to {}".
-                            format(node, area, nodes_to_area[node]))
+                        "Trying to map {} to {}, but already mapped to {}".format(
+                            node, area, nodes_to_area[node]))
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 

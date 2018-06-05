@@ -79,6 +79,7 @@ class ResourceDatabase(NamedTuple):
     version: List[SimpleResourceInfo]
     misc: List[SimpleResourceInfo]
     difficulty: List[SimpleResourceInfo]
+    pickups: List[PickupEntry]
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
