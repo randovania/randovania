@@ -26,9 +26,11 @@ class DamageResourceInfo(NamedTuple):
         return "Damage {}".format(self.long_name)
 
 
-class PickupIndex(typing.NamedTuple):
-    node: "PickupNode"
+class PickupIndex:
     index: int
+
+    def __init__(self, index: int):
+        self.index = index
 
     def __str__(self):
         return "PickupIndex {}".format(self.index)
