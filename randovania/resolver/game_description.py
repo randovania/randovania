@@ -38,19 +38,25 @@ class PickupIndex(typing.NamedTuple):
         return "PickupIndex {}".format(self.index)
 
 
+ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]
+ResourceGain = List[Tuple[ResourceInfo, int]]
+CurrentResources = Dict[ResourceInfo, int]
+
+
 class PickupEntry(typing.NamedTuple):
     world: str
     room: str
     item: str
     resources: Dict[str, int]
 
+    def resource_gain(self,
+                      database: "ResourceDatabase") -> ResourceGain:
+
+        for name, value in self.resources.items():
+            yield _find_resource_info_with_long_name(database.item, name), value
+
     def __str__(self):
         return "Pickup {}".format(self.item)
-
-
-ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]
-ResourceGain = List[Tuple[ResourceInfo, int]]
-CurrentResources = Dict[ResourceInfo, int]
 
 
 def _find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
@@ -59,6 +65,14 @@ def _find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
             return info
     raise ValueError(
         "Resource with index {} not found in {}".format(index, info_list))
+
+
+def _find_resource_info_with_long_name(info_list: List[ResourceInfo], long_name: str):
+    for info in info_list:
+        if info.long_name == long_name:
+            return info
+    raise ValueError(
+        "Resource with long_name '{}' not found in {}".format(long_name, info_list))
 
 
 @unique
