@@ -1,4 +1,3 @@
-from collections import defaultdict
 from functools import partial
 from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
 
@@ -47,6 +46,7 @@ def read_damage_resource_info_array(data: List[Dict]) -> List[DamageResourceInfo
 def read_pickup_info_array(data: List[Dict]) -> List[PickupEntry]:
     return read_array(data, lambda pickup: PickupEntry(**pickup))
 
+
 # Requirement
 
 
@@ -79,6 +79,7 @@ def read_requirement_set(data: List[List[Dict]],
 def add_requirement_to_set(
         requirement_set: RequirementSet,
         new_requirement: IndividualRequirement) -> RequirementSet:
+
     return RequirementSet(
         RequirementList(requirement_list.union([new_requirement]))
         for requirement_list in requirement_set.alternatives)
@@ -108,18 +109,15 @@ def read_dock_weakness_database(data: Dict,
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    pickup_database: PickupDatabase
     elevators: Dict[int, Elevator]
     generic_index: int = 0
 
     def __init__(self,
                  resource_database: ResourceDatabase,
                  dock_weakness_database: DockWeaknessDatabase,
-                 pickup_database: PickupDatabase,
                  elevators: List[Elevator]):
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
-        self.pickup_database = pickup_database
         self.elevators = {
             elevator.instance_id: elevator
             for elevator in elevators
@@ -169,8 +167,6 @@ class WorldReader:
         name = data["name"]
         nodes = read_array(data["nodes"], self.read_node)
 
-        _validate_pickup_nodes(self.pickup_database, name, nodes)
-
         connections = {}
         for i, origin in enumerate(data["connections"]):
             connections[nodes[i]] = {}
@@ -187,8 +183,7 @@ class WorldReader:
                     the_set = read_requirement_set(target,
                                                    self.resource_database)
                     if extra_requirement is not None:
-                        the_set = add_requirement_to_set(
-                            the_set, extra_requirement)
+                        the_set = add_requirement_to_set(the_set, extra_requirement)
                     connections[nodes[i]][nodes[j]] = the_set
 
         return Area(name, data["asset_id"], data["default_node_index"], nodes,
@@ -203,16 +198,6 @@ class WorldReader:
 
     def read_world_list(self, data: List[Dict]) -> List[World]:
         return read_array(data, self.read_world)
-
-
-def _validate_pickup_nodes(pickup_database: PickupDatabase, name: str, nodes: Iterable[Node]):
-    for node in nodes:
-        if isinstance(node, PickupNode):
-            pickup = pickup_database.entries[node.pickup_index]
-            if pickup.room != name:
-                raise ValueError(
-                    "Pickup at {}/{} has area name mismatch ({})".format(
-                        name, node.name, pickup.room))
 
 
 def read_resource_database(data: Dict) -> ResourceDatabase:
@@ -237,7 +222,6 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
 
     world_reader = WorldReader(resource_database,
                                dock_weakness_database,
-                               pickup_database,
                                elevators)
     worlds = world_reader.read_world_list(data["worlds"])
 
@@ -245,17 +229,7 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
     starting_area_asset_id = data["starting_area_asset_id"]
     victory_condition = read_requirement_set(data["victory_condition"], resource_database)
 
-    nodes_to_area = {}
-    nodes_to_world = {}
-    for world in worlds:
-        for area in world.areas:
-            for node in area.nodes:
-                if node in nodes_to_area:
-                    raise ValueError(
-                        "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node]))
-                nodes_to_area[node] = area
-                nodes_to_world[node] = world
+    nodes_to_area, nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
     return GameDescription(
         game=game,
@@ -270,3 +244,20 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
         starting_world_asset_id=starting_world_asset_id,
         starting_area_asset_id=starting_area_asset_id
     )
+
+
+def _calculate_nodes_to_area_world(worlds: Iterable[World]):
+    nodes_to_area = {}
+    nodes_to_world = {}
+
+    for world in worlds:
+        for area in world.areas:
+            for node in area.nodes:
+                if node in nodes_to_area:
+                    raise ValueError(
+                        "Trying to map {} to {}, but already mapped to {}".format(
+                            node, area, nodes_to_area[node]))
+                nodes_to_area[node] = area
+                nodes_to_world[node] = world
+
+    return nodes_to_area, nodes_to_world
