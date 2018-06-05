@@ -245,7 +245,6 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
     starting_area_asset_id = data["starting_area_asset_id"]
     victory_condition = read_requirement_set(data["victory_condition"], resource_database)
 
-    available_resources = defaultdict(int)
     nodes_to_area = {}
     nodes_to_world = {}
     for world in worlds:
@@ -257,13 +256,6 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
                             node, area, nodes_to_area[node]))
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
-
-                if is_resource_node(node):
-                    for resource, quantity in node.resource_gain_on_collect(resource_database, pickup_database):
-                        available_resources[resource] += quantity
-
-    # Add the No Requirements
-    available_resources[resource_database.impossible_resource()] = 1
 
     return GameDescription(
         game=game,
