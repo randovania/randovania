@@ -18,6 +18,7 @@ def database():
             SimpleResourceInfo(1, "Impossible", "Impossible"),
         ],
         difficulty=[],
+        pickups=[]
     )
 
 

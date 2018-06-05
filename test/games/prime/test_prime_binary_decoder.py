@@ -1,6 +1,6 @@
 import io
 import json
-from typing import BinaryIO
+from typing import BinaryIO, TextIO
 
 from randovania.games.prime import binary_data
 
@@ -17,7 +17,11 @@ def test_simple_round_trip():
             "versions": [],
             "misc": [],
             "difficulty": [],
+            "pickups": [],
         },
+        "starting_world_asset_id": 1006255871,
+        "starting_area_asset_id": 1655756413,
+        "victory_condition": [],
         "dock_weakness_database": {
             "door": [],
             "portal": []
@@ -25,12 +29,22 @@ def test_simple_round_trip():
         "worlds": [],
     }
 
+    s = io.StringIO()
+    s_io: TextIO = s
+    json.dump({
+        "pickups": sample_data["resource_database"]["pickups"],
+        "starting_world_asset_id": sample_data["starting_world_asset_id"],
+        "starting_area_asset_id": sample_data["starting_area_asset_id"],
+        "victory_condition": sample_data["victory_condition"],
+    }, s)
+
     b = io.BytesIO()
-    b_io = b  # type: BinaryIO
+    b_io: BinaryIO = b
     binary_data.encode(sample_data, b_io)
 
+    s.seek(0)
     b.seek(0)
-    decoded = binary_data.decode(b_io)
+    decoded = binary_data.decode(b_io, s_io)
 
     assert sample_data == decoded
 
@@ -52,7 +66,9 @@ def test_complex_encode(test_files_dir):
 def test_complex_decode(test_files_dir):
     # Run
     decoded_data = binary_data.decode_file_path(
-        str(test_files_dir.join("prime_data_as_binary.bin")))
+        str(test_files_dir.join("prime_data_as_binary.bin")),
+        str(test_files_dir.join("prime_extra_data.json"))
+    )
 
     # Assert
     with test_files_dir.join("prime_data_as_json.json").open("r") as data_file:
