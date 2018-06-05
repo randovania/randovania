@@ -203,7 +203,7 @@ class PickupDatabase:
 
 
 class IndividualRequirement(NamedTuple):
-    requirement: ResourceInfo
+    resource: ResourceInfo
     amount: int
     negate: bool
 
@@ -221,10 +221,10 @@ class IndividualRequirement(NamedTuple):
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
-        if isinstance(self.requirement, DamageResourceInfo):
+        if isinstance(self.resource, DamageResourceInfo):
             # TODO: actually implement the damage resources
             return True
-        has_amount = current_resources.get(self.requirement, 0) >= self.amount
+        has_amount = current_resources.get(self.resource, 0) >= self.amount
         if self.negate:
             return not has_amount
         else:
@@ -232,12 +232,12 @@ class IndividualRequirement(NamedTuple):
 
     def __repr__(self):
         return "{} {} {}".format(
-            self.requirement,
+            self.resource,
             "<" if self.negate else ">=",
             self.amount)
 
     def __lt__(self, other: "IndividualRequirement") -> bool:
-        return str(self.requirement) < str(other.requirement)
+        return str(self.resource) < str(other.resource)
 
 
 class RequirementList(frozenset):
@@ -253,12 +253,12 @@ class RequirementList(frozenset):
                  database: ResourceDatabase) -> Optional["RequirementList"]:
         items = []
         for item in self:  # type: IndividualRequirement
-            if item.requirement == database.impossible_resource():
+            if item.resource == database.impossible_resource():
                 return None
-            if item.requirement in static_resources:
+            if item.resource in static_resources:
                 if not item.satisfied(static_resources):
                     return None
-            elif item.requirement != database.trivial_resource():
+            elif item.resource != database.trivial_resource():
                 items.append(item)
         return RequirementList(items)
 
