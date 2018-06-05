@@ -1,8 +1,8 @@
 import copy
 from typing import Optional
 
-from randovania.resolver.game_description import Node, ResourceNode, ResourceDatabase, \
-    PickupDatabase
+from randovania.resolver.game_description import Node, ResourceNode, ResourceDatabase
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.resources import ResourceInfo, CurrentResources
 
 
@@ -21,7 +21,7 @@ class State:
 
     def collect_resource_node(self, node: ResourceNode,
                               resource_database: ResourceDatabase,
-                              pickup_database: PickupDatabase) -> "State":
+                              game_patches: GamePatches) -> "State":
 
         resource = node.resource(resource_database)
         if self.has_resource(resource):
@@ -30,8 +30,7 @@ class State:
                     resource))
 
         new_resources = copy.copy(self.resources)
-        for pickup_resource, quantity in node.resource_gain_on_collect(
-                resource_database, pickup_database):
+        for pickup_resource, quantity in node.resource_gain_on_collect(resource_database, game_patches):
             new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
@@ -40,7 +39,7 @@ class State:
     def act_on_node(self,
                     node: ResourceNode,
                     resource_database: ResourceDatabase,
-                    pickup_database: PickupDatabase) -> "State":
-        new_state = self.collect_resource_node(node, resource_database, pickup_database)
+                    game_patches: GamePatches) -> "State":
+        new_state = self.collect_resource_node(node, resource_database, game_patches)
         new_state.node = node
         return new_state

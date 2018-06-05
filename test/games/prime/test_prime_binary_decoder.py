@@ -21,6 +21,8 @@ def test_simple_round_trip():
         },
         "starting_world_asset_id": 1006255871,
         "starting_area_asset_id": 1655756413,
+        "starting_items": {},
+        "item_loss_items": {},
         "victory_condition": [],
         "dock_weakness_database": {
             "door": [],
@@ -36,6 +38,8 @@ def test_simple_round_trip():
         "starting_world_asset_id": sample_data["starting_world_asset_id"],
         "starting_area_asset_id": sample_data["starting_area_asset_id"],
         "victory_condition": sample_data["victory_condition"],
+        "starting_items": sample_data["starting_items"],
+        "item_loss_items": sample_data["item_loss_items"],
     }, s)
 
     b = io.BytesIO()

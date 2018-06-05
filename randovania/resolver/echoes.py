@@ -6,6 +6,7 @@ from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.interface_common.options import Options
 from randovania.resolver import data_reader, resolver, debug
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.state import State
 
 
@@ -37,16 +38,22 @@ def run_resolver(data: Dict,
                  randomizer_log: RandomizerLog,
                  resolver_config: ResolverConfiguration,
                  verbose=True) -> Optional[State]:
-    game_description = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
+
+    game_description = data_reader.decode_data(data, randomizer_log.elevators)
+    game_patches = GamePatches(randomizer_log.pickup_mapping)
+
     final_state = resolver.resolve(resolver_config.difficulty,
                                    resolver_config.enabled_tricks,
-                                   resolver_config.item_loss, game_description)
+                                   resolver_config.item_loss,
+                                   game_description,
+                                   game_patches)
     if final_state:
         if resolver_config.minimum_difficulty > 0:
             if resolver.resolve(resolver_config.minimum_difficulty - 1,
                                 resolver_config.enabled_tricks,
                                 resolver_config.item_loss,
-                                game_description):
+                                game_description,
+                                game_patches):
                 if verbose:
                     print("Game is beatable using a lower difficulty!")
                 return None

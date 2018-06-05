@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import randovania.resolver.logic
 from randovania.resolver.game_description import EventNode
@@ -6,37 +6,36 @@ from randovania.resolver.game_description import EventNode
 
 def test_actions_with_reach_empty():
     state = MagicMock()
-    memory = MagicMock(spec=randovania.resolver.logic.LogicMemory)
-    game = MagicMock()
 
-    options = list(randovania.resolver.logic.actions_with_reach([], state, memory, game))
+    logic = randovania.resolver.logic.Logic(MagicMock(), MagicMock())
+    options = list(logic.actions_with_reach([], state))
 
     assert options == []
 
 
 def test_actions_with_reach_no_resources():
     state = MagicMock()
-    memory = MagicMock(spec=randovania.resolver.logic.LogicMemory)
-    game = MagicMock()
 
-    options = list(randovania.resolver.logic.actions_with_reach([MagicMock(), MagicMock()], state, memory, game))
+    logic = randovania.resolver.logic.Logic(MagicMock(), MagicMock())
+    options = list(logic.actions_with_reach([MagicMock(), MagicMock()], state))
 
     assert options == []
 
 
 def test_actions_with_reach_with_event():
     state = MagicMock()
-    memory = MagicMock(spec=randovania.resolver.logic.LogicMemory)
     game = MagicMock()
     event = MagicMock(spec=EventNode)
     state.has_resource.return_value = False
 
     # Run
-    options = list(randovania.resolver.logic.actions_with_reach([event], state, memory, game))
+    with patch("randovania.resolver.logic.Logic.get_additional_requirements", autospec=True) as mock_get:
+        logic = randovania.resolver.logic.Logic(game, MagicMock())
+        options = list(logic.actions_with_reach([event], state))
 
     # Assert
     assert options == [event]
     event.resource.assert_called_once_with(game.resource_database)
     state.has_resource.assert_called_once_with(event.resource.return_value)
-    memory.get_additional_requirements.assert_called_once_with(event)
-    memory.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources)
+    mock_get.assert_called_once_with(logic, event)
+    mock_get.return_value.satisfied.assert_called_once_with(state.resources)

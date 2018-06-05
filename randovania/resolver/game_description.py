@@ -5,6 +5,7 @@ from enum import Enum, unique
 from functools import lru_cache
 from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
 
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.resources import SimpleResourceInfo, DamageResourceInfo, PickupIndex, ResourceInfo, \
     ResourceGain, CurrentResources
 
@@ -94,94 +95,6 @@ class ResourceDatabase(NamedTuple):
 
     def item_percentage(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
-
-
-class PickupDatabase:
-    percent_less_items: Set[str]
-    direct_name: Dict[str, int]
-    custom_mapping: Dict[str, Dict[str, int]]
-    pickup_importance: Dict[str, int]
-    entries: List[PickupEntry]
-    _cache: Dict[str, ResourceGain]
-
-    def __init__(self,
-                 percent_less_items: Set[str],
-                 direct_name: Dict[str, int],
-                 custom_mapping: Dict[str, Dict[str, int]],
-                 pickup_importance: Dict[str, int],
-                 entries: List[PickupEntry]) -> None:
-        self.percent_less_items = percent_less_items
-        self.direct_name = direct_name
-        self.custom_mapping = custom_mapping
-        self.pickup_importance = pickup_importance
-        self.entries = entries
-        self._cache = {}
-
-    def __eq__(self, other: "PickupDatabase") -> bool:
-        return self.percent_less_items == other.percent_less_items and (
-                self.direct_name == other.direct_name and
-                self.custom_mapping == other.custom_mapping and
-                self.entries == other.entries
-        )
-
-    def pickup_index_to_resource_gain(self,
-                                      index: int,
-                                      database: ResourceDatabase) -> ResourceGain:
-        return self.pickup_name_to_resource_gain(
-            self.entries[index].item,
-            database
-        )
-
-    def pickup_name_to_resource_gain(self,
-                                     name: str,
-                                     database: ResourceDatabase) -> ResourceGain:
-        """Collecting a pickup of a given name implies into gaining multiple resources.
-        :param name: The name of the pickup we're collecting
-        :param database: The database of all resources.
-        :return:
-        """
-
-        if name in self._cache:
-            return self._cache[name]
-
-        def do_return(value: List[Tuple[ResourceInfo, int]]) -> ResourceGain:
-            self._cache[name] = value
-            return value
-
-        item_database = database.get_by_type(ResourceType.ITEM)
-
-        result = []
-        if name not in self.percent_less_items:
-            result.append((database.item_percentage(), 1))
-
-        if name in self.direct_name:
-            # This means this pickup gives a resource of the same name.
-            for info in item_database:
-                if info.long_name == name:
-                    result.append((info, self.direct_name[name]))
-                    return do_return(result)
-
-            raise ValueError("Pickup '{}' not found in database.".format(name))
-        else:
-            # Check if we have a regular expression that matches the pickup name
-            for pattern, values in self.custom_mapping.items():
-                if re.match(pattern, name):
-                    starting_size = len(result)
-
-                    # values is a mapping of resource names it gives on pickup.
-                    for info in item_database:
-                        if info.long_name in values:
-                            result.append((info, values[info.long_name]))
-
-                    # Check if some resource name was unknown
-                    if len(result) - starting_size != len(values):
-                        raise ValueError(
-                            "Pattern '{}' (matched by '{}') has resource not found in database. Found {}".format(
-                                pattern, name, result))
-
-                    return do_return(result)
-
-        raise ValueError("'{}' is unknown by pickup_database".format(name))
 
 
 class IndividualRequirement(NamedTuple):
@@ -399,11 +312,12 @@ class PickupNode(NamedTuple):
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
-                                 pickup_database: PickupDatabase
+                                 game_patches: GamePatches
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
         yield self.resource(resource_database), 1
-        yield from pickup_database.pickup_index_to_resource_gain(
-            self.pickup_index.index, resource_database)
+
+        new_index = game_patches.pickup_mapping[self.pickup_index.index]
+        yield from resource_database.pickups[new_index].resource_gain(resource_database)
 
 
 class EventNode(NamedTuple):
@@ -416,7 +330,7 @@ class EventNode(NamedTuple):
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
-                                 pickup_database: PickupDatabase
+                                 game_patches: GamePatches
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
         yield self.resource(resource_database), 1
 
@@ -466,7 +380,6 @@ class GameDescription(NamedTuple):
     game: int
     game_name: str
     resource_database: ResourceDatabase
-    pickup_database: PickupDatabase
     dock_weakness_database: DockWeaknessDatabase
     worlds: List[World]
     nodes_to_area: Dict[Node, Area]
@@ -474,6 +387,8 @@ class GameDescription(NamedTuple):
     victory_condition: RequirementSet
     starting_world_asset_id: int
     starting_area_asset_id: int
+    starting_items: ResourceGain
+    item_loss_items: ResourceGain
 
     def world_by_asset_id(self, asset_id: int) -> World:
         for world in self.worlds:

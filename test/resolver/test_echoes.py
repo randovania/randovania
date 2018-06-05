@@ -5,6 +5,7 @@ import pytest
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.resolver import echoes
 from randovania.resolver.echoes import ResolverConfiguration, RandomizerConfiguration
+from randovania.resolver.game_patches import GamePatches
 
 
 @patch("randovania.resolver.resolver.resolve", autospec=True)
@@ -24,9 +25,10 @@ def test_run_resolver_failure(mock_decode_data: MagicMock,
         resolver_config.difficulty,
         resolver_config.enabled_tricks,
         resolver_config.item_loss,
-        mock_decode_data.return_value
+        mock_decode_data.return_value,
+        GamePatches(randomizer_log.pickup_mapping)
     )
-    mock_decode_data.assert_called_once_with(data, randomizer_log.pickup_database, randomizer_log.elevators)
+    mock_decode_data.assert_called_once_with(data, randomizer_log.elevators)
 
 
 @patch("randovania.resolver.resolver.resolve", autospec=True)
@@ -47,9 +49,10 @@ def test_run_resolver_success_without_minimum_difficulty(
         resolver_config.difficulty,
         resolver_config.enabled_tricks,
         resolver_config.item_loss,
-        mock_decode_data.return_value
+        mock_decode_data.return_value,
+        GamePatches(randomizer_log.pickup_mapping)
     )
-    mock_decode_data.assert_called_once_with(data, randomizer_log.pickup_database, randomizer_log.elevators)
+    mock_decode_data.assert_called_once_with(data, randomizer_log.elevators)
 
 
 @patch("randovania.resolver.resolver.resolve", autospec=True)
@@ -62,6 +65,7 @@ def test_run_resolver_success_with_minimum_difficulty(
     resolver_config = MagicMock(spec=ResolverConfiguration)
     resolver_config.minimum_difficulty = 1
     success_response = MagicMock()
+    patches = GamePatches(randomizer_log.pickup_mapping)
 
     mock_resolve.side_effect = [success_response, None]
 
@@ -71,11 +75,11 @@ def test_run_resolver_success_with_minimum_difficulty(
     assert final_state is success_response
     mock_resolve.assert_has_calls([
         call(resolver_config.difficulty, resolver_config.enabled_tricks,
-             resolver_config.item_loss, mock_decode_data.return_value),
+             resolver_config.item_loss, mock_decode_data.return_value, patches),
         call(resolver_config.minimum_difficulty - 1, resolver_config.enabled_tricks,
-             resolver_config.item_loss, mock_decode_data.return_value),
+             resolver_config.item_loss, mock_decode_data.return_value, patches),
     ])
-    mock_decode_data.assert_called_once_with(data, randomizer_log.pickup_database, randomizer_log.elevators)
+    mock_decode_data.assert_called_once_with(data, randomizer_log.elevators)
 
 
 @patch("randovania.resolver.resolver.resolve", autospec=True)
@@ -88,6 +92,7 @@ def test_run_resolver_failure_due_to_minimum_difficulty(
     resolver_config = MagicMock(spec=ResolverConfiguration)
     resolver_config.minimum_difficulty = 1
     mock_resolve.return_value = MagicMock()
+    patches = GamePatches(randomizer_log.pickup_mapping)
 
     final_state = echoes.run_resolver(data, randomizer_log, resolver_config)
 
@@ -95,11 +100,11 @@ def test_run_resolver_failure_due_to_minimum_difficulty(
     assert final_state is None
     mock_resolve.assert_has_calls([
         call(resolver_config.difficulty, resolver_config.enabled_tricks,
-             resolver_config.item_loss, mock_decode_data.return_value),
+             resolver_config.item_loss, mock_decode_data.return_value, patches),
         call(resolver_config.minimum_difficulty - 1, resolver_config.enabled_tricks,
-             resolver_config.item_loss, mock_decode_data.return_value),
+             resolver_config.item_loss, mock_decode_data.return_value, patches),
     ])
-    mock_decode_data.assert_called_once_with(data, randomizer_log.pickup_database, randomizer_log.elevators)
+    mock_decode_data.assert_called_once_with(data, randomizer_log.elevators)
 
 
 @patch("randovania.resolver.echoes.run_resolver", autospec=True)
