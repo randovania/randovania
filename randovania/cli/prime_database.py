@@ -110,7 +110,7 @@ def load_game_description(args) -> GameDescription:
     logfile = os.path.join(get_data_path(), "prime2_original_log.txt")
     randomizer_log = log_parser.parse_log(logfile)
 
-    gd = data_reader.decode_data(data, randomizer_log.pickup_database, randomizer_log.elevators)
+    gd = data_reader.decode_data(data, randomizer_log.elevators)
     debug._gd = gd
     return gd
 
@@ -205,7 +205,6 @@ def list_paths_with_difficulty_logic(args):
                             count += 1
 
     print("Total routes: {}".format(count))
-
 
 
 def list_paths_with_difficulty_command(sub_parsers):

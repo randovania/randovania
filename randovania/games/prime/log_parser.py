@@ -1,154 +1,11 @@
 import copy
-import os
 import re
 from collections import defaultdict
 from typing import NamedTuple, List, Dict, TextIO, Optional
 
-from randovania import get_data_path
-from randovania.games.prime import claris_random
-from randovania.resolver.game_description import PickupEntry, PickupDatabase
+from randovania.games.prime import claris_random, binary_data
 
 RANDOMIZER_VERSION = "3.2"
-
-percent_less_items = {
-    "Dark Agon Key 1",
-    "Dark Agon Key 2",
-    "Dark Agon Key 3",
-    "Dark Torvus Key 1",
-    "Dark Torvus Key 2",
-    "Dark Torvus Key 3",
-    "Ing Hive Key 1",
-    "Ing Hive Key 2",
-    "Ing Hive Key 3",
-    "Sky Temple Key 1",
-    "Sky Temple Key 2",
-    "Sky Temple Key 3",
-    "Sky Temple Key 4",
-    "Sky Temple Key 5",
-    "Sky Temple Key 6",
-    "Sky Temple Key 7",
-    "Sky Temple Key 8",
-    "Sky Temple Key 9",
-    "_ItemLossItems",
-    "_StartingItems",
-}
-
-pickup_importance = {
-    "Violet Translator": 2,
-    "Amber Translator": 2,
-    "Emerald Translator": 1,
-    "Cobalt Translator": 1,
-
-    "Dark Beam": 3,
-    "Light Beam": 3,
-    "Annihilator Beam": 2,
-
-    "Boost Ball": 1,
-    "Spider Ball": 1,
-    "Morph Ball Bomb": 1,
-
-    "Dark Visor": 2,
-    "Echo Visor": 1,
-
-    "Grapple Beam": 1,
-    "Gravity Boost": 1,
-    "Space Jump Boots": 1,
-    "Super Missile": 2,
-    "Seeker Launcher": 2,
-    "Screw Attack": 3,
-
-    "Dark Suit": 1,
-    "Light Suit": 3,
-}
-
-direct_name = {
-    "Amber Translator": 1,
-    "Annihilator Beam": 1,
-    "Boost Ball": 1,
-    "Cobalt Translator": 1,
-    "Dark Agon Key 1": 1,
-    "Dark Agon Key 2": 1,
-    "Dark Agon Key 3": 1,
-    "Dark Suit": 1,
-    "Dark Torvus Key 1": 1,
-    "Dark Torvus Key 2": 1,
-    "Dark Torvus Key 3": 1,
-    "Dark Visor": 1,
-    "Darkburst": 1,
-    "Echo Visor": 1,
-    "Emerald Translator": 1,
-    "Energy Transfer Module": 1,
-    "Grapple Beam": 1,
-    "Gravity Boost": 1,
-    "Ing Hive Key 1": 1,
-    "Ing Hive Key 2": 1,
-    "Ing Hive Key 3": 1,
-    "Light Suit": 1,
-    "Morph Ball Bomb": 1,
-    "Power Bomb": 2,
-    "Screw Attack": 1,
-    "Sky Temple Key 1": 1,
-    "Sky Temple Key 2": 1,
-    "Sky Temple Key 3": 1,
-    "Sky Temple Key 4": 1,
-    "Sky Temple Key 5": 1,
-    "Sky Temple Key 6": 1,
-    "Sky Temple Key 7": 1,
-    "Sky Temple Key 8": 1,
-    "Sky Temple Key 9": 1,
-    "Sonic Boom": 1,
-    "Space Jump Boots": 1,
-    "Spider Ball": 1,
-    "Sunburst": 1,
-    "Super Missile": 1,
-    "Violet Translator": 1,
-}
-
-custom_mapping = {
-    "Seeker Launcher": {
-        "Seeker Launcher": 1,
-        "Missile": 5,
-    },
-    "Missile Launcher": {
-        "Missile": 5,
-    },
-    "Energy Tank \d+": {
-        "Energy Tank": 1
-    },
-    "Missile Expansion \d+": {
-        "Missile": 5
-    },
-    "Power Bomb Expansion \d+": {
-        "Power Bomb": 1
-    },
-    "Beam Ammo Expansion \d+": {
-        "Dark Ammo": 50,
-        "Light Ammo": 50,
-    },
-    "Light Beam": {
-        "Light Beam": 1,
-        "Light Ammo": 50,
-    },
-    "Dark Beam": {
-        "Dark Beam": 1,
-        "Dark Ammo": 50,
-    },
-    "_StartingItems": {
-        "Power Beam": 1,
-        "Combat Visor": 1,
-        "Scan Visor": 1,
-        "Varia Suit": 1,
-        "Morph Ball": 1,
-        "Charge Beam": 1,
-    },
-    "_ItemLossItems": {
-        "Boost Ball": 1,
-        "Spider Ball": 1,
-        "Morph Ball Bomb": 1,
-        "Space Jump Boots": 1,
-        "Missile": 5,
-    },
-}
 
 
 class Elevator:
@@ -287,7 +144,7 @@ class RandomizerLog(NamedTuple):
     version: str
     seed: int
     excluded_pickups: List[int]
-    pickup_database: PickupDatabase
+    pickup_mapping: List[int]
     elevators: List[Elevator]
 
     def write(self, output_file: TextIO):
@@ -296,11 +153,13 @@ class RandomizerLog(NamedTuple):
         output_file.write("Excluded pickups: {}\n".format(
             " ".join(str(pickup) for pickup in self.excluded_pickups)))
 
-        for entry in self.pickup_database.entries:
+        pickups = binary_data.decode_default_prime2()["resource_database"]["pickups"]
+        for original_index, new_index in enumerate(self.pickup_mapping):
+            entry = pickups[original_index]
             output_file.write("{:.20} {:.29} {}\n".format(
-                _add_hyphens(entry.world, 1),
-                _add_hyphens(entry.room, 0),
-                entry.item
+                _add_hyphens(entry["world"], 1),
+                _add_hyphens(entry["room"], 0),
+                pickups[new_index]["item"]
             ))
 
         if self.elevators:
@@ -325,6 +184,12 @@ def extract_with_regexp(logfile, f, regex, invalid_reason):
 
 
 def parse_log(logfile: str) -> RandomizerLog:
+    echoes_data = binary_data.decode_default_prime2()
+    name_to_index = {
+        pickup["item"]: index
+        for index, pickup in enumerate(echoes_data["resource_database"]["pickups"])
+    }
+
     with open(logfile) as f:
         version = extract_with_regexp(logfile, f, r"Randomizer V(\d+\.\d+)",
                                       "Could not find Randomizer version")
@@ -344,13 +209,12 @@ def parse_log(logfile: str) -> RandomizerLog:
         else:
             excluded_pickups = [int(pickup_str) for pickup_str in excluded_pickups_str.split(" ")]
 
-        pickups = []
+        pickups: List[int] = []
         for line in f:
             m = re.match(r"^([^-]+)(?:\s-)+([^-]+)(?:\s-)+([^-]+)$", line)
             if m:
-                args: list = list(map(str.strip, m.group(1, 2, 3)))
-                args.append({})  # TODO
-                pickups.append(PickupEntry(*args))
+                world, room, item = map(str.strip, m.group(1, 2, 3))
+                pickups.append(name_to_index[item])
             else:
                 break
 
@@ -371,8 +235,8 @@ def parse_log(logfile: str) -> RandomizerLog:
                     elevators.append(source)
                 else:
                     break
-        database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickup_importance, pickups)
-        return RandomizerLog(version, seed, excluded_pickups, database, elevators)
+
+        return RandomizerLog(version, seed, excluded_pickups, pickups, elevators)
 
 
 def generate_log(seed: int,
@@ -380,16 +244,14 @@ def generate_log(seed: int,
                  randomize_elevators: bool) -> RandomizerLog:
     """Reference implementation:
     https://github.com/EthanArmbrust/new-prime-seed-generator/blob/master/src/logChecker.cpp#L4458-L4505"""
-    original_log = parse_log(os.path.join(get_data_path(), "prime2_original_log.txt"))
-    original_size = len(original_log.pickup_database.entries)
 
-    randomized_items = [""] * original_size
+    echoes_data = binary_data.decode_default_prime2()
+    original_size = len(echoes_data["resource_database"]["pickups"])
+
+    randomized_items = [-1] * original_size
 
     # add all items from originalList to orderedItems in order
-    ordered_items = [
-        entry.item
-        for entry in original_log.pickup_database.entries
-    ]
+    ordered_items = list(range(original_size))
 
     # fill addedItems with ordered integers
     items_to_add = list(range(original_size))
@@ -417,10 +279,4 @@ def generate_log(seed: int,
         while not elevators:
             elevators = try_randomize_elevators(randomizer)
 
-    pickups = [
-        PickupEntry(original_entry.world, original_entry.room, randomized_item, {})
-        for randomized_item, original_entry in zip(randomized_items, original_log.pickup_database.entries)
-    ]
-
-    database = PickupDatabase(percent_less_items, direct_name, custom_mapping, pickup_importance, pickups)
-    return RandomizerLog(RANDOMIZER_VERSION, seed, excluded_pickups, database, elevators)
+    return RandomizerLog(RANDOMIZER_VERSION, seed, excluded_pickups, randomized_items, elevators)

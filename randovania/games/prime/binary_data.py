@@ -207,6 +207,8 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
         },
         "starting_world_asset_id": extra["starting_world_asset_id"],
         "starting_area_asset_id": extra["starting_area_asset_id"],
+        "starting_items": extra["starting_items"],
+        "item_loss_items": extra["item_loss_items"],
         "victory_condition": extra["victory_condition"],
         "dock_weakness_database": dock_weakness_database,
         "worlds": worlds,

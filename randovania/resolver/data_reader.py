@@ -4,9 +4,10 @@ from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
 from randovania.games.prime.log_parser import Elevator
 from randovania.resolver.game_description import IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, GameDescription, \
-    ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
-    EventNode, PickupNode, is_resource_node, PickupEntry
-from randovania.resolver.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex
+    ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, EventNode, PickupNode, \
+    is_resource_node, PickupEntry, _find_resource_info_with_long_name
+from randovania.resolver.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
+    ResourceGain
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -212,7 +213,14 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
     )
 
 
-def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Elevator]) -> GameDescription:
+def _convert_to_resource_gain(data: Dict[str, int], resource_database: ResourceDatabase) -> ResourceGain:
+    return [
+        (_find_resource_info_with_long_name(resource_database.item, resource_long_name), quantity)
+        for resource_long_name, quantity in data.items()
+    ]
+
+
+def decode_data(data: Dict, elevators: List[Elevator]) -> GameDescription:
     game = data["game"]
     game_name = data["game_name"]
 
@@ -228,20 +236,26 @@ def decode_data(data: Dict, pickup_database: PickupDatabase, elevators: List[Ele
     starting_area_asset_id = data["starting_area_asset_id"]
     victory_condition = read_requirement_set(data["victory_condition"], resource_database)
 
+    # _find_resource_info_with_long_name(database.item, name), value
+
+    starting_items = _convert_to_resource_gain(data["starting_items"], resource_database)
+    item_loss_items = _convert_to_resource_gain(data["item_loss_items"], resource_database)
+
     nodes_to_area, nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
     return GameDescription(
         game=game,
         game_name=game_name,
         resource_database=resource_database,
-        pickup_database=pickup_database,
         dock_weakness_database=dock_weakness_database,
         worlds=worlds,
         nodes_to_area=nodes_to_area,
         nodes_to_world=nodes_to_world,
         victory_condition=victory_condition,
         starting_world_asset_id=starting_world_asset_id,
-        starting_area_asset_id=starting_area_asset_id
+        starting_area_asset_id=starting_area_asset_id,
+        starting_items=starting_items,
+        item_loss_items=item_loss_items,
     )
 
 
