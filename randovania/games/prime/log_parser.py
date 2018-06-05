@@ -418,7 +418,7 @@ def generate_log(seed: int,
             elevators = try_randomize_elevators(randomizer)
 
     pickups = [
-        PickupEntry(original_entry.world, original_entry.room, randomized_item)
+        PickupEntry(original_entry.world, original_entry.room, randomized_item, {})
         for randomized_item, original_entry in zip(randomized_items, original_log.pickup_database.entries)
     ]
 
