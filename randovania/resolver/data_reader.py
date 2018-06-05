@@ -6,7 +6,7 @@ from randovania.resolver.game_description import IndividualRequirement, \
     DockWeakness, RequirementSet, World, Area, Node, GenericNode, DockNode, TeleporterNode, GameDescription, \
     ResourceType, ResourceDatabase, DockType, DockWeaknessDatabase, RequirementList, PickupDatabase, \
     EventNode, PickupNode, is_resource_node, PickupEntry
-from randovania.resolver.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo
+from randovania.resolver.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -79,7 +79,6 @@ def read_requirement_set(data: List[List[Dict]],
 def add_requirement_to_set(
         requirement_set: RequirementSet,
         new_requirement: IndividualRequirement) -> RequirementSet:
-
     return RequirementSet(
         RequirementList(requirement_list.union([new_requirement]))
         for requirement_list in requirement_set.alternatives)
@@ -140,7 +139,7 @@ class WorldReader:
                     DockType(data["dock_type"]), data["dock_weakness_index"]))
 
         elif node_type == 2:
-            return PickupNode(name, heal, data["pickup_index"])
+            return PickupNode(name, heal, PickupIndex(data["pickup_index"]))
 
         elif node_type == 3:
             instance_id = data["teleporter_instance_id"]

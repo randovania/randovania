@@ -392,10 +392,10 @@ class TeleporterNode(NamedTuple):
 class PickupNode(NamedTuple):
     name: str
     heal: bool
-    pickup_index: int
+    pickup_index: PickupIndex
 
     def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
-        return PickupIndex(self, self.pickup_index)
+        return self.pickup_index
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
@@ -403,7 +403,7 @@ class PickupNode(NamedTuple):
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
         yield self.resource(resource_database), 1
         yield from pickup_database.pickup_index_to_resource_gain(
-            self.pickup_index, resource_database)
+            self.pickup_index.index, resource_database)
 
 
 class EventNode(NamedTuple):
