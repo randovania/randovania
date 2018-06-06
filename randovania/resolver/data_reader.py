@@ -8,7 +8,7 @@ from randovania.resolver.node import GenericNode, DockNode, TeleporterNode, Pick
 from randovania.resolver.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.resolver.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
-    ResourceGain, PickupEntry, _find_resource_info_with_long_name, ResourceType, ResourceDatabase
+    ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -216,7 +216,7 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
 
 def _convert_to_resource_gain(data: Dict[str, int], resource_database: ResourceDatabase) -> ResourceGain:
     return [
-        (_find_resource_info_with_long_name(resource_database.item, resource_long_name), quantity)
+        (find_resource_info_with_long_name(resource_database.item, resource_long_name), quantity)
         for resource_long_name, quantity in data.items()
     ]
 
