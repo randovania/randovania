@@ -53,7 +53,7 @@ class PickupEntry(NamedTuple):
     def resource_gain(self,
                       database: "ResourceDatabase") -> ResourceGain:
         for name, value in self.resources.items():
-            yield _find_resource_info_with_long_name(database.item, name), value
+            yield find_resource_info_with_long_name(database.item, name), value
 
     def __str__(self):
         return "Pickup {}".format(self.item)
@@ -67,7 +67,7 @@ def _find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
         "Resource with index {} not found in {}".format(index, info_list))
 
 
-def _find_resource_info_with_long_name(info_list: List[ResourceInfo], long_name: str):
+def find_resource_info_with_long_name(info_list: List[ResourceInfo], long_name: str):
     for info in info_list:
         if info.long_name == long_name:
             return info
