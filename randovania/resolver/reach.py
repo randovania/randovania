@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Dict, Set, List, Iterator, Tuple, Iterable
 
 from randovania.resolver import debug
-from randovania.resolver.game_description import potential_nodes_from, calculate_interesting_resources
+from randovania.resolver.game_description import calculate_interesting_resources
 from randovania.resolver.node import ResourceNode, Node, is_resource_node
 from randovania.resolver.requirements import RequirementList, RequirementSet, SatisfiableRequirements
 from randovania.resolver.state import State
@@ -42,7 +42,7 @@ class Reach:
             if node != initial_state.node:
                 reach_nodes.append(node)
 
-            for target_node, requirements in potential_nodes_from(node, logic.game):
+            for target_node, requirements in logic.game.potential_nodes_from(node):
                 if target_node in checked_nodes or target_node in nodes_to_check:
                     continue
 
