@@ -12,7 +12,6 @@ def test_parse_log(test_files_dir):
     assert log.version == "3.2"
     assert log.seed == 1145919247
     assert log.excluded_pickups == [23]
-    print(log.pickup_mapping)
     assert log.pickup_mapping == [88, 24, 71, 35, 103, 85, 114, 73, 54, 25, 62, 70, 10, 33, 118, 86, 1, 5, 4, 36, 8, 89,
                                   87, 23, 74, 22, 43, 116, 75, 37, 40, 15, 108, 91, 14, 72, 61, 68, 28, 64, 90, 99, 12,
                                   96, 45, 0, 66, 50, 94, 41, 77, 9, 6, 18, 83, 58, 46, 102, 2, 67, 76, 65, 42, 78, 53,
