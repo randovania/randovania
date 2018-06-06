@@ -128,3 +128,10 @@ class ResourceDatabase(NamedTuple):
 
     def item_percentage(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
+
+
+def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResources:
+    return {
+        resource: a.get(resource, 0) + b.get(resource, 0)
+        for resource in a.keys() | b.keys()
+    }
