@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import NamedTuple, Optional, Set, Iterable, FrozenSet
+from typing import NamedTuple, Optional, Iterable, FrozenSet
 
 from randovania.resolver.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceType, \
     ResourceDatabase
@@ -85,9 +85,8 @@ class RequirementList(frozenset):
 
         return RequirementList(items)
 
-    def values(self) -> Set[IndividualRequirement]:
-        the_set = self  # type: Set[IndividualRequirement]
-        return the_set
+    def values(self) -> FrozenSet[IndividualRequirement]:
+        return self
 
 
 class RequirementSet:
@@ -95,7 +94,7 @@ class RequirementSet:
     Represents multiple alternatives of satisfying a requirement.
     For example, going from A to B may be possible by having Grapple+Space Jump or Screw Attack.
     """
-    alternatives: Set[RequirementList]
+    alternatives: FrozenSet[RequirementList]
 
     def __init__(self, alternatives: Iterable[RequirementList]):
         """

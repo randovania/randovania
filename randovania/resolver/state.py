@@ -58,13 +58,13 @@ class State:
 
     @classmethod
     def calculate_starting_state(cls,
-                                 item_loss: bool,
                                  logic: Logic) -> "State":
         game = logic.game
 
         starting_world = game.world_by_asset_id(game.starting_world_asset_id)
         starting_area = starting_world.area_by_asset_id(game.starting_area_asset_id)
         starting_node = starting_area.nodes[starting_area.default_node_index]
+
         starting_state = State(
             {
                 # "No Requirements"
@@ -81,7 +81,7 @@ class State:
                 starting_state.resources[pickup_resource] += quantity
 
         add_resources_from(game.starting_items)
-        if item_loss:
+        if logic.patches.item_loss_enabled:
             # TODO: not hardcode this data here.
             # TODO: actually lose the items when trigger the Item Loss cutscene
             # These ids are all events you trigger before reaching the IL cutscene in echoes

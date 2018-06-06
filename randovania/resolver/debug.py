@@ -3,7 +3,6 @@ from typing import Set
 from randovania.resolver.game_description import Area, GameDescription
 from randovania.resolver.node import Node
 from randovania.resolver.requirements import RequirementList
-from randovania.resolver.state import State
 
 _DEBUG_LEVEL = 0
 count = 0
@@ -47,7 +46,7 @@ def _indent(offset=0):
     return " " * (_current_indent - offset)
 
 
-def log_new_advance(state: State, reach):
+def log_new_advance(state: "State", reach):
     global _current_indent
     increment_attempts()
     _current_indent += 1

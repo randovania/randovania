@@ -4,7 +4,7 @@ from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.node import Node
 from randovania.resolver.requirements import RequirementSet
-from randovania.resolver.resources import CurrentResources
+from randovania.resolver.resources import CurrentResources, ResourceDatabase
 
 
 class Logic:
@@ -24,15 +24,15 @@ class Logic:
 
 def build_static_resources(difficulty_level: int,
                            tricks_enabled: Set[int],
-                           game: GameDescription) -> CurrentResources:
+                           resource_database: ResourceDatabase) -> CurrentResources:
     static_resources = {}
 
-    for trick in game.resource_database.trick:
+    for trick in resource_database.trick:
         if trick.index in tricks_enabled:
             static_resources[trick] = 1
         else:
             static_resources[trick] = 0
 
-    for difficulty in game.resource_database.difficulty:
+    for difficulty in resource_database.difficulty:
         static_resources[difficulty] = difficulty_level
     return static_resources

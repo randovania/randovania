@@ -7,4 +7,5 @@ class GamePatches(NamedTuple):
     * Swapping pickup locations
     """
 
+    item_loss_enabled: bool
     pickup_mapping: List[int]
