@@ -1,8 +1,7 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 from randovania.resolver.node import EventNode
 from randovania.resolver.reach import Reach
-from randovania.resolver.state import State
 
 
 def test_possible_actions_empty():

@@ -38,21 +38,16 @@ def run_resolver(data: Dict,
                  randomizer_log: RandomizerLog,
                  resolver_config: ResolverConfiguration,
                  verbose=True) -> Optional[State]:
-    game_description = data_reader.decode_data(data, randomizer_log.elevators)
-    game_patches = GamePatches(randomizer_log.pickup_mapping)
 
-    final_state = resolver.resolve(resolver_config.difficulty,
-                                   resolver_config.enabled_tricks,
-                                   resolver_config.item_loss,
-                                   game_description,
+    game_description = data_reader.decode_data(data, randomizer_log.elevators)
+    game_patches = GamePatches(resolver_config.item_loss, randomizer_log.pickup_mapping)
+
+    final_state = resolver.resolve(resolver_config.difficulty, resolver_config.enabled_tricks, game_description,
                                    game_patches)
     if final_state:
         if resolver_config.minimum_difficulty > 0:
-            if resolver.resolve(resolver_config.minimum_difficulty - 1,
-                                resolver_config.enabled_tricks,
-                                resolver_config.item_loss,
-                                game_description,
-                                game_patches):
+            if resolver.resolve(resolver_config.minimum_difficulty - 1, resolver_config.enabled_tricks,
+                                game_description, game_patches):
                 if verbose:
                     print("Game is beatable using a lower difficulty!")
                 return None

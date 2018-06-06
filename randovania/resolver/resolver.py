@@ -6,7 +6,7 @@ from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import build_static_resources, \
     Logic
 from randovania.resolver.reach import Reach
-from randovania.resolver.resources import CurrentResources, merge_resources
+from randovania.resolver.resources import merge_resources
 from randovania.resolver.state import State
 
 
@@ -33,27 +33,18 @@ def advance_depth(state: State,
     return None
 
 
-def simplify_connections(game: GameDescription, resources: CurrentResources) -> None:
-    for world in game.worlds:
-        for area in world.areas:
-            for connections in area.connections.values():
-                for target, value in connections.items():
-                    connections[target] = value.simplify(resources, game.resource_database)
-
-
 def resolve(difficulty_level: int,
             tricks_enabled: Set[int],
-            item_loss: bool,
             game: GameDescription,
             patches: GamePatches) -> Optional[State]:
     # global state for easy printing functions
     debug._gd = game
 
     logic = Logic(game, patches)
-    starting_state = State.calculate_starting_state(item_loss, logic)
+    starting_state = State.calculate_starting_state(logic)
 
-    simplify_connections(game,
-                         merge_resources(build_static_resources(difficulty_level, tricks_enabled, game),
-                                         starting_state.resources))
+    game.simplify_connections(merge_resources(
+        build_static_resources(difficulty_level, tricks_enabled, game.resource_database),
+        starting_state.resources))
 
     return advance_depth(starting_state, logic)
