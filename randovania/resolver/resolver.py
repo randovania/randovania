@@ -1,7 +1,8 @@
 from typing import Set, Optional
 
 from randovania.resolver import debug
-from randovania.resolver.game_description import GameDescription, RequirementSet
+from randovania.resolver.game_description import GameDescription
+from randovania.resolver.requirements import RequirementSet
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import build_static_resources, \
     Logic

@@ -2,8 +2,9 @@ from collections import defaultdict
 from typing import Dict, Set, List, Iterator, Tuple, Iterable
 
 from randovania.resolver import debug
-from randovania.resolver.game_description import Node, RequirementList, RequirementSet, ResourceNode, \
-    is_resource_node, potential_nodes_from, calculate_interesting_resources, SatisfiableRequirements
+from randovania.resolver.game_description import Node, ResourceNode, \
+    is_resource_node, potential_nodes_from, calculate_interesting_resources
+from randovania.resolver.requirements import RequirementList, RequirementSet, SatisfiableRequirements
 from randovania.resolver.state import State
 
 

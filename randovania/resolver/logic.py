@@ -1,6 +1,7 @@
 from typing import Dict, Set
 
-from randovania.resolver.game_description import Node, GameDescription, RequirementSet
+from randovania.resolver.game_description import Node, GameDescription
+from randovania.resolver.requirements import RequirementSet
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.resources import CurrentResources
 

@@ -1,6 +1,7 @@
 from typing import Set
 
-from randovania.resolver.game_description import Node, Area, GameDescription, RequirementList, potential_nodes_from
+from randovania.resolver.game_description import Node, Area, GameDescription, potential_nodes_from
+from randovania.resolver.requirements import RequirementList
 from randovania.resolver.state import State
 
 _DEBUG_LEVEL = 0
