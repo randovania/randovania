@@ -115,6 +115,11 @@ class GameDescription:
         return area.nodes[area.default_node_index]
 
     def potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+        """
+        Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
+        :param node:
+        :return: Generator of pairs Node + RequirementSet for going to that node
+        """
         if isinstance(node, DockNode):
             # TODO: respect is_blast_shield: if already opened once, no requirement needed.
             # Includes opening form behind with different criteria
@@ -136,6 +141,21 @@ class GameDescription:
         area = self.nodes_to_area(node)
         for target_node, requirements in area.connections[node].items():
             yield target_node, requirements
+
+    def simplify_connections(self, static_resources: CurrentResources) -> None:
+        """
+        Simplifies all Node connections, assuming the given resources will never change their quantity.
+        This is removes all checking for tricks and difficulties in runtime since these never change.
+        This also removes redundant variations such as "Bombs or Bombs + Grapple", caused by one variation
+        needing originally a difficulty and/or trick.
+        :param static_resources:
+        :return:
+        """
+        for world in self.worlds:
+            for area in world.areas:
+                for connections in area.connections.values():
+                    for target, value in connections.items():
+                        connections[target] = value.simplify(static_resources, self.resource_database)
 
 
 def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
