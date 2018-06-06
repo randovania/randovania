@@ -35,4 +35,5 @@ def build_static_resources(difficulty_level: int,
 
     for difficulty in resource_database.difficulty:
         static_resources[difficulty] = difficulty_level
+
     return static_resources

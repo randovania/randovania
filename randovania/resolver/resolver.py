@@ -1,12 +1,11 @@
 from typing import Set, Optional
 
 from randovania.resolver import debug
+from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.logic import build_static_resources, \
-    Logic
+from randovania.resolver.logic import Logic
 from randovania.resolver.reach import Reach
-from randovania.resolver.resources import merge_resources
 from randovania.resolver.state import State
 
 
@@ -37,14 +36,8 @@ def resolve(difficulty_level: int,
             tricks_enabled: Set[int],
             game: GameDescription,
             patches: GamePatches) -> Optional[State]:
-    # global state for easy printing functions
-    debug._gd = game
 
-    logic = Logic(game, patches)
-    starting_state = State.calculate_starting_state(logic)
-
-    game.simplify_connections(merge_resources(
-        build_static_resources(difficulty_level, tricks_enabled, game.resource_database),
-        starting_state.resources))
-
+    logic, starting_state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
     return advance_depth(starting_state, logic)
+
+

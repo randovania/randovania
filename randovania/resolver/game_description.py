@@ -1,6 +1,8 @@
 """Classes that describes the raw data of a game world."""
 from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet, Iterable
 
+import copy
+
 from randovania.resolver.dock import DockWeaknessDatabase
 from randovania.resolver.node import DockNode, TeleporterNode, Node
 from randovania.resolver.requirements import RequirementSet, SatisfiableRequirements
@@ -56,6 +58,20 @@ class GameDescription:
 
     _nodes_to_area: Dict[Node, Area] = {}
     _nodes_to_world: Dict[Node, World] = {}
+
+    def __deepcopy__(self, memodict):
+        return GameDescription(
+            game=self.game,
+            game_name=self.game_name,
+            resource_database=self.resource_database,
+            dock_weakness_database=self.dock_weakness_database,
+            worlds=copy.deepcopy(self.worlds, memodict),
+            victory_condition=self.victory_condition,
+            starting_world_asset_id=self.starting_world_asset_id,
+            starting_area_asset_id=self.starting_area_asset_id,
+            starting_items=self.starting_items,
+            item_loss_items=self.item_loss_items,
+        )
 
     def __init__(self,
                  game: int,

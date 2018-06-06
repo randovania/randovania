@@ -1,3 +1,7 @@
+import copy
+
+from randovania.games.prime import binary_data
+from randovania.resolver import data_reader
 from randovania.resolver.data_reader import add_requirement_to_set
 from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.resolver.resources import SimpleResourceInfo
@@ -20,3 +24,13 @@ def test_add_requirement_to_set():
     for the_set_list, new_set_list in zip(the_set.alternatives,
                                           new_set.alternatives):
         assert the_set_list.union([id_req_c]) == new_set_list
+
+
+def test_copy_worlds():
+    data = binary_data.decode_default_prime2()
+    game_description = data_reader.decode_data(data, [])
+
+    worlds_copy = copy.deepcopy(game_description.worlds)
+
+    assert worlds_copy == game_description.worlds
+    assert worlds_copy is not game_description.worlds
