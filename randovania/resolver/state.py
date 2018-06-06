@@ -1,7 +1,8 @@
 import copy
 from typing import Optional
 
-from randovania.resolver.game_description import Node, ResourceNode, GameDescription
+from randovania.resolver.game_description import GameDescription
+from randovania.resolver.node import ResourceNode, Node
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import Logic
 from randovania.resolver.resources import ResourceInfo, CurrentResources, ResourceGain, ResourceType, ResourceDatabase
