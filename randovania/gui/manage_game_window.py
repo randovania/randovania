@@ -7,7 +7,7 @@ from typing import Optional, Callable
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import apply_seed

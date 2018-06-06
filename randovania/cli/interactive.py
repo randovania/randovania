@@ -1,9 +1,6 @@
 import multiprocessing
-import os
 from argparse import ArgumentParser
-from typing import BinaryIO
 
-from randovania import get_data_path
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import has_randomizer_binary, apply_seed
 from randovania.interface_common.options import value_parsers, options_validation, Options

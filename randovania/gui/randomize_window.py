@@ -1,13 +1,10 @@
-import os
-from typing import Dict, Iterable, BinaryIO
+from typing import Dict, Iterable
 
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
 
-from randovania import get_data_path
 from randovania.games.prime import binary_data
-from randovania.games.prime.log_parser import parse_log
 from randovania.gui import application_options
 from randovania.gui.randomize_window_ui import Ui_RandomizeWindow
 from randovania.resolver.data_reader import read_resource_database
@@ -24,6 +21,7 @@ def _persist_bool_option(attribute_name: str):
         options = application_options()
         setattr(options, attribute_name, value)
         options.save_to_disk()
+
     return callback
 
 

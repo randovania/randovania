@@ -38,7 +38,6 @@ def run_resolver(data: Dict,
                  randomizer_log: RandomizerLog,
                  resolver_config: ResolverConfiguration,
                  verbose=True) -> Optional[State]:
-
     game_description = data_reader.decode_data(data, randomizer_log.elevators)
     game_patches = GamePatches(randomizer_log.pickup_mapping)
 
@@ -154,7 +153,6 @@ def search_seed_with_options(data: Dict,
                              options: Options,
                              seed_report: Callable[[int], None],
                              start_on_seed: Optional[int] = None) -> Tuple[int, int]:
-
     randomizer_config = RandomizerConfiguration.from_options(options)
     resolver_config = ResolverConfiguration.from_options(options)
     cpu_count = options.cpu_usage.num_cpu_for_count(multiprocessing.cpu_count())

@@ -1,8 +1,7 @@
 import json
+import os
 from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Dict, TextIO
-
-import os
 
 from randovania import get_data_path
 from randovania.binary_file import BinarySource, BinaryWriter

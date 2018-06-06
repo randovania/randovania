@@ -2,10 +2,10 @@ from functools import partial
 from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
 
 from randovania.games.prime.log_parser import Elevator
+from randovania.resolver.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.resolver.game_description import World, Area, GameDescription
 from randovania.resolver.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     is_resource_node
-from randovania.resolver.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.resolver.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
     ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase

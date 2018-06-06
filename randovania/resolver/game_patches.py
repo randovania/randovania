@@ -6,5 +6,5 @@ class GamePatches(NamedTuple):
     Currently we support:
     * Swapping pickup locations
     """
-    
+
     pickup_mapping: List[int]
