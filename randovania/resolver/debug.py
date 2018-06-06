@@ -1,6 +1,6 @@
 from typing import Set
 
-from randovania.resolver.game_description import Area, GameDescription, potential_nodes_from
+from randovania.resolver.game_description import Area, GameDescription
 from randovania.resolver.node import Node
 from randovania.resolver.requirements import RequirementList
 from randovania.resolver.state import State
@@ -20,7 +20,7 @@ def pretty_print_area(area: Area):
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))
-        for target_node, requirements in potential_nodes_from(node, _gd):
+        for target_node, requirements in _gd.potential_nodes_from(node):
             if target_node is None:
                 print("  > None?")
             else:

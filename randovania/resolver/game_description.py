@@ -67,20 +67,40 @@ class GameDescription(NamedTuple):
                 for node in area.nodes:
                     yield node
 
+    def resolve_dock_node(self, node: DockNode) -> Node:
+        world = self.nodes_to_world[node]
+        area = world.area_by_asset_id(node.connected_area_asset_id)
+        return area.node_with_dock_index(node.connected_dock_index)
 
-def resolve_dock_node(node: DockNode, game: GameDescription) -> Node:
-    world = game.nodes_to_world[node]
-    area = world.area_by_asset_id(node.connected_area_asset_id)
-    return area.node_with_dock_index(node.connected_dock_index)
+    def resolve_teleporter_node(self, node: TeleporterNode) -> Node:
+        world = self.world_by_asset_id(node.destination_world_asset_id)
+        area = world.area_by_asset_id(node.destination_area_asset_id)
+        if area.default_node_index == 255:
+            raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
+        return area.nodes[area.default_node_index]
 
+    def potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+        if isinstance(node, DockNode):
+            # TODO: respect is_blast_shield: if already opened once, no requirement needed.
+            # Includes opening form behind with different criteria
+            try:
+                target_node = self.resolve_dock_node(node)
+                yield target_node, node.dock_weakness.requirements
+            except IndexError:
+                # TODO: fix data to not having docks pointing to nothing
+                yield None, RequirementSet.impossible()
 
-def resolve_teleporter_node(node: TeleporterNode,
-                            game: GameDescription) -> Node:
-    world = game.world_by_asset_id(node.destination_world_asset_id)
-    area = world.area_by_asset_id(node.destination_area_asset_id)
-    if area.default_node_index == 255:
-        raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
-    return area.nodes[area.default_node_index]
+        if isinstance(node, TeleporterNode):
+            try:
+                yield self.resolve_teleporter_node(node), RequirementSet.trivial()
+            except IndexError:
+                # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
+                print("Teleporter is broken!", node)
+                yield None, RequirementSet.impossible()
+
+        area = self.nodes_to_area[node]
+        for target_node, requirements in area.connections[node].items():
+            yield target_node, requirements
 
 
 def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
@@ -89,38 +109,14 @@ def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
             for node in area.nodes:
                 if isinstance(node, DockNode):
                     try:
-                        resolve_dock_node(node, game)
+                        game.resolve_dock_node(node)
                     except IndexError as e:
                         yield node, "Invalid dock connection: {}".format(e)
                 elif isinstance(node, TeleporterNode):
                     try:
-                        resolve_teleporter_node(node, game)
+                        game.resolve_teleporter_node(node)
                     except IndexError as e:
                         yield node, "Invalid teleporter connection: {}".format(e)
-
-
-def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
-    if isinstance(node, DockNode):
-        # TODO: respect is_blast_shield: if already opened once, no requirement needed.
-        # Includes opening form behind with different criteria
-        try:
-            target_node = resolve_dock_node(node, game)
-            yield target_node, node.dock_weakness.requirements
-        except IndexError:
-            # TODO: fix data to not having docks pointing to nothing
-            yield None, RequirementSet.impossible()
-
-    if isinstance(node, TeleporterNode):
-        try:
-            yield resolve_teleporter_node(node, game), RequirementSet.trivial()
-        except IndexError:
-            # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
-            print("Teleporter is broken!", node)
-            yield None, RequirementSet.impossible()
-
-    area = game.nodes_to_area[node]
-    for target_node, requirements in area.connections[node].items():
-        yield target_node, requirements
 
 
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
