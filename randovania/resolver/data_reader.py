@@ -2,8 +2,8 @@ from functools import partial
 from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
 
 from randovania.games.prime.log_parser import Elevator
-from randovania.resolver.game_description import World, Area, Node, GenericNode, DockNode, TeleporterNode, GameDescription, \
-    EventNode, PickupNode, \
+from randovania.resolver.game_description import World, Area, GameDescription
+from randovania.resolver.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     is_resource_node
 from randovania.resolver.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet

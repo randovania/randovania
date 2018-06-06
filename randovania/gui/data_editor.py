@@ -9,7 +9,8 @@ from randovania.games.prime import binary_data
 from randovania.games.prime.log_parser import parse_log
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 from randovania.resolver.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
-from randovania.resolver.game_description import World, Area, Node
+from randovania.resolver.game_description import World, Area
+from randovania.resolver.node import Node
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
