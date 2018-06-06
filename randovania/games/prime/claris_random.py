@@ -87,4 +87,3 @@ class Random:
 
     def sample(self) -> float:
         return self._internal_sample().value / MBIG.value
-

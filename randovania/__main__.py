@@ -1,4 +1,3 @@
-import argparse
 import multiprocessing
 
 from randovania import cli

@@ -50,4 +50,3 @@ def apply_seed(randomizer_config: RandomizerConfiguration,
         except Exception:
             process.kill()
             raise
-

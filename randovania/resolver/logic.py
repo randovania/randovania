@@ -1,9 +1,9 @@
 from typing import Dict, Set
 
 from randovania.resolver.game_description import GameDescription
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.node import Node
 from randovania.resolver.requirements import RequirementSet
-from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.resources import CurrentResources
 
 
@@ -36,5 +36,3 @@ def build_static_resources(difficulty_level: int,
     for difficulty in game.resource_database.difficulty:
         static_resources[difficulty] = difficulty_level
     return static_resources
-
-

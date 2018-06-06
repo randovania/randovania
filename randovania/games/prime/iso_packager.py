@@ -16,8 +16,9 @@ def _disc_unpack_process(output_pipe, iso: str, game_files_path: str):
             disc, is_wii = nod.open_disc_from_image(iso)
             data_partition = disc.get_data_partition()
             if not data_partition:
-                raise RuntimeError("Could not find a data partition in '{}'.\nIs it a valid Metroid Prime 2 ISO?".format(
-                    iso))
+                raise RuntimeError(
+                    "Could not find a data partition in '{}'.\nIs it a valid Metroid Prime 2 ISO?".format(
+                        iso))
 
             context = nod.ExtractionContext()
             context.set_progress_callback(progress_callback)
@@ -26,6 +27,7 @@ def _disc_unpack_process(output_pipe, iso: str, game_files_path: str):
 
         except RuntimeError as e:
             return True, str(e), 0
+
     output_pipe.send(_helper())
 
 
@@ -41,6 +43,7 @@ def _disc_pack_process(status_queue, iso: str, game_files_path: str):
 
         except RuntimeError as e:
             return True, str(e), 0
+
     status_queue.send(_helper())
 
 
@@ -49,7 +52,6 @@ def _shared_process_code(target,
                          game_files_path: str,
                          on_finish_message: str,
                          progress_update: Callable[[str, int], None]):
-
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
     process = multiprocessing.Process(
         target=target,
