@@ -1,5 +1,5 @@
 """Classes that describes the raw data of a game world."""
-from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet
+from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet, Iterable
 
 from randovania.resolver.dock import DockWeaknessDatabase
 from randovania.resolver.node import DockNode, TeleporterNode, Node
@@ -41,19 +41,48 @@ class World(NamedTuple):
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
 
-class GameDescription(NamedTuple):
+class GameDescription:
     game: int
     game_name: str
-    resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    worlds: List[World]
-    nodes_to_area: Dict[Node, Area]
-    nodes_to_world: Dict[Node, World]
+
+    resource_database: ResourceDatabase
     victory_condition: RequirementSet
     starting_world_asset_id: int
     starting_area_asset_id: int
     starting_items: ResourceGain
     item_loss_items: ResourceGain
+    worlds: List[World]
+
+    _nodes_to_area: Dict[Node, Area] = {}
+    _nodes_to_world: Dict[Node, World] = {}
+
+    def __init__(self,
+                 game: int,
+                 game_name: str,
+                 dock_weakness_database: DockWeaknessDatabase,
+
+                 resource_database: ResourceDatabase,
+                 victory_condition: RequirementSet,
+                 starting_world_asset_id: int,
+                 starting_area_asset_id: int,
+                 starting_items: ResourceGain,
+                 item_loss_items: ResourceGain,
+                 worlds: List[World],
+                 ):
+        self.game = game
+        self.game_name = game_name
+        self.dock_weakness_database = dock_weakness_database
+
+        self.resource_database = resource_database
+        self.victory_condition = victory_condition
+        self.starting_world_asset_id = starting_world_asset_id
+        self.starting_area_asset_id = starting_area_asset_id
+        self.starting_items = starting_items
+        self.item_loss_items = item_loss_items
+        self.worlds = worlds
+
+        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
     def world_by_asset_id(self, asset_id: int) -> World:
         for world in self.worlds:
@@ -67,8 +96,14 @@ class GameDescription(NamedTuple):
                 for node in area.nodes:
                     yield node
 
+    def nodes_to_world(self, node: Node) -> World:
+        return self._nodes_to_world[node]
+
+    def nodes_to_area(self, node: Node) -> Area:
+        return self._nodes_to_area[node]
+
     def resolve_dock_node(self, node: DockNode) -> Node:
-        world = self.nodes_to_world[node]
+        world = self.nodes_to_world(node)
         area = world.area_by_asset_id(node.connected_area_asset_id)
         return area.node_with_dock_index(node.connected_dock_index)
 
@@ -98,7 +133,7 @@ class GameDescription(NamedTuple):
                 print("Teleporter is broken!", node)
                 yield None, RequirementSet.impossible()
 
-        area = self.nodes_to_area[node]
+        area = self.nodes_to_area(node)
         for target_node, requirements in area.connections[node].items():
             yield target_node, requirements
 
@@ -136,3 +171,20 @@ def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequire
                         yield individual.resource
 
     return frozenset(helper())
+
+
+def _calculate_nodes_to_area_world(worlds: Iterable[World]):
+    nodes_to_area = {}
+    nodes_to_world = {}
+
+    for world in worlds:
+        for area in world.areas:
+            for node in area.nodes:
+                if node in nodes_to_area:
+                    raise ValueError(
+                        "Trying to map {} to {}, but already mapped to {}".format(
+                            node, area, nodes_to_area[node]))
+                nodes_to_area[node] = area
+                nodes_to_world[node] = world
+
+    return nodes_to_area, nodes_to_world

@@ -6,7 +6,7 @@ from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import build_static_resources, \
     Logic
 from randovania.resolver.reach import Reach
-from randovania.resolver.resources import CurrentResources
+from randovania.resolver.resources import CurrentResources, merge_resources
 from randovania.resolver.state import State
 
 
@@ -53,7 +53,7 @@ def resolve(difficulty_level: int,
     starting_state = State.calculate_starting_state(item_loss, logic)
 
     simplify_connections(game,
-                         build_static_resources(difficulty_level, tricks_enabled, game))
-    simplify_connections(game, starting_state.resources)
+                         merge_resources(build_static_resources(difficulty_level, tricks_enabled, game),
+                                         starting_state.resources))
 
     return advance_depth(starting_state, logic)

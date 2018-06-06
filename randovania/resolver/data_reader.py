@@ -1,5 +1,5 @@
 from functools import partial
-from typing import List, Callable, TypeVar, Tuple, Dict, Iterable
+from typing import List, Callable, TypeVar, Tuple, Dict
 
 from randovania.games.prime.log_parser import Elevator
 from randovania.resolver.dock import DockWeakness, DockType, DockWeaknessDatabase
@@ -228,21 +228,15 @@ def decode_data(data: Dict, elevators: List[Elevator]) -> GameDescription:
     resource_database = read_resource_database(data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
-    world_reader = WorldReader(resource_database,
-                               dock_weakness_database,
-                               elevators)
-    worlds = world_reader.read_world_list(data["worlds"])
+    worlds = WorldReader(resource_database,
+                         dock_weakness_database,
+                         elevators).read_world_list(data["worlds"])
 
     starting_world_asset_id = data["starting_world_asset_id"]
     starting_area_asset_id = data["starting_area_asset_id"]
     victory_condition = read_requirement_set(data["victory_condition"], resource_database)
-
-    # _find_resource_info_with_long_name(database.item, name), value
-
     starting_items = _convert_to_resource_gain(data["starting_items"], resource_database)
     item_loss_items = _convert_to_resource_gain(data["item_loss_items"], resource_database)
-
-    nodes_to_area, nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
     return GameDescription(
         game=game,
@@ -250,28 +244,9 @@ def decode_data(data: Dict, elevators: List[Elevator]) -> GameDescription:
         resource_database=resource_database,
         dock_weakness_database=dock_weakness_database,
         worlds=worlds,
-        nodes_to_area=nodes_to_area,
-        nodes_to_world=nodes_to_world,
         victory_condition=victory_condition,
         starting_world_asset_id=starting_world_asset_id,
         starting_area_asset_id=starting_area_asset_id,
         starting_items=starting_items,
         item_loss_items=item_loss_items,
     )
-
-
-def _calculate_nodes_to_area_world(worlds: Iterable[World]):
-    nodes_to_area = {}
-    nodes_to_world = {}
-
-    for world in worlds:
-        for area in world.areas:
-            for node in area.nodes:
-                if node in nodes_to_area:
-                    raise ValueError(
-                        "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node]))
-                nodes_to_area[node] = area
-                nodes_to_world[node] = world
-
-    return nodes_to_area, nodes_to_world
