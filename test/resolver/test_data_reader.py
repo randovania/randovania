@@ -1,5 +1,5 @@
 from randovania.resolver.data_reader import add_requirement_to_set
-from randovania.resolver.game_description import RequirementSet, RequirementList, IndividualRequirement
+from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.resolver.resources import SimpleResourceInfo
 
 

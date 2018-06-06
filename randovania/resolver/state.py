@@ -1,10 +1,10 @@
 import copy
 from typing import Optional
 
-from randovania.resolver.game_description import Node, ResourceNode, ResourceDatabase, GameDescription, ResourceType
+from randovania.resolver.game_description import Node, ResourceNode, GameDescription
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import Logic
-from randovania.resolver.resources import ResourceInfo, CurrentResources, ResourceGain
+from randovania.resolver.resources import ResourceInfo, CurrentResources, ResourceGain, ResourceType, ResourceDatabase
 
 
 class State:

@@ -1,8 +1,7 @@
 import pytest
 
-from randovania.resolver.game_description import RequirementSet, IndividualRequirement, \
-    RequirementList, ResourceDatabase
-from randovania.resolver.resources import SimpleResourceInfo
+from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet
+from randovania.resolver.resources import SimpleResourceInfo, ResourceDatabase
 
 
 @pytest.fixture
