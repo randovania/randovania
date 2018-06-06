@@ -27,13 +27,17 @@ class DamageResourceInfo(NamedTuple):
 
 
 class PickupIndex:
-    index: int
+    _index: int
 
     def __init__(self, index: int):
-        self.index = index
+        self._index = index
 
     def __str__(self):
-        return "PickupIndex {}".format(self.index)
+        return "PickupIndex {}".format(self._index)
+
+    @property
+    def index(self) -> int:
+        return self._index
 
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]

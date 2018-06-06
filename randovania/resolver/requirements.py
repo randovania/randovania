@@ -44,6 +44,9 @@ class IndividualRequirement(NamedTuple):
 
 
 class RequirementList(frozenset):
+    def __deepcopy__(self, memodict):
+        return self
+
     def amount_unsatisfied(self, current_resources: CurrentResources) -> bool:
         return sum(not requirement.satisfied(current_resources)
                    for requirement in self)

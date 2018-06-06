@@ -33,6 +33,9 @@ class PickupNode(NamedTuple):
     heal: bool
     pickup_index: PickupIndex
 
+    def __deepcopy__(self, memodict):
+        return PickupNode(self.name, self.heal, self.pickup_index)
+
     def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
         return self.pickup_index
 
