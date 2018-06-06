@@ -49,20 +49,40 @@ class RequirementList(frozenset):
                    for requirement in self)
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
+        """
+        A list is considered satisfied if all IndividualRequirement that belongs to it are satisfied.
+        In particular, an empty RequirementList is considered satisfied.
+        :param current_resources:
+        :return:
+        """
         return all(requirement.satisfied(current_resources)
                    for requirement in self)
 
-    def simplify(self, static_resources: CurrentResources,
+    def simplify(self,
+                 static_resources: CurrentResources,
                  database: ResourceDatabase) -> Optional["RequirementList"]:
+        """
+        Creates a new RequirementList that does not contain reference to resources in static_resources
+        :param static_resources:
+        :param database:
+        :return: None if this RequirementList is impossible to satisfy, otherwise the simplified RequirementList.
+        """
         items = []
         for item in self:  # type: IndividualRequirement
+            # The impossible resource is always impossible.
             if item.resource == database.impossible_resource():
                 return None
+
             if item.resource in static_resources:
+                # If the resource is a static resource, we either remove it from the list or
+                # consider this list impossible
                 if not item.satisfied(static_resources):
                     return None
+
             elif item.resource != database.trivial_resource():
+                # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
                 items.append(item)
+
         return RequirementList(items)
 
     def values(self) -> Set[IndividualRequirement]:
@@ -116,17 +136,27 @@ class RequirementSet:
         return cls([])
 
     def satisfied(self, current_resources: CurrentResources) -> bool:
+        """
+        Checks if at least one alternative is satisfied with the given resources.
+        In particular, an empty RequirementSet is *never* considered satisfied.
+        :param current_resources:
+        :return:
+        """
         return any(
             requirement_list.satisfied(current_resources)
             for requirement_list in self.alternatives)
 
     def simplify(self, static_resources: CurrentResources,
                  database: ResourceDatabase) -> "RequirementSet":
+        """"""
         new_alternatives = [
             alternative.simplify(static_resources, database)
             for alternative in self.alternatives
         ]
-        return RequirementSet(alternative for alternative in new_alternatives
+        return RequirementSet(alternative
+                              for alternative in new_alternatives
+
+                              # RequirementList.simplify may return None
                               if alternative is not None)
 
     def merge(self, other: "RequirementSet") -> "RequirementSet":
