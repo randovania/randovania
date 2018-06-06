@@ -1,10 +1,10 @@
 from typing import List, Set
 
 from randovania.resolver import debug
-from randovania.resolver.game_description import GameDescription
-from randovania.resolver.logic import build_static_resources, calculate_starting_state, calculate_reach, \
-    calculate_interesting_resources, uncollected_resource_nodes
+from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
+from randovania.resolver.logic import build_static_resources
 from randovania.resolver.resolver import simplify_connections
+from randovania.resolver.state import State
 
 
 def generate_list(
@@ -17,7 +17,7 @@ def generate_list(
 
     static_resources = build_static_resources(difficulty_level, tricks_enabled, game)
     simplify_connections(game, static_resources)
-    starting_state = calculate_starting_state(item_loss, game)
+    starting_state = State.calculate_starting_state(item_loss, game)
     simplify_connections(game, starting_state.resources)
 
     state = starting_state

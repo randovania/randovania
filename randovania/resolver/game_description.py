@@ -1,16 +1,14 @@
 """Classes that describes the raw data of a game world."""
-import re
-import typing
 from enum import Enum, unique
 from functools import lru_cache
-from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional
+from typing import NamedTuple, List, Dict, Union, Tuple, Iterator, Set, Optional, Iterable, FrozenSet
 
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.resources import SimpleResourceInfo, DamageResourceInfo, PickupIndex, ResourceInfo, \
     ResourceGain, CurrentResources
 
 
-class PickupEntry(typing.NamedTuple):
+class PickupEntry(NamedTuple):
     world: str
     room: str
     item: str
@@ -21,7 +19,6 @@ class PickupEntry(typing.NamedTuple):
 
     def resource_gain(self,
                       database: "ResourceDatabase") -> ResourceGain:
-
         for name, value in self.resources.items():
             yield _find_resource_info_with_long_name(database.item, name), value
 
@@ -168,7 +165,7 @@ class RequirementList(frozenset):
 class RequirementSet:
     alternatives: Set[RequirementList]
 
-    def __init__(self, alternatives: typing.Iterable[RequirementList]):
+    def __init__(self, alternatives: Iterable[RequirementList]):
         input_set = frozenset(alternatives)
         self.alternatives = frozenset(
             requirement
@@ -229,6 +226,9 @@ class RequirementSet:
             RequirementList(a.union(b))
             for a in self.alternatives
             for b in other.alternatives)
+
+
+SatisfiableRequirements = FrozenSet[RequirementList]
 
 
 class DockWeakness(NamedTuple):
@@ -435,3 +435,46 @@ def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
                         resolve_teleporter_node(node, game)
                     except IndexError as e:
                         yield node, "Invalid teleporter connection: {}".format(e)
+
+
+def potential_nodes_from(node: Node, game: GameDescription) -> Iterator[Tuple[Node, RequirementSet]]:
+    if isinstance(node, DockNode):
+        # TODO: respect is_blast_shield: if already opened once, no requirement needed.
+        # Includes opening form behind with different criteria
+        try:
+            target_node = resolve_dock_node(node, game)
+            yield target_node, node.dock_weakness.requirements
+        except IndexError:
+            # TODO: fix data to not having docks pointing to nothing
+            yield None, RequirementSet.impossible()
+
+    if isinstance(node, TeleporterNode):
+        try:
+            yield resolve_teleporter_node(node, game), RequirementSet.trivial()
+        except IndexError:
+            # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
+            print("Teleporter is broken!", node)
+            yield None, RequirementSet.impossible()
+
+    area = game.nodes_to_area[node]
+    for target_node, requirements in area.connections[node].items():
+        yield target_node, requirements
+
+
+def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
+                                    resources: CurrentResources) -> FrozenSet[ResourceInfo]:
+    """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList """
+
+    def helper():
+        # For each possible requirement list
+        for requirement_list in satisfiable_requirements:
+            # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
+            if not requirement_list.satisfied(resources):
+
+                for individual in requirement_list.values():
+                    # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
+                    # Finally, if it's not satisfied then we're interested in collecting it
+                    if not individual.negate and not individual.satisfied(resources):
+                        yield individual.resource
+
+    return frozenset(helper())

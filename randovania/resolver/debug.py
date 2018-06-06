@@ -1,11 +1,11 @@
 from typing import Set
 
-from randovania.resolver.game_description import Node, Area, GameDescription, RequirementList
+from randovania.resolver.game_description import Node, Area, GameDescription, RequirementList, potential_nodes_from
 from randovania.resolver.state import State
 
 _DEBUG_LEVEL = 0
 count = 0
-_gd = None  # type: GameDescription
+_gd: GameDescription = None
 _current_indent = 0
 
 
@@ -15,7 +15,6 @@ def n(node: Node, with_world=False) -> str:
 
 
 def pretty_print_area(area: Area):
-    from randovania.resolver.logic import potential_nodes_from
     print(area.name)
     for node in area.nodes:
         print(">", node.name, type(node))
