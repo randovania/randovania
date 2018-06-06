@@ -91,9 +91,18 @@ class RequirementList(frozenset):
 
 
 class RequirementSet:
+    """
+    Represents multiple alternatives of satisfying a requirement.
+    For example, going from A to B may be possible by having Grapple+Space Jump or Screw Attack.
+    """
     alternatives: Set[RequirementList]
 
     def __init__(self, alternatives: Iterable[RequirementList]):
+        """
+        Constructs a RequirementSet from given iterator of RequirementList.
+        Redundant alternatives (Bombs or Bombs + Space Jump) are automatically removed.
+        :param alternatives:
+        """
         input_set = frozenset(alternatives)
         self.alternatives = frozenset(
             requirement

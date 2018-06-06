@@ -146,8 +146,6 @@ class GameDescription:
         """
         Simplifies all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
-        This also removes redundant variations such as "Bombs or Bombs + Grapple", caused by one variation
-        needing originally a difficulty and/or trick.
         :param static_resources:
         :return:
         """
