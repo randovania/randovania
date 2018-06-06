@@ -1,4 +1,3 @@
-import typing
 from typing import NamedTuple, Tuple, Union, List, Dict
 
 
