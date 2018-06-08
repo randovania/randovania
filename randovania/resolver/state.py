@@ -85,6 +85,7 @@ class State:
             # TODO: not hardcode this data here.
             # TODO: actually lose the items when trigger the Item Loss cutscene
             # These ids are all events you trigger before reaching the IL cutscene in echoes
+            # We're giving these items right now because you need the items you lose to be able to get here.
             for event_id in (71, 78, 2, 4):
                 resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
                 starting_state.resources[resource] = 1

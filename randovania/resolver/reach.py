@@ -17,6 +17,10 @@ class Reach:
         return iter(self._nodes)
 
     @property
+    def satisfiable_requirements(self) -> SatisfiableRequirements:
+        return self._satisfiable_requirements
+
+    @property
     def satisfiable_as_requirement_set(self) -> RequirementSet:
         return RequirementSet(self._satisfiable_requirements)
 
