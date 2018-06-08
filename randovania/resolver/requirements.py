@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import NamedTuple, Optional, Iterable, FrozenSet
+from typing import NamedTuple, Optional, Iterable, FrozenSet, Dict
 
 from randovania.resolver.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceType, \
     ResourceDatabase
@@ -59,7 +59,7 @@ class RequirementList(frozenset):
         :return:
         """
         return all(requirement.satisfied(current_resources)
-                   for requirement in self)
+                   for requirement in self.values())
 
     def simplify(self,
                  static_resources: CurrentResources,
@@ -86,6 +86,15 @@ class RequirementList(frozenset):
                 # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
                 items.append(item)
 
+        return RequirementList(items)
+
+    def replace(self, individual: IndividualRequirement, replacement: "RequirementList") -> "RequirementList":
+        items = []
+        for item in self:  # type: IndividualRequirement
+            if item == individual:
+                items.extend(replacement)
+            else:
+                items.append(item)
         return RequirementList(items)
 
     def values(self) -> FrozenSet[IndividualRequirement]:
@@ -169,6 +178,19 @@ class RequirementSet:
 
                               # RequirementList.simplify may return None
                               if alternative is not None)
+
+    def replace(self, individual: IndividualRequirement, replacements: "RequirementSet") -> "RequirementSet":
+        result = []
+
+        for alternative in self.alternatives:
+            if replacements.alternatives:
+                for other in replacements.alternatives:
+                    result.append(alternative.replace(individual, other))
+            elif individual not in alternative:
+                result.append(alternative)
+
+        return RequirementSet(result)
+
 
     def merge(self, other: "RequirementSet") -> "RequirementSet":
         return RequirementSet(
