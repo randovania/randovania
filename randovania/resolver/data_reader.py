@@ -94,7 +94,7 @@ def read_dock_weakness_database(data: Dict,
     def read_dock_weakness(item: Dict) -> DockWeakness:
         return DockWeakness(item["index"], item["name"], item["is_blast_door"],
                             read_requirement_set(item["requirement_set"],
-                                                 resource_database))
+                                                 resource_database).simplify({}, resource_database))
 
     door_types = read_array(data["door"], read_dock_weakness)
     portal_types = read_array(data["portal"], read_dock_weakness)
