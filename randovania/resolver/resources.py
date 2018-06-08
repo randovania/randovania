@@ -32,7 +32,7 @@ class PickupIndex:
     def __init__(self, index: int):
         self._index = index
 
-    def __str__(self):
+    def __repr__(self):
         return "PickupIndex {}".format(self._index)
 
     @property
