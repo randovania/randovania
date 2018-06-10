@@ -191,11 +191,15 @@ class RequirementSet:
 
         return RequirementSet(result)
 
-    def merge(self, other: "RequirementSet") -> "RequirementSet":
+    def union(self, other: "RequirementSet") -> "RequirementSet":
+        """Create a new RequirementSet that is only satisfied when both are satisfied"""
         return RequirementSet(
             RequirementList(a.union(b))
             for a in self.alternatives
             for b in other.alternatives)
 
+    def expand_alternatives(self, other: "RequirementSet") -> "RequirementSet":
+        """Create a new RequirementSet that is satisfied when either are satisfied."""
+        return RequirementSet(self.alternatives | other.alternatives)
 
 SatisfiableRequirements = FrozenSet[RequirementList]

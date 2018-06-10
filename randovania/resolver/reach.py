@@ -69,7 +69,7 @@ class Reach:
 
         if requirements_by_node:
             satisfiable_requirements = frozenset.union(
-                *[RequirementSet(requirements).merge(logic.get_additional_requirements(node)).alternatives
+                *[RequirementSet(requirements).union(logic.get_additional_requirements(node)).alternatives
                   for node, requirements in requirements_by_node.items()])
         else:
             satisfiable_requirements = frozenset()

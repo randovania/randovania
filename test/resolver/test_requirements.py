@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import pytest
 
 from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet
@@ -33,6 +35,10 @@ def make_req_b():
     id_req_b = IndividualRequirement(req_b, 1, False)
 
     return req_b, id_req_b
+
+
+def make_single_set(id_req: Tuple[SimpleResourceInfo, IndividualRequirement]) -> RequirementSet:
+    return RequirementSet([RequirementList([id_req[1]])])
 
 
 def test_empty_requirement_set():
@@ -82,18 +88,18 @@ def test_trivial_merge():
         RequirementList([id_req_a]),
     ])
 
-    assert trivial.merge(trivial) == trivial
-    assert trivial.merge(the_set) == the_set
-    assert the_set.merge(trivial) == the_set
-    assert trivial.merge(impossible) == impossible
-    assert impossible.merge(the_set) == impossible
-    assert the_set.merge(impossible) == impossible
-    assert the_set.merge(the_set) == the_set
+    assert trivial.union(trivial) == trivial
+    assert trivial.union(the_set) == the_set
+    assert the_set.union(trivial) == the_set
+    assert trivial.union(impossible) == impossible
+    assert impossible.union(the_set) == impossible
+    assert the_set.union(impossible) == impossible
+    assert the_set.union(the_set) == the_set
 
 
 @pytest.mark.parametrize("replacement", [
     RequirementSet.impossible(),
-    RequirementSet([RequirementList([make_req_a()[1]])]),
+    make_single_set(make_req_a()),
     RequirementSet([RequirementList([make_req_a()[1], make_req_b()[1]])]),
 ])
 def test_replace_missing(replacement):
@@ -105,3 +111,14 @@ def test_replace_missing(replacement):
     result = trivial.replace(id_req_a, replacement)
 
     assert result == trivial
+
+
+@pytest.mark.parametrize(["a", "b", "expected"], [
+    (RequirementSet.impossible(), make_single_set(make_req_a()), make_single_set(make_req_a())),
+    (RequirementSet.impossible(), RequirementSet.trivial(), RequirementSet.trivial()),
+    (RequirementSet.trivial(), make_single_set(make_req_a()), RequirementSet.trivial()),
+    (make_single_set(make_req_a()), make_single_set(make_req_b()),
+     RequirementSet([RequirementList([make_req_a()[1]]), RequirementList([make_req_b()[1]])])),
+])
+def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: RequirementSet):
+    assert a.expand_alternatives(b) == expected
