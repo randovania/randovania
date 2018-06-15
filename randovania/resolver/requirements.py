@@ -40,7 +40,7 @@ class IndividualRequirement(NamedTuple):
             self.amount)
 
     def __lt__(self, other: "IndividualRequirement") -> bool:
-        return str(self.resource) < str(other.resource)
+        return str(self) < str(other)
 
 
 class RequirementList(frozenset):
@@ -190,7 +190,6 @@ class RequirementSet:
                 result.append(alternative)
 
         return RequirementSet(result)
-
 
     def merge(self, other: "RequirementSet") -> "RequirementSet":
         return RequirementSet(
