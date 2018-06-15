@@ -1,16 +1,18 @@
-from pprint import pprint
-from typing import List, Set, Dict
-
+import collections
 import math
+from pprint import pprint
+from typing import List, Set, Dict, Tuple, NamedTuple, Iterable
 
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.debug import n
 from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node
 from randovania.resolver.reach import Reach
-from randovania.resolver.requirements import RequirementSet, IndividualRequirement
+from randovania.resolver.requirements import RequirementSet, IndividualRequirement, RequirementList
 from randovania.resolver.resources import ResourceInfo, ResourceDatabase
+from randovania.resolver.state import State
 
 
 def _expand_safe_events(state, node: Node):
@@ -41,7 +43,9 @@ def generate_list(difficulty_level: int,
     logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
     state.resources = CustomResources(logic.game.resource_database, state.resources)
     logic.game.simplify_connections(state.resources)
-    explore(logic, state)
+
+    # explore(logic, state)
+    list_dependencies(logic, state)
 
 
 def explore(logic, initial_state):
@@ -66,7 +70,6 @@ def explore(logic, initial_state):
                     requirements.pretty_print(" ")
                     print("Replacement")
                     replacement.pretty_print(" ")
-
 
         for target_node, requirements in logic.game.potential_nodes_from(node):
             if target_node is None:
@@ -149,3 +152,305 @@ def old_code(logic, state):
         break
 
     return entries
+
+
+class NodeRequirement(NamedTuple):
+    resource: Node
+
+    def __lt__(self, other: "NodeRequirement") -> bool:
+        return str(self) < str(other)
+
+    def __repr__(self):
+        return " Node {0} >= 1".format(n(self.resource))
+
+
+def find_nodes_that_depend_on_node(node: Node, requirements_for_node: Dict[Node, RequirementSet]) -> Iterable[Node]:
+    node_requirement = NodeRequirement(node)
+
+    for target_node, requirements in requirements_for_node.items():
+        if any(node_requirement in alternative for alternative in requirements.alternatives):
+            yield target_node
+
+
+def has_node_requirement(alternative: RequirementList) -> bool:
+    return any(isinstance(individual, NodeRequirement)
+               for individual in alternative.values())
+
+
+def is_simplified(requirements: RequirementSet) -> bool:
+    """
+    Checks if a given RequirementSet does not depend on nodes.
+    :param requirements:
+    :return:
+    """
+    return not any(
+        has_node_requirement(alternative)
+        for alternative in requirements.alternatives
+    )
+
+
+def do_simplify(requirements_for_node: Dict[Node, RequirementSet],
+                simplified_nodes: Set[Node]) -> bool:
+    nodes_to_process = {
+        node
+        for node, requirements in requirements_for_node.items()
+        if is_simplified(requirements) and node not in simplified_nodes
+    }
+
+    if not nodes_to_process:
+        return False
+
+    while nodes_to_process:
+        processing_node = nodes_to_process.pop()
+        simplified_nodes.add(processing_node)
+
+        print("Will process", n(processing_node))
+
+        dependents = list(find_nodes_that_depend_on_node(processing_node, requirements_for_node))
+        for node in dependents:
+            requirements_for_node[node] = requirements_for_node[node].replace(
+                NodeRequirement(processing_node),
+                requirements_for_node[processing_node]
+            )
+            if is_simplified(requirements_for_node[node]):
+                nodes_to_process.add(node)
+            else:
+                print(">", n(node), "not simplified")
+    return True
+
+
+def forward_dependencies(requirements_for_node: Dict[Node, RequirementSet],
+                         simplified_nodes: Set[Node]) -> bool:
+    something_changed = False
+    for node, requirements in requirements_for_node.items():
+        # Skip simplified nodes
+        if node in simplified_nodes:
+            continue
+
+        if not all(len(alternative) == 1 or not has_node_requirement(alternative)
+                   for alternative in requirements.alternatives):
+            continue
+
+        stuff_to_replace = []
+        for alternative in requirements.alternatives:
+            if has_node_requirement(alternative):
+                assert len(alternative) == 1
+                indiv = next(iter(alternative))
+                if isinstance(indiv, NodeRequirement):
+                    stuff_to_replace.append(indiv)
+
+        if stuff_to_replace:
+            old = requirements
+            for indiv in stuff_to_replace:
+                new_requirements = requirements_for_node[indiv.resource]
+                assert not is_simplified(new_requirements)
+                if is_simplified(new_requirements):
+                    requirements = requirements.replace(indiv, requirements_for_node[indiv.resource])
+                    something_changed = True
+            requirements_for_node[node] = requirements
+
+            print("====", n(node))
+            old.pretty_print("<< ")
+            print()
+            requirements.pretty_print(">> ")
+
+    return something_changed
+
+
+def list_dependencies(logic: Logic,
+                      initial_state: State
+                      ):
+    paths_to_node: Dict[Node, List[Tuple[Node, RequirementSet]]] = collections.defaultdict(list)
+
+    # for world in logic.game.worlds:
+    if True:
+        world = logic.game.worlds[0]
+        for area in world.areas:
+            for node in area.nodes:
+                for target_node, requirements in logic.game.potential_nodes_from(node):
+                    if target_node is not None:
+                        paths_to_node[target_node].append((node, requirements))
+
+    resource_db = logic.game.resource_database
+
+    # for node, paths in paths_to_node.items():
+    #     print("\n>>> {} can be reached from:".format(n(node)))
+    #     for source_node, requirements in paths:
+    #         print("*", n(source_node))
+    #         requirements.pretty_print("")
+
+    all_individual_requirements: Set[IndividualRequirement] = set()
+    event_to_node: Dict[ResourceInfo, Node] = {}
+
+    for node, paths in paths_to_node.items():
+        if isinstance(node, EventNode):
+            event_to_node[node.resource(resource_db)] = node
+
+        for source_node, requirements in paths:
+            for alternative in requirements.alternatives:
+                all_individual_requirements |= alternative.values()
+
+    requirements_for_node: Dict[Node, RequirementSet] = {}
+
+    for node, paths in paths_to_node.items():
+        alternatives = []
+        for target_node, requirements in paths:
+            alternatives.extend(requirements.merge(RequirementSet([RequirementList([
+                NodeRequirement(target_node)
+            ])])).alternatives)
+
+        requirements_for_node[node] = RequirementSet(alternatives)
+
+    requirements_for_node[initial_state.node] = RequirementSet.trivial()
+
+    simplified_nodes = set()
+
+    some_stuff_changed = True
+    while some_stuff_changed:
+        print("==================== TRYING TO SIMPLIFY STUFF")
+        some_stuff_changed = False
+        if do_simplify(requirements_for_node, simplified_nodes):
+            some_stuff_changed = True
+        if forward_dependencies(requirements_for_node, simplified_nodes):
+            some_stuff_changed = True
+
+    for node in simplified_nodes:
+        print()
+        print(n(node))
+        requirements_for_node[node].pretty_print("* ")
+
+    print("=================")
+
+    for node, requirements in requirements_for_node.items():
+        if node in simplified_nodes:
+            continue
+
+        print()
+        print(n(node))
+        print(is_simplified(requirements))
+        assert not is_simplified(requirements)
+        requirements.pretty_print("* ")
+
+
+def list_dependencies_boolean_algebra(logic: Logic, initial_state: State):
+    paths_to_node: Dict[Node, List[Tuple[Node, RequirementSet]]] = collections.defaultdict(list)
+
+    for world in logic.game.worlds:
+        for area in world.areas:
+            if area.name.startswith("!!") or area.name == "Sky Temple Gateway":
+                continue
+            for node in area.nodes:
+                for target_node, requirements in logic.game.potential_nodes_from(node):
+                    if target_node is not None:
+                        paths_to_node[target_node].append((node, requirements))
+
+    resource_db = logic.game.resource_database
+
+    # for node, paths in paths_to_node.items():
+    #     print("\n>>> {} can be reached from:".format(n(node)))
+    #     for source_node, requirements in paths:
+    #         print("*", n(source_node))
+    #         requirements.pretty_print("")
+
+    all_individual_requirements: Set[IndividualRequirement] = set()
+    event_to_node: Dict[ResourceInfo, Node] = {}
+
+    for node, paths in paths_to_node.items():
+        if isinstance(node, EventNode):
+            event_to_node[node.resource(resource_db)] = node
+
+        for source_node, requirements in paths:
+            for alternative in requirements.alternatives:
+                all_individual_requirements |= alternative.values()
+
+    all_item_requirements: Set[IndividualRequirement] = {
+        indiv
+        for indiv in all_individual_requirements
+        if indiv.resource in resource_db.item
+    }
+    all_event_requirements: Set[IndividualRequirement] = {
+        indiv
+        for indiv in all_individual_requirements
+        if indiv.resource in resource_db.event
+    }
+
+    assert all_item_requirements | all_event_requirements == all_individual_requirements
+
+    print("ITEMS")
+    pprint(all_item_requirements)
+
+    print("EVENTS")
+    pprint(all_event_requirements)
+
+    all_collectable_events = {
+        node.resource(resource_db)
+        for node in paths_to_node
+        if isinstance(node, EventNode)
+    }
+    print("Missing events:")
+    pprint(all_collectable_events - {
+        indiv.resource
+        for indiv in all_event_requirements
+    })
+
+    import pyeda.boolalg.bfarray
+    import pyeda.boolalg.expr
+
+    nodes_var = pyeda.boolalg.bfarray.exprvars("nodes", len(paths_to_node.keys()))
+    node_to_var = {
+        node: nodes_var[i]
+        for i, node in enumerate(paths_to_node)
+    }
+
+    items_var = pyeda.boolalg.bfarray.exprvars("items", len(all_item_requirements))
+    item_to_var = {
+        item: items_var[i]
+        for i, item in enumerate(all_item_requirements)
+    }
+
+    def convert_indiv_to_expression(indiv: IndividualRequirement):
+        if indiv in all_item_requirements:
+            return item_to_var[indiv]
+
+        elif indiv.resource in all_collectable_events:
+            result = node_to_var[event_to_node[indiv.resource]]
+            if indiv.negate:
+                result = not result
+            return result
+
+        else:
+            return True
+            # raise Exception("Unknown individual resource: {}".format(indiv))
+
+    def convert_requirement_to_expression(requirements: RequirementSet):
+        if not requirements.alternatives:
+            return pyeda.boolalg.expr.Or()
+
+        alternative_expressions = []
+        for alternative in requirements.alternatives:
+            individual_expressions = []
+            for indiv in alternative.values():
+                individual_expressions.append(convert_indiv_to_expression(indiv))
+            alternative_expressions.append(
+                pyeda.boolalg.expr.And(*individual_expressions)
+            )
+
+        return pyeda.boolalg.expr.Or(
+            *alternative_expressions
+        )
+
+    for node, paths in paths_to_node.items():
+        requirement_expressions = []
+        for source_node, requirements in paths:
+            requirement_expressions.append(node_to_var[source_node] & convert_requirement_to_expression(requirements))
+
+        node_to_var[node] = pyeda.boolalg.expr.Or(
+            *requirement_expressions
+        )
+
+    for node, var in node_to_var.items():
+        print("\n>> {}".format(n(node)))
+        print(var)
+
+    combined = pyeda.boolalg.expr.And(*node_to_var.values())
+    print("COMBINED:", combined)
