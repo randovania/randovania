@@ -130,9 +130,9 @@ class GameDescription:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
         return area.nodes[area.default_node_index]
 
-    def potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+    def connections_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
         """
-        Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
+        Queries all nodes from other areas you can go from a given node. Aka, doors and teleporters
         :param node:
         :return: Generator of pairs Node + RequirementSet for going to that node
         """
@@ -153,6 +153,14 @@ class GameDescription:
                 # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
                 print("Teleporter is broken!", node)
                 yield None, RequirementSet.impossible()
+
+    def potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+        """
+        Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
+        :param node:
+        :return: Generator of pairs Node + RequirementSet for going to that node
+        """
+        yield from self.connections_from(node)
 
         area = self.nodes_to_area(node)
         for target_node, requirements in area.connections[node].items():
