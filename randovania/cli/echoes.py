@@ -85,6 +85,43 @@ def add_randomizer_configuration_arguments(parser):
     )
 
 
+def distribute_command_logic(args):
+    debug._DEBUG_LEVEL = args.debug
+    data = prime_database.decode_data_file(args)
+    resolver_config = build_resolver_configuration(args)
+
+    from randovania.resolver import data_reader
+    from randovania.resolver.game_patches import GamePatches
+
+    game_description = data_reader.decode_data(data, [])
+    game_patches = GamePatches(resolver_config.item_loss, [])
+
+    from randovania.resolver import generator
+    generator.generate_list(
+        resolver_config.difficulty,
+        resolver_config.enabled_tricks,
+        game_description,
+        game_patches
+    )
+
+
+def add_distribute_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "preview-distribute",
+        help="Distribute pickups."
+    )
+
+    add_resolver_config_arguments(parser)
+    prime_database.add_data_file_argument(parser)
+    parser.add_argument(
+        "--debug",
+        choices=range(4),
+        type=int,
+        default=0,
+        help="The level of debug logging to print.")
+    parser.set_defaults(func=distribute_command_logic)
+
+
 def validate_command_logic(args):
     debug._DEBUG_LEVEL = args.debug
     data = prime_database.decode_data_file(args)
@@ -268,6 +305,7 @@ def create_subparsers(sub_parsers):
     )
     sub_parsers = parser.add_subparsers(dest="command")
     add_validate_command(sub_parsers)
+    add_distribute_command(sub_parsers)
     add_generate_seed_command(sub_parsers)
     add_generate_seed_log_command(sub_parsers)
     add_analyze_seed_log_command(sub_parsers)
