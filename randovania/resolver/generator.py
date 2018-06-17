@@ -44,8 +44,6 @@ def generate_list(difficulty_level: int,
     # state.resources = CustomResources(logic.game.resource_database, state.resources)
     logic.game.simplify_connections(state.resources)
 
-    print(n(state.node))
-
     # explore(logic, state)
     # list_dependencies(logic, state)
     distribute_one_item(logic, state)
