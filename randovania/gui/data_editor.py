@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QRadioButton
@@ -93,8 +93,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         return self.areaSelectorBox.currentData()
 
     @property
-    def current_node(self) -> Node:
-        return self.radio_button_to_node[self.selected_node_button]
+    def current_node(self) -> Optional[Node]:
+        return self.radio_button_to_node.get(self.selected_node_button)
 
     @property
     def current_connection_node(self) -> Node:
