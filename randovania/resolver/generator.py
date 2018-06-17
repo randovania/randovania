@@ -8,7 +8,7 @@ from randovania.resolver.debug import n
 from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import Logic
-from randovania.resolver.node import EventNode, Node
+from randovania.resolver.node import EventNode, Node, PickupNode
 from randovania.resolver.reach import Reach
 from randovania.resolver.requirements import RequirementSet, IndividualRequirement, RequirementList
 from randovania.resolver.resources import ResourceInfo, ResourceDatabase
@@ -41,11 +41,23 @@ def generate_list(difficulty_level: int,
                   game: GameDescription,
                   patches: GamePatches) -> List[int]:
     logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
-    state.resources = CustomResources(logic.game.resource_database, state.resources)
+    # state.resources = CustomResources(logic.game.resource_database, state.resources)
     logic.game.simplify_connections(state.resources)
 
+    print(n(state.node))
+
     # explore(logic, state)
-    list_dependencies(logic, state)
+    # list_dependencies(logic, state)
+    distribute_one_item(logic, state)
+
+
+def distribute_one_item(logic: Logic, state: State):
+
+    reach = Reach.calculate_reach(state)
+    pprint(list(reach.nodes))
+
+    possible_actions = list(reach.possible_actions(state))
+    pprint(possible_actions)
 
 
 def explore(logic, initial_state):
@@ -172,6 +184,15 @@ def find_nodes_that_depend_on_node(node: Node, requirements_for_node: Dict[Node,
             yield target_node
 
 
+def all_node_requirements(requirements: RequirementSet) -> Set[NodeRequirement]:
+    result = set()
+    for alternative in requirements.alternatives:
+        for individual in alternative.values():
+            if isinstance(individual, NodeRequirement):
+                result.add(individual)
+    return result
+
+
 def has_node_requirement(alternative: RequirementList) -> bool:
     return any(isinstance(individual, NodeRequirement)
                for individual in alternative.values())
@@ -281,10 +302,14 @@ def list_dependencies(logic: Logic,
 
     all_individual_requirements: Set[IndividualRequirement] = set()
     event_to_node: Dict[ResourceInfo, Node] = {}
+    pickup_nodes: List[PickupNode] = []
 
     for node, paths in paths_to_node.items():
         if isinstance(node, EventNode):
             event_to_node[node.resource(resource_db)] = node
+
+        if isinstance(node, PickupNode):
+            pickup_nodes.append(node)
 
         for source_node, requirements in paths:
             for alternative in requirements.alternatives:
@@ -295,13 +320,24 @@ def list_dependencies(logic: Logic,
     for node, paths in paths_to_node.items():
         alternatives = []
         for target_node, requirements in paths:
-            alternatives.extend(requirements.merge(RequirementSet([RequirementList([
+            alternatives.extend(requirements.union(RequirementSet([RequirementList([
                 NodeRequirement(target_node)
             ])])).alternatives)
 
         requirements_for_node[node] = RequirementSet(alternatives)
 
     requirements_for_node[initial_state.node] = RequirementSet.trivial()
+
+    # Replace event requirement with node requirement
+    for event_resource, event_node in event_to_node.items():
+        individual = IndividualRequirement(event_resource, 1, False)
+        replacement = RequirementSet([RequirementList([
+                    NodeRequirement(event_node)
+                ])])
+        for node, requirements in requirements_for_node.items():
+            requirements_for_node[node] = requirements_for_node[node].replace(
+                individual,
+                replacement)
 
     simplified_nodes = set()
 
@@ -321,15 +357,46 @@ def list_dependencies(logic: Logic,
 
     print("=================")
 
-    for node, requirements in requirements_for_node.items():
-        if node in simplified_nodes:
-            continue
+    # for node, requirements in requirements_for_node.items():
+    #     if node in simplified_nodes:
+    #         continue
+    #
+    #     print()
+    #     print(n(node))
+    #     print(is_simplified(requirements))
+    #     assert not is_simplified(requirements)
+    #     requirements.pretty_print("* ")
 
-        print()
+    print("=================")
+    print("=================")
+
+    # Poping the Dark Missile Trooper pickup
+    pickup_nodes.pop(0)
+
+    for node in pickup_nodes:
+        requirements = requirements_for_node[node]
+
+        print("=================")
         print(n(node))
-        print(is_simplified(requirements))
-        assert not is_simplified(requirements)
-        requirements.pretty_print("* ")
+        requirements.pretty_print("> ")
+
+        i = 0
+
+        while not is_simplified(requirements):
+            i += 1
+            for individual in all_node_requirements(requirements):
+                # print("Replacing {} with {}".format(individual, requirements_for_node[individual.resource]))
+                requirements = requirements.replace(
+                    individual,
+                    requirements_for_node[individual.resource]
+                )
+
+            if i > 500:
+                break
+
+        requirements.pretty_print(">> ")
+
+        break
 
 
 def list_dependencies_boolean_algebra(logic: Logic, initial_state: State):
