@@ -1,5 +1,5 @@
 import copy
-from typing import Optional
+from typing import Optional, List
 
 from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
@@ -33,17 +33,16 @@ class State:
         return self.resources.get(resource, 0) > 0
 
     def collect_resource_node(self, node: ResourceNode,
-                              resource_database: ResourceDatabase,
-                              game_patches: GamePatches) -> "State":
+                              pickup_mapping: List[Optional[int]]) -> "State":
 
-        resource = node.resource(resource_database)
+        resource = node.resource(self.resource_database)
         if self.has_resource(resource):
             raise ValueError(
                 "Trying to collect an already collected resource '{}'".format(
                     resource))
 
         new_resources = copy.copy(self.resources)
-        for pickup_resource, quantity in node.resource_gain_on_collect(resource_database, game_patches):
+        for pickup_resource, quantity in node.resource_gain_on_collect(self.resource_database, pickup_mapping):
             new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
@@ -51,9 +50,8 @@ class State:
 
     def act_on_node(self,
                     node: ResourceNode,
-                    resource_database: ResourceDatabase,
-                    game_patches: GamePatches) -> "State":
-        new_state = self.collect_resource_node(node, resource_database, game_patches)
+                    pickup_mapping: List[Optional[int]]) -> "State":
+        new_state = self.collect_resource_node(node, pickup_mapping)
         new_state.node = node
         return new_state
 
