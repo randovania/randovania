@@ -3,6 +3,7 @@ from typing import Dict, Set, List, Iterator, Tuple, Iterable
 
 from randovania.resolver import debug
 from randovania.resolver.game_description import calculate_interesting_resources
+from randovania.resolver.logic import Logic
 from randovania.resolver.node import ResourceNode, Node, is_resource_node
 from randovania.resolver.requirements import RequirementList, RequirementSet, SatisfiableRequirements
 from randovania.resolver.state import State
@@ -11,6 +12,7 @@ from randovania.resolver.state import State
 class Reach:
     _nodes: Tuple[Node]
     _satisfiable_requirements: SatisfiableRequirements
+    _logic: Logic
 
     @property
     def nodes(self) -> Iterator[Node]:
@@ -30,8 +32,8 @@ class Reach:
 
     @classmethod
     def calculate_reach(cls,
+                        logic: Logic,
                         initial_state: State) -> "Reach":
-        logic = initial_state.logic
 
         checked_nodes = set()
         nodes_to_check = [initial_state.node]

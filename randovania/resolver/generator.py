@@ -70,12 +70,12 @@ def _filter_pickups(nodes: Iterator[Node]) -> FrozenSet[PickupNode]:
 _MAXIMUM_DEPTH = 3
 
 
-def find_potential_item_slots(resource_database: ResourceDatabase,
+def find_potential_item_slots(logic: Logic,
                               patches: GamePatches,
                               state: State,
                               actions_required: Tuple[Node, ...] = (),
                               current_depth: int = 0) -> Iterator[ItemSlot]:
-    reach = Reach.calculate_reach(state)
+    reach = Reach.calculate_reach(logic, state)
 
     actions = list(reach.possible_actions(state))
     new_depth = current_depth if len(actions) == 1 else current_depth + 1
@@ -90,9 +90,9 @@ def find_potential_item_slots(resource_database: ResourceDatabase,
 
     for action in actions:
         yield from find_potential_item_slots(
-            resource_database,
+            logic,
             patches,
-            state.act_on_node(actions[0], resource_database, patches),
+            state.act_on_node(actions[0], logic.game.resource_database, patches),
             actions_required + (action,),
             new_depth
         )
@@ -100,7 +100,7 @@ def find_potential_item_slots(resource_database: ResourceDatabase,
 
 def distribute_one_item(logic: Logic, state: State) -> bool:
     potential_item_slots: List[ItemSlot] = list(find_potential_item_slots(
-        logic.game.resource_database,
+        logic,
         logic.patches,
         state))
     random.shuffle(potential_item_slots)
