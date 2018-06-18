@@ -1,7 +1,9 @@
 import collections
+import copy
 import math
+import random
 from pprint import pprint
-from typing import List, Set, Dict, Tuple, NamedTuple, Iterable
+from typing import List, Set, Dict, Tuple, NamedTuple, Iterable, FrozenSet, Iterator
 
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.debug import n
@@ -10,8 +12,9 @@ from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node, PickupNode
 from randovania.resolver.reach import Reach
-from randovania.resolver.requirements import RequirementSet, IndividualRequirement, RequirementList
-from randovania.resolver.resources import ResourceInfo, ResourceDatabase
+from randovania.resolver.requirements import RequirementSet, IndividualRequirement, RequirementList, \
+    SatisfiableRequirements
+from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources
 from randovania.resolver.state import State
 
 
@@ -49,13 +52,73 @@ def generate_list(difficulty_level: int,
     distribute_one_item(logic, state)
 
 
-def distribute_one_item(logic: Logic, state: State):
+class ItemSlot(NamedTuple):
+    available_pickups: FrozenSet[PickupNode]
+    satisfiable_requirements: SatisfiableRequirements
+    required_actions: Tuple[Node, ...]
+    expected_resources: CurrentResources
 
+
+def _filter_pickups(nodes: Iterator[Node]) -> FrozenSet[PickupNode]:
+    return frozenset(
+        node
+        for node in nodes
+        if isinstance(node, PickupNode)
+    )
+
+
+_MAXIMUM_DEPTH = 3
+
+
+def find_potential_item_slots(resource_database: ResourceDatabase,
+                              patches: GamePatches,
+                              state: State,
+                              actions_required: Tuple[Node, ...] = (),
+                              current_depth: int = 0) -> Iterator[ItemSlot]:
     reach = Reach.calculate_reach(state)
-    pprint(list(reach.nodes))
 
-    possible_actions = list(reach.possible_actions(state))
-    pprint(possible_actions)
+    actions = list(reach.possible_actions(state))
+    new_depth = current_depth if len(actions) == 1 else current_depth + 1
+
+    if new_depth > _MAXIMUM_DEPTH:
+        return
+
+    available_pickups = _filter_pickups(actions)
+    if available_pickups:
+        yield ItemSlot(available_pickups, reach.satisfiable_requirements,
+                       actions_required, copy.copy(state.resources))
+
+    for action in actions:
+        yield from find_potential_item_slots(
+            resource_database,
+            patches,
+            state.act_on_node(actions[0], resource_database, patches),
+            actions_required + (action,),
+            new_depth
+        )
+
+
+def distribute_one_item(logic: Logic, state: State) -> bool:
+    potential_item_slots: List[ItemSlot] = list(find_potential_item_slots(
+        logic.game.resource_database,
+        logic.patches,
+        state))
+    random.shuffle(potential_item_slots)
+
+    for item_option in potential_item_slots:
+        item = get_pickup_that_satisfies(item_option.satisfiable_requirements)
+        pickup_node = random.choice(item_option.available_pickups)
+        add_item_to_node(item, pickup_node, logic)
+        new_state = state
+        for action in item_option.required_actions:
+            new_state = new_state.act_on_node(
+                action, logic.game.resource_database, logic.patches
+            )
+        if distribute_one_item(logic, new_state):
+            return True
+        remote_item_from_node(item, pickup_node, logic)
+
+    return False
 
 
 def explore(logic, initial_state):
@@ -330,8 +393,8 @@ def list_dependencies(logic: Logic,
     for event_resource, event_node in event_to_node.items():
         individual = IndividualRequirement(event_resource, 1, False)
         replacement = RequirementSet([RequirementList([
-                    NodeRequirement(event_node)
-                ])])
+            NodeRequirement(event_node)
+        ])])
         for node, requirements in requirements_for_node.items():
             requirements_for_node[node] = requirements_for_node[node].replace(
                 individual,
