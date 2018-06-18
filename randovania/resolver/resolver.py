@@ -14,7 +14,7 @@ def advance_depth(state: State,
     if logic.game.victory_condition.satisfied(state.resources):
         return state
 
-    reach = Reach.calculate_reach(state)
+    reach = Reach.calculate_reach(logic, state)
     debug.log_new_advance(state, reach)
 
     for action in reach.satisfiable_actions(state):
