@@ -26,9 +26,10 @@ class Reach:
     def satisfiable_as_requirement_set(self) -> RequirementSet:
         return RequirementSet(self._satisfiable_requirements)
 
-    def __init__(self, nodes: Iterable[Node], requirements: SatisfiableRequirements):
+    def __init__(self, nodes: Iterable[Node], requirements: SatisfiableRequirements, logic: Logic):
         self._nodes = tuple(nodes)
         self._satisfiable_requirements = requirements
+        self._logic = logic
 
     @classmethod
     def calculate_reach(cls,
@@ -76,16 +77,16 @@ class Reach:
         else:
             satisfiable_requirements = frozenset()
 
-        return Reach(reach_nodes, satisfiable_requirements)
+        return Reach(reach_nodes, satisfiable_requirements, logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
 
         for node in self.uncollected_resource_nodes(state):
-            if state.logic.get_additional_requirements(node).satisfied(state.resources):
+            if self._logic.get_additional_requirements(node).satisfied(state.resources):
                 yield node
             else:
-                debug.log_skip_action_missing_requirement(node, state.game)
+                debug.log_skip_action_missing_requirement(node, self._logic.game)
 
     def satisfiable_actions(self, state: State) -> Iterator[ResourceNode]:
 
@@ -95,8 +96,8 @@ class Reach:
 
             # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
             for action in self.possible_actions(state):
-                for resource, amount in action.resource_gain_on_collect(state.game.resource_database,
-                                                                        state.logic.patches):
+                for resource, amount in action.resource_gain_on_collect(state.resource_database,
+                                                                        self._logic.patches):
                     if resource in interesting_resources:
                         yield action
                         break
@@ -107,5 +108,5 @@ class Reach:
             if not is_resource_node(node):
                 continue
 
-            if not state.has_resource(node.resource(state.game.resource_database)):
+            if not state.has_resource(node.resource(state.resource_database)):
                 yield node
