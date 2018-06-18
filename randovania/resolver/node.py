@@ -46,7 +46,8 @@ class PickupNode(NamedTuple):
         yield self.resource(resource_database), 1
 
         new_index = game_patches.pickup_mapping[self.pickup_index.index]
-        yield from resource_database.pickups[new_index].resource_gain(resource_database)
+        if new_index is not None:
+            yield from resource_database.pickups[new_index].resource_gain(resource_database)
 
 
 class EventNode(NamedTuple):

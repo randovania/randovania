@@ -1,4 +1,4 @@
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Optional
 
 
 class GamePatches(NamedTuple):
@@ -8,4 +8,4 @@ class GamePatches(NamedTuple):
     """
 
     item_loss_enabled: bool
-    pickup_mapping: List[int]
+    pickup_mapping: List[Optional[int]]
