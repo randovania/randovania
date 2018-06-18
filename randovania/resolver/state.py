@@ -13,6 +13,7 @@ class State:
     node: Node
     previous_state: Optional["State"]
     logic: Logic
+    resource_database: ResourceDatabase
 
     @property
     def game(self) -> GameDescription:
@@ -22,11 +23,11 @@ class State:
                  resources: CurrentResources,
                  node: Node,
                  previous: Optional["State"],
-                 logic: Logic):
+                 resource_database: ResourceDatabase):
         self.resources = resources
         self.node = node
         self.previous_state = previous
-        self.logic = logic
+        self.resource_database = resource_database
 
     def has_resource(self, resource: ResourceInfo) -> bool:
         return self.resources.get(resource, 0) > 0
@@ -46,7 +47,7 @@ class State:
             new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
-        return State(new_resources, self.node, self, self.logic)
+        return State(new_resources, self.node, self, self.resource_database)
 
     def act_on_node(self,
                     node: ResourceNode,
@@ -72,7 +73,7 @@ class State:
             },
             starting_node,
             None,
-            logic
+            game.resource_database
         )
 
         def add_resources_from(resource_gain: ResourceGain):
