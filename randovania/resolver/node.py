@@ -1,4 +1,4 @@
-from typing import NamedTuple, Iterator, Tuple, Union
+from typing import NamedTuple, Iterator, Tuple, Union, List, Optional
 
 from randovania.resolver.dock import DockWeakness
 from randovania.resolver.game_patches import GamePatches
@@ -41,11 +41,11 @@ class PickupNode(NamedTuple):
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
-                                 game_patches: GamePatches
+                                 pickup_mapping: List[Optional[int]]
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
         yield self.resource(resource_database), 1
 
-        new_index = game_patches.pickup_mapping[self.pickup_index.index]
+        new_index = pickup_mapping[self.pickup_index.index]
         if new_index is not None:
             yield from resource_database.pickups[new_index].resource_gain(resource_database)
 
@@ -60,7 +60,7 @@ class EventNode(NamedTuple):
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
-                                 game_patches: GamePatches
+                                 pickup_mapping: List[Optional[int]]
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
         yield self.resource(resource_database), 1
 

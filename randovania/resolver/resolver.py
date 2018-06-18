@@ -19,7 +19,7 @@ def advance_depth(state: State,
 
     for action in reach.satisfiable_actions(state):
         new_state = advance_depth(
-            state=state.act_on_node(action, logic.game.resource_database, logic.patches),
+            state=state.act_on_node(action, logic.patches.pickup_mapping),
             logic=logic)
 
         # We got a positive result. Send it back up

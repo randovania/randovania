@@ -94,7 +94,7 @@ def distribute_command_logic(args):
     from randovania.resolver.game_patches import GamePatches
 
     game_description = data_reader.decode_data(data, [])
-    game_patches = GamePatches(resolver_config.item_loss, [None] * 200)
+    game_patches = GamePatches(resolver_config.item_loss, [])
 
     from randovania.resolver import generator
     generator.generate_list(
