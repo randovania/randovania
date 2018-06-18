@@ -3,7 +3,7 @@ import copy
 import math
 import random
 from pprint import pprint
-from typing import List, Set, Dict, Tuple, NamedTuple, Iterable, FrozenSet, Iterator
+from typing import List, Set, Dict, Tuple, NamedTuple, Iterator, Optional
 
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.debug import n
@@ -14,7 +14,7 @@ from randovania.resolver.node import EventNode, Node, PickupNode
 from randovania.resolver.reach import Reach
 from randovania.resolver.requirements import RequirementSet, IndividualRequirement, RequirementList, \
     SatisfiableRequirements
-from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources
+from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
 from randovania.resolver.state import State
 
 
@@ -39,28 +39,46 @@ class CustomResources(dict):
             return super().get(resource, default)
 
 
+def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase) -> CurrentResources:
+    return {
+        resource: quantity
+        for resource, quantity in pickup.resource_gain(database)
+    }
+
+
 def generate_list(difficulty_level: int,
                   tricks_enabled: Set[int],
                   game: GameDescription,
                   patches: GamePatches) -> List[int]:
+    patches = GamePatches(
+        patches.item_loss_enabled,
+        [None] * len(game.resource_database.pickups)
+    )
+
+    _crap = {
+        frozenset(pickup_to_current_resources(pickup, game.resource_database).items()): pickup
+        for pickup in game.resource_database.pickups
+    }
+    available_pickups = list(_crap.values())
+
     logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
     # state.resources = CustomResources(logic.game.resource_database, state.resources)
     logic.game.simplify_connections(state.resources)
 
     # explore(logic, state)
     # list_dependencies(logic, state)
-    distribute_one_item(logic, state)
+    distribute_one_item(logic, state, patches, available_pickups)
 
 
 class ItemSlot(NamedTuple):
-    available_pickups: FrozenSet[PickupNode]
+    available_pickups: Tuple[PickupNode]
     satisfiable_requirements: SatisfiableRequirements
     required_actions: Tuple[Node, ...]
     expected_resources: CurrentResources
 
 
-def _filter_pickups(nodes: Iterator[Node]) -> FrozenSet[PickupNode]:
-    return frozenset(
+def _filter_pickups(nodes: Iterator[Node]) -> Tuple[PickupNode]:
+    return tuple(
         node
         for node in nodes
         if isinstance(node, PickupNode)
@@ -92,33 +110,72 @@ def find_potential_item_slots(logic: Logic,
         yield from find_potential_item_slots(
             logic,
             patches,
-            state.act_on_node(actions[0], logic.game.resource_database, patches),
+            state.act_on_node(actions[0], patches.pickup_mapping),
             actions_required + (action,),
             new_depth
         )
 
 
-def distribute_one_item(logic: Logic, state: State) -> bool:
+def get_item_that_satisfies(satisfiable_requirements: SatisfiableRequirements,
+                            current_resources: CurrentResources,
+                            database: ResourceDatabase,
+                            available_item_pickups: List[PickupEntry]
+                            ) -> Tuple[Optional[PickupEntry], List[PickupEntry]]:
+
+    result_pickup_list = copy.copy(available_item_pickups)
+    random.shuffle(result_pickup_list)  # TODO: random
+
+    simplified_requirements: Set[RequirementList] = set(
+        filter(
+            lambda x: x,
+            (requirements.simplify(current_resources, database)
+             for requirements in satisfiable_requirements)
+        ))
+
+    for i, pickup in enumerate(result_pickup_list):
+
+        new_resources = pickup_to_current_resources(pickup, database)
+
+        if any(requirements.satisfied(new_resources) for requirements in simplified_requirements):
+            result_pickup_list.pop(i)
+            return pickup, result_pickup_list
+
+    return None, result_pickup_list
+
+
+def distribute_one_item(logic: Logic, state: State,
+                        patches: GamePatches, available_item_pickups: List[PickupEntry]) -> Optional[GamePatches]:
     potential_item_slots: List[ItemSlot] = list(find_potential_item_slots(
         logic,
-        logic.patches,
+        patches,
         state))
-    random.shuffle(potential_item_slots)
+    random.shuffle(potential_item_slots)  # TODO: random
 
     for item_option in potential_item_slots:
-        item = get_pickup_that_satisfies(item_option.satisfiable_requirements)
-        pickup_node = random.choice(item_option.available_pickups)
-        add_item_to_node(item, pickup_node, logic)
+        item, new_available_item_pickups = get_item_that_satisfies(item_option.satisfiable_requirements,
+                                                                   item_option.expected_resources,
+                                                                   logic.game.resource_database,
+                                                                   available_item_pickups)
+
+        if item is None:
+            print("Nothing satisfies")
+            continue
+
+        # pickup_node = next(iter(item_option.available_pickups))
+        pickup_node = random.choice(item_option.available_pickups)  # TODO random
+
+        print("{} ==== {}".format(item, pickup_node))
+        new_patches = add_item_to_node(item, pickup_node, logic)
         new_state = state
         for action in item_option.required_actions:
-            new_state = new_state.act_on_node(
-                action, logic.game.resource_database, logic.patches
-            )
-        if distribute_one_item(logic, new_state):
-            return True
-        remote_item_from_node(item, pickup_node, logic)
+            new_state = new_state.act_on_node(action, new_patches.pickup_mapping)
 
-    return False
+        recursive_patches = distribute_one_item(logic, new_state,
+                                                new_patches, new_available_item_pickups)
+        if recursive_patches:
+            return recursive_patches
+
+    return None
 
 
 def explore(logic, initial_state):
@@ -237,7 +294,7 @@ class NodeRequirement(NamedTuple):
         return " Node {0} >= 1".format(n(self.resource))
 
 
-def find_nodes_that_depend_on_node(node: Node, requirements_for_node: Dict[Node, RequirementSet]) -> Iterable[Node]:
+def find_nodes_that_depend_on_node(node: Node, requirements_for_node: Dict[Node, RequirementSet]) -> Iterator[Node]:
     node_requirement = NodeRequirement(node)
 
     for target_node, requirements in requirements_for_node.items():
