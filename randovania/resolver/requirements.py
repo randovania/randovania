@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import NamedTuple, Optional, Iterable, FrozenSet, Dict
+from typing import NamedTuple, Optional, Iterable, FrozenSet
 
 from randovania.resolver.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceType, \
     ResourceDatabase
@@ -201,5 +201,6 @@ class RequirementSet:
     def expand_alternatives(self, other: "RequirementSet") -> "RequirementSet":
         """Create a new RequirementSet that is satisfied when either are satisfied."""
         return RequirementSet(self.alternatives | other.alternatives)
+
 
 SatisfiableRequirements = FrozenSet[RequirementList]
