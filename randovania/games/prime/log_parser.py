@@ -4,6 +4,7 @@ from collections import defaultdict
 from typing import NamedTuple, List, Dict, TextIO, Optional
 
 from randovania.games.prime import claris_random, binary_data
+from randovania.resolver.game_patches import GamePatches
 
 RANDOMIZER_VERSION = "3.2"
 
@@ -149,9 +150,13 @@ class RandomizerLog(NamedTuple):
 
     def write(self, output_file: TextIO):
         output_file.write("Randomizer V{}\n".format(self.version))
-        output_file.write("Seed: {}\n".format(self.seed))
-        output_file.write("Excluded pickups: {}\n".format(
-            " ".join(str(pickup) for pickup in self.excluded_pickups)))
+        if self.seed:
+            output_file.write("Seed: {}\n".format(self.seed))
+        if self.excluded_pickups:
+            output_file.write("Excluded pickups: {}\n".format(
+                " ".join(str(pickup) for pickup in self.excluded_pickups)))
+        else:
+            output_file.write("Generated from a provided pickup list\n")
 
         pickups = binary_data.decode_default_prime2()["resource_database"]["pickups"]
         for original_index, new_index in enumerate(self.pickup_mapping):
@@ -159,7 +164,7 @@ class RandomizerLog(NamedTuple):
             output_file.write("{:.20} {:.29} {}\n".format(
                 _add_hyphens(entry["world"], 1),
                 _add_hyphens(entry["room"], 0),
-                pickups[new_index]["item"]
+                pickups[new_index]["item"] if new_index is not None else "Nothing"
             ))
 
         if self.elevators:
@@ -280,3 +285,7 @@ def generate_log(seed: int,
             elevators = try_randomize_elevators(randomizer)
 
     return RandomizerLog(RANDOMIZER_VERSION, seed, excluded_pickups, randomized_items, elevators)
+
+
+def log_with_patches(patches: GamePatches) -> RandomizerLog:
+    return RandomizerLog(RANDOMIZER_VERSION, None, None, patches.pickup_mapping, [])

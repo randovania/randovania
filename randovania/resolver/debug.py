@@ -67,3 +67,33 @@ def log_rollback(state):
 def log_skip_action_missing_requirement(node: Node, game: GameDescription):
     if _DEBUG_LEVEL > 1:
         print("{}* Skip {}, missing additional".format(_indent(), n(node)))
+
+
+def print_potential_item_slots(state, actions, available_pickups, current_depth, maximum_depth):
+    if _DEBUG_LEVEL > 2:
+        print(":: Potential from {} with {} actions and {} pickups at depth {}/{}".format(
+            n(state.node), len(actions), len(available_pickups), current_depth, maximum_depth))
+
+
+def print_distribute_one_item_detail(potential_item_slots, available_pickups_spots, available_item_pickups):
+    if _DEBUG_LEVEL > 1:
+        print("** {:2d} item slots, {:2d} pickups spots, {:2d} available_item_pickups".format(
+            len(potential_item_slots), len(available_pickups_spots), len(available_item_pickups)))
+
+
+def print_distribute_one_item(state):
+    if _DEBUG_LEVEL > 1:
+        print("> Distribute for {}".format(n(state.node)))
+
+
+def print_distribute_one_item_rollback(item_log, interesting_resources, available_item_pickups):
+    if _DEBUG_LEVEL > 2:
+        print("Rollback after trying {}. \n++ Trying to satisfy {} with:\n+{}".format(
+            item_log,
+            interesting_resources,
+            ", ".join(pickup.item for pickup in available_item_pickups)))
+
+
+def print_distribute_place_item(item, pickup_node):
+    if _DEBUG_LEVEL > 1:
+        print("Place {} == at {}".format(item, n(pickup_node)))

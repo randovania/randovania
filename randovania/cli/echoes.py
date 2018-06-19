@@ -97,12 +97,24 @@ def distribute_command_logic(args):
     game_patches = GamePatches(resolver_config.item_loss, [])
 
     from randovania.resolver import generator
-    generator.generate_list(
+    new_patches = generator.generate_list(
         resolver_config.difficulty,
         resolver_config.enabled_tricks,
         game_description,
         game_patches
     )
+
+    log = log_parser.log_with_patches(new_patches)
+    log.write(sys.stdout)
+
+    resolver_config = build_resolver_configuration(args)
+
+    final_state = run_resolver(data, log, resolver_config)
+    if final_state:
+        print_path_for_state(final_state)
+    else:
+        print("Impossible.")
+        raise SystemExit(1)
 
 
 def add_distribute_command(sub_parsers):
