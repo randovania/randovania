@@ -1,43 +1,17 @@
-import collections
 import copy
 import itertools
-import math
-from pprint import pprint
-from typing import List, Set, Dict, Tuple, NamedTuple, Iterator, Optional, FrozenSet
 import random
+from typing import List, Set, Tuple, NamedTuple, Iterator, Optional, FrozenSet
 
 from randovania.resolver import debug
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.debug import n
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node, PickupNode
 from randovania.resolver.reach import Reach
-from randovania.resolver.requirements import RequirementSet, IndividualRequirement, RequirementList
 from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
 from randovania.resolver.state import State
-
-
-def _expand_safe_events(state, node: Node):
-    pass
-
-
-class CustomResources(dict):
-    database: ResourceDatabase
-
-    def __init__(self, database, *args, **kawgs):
-        super().__init__(*args, **kawgs)
-        self.database = database
-
-    def __contains__(self, resource: ResourceInfo) -> bool:
-        return self.get(resource, "Banana") != "Banana"
-
-    def get(self, resource: ResourceInfo, default: int = 0) -> int:
-        if resource in self.database.damage:
-            return math.inf
-        else:
-            return super().get(resource, default)
 
 
 def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase) -> CurrentResources:
@@ -56,18 +30,14 @@ def generate_list(difficulty_level: int,
         [None] * len(game.resource_database.pickups)
     )
 
-    _crap = {
-        frozenset(pickup_to_current_resources(pickup, game.resource_database).items()): pickup
-        for pickup in game.resource_database.pickups
-    }
-    available_pickups = list(_crap.values())
+    available_pickups = list({
+                                 frozenset(pickup_to_current_resources(pickup, game.resource_database).items()): pickup
+                                 for pickup in game.resource_database.pickups
+                             }.values())
 
     logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
-    # state.resources = CustomResources(logic.game.resource_database, state.resources)
     logic.game.simplify_connections(state.resources)
 
-    # explore(logic, state)
-    # list_dependencies(logic, state)
     return distribute_one_item(logic, state, patches, available_pickups)
 
 
@@ -112,7 +82,6 @@ def find_potential_item_slots(logic: Logic,
         return
 
     available_pickups = _filter_pickups(actions)
-
     debug.print_potential_item_slots(state, actions, available_pickups, current_depth, _MAXIMUM_DEPTH)
 
     if available_pickups:
@@ -150,7 +119,6 @@ def get_items_that_satisfies(available_item_pickups: List[PickupEntry],
                              interesting_resources: FrozenSet[ResourceInfo],
                              database: ResourceDatabase,
                              ) -> Iterator[PickupEntry]:
-
     result_pickup_list = copy.copy(available_item_pickups)
     random.shuffle(result_pickup_list)  # TODO: random
 
@@ -174,7 +142,6 @@ def add_item_to_node(item: PickupEntry, node: PickupNode,
 
 def distribute_one_item(logic: Logic, state: State,
                         patches: GamePatches, available_item_pickups: List[PickupEntry]) -> Optional[GamePatches]:
-
     if logic.game.victory_condition.satisfied(state.resources) or not available_item_pickups:
         return patches
 
