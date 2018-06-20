@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.manage_game_window import ManageGameWindow
-from randovania.gui.randomize_window import RandomizeWindow
+from randovania.gui.randomizer_configuration_window import RandomizeWindow
 from randovania.interface_common.options import Options
 
 
