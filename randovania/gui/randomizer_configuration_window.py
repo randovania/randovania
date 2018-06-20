@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 from randovania.games.prime import binary_data
 from randovania.gui import application_options
-from randovania.gui.randomize_window_ui import Ui_RandomizeWindow
+from randovania.gui.randomizer_configuration_window_ui import Ui_RandomizeWindow
 from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.resources import SimpleResourceInfo, PickupEntry
 
