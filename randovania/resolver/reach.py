@@ -10,7 +10,8 @@ from randovania.resolver.state import State
 
 
 class Reach:
-    _nodes: Tuple[Node]
+    _nodes: Tuple[Node, ...]
+    path_to_node: Dict[Node, Tuple[Node, ...]]
     _satisfiable_requirements: SatisfiableRequirements
     _logic: Logic
 
@@ -26,8 +27,13 @@ class Reach:
     def satisfiable_as_requirement_set(self) -> RequirementSet:
         return RequirementSet(self._satisfiable_requirements)
 
-    def __init__(self, nodes: Iterable[Node], requirements: SatisfiableRequirements, logic: Logic):
+    def __init__(self,
+                 nodes: Iterable[Node],
+                 path_to_node: Dict[Node, Tuple[Node, ...]],
+                 requirements: SatisfiableRequirements,
+                 logic: Logic):
         self._nodes = tuple(nodes)
+        self.path_to_node = path_to_node
         self._satisfiable_requirements = requirements
         self._logic = logic
 
@@ -37,10 +43,13 @@ class Reach:
                         initial_state: State) -> "Reach":
 
         checked_nodes = set()
-        nodes_to_check = [initial_state.node]
+        nodes_to_check: List[Node] = [initial_state.node]
+        path_to_node: Dict[Node, Tuple[Node, ...]] = {}
 
         reach_nodes: List[Node] = []
         requirements_by_node: Dict[Node, Set[RequirementList]] = defaultdict(set)
+
+        path_to_node[initial_state.node] = tuple()
 
         while nodes_to_check:
             node = nodes_to_check.pop()
@@ -61,6 +70,8 @@ class Reach:
 
                 if satisfied:
                     nodes_to_check.append(target_node)
+                    path_to_node[target_node] = path_to_node[node] + (node,)
+
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
@@ -77,7 +88,7 @@ class Reach:
         else:
             satisfiable_requirements = frozenset()
 
-        return Reach(reach_nodes, satisfiable_requirements, logic)
+        return Reach(reach_nodes, path_to_node, satisfiable_requirements, logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:

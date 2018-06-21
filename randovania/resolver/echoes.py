@@ -7,6 +7,8 @@ from randovania.games.prime.log_parser import RandomizerLog
 from randovania.interface_common.options import Options
 from randovania.resolver import data_reader, resolver, debug
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.node import EventNode, PickupNode
+from randovania.resolver.resources import PickupIndex
 from randovania.resolver.state import State
 
 
@@ -61,15 +63,30 @@ def run_resolver(data: Dict,
     return final_state
 
 
-def print_path_for_state(final_state):
+def print_path_for_state(final_state: State,
+                         include_inner_steps: bool,
+                         include_picked_item: bool):
     states = []
     state = final_state
     while state:
         states.append(state)
         state = state.previous_state
+
     print("Path taken:")
     for state in reversed(states):
-        print("> {}".format(debug.n(state.node, with_world=True)))
+        if include_inner_steps and state.path_from_previous_state:
+            print(" * {}".format(
+                "\n * ".join(debug.n(node) for node in state.path_from_previous_state)
+            ))
+
+        extra_text = ""
+        if include_picked_item:
+            if isinstance(state.node, (EventNode, PickupNode)):
+                resource = state.node.resource(state.resource_database)
+                if isinstance(resource, PickupIndex):
+                    resource = state.resource_database.pickups[resource.index]
+                extra_text = " for {}".format(resource)
+        print("> {}{}".format(debug.n(state.node, with_world=True), extra_text))
 
 
 def generate_and_validate(data: Dict,

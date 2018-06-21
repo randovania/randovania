@@ -1,8 +1,7 @@
 import copy
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 from randovania.resolver.game_description import GameDescription
-from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import ResourceNode, Node
 from randovania.resolver.resources import ResourceInfo, CurrentResources, ResourceGain, ResourceType, ResourceDatabase
@@ -12,12 +11,8 @@ class State:
     resources: CurrentResources
     node: Node
     previous_state: Optional["State"]
-    logic: Logic
+    path_from_previous_state: Tuple[Node, ...]
     resource_database: ResourceDatabase
-
-    @property
-    def game(self) -> GameDescription:
-        return self.logic.game
 
     def __init__(self,
                  resources: CurrentResources,
@@ -26,6 +21,7 @@ class State:
                  resource_database: ResourceDatabase):
         self.resources = resources
         self.node = node
+        self.path_from_previous_state = ()
         self.previous_state = previous
         self.resource_database = resource_database
 
@@ -50,9 +46,12 @@ class State:
 
     def act_on_node(self,
                     node: ResourceNode,
-                    pickup_mapping: List[Optional[int]]) -> "State":
+                    pickup_mapping: List[Optional[int]],
+                    path: Tuple[Node, ...] = (),
+                    ) -> "State":
         new_state = self.collect_resource_node(node, pickup_mapping)
         new_state.node = node
+        new_state.path_from_previous_state = path
         return new_state
 
     @classmethod
