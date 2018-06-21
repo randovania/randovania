@@ -64,6 +64,7 @@ def run_resolver(data: Dict,
 
 
 def print_path_for_state(final_state: State,
+                         patches: GamePatches,
                          include_inner_steps: bool,
                          include_picked_item: bool):
     states = []
@@ -76,7 +77,10 @@ def print_path_for_state(final_state: State,
     for state in reversed(states):
         if include_inner_steps and state.path_from_previous_state:
             print(" * {}".format(
-                "\n * ".join(debug.n(node) for node in state.path_from_previous_state)
+                "\n * ".join(
+                    debug.n(node) for node in state.path_from_previous_state
+                    if node is not state.previous_state.node
+                )
             ))
 
         extra_text = ""
@@ -84,7 +88,11 @@ def print_path_for_state(final_state: State,
             if isinstance(state.node, (EventNode, PickupNode)):
                 resource = state.node.resource(state.resource_database)
                 if isinstance(resource, PickupIndex):
-                    resource = state.resource_database.pickups[resource.index]
+                    mapping = patches.pickup_mapping[resource.index]
+                    if mapping is not None:
+                        resource = state.resource_database.pickups[mapping]
+                    else:
+                        resource = None
                 extra_text = " for {}".format(resource)
         print("> {}{}".format(debug.n(state.node, with_world=True), extra_text))
 
