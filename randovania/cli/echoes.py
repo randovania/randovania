@@ -10,6 +10,7 @@ from randovania.interface_common.options import MAX_DIFFICULTY
 from randovania.resolver import debug
 from randovania.resolver.echoes import run_resolver, search_seed, RandomizerConfiguration, \
     ResolverConfiguration, print_path_for_state
+from randovania.resolver.game_patches import GamePatches
 
 __all__ = ["create_subparsers"]
 
@@ -111,7 +112,7 @@ def distribute_command_logic(args):
 
     final_state = run_resolver(data, log, resolver_config)
     if final_state:
-        print_path_for_state(final_state, True, True)
+        print_path_for_state(final_state, new_patches, True, True)
     else:
         print("Impossible.")
         raise SystemExit(1)
@@ -143,7 +144,10 @@ def validate_command_logic(args):
     final_state = run_resolver(data, randomizer_log, resolver_config)
     if final_state:
         if args.print_final_path:
-            print_path_for_state(final_state, True, True)
+            print_path_for_state(final_state,
+                                 GamePatches(resolver_config.item_loss, randomizer_log.pickup_mapping),
+                                 True,
+                                 True)
     else:
         print("Impossible.")
         raise SystemExit(1)
