@@ -111,7 +111,7 @@ def distribute_command_logic(args):
 
     final_state = run_resolver(data, log, resolver_config)
     if final_state:
-        print_path_for_state(final_state)
+        print_path_for_state(final_state, True, True)
     else:
         print("Impossible.")
         raise SystemExit(1)
@@ -143,17 +143,17 @@ def validate_command_logic(args):
     final_state = run_resolver(data, randomizer_log, resolver_config)
     if final_state:
         if args.print_final_path:
-            print_path_for_state(final_state)
+            print_path_for_state(final_state, True, True)
     else:
         print("Impossible.")
         raise SystemExit(1)
 
 
 def add_validate_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "validate",
         help="Validate a randomizer log."
-    )  # type: ArgumentParser
+    )
 
     parser.add_argument(
         "logfile",
