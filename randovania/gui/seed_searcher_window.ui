@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ManageGameWindow</class>
- <widget class="QMainWindow" name="ManageGameWindow">
+ <class>SeedSearcherWindow</class>
+ <widget class="QMainWindow" name="SeedSearcherWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -134,6 +134,13 @@
        <string>Seed</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
+       <item row="2" column="2">
+        <widget class="QPushButton" name="applySeedButton">
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="1">
         <widget class="QLineEdit" name="currentSeedEdit">
          <property name="maximumSize">
@@ -147,17 +154,27 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="applySeedButton">
+       <item row="3" column="1" colspan="2">
+        <widget class="QLabel" name="statusLabel">
          <property name="text">
-          <string>Apply</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="1" column="1" colspan="2">
+       <item row="1" column="1">
         <widget class="QPushButton" name="generateSeedButton">
          <property name="text">
           <string>Generate new Seed</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="stopBackgroundProcessButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Stop</string>
          </property>
         </widget>
        </item>

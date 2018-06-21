@@ -8,6 +8,7 @@ from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.manage_game_window import ManageGameWindow
 from randovania.gui.randomizer_configuration_window import RandomizeWindow
+from randovania.gui.seed_searcher_window import SeedSearcherWindow
 from randovania.interface_common.options import Options
 
 
@@ -18,6 +19,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.manage_game_window = ManageGameWindow()
         self.randomize_window = RandomizeWindow()
+        self.seed_searcher_window = SeedSearcherWindow()
         self.data_editor_window = DataEditorWindow()
 
         _translate = QtCore.QCoreApplication.translate
@@ -28,9 +30,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.configurationTab = self.randomize_window.centralWidget
         self.tabWidget.insertTab(1, self.configurationTab, _translate("MainWindow", "Configuration"))
 
+        self.searchSearcherTab = self.seed_searcher_window.centralWidget
+        self.tabWidget.insertTab(2, self.searchSearcherTab, _translate("MainWindow", "Seed Searching"))
+
         if preview:
             self.dataEditorTab = self.data_editor_window.centralWidget
-            self.tabWidget.insertTab(2, self.dataEditorTab, _translate("MainWindow", "Data Editor"))
+            self.tabWidget.insertTab(3, self.dataEditorTab, _translate("MainWindow", "Data Editor"))
 
         self.tabWidget.setCurrentIndex(0)
 
