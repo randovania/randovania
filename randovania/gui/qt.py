@@ -1,8 +1,12 @@
 import sys
 from argparse import ArgumentParser
+from typing import Optional
 
+import requests
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtCore import pyqtSignal, QUrl
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QMenu, QAction
 
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
@@ -10,12 +14,20 @@ from randovania.gui.manage_game_window import ManageGameWindow
 from randovania.gui.randomizer_configuration_window import RandomizeWindow
 from randovania.gui.seed_searcher_window import SeedSearcherWindow
 from randovania.interface_common.options import Options
+from randovania.interface_common.update_checker import get_latest_version
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
+    newer_version_signal = pyqtSignal(str, str)
+
+    menu_new_version: Optional[QAction] = None
+    _current_version_url: Optional[str] = None
+
     def __init__(self, preview: bool):
         super().__init__()
         self.setupUi(self)
+
+        self.newer_version_signal.connect(self.display_new_version)
 
         self.manage_game_window = ManageGameWindow()
         self.randomize_window = RandomizeWindow()
@@ -39,9 +51,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.tabWidget.setCurrentIndex(0)
 
+        get_latest_version(self.newer_version_signal.emit)
+
     def closeEvent(self, event):
         self.manage_game_window.closeEvent(event)
         super().closeEvent(event)
+
+    def display_new_version(self, new_version: str, new_version_url: str):
+        if self.menu_new_version is None:
+            self.menu_new_version = QAction("", self)
+            self.menu_new_version.triggered.connect(self.open_version_link)
+            self.menuBar.addAction(self.menu_new_version)
+
+        self.menu_new_version.setText("New version available: {}".format(new_version))
+        self._current_version_url = new_version_url
+
+    def open_version_link(self):
+        if self._current_version_url is None:
+            raise RuntimeError("Called open_version_link, but _current_version_url is None")
+
+        QDesktopServices.openUrl(QUrl(self._current_version_url))
 
 
 def catch_exceptions(t, val, tb):

@@ -45,7 +45,7 @@ setup(
         'py',
         'PyQt5>=5.8',
         'appdirs',
-        'nod>=1.0.0'
+        'nod>=1.0.0', 'requests'
     ],
     setup_requires=[
         'markdown',
