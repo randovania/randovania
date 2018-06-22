@@ -9,6 +9,7 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QMenu, QAction
 
 from randovania.gui.data_editor import DataEditorWindow
+from randovania.gui.history_window import HistoryWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.manage_game_window import ManageGameWindow
 from randovania.gui.randomizer_configuration_window import RandomizeWindow
@@ -28,33 +29,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.newer_version_signal.connect(self.display_new_version)
-
-        self.manage_game_window = ManageGameWindow()
-        self.randomize_window = RandomizeWindow()
-        self.seed_searcher_window = SeedSearcherWindow()
-        self.data_editor_window = DataEditorWindow()
-
         _translate = QtCore.QCoreApplication.translate
+        self.tabs = []
+        self.windows = []
 
-        self.fileTab = self.manage_game_window.centralWidget
-        self.tabWidget.insertTab(0, self.fileTab, _translate("MainWindow", "Game Management"))
-
-        self.configurationTab = self.randomize_window.centralWidget
-        self.tabWidget.insertTab(1, self.configurationTab, _translate("MainWindow", "Configuration"))
-
-        self.searchSearcherTab = self.seed_searcher_window.centralWidget
-        self.tabWidget.insertTab(2, self.searchSearcherTab, _translate("MainWindow", "Seed Searching"))
-
+        self.tab_windows = [
+            (ManageGameWindow, "Game Management"),
+            (RandomizeWindow, "Configuration"),
+            (SeedSearcherWindow, "Seed Searching"),
+            (HistoryWindow, "History"),
+        ]
         if preview:
-            self.dataEditorTab = self.data_editor_window.centralWidget
-            self.tabWidget.insertTab(3, self.dataEditorTab, _translate("MainWindow", "Data Editor"))
+            self.tab_windows.append((DataEditorWindow, "Data Editor"))
+
+        for i, tab in enumerate(self.tab_windows):
+            self.windows.append(tab[0]())
+            self.tabs.append(self.windows[i].centralWidget)
+            self.tabWidget.insertTab(i, self.tabs[i], _translate("MainWindow", tab[1]))
 
         self.tabWidget.setCurrentIndex(0)
 
         get_latest_version(self.newer_version_signal.emit)
 
     def closeEvent(self, event):
-        self.manage_game_window.closeEvent(event)
+        for window in self.windows:
+            window.closeEvent(event)
         super().closeEvent(event)
 
     def display_new_version(self, new_version: str, new_version_url: str):
