@@ -185,7 +185,6 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
     damage = read_damage_resource_info_array(source)
     versions = read_resource_info_array(source)
     misc = read_resource_info_array(source)
-    source.skip(1)  # Undocumented null byte
     difficulty = read_resource_info_array(source)
 
     dock_weakness_database = read_dock_weakness_database(source)
@@ -270,7 +269,6 @@ def encode(data: Dict, x: BinaryIO):
     write_array(writer, data["resource_database"]["versions"],
                 write_resource_info)
     write_array(writer, data["resource_database"]["misc"], write_resource_info)
-    writer.write_byte(0)  # Undocumented null byte
     write_array(writer, data["resource_database"]["difficulty"],
                 write_resource_info)
 
