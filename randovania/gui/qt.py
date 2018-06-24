@@ -34,10 +34,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.windows = []
 
         self.tab_windows = [
-            (ManageGameWindow, "Game Management"),
-            (RandomizeWindow, "Configuration"),
-            (SeedSearcherWindow, "Seed Searching"),
             (HistoryWindow, "History"),
+            (ManageGameWindow, "ISO Management"),
+            (RandomizeWindow, "Layout Generator"),
+            (SeedSearcherWindow, "Seed Searching"),
         ]
         if preview:
             self.tab_windows.append((DataEditorWindow, "Data Editor"))
