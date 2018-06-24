@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui import application_options
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.manage_game_window_ui import Ui_ManageGameWindow
+from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 
 
 def _translate(message, n=None):
@@ -17,7 +17,7 @@ def _translate(message, n=None):
     )
 
 
-class ManageGameWindow(QMainWindow, Ui_ManageGameWindow, BackgroundTaskMixin):
+class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMixin):
     current_files_location: str
 
     def __init__(self):

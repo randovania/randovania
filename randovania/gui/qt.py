@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QMenu, QActi
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
-from randovania.gui.manage_game_window import ManageGameWindow
+from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.randomizer_configuration_window import RandomizeWindow
 from randovania.gui.seed_searcher_window import SeedSearcherWindow
 from randovania.interface_common.options import Options
@@ -35,7 +35,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.tab_windows = [
             (HistoryWindow, "History"),
-            (ManageGameWindow, "ISO Management"),
+            (ISOManagementWindow, "ISO Management"),
             (RandomizeWindow, "Layout Generator"),
             (SeedSearcherWindow, "Seed Searching"),
         ]
