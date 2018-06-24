@@ -1,3 +1,4 @@
+import pytoml
 from pyqt_distutils.build_ui import build_ui
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
@@ -13,6 +14,9 @@ class custom_build_py(build_py):
 
 with open("README.md") as readme_file:
     long_description = readme_file.read()
+
+with open('pyproject.toml', 'rb') as fin:
+    pyproject = pytoml.load(fin)
 
 setup(
     name='randovania',
@@ -41,21 +45,14 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Games/Entertainment',
     ],
+    python_requires=">=3.6",
     install_requires=[
         'py',
         'PyQt5>=5.8',
         'appdirs',
         'nod>=1.0.0', 'requests', 'dataset'
     ],
-    setup_requires=[
-        'markdown',
-        'pytest',
-        'PyInstaller',
-        'pyqt-distutils',
-        'setuptools>=38.6.0',
-        'twine>=1.11.0',
-        'wheel>=0.31.0',
-    ],
+    setup_requires=pyproject["build-system"]["requires"],
     entry_points={
         'console_scripts': [
             "randovania = randovania.__main__:main"
