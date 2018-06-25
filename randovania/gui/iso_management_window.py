@@ -6,7 +6,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
-from randovania.gui import application_options
+from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 
@@ -38,6 +38,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         self.deleteFilesButton.clicked.connect(self.delete_files_location)
 
         # Layout
+        self.remove_hud_popup.setChecked(options.hud_memo_popup_removal)
+        self.remove_hud_popup.stateChanged.connect(persist_bool_option("hud_memo_popup_removal"))
 
         # ISO Packing
         self.loadIsoButton.clicked.connect(self.load_iso)

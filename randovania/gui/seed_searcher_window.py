@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 from randovania.games.prime import binary_data
 from randovania.games.prime.claris_randomizer import apply_seed
-from randovania.gui import application_options
+from randovania.gui.common_qt_lib import application_options
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.seed_searcher_window_ui import Ui_SeedSearcherWindow
 from randovania.interface_common.options import CpuUsage

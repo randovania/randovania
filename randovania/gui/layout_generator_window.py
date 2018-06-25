@@ -1,27 +1,13 @@
-from typing import Dict, Iterator
+from typing import Dict
 
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QMainWindow
 
 from randovania.games.prime import binary_data
-from randovania.gui import application_options
+from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.resources import SimpleResourceInfo
-
-
-def _map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):
-    for checkbox in iterable:
-        checkbox.setChecked(new_status)
-
-
-def _persist_bool_option(attribute_name: str):
-    def callback(value: bool):
-        options = application_options()
-        setattr(options, attribute_name, value)
-        options.save_to_disk()
-
-    return callback
 
 
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
@@ -42,12 +28,10 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         self.maximumDifficulty.valueChanged.connect(self.on_max_difficulty_changed)
 
         # Checkers
-        self.removeItemLoss.setChecked(options.remove_item_loss)
-        self.removeItemLoss.stateChanged.connect(_persist_bool_option("remove_item_loss"))
-        self.randomizeElevators.setChecked(options.randomize_elevators)
-        self.randomizeElevators.stateChanged.connect(_persist_bool_option("randomize_elevators"))
-        self.removeHudPopup.setChecked(options.hud_memo_popup_removal)
-        self.removeHudPopup.stateChanged.connect(_persist_bool_option("hud_memo_popup_removal"))
+        self.remove_item_loss.setChecked(options.remove_item_loss)
+        self.remove_item_loss.stateChanged.connect(persist_bool_option("remove_item_loss"))
+        self.randomize_elevators.setChecked(options.randomize_elevators)
+        self.randomize_elevators.stateChanged.connect(persist_bool_option("randomize_elevators"))
 
         # Trick Selection
         self.trick_checkboxes: Dict[SimpleResourceInfo, QtWidgets.QCheckBox] = {}

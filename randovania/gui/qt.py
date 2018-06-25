@@ -2,17 +2,16 @@ import sys
 from argparse import ArgumentParser
 from typing import Optional
 
-import requests
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, QUrl
 from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QMenu, QAction
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QAction
 
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.history_window import HistoryWindow
-from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.layout_generator_window import LayoutGeneratorWindow
+from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.seed_searcher_window import SeedSearcherWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.update_checker import get_latest_version
@@ -35,11 +34,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.tab_windows = [
             (HistoryWindow, "History"),
-            (ISOManagementWindow, "ISO Management"),
             (LayoutGeneratorWindow, "Layout Generator"),
-            (SeedSearcherWindow, "Seed Searching"),
+            (ISOManagementWindow, "ISO Management"),
         ]
         if preview:
+            self.tab_windows.append((SeedSearcherWindow, "Seed Searching"))
             self.tab_windows.append((DataEditorWindow, "Data Editor"))
 
         for i, tab in enumerate(self.tab_windows):
