@@ -55,6 +55,13 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="maximumDifficultyLabel">
+           <property name="text">
+            <string>Maximum</string>
+           </property>
+          </widget>
+         </item>
          <item row="2" column="1">
           <widget class="QSlider" name="maximumDifficulty">
            <property name="minimum">
@@ -71,13 +78,6 @@
            </property>
            <property name="tickPosition">
             <enum>QSlider::TicksBelow</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="maximumDifficultyLabel">
-           <property name="text">
-            <string>Maximum</string>
            </property>
           </widget>
          </item>
@@ -101,23 +101,13 @@
        </widget>
       </item>
       <item row="2" column="1" rowspan="2">
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QGroupBox" name="variants_box">
         <property name="title">
-         <string/>
+         <string>Variants</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QCheckBox" name="removeHudPopup">
-           <property name="toolTip">
-            <string>The &quot;HUD Popup&quot; is the popup that appears after you collect an item</string>
-           </property>
-           <property name="text">
-            <string>Remove HUD popup</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="outOfBounds">
+          <widget class="QCheckBox" name="allow_out_of_bounds">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -125,7 +115,7 @@
             <string>Currently we have no data to allow this feature</string>
            </property>
            <property name="text">
-            <string>Require Out-of-Bounds</string>
+            <string>Allow out of bounds</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -133,14 +123,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="randomizeElevators">
+          <widget class="QCheckBox" name="randomize_elevators">
            <property name="text">
-            <string>Randomize Elevators</string>
+            <string>Randomize elevators</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="removeItemLoss">
+          <widget class="QCheckBox" name="remove_item_loss">
            <property name="toolTip">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, you don't lose your items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;p&gt;Seeds with this unchecked are rare and may just have many items in the beggining.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
