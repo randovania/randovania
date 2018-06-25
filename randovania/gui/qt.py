@@ -12,7 +12,7 @@ from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
-from randovania.gui.randomizer_configuration_window import RandomizeWindow
+from randovania.gui.layout_generator_window import LayoutGeneratorWindow
 from randovania.gui.seed_searcher_window import SeedSearcherWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.update_checker import get_latest_version
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tab_windows = [
             (HistoryWindow, "History"),
             (ISOManagementWindow, "ISO Management"),
-            (RandomizeWindow, "Layout Generator"),
+            (LayoutGeneratorWindow, "Layout Generator"),
             (SeedSearcherWindow, "Seed Searching"),
         ]
         if preview:
