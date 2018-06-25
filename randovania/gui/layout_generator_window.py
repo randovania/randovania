@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow
 
 from randovania.games.prime import binary_data
 from randovania.gui import application_options
-from randovania.gui.randomizer_configuration_window_ui import Ui_RandomizeWindow
+from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.resources import SimpleResourceInfo
 
@@ -24,7 +24,7 @@ def _persist_bool_option(attribute_name: str):
     return callback
 
 
-class RandomizeWindow(QMainWindow, Ui_RandomizeWindow):
+class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
