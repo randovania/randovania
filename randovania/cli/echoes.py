@@ -103,7 +103,7 @@ def distribute_command_logic(args):
         resolver_config.difficulty,
         resolver_config.enabled_tricks,
         game_description,
-        random.Random(),
+        random.randint(0, 2 ** 31),
         game_patches
     )
 
