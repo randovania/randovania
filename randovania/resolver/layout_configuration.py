@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import NamedTuple, Tuple
+from typing import NamedTuple
 
 
 class LayoutLogic(Enum):
@@ -27,12 +27,7 @@ class LayoutDifficulty(Enum):
     NORMAL = "normal"
 
 
-class SolverPath(NamedTuple):
-    node_name: str
-    previous_nodes: Tuple[str, ...]
-
-
-class LayoutDescription(NamedTuple):
+class LayoutConfiguration(NamedTuple):
     seed_number: int
     logic: LayoutLogic
     mode: LayoutMode
@@ -41,6 +36,3 @@ class LayoutDescription(NamedTuple):
     elevators: LayoutRandomizedFlag
     hundo_guaranteed: LayoutEnabledFlag
     difficulty: LayoutDifficulty
-    version: str
-    pickup_mapping: Tuple[int, ...]
-    solver_path: Tuple[SolverPath, ...]
