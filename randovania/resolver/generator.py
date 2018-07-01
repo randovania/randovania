@@ -1,6 +1,6 @@
 import copy
 import itertools
-import random
+from random import Random
 from typing import List, Set, Tuple, NamedTuple, Iterator, Optional, FrozenSet
 
 from randovania.resolver import debug
@@ -24,6 +24,7 @@ def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase)
 def generate_list(difficulty_level: int,
                   tricks_enabled: Set[int],
                   game: GameDescription,
+                  rng: Random,
                   patches: GamePatches) -> GamePatches:
     patches = GamePatches(
         patches.item_loss_enabled,
@@ -43,10 +44,10 @@ def generate_list(difficulty_level: int,
     logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
     logic.game.simplify_connections(state.resources)
 
-    new_patches, non_added_items = distribute_one_item(logic, state, patches, available_pickups)
+    new_patches, non_added_items = distribute_one_item(logic, state, patches, available_pickups, rng)
     remaining_items.extend(non_added_items)
 
-    random.shuffle(remaining_items)
+    rng.shuffle(remaining_items)
 
     # for i, index in enumerate(new_patches.pickup_mapping):
     #     if index is not None:
@@ -134,9 +135,10 @@ def does_pickup_satisfies(pickup: PickupEntry,
 def get_items_that_satisfies(available_item_pickups: List[PickupEntry],
                              interesting_resources: FrozenSet[ResourceInfo],
                              database: ResourceDatabase,
+                             rng: Random,
                              ) -> Iterator[PickupEntry]:
     result_pickup_list = copy.copy(available_item_pickups)
-    random.shuffle(result_pickup_list)  # TODO: random
+    rng.shuffle(result_pickup_list)
 
     for pickup in result_pickup_list:
         if does_pickup_satisfies(pickup, interesting_resources, database):
@@ -160,6 +162,7 @@ def distribute_one_item(logic: Logic,
                         state: State,
                         patches: GamePatches,
                         available_item_pickups: List[PickupEntry],
+                        rng: Random,
                         ) -> Optional[Tuple[GamePatches, List[PickupEntry]]]:
     debug.print_distribute_one_item(state)
 
@@ -167,7 +170,7 @@ def distribute_one_item(logic: Logic,
         logic,
         patches,
         state))
-    random.shuffle(potential_item_slots)  # TODO: random
+    rng.shuffle(potential_item_slots)
 
     for item_option in potential_item_slots:
         for event in item_option.events:
@@ -183,12 +186,13 @@ def distribute_one_item(logic: Logic,
         item_option.available_pickups
         for item_option in potential_item_slots
     )))
-    random.shuffle(available_pickups_spots)  # TODO: random
+    rng.shuffle(available_pickups_spots)
 
     debug.print_distribute_one_item_detail(potential_item_slots, available_pickups_spots, available_item_pickups)
 
     item_log = []
-    for item in get_items_that_satisfies(available_item_pickups, interesting_resources, logic.game.resource_database):
+    for item in get_items_that_satisfies(available_item_pickups, interesting_resources,
+                                         logic.game.resource_database, rng):
         item_log.append(item)
 
         for pickup_node in available_pickups_spots:
@@ -217,7 +221,8 @@ def distribute_one_item(logic: Logic,
                     return new_patches, new_available_item_pickups
 
                 recursive_result = distribute_one_item(logic, new_state,
-                                                       new_patches, new_available_item_pickups)
+                                                       new_patches, new_available_item_pickups,
+                                                       rng)
                 if recursive_result:
                     return recursive_result
                 # TODO: boost the additional_requirements for _something_ so we never try this again
