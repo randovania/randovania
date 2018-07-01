@@ -3,15 +3,14 @@ from functools import partial
 from typing import Dict, List, Optional
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
-    QComboBox
+from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
 from randovania.games.prime import binary_data
 from randovania.gui.history_window_ui import Ui_HistoryWindow
-from randovania.interface_common.layout_description import LayoutDescription, LayoutLogic, LayoutMode, \
-    LayoutEnabledFlag, LayoutRandomizedFlag, LayoutDifficulty, SolverPath
+from randovania.resolver.layout_description import LayoutDescription, SolverPath
+from randovania.resolver.layout_configuration import LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
+    LayoutEnabledFlag, LayoutDifficulty, LayoutConfiguration
 from randovania.resolver.data_reader import read_resource_database
-from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.resources import PickupEntry
 
 
@@ -79,14 +78,16 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
         self.update_layout_description(
             LayoutDescription(
-                seed_number=0,
-                logic=self.logic_selection_combo.currentData(),
-                mode=self.mode_selection_combo.currentData(),
-                sky_temple_keys=self.keys_selection_combo.currentData(),
-                item_loss=self.item_loss_selection_combo.currentData(),
-                elevators=self.elevators_selection_combo.currentData(),
-                hundo_guaranteed=self.guaranteed_100_selection_combo.currentData(),
-                difficulty=self.difficulty_selection_combo.currentData(),
+                configuration=LayoutConfiguration(
+                    seed_number=0,
+                    logic=self.logic_selection_combo.currentData(),
+                    mode=self.mode_selection_combo.currentData(),
+                    sky_temple_keys=self.keys_selection_combo.currentData(),
+                    item_loss=self.item_loss_selection_combo.currentData(),
+                    elevators=self.elevators_selection_combo.currentData(),
+                    hundo_guaranteed=self.guaranteed_100_selection_combo.currentData(),
+                    difficulty=self.difficulty_selection_combo.currentData(),
+                ),
                 version="???",
                 pickup_mapping=tuple(reversed(range(num_items))),
                 solver_path=(
