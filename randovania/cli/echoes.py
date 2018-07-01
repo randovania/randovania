@@ -1,5 +1,6 @@
 import argparse
 import multiprocessing
+import random
 import sys
 from argparse import ArgumentParser
 from collections import defaultdict
@@ -102,6 +103,7 @@ def distribute_command_logic(args):
         resolver_config.difficulty,
         resolver_config.enabled_tricks,
         game_description,
+        random.Random(),
         game_patches
     )
 
