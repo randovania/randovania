@@ -24,8 +24,10 @@ def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase)
 def generate_list(difficulty_level: int,
                   tricks_enabled: Set[int],
                   game: GameDescription,
-                  rng: Random,
+                  seed: int,
                   patches: GamePatches) -> GamePatches:
+
+    rng = Random(seed)
     patches = GamePatches(
         patches.item_loss_enabled,
         [None] * len(game.resource_database.pickups)
