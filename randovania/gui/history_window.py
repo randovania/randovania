@@ -3,6 +3,7 @@ from functools import partial
 from typing import Dict, List, Optional
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
 from randovania.games.prime import binary_data
@@ -40,6 +41,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.layout_history_content_layout.setAlignment(Qt.AlignTop)
 
         # All code for the Randomize button
+        self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
         self.setup_layout_combo_data()
         self.setup_initial_combo_selection()
         self.create_layout_button.clicked.connect(self.create_new_layout)
