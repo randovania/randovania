@@ -3,10 +3,13 @@ import itertools
 from random import Random
 from typing import List, Set, Tuple, NamedTuple, Iterator, Optional, FrozenSet
 
-from randovania.resolver import debug
+from randovania import VERSION
+from randovania.resolver import debug, resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic
+from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node, PickupNode
 from randovania.resolver.reach import Reach
@@ -21,17 +24,52 @@ def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase)
     }
 
 
-def generate_list(difficulty_level: int,
-                  tricks_enabled: Set[int],
-                  game: GameDescription,
-                  seed: int,
-                  patches: GamePatches) -> GamePatches:
+def expand_layout_logic(logic: LayoutLogic):
+    if logic == LayoutLogic.NO_GLITCHES:
+        return 0, set()
+    else:
+        raise Exception("Unsupported logic")
 
-    rng = Random(seed)
+
+def _iterate_previous_states(state: State) -> Iterator[State]:
+    while state:
+        yield state
+        state = state.previous_state
+
+
+def _state_to_solver_path(final_state: State,
+                          game: GameDescription
+                          ) -> Tuple[SolverPath, ...]:
+
+    def build_previous_nodes(s: State):
+        if s.path_from_previous_state:
+            return tuple(
+                game.node_name(node) for node in s.path_from_previous_state
+                if node is not s.previous_state.node
+            )
+        else:
+            return tuple()
+
+    return tuple(
+        SolverPath(
+            node_name=game.node_name(state.node, with_world=True),
+            previous_nodes=build_previous_nodes(state)
+        )
+        for state in reversed(list(_iterate_previous_states(final_state)))
+    )
+
+
+def generate_list(game: GameDescription,
+                  configuration: LayoutConfiguration
+                  )-> LayoutDescription:
+
+    rng = Random(configuration.seed_number)
+
     patches = GamePatches(
-        patches.item_loss_enabled,
+        configuration.item_loss == LayoutEnabledFlag.ENABLED,
         [None] * len(game.resource_database.pickups)
     )
+    difficulty_level, tricks_enabled = expand_layout_logic(configuration.logic)
 
     available_pickups = list({
                                  frozenset(pickup_to_current_resources(pickup, game.resource_database).items()): pickup
@@ -57,7 +95,23 @@ def generate_list(difficulty_level: int,
     #     new_patches.pickup_mapping[i] = game.resource_database.pickups.index(remaining_items.pop())
     #
     # assert not remaining_items
-    return new_patches
+
+    final_state = resolver.resolve(
+        difficulty_level=difficulty_level,
+        tricks_enabled=tricks_enabled,
+        game=game,
+        patches=new_patches
+    )
+
+    if final_state is None:
+        raise Exception("We just created an item distribution we believe is impossible. What?")
+
+    return LayoutDescription(
+        configuration=configuration,
+        version=VERSION,
+        pickup_mapping=new_patches.pickup_mapping,
+        solver_path=_state_to_solver_path(final_state, game)
+    )
 
 
 class ItemSlot(NamedTuple):

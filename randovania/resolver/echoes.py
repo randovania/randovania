@@ -1,12 +1,16 @@
 import multiprocessing
 import random
+import traceback
 from typing import Dict, Optional, NamedTuple, List, Tuple, Set, Callable
 
 from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.interface_common.options import Options
-from randovania.resolver import data_reader, resolver, debug
+from randovania.resolver import data_reader, resolver, debug, generator
+from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.node import EventNode, PickupNode
 from randovania.resolver.resources import PickupIndex
 from randovania.resolver.state import State
@@ -182,3 +186,34 @@ def search_seed_with_options(data: Dict,
                        cpu_count=cpu_count,
                        seed_report=seed_report,
                        start_on_seed=start_on_seed)
+
+
+def _generate_layout_worker(output_pipe,
+                            game: GameDescription,
+                            configuration: LayoutConfiguration):
+    try:
+        layout_description = generator.generate_list(game, configuration)
+        output_pipe.send(layout_description)
+    except Exception as e:
+        traceback.print_exc()
+        output_pipe.send(e)
+
+
+def generate_layout(data: Dict,
+                    configuration: LayoutConfiguration,
+                    ) -> LayoutDescription:
+
+    receiving_pipe, output_pipe = multiprocessing.Pipe(False)
+
+    game = data_reader.decode_data(data, [])  # TODO: elevator support
+    process = multiprocessing.Process(
+        target=_generate_layout_worker,
+        args=(output_pipe, game, configuration)
+    )
+    process.start()
+    try:
+        layout_description = receiving_pipe.recv()
+    finally:
+        process.terminate()
+
+    return layout_description
