@@ -12,6 +12,8 @@ from randovania.resolver import debug
 from randovania.resolver.echoes import run_resolver, search_seed, RandomizerConfiguration, \
     ResolverConfiguration, print_path_for_state
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
+    LayoutEnabledFlag, LayoutDifficulty
 
 __all__ = ["create_subparsers"]
 
@@ -96,16 +98,23 @@ def distribute_command_logic(args):
     from randovania.resolver.game_patches import GamePatches
 
     game_description = data_reader.decode_data(data, [])
-    game_patches = GamePatches(resolver_config.item_loss, [])
 
     from randovania.resolver import generator
-    new_patches = generator.generate_list(
-        resolver_config.difficulty,
-        resolver_config.enabled_tricks,
+    layout_description = generator.generate_list(
         game_description,
-        random.randint(0, 2 ** 31),
-        game_patches
+        LayoutConfiguration(
+            seed_number=random.randint(0, 2 ** 31),
+            logic=LayoutLogic.NO_GLITCHES,
+            mode=LayoutMode.STANDARD,
+            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            item_loss=LayoutEnabledFlag.ENABLED if resolver_config.item_loss else LayoutEnabledFlag.DISABLED,
+            elevators=LayoutRandomizedFlag.VANILLA,
+            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+            difficulty=LayoutDifficulty.NORMAL,
+        ),
     )
+
+    new_patches = GamePatches(resolver_config.item_loss, list(layout_description.pickup_mapping))
 
     log = log_parser.log_with_patches(new_patches)
     log.write(sys.stdout)

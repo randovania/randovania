@@ -1,13 +1,17 @@
 import collections
+import random
 from functools import partial
 from typing import Dict, List, Optional
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
+from randovania import VERSION
 from randovania.games.prime import binary_data
+from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.history_window_ui import Ui_HistoryWindow
+from randovania.resolver.echoes import generate_layout
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.layout_configuration import LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty, LayoutConfiguration
@@ -25,11 +29,14 @@ def _unique(iterable):
         yield item
 
 
-class HistoryWindow(QMainWindow, Ui_HistoryWindow):
+class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton] = []
     pickup_spoiler_buttons: List[QPushButton] = []
     current_layout_description: Optional[LayoutDescription] = None
+
+    layout_generated_signal = pyqtSignal(LayoutDescription)
+    selected_layout_change_signal = pyqtSignal(LayoutDescription)
 
     def __init__(self):
         super().__init__()
@@ -39,6 +46,10 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.resource_database = read_resource_database(data["resource_database"])
 
         self.layout_history_content_layout.setAlignment(Qt.AlignTop)
+
+        # signals
+        self.layout_generated_signal.connect(self._on_layout_generated)
+        self.selected_layout_change_signal.connect(self.update_layout_description)
 
         # All code for the Randomize button
         self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
@@ -55,6 +66,24 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.layout_info_tab.hide()
 
     # Layout Creation logic
+    @property
+    def currently_selected_layout_configuration(self) -> LayoutConfiguration:
+        seed = self.seed_number_edit.text()
+        if seed == "":
+            seed = random.randint(0, 2 ** 31)
+        else:
+            seed = int(seed)
+        return LayoutConfiguration(
+            seed_number=seed,
+            logic=self.logic_selection_combo.currentData(),
+            mode=self.mode_selection_combo.currentData(),
+            sky_temple_keys=self.keys_selection_combo.currentData(),
+            item_loss=self.item_loss_selection_combo.currentData(),
+            elevators=self.elevators_selection_combo.currentData(),
+            hundo_guaranteed=self.guaranteed_100_selection_combo.currentData(),
+            difficulty=self.difficulty_selection_combo.currentData(),
+        )
+
     def setup_layout_combo_data(self):
         self.keys_selection_combo.setItemData(0, LayoutRandomizedFlag.VANILLA)
         self.keys_selection_combo.setItemData(1, LayoutRandomizedFlag.RANDOMIZED)
@@ -75,29 +104,24 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.keys_selection_combo.setCurrentIndex(1)
         self.guaranteed_100_selection_combo.setCurrentIndex(1)
 
-    def create_new_layout(self):
-        num_items = len(self.resource_database.pickups)
+    def _on_layout_generated(self, layout: LayoutDescription):
+        self.randomize_in_progress_bar.setValue(1)
+        self.randomize_in_progress_bar.setMaximum(1)
+        self.selected_layout_change_signal.emit(layout)
 
-        self.update_layout_description(
-            LayoutDescription(
-                configuration=LayoutConfiguration(
-                    seed_number=0,
-                    logic=self.logic_selection_combo.currentData(),
-                    mode=self.mode_selection_combo.currentData(),
-                    sky_temple_keys=self.keys_selection_combo.currentData(),
-                    item_loss=self.item_loss_selection_combo.currentData(),
-                    elevators=self.elevators_selection_combo.currentData(),
-                    hundo_guaranteed=self.guaranteed_100_selection_combo.currentData(),
-                    difficulty=self.difficulty_selection_combo.currentData(),
-                ),
-                version="???",
-                pickup_mapping=tuple(reversed(range(num_items))),
-                solver_path=(
-                    SolverPath("Stuff", ("a", "b", "c")),
-                    SolverPath("Second Room", ("z", "w")),
+    def create_new_layout(self):
+        self.randomize_in_progress_bar.setValue(0)
+        self.randomize_in_progress_bar.setMaximum(0)
+
+        def work(status_update):
+            self.layout_generated_signal.emit(
+                generate_layout(
+                    data=binary_data.decode_default_prime2(),
+                    configuration=self.currently_selected_layout_configuration,
                 )
             )
-        )
+
+        self.run_in_background_thread(work, "Randomizing...")
 
     def _create_pickup_spoilers(self, resource_database):
         pickup_by_world: Dict[str, List[PickupEntry]] = collections.defaultdict(list)
@@ -162,18 +186,23 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.current_layout_description = layout
         self.layout_info_tab.show()
 
-        self.layout_seed_value_label.setText(str(layout.seed_number))
-        self.layout_logic_value_label.setText(layout.logic.value)
-        self.layout_mode_value_label.setText(layout.mode.value)
-        self.layout_keys_value_label.setText(layout.sky_temple_keys.value)
-        self.layout_item_loss_value_label.setText(layout.item_loss.value)
-        self.layout_elevators_value_label.setText(layout.elevators.value)
-        self.layout_hundo_value_label.setText(layout.hundo_guaranteed.value)
-        self.layout_difficulty_value_label.setText(layout.difficulty.value)
+        configuration = layout.configuration
+        self.layout_seed_value_label.setText(str(configuration.seed_number))
+        self.layout_logic_value_label.setText(configuration.logic.value)
+        self.layout_mode_value_label.setText(configuration.mode.value)
+        self.layout_keys_value_label.setText(configuration.sky_temple_keys.value)
+        self.layout_item_loss_value_label.setText(configuration.item_loss.value)
+        self.layout_elevators_value_label.setText(configuration.elevators.value)
+        self.layout_hundo_value_label.setText(configuration.hundo_guaranteed.value)
+        self.layout_difficulty_value_label.setText(configuration.difficulty.value)
 
         for i, pickup_button in enumerate(self.pickup_spoiler_buttons):
-            pickup = self.resource_database.pickups[layout.pickup_mapping[i]]
-            pickup_button.item_name = pickup.item
+            mapping = layout.pickup_mapping[i]
+            if mapping is not None:
+                pickup = self.resource_database.pickups[mapping]
+                pickup_button.item_name = pickup.item
+            else:
+                pickup_button.item_name = "Nothing"
 
     def _toggle_pickup_spoiler(self, button):
         if button.item_is_hidden:
@@ -188,3 +217,4 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
             visible = text == "None" or text == button.item_name
             button.setVisible(visible)
             button.row.label.setVisible(visible)
+

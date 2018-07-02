@@ -112,6 +112,10 @@ class GameDescription:
                 for node in area.nodes:
                     yield node
 
+    def node_name(self, node: Node, with_world=False) -> str:
+        prefix = "{}/".format(self.nodes_to_world(node).name) if with_world else ""
+        return "{}{}/{}".format(prefix, self.nodes_to_area(node).name, node.name)
+
     def nodes_to_world(self, node: Node) -> World:
         return self._nodes_to_world[node]
 
