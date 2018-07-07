@@ -1,5 +1,6 @@
 import copy
 import itertools
+import pprint
 from random import Random
 from typing import List, Set, Tuple, NamedTuple, Iterator, Optional, FrozenSet
 
@@ -84,7 +85,8 @@ def generate_list(game: GameDescription,
     logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
     logic.game.simplify_connections(state.resources)
 
-    new_patches, non_added_items = distribute_one_item(logic, state, patches, available_pickups, rng)
+    new_patches, non_added_items, final_state_by_distribution = distribute_one_item(
+        logic, state, patches, available_pickups, rng)
     remaining_items.extend(non_added_items)
 
     rng.shuffle(remaining_items)
@@ -96,21 +98,22 @@ def generate_list(game: GameDescription,
     #
     # assert not remaining_items
 
-    final_state = resolver.resolve(
+    final_state_by_resolve = resolver.resolve(
         difficulty_level=difficulty_level,
         tricks_enabled=tricks_enabled,
         game=game,
         patches=new_patches
     )
 
-    if final_state is None:
+    if final_state_by_resolve is None:
+        # Why is final_state_by_distribution not OK?
         raise Exception("We just created an item distribution we believe is impossible. What?")
 
     return LayoutDescription(
         configuration=configuration,
         version=VERSION,
         pickup_mapping=new_patches.pickup_mapping,
-        solver_path=_state_to_solver_path(final_state, game)
+        solver_path=_state_to_solver_path(final_state_by_resolve, game)
     )
 
 
@@ -219,7 +222,7 @@ def distribute_one_item(logic: Logic,
                         patches: GamePatches,
                         available_item_pickups: List[PickupEntry],
                         rng: Random,
-                        ) -> Optional[Tuple[GamePatches, List[PickupEntry]]]:
+                        ) -> Optional[Tuple[GamePatches, List[PickupEntry], State]]:
     debug.print_distribute_one_item(state)
 
     potential_item_slots: List[ItemSlot] = list(find_potential_item_slots(
@@ -232,7 +235,7 @@ def distribute_one_item(logic: Logic,
         for event in item_option.events:
             with_event = state.act_on_node(event, patches.pickup_mapping)
             if logic.game.victory_condition.satisfied(with_event.resources):
-                return patches, available_item_pickups
+                return patches, available_item_pickups, state
 
     interesting_resources = frozenset(itertools.chain.from_iterable(
         item_option.interesting_resources
@@ -274,7 +277,7 @@ def distribute_one_item(logic: Logic,
                 new_available_item_pickups.remove(item)
 
                 if not new_available_item_pickups:
-                    return new_patches, new_available_item_pickups
+                    return new_patches, new_available_item_pickups, new_state
 
                 recursive_result = distribute_one_item(logic, new_state,
                                                        new_patches, new_available_item_pickups,
