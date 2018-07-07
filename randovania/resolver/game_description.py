@@ -106,6 +106,7 @@ class GameDescription:
                 return world
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
+    @property
     def all_nodes(self) -> Iterator[Node]:
         for world in self.worlds:
             for area in world.areas:
