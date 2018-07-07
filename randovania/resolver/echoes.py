@@ -1,7 +1,7 @@
 import multiprocessing
 import random
 import traceback
-from typing import Dict, Optional, NamedTuple, List, Tuple, Set, Callable
+from typing import Dict, Optional, NamedTuple, List, Tuple, Set, Callable, Union
 
 from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
@@ -192,7 +192,11 @@ def _generate_layout_worker(output_pipe,
                             game: GameDescription,
                             configuration: LayoutConfiguration):
     try:
-        layout_description = generator.generate_list(game, configuration)
+        def status_update(message: str):
+            output_pipe.send(message)
+        layout_description = generator.generate_list(game,
+                                                     configuration,
+                                                     status_update=status_update)
         output_pipe.send(layout_description)
     except Exception as e:
         traceback.print_exc()
@@ -201,7 +205,8 @@ def _generate_layout_worker(output_pipe,
 
 def generate_layout(data: Dict,
                     configuration: LayoutConfiguration,
-                    ) -> LayoutDescription:
+                    status_update: Callable[[str], None]
+                    ) -> Union[Exception, LayoutDescription]:
 
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
 
@@ -212,8 +217,14 @@ def generate_layout(data: Dict,
     )
     process.start()
     try:
-        layout_description = receiving_pipe.recv()
+        result: Union[Exception, LayoutDescription] = None
+        while result is None:
+            pipe_input = receiving_pipe.recv()
+            if isinstance(pipe_input, (LayoutDescription, Exception)):
+                result = pipe_input
+            else:
+                status_update(pipe_input)
     finally:
         process.terminate()
 
-    return layout_description
+    return result
