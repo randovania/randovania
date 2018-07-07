@@ -9,6 +9,7 @@ from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
+from randovania.resolver.layout_description import LayoutDescription
 
 
 def _translate(message, n=None):
@@ -19,8 +20,9 @@ def _translate(message, n=None):
 
 class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMixin):
     current_files_location: str
+    current_layout: Optional[LayoutDescription] = None
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
         self.setupUi(self)
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -30,6 +32,10 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         self.stopBackgroundProcessButton.clicked.connect(self.stop_background_process)
 
         options = application_options()
+
+        # Game Patching
+        self.layout_identifier_label.default_text = self.layout_identifier_label.text()
+        self.load_layout(None)
 
         # File Location
         self.filesLocation.setText(options.game_files_path)
@@ -54,6 +60,15 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
     def closeEvent(self, event):
         self.stop_background_process()
         super().closeEvent(event)
+
+    # Game Patching
+    def load_layout(self, layout: Optional[LayoutDescription]):
+        self.current_layout = layout
+        if layout is not None:
+            self.layout_identifier_label.setText(str(layout))
+        else:
+            self.layout_identifier_label.setText(self.layout_identifier_label.default_text)
+        self.apply_layout_button.setEnabled(layout is not None)
 
     # File Location
     def prompt_new_files_location(self):

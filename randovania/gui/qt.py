@@ -1,12 +1,13 @@
 import sys
 from argparse import ArgumentParser
-from typing import Optional
+from typing import Optional, List
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, QUrl
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QAction
 
+from randovania import VERSION
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
@@ -26,23 +27,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, preview: bool):
         super().__init__()
         self.setupUi(self)
+        self.setWindowTitle("Randovania {}".format(VERSION))
 
         self.newer_version_signal.connect(self.display_new_version)
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
-        self.windows = []
+        self.windows: List[QMainWindow] = []
 
         self.tab_windows = [
             (HistoryWindow, "History"),
-            (LayoutGeneratorWindow, "Layout Generator"),
             (ISOManagementWindow, "ISO Management"),
+            # (LayoutGeneratorWindow, "Layout Generator"),
         ]
         if preview:
             self.tab_windows.append((SeedSearcherWindow, "Seed Searching"))
             self.tab_windows.append((DataEditorWindow, "Data Editor"))
 
         for i, tab in enumerate(self.tab_windows):
-            self.windows.append(tab[0]())
+            self.windows.append(tab[0](self))
             self.tabs.append(self.windows[i].centralWidget)
             self.tabWidget.insertTab(i, self.tabs[i], _translate("MainWindow", tab[1]))
 
@@ -69,6 +71,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             raise RuntimeError("Called open_version_link, but _current_version_url is None")
 
         QDesktopServices.openUrl(QUrl(self._current_version_url))
+
+    def get_tab(self, tab_class) -> Optional[QMainWindow]:
+        for window in self.windows:
+            if isinstance(window, tab_class):
+                return window
+
+    def focus_tab(self, tab: QMainWindow):
+        index = self.windows.index(tab)
+        self.tabWidget.setCurrentIndex(index)
 
 
 def catch_exceptions(t, val, tb):

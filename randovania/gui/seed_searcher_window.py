@@ -31,7 +31,7 @@ def _translate(message, n=None):
 class SeedSearcherWindow(QMainWindow, Ui_SeedSearcherWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
         self.setupUi(self)
 

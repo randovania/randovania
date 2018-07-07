@@ -14,7 +14,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     selected_node_button: QRadioButton = None
     radio_button_to_node: Dict[QRadioButton, Node] = {}
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
         self.setupUi(self)
         self.worldSelectorBox.currentIndexChanged.connect(self.on_select_world)
