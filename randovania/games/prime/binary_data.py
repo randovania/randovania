@@ -1,3 +1,4 @@
+import functools
 import json
 import os
 from functools import partial
@@ -340,6 +341,7 @@ def encode(data: Dict, x: BinaryIO):
     write_array(writer, data["worlds"], write_world)
 
 
+@functools.lru_cache()
 def decode_default_prime2():
     return decode_file_path(
         os.path.join(get_data_path(), "prime2.bin"),

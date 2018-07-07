@@ -65,7 +65,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
     def load_layout(self, layout: Optional[LayoutDescription]):
         self.current_layout = layout
         if layout is not None:
-            self.layout_identifier_label.setText(str(layout))
+            self.layout_identifier_label.setText(layout.configuration.as_str)
         else:
             self.layout_identifier_label.setText(self.layout_identifier_label.default_text)
         self.apply_layout_button.setEnabled(layout is not None)

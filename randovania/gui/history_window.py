@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
-    QMessageBox
+    QMessageBox, QFileDialog
 
 from randovania import VERSION
 from randovania.games.prime import binary_data
@@ -75,7 +75,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers(self.resource_database)
-        self.layout_info_tab.hide()
+        # self.layout_info_tab.hide()
 
         # Exporting
         self.apply_layout_button.clicked.connect(self.apply_layout)
@@ -243,4 +243,10 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.main_window.focus_tab(iso_management)
 
     def export_layout(self):
-        pass
+        open_result = QFileDialog.getSaveFileName(self, filter="*.json")
+        if not open_result or open_result == ("", ""):
+            return
+
+        json_path, extension = open_result
+
+        self.current_layout_description.save_to_file(json_path)
