@@ -243,7 +243,10 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.main_window.focus_tab(iso_management)
 
     def export_layout(self):
-        open_result = QFileDialog.getSaveFileName(self, filter="*.json")
+        open_result = QFileDialog.getSaveFileName(
+            self,
+            caption="Select a file to export the layout to...",
+            filter="*.json")
         if not open_result or open_result == ("", ""):
             return
 

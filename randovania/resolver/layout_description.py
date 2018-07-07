@@ -49,7 +49,13 @@ class LayoutDescription(NamedTuple):
                 "configuration": self.configuration.as_json,
             },
             "locations": _pickup_mapping_to_item_locations(self.pickup_mapping),
-            "playthrough": []
+            "playthrough": [
+                {
+                    "node": path.node_name,
+                    "path_from_previous": path.previous_nodes
+                }
+                for path in self.solver_path
+            ]
         }
 
     def save_to_file(self, json_path: str):
