@@ -5,12 +5,14 @@ from typing import Dict, List, Optional
 
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
+    QMessageBox
 
 from randovania import VERSION
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.history_window_ui import Ui_HistoryWindow
+from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.resolver.echoes import generate_layout
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.layout_configuration import LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
@@ -29,6 +31,12 @@ def _unique(iterable):
         yield item
 
 
+def show_failed_generation_exception(exception: Exception):
+    QMessageBox.critical(None,
+                         "An exception was raised",
+                         "An unhandled Exception occurred:\n{}".format(exception))
+
+
 class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton] = []
@@ -37,10 +45,13 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
 
     layout_generated_signal = pyqtSignal(LayoutDescription)
     selected_layout_change_signal = pyqtSignal(LayoutDescription)
+    failed_to_generate_signal = pyqtSignal(Exception)
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
         self.setupUi(self)
+
+        self.main_window = main_window
 
         data = binary_data.decode_default_prime2()
         self.resource_database = read_resource_database(data["resource_database"])
@@ -50,6 +61,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         # signals
         self.layout_generated_signal.connect(self._on_layout_generated)
         self.selected_layout_change_signal.connect(self.update_layout_description)
+        self.failed_to_generate_signal.connect(show_failed_generation_exception)
 
         # All code for the Randomize button
         self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
@@ -64,6 +76,10 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers(self.resource_database)
         self.layout_info_tab.hide()
+
+        # Exporting
+        self.apply_layout_button.clicked.connect(self.apply_layout)
+        self.export_layout_button.clicked.connect(self.export_layout)
 
     # Layout Creation logic
     @property
@@ -114,12 +130,14 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.randomize_in_progress_bar.setMaximum(0)
 
         def work(status_update):
-            self.layout_generated_signal.emit(
-                generate_layout(
-                    data=binary_data.decode_default_prime2(),
-                    configuration=self.currently_selected_layout_configuration,
-                )
+            resulting_layout = generate_layout(
+                data=binary_data.decode_default_prime2(),
+                configuration=self.currently_selected_layout_configuration,
             )
+            if isinstance(resulting_layout, Exception):
+                self.failed_to_generate_signal.emit(resulting_layout)
+            else:
+                self.layout_generated_signal.emit(resulting_layout)
 
         self.run_in_background_thread(work, "Randomizing...")
 
@@ -218,3 +236,11 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
             button.setVisible(visible)
             button.row.label.setVisible(visible)
 
+    # Exporting
+    def apply_layout(self):
+        iso_management = self.main_window.get_tab(ISOManagementWindow)
+        iso_management.load_layout(self.current_layout_description)
+        self.main_window.focus_tab(iso_management)
+
+    def export_layout(self):
+        pass
