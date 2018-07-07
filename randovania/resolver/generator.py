@@ -2,7 +2,7 @@ import copy
 import itertools
 import pprint
 from random import Random
-from typing import List, Set, Tuple, NamedTuple, Iterator, Optional, FrozenSet
+from typing import List, Set, Tuple, NamedTuple, Iterator, Optional, FrozenSet, Callable
 
 from randovania import VERSION
 from randovania.resolver import debug, resolver
@@ -61,7 +61,8 @@ def _state_to_solver_path(final_state: State,
 
 
 def generate_list(game: GameDescription,
-                  configuration: LayoutConfiguration
+                  configuration: LayoutConfiguration,
+                  status_update: Callable[[str], None]
                   )-> LayoutDescription:
 
     rng = Random(configuration.seed_number)
@@ -86,7 +87,7 @@ def generate_list(game: GameDescription,
     logic.game.simplify_connections(state.resources)
 
     new_patches, non_added_items, final_state_by_distribution = distribute_one_item(
-        logic, state, patches, available_pickups, rng)
+        logic, state, patches, available_pickups, rng, status_update=status_update)
     remaining_items.extend(non_added_items)
 
     rng.shuffle(remaining_items)
@@ -217,11 +218,16 @@ def add_item_to_node(item: PickupEntry, node: PickupNode,
     )
 
 
+def _num_items_in_patches(patches: GamePatches) -> int:
+    return len([x for x in patches.pickup_mapping if x is not None])
+
+
 def distribute_one_item(logic: Logic,
                         state: State,
                         patches: GamePatches,
                         available_item_pickups: List[PickupEntry],
                         rng: Random,
+                        status_update: Callable[[str], None],
                         ) -> Optional[Tuple[GamePatches, List[PickupEntry], State]]:
     debug.print_distribute_one_item(state)
 
@@ -279,11 +285,15 @@ def distribute_one_item(logic: Logic,
                 if not new_available_item_pickups:
                     return new_patches, new_available_item_pickups, new_state
 
+                status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
                 recursive_result = distribute_one_item(logic, new_state,
                                                        new_patches, new_available_item_pickups,
-                                                       rng)
+                                                       rng,
+                                                       status_update=status_update)
                 if recursive_result:
                     return recursive_result
+
+                status_update("Rollback. Only {} items now".format(_num_items_in_patches(patches)))
                 # TODO: boost the additional_requirements for _something_ so we never try this again
 
     debug.print_distribute_one_item_rollback(item_log, interesting_resources, available_item_pickups)

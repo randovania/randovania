@@ -47,7 +47,7 @@
             <x>0</x>
             <y>0</y>
             <width>211</width>
-            <height>207</height>
+            <height>188</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -108,17 +108,36 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="seed_number_label">
-         <property name="text">
-          <string>Seed Number</string>
-         </property>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="logic_selection_combo">
+         <item>
+          <property name="text">
+           <string>No Glitches</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Normal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Hard</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="mode_selection_label">
          <property name="text">
           <string>Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="seed_number_label">
+         <property name="text">
+          <string>Seed Number</string>
          </property>
         </widget>
        </item>
@@ -146,57 +165,10 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="logic_selection_combo">
-         <item>
-          <property name="text">
-           <string>No Glitches</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Normal</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Hard</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="keys_selection_combo">
-         <item>
-          <property name="text">
-           <string>Vanilla (Original Locations)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Randomized</string>
-          </property>
-         </item>
-        </widget>
-       </item>
        <item row="8" column="0" colspan="2">
         <widget class="QPushButton" name="create_layout_button">
          <property name="text">
           <string>Randomize</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="guaranteed_100_selection_label">
-         <property name="text">
-          <string>100% Completion</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="elevators_selection_label">
-         <property name="text">
-          <string>Elevators</string>
          </property>
         </widget>
        </item>
@@ -223,11 +195,46 @@
          </item>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="item_loss_selection_label">
+       <item row="6" column="0">
+        <widget class="QLabel" name="guaranteed_100_selection_label">
          <property name="text">
-          <string>Item Loss</string>
+          <string>100% Completion</string>
          </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="elevators_selection_label">
+         <property name="text">
+          <string>Elevators</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="keys_selection_combo">
+         <item>
+          <property name="text">
+           <string>Vanilla (Original Locations)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Randomized</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="elevators_selection_combo">
+         <item>
+          <property name="text">
+           <string>Vanilla (Original Locations)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Randomized</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="4" column="1">
@@ -243,20 +250,6 @@
          <item>
           <property name="text">
            <string>Disabled</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="elevators_selection_combo">
-         <item>
-          <property name="text">
-           <string>Vanilla (Original Locations)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Randomized</string>
           </property>
          </item>
         </widget>
@@ -280,6 +273,20 @@
          </property>
          <property name="invertedAppearance">
           <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="item_loss_selection_label">
+         <property name="text">
+          <string>Item Loss</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="2">
+        <widget class="QLabel" name="randomize_in_progress_status">
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>

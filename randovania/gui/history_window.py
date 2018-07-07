@@ -1,23 +1,22 @@
 import collections
 import random
 from functools import partial
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Callable
 
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QMessageBox, QFileDialog
 
-from randovania import VERSION
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.history_window_ui import Ui_HistoryWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
+from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.echoes import generate_layout
-from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.layout_configuration import LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty, LayoutConfiguration
-from randovania.resolver.data_reader import read_resource_database
+from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.resources import PickupEntry
 
 
@@ -59,6 +58,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.layout_history_content_layout.setAlignment(Qt.AlignTop)
 
         # signals
+        self.progress_update_signal.connect(self.update_progress)
         self.layout_generated_signal.connect(self._on_layout_generated)
         self.selected_layout_change_signal.connect(self.update_layout_description)
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
@@ -121,23 +121,25 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.guaranteed_100_selection_combo.setCurrentIndex(1)
 
     def _on_layout_generated(self, layout: LayoutDescription):
-        self.randomize_in_progress_bar.setValue(1)
-        self.randomize_in_progress_bar.setMaximum(1)
         self.selected_layout_change_signal.emit(layout)
 
     def create_new_layout(self):
-        self.randomize_in_progress_bar.setValue(0)
-        self.randomize_in_progress_bar.setMaximum(0)
 
-        def work(status_update):
+        def work(status_update: Callable[[str, int], None]):
+            def status_wrapper(message: str):
+                status_update(message, -1)
+
             resulting_layout = generate_layout(
                 data=binary_data.decode_default_prime2(),
                 configuration=self.currently_selected_layout_configuration,
+                status_update=status_wrapper
             )
             if isinstance(resulting_layout, Exception):
                 self.failed_to_generate_signal.emit(resulting_layout)
+                status_update("Error: {}".format(resulting_layout), 100)
             else:
                 self.layout_generated_signal.emit(resulting_layout)
+                status_update("Success: {}".format(resulting_layout.configuration.as_str), 100)
 
         self.run_in_background_thread(work, "Randomizing...")
 
@@ -253,3 +255,11 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         json_path, extension = open_result
 
         self.current_layout_description.save_to_file(json_path)
+
+    def update_progress(self, message: str, percentage: int):
+        self.randomize_in_progress_status.setText(message)
+        if percentage >= 0:
+            self.randomize_in_progress_bar.setRange(0, 100)
+            self.randomize_in_progress_bar.setValue(percentage)
+        else:
+            self.randomize_in_progress_bar.setRange(0, 0)
