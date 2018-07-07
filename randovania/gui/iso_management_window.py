@@ -1,10 +1,11 @@
 import os
 import shutil
-from typing import Optional
+from typing import Optional, Callable
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
+from randovania.games.prime import claris_randomizer
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
@@ -36,6 +37,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         # Game Patching
         self.layout_identifier_label.default_text = self.layout_identifier_label.text()
         self.load_layout(None)
+        self.apply_layout_button.clicked.connect(self.apply_layout)
 
         # File Location
         self.filesLocation.setText(options.game_files_path)
@@ -52,7 +54,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         self.packageIsoButton.clicked.connect(self.package_iso)
 
     def enable_buttons_with_background_tasks(self, value: bool):
-        self.generateLayoutButton.setEnabled(value)
+        self.apply_layout_button.setEnabled(value)
         self.stopBackgroundProcessButton.setEnabled(not value)
         self.loadIsoButton.setEnabled(value)
         self.packageIsoButton.setEnabled(value)
@@ -69,6 +71,26 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         else:
             self.layout_identifier_label.setText(self.layout_identifier_label.default_text)
         self.apply_layout_button.setEnabled(layout is not None)
+
+    def apply_layout(self):
+        if self.current_layout is None:
+            raise Exception("Trying to apply layout, but current_layout is None")
+
+        hud_memo_popup_removal = self.remove_hud_popup.isChecked()
+        game_files_path = application_options().game_files_path
+
+        def work(status_update: Callable[[str, int], None]):
+            def wrap_update(args: str):
+                status_update(args, 0)
+
+            claris_randomizer.apply_layout(
+                layout=self.current_layout,
+                hud_memo_popup_removal=hud_memo_popup_removal,
+                game_root=game_files_path,
+                status_update=wrap_update
+            )
+
+        self.run_in_background_thread(work, "Randomizing files...")
 
     # File Location
     def prompt_new_files_location(self):
