@@ -129,11 +129,13 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
             def status_wrapper(message: str):
                 status_update(message, -1)
 
+            print(self.currently_selected_layout_configuration)
             resulting_layout = generate_layout(
                 data=binary_data.decode_default_prime2(),
                 configuration=self.currently_selected_layout_configuration,
                 status_update=status_wrapper
             )
+            print(resulting_layout)
             if isinstance(resulting_layout, Exception):
                 self.failed_to_generate_signal.emit(resulting_layout)
                 status_update("Error: {}".format(resulting_layout), 100)

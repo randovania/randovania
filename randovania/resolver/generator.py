@@ -114,7 +114,7 @@ def generate_list(game: GameDescription,
         configuration=configuration,
         version=VERSION,
         pickup_mapping=new_patches.pickup_mapping,
-        solver_path=_state_to_solver_path(final_state_by_resolve, game)
+        solver_path=()  #_state_to_solver_path(final_state_by_resolve, game)
     )
 
 
