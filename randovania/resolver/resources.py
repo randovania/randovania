@@ -32,6 +32,9 @@ class PickupIndex:
     def __init__(self, index: int):
         self._index = index
 
+    def __lt__(self, other: "PickupIndex") -> bool:
+        return self._index < other._index
+
     def __repr__(self):
         return "PickupIndex {}".format(self._index)
 
