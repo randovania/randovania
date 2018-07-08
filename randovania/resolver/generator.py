@@ -73,10 +73,10 @@ def generate_list(game: GameDescription,
     )
     difficulty_level, tricks_enabled = expand_layout_logic(configuration.logic)
 
-    available_pickups = list({
+    available_pickups = list(sorted({
                                  frozenset(pickup_to_current_resources(pickup, game.resource_database).items()): pickup
                                  for pickup in game.resource_database.pickups
-                             }.values())
+                             }.values()))
     remaining_items = [
         pickup
         for pickup in game.resource_database.pickups
@@ -114,7 +114,7 @@ def generate_list(game: GameDescription,
         configuration=configuration,
         version=VERSION,
         pickup_mapping=new_patches.pickup_mapping,
-        solver_path=()  #_state_to_solver_path(final_state_by_resolve, game)
+        solver_path=_state_to_solver_path(final_state_by_resolve, game)
     )
 
 
@@ -247,10 +247,10 @@ def distribute_one_item(logic: Logic,
         item_option.interesting_resources
         for item_option in potential_item_slots
     ))
-    available_pickups_spots = list(frozenset(itertools.chain.from_iterable(
+    available_pickups_spots = sorted(list(frozenset(itertools.chain.from_iterable(
         item_option.available_pickups
         for item_option in potential_item_slots
-    )))
+    ))))
     rng.shuffle(available_pickups_spots)
 
     debug.print_distribute_one_item_detail(potential_item_slots, available_pickups_spots, available_item_pickups)
