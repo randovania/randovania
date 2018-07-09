@@ -11,7 +11,7 @@ from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
-from randovania.resolver.node import EventNode, Node, PickupNode
+from randovania.resolver.node import EventNode, Node, PickupNode, ResourceNode
 from randovania.resolver.reach import Reach
 from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
 from randovania.resolver.state import State
@@ -124,17 +124,17 @@ def generate_list(game: GameDescription,
     return LayoutDescription(
         configuration=configuration,
         version=VERSION,
-        pickup_mapping=new_patches.pickup_mapping,
+        pickup_mapping=tuple(new_patches.pickup_mapping),
         solver_path=_state_to_solver_path(final_state_by_resolve, game)
     )
 
 
 class ItemSlot(NamedTuple):
-    available_pickups: Tuple[PickupNode, ...]
-    interesting_resources: FrozenSet[ResourceInfo]
     required_actions: Tuple[Node, ...]
-    expected_resources: CurrentResources
-    events: Tuple[EventNode, ...]
+    available_actions: Tuple[ResourceNode, ...]
+    state: State
+    reach: Reach
+    interesting_resources: FrozenSet[ResourceInfo]
 
 
 def _filter_pickups(nodes: Iterator[Node]) -> Tuple[PickupNode, ...]:
@@ -174,12 +174,12 @@ def find_potential_item_slots(logic: Logic,
     debug.print_potential_item_slots(state, actions, available_pickups, new_depth, maximum_depth)
 
     if available_pickups:
-        yield ItemSlot(available_pickups,
-                       calculate_interesting_resources(reach.satisfiable_requirements,
-                                                       state.resources),
-                       actions_required,
-                       copy.copy(state.resources),
-                       _filter_events(actions)
+        yield ItemSlot(required_actions=actions_required,
+                       available_actions=tuple(actions),
+                       state=state,
+                       reach=reach,
+                       interesting_resources=calculate_interesting_resources(reach.satisfiable_requirements,
+                                                                             state.resources),
                        )
 
     # Enough pickups, just try to use one of then already
@@ -237,7 +237,7 @@ def is_victory_condition_reachable(logic: Logic,
                                    potential_item_slots: List[ItemSlot],
                                    ) -> bool:
     for item_option in potential_item_slots:
-        for event in item_option.events:
+        for event in _filter_events(item_option.available_actions):
             with_event = state.act_on_node(event, patches.pickup_mapping)
             if logic.game.victory_condition.satisfied(with_event.resources):
                 return True
@@ -248,7 +248,7 @@ def is_victory_condition_reachable(logic: Logic,
 def find_available_pickup_slots(potential_item_slots: List[ItemSlot]
                                 ) -> List[PickupNode]:
     return list(sorted(frozenset(itertools.chain.from_iterable(
-        item_option.available_pickups
+        _filter_pickups(item_option.available_actions)
         for item_option in potential_item_slots
     ))))
 
@@ -258,6 +258,36 @@ def _merge_interesting_resources(potential_item_slots: List[ItemSlot]) -> Frozen
         item_option.interesting_resources
         for item_option in potential_item_slots
     ))
+
+
+def add_item_and_act(item: PickupEntry,
+                     item_option: ItemSlot,
+                     pickup_node: PickupNode,
+                     new_patches: GamePatches,
+                     logic: Logic,
+                     state: State,
+                     available_item_pickups: Tuple[PickupEntry],
+                     rng: Random,
+                     status_update: Callable[[str], None],
+                     ):
+
+    for action in item_option.required_actions:
+        state = state.act_on_node(action, new_patches.pickup_mapping)
+
+    # Handle when the pickup_node we selected was a required action
+    if pickup_node not in item_option.required_actions:
+        state = state.act_on_node(pickup_node, new_patches.pickup_mapping)
+
+    new_available_item_pickups = tuple(pickup for pickup in available_item_pickups if pickup is not item)
+
+    if not new_available_item_pickups:
+        return new_patches, new_available_item_pickups, state
+
+    status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
+    return distribute_one_item(logic, state,
+                               new_patches, new_available_item_pickups,
+                               rng,
+                               status_update=status_update)
 
 
 def distribute_one_item(logic: Logic,
@@ -287,33 +317,24 @@ def distribute_one_item(logic: Logic,
 
         for pickup_node in available_pickups_spots:
             for item_option in potential_item_slots:
-                if pickup_node not in item_option.available_pickups or \
+                if pickup_node not in item_option.available_actions or \
                         not does_pickup_satisfies(item,
                                                   item_option.interesting_resources,
                                                   logic.game.resource_database):
                     continue
 
                 debug.print_distribute_place_item(item, pickup_node)
-                new_patches = add_item_to_node(item, pickup_node, patches, logic.game.resource_database)
-
-                new_state = state
-                for action in item_option.required_actions:
-                    new_state = new_state.act_on_node(action, new_patches.pickup_mapping)
-
-                # Handle when the pickup_node we selected was a required action
-                if pickup_node not in item_option.required_actions:
-                    new_state = new_state.act_on_node(pickup_node, new_patches.pickup_mapping)
-
-                new_available_item_pickups = tuple(pickup for pickup in available_item_pickups if pickup is not item)
-
-                if not new_available_item_pickups:
-                    return new_patches, new_available_item_pickups, new_state
-
-                status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
-                recursive_result = distribute_one_item(logic, new_state,
-                                                       new_patches, new_available_item_pickups,
-                                                       rng,
-                                                       status_update=status_update)
+                recursive_result = add_item_and_act(
+                    item,
+                    item_option,
+                    pickup_node,
+                    new_patches=add_item_to_node(item, pickup_node, patches, logic.game.resource_database),
+                    logic=logic,
+                    state=state,
+                    available_item_pickups=available_item_pickups,
+                    rng=rng,
+                    status_update=status_update
+                )
                 if recursive_result:
                     return recursive_result
 
