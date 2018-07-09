@@ -85,12 +85,9 @@ def print_distribute_one_item(state):
         print("> Distribute for {}".format(n(state.node)))
 
 
-def print_distribute_one_item_rollback(item_log, interesting_resources, available_item_pickups):
+def print_distribute_one_item_rollback(item_log):
     if _DEBUG_LEVEL > 2:
-        print("Rollback after trying {}. \n++ Trying to satisfy {} with:\n+{}".format(
-            item_log,
-            interesting_resources,
-            ", ".join(pickup.item for pickup in available_item_pickups)))
+        print("Rollback after trying {}.".format(item_log))
 
 
 def print_distribute_place_item(item, pickup_node):
