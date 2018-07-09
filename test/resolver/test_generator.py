@@ -1,13 +1,14 @@
 from unittest.mock import MagicMock
 
 from randovania.games.prime import binary_data
-from randovania.resolver import data_reader, generator
+from randovania.resolver import data_reader, generator, debug
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
 from randovania.resolver.layout_description import LayoutDescription
 
 
 def test_generate_list():
+    debug._DEBUG_LEVEL = 3
     status_update = MagicMock()
     game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
 
