@@ -160,17 +160,18 @@ def find_potential_item_slots(logic: Logic,
                               patches: GamePatches,
                               state: State,
                               actions_required: Tuple[Node, ...] = (),
-                              current_depth: int = 0) -> Iterator[ItemSlot]:
+                              current_depth: int = 0,
+                              maximum_depth: int = _MAXIMUM_DEPTH,
+                              ) -> Iterator[ItemSlot]:
     reach = Reach.calculate_reach(logic, state)
 
     actions = list(reach.possible_actions(state))
-    new_depth = current_depth if len(actions) == 1 else current_depth + 1
-
-    if new_depth > _MAXIMUM_DEPTH:
-        return
+    new_depth = current_depth + 1
+    if len(actions) == 1:
+        maximum_depth += 1
 
     available_pickups = _filter_pickups(actions)
-    debug.print_potential_item_slots(state, actions, available_pickups, current_depth, _MAXIMUM_DEPTH)
+    debug.print_potential_item_slots(state, actions, available_pickups, new_depth, maximum_depth)
 
     if available_pickups:
         yield ItemSlot(available_pickups,
@@ -182,7 +183,7 @@ def find_potential_item_slots(logic: Logic,
                        )
 
     # Enough pickups, just try to use one of then already
-    if len(available_pickups) > 10:
+    if new_depth > maximum_depth or len(available_pickups) > 10:
         return
 
     for action in actions:
@@ -191,7 +192,8 @@ def find_potential_item_slots(logic: Logic,
             patches,
             state.act_on_node(action, patches.pickup_mapping),
             actions_required + (action,),
-            new_depth
+            current_depth=new_depth,
+            maximum_depth=maximum_depth
         )
 
 
@@ -265,7 +267,7 @@ def distribute_one_item(logic: Logic,
                         rng: Random,
                         status_update: Callable[[str], None],
                         ) -> Optional[Tuple[GamePatches, Tuple[PickupEntry], State]]:
-    debug.print_distribute_one_item(state)
+    debug.print_distribute_one_item(state, available_item_pickups)
 
     potential_item_slots: List[ItemSlot] = shuffle(
         rng,

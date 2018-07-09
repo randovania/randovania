@@ -45,14 +45,14 @@ def _indent(offset=0):
     return " " * (_current_indent - offset)
 
 
-def log_new_advance(state: "State", reach):
+def log_new_advance(state: "State", reach: "Reach"):
     global _current_indent
     increment_attempts()
     _current_indent += 1
     if _DEBUG_LEVEL > 0:
         print("{}> {} for {}".format(_indent(1), n(state.node), getattr(state.node, "resource", None)))
         if _DEBUG_LEVEL >= 3:
-            for node in reach:
+            for node in reach.nodes:
                 print("{}: {}".format(_indent(), n(node)))
 
 
@@ -80,9 +80,13 @@ def print_distribute_one_item_detail(potential_item_slots, available_pickups_spo
             len(potential_item_slots), len(available_pickups_spots), len(available_item_pickups)))
 
 
-def print_distribute_one_item(state):
+def print_distribute_one_item(state, available_item_pickups):
     if _DEBUG_LEVEL > 1:
-        print("> Distribute for {}".format(n(state.node)))
+        print("> Distribute starting at {} with {} resources and {} pickups left.".format(
+            n(state.node),
+            len(state.resources),
+            len(available_item_pickups)
+        ))
 
 
 def print_distribute_one_item_rollback(item_log):
