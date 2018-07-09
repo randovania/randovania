@@ -171,7 +171,7 @@ def find_potential_item_slots(logic: Logic,
         maximum_depth += 1
 
     available_pickups = _filter_pickups(actions)
-    debug.print_potential_item_slots(state, actions, available_pickups, new_depth, maximum_depth)
+    debug.print_potential_item_slots(state, actions, available_pickups, current_depth, maximum_depth)
 
     if available_pickups:
         yield ItemSlot(required_actions=actions_required,
@@ -277,6 +277,10 @@ def add_item_and_act(item: PickupEntry,
     # Handle when the pickup_node we selected was a required action
     if pickup_node not in item_option.required_actions:
         state = state.act_on_node(pickup_node, new_patches.pickup_mapping)
+
+    new_reach = Reach.calculate_reach(logic, state)
+    if new_reach.nodes == item_option.reach.nodes:
+        return None
 
     new_available_item_pickups = tuple(pickup for pickup in available_item_pickups if pickup is not item)
 

@@ -11,7 +11,7 @@ def _run_generation_comparison(
         configuration: LayoutConfiguration,
         pickup_mapping,
 ):
-    debug._DEBUG_LEVEL = 1
+    debug._DEBUG_LEVEL = 3
     status_update = MagicMock()
     game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
 
