@@ -75,7 +75,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers(self.resource_database)
-        # self.layout_info_tab.hide()
+        self.layout_info_tab.hide()
 
         # Exporting
         self.apply_layout_button.clicked.connect(self.apply_layout)
