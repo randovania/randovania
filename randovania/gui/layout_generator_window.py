@@ -11,7 +11,7 @@ from randovania.resolver.resources import SimpleResourceInfo
 
 
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
         self.setupUi(self)
         self._on_bulk_change = False

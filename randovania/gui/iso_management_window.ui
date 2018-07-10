@@ -85,17 +85,17 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="resetFilesLocationButton">
-         <property name="text">
-          <string>Use Default Location</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="2">
         <widget class="QPushButton" name="deleteFilesButton">
          <property name="text">
           <string>Delete contents</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="resetFilesLocationButton">
+         <property name="text">
+          <string>Use Default Location</string>
          </property>
         </widget>
        </item>
@@ -185,27 +185,50 @@
        <string>Game Patching</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0" colspan="2">
+       <item row="0" column="0">
         <widget class="QLabel" name="layout_identifier_label">
          <property name="text">
           <string>No layout has been selected. Please select one in the `History` tab.</string>
          </property>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="apply_layout_button">
+         <property name="text">
+          <string>Randomize game files with layout</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
+        <widget class="QLineEdit" name="current_seed_edit">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+         </property>
+         <property name="placeholderText">
+          <string>Seed number. For item loss / elevator randomization, check the Configuration tab</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="apply_seed_button">
+         <property name="text">
+          <string>Randomize game files with seed</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <widget class="QCheckBox" name="remove_hud_popup">
          <property name="toolTip">
           <string>The &quot;HUD Popup&quot; is the popup that appears after you collect an item</string>
          </property>
          <property name="text">
           <string>Remove HUD popup</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="apply_layout_button">
-         <property name="text">
-          <string>Randomize game files with layout</string>
          </property>
         </widget>
        </item>

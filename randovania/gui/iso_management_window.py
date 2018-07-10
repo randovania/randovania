@@ -3,6 +3,7 @@ import shutil
 from typing import Optional, Callable
 
 from PyQt5 import QtCore
+from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
 from randovania.games.prime import claris_randomizer
@@ -10,6 +11,7 @@ from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
+from randovania.resolver.echoes import RandomizerConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -38,6 +40,16 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         self.layout_identifier_label.default_text = self.layout_identifier_label.text()
         self.load_layout(None)
         self.apply_layout_button.clicked.connect(self.apply_layout)
+        self.current_seed_edit.setValidator(QIntValidator(0, 2147483647))
+        self.current_seed_edit.textChanged.connect(self.on_seed_changed)
+        self.apply_seed_button.clicked.connect(self.apply_seed)
+        self.apply_seed_button.setEnabled(False)
+        if main_window.is_preview_mode:
+            self.current_seed_edit.hide()
+            self.apply_seed_button.hide()
+        else:
+            self.layout_identifier_label.hide()
+            self.apply_layout_button.hide()
 
         # File Location
         self.filesLocation.setText(options.game_files_path)
@@ -85,6 +97,37 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
 
             claris_randomizer.apply_layout(
                 layout=self.current_layout,
+                hud_memo_popup_removal=hud_memo_popup_removal,
+                game_root=game_files_path,
+                status_update=wrap_update
+            )
+
+        self.run_in_background_thread(work, "Randomizing files...")
+
+    def on_seed_changed(self, value):
+        self.apply_seed_button.setEnabled(value != "")
+
+    def load_seed(self, value: int):
+        self.current_seed_edit.setText(str(value))
+
+    def apply_seed(self):
+        seed_number = int(self.current_seed_edit.text())
+
+        hud_memo_popup_removal = self.remove_hud_popup.isChecked()
+
+        options = application_options()
+        configuration = RandomizerConfiguration.from_options(options)
+        game_files_path = options.game_files_path
+        remove_item_loss = options.remove_item_loss
+
+        def work(status_update: Callable[[str, int], None]):
+            def wrap_update(args: str):
+                status_update(args, 0)
+
+            claris_randomizer.apply_seed(
+                randomizer_config=configuration,
+                seed=seed_number,
+                remove_item_loss=remove_item_loss,
                 hud_memo_popup_removal=hud_memo_popup_removal,
                 game_root=game_files_path,
                 status_update=wrap_update
