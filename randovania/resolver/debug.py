@@ -79,10 +79,13 @@ def print_potential_item_slots(state, actions, available_pickups, current_depth,
             n(state.node), len(actions), len(available_pickups), current_depth, maximum_depth))
 
 
-def print_distribute_one_item_detail(potential_item_slots, available_pickups_spots, available_item_pickups):
+def print_distribute_one_item_detail(potential_item_slots, available_pickups_spots,
+                                     available_item_pickups, item_options):
     if _DEBUG_LEVEL > 1:
-        print("** {:2d} item slots, {:2d} pickups spots, {:2d} available_item_pickups".format(
-            len(potential_item_slots), len(available_pickups_spots), len(available_item_pickups)))
+        print("** {:2d} item slots, {:2d} pickups spots, {:2d} available_item_pickups.\nItem options: {}".format(
+            len(potential_item_slots), len(available_pickups_spots), len(available_item_pickups),
+            ", ".join(pickup.item for pickup in item_options)
+        ))
 
 
 def print_distribute_one_item(state, available_item_pickups):
