@@ -2,18 +2,17 @@ import multiprocessing
 from typing import Dict, Iterator, Callable
 
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow
 
 from randovania.games.prime import binary_data
-from randovania.games.prime.claris_randomizer import apply_seed
-from randovania.gui.common_qt_lib import application_options
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.common_qt_lib import application_options
+from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.seed_searcher_window_ui import Ui_SeedSearcherWindow
 from randovania.interface_common.options import CpuUsage
 from randovania.resolver.data_reader import read_resource_database
-from randovania.resolver.echoes import search_seed_with_options, RandomizerConfiguration
+from randovania.resolver.echoes import search_seed_with_options
 from randovania.resolver.resources import PickupEntry
 
 
@@ -31,9 +30,12 @@ def _translate(message, n=None):
 class SeedSearcherWindow(QMainWindow, Ui_SeedSearcherWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
 
+    newSeedSignal = pyqtSignal(int)
+
     def __init__(self, main_window):
         super().__init__()
         self.setupUi(self)
+        self.main_window = main_window
 
         # Background Processing
         self.progress_update_signal.connect(self.update_progress)
@@ -59,8 +61,7 @@ class SeedSearcherWindow(QMainWindow, Ui_SeedSearcherWindow, BackgroundTaskMixin
 
         # Layout
         self.generateSeedButton.clicked.connect(self.generate_new_seed)
-        self.currentSeedEdit.setValidator(QIntValidator(0, 2147483647))
-        self.currentSeedEdit.textChanged.connect(self.on_new_seed)
+        self.newSeedSignal.connect(self.on_new_seed)
         self.applySeedButton.setEnabled(False)
         self.applySeedButton.clicked.connect(self.apply_seed)
 
@@ -123,37 +124,21 @@ class SeedSearcherWindow(QMainWindow, Ui_SeedSearcherWindow, BackgroundTaskMixin
                 _translate("Seed '{}' found after %n seed(s).", n=final_seed_count).format(seed),
                 100
             )
-            self.currentSeedEdit.setText(str(seed))
+            self.newSeedSignal.emit(seed)
 
         self.run_in_background_thread(
             gui_seed_searcher,
             _translate("Generating %n seed(s) so far...", n=0)
         )
 
-    def on_new_seed(self, value):
-        self.applySeedButton.setEnabled(bool(value))
+    def on_new_seed(self, value: int):
+        self.applySeedButton.setEnabled(True)
+        self.last_seed_label.setText(str(value))
 
     def apply_seed(self):
-        options = application_options()
-
-        def gui_seed_searcher(status_update: Callable[[str, int], None]):
-            def randomizer_update(message: str):
-                if message == "Randomized!":
-                    status_update(message, 100)
-                else:
-                    status_update(message, -1)
-
-            apply_seed(randomizer_config=RandomizerConfiguration.from_options(options),
-                       seed=int(self.currentSeedEdit.text()),
-                       remove_item_loss=options.remove_item_loss,
-                       hud_memo_popup_removal=options.hud_memo_popup_removal,
-                       game_root=options.game_files_path,
-                       status_update=randomizer_update)
-
-        self.run_in_background_thread(
-            gui_seed_searcher,
-            _translate("Generating %n seed(s) so far...", n=0)
-        )
+        iso_management = self.main_window.get_tab(ISOManagementWindow)
+        iso_management.load_seed(int(self.last_seed_label.text()))
+        self.main_window.focus_tab(iso_management)
 
     # Exclusion Selection
     def create_exclusion_checkboxes(self):

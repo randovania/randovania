@@ -20,6 +20,7 @@ from randovania.interface_common.update_checker import get_latest_version
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     newer_version_signal = pyqtSignal(str, str)
+    is_preview_mode: bool = False
 
     menu_new_version: Optional[QAction] = None
     _current_version_url: Optional[str] = None
@@ -28,6 +29,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
+        self.is_preview_mode = preview
 
         self.newer_version_signal.connect(self.display_new_version)
         _translate = QtCore.QCoreApplication.translate
@@ -35,13 +37,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.windows: List[QMainWindow] = []
 
         self.tab_windows = [
-            (HistoryWindow, "History"),
+            (SeedSearcherWindow, "Seed Searching"),
+            (LayoutGeneratorWindow, "Configuration"),
             (ISOManagementWindow, "ISO Management"),
-            # (LayoutGeneratorWindow, "Layout Generator"),
         ]
         if preview:
-            self.tab_windows.append((SeedSearcherWindow, "Seed Searching"))
-            self.tab_windows.append((DataEditorWindow, "Data Editor"))
+            self.tab_windows[0] = (HistoryWindow, "History")
+            self.tab_windows[1] = (DataEditorWindow, "Data Editor")
 
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self))
