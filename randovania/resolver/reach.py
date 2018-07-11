@@ -97,7 +97,8 @@ class Reach:
             if self._logic.get_additional_requirements(node).satisfied(state.resources):
                 yield node
             else:
-                debug.log_skip_action_missing_requirement(node, self._logic.game)
+                debug.log_skip_action_missing_requirement(node, self._logic.game,
+                                                          self._logic.get_additional_requirements(node))
 
     def satisfiable_actions(self, state: State) -> Iterator[ResourceNode]:
 

@@ -1,10 +1,12 @@
+import collections
 import copy
 import itertools
+import pprint
 from random import Random
-from typing import List, Tuple, NamedTuple, Iterator, Optional, FrozenSet, Callable, TypeVar
+from typing import List, Tuple, NamedTuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict, Set
 
 from randovania import VERSION
-from randovania.resolver import debug, resolver
+from randovania.resolver import debug, resolver, data_reader
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
@@ -27,9 +29,10 @@ def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase)
 T = TypeVar('T')
 
 
-def shuffle(rng: Random, x: List[T]) -> List[T]:
-    rng.shuffle(x)
-    return x
+def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
+    result = list(x)
+    rng.shuffle(result)
+    return result
 
 
 def expand_layout_logic(logic: LayoutLogic):
@@ -75,19 +78,48 @@ def calculate_available_pickups(game: GameDescription) -> Iterator[PickupEntry]:
         yield pickup
 
 
-def generate_list(game: GameDescription,
+def generate_list(data: Dict,
                   configuration: LayoutConfiguration,
                   status_update: Callable[[str], None]
                   ) -> LayoutDescription:
-    rng = Random(configuration.seed_number)
 
+    difficulty_level, tricks_enabled = expand_layout_logic(configuration.logic)
+
+    new_patches = _create_patches(configuration, data, difficulty_level, status_update, tricks_enabled)
+
+    game = data_reader.decode_data(data, [])
+    final_state_by_resolve = resolver.resolve(
+        difficulty_level=difficulty_level,
+        tricks_enabled=tricks_enabled,
+        game=game,
+        patches=new_patches
+    )
+
+    if final_state_by_resolve is None:
+        # Why is final_state_by_distribution not OK?
+        raise Exception("We just created an item distribution we believe is impossible. What?")
+
+    return LayoutDescription(
+        configuration=configuration,
+        version=VERSION,
+        pickup_mapping=tuple(new_patches.pickup_mapping),
+        solver_path=_state_to_solver_path(final_state_by_resolve, game)
+    )
+
+
+def _create_patches(configuration: LayoutConfiguration,
+                    data: Dict,
+                    difficulty_level: int,
+                    status_update: Callable[[str], None],
+                    tricks_enabled):
+    rng = Random(configuration.seed_number)
+    game = data_reader.decode_data(data, [])
     patches = GamePatches(
         configuration.item_loss == LayoutEnabledFlag.ENABLED,
         [None] * len(game.resource_database.pickups)
     )
-    difficulty_level, tricks_enabled = expand_layout_logic(configuration.logic)
 
-    available_pickups = tuple(shuffle(rng, list(sorted(calculate_available_pickups(game)))))
+    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(game))))
     remaining_items = [
         pickup
         for pickup in game.resource_database.pickups
@@ -110,23 +142,7 @@ def generate_list(game: GameDescription,
 
     assert not remaining_items
 
-    final_state_by_resolve = resolver.resolve(
-        difficulty_level=difficulty_level,
-        tricks_enabled=tricks_enabled,
-        game=game,
-        patches=new_patches
-    )
-
-    if final_state_by_resolve is None:
-        # Why is final_state_by_distribution not OK?
-        raise Exception("We just created an item distribution we believe is impossible. What?")
-
-    return LayoutDescription(
-        configuration=configuration,
-        version=VERSION,
-        pickup_mapping=tuple(new_patches.pickup_mapping),
-        solver_path=_state_to_solver_path(final_state_by_resolve, game)
-    )
+    return new_patches
 
 
 class ItemSlot(NamedTuple):
@@ -137,20 +153,40 @@ class ItemSlot(NamedTuple):
     interesting_resources: FrozenSet[ResourceInfo]
 
 
-def _filter_pickups(nodes: Iterator[Node]) -> Tuple[PickupNode, ...]:
-    return tuple(
-        node
-        for node in nodes
-        if isinstance(node, PickupNode)
-    )
+def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
+    return filter(lambda node: isinstance(node, PickupNode), nodes)
 
 
-def _filter_events(nodes: Iterator[Node]) -> Tuple[EventNode, ...]:
-    return tuple(
-        node
-        for node in nodes
-        if isinstance(node, EventNode)
-    )
+def _filter_events(nodes: Iterator[Node]) -> Iterator[EventNode]:
+    return filter(lambda node: isinstance(node, EventNode), nodes)
+
+
+def find_all_pickups_via_most_events(logic: Logic,
+                                     patches: GamePatches,
+                                     initial_state: State,
+                                     ) -> Dict[PickupNode, Tuple[EventNode, ...]]:
+
+    paths = {}
+    checked = set()
+
+    queue: collections.OrderedDict[State, Tuple[EventNode, ...]] = collections.OrderedDict()
+    queue[initial_state] = ()
+
+    while queue:
+        state, path = queue.popitem(last=False)
+        checked.add(state.node)
+
+        reach = Reach.calculate_reach(logic, state)
+        actions = list(reach.possible_actions(state))
+
+        for event in _filter_events(actions):
+            if event not in checked:
+                queue[state.act_on_node(event, patches.pickup_mapping)] = path + (event,)
+
+        for pickup in _filter_pickups(actions):
+            paths[pickup] = path
+
+    return paths
 
 
 _MAXIMUM_DEPTH = 2
@@ -170,7 +206,7 @@ def find_potential_item_slots(logic: Logic,
     if len(actions) == 1:
         maximum_depth += 1
 
-    available_pickups = _filter_pickups(actions)
+    available_pickups = tuple(_filter_pickups(actions))
     debug.print_potential_item_slots(state, actions, available_pickups, current_depth, maximum_depth)
 
     if available_pickups:
@@ -304,7 +340,13 @@ def distribute_one_item(logic: Logic,
 
     potential_item_slots: List[ItemSlot] = shuffle(
         rng,
-        list(find_potential_item_slots(logic, patches, state)))
+        find_potential_item_slots(logic, patches, state))
+
+    # print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    # for pickup, paths in find_all_pickups_via_most_events(logic, patches, state).items():
+    #     print("==============")
+    #     print(debug.n(pickup))
+    #     pprint.pprint(paths)
 
     if is_victory_condition_reachable(logic, state, patches, potential_item_slots):
         return patches, available_item_pickups, state
