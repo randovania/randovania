@@ -99,6 +99,9 @@ def distribute_command_logic(args):
 
     game_description = data_reader.decode_data(data, [])
 
+    def status_update(s):
+        pass
+
     from randovania.resolver import generator
     layout_description = generator.generate_list(
         game_description,
@@ -112,6 +115,7 @@ def distribute_command_logic(args):
             hundo_guaranteed=LayoutEnabledFlag.DISABLED,
             difficulty=LayoutDifficulty.NORMAL,
         ),
+        status_update=status_update
     )
 
     new_patches = GamePatches(resolver_config.item_loss, list(layout_description.pickup_mapping))
