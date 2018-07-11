@@ -11,13 +11,13 @@ def _run_generation_comparison(
         configuration: LayoutConfiguration,
         pickup_mapping,
 ):
-    debug._DEBUG_LEVEL = 3
+    debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
     game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
 
     description = LayoutDescription(
         configuration=configuration,
-        version='0.9.1',
+        version='0.9.2',
         pickup_mapping=pickup_mapping,
         solver_path=())
 
@@ -57,10 +57,10 @@ def test_generate_list_extra():
                                           item_loss=LayoutEnabledFlag.DISABLED, elevators=LayoutRandomizedFlag.VANILLA,
                                           hundo_guaranteed=LayoutEnabledFlag.DISABLED,
                                           difficulty=LayoutDifficulty.NORMAL),
-        pickup_mapping=(24, 29, 49, 68, 57, 115, 23, 14, 92, 39, 3, 11, 20, 1, 52, 7, 98, 93, 79, 94, 88, 66, 74, 2,
-                        114, 17, 118, 109, 5, 100, 106, 46, 18, 117, 91, 86, 35, 0, 47, 82, 10, 8, 9, 22, 112, 21, 33,
-                        104, 101, 53, 15, 48, 45, 97, 77, 61, 81, 60, 67, 12, 41, 107, 19, 105, 28, 70, 99, 44, 63, 26,
-                        65, 83, 87, 73, 71, 25, 78, 50, 16, 103, 59, 102, 13, 51, 96, 55, 64, 84, 111, 27, 80, 113, 72,
-                        37, 90, 34, 54, 108, 69, 36, 43, 85, 30, 31, 116, 89, 40, 62, 76, 42, 95, 58, 75, 6, 38, 32,
-                        110, 4, 56)
+        pickup_mapping=(
+            86, 68, 14, 53, 44, 1, 23, 13, 45, 8, 7, 106, 118, 115, 87, 107, 18, 74, 79, 105, 37, 60, 82, 73, 116, 113,
+            88, 62, 24, 92, 46, 11, 29, 117, 43, 51, 39, 89, 58, 47, 52, 112, 94, 76, 56, 78, 81, 40, 12, 15, 91, 111,
+            19, 42, 4, 97, 96, 57, 32, 75, 30, 61, 50, 108, 102, 114, 38, 80, 25, 98, 27, 21, 110, 85, 63, 48, 17, 2,
+            49, 99, 34, 103, 71, 65, 9, 41, 64, 66, 72, 84, 109, 35, 95, 36, 20, 90, 16, 5, 100, 33, 26, 22, 10, 101,
+            55, 93, 31, 6, 77, 0, 67, 3, 70, 59, 69, 54, 104, 83, 28)
     )
