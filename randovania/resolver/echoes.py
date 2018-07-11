@@ -189,12 +189,12 @@ def search_seed_with_options(data: Dict,
 
 
 def _generate_layout_worker(output_pipe,
-                            game: GameDescription,
+                            data: Dict,
                             configuration: LayoutConfiguration):
     try:
         def status_update(message: str):
             output_pipe.send(message)
-        layout_description = generator.generate_list(game,
+        layout_description = generator.generate_list(data,
                                                      configuration,
                                                      status_update=status_update)
         output_pipe.send(layout_description)
@@ -210,10 +210,9 @@ def generate_layout(data: Dict,
 
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
 
-    game = data_reader.decode_data(data, [])  # TODO: elevator support
     process = multiprocessing.Process(
         target=_generate_layout_worker,
-        args=(output_pipe, game, configuration)
+        args=(output_pipe, data, configuration)
     )
     process.start()
     try:

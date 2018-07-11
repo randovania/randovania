@@ -2,7 +2,7 @@ from typing import Set
 
 from randovania.resolver.game_description import Area, GameDescription
 from randovania.resolver.node import Node
-from randovania.resolver.requirements import RequirementList
+from randovania.resolver.requirements import RequirementList, RequirementSet
 
 _DEBUG_LEVEL = 0
 count = 0
@@ -68,9 +68,10 @@ def log_rollback(state):
     _current_indent -= 1
 
 
-def log_skip_action_missing_requirement(node: Node, game: GameDescription):
+def log_skip_action_missing_requirement(node: Node, game: GameDescription, requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
-        print("{}* Skip {}, missing additional".format(_indent(), n(node)))
+        print("{}* Skip {}, missing additional:".format(_indent(), n(node)))
+        requirement_set.pretty_print(_indent(-1))
 
 
 def print_potential_item_slots(state, actions, available_pickups, current_depth, maximum_depth):

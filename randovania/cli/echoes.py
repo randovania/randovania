@@ -97,8 +97,6 @@ def distribute_command_logic(args):
     from randovania.resolver import data_reader
     from randovania.resolver.game_patches import GamePatches
 
-    game_description = data_reader.decode_data(data, [])
-
     def status_update(s):
         pass
 
@@ -110,7 +108,7 @@ def distribute_command_logic(args):
 
     from randovania.resolver import generator
     layout_description = generator.generate_list(
-        game_description,
+        data,
         LayoutConfiguration(
             seed_number=random.randint(0, 2 ** 31),
             logic=LayoutLogic.NO_GLITCHES,
