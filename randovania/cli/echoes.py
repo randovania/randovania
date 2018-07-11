@@ -102,6 +102,12 @@ def distribute_command_logic(args):
     def status_update(s):
         pass
 
+    seed_number = args.seed
+    if seed_number is None:
+        seed_number = random.randint(0, 2 ** 31)
+
+    print("Using seed: {}".format(seed_number))
+
     from randovania.resolver import generator
     layout_description = generator.generate_list(
         game_description,
@@ -147,6 +153,11 @@ def add_distribute_command(sub_parsers):
         type=int,
         default=0,
         help="The level of debug logging to print.")
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="The seed number to generate with.")
     parser.set_defaults(func=distribute_command_logic)
 
 
