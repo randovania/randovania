@@ -354,10 +354,8 @@ def new_distribute_one_item(
         return patches, available_item_pickups, v.state
 
     for pickup_node in shuffle(rng, sorted(pickups_with_path.keys())):
-
-        if patches.pickup_mapping[pickup_node.pickup_index.index] is not None:
-            print("Skipping pickup node that already has items {}".format(logic.game.node_name(pickup_node)))
-            continue
+        assert patches.pickup_mapping[
+                   pickup_node.pickup_index.index] is None, "Node with assigned pickup being considered again"
 
         new_state = state
         for action in pickups_with_path[pickup_node]:
@@ -379,10 +377,9 @@ def new_distribute_one_item(
             before_reach = Reach.calculate_reach(logic, new_state.act_on_node(pickup_node, patches.pickup_mapping))
             after_reach = Reach.calculate_reach(logic, next_state)
             if before_reach.nodes == after_reach.nodes:
-                print("Adding {} to {} didn't expand reach.".format(item, logic.game.node_name(pickup_node)))
                 continue
 
-            print("Adding {} to {}.".format(item.item, logic.game.node_name(pickup_node)))
+            status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
             recursive_result = new_distribute_one_item(
                 logic,
                 next_state,
@@ -394,7 +391,7 @@ def new_distribute_one_item(
             if recursive_result:
                 return recursive_result
             else:
-                print("* Rollback.")
+                status_update("Rollback. Only {} items now".format(_num_items_in_patches(patches)))
 
     debug.print_distribute_one_item_rollback([])
     return None

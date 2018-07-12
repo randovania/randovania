@@ -106,3 +106,8 @@ def print_distribute_one_item_rollback(item_log):
 def print_distribute_place_item(item, pickup_node):
     if _DEBUG_LEVEL > 1:
         print("Place {} == at {}".format(item, n(pickup_node)))
+
+
+def print_skipped_already_used_node(pickup_node):
+    if _DEBUG_LEVEL > 0:
+        print("Skipping {}: item already assigned to".format(logic.game.node_name(pickup_node))),
