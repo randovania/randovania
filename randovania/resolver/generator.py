@@ -1,8 +1,7 @@
 import collections
 import copy
-import itertools
 from random import Random
-from typing import List, Tuple, NamedTuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict
+from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict
 
 from randovania import VERSION
 from randovania.resolver import debug, resolver, data_reader
@@ -12,7 +11,7 @@ from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
-from randovania.resolver.node import EventNode, Node, PickupNode, ResourceNode
+from randovania.resolver.node import EventNode, Node, PickupNode
 from randovania.resolver.reach import Reach
 from randovania.resolver.requirements import RequirementSet
 from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
@@ -128,7 +127,7 @@ def _create_patches(configuration: LayoutConfiguration,
     logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
     logic.game.simplify_connections(state.resources)
 
-    new_patches, non_added_items, final_state_by_distribution = new_distribute_one_item(
+    new_patches, non_added_items, final_state_by_distribution = distribute_one_item(
         logic, state, patches, available_pickups, rng, status_update=status_update)
     remaining_items.extend(non_added_items)
 
@@ -142,14 +141,6 @@ def _create_patches(configuration: LayoutConfiguration,
     assert not remaining_items
 
     return new_patches
-
-
-class ItemSlot(NamedTuple):
-    required_actions: Tuple[Node, ...]
-    available_actions: Tuple[ResourceNode, ...]
-    state: State
-    reach: Reach
-    interesting_resources: FrozenSet[ResourceInfo]
 
 
 def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
@@ -196,69 +187,28 @@ def find_all_pickups_via_most_events(logic: Logic,
     return paths
 
 
-_MAXIMUM_DEPTH = 2
-
-
-def find_potential_item_slots(logic: Logic,
-                              patches: GamePatches,
-                              state: State,
-                              actions_required: Tuple[Node, ...] = (),
-                              current_depth: int = 0,
-                              maximum_depth: int = _MAXIMUM_DEPTH,
-                              ) -> Iterator[ItemSlot]:
-    reach = Reach.calculate_reach(logic, state)
-
-    actions = list(reach.possible_actions(state))
-    new_depth = current_depth + 1
-    if len(actions) == 1:
-        maximum_depth += 1
-
-    available_pickups = tuple(_filter_pickups(actions))
-    debug.print_potential_item_slots(state, actions, available_pickups, current_depth, maximum_depth)
-
-    if available_pickups:
-        yield ItemSlot(required_actions=actions_required,
-                       available_actions=tuple(actions),
-                       state=state,
-                       reach=reach,
-                       interesting_resources=calculate_interesting_resources(reach.satisfiable_requirements,
-                                                                             state.resources),
-                       )
-
-    # Enough pickups, just try to use one of then already
-    if new_depth > maximum_depth or len(available_pickups) > 10:
-        return
-
-    for action in actions:
-        yield from find_potential_item_slots(
-            logic,
-            patches,
-            state.act_on_node(action, patches.pickup_mapping),
-            actions_required + (action,),
-            current_depth=new_depth,
-            maximum_depth=maximum_depth
-        )
-
-
-def does_pickup_satisfies(pickup: PickupEntry,
-                          interesting_resources: FrozenSet[ResourceInfo],
-                          database: ResourceDatabase,
-                          ) -> bool:
+def _does_pickup_satisfies(pickup: PickupEntry,
+                           interesting_resources: FrozenSet[ResourceInfo],
+                           database: ResourceDatabase,
+                           ) -> bool:
     return any(resource in interesting_resources
                for resource, _ in pickup.resource_gain(database))
 
 
-def get_items_that_satisfies(available_item_pickups: Iterator[PickupEntry],
-                             interesting_resources: FrozenSet[ResourceInfo],
-                             database: ResourceDatabase,
-                             ) -> Iterator[PickupEntry]:
+def _get_items_that_satisfies(available_item_pickups: Iterator[PickupEntry],
+                              interesting_resources: FrozenSet[ResourceInfo],
+                              database: ResourceDatabase,
+                              ) -> Iterator[PickupEntry]:
     for pickup in available_item_pickups:
-        if does_pickup_satisfies(pickup, interesting_resources, database):
+        if _does_pickup_satisfies(pickup, interesting_resources, database):
             yield pickup
 
 
-def add_item_to_node(item: PickupEntry, node: PickupNode,
-                     patches: GamePatches, database: ResourceDatabase) -> GamePatches:
+def _add_item_to_node(item: PickupEntry,
+                      node: PickupNode,
+                      patches: GamePatches,
+                      database: ResourceDatabase,
+                      ) -> GamePatches:
     pickup_mapping = copy.copy(patches.pickup_mapping)
 
     assert pickup_mapping[node.pickup_index.index] is None
@@ -274,69 +224,7 @@ def _num_items_in_patches(patches: GamePatches) -> int:
     return len([x for x in patches.pickup_mapping if x is not None])
 
 
-def is_victory_condition_reachable(logic: Logic,
-                                   state: State,
-                                   patches: GamePatches,
-                                   potential_item_slots: List[ItemSlot],
-                                   ) -> bool:
-    for item_option in potential_item_slots:
-        for event in _filter_events(item_option.available_actions):
-            with_event = state.act_on_node(event, patches.pickup_mapping)
-            if logic.game.victory_condition.satisfied(with_event.resources):
-                return True
-
-    return False
-
-
-def find_available_pickup_slots(potential_item_slots: List[ItemSlot]
-                                ) -> List[PickupNode]:
-    return list(sorted(frozenset(itertools.chain.from_iterable(
-        _filter_pickups(item_option.available_actions)
-        for item_option in potential_item_slots
-    ))))
-
-
-def _merge_interesting_resources(potential_item_slots: List[ItemSlot]) -> FrozenSet[ResourceInfo]:
-    return frozenset(itertools.chain.from_iterable(
-        item_option.interesting_resources
-        for item_option in potential_item_slots
-    ))
-
-
-def add_item_and_act(item: PickupEntry,
-                     item_slot: ItemSlot,
-                     pickup_node: PickupNode,
-                     new_patches: GamePatches,
-                     logic: Logic,
-                     state: State,
-                     available_item_pickups: Tuple[PickupEntry],
-                     rng: Random,
-                     status_update: Callable[[str], None],
-                     ):
-    for action in item_slot.required_actions:
-        state = state.act_on_node(action, new_patches.pickup_mapping)
-
-    # Handle when the pickup_node we selected was a required action
-    if pickup_node not in item_slot.required_actions:
-        state = state.act_on_node(pickup_node, new_patches.pickup_mapping)
-
-    new_reach = Reach.calculate_reach(logic, state)
-    if new_reach.nodes == item_slot.reach.nodes:
-        return None
-
-    new_available_item_pickups = tuple(pickup for pickup in available_item_pickups if pickup is not item)
-
-    if not new_available_item_pickups:
-        return new_patches, new_available_item_pickups, state
-
-    status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
-    return distribute_one_item(logic, state,
-                               new_patches, new_available_item_pickups,
-                               rng,
-                               status_update=status_update)
-
-
-def new_distribute_one_item(
+def distribute_one_item(
         logic: Logic,
         state: State,
         patches: GamePatches,
@@ -366,12 +254,12 @@ def new_distribute_one_item(
         calculate_interesting_resources(reach.satisfiable_requirements,
                                         state.resources)
 
-        for item in get_items_that_satisfies(available_item_pickups,
-                                             calculate_interesting_resources(reach.satisfiable_requirements,
+        for item in _get_items_that_satisfies(available_item_pickups,
+                                              calculate_interesting_resources(reach.satisfiable_requirements,
                                                                              state.resources),
-                                             logic.game.resource_database):
+                                              logic.game.resource_database):
 
-            new_patches = add_item_to_node(item, pickup_node, patches, logic.game.resource_database)
+            new_patches = _add_item_to_node(item, pickup_node, patches, logic.game.resource_database)
             next_state = new_state.act_on_node(pickup_node, new_patches.pickup_mapping)
 
             before_reach = Reach.calculate_reach(logic, new_state.act_on_node(pickup_node, patches.pickup_mapping))
@@ -380,7 +268,7 @@ def new_distribute_one_item(
                 continue
 
             status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
-            recursive_result = new_distribute_one_item(
+            recursive_result = distribute_one_item(
                 logic,
                 next_state,
                 new_patches,
@@ -394,60 +282,4 @@ def new_distribute_one_item(
                 status_update("Rollback. Only {} items now".format(_num_items_in_patches(patches)))
 
     debug.print_distribute_one_item_rollback([])
-    return None
-
-
-def distribute_one_item(logic: Logic,
-                        state: State,
-                        patches: GamePatches,
-                        available_item_pickups: Tuple[PickupEntry],
-                        rng: Random,
-                        status_update: Callable[[str], None],
-                        ) -> Optional[Tuple[GamePatches, Tuple[PickupEntry], State]]:
-    debug.print_distribute_one_item(state, available_item_pickups)
-
-    potential_item_slots: List[ItemSlot] = shuffle(
-        rng,
-        find_potential_item_slots(logic, patches, state))
-
-    available_pickups_spots = shuffle(rng, find_available_pickup_slots(potential_item_slots))
-
-    item_options = list(get_items_that_satisfies(available_item_pickups,
-                                                 _merge_interesting_resources(potential_item_slots),
-                                                 logic.game.resource_database))
-
-    debug.print_distribute_one_item_detail(potential_item_slots,
-                                           available_pickups_spots,
-                                           available_item_pickups,
-                                           item_options)
-
-    for item in item_options:
-        for pickup_node in available_pickups_spots:
-            for item_slot in potential_item_slots:
-                if pickup_node not in item_slot.available_actions or \
-                        not does_pickup_satisfies(item,
-                                                  item_slot.interesting_resources,
-                                                  logic.game.resource_database):
-                    continue
-
-                debug.print_distribute_place_item(item, pickup_node)
-                recursive_result = add_item_and_act(
-                    item,
-                    item_slot,
-                    pickup_node,
-                    new_patches=add_item_to_node(item, pickup_node, patches, logic.game.resource_database),
-                    logic=logic,
-                    state=state,
-                    available_item_pickups=available_item_pickups,
-                    rng=rng,
-                    status_update=status_update
-                )
-                if recursive_result:
-                    return recursive_result
-
-                status_update("Rollback. Only {} items now".format(_num_items_in_patches(patches)))
-                # TODO: boost the additional_requirements for _something_ so we never try this again
-
-    debug.print_distribute_one_item_rollback(item_options)
-    logic.additional_requirements[state.node] = Reach.calculate_reach(logic, state).satisfiable_as_requirement_set
     return None
