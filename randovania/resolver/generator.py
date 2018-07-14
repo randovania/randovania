@@ -1,4 +1,5 @@
 import copy
+import pprint
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict
 
@@ -133,6 +134,7 @@ def _create_patches(configuration: LayoutConfiguration,
         available_pickups,
         rng,
         status_update=status_update)
+
     remaining_items.extend(non_added_items)
 
     rng.shuffle(remaining_items)
@@ -182,7 +184,7 @@ def find_all_pickups_via_most_events(logic: Logic,
             raise VictoryReached(state)
 
         reach = Reach.calculate_reach(logic, state)
-        actions = list(reach.possible_actions(state))
+        actions = list(sorted(reach.possible_actions(state)))
 
         for event in _filter_events(actions):
             if event not in checked:
@@ -240,6 +242,23 @@ def _calculate_distance(source: State, target: State):
     return result
 
 
+def _iterate_with_weights(potential_pickup_nodes: List[PickupNode],
+                          pickup_weights: Dict[PickupNode, int],
+                          rng: Random) -> Iterator[PickupNode]:
+
+    weights = [pickup_weights[pickup_node] for pickup_node in potential_pickup_nodes]
+
+    while potential_pickup_nodes:
+        pickup_node = rng.choices(potential_pickup_nodes, pickup_weights)[0]
+
+        # Remove the pickup_node from the potential list, along with it's weight
+        index = potential_pickup_nodes.index(pickup_node)
+        potential_pickup_nodes.pop(index)
+        pickup_weights.pop(index)
+
+        yield pickup_node
+
+
 def distribute_one_item(
         logic: Logic,
         state: State,
@@ -262,33 +281,21 @@ def distribute_one_item(
         logic.node_sightings[pickup_node] += 1
 
     node_weights = {pickup_node: 1 / logic.node_sightings[pickup_node] for pickup_node in potential_pickup_nodes}
-    # print(logic.game.node_name(state.node),
-    #       len(potential_pickup_nodes),
-    #       [_calculate_distance(state, target) for target in pickups_with_path.values()]
-    #       )
     pickup_state_for_nodes = {node: pickups_with_path[node].act_on_node(node, patches.pickup_mapping)
                               for node in potential_pickup_nodes}
 
     # Calculating Reach for all nodes is kinda too CPU intensive, unfortunately.
     # TODO: better algorithm that calculates multiple reaches at the same time?
-    # reach_for_nodes = {node: Reach.calculate_reach(logic, pickup_state_for_nodes[node])
-    #                    for node in potential_pickup_nodes}
 
-    pickup_weights = [node_weights[pickup_node] for pickup_node in potential_pickup_nodes]
-    while potential_pickup_nodes:
-        pickup_node = rng.choices(potential_pickup_nodes, pickup_weights)[0]
+    for pickup_node in _iterate_with_weights(potential_pickup_nodes,
+                                             node_weights,
+                                             rng):
         assert patches.pickup_mapping[
                    pickup_node.pickup_index.index] is None, "Node with assigned pickup being considered again"
 
-        # Remove the pickup_node from the potential list, along with it's weight
-        index = potential_pickup_nodes.index(pickup_node)
-        potential_pickup_nodes.pop(index)
-        pickup_weights.pop(index)
-
         before_state = pickups_with_path[pickup_node]
-
-        # before_reach = reach_for_nodes[pickup_node]
         before_reach = Reach.calculate_reach(logic, pickup_state_for_nodes[pickup_node])
+
         interesting_resources = calculate_interesting_resources(
             before_reach.satisfiable_requirements,
             pickup_state_for_nodes[pickup_node].resources)
