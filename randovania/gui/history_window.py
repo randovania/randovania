@@ -3,6 +3,7 @@ import random
 from functools import partial
 from typing import Dict, List, Optional, Callable
 
+from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
@@ -34,6 +35,16 @@ def show_failed_generation_exception(exception: Exception):
     QMessageBox.critical(None,
                          "An exception was raised",
                          "An unhandled Exception occurred:\n{}".format(exception))
+
+
+def _show_pickup_spoiler(button):
+    button.setText(button.item_name)
+    button.item_is_hidden = False
+
+
+def _hide_pickup_spoiler(button):
+    button.setText("Hidden")
+    button.item_is_hidden = True
 
 
 class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
@@ -149,6 +160,9 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         for pickup in resource_database.pickups:
             pickup_by_world[pickup.world].append(pickup)
 
+        self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
+        self.pickup_spoiler_show_all_button.currently_show_all = True
+
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
         for pickup in sorted(resource_database.pickups, key=lambda p: p.item):
             self.pickup_spoiler_pickup_combobox.addItem(pickup.item)
@@ -226,11 +240,30 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
 
     def _toggle_pickup_spoiler(self, button):
         if button.item_is_hidden:
-            button.setText(button.item_name)
-            button.item_is_hidden = False
+            _show_pickup_spoiler(button)
         else:
-            button.setText("Hidden")
-            button.item_is_hidden = True
+            _hide_pickup_spoiler(button)
+        self._update_show_all_button_state()
+
+    def _toggle_show_all_pickup_spoiler(self):
+        if self.pickup_spoiler_show_all_button.currently_show_all:
+            action = _show_pickup_spoiler
+        else:
+            action = _hide_pickup_spoiler
+
+        for button in self.pickup_spoiler_buttons:
+            action(button)
+
+        self._update_show_all_button_state()
+
+    def _update_show_all_button_state(self):
+        self.pickup_spoiler_show_all_button.currently_show_all = all(
+            button.item_is_hidden for button in self.pickup_spoiler_buttons
+        )
+        if self.pickup_spoiler_show_all_button.currently_show_all:
+            self.pickup_spoiler_show_all_button.setText(QtCore.QCoreApplication.translate("HistoryWindow", "Show All"))
+        else:
+            self.pickup_spoiler_show_all_button.setText(QtCore.QCoreApplication.translate("HistoryWindow", "Hide All"))
 
     def _on_change_pickup_filter(self, text):
         for button in self.pickup_spoiler_buttons:
