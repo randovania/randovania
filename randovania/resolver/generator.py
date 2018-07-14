@@ -249,12 +249,12 @@ def _iterate_with_weights(potential_pickup_nodes: List[PickupNode],
     weights = [pickup_weights[pickup_node] for pickup_node in potential_pickup_nodes]
 
     while potential_pickup_nodes:
-        pickup_node = rng.choices(potential_pickup_nodes, pickup_weights)[0]
+        pickup_node = rng.choices(potential_pickup_nodes, weights)[0]
 
         # Remove the pickup_node from the potential list, along with it's weight
         index = potential_pickup_nodes.index(pickup_node)
         potential_pickup_nodes.pop(index)
-        pickup_weights.pop(index)
+        weights.pop(index)
 
         yield pickup_node
 

@@ -61,3 +61,15 @@ class LayoutDescription(NamedTuple):
     def save_to_file(self, json_path: str):
         with open(json_path, "w") as open_file:
             json.dump(self.as_json, open_file, sort_keys=True, indent=4, separators=(',', ': '))
+
+    @property
+    def without_solver_path(self) -> "LayoutDescription":
+        """
+        A solver path is way too big to reasonably store for test purposes, so use LayoutDescriptions with an empty one.
+        :return:
+        """
+        return LayoutDescription(
+            configuration=self.configuration,
+            version=self.version,
+            pickup_mapping=self.pickup_mapping,
+            solver_path=())

@@ -94,7 +94,6 @@ def distribute_command_logic(args):
     data = prime_database.decode_data_file(args)
     resolver_config = build_resolver_configuration(args)
 
-    from randovania.resolver import data_reader
     from randovania.resolver.game_patches import GamePatches
 
     def status_update(s):
@@ -110,7 +109,7 @@ def distribute_command_logic(args):
     layout_description = generator.generate_list(
         data,
         LayoutConfiguration(
-            seed_number=random.randint(0, 2 ** 31),
+            seed_number=seed_number,
             logic=LayoutLogic.NO_GLITCHES,
             mode=LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
