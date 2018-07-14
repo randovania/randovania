@@ -1,3 +1,4 @@
+import collections
 from typing import Dict, Set
 
 from randovania.resolver.game_description import GameDescription
@@ -13,6 +14,7 @@ class Logic:
     game: GameDescription
     patches: GamePatches
     additional_requirements: Dict[Node, RequirementSet] = {}
+    node_sightings: Dict[Node, int] = collections.defaultdict(int)
 
     def __init__(self, game: GameDescription, patches: GamePatches):
         self.game = game

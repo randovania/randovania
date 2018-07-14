@@ -127,7 +127,12 @@ def _create_patches(configuration: LayoutConfiguration,
     logic.game.simplify_connections(state.resources)
 
     new_patches, non_added_items, final_state_by_distribution = distribute_one_item(
-        logic, state, patches, available_pickups, rng, status_update=status_update)
+        logic,
+        state,
+        patches,
+        available_pickups,
+        rng,
+        status_update=status_update)
     remaining_items.extend(non_added_items)
 
     rng.shuffle(remaining_items)
@@ -148,6 +153,10 @@ def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def _filter_events(nodes: Iterator[Node]) -> Iterator[EventNode]:
     return filter(lambda node: isinstance(node, EventNode), nodes)
+
+
+def is_pickup_node_available(pickup_node: PickupNode, patches: GamePatches) -> bool:
+    return patches.pickup_mapping[pickup_node.pickup_index.index] is None
 
 
 class VictoryReached(Exception):
@@ -180,7 +189,8 @@ def find_all_pickups_via_most_events(logic: Logic,
                 queue.append(state.act_on_node(event, patches.pickup_mapping))
 
         for pickup in _filter_pickups(actions):
-            paths[pickup] = state
+            if is_pickup_node_available(pickup, patches):
+                paths[pickup] = state
 
     return paths
 
@@ -222,6 +232,14 @@ def _num_items_in_patches(patches: GamePatches) -> int:
     return len([x for x in patches.pickup_mapping if x is not None])
 
 
+def _calculate_distance(source: State, target: State):
+    result = 0
+    while target != source:
+        result += 1
+        target = target.previous_state
+    return result
+
+
 def distribute_one_item(
         logic: Logic,
         state: State,
@@ -239,14 +257,11 @@ def distribute_one_item(
     except VictoryReached as v:
         return patches, available_item_pickups, v.state
 
-    def _calculate_distance(source: State, target: State):
-        result = 0
-        while target != source:
-            result += 1
-            target = target.previous_state
-        return result
-
     potential_pickup_nodes = list(sorted(pickups_with_path.keys(), reverse=True))
+    for pickup_node in potential_pickup_nodes:
+        logic.node_sightings[pickup_node] += 1
+
+    node_weights = {pickup_node: 1 / logic.node_sightings[pickup_node] for pickup_node in potential_pickup_nodes}
     # print(logic.game.node_name(state.node),
     #       len(potential_pickup_nodes),
     #       [_calculate_distance(state, target) for target in pickups_with_path.values()]
@@ -254,16 +269,21 @@ def distribute_one_item(
     pickup_state_for_nodes = {node: pickups_with_path[node].act_on_node(node, patches.pickup_mapping)
                               for node in potential_pickup_nodes}
 
-    # TODO: prefer pickup nodes that were previously unknown!
-
     # Calculating Reach for all nodes is kinda too CPU intensive, unfortunately.
     # TODO: better algorithm that calculates multiple reaches at the same time?
     # reach_for_nodes = {node: Reach.calculate_reach(logic, pickup_state_for_nodes[node])
     #                    for node in potential_pickup_nodes}
 
-    for pickup_node in shuffle(rng, potential_pickup_nodes):
+    pickup_weights = [node_weights[pickup_node] for pickup_node in potential_pickup_nodes]
+    while potential_pickup_nodes:
+        pickup_node = rng.choices(potential_pickup_nodes, pickup_weights)[0]
         assert patches.pickup_mapping[
                    pickup_node.pickup_index.index] is None, "Node with assigned pickup being considered again"
+
+        # Remove the pickup_node from the potential list, along with it's weight
+        index = potential_pickup_nodes.index(pickup_node)
+        potential_pickup_nodes.pop(index)
+        pickup_weights.pop(index)
 
         before_state = pickups_with_path[pickup_node]
 
@@ -273,9 +293,9 @@ def distribute_one_item(
             before_reach.satisfiable_requirements,
             pickup_state_for_nodes[pickup_node].resources)
 
-        for item in _get_items_that_satisfies(available_item_pickups,
-                                              interesting_resources,
-                                              logic.game.resource_database):
+        for item in shuffle(rng, _get_items_that_satisfies(available_item_pickups,
+                                                           interesting_resources,
+                                                           logic.game.resource_database)):
 
             new_patches = _add_item_to_node(item, pickup_node, patches, logic.game.resource_database)
             after_state = before_state.act_on_node(pickup_node, new_patches.pickup_mapping)
