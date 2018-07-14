@@ -19,14 +19,6 @@ def _create_test_layout_description(
         solver_path=())
 
 
-def _remove_solver_path(description: LayoutDescription):
-    return LayoutDescription(
-        configuration=description.configuration,
-        version=description.version,
-        pickup_mapping=description.pickup_mapping,
-        solver_path=())
-
-
 _test_descriptions = [
     _create_test_layout_description(
         configuration=LayoutConfiguration(seed_number=1027649936,
@@ -59,7 +51,7 @@ def test_compare_generated_with_data(layout_description: LayoutDescription):
     data = binary_data.decode_default_prime2()
     generated_description = generator.generate_list(data, layout_description.configuration, status_update=status_update)
 
-    assert _remove_solver_path(generated_description) == layout_description
+    assert generated_description.without_solver_path == layout_description
 
 
 def test_generate_twice(layout_description: LayoutDescription):
@@ -68,4 +60,5 @@ def test_generate_twice(layout_description: LayoutDescription):
 
     data = binary_data.decode_default_prime2()
     generated_description = generator.generate_list(data, layout_description.configuration, status_update=status_update)
-    assert generated_description == generator.generate_list(data, layout_description.configuration, status_update=status_update)
+    assert generated_description == generator.generate_list(data, layout_description.configuration,
+                                                            status_update=status_update)
