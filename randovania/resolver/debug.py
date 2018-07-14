@@ -1,8 +1,10 @@
 from typing import Set
 
 from randovania.resolver.game_description import Area, GameDescription
+from randovania.resolver.logic import Logic
 from randovania.resolver.node import Node
 from randovania.resolver.requirements import RequirementList, RequirementSet
+from randovania.resolver.resources import PickupEntry, PickupIndex
 
 _DEBUG_LEVEL = 0
 count = 0
@@ -45,13 +47,15 @@ def _indent(offset=0):
     return " " * (_current_indent - offset)
 
 
-def log_new_advance(state: "State", reach: "Reach"):
+def log_new_advance(state: "State", reach: "Reach", logic: Logic):
     global _current_indent
     increment_attempts()
     _current_indent += 1
     if _DEBUG_LEVEL > 0:
         if hasattr(state.node, "resource"):
             resource = state.node.resource(state.resource_database)
+            if isinstance(resource, PickupIndex):
+                resource = state.resource_database.pickups[logic.patches.pickup_mapping[resource.index]]
         else:
             resource = None
 
@@ -74,40 +78,30 @@ def log_skip_action_missing_requirement(node: Node, game: GameDescription, requi
         requirement_set.pretty_print(_indent(-1))
 
 
-def print_potential_item_slots(state, actions, available_pickups, current_depth, maximum_depth):
-    if _DEBUG_LEVEL > 2:
-        print(":: Potential from {} with {} actions and {} pickups at depth {}/{}".format(
-            n(state.node), len(actions), len(available_pickups), current_depth, maximum_depth))
-
-
-def print_distribute_one_item_detail(potential_item_slots, available_pickups_spots,
-                                     available_item_pickups, item_options):
-    if _DEBUG_LEVEL > 1:
-        print("** {:2d} item slots, {:2d} pickups spots, {:2d} available_item_pickups.\nItem options: {}".format(
-            len(potential_item_slots), len(available_pickups_spots), len(available_item_pickups),
-            ", ".join(pickup.item for pickup in item_options)
+def print_distribute_one_item_detail(potential_pickup_nodes):
+    if _DEBUG_LEVEL > 0:
+        print(":: {:2d} pickups spots".format(
+            len(potential_pickup_nodes),
         ))
 
 
 def print_distribute_one_item(state, available_item_pickups):
     if _DEBUG_LEVEL > 0:
-        print("> Distribute starting at {} with {} resources and {} pickups left.".format(
+        print("\n> Distribute starting at {} with {} resources and {} pickups left.".format(
             n(state.node),
             len(state.resources),
             len(available_item_pickups)
         ))
 
 
-def print_distribute_one_item_rollback(item_log):
-    if _DEBUG_LEVEL > 2:
-        print("Rollback after trying {}.".format(item_log))
-
-
-def print_distribute_place_item(item, pickup_node):
-    if _DEBUG_LEVEL > 1:
-        print("Place {} == at {}".format(item, n(pickup_node)))
-
-
-def print_skipped_already_used_node(pickup_node):
+def print_distribute_one_item_rollback(state):
     if _DEBUG_LEVEL > 0:
-        print("Skipping {}: item already assigned to".format(logic.game.node_name(pickup_node))),
+        print(": Rollback at {}.".format(n(state)))
+
+
+def print_distribute_place_item(pickup_node, item: PickupEntry, logic):
+    if _DEBUG_LEVEL > 1:
+        print("Placed {} at {} after {} sightings".format(
+            item.item,
+            n(pickup_node, with_world=True),
+            logic.node_sightings[pickup_node]))

@@ -283,15 +283,17 @@ def distribute_one_item(
         return patches, available_item_pickups, v.state
 
     potential_pickup_nodes = list(sorted(pickups_with_path.keys(), reverse=True))
+
+    # Increment how many times we've seen each pickup node
     for pickup_node in potential_pickup_nodes:
         logic.node_sightings[pickup_node] += 1
 
+    # Our weighting currently favors more nodes seem for the first time
     node_weights = {pickup_node: 1 / logic.node_sightings[pickup_node] for pickup_node in potential_pickup_nodes}
-    pickup_state_for_nodes = {node: pickups_with_path[node].act_on_node(node, patches.pickup_mapping)
-                              for node in potential_pickup_nodes}
 
     # Calculating Reach for all nodes is kinda too CPU intensive, unfortunately.
     # TODO: better algorithm that calculates multiple reaches at the same time?
+    debug.print_distribute_one_item_detail(potential_pickup_nodes)
 
     for pickup_node in _iterate_with_weights(potential_pickup_nodes,
                                              node_weights,
@@ -317,6 +319,7 @@ def distribute_one_item(
             if pickup_reach_without_item.nodes == pickup_reach_with_item.nodes:
                 continue
 
+            debug.print_distribute_place_item(pickup_node, item, logic)
             status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
             recursive_result = distribute_one_item(
                 logic,
@@ -331,5 +334,5 @@ def distribute_one_item(
             else:
                 status_update("Rollback. Only {} items now".format(_num_items_in_patches(patches)))
 
-    debug.print_distribute_one_item_rollback([])
+    debug.print_distribute_one_item_rollback(state)
     return None
