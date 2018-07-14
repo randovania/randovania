@@ -53,6 +53,7 @@ class PickupEntry(NamedTuple):
     room: str
     item: str
     resources: Dict[str, int]
+    item_category: str
 
     def __hash__(self):
         return hash(self.item)
