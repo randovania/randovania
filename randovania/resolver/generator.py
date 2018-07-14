@@ -206,9 +206,15 @@ def _does_pickup_satisfies(pickup: PickupEntry,
 
 
 def _get_items_that_satisfies(available_item_pickups: Iterator[PickupEntry],
-                              interesting_resources: FrozenSet[ResourceInfo],
+                              pickup_state_without_item: State,
+                              pickup_reach_without_item: Reach,
                               database: ResourceDatabase,
                               ) -> Iterator[PickupEntry]:
+
+    interesting_resources = calculate_interesting_resources(
+        pickup_reach_without_item.satisfiable_requirements,
+        pickup_state_without_item.resources)
+
     for pickup in available_item_pickups:
         if _does_pickup_satisfies(pickup, interesting_resources, database):
             yield pickup
@@ -293,28 +299,28 @@ def distribute_one_item(
         assert patches.pickup_mapping[
                    pickup_node.pickup_index.index] is None, "Node with assigned pickup being considered again"
 
+        # This is the State that can act on the pickup node, with all events we want to collect
         before_state = pickups_with_path[pickup_node]
-        before_reach = Reach.calculate_reach(logic, pickup_state_for_nodes[pickup_node])
 
-        interesting_resources = calculate_interesting_resources(
-            before_reach.satisfiable_requirements,
-            pickup_state_for_nodes[pickup_node].resources)
+        pickup_state_without_item = before_state.act_on_node(pickup_node, patches.pickup_mapping)
+        pickup_reach_without_item = Reach.calculate_reach(logic, pickup_state_without_item)
 
         for item in shuffle(rng, _get_items_that_satisfies(available_item_pickups,
-                                                           interesting_resources,
+                                                           pickup_state_without_item,
+                                                           pickup_reach_without_item,
                                                            logic.game.resource_database)):
 
             new_patches = _add_item_to_node(item, pickup_node, patches, logic.game.resource_database)
-            after_state = before_state.act_on_node(pickup_node, new_patches.pickup_mapping)
+            pickup_state_with_item = before_state.act_on_node(pickup_node, new_patches.pickup_mapping)
+            pickup_reach_with_item = Reach.calculate_reach(logic, pickup_state_with_item)
 
-            after_reach = Reach.calculate_reach(logic, after_state)
-            if before_reach.nodes == after_reach.nodes:
+            if pickup_reach_without_item.nodes == pickup_reach_with_item.nodes:
                 continue
 
             status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
             recursive_result = distribute_one_item(
                 logic,
-                after_state,
+                pickup_state_with_item,
                 new_patches,
                 tuple(pickup for pickup in available_item_pickups if pickup is not item),
                 rng,

@@ -90,7 +90,7 @@ def print_distribute_one_item_detail(potential_item_slots, available_pickups_spo
 
 
 def print_distribute_one_item(state, available_item_pickups):
-    if _DEBUG_LEVEL > 1:
+    if _DEBUG_LEVEL > 0:
         print("> Distribute starting at {} with {} resources and {} pickups left.".format(
             n(state.node),
             len(state.resources),
