@@ -56,8 +56,8 @@ class GameDescription:
     item_loss_items: ResourceGain
     worlds: List[World]
 
-    _nodes_to_area: Dict[Node, Area] = {}
-    _nodes_to_world: Dict[Node, World] = {}
+    _nodes_to_area: Dict[Node, Area]
+    _nodes_to_world: Dict[Node, World]
 
     def __deepcopy__(self, memodict):
         return GameDescription(

@@ -13,12 +13,14 @@ class Logic:
 
     game: GameDescription
     patches: GamePatches
-    additional_requirements: Dict[Node, RequirementSet] = {}
-    node_sightings: Dict[Node, int] = collections.defaultdict(int)
+    additional_requirements: Dict[Node, RequirementSet]
+    node_sightings: Dict[Node, int]
 
     def __init__(self, game: GameDescription, patches: GamePatches):
         self.game = game
         self.patches = patches
+        self.additional_requirements = {}
+        self.node_sightings = collections.defaultdict(int)
 
     def get_additional_requirements(self, node: Node) -> RequirementSet:
         return self.additional_requirements.get(node, RequirementSet.trivial())
