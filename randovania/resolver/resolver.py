@@ -7,20 +7,34 @@ from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.logic import Logic
 from randovania.resolver.reach import Reach
+from randovania.resolver.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.resolver.resources import PickupIndex
 from randovania.resolver.state import State
 
 
-class PickupIndexResources(dict):
-    def __contains__(self, k): # real signature unknown
-        """ True if D has a key k, else False. """
-        return isinstance(k, PickupIndex)
+def _simplify_requirement_list(self: RequirementList) -> Optional[RequirementList]:
+    items = []
+    for item in self:  # type: IndividualRequirement
+        if item.negate:
+            return None
 
-    def get(self, y, default=0): # real signature unknown; restored from __doc__
-        if self.__contains__(y):
-            return 1
-        else:
-            raise default
+        if not isinstance(item.resource, PickupIndex):
+            # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
+            items.append(item)
+
+    return RequirementList(items)
+
+
+def _simplify_requirement_set_for_additional_requirements(requirements: RequirementSet) -> RequirementSet:
+    new_alternatives = [
+        _simplify_requirement_list(alternative)
+        for alternative in requirements.alternatives
+    ]
+    return RequirementSet(alternative
+                          for alternative in new_alternatives
+
+                          # RequirementList.simplify may return None
+                          if alternative is not None)
 
 
 def advance_depth(state: State,
@@ -44,11 +58,8 @@ def advance_depth(state: State,
             return new_state
 
     debug.log_rollback(state)
-    logic.additional_requirements[state.node] = reach.satisfiable_as_requirement_set.simplify(
-        PickupIndexResources(),
-        state.resource_database
-    )
-    # print("> Rollback finished.")
+    logic.additional_requirements[state.node] = _simplify_requirement_set_for_additional_requirements(
+        reach.satisfiable_as_requirement_set)
     return None
 
 
