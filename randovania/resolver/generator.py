@@ -8,7 +8,8 @@ from randovania.resolver import debug, resolver, data_reader
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic, LayoutMode
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic, LayoutMode, \
+    LayoutRandomizedFlag
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node, PickupNode
@@ -97,8 +98,7 @@ def _state_to_solver_path(final_state: State,
     )
 
 
-def calculate_available_pickups(game: GameDescription) -> Iterator[PickupEntry]:
-    categories = {"sky_temple_key", "translator", "major", "temple_key"}
+def calculate_available_pickups(game: GameDescription, categories: Set[str]) -> Iterator[PickupEntry]:
     for pickup in game.resource_database.pickups:
         if pickup.item_category in categories:
             yield pickup
@@ -145,7 +145,16 @@ def _create_patches(configuration: LayoutConfiguration,
         [None] * len(game.resource_database.pickups)
     )
 
-    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(game))))
+    categories = {"translator", "major", "temple_key"}
+
+    if configuration.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
+        for i, pickup in enumerate(game.resource_database.pickups):
+            if pickup.item_category == "sky_temple_key":
+                patches.pickup_mapping[i] = i
+    else:
+        categories.add("sky_temple_key")
+
+    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(game, categories))))
     remaining_items = [
         pickup
         for pickup in game.resource_database.pickups
