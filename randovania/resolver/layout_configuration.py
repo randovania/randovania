@@ -55,3 +55,16 @@ class LayoutConfiguration(NamedTuple):
     @property
     def as_str(self) -> str:
         return "-".join(s.value if hasattr(s, "value") else str(s) for s in self)
+
+    @classmethod
+    def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
+        return LayoutConfiguration(
+            seed_number=json_dict["seed"],
+            logic=LayoutLogic(json_dict["logic"]),
+            mode=LayoutMode(json_dict["mode"]),
+            sky_temple_keys=LayoutRandomizedFlag(json_dict["sky_temple_keys"]),
+            item_loss=LayoutEnabledFlag(json_dict["item_loss"]),
+            elevators=LayoutRandomizedFlag(json_dict["elevators"]),
+            hundo_guaranteed=LayoutEnabledFlag(json_dict["hundo_guaranteed"]),
+            difficulty=LayoutDifficulty(json_dict["difficulty"]),
+        )

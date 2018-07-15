@@ -1,9 +1,10 @@
 import collections
 import json
-from typing import NamedTuple, Tuple, Dict, Optional
+from typing import NamedTuple, Tuple, Dict, Optional, List
 
 from randovania.games.prime import binary_data
 from randovania.resolver import data_reader
+from randovania.resolver.game_description import Area
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.node import PickupNode
 
@@ -35,11 +36,67 @@ def _pickup_mapping_to_item_locations(pickup_mapping: Tuple[int, ...]) -> Dict[s
     return items_locations
 
 
+def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPath, ...]:
+    return tuple(
+        SolverPath(
+            node_name=step["node"],
+            previous_nodes=tuple(step["path_from_previous"])
+        )
+        for step in playthrough
+    )
+
+
+def _item_locations_to_pickup_mapping(locations: Dict[str, Dict[str, str]]) -> Tuple[Optional[int], ...]:
+    game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
+    pickup_mapping = [None] * len(game.resource_database.pickups)
+
+    pickup_index_by_name = {
+        pickup.item: i for i, pickup in enumerate(game.resource_database.pickups)
+    }
+
+    for world_name, world_data in locations.items():
+        world = [world for world in game.worlds if world.name == world_name][0]
+        areas_by_name = collections.defaultdict(list)
+        for area in world.areas:
+            areas_by_name[area.name].append(area)
+
+        for location_name, item in world_data.items():
+            if item == "Nothing":
+                continue
+
+            area_name, node_name = location_name.split("/", maxsplit=1)
+            node: PickupNode = None
+
+            for area in areas_by_name[area_name]:
+                nodes = [node for node in area.nodes if node.name == node_name]
+                if len(nodes) == 1:
+                    node = nodes[0]
+                    break
+
+            pickup_mapping[node.pickup_index.index] = pickup_index_by_name[item]
+
+    return tuple(pickup_mapping)
+
+
 class LayoutDescription(NamedTuple):
     configuration: LayoutConfiguration
     version: str
     pickup_mapping: Tuple[Optional[int], ...]
     solver_path: Tuple[SolverPath, ...]
+
+    @classmethod
+    def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
+        return LayoutDescription(
+            configuration=LayoutConfiguration.from_json_dict(json_dict["info"]["configuration"]),
+            version=json_dict["info"]["version"],
+            pickup_mapping=_item_locations_to_pickup_mapping(json_dict["locations"]),
+            solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
+        )
+
+    @classmethod
+    def from_file(cls, json_path: str) -> "LayoutDescription":
+        with open(json_path, "r") as open_file:
+            return cls.from_json_dict(json.load(open_file))
 
     @property
     def as_json(self) -> dict:

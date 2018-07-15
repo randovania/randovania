@@ -39,13 +39,13 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
     easy_tricks = {
         0,  # Scan Dash
         2,  # Slope Jump
-        6,  # Underwater Dash
     }
     normal_tricks = easy_tricks | {
         1,  # Difficult Bomb Jump
         3,  # R Jump
         4,  # BSJ
         5,  # Roll Jump
+        6,  # Underwater Dash
         15,  # Instant Morph
     }
     hard_tricks = normal_tricks | {

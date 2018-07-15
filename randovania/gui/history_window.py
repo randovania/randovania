@@ -73,24 +73,31 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.layout_generated_signal.connect(self._on_layout_generated)
         self.selected_layout_change_signal.connect(self.update_layout_description)
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
+        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
 
         # All code for the Randomize button
         self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
         self.setup_layout_combo_data()
         self.setup_initial_combo_selection()
         self.create_layout_button.clicked.connect(self.create_new_layout)
+        self.abort_create_button.clicked.connect(self.stop_background_process)
 
         # Fill the history page
         self.create_history_items()
-        self.history_box.hide()  # But hide it for now
+        self.layout_history_scroll.hide()  # But hide it for now
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers(self.resource_database)
+
+        size_policy = self.layout_info_tab.sizePolicy()
+        size_policy.setRetainSizeWhenHidden(True)
+        self.layout_info_tab.setSizePolicy(size_policy)
         self.layout_info_tab.hide()
 
         # Exporting
         self.apply_layout_button.clicked.connect(self.apply_layout)
         self.export_layout_button.clicked.connect(self.export_layout)
+        self.import_layout_button.clicked.connect(self.import_layout)
 
     # Layout Creation logic
     @property
@@ -151,7 +158,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
                 status_update("Error: {}".format(resulting_layout), 100)
             else:
                 self.layout_generated_signal.emit(resulting_layout)
-                status_update("Success: {}".format(resulting_layout.configuration.as_str), 100)
+                status_update("Success!", 100)
 
         self.run_in_background_thread(work, "Randomizing...")
 
@@ -239,6 +246,9 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
             else:
                 pickup_button.item_name = "Nothing"
 
+            if not pickup_button.item_is_hidden:
+                pickup_button.setText(pickup_button.item_name)
+
     def _toggle_pickup_spoiler(self, button):
         if button.item_is_hidden:
             _show_pickup_spoiler(button)
@@ -290,10 +300,28 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
 
         self.current_layout_description.save_to_file(json_path)
 
+    def import_layout(self):
+        open_result = QFileDialog.getOpenFileName(
+            self,
+            caption="Select a layout file to import...",
+            filter="*.json")
+
+        if not open_result or open_result == ("", ""):
+            return
+
+        json_path, extension = open_result
+        self.layout_generated_signal.emit(LayoutDescription.from_file(json_path))
+
     def update_progress(self, message: str, percentage: int):
         self.randomize_in_progress_status.setText(message)
+        if "Aborted" in message:
+            percentage = 0
         if percentage >= 0:
             self.randomize_in_progress_bar.setRange(0, 100)
             self.randomize_in_progress_bar.setValue(percentage)
         else:
             self.randomize_in_progress_bar.setRange(0, 0)
+
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self.create_layout_button.setEnabled(value)
+        self.abort_create_button.setEnabled(not value)
