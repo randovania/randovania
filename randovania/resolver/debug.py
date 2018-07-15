@@ -96,7 +96,7 @@ def print_distribute_one_item(state, available_item_pickups):
 
 def print_distribute_one_item_rollback(state):
     if _DEBUG_LEVEL > 0:
-        print(": Rollback at {}.".format(n(state)))
+        print(": Rollback at {}.".format(n(state.node)))
 
 
 def print_distribute_place_item(pickup_node, item: PickupEntry, logic):
