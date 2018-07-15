@@ -14,7 +14,7 @@ def _create_test_layout_description(
         pickup_mapping):
     return LayoutDescription(
         configuration=configuration,
-        version='0.9.2',
+        version='0.10.0',
         pickup_mapping=pickup_mapping,
         solver_path=())
 
