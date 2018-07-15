@@ -1,7 +1,7 @@
 import copy
 import pprint
 from random import Random
-from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict
+from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict, Set
 
 from randovania import VERSION
 from randovania.resolver import debug, resolver, data_reader
@@ -34,9 +34,38 @@ def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
     return result
 
 
-def expand_layout_logic(logic: LayoutLogic):
+def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
+    easy_tricks = {
+        0,  # Scan Dash
+        2,  # Slope Jump
+        6,  # Underwater Dash
+    }
+    normal_tricks = easy_tricks | {
+        1,  # Difficult Bomb Jump
+        3,  # R Jump
+        4,  # BSJ
+        5,  # Roll Jump
+        15,  # Instant Morph
+    }
+    hard_tricks = normal_tricks | {
+        7,  # Air Underwater
+        8,  # Floaty
+        9,  # Infinite Speed
+        10,  # SA without SJ
+        11,  # Wall Boost
+        12,  # Jump of Enemy
+    }
+
+    # Skipping Controller Reset and Exclude from Room Randomizer
+
     if logic == LayoutLogic.NO_GLITCHES:
         return 0, set()
+    elif logic == LayoutLogic.EASY:
+        return 1, easy_tricks
+    elif logic == LayoutLogic.NORMAL:
+        return 3, normal_tricks
+    elif logic == LayoutLogic.HARD:
+        return 5, hard_tricks
     else:
         raise Exception("Unsupported logic")
 
@@ -210,7 +239,6 @@ def _get_items_that_satisfies(available_item_pickups: Iterator[PickupEntry],
                               pickup_reach_without_item: Reach,
                               database: ResourceDatabase,
                               ) -> Iterator[PickupEntry]:
-
     interesting_resources = calculate_interesting_resources(
         pickup_reach_without_item.satisfiable_requirements,
         pickup_state_without_item.resources)
@@ -251,7 +279,6 @@ def _calculate_distance(source: State, target: State):
 def _iterate_with_weights(potential_pickup_nodes: List[PickupNode],
                           pickup_weights: Dict[PickupNode, int],
                           rng: Random) -> Iterator[PickupNode]:
-
     weights = [pickup_weights[pickup_node] for pickup_node in potential_pickup_nodes]
 
     while potential_pickup_nodes:
