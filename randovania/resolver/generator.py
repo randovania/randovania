@@ -1,3 +1,4 @@
+import collections
 import copy
 import pprint
 from random import Random
@@ -215,10 +216,11 @@ def find_all_pickups_via_most_events(logic: Logic,
     paths = {}
     checked = set()
 
-    queue: List[State] = [initial_state]
+    queue: collections.OrderedDict[Node, State] = collections.OrderedDict()
+    queue[initial_state.node] = initial_state
 
     while queue:
-        state = queue.pop(0)
+        _, state = queue.popitem(last=False)
         checked.add(state.node)
 
         if victory_condition.satisfied(state.resources):
@@ -229,7 +231,7 @@ def find_all_pickups_via_most_events(logic: Logic,
         for action in sorted(reach.possible_actions(state)):
             if isinstance(action, EventNode) or not is_pickup_node_available(action, logic, patches):
                 if action not in checked:
-                    queue.append(state.act_on_node(action, patches.pickup_mapping))
+                    queue[action] = state.act_on_node(action, patches.pickup_mapping)
             else:
                 paths[action] = state
 
