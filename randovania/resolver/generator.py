@@ -185,7 +185,11 @@ def _filter_events(nodes: Iterator[Node]) -> Iterator[EventNode]:
     return filter(lambda node: isinstance(node, EventNode), nodes)
 
 
-def is_pickup_node_available(pickup_node: PickupNode, patches: GamePatches) -> bool:
+def is_pickup_node_available(pickup_node: PickupNode, logic: Logic, patches: GamePatches) -> bool:
+    if logic.configuration.mode == LayoutMode.MAJOR_ITEMS:
+        pickup = logic.game.resource_database.pickups[pickup_node.pickup_index.index]
+        if pickup.item_category not in {"sky_temple_key", "translator", "major", "temple_key", "energy_tank"}:
+            return False
     return patches.pickup_mapping[pickup_node.pickup_index.index] is None
 
 
@@ -212,15 +216,13 @@ def find_all_pickups_via_most_events(logic: Logic,
             raise VictoryReached(state)
 
         reach = Reach.calculate_reach(logic, state)
-        actions = list(sorted(reach.possible_actions(state)))
 
-        for event in _filter_events(actions):
-            if event not in checked:
-                queue.append(state.act_on_node(event, patches.pickup_mapping))
-
-        for pickup in _filter_pickups(actions):
-            if is_pickup_node_available(pickup, patches):
-                paths[pickup] = state
+        for action in sorted(reach.possible_actions(state)):
+            if isinstance(action, EventNode) or not is_pickup_node_available(action, logic, patches):
+                if action not in checked:
+                    queue.append(state.act_on_node(action, patches.pickup_mapping))
+            else:
+                paths[action] = state
 
     return paths
 

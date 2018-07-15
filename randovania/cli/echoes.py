@@ -111,7 +111,7 @@ def distribute_command_logic(args):
         LayoutConfiguration(
             seed_number=seed_number,
             logic=LayoutLogic.NO_GLITCHES,
-            mode=LayoutMode.STANDARD,
+            mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED if resolver_config.item_loss else LayoutEnabledFlag.DISABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
@@ -155,6 +155,11 @@ def add_distribute_command(sub_parsers):
         type=int,
         default=None,
         help="The seed number to generate with.")
+    parser.add_argument(
+        "--major-items-mode",
+        default=False,
+        action="store_true",
+        help="If set, will use the Major Item mode")
     parser.set_defaults(func=distribute_command_logic)
 
 
