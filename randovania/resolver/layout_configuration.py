@@ -4,6 +4,7 @@ from typing import NamedTuple
 
 class LayoutLogic(Enum):
     NO_GLITCHES = "no-glitches"
+    EASY = "easy"
     NORMAL = "normal"
     HARD = "hard"
 
