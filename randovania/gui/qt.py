@@ -37,13 +37,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.windows: List[QMainWindow] = []
 
         self.tab_windows = [
-            (SeedSearcherWindow, "Seed Searching"),
-            (LayoutGeneratorWindow, "Configuration"),
+            (HistoryWindow, "History"),
             (ISOManagementWindow, "ISO Management"),
         ]
         if preview:
-            self.tab_windows[0] = (HistoryWindow, "History")
-            self.tab_windows[1] = (DataEditorWindow, "Data Editor")
+            self.tab_windows.insert(1, (DataEditorWindow, "Data Editor"))
 
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self))

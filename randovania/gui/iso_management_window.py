@@ -44,12 +44,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         self.current_seed_edit.textChanged.connect(self.on_seed_changed)
         self.apply_seed_button.clicked.connect(self.apply_seed)
         self.apply_seed_button.setEnabled(False)
-        if main_window.is_preview_mode:
-            self.current_seed_edit.hide()
-            self.apply_seed_button.hide()
-        else:
-            self.layout_identifier_label.hide()
-            self.apply_layout_button.hide()
+        self.current_seed_edit.hide()
+        self.apply_seed_button.hide()
 
         # File Location
         self.filesLocation.setText(options.game_files_path)
