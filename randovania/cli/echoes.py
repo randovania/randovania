@@ -112,7 +112,7 @@ def distribute_command_logic(args):
             seed_number=seed_number,
             logic=LayoutLogic.NO_GLITCHES,
             mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
-            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED if resolver_config.item_loss else LayoutEnabledFlag.DISABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
             hundo_guaranteed=LayoutEnabledFlag.DISABLED,
@@ -160,6 +160,11 @@ def add_distribute_command(sub_parsers):
         default=False,
         action="store_true",
         help="If set, will use the Major Item mode")
+    parser.add_argument(
+        "--vanilla-sky-temple-keys",
+        default=False,
+        action="store_true",
+        help="If set, Sky Temple Keys won't be randomized.")
     parser.set_defaults(func=distribute_command_logic)
 
 
