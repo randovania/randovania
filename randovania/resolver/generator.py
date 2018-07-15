@@ -36,25 +36,22 @@ def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
 
 
 def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
-    easy_tricks = {
+    tricks = {
         0,  # Scan Dash
-        2,  # Slope Jump
-    }
-    normal_tricks = easy_tricks | {
         1,  # Difficult Bomb Jump
+        2,  # Slope Jump
         3,  # R Jump
         4,  # BSJ
         5,  # Roll Jump
         6,  # Underwater Dash
-        15,  # Instant Morph
-    }
-    hard_tricks = normal_tricks | {
         7,  # Air Underwater
         8,  # Floaty
         9,  # Infinite Speed
         10,  # SA without SJ
         11,  # Wall Boost
-        12,  # Jump of Enemy
+        12,  # Jump off Enemy
+        14,  # Controller Reset
+        15,  # Instant Morph
     }
 
     # Skipping Controller Reset and Exclude from Room Randomizer
@@ -62,11 +59,11 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
     if logic == LayoutLogic.NO_GLITCHES:
         return 0, set()
     elif logic == LayoutLogic.EASY:
-        return 1, easy_tricks
+        return 2, tricks
     elif logic == LayoutLogic.NORMAL:
-        return 3, normal_tricks
+        return 3, tricks
     elif logic == LayoutLogic.HARD:
-        return 5, hard_tricks
+        return 5, tricks
     else:
         raise Exception("Unsupported logic")
 
