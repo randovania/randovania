@@ -22,6 +22,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.otherNodeConnectionBox.currentIndexChanged.connect(self.update_connections)
         self.verticalLayout.setAlignment(Qt.AlignTop)
 
+        self.nodeInfoBox.hide()
         data = binary_data.decode_default_prime2()
 
         resource_database = read_resource_database(data["resource_database"])

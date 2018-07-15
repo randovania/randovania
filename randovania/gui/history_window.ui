@@ -20,296 +20,10 @@
      <height>16777215</height>
     </size>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0">
-     <widget class="QGroupBox" name="history_box">
-      <property name="title">
-       <string>History</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="1" column="1" colspan="2">
-        <widget class="QScrollArea" name="layout_history_scroll">
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOn</enum>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QAbstractScrollArea::AdjustToContents</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <widget class="QWidget" name="layout_history_content">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>211</width>
-            <height>188</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <layout class="QVBoxLayout" name="layout_history_content_layout"/>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="import_layout_button">
-         <property name="text">
-          <string>Import</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="create_new_layout_button">
-         <property name="text">
-          <string>Create New</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
-     <widget class="QGroupBox" name="generate_box">
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>500</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Generate Randomized Layout</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_7">
-       <item row="1" column="0">
-        <widget class="QLabel" name="logic_selection_label">
-         <property name="text">
-          <string>Logic</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="keys_selection_label">
-         <property name="text">
-          <string>Sky Temple Keys</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="seed_number_edit">
-         <property name="placeholderText">
-          <string>Random Seed</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="logic_selection_combo">
-         <item>
-          <property name="text">
-           <string>No Glitches</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Easy</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Normal</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Hard</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="mode_selection_label">
-         <property name="text">
-          <string>Mode</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="seed_number_label">
-         <property name="text">
-          <string>Seed Number</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="difficulty_selection_label">
-         <property name="text">
-          <string>Difficulty</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="mode_selection_combo">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard: any upgrade, expansion or key can appear on any item location&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Major Items: items are shuffled in two separate pools: upgrades and keys in one, expansions in the other&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>Standard</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Major Items</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="8" column="0" colspan="2">
-        <widget class="QPushButton" name="create_layout_button">
-         <property name="text">
-          <string>Randomize</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QComboBox" name="guaranteed_100_selection_combo">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Guaranteed</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Not Guaranteed</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="difficulty_selection_combo">
-         <item>
-          <property name="text">
-           <string>Normal</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="guaranteed_100_selection_label">
-         <property name="text">
-          <string>100% Completion</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="elevators_selection_label">
-         <property name="text">
-          <string>Elevators</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="keys_selection_combo">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Vanilla (Original Locations)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Randomized</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="elevators_selection_combo">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Vanilla (Original Locations)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Randomized</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="item_loss_selection_combo">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Control if Samus loses her items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>Enabled</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Disabled</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="9" column="0" colspan="2">
-        <widget class="QProgressBar" name="randomize_in_progress_bar">
-         <property name="maximumSize">
-          <size>
-           <width>250</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="maximum">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-         <property name="textVisible">
-          <bool>false</bool>
-         </property>
-         <property name="invertedAppearance">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="item_loss_selection_label">
-         <property name="text">
-          <string>Item Loss</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="2">
-        <widget class="QLabel" name="randomize_in_progress_status">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="0" column="1" rowspan="3">
      <widget class="QTabWidget" name="layout_info_tab">
       <property name="currentIndex">
@@ -515,8 +229,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>535</width>
-             <height>493</height>
+             <width>371</width>
+             <height>174</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -566,7 +280,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>535</width>
+             <width>371</width>
              <height>522</height>
             </rect>
            </property>
@@ -591,6 +305,313 @@
         </item>
        </layout>
       </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QGroupBox" name="history_box">
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>History</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="1" colspan="2">
+        <widget class="QScrollArea" name="layout_history_scroll">
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <widget class="QWidget" name="layout_history_content">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>211</width>
+            <height>188</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <layout class="QVBoxLayout" name="layout_history_content_layout"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QPushButton" name="import_layout_button">
+         <property name="text">
+          <string>Import from file</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+     <widget class="QGroupBox" name="generate_box">
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>500</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Generate Randomized Layout</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="1" column="0">
+        <widget class="QLabel" name="logic_selection_label">
+         <property name="text">
+          <string>Logic</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="mode_selection_label">
+         <property name="text">
+          <string>Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="seed_number_label">
+         <property name="text">
+          <string>Seed Number</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="seed_number_edit">
+         <property name="placeholderText">
+          <string>Random Seed</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="logic_selection_combo">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;There are logic rules in place which prevent you from being locked out of progression and guaranteeing that you’ll be able to finish the game every time regardless of the distribution of items. The different game modes use different logic and assume different levels of game knowledge and ability.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;No Glitches&lt;br/&gt;&lt;/span&gt;This mode requires no advanced knowledge about the game, nor does it require any glitches or sequence breaks to be used, making it ideal for casual players.&lt;/p&gt;&lt;p&gt;This logic is designed to prevent players from getting stuck in as many locations as possible, but it is still possible to softlock when you enter a room that you're unable to leave (ex: vanilla beam rooms without the necessary beam to escape, Dark World without Light Beam/Anihhilator Beam).&lt;br/&gt;&lt;br/&gt;Warning: It may be &lt;span style=&quot; font-style:italic;&quot;&gt;necessary&lt;/span&gt; to enter Dark World without a way to escape if that item is located in the Dark World.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Easy&lt;br/&gt;&lt;/span&gt;This mode assumes you can do easy aplications of the follwing tricks:&lt;br/&gt;* Scan Dash&lt;br/&gt;* Slope (Ghetto) Jump&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Normal&lt;br/&gt;&lt;/span&gt;This mode expands on the Easy mode, including the following tricks into the mix:&lt;br/&gt;* R Jump&lt;br/&gt;* BSJ&lt;br/&gt;* Roll Jump&lt;br/&gt;* Underwater Dash&lt;br/&gt;* Instant Morph&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Hard&lt;br/&gt;&lt;/span&gt;This mode considers every single trick and path know to Randovania as valid.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>No Glitches</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Easy</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Normal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Hard</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="keys_selection_label">
+         <property name="text">
+          <string>Sky Temple Keys</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="difficulty_selection_label">
+         <property name="text">
+          <string>Difficulty</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QComboBox" name="difficulty_selection_combo">
+         <item>
+          <property name="text">
+           <string>Normal</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="guaranteed_100_selection_combo">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Currently unsupported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Guaranteed</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Not Guaranteed</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="mode_selection_combo">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;* Standard: There is a single item pool with all expansions, energy tanks, temple keys, sky temple keys, translators and upgrades.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;* Major Items: The are two items pools where items are shuffled between:&lt;br/&gt;Expansions Pool: all Missile, Power Bomb and Beam Ammo expansions&lt;br/&gt;Major Pool: all Keys, Translators, Energy Tanks and Suit Upgrades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Standard</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Major Items</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="keys_selection_combo">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where the Sky Temple Keys will be located.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;* Vanilla: all Sky Temple Keys are inside the Ing Caches they were in originally.&lt;/p&gt;&lt;p&gt;WARNING: this option may take too long to finish generating, or not finish at all.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;* Randomized: Sky Temple Keys are shuffled along with everything else.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Vanilla (Original Locations)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Randomized</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="elevators_selection_label">
+         <property name="text">
+          <string>Elevators</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="elevators_selection_combo">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Vanilla (Original Locations)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Randomized</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="item_loss_selection_combo">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Control if Samus loses her items when entering Hive Chamber B for the first time.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Enabled</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Disabled</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="guaranteed_100_selection_label">
+         <property name="text">
+          <string>100% Completion</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" colspan="2">
+        <widget class="QProgressBar" name="randomize_in_progress_bar">
+         <property name="maximumSize">
+          <size>
+           <width>250</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>0</number>
+         </property>
+         <property name="textVisible">
+          <bool>false</bool>
+         </property>
+         <property name="invertedAppearance">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="2">
+        <widget class="QLabel" name="randomize_in_progress_status">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="item_loss_selection_label">
+         <property name="text">
+          <string>Item Loss</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QPushButton" name="abort_create_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QPushButton" name="create_layout_button">
+         <property name="text">
+          <string>Randomize</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
