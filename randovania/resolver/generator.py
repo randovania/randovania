@@ -1,6 +1,5 @@
 import collections
 import copy
-import pprint
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict, Set
 
@@ -328,7 +327,9 @@ def distribute_one_item(
         logic.node_sightings[pickup_node] += 1
 
     # Our weighting currently favors more nodes seem for the first time
-    node_weights = {pickup_node: 1 / logic.node_sightings[pickup_node] for pickup_node in potential_pickup_nodes}
+    # FIXME: Using ** 2 made glitchless seed 50000 break on validation again...
+    node_weights = {pickup_node: 1000 / (logic.node_sightings[pickup_node] ** 1)
+                    for pickup_node in potential_pickup_nodes}
 
     # Calculating Reach for all nodes is kinda too CPU intensive, unfortunately.
     # TODO: better algorithm that calculates multiple reaches at the same time?
