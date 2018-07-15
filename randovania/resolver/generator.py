@@ -8,7 +8,7 @@ from randovania.resolver import debug, resolver, data_reader
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic, LayoutMode
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node, PickupNode
@@ -98,12 +98,10 @@ def _state_to_solver_path(final_state: State,
 
 
 def calculate_available_pickups(game: GameDescription) -> Iterator[PickupEntry]:
-    unique_stuff = {
-        frozenset(pickup_to_current_resources(pickup, game.resource_database).items()): pickup
-        for pickup in game.resource_database.pickups
-    }
-    for pickup in unique_stuff.values():
-        yield pickup
+    categories = {"sky_temple_key", "translator", "major", "temple_key"}
+    for pickup in game.resource_database.pickups:
+        if pickup.item_category in categories:
+            yield pickup
 
 
 def generate_list(data: Dict,
@@ -118,6 +116,7 @@ def generate_list(data: Dict,
     final_state_by_resolve = resolver.resolve(
         difficulty_level=difficulty_level,
         tricks_enabled=tricks_enabled,
+        configuration=configuration,
         game=game,
         patches=new_patches
     )
@@ -153,7 +152,7 @@ def _create_patches(configuration: LayoutConfiguration,
         if pickup not in available_pickups
     ]
 
-    logic, state = logic_bootstrap(difficulty_level, game, patches, tricks_enabled)
+    logic, state = logic_bootstrap(difficulty_level, configuration, game, patches, tricks_enabled)
     logic.game.simplify_connections(state.resources)
 
     new_patches, non_added_items, final_state_by_distribution = distribute_one_item(

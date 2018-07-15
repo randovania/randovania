@@ -4,12 +4,14 @@ from typing import Tuple, Set
 from randovania.resolver import debug
 from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.logic import Logic, build_static_resources
 from randovania.resolver.resources import merge_resources
 from randovania.resolver.state import State
 
 
 def logic_bootstrap(difficulty_level: int,
+                    configuration: LayoutConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
                     tricks_enabled: Set[int]) -> Tuple[Logic, State]:
@@ -26,7 +28,7 @@ def logic_bootstrap(difficulty_level: int,
     debug._gd = game
 
     game = copy.deepcopy(game)
-    logic = Logic(game, patches)
+    logic = Logic(game, configuration, patches)
     starting_state = State.calculate_starting_state(logic)
 
     game.simplify_connections(merge_resources(

@@ -7,9 +7,9 @@ from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
 from randovania.interface_common.options import Options
 from randovania.resolver import data_reader, resolver, debug, generator
-from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutDifficulty, LayoutEnabledFlag, \
+    LayoutRandomizedFlag, LayoutMode, LayoutLogic
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.node import EventNode, PickupNode
 from randovania.resolver.resources import PickupIndex
@@ -44,16 +44,28 @@ def run_resolver(data: Dict,
                  randomizer_log: RandomizerLog,
                  resolver_config: ResolverConfiguration,
                  verbose=True) -> Optional[State]:
-
     game_description = data_reader.decode_data(data, randomizer_log.elevators)
     game_patches = GamePatches(resolver_config.item_loss, randomizer_log.pickup_mapping)
 
-    final_state = resolver.resolve(resolver_config.difficulty, resolver_config.enabled_tricks, game_description,
-                                   game_patches)
+    configuration = LayoutConfiguration(seed_number=0,
+                                        logic=LayoutLogic.NO_GLITCHES,
+                                        mode=LayoutMode.STANDARD,
+                                        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                        item_loss=LayoutEnabledFlag.ENABLED,
+                                        elevators=LayoutRandomizedFlag.VANILLA,
+                                        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+                                        difficulty=LayoutDifficulty.NORMAL)
+
+    final_state = resolver.resolve(
+        resolver_config.difficulty,
+        resolver_config.enabled_tricks,
+        configuration,
+        game_description,
+        game_patches)
     if final_state:
         if resolver_config.minimum_difficulty > 0:
             if resolver.resolve(resolver_config.minimum_difficulty - 1, resolver_config.enabled_tricks,
-                                game_description, game_patches):
+                                configuration, game_description, game_patches):
                 if verbose:
                     print("Game is beatable using a lower difficulty!")
                 return None
@@ -194,6 +206,7 @@ def _generate_layout_worker(output_pipe,
     try:
         def status_update(message: str):
             output_pipe.send(message)
+
         layout_description = generator.generate_list(data,
                                                      configuration,
                                                      status_update=status_update)
@@ -207,7 +220,6 @@ def generate_layout(data: Dict,
                     configuration: LayoutConfiguration,
                     status_update: Callable[[str], None]
                     ) -> Union[Exception, LayoutDescription]:
-
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
 
     process = multiprocessing.Process(

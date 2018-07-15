@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
@@ -24,6 +24,7 @@ def test_run_resolver_failure(mock_decode_data: MagicMock,
     mock_resolve.assert_called_once_with(
         resolver_config.difficulty,
         resolver_config.enabled_tricks,
+        ANY,
         mock_decode_data.return_value,
         GamePatches(resolver_config.item_loss, randomizer_log.pickup_mapping)
     )
@@ -47,6 +48,7 @@ def test_run_resolver_success_without_minimum_difficulty(
     mock_resolve.assert_called_once_with(
         resolver_config.difficulty,
         resolver_config.enabled_tricks,
+        ANY,
         mock_decode_data.return_value,
         GamePatches(resolver_config.item_loss, randomizer_log.pickup_mapping)
     )
@@ -73,9 +75,9 @@ def test_run_resolver_success_with_minimum_difficulty(
     assert final_state is success_response
     mock_resolve.assert_has_calls([
         call(resolver_config.difficulty, resolver_config.enabled_tricks,
-             mock_decode_data.return_value, patches),
+             ANY, mock_decode_data.return_value, patches),
         call(resolver_config.minimum_difficulty - 1, resolver_config.enabled_tricks,
-             mock_decode_data.return_value, patches),
+             ANY, mock_decode_data.return_value, patches),
     ])
     mock_decode_data.assert_called_once_with(data, randomizer_log.elevators)
 
@@ -98,9 +100,9 @@ def test_run_resolver_failure_due_to_minimum_difficulty(
     assert final_state is None
     mock_resolve.assert_has_calls([
         call(resolver_config.difficulty, resolver_config.enabled_tricks,
-             mock_decode_data.return_value, patches),
+             ANY, mock_decode_data.return_value, patches),
         call(resolver_config.minimum_difficulty - 1, resolver_config.enabled_tricks,
-             mock_decode_data.return_value, patches),
+             ANY, mock_decode_data.return_value, patches),
     ])
     mock_decode_data.assert_called_once_with(data, randomizer_log.elevators)
 
