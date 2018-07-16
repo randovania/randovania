@@ -137,6 +137,10 @@ class ResourceDatabase(NamedTuple):
     def item_percentage(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
 
+    @property
+    def energy_tank(self):
+        return self.get_by_type_and_index(ResourceType.ITEM, 42)
+
 
 def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResources:
     return {

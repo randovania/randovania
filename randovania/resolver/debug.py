@@ -47,6 +47,11 @@ def _indent(offset=0):
     return " " * (_current_indent - offset)
 
 
+def log_resolve_start():
+    global _current_indent
+    _current_indent = 0
+
+
 def log_new_advance(state: "State", reach: "Reach", logic: Logic):
     global _current_indent
     increment_attempts()

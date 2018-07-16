@@ -5,6 +5,19 @@ from randovania.resolver.resources import ResourceInfo, CurrentResources, Damage
     ResourceDatabase
 
 
+def _calculate_reduction(resource: DamageResourceInfo,
+                         current_resources: CurrentResources,
+                         database: ResourceDatabase) -> float:
+
+    multiplier = 1
+
+    for reduction in resource.reductions:
+        if current_resources.get(database.get_by_type_and_index(ResourceType.ITEM, reduction.inventory_index), 0) > 0:
+            multiplier *= reduction.damage_multiplier
+
+    return multiplier
+
+
 class IndividualRequirement(NamedTuple):
     resource: ResourceInfo
     amount: int
@@ -24,10 +37,16 @@ class IndividualRequirement(NamedTuple):
 
     def satisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
+
         if isinstance(self.resource, DamageResourceInfo):
             assert not self.negate, "Damage requirements shouldn't have the negate flag"
             # TODO: actually implement the damage resources
-            return True
+
+            current_energy = current_resources.get(database.energy_tank, 0) * 100
+            damage = _calculate_reduction(self.resource, current_resources, database) * self.amount
+
+            return current_energy >= damage
+
         has_amount = current_resources.get(self.resource, 0) >= self.amount
         if self.negate:
             return not has_amount

@@ -7,7 +7,7 @@ from randovania.resolver.dock import DockWeaknessDatabase
 from randovania.resolver.node import DockNode, TeleporterNode, Node
 from randovania.resolver.requirements import RequirementSet, SatisfiableRequirements
 from randovania.resolver.resources import ResourceInfo, \
-    ResourceGain, CurrentResources, ResourceDatabase
+    ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, ResourceType
 
 
 class Area(NamedTuple):
@@ -201,6 +201,13 @@ def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
                         yield node, "Invalid teleporter connection: {}".format(e)
 
 
+def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
+    yield database.energy_tank
+    yield database.get_by_type_and_index(
+        ResourceType.ITEM,
+        resource.reductions[0].inventory_index)
+
+
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
                                     resources: CurrentResources,
                                     database: ResourceDatabase) -> FrozenSet[ResourceInfo]:
@@ -216,7 +223,10 @@ def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequire
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
                     if not individual.negate and not individual.satisfied(resources, database):
-                        yield individual.resource
+                        if isinstance(individual.resource, DamageResourceInfo):
+                            yield from _resources_for_damage(individual.resource, database)
+                        else:
+                            yield individual.resource
 
     return frozenset(helper())
 
