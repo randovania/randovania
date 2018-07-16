@@ -219,7 +219,7 @@ def find_all_pickups_via_most_events(logic: Logic,
         _, state = queue.popitem(last=False)
         checked.add(state.node)
 
-        if victory_condition.satisfied(state.resources):
+        if victory_condition.satisfied(state.resources, state.resource_database):
             raise VictoryReached(state)
 
         reach = Reach.calculate_reach(logic, state)
@@ -247,9 +247,11 @@ def _get_items_that_satisfies(available_item_pickups: Iterator[PickupEntry],
                               pickup_reach_without_item: Reach,
                               database: ResourceDatabase,
                               ) -> Iterator[PickupEntry]:
+
     interesting_resources = calculate_interesting_resources(
         pickup_reach_without_item.satisfiable_requirements,
-        pickup_state_without_item.resources)
+        pickup_state_without_item.resources,
+        pickup_state_without_item.resource_database)
 
     for pickup in available_item_pickups:
         if _does_pickup_satisfies(pickup, interesting_resources, database):

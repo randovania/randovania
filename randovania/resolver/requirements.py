@@ -22,9 +22,10 @@ class IndividualRequirement(NamedTuple):
             amount,
             negate)
 
-    def satisfied(self, current_resources: CurrentResources) -> bool:
+    def satisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
         if isinstance(self.resource, DamageResourceInfo):
+            assert not self.negate, "Damage requirements shouldn't have the negate flag"
             # TODO: actually implement the damage resources
             return True
         has_amount = current_resources.get(self.resource, 0) >= self.amount
@@ -47,18 +48,19 @@ class RequirementList(frozenset):
     def __deepcopy__(self, memodict):
         return self
 
-    def amount_unsatisfied(self, current_resources: CurrentResources) -> bool:
-        return sum(not requirement.satisfied(current_resources)
-                   for requirement in self)
+    def amount_unsatisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
+        return sum(not requirement.satisfied(current_resources, database)
+                   for requirement in self.values())
 
-    def satisfied(self, current_resources: CurrentResources) -> bool:
+    def satisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
         """
         A list is considered satisfied if all IndividualRequirement that belongs to it are satisfied.
         In particular, an empty RequirementList is considered satisfied.
+        :param database:
         :param current_resources:
         :return:
         """
-        return all(requirement.satisfied(current_resources)
+        return all(requirement.satisfied(current_resources, database)
                    for requirement in self.values())
 
     def simplify(self,
@@ -79,7 +81,7 @@ class RequirementList(frozenset):
             if item.resource in static_resources:
                 # If the resource is a static resource, we either remove it from the list or
                 # consider this list impossible
-                if not item.satisfied(static_resources):
+                if not item.satisfied(static_resources, database):
                     return None
 
             elif item.resource != database.trivial_resource():
@@ -155,15 +157,16 @@ class RequirementSet:
         # No alternatives makes satisfied always return False
         return cls([])
 
-    def satisfied(self, current_resources: CurrentResources) -> bool:
+    def satisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
         """
         Checks if at least one alternative is satisfied with the given resources.
         In particular, an empty RequirementSet is *never* considered satisfied.
+        :param database:
         :param current_resources:
         :return:
         """
         return any(
-            requirement_list.satisfied(current_resources)
+            requirement_list.satisfied(current_resources, database)
             for requirement_list in self.alternatives)
 
     def simplify(self, static_resources: CurrentResources,
