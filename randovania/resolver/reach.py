@@ -63,10 +63,12 @@ class Reach:
                     continue
 
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = requirements.satisfied(initial_state.resources)
+                satisfied = requirements.satisfied(initial_state.resources,
+                                                   initial_state.resource_database)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
-                    satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources)
+                    satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources,
+                                                                                  initial_state.resource_database)
 
                 if satisfied:
                     nodes_to_check.append(target_node)
@@ -94,7 +96,7 @@ class Reach:
                          state: State) -> Iterator[ResourceNode]:
 
         for node in self.uncollected_resource_nodes(state):
-            if self._logic.get_additional_requirements(node).satisfied(state.resources):
+            if self._logic.get_additional_requirements(node).satisfied(state.resources, state.resource_database):
                 yield node
             else:
                 debug.log_skip_action_missing_requirement(node, self._logic.game,
@@ -104,7 +106,9 @@ class Reach:
 
         if self._satisfiable_requirements:
             # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
-            interesting_resources = calculate_interesting_resources(self._satisfiable_requirements, state.resources)
+            interesting_resources = calculate_interesting_resources(self._satisfiable_requirements,
+                                                                    state.resources,
+                                                                    state.resource_database)
 
             # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
             for action in self.possible_actions(state):

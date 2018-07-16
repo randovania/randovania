@@ -39,7 +39,7 @@ def _simplify_requirement_set_for_additional_requirements(requirements: Requirem
 
 def advance_depth(state: State,
                   logic: Logic) -> Optional[State]:
-    if logic.game.victory_condition.satisfied(state.resources):
+    if logic.game.victory_condition.satisfied(state.resources, state.resource_database):
         return state
 
     reach = Reach.calculate_reach(logic, state)
