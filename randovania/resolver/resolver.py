@@ -70,6 +70,7 @@ def resolve(difficulty_level: int,
             patches: GamePatches) -> Optional[State]:
 
     logic, starting_state = logic_bootstrap(difficulty_level, configuration, game, patches, tricks_enabled)
+    debug.log_resolve_start()
     return advance_depth(starting_state, logic)
 
 
