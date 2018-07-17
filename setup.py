@@ -15,9 +15,6 @@ class custom_build_py(build_py):
 with open("README.md") as readme_file:
     long_description = readme_file.read()
 
-with open('pyproject.toml', 'rb') as fin:
-    pyproject = pytoml.load(fin)
-
 setup(
     name='randovania',
     version=VERSION,
@@ -52,7 +49,6 @@ setup(
         'appdirs',
         'nod>=1.0.0', 'requests', 'dataset'
     ],
-    setup_requires=pyproject["build-system"]["requires"],
     entry_points={
         'console_scripts': [
             "randovania = randovania.__main__:main"
