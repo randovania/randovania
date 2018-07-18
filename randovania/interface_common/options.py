@@ -140,6 +140,14 @@ class Options:
     def cpu_usage(self, value: CpuUsage):
         self.raw_data["cpu_usage"] = value
 
+    @property
+    def advanced_options(self) -> bool:
+        return self.raw_data["show_advanced_options"]
+
+    @advanced_options.setter
+    def advanced_options(self, value: bool):
+        self.raw_data["show_advanced_options"] = value
+
     def __getitem__(self, item):
         return self.raw_data[item]
 
@@ -168,6 +176,7 @@ def _default_options() -> Dict[str, Any]:
     options["game_files_path"] = None
     options["cpu_usage"] = CpuUsage.FULL
     options["seed"] = 0
+    options["show_advanced_options"] = False
     return options
 
 

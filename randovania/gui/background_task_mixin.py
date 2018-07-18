@@ -26,7 +26,7 @@ class BackgroundTaskMixin:
                 target(status_update=status_update, **_kwargs)
             except AbortBackgroundTask:
                 pass
-            except RuntimeError as e:
+            except Exception as e:
                 status_update("Error: {}".format(e), -1)
             finally:
                 self.background_tasks_button_lock_signal.emit(True)

@@ -227,6 +227,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
     def update_layout_description(self, layout: LayoutDescription):
         self.current_layout_description = layout
         self.layout_info_tab.show()
+        self.main_window.get_tab(ISOManagementWindow).load_layout(self.current_layout_description)
 
         configuration = layout.configuration
         self.layout_seed_value_label.setText(str(configuration.seed_number))
@@ -284,8 +285,6 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
 
     # Exporting
     def apply_layout(self):
-        iso_management = self.main_window.get_tab(ISOManagementWindow)
-        iso_management.load_layout(self.current_layout_description)
         self.main_window.focus_tab(iso_management)
 
     def export_layout(self):
