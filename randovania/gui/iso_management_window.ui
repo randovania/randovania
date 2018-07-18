@@ -32,7 +32,7 @@
      </widget>
     </item>
     <item row="4" column="0" colspan="2">
-     <widget class="QGroupBox" name="isoBox">
+     <widget class="QGroupBox" name="iso_box">
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -67,7 +67,7 @@
      </widget>
     </item>
     <item row="2" column="0" colspan="2">
-     <widget class="QGroupBox" name="filesBox">
+     <widget class="QGroupBox" name="files_box">
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -194,41 +194,31 @@
        </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="apply_layout_button">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>Randomize game files with layout</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLineEdit" name="current_seed_edit">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
-         </property>
-         <property name="placeholderText">
-          <string>Seed number. For item loss / elevator randomization, check the Configuration tab</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="apply_seed_button">
-         <property name="text">
-          <string>Randomize game files with seed</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
         <widget class="QCheckBox" name="remove_hud_popup">
          <property name="toolTip">
           <string>The &quot;HUD Popup&quot; is the popup that appears after you collect an item</string>
          </property>
          <property name="text">
           <string>Remove HUD popup</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="show_advanced_options_check">
+         <property name="text">
+          <string>Show advanced options</string>
          </property>
         </widget>
        </item>
