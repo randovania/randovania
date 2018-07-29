@@ -93,7 +93,7 @@ def unpack_iso(iso: str, game_files_path: str, progress_update: Callable[[str, i
 def pack_iso(iso: str, game_files_path: str, progress_update: Callable[[str, int], None]):
     validate_game_files_path(os.path.join(game_files_path, "files"))
 
-    if nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) == -1:
+    if nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:
         raise RuntimeError("Image built with given directory would pass the maximum size.")
 
     _shared_process_code(
