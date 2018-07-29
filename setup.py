@@ -47,7 +47,8 @@ setup(
         'py',
         'PyQt5>=5.8',
         'appdirs',
-        'nod>=1.0.0', 'requests', 'dataset'
+        'nod>=1.0.3',
+        'requests', 'dataset'
     ],
     entry_points={
         'console_scripts': [
