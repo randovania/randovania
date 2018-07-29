@@ -285,7 +285,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
 
     # Exporting
     def apply_layout(self):
-        self.main_window.focus_tab(iso_management)
+        self.main_window.focus_tab(self.main_window.get_tab(ISOManagementWindow))
 
     def export_layout(self):
         open_result = QFileDialog.getSaveFileName(
