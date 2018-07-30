@@ -90,6 +90,7 @@ def apply_layout(
     if layout.configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
 
+    layout.save_to_file(os.path.join(game_root, "files", "randovania.json"))
     _run_with_args(args, status_update)
 
 
