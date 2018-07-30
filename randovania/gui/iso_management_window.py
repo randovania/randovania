@@ -172,6 +172,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
             pack_iso(
                 iso=output_iso,
                 game_files_path=game_files_path,
+                disable_attract_if_necessary=True,
                 progress_update=iso_update,
             )
 
@@ -225,6 +226,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
             pack_iso(
                 iso=iso,
                 game_files_path=game_files_path,
+                disable_attract_if_necessary=True,
                 progress_update=status_update,
             )
 
