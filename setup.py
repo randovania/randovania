@@ -47,7 +47,17 @@ setup(
         'PyQt5>=5.8',
         'appdirs',
         'nod>=1.1',
-        'requests', 'dataset'
+        'requests',
+        'dataset',
+    ],
+    setup_requires=[
+        'markdown',
+        'pytest',
+        'PyInstaller',
+        'pyqt-distutils',
+        'setuptools>=38.6.0',
+        'twine>=1.11.0',
+        'wheel>=0.31.0',
     ],
     entry_points={
         'console_scripts': [
