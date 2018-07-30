@@ -9,8 +9,12 @@ from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRa
 from randovania.resolver.layout_description import LayoutDescription
 
 
+def _get_randomizer_folder():
+    return os.path.join(get_data_path(), "ClarisPrimeRandomizer")
+
+
 def _get_randomizer_path():
-    return os.path.join(get_data_path(), "ClarisPrimeRandomizer", "Randomizer.exe")
+    return os.path.join(_get_randomizer_folder(), "Randomizer.exe")
 
 
 def has_randomizer_binary():
@@ -87,3 +91,20 @@ def apply_layout(
         args.append("-v")
 
     _run_with_args(args, status_update)
+
+
+def disable_echoes_attract_videos(game_root: str,
+                                  status_update: Callable[[str], None]):
+    game_files = os.path.join(game_root, "files")
+    args = [
+        os.path.join(_get_randomizer_folder(), "DisableEchoesAttractVideos.exe"),
+        game_files
+    ]
+    with subprocess.Popen(args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
+        try:
+            for line in process.stdout:
+                x = line.strip()
+                status_update(x)
+        except Exception:
+            process.kill()
+            raise

@@ -4,6 +4,7 @@ from typing import Callable
 
 import nod
 
+from randovania.games.prime import claris_randomizer
 from randovania.interface_common.options import validate_game_files_path
 
 
@@ -90,8 +91,41 @@ def unpack_iso(iso: str, game_files_path: str, progress_update: Callable[[str, i
     )
 
 
-def pack_iso(iso: str, game_files_path: str, progress_update: Callable[[str, int], None]):
+def _remove_attract_videos_helper(output_pipe, iso: str, game_files_path: str):
+    def progress_update(message: str):
+        output_pipe.send((False, message, -1))
+
+    claris_randomizer.disable_echoes_attract_videos(game_files_path, progress_update)
+
+    with open(os.path.join(game_files_path, "files", "attract_videos_disabled.txt"), "w"):
+        pass
+
+    output_pipe.send((True, "Finished disabling attract videos.", -1))
+
+
+def _remove_attract_videos(game_files_path: str, update: Callable[[str, int], None]) -> None:
+    if os.path.exists(os.path.join(game_files_path, "files", "attract_videos_disabled.txt")):
+        return
+
+    _shared_process_code(
+        target=_remove_attract_videos_helper,
+        iso="",
+        game_files_path=game_files_path,
+        on_finish_message="Finished disabling attract videos.",
+        progress_update=update
+    )
+
+
+def pack_iso(iso: str,
+             game_files_path: str,
+             disable_attract_if_necessary: bool,
+             progress_update: Callable[[str, int], None]
+             ):
+
     validate_game_files_path(os.path.join(game_files_path, "files"))
+
+    if disable_attract_if_necessary and nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:
+        _remove_attract_videos(game_files_path, progress_update)
 
     if nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:
         raise RuntimeError("Image built with given directory would pass the maximum size.")
