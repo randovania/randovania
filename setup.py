@@ -1,4 +1,3 @@
-import pytoml
 from pyqt_distutils.build_ui import build_ui
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
