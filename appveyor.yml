@@ -36,8 +36,10 @@ test_script:
   # the interpreter you're using - Appveyor does not do anything special
   # to put the Python version you want to use on PATH.
   - "%PYTHON%\\python.exe -m pip install -e ."
+  - "%PYTHON%\\python.exe setup.py bdist_wheel"
   - "%PYTHON%\\python.exe -m pytest"
   - "%PYTHON%\\python.exe create_windows_release.py"
+  - dist\randovania.exe --version
 
 # after_test:
   # This step builds your wheels.
@@ -52,8 +54,8 @@ test_script:
 
 artifacts:
   # bdist_wheel puts your built wheel in the dist directory
-  - path: dist\*.exe
-    name: executable
+  - path: dist\*.zip
+    name: release
 
 #on_success:
 #  You can use this step to upload your artifacts to a public website.
@@ -65,7 +67,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: OYbosmQKuS8Qh+fNvEwP3OPg/qOVeLKW03kWhwGmlu4jSEDS35klfiw8Rz6jDKKe
-  artifact: executable             # upload the packaged Release
+  artifact: release             # upload the packaged Release
   draft: true
   prerelease: false
   on:
