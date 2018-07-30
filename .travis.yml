@@ -43,6 +43,9 @@ before_install:
 
 install:
 - python -m pip install --upgrade pytest pyqt-distutils setuptools>=38.6.0 twine>=1.11.0 wheel>=0.31.0
+# Install a custom pip version that is able to install manylinux2010 wheels.
+# TODO: when upstream, remove this fork
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install git+https://github.com/wtolson/pip@manylinux2010; fi
 
 script:
 - python setup.py bdist_wheel
