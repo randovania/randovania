@@ -91,7 +91,7 @@ def unpack_iso(iso: str, game_files_path: str, progress_update: Callable[[str, i
     )
 
 
-def _remove_attract_videos_helper(output_pipe, iso: str, game_files_path: str):
+def _disable_attract_videos_helper(output_pipe, iso: str, game_files_path: str):
     def progress_update(message: str):
         output_pipe.send((False, message, -1))
 
@@ -100,15 +100,15 @@ def _remove_attract_videos_helper(output_pipe, iso: str, game_files_path: str):
     with open(os.path.join(game_files_path, "files", "attract_videos_disabled.txt"), "w"):
         pass
 
-    output_pipe.send((True, "Finished disabling attract videos.", -1))
+    output_pipe.send((True, None, -1))
 
 
-def _remove_attract_videos(game_files_path: str, update: Callable[[str, int], None]) -> None:
+def _disable_attract_videos(game_files_path: str, update: Callable[[str, int], None]) -> None:
     if os.path.exists(os.path.join(game_files_path, "files", "attract_videos_disabled.txt")):
         return
 
     _shared_process_code(
-        target=_remove_attract_videos_helper,
+        target=_disable_attract_videos_helper,
         iso="",
         game_files_path=game_files_path,
         on_finish_message="Finished disabling attract videos.",
@@ -125,7 +125,7 @@ def pack_iso(iso: str,
     validate_game_files_path(os.path.join(game_files_path, "files"))
 
     if disable_attract_if_necessary and nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:
-        _remove_attract_videos(game_files_path, progress_update)
+        _disable_attract_videos(game_files_path, progress_update)
 
     if nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:
         raise RuntimeError("Image built with given directory would pass the maximum size.")
