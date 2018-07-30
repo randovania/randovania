@@ -20,6 +20,7 @@ environment:
 
 install:
   - git submodule update --init --recursive
+  - set PATH=%PYTHON%\Scripts;%PATH%
   - "%PYTHON%\\python.exe -m pip install --upgrade pip"
   - "%PYTHON%\\python.exe -m pip install --upgrade markdown pytest pyqt-distutils setuptools>=38.6.0 twine>=1.11.0 wheel>=0.31.0 pywin32"
   - "%PYTHON%\\python.exe -m pip install https://github.com/enthought/pywin32-ctypes/archive/master.zip"
