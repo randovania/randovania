@@ -46,7 +46,7 @@ setup(
         'py',
         'PyQt5>=5.8',
         'appdirs',
-        'nod>=1.0.3',
+        'nod>=1.1',
         'requests', 'dataset'
     ],
     entry_points={
