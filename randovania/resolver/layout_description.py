@@ -138,6 +138,7 @@ class LayoutDescription(NamedTuple):
         :return:
         """
         return LayoutDescription(
+            seed_number=self.seed_number,
             configuration=self.configuration,
             version=self.version,
             pickup_mapping=self.pickup_mapping,
