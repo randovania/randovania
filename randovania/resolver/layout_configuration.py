@@ -29,7 +29,6 @@ class LayoutDifficulty(Enum):
 
 
 class LayoutConfiguration(NamedTuple):
-    seed_number: int
     logic: LayoutLogic
     mode: LayoutMode
     sky_temple_keys: LayoutRandomizedFlag
@@ -42,7 +41,6 @@ class LayoutConfiguration(NamedTuple):
     def as_json(self) -> dict:
         return {
             "game": "mp2-echoes",
-            "seed": self.seed_number,
             "logic": self.logic.value,
             "mode": self.mode.value,
             "sky_temple_keys": self.sky_temple_keys.value,
@@ -59,7 +57,6 @@ class LayoutConfiguration(NamedTuple):
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return LayoutConfiguration(
-            seed_number=json_dict["seed"],
             logic=LayoutLogic(json_dict["logic"]),
             mode=LayoutMode(json_dict["mode"]),
             sky_temple_keys=LayoutRandomizedFlag(json_dict["sky_temple_keys"]),

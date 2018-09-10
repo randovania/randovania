@@ -102,12 +102,13 @@ def calculate_available_pickups(game: GameDescription, categories: Set[str]) -> 
 
 
 def generate_list(data: Dict,
+                  seed_number: int,
                   configuration: LayoutConfiguration,
                   status_update: Callable[[str], None]
                   ) -> LayoutDescription:
     difficulty_level, tricks_enabled = expand_layout_logic(configuration.logic)
 
-    new_patches = _create_patches(configuration, data, difficulty_level, status_update, tricks_enabled)
+    new_patches = _create_patches(seed_number, configuration, data, difficulty_level, status_update, tricks_enabled)
 
     game = data_reader.decode_data(data, [])
     final_state_by_resolve = resolver.resolve(
@@ -123,6 +124,7 @@ def generate_list(data: Dict,
         raise Exception("We just created an item distribution we believe is impossible. What?")
 
     return LayoutDescription(
+        seed_number=seed_number,
         configuration=configuration,
         version=VERSION,
         pickup_mapping=tuple(new_patches.pickup_mapping),
@@ -130,12 +132,15 @@ def generate_list(data: Dict,
     )
 
 
-def _create_patches(configuration: LayoutConfiguration,
-                    data: Dict,
-                    difficulty_level: int,
-                    status_update: Callable[[str], None],
-                    tricks_enabled):
-    rng = Random(configuration.seed_number)
+def _create_patches(
+        seed_number: int,
+        configuration: LayoutConfiguration,
+        data: Dict,
+        difficulty_level: int,
+        status_update: Callable[[str], None],
+        tricks_enabled):
+
+    rng = Random(seed_number)
     game = data_reader.decode_data(data, [])
     patches = GamePatches(
         configuration.item_loss == LayoutEnabledFlag.ENABLED,
@@ -247,7 +252,6 @@ def _get_items_that_satisfies(available_item_pickups: Iterator[PickupEntry],
                               pickup_reach_without_item: Reach,
                               database: ResourceDatabase,
                               ) -> Iterator[PickupEntry]:
-
     interesting_resources = calculate_interesting_resources(
         pickup_reach_without_item.satisfiable_requirements,
         pickup_state_without_item.resources,

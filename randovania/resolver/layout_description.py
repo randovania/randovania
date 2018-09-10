@@ -1,5 +1,6 @@
 import collections
 import json
+from distutils.version import StrictVersion
 from typing import NamedTuple, Tuple, Dict, Optional, List
 
 from randovania.games.prime import binary_data
@@ -79,16 +80,26 @@ def _item_locations_to_pickup_mapping(locations: Dict[str, Dict[str, str]]) -> T
 
 
 class LayoutDescription(NamedTuple):
-    configuration: LayoutConfiguration
     version: str
+    configuration: LayoutConfiguration
+    seed_number: int
     pickup_mapping: Tuple[Optional[int], ...]
     solver_path: Tuple[SolverPath, ...]
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
+        version = json_dict["info"]["version"]
+        if StrictVersion(version) < StrictVersion("0.12.0"):
+            seed = json_dict["info"]["configuration"]["seed"]
+        else:
+            seed = json_dict["info"]["seed"]
+
+        # TODO: add try/catch to throw convert potential errors in "seed from future version broke"
+
         return LayoutDescription(
+            version=version,
             configuration=LayoutConfiguration.from_json_dict(json_dict["info"]["configuration"]),
-            version=json_dict["info"]["version"],
+            seed_number=seed,
             pickup_mapping=_item_locations_to_pickup_mapping(json_dict["locations"]),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
@@ -103,6 +114,7 @@ class LayoutDescription(NamedTuple):
         return {
             "info": {
                 "version": self.version,
+                "seed": self.seed_number,
                 "configuration": self.configuration.as_json,
             },
             "locations": _pickup_mapping_to_item_locations(self.pickup_mapping),

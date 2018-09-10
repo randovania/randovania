@@ -10,6 +10,8 @@ from appdirs import AppDirs
 
 from randovania.games.prime import binary_data
 from randovania.resolver.data_reader import read_resource_database
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
+    LayoutDifficulty, LayoutLogic, LayoutMode
 from randovania.resolver.resources import SimpleResourceInfo
 
 dirs = AppDirs("Randovania", False)
@@ -148,6 +150,62 @@ class Options:
     def advanced_options(self, value: bool):
         self.raw_data["show_advanced_options"] = value
 
+    @property
+    def display_generate_help(self) -> bool:
+        return self.raw_data["display_generate_help"]
+
+    @display_generate_help.setter
+    def display_generate_help(self, value: bool):
+        self.raw_data["display_generate_help"] = value
+
+    @property
+    def layout_configuration_logic(self) -> LayoutLogic:
+        # TODO: detect invalid values
+        return LayoutLogic(self.raw_data["layout_logic"])
+
+    @layout_configuration_logic.setter
+    def layout_configuration_logic(self, value: LayoutLogic):
+        self.raw_data["layout_logic"] = LayoutLogic(value.value).value
+
+    @property
+    def layout_configuration_mode(self) -> LayoutMode:
+        # TODO: detect invalid values
+        return LayoutMode(self.raw_data["layout_mode"])
+
+    @layout_configuration_mode.setter
+    def layout_configuration_mode(self, value: LayoutMode):
+        self.raw_data["layout_mode"] = LayoutMode(value.value).value
+
+    @property
+    def layout_configuration_sky_temple_keys(self) -> LayoutRandomizedFlag:
+        # TODO: detect invalid values
+        return LayoutRandomizedFlag(self.raw_data["layout_sky_temple_keys"])
+
+    @layout_configuration_sky_temple_keys.setter
+    def layout_configuration_sky_temple_keys(self, value: LayoutRandomizedFlag):
+        self.raw_data["layout_sky_temple_keys"] = LayoutRandomizedFlag(value.value).value
+
+    @property
+    def layout_configuration_item_loss(self) -> LayoutEnabledFlag:
+        # TODO: detect invalid values
+        return LayoutEnabledFlag(self.raw_data["layout_item_loss"])
+
+    @layout_configuration_item_loss.setter
+    def layout_configuration_item_loss(self, value: LayoutEnabledFlag):
+        self.raw_data["layout_item_loss"] = LayoutEnabledFlag(value.value).value
+
+    @property
+    def layout_configuration(self) -> LayoutConfiguration:
+        return LayoutConfiguration(
+            logic=self.layout_configuration_logic,
+            mode=self.layout_configuration_mode,
+            sky_temple_keys=self.layout_configuration_sky_temple_keys,
+            item_loss=self.layout_configuration_item_loss,
+            elevators=LayoutRandomizedFlag.VANILLA,
+            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+            difficulty=LayoutDifficulty.NORMAL,
+        )
+
     def __getitem__(self, item):
         return self.raw_data[item]
 
@@ -177,6 +235,12 @@ def _default_options() -> Dict[str, Any]:
     options["cpu_usage"] = CpuUsage.FULL
     options["seed"] = 0
     options["show_advanced_options"] = False
+    options["display_generate_help"] = True
+
+    options["layout_logic"] = LayoutLogic.NO_GLITCHES.value
+    options["layout_mode"] = LayoutMode.STANDARD.value
+    options["layout_sky_temple_keys"] = LayoutRandomizedFlag.RANDOMIZED.value
+    options["layout_item_loss"] = LayoutEnabledFlag.ENABLED.value
     return options
 
 
