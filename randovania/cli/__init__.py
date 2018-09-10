@@ -2,7 +2,7 @@ import argparse
 import os
 
 import randovania
-from randovania.cli import echoes, interactive
+from randovania.cli import echoes
 from randovania.gui import qt
 
 games = [echoes]
@@ -11,7 +11,6 @@ games = [echoes]
 def create_subparsers(root_parser):
     for game in games:
         game.create_subparsers(root_parser)
-    interactive.create_subparsers(root_parser)
     qt.create_subparsers(root_parser)
 
 

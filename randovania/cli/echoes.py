@@ -9,7 +9,7 @@ from randovania.cli import prime_database
 from randovania.games.prime import log_parser, iso_packager
 from randovania.interface_common.options import MAX_DIFFICULTY
 from randovania.resolver import debug
-from randovania.resolver.echoes import run_resolver, search_seed, RandomizerConfiguration, \
+from randovania.resolver.echoes import run_resolver, RandomizerConfiguration, \
     ResolverConfiguration, print_path_for_state
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
@@ -207,55 +207,6 @@ def add_validate_command(sub_parsers):
     parser.set_defaults(func=validate_command_logic)
 
 
-def generate_seed_command_logic(args):
-    data = prime_database.decode_data_file(args)
-    randomizer_config = build_randomizer_configuration(args)
-    resolver_config = build_resolver_configuration(args)
-    cpu_count = multiprocessing.cpu_count()
-
-    if args.quiet:
-        seed_report = id
-    else:
-        def seed_report(seed_count_so_far: int):
-            if seed_count_so_far % (100 * cpu_count) == 0:
-                print("Total seed count so far: {}".format(seed_count_so_far))
-
-    seed, seed_count = search_seed(data=data, randomizer_config=randomizer_config, resolver_config=resolver_config,
-                                   cpu_count=cpu_count, seed_report=seed_report, start_on_seed=args.start_on_seed)
-    if args.quiet:
-        print(seed)
-    else:
-        print("== Successful seed: {} \nTotal seed count: {}".format(seed, seed_count))
-
-
-def add_generate_seed_command(sub_parsers):
-    parser = sub_parsers.add_parser(
-        "generate-seed",
-        help="Generates a valid seed with the given conditions.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
-
-    add_resolver_config_arguments(parser)
-    add_randomizer_configuration_arguments(parser)
-    parser.add_argument(
-        "--quiet",
-        action="store_true",
-        help="Generate no output, other than the final seed."
-    )
-    parser.add_argument(
-        "--limit-multi-threading",
-        type=int,
-        help="Limit the seed generation to the given process count. If unsure, leave default."
-    )
-    parser.add_argument(
-        "--start-on-seed",
-        type=int,
-        help="Starts checking with the given seed number. Defaults to a random value."
-    )
-    prime_database.add_data_file_argument(parser)
-    parser.set_defaults(func=generate_seed_command_logic)
-
-
 def generate_seed_log_command_logic(args):
     if args.output_file:
         out = open(args.output_file, "w")
@@ -355,7 +306,6 @@ def create_subparsers(sub_parsers):
     sub_parsers = parser.add_subparsers(dest="command")
     add_validate_command(sub_parsers)
     add_distribute_command(sub_parsers)
-    add_generate_seed_command(sub_parsers)
     add_generate_seed_log_command(sub_parsers)
     add_analyze_seed_log_command(sub_parsers)
     add_extract_iso_command(sub_parsers)

@@ -5,7 +5,6 @@ from typing import Dict, Optional, NamedTuple, List, Tuple, Set, Callable, Union
 
 from randovania.games.prime import log_parser
 from randovania.games.prime.log_parser import RandomizerLog
-from randovania.interface_common.options import Options
 from randovania.resolver import data_reader, resolver, debug, generator
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutDifficulty, LayoutEnabledFlag, \
@@ -22,22 +21,10 @@ class ResolverConfiguration(NamedTuple):
     enabled_tricks: Set[int]
     item_loss: bool
 
-    @classmethod
-    def from_options(cls, options: Options) -> "ResolverConfiguration":
-        return ResolverConfiguration(options.maximum_difficulty,
-                                     options.minimum_difficulty,
-                                     options.enabled_tricks,
-                                     not options.remove_item_loss)
-
 
 class RandomizerConfiguration(NamedTuple):
     exclude_pickups: List[int]
     randomize_elevators: bool
-
-    @classmethod
-    def from_options(cls, options: Options) -> "RandomizerConfiguration":
-        return RandomizerConfiguration(list(options.excluded_pickups),
-                                       options.randomize_elevators)
 
 
 def run_resolver(data: Dict,
@@ -182,21 +169,6 @@ def search_seed(data: Dict,
             process.terminate()
 
     return seed, seed_count
-
-
-def search_seed_with_options(data: Dict,
-                             options: Options,
-                             seed_report: Callable[[int], None],
-                             start_on_seed: Optional[int] = None) -> Tuple[int, int]:
-    randomizer_config = RandomizerConfiguration.from_options(options)
-    resolver_config = ResolverConfiguration.from_options(options)
-    cpu_count = options.cpu_usage.num_cpu_for_count(multiprocessing.cpu_count())
-    return search_seed(data=data,
-                       randomizer_config=randomizer_config,
-                       resolver_config=resolver_config,
-                       cpu_count=cpu_count,
-                       seed_report=seed_report,
-                       start_on_seed=start_on_seed)
 
 
 def _generate_layout_worker(output_pipe,
