@@ -47,8 +47,7 @@ def run_resolver(data: Dict,
     game_description = data_reader.decode_data(data, randomizer_log.elevators)
     game_patches = GamePatches(resolver_config.item_loss, randomizer_log.pickup_mapping)
 
-    configuration = LayoutConfiguration(seed_number=0,
-                                        logic=LayoutLogic.NO_GLITCHES,
+    configuration = LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
                                         mode=LayoutMode.STANDARD,
                                         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                         item_loss=LayoutEnabledFlag.ENABLED,

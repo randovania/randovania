@@ -10,19 +10,21 @@ from randovania.resolver.layout_description import LayoutDescription
 
 
 def _create_test_layout_description(
+        seed_number: int,
         configuration: LayoutConfiguration,
         pickup_mapping):
     return LayoutDescription(
+        seed_number=seed_number,
         configuration=configuration,
-        version='0.11.0',
+        version='0.12.0',
         pickup_mapping=pickup_mapping,
         solver_path=())
 
 
 _test_descriptions = [
     _create_test_layout_description(
-        configuration=LayoutConfiguration(seed_number=1027649936,
-                                          logic=LayoutLogic.NO_GLITCHES,
+        seed_number=1027649936,
+        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
                                           mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
@@ -37,8 +39,8 @@ _test_descriptions = [
                         41),
     ),
     _create_test_layout_description(
-        configuration=LayoutConfiguration(seed_number=50000,
-                                          logic=LayoutLogic.NO_GLITCHES,
+        seed_number=50000,
+        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
                                           mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
@@ -65,7 +67,11 @@ def test_compare_generated_with_data(layout_description: LayoutDescription):
     status_update = MagicMock()
 
     data = binary_data.decode_default_prime2()
-    generated_description = generator.generate_list(data, layout_description.configuration, status_update=status_update)
+    generated_description = generator.generate_list(
+        data,
+        layout_description.seed_number,
+        layout_description.configuration,
+        status_update=status_update)
 
     assert generated_description.without_solver_path == layout_description
 
@@ -75,6 +81,13 @@ def test_generate_twice(layout_description: LayoutDescription):
     status_update = MagicMock()
 
     data = binary_data.decode_default_prime2()
-    generated_description = generator.generate_list(data, layout_description.configuration, status_update=status_update)
-    assert generated_description == generator.generate_list(data, layout_description.configuration,
+    generated_description = generator.generate_list(
+        data,
+        layout_description.seed_number,
+        layout_description.configuration,
+        status_update=status_update)
+
+    assert generated_description == generator.generate_list(data,
+                                                            layout_description.seed_number,
+                                                            layout_description.configuration,
                                                             status_update=status_update)
