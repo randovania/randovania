@@ -1,7 +1,6 @@
 import collections
-import random
 from functools import partial
-from typing import Dict, List, Optional, Callable
+from typing import Dict, List, Optional
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, pyqtSignal
@@ -14,11 +13,8 @@ from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.history_window_ui import Ui_HistoryWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.resolver.data_reader import read_resource_database
-from randovania.resolver.echoes import generate_layout
-from randovania.resolver.layout_configuration import LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
-    LayoutEnabledFlag, LayoutDifficulty, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.resources import PickupEntry
+from randovania.resolver.resources import PickupEntry, ResourceDatabase
 
 
 def _unique(iterable):
@@ -31,12 +27,6 @@ def _unique(iterable):
         yield item
 
 
-def show_failed_generation_exception(exception: Exception):
-    QMessageBox.critical(None,
-                         "An exception was raised",
-                         "An unhandled Exception occurred:\n{}".format(exception))
-
-
 def _show_pickup_spoiler(button):
     button.setText(button.item_name)
     button.item_is_hidden = False
@@ -47,15 +37,13 @@ def _hide_pickup_spoiler(button):
     button.item_is_hidden = True
 
 
-class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
+class HistoryWindow(QMainWindow, Ui_HistoryWindow):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton] = []
     pickup_spoiler_buttons: List[QPushButton] = []
     current_layout_description: Optional[LayoutDescription] = None
 
-    layout_generated_signal = pyqtSignal(LayoutDescription)
     selected_layout_change_signal = pyqtSignal(LayoutDescription)
-    failed_to_generate_signal = pyqtSignal(Exception)
 
     def __init__(self, main_window):
         super().__init__()
@@ -69,18 +57,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.layout_history_content_layout.setAlignment(Qt.AlignTop)
 
         # signals
-        self.progress_update_signal.connect(self.update_progress)
-        self.layout_generated_signal.connect(self._on_layout_generated)
         self.selected_layout_change_signal.connect(self.update_layout_description)
-        self.failed_to_generate_signal.connect(show_failed_generation_exception)
-        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
-
-        # All code for the Randomize button
-        self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
-        self.setup_layout_combo_data()
-        self.setup_initial_combo_selection()
-        self.create_layout_button.clicked.connect(self.create_new_layout)
-        self.abort_create_button.clicked.connect(self.stop_background_process)
 
         # Fill the history page
         self.create_history_items()
@@ -99,70 +76,12 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.export_layout_button.clicked.connect(self.export_layout)
         self.import_layout_button.clicked.connect(self.import_layout)
 
-    # Layout Creation logic
-    @property
-    def currently_selected_layout_configuration(self) -> LayoutConfiguration:
-        seed = self.seed_number_edit.text()
-        if seed == "":
-            seed = random.randint(0, 2 ** 31)
-        else:
-            seed = int(seed)
-        return LayoutConfiguration(
-            seed_number=seed,
-            logic=self.logic_selection_combo.currentData(),
-            mode=self.mode_selection_combo.currentData(),
-            sky_temple_keys=self.keys_selection_combo.currentData(),
-            item_loss=self.item_loss_selection_combo.currentData(),
-            elevators=self.elevators_selection_combo.currentData(),
-            hundo_guaranteed=self.guaranteed_100_selection_combo.currentData(),
-            difficulty=self.difficulty_selection_combo.currentData(),
-        )
-
-    def setup_layout_combo_data(self):
-        self.keys_selection_combo.setItemData(0, LayoutRandomizedFlag.VANILLA)
-        self.keys_selection_combo.setItemData(1, LayoutRandomizedFlag.RANDOMIZED)
-        self.logic_selection_combo.setItemData(0, LayoutLogic.NO_GLITCHES)
-        self.logic_selection_combo.setItemData(1, LayoutLogic.EASY)
-        self.logic_selection_combo.setItemData(2, LayoutLogic.NORMAL)
-        self.logic_selection_combo.setItemData(3, LayoutLogic.HARD)
-        self.mode_selection_combo.setItemData(0, LayoutMode.STANDARD)
-        self.mode_selection_combo.setItemData(1, LayoutMode.MAJOR_ITEMS)
-        self.difficulty_selection_combo.setItemData(0, LayoutDifficulty.NORMAL)
-        self.item_loss_selection_combo.setItemData(0, LayoutEnabledFlag.ENABLED)
-        self.item_loss_selection_combo.setItemData(1, LayoutEnabledFlag.DISABLED)
-        self.elevators_selection_combo.setItemData(0, LayoutRandomizedFlag.VANILLA)
-        self.elevators_selection_combo.setItemData(1, LayoutRandomizedFlag.RANDOMIZED)
-        self.guaranteed_100_selection_combo.setItemData(0, LayoutEnabledFlag.ENABLED)
-        self.guaranteed_100_selection_combo.setItemData(1, LayoutEnabledFlag.DISABLED)
-
-    def setup_initial_combo_selection(self):
-        self.keys_selection_combo.setCurrentIndex(1)
-        self.guaranteed_100_selection_combo.setCurrentIndex(1)
-
-    def _on_layout_generated(self, layout: LayoutDescription):
+    # Layout History
+    def add_new_layout_to_history(self, layout: LayoutDescription):
         self.selected_layout_change_signal.emit(layout)
 
-    def create_new_layout(self):
-
-        def work(status_update: Callable[[str, int], None]):
-            def status_wrapper(message: str):
-                status_update(message, -1)
-
-            resulting_layout = generate_layout(
-                data=binary_data.decode_default_prime2(),
-                configuration=self.currently_selected_layout_configuration,
-                status_update=status_wrapper
-            )
-            if isinstance(resulting_layout, Exception):
-                self.failed_to_generate_signal.emit(resulting_layout)
-                status_update("Error: {}".format(resulting_layout), 100)
-            else:
-                self.layout_generated_signal.emit(resulting_layout)
-                status_update("Success!", 100)
-
-        self.run_in_background_thread(work, "Randomizing...")
-
-    def _create_pickup_spoilers(self, resource_database):
+    # Layout Visualization
+    def _create_pickup_spoilers(self, resource_database: ResourceDatabase):
         pickup_by_world: Dict[str, List[PickupEntry]] = collections.defaultdict(list)
 
         for pickup in resource_database.pickups:
@@ -230,7 +149,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
         self.main_window.get_tab(ISOManagementWindow).load_layout(self.current_layout_description)
 
         configuration = layout.configuration
-        self.layout_seed_value_label.setText(str(configuration.seed_number))
+        self.layout_seed_value_label.setText(str(layout.seed_number))
         self.layout_logic_value_label.setText(configuration.logic.value)
         self.layout_mode_value_label.setText(configuration.mode.value)
         self.layout_keys_value_label.setText(configuration.sky_temple_keys.value)
@@ -309,18 +228,4 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow, BackgroundTaskMixin):
             return
 
         json_path, extension = open_result
-        self.layout_generated_signal.emit(LayoutDescription.from_file(json_path))
-
-    def update_progress(self, message: str, percentage: int):
-        self.randomize_in_progress_status.setText(message)
-        if "Aborted" in message:
-            percentage = 0
-        if percentage >= 0:
-            self.randomize_in_progress_bar.setRange(0, 100)
-            self.randomize_in_progress_bar.setValue(percentage)
-        else:
-            self.randomize_in_progress_bar.setRange(0, 0)
-
-    def enable_buttons_with_background_tasks(self, value: bool):
-        self.create_layout_button.setEnabled(value)
-        self.abort_create_button.setEnabled(not value)
+        self.add_new_layout_to_history(LayoutDescription.from_file(json_path))

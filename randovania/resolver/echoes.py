@@ -202,12 +202,14 @@ def search_seed_with_options(data: Dict,
 
 def _generate_layout_worker(output_pipe,
                             data: Dict,
+                            seed_number: int,
                             configuration: LayoutConfiguration):
     try:
         def status_update(message: str):
             output_pipe.send(message)
 
         layout_description = generator.generate_list(data,
+                                                     seed_number,
                                                      configuration,
                                                      status_update=status_update)
         output_pipe.send(layout_description)
@@ -217,6 +219,7 @@ def _generate_layout_worker(output_pipe,
 
 
 def generate_layout(data: Dict,
+                    seed_number: int,
                     configuration: LayoutConfiguration,
                     status_update: Callable[[str], None]
                     ) -> Union[Exception, LayoutDescription]:
@@ -224,7 +227,7 @@ def generate_layout(data: Dict,
 
     process = multiprocessing.Process(
         target=_generate_layout_worker,
-        args=(output_pipe, data, configuration)
+        args=(output_pipe, data, seed_number, configuration)
     )
     process.start()
     try:

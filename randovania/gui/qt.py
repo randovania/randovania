@@ -1,6 +1,6 @@
 import sys
 from argparse import ArgumentParser
-from typing import Optional, List
+from typing import Optional
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, QUrl
@@ -8,22 +8,26 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QAction
 
 from randovania import VERSION
+from randovania.gui.TabService import TabService
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.layout_generator_window import LayoutGeneratorWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
-from randovania.gui.seed_searcher_window import SeedSearcherWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.update_checker import get_latest_version
 
 
-class MainWindow(QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow, TabService):
     newer_version_signal = pyqtSignal(str, str)
     is_preview_mode: bool = False
 
     menu_new_version: Optional[QAction] = None
     _current_version_url: Optional[str] = None
+
+    @property
+    def _tab_widget(self):
+        raise self.tabWidget
 
     def __init__(self, preview: bool):
         super().__init__()
@@ -34,14 +38,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.newer_version_signal.connect(self.display_new_version)
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
-        self.windows: List[QMainWindow] = []
 
         self.tab_windows = [
-            (HistoryWindow, "History"),
+            (LayoutGeneratorWindow, "Randomize"),
+            (HistoryWindow, "Seed Details"),
             (ISOManagementWindow, "ISO Management"),
         ]
         if preview:
-            self.tab_windows.insert(1, (DataEditorWindow, "Data Editor"))
+            self.tab_windows.insert(2, (DataEditorWindow, "Data Editor"))
 
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self))
@@ -71,15 +75,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             raise RuntimeError("Called open_version_link, but _current_version_url is None")
 
         QDesktopServices.openUrl(QUrl(self._current_version_url))
-
-    def get_tab(self, tab_class) -> Optional[QMainWindow]:
-        for window in self.windows:
-            if isinstance(window, tab_class):
-                return window
-
-    def focus_tab(self, tab: QMainWindow):
-        index = self.windows.index(tab)
-        self.tabWidget.setCurrentIndex(index)
 
 
 def catch_exceptions(t, val, tb):
