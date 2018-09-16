@@ -27,7 +27,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService):
 
     @property
     def _tab_widget(self):
-        raise self.tabWidget
+        return self.tabWidget
 
     def __init__(self, preview: bool):
         super().__init__()

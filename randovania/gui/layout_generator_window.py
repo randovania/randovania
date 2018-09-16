@@ -1,6 +1,6 @@
 import functools
 import random
-from typing import Callable, Dict
+from typing import Callable, Dict, Optional
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
@@ -33,6 +33,7 @@ def show_failed_generation_exception(exception: Exception):
 
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTaskMixin):
     tab_service: TabService
+    _last_generated_layout: Optional[LayoutDescription] = None
     _layout_logic_radios: Dict[LayoutLogic, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
     _sky_temple_radios: Dict[LayoutRandomizedFlag, QRadioButton]
@@ -60,6 +61,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
         # self.setup_initial_combo_selection()
         self.create_layout_button.clicked.connect(self.create_new_layout)
         self.abort_create_button.clicked.connect(self.stop_background_process)
+        self.view_details_button.clicked.connect(self._view_layout_details)
 
         # Update with Options
         options = application_options()
@@ -88,7 +90,18 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
         self.guaranteed_100_selection_combo.setCurrentIndex(1)
 
     def _on_layout_generated(self, layout: LayoutDescription):
+        self._last_generated_layout = layout
         self.tab_service.get_tab(HistoryWindow).add_new_layout_to_history(layout)
+
+        self.view_details_button.setEnabled(True)
+
+    def _view_layout_details(self):
+        if self._last_generated_layout is None:
+            raise RuntimeError("_view_layout_details should never be called without a _last_generated_layout")
+
+        window: HistoryWindow = self.tab_service.get_tab(HistoryWindow)
+        window.change_selected_layout(self._last_generated_layout)
+        self.tab_service.focus_tab(window)
 
     def create_new_layout(self):
         configuration = application_options().layout_configuration
