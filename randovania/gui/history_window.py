@@ -78,6 +78,9 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
     # Layout History
     def add_new_layout_to_history(self, layout: LayoutDescription):
+        self.change_selected_layout(layout)
+
+    def change_selected_layout(self, layout: LayoutDescription):
         self.selected_layout_change_signal.emit(layout)
 
     # Layout Visualization

@@ -13,6 +13,7 @@ class TabService:
         raise NotImplementedError()
 
     def get_tab(self, tab_class: T) -> Optional[T]:
+        tab_class: type = tab_class
         for window in self.windows:
             if isinstance(window, tab_class):
                 return window
