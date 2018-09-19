@@ -1,10 +1,11 @@
 import functools
+import os
 import random
 from typing import Callable, Dict, Optional
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton
+from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFileDialog
 
 from randovania.games.prime import binary_data
 from randovania.gui import TabService
@@ -13,6 +14,7 @@ from randovania.gui.common_qt_lib import application_options
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common.options import Options
+from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.echoes import generate_layout
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutLogic, LayoutMode, LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
@@ -59,7 +61,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
         self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
 
         # self.setup_initial_combo_selection()
-        self.create_layout_button.clicked.connect(self.create_new_layout)
+        self.create_layout_button.clicked.connect(self._create_new_layout_pressed)
         self.abort_create_button.clicked.connect(self.stop_background_process)
         self.view_details_button.clicked.connect(self._view_layout_details)
 
@@ -103,10 +105,27 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
         window.change_selected_layout(self._last_generated_layout)
         self.tab_service.focus_tab(window)
 
+    def _create_new_layout_pressed(self):
+        if application_options().advanced_options:
+            self.create_new_layout()
+        else:
+            self.randomize_game_simplified()
+
+    def randomize_game_simplified(self):
+        seed_number = self.get_current_seed_number_or_random_one()
+
+        open_result = QFileDialog.getOpenFileName(self, caption="Select the vanilla Game ISO.", filter="*.iso")
+        if not open_result or open_result == ("", ""):
+            return
+
+        input_iso = open_result[0]
+        base_directory = os.path.dirname(input_iso)
+        print(input_iso, base_directory)
+
     def create_new_layout(self):
         configuration = application_options().layout_configuration
 
-        def work(status_update: Callable[[str, int], None]):
+        def work(status_update: ProgressUpdateCallable):
             def status_wrapper(message: str):
                 status_update(message, -1)
 
@@ -118,10 +137,10 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
             )
             if isinstance(resulting_layout, Exception):
                 self.failed_to_generate_signal.emit(resulting_layout)
-                status_update("Error: {}".format(resulting_layout), 100)
+                status_update("Error: {}".format(resulting_layout), 1)
             else:
                 self.layout_generated_signal.emit(resulting_layout)
-                status_update("Success!", 100)
+                status_update("Success!", 1)
 
         self.run_in_background_thread(work, "Randomizing...")
 
