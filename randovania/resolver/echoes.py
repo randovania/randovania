@@ -193,7 +193,7 @@ def generate_layout(data: Dict,
                     seed_number: int,
                     configuration: LayoutConfiguration,
                     status_update: Callable[[str], None]
-                    ) -> Union[Exception, LayoutDescription]:
+                    ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
 
     process = multiprocessing.Process(
@@ -212,4 +212,7 @@ def generate_layout(data: Dict,
     finally:
         process.terminate()
 
-    return result
+    if isinstance(result, Exception):
+        raise result
+    else:
+        return result

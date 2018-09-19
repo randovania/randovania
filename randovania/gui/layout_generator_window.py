@@ -1,13 +1,11 @@
 import functools
-import os
 import random
-from typing import Callable, Dict, Optional
+from typing import Dict, Optional
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFileDialog
 
-from randovania.games.prime import binary_data
 from randovania.gui import TabService
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
@@ -16,7 +14,7 @@ from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.echoes import generate_layout
+from randovania.resolver.generator import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutLogic, LayoutMode, LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
 
@@ -112,45 +110,40 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
         else:
             self.randomize_game_simplified()
 
-    def randomize_game_simplified(self):
-        seed_number = self.get_current_seed_number_or_random_one()
+    def _try_generate_layout(self, job, progress_update: ProgressUpdateCallable):
+        try:
+            resulting_layout = job(
+                seed_number=self.get_current_seed_number_or_random_one(),
+                progress_update=progress_update)
+            self.layout_generated_signal.emit(resulting_layout)
+            progress_update("Success!", 1)
 
+        except GenerationFailure as generate_exception:
+            self.failed_to_generate_signal.emit(generate_exception)
+            progress_update("Error: {}".format(generate_exception), 1)
+
+    def randomize_game_simplified(self):
         open_result = QFileDialog.getOpenFileName(self, caption="Select the vanilla Game ISO.", filter="*.iso")
         if not open_result or open_result == ("", ""):
             return
 
         input_iso = open_result[0]
 
-        self.run_in_background_thread(
-            functools.partial(
-                simplified_patcher.randomize_iso,
-                input_iso=input_iso,
-                seed_number=seed_number,
-                layout_reporter=self.layout_generated_signal.emit,
-                exception_reporter=self.failed_to_generate_signal.emit,
-            ),
-            "Randomizing..."
-        )
+        def work(progress_update: ProgressUpdateCallable):
+            self._try_generate_layout(
+                functools.partial(
+                    simplified_patcher.randomize_iso,
+                    input_iso=input_iso,
+                ),
+                progress_update)
+
+        self.run_in_background_thread(work, "Randomizing...")
 
     def create_new_layout(self):
-        configuration = application_options().layout_configuration
-
-        def work(status_update: ProgressUpdateCallable):
-            def status_wrapper(message: str):
-                status_update(message, -1)
-
-            resulting_layout = generate_layout(
-                data=binary_data.decode_default_prime2(),
-                seed_number=self.get_current_seed_number_or_random_one(),
-                configuration=configuration,
-                status_update=status_wrapper
-            )
-            if isinstance(resulting_layout, Exception):
-                self.failed_to_generate_signal.emit(resulting_layout)
-                status_update("Error: {}".format(resulting_layout), 1)
-            else:
-                self.layout_generated_signal.emit(resulting_layout)
-                status_update("Success!", 1)
+        def work(progress_update: ProgressUpdateCallable):
+            self._try_generate_layout(
+                simplified_patcher.generate_layout,
+                progress_update)
 
         self.run_in_background_thread(work, "Creating a layout...")
 

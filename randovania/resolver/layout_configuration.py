@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import NamedTuple
+from typing import NamedTuple, List
 
 
 class LayoutLogic(Enum):
@@ -52,7 +52,18 @@ class LayoutConfiguration(NamedTuple):
 
     @property
     def as_str(self) -> str:
-        return "-".join(s.value if hasattr(s, "value") else str(s) for s in self)
+        strings: List[str] = [self.logic.value, self.mode.value]
+
+        if self.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
+            strings.append("vanilla-sky-temple-keys")
+
+        if self.item_loss == LayoutEnabledFlag.DISABLED:
+            strings.append("disabled-item-loss")
+
+        if self.elevators == LayoutRandomizedFlag.RANDOMIZED:
+            strings.append("randomized-elevators")
+
+        return "_".join(strings)
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":

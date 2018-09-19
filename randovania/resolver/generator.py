@@ -19,6 +19,10 @@ from randovania.resolver.resources import ResourceInfo, ResourceDatabase, Curren
 from randovania.resolver.state import State
 
 
+class GenerationFailure(Exception):
+    pass
+
+
 def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase) -> CurrentResources:
     return {
         resource: quantity
@@ -65,7 +69,7 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
     elif logic == LayoutLogic.HARD:
         return 5, tricks
     else:
-        raise Exception("Unsupported logic")
+        raise RuntimeError("Unsupported logic")
 
 
 def _iterate_previous_states(state: State) -> Iterator[State]:
@@ -121,7 +125,7 @@ def generate_list(data: Dict,
 
     if final_state_by_resolve is None:
         # Why is final_state_by_distribution not OK?
-        raise Exception("We just created an item distribution we believe is impossible. What?")
+        raise GenerationFailure("We just created an item distribution we believe is impossible. What?")
 
     return LayoutDescription(
         seed_number=seed_number,
