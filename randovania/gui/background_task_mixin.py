@@ -19,7 +19,7 @@ class BackgroundTaskMixin:
                 self.progress_update_signal.emit("{} - Aborted".format(message), int(progress * 100))
                 raise AbortBackgroundTask()
             else:
-                self.progress_update_signal.emit(message, progress)
+                self.progress_update_signal.emit(message, int(progress * 100))
 
         def thread(**_kwargs):
             try:
