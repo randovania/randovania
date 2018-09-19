@@ -7,11 +7,12 @@ import nod
 
 from randovania.games.prime import claris_randomizer
 from randovania.interface_common.options import validate_game_files_path
+from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 
 
 def _disc_unpack_process(output_pipe, iso: str, game_files_path: str):
     def progress_callback(path, progress):
-        output_pipe.send((False, path, int(progress * 100)))
+        output_pipe.send((False, path, progress))
 
     def _helper():
         try:
@@ -35,7 +36,7 @@ def _disc_unpack_process(output_pipe, iso: str, game_files_path: str):
 
 def _disc_pack_process(status_queue, iso: str, game_files_path: str):
     def fprogress_callback(progress: float, name: str, bytes: int):
-        status_queue.send((False, name, int(progress * 100)))
+        status_queue.send((False, name, progress))
 
     def _helper():
         try:
@@ -53,7 +54,7 @@ def _shared_process_code(target,
                          iso: str,
                          game_files_path: str,
                          on_finish_message: str,
-                         progress_update: Callable[[str, int], None]):
+                         progress_update: ProgressUpdateCallable):
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
     process = multiprocessing.Process(
         target=target,
@@ -71,12 +72,12 @@ def _shared_process_code(target,
         if isinstance(message, str):
             raise RuntimeError(message)
 
-        progress_update(on_finish_message, 100)
+        progress_update(on_finish_message, 1)
     finally:
         process.terminate()
 
 
-def unpack_iso(iso: str, game_files_path: str, progress_update: Callable[[str, int], None]):
+def unpack_iso(iso: str, game_files_path: str, progress_update: ProgressUpdateCallable):
     try:
         os.makedirs(game_files_path, exist_ok=True)
     except OSError as e:
@@ -104,7 +105,7 @@ def _disable_attract_videos_helper(output_pipe, iso: str, game_files_path: str):
     output_pipe.send((True, None, -1))
 
 
-def _disable_attract_videos(game_files_path: str, update: Callable[[str, int], None]) -> None:
+def _disable_attract_videos(game_files_path: str, update: ProgressUpdateCallable) -> None:
     if os.path.exists(os.path.join(game_files_path, "files", "attract_videos_disabled.txt")):
         return
 
@@ -120,7 +121,7 @@ def _disable_attract_videos(game_files_path: str, update: Callable[[str, int], N
 def pack_iso(iso: str,
              game_files_path: str,
              disable_attract_if_necessary: bool,
-             progress_update: Callable[[str, int], None]
+             progress_update: ProgressUpdateCallable
              ):
 
     validate_game_files_path(os.path.join(game_files_path, "files"))

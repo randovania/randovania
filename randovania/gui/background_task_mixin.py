@@ -14,9 +14,9 @@ class BackgroundTaskMixin:
                                  target,
                                  starting_message: str,
                                  kwargs=None):
-        def status_update(message: str, progress: int):
+        def status_update(message: str, progress: float):
             if self.abort_background_task_requested:
-                self.progress_update_signal.emit("{} - Aborted".format(message), progress)
+                self.progress_update_signal.emit("{} - Aborted".format(message), int(progress * 100))
                 raise AbortBackgroundTask()
             else:
                 self.progress_update_signal.emit(message, progress)

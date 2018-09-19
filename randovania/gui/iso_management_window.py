@@ -10,6 +10,8 @@ from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
+from randovania.interface_common import status_update_lib
+from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -111,7 +113,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         hud_memo_popup_removal = self.remove_hud_popup.isChecked()
         game_files_path = application_options().game_files_path
 
-        def work(status_update: Callable[[str, int], None]):
+        def work(status_update: ProgressUpdateCallable):
             def wrap_update(args: str):
                 status_update(args, 0)
 
@@ -144,36 +146,31 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
 
         output_iso = open_result[0]
 
-        def work(status_update: Callable[[str, int], None]):
-            offset = 0
-            middle_steps = 0
-
-            def iso_update(message: str, status: int):
-                status_update(message, int((status + offset) / 3))
-
-            def wrap_update(args: str):
-                nonlocal middle_steps
-                middle_steps += 1
-                status_update(args, int((100 + min(middle_steps, 100)) / 3))
+        def work(status_update: ProgressUpdateCallable):
+            updaters = status_update_lib.split_progress_update(
+                status_update,
+                3
+            )
 
             _delete_files_location(game_files_path)
             unpack_iso(
                 iso=input_iso,
                 game_files_path=game_files_path,
-                progress_update=iso_update,
+                progress_update=updaters[0],
             )
             claris_randomizer.apply_layout(
                 layout=self.current_layout,
                 hud_memo_popup_removal=hud_memo_popup_removal,
                 game_root=game_files_path,
-                status_update=wrap_update
+                status_update=status_update_lib.create_progress_update_from_successive_messages(
+                    updaters[1], 100
+                )
             )
-            offset = 200
             pack_iso(
                 iso=output_iso,
                 game_files_path=game_files_path,
                 disable_attract_if_necessary=True,
-                progress_update=iso_update,
+                progress_update=updaters[2],
             )
 
         self.run_in_background_thread(work, "Randomizing ISO...")
@@ -205,7 +202,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         iso, extension = open_result
         game_files_path = application_options().game_files_path
 
-        def work(status_update):
+        def work(status_update: ProgressUpdateCallable):
             unpack_iso(
                 iso=iso,
                 game_files_path=game_files_path,
@@ -222,7 +219,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         iso, extension = open_result
         game_files_path = application_options().game_files_path
 
-        def work(status_update):
+        def work(status_update: ProgressUpdateCallable):
             pack_iso(
                 iso=iso,
                 game_files_path=game_files_path,
