@@ -104,11 +104,11 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
         window.change_selected_layout(self._last_generated_layout)
         self.tab_service.focus_tab(window)
 
-    def _create_new_layout_pressed(self):
-        if application_options().advanced_options:
-            self.create_new_layout()
-        else:
-            self.randomize_game_simplified()
+    def _prompt_user_for_input_iso(self) -> Optional[str]:
+        open_result = QFileDialog.getOpenFileName(self, caption="Select the vanilla Game ISO.", filter="*.iso")
+        if not open_result or open_result == ("", ""):
+            return
+        return open_result[0]
 
     def _try_generate_layout(self, job, progress_update: ProgressUpdateCallable):
         try:
@@ -123,29 +123,37 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
             progress_update("Error: {}".format(generate_exception), 1)
 
     def randomize_game_simplified(self):
-        open_result = QFileDialog.getOpenFileName(self, caption="Select the vanilla Game ISO.", filter="*.iso")
-        if not open_result or open_result == ("", ""):
+        input_iso = self._prompt_user_for_input_iso()
+        if input_iso is None:
             return
 
-        input_iso = open_result[0]
-
-        def work(progress_update: ProgressUpdateCallable):
-            self._try_generate_layout(
-                functools.partial(
+        self.run_in_background_thread(
+            functools.partial(
+                self._try_generate_layout,
+                job=functools.partial(
                     simplified_patcher.randomize_iso,
                     input_iso=input_iso,
-                ),
-                progress_update)
-
-        self.run_in_background_thread(work, "Randomizing...")
+                )
+            ),
+            "Randomizing...")
 
     def create_new_layout(self):
-        def work(progress_update: ProgressUpdateCallable):
-            self._try_generate_layout(
-                simplified_patcher.generate_layout,
-                progress_update)
+        self.run_in_background_thread(
+            functools.partial(
+                self._try_generate_layout,
+                job=simplified_patcher.generate_layout
+            ),
+            "Creating a layout...")
 
-        self.run_in_background_thread(work, "Creating a layout...")
+    def _create_new_layout_pressed(self):
+        """
+        Listener to the "Randomize" button. This does the whole process when "advanced mode" is disabled, just generates
+        layouts if enabled.
+        """
+        if application_options().advanced_options:
+            self.create_new_layout()
+        else:
+            self.randomize_game_simplified()
 
     def setup_layout_radio_data(self, options: Options):
         # Setup config values to radio maps
