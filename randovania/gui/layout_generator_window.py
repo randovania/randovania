@@ -13,6 +13,7 @@ from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
+from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.echoes import generate_layout
@@ -119,8 +120,17 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
             return
 
         input_iso = open_result[0]
-        base_directory = os.path.dirname(input_iso)
-        print(input_iso, base_directory)
+
+        self.run_in_background_thread(
+            functools.partial(
+                simplified_patcher.randomize_iso,
+                input_iso=input_iso,
+                seed_number=seed_number,
+                layout_reporter=self.layout_generated_signal.emit,
+                exception_reporter=self.failed_to_generate_signal.emit,
+            ),
+            "Randomizing..."
+        )
 
     def create_new_layout(self):
         configuration = application_options().layout_configuration
@@ -142,7 +152,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
                 self.layout_generated_signal.emit(resulting_layout)
                 status_update("Success!", 1)
 
-        self.run_in_background_thread(work, "Randomizing...")
+        self.run_in_background_thread(work, "Creating a layout...")
 
     def setup_layout_radio_data(self, options: Options):
         # Setup config values to radio maps

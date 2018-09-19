@@ -3,6 +3,15 @@ from typing import Callable, List
 ProgressUpdateCallable = Callable[[str, float], None]
 
 
+class ConstantPercentageCallback:
+    def __init__(self, status_update: ProgressUpdateCallable, percentage: float):
+        self.status_update = status_update
+        self.percentage = percentage
+
+    def __call__(self, message: str) -> None:
+        self.status_update(message, self.percentage)
+
+
 class SuccessiveCallback:
     def __init__(self, status_update: ProgressUpdateCallable, max_calls: int):
         self.call_count = 0
@@ -24,9 +33,10 @@ class OffsetProgressUpdate:
         self.scale = scale
 
     def __call__(self, message: str, percentage: float) -> None:
+        new_value = percentage if percentage < 0 else self.offset + percentage * self.scale
         self.status_update(
             message,
-            self.offset + percentage * self.scale
+            new_value
         )
 
 
