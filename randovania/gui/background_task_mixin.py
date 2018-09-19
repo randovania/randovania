@@ -14,7 +14,7 @@ class BackgroundTaskMixin:
                                  target,
                                  starting_message: str,
                                  kwargs=None):
-        def status_update(message: str, progress: float):
+        def progress_update(message: str, progress: float):
             if self.abort_background_task_requested:
                 self.progress_update_signal.emit("{} - Aborted".format(message), int(progress * 100))
                 raise AbortBackgroundTask()
@@ -23,11 +23,11 @@ class BackgroundTaskMixin:
 
         def thread(**_kwargs):
             try:
-                target(status_update=status_update, **_kwargs)
+                target(progress_update=progress_update, **_kwargs)
             except AbortBackgroundTask:
                 pass
             except Exception as e:
-                status_update("Error: {}".format(e), -1)
+                progress_update("Error: {}".format(e), -1)
             finally:
                 self.background_tasks_button_lock_signal.emit(True)
                 self._background_thread = None
@@ -35,7 +35,7 @@ class BackgroundTaskMixin:
         if self._background_thread:
             raise RuntimeError("Trying to start a new background thread while one exists already.")
         self.abort_background_task_requested = False
-        status_update(starting_message, 0)
+        progress_update(starting_message, 0)
 
         self.background_tasks_button_lock_signal.emit(False)
         self._background_thread = threading.Thread(target=thread, kwargs=kwargs)

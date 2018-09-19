@@ -113,9 +113,9 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         hud_memo_popup_removal = self.remove_hud_popup.isChecked()
         game_files_path = application_options().game_files_path
 
-        def work(status_update: ProgressUpdateCallable):
+        def work(progress_update: ProgressUpdateCallable):
             def wrap_update(args: str):
-                status_update(args, 0)
+                progress_update(args, 0)
 
             claris_randomizer.apply_layout(
                 layout=self.current_layout,
@@ -146,9 +146,9 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
 
         output_iso = open_result[0]
 
-        def work(status_update: ProgressUpdateCallable):
+        def work(progress_update: ProgressUpdateCallable):
             updaters = status_update_lib.split_progress_update(
-                status_update,
+                progress_update,
                 3
             )
 
@@ -202,11 +202,11 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         iso, extension = open_result
         game_files_path = application_options().game_files_path
 
-        def work(status_update: ProgressUpdateCallable):
+        def work(progress_update: ProgressUpdateCallable):
             unpack_iso(
                 iso=iso,
                 game_files_path=game_files_path,
-                progress_update=status_update,
+                progress_update=progress_update,
             )
 
         self.run_in_background_thread(work, "Will unpack ISO")
@@ -219,12 +219,12 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         iso, extension = open_result
         game_files_path = application_options().game_files_path
 
-        def work(status_update: ProgressUpdateCallable):
+        def work(progress_update: ProgressUpdateCallable):
             pack_iso(
                 iso=iso,
                 game_files_path=game_files_path,
                 disable_attract_if_necessary=True,
-                progress_update=status_update,
+                progress_update=progress_update,
             )
 
         self.run_in_background_thread(work, "Will pack ISO")
