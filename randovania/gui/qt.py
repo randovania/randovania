@@ -41,8 +41,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService):
 
         self.tab_windows = [
             (LayoutGeneratorWindow, "Randomize"),
-            (HistoryWindow, "Seed Details"),
-            (ISOManagementWindow, "ISO Management"),
+            (HistoryWindow, "Layout Details"),
+            (ISOManagementWindow, "Advanced"),
         ]
         if preview:
             self.tab_windows.insert(2, (DataEditorWindow, "Data Editor"))
