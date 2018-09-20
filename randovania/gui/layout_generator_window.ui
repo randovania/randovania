@@ -21,16 +21,6 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="3" column="4">
-     <widget class="QPushButton" name="abort_create_button">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Stop</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="0">
      <widget class="QLabel" name="seed_number_label">
       <property name="text">
@@ -38,7 +28,23 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="5">
+    <item row="2" column="3">
+     <widget class="QCheckBox" name="display_help_box">
+      <property name="minimumSize">
+       <size>
+        <width>130</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Display Help</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="4">
      <widget class="QScrollArea" name="scroll_area">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -48,8 +54,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>765</width>
-         <height>776</height>
+         <width>768</width>
+         <height>862</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -296,29 +302,6 @@
       </widget>
      </widget>
     </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QPushButton" name="create_layout_button">
-      <property name="text">
-       <string>Randomize</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="4">
-     <widget class="QCheckBox" name="display_help_box">
-      <property name="minimumSize">
-       <size>
-        <width>130</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Display Help</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="1" colspan="2">
      <widget class="QLineEdit" name="seed_number_edit">
       <property name="placeholderText">
@@ -327,41 +310,19 @@
      </widget>
     </item>
     <item row="3" column="3">
-     <widget class="QProgressBar" name="randomize_in_progress_bar">
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="maximum">
-       <number>1</number>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
-      <property name="invertedAppearance">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0" colspan="3">
-     <widget class="QLabel" name="randomize_in_progress_status">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="4">
      <widget class="QPushButton" name="view_details_button">
       <property name="enabled">
        <bool>false</bool>
       </property>
       <property name="text">
        <string>View details</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="create_layout_button">
+      <property name="text">
+       <string>Randomize</string>
       </property>
      </widget>
     </item>

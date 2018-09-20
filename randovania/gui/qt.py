@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QAction
 
 from randovania import VERSION
 from randovania.gui.TabService import TabService
+from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
@@ -18,7 +19,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.update_checker import get_latest_version
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, TabService):
+class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     newer_version_signal = pyqtSignal(str, str)
     is_preview_mode: bool = False
 
@@ -35,7 +36,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService):
         self.setWindowTitle("Randovania {}".format(VERSION))
         self.is_preview_mode = preview
 
+        # Signals
         self.newer_version_signal.connect(self.display_new_version)
+        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.progress_update_signal.connect(self.update_progress)
+
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
 
@@ -48,7 +53,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService):
             self.tab_windows.insert(2, (DataEditorWindow, "Data Editor"))
 
         for i, tab in enumerate(self.tab_windows):
-            self.windows.append(tab[0](self))
+            self.windows.append(tab[0](self, self))
             self.tabs.append(self.windows[i].centralWidget)
             self.tabWidget.insertTab(i, self.tabs[i], _translate("MainWindow", tab[1]))
 
@@ -57,6 +62,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService):
         get_latest_version(self.newer_version_signal.emit)
 
     def closeEvent(self, event):
+        self.stop_background_process()
         for window in self.windows:
             window.closeEvent(event)
         super().closeEvent(event)
@@ -75,6 +81,21 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService):
             raise RuntimeError("Called open_version_link, but _current_version_url is None")
 
         QDesktopServices.openUrl(QUrl(self._current_version_url))
+
+    # Background Process
+
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setEnabled(not value)
+
+    def update_progress(self, message: str, percentage: int):
+        self.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.progress_bar.setRange(0, 100)
+            self.progress_bar.setValue(percentage)
+        else:
+            self.progress_bar.setRange(0, 0)
 
 
 def catch_exceptions(t, val, tb):

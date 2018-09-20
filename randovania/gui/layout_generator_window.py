@@ -32,7 +32,7 @@ def show_failed_generation_exception(exception: Exception):
                          "An unhandled Exception occurred:\n{}".format(exception))
 
 
-class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTaskMixin):
+class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     tab_service: TabService
     _last_generated_layout: Optional[LayoutDescription] = None
     _layout_logic_radios: Dict[LayoutLogic, QRadioButton]
@@ -43,16 +43,16 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
     layout_generated_signal = pyqtSignal(LayoutDescription)
     failed_to_generate_signal = pyqtSignal(Exception)
 
-    def __init__(self, tab_service: TabService):
+    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
 
         self.tab_service = tab_service
+        self.background_processor = background_processor
 
         # Connect to Events
+        background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.display_help_box.toggled.connect(self.update_help_display)
-        self.progress_update_signal.connect(self.update_progress)
-        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
         self.layout_generated_signal.connect(self._on_layout_generated)
 
@@ -61,7 +61,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
 
         # self.setup_initial_combo_selection()
         self.create_layout_button.clicked.connect(self._create_new_layout_pressed)
-        self.abort_create_button.clicked.connect(self.stop_background_process)
         self.view_details_button.clicked.connect(self._view_layout_details)
 
         # Update with Options
@@ -127,7 +126,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
         if input_iso is None:
             return
 
-        self.run_in_background_thread(
+        self.background_processor.run_in_background_thread(
             functools.partial(
                 self._try_generate_layout,
                 job=functools.partial(
@@ -138,7 +137,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
             "Randomizing...")
 
     def create_new_layout(self):
-        self.run_in_background_thread(
+        self.background_processor.run_in_background_thread(
             functools.partial(
                 self._try_generate_layout,
                 job=simplified_patcher.generate_layout
@@ -195,19 +194,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow, BackgroundTas
                     functools.partial(
                         _update_options_when_true, field_name, value))
 
-    # Getters
-
-    # Background Processing
-    def update_progress(self, message: str, percentage: int):
-        self.randomize_in_progress_status.setText(message)
-        if "Aborted" in message:
-            percentage = 0
-        if percentage >= 0:
-            self.randomize_in_progress_bar.setRange(0, 100)
-            self.randomize_in_progress_bar.setValue(percentage)
-        else:
-            self.randomize_in_progress_bar.setRange(0, 0)
-
+    # Progress
     def enable_buttons_with_background_tasks(self, value: bool):
         self.create_layout_button.setEnabled(value)
-        self.abort_create_button.setEnabled(not value)
