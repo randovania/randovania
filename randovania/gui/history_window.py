@@ -1,4 +1,5 @@
 import collections
+import functools
 from functools import partial
 from typing import Dict, List, Optional
 
@@ -10,8 +11,10 @@ from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, Q
 
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
 from randovania.gui.history_window_ui import Ui_HistoryWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
+from randovania.interface_common import simplified_patcher
 from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.resources import PickupEntry, ResourceDatabase
@@ -50,6 +53,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.setupUi(self)
 
         self.main_window = main_window
+        self.background_processor = background_processor
 
         data = binary_data.decode_default_prime2()
         self.resource_database = read_resource_database(data["resource_database"])
@@ -149,7 +153,6 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
     def update_layout_description(self, layout: LayoutDescription):
         self.current_layout_description = layout
         self.layout_info_tab.show()
-        self.main_window.get_tab(ISOManagementWindow).load_layout(self.current_layout_description)
 
         configuration = layout.configuration
         self.layout_seed_value_label.setText(str(layout.seed_number))
@@ -207,7 +210,34 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
     # Exporting
     def apply_layout(self):
-        self.main_window.focus_tab(self.main_window.get_tab(ISOManagementWindow))
+        if self.current_layout_description is None:
+            raise RuntimeError("Trying to apply_layout, but current_layout_description is None")
+
+        if application_options().advanced_options:
+            self.apply_layout_advanced()
+        else:
+            self.apply_layout_simplified()
+
+    def apply_layout_advanced(self):
+        self.background_processor.run_in_background_thread(
+            functools.partial(
+                simplified_patcher.apply_layout,
+                layout=self.current_layout_description
+            ),
+            "Patching game files...")
+
+    def randomize_game_simplified(self):
+        input_iso = prompt_user_for_input_iso(self)
+        if input_iso is None:
+            return
+
+        self.background_processor.run_in_background_thread(
+            functools.partial(
+                simplified_patcher.patch_iso_with_existing_layout,
+                layout=self.current_layout_description,
+                input_iso=input_iso,
+            ),
+            "Patching ISO...")
 
     def export_layout(self):
         open_result = QFileDialog.getSaveFileName(

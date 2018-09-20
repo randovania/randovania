@@ -1,6 +1,6 @@
 import os
 import shutil
-from typing import Optional, Callable
+from typing import List
 
 from randovania.games.prime import iso_packager, claris_randomizer, binary_data
 from randovania.gui.common_qt_lib import application_options
@@ -86,11 +86,48 @@ def pack_iso(output_iso: str, progress_update: ProgressUpdateCallable):
     )
 
 
-def randomize_iso(progress_update: ProgressUpdateCallable,
-                  input_iso: str,
-                  seed_number: int,
-                  ) -> LayoutDescription:
+def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
+                        input_iso: str,
+                        layout: LayoutDescription,
+                        ):
+    layout_configuration = layout.configuration
 
+    output_name = "Echoes Randomizer - {}_{}".format(layout_configuration.as_str, layout.seed_number)
+    base_directory = os.path.dirname(input_iso)
+    output_iso = os.path.join(base_directory, "{}.iso".format(output_name))
+    output_json = os.path.join(base_directory, "{}.json".format(output_name))
+
+    # Unpack ISO
+    unpack_iso(input_iso=input_iso, progress_update=updaters[0])
+
+    # Patch ISO
+    apply_layout(layout=layout, progress_update=updaters[1])
+
+    # Pack ISO
+    pack_iso(output_iso=output_iso, progress_update=updaters[2])
+
+    # Save the layout to a file
+    layout.save_to_file(output_json)
+
+
+def patch_iso_with_existing_layout(progress_update: ProgressUpdateCallable,
+                                   input_iso: str,
+                                   layout: LayoutDescription,
+                                   ):
+    _internal_patch_iso(
+        updaters=status_update_lib.split_progress_update(
+            progress_update,
+            3
+        ),
+        input_iso=input_iso,
+        layout=layout
+    )
+
+
+def create_layout_then_patch_iso(progress_update: ProgressUpdateCallable,
+                                 input_iso: str,
+                                 seed_number: int,
+                                 ) -> LayoutDescription:
     updaters = status_update_lib.split_progress_update(
         progress_update,
         4
@@ -98,21 +135,11 @@ def randomize_iso(progress_update: ProgressUpdateCallable,
 
     # Create a LayoutDescription
     resulting_layout = generate_layout(seed_number=seed_number, progress_update=updaters[0])
-    layout_configuration = resulting_layout.configuration
 
-    output_name = "Echoes Randomizer - {}_{}".format(layout_configuration.as_str, seed_number)
-    base_directory = os.path.dirname(input_iso)
-    output_iso = os.path.join(base_directory, "{}.iso".format(output_name))
-    output_json = os.path.join(base_directory, "{}.json".format(output_name))
+    _internal_patch_iso(
+        updaters=updaters[1:],
+        input_iso=input_iso,
+        layout=resulting_layout
+    )
 
-    # Unpack ISO
-    unpack_iso(input_iso=input_iso, progress_update=updaters[1])
-
-    # Patch ISO
-    apply_layout(layout=resulting_layout, progress_update=updaters[2])
-
-    # Pack ISO
-    pack_iso(output_iso=output_iso, progress_update=updaters[3])
-
-    resulting_layout.save_to_file(output_json)
     return resulting_layout

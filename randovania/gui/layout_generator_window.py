@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFil
 
 from randovania.gui import TabService
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options
+from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
@@ -103,12 +103,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         window.change_selected_layout(self._last_generated_layout)
         self.tab_service.focus_tab(window)
 
-    def _prompt_user_for_input_iso(self) -> Optional[str]:
-        open_result = QFileDialog.getOpenFileName(self, caption="Select the vanilla Game ISO.", filter="*.iso")
-        if not open_result or open_result == ("", ""):
-            return
-        return open_result[0]
-
     def _try_generate_layout(self, job, progress_update: ProgressUpdateCallable):
         try:
             resulting_layout = job(
@@ -122,7 +116,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
             progress_update("Error: {}".format(generate_exception), 1)
 
     def randomize_game_simplified(self):
-        input_iso = self._prompt_user_for_input_iso()
+        input_iso = prompt_user_for_input_iso(self)
         if input_iso is None:
             return
 
@@ -130,7 +124,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
             functools.partial(
                 self._try_generate_layout,
                 job=functools.partial(
-                    simplified_patcher.randomize_iso,
+                    simplified_patcher.create_layout_then_patch_iso,
                     input_iso=input_iso,
                 )
             ),
