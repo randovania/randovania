@@ -59,6 +59,13 @@ class IndividualRequirement(NamedTuple):
             "<" if self.negate else ">=",
             self.amount)
 
+    @property
+    def pretty_text(self):
+        if self.amount == 1:
+            return "{}{}".format("No " if self.negate else "", self.resource)
+        else:
+            return str(self)
+
     def __lt__(self, other: "IndividualRequirement") -> bool:
         return str(self) < str(other)
 

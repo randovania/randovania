@@ -50,10 +50,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.tab_windows = [
             (LayoutGeneratorWindow, "Randomize"),
             (HistoryWindow, "Layout Details"),
+            (DataEditorWindow, "Data Visualizer"),
             (ISOManagementWindow, "Advanced"),
         ]
-        if preview:
-            self.tab_windows.insert(2, (DataEditorWindow, "Data Editor"))
 
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self, self))
