@@ -26,21 +26,20 @@ def _delete_files_location(game_files_path: str):
         shutil.rmtree(game_files_path)
 
 
-class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMixin):
+class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     current_files_location: str
     current_layout: Optional[LayoutDescription] = None
     _current_lock_state: bool = True
 
-    def __init__(self, main_window):
+    def __init__(self, main_window, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
-        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
-
-        # Progress
-        self.progress_update_signal.connect(self.update_progress)
-        self.stopBackgroundProcessButton.clicked.connect(self.stop_background_process)
+        self.background_processor = background_processor
 
         options = application_options()
+
+        # Progress
+        background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
 
         # Game Patching
         self.layout_identifier_label.default_text = self.layout_identifier_label.text()
@@ -48,6 +47,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         self.apply_layout_button.clicked.connect(self.apply_layout_button_logic)
         self.show_advanced_options_check.setChecked(options.advanced_options)
         self.show_advanced_options_check.toggled.connect(self.set_advanced_options_visibility)
+        self.show_advanced_options_check.setVisible(main_window.is_preview_mode)
 
         # File Location
         self.filesLocation.setText(options.game_files_path)
@@ -56,8 +56,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         self.deleteFilesButton.clicked.connect(self.delete_current_files_location)
 
         # Layout
-        self.remove_hud_popup.setChecked(options.hud_memo_popup_removal)
-        self.remove_hud_popup.stateChanged.connect(persist_bool_option("hud_memo_popup_removal"))
+        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
+        self.remove_hud_popup_check.stateChanged.connect(persist_bool_option("hud_memo_popup_removal"))
 
         # ISO Packing
         self.loadIsoButton.clicked.connect(self.load_iso)
@@ -68,13 +68,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
         self._refresh_apply_layout_button_state()
-        self.stopBackgroundProcessButton.setEnabled(not value)
         self.loadIsoButton.setEnabled(value)
         self.packageIsoButton.setEnabled(value)
-
-    def closeEvent(self, event):
-        self.stop_background_process()
-        super().closeEvent(event)
 
     # Advanced Options
     def set_advanced_options_visibility(self, new_value: bool):
@@ -110,7 +105,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
         if self.current_layout is None:
             raise Exception("Trying to apply layout, but current_layout is None")
 
-        hud_memo_popup_removal = self.remove_hud_popup.isChecked()
+        hud_memo_popup_removal = self.remove_hud_popup_check.isChecked()
         game_files_path = application_options().game_files_path
 
         def work(progress_update: ProgressUpdateCallable):
@@ -124,13 +119,13 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
                 status_update=wrap_update
             )
 
-        self.run_in_background_thread(work, "Randomizing files...")
+        self.background_processor.run_in_background_thread(work, "Randomizing files...")
 
     def apply_layout_simplified(self):
         if self.current_layout is None:
             raise Exception("Trying to apply layout, but current_layout is None")
 
-        hud_memo_popup_removal = self.remove_hud_popup.isChecked()
+        hud_memo_popup_removal = self.remove_hud_popup_check.isChecked()
         game_files_path = application_options().game_files_path
 
         open_result = QFileDialog.getOpenFileName(self, caption="Select the vanilla Game ISO.", filter="*.iso")
@@ -173,7 +168,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
                 progress_update=updaters[2],
             )
 
-        self.run_in_background_thread(work, "Randomizing ISO...")
+        self.background_processor.run_in_background_thread(work, "Randomizing ISO...")
 
     # File Location
     def prompt_new_files_location(self):
@@ -209,7 +204,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
                 progress_update=progress_update,
             )
 
-        self.run_in_background_thread(work, "Will unpack ISO")
+        self.background_processor.run_in_background_thread(work, "Will unpack ISO")
 
     def package_iso(self):
         open_result = QFileDialog.getSaveFileName(self, filter="*.iso")
@@ -227,12 +222,4 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow, BackgroundTaskMix
                 progress_update=progress_update,
             )
 
-        self.run_in_background_thread(work, "Will pack ISO")
-
-    def update_progress(self, message: str, percentage: int):
-        self.progressLabel.setText(message)
-        if percentage >= 0:
-            self.progressBar.setRange(0, 100)
-            self.progressBar.setValue(percentage)
-        else:
-            self.progressBar.setRange(0, 0)
+        self.background_processor.run_in_background_thread(work, "Will pack ISO")

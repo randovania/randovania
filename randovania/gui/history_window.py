@@ -45,7 +45,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
     selected_layout_change_signal = pyqtSignal(LayoutDescription)
 
-    def __init__(self, main_window):
+    def __init__(self, main_window, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
 

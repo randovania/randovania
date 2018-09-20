@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QRadioButton
 
 from randovania.games.prime import binary_data
+from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 from randovania.resolver.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.resolver.game_description import World, Area
@@ -14,7 +15,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     selected_node_button: QRadioButton = None
     radio_button_to_node: Dict[QRadioButton, Node] = {}
 
-    def __init__(self, main_window):
+    def __init__(self, main_window, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
         self.worldSelectorBox.currentIndexChanged.connect(self.on_select_world)
