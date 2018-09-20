@@ -120,6 +120,9 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         if input_iso is None:
             return
 
+        self.randomize_given_iso(input_iso)
+
+    def randomize_given_iso(self, input_iso: str):
         self.background_processor.run_in_background_thread(
             functools.partial(
                 self._try_generate_layout,

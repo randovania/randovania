@@ -1,3 +1,4 @@
+import os
 import sys
 from argparse import ArgumentParser
 from typing import Optional
@@ -35,11 +36,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
         self.is_preview_mode = preview
+        self.setAcceptDrops(True)
 
         # Signals
         self.newer_version_signal.connect(self.display_new_version)
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.progress_update_signal.connect(self.update_progress)
+        self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
@@ -66,6 +69,19 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         for window in self.windows:
             window.closeEvent(event)
         super().closeEvent(event)
+
+    def dragEnterEvent(self, event):
+        for url in event.mimeData().urls():
+            if os.path.splitext(url.toLocalFile())[1] == ".iso":
+                event.acceptProposedAction()
+                return
+
+    def dropEvent(self, event):
+        for url in event.mimeData().urls():
+            iso_path = url.toLocalFile()
+            if os.path.splitext(iso_path)[1] == ".iso":
+                self.get_tab(LayoutGeneratorWindow).randomize_given_iso(iso_path)
+                return
 
     def display_new_version(self, new_version: str, new_version_url: str):
         if self.menu_new_version is None:
