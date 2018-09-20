@@ -22,35 +22,6 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0" colspan="2">
-     <widget class="QGroupBox" name="randomizer_box">
-      <property name="title">
-       <string>Game Patching</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QLabel" name="layout_identifier_label">
-         <property name="text">
-          <string>No layout has been selected. Please select one in the `History` tab.</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="apply_layout_button">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Randomize game files with layout</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="2">
      <widget class="QGroupBox" name="files_box">
       <property name="maximumSize">
        <size>
@@ -63,28 +34,28 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="1" column="0">
-        <widget class="QPushButton" name="changeFilesLocationButton">
+        <widget class="QPushButton" name="change_files_location_button">
          <property name="text">
           <string>Change</string>
          </property>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QPushButton" name="deleteFilesButton">
+        <widget class="QPushButton" name="delete_files_button">
          <property name="text">
           <string>Delete contents</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="resetFilesLocationButton">
+        <widget class="QPushButton" name="reset_files_location_button">
          <property name="text">
           <string>Use Default Location</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="current_files_location_label">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -103,7 +74,7 @@
         </widget>
        </item>
        <item row="0" column="1" colspan="2">
-        <widget class="QLabel" name="filesLocation">
+        <widget class="QLabel" name="files_location">
          <property name="text">
           <string>&lt;CHANGE ME&gt;</string>
          </property>
@@ -112,7 +83,7 @@
       </layout>
      </widget>
     </item>
-    <item row="4" column="0" colspan="2">
+    <item row="3" column="0" colspan="2">
      <widget class="QGroupBox" name="iso_box">
       <property name="maximumSize">
        <size>
@@ -125,7 +96,7 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
-        <widget class="QPushButton" name="loadIsoButton">
+        <widget class="QPushButton" name="load_iso_button">
          <property name="toolTip">
           <string>Extracts an Game ISO to the current files location</string>
          </property>
@@ -135,7 +106,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QPushButton" name="packageIsoButton">
+        <widget class="QPushButton" name="package_iso_button">
          <property name="toolTip">
           <string>Creates an ISO based on the contents of the current files location</string>
          </property>
@@ -148,7 +119,7 @@
      </widget>
     </item>
     <item row="0" column="0" colspan="2">
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="game_patching">
       <property name="title">
        <string>Game Patching</string>
       </property>
