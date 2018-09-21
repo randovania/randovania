@@ -226,7 +226,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
             ),
             "Patching game files...")
 
-    def randomize_game_simplified(self):
+    def apply_layout_simplified(self):
         input_iso = prompt_user_for_input_iso(self)
         if input_iso is None:
             return
