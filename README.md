@@ -1,64 +1,36 @@
-# randovania
-A randomizer validator for the Metroid Prime series.
+# Randovania
+With Randovania, each Metroid Prime 2: Echoes playthrough shuffles the location of all items in the game.
+You could find the Light Beam right off the start, or the Bombs deep inside Sanctuary Fortress.  
 
 ## Installation
 
 ### Windows
 
-Check the [releases page](https://github.com/henriquegemignani/randovania/releases).
+In the [releases page](https://github.com/henriquegemignani/randovania/releases) we have zip files with everything ready to use.
+Just extract and run!
 
-Please note that all binary releases will be for 64-bit Windows only.
+## Usage
 
-### Python Package
-With a Python 3.6 installation:
+![alt text](randovania-readme/gui-1.png)
 
-`python3 -m pip install --upgrade randovania`
+Pressing "Randomize" will open a prompt where you can select your unmodified Metroid Prime 2 ISO file.
+You can also drag-n-drop the ISO on the program.
+
+Randovania will then create a new ISO file in the same location of the provided ISO. Please note
+this make take a few minutes and requires about 3 GiB of space.
+
+In this window you can also configure many options in how the items will be distributed.
+If you're not familiar with many sequence breaking techniques, the default options requires none
+of then, allowing any player to finish the game.
+
+## Community
+
+Join the Metroid Prime Randomizer Discord: https://discord.gg/gymstUz
  
-## Command Line Usage
-
-`randovania echoes validate path/to/randomizer.log`
-
-Checks if the given [Metroid Prime 2: Echoes Randomizer](
-https://m2k2.taigaforum.com/post/randomizer_release.html) seed is beatable
-by a casual player.
-
-`randovania echoes validate --difficulty 5 --skip-item-loss
---print-final-path path/to/randomizer.log`
-
-Check if the seed if the given seed is beatable using every known trick,
-no matter how difficult. This does not include going out of bounds.
-
-It will also print the order of pickups taken and events triggered in
-order to finish the game.
-
-`randovania echoes generate-seed --difficulty 3 --skip-item-loss`
-
-Generate a new seed and validate it until a possible seed is found. Please
-not that this is a very CPU intensive operation, and your computer can be
-non-responsive while it runs.
-
-Dropping the difficulty, or disabling `--skip-item-loss` may cause this
-operation to take even hours to finish, depending on your CPU.
-
-When finished, it will output the seed number. Use this number with the
-Echoes Randomizer as usual. Be sure to remember to pass the correct 
-exclusion list. (The default for this operation is _no_ exclusions.)
-
-## Limitations
-
-* There's no way to choose each trick individually via CLI.
-* The data set does not include out of bounds movement.
-* Dark World damage requirements, while mapped, are not verified.
-* Opening Blast Shield doors from a side does not consider the other side
-as unlocked.
-
-## Options
-
-See `randovania --help`.
-
-
 ## Credits
 
 Many thanks to [Claris](https://www.twitch.tv/claris) for
 making the Echoes Randomizer and both collecting and providing this
-incredible set of data which powers this validator.
+incredible set of data which powers Randovania.
+
+Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testing.
