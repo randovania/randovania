@@ -11,7 +11,7 @@ Just extract and run!
 
 ## Usage
 
-![alt text](randovania-readme/gui-1.png)
+![Randovania GUI](randovania-readme/gui-1.png)
 
 Pressing "Randomize" will open a prompt where you can select your unmodified Metroid Prime 2 ISO file.
 You can also drag-n-drop the ISO on the program.
