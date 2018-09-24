@@ -16,7 +16,7 @@ def _create_test_layout_description(
     return LayoutDescription(
         seed_number=seed_number,
         configuration=configuration,
-        version='0.12.0',
+        version='0.12.1',
         pickup_mapping=pickup_mapping,
         solver_path=())
 

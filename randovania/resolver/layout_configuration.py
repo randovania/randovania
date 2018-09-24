@@ -7,6 +7,7 @@ class LayoutLogic(Enum):
     EASY = "easy"
     NORMAL = "normal"
     HARD = "hard"
+    MINIMAL_RESTRICTIONS = "minimal-restrictions"
 
 
 class LayoutMode(Enum):
