@@ -44,6 +44,18 @@ class Options:
     @hud_memo_popup_removal.setter
     def hud_memo_popup_removal(self, value: bool):
         self.raw_data["hud_memo_popup_removal"] = value
+        
+    @property
+    def include_menu_mod(self) -> bool:
+        return self.raw_data["include_menu_mod"]
+
+    @include_menu_mod.setter
+    def include_menu_mod(self, value: bool):
+        self.raw_data["include_menu_mod"] = value
+
+    @property
+    def backup_files_path(self) -> str:
+        return os.path.join(dirs.user_data_dir, "backup")
 
     @property
     def game_files_path(self) -> str:
@@ -127,6 +139,7 @@ def _default_options() -> Dict[str, Any]:
     options["game_files_path"] = None
     options["show_advanced_options"] = False
     options["display_generate_help"] = True
+    options["include_menu_mod"] = False
 
     options["layout_logic"] = LayoutLogic.NO_GLITCHES.value
     options["layout_mode"] = LayoutMode.STANDARD.value

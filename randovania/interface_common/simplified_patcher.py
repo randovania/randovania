@@ -10,9 +10,16 @@ from randovania.resolver import echoes
 from randovania.resolver.layout_description import LayoutDescription
 
 
-def _delete_files_location(game_files_path: str):
+def delete_files_location():
+    options = application_options()
+
+    game_files_path = options.game_files_path
     if os.path.exists(game_files_path):
         shutil.rmtree(game_files_path)
+
+    backup_files_path = options.backup_files_path
+    if os.path.exists(backup_files_path):
+        shutil.rmtree(backup_files_path)
 
 
 def unpack_iso(input_iso: str, progress_update: ProgressUpdateCallable):
@@ -24,7 +31,7 @@ def unpack_iso(input_iso: str, progress_update: ProgressUpdateCallable):
     """
     game_files_path = application_options().game_files_path
 
-    _delete_files_location(game_files_path)
+    delete_files_location()
     iso_packager.unpack_iso(
         iso=input_iso,
         game_files_path=game_files_path,
@@ -59,13 +66,17 @@ def apply_layout(layout: LayoutDescription, progress_update: ProgressUpdateCalla
     options = application_options()
 
     game_files_path = options.game_files_path
+    backup_files_path = options.backup_files_path
     hud_memo_popup_removal = options.hud_memo_popup_removal
+    include_menu_mod = options.include_menu_mod
 
     claris_randomizer.apply_layout(
         layout=layout,
         hud_memo_popup_removal=hud_memo_popup_removal,
+        include_menu_mod=include_menu_mod,
         game_root=game_files_path,
-        status_update=status_update_lib.create_progress_update_from_successive_messages(progress_update, 100)
+        backup_files_path=backup_files_path,
+        progress_update=progress_update
     )
 
 
