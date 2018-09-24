@@ -1,12 +1,11 @@
 import collections
-from typing import Dict, Set
+from typing import Dict
 
 from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.node import Node
 from randovania.resolver.requirements import RequirementSet
-from randovania.resolver.resources import CurrentResources, ResourceDatabase
 
 
 class Logic:
