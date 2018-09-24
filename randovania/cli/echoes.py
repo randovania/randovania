@@ -35,7 +35,7 @@ def distribute_command_logic(args):
         data=data,
         seed_number=seed_number,
         configuration=LayoutConfiguration(
-            logic=LayoutLogic.NO_GLITCHES,
+            logic=LayoutLogic(args.logic),
             mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED if args.skip_item_loss else LayoutEnabledFlag.DISABLED,
@@ -70,6 +70,12 @@ def add_distribute_command(sub_parsers):
         "--seed",
         type=int,
         default=None,
+        help="The seed number to generate with.")
+    parser.add_argument(
+        "--logic",
+        type=str,
+        choices=[layout.value for layout in LayoutLogic],
+        default=LayoutLogic.NO_GLITCHES.value,
         help="The seed number to generate with.")
     parser.add_argument(
         "--major-items-mode",
