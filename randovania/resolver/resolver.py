@@ -63,13 +63,11 @@ def advance_depth(state: State,
     return None
 
 
-def resolve(difficulty_level: int,
-            tricks_enabled: Set[int],
-            configuration: LayoutConfiguration,
+def resolve(configuration: LayoutConfiguration,
             game: GameDescription,
             patches: GamePatches) -> Optional[State]:
 
-    logic, starting_state = logic_bootstrap(difficulty_level, configuration, game, patches, tricks_enabled)
+    logic, starting_state = logic_bootstrap(configuration, game, patches)
     debug.log_resolve_start()
     return advance_depth(starting_state, logic)
 
