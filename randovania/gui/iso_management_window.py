@@ -11,6 +11,7 @@ from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 from randovania.interface_common import status_update_lib
+from randovania.interface_common.simplified_patcher import delete_files_location
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.layout_description import LayoutDescription
 
@@ -44,16 +45,16 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.show_advanced_options_check.setChecked(options.advanced_options)
         self.show_advanced_options_check.toggled.connect(self.set_advanced_options_visibility)
         self.show_advanced_options_check.setVisible(main_window.is_preview_mode)
+        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
+        self.remove_hud_popup_check.stateChanged.connect(persist_bool_option("hud_memo_popup_removal"))
+        self.include_menu_mod_check.setChecked(options.include_menu_mod)
+        self.include_menu_mod_check.stateChanged.connect(persist_bool_option("include_menu_mod"))
 
         # File Location
         self.files_location.setText(options.game_files_path)
         self.change_files_location_button.clicked.connect(self.prompt_new_files_location)
         self.reset_files_location_button.clicked.connect(self.reset_files_location)
-        self.delete_files_button.clicked.connect(self.delete_current_files_location)
-
-        # Layout
-        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
-        self.remove_hud_popup_check.stateChanged.connect(persist_bool_option("hud_memo_popup_removal"))
+        self.delete_files_button.clicked.connect(delete_files_location)
 
         # ISO Packing
         self.load_iso_button.clicked.connect(self.load_iso)
@@ -92,9 +93,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
     def reset_files_location(self):
         self.set_current_files_location(None)
-
-    def delete_current_files_location(self):
-        _delete_files_location(application_options().game_files_path)
 
     # ISO Packing
     def load_iso(self):
