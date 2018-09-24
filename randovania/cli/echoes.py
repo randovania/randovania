@@ -107,9 +107,9 @@ def distribute_command_logic(args):
 
     from randovania.resolver import generator
     layout_description = generator.generate_list(
-        data,
-        LayoutConfiguration(
-            seed_number=seed_number,
+        data=data,
+        seed_number=seed_number,
+        configuration=LayoutConfiguration(
             logic=LayoutLogic.NO_GLITCHES,
             mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
