@@ -8,7 +8,7 @@ from randovania.resolver import debug, resolver, data_reader
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutLogic, LayoutMode, \
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutMode, \
     LayoutRandomizedFlag
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
@@ -37,39 +37,6 @@ def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
     result = list(x)
     rng.shuffle(result)
     return result
-
-
-def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
-    tricks = {
-        0,  # Scan Dash
-        1,  # Difficult Bomb Jump
-        2,  # Slope Jump
-        3,  # R Jump
-        4,  # BSJ
-        5,  # Roll Jump
-        6,  # Underwater Dash
-        7,  # Air Underwater
-        8,  # Floaty
-        9,  # Infinite Speed
-        10,  # SA without SJ
-        11,  # Wall Boost
-        12,  # Jump off Enemy
-        14,  # Controller Reset
-        15,  # Instant Morph
-    }
-
-    # Skipping Controller Reset and Exclude from Room Randomizer
-
-    if logic == LayoutLogic.NO_GLITCHES:
-        return 0, set()
-    elif logic == LayoutLogic.EASY:
-        return 2, tricks
-    elif logic == LayoutLogic.NORMAL:
-        return 3, tricks
-    elif logic == LayoutLogic.HARD:
-        return 5, tricks
-    else:
-        raise RuntimeError("Unsupported logic")
 
 
 def _iterate_previous_states(state: State) -> Iterator[State]:
@@ -110,14 +77,14 @@ def generate_list(data: Dict,
                   configuration: LayoutConfiguration,
                   status_update: Callable[[str], None]
                   ) -> LayoutDescription:
-    difficulty_level, tricks_enabled = expand_layout_logic(configuration.logic)
-
-    new_patches = _create_patches(seed_number, configuration, data, difficulty_level, status_update, tricks_enabled)
+    new_patches = _create_patches(
+        seed_number=seed_number,
+        configuration=configuration,
+        data=data,
+        status_update=status_update)
 
     game = data_reader.decode_data(data, [])
     final_state_by_resolve = resolver.resolve(
-        difficulty_level=difficulty_level,
-        tricks_enabled=tricks_enabled,
         configuration=configuration,
         game=game,
         patches=new_patches
@@ -140,10 +107,8 @@ def _create_patches(
         seed_number: int,
         configuration: LayoutConfiguration,
         data: Dict,
-        difficulty_level: int,
         status_update: Callable[[str], None],
-        tricks_enabled) -> GamePatches:
-
+) -> GamePatches:
     rng = Random(seed_number)
     game = data_reader.decode_data(data, [])
     patches = GamePatches(
@@ -167,7 +132,7 @@ def _create_patches(
         if pickup not in available_pickups
     ]
 
-    logic, state = logic_bootstrap(difficulty_level, configuration, game, patches, tricks_enabled)
+    logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
     new_patches, non_added_items, final_state_by_distribution = distribute_one_item(

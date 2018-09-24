@@ -27,20 +27,3 @@ class Logic:
 
     def get_additional_requirements(self, node: Node) -> RequirementSet:
         return self.additional_requirements.get(node, RequirementSet.trivial())
-
-
-def build_static_resources(difficulty_level: int,
-                           tricks_enabled: Set[int],
-                           resource_database: ResourceDatabase) -> CurrentResources:
-    static_resources = {}
-
-    for trick in resource_database.trick:
-        if trick.index in tricks_enabled:
-            static_resources[trick] = 1
-        else:
-            static_resources[trick] = 0
-
-    for difficulty in resource_database.difficulty:
-        static_resources[difficulty] = difficulty_level
-
-    return static_resources
