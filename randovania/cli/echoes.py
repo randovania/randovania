@@ -1,12 +1,10 @@
-import argparse
-import multiprocessing
+import random
 import random
 import sys
 from argparse import ArgumentParser
-from collections import defaultdict
 
 from randovania.cli import prime_database
-from randovania.games.prime import log_parser, iso_packager
+from randovania.games.prime import log_parser
 from randovania.interface_common.options import MAX_DIFFICULTY
 from randovania.resolver import debug
 from randovania.resolver.echoes import run_resolver, RandomizerConfiguration, \
@@ -94,8 +92,6 @@ def distribute_command_logic(args):
     data = prime_database.decode_data_file(args)
     resolver_config = build_resolver_configuration(args)
 
-    from randovania.resolver.game_patches import GamePatches
-
     def status_update(s):
         pass
 
@@ -120,30 +116,21 @@ def distribute_command_logic(args):
         ),
         status_update=status_update
     )
-
-    new_patches = GamePatches(resolver_config.item_loss, list(layout_description.pickup_mapping))
-
-    log = log_parser.log_with_patches(new_patches)
-    log.write(sys.stdout)
-
-    resolver_config = build_resolver_configuration(args)
-
-    final_state = run_resolver(data, log, resolver_config)
-    if final_state:
-        print_path_for_state(final_state, new_patches, True, True)
-    else:
-        print("Impossible.")
-        raise SystemExit(1)
+    layout_description.save_to_file(args.output_file)
 
 
 def add_distribute_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "preview-distribute",
+        "distribute",
         help="Distribute pickups."
     )
 
     add_resolver_config_arguments(parser)
     prime_database.add_data_file_argument(parser)
+    parser.add_argument(
+        "output_file",
+        type=str,
+        help="Where to place the seed log.")
     parser.add_argument(
         "--debug",
         choices=range(4),
@@ -207,97 +194,6 @@ def add_validate_command(sub_parsers):
     parser.set_defaults(func=validate_command_logic)
 
 
-def generate_seed_log_command_logic(args):
-    if args.output_file:
-        out = open(args.output_file, "w")
-    else:
-        out = sys.stdout
-    log_parser.generate_log(args.seed, args.exclude_pickups, args.randomize_elevators).write(out)
-    out.close()
-
-
-def add_generate_seed_log_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "generate-seed-log",
-        help="Generates a logfile for the given seed.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )
-    parser.add_argument(
-        "seed",
-        type=int,
-        help="The seed."
-    )
-    add_randomizer_configuration_arguments(parser)
-    parser.add_argument(
-        "--output-file",
-        type=str,
-        help="Where to write output to. Defaults to standard output."
-    )
-    parser.set_defaults(func=generate_seed_log_command_logic)
-
-
-def analyze_seed_log_command_logic(args):
-    randomizer_log = log_parser.parse_log(args.logfile)
-
-    major_pickups_per_world = defaultdict(int)
-    world_importance = defaultdict(int)
-
-    pickup_database = randomizer_log.pickup_database
-    for entry in pickup_database.entries:
-        if entry.item in pickup_database.pickup_importance:
-            major_pickups_per_world[entry.world] += 1
-            world_importance[entry.world] += pickup_database.pickup_importance[entry.item]
-
-    print("World Major Pickup Count:")
-    for world, count in major_pickups_per_world.items():
-        print(world, count)
-    print()
-
-    print("World Importance Count:")
-    for world, count in world_importance.items():
-        print(world, count)
-
-
-def add_analyze_seed_log_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "analyze-seed-log",
-        help="Analyzes how the major pickups are distributed in a given seed.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )
-    parser.add_argument(
-        "logfile",
-        type=str,
-        help="Path to the log file of a Randomizer run.")
-    parser.set_defaults(func=analyze_seed_log_command_logic)
-
-
-def extract_iso_command_logic(args):
-    def progress_update(status: int):
-        print("Status update: {}".format(status))
-
-    iso_packager.unpack_iso(
-        iso=args.iso_path,
-        game_files_path=args.extract_path,
-        progress_update=progress_update)
-
-
-def add_extract_iso_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "extract-iso",
-        help="Extracts files from an ISO, in order to run the Randomizer.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )
-    parser.add_argument(
-        "iso_path",
-        type=str,
-        help="Path to the ISO file to extract.")
-    parser.add_argument(
-        "extract_path",
-        type=str,
-        help="Path to where the ISO will be extracted.")
-    parser.set_defaults(func=extract_iso_command_logic)
-
-
 def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "echoes",
@@ -306,9 +202,6 @@ def create_subparsers(sub_parsers):
     sub_parsers = parser.add_subparsers(dest="command")
     add_validate_command(sub_parsers)
     add_distribute_command(sub_parsers)
-    add_generate_seed_log_command(sub_parsers)
-    add_analyze_seed_log_command(sub_parsers)
-    add_extract_iso_command(sub_parsers)
     prime_database.create_subparsers(sub_parsers)
 
     def check_command(args):
