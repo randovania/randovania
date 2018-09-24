@@ -142,7 +142,7 @@ def _create_patches(
         data: Dict,
         difficulty_level: int,
         status_update: Callable[[str], None],
-        tricks_enabled):
+        tricks_enabled) -> GamePatches:
 
     rng = Random(seed_number)
     game = data_reader.decode_data(data, [])
