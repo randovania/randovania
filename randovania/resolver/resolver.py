@@ -1,4 +1,4 @@
-from typing import Set, Optional
+from typing import Optional
 
 from randovania.resolver import debug
 from randovania.resolver.bootstrap import logic_bootstrap

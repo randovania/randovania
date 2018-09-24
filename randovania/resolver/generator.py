@@ -9,7 +9,7 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutMode, \
-    LayoutRandomizedFlag
+    LayoutRandomizedFlag, LayoutLogic
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node, PickupNode
@@ -83,23 +83,30 @@ def generate_list(data: Dict,
         data=data,
         status_update=status_update)
 
-    game = data_reader.decode_data(data, [])
-    final_state_by_resolve = resolver.resolve(
-        configuration=configuration,
-        game=game,
-        patches=new_patches
-    )
+    if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS and False:
+        # For minimal restrictions, the solver path will take paths that are just impossible.
+        # Let's just not include a path instead of including a lie.
+        solver_path = ()
 
-    if final_state_by_resolve is None:
-        # Why is final_state_by_distribution not OK?
-        raise GenerationFailure("We just created an item distribution we believe is impossible. What?")
+    else:
+        game = data_reader.decode_data(data, [])
+        final_state_by_resolve = resolver.resolve(
+            configuration=configuration,
+            game=game,
+            patches=new_patches
+        )
+        if final_state_by_resolve is None:
+            # Why is final_state_by_distribution not OK?
+            raise GenerationFailure("We just created an item distribution we believe is impossible. What?")
+        else:
+            solver_path = _state_to_solver_path(final_state_by_resolve, game)
 
     return LayoutDescription(
         seed_number=seed_number,
         configuration=configuration,
         version=VERSION,
         pickup_mapping=tuple(new_patches.pickup_mapping),
-        solver_path=_state_to_solver_path(final_state_by_resolve, game)
+        solver_path=solver_path
     )
 
 

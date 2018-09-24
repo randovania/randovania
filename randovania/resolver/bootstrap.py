@@ -10,6 +10,34 @@ from randovania.resolver.resources import merge_resources, ResourceDatabase, Cur
 from randovania.resolver.state import State
 
 
+_items_to_not_add_in_minimal_restrictions = {
+    # Dark Visor
+    10,
+
+    # Light Suit
+    14,
+
+    # Screw Attack
+    27,
+
+    # Sky Temple Keys
+    29, 30, 31, 101, 102, 103, 104, 105, 106
+}
+
+_minimal_restrictions_custom_item_count = {
+    # Energy Tank
+    42: 14,
+    # Power Bomb
+    43: 10,
+    # Missile
+    44: 100,
+    # Dark Ammo
+    45: 100,
+    # Light Ammo
+    46: 100
+}
+
+
 def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
     """
 
@@ -42,7 +70,7 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
         return 2, tricks
     elif logic == LayoutLogic.NORMAL:
         return 3, tricks
-    elif logic == LayoutLogic.HARD:
+    elif logic == LayoutLogic.HARD or logic == LayoutLogic.MINIMAL_RESTRICTIONS:
         return 5, tricks
     else:
         raise RuntimeError("Unsupported logic")
@@ -74,6 +102,20 @@ def static_resources_for_layout_logic(
     return static_resources
 
 
+def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
+                                                resource_database: ResourceDatabase,
+                                                ) -> None:
+    # TODO: this function assumes we're talking about Echoes
+    for event in resource_database.event:
+        # Ignoring Emperor Ing event, otherwise we're done automatically
+        if event.index != 8:
+            resources[event] = 1
+
+    for item in resource_database.item:
+        if item.index not in _items_to_not_add_in_minimal_restrictions:
+            resources[item] = _minimal_restrictions_custom_item_count.get(item.index, 1)
+
+
 def logic_bootstrap(configuration: LayoutConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
@@ -92,6 +134,10 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     game = copy.deepcopy(game)
     logic = Logic(game, configuration, patches)
     starting_state = State.calculate_starting_state(logic)
+
+    if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS:
+        _add_minimal_restrictions_initial_resources(starting_state.resources,
+                                                    game.resource_database)
 
     game.simplify_connections(merge_resources(
         static_resources_for_layout_logic(configuration.logic, game.resource_database),

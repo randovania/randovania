@@ -158,6 +158,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
             LayoutLogic.EASY: self.logic_easy_radio,
             LayoutLogic.NORMAL: self.logic_normal_radio,
             LayoutLogic.HARD: self.logic_hard_radio,
+            LayoutLogic.MINIMAL_RESTRICTIONS: self.logic_minimalrestrictions_radio,
         }
         self._mode_radios = {
             LayoutMode.STANDARD: self.mode_standard_radio,
