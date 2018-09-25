@@ -1,5 +1,6 @@
 import collections
 import copy
+import itertools
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict, Set
 
@@ -66,8 +67,8 @@ def _state_to_solver_path(final_state: State,
     )
 
 
-def calculate_available_pickups(game: GameDescription, categories: Set[str]) -> Iterator[PickupEntry]:
-    for pickup in game.resource_database.pickups:
+def calculate_available_pickups(remaining_items: Iterator[PickupEntry], categories: Set[str]) -> Iterator[PickupEntry]:
+    for pickup in remaining_items:
         if pickup.item_category in categories:
             yield pickup
 
@@ -132,10 +133,35 @@ def _create_patches(
     else:
         categories.add("sky_temple_key")
 
-    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(game, categories))))
+    split_pickups = game.resource_database.pickups_split_by_name()
+    useless_item = split_pickups["Energy Transfer Module"][0]
+
+    for pickup_name, pickup_list in split_pickups.items():
+        configured_quantity = configuration.quantity_for_pickup(pickup_name) or len(pickup_list)
+        quantity_delta = configured_quantity - len(pickup_list)
+
+        if quantity_delta > 0:
+            # We need more: copy the last element
+            pickup_list.extend(pickup_list[-1:] * quantity_delta)
+
+        elif quantity_delta < 0:
+            # We need less: drop the end of the list
+            # Yes, the index of the following slice should be negative
+            del pickup_list[quantity_delta:]
+
+    remaining_items = list(itertools.chain.from_iterable(split_pickups.values()))
+    quantity_delta = len(remaining_items) - len(game.resource_database.pickups)
+    if quantity_delta > 0:
+        raise GenerationFailure("Invalid configuration: requested {} more items than available slots ({}).".format(
+            quantity_delta, len(game.resource_database.pickups)
+        ))
+
+    elif quantity_delta < 0:
+        remaining_items.extend([useless_item] * -quantity_delta)
+
+    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(remaining_items, categories))))
     remaining_items = [
-        pickup
-        for pickup in game.resource_database.pickups
+        pickup for pickup in remaining_items
         if pickup not in available_pickups
     ]
 
