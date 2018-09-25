@@ -141,6 +141,13 @@ class ResourceDatabase(NamedTuple):
     def energy_tank(self):
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
 
+    def pickups_split_by_name(self) -> Dict[str, List[PickupEntry]]:
+        result = {}
+        for pickup in self.pickups:
+            result[pickup.item] = result.get(pickup.item, [])
+            result[pickup.item].append(pickup)
+        return result
+
 
 def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResources:
     return {
