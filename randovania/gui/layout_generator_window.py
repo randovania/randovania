@@ -4,8 +4,9 @@ from typing import Dict, Optional
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFileDialog, QCheckBox
 
+from randovania.games.prime import binary_data
 from randovania.gui import TabService
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
@@ -14,6 +15,7 @@ from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.generator import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutLogic, LayoutMode, LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
@@ -62,6 +64,8 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         # self.setup_initial_combo_selection()
         self.create_layout_button.clicked.connect(self._create_new_layout_pressed)
         self.view_details_button.clicked.connect(self._view_layout_details)
+
+        self._create_item_toggles()
 
         # Update with Options
         options = application_options()
@@ -191,6 +195,22 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
                 radio.toggled.connect(
                     functools.partial(
                         _update_options_when_true, field_name, value))
+
+    def _create_item_toggles(self):
+
+        data = binary_data.decode_default_prime2()
+        resource_database = read_resource_database(data["resource_database"])
+
+        split_pickups = resource_database.pickups_split_by_name()
+
+        # TODO: Very specific logic that should be provided by data
+        split_pickups.pop("Energy Transfer Module")
+
+        for pickup in sorted(split_pickups.keys()):
+            check_box = QCheckBox(self.itemquantity_group)
+            check_box.setObjectName("checkBox")
+            check_box.setText(pickup)
+            self.gridLayout_2.addWidget(check_box)
 
     # Progress
     def enable_buttons_with_background_tasks(self, value: bool):
