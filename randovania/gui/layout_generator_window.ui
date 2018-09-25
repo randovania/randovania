@@ -314,6 +314,51 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
           </layout>
          </widget>
         </item>
+        <item>
+         <widget class="QGroupBox" name="itemquantity_group">
+          <property name="title">
+           <string>Item Quantity</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="spinBox"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="itemquantity_reset_button">
+             <property name="text">
+              <string>Reset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="itemquantity_total_label">
+             <property name="text">
+              <string>Total Pickups: 0/0</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="itemquantity_description_label">
+             <property name="text">
+              <string>Choose how many of each item will appear in the game. Adding more than one for major upgrades makes it more likely you'll find that upgrade, but additional copies are useless.
+
+The total of configured items must be less than how many spots are in the game: trying to add more will fail when generating.
+If removing items, the remaning spots are filled with Energy Transfer Module.
+
+Removing required items, like Screw Attack or all beams, will cause the generation to go infinitely.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>
