@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import NamedTuple, List, Optional
+from typing import NamedTuple, List, Optional, Set
 
 
 class LayoutLogic(Enum):
@@ -41,6 +41,10 @@ class LayoutConfiguration(NamedTuple):
 
     def quantity_for_pickup(self, pickup_name: str) -> Optional[int]:
         return self.pickup_quantities.get(pickup_name)
+
+    @property
+    def pickups_with_configured_quantity(self) -> Set[str]:
+        return set(self.pickup_quantities.keys())
 
     @property
     def as_json(self) -> dict:
