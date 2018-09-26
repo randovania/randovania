@@ -120,6 +120,15 @@ class Options:
     def layout_configuration_item_loss(self, value: LayoutEnabledFlag):
         self.raw_data["layout_item_loss"] = LayoutEnabledFlag(value.value).value
 
+    def quantity_for_pickup(self, pickup_name: str) -> Optional[int]:
+        return self.raw_data["quantity_for_pickup"].get(pickup_name)
+
+    def set_quantity_for_pickup(self, pickup_name: str, new_quantity: Optional[int]) -> None:
+        if new_quantity is not None:
+            self.raw_data["quantity_for_pickup"][pickup_name] = new_quantity
+        elif pickup_name in self.raw_data["quantity_for_pickup"]:
+            del self.raw_data["quantity_for_pickup"][pickup_name]
+
     @property
     def layout_configuration(self) -> LayoutConfiguration:
         return LayoutConfiguration(
@@ -145,6 +154,7 @@ def _default_options() -> Dict[str, Any]:
     options["layout_mode"] = LayoutMode.STANDARD.value
     options["layout_sky_temple_keys"] = LayoutRandomizedFlag.RANDOMIZED.value
     options["layout_item_loss"] = LayoutEnabledFlag.ENABLED.value
+    options["quantity_for_pickup"] = {}
     return options
 
 

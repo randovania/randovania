@@ -4,7 +4,7 @@ from typing import Dict, Optional
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFileDialog, QCheckBox
+from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFileDialog, QCheckBox, QSpinBox
 
 from randovania.games.prime import binary_data
 from randovania.gui import TabService
@@ -41,6 +41,11 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     _mode_radios: Dict[LayoutMode, QRadioButton]
     _sky_temple_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _item_loss_radios: Dict[LayoutEnabledFlag, QRadioButton]
+    _spinbox_for_item: Dict[str, QSpinBox] = {}
+    _bulk_changing_quantity = False
+
+    _total_item_count = 0
+    _maximum_item_count = 0
 
     layout_generated_signal = pyqtSignal(LayoutDescription)
     failed_to_generate_signal = pyqtSignal(Exception)
@@ -57,6 +62,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         self.display_help_box.toggled.connect(self.update_help_display)
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
         self.layout_generated_signal.connect(self._on_layout_generated)
+        self.itemquantity_reset_button.clicked.connect(self._reset_item_quantities)
 
         # All code for the Randomize button
         self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
@@ -197,20 +203,67 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
                         _update_options_when_true, field_name, value))
 
     def _create_item_toggles(self):
-
+        options = application_options()
         data = binary_data.decode_default_prime2()
         resource_database = read_resource_database(data["resource_database"])
 
         split_pickups = resource_database.pickups_split_by_name()
+        self._maximum_item_count = len(resource_database.pickups)
 
         # TODO: Very specific logic that should be provided by data
         split_pickups.pop("Energy Transfer Module")
 
-        for pickup in sorted(split_pickups.keys()):
-            check_box = QCheckBox(self.itemquantity_group)
-            check_box.setObjectName("checkBox")
-            check_box.setText(pickup)
-            self.gridLayout_2.addWidget(check_box)
+        num_rows = len(split_pickups) / 2
+        for i, pickup in enumerate(sorted(split_pickups.keys())):
+            row = 3 + i % num_rows
+            column = (i // num_rows) * 2
+            pickup_label = QLabel(self.itemquantity_group)
+            pickup_label.setText(pickup)
+            self.gridLayout_2.addWidget(pickup_label, row, column, 1, 1)
+
+            value = options.quantity_for_pickup(pickup) or len(split_pickups[pickup])
+            self._total_item_count += value
+
+            spin_box = QSpinBox(self.itemquantity_group)
+            spin_box.pickup_name = pickup
+            spin_box.previous_value = value
+            spin_box.setValue(value)
+            spin_box.setFixedWidth(75)
+            spin_box.setMaximum(self._maximum_item_count)
+            spin_box.valueChanged.connect(functools.partial(self._change_item_quantity, spin_box))
+            self._spinbox_for_item[pickup] = spin_box
+            self.gridLayout_2.addWidget(spin_box, row, column + 1, 1, 1)
+
+        self._update_item_quantity_total_label()
+
+    def _reset_item_quantities(self):
+        self._bulk_changing_quantity = True
+
+        data = binary_data.decode_default_prime2()
+        resource_database = read_resource_database(data["resource_database"])
+        split_pickups = resource_database.pickups_split_by_name()
+
+        for pickup, pickup_list in split_pickups.items():
+            if pickup not in self._spinbox_for_item:
+                continue
+            self._spinbox_for_item[pickup].setValue(len(pickup_list))
+
+        self._bulk_changing_quantity = False
+
+    def _change_item_quantity(self, spin_box: QSpinBox, new_quantity: int):
+        options = application_options()
+        self._total_item_count -= spin_box.previous_value
+        self._total_item_count += new_quantity
+        spin_box.previous_value = new_quantity
+        options.set_quantity_for_pickup(spin_box.pickup_name, new_quantity)
+        self._update_item_quantity_total_label()
+
+        if not self._bulk_changing_quantity:
+            options.save_to_disk()
+
+    def _update_item_quantity_total_label(self):
+        self.itemquantity_total_label.setText("Total Pickups: {}/{}".format(
+            self._total_item_count, self._maximum_item_count))
 
     # Progress
     def enable_buttons_with_background_tasks(self, value: bool):
