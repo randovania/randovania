@@ -37,9 +37,10 @@ class LayoutConfiguration(NamedTuple):
     elevators: LayoutRandomizedFlag
     hundo_guaranteed: LayoutEnabledFlag
     difficulty: LayoutDifficulty
+    pickup_quantities: dict
 
     def quantity_for_pickup(self, pickup_name: str) -> Optional[int]:
-        return None
+        return self.pickup_quantities.get(pickup_name)
 
     @property
     def as_json(self) -> dict:
@@ -52,6 +53,7 @@ class LayoutConfiguration(NamedTuple):
             "elevators": self.elevators.value,
             "hundo_guaranteed": self.hundo_guaranteed.value,
             "difficulty": self.difficulty.value,
+            "pickup_quantities": self.pickup_quantities,
         }
 
     @property
@@ -67,6 +69,9 @@ class LayoutConfiguration(NamedTuple):
         if self.elevators == LayoutRandomizedFlag.RANDOMIZED:
             strings.append("randomized-elevators")
 
+        if self.pickup_quantities:
+            strings.append("customized-quantities")
+
         return "_".join(strings)
 
     @classmethod
@@ -79,4 +84,5 @@ class LayoutConfiguration(NamedTuple):
             elevators=LayoutRandomizedFlag(json_dict["elevators"]),
             hundo_guaranteed=LayoutEnabledFlag(json_dict["hundo_guaranteed"]),
             difficulty=LayoutDifficulty(json_dict["difficulty"]),
+            pickup_quantities=json_dict["pickup_quantities"],
         )

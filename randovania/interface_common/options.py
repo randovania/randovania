@@ -139,6 +139,7 @@ class Options:
             elevators=LayoutRandomizedFlag.VANILLA,
             hundo_guaranteed=LayoutEnabledFlag.DISABLED,
             difficulty=LayoutDifficulty.NORMAL,
+            pickup_quantities=self.raw_data["quantity_for_pickup"],
         )
 
 

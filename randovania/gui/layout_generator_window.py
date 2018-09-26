@@ -221,11 +221,15 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
             pickup_label.setText(pickup)
             self.gridLayout_2.addWidget(pickup_label, row, column, 1, 1)
 
-            value = options.quantity_for_pickup(pickup) or len(split_pickups[pickup])
+            original_quantity = len(split_pickups[pickup])
+            value = options.quantity_for_pickup(pickup)
+            if value is None:
+                value = original_quantity
             self._total_item_count += value
 
             spin_box = QSpinBox(self.itemquantity_group)
             spin_box.pickup_name = pickup
+            spin_box.original_quantity = original_quantity
             spin_box.previous_value = value
             spin_box.setValue(value)
             spin_box.setFixedWidth(75)
@@ -248,15 +252,18 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
                 continue
             self._spinbox_for_item[pickup].setValue(len(pickup_list))
 
+        application_options().save_to_disk()
         self._bulk_changing_quantity = False
 
     def _change_item_quantity(self, spin_box: QSpinBox, new_quantity: int):
-        options = application_options()
         self._total_item_count -= spin_box.previous_value
         self._total_item_count += new_quantity
         spin_box.previous_value = new_quantity
-        options.set_quantity_for_pickup(spin_box.pickup_name, new_quantity)
         self._update_item_quantity_total_label()
+
+        options = application_options()
+        options.set_quantity_for_pickup(
+            spin_box.pickup_name, new_quantity if new_quantity != spin_box.original_quantity else None)
 
         if not self._bulk_changing_quantity:
             options.save_to_disk()

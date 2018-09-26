@@ -137,7 +137,9 @@ def _create_patches(
     useless_item = split_pickups["Energy Transfer Module"][0]
 
     for pickup_name, pickup_list in split_pickups.items():
-        configured_quantity = configuration.quantity_for_pickup(pickup_name) or len(pickup_list)
+        configured_quantity = configuration.quantity_for_pickup(pickup_name)
+        if configured_quantity is None:
+            configured_quantity = len(pickup_list)
         quantity_delta = configured_quantity - len(pickup_list)
 
         if quantity_delta > 0:
