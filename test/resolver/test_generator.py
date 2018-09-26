@@ -59,8 +59,8 @@ _test_descriptions = [
 ]
 
 
-@pytest.fixture(params=_test_descriptions)
-def layout_description(request):
+@pytest.fixture(params=_test_descriptions, name="layout_description")
+def _layout_description(request):
     yield request.param
 
 
