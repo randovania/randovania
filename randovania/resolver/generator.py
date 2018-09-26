@@ -111,6 +111,49 @@ def generate_list(data: Dict,
     )
 
 
+def _calculate_item_pool(configuration: LayoutConfiguration,
+                         game: GameDescription,
+                         ) -> List[PickupEntry]:
+    split_pickups = game.resource_database.pickups_split_by_name()
+    useless_item = split_pickups["Energy Transfer Module"][0]
+
+    pickups_with_configured_quantity = configuration.pickups_with_configured_quantity
+
+    for pickup_name, pickup_list in split_pickups.items():
+        if pickup_name in pickups_with_configured_quantity:
+            configured_quantity = configuration.quantity_for_pickup(pickup_name)
+            pickups_with_configured_quantity.remove(pickup_name)
+        else:
+            configured_quantity = len(pickup_list)
+
+        quantity_delta = configured_quantity - len(pickup_list)
+
+        if quantity_delta > 0:
+            # We need more: copy the last element
+            pickup_list.extend(pickup_list[-1:] * quantity_delta)
+
+        elif quantity_delta < 0:
+            # We need less: drop the end of the list
+            # Yes, the index of the following slice should be negative
+            del pickup_list[quantity_delta:]
+
+    if pickups_with_configured_quantity:
+        raise GenerationFailure("Configuration has custom quantity for unknown pickups: {}".format(
+            pickups_with_configured_quantity))
+
+    item_pool = list(itertools.chain.from_iterable(split_pickups.values()))
+    quantity_delta = len(item_pool) - len(game.resource_database.pickups)
+    if quantity_delta > 0:
+        raise GenerationFailure("Invalid configuration: requested {} more items than available slots ({}).".format(
+            quantity_delta, len(game.resource_database.pickups)
+        ))
+
+    elif quantity_delta < 0:
+        item_pool.extend([useless_item] * -quantity_delta)
+
+    return item_pool
+
+
 def _create_patches(
         seed_number: int,
         configuration: LayoutConfiguration,
@@ -133,37 +176,10 @@ def _create_patches(
     else:
         categories.add("sky_temple_key")
 
-    split_pickups = game.resource_database.pickups_split_by_name()
-    useless_item = split_pickups["Energy Transfer Module"][0]
-
-    for pickup_name, pickup_list in split_pickups.items():
-        configured_quantity = configuration.quantity_for_pickup(pickup_name)
-        if configured_quantity is None:
-            configured_quantity = len(pickup_list)
-        quantity_delta = configured_quantity - len(pickup_list)
-
-        if quantity_delta > 0:
-            # We need more: copy the last element
-            pickup_list.extend(pickup_list[-1:] * quantity_delta)
-
-        elif quantity_delta < 0:
-            # We need less: drop the end of the list
-            # Yes, the index of the following slice should be negative
-            del pickup_list[quantity_delta:]
-
-    remaining_items = list(itertools.chain.from_iterable(split_pickups.values()))
-    quantity_delta = len(remaining_items) - len(game.resource_database.pickups)
-    if quantity_delta > 0:
-        raise GenerationFailure("Invalid configuration: requested {} more items than available slots ({}).".format(
-            quantity_delta, len(game.resource_database.pickups)
-        ))
-
-    elif quantity_delta < 0:
-        remaining_items.extend([useless_item] * -quantity_delta)
-
-    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(remaining_items, categories))))
+    item_pool = _calculate_item_pool(configuration, game)
+    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(item_pool, categories))))
     remaining_items = [
-        pickup for pickup in sorted(remaining_items)
+        pickup for pickup in sorted(item_pool)
         if pickup not in available_pickups
     ]
 

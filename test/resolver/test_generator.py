@@ -75,6 +75,7 @@ def test_compare_generated_with_data(layout_description: LayoutDescription):
         layout_description.configuration,
         status_update=status_update)
 
+    print(generated_description.pickup_mapping)
     assert generated_description.without_solver_path == layout_description
 
 
