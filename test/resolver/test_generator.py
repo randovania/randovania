@@ -64,6 +64,28 @@ def _layout_description(request):
     yield request.param
 
 
+def test_generate_seed_with_invalid_quantity_configuration():
+    # Setup
+    status_update = MagicMock()
+    data = binary_data.decode_default_prime2()
+
+    configuration = LayoutConfiguration(
+        logic=LayoutLogic.NO_GLITCHES,
+        mode=LayoutMode.STANDARD,
+        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+        item_loss=LayoutEnabledFlag.ENABLED,
+        elevators=LayoutRandomizedFlag.VANILLA,
+        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+        difficulty=LayoutDifficulty.NORMAL,
+        pickup_quantities={"Undefined Item": 5})
+
+    # Run
+    with pytest.raises(generator.GenerationFailure):
+        generator.generate_list(
+            data, 50, configuration,
+            status_update=status_update)
+
+
 def test_compare_generated_with_data(layout_description: LayoutDescription):
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
