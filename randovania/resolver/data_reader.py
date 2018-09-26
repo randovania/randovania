@@ -1,8 +1,7 @@
-import pprint
 from functools import partial
 from typing import List, Callable, TypeVar, Tuple, Dict
 
-from randovania.games.prime.log_parser import Elevator
+from randovania.games.prime.echoes_elevator import Elevator
 from randovania.resolver.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.resolver.game_description import World, Area, GameDescription
 from randovania.resolver.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
