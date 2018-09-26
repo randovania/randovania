@@ -163,7 +163,7 @@ def _create_patches(
 
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(remaining_items, categories))))
     remaining_items = [
-        pickup for pickup in remaining_items
+        pickup for pickup in sorted(remaining_items)
         if pickup not in available_pickups
     ]
 
