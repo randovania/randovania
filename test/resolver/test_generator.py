@@ -56,6 +56,25 @@ _test_descriptions = [
                         11, 60, 6, 110, 24, 28, 108, 58, 34, 111, 0, 72, 64, 99, 7, 29, 83, 84, 39, 14, 40, 16, 89, 26,
                         50),
     ),
+    _create_test_layout_description(
+        seed_number=50000,
+        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+                                          mode=LayoutMode.STANDARD,
+                                          sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                          item_loss=LayoutEnabledFlag.ENABLED,
+                                          elevators=LayoutRandomizedFlag.VANILLA,
+                                          hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+                                          difficulty=LayoutDifficulty.NORMAL,
+                                          pickup_quantities={
+                                              "Missile Expansion": 0
+                                          }),
+        pickup_mapping=(21, 59, 76, 21, 108, 21, 115, 114, 1, 69, 4, 53, 96, 88, 56, 92, 90, 43, 15, 21, 23, 82, 21, 46,
+                        21, 21, 9, 21, 21, 21, 19, 80, 21, 112, 21, 21, 21, 74, 57, 70, 21, 44, 116, 13, 91, 21, 37, 55,
+                        38, 86, 64, 45, 52, 27, 102, 21, 21, 21, 8, 75, 117, 105, 118, 78, 26, 21, 21, 21, 109, 21, 21,
+                        21, 21, 21, 68, 21, 42, 111, 79, 21, 21, 21, 16, 25, 21, 21, 21, 71, 21, 21, 21, 21, 100, 106,
+                        11, 65, 21, 21, 24, 21, 21, 21, 33, 21, 21, 17, 94, 21, 7, 21, 83, 95, 39, 21, 40, 21, 72, 21,
+                        50),
+    ),
 ]
 
 
