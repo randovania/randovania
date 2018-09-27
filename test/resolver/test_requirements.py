@@ -15,8 +15,8 @@ def database():
         damage=[],
         version=[],
         misc=[
-            SimpleResourceInfo(0, "Trivial", "Trivial"),
-            SimpleResourceInfo(1, "Impossible", "Impossible"),
+            SimpleResourceInfo(0, "Trivial", "Trivial", ""),
+            SimpleResourceInfo(1, "Impossible", "Impossible", ""),
         ],
         difficulty=[],
         pickups=[]
@@ -24,14 +24,14 @@ def database():
 
 
 def make_req_a():
-    req_a = SimpleResourceInfo(0, "A", "A")
+    req_a = SimpleResourceInfo(0, "A", "A", "")
     id_req_a = IndividualRequirement(req_a, 1, False)
 
     return req_a, id_req_a
 
 
 def make_req_b():
-    req_b = SimpleResourceInfo(1, "B", "B")
+    req_b = SimpleResourceInfo(1, "B", "B", "")
     id_req_b = IndividualRequirement(req_b, 1, False)
 
     return req_b, id_req_b
@@ -105,7 +105,7 @@ def test_trivial_merge():
 def test_replace_missing(replacement):
     trivial = RequirementSet.trivial()
 
-    req_a = SimpleResourceInfo(0, "A", "A")
+    req_a = SimpleResourceInfo(0, "A", "A", "")
     id_req_a = IndividualRequirement(req_a, 1, False)
 
     result = trivial.replace(id_req_a, replacement)

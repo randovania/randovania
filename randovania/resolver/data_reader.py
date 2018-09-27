@@ -1,3 +1,4 @@
+import functools
 from functools import partial
 from typing import List, Callable, TypeVar, Tuple, Dict
 
@@ -26,13 +27,13 @@ def read_damage_reductions(data: List[Dict]) -> Tuple[DamageReduction, ...]:
     return tuple(read_array(data, read_damage_reduction))
 
 
-def read_resource_info(data: Dict) -> SimpleResourceInfo:
+def read_resource_info(data: Dict, resource_type: str = "") -> SimpleResourceInfo:
     return SimpleResourceInfo(data["index"], data["long_name"],
-                              data["short_name"])
+                              data["short_name"], resource_type)
 
 
-def read_resource_info_array(data: List[Dict]) -> List[SimpleResourceInfo]:
-    return read_array(data, read_resource_info)
+def read_resource_info_array(data: List[Dict], resource_type: str = "") -> List[SimpleResourceInfo]:
+    return read_array(data, functools.partial(read_resource_info, resource_type=resource_type))
 
 
 def read_damage_resource_info(data: Dict) -> DamageResourceInfo:
@@ -203,9 +204,9 @@ class WorldReader:
 
 def read_resource_database(data: Dict) -> ResourceDatabase:
     return ResourceDatabase(
-        item=read_resource_info_array(data["items"]),
-        event=read_resource_info_array(data["events"]),
-        trick=read_resource_info_array(data["tricks"]),
+        item=read_resource_info_array(data["items"], "I"),
+        event=read_resource_info_array(data["events"], "E"),
+        trick=read_resource_info_array(data["tricks"], "T"),
         damage=read_damage_resource_info_array(data["damage"]),
         version=read_resource_info_array(data["versions"]),
         misc=read_resource_info_array(data["misc"]),

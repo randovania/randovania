@@ -8,9 +8,9 @@ from randovania.resolver.resources import SimpleResourceInfo
 
 
 def test_add_requirement_to_set():
-    req_a = SimpleResourceInfo(0, "A", "A")
-    req_b = SimpleResourceInfo(0, "B", "B")
-    req_c = SimpleResourceInfo(0, "C", "C")
+    req_a = SimpleResourceInfo(0, "A", "A", "")
+    req_b = SimpleResourceInfo(0, "B", "B", "")
+    req_c = SimpleResourceInfo(0, "C", "C", "")
 
     id_req_a = IndividualRequirement(req_a, 1, False)
     id_req_c = IndividualRequirement(req_c, 1, False)

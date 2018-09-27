@@ -6,9 +6,10 @@ class SimpleResourceInfo(NamedTuple):
     index: int
     long_name: str
     short_name: str
+    resource_type: str
 
     def __str__(self):
-        return self.long_name
+        return "{}: {}".format(self.resource_type, self.long_name) if self.resource_type else self.long_name
 
 
 class DamageReduction(NamedTuple):

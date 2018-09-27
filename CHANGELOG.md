@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 - Fixed logic errors due to inability to reload Main Reactor after defeating Dark Samus 1.
+- Added prefix when loading resources based on type, improving logs and Data Visualizer.
 
 ## [0.13.0] - 2018-06-26
 - Added new logic: "Minimal Validation". This logic only checks if Dark Visor, Light Suit and Screw Attack won't lock each other.
