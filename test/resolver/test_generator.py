@@ -2,6 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania import VERSION
 from randovania.games.prime import binary_data
 from randovania.resolver import generator, debug
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
@@ -16,7 +17,7 @@ def _create_test_layout_description(
     return LayoutDescription(
         seed_number=seed_number,
         configuration=configuration,
-        version='0.12.1',
+        version=VERSION,
         pickup_mapping=pickup_mapping,
         solver_path=())
 
