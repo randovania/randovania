@@ -14,21 +14,7 @@ from randovania.resolver.resources import DamageResourceInfo, SimpleResourceInfo
 
 
 def _sort_alternative(alternative: RequirementList) -> Iterable[IndividualRequirement]:
-    filtered = set()
-
-    for individual in alternative:
-        if isinstance(individual.resource, SimpleResourceInfo) and individual.resource.long_name == "Difficulty Level":
-            filtered.add(individual)
-            yield individual
-
-    for individual in alternative:
-        if isinstance(individual.resource, DamageResourceInfo):
-            filtered.add(individual)
-            yield individual
-
-    for individual in sorted(alternative):
-        if individual not in filtered:
-            yield individual
+    return sorted(alternative)
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
