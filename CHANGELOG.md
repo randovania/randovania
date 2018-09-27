@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.13.1] - 2018-06-27
 - Fixed logic errors due to inability to reload Main Reactor after defeating Dark Samus 1.
 - Added prefix when loading resources based on type, improving logs and Data Visualizer.
 
