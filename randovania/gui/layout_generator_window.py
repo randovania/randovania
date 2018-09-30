@@ -2,9 +2,9 @@ import functools
 import random
 from typing import Dict, Optional
 
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, Qt, QObject, QEvent
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QFileDialog, QCheckBox, QSpinBox
+from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QSpinBox
 
 from randovania.games.prime import binary_data
 from randovania.gui import TabService
@@ -32,6 +32,29 @@ def show_failed_generation_exception(exception: Exception):
     QMessageBox.critical(None,
                          "An exception was raised",
                          "An unhandled Exception occurred:\n{}".format(exception))
+
+
+class CustomSpinBox(QSpinBox):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.installEventFilter(self)
+        self.setFocusPolicy(Qt.StrongFocus)
+
+    def focusInEvent(self, event: QEvent):
+        self.setFocusPolicy(Qt.WheelFocus)
+
+    def focusOutEvent(self, event: QEvent):
+        self.setFocusPolicy(Qt.StrongFocus)
+
+    def eventFilter(self, obj: QSpinBox, event: QEvent) -> bool:
+        if event.type() == QEvent.Wheel and isinstance(obj, QSpinBox):
+            if obj.focusPolicy() == Qt.WheelFocus:
+                event.accept()
+                return False
+            else:
+                event.ignore()
+                return True
+        return super().eventFilter(obj, event)
 
 
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
@@ -227,7 +250,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
                 value = original_quantity
             self._total_item_count += value
 
-            spin_box = QSpinBox(self.itemquantity_group)
+            spin_box = CustomSpinBox(self.itemquantity_group)
             spin_box.pickup_name = pickup
             spin_box.original_quantity = original_quantity
             spin_box.previous_value = value
