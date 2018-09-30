@@ -16,6 +16,7 @@ from randovania.gui.history_window import HistoryWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.layout_generator_window import LayoutGeneratorWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.gui.tracker_window import TrackerWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.update_checker import get_latest_version
 
@@ -53,6 +54,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             (DataEditorWindow, "Data Visualizer"),
             (ISOManagementWindow, "Advanced"),
         ]
+
+        if preview:
+            self._tracker_window = TrackerWindow()
+            self._tracker_window.show()
 
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self, self))
