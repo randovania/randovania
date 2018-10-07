@@ -131,6 +131,7 @@ def apply_layout(
     _create_pak_backups(game_root, backup_files_path, status_update)
 
     args += [
+        "-s", str(layout.seed_number),
         "-p", ",".join(str(pickup) for pickup in layout.pickup_mapping),
     ]
     if layout.configuration.item_loss == LayoutEnabledFlag.DISABLED:
