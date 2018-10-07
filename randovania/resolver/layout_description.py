@@ -5,6 +5,7 @@ from typing import NamedTuple, Tuple, Dict, Optional, List
 
 from randovania.games.prime import binary_data, echoes_elevator
 from randovania.resolver import data_reader
+from randovania.resolver.game_description import GameDescription
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.node import PickupNode
 
@@ -14,9 +15,9 @@ class SolverPath(NamedTuple):
     previous_nodes: Tuple[str, ...]
 
 
-def _pickup_mapping_to_item_locations(pickup_mapping: Tuple[int, ...]) -> Dict[str, Dict[str, str]]:
-    game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
-
+def _pickup_mapping_to_item_locations(game: GameDescription,
+                                      pickup_mapping: Tuple[int, ...],
+                                      ) -> Dict[str, Dict[str, str]]:
     items_locations = {}
 
     for world in game.worlds:
@@ -35,6 +36,16 @@ def _pickup_mapping_to_item_locations(pickup_mapping: Tuple[int, ...]) -> Dict[s
 
     return items_locations
 
+
+def _elevator_to_location(game: GameDescription,
+                          elevator: echoes_elevator.Elevator,
+                          ) -> str:
+
+    world = game.world_by_asset_id(elevator.world_asset_id)
+    return "{}/{}".format(
+        world.name,
+        world.area_by_asset_id(elevator.area_asset_id).name
+    )
 
 def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPath, ...]:
     return tuple(
@@ -110,6 +121,7 @@ class LayoutDescription(NamedTuple):
 
     @property
     def as_json(self) -> dict:
+        game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
         return {
             "info": {
                 "version": self.version,
@@ -118,10 +130,10 @@ class LayoutDescription(NamedTuple):
             },
             "locations": {
                 key: value
-                for key, value in sorted(_pickup_mapping_to_item_locations(self.pickup_mapping).items())
+                for key, value in sorted(_pickup_mapping_to_item_locations(game, self.pickup_mapping).items())
             },
             "elevators": {
-                elevator.pretty_name: elevator.connected_elevator.pretty_name
+                _elevator_to_location(game, elevator): _elevator_to_location(game, elevator.connected_elevator)
                 for elevator in echoes_elevator.elevator_list_for_configuration(self.configuration, self.seed_number)
             },
             "playthrough": [
