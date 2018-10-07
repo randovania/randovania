@@ -5,6 +5,7 @@ from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, TypeVar, Dict, Set
 
 from randovania import VERSION
+from randovania.games.prime import echoes_elevator
 from randovania.resolver import debug, resolver, data_reader
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
@@ -78,10 +79,12 @@ def generate_list(data: Dict,
                   configuration: LayoutConfiguration,
                   status_update: Callable[[str], None]
                   ) -> LayoutDescription:
+
+    elevators = echoes_elevator.elevator_list_for_configuration(configuration, seed_number)
     new_patches = _create_patches(
         seed_number=seed_number,
         configuration=configuration,
-        data=data,
+        game=data_reader.decode_data(data, elevators),
         status_update=status_update)
 
     if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS and False:
@@ -90,7 +93,7 @@ def generate_list(data: Dict,
         solver_path = ()
 
     else:
-        game = data_reader.decode_data(data, [])
+        game = data_reader.decode_data(data, elevators)
         final_state_by_resolve = resolver.resolve(
             configuration=configuration,
             game=game,
@@ -157,11 +160,11 @@ def _calculate_item_pool(configuration: LayoutConfiguration,
 def _create_patches(
         seed_number: int,
         configuration: LayoutConfiguration,
-        data: Dict,
+        game: GameDescription,
         status_update: Callable[[str], None],
 ) -> GamePatches:
     rng = Random(seed_number)
-    game = data_reader.decode_data(data, [])
+
     patches = GamePatches(
         configuration.item_loss == LayoutEnabledFlag.ENABLED,
         [None] * len(game.resource_database.pickups)
