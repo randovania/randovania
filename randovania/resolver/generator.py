@@ -12,6 +12,7 @@ from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
 from randovania.resolver import debug, resolver
 from randovania.resolver.bootstrap import logic_bootstrap
+from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutMode, \
@@ -21,10 +22,6 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.reach import Reach
 from randovania.resolver.state import State
-
-
-class GenerationFailure(Exception):
-    pass
 
 
 def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase) -> CurrentResources:

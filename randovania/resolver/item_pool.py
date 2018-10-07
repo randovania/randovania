@@ -3,7 +3,7 @@ from typing import List, Iterator, Set
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import PickupEntry
-from randovania.resolver.generator import GenerationFailure
+from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutConfiguration
 
 
