@@ -44,7 +44,7 @@ class Options:
     @hud_memo_popup_removal.setter
     def hud_memo_popup_removal(self, value: bool):
         self.raw_data["hud_memo_popup_removal"] = value
-        
+
     @property
     def include_menu_mod(self) -> bool:
         return self.raw_data["include_menu_mod"]

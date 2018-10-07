@@ -1,7 +1,7 @@
 from enum import unique, Enum
 from typing import NamedTuple, List
 
-from randovania.resolver.requirements import RequirementSet
+from randovania.game_description.requirements import RequirementSet
 
 
 class DockWeakness(NamedTuple):

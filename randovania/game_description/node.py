@@ -1,8 +1,7 @@
 from typing import NamedTuple, Iterator, Tuple, Union, List, Optional
 
-from randovania.resolver.dock import DockWeakness
-from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.resources import PickupIndex, ResourceDatabase, ResourceInfo, ResourceType
+from randovania.game_description.dock import DockWeakness
+from randovania.game_description.resources import PickupIndex, ResourceDatabase, ResourceInfo, ResourceType
 
 
 class GenericNode(NamedTuple):

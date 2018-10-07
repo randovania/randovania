@@ -1,7 +1,6 @@
 import multiprocessing
 import os
 from distutils.version import StrictVersion
-from typing import Callable
 
 import nod
 
@@ -123,7 +122,6 @@ def pack_iso(iso: str,
              disable_attract_if_necessary: bool,
              progress_update: ProgressUpdateCallable
              ):
-
     validate_game_files_path(os.path.join(game_files_path, "files"))
 
     nod_version = StrictVersion(getattr(nod, "VERSION", "0.0.0"))

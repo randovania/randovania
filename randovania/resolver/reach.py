@@ -1,11 +1,11 @@
 from collections import defaultdict
 from typing import Dict, Set, List, Iterator, Tuple, Iterable
 
+from randovania.game_description.game_description import calculate_interesting_resources
+from randovania.game_description.node import ResourceNode, Node, is_resource_node
+from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements
 from randovania.resolver import debug
-from randovania.resolver.game_description import calculate_interesting_resources
 from randovania.resolver.logic import Logic
-from randovania.resolver.node import ResourceNode, Node, is_resource_node
-from randovania.resolver.requirements import RequirementList, RequirementSet, SatisfiableRequirements
 from randovania.resolver.state import State
 
 

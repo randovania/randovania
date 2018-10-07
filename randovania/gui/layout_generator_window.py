@@ -2,10 +2,11 @@ import functools
 import random
 from typing import Dict, Optional
 
-from PyQt5.QtCore import pyqtSignal, Qt, QObject, QEvent
+from PyQt5.QtCore import pyqtSignal, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QSpinBox
 
+from randovania.game_description.data_reader import read_resource_database
 from randovania.games.prime import binary_data
 from randovania.gui import TabService
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
@@ -15,7 +16,6 @@ from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.data_reader import read_resource_database
 from randovania.resolver.generator import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutLogic, LayoutMode, LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription

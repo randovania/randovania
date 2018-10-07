@@ -1,19 +1,16 @@
 import os
 import shutil
-from typing import Optional, Callable
+from typing import Optional
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 
-from randovania.games.prime import claris_randomizer
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, persist_bool_option
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
-from randovania.interface_common import status_update_lib
 from randovania.interface_common.simplified_patcher import delete_files_location
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.layout_description import LayoutDescription
 
 
 def _translate(message, n=None):

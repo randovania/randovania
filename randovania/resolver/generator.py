@@ -3,22 +3,23 @@ import copy
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, Dict
 
+import randovania.games.prime.claris_randomizer
 from randovania import VERSION
-from randovania.games.prime import echoes_elevator
-from randovania.resolver import debug, resolver, data_reader
+from randovania.game_description import data_reader
+from randovania.game_description.game_description import GameDescription, calculate_interesting_resources
+from randovania.game_description.node import EventNode, Node, PickupNode
+from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
+from randovania.resolver import debug, resolver
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.game_description import GameDescription, calculate_interesting_resources
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutMode, \
     LayoutRandomizedFlag, LayoutLogic
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
-from randovania.resolver.node import EventNode, Node, PickupNode
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.reach import Reach
-from randovania.resolver.requirements import RequirementSet
-from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
 from randovania.resolver.state import State
 
 
@@ -65,7 +66,7 @@ def generate_list(data: Dict,
                   configuration: LayoutConfiguration,
                   status_update: Callable[[str], None]
                   ) -> LayoutDescription:
-    elevators = echoes_elevator.elevator_list_for_configuration(configuration, seed_number)
+    elevators = randovania.games.prime.claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
     new_patches = _create_patches(
         seed_number=seed_number,
         configuration=configuration,
