@@ -33,4 +33,7 @@ Many thanks to [Claris](https://www.twitch.tv/claris) for
 making the Echoes Randomizer and both collecting and providing this
 incredible set of data which powers Randovania.
 
+Claris also made the included [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z), a tool for practicing Echoes.
+For more information, see the [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
+
 Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testing.
