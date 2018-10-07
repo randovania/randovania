@@ -265,10 +265,10 @@ def distribute_one_item(
         logic: Logic,
         state: State,
         patches: GamePatches,
-        available_item_pickups: Tuple[PickupEntry],
+        available_item_pickups: Tuple[PickupEntry, ...],
         rng: Random,
         status_update: Callable[[str], None],
-) -> Optional[Tuple[GamePatches, Tuple[PickupEntry], State]]:
+) -> Optional[Tuple[GamePatches, Tuple[PickupEntry, ...], State]]:
     debug.print_distribute_one_item(state, available_item_pickups)
 
     try:

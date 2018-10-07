@@ -1,5 +1,5 @@
 import itertools
-from typing import List, Iterator, Set
+from typing import List, Iterator, Set, Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import PickupEntry
@@ -54,3 +54,9 @@ def calculate_available_pickups(remaining_items: Iterator[PickupEntry], categori
     for pickup in remaining_items:
         if pickup.item_category in categories:
             yield pickup
+
+
+def remove_pickup_entry_from_list(available_item_pickups: Tuple[PickupEntry, ...],
+                                  item: PickupEntry,
+                                  ) -> Tuple[PickupEntry, ...]:
+    return tuple(filter(lambda x, c=itertools.count(): x != item or next(c) != 0, available_item_pickups))
