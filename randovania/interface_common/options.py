@@ -112,6 +112,15 @@ class Options:
         self.raw_data["layout_sky_temple_keys"] = LayoutRandomizedFlag(value.value).value
 
     @property
+    def layout_configuration_elevators(self) -> LayoutRandomizedFlag:
+        # TODO: detect invalid values
+        return LayoutRandomizedFlag(self.raw_data["layout_elevators"])
+
+    @layout_configuration_elevators.setter
+    def layout_configuration_elevators(self, value: LayoutRandomizedFlag):
+        self.raw_data["layout_elevators"] = LayoutRandomizedFlag(value.value).value
+
+    @property
     def layout_configuration_item_loss(self) -> LayoutEnabledFlag:
         # TODO: detect invalid values
         return LayoutEnabledFlag(self.raw_data["layout_item_loss"])
@@ -136,7 +145,7 @@ class Options:
             mode=self.layout_configuration_mode,
             sky_temple_keys=self.layout_configuration_sky_temple_keys,
             item_loss=self.layout_configuration_item_loss,
-            elevators=LayoutRandomizedFlag.VANILLA,
+            elevators=self.layout_configuration_elevators,
             hundo_guaranteed=LayoutEnabledFlag.DISABLED,
             difficulty=LayoutDifficulty.NORMAL,
             pickup_quantities=self.raw_data["quantity_for_pickup"],
@@ -154,6 +163,7 @@ def _default_options() -> Dict[str, Any]:
     options["layout_logic"] = LayoutLogic.NO_GLITCHES.value
     options["layout_mode"] = LayoutMode.STANDARD.value
     options["layout_sky_temple_keys"] = LayoutRandomizedFlag.RANDOMIZED.value
+    options["layout_elevators"] = LayoutRandomizedFlag.VANILLA.value
     options["layout_item_loss"] = LayoutEnabledFlag.ENABLED.value
     options["quantity_for_pickup"] = {}
     return options
