@@ -120,15 +120,18 @@ class LayoutDescription(NamedTuple):
                 "seed": self.seed_number,
                 "configuration": self.configuration.as_json,
             },
-            "locations": _pickup_mapping_to_item_locations(self.pickup_mapping),
+            "locations": {
+                key: value
+                for key, value in sorted(_pickup_mapping_to_item_locations(self.pickup_mapping).items())
+            },
             "elevators": {
                 elevator.pretty_name: elevator.connected_elevator.pretty_name
                 for elevator in elevators
             },
             "playthrough": [
                 {
+                    "path_from_previous": path.previous_nodes,
                     "node": path.node_name,
-                    "path_from_previous": path.previous_nodes
                 }
                 for path in self.solver_path
             ]
@@ -136,7 +139,7 @@ class LayoutDescription(NamedTuple):
 
     def save_to_file(self, json_path: str):
         with open(json_path, "w") as open_file:
-            json.dump(self.as_json, open_file, sort_keys=True, indent=4, separators=(',', ': '))
+            json.dump(self.as_json, open_file, indent=4, separators=(',', ': '))
 
     @property
     def without_solver_path(self) -> "LayoutDescription":
