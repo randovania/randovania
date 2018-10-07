@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Fixed spin boxes for item quantities changing while user scrolled the window.
 It is now needed to click on them before using the mouse wheel to change their values.
-- Fixed some texts being truncated in the Layout Generation window.  
+- Fixed some texts being truncated in the Layout Generation window.
+- Added links to where to find the Menu Mod.
+- Changed the order of some fields in the Seed Log.  
 
 ## [0.13.2] - 2018-06-28
 - Fixed logic missing Amber Translator being required to pass by Path of Eyes.
