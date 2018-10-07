@@ -10,7 +10,7 @@ from randovania.game_description.game_description import GameDescription, calcul
 from randovania.game_description.node import EventNode, Node, PickupNode
 from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
-from randovania.resolver import debug, resolver
+from randovania.resolver import debug, resolver, item_pool
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches
@@ -323,7 +323,7 @@ def distribute_one_item(
                 logic,
                 pickup_state_with_item,
                 new_patches,
-                tuple(pickup for pickup in available_item_pickups if pickup is not item),
+                item_pool.remove_pickup_entry_from_list(available_item_pickups, item),
                 rng,
                 status_update
             )

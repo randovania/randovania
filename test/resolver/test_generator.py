@@ -77,6 +77,26 @@ _test_descriptions = [
                         11, 65, 21, 21, 24, 21, 21, 21, 33, 21, 21, 17, 94, 21, 7, 21, 83, 95, 39, 21, 40, 21, 72, 21,
                         50),
     ),
+    _create_test_layout_description(
+        seed_number=50000,
+        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+                                          mode=LayoutMode.STANDARD,
+                                          sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                          item_loss=LayoutEnabledFlag.ENABLED,
+                                          elevators=LayoutRandomizedFlag.VANILLA,
+                                          hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+                                          difficulty=LayoutDifficulty.NORMAL,
+                                          pickup_quantities={
+                                              "Sky Temple Key 1": 2,
+                                              "Darkburst": 0
+                                          }),
+        pickup_mapping=(22, 62, 1, 109, 20, 55, 111, 21, 38, 73, 83, 5, 68, 88, 39, 6, 60, 116, 80, 11, 23, 82, 114, 46,
+                        43, 13, 102, 34, 108, 48, 0, 37, 30, 118, 15, 24, 66, 74, 65, 45, 35, 105, 115, 40, 53, 33, 52,
+                        110, 96, 90, 4, 77, 104, 31, 44, 79, 86, 57, 84, 81, 58, 91, 70, 61, 17, 12, 93, 99, 100, 101,
+                        2, 94, 7, 56, 67, 16, 103, 36, 41, 45, 3, 78, 97, 69, 32, 8, 95, 85, 25, 19, 10, 54, 92, 106,
+                        29, 47, 107, 76, 14, 49, 18, 87, 26, 71, 59, 117, 98, 28, 9, 51, 50, 63, 89, 75, 42, 72, 64,
+                        113, 112),
+    ),
 ]
 
 
@@ -122,9 +142,10 @@ def test_compare_generated_with_data(layout_description: LayoutDescription):
     assert generated_description.without_solver_path == layout_description
 
 
-def test_generate_twice(layout_description: LayoutDescription):
+def test_generate_twice():
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
+    layout_description = _test_descriptions[0]
 
     data = binary_data.decode_default_prime2()
     generated_description = generator.generate_list(
