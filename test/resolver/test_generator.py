@@ -2,6 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+import randovania.resolver.exceptions
 from randovania import VERSION
 from randovania.games.prime import binary_data
 from randovania.resolver import generator, debug
@@ -100,7 +101,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
         pickup_quantities={"Undefined Item": 5})
 
     # Run
-    with pytest.raises(generator.GenerationFailure):
+    with pytest.raises(randovania.resolver.exceptions.GenerationFailure):
         generator.generate_list(
             data, 50, configuration,
             status_update=status_update)

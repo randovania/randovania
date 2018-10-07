@@ -1,10 +1,10 @@
 import copy
 
-from randovania.games.prime import binary_data
 from randovania.game_description import data_reader
 from randovania.game_description.data_reader import add_requirement_to_set
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources import SimpleResourceInfo
+from randovania.games.prime import binary_data
 
 
 def test_add_requirement_to_set():

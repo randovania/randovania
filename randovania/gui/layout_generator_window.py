@@ -16,7 +16,7 @@ from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.generator import GenerationFailure
+from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutLogic, LayoutMode, LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
 
