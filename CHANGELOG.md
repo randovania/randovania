@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.14.0] - 2018-10-07
 - **Major**: Added support for randomizing elevators. 
 - Fixed spin boxes for item quantities changing while user scrolled the window.
 It is now needed to click on them before using the mouse wheel to change their values.
