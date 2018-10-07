@@ -15,6 +15,7 @@ from randovania.resolver.layout_configuration import LayoutConfiguration, Layout
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
 from randovania.resolver.node import EventNode, Node, PickupNode
+from randovania.resolver.random_lib import shuffle
 from randovania.resolver.reach import Reach
 from randovania.resolver.requirements import RequirementSet
 from randovania.resolver.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
@@ -30,15 +31,6 @@ def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase)
         resource: quantity
         for resource, quantity in pickup.resource_gain(database)
     }
-
-
-T = TypeVar('T')
-
-
-def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
-    result = list(x)
-    rng.shuffle(result)
-    return result
 
 
 def _iterate_previous_states(state: State) -> Iterator[State]:
