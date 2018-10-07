@@ -53,12 +53,12 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-650</y>
+         <y>-534</y>
          <width>765</width>
-         <height>1042</height>
+         <height>1216</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QGroupBox" name="logic_group">
           <property name="title">
@@ -211,6 +211,62 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
             <widget class="QLabel" name="mode_major_items_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The are two items pools where items are shuffled between:&lt;br/&gt;Expansions Pool: all Missile, Power Bomb and Beam Ammo expansions&lt;br/&gt;Major Pool: all Keys, Translators, Energy Tanks and Suit Upgrades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="elevators_group">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;There is a single item pool with all expansions, energy tanks, temple keys, sky temple keys, translators and upgrades.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="title">
+           <string>Elevators</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QLabel" name="elevators_description_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls what each elevator connects to.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="elevators_vanilla_radio">
+             <property name="text">
+              <string>Vanilla Connections (Not Randomized)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="elevators_vanilla_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;All elevators connects to the original locations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="elevators_randomized_radio">
+             <property name="text">
+              <string>Randomized</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="elevators_randomized_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shuffles what each elevators connects to.&lt;/p&gt;&lt;p&gt;All connections are two-way: after taking an elevator, the elevator in the room you're left brings you to where you where.&lt;br/&gt;All zones are guaranteed to be reachable, and an elevator will never connect to the same area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

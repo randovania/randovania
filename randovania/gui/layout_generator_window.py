@@ -62,6 +62,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     _last_generated_layout: Optional[LayoutDescription] = None
     _layout_logic_radios: Dict[LayoutLogic, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
+    _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _sky_temple_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _item_loss_radios: Dict[LayoutEnabledFlag, QRadioButton]
     _spinbox_for_item: Dict[str, QSpinBox] = {}
@@ -201,6 +202,10 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
             LayoutEnabledFlag.ENABLED: self.itemloss_enabled_radio,
             LayoutEnabledFlag.DISABLED: self.itemloss_disabled_radio,
         }
+        self._elevators_radios = {
+            LayoutRandomizedFlag.VANILLA: self.elevators_vanilla_radio,
+            LayoutRandomizedFlag.RANDOMIZED: self.elevators_randomized_radio,
+        }
         self._sky_temple_radios = {
             LayoutRandomizedFlag.VANILLA: self.skytemple_vanilla_radio,
             LayoutRandomizedFlag.RANDOMIZED: self.skytemple_randomized_radio,
@@ -209,6 +214,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         # Check the correct radio element
         self._layout_logic_radios[options.layout_configuration_logic].setChecked(True)
         self._mode_radios[options.layout_configuration_mode].setChecked(True)
+        self._elevators_radios[options.layout_configuration_elevators].setChecked(True)
         self._sky_temple_radios[options.layout_configuration_sky_temple_keys].setChecked(True)
         self._item_loss_radios[options.layout_configuration_item_loss].setChecked(True)
 
@@ -217,6 +223,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
             "layout_configuration_logic": self._layout_logic_radios,
             "layout_configuration_mode": self._mode_radios,
             "layout_configuration_item_loss": self._item_loss_radios,
+            "layout_configuration_elevators": self._elevators_radios,
             "layout_configuration_sky_temple_keys": self._sky_temple_radios,
         }
         for field_name, mapping in field_name_to_mapping.items():
