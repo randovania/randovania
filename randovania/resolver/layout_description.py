@@ -3,10 +3,10 @@ import json
 from distutils.version import StrictVersion
 from typing import NamedTuple, Tuple, Dict, Optional, List
 
-from randovania.games.prime import binary_data
+from randovania.games.prime import binary_data, echoes_elevator, claris_random
 from randovania.resolver import data_reader
 from randovania.resolver.game_description import Area
-from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag
 from randovania.resolver.node import PickupNode
 
 
@@ -111,6 +111,9 @@ class LayoutDescription(NamedTuple):
 
     @property
     def as_json(self) -> dict:
+        elevators = []
+        if self.configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
+            elevators = echoes_elevator.try_randomize_elevators(claris_random.Random(self.seed_number))
         return {
             "info": {
                 "version": self.version,
@@ -118,6 +121,10 @@ class LayoutDescription(NamedTuple):
                 "configuration": self.configuration.as_json,
             },
             "locations": _pickup_mapping_to_item_locations(self.pickup_mapping),
+            "elevators": {
+                elevator.pretty_name: elevator.connected_elevator.pretty_name
+                for elevator in elevators
+            },
             "playthrough": [
                 {
                     "node": path.node_name,
