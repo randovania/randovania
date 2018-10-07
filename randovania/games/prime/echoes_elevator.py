@@ -37,10 +37,6 @@ class Elevator:
         other.destination_area = self.area_asset_id
         self.connected_elevator = other
         other.connected_elevator = self
-        
-    @property
-    def pretty_name(self) -> str:
-        return elevator_id_to_name[self.instance_id]
 
 
 echoes_elevators = [
