@@ -47,6 +47,7 @@ def _elevator_to_location(game: GameDescription,
         world.area_by_asset_id(elevator.area_asset_id).name
     )
 
+
 def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPath, ...]:
     return tuple(
         SolverPath(
