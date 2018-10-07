@@ -34,15 +34,22 @@ def calculate_item_pool(configuration: LayoutConfiguration,
             del pickup_list[quantity_delta:]
 
     if pickups_with_configured_quantity:
-        raise GenerationFailure("Configuration has custom quantity for unknown pickups: {}".format(
-            pickups_with_configured_quantity))
+        raise GenerationFailure(
+            "Invalid configuration: has custom quantity for unknown pickups: {}".format(pickups_with_configured_quantity),
+            configuration=configuration,
+            seed_number=-1
+        )
 
     item_pool = list(itertools.chain.from_iterable(split_pickups.values()))
     quantity_delta = len(item_pool) - len(game.resource_database.pickups)
     if quantity_delta > 0:
-        raise GenerationFailure("Invalid configuration: requested {} more items than available slots ({}).".format(
-            quantity_delta, len(game.resource_database.pickups)
-        ))
+        raise GenerationFailure(
+            "Invalid configuration: requested {} more items than available slots ({}).".format(
+                quantity_delta, len(game.resource_database.pickups)
+            ),
+            configuration=configuration,
+            seed_number=-1
+        )
 
     elif quantity_delta < 0:
         item_pool.extend([useless_item] * -quantity_delta)

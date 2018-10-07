@@ -147,7 +147,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
 
         except GenerationFailure as generate_exception:
             self.failed_to_generate_signal.emit(generate_exception)
-            progress_update("Error: {}".format(generate_exception), 1)
+            progress_update("Generation Failure: {}".format(generate_exception), -1)
 
     def randomize_game_simplified(self):
         input_iso = prompt_user_for_input_iso(self)

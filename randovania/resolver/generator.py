@@ -84,7 +84,11 @@ def generate_list(data: Dict,
         )
         if final_state_by_resolve is None:
             # Why is final_state_by_distribution not OK?
-            raise GenerationFailure("We just created an item distribution we believe is impossible. What?")
+            raise GenerationFailure(
+                "Generated patches was impossible for the solver.",
+                configuration=configuration,
+                seed_number=seed_number
+            )
         else:
             solver_path = _state_to_solver_path(final_state_by_resolve, game)
 
