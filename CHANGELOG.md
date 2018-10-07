@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed spin boxes for item quantities changing while user scrolled the window.
 It is now needed to click on them before using the mouse wheel to change their values.
 - Fixed some texts being truncated in the Layout Generation window.
+- Fixed generation failing when adding multiple of some items.
 - Added links to where to find the Menu Mod.
 - Changed the order of some fields in the Seed Log.  
 
