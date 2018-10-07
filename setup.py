@@ -30,7 +30,10 @@ setup(
     scripts=[
     ],
     package_data={
-        "randovania": ["data/*", "data/ClarisPrimeRandomizer/*"]
+        "randovania": [
+            "data/*",
+            "data/ClarisPrimeRandomizer/*",
+        ]
     },
     license='License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
     classifiers=[
