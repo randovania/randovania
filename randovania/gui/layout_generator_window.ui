@@ -50,11 +50,13 @@
        <bool>true</bool>
       </property>
       <widget class="QWidget" name="scroll_area_widget_contents">
-       <property name="maximumSize">
-        <size>
-         <width>700</width>
-         <height>16777215</height>
-        </size>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-650</y>
+         <width>765</width>
+         <height>1042</height>
+        </rect>
        </property>
        <layout class="QVBoxLayout">
         <item>
@@ -164,6 +166,9 @@
 
 Since there aren't many checks, out of bounds tricks will probably be necessary for many items.</string>
              </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>
@@ -189,6 +194,9 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
             <widget class="QLabel" name="mode_standard_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;There is a single item pool with all expansions, energy tanks, temple keys, sky temple keys, translators and upgrades.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -226,6 +234,9 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Control if Samus loses her items when entering Hive Chamber B for the first time.&lt;br/&gt;Going out of bounds to avoid item loss is not recomended, since one item is permantently unacessible.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -239,6 +250,9 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
             <widget class="QLabel" name="itemloss_enabled_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Samus loses her items as normal.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -276,6 +290,9 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where the Sky Temple Keys will be located.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -289,6 +306,9 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
             <widget class="QLabel" name="skytemple_vanilla_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;All Sky Temple Keys are inside the Ing Caches they were in originally.&lt;br/&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;WARNING&lt;/span&gt;: this option may take too long to finish generating, or not finish at all.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -354,6 +374,9 @@ The total of configured items must be less than how many spots are in the game: 
 If removing items, the remaning spots are filled with Energy Transfer Module.
 
 Removing required items, like Screw Attack or all beams, will cause the generation to go infinitely.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
