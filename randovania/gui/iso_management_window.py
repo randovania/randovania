@@ -44,7 +44,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         # Game Patching
         self.show_advanced_options_check.setChecked(options.advanced_options)
         self.show_advanced_options_check.toggled.connect(self.set_advanced_options_visibility)
-        self.show_advanced_options_check.setVisible(main_window.is_preview_mode)
         self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
         self.remove_hud_popup_check.stateChanged.connect(persist_bool_option("hud_memo_popup_removal"))
         self.include_menu_mod_check.setChecked(options.include_menu_mod)
