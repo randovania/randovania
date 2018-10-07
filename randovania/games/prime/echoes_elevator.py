@@ -1,10 +1,8 @@
 import copy
-import re
 from collections import defaultdict
-from typing import NamedTuple, List, Dict, TextIO, Optional
+from typing import List, Dict, Optional
 
-from randovania.games.prime import claris_random, binary_data
-from randovania.resolver.game_patches import GamePatches
+from randovania.games.prime import claris_random
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag
 
 RANDOMIZER_VERSION = "3.2"
