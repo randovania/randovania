@@ -1,10 +1,10 @@
 from typing import Set
 
-from randovania.resolver.game_description import Area, GameDescription
+from randovania.game_description.game_description import Area, GameDescription
+from randovania.game_description.node import Node
+from randovania.game_description.requirements import RequirementList, RequirementSet
+from randovania.game_description.resources import PickupEntry, PickupIndex
 from randovania.resolver.logic import Logic
-from randovania.resolver.node import Node
-from randovania.resolver.requirements import RequirementList, RequirementSet
-from randovania.resolver.resources import PickupEntry, PickupIndex
 
 _DEBUG_LEVEL = 0
 count = 0

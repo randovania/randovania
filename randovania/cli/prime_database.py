@@ -7,8 +7,9 @@ from typing import Dict, BinaryIO
 
 from randovania import get_data_path
 from randovania.games.prime import binary_data
-from randovania.resolver import resolver, data_reader, debug
-from randovania.resolver.game_description import consistency_check, GameDescription
+from randovania.resolver import resolver, debug
+from randovania.game_description import data_reader
+from randovania.game_description.game_description import consistency_check, GameDescription
 
 
 def decode_data_file(args) -> Dict:

@@ -1,14 +1,13 @@
 import copy
 from typing import Tuple, Set
 
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources
 from randovania.resolver import debug
-from randovania.resolver.game_description import GameDescription
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic
 from randovania.resolver.logic import Logic
-from randovania.resolver.resources import merge_resources, ResourceDatabase, CurrentResources
 from randovania.resolver.state import State
-
 
 _items_to_not_add_in_minimal_restrictions = {
     # Dark Visor
@@ -79,7 +78,7 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
 def static_resources_for_layout_logic(
         layout_logic: LayoutLogic,
         resource_database: ResourceDatabase,
-        ) -> CurrentResources:
+) -> CurrentResources:
     """
 
     :param layout_logic:

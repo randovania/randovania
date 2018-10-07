@@ -1,6 +1,6 @@
 import datetime
 import threading
-from typing import Callable, Optional, Tuple, NamedTuple
+from typing import Callable, Optional, NamedTuple
 
 import requests
 from dataset import Table

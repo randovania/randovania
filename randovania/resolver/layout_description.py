@@ -3,11 +3,12 @@ import json
 from distutils.version import StrictVersion
 from typing import NamedTuple, Tuple, Dict, Optional, List
 
-from randovania.games.prime import binary_data, echoes_elevator
-from randovania.resolver import data_reader
-from randovania.resolver.game_description import GameDescription
+import randovania.games.prime.claris_randomizer
+from randovania.game_description import echoes_elevator, data_reader
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.node import PickupNode
+from randovania.games.prime import binary_data
 from randovania.resolver.layout_configuration import LayoutConfiguration
-from randovania.resolver.node import PickupNode
 
 
 class SolverPath(NamedTuple):
@@ -40,7 +41,6 @@ def _pickup_mapping_to_item_locations(game: GameDescription,
 def _elevator_to_location(game: GameDescription,
                           elevator: echoes_elevator.Elevator,
                           ) -> str:
-
     world = game.world_by_asset_id(elevator.world_asset_id)
     return "{}/{}".format(
         world.name,
@@ -135,7 +135,9 @@ class LayoutDescription(NamedTuple):
             },
             "elevators": {
                 _elevator_to_location(game, elevator): _elevator_to_location(game, elevator.connected_elevator)
-                for elevator in echoes_elevator.elevator_list_for_configuration(self.configuration, self.seed_number)
+                for elevator in
+                randovania.games.prime.claris_randomizer.elevator_list_for_configuration(self.configuration,
+                                                                                         self.seed_number)
             },
             "playthrough": [
                 {

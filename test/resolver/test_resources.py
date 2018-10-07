@@ -1,6 +1,6 @@
 import pytest
 
-from randovania.resolver.resources import merge_resources
+from randovania.game_description.resources import merge_resources
 
 
 @pytest.mark.parametrize(["a", "b", "result"], [

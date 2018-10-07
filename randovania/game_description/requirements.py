@@ -1,14 +1,13 @@
 from functools import lru_cache
 from typing import NamedTuple, Optional, Iterable, FrozenSet
 
-from randovania.resolver.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceType, \
+from randovania.game_description.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceType, \
     ResourceDatabase
 
 
 def _calculate_reduction(resource: DamageResourceInfo,
                          current_resources: CurrentResources,
                          database: ResourceDatabase) -> float:
-
     multiplier = 1
 
     for reduction in resource.reductions:

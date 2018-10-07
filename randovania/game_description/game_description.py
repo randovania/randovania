@@ -1,12 +1,11 @@
 """Classes that describes the raw data of a game world."""
+import copy
 from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet, Iterable
 
-import copy
-
-from randovania.resolver.dock import DockWeaknessDatabase
-from randovania.resolver.node import DockNode, TeleporterNode, Node
-from randovania.resolver.requirements import RequirementSet, SatisfiableRequirements
-from randovania.resolver.resources import ResourceInfo, \
+from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description.node import DockNode, TeleporterNode, Node
+from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
+from randovania.game_description.resources import ResourceInfo, \
     ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, ResourceType
 
 

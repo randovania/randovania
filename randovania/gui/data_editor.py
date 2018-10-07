@@ -1,16 +1,15 @@
 from typing import Dict, Optional, List, Iterable
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroupBox, QVBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroupBox, QVBoxLayout
 
+from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
+from randovania.game_description.game_description import World, Area
+from randovania.game_description.node import Node
+from randovania.game_description.requirements import RequirementList, IndividualRequirement
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
-from randovania.resolver.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
-from randovania.resolver.game_description import World, Area
-from randovania.resolver.node import Node
-from randovania.resolver.requirements import RequirementList, IndividualRequirement
-from randovania.resolver.resources import DamageResourceInfo, SimpleResourceInfo
 
 
 def _sort_alternative(alternative: RequirementList) -> Iterable[IndividualRequirement]:

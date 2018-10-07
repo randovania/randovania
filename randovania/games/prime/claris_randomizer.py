@@ -1,15 +1,18 @@
+import copy
 import os
-import shutil
 import subprocess
-from typing import Callable, List
+from collections.__init__ import defaultdict
+from typing import Callable, List, Optional, Dict
 
 import py
 
 from randovania import get_data_path
+from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
+from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.options import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag
+from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -68,7 +71,7 @@ def _ensure_no_menu_mod(
         game_root: str,
         backup_files_path: str,
         status_update: Callable[[str], None],
-        ):
+):
     pak_folder = py.path.local(backup_files_path).join("mp2_paks")
     files_folder = py.path.local(game_root).join("files")
     menu_mod_txt = files_folder.join("menu_mod.txt")
@@ -84,8 +87,7 @@ def _create_pak_backups(
         game_root: str,
         backup_files_path: str,
         status_update: Callable[[str], None],
-        ):
-
+):
     pak_folder = py.path.local(backup_files_path).join("mp2_paks")
     pak_folder.ensure_dir()
 
@@ -99,8 +101,7 @@ def _create_pak_backups(
 def _add_menu_mod_to_files(
         game_root: str,
         status_update: Callable[[str], None],
-        ):
-
+):
     files_folder = py.path.local(game_root).join("files")
     _run_with_args(
         [
@@ -120,7 +121,7 @@ def apply_layout(
         game_root: str,
         backup_files_path: str,
         progress_update: ProgressUpdateCallable,
-        ):
+):
     args = _base_args(game_root,
                       hud_memo_popup_removal=hud_memo_popup_removal)
 
@@ -161,3 +162,58 @@ def disable_echoes_attract_videos(game_root: str,
         except Exception:
             process.kill()
             raise
+
+
+def try_randomize_elevators(randomizer: claris_random.Random) -> Optional[List[Elevator]]:
+    elevator_database: List[Elevator] = copy.deepcopy(echoes_elevators)
+
+    elevator_list = copy.copy(elevator_database)
+    elevators_by_world: Dict[int, List[Elevator]] = defaultdict(list)
+    for elevator in elevator_list:
+        elevators_by_world[elevator.world_number].append(elevator)
+
+    while elevator_list:
+        source_elevators: List[Elevator] = max(elevators_by_world.values(), key=len)
+        target_elevators: List[Elevator] = [
+            elevator
+            for elevator in elevator_list
+            if elevator not in source_elevators
+        ]
+        source_elevator = source_elevators[0]
+        target_elevator = target_elevators[randomizer.next_with_max(len(target_elevators) - 1)]
+
+        source_elevator.connect_to(target_elevator)
+
+        elevators_by_world[source_elevator.world_number].remove(source_elevator)
+        elevators_by_world[target_elevator.world_number].remove(target_elevator)
+        elevator_list.remove(source_elevator)
+        elevator_list.remove(target_elevator)
+
+    # TODO
+    list3 = copy.copy(elevator_database)
+    celevator_list3 = [list3[0]]
+    while list3:
+        celevator_list1 = []
+        for celevator1 in celevator_list3:
+            index = 0
+            while index < len(list3):
+                celevator2 = list3[index]
+                if celevator2.world_number == celevator1.world_number or celevator2.area_asset_id == celevator1.destination_area:
+                    celevator_list1.append(celevator2)
+                    list3.remove(celevator2)
+                else:
+                    index += 1
+        if celevator_list1:
+            celevator_list3 = celevator_list1
+        else:
+            # Randomization failed
+            return None
+
+    return elevator_database
+
+
+def elevator_list_for_configuration(configuration: LayoutConfiguration, seed_number: int) -> List[Elevator]:
+    if configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
+        return try_randomize_elevators(claris_random.Random(seed_number))
+    else:
+        return []

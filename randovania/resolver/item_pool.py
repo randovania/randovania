@@ -1,10 +1,10 @@
 import itertools
 from typing import List, Iterator, Set
 
-from randovania.resolver.game_description import GameDescription
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.resources import PickupEntry
 from randovania.resolver.generator import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutConfiguration
-from randovania.resolver.resources import PickupEntry
 
 
 def calculate_item_pool(configuration: LayoutConfiguration,

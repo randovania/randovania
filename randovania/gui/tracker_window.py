@@ -1,10 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow, QTreeWidgetItem, QListWidgetItem
 
+from randovania.game_description import data_reader
 from randovania.games.prime import binary_data
-from randovania.gui.TabService import TabService
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
-from randovania.resolver import data_reader
 
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
@@ -28,4 +26,3 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             list_item.setText(event.long_name)
             self.events_list_widget.addItem(list_item)
         self.events_list_widget.sortItems()
-

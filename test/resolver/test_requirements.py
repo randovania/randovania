@@ -2,8 +2,8 @@ from typing import Tuple
 
 import pytest
 
-from randovania.resolver.requirements import IndividualRequirement, RequirementList, RequirementSet
-from randovania.resolver.resources import SimpleResourceInfo, ResourceDatabase
+from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
+from randovania.game_description.resources import SimpleResourceInfo, ResourceDatabase
 
 
 @pytest.fixture
