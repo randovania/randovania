@@ -38,8 +38,8 @@ class Elevator:
         other.connected_elevator = self
         
     @property
-    def pretty_name(self):
-        return "{} <> {}".format(elevator_id_to_name[self.instance_id], elevator_id_to_name[self.connected_elevator.instance_id])
+    def pretty_name(self) -> str:
+        return elevator_id_to_name[self.instance_id]
 
 
 echoes_elevators = [
