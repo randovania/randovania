@@ -5,6 +5,7 @@ from typing import NamedTuple, List, Dict, TextIO, Optional
 
 from randovania.games.prime import claris_random, binary_data
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag
 
 RANDOMIZER_VERSION = "3.2"
 
@@ -137,3 +138,10 @@ elevator_id_to_name = {
     elevator_id: name
     for name, elevator_id in elevator_name_to_id.items()
 }
+
+
+def elevator_list_for_configuration(configuration: LayoutConfiguration, seed_number: int) -> List[Elevator]:
+    if configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
+        return try_randomize_elevators(claris_random.Random(seed_number))
+    else:
+        return []
