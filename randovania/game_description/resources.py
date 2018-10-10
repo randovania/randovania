@@ -139,6 +139,10 @@ class ResourceDatabase(NamedTuple):
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
 
     @property
+    def difficulty_resource(self) -> ResourceInfo:
+        return self.get_by_type_and_index(ResourceType.DIFFICULTY, 0)
+
+    @property
     def energy_tank(self):
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
 
