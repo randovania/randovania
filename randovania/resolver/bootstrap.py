@@ -138,8 +138,10 @@ def logic_bootstrap(configuration: LayoutConfiguration,
         _add_minimal_restrictions_initial_resources(starting_state.resources,
                                                     game.resource_database)
 
-    game.simplify_connections(merge_resources(
+    starting_state.resources = merge_resources(
         static_resources_for_layout_logic(configuration.logic, game.resource_database),
-        starting_state.resources))
+        starting_state.resources)
+
+    # game.simplify_connections()
 
     return logic, starting_state
