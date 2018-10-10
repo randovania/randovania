@@ -139,6 +139,13 @@ class RequirementList(frozenset):
         return self
 
 
+def _get_quantity_or_zero(individual: Optional[IndividualRequirement]) -> int:
+    if individual is not None:
+        return individual.amount
+    else:
+        return 0
+
+
 class RequirementSet:
     """
     Represents multiple alternatives of satisfying a requirement.
@@ -216,7 +223,7 @@ class RequirementSet:
         :return:
         """
         difficulties = [
-            requirement_list.get(database.difficulty_resource)
+            _get_quantity_or_zero(requirement_list.get(database.difficulty_resource))
             for requirement_list in self.alternatives
             if requirement_list.satisfied(current_resources, database)
         ]
