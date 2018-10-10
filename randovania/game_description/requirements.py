@@ -115,6 +115,17 @@ class RequirementList(frozenset):
 
         return RequirementList(items)
 
+    def get(self, resource: ResourceInfo) -> Optional[IndividualRequirement]:
+        """
+        Gets an IndividualRequirement that uses the given resource
+        :param resource:
+        :return:
+        """
+        for item in self.values():
+            if item.resource == resource:
+                return item
+        return None
+
     def replace(self, individual: IndividualRequirement, replacement: "RequirementList") -> "RequirementList":
         items = []
         for item in self:  # type: IndividualRequirement
@@ -193,6 +204,26 @@ class RequirementSet:
         return any(
             requirement_list.satisfied(current_resources, database)
             for requirement_list in self.alternatives)
+
+    def minimum_satisfied_difficulty(self,
+                                     current_resources: CurrentResources,
+                                     database: ResourceDatabase,
+                                     ) -> Optional[int]:
+        """
+        Gets the minimum difficulty that is currently satisfied
+        :param database:
+        :param current_resources:
+        :return:
+        """
+        difficulties = [
+            requirement_list.get(database.difficulty_resource)
+            for requirement_list in self.alternatives
+            if requirement_list.satisfied(current_resources, database)
+        ]
+        if difficulties:
+            return min(difficulties)
+        else:
+            return 0
 
     def simplify(self, static_resources: CurrentResources,
                  database: ResourceDatabase) -> "RequirementSet":
