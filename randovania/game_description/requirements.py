@@ -230,7 +230,7 @@ class RequirementSet:
         if difficulties:
             return min(difficulties)
         else:
-            return 0
+            return None
 
     def simplify(self, static_resources: CurrentResources,
                  database: ResourceDatabase) -> "RequirementSet":

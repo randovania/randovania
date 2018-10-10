@@ -3,13 +3,17 @@ from typing import Tuple
 import pytest
 
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
-from randovania.game_description.resources import SimpleResourceInfo, ResourceDatabase
+from randovania.game_description.resources import SimpleResourceInfo, ResourceDatabase, ResourceType
 
 
-@pytest.fixture
-def database():
+@pytest.fixture(name="database")
+def _database() -> ResourceDatabase:
     return ResourceDatabase(
-        item=[],
+        item=[
+            SimpleResourceInfo(0, "A", "A", ""),
+            SimpleResourceInfo(1, "B", "B", ""),
+            SimpleResourceInfo(2, "C", "C", ""),
+        ],
         event=[],
         trick=[],
         damage=[],
@@ -18,35 +22,41 @@ def database():
             SimpleResourceInfo(0, "Trivial", "Trivial", ""),
             SimpleResourceInfo(1, "Impossible", "Impossible", ""),
         ],
-        difficulty=[],
+        difficulty=[
+            SimpleResourceInfo(0, "Difficulty", "Difficulty", ""),
+        ],
         pickups=[]
     )
 
 
-def make_req_a():
-    req_a = SimpleResourceInfo(0, "A", "A", "")
-    id_req_a = IndividualRequirement(req_a, 1, False)
+def _make_req(name: str, index: int):
+    req = SimpleResourceInfo(index, name, name, "")
+    id_req = IndividualRequirement(req, 1, False)
+    return req, id_req
 
-    return req_a, id_req_a
+
+def make_req_a():
+    return _make_req("A", 0)
 
 
 def make_req_b():
-    req_b = SimpleResourceInfo(1, "B", "B", "")
-    id_req_b = IndividualRequirement(req_b, 1, False)
+    return _make_req("B", 1)
 
-    return req_b, id_req_b
+
+def make_req_c():
+    return _make_req("C", 2)
 
 
 def make_single_set(id_req: Tuple[SimpleResourceInfo, IndividualRequirement]) -> RequirementSet:
     return RequirementSet([RequirementList([id_req[1]])])
 
 
-def test_empty_requirement_set():
-    assert not RequirementSet([]).satisfied({}, None)
+def test_empty_requirement_set(database):
+    assert not RequirementSet([]).satisfied({}, database)
 
 
-def test_empty_requirement_list():
-    assert RequirementList([]).satisfied({}, None)
+def test_empty_requirement_list(database):
+    assert RequirementList([]).satisfied({}, database)
 
 
 def test_simplify_requirement_set_static(database):
@@ -122,3 +132,29 @@ def test_replace_missing(replacement):
 ])
 def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: RequirementSet):
     assert a.expand_alternatives(b) == expected
+
+
+@pytest.mark.parametrize(["resources", "expected_level"], [
+    ([], None),
+    ([0], 0),
+    ([1], 1),
+    ([2], 2),
+    ([1, 2], 1),
+])
+def test_minimum_satisfied_difficulty(database: ResourceDatabase, resources, expected_level):
+    res_a, id_req_a = make_req_a()
+    res_b, id_req_b = make_req_b()
+    res_c, id_req_c = make_req_c()
+    the_set = RequirementSet([
+        RequirementList([id_req_a]),
+        RequirementList([id_req_b, IndividualRequirement(database.difficulty_resource, 1, False)]),
+        RequirementList([id_req_c, IndividualRequirement(database.difficulty_resource, 2, False)]),
+    ])
+
+    res = {
+        database.get_by_type_and_index(ResourceType.ITEM, x): 1
+        for x in resources
+    }
+    res[database.difficulty_resource] = 10
+    diff = the_set.minimum_satisfied_difficulty(res, database)
+    assert diff == expected_level
