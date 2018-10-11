@@ -1,4 +1,5 @@
 from typing import Tuple
+from unittest.mock import patch, MagicMock
 
 import pytest
 
@@ -158,3 +159,46 @@ def test_minimum_satisfied_difficulty(database: ResourceDatabase, resources, exp
     res[database.difficulty_resource] = 10
     diff = the_set.minimum_satisfied_difficulty(res, database)
     assert diff == expected_level
+
+
+@pytest.mark.parametrize(["input_data", "output_data"], [
+    ([], []),
+    ([(0, False)], []),
+    ([(0, True)], [0]),
+    ([(0, True), (0, False)], [0]),
+    ([(0, True), (1, False)], [0]),
+    ([(0, True), (1, True)], [0, 1]),
+])
+def test_list_dangerous_resources(input_data, output_data):
+    # setup
+    req_list = RequirementList(
+        IndividualRequirement(SimpleResourceInfo(item[0], str(item[0]), str(item[0]), ""), 1, item[1])
+        for item in input_data
+    )
+    expected_result = {
+        SimpleResourceInfo(item, str(item), str(item), "")
+        for item in output_data
+    }
+
+    # run
+    result = set(req_list.dangerous_resources)
+
+    # assert
+    assert result == expected_result
+
+
+def test_set_dangerous_resources():
+    # setup
+    list_a = MagicMock()
+    list_b = MagicMock()
+    list_a.dangerous_resources = [1, 2, 3]
+    list_b.dangerous_resources = ["a", "b", "c"]
+
+    req_set = RequirementSet([])
+    req_set.alternatives = frozenset([list_a, list_b])
+
+    # Run
+    result = set(req_set.dangerous_resources)
+
+    # Assert
+    assert result == {1, 2, 3, "a", "b", "c"}

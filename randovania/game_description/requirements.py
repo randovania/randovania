@@ -1,8 +1,8 @@
 from functools import lru_cache
-from typing import NamedTuple, Optional, Iterable, FrozenSet
+from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator
 
 from randovania.game_description.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceType, \
-    ResourceDatabase
+    ResourceDatabase, SimpleResourceInfo
 
 
 def _calculate_reduction(resource: DamageResourceInfo,
@@ -125,6 +125,16 @@ class RequirementList(frozenset):
             if item.resource == resource:
                 return item
         return None
+
+    @property
+    def dangerous_resources(self) -> Iterator[SimpleResourceInfo]:
+        """
+        Return an iterator of all SimpleResourceInfo in this list that have the negate flag
+        :return:
+        """
+        for individual in self:
+            if individual.negate:
+                yield individual.resource
 
     def replace(self, individual: IndividualRequirement, replacement: "RequirementList") -> "RequirementList":
         items = []
@@ -267,6 +277,15 @@ class RequirementSet:
     def expand_alternatives(self, other: "RequirementSet") -> "RequirementSet":
         """Create a new RequirementSet that is satisfied when either are satisfied."""
         return RequirementSet(self.alternatives | other.alternatives)
+
+    @property
+    def dangerous_resources(self) -> Iterator[SimpleResourceInfo]:
+        """
+        Return an iterator of all SimpleResourceInfo in all alternatives that have the negate flag
+        :return:
+        """
+        for alternative in self.alternatives:
+            yield from alternative.dangerous_resources
 
 
 SatisfiableRequirements = FrozenSet[RequirementList]
