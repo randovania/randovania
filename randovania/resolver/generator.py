@@ -191,14 +191,28 @@ def find_all_pickups_via_most_events(logic: Logic,
         _, state = queue.popitem(last=False)
         checked.add(state.node)
 
-        if victory_condition.satisfied(state.resources, state.resource_database):
-            raise VictoryReached(state)
-
         reach = Reach.calculate_reach(logic, state)
+
+        has_safe_event = True
+        while has_safe_event:
+            if victory_condition.satisfied(state.resources, state.resource_database):
+                raise VictoryReached(state)
+
+            has_safe_event = False
+            # This actually increased the time, instead of decreasing...
+            # for action in sorted(reach.possible_actions(state)):
+            #     if reach.is_safe(action) and isinstance(action, EventNode) and (
+            #             action.resource(state.resource_database) not in logic.game.dangerous_resources):
+            #
+            #         state.collect_resource_node(action, patches.pickup_mapping)
+            #         has_safe_event = True
+
+            reach = Reach.calculate_reach(logic, state)
 
         for action in sorted(reach.possible_actions(state)):
             if isinstance(action, EventNode) or not is_pickup_node_available(action, logic, patches):
                 if action not in checked:
+                    # assert not reach.is_safe(action)
                     queue[action] = state.act_on_node(action, patches.pickup_mapping)
             else:
                 paths[action] = state
@@ -273,7 +287,7 @@ def distribute_one_item(
         rng: Random,
         status_update: Callable[[str], None],
 ) -> Optional[Tuple[GamePatches, Tuple[PickupEntry, ...], State]]:
-    debug.print_distribute_one_item(state, available_item_pickups)
+    start_time = debug.print_distribute_one_item(state, available_item_pickups)
 
     try:
         pickups_with_path = find_all_pickups_via_most_events(
@@ -295,7 +309,7 @@ def distribute_one_item(
 
     # Calculating Reach for all nodes is kinda too CPU intensive, unfortunately.
     # TODO: better algorithm that calculates multiple reaches at the same time?
-    debug.print_distribute_one_item_detail(potential_pickup_nodes)
+    debug.print_distribute_one_item_detail(potential_pickup_nodes, start_time)
 
     for pickup_node in _iterate_with_weights(potential_pickup_nodes,
                                              node_weights,
