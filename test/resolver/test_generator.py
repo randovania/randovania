@@ -127,18 +127,25 @@ def test_generate_seed_with_invalid_quantity_configuration():
             status_update=status_update)
 
 
-def test_compare_generated_with_data(layout_description: LayoutDescription):
+def test_compare_generated_with_data(benchmark, layout_description: LayoutDescription):
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
 
     data = binary_data.decode_default_prime2()
-    generated_description = generator.generate_list(
-        data,
-        layout_description.seed_number,
-        layout_description.configuration,
-        status_update=status_update)
+    generated_description = benchmark.pedantic(
+        generator.generate_list,
+        args=(
+            data,
+            layout_description.seed_number,
+            layout_description.configuration,
+        ),
+        kwargs={
+            'status_update': status_update
+        },
+        iterations=1,
+        rounds=1)
 
-    print(generated_description.pickup_mapping)
+    # print(generated_description.pickup_mapping)
     assert generated_description.without_solver_path == layout_description
 
 
