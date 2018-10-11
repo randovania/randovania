@@ -1,7 +1,7 @@
 import collections
 import math
 from collections import defaultdict
-from typing import Dict, Set, List, Iterator, Tuple, Iterable
+from typing import Dict, Set, List, Iterator, Tuple, Iterable, FrozenSet
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, Node, is_resource_node
@@ -15,6 +15,7 @@ class Reach:
     _nodes: Tuple[Node, ...]
     path_to_node: Dict[Node, Tuple[Node, ...]]
     _satisfiable_requirements: SatisfiableRequirements
+    _safe_nodes: FrozenSet[Node]
     _logic: Logic
 
     @property
@@ -33,10 +34,12 @@ class Reach:
                  nodes: Iterable[Node],
                  path_to_node: Dict[Node, Tuple[Node, ...]],
                  requirements: SatisfiableRequirements,
+                 safe_nodes: Iterable[Node],
                  logic: Logic):
         self._nodes = tuple(nodes)
         self.path_to_node = path_to_node
         self._satisfiable_requirements = requirements
+        self._safe_nodes = frozenset(safe_nodes)
         self._logic = logic
 
     @classmethod
@@ -45,6 +48,7 @@ class Reach:
                         initial_state: State) -> "Reach":
 
         checked_nodes = {}
+        safe_nodes = {initial_state.node}
         nodes_to_check = collections.OrderedDict()
         nodes_to_check[initial_state.node] = 0
 
@@ -68,6 +72,9 @@ class Reach:
                     initial_state.resources, initial_state.resource_database)
 
                 if difficulty is not None:
+                    if target_node in safe_nodes:
+                        safe_nodes.add(node)
+
                     new_difficulty = max(path_difficulty, difficulty)
                     if min(checked_nodes.get(target_node, math.inf),
                            nodes_to_check.get(target_node, math.inf)) <= new_difficulty:
@@ -100,7 +107,7 @@ class Reach:
         else:
             satisfiable_requirements = frozenset()
 
-        return Reach(reach_nodes, path_to_node, satisfiable_requirements, logic)
+        return Reach(reach_nodes, path_to_node, satisfiable_requirements, safe_nodes, logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
