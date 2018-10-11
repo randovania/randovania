@@ -30,6 +30,14 @@ class Reach:
     def satisfiable_as_requirement_set(self) -> RequirementSet:
         return RequirementSet(self._satisfiable_requirements)
 
+    def is_safe(self, node: Node) -> bool:
+        """
+        Checks if a given node is considered safe
+        :param node:
+        :return:
+        """
+        return node in self._safe_nodes
+
     def __init__(self,
                  nodes: Iterable[Node],
                  path_to_node: Dict[Node, Tuple[Node, ...]],
