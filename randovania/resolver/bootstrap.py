@@ -78,7 +78,7 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
 def static_resources_for_layout_logic(
         layout_logic: LayoutLogic,
         resource_database: ResourceDatabase,
-) -> CurrentResources:
+) -> Tuple[int, CurrentResources]:
     """
 
     :param layout_logic:
@@ -95,10 +95,7 @@ def static_resources_for_layout_logic(
         else:
             static_resources[trick] = 0
 
-    for difficulty in resource_database.difficulty:
-        static_resources[difficulty] = difficulty_level
-
-    return static_resources
+    return difficulty_level, static_resources
 
 
 def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
@@ -138,10 +135,11 @@ def logic_bootstrap(configuration: LayoutConfiguration,
         _add_minimal_restrictions_initial_resources(starting_state.resources,
                                                     game.resource_database)
 
-    starting_state.resources = merge_resources(
-        static_resources_for_layout_logic(configuration.logic, game.resource_database),
-        starting_state.resources)
+    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.logic, game.resource_database)
 
-    # game.simplify_connections()
+    starting_state.resources = merge_resources(static_resources, starting_state.resources)
+    game.simplify_connections(starting_state.resources)
+
+    starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level
 
     return logic, starting_state
