@@ -1,7 +1,7 @@
 import copy
 import os
 import subprocess
-from collections.__init__ import defaultdict
+from collections import defaultdict
 from typing import Callable, List, Optional, Dict
 
 import py
