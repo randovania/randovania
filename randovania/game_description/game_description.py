@@ -1,12 +1,13 @@
 """Classes that describes the raw data of a game world."""
 import copy
+import itertools
 from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet, Iterable
 
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.node import DockNode, TeleporterNode, Node
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
 from randovania.game_description.resources import ResourceInfo, \
-    ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, ResourceType
+    ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, ResourceType, SimpleResourceInfo
 
 
 class Area(NamedTuple):
@@ -42,6 +43,16 @@ class World(NamedTuple):
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
 
+def _calculate_dangerous_resources(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
+    yield from itertools.chain.from_iterable(
+        requirement_set.dangerous_resources
+
+        for area in areas
+        for node_connection in area.connections.values()
+        for requirement_set in node_connection.values()
+    )
+
+
 class GameDescription:
     game: int
     game_name: str
@@ -54,6 +65,7 @@ class GameDescription:
     starting_items: ResourceGain
     item_loss_items: ResourceGain
     worlds: List[World]
+    dangerous_resources: FrozenSet[SimpleResourceInfo]
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
@@ -97,6 +109,8 @@ class GameDescription:
         self.item_loss_items = item_loss_items
         self.worlds = worlds
 
+        self.dangerous_resources = frozenset(_calculate_dangerous_resources(self.all_areas))
+
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
     def world_by_asset_id(self, asset_id: int) -> World:
@@ -106,11 +120,14 @@ class GameDescription:
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
     @property
-    def all_nodes(self) -> Iterator[Node]:
+    def all_areas(self) -> Iterator[Area]:
         for world in self.worlds:
-            for area in world.areas:
-                for node in area.nodes:
-                    yield node
+            yield from world.areas
+
+    @property
+    def all_nodes(self) -> Iterator[Node]:
+        for area in self.all_areas:
+            yield from area.nodes
 
     def node_name(self, node: Node, with_world=False) -> str:
         prefix = "{}/".format(self.nodes_to_world(node).name) if with_world else ""
