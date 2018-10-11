@@ -1,3 +1,4 @@
+import time
 from typing import Set
 
 from randovania.game_description.game_description import Area, GameDescription
@@ -83,10 +84,10 @@ def log_skip_action_missing_requirement(node: Node, game: GameDescription, requi
         requirement_set.pretty_print(_indent(-1))
 
 
-def print_distribute_one_item_detail(potential_pickup_nodes):
+def print_distribute_one_item_detail(potential_pickup_nodes, start_time):
     if _DEBUG_LEVEL > 0:
-        print(":: {:2d} pickups spots".format(
-            len(potential_pickup_nodes),
+        print(":: {:2d} pickups spots :: Took {}s".format(
+            len(potential_pickup_nodes), time.perf_counter() - start_time
         ))
 
 
@@ -97,6 +98,7 @@ def print_distribute_one_item(state, available_item_pickups):
             len(state.resources),
             len(available_item_pickups)
         ))
+        return time.perf_counter()
 
 
 def print_distribute_one_item_rollback(state):
