@@ -183,7 +183,8 @@ def export_areas_command(sub_parsers):
 
 def list_paths_with_difficulty_logic(args):
     gd = load_game_description(args)
-    difficulty_requirement = gd.resource_database.difficulty[0]
+
+    difficulty_resource = gd.resource_database.difficulty_resource
     count = 0
 
     for world in gd.worlds:
@@ -191,13 +192,17 @@ def list_paths_with_difficulty_logic(args):
             for source, connection in area.connections.items():
                 for target, requirements in connection.items():
                     for alternative in requirements.alternatives:
-                        if any(requirement.requirement == difficulty_requirement
-                               and requirement.amount == args.difficulty
-                               for requirement in alternative.values()):
-                            print("At {}/{}, from {} to {}:\n{}\n".format(
-                                world.name, area.name, source.name, target.name,
+                        difficulty_invididual = alternative.get(difficulty_resource)
+                        alternative_difficulty = difficulty_invididual.amount if difficulty_invididual is not None else 0
+
+                        if alternative_difficulty == args.difficulty:
+                            print("At {0.name}/{1.name}, from {2} to {3}:\n{4}\n".format(
+                                world,
+                                area,
+                                source.name,
+                                target.name,
                                 sorted(individual for individual in alternative.values()
-                                       if individual.requirement != difficulty_requirement)
+                                       if individual.resource != difficulty_resource)
                             ))
                             count += 1
 
