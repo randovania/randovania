@@ -42,6 +42,7 @@ def distribute_command_logic(args):
             elevators=LayoutRandomizedFlag.VANILLA,
             hundo_guaranteed=LayoutEnabledFlag.DISABLED,
             difficulty=LayoutDifficulty.NORMAL,
+            pickup_quantities={}
         ),
         status_update=status_update
     )
