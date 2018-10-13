@@ -2,7 +2,7 @@ import random
 from argparse import ArgumentParser
 
 from randovania.cli import prime_database
-from randovania.resolver import debug
+from randovania.resolver import debug, generator
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, \
     LayoutRandomizedFlag, LayoutEnabledFlag, LayoutDifficulty
 
@@ -30,7 +30,6 @@ def distribute_command_logic(args):
 
     print("Using seed: {}".format(seed_number))
 
-    from randovania.resolver import generator
     layout_description = generator.generate_list(
         data=data,
         seed_number=seed_number,
