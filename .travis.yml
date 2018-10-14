@@ -52,15 +52,15 @@ install:
 script:
 - python setup.py bdist_wheel
 - python -m pip install --upgrade dist/*
-- python -m pytest
+- python -m pytest --cov randovania
 - if [[ "$INCLUDE_SDIST" == "true" ]]; then python setup.py sdist; fi
 
 after_success:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/6d919918f55cff047d6f71689931ed15f9716b53/send.sh
   - chmod +x send.sh
-#  - ./send.sh success $WEBHOOK_URL
+  - ./send.sh success $WEBHOOK_URL
 
 after_failure:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/6d919918f55cff047d6f71689931ed15f9716b53/send.sh
   - chmod +x send.sh
-#  - ./send.sh failure $WEBHOOK_URL
+  - ./send.sh failure $WEBHOOK_URL
