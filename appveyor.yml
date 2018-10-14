@@ -24,6 +24,7 @@ install:
   - "%PYTHON%\\python.exe -m pip install --upgrade pip"
   - "%PYTHON%\\python.exe -m pip install https://github.com/enthought/pywin32-ctypes/archive/master.zip"
   - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
+  - "%PYTHON%\\python.exe -m pip install -e ."
 
 build: off
 
@@ -35,8 +36,8 @@ test_script:
   # Note that you must use the environment variable %PYTHON% to refer to
   # the interpreter you're using - Appveyor does not do anything special
   # to put the Python version you want to use on PATH.
-  - "%PYTHON%\\python.exe -m pip install -e ."
-  - "%PYTHON%\\python.exe -m pytest"
+  - "%PYTHON%\\python.exe -m bdist_wheel"
+  - "%PYTHON%\\python.exe -m pytest --cov randovania"
   - "%PYTHON%\\python.exe create_windows_release.py"
   - dist\randovania.exe --version
 
