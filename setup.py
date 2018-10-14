@@ -53,17 +53,6 @@ setup(
         'requests',
         'dataset',
     ],
-    setup_requires=[
-        'markdown',
-        'pytest',
-        'pytest-benchmark',
-        'pytest-cov',
-        'PyInstaller',
-        'pyqt-distutils',
-        'setuptools>=38.6.0',
-        'twine>=1.11.0',
-        'wheel>=0.31.0',
-    ],
     entry_points={
         'console_scripts': [
             "randovania = randovania.__main__:main"

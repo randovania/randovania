@@ -22,9 +22,8 @@ install:
   - git submodule update --init --recursive
   - set PATH=%PYTHON%\Scripts;%PATH%
   - "%PYTHON%\\python.exe -m pip install --upgrade pip"
-  - "%PYTHON%\\python.exe -m pip install --upgrade markdown pytest pytest-benchmark pyqt-distutils setuptools>=38.6.0 twine>=1.11.0 wheel>=0.31.0 pywin32"
   - "%PYTHON%\\python.exe -m pip install https://github.com/enthought/pywin32-ctypes/archive/master.zip"
-  - "%PYTHON%\\python.exe -m pip install https://github.com/pyinstaller/pyinstaller/archive/develop.tar.gz"
+  - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
 
 build: off
 
@@ -37,7 +36,6 @@ test_script:
   # the interpreter you're using - Appveyor does not do anything special
   # to put the Python version you want to use on PATH.
   - "%PYTHON%\\python.exe -m pip install -e ."
-  - "%PYTHON%\\python.exe setup.py bdist_wheel"
   - "%PYTHON%\\python.exe -m pytest"
   - "%PYTHON%\\python.exe create_windows_release.py"
   - dist\randovania.exe --version
