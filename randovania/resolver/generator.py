@@ -61,9 +61,13 @@ def _state_to_solver_path(final_state: State,
 def generate_list(data: Dict,
                   seed_number: int,
                   configuration: LayoutConfiguration,
-                  status_update: Callable[[str], None]
+                  status_update: Optional[Callable[[str], None]]
                   ) -> LayoutDescription:
+
     elevators = randovania.games.prime.claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
+    if status_update is None:
+        status_update = id
+
     new_patches = _create_patches(
         seed_number=seed_number,
         configuration=configuration,
