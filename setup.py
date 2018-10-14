@@ -57,6 +57,7 @@ setup(
         'markdown',
         'pytest',
         'pytest-benchmark',
+        'pytest-cov',
         'PyInstaller',
         'pyqt-distutils',
         'setuptools>=38.6.0',
