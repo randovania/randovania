@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QSpi
 
 from randovania.game_description.data_reader import read_resource_database
 from randovania.games.prime import binary_data
-from randovania.gui import TabService
+from randovania.gui import tab_service
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
 from randovania.gui.history_window import HistoryWindow
@@ -58,7 +58,7 @@ class CustomSpinBox(QSpinBox):
 
 
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
-    tab_service: TabService
+    tab_service: tab_service
     _last_generated_layout: Optional[LayoutDescription] = None
     _layout_logic_radios: Dict[LayoutLogic, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
@@ -74,7 +74,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     layout_generated_signal = pyqtSignal(LayoutDescription)
     failed_to_generate_signal = pyqtSignal(Exception)
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
+    def __init__(self, tab_service: tab_service, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
 
