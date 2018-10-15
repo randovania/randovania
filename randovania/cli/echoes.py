@@ -1,6 +1,7 @@
 import multiprocessing
 import os
 import random
+import time
 from argparse import ArgumentParser
 
 from randovania.cli import prime_database
@@ -96,12 +97,16 @@ def add_distribute_command(sub_parsers):
     parser.set_defaults(func=distribute_command_logic)
 
 
-def batch_distribute_helper(args, seed_number):
+def batch_distribute_helper(args, seed_number) -> float:
     data = prime_database.decode_data_file(args)
     configuration = get_layout_configuration_from_args(args)
 
+    start_time = time.perf_counter()
     description = generator.generate_list(data, seed_number, configuration, None)
+    delta_time = time.perf_counter() - start_time
+
     description.save_to_file(os.path.join(args.output_dir, "{}.json".format(description.seed_number)))
+    return delta_time
 
 
 def batch_distribute_command_logic(args):
@@ -115,7 +120,7 @@ def batch_distribute_command_logic(args):
     def callback(result):
         nonlocal finished_count
         finished_count += 1
-        print("Finished {} of {} seeds.".format(finished_count, args.seed_count))
+        print("Finished seed in {} seconds. At {} of {} seeds.".format(result, finished_count, args.seed_count))
 
     def error_callback(e):
         nonlocal finished_count
