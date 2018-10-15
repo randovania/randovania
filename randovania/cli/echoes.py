@@ -2,14 +2,11 @@ import multiprocessing
 import os
 import random
 from argparse import ArgumentParser
-from typing import List
 
 from randovania.cli import prime_database
 from randovania.resolver import debug, generator
-from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, \
     LayoutRandomizedFlag, LayoutEnabledFlag, LayoutDifficulty
-from randovania.resolver.layout_description import LayoutDescription
 
 __all__ = ["create_subparsers"]
 
@@ -34,7 +31,7 @@ def add_layout_configuration_arguments(parser):
     parser.add_argument(
         "--skip-item-loss",
         action="store_true",
-        help="Assumes the Item Loss trigger is disabled."
+        help="Disables the item loss cutscene, disabling losing your items."
     )
 
 
@@ -43,7 +40,7 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
         logic=LayoutLogic(args.logic),
         mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
         sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
-        item_loss=LayoutEnabledFlag.ENABLED if args.skip_item_loss else LayoutEnabledFlag.DISABLED,
+        item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
         hundo_guaranteed=LayoutEnabledFlag.DISABLED,
         difficulty=LayoutDifficulty.NORMAL,
@@ -109,7 +106,7 @@ def batch_distribute_helper(args, seed_number):
 
 def batch_distribute_command_logic(args):
     finished_count = 0
-    
+
     print("Starting batch generation with configuration: {}".format(
         get_layout_configuration_from_args(args).as_str
     ))
