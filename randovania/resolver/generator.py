@@ -1,5 +1,6 @@
 import collections
 import copy
+import multiprocessing.dummy
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, Dict
 
@@ -63,16 +64,27 @@ def generate_list(data: Dict,
                   configuration: LayoutConfiguration,
                   status_update: Optional[Callable[[str], None]]
                   ) -> LayoutDescription:
-
     elevators = randovania.games.prime.claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
     if status_update is None:
         status_update = id
 
-    new_patches = _create_patches(
-        seed_number=seed_number,
-        configuration=configuration,
-        game=data_reader.decode_data(data, elevators),
-        status_update=status_update)
+    try:
+        with multiprocessing.dummy.Pool(1) as dummy_pool:
+            new_patches = dummy_pool.apply_async(
+                func=_create_patches,
+                kwds={
+                    "seed_number": seed_number,
+                    "configuration": configuration,
+                    "game": data_reader.decode_data(data, elevators),
+                    "status_update": status_update
+                }
+            ).get(120)
+    except multiprocessing.TimeoutError:
+        raise GenerationFailure(
+            "Timeout reached when generating patches.",
+            configuration=configuration,
+            seed_number=seed_number
+        )
 
     if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS and False:
         # For minimal restrictions, the solver path will take paths that are just impossible.
