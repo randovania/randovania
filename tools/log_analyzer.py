@@ -1,8 +1,14 @@
 import argparse
 import collections
 import json
+from statistics import stdev
+from typing import Dict, List
 
 import py
+
+from randovania.game_description.data_reader import read_resource_database
+from randovania.game_description.resources import PickupEntry
+from randovania.games.prime import binary_data
 
 
 def read_json(path: str) -> dict:
@@ -27,6 +33,14 @@ def sort_by_contents(data: dict) -> dict:
     }
 
 
+def calculate_stddev(split_pickups: Dict[str, List[PickupEntry]], item_counts: Dict[str, float]) -> float:
+    balanced_freq = {
+        item: count / len(split_pickups[item])
+        for item, count in item_counts.items()
+    }
+    return stdev(balanced_freq.values())
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("seeds_dir")
@@ -44,8 +58,21 @@ def main():
         accumulate_results(read_json(seed), items, locations)
         seed_count += 1
 
+    data = binary_data.decode_default_prime2()
+    resource_database = read_resource_database(data["resource_database"])
+    split_pickups = resource_database.pickups_split_by_name()
+
+    stddev_by_location = {
+        location: calculate_stddev(split_pickups, locations[location])
+        for location in locations.keys()
+    }
+
     final_results = {
         "seed_count": seed_count,
+        "stddev_by_location": {
+            location: stddev
+            for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1], reverse=True)
+        },
         "items": sort_by_contents(items),
         "locations": sort_by_contents(locations),
     }
