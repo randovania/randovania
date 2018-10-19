@@ -15,7 +15,8 @@ from randovania.resolver import debug, resolver, item_pool
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
+from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups, \
+    remove_pickup_entry_from_list
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutMode, \
     LayoutRandomizedFlag, LayoutLogic
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
@@ -192,6 +193,14 @@ class VictoryReached(Exception):
         self.state = state
 
 
+def _can_reach_safe_node(with_event_state: State, logic: Logic, reach: Reach) -> bool:
+    return any(
+        reach.is_safe(target_node) and requirements.satisfied(with_event_state.resources,
+                                                              with_event_state.resource_database)
+        for target_node, requirements in logic.game.potential_nodes_from(with_event_state.node)
+    )
+
+
 def find_all_pickups_via_most_events(logic: Logic,
                                      patches: GamePatches,
                                      initial_state: State,
@@ -207,28 +216,29 @@ def find_all_pickups_via_most_events(logic: Logic,
         _, state = queue.popitem(last=False)
         checked.add(state.node)
 
-        reach = Reach.calculate_reach(logic, state)
-
+        reach = None
         has_safe_event = True
         while has_safe_event:
+            reach = Reach.calculate_reach(logic, state)
             if victory_condition.satisfied(state.resources, state.resource_database):
                 raise VictoryReached(state)
 
             has_safe_event = False
-            # This actually increased the time, instead of decreasing...
-            # for action in sorted(reach.possible_actions(state)):
-            #     if reach.is_safe(action) and isinstance(action, EventNode) and (
-            #             action.resource(state.resource_database) not in logic.game.dangerous_resources):
-            #
-            #         state.collect_resource_node(action, patches.pickup_mapping)
-            #         has_safe_event = True
 
-            reach = Reach.calculate_reach(logic, state)
+            for action in reach.possible_actions(state):
+                if isinstance(action, EventNode) and (
+                        action.resource(state.resource_database) not in logic.game.dangerous_resources):
+
+                    if _can_reach_safe_node(state.act_on_node(action, patches.pickup_mapping),
+                                            logic,
+                                            reach):
+                        state.resources = state.collect_resource_node(action, patches.pickup_mapping).resources
+                        has_safe_event = True
 
         for action in sorted(reach.possible_actions(state)):
-            if isinstance(action, EventNode) or not is_pickup_node_available(action, logic, patches):
+            if isinstance(action, EventNode):
                 if action not in checked:
-                    # assert not reach.is_safe(action)
+                    assert not reach.is_safe(action)
                     queue[action] = state.act_on_node(action, patches.pickup_mapping)
             else:
                 paths[action] = state
@@ -357,7 +367,7 @@ def distribute_one_item(
                 logic,
                 pickup_state_with_item,
                 new_patches,
-                item_pool.remove_pickup_entry_from_list(available_item_pickups, item),
+                remove_pickup_entry_from_list(available_item_pickups, item),
                 rng,
                 status_update
             )
