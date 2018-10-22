@@ -14,7 +14,7 @@ from randovania.resolver.state import State
 
 def _simplify_requirement_list(self: RequirementList) -> Optional[RequirementList]:
     items = []
-    for item in self:  # type: IndividualRequirement
+    for item in self.values():
         if item.negate:
             return None
 

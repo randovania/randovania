@@ -23,7 +23,7 @@ def test_add_requirement_to_set():
     assert the_set != new_set
     for the_set_list, new_set_list in zip(the_set.alternatives,
                                           new_set.alternatives):
-        assert the_set_list.union([id_req_c]) == new_set_list
+        assert the_set_list.union(RequirementList([id_req_c])) == new_set_list
 
 
 def test_copy_worlds():

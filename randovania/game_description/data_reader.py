@@ -83,7 +83,7 @@ def add_requirement_to_set(
         requirement_set: RequirementSet,
         new_requirement: IndividualRequirement) -> RequirementSet:
     return RequirementSet(
-        RequirementList(requirement_list.union([new_requirement]))
+        requirement_list.union(RequirementList([new_requirement]))
         for requirement_list in requirement_set.alternatives)
 
 
