@@ -175,6 +175,16 @@ class GameDescription:
                 print("Teleporter is broken!", node)
                 yield None, RequirementSet.impossible()
 
+    def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+        """
+        Queries all nodes from the same area you can go from a given node.
+        :param node:
+        :return: Generator of pairs Node + RequirementSet for going to that node
+        """
+        area = self.nodes_to_area(node)
+        for target_node, requirements in area.connections[node].items():
+            yield target_node, requirements
+
     def potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
         """
         Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
@@ -182,10 +192,7 @@ class GameDescription:
         :return: Generator of pairs Node + RequirementSet for going to that node
         """
         yield from self.connections_from(node)
-
-        area = self.nodes_to_area(node)
-        for target_node, requirements in area.connections[node].items():
-            yield target_node, requirements
+        yield from self.area_connections_from(node)
 
     def simplify_connections(self, static_resources: CurrentResources) -> None:
         """
