@@ -22,7 +22,7 @@ def test_possible_actions_no_resources():
     digraph.add_node(MagicMock())
     digraph.add_node(MagicMock())
 
-    reach = Reach(digraph, {}, frozenset(), [], MagicMock())
+    reach = Reach(digraph, {}, frozenset(), None, MagicMock())
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -38,7 +38,7 @@ def test_possible_actions_with_event():
     digraph.add_node(event)
 
     # Run
-    reach = Reach(digraph, {}, frozenset(), [], logic)
+    reach = Reach(digraph, {}, frozenset(), None, logic)
     options = list(reach.possible_actions(state))
 
     # Assert

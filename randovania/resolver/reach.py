@@ -44,14 +44,19 @@ class Reach:
                  digraph: networkx.DiGraph,
                  path_to_node: Dict[Node, Tuple[Node, ...]],
                  requirements: SatisfiableRequirements,
-                 safe_nodes: Iterable[Node],
+                 starting_node: Node,
                  logic: Logic):
         self._digraph = digraph
+        self._strongly_connected_components = networkx.strongly_connected_components(digraph)
         self._nodes = tuple(digraph.nodes)
+        self._logic = logic
         self.path_to_node = path_to_node
         self._satisfiable_requirements = requirements
-        self._safe_nodes = frozenset(safe_nodes)
-        self._logic = logic
+
+        for components in self._strongly_connected_components:
+            if starting_node in components:
+                self._safe_nodes = components
+                break
 
     @classmethod
     def calculate_reach(cls,
@@ -59,17 +64,13 @@ class Reach:
                         initial_state: State) -> "Reach":
 
         checked_nodes = {}
-        safe_nodes = {initial_state.node}
         nodes_to_check = collections.OrderedDict()
         nodes_to_check[initial_state.node] = 0
 
         digraph = networkx.DiGraph()
-
-        # nodes_to_check: List[Node] = [initial_state.node]
-        path_to_node: Dict[Node, Tuple[Node, ...]] = {}
-
         requirements_by_node: Dict[Node, Set[RequirementList]] = defaultdict(set)
 
+        path_to_node: Dict[Node, Tuple[Node, ...]] = {}
         path_to_node[initial_state.node] = tuple()
 
         while nodes_to_check:
@@ -82,9 +83,6 @@ class Reach:
                     initial_state.resources, initial_state.resource_database)
 
                 if difficulty is not None:
-                    if target_node in safe_nodes:
-                        safe_nodes.add(node)
-
                     new_difficulty = max(path_difficulty, difficulty)
                     if min(checked_nodes.get(target_node, math.inf),
                            nodes_to_check.get(target_node, math.inf)) <= new_difficulty:
@@ -120,7 +118,7 @@ class Reach:
         else:
             satisfiable_requirements = frozenset()
 
-        return Reach(digraph, path_to_node, satisfiable_requirements, safe_nodes, logic)
+        return Reach(digraph, path_to_node, satisfiable_requirements, initial_state.node, logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
