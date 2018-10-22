@@ -3,6 +3,8 @@ import math
 from collections import defaultdict
 from typing import Dict, Set, List, Iterator, Tuple, Iterable, FrozenSet
 
+import networkx
+
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, Node, is_resource_node
 from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements
@@ -39,12 +41,13 @@ class Reach:
         return node in self._safe_nodes
 
     def __init__(self,
-                 nodes: Iterable[Node],
+                 digraph: networkx.DiGraph,
                  path_to_node: Dict[Node, Tuple[Node, ...]],
                  requirements: SatisfiableRequirements,
                  safe_nodes: Iterable[Node],
                  logic: Logic):
-        self._nodes = tuple(nodes)
+        self._digraph = digraph
+        self._nodes = tuple(digraph.nodes)
         self.path_to_node = path_to_node
         self._satisfiable_requirements = requirements
         self._safe_nodes = frozenset(safe_nodes)
@@ -60,10 +63,11 @@ class Reach:
         nodes_to_check = collections.OrderedDict()
         nodes_to_check[initial_state.node] = 0
 
+        digraph = networkx.DiGraph()
+
         # nodes_to_check: List[Node] = [initial_state.node]
         path_to_node: Dict[Node, Tuple[Node, ...]] = {}
 
-        reach_nodes: List[Node] = []
         requirements_by_node: Dict[Node, Set[RequirementList]] = defaultdict(set)
 
         path_to_node[initial_state.node] = tuple()
@@ -71,9 +75,7 @@ class Reach:
         while nodes_to_check:
             node, path_difficulty = nodes_to_check.popitem(False)
             checked_nodes[node] = path_difficulty
-
-            if node != initial_state.node:
-                reach_nodes.append(node)
+            digraph.add_node(node)
 
             for target_node, requirements in logic.game.potential_nodes_from(node):
                 difficulty = requirements.minimum_satisfied_difficulty(
@@ -86,6 +88,7 @@ class Reach:
                     new_difficulty = max(path_difficulty, difficulty)
                     if min(checked_nodes.get(target_node, math.inf),
                            nodes_to_check.get(target_node, math.inf)) <= new_difficulty:
+                        digraph.add_edge(node, target_node, difficulty=new_difficulty)
                         continue
 
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
@@ -96,6 +99,8 @@ class Reach:
                     new_difficulty = None
 
                 if satisfied:
+                    digraph.add_node(target_node)
+                    digraph.add_edge(node, target_node, difficulty=new_difficulty)
                     nodes_to_check[target_node] = new_difficulty
                     path_to_node[target_node] = path_to_node[node] + (node,)
 
@@ -105,7 +110,7 @@ class Reach:
                     requirements_by_node[target_node].update(requirements.alternatives)
 
         # Discard satisfiable requirements of nodes reachable by other means
-        for node in set(reach_nodes).intersection(requirements_by_node.keys()):
+        for node in set(digraph.nodes).intersection(requirements_by_node.keys()):
             requirements_by_node.pop(node)
 
         if requirements_by_node:
@@ -115,7 +120,7 @@ class Reach:
         else:
             satisfiable_requirements = frozenset()
 
-        return Reach(reach_nodes, path_to_node, satisfiable_requirements, safe_nodes, logic)
+        return Reach(digraph, path_to_node, satisfiable_requirements, safe_nodes, logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
