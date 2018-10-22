@@ -69,9 +69,29 @@ class IndividualRequirement(NamedTuple):
         return str(self) < str(other)
 
 
-class RequirementList(frozenset):
+class RequirementList:
+    items: FrozenSet[IndividualRequirement]
+
     def __deepcopy__(self, memodict):
         return self
+
+    def __init__(self, items: Optional[Iterable[IndividualRequirement]] = None):
+        if items is None:
+            items = []
+        self.items = frozenset(items)
+
+    def __eq__(self, other):
+        return isinstance(
+            other, RequirementList) and self.items == other.items
+
+    def __lt__(self, other: "RequirementList"):
+        return self.items < other.items
+
+    def __hash__(self):
+        return hash(self.items)
+
+    def __repr__(self):
+        return repr(self.items)
 
     def amount_unsatisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
         return sum(not requirement.satisfied(current_resources, database)
@@ -98,7 +118,7 @@ class RequirementList(frozenset):
         :return: None if this RequirementList is impossible to satisfy, otherwise the simplified RequirementList.
         """
         items = []
-        for item in self:  # type: IndividualRequirement
+        for item in self.values():
             # The impossible resource is always impossible.
             if item.resource == database.impossible_resource():
                 return None
@@ -132,13 +152,13 @@ class RequirementList(frozenset):
         Return an iterator of all SimpleResourceInfo in this list that have the negate flag
         :return:
         """
-        for individual in self:
+        for individual in self.values():
             if individual.negate:
                 yield individual.resource
 
     def replace(self, individual: IndividualRequirement, replacement: "RequirementList") -> "RequirementList":
         items = []
-        for item in self:  # type: IndividualRequirement
+        for item in self.values():
             if item == individual:
                 items.extend(replacement)
             else:
@@ -146,7 +166,10 @@ class RequirementList(frozenset):
         return RequirementList(items)
 
     def values(self) -> FrozenSet[IndividualRequirement]:
-        return self
+        return self.items
+
+    def union(self, other: "RequirementList") -> "RequirementList":
+        return RequirementList(self.items | other.items)
 
 
 def _get_quantity_or_zero(individual: Optional[IndividualRequirement]) -> int:
@@ -194,7 +217,7 @@ class RequirementSet:
             to_print.append("Trivial")
         else:
             for alternative in self.alternatives:
-                to_print.append(", ".join(map(str, sorted(alternative))))
+                to_print.append(", ".join(map(str, sorted(alternative.values()))))
         for line in sorted(to_print):
             print(indent + line)
 
@@ -262,7 +285,7 @@ class RequirementSet:
             if replacements.alternatives:
                 for other in replacements.alternatives:
                     result.append(alternative.replace(individual, other))
-            elif individual not in alternative:
+            elif individual not in alternative.values():
                 result.append(alternative)
 
         return RequirementSet(result)
@@ -270,7 +293,7 @@ class RequirementSet:
     def union(self, other: "RequirementSet") -> "RequirementSet":
         """Create a new RequirementSet that is only satisfied when both are satisfied"""
         return RequirementSet(
-            RequirementList(a.union(b))
+            a.union(b)
             for a in self.alternatives
             for b in other.alternatives)
 
