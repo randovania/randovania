@@ -117,13 +117,15 @@ class WorldReader:
     def __init__(self,
                  resource_database: ResourceDatabase,
                  dock_weakness_database: DockWeaknessDatabase,
-                 elevators: List[Elevator]):
+                 elevators: List[Elevator],
+                 add_self_as_requirement_to_resources: bool):
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
         self.elevators = {
             elevator.instance_id: elevator
             for elevator in elevators
         }
+        self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
     def read_node(self, data: Dict) -> Node:
         name = data["name"]
@@ -174,7 +176,7 @@ class WorldReader:
             connections[nodes[i]] = {}
             extra_requirement = None
 
-            if is_resource_node(nodes[i]):
+            if is_resource_node(nodes[i]) and self.add_self_as_requirement_to_resources:
                 extra_requirement = IndividualRequirement(
                     nodes[i].resource(self.resource_database),
                     1,
@@ -222,7 +224,10 @@ def _convert_to_resource_gain(data: Dict[str, int], resource_database: ResourceD
     ]
 
 
-def decode_data(data: Dict, elevators: List[Elevator]) -> GameDescription:
+def decode_data(data: Dict,
+                elevators: List[Elevator],
+                add_self_as_requirement_to_resources: bool = True,
+                ) -> GameDescription:
     game = data["game"]
     game_name = data["game_name"]
 
@@ -231,7 +236,8 @@ def decode_data(data: Dict, elevators: List[Elevator]) -> GameDescription:
 
     worlds = WorldReader(resource_database,
                          dock_weakness_database,
-                         elevators).read_world_list(data["worlds"])
+                         elevators,
+                         add_self_as_requirement_to_resources).read_world_list(data["worlds"])
 
     starting_world_asset_id = data["starting_world_asset_id"]
     starting_area_asset_id = data["starting_area_asset_id"]
