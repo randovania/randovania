@@ -4,9 +4,11 @@ from typing import NamedTuple, List, Optional, Set
 
 class LayoutLogic(Enum):
     NO_GLITCHES = "no-glitches"
+    TRIVIAL = "trivial"
     EASY = "easy"
     NORMAL = "normal"
     HARD = "hard"
+    HYPERMODE = "hypermode"
     MINIMAL_RESTRICTIONS = "minimal-restrictions"
 
 

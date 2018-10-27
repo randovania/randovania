@@ -65,11 +65,15 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
 
     if logic == LayoutLogic.NO_GLITCHES:
         return 0, set()
+    elif logic == LayoutLogic.TRIVIAL:
+        return 1, set()
     elif logic == LayoutLogic.EASY:
         return 2, tricks
     elif logic == LayoutLogic.NORMAL:
         return 3, tricks
-    elif logic == LayoutLogic.HARD or logic == LayoutLogic.MINIMAL_RESTRICTIONS:
+    elif logic == LayoutLogic.HARD:
+        return 4, tricks
+    elif logic == LayoutLogic.HYPERMODE or logic == LayoutLogic.MINIMAL_RESTRICTIONS:
         return 5, tricks
     else:
         raise RuntimeError("Unsupported logic")
