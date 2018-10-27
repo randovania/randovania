@@ -57,7 +57,7 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
         10,  # SA without SJ
         11,  # Wall Boost
         12,  # Jump off Enemy
-        14,  # Controller Reset
+        # 14,  # Controller Reset
         15,  # Instant Morph
     }
 
