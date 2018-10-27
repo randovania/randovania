@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Added a timeout of 2 minutes to seed generation.
+- Added two new difficulties:
+  - Trivial: An expansion of No Glitches, where no tricks are used but some clever abuse of room layouts are used.
+  - Hypermode: The highest difficulty tricks, mostly including ways to skip Space Jump, are now exclusive to this difficulty.
 
 ## [0.14.0] - 2018-10-07
 - **Major**: Added support for randomizing elevators. 
