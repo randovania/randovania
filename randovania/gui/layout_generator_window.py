@@ -189,9 +189,11 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         # Setup config values to radio maps
         self._layout_logic_radios = {
             LayoutLogic.NO_GLITCHES: self.logic_noglitches_radio,
+            LayoutLogic.TRIVIAL: self.logic_trivial_radio,
             LayoutLogic.EASY: self.logic_easy_radio,
             LayoutLogic.NORMAL: self.logic_normal_radio,
             LayoutLogic.HARD: self.logic_hard_radio,
+            LayoutLogic.HYPERMODE: self.logic_hypermode_radio,
             LayoutLogic.MINIMAL_RESTRICTIONS: self.logic_minimalrestrictions_radio,
         }
         self._mode_radios = {
