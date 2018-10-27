@@ -13,7 +13,7 @@ from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 
 
 def _sort_alternative(alternative: RequirementList) -> Iterable[IndividualRequirement]:
-    return sorted(alternative)
+    return sorted(alternative.values())
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
@@ -37,7 +37,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         world_reader = WorldReader(resource_database,
                                    dock_weakness_database,
-                                   [])
+                                   [],
+                                   False)
         self.worlds = world_reader.read_world_list(data["worlds"])
 
         for world in sorted(self.worlds, key=lambda x: x.name):
