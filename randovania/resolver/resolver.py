@@ -22,7 +22,7 @@ def _simplify_requirement_list(self: RequirementList) -> Optional[RequirementLis
             # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
             items.append(item)
 
-    return RequirementList(items)
+    return RequirementList(self.difficulty_level, items)
 
 
 def _simplify_requirement_set_for_additional_requirements(requirements: RequirementSet) -> RequirementSet:

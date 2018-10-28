@@ -49,7 +49,7 @@ def make_req_c():
 
 
 def make_single_set(id_req: Tuple[SimpleResourceInfo, IndividualRequirement]) -> RequirementSet:
-    return RequirementSet([RequirementList([id_req[1]])])
+    return RequirementSet([RequirementList(0, [id_req[1]])])
 
 
 def test_empty_requirement_set(database):
@@ -57,7 +57,7 @@ def test_empty_requirement_set(database):
 
 
 def test_empty_requirement_list(database):
-    assert RequirementList([]).satisfied({}, database)
+    assert RequirementList(0, []).satisfied({}, database)
 
 
 def test_simplify_requirement_set_static(database):
@@ -65,8 +65,8 @@ def test_simplify_requirement_set_static(database):
     res_b, id_req_b = make_req_b()
 
     the_set = RequirementSet([
-        RequirementList([id_req_a]),
-        RequirementList([id_req_b]),
+        RequirementList(0, [id_req_a]),
+        RequirementList(0, [id_req_b]),
     ])
 
     simple_1 = the_set.simplify({res_a: 0, res_b: 0}, database)
@@ -74,8 +74,8 @@ def test_simplify_requirement_set_static(database):
     simple_3 = the_set.simplify({res_a: 1, res_b: 1}, database)
 
     assert simple_1.alternatives == frozenset()
-    assert simple_2.alternatives == frozenset([RequirementList()])
-    assert simple_3.alternatives == frozenset([RequirementList()])
+    assert simple_2.alternatives == frozenset([RequirementList(0, [])])
+    assert simple_3.alternatives == frozenset([RequirementList(0, [])])
 
 
 def test_prevent_redundant():
@@ -83,11 +83,11 @@ def test_prevent_redundant():
     res_b, id_req_b = make_req_b()
 
     the_set = RequirementSet([
-        RequirementList([id_req_a]),
-        RequirementList([id_req_a, id_req_b]),
+        RequirementList(0, [id_req_a]),
+        RequirementList(0, [id_req_a, id_req_b]),
     ])
 
-    assert the_set.alternatives == frozenset([RequirementList([id_req_a])])
+    assert the_set.alternatives == frozenset([RequirementList(0, [id_req_a])])
 
 
 def test_trivial_merge():
@@ -96,7 +96,7 @@ def test_trivial_merge():
     res_a, id_req_a = make_req_a()
 
     the_set = RequirementSet([
-        RequirementList([id_req_a]),
+        RequirementList(0, [id_req_a]),
     ])
 
     assert trivial.union(trivial) == trivial
@@ -111,7 +111,7 @@ def test_trivial_merge():
 @pytest.mark.parametrize("replacement", [
     RequirementSet.impossible(),
     make_single_set(make_req_a()),
-    RequirementSet([RequirementList([make_req_a()[1], make_req_b()[1]])]),
+    RequirementSet([RequirementList(0, [make_req_a()[1], make_req_b()[1]])]),
 ])
 def test_replace_missing(replacement):
     trivial = RequirementSet.trivial()
@@ -129,7 +129,7 @@ def test_replace_missing(replacement):
     (RequirementSet.impossible(), RequirementSet.trivial(), RequirementSet.trivial()),
     (RequirementSet.trivial(), make_single_set(make_req_a()), RequirementSet.trivial()),
     (make_single_set(make_req_a()), make_single_set(make_req_b()),
-     RequirementSet([RequirementList([make_req_a()[1]]), RequirementList([make_req_b()[1]])])),
+     RequirementSet([RequirementList(0, [make_req_a()[1]]), RequirementList(0, [make_req_b()[1]])])),
 ])
 def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: RequirementSet):
     assert a.expand_alternatives(b) == expected
@@ -147,9 +147,9 @@ def test_minimum_satisfied_difficulty(database: ResourceDatabase, resources, exp
     res_b, id_req_b = make_req_b()
     res_c, id_req_c = make_req_c()
     the_set = RequirementSet([
-        RequirementList([id_req_a]),
-        RequirementList([id_req_b, IndividualRequirement(database.difficulty_resource, 1, False)]),
-        RequirementList([id_req_c, IndividualRequirement(database.difficulty_resource, 2, False)]),
+        RequirementList(0, [id_req_a]),
+        RequirementList(1, [id_req_b, IndividualRequirement(database.difficulty_resource, 1, False)]),
+        RequirementList(2, [id_req_c, IndividualRequirement(database.difficulty_resource, 2, False)]),
     ])
 
     res = {
@@ -172,8 +172,9 @@ def test_minimum_satisfied_difficulty(database: ResourceDatabase, resources, exp
 def test_list_dangerous_resources(input_data, output_data):
     # setup
     req_list = RequirementList(
-        IndividualRequirement(SimpleResourceInfo(item[0], str(item[0]), str(item[0]), ""), 1, item[1])
-        for item in input_data
+        0,
+        (IndividualRequirement(SimpleResourceInfo(item[0], str(item[0]), str(item[0]), ""), 1, item[1])
+         for item in input_data)
     )
     expected_result = {
         SimpleResourceInfo(item, str(item), str(item), "")

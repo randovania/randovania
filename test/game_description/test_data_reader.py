@@ -16,14 +16,14 @@ def test_add_requirement_to_set():
     id_req_c = IndividualRequirement(req_c, 1, False)
 
     the_set = RequirementSet([
-        RequirementList([id_req_a]),
+        RequirementList(0, [id_req_a]),
     ])
     new_set = add_requirement_to_set(the_set, id_req_c)
 
     assert the_set != new_set
     for the_set_list, new_set_list in zip(the_set.alternatives,
                                           new_set.alternatives):
-        assert the_set_list.union(RequirementList([id_req_c])) == new_set_list
+        assert the_set_list.union(RequirementList(0, [id_req_c])) == new_set_list
 
 
 def test_copy_worlds():

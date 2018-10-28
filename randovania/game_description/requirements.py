@@ -70,14 +70,14 @@ class IndividualRequirement(NamedTuple):
 
 
 class RequirementList:
+    difficulty_level: int
     items: FrozenSet[IndividualRequirement]
 
     def __deepcopy__(self, memodict):
         return self
 
-    def __init__(self, items: Optional[Iterable[IndividualRequirement]] = None):
-        if items is None:
-            items = []
+    def __init__(self, difficulty_level: int, items: Iterable[IndividualRequirement]):
+        self.difficulty_level = difficulty_level
         self.items = frozenset(items)
 
     def __eq__(self, other):
@@ -139,7 +139,7 @@ class RequirementList:
                 # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
                 items.append(item)
 
-        return RequirementList(items)
+        return RequirementList(self.difficulty_level, items)
 
     def get(self, resource: ResourceInfo) -> Optional[IndividualRequirement]:
         """
@@ -169,20 +169,14 @@ class RequirementList:
                 items.extend(replacement)
             else:
                 items.append(item)
-        return RequirementList(items)
+        return RequirementList(self.difficulty_level, items)
 
     def values(self) -> FrozenSet[IndividualRequirement]:
         return self.items
 
     def union(self, other: "RequirementList") -> "RequirementList":
-        return RequirementList(self.items | other.items)
-
-
-def _get_quantity_or_zero(individual: Optional[IndividualRequirement]) -> int:
-    if individual is not None:
-        return individual.amount
-    else:
-        return 0
+        return RequirementList(max(self.difficulty_level, other.difficulty_level),
+                               self.items | other.items)
 
 
 class RequirementSet:
@@ -231,7 +225,7 @@ class RequirementSet:
     @lru_cache()
     def trivial(cls) -> "RequirementSet":
         # empty RequirementList.satisfied is True
-        return cls([RequirementList([])])
+        return cls([RequirementList(0, [])])
 
     @classmethod
     @lru_cache()
@@ -262,7 +256,7 @@ class RequirementSet:
         :return:
         """
         difficulties = [
-            _get_quantity_or_zero(requirement_list.get(database.difficulty_resource))
+            requirement_list.difficulty_level
             for requirement_list in self.alternatives
             if requirement_list.satisfied(current_resources, database)
         ]
