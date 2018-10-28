@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroupBo
 from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.game_description.game_description import World, Area
 from randovania.game_description.node import Node
-from randovania.game_description.requirements import RequirementList, IndividualRequirement
+from randovania.game_description.requirements import RequirementList, IndividualRequirement, RequirementSet
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
@@ -109,12 +109,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if current_node and current_connection_node and current_node != current_connection_node:
             requirement_set = self.current_area.connections[self.current_node][self.current_connection_node]
 
-            for i, alternative in enumerate(requirement_set.alternatives):
-                self._add_box_with_labels(
-                    i,
-                    (individual_requirement.pretty_text
-                     for individual_requirement in _sort_alternative(alternative))
-                )
+            if requirement_set == RequirementSet.impossible():
+                self._add_box_with_labels(0, ["Impossible to Reach"])
+            else:
+                for i, alternative in enumerate(requirement_set.alternatives):
+                    if alternative.items:
+                        contents = (individual_requirement.pretty_text
+                                    for individual_requirement in _sort_alternative(alternative))
+                    else:
+                        contents = ["No Requirement"]
+                    self._add_box_with_labels(i, contents)
 
         else:
             self._add_box_with_labels(0, [

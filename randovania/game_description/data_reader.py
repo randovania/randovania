@@ -63,20 +63,14 @@ def read_individual_requirement(data: Dict, resource_database: ResourceDatabase
 
 def read_requirement_list(data: List[Dict],
                           resource_database: ResourceDatabase) -> RequirementList:
-    return RequirementList(
-        read_array(data,
-                   partial(
-                       read_individual_requirement,
-                       resource_database=resource_database)))
+    return RequirementList(read_array(data,
+                                      lambda x: read_individual_requirement(x, resource_database=resource_database)))
 
 
 def read_requirement_set(data: List[List[Dict]],
                          resource_database: ResourceDatabase) -> RequirementSet:
-    return RequirementSet(
-        read_array(data,
-                   partial(
-                       read_requirement_list,
-                       resource_database=resource_database)))
+    return RequirementSet(read_array(data, lambda x: read_requirement_list(x, resource_database=resource_database))
+                          ).simplify({}, resource_database)
 
 
 def add_requirement_to_set(
