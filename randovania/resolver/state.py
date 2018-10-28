@@ -1,9 +1,9 @@
 import copy
-from typing import Optional, List, Tuple
+from typing import Optional, List, Tuple, Iterator
 
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.resources import ResourceInfo, CurrentResources, ResourceGain, ResourceType, \
-    ResourceDatabase
+    ResourceDatabase, PickupIndex
 from randovania.resolver.logic import Logic
 
 
@@ -27,6 +27,18 @@ class State:
 
     def has_resource(self, resource: ResourceInfo) -> bool:
         return self.resources.get(resource, 0) > 0
+
+    def copy(self) -> "State":
+        return State(copy.copy(self.resources),
+                     self.node,
+                     self.previous_state,
+                     self.resource_database)
+
+    @property
+    def collected_pickup_indices(self) -> Iterator[PickupIndex]:
+        for resource, count in self.resources.items():
+            if isinstance(resource, PickupIndex) and count > 0:
+                yield resource
 
     def collect_resource_node(self, node: ResourceNode,
                               pickup_mapping: List[Optional[int]]) -> "State":

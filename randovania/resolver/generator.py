@@ -1,17 +1,18 @@
 import collections
 import copy
 import multiprocessing.dummy
+import pprint
 from random import Random
-from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, Dict
+from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, Dict, TypeVar, Iterable, Union, Set
 
 import randovania.games.prime.claris_randomizer
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription, calculate_interesting_resources
-from randovania.game_description.node import EventNode, Node, PickupNode
-from randovania.game_description.requirements import RequirementSet
-from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry
-from randovania.resolver import debug, resolver, item_pool
+from randovania.game_description.node import EventNode, Node, PickupNode, is_resource_node, ResourceNode
+from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry, \
+    PickupIndex
+from randovania.resolver import debug, resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches
@@ -24,6 +25,8 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.reach import Reach
 from randovania.resolver.state import State
+
+T = TypeVar("T")
 
 
 def pickup_to_current_resources(pickup: PickupEntry, database: ResourceDatabase) -> CurrentResources:
@@ -201,49 +204,35 @@ def _can_reach_safe_node(with_event_state: State, logic: Logic, reach: Reach) ->
     )
 
 
-def find_all_pickups_via_most_events(logic: Logic,
-                                     patches: GamePatches,
-                                     initial_state: State,
-                                     victory_condition: RequirementSet,
-                                     ) -> Dict[PickupNode, State]:
-    paths = {}
-    checked = set()
+def reach_with_all_safe_events(logic: Logic,
+                               patches: GamePatches,
+                               initial_state: State,
+                               ) -> Tuple[State, Reach]:
+    dangerous_resources = logic.game.dangerous_resources
+    resource_database = initial_state.resource_database
 
-    queue: collections.OrderedDict[Node, State] = collections.OrderedDict()
-    queue[initial_state.node] = initial_state
+    state = initial_state
 
-    while queue:
-        _, state = queue.popitem(last=False)
-        checked.add(state.node)
+    reach = None
+    has_safe_event = True
+    while has_safe_event:
+        state.node = initial_state.node
+        reach = Reach.calculate_reach(logic, state)
+        has_safe_event = False
 
-        reach = None
-        has_safe_event = True
-        while has_safe_event:
-            reach = Reach.calculate_reach(logic, state)
-            if victory_condition.satisfied(state.resources, state.resource_database):
-                raise VictoryReached(state)
+        new_state = state
+        for action in reach.possible_actions(state):
+            new_resource = action.resource(resource_database)
+            if is_resource_node(action) and new_resource not in dangerous_resources and new_state.has_resource(new_state):
+                potential_new_state = new_state.act_on_node(action, patches.pickup_mapping)
+                if _can_reach_safe_node(potential_new_state,
+                                        logic,
+                                        reach):
+                    new_state = potential_new_state
+                    has_safe_event = True
+        state = new_state
 
-            has_safe_event = False
-
-            for action in reach.possible_actions(state):
-                if isinstance(action, EventNode) and (
-                        action.resource(state.resource_database) not in logic.game.dangerous_resources):
-
-                    if _can_reach_safe_node(state.act_on_node(action, patches.pickup_mapping),
-                                            logic,
-                                            reach):
-                        state.resources = state.collect_resource_node(action, patches.pickup_mapping).resources
-                        has_safe_event = True
-
-        for action in sorted(reach.possible_actions(state)):
-            if isinstance(action, EventNode):
-                if action not in checked:
-                    assert not reach.is_safe(action)
-                    queue[action] = state.act_on_node(action, patches.pickup_mapping)
-            else:
-                paths[action] = state
-
-    return paths
+    return state, reach
 
 
 def _does_pickup_satisfies(pickup: PickupEntry,
@@ -289,20 +278,93 @@ def _num_items_in_patches(patches: GamePatches) -> int:
     return len([x for x in patches.pickup_mapping if x is not None])
 
 
-def _iterate_with_weights(potential_pickup_nodes: List[PickupNode],
-                          pickup_weights: Dict[PickupNode, int],
-                          rng: Random) -> Iterator[PickupNode]:
-    weights = [pickup_weights[pickup_node] for pickup_node in potential_pickup_nodes]
+def _iterate_with_weights(potential_actions: List[T],
+                          actions_weights: Dict[T, int],
+                          rng: Random) -> Iterator[T]:
+    weights = [actions_weights[pickup_node] for pickup_node in potential_actions]
 
-    while potential_pickup_nodes:
-        pickup_node = rng.choices(potential_pickup_nodes, weights)[0]
+    while potential_actions:
+        pickup_node = rng.choices(potential_actions, weights)[0]
 
         # Remove the pickup_node from the potential list, along with it's weight
-        index = potential_pickup_nodes.index(pickup_node)
-        potential_pickup_nodes.pop(index)
+        index = potential_actions.index(pickup_node)
+        potential_actions.pop(index)
         weights.pop(index)
 
         yield pickup_node
+
+
+def _pickup_indices_in_reach(reach: Reach) -> Iterator[PickupIndex]:
+    for node in reach.nodes:
+        if isinstance(node, PickupNode):
+            yield node.pickup_index
+
+
+def _empty_pickup_indices(pickup_indices: Iterable[PickupIndex],
+                          patches: GamePatches,
+                          ) -> Iterator[PickupIndex]:
+    """
+    Iterates over all PickupIndex that have no item defined in the given patches
+    :param pickup_indices:
+    :param patches:
+    :return:
+    """
+    for pickup in pickup_indices:
+        if patches.pickup_mapping[pickup.index] is None:
+            yield pickup
+
+
+def _add_item_to_pickup_index(action: PickupEntry, state: State,
+                              pickup_index: PickupIndex, patches: GamePatches,
+                              database: ResourceDatabase,
+                              ) -> Tuple[State, GamePatches]:
+
+    pickup_mapping = copy.copy(patches.pickup_mapping)
+
+    assert pickup_mapping[pickup_index.index] is None
+    pickup_mapping[pickup_index.index] = database.pickups.index(action)
+
+    new_state = state.copy()
+    for pickup_resource, quantity in action.resource_gain(database):
+        new_state.resources[pickup_resource] = new_state.resources.get(pickup_resource, 0)
+        new_state.resources[pickup_resource] += quantity
+
+    new_patches = GamePatches(patches.item_loss_enabled, pickup_mapping)
+
+    return new_state, new_patches
+
+
+def _count_by_type(iterable: Iterable[T]) -> Dict[type, int]:
+    result = {}
+    for item in iterable:
+        t = type(item)
+        result[t] = result.get(t, 0) + 1
+
+    return {
+        t.__name__: v
+        for t, v in sorted(result.items(), key=lambda x: x[0].__name__)
+    }
+
+
+Action = Union[ResourceNode, PickupEntry]
+
+
+def _calculate_weights(potential_actions: Set[Action], components) -> Dict[Action, int]:
+    result = {}
+
+    component_for_node = {}
+    for component in components:
+        for node in component:
+            component_for_node[node] = component
+
+    print(">>>>>")
+    for action in potential_actions:
+        if isinstance(action, PickupEntry):
+            result[action] = 1
+        else:
+            result[action] = len(component_for_node[action])
+            print("Weight for {} is {}".format(action.name, result[action]))
+    return result
 
 
 def distribute_one_item(
@@ -315,28 +377,63 @@ def distribute_one_item(
 ) -> Optional[Tuple[GamePatches, Tuple[PickupEntry, ...], State]]:
     start_time = debug.print_distribute_one_item(state, available_item_pickups)
 
-    try:
-        pickups_with_path = find_all_pickups_via_most_events(
-            logic, patches, state, logic.game.victory_condition)
+    state, reach = reach_with_all_safe_events(logic, patches, state)
 
-    except VictoryReached as v:
-        return patches, available_item_pickups, v.state
+    if logic.game.victory_condition.satisfied(state.resources, state.resource_database):
+        return patches, available_item_pickups, state
 
-    potential_pickup_nodes = list(sorted(pickups_with_path.keys(), reverse=True))
+    potential_actions = set(reach.possible_actions(state))
+    potential_actions |= set(_get_items_that_satisfies(available_item_pickups,
+                                                       state,
+                                                       reach,
+                                                       logic.game.resource_database))
 
-    # Increment how many times we've seen each pickup node
-    for pickup_node in potential_pickup_nodes:
-        logic.node_sightings[pickup_node] += 1
+    actions_weights = _calculate_weights(potential_actions, reach._strongly_connected_components)
+    print("Potential actions: {}".format(_count_by_type(potential_actions)))
 
-    # Our weighting currently favors more nodes seem for the first time
-    # FIXME: Using ** 2 made glitchless seed 50000 break on validation again...
-    node_weights = {pickup_node: 1000 / (logic.node_sightings[pickup_node] ** 1)
-                    for pickup_node in potential_pickup_nodes}
+    for action in _iterate_with_weights(list(sorted(potential_actions)),
+                                        actions_weights,
+                                        rng):
 
-    # Calculating Reach for all nodes is kinda too CPU intensive, unfortunately.
-    # TODO: better algorithm that calculates multiple reaches at the same time?
-    debug.print_distribute_one_item_detail(potential_pickup_nodes, start_time)
+        if isinstance(action, PickupEntry):
+            # Let's shuffle a pickup somewhere!
+            all_pickup_indices = set(state.collected_pickup_indices)
+            all_pickup_indices |= set(_pickup_indices_in_reach(reach))
 
+            for pickup_index in shuffle(rng, _empty_pickup_indices(all_pickup_indices, patches)):
+                new_state, new_patches = _add_item_to_pickup_index(action, state, pickup_index,
+                                                                   patches, logic.game.resource_database)
+                debug.print_distribute_fill_pickup_index(pickup_index, action, logic)
+                status_update("Distributed {} items so far...".format(_num_items_in_patches(new_patches)))
+
+                new_result = distribute_one_item(
+                    logic,
+                    new_state,
+                    new_patches,
+                    remove_pickup_entry_from_list(available_item_pickups, action),
+                    rng,
+                    status_update
+                )
+                if new_result is not None:
+                    return new_result
+
+        else:
+            # We decided just to pick a new dangerous action
+            new_result = distribute_one_item(
+                logic,
+                state.act_on_node(action, patches.pickup_mapping),
+                patches,
+                available_item_pickups,
+                rng,
+                status_update
+            )
+            if new_result is not None:
+                return new_result
+
+    status_update("Rollback. Only {} items now".format(_num_items_in_patches(patches)))
+
+
+def _old_code():
     for pickup_node in _iterate_with_weights(potential_pickup_nodes,
                                              node_weights,
                                              rng):
