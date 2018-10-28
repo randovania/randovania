@@ -107,9 +107,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.connection_widgets.clear()
 
         if current_node and current_connection_node and current_node != current_connection_node:
-            requirement_set = self.current_area.connections[self.current_node][self.current_connection_node]
+            requirement_set = self.current_area.connections[self.current_node].get(self.current_connection_node)
 
-            if requirement_set == RequirementSet.impossible():
+            if requirement_set == RequirementSet.impossible() or requirement_set is None:
                 self._add_box_with_labels(0, ["Impossible to Reach"])
             else:
                 for i, alternative in enumerate(requirement_set.alternatives):

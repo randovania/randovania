@@ -178,11 +178,12 @@ class WorldReader:
 
             for j, target in enumerate(origin):
                 if target:
-                    the_set = read_requirement_set(target,
-                                                   self.resource_database)
+                    the_set = read_requirement_set(target, self.resource_database)
                     if extra_requirement is not None:
                         the_set = add_requirement_to_set(the_set, extra_requirement)
-                    connections[nodes[i]][nodes[j]] = the_set
+
+                    if the_set != RequirementSet.impossible():
+                        connections[nodes[i]][nodes[j]] = the_set
 
         return Area(name, data["asset_id"], data["default_node_index"], nodes,
                     connections)
