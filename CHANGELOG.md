@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added two new difficulties:
   - Trivial: An expansion of No Glitches, where no tricks are used but some clever abuse of room layouts are used.
   - Hypermode: The highest difficulty tricks, mostly including ways to skip Space Jump, are now exclusive to this difficulty.
-- Removed Controller Reset tricks. This trick doesn't work with Nintendon't. This will return later as an additional configuration.
+- Removed Controller Reset tricks. This trick doesn't work with Nintendont. This will return later as an additional configuration.
 
 ## [0.14.0] - 2018-10-07
 - **Major**: Added support for randomizing elevators. 
