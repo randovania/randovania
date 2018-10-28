@@ -2,7 +2,7 @@ import time
 from typing import Set
 
 from randovania.game_description.game_description import Area, GameDescription
-from randovania.game_description.node import Node
+from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources import PickupEntry, PickupIndex
 from randovania.resolver.logic import Logic
@@ -104,6 +104,18 @@ def print_distribute_one_item(state, available_item_pickups):
 def print_distribute_one_item_rollback(state):
     if _DEBUG_LEVEL > 0:
         print(": Rollback at {}.".format(n(state.node)))
+
+
+def print_distribute_fill_pickup_index(pickup_index: PickupIndex, action: PickupEntry, logic: Logic):
+    target_node = None
+    for node in logic.game.all_nodes:
+        if isinstance(node, PickupNode) and node.pickup_index == pickup_index:
+            target_node = node
+
+    if _DEBUG_LEVEL > 1:
+        print("Placed {} at {}".format(
+            action,
+            n(target_node, with_world=True)))
 
 
 def print_distribute_place_item(pickup_node, item: PickupEntry, logic):

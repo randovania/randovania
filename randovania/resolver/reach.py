@@ -47,7 +47,7 @@ class Reach:
                  starting_node: Node,
                  logic: Logic):
         self._digraph = digraph
-        self._strongly_connected_components = networkx.strongly_connected_components(digraph)
+        self._strongly_connected_components = list(networkx.strongly_connected_components(digraph))
         self._nodes = tuple(digraph.nodes)
         self._logic = logic
         self.path_to_node = path_to_node
