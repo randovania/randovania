@@ -93,6 +93,12 @@ class RequirementList:
     def __repr__(self):
         return repr(self.items)
 
+    def __str__(self) -> str:
+        if self.items:
+            return str(self.items)
+        else:
+            return "Trivial"
+
     def amount_unsatisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
         return sum(not requirement.satisfied(current_resources, database)
                    for requirement in self.values())
