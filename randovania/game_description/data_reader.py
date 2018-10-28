@@ -63,8 +63,15 @@ def read_individual_requirement(data: Dict, resource_database: ResourceDatabase
 
 def read_requirement_list(data: List[Dict],
                           resource_database: ResourceDatabase) -> RequirementList:
-    return RequirementList(read_array(data,
-                                      lambda x: read_individual_requirement(x, resource_database=resource_database)))
+    individuals = read_array(data, lambda x: read_individual_requirement(x, resource_database=resource_database))
+
+    difficulty = 0
+    for individual in individuals:
+        if individual.resource == resource_database.difficulty_resource:
+            assert not individual.negate, "We shouldn't have a negate requirement for difficulty"
+            difficulty = individual.amount
+
+    return RequirementList(difficulty, individuals)
 
 
 def read_requirement_set(data: List[List[Dict]],
@@ -77,7 +84,7 @@ def add_requirement_to_set(
         requirement_set: RequirementSet,
         new_requirement: IndividualRequirement) -> RequirementSet:
     return RequirementSet(
-        requirement_list.union(RequirementList([new_requirement]))
+        requirement_list.union(RequirementList(0, [new_requirement]))
         for requirement_list in requirement_set.alternatives)
 
 
