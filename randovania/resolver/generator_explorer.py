@@ -29,6 +29,9 @@ class Path(NamedTuple):
     node: Node
     detail: PathDetail
 
+    def __repr__(self):
+        return "Path({} with {} from {})".format(self.node, self.detail, self.previous_node)
+
 
 def _calculate_path_detail(digraph: networkx.DiGraph,
                            previous_node: Optional[Node],
