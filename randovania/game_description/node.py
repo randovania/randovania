@@ -18,6 +18,10 @@ class DockNode(NamedTuple):
     connected_dock_index: int
     dock_weakness: DockWeakness
 
+    def __repr__(self):
+        return "DockNode({!r}/{} -> {}/{})".format(self.name, self.dock_index,
+                                                   self.connected_area_asset_id, self.connected_dock_index)
+
 
 class TeleporterNode(NamedTuple):
     name: str
@@ -25,6 +29,10 @@ class TeleporterNode(NamedTuple):
     destination_world_asset_id: int
     destination_area_asset_id: int
     teleporter_instance_id: int
+
+    def __repr__(self):
+        return "TeleporterNode({!r} -> {}/{})".format(
+            self.name, self.destination_world_asset_id, self.destination_area_asset_id)
 
 
 class PickupNode(NamedTuple):
@@ -34,6 +42,9 @@ class PickupNode(NamedTuple):
 
     def __deepcopy__(self, memodict):
         return PickupNode(self.name, self.heal, self.pickup_index)
+
+    def __repr__(self):
+        return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
     def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
         return self.pickup_index
@@ -53,6 +64,9 @@ class EventNode(NamedTuple):
     name: str
     heal: bool
     event_index: int
+
+    def __repr__(self):
+        return "EventNode({!r} -> {})".format(self.name, self.event_index)
 
     def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
         return resource_database.get_by_type_and_index(ResourceType.EVENT, self.event_index)
