@@ -1,0 +1,285 @@
+{
+  "game": 2,
+  "game_name": "Metroid Prime 2: Echoes",
+  "resource_database": {
+    "items": [
+      {
+        "index": 1,
+        "long_name": "Power Bomb",
+        "short_name": "Light"
+      },
+      {
+        "index": 2,
+        "long_name": "Light Beam",
+        "short_name": "Light"
+      },
+      {
+        "index": 24,
+        "long_name": "Space Jump Boots",
+        "short_name": "SpaceJump"
+      }
+    ],
+    "events": [
+      {
+        "index": 1,
+        "long_name": "First Event",
+        "short_name": "Event1"
+      },
+      {
+        "index": 32,
+        "long_name": "Victory Event",
+        "short_name": "Event32"
+      }
+    ],
+    "tricks": [
+    ],
+    "damage": [
+    ],
+    "versions": [
+    ],
+    "misc": [
+      {
+        "index": 0,
+        "long_name": "No Requirements",
+        "short_name": "None"
+      },
+      {
+        "index": 1,
+        "long_name": "Impossible to Reach",
+        "short_name": "Impossible"
+      }
+    ],
+    "difficulty": [
+      {
+        "index": 0,
+        "long_name": "Difficulty Level",
+        "short_name": "Difficulty"
+      }
+    ],
+    "pickups": [
+      {
+        "world": "Temple Grounds",
+        "room": "Room A",
+        "item": "Light Beam",
+        "item_category": "major",
+        "resources": {
+          "Light Beam": 1
+        }
+      },
+      {
+        "world": "Temple Grounds",
+        "room": "Room B",
+        "item": "Space Jump Boots",
+        "item_category": "major",
+        "resources": {
+          "Space Jump Boots": 1
+        }
+      },
+      {
+        "world": "Temple Grounds",
+        "room": "Room C",
+        "item": "Energy Transfer Module",
+        "item_category": "major",
+        "resources": {
+        }
+      }
+
+    ]
+  },
+  "dock_weakness_database": {
+    "door": [
+      {
+        "index": 0,
+        "name": "Normal Door",
+        "is_blast_door": false,
+        "requirement_set": [
+          [
+            {
+              "requirement_type": 5,
+              "requirement_index": 0,
+              "amount": 1,
+              "negate": false
+            }
+          ]
+        ]
+      },
+      {
+        "index": 8,
+        "name": "Permanently Locked",
+        "is_blast_door": false,
+        "requirement_set": [
+          [
+            {
+              "requirement_type": 5,
+              "requirement_index": 1,
+              "amount": 1,
+              "negate": false
+            }
+          ]
+        ]
+      }
+    ],
+    "portal": [
+      {
+        "index": 0,
+        "name": "Scan Portal",
+        "is_blast_door": false,
+        "requirement_set": [
+          [
+            {
+              "requirement_type": 5,
+              "requirement_index": 0,
+              "amount": 1,
+              "negate": false
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "starting_world_asset_id": 1006255871,
+  "starting_area_asset_id": 1655756413,
+  "starting_items": {
+  },
+  "item_loss_items": {
+    "Space Jump Boots": 1
+  },
+  "victory_condition": [
+    [
+      {
+        "requirement_type": 1,
+        "requirement_index": 32,
+        "amount": 3,
+        "negate": false
+      }
+    ]
+  ],
+  "worlds": [
+    {
+      "name": "Temple Grounds",
+      "asset_id": 1006255871,
+      "areas": [
+        {
+          "name": "Landing Site",
+          "asset_id": 1655756413,
+          "default_node_index": 0,
+          "nodes": [
+            {
+              "name": "Save Station",
+              "heal": true,
+              "node_type": 0
+            },
+            {
+              "name": "Door to Room A",
+              "heal": true,
+              "node_type": 1,
+              "dock_index": 0,
+              "connected_area_asset_id": 1,
+              "connected_dock_index": 0,
+              "dock_type": 0,
+              "dock_weakness_index": 0
+            },
+            {
+              "name": "Door to Room B",
+              "heal": true,
+              "node_type": 1,
+              "dock_index": 0,
+              "connected_area_asset_id": 2,
+              "connected_dock_index": 1,
+              "dock_type": 0,
+              "dock_weakness_index": 0
+            }
+          ],
+          "connections": [
+            [
+              null,
+              [
+                []
+              ],
+              [
+                []
+              ]
+            ],
+            [
+              [
+                []
+              ],
+              null,
+              [
+                []
+              ]
+            ],
+            [
+              [
+                []
+              ],
+              [
+                []
+              ],
+              null
+            ]
+          ]
+        },
+        {
+          "name": "Room A",
+          "asset_id": 1,
+          "default_node_index": 0,
+          "nodes": [
+            {
+              "name": "Door to Landing Site",
+              "heal": true,
+              "node_type": 1,
+              "dock_index": 0,
+              "connected_area_asset_id": 1655756413,
+              "connected_dock_index": 0,
+              "dock_type": 0,
+              "dock_weakness_index": 0
+            },
+            {
+              "name": "Pickup (Light Beam)",
+              "heal": true,
+              "node_type": 2,
+              "pickup_index": 0
+            }
+          ],
+          "connections": [
+            [
+              null,
+              [
+                []
+              ]
+            ],
+            [
+              [
+                []
+              ],
+              null
+            ]
+          ]
+        },
+        {
+          "name": "Room B",
+          "asset_id": 2,
+          "default_node_index": 0,
+          "nodes": [
+            {
+              "name": "Door to Landing Site",
+              "heal": true,
+              "node_type": 1,
+              "dock_index": 0,
+              "connected_area_asset_id": 1655756413,
+              "connected_dock_index": 1,
+              "dock_type": 0,
+              "dock_weakness_index": 0
+            }
+          ],
+          "connections": [
+            [
+              null
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

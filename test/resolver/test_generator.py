@@ -165,3 +165,21 @@ def test_generate_twice():
                                                             layout_description.seed_number,
                                                             layout_description.configuration,
                                                             status_update=status_update)
+
+
+def test_generate_simple(simple_data: dict):
+    status_update = MagicMock()
+    configuration = LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+                                        mode=LayoutMode.STANDARD,
+                                        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                        item_loss=LayoutEnabledFlag.DISABLED,
+                                        elevators=LayoutRandomizedFlag.VANILLA,
+                                        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+                                        difficulty=LayoutDifficulty.NORMAL,
+                                        pickup_quantities={})
+
+    generated_description = generator.generate_list(
+        simple_data,
+        10,
+        configuration,
+        status_update=status_update)
