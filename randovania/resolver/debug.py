@@ -14,7 +14,7 @@ _current_indent = 0
 
 
 def n(node: Node, with_world=False) -> str:
-    return _gd.node_name(node, with_world)
+    return _gd.node_name(node, with_world) if node is not None else "None"
 
 
 def pretty_print_area(area: Area):

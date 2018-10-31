@@ -1,132 +1,169 @@
 import collections
 import math
-from collections import defaultdict
-from typing import Dict, Set, List, Iterator, Tuple, Iterable, FrozenSet, Optional
+from typing import Iterator, Tuple, Optional, Set, Dict, List, NamedTuple
 
 import networkx
 
-from randovania.game_description.game_description import calculate_interesting_resources
-from randovania.game_description.node import ResourceNode, Node, is_resource_node
-from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements
-from randovania.game_description.resources import ResourceDatabase
-from randovania.resolver import debug
+from randovania.game_description.node import Node, is_resource_node, ResourceNode
+from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.resources import ResourceInfo
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
-Path = Tuple[Node, bool, int]
+
+class PathDetail(NamedTuple):
+    reachability: bool
+    difficulty: int
+
+    def is_better(self, old: "PathDetail") -> bool:
+        """
+        Compares if self is better than old_path
+        :param old:
+        :return:
+        """
+        return (not old.reachability, old.difficulty) > (not self.reachability, self.difficulty)
 
 
-def _calculate_previous_path(digraph: networkx.DiGraph,
-                             previous_node: Optional[Node],
-                             node: Node,) -> Path:
+class Path(NamedTuple):
+    previous_node: Optional[Node]
+    node: Node
+    detail: PathDetail
 
+
+def _calculate_path_detail(digraph: networkx.DiGraph,
+                           previous_node: Optional[Node],
+                           node: Node,
+                           ) -> PathDetail:
     if previous_node is not None:
         difficulty = digraph.edges[(previous_node, node)].get("difficulty", math.inf)
     else:
         difficulty = math.inf
 
     reachability = digraph.nodes[node].get("reachable", False)
-    return previous_node, reachability, difficulty
+    return PathDetail(reachability, difficulty)
 
 
-def _is_path_better(old_path: Path, new_path: Path) -> bool:
-    """
-    Compares if new_path is better than old_path
-    :param old_path:
-    :param new_path:
-    :return:
-    """
-    _, old_reachable, old_difficulty = old_path
-    _, new_reachable, new_difficulty = new_path
-
-    better_difficulty = new_difficulty < old_difficulty
-    worse_reachability = old_reachable and not new_reachable
-
-    return not (worse_reachability or not better_difficulty)
+def _add_node_and_edge_to_graph(digraph: networkx.DiGraph,
+                                path: Path,
+                                ):
+    digraph.add_node(path.node)
+    if path.previous_node is not None:
+        digraph.add_edge(path.previous_node, path.node)
 
 
-def _can_advance(initial_state: State,
-                 node: Node,
-                 path_reachable: bool,
-                 resource_database: ResourceDatabase,
-                 ) -> bool:
-    """
-    Calculates if we can advance based from a given node coming from a given path
-    :param initial_state:
-    :param node:
-    :param path_reachable:
-    :param resource_database:
-    :return:
-    """
-    # If we aren't reachable, places we can reach from here also aren't
-    if path_reachable:
-        # We can't advance past a resource node if we haven't collected it
-        if is_resource_node(node):
-            return initial_state.has_resource(node.resource(resource_database))
-        else:
-            return True
-    else:
-        return False
+def _update_graph_attributes(digraph: networkx.DiGraph,
+                             path: Path,
+                             ):
+    digraph.nodes[path.node]["reachable"] = path.detail.reachability
+    if path.previous_node is not None:
+        digraph.edges[(path.previous_node, path.node)]["difficulty"] = path.detail.difficulty
 
 
 class GeneratorReach:
     _digraph: networkx.DiGraph
-    _starting_node: Node
+    _state: State
     _logic: Logic
+    _unreachable_nodes: Dict[Node, RequirementSet]
 
     def __init__(self,
-                 digraph: networkx.DiGraph,
-                 starting_node: Node,
-                 logic: Logic):
+                 logic: Logic,
+                 initial_state: State,
+                 ):
 
-        self._digraph = digraph
-        self._starting_node = starting_node
         self._logic = logic
+        self._state = initial_state
+        self._digraph = networkx.DiGraph()
+        self._expand_graph()
 
-    @classmethod
-    def calculate_reach(cls,
-                        logic: Logic,
-                        initial_state: State) -> "GeneratorReach":
-        resource_database = logic.game.resource_database
+        self._calculate_safe_nodes()
 
-        nodes_to_check = collections.OrderedDict()
-        nodes_to_check[initial_state.node] = (None, True, 0)
+    def _expand_graph(self):
+        paths_to_check: List[Path] = [Path(None, self._state.node, PathDetail(True, 0))]
+        unreachable = collections.defaultdict(RequirementSet.impossible)
 
-        digraph = networkx.DiGraph()
+        while paths_to_check:
+            path = paths_to_check.pop(0)
 
-        while nodes_to_check:
-            node, path = nodes_to_check.popitem(False)
-            previous_node, path_reachable, path_difficulty = path
-
-            digraph.add_node(node)
-            if previous_node is not None:
-                digraph.add_edge(previous_node, node)
-
-            if not _is_path_better(_calculate_previous_path(digraph, previous_node, node),
-                                   path):
+            _add_node_and_edge_to_graph(self._digraph, path)
+            if not path.detail.is_better(_calculate_path_detail(self._digraph, path.previous_node, path.node)):
                 continue
 
-            digraph.nodes[node]["reachable"] = path_reachable
-            digraph.edges[(previous_node, node)]["difficulty"] = path_difficulty
+            _update_graph_attributes(self._digraph, path)
+            can_advance = self._can_advance(path)
 
-            can_advance = _can_advance(initial_state, node, path_reachable, resource_database)
-
-            for target_node, requirements in logic.game.potential_nodes_from(node):
-                difficulty = requirements.minimum_satisfied_difficulty(
-                    initial_state.resources, initial_state.resource_database)
-
+            for target_node, requirements in self._logic.game.potential_nodes_from(path.node):
+                if target_node is None:
+                    continue
                 # minimum_satisfied_difficulty returns None is no alternative is satisfied
+                difficulty = requirements.minimum_satisfied_difficulty(self._state.resources,
+                                                                       self._state.resource_database)
                 if difficulty is not None:
-                    new_difficulty = max(path_difficulty, difficulty)
+                    new_path = Path(path.node, target_node,
+                                    PathDetail(can_advance, max(path.detail.difficulty, difficulty)))
+                    paths_to_check.append(new_path)
                 else:
-                    new_difficulty = None
+                    unreachable[target_node] = unreachable[target_node].expand_alternatives(requirements)
 
-                if new_difficulty is not None:
-                    new_path = (node, can_advance, new_difficulty)
+        self._unreachable_nodes = {
+            node: requirements
+            for node, requirements in unreachable.items()
+            if node not in self._digraph
+        }
 
-                    if target_node in nodes_to_check and not _is_path_better(nodes_to_check[target_node], new_path):
-                        continue
+    def _can_advance(self,
+                     path: Path,
+                     ) -> bool:
+        """
+        Calculates if we can advance based from a given node coming from a given path
+        :param path:
+        :return:
+        """
+        # If we aren't reachable, places we can reach from here also aren't
+        if path.detail.reachability:
+            # We can't advance past a resource node if we haven't collected it
+            if is_resource_node(path.node):
+                return self._state.has_resource(path.node.resource(self._logic.game.resource_database))
+            else:
+                return True
+        else:
+            return False
 
-                    nodes_to_check[target_node] = new_path
+    def _calculate_safe_nodes(self):
+        self._connected_components = list(networkx.strongly_connected_components(self._digraph))
 
-        return GeneratorReach(digraph, initial_state.node, logic)
+        self._safe_nodes = None
+        for component in self._connected_components:
+            if self._state.node in component:
+                self._safe_nodes = component
+        assert self._safe_nodes is not None
+
+    @property
+    def reachable_nodes(self) -> Iterator[Node]:
+        for node in self._digraph:
+            if self._digraph.nodes[node]["reachable"]:
+                yield node
+
+    @property
+    def reachable_resource_nodes(self) -> Iterator[ResourceNode]:
+        for node in self.reachable_nodes:
+            if is_resource_node(node):
+                yield node
+
+    def uncollected_resource_nodes(self, state: State) -> Iterator[ResourceNode]:
+        for resource_node in self.reachable_resource_nodes:
+            if not state.has_resource(resource_node.resource(state.resource_database)):
+                yield resource_node
+
+    def is_safe_node(self, node: Node) -> bool:
+        return node in self._safe_nodes
+
+    @property
+    def progression_resources(self) -> Set[ResourceInfo]:
+        # TODO: should the quantity as well matter?
+        return {
+            individual.resource
+            for requirements in self._unreachable_nodes.values()
+            for alternative in requirements.alternatives
+            for individual in alternative.values()
+            if not individual.negate
+        }

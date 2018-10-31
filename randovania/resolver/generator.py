@@ -12,7 +12,7 @@ from randovania.game_description.game_description import GameDescription, calcul
 from randovania.game_description.node import EventNode, Node, PickupNode, is_resource_node, ResourceNode
 from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry, \
     PickupIndex
-from randovania.resolver import debug, resolver
+from randovania.resolver import debug, resolver, generator_explorer
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches
@@ -74,15 +74,22 @@ def generate_list(data: Dict,
 
     try:
         with multiprocessing.dummy.Pool(1) as dummy_pool:
-            new_patches = dummy_pool.apply_async(
-                func=_create_patches,
-                kwds={
+            new_patches = _create_patches(
+                **{
                     "seed_number": seed_number,
                     "configuration": configuration,
                     "game": data_reader.decode_data(data, elevators),
                     "status_update": status_update
-                }
-            ).get(120)
+                })
+            # new_patches = dummy_pool.apply_async(
+            #     func=_create_patches,
+            #     kwds={
+            #         "seed_number": seed_number,
+            #         "configuration": configuration,
+            #         "game": data_reader.decode_data(data, elevators),
+            #         "status_update": status_update
+            #     }
+            # ).get(120)
     except multiprocessing.TimeoutError:
         raise GenerationFailure(
             "Timeout reached when generating patches.",
@@ -121,6 +128,33 @@ def generate_list(data: Dict,
     )
 
 
+def _gimme_reach(logic: Logic, state: State):
+    reach = generator_explorer.GeneratorReach(logic, state)
+
+    print(">>>>>>>> Actions from {}:".format(logic.game.node_name(state.node)))
+    for node in reach.uncollected_resource_nodes(state):
+        print("++ Safe? {1} -- {0}".format(logic.game.node_name(node), reach.is_safe_node(node)))
+
+    print("Progression:\n * {}".format(
+        "\n * ".join(sorted(str(resource) for resource in reach.progression_resources))
+    ))
+
+    return reach
+
+
+def _do_stuff(logic: Logic, state: State, patches: GamePatches):
+    for i in range(7):
+        print("\n>>> STEP {}".format(i))
+        reach = _gimme_reach(logic, state)
+        state = state.act_on_node(next(reach.uncollected_resource_nodes(state)), patches.pickup_mapping)
+
+    reach = _gimme_reach(logic, state)
+    for component in reach._connected_components:
+        print("===============")
+        for node in component:
+            print(logic.game.node_name(node))
+
+
 def _create_patches(
         seed_number: int,
         configuration: LayoutConfiguration,
@@ -152,6 +186,9 @@ def _create_patches(
 
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
+
+    _do_stuff(logic, state, patches)
+    raise SystemExit(1)
 
     new_patches, non_added_items, final_state_by_distribution = distribute_one_item(
         logic,
