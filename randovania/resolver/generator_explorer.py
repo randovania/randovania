@@ -1,6 +1,6 @@
 import collections
 import math
-from typing import Iterator, Tuple, Optional, Set, Dict, List, NamedTuple
+from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 import networkx
 
@@ -32,6 +32,10 @@ class Path(NamedTuple):
     def __repr__(self):
         return "Path({} with {} from {})".format(self.node, self.detail, self.previous_node)
 
+    def advance(self, next_node: Node, can_advance: bool, new_difficulty: int) -> "Path":
+        return Path(self.node, next_node,
+                    PathDetail(can_advance, max(self.detail.difficulty, new_difficulty)))
+
 
 def _calculate_path_detail(digraph: networkx.DiGraph,
                            previous_node: Optional[Node],
@@ -62,11 +66,63 @@ def _update_graph_attributes(digraph: networkx.DiGraph,
         digraph.edges[(path.previous_node, path.node)]["difficulty"] = path.detail.difficulty
 
 
+def filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
+    for node in nodes:
+        if is_resource_node(node):
+            yield node
+
+
+def filter_uncollected(resource_nodes: Iterator[ResourceNode], state: State) -> Iterator[ResourceNode]:
+    for resource_node in resource_nodes:
+        if not state.has_resource(resource_node.resource(state.resource_database)):
+            yield resource_node
+
+
+def filter_reachable(nodes: Iterator[Node], reach: "GeneratorReach") -> Iterator[Node]:
+    for node in nodes:
+        if reach.is_reachable_node(node):
+            yield node
+
+
+def _best_path(old_path: Optional[Path], new_path: Path) -> Path:
+    if old_path is None or new_path.detail.is_better(old_path.detail):
+        return new_path
+    else:
+        return old_path
+
+
+class UnreachablePaths:
+    _expanded: RequirementSet
+    _paths: List[Tuple[Node, PathDetail, RequirementSet]]
+
+    def __init__(self):
+        self._expanded = RequirementSet.impossible()
+        self._paths = []
+
+    def add_new(self, previous: Node, previous_detail: PathDetail, requirements: RequirementSet):
+        self._paths.append((previous, previous_detail, requirements))
+        self._expanded = self._expanded.expand_alternatives(requirements)
+
+    @property
+    def expanded_alternatives(self) -> RequirementSet:
+        return self._expanded
+
+    def satisfied_paths(self, target_node: Node, state: State) -> Iterator[Path]:
+        for previous, previous_detail, requirements in self._paths:
+            difficulty = requirements.minimum_satisfied_difficulty(state.resources,
+                                                                   state.resource_database)
+            if difficulty is not None:
+                yield Path(previous, target_node,
+                           PathDetail(previous_detail.reachability, max(previous_detail.difficulty, difficulty)))
+
+
 class GeneratorReach:
     _digraph: networkx.DiGraph
     _state: State
     _logic: Logic
-    _unreachable_nodes: Dict[Node, RequirementSet]
+    _bad_reachability_sources: Set[Node]
+    _last_path_for_node: Dict[Node, Path]
+    _unreachable_paths: Dict[Node, UnreachablePaths]
 
     def __init__(self,
                  logic: Logic,
@@ -76,14 +132,33 @@ class GeneratorReach:
         self._logic = logic
         self._state = initial_state
         self._digraph = networkx.DiGraph()
-        self._expand_graph()
+        self._bad_reachability_sources = set()
+        self._last_path_for_node = {}
+        self._unreachable_paths = collections.defaultdict(UnreachablePaths)
 
+        self._expand_graph([Path(None, self._state.node, PathDetail(True, 0))])
         self._calculate_safe_nodes()
 
-    def _expand_graph(self):
-        paths_to_check: List[Path] = [Path(None, self._state.node, PathDetail(True, 0))]
-        unreachable = collections.defaultdict(RequirementSet.impossible)
+    def _update_bad_reachability_source(self, path: Path, can_advance: bool):
+        if can_advance:
+            if path.node in self._bad_reachability_sources:
+                self._bad_reachability_sources.remove(path.node)
+        elif path.detail.reachability:
+            self._bad_reachability_sources.add(path.node)
 
+    def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet, Optional[int]]]:
+        for target_node, requirements in self._logic.game.potential_nodes_from(node):
+            if target_node is None:
+                continue
+
+            # minimum_satisfied_difficulty returns None is no alternative is satisfied
+            difficulty = requirements.minimum_satisfied_difficulty(self._state.resources,
+                                                                   self._state.resource_database)
+
+            yield target_node, requirements, difficulty
+
+    def _expand_graph(self, paths_to_check: List[Path]):
+        print("!! _expand_graph", len(paths_to_check))
         while paths_to_check:
             path = paths_to_check.pop(0)
 
@@ -92,26 +167,24 @@ class GeneratorReach:
                 continue
 
             _update_graph_attributes(self._digraph, path)
+            self._last_path_for_node[path.node] = _best_path(
+                self._last_path_for_node.get(path.node), path)
+
             can_advance = self._can_advance(path)
+            self._update_bad_reachability_source(path, can_advance)
 
-            for target_node, requirements in self._logic.game.potential_nodes_from(path.node):
-                if target_node is None:
-                    continue
-                # minimum_satisfied_difficulty returns None is no alternative is satisfied
-                difficulty = requirements.minimum_satisfied_difficulty(self._state.resources,
-                                                                       self._state.resource_database)
+            for target_node, requirements, difficulty in self._potential_nodes_from(path.node):
                 if difficulty is not None:
-                    new_path = Path(path.node, target_node,
-                                    PathDetail(can_advance, max(path.detail.difficulty, difficulty)))
-                    paths_to_check.append(new_path)
+                    paths_to_check.append(path.advance(target_node, can_advance, difficulty))
                 else:
-                    unreachable[target_node] = unreachable[target_node].expand_alternatives(requirements)
+                    self._unreachable_paths[target_node].add_new(
+                        path.node, path.detail, requirements
+                    )
 
-        self._unreachable_nodes = {
-            node: requirements
-            for node, requirements in unreachable.items()
-            if node not in self._digraph
-        }
+        # Remove all "unreachable" nodes we found that aren't that were later on reachable
+        for node in self._digraph:
+            if node in self._unreachable_paths:
+                del self._unreachable_paths[node]
 
     def _can_advance(self,
                      path: Path,
@@ -140,22 +213,26 @@ class GeneratorReach:
                 self._safe_nodes = component
         assert self._safe_nodes is not None
 
+    def is_reachable_node(self, node: Node) -> bool:
+        attributes = self._digraph.nodes.get(node)
+        if attributes is not None:
+            return attributes["reachable"]
+        else:
+            return False
+
     @property
-    def reachable_nodes(self) -> Iterator[Node]:
+    def state(self) -> State:
+        return self._state
+
+    @property
+    def nodes(self) -> Iterator[Node]:
         for node in self._digraph:
-            if self._digraph.nodes[node]["reachable"]:
-                yield node
+            yield node
 
     @property
-    def reachable_resource_nodes(self) -> Iterator[ResourceNode]:
-        for node in self.reachable_nodes:
-            if is_resource_node(node):
-                yield node
-
-    def uncollected_resource_nodes(self, state: State) -> Iterator[ResourceNode]:
-        for resource_node in self.reachable_resource_nodes:
-            if not state.has_resource(resource_node.resource(state.resource_database)):
-                yield resource_node
+    def safe_nodes(self) -> Iterator[Node]:
+        for node in self._safe_nodes:
+            yield node
 
     def is_safe_node(self, node: Node) -> bool:
         return node in self._safe_nodes
@@ -165,8 +242,33 @@ class GeneratorReach:
         # TODO: should the quantity as well matter?
         return {
             individual.resource
-            for requirements in self._unreachable_nodes.values()
-            for alternative in requirements.alternatives
+            for unreachable_path in self._unreachable_paths.values()
+            for alternative in unreachable_path.expanded_alternatives.alternatives
             for individual in alternative.values()
             if not individual.negate
         }
+
+    def advance_to(self, new_state: State) -> None:
+        assert new_state.previous_state == self.state
+        self._state = new_state
+
+        paths_to_check: List[Path] = []
+
+        # Resource nodes block reachability of nodes behind then. Check if we need to update reachiblity of nodes
+        if new_state.node in self._bad_reachability_sources:
+            previous_path = self._last_path_for_node[new_state.node]
+            paths_to_check.extend(
+                previous_path.advance(target_node, self._can_advance(previous_path), difficulty)
+                for target_node, _, difficulty in self._potential_nodes_from(new_state.node)
+                if difficulty is not None
+            )
+
+        # Check if we can expand the corners of our graph
+        # TODO: check if expensive. We filter by only nodes that depends on a new resource
+        for node, unreachable_path in self._unreachable_paths.items():
+            if unreachable_path.expanded_alternatives.satisfied(new_state.resources,
+                                                                new_state.resource_database):
+                paths_to_check.extend(unreachable_path.satisfied_paths(node, new_state))
+
+        self._expand_graph(paths_to_check)
+        self._calculate_safe_nodes()

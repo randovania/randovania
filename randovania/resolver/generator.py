@@ -16,6 +16,8 @@ from randovania.resolver import debug, resolver, generator_explorer
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.generator_explorer import filter_resource_nodes, filter_uncollected, filter_reachable, \
+    GeneratorReach
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups, \
     remove_pickup_entry_from_list
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutMode, \
@@ -128,25 +130,48 @@ def generate_list(data: Dict,
     )
 
 
-def _gimme_reach(logic: Logic, state: State):
-    reach = generator_explorer.GeneratorReach(logic, state)
+def _uncollected_resources(nodes: Iterator[Node], state: State) -> Iterator[ResourceNode]:
+    return filter_uncollected(filter_resource_nodes(nodes), state)
 
-    print(">>>>>>>> Actions from {}:".format(logic.game.node_name(state.node)))
-    for node in reach.uncollected_resource_nodes(state):
+
+Action = Union[ResourceNode, PickupEntry]
+
+
+def _gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> Tuple[GeneratorReach, List[Action]]:
+    reach = GeneratorReach(logic, initial_state)
+    actions = []
+
+    while True:
+        safe_actions = [
+            node
+            for node in _uncollected_resources(reach.safe_nodes, reach.state)
+        ]
+        print("=== Found {} safe actions".format(len(safe_actions)))
+        if not safe_actions:
+            break
+
+        for action in safe_actions:
+            print("== Collecting safe resource at {}".format(logic.game.node_name(action)))
+            reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
+            assert reach._digraph.nodes == GeneratorReach(logic, reach.state)._digraph.nodes
+
+    print(">>>>>>>> Actions from {}:".format(logic.game.node_name(reach.state.node)))
+    for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach.state):
+        actions.append(node)
         print("++ Safe? {1} -- {0}".format(logic.game.node_name(node), reach.is_safe_node(node)))
 
     print("Progression:\n * {}".format(
         "\n * ".join(sorted(str(resource) for resource in reach.progression_resources))
     ))
 
-    return reach
+    return reach, actions
 
 
 def _do_stuff(logic: Logic, state: State, patches: GamePatches):
     for i in range(7):
         print("\n>>> STEP {}".format(i))
-        reach = _gimme_reach(logic, state)
-        state = state.act_on_node(next(reach.uncollected_resource_nodes(state)), patches.pickup_mapping)
+        reach, actions = _gimme_reach(logic, state, patches)
+        state = state.act_on_node(actions[0], patches.pickup_mapping)
 
     reach = _gimme_reach(logic, state)
     for component in reach._connected_components:
@@ -381,9 +406,6 @@ def _count_by_type(iterable: Iterable[T]) -> Dict[type, int]:
         t.__name__: v
         for t, v in sorted(result.items(), key=lambda x: x[0].__name__)
     }
-
-
-Action = Union[ResourceNode, PickupEntry]
 
 
 def _calculate_weights(potential_actions: Set[Action], components) -> Dict[Action, int]:
