@@ -9,7 +9,7 @@ from randovania.resolver.reach import Reach
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = Reach(networkx.DiGraph(), {}, frozenset(), [], MagicMock())
+    reach = Reach([], {}, frozenset(), MagicMock())
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -18,11 +18,7 @@ def test_possible_actions_empty():
 def test_possible_actions_no_resources():
     state = MagicMock()
 
-    digraph = networkx.DiGraph()
-    digraph.add_node(MagicMock())
-    digraph.add_node(MagicMock())
-
-    reach = Reach(digraph, {}, frozenset(), None, MagicMock())
+    reach = Reach([MagicMock(), MagicMock()], {}, frozenset(), MagicMock())
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -34,11 +30,8 @@ def test_possible_actions_with_event():
     event = MagicMock(spec=EventNode)
     state.has_resource.return_value = False
 
-    digraph = networkx.DiGraph()
-    digraph.add_node(event)
-
     # Run
-    reach = Reach(digraph, {}, frozenset(), None, logic)
+    reach = Reach([event], {}, frozenset(), logic)
     options = list(reach.possible_actions(state))
 
     # Assert

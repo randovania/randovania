@@ -1,5 +1,3 @@
-import collections
-import math
 from collections import defaultdict
 from typing import Dict, Set, List, Iterator, Tuple, Iterable, FrozenSet
 
@@ -45,9 +43,9 @@ class Reach:
                         logic: Logic,
                         initial_state: State) -> "Reach":
 
-        checked_nodes = {}
-        nodes_to_check = collections.OrderedDict()
-        nodes_to_check[initial_state.node] = 0
+        checked_nodes = set()
+        nodes_to_check: List[Node] = [initial_state.node]
+        path_to_node: Dict[Node, Tuple[Node, ...]] = {}
 
         reach_nodes: List[Node] = []
         requirements_by_node: Dict[Node, Set[RequirementList]] = defaultdict(set)
@@ -56,31 +54,26 @@ class Reach:
         path_to_node[initial_state.node] = tuple()
 
         while nodes_to_check:
-            node, path_difficulty = nodes_to_check.popitem(False)
-            checked_nodes[node] = path_difficulty
+            node = nodes_to_check.pop()
+            checked_nodes.add(node)
 
             if node != initial_state.node:
                 reach_nodes.append(node)
 
             for target_node, requirements in logic.game.potential_nodes_from(node):
-                difficulty = requirements.minimum_satisfied_difficulty(
-                    initial_state.resources, initial_state.resource_database)
+                if target_node in checked_nodes or target_node in nodes_to_check:
+                    continue
 
-                if difficulty is not None:
-                    new_difficulty = max(path_difficulty, difficulty)
-                    if min(checked_nodes.get(target_node, math.inf),
-                           nodes_to_check.get(target_node, math.inf)) <= new_difficulty:
-                        continue
-
+                # Check if the normal requirements to reach that node is satisfied
+                satisfied = requirements.satisfied(initial_state.resources,
+                                                   initial_state.resource_database)
+                if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
                     satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources,
                                                                                   initial_state.resource_database)
-                else:
-                    satisfied = False
-                    new_difficulty = None
 
                 if satisfied:
-                    nodes_to_check[target_node] = new_difficulty
+                    nodes_to_check.append(target_node)
                     path_to_node[target_node] = path_to_node[node] + (node,)
 
                 elif target_node:
