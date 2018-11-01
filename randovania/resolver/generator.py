@@ -78,7 +78,7 @@ def generate_list(data: Dict,
                 **{
                     "seed_number": seed_number,
                     "configuration": configuration,
-                    "game": data_reader.decode_data(data, elevators),
+                    "game": data_reader.decode_data(data, elevators, False),
                     "status_update": status_update
                 })
             # new_patches = dummy_pool.apply_async(
