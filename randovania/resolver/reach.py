@@ -3,8 +3,6 @@ import math
 from collections import defaultdict
 from typing import Dict, Set, List, Iterator, Tuple, Iterable, FrozenSet
 
-import networkx
-
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, Node, is_resource_node
 from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements
@@ -32,31 +30,15 @@ class Reach:
     def satisfiable_as_requirement_set(self) -> RequirementSet:
         return RequirementSet(self._satisfiable_requirements)
 
-    def is_safe(self, node: Node) -> bool:
-        """
-        Checks if a given node is considered safe
-        :param node:
-        :return:
-        """
-        return node in self._safe_nodes
-
     def __init__(self,
-                 digraph: networkx.DiGraph,
+                 nodes: Iterable[Node],
                  path_to_node: Dict[Node, Tuple[Node, ...]],
                  requirements: SatisfiableRequirements,
-                 starting_node: Node,
                  logic: Logic):
-        self._digraph = digraph
-        self._strongly_connected_components = list(networkx.strongly_connected_components(digraph))
-        self._nodes = tuple(digraph.nodes)
+        self._nodes = tuple(nodes)
         self._logic = logic
         self.path_to_node = path_to_node
         self._satisfiable_requirements = requirements
-
-        for components in self._strongly_connected_components:
-            if starting_node in components:
-                self._safe_nodes = components
-                break
 
     @classmethod
     def calculate_reach(cls,
@@ -67,7 +49,7 @@ class Reach:
         nodes_to_check = collections.OrderedDict()
         nodes_to_check[initial_state.node] = 0
 
-        digraph = networkx.DiGraph()
+        reach_nodes: List[Node] = []
         requirements_by_node: Dict[Node, Set[RequirementList]] = defaultdict(set)
 
         path_to_node: Dict[Node, Tuple[Node, ...]] = {}
@@ -76,7 +58,9 @@ class Reach:
         while nodes_to_check:
             node, path_difficulty = nodes_to_check.popitem(False)
             checked_nodes[node] = path_difficulty
-            digraph.add_node(node)
+
+            if node != initial_state.node:
+                reach_nodes.append(node)
 
             for target_node, requirements in logic.game.potential_nodes_from(node):
                 difficulty = requirements.minimum_satisfied_difficulty(
@@ -86,7 +70,6 @@ class Reach:
                     new_difficulty = max(path_difficulty, difficulty)
                     if min(checked_nodes.get(target_node, math.inf),
                            nodes_to_check.get(target_node, math.inf)) <= new_difficulty:
-                        digraph.add_edge(node, target_node, difficulty=new_difficulty)
                         continue
 
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
@@ -97,8 +80,6 @@ class Reach:
                     new_difficulty = None
 
                 if satisfied:
-                    digraph.add_node(target_node)
-                    digraph.add_edge(node, target_node, difficulty=new_difficulty)
                     nodes_to_check[target_node] = new_difficulty
                     path_to_node[target_node] = path_to_node[node] + (node,)
 
@@ -108,7 +89,7 @@ class Reach:
                     requirements_by_node[target_node].update(requirements.alternatives)
 
         # Discard satisfiable requirements of nodes reachable by other means
-        for node in set(digraph.nodes).intersection(requirements_by_node.keys()):
+        for node in set(reach_nodes).intersection(requirements_by_node.keys()):
             requirements_by_node.pop(node)
 
         if requirements_by_node:
@@ -118,7 +99,7 @@ class Reach:
         else:
             satisfiable_requirements = frozenset()
 
-        return Reach(digraph, path_to_node, satisfiable_requirements, initial_state.node, logic)
+        return Reach(reach_nodes, path_to_node, satisfiable_requirements, logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
