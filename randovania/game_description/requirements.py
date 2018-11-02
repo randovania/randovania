@@ -80,6 +80,10 @@ class RequirementList:
         self.difficulty_level = difficulty_level
         self.items = frozenset(items)
 
+    @classmethod
+    def with_single_resource(cls, resource: ResourceInfo) -> "RequirementList":
+        return cls(0, [IndividualRequirement(resource, 1, False)])
+
     def __eq__(self, other):
         return isinstance(
             other, RequirementList) and self.items == other.items

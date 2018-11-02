@@ -80,14 +80,6 @@ def read_requirement_set(data: List[List[Dict]],
                           ).simplify({}, resource_database)
 
 
-def add_requirement_to_set(
-        requirement_set: RequirementSet,
-        new_requirement: IndividualRequirement) -> RequirementSet:
-    return RequirementSet(
-        requirement_list.union(RequirementList(0, [new_requirement]))
-        for requirement_list in requirement_set.alternatives)
-
-
 # Dock Weakness
 
 
@@ -175,19 +167,16 @@ class WorldReader:
         connections = {}
         for i, origin in enumerate(data["connections"]):
             connections[nodes[i]] = {}
-            extra_requirement = None
 
+            extra_requirement = None
             if is_resource_node(nodes[i]) and self.add_self_as_requirement_to_resources:
-                extra_requirement = IndividualRequirement(
-                    nodes[i].resource(self.resource_database),
-                    1,
-                    False)
+                extra_requirement = RequirementList.with_single_resource(nodes[i].resource(self.resource_database))
 
             for j, target in enumerate(origin):
                 if target:
                     the_set = read_requirement_set(target, self.resource_database)
                     if extra_requirement is not None:
-                        the_set = add_requirement_to_set(the_set, extra_requirement)
+                        the_set = the_set.union(RequirementSet([extra_requirement]))
 
                     if the_set != RequirementSet.impossible():
                         connections[nodes[i]][nodes[j]] = the_set
