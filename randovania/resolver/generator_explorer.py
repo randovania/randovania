@@ -4,6 +4,7 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 import networkx
 
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, is_resource_node, ResourceNode
 from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources import ResourceInfo
@@ -84,6 +85,14 @@ def filter_reachable(nodes: Iterator[Node], reach: "GeneratorReach") -> Iterator
             yield node
 
 
+def filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
+                                 game: GameDescription,
+                                 ) -> Iterator[ResourceNode]:
+    for resource_node in resource_nodes:
+        if resource_node.resource(game.resource_database) not in game.dangerous_resources:
+            yield resource_node
+
+
 def _best_path(old_path: Optional[Path], new_path: Path) -> Path:
     if old_path is None or new_path.detail.is_better(old_path.detail):
         return new_path
@@ -158,7 +167,7 @@ class GeneratorReach:
             yield target_node, requirements, difficulty
 
     def _expand_graph(self, paths_to_check: List[Path]):
-        print("!! _expand_graph", len(paths_to_check))
+        # print("!! _expand_graph", len(paths_to_check))
         while paths_to_check:
             path = paths_to_check.pop(0)
 
@@ -250,6 +259,9 @@ class GeneratorReach:
 
     def advance_to(self, new_state: State) -> None:
         assert new_state.previous_state == self.state
+        assert self.is_safe_node(new_state.node)
+        assert self.is_reachable_node(new_state.node)
+
         self._state = new_state
 
         paths_to_check: List[Path] = []

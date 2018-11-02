@@ -153,7 +153,6 @@ def _gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> Tu
         for action in safe_actions:
             print("== Collecting safe resource at {}".format(logic.game.node_name(action)))
             reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
-            assert reach._digraph.nodes == GeneratorReach(logic, reach.state)._digraph.nodes
 
     print(">>>>>>>> Actions from {}:".format(logic.game.node_name(reach.state.node)))
     for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach.state):
