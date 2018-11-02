@@ -6,7 +6,7 @@ import networkx
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, is_resource_node, ResourceNode
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources import ResourceInfo
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -156,9 +156,16 @@ class GeneratorReach:
             self._bad_reachability_sources.add(path.node)
 
     def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet, Optional[int]]]:
-        for target_node, requirements in self._logic.game.potential_nodes_from(node):
+        game = self._logic.game
+
+        extra_requirement = _extra_requirement_for_node(game, node)
+
+        for target_node, requirements in game.potential_nodes_from(node):
             if target_node is None:
                 continue
+
+            if extra_requirement is not None:
+                requirements = requirements.union(extra_requirement)
 
             # minimum_satisfied_difficulty returns None is no alternative is satisfied
             difficulty = requirements.minimum_satisfied_difficulty(self._state.resources,
@@ -284,3 +291,14 @@ class GeneratorReach:
 
         self._expand_graph(paths_to_check)
         self._calculate_safe_nodes()
+
+
+def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[RequirementSet]:
+    extra_requirement = None
+
+    if is_resource_node(node):
+        node_resource = node.resource(game.resource_database)
+        if node_resource in game.dangerous_resources:
+            extra_requirement = RequirementSet([RequirementList.with_single_resource(node_resource)])
+
+    return extra_requirement
