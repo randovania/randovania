@@ -241,6 +241,10 @@ class GeneratorReach:
         return self._state
 
     @property
+    def logic(self) -> Logic:
+        return self._logic
+
+    @property
     def nodes(self) -> Iterator[Node]:
         for node in sorted(self._digraph):
             yield node
