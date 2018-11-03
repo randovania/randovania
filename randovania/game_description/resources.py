@@ -1,5 +1,5 @@
 from enum import unique, Enum
-from typing import NamedTuple, Tuple, Union, List, Dict
+from typing import NamedTuple, Tuple, Union, List, Dict, Iterator
 
 
 class SimpleResourceInfo(NamedTuple):
@@ -45,7 +45,7 @@ class PickupIndex:
 
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]
-ResourceGain = List[Tuple[ResourceInfo, int]]
+ResourceGain = Iterator[Tuple[ResourceInfo, int]]
 CurrentResources = Dict[ResourceInfo, int]
 
 

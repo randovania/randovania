@@ -10,7 +10,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription, calculate_interesting_resources
 from randovania.game_description.node import EventNode, Node, PickupNode, is_resource_node, ResourceNode
 from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry, \
-    PickupIndex
+    PickupIndex, ResourceGain
 from randovania.resolver import debug, resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
@@ -136,30 +136,29 @@ def _uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iter
 Action = Union[ResourceNode, PickupEntry]
 
 
+def _get_safe_actions(reach: GeneratorReach) -> Iterator[Action]:
+    return filter_out_dangerous_actions(
+        _uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
+        reach.logic.game
+    )
+
+
 def gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> GeneratorReach:
     reach = GeneratorReach(logic, initial_state)
     safe_events = []
 
-    print(len(list(reach.nodes)))
-    print(">>>>>>>>>>>>>>>>")
+    while True:
+        try:
+            action = next(_get_safe_actions(reach))
+        except StopIteration:
+            break
 
-    had_actions = True
-    while had_actions:
-        had_actions = False
-        safe_actions = filter_out_dangerous_actions(
-            _uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
-            logic.game
-        )
-
-        i = 0
-        for i, action in enumerate(safe_actions):
-            safe_events.append(action)
-            reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
-            had_actions = True
-        print(i)
+        safe_events.append(action)
+        print("safe node: ", action.name)
+        reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
 
     setattr(reach, "safe_events", safe_events)
-    print("=======================")
+    # print("=======================")
     return reach
 
 
@@ -175,6 +174,12 @@ def _filter_unassigned_pickup_nodes(nodes: Iterator[Node],
             yield node
 
 
+def add_resource_gain_to_state(state: State, resource_gain: ResourceGain):
+    for resource, quantity in resource_gain:
+        state.resources[resource] = state.resources.get(resource, 0)
+        state.resources[resource] += quantity
+
+
 def _do_stuff(logic: Logic, state: State,
               patches: GamePatches,
               available_pickups: Tuple[PickupEntry],
@@ -187,10 +192,8 @@ def _do_stuff(logic: Logic, state: State,
 
         remaining_pickups = available_pickups[i + 1:]
         for other_pickup in remaining_pickups:
-            print("adding {}".format(other_pickup))
-            for resource, quantity in other_pickup.resource_gain(logic.game.resource_database):
-                new_state.resources[resource] = new_state.resources.get(resource, 0)
-                new_state.resources[resource] += quantity
+            # print("adding {}".format(other_pickup))
+            add_resource_gain_to_state(new_state, other_pickup.resource_gain(logic.game.resource_database))
 
         print(">>>>>>>>>")
 
