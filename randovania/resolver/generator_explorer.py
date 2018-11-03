@@ -73,9 +73,9 @@ def filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
             yield node
 
 
-def filter_uncollected(resource_nodes: Iterator[ResourceNode], state: State) -> Iterator[ResourceNode]:
+def filter_uncollected(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if not state.has_resource(resource_node.resource(state.resource_database)):
+        if not reach.state.has_resource(resource_node.resource(reach.state.resource_database)):
             yield resource_node
 
 
@@ -226,7 +226,7 @@ class GeneratorReach:
         self._safe_nodes = None
         for component in self._connected_components:
             if self._state.node in component:
-                self._safe_nodes = set(sorted(component))
+                self._safe_nodes = component
         assert self._safe_nodes is not None
 
     def is_reachable_node(self, node: Node) -> bool:
@@ -247,7 +247,7 @@ class GeneratorReach:
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
-        for node in self._safe_nodes:
+        for node in sorted(self._safe_nodes):
             yield node
 
     def is_safe_node(self, node: Node) -> bool:
