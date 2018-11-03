@@ -146,7 +146,6 @@ class GeneratorReach:
         self._unreachable_paths = collections.defaultdict(UnreachablePaths)
 
         self._expand_graph([Path(None, self._state.node, PathDetail(True, 0))])
-        self._calculate_safe_nodes()
 
     def _update_bad_reachability_source(self, path: Path, can_advance: bool):
         if can_advance:
@@ -201,6 +200,7 @@ class GeneratorReach:
         for node in self._digraph:
             if node in self._unreachable_paths:
                 del self._unreachable_paths[node]
+        self._calculate_safe_nodes()
 
     def _can_advance(self,
                      path: Path,
@@ -226,7 +226,7 @@ class GeneratorReach:
         self._safe_nodes = None
         for component in self._connected_components:
             if self._state.node in component:
-                self._safe_nodes = component
+                self._safe_nodes = set(sorted(component))
         assert self._safe_nodes is not None
 
     def is_reachable_node(self, node: Node) -> bool:
@@ -242,7 +242,7 @@ class GeneratorReach:
 
     @property
     def nodes(self) -> Iterator[Node]:
-        for node in self._digraph:
+        for node in sorted(self._digraph):
             yield node
 
     @property
@@ -266,14 +266,13 @@ class GeneratorReach:
 
     def advance_to(self, new_state: State) -> None:
         assert new_state.previous_state == self.state
-        assert self.is_safe_node(new_state.node)
         assert self.is_reachable_node(new_state.node)
 
         self._state = new_state
 
         paths_to_check: List[Path] = []
 
-        # Resource nodes block reachability of nodes behind then. Check if we need to update reachiblity of nodes
+        # Resource nodes block reachability of nodes behind then. Check if we need to update reachability of nodes
         if new_state.node in self._bad_reachability_sources:
             previous_path = self._last_path_for_node[new_state.node]
             paths_to_check.extend(
@@ -290,7 +289,6 @@ class GeneratorReach:
                 paths_to_check.extend(unreachable_path.satisfied_paths(node, new_state))
 
         self._expand_graph(paths_to_check)
-        self._calculate_safe_nodes()
 
 
 def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[RequirementSet]:

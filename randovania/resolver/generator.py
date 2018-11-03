@@ -1,7 +1,6 @@
-import collections
+import copy
 import copy
 import multiprocessing.dummy
-import pprint
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, Dict, TypeVar, Iterable, Union, Set
 
@@ -12,12 +11,12 @@ from randovania.game_description.game_description import GameDescription, calcul
 from randovania.game_description.node import EventNode, Node, PickupNode, is_resource_node, ResourceNode
 from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry, \
     PickupIndex
-from randovania.resolver import debug, resolver, generator_explorer
+from randovania.resolver import debug, resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.generator_explorer import filter_resource_nodes, filter_uncollected, filter_reachable, \
-    GeneratorReach
+    GeneratorReach, filter_out_dangerous_actions
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups, \
     remove_pickup_entry_from_list
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutEnabledFlag, LayoutMode, \
@@ -137,46 +136,77 @@ def _uncollected_resources(nodes: Iterator[Node], state: State) -> Iterator[Reso
 Action = Union[ResourceNode, PickupEntry]
 
 
-def _gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> Tuple[GeneratorReach, List[Action]]:
+def gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> GeneratorReach:
     reach = GeneratorReach(logic, initial_state)
-    actions = []
 
     while True:
         safe_actions = [
-            node
-            for node in _uncollected_resources(reach.safe_nodes, reach.state)
+            action for action in
+            filter_out_dangerous_actions(
+                _uncollected_resources(
+                    filter_reachable(reach.safe_nodes, reach),
+                    reach.state),
+                logic.game
+            )
         ]
-        print("=== Found {} safe actions".format(len(safe_actions)))
         if not safe_actions:
             break
 
         for action in safe_actions:
-            print("== Collecting safe resource at {}".format(logic.game.node_name(action)))
-            reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
+            if not reach.state.has_resource(action.resource(logic.game.resource_database)):
+                reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
 
-    print(">>>>>>>> Actions from {}:".format(logic.game.node_name(reach.state.node)))
-    for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach.state):
-        actions.append(node)
-        print("++ Safe? {1} -- {0}".format(logic.game.node_name(node), reach.is_safe_node(node)))
-
-    print("Progression:\n * {}".format(
-        "\n * ".join(sorted(str(resource) for resource in reach.progression_resources))
-    ))
-
-    return reach, actions
+    return reach
 
 
-def _do_stuff(logic: Logic, state: State, patches: GamePatches):
-    for i in range(7):
-        print("\n>>> STEP {}".format(i))
-        reach, actions = _gimme_reach(logic, state, patches)
-        state = state.act_on_node(actions[0], patches.pickup_mapping)
+def get_actions_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
+    return [node for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach.state)]
 
-    reach = _gimme_reach(logic, state)
-    for component in reach._connected_components:
-        print("===============")
-        for node in component:
-            print(logic.game.node_name(node))
+
+def _filter_unassigned_pickup_nodes(nodes: Iterator[Node],
+                                    item_mapping: List[Optional[int]],
+                                    ) -> Iterator[PickupNode]:
+    for node in nodes:
+        if isinstance(node, PickupNode) and item_mapping[node.pickup_index.index] is None:
+            yield node
+
+
+def _do_stuff(logic: Logic, state: State,
+              patches: GamePatches,
+              available_pickups: Tuple[PickupEntry],
+              rng: Random):
+    item_mapping = copy.copy(patches.pickup_mapping)
+
+    for i, pickup in enumerate(available_pickups):
+        print("Will place {}, have {} left".format(pickup, len(available_pickups) - i - 1))
+        new_state = state.copy()
+
+        remaining_pickups = available_pickups[i + 1:]
+        for other_pickup in remaining_pickups:
+            print("adding {}".format(other_pickup))
+            for resource, quantity in other_pickup.resource_gain(logic.game.resource_database):
+                new_state.resources[resource] = new_state.resources.get(resource, 0)
+                new_state.resources[resource] += quantity
+
+        print(">>>>>>>>>")
+
+        reach = gimme_reach(logic, new_state, patches)
+        actions = get_actions_of_reach(reach)
+        for action in actions:
+            print("++ Safe? {1} -- {0}".format(logic.game.node_name(action), reach.is_safe_node(action)))
+        assert set(actions) == set(get_actions_of_reach(gimme_reach(logic, reach.state, patches)))
+
+        pickup_node_generator = _filter_unassigned_pickup_nodes(filter_reachable(reach.safe_nodes, reach), item_mapping)
+        try:
+            pickup_node_list = shuffle(rng, sorted(pickup_node_generator))
+            pickup_node = pickup_node_list[0]
+            print("Placed at {} of {} nodes.".format(logic.game.node_name(pickup_node), len(pickup_node_list)))
+
+        except IndexError:
+            raise
+        item_mapping[pickup_node.pickup_index.index] = logic.game.resource_database.pickups.index(pickup)
+
+    return item_mapping
 
 
 def _create_patches(
@@ -192,14 +222,12 @@ def _create_patches(
         [None] * len(game.resource_database.pickups)
     )
 
-    categories = {"translator", "major", "temple_key"}
+    categories = {"translator", "major"}
 
     if configuration.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
         for i, pickup in enumerate(game.resource_database.pickups):
             if pickup.item_category == "sky_temple_key":
                 patches.pickup_mapping[i] = i
-    else:
-        categories.add("sky_temple_key")
 
     item_pool = calculate_item_pool(configuration, game)
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(item_pool, categories))))
@@ -211,29 +239,20 @@ def _create_patches(
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    _do_stuff(logic, state, patches)
-    raise SystemExit(1)
-
-    new_patches, non_added_items, final_state_by_distribution = distribute_one_item(
-        logic,
-        state,
-        patches,
-        available_pickups,
-        rng,
-        status_update=status_update)
-
-    remaining_items.extend(non_added_items)
-
+    new_pickup_mapping = _do_stuff(logic, state, patches, available_pickups, rng)
     rng.shuffle(remaining_items)
 
-    for i, index in enumerate(new_patches.pickup_mapping):
+    for i, index in enumerate(new_pickup_mapping):
         if index is not None:
             continue
-        new_patches.pickup_mapping[i] = game.resource_database.pickups.index(remaining_items.pop())
+        new_pickup_mapping[i] = game.resource_database.pickups.index(remaining_items.pop())
 
     assert not remaining_items
 
-    return new_patches
+    return GamePatches(
+        patches.item_loss_enabled,
+        new_pickup_mapping
+    )
 
 
 def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
@@ -284,7 +303,8 @@ def reach_with_all_safe_events(logic: Logic,
         new_state = state
         for action in reach.possible_actions(state):
             new_resource = action.resource(resource_database)
-            if is_resource_node(action) and new_resource not in dangerous_resources and new_state.has_resource(new_state):
+            if is_resource_node(action) and new_resource not in dangerous_resources and new_state.has_resource(
+                    new_state):
                 potential_new_state = new_state.act_on_node(action, patches.pickup_mapping)
                 if _can_reach_safe_node(potential_new_state,
                                         logic,
@@ -379,7 +399,6 @@ def _add_item_to_pickup_index(action: PickupEntry, state: State,
                               pickup_index: PickupIndex, patches: GamePatches,
                               database: ResourceDatabase,
                               ) -> Tuple[State, GamePatches]:
-
     pickup_mapping = copy.copy(patches.pickup_mapping)
 
     assert pickup_mapping[pickup_index.index] is None
