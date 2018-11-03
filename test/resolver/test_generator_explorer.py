@@ -1,6 +1,7 @@
 from random import Random
 from typing import Tuple, List
 
+import networkx
 import pytest
 
 from randovania.game_description import data_reader
@@ -8,7 +9,8 @@ from randovania.game_description.node import ResourceNode
 from randovania.games.prime import binary_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.generator import gimme_reach, get_actions_of_reach, add_resource_gain_to_state
+from randovania.resolver.generator import gimme_reach, get_actions_of_reach, add_resource_gain_to_state, \
+    get_safe_actions
 from randovania.resolver.generator_explorer import PathDetail, GeneratorReach
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
@@ -51,10 +53,8 @@ def _test_data():
 
 def _create_reaches_and_compare(logic: Logic, state: State,
                                 patches: GamePatches,
-                                )-> Tuple[GeneratorReach, GeneratorReach]:
-
+                                ) -> Tuple[GeneratorReach, GeneratorReach]:
     first_reach = gimme_reach(logic, state, patches)
-    print("=====================")
     second_reach = gimme_reach(logic, first_reach.state, patches)
 
     assert first_reach.is_safe_node(first_reach.state.node)
@@ -70,8 +70,7 @@ def _create_reaches_and_compare(logic: Logic, state: State,
 
 def _compare_actions(first_reach: GeneratorReach,
                      second_reach: GeneratorReach,
-                     )-> Tuple[List[ResourceNode], List[ResourceNode]]:
-
+                     ) -> Tuple[List[ResourceNode], List[ResourceNode]]:
     first_actions = get_actions_of_reach(first_reach)
     second_actions = get_actions_of_reach(second_reach)
     assert set(first_actions) == set(second_actions)
@@ -94,7 +93,10 @@ def test_calculate_reach_with_seeds():
         add_resource_gain_to_state(state, pickup.resource_gain(logic.game.resource_database))
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state, patches)
-    _compare_actions(first_reach, second_reach)
+    first_actions, second_actions = _compare_actions(first_reach, second_reach)
+
+    assert (len(list(first_reach.nodes)), len(first_actions)) == (456, 10)
+    assert (len(list(second_reach.nodes)), len(second_actions)) == (456, 10)
 
 
 def test_calculate_reach_with_all_pickups():

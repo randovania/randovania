@@ -136,7 +136,7 @@ def _uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iter
 Action = Union[ResourceNode, PickupEntry]
 
 
-def _get_safe_actions(reach: GeneratorReach) -> Iterator[Action]:
+def get_safe_actions(reach: GeneratorReach) -> Iterator[Action]:
     return filter_out_dangerous_actions(
         _uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
         reach.logic.game
@@ -145,20 +145,14 @@ def _get_safe_actions(reach: GeneratorReach) -> Iterator[Action]:
 
 def gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> GeneratorReach:
     reach = GeneratorReach(logic, initial_state)
-    safe_events = []
 
     while True:
         try:
-            action = next(_get_safe_actions(reach))
+            action = next(get_safe_actions(reach))
         except StopIteration:
             break
-
-        safe_events.append(action)
-        print("safe node: ", action.name)
         reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
 
-    setattr(reach, "safe_events", safe_events)
-    # print("=======================")
     return reach
 
 
