@@ -129,8 +129,8 @@ def generate_list(data: Dict,
     )
 
 
-def _uncollected_resources(nodes: Iterator[Node], state: State) -> Iterator[ResourceNode]:
-    return filter_uncollected(filter_resource_nodes(nodes), state)
+def _uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
+    return filter_uncollected(filter_resource_nodes(nodes), reach)
 
 
 Action = Union[ResourceNode, PickupEntry]
@@ -138,29 +138,33 @@ Action = Union[ResourceNode, PickupEntry]
 
 def gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> GeneratorReach:
     reach = GeneratorReach(logic, initial_state)
+    safe_events = []
 
-    while True:
-        safe_actions = [
-            action for action in
-            filter_out_dangerous_actions(
-                _uncollected_resources(
-                    filter_reachable(reach.safe_nodes, reach),
-                    reach.state),
-                logic.game
-            )
-        ]
-        if not safe_actions:
-            break
+    print(len(list(reach.nodes)))
+    print(">>>>>>>>>>>>>>>>")
 
-        for action in safe_actions:
-            if not reach.state.has_resource(action.resource(logic.game.resource_database)):
-                reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
+    had_actions = True
+    while had_actions:
+        had_actions = False
+        safe_actions = filter_out_dangerous_actions(
+            _uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
+            logic.game
+        )
 
+        i = 0
+        for i, action in enumerate(safe_actions):
+            safe_events.append(action)
+            reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
+            had_actions = True
+        print(i)
+
+    setattr(reach, "safe_events", safe_events)
+    print("=======================")
     return reach
 
 
 def get_actions_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
-    return [node for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach.state)]
+    return [node for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach)]
 
 
 def _filter_unassigned_pickup_nodes(nodes: Iterator[Node],
