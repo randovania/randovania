@@ -5,6 +5,7 @@ from randovania.game_description.game_description import Area, GameDescription
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources import PickupEntry, PickupIndex
+from randovania.resolver.generator_explorer import GeneratorReach
 from randovania.resolver.logic import Logic
 
 _DEBUG_LEVEL = 0
@@ -124,3 +125,19 @@ def print_distribute_place_item(pickup_node, item: PickupEntry, logic):
             item.item,
             n(pickup_node, with_world=True),
             logic.node_sightings[pickup_node]))
+
+
+def print_actions_of_reach(reach: GeneratorReach):
+    from randovania.resolver.generator import get_actions_of_reach
+    if _DEBUG_LEVEL <= 1:
+        return
+
+    logic = reach.logic
+    actions = get_actions_of_reach(reach)
+
+    for action in actions:
+        print("++ Safe? {1} -- {0} -- Dangerous? {2}".format(
+            logic.game.node_name(action),
+            reach.is_safe_node(action),
+            action.resource(logic.game.resource_database) in logic.game.dangerous_resources
+        ))
