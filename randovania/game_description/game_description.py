@@ -207,6 +207,18 @@ class GameDescription:
                     for target, value in connections.items():
                         connections[target] = value.simplify(static_resources, self.resource_database)
 
+    @property
+    def relevant_resources(self) -> FrozenSet[ResourceInfo]:
+        results = set()
+
+        for node in self.all_nodes:
+            for _, requirements in self.potential_nodes_from(node):
+                for alternative in requirements.alternatives:
+                    for individual in alternative.items:
+                        results.add(individual.resource)
+
+        return frozenset(results)
+
 
 def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
     for world in game.worlds:

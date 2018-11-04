@@ -1,8 +1,8 @@
 import itertools
-from typing import List, Iterator, Set, Tuple
+from typing import List, Iterator, Set, Tuple, FrozenSet, Optional
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources import PickupEntry
+from randovania.game_description.resources import PickupEntry, ResourceInfo, ResourceDatabase
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutConfiguration
 
@@ -57,10 +57,15 @@ def calculate_item_pool(configuration: LayoutConfiguration,
     return item_pool
 
 
-def calculate_available_pickups(remaining_items: Iterator[PickupEntry], categories: Set[str]) -> Iterator[PickupEntry]:
+def calculate_available_pickups(remaining_items: Iterator[PickupEntry],
+                                categories: Set[str],
+                                database: ResourceDatabase,
+                                relevant_resources: Optional[FrozenSet[ResourceInfo]]) -> Iterator[PickupEntry]:
     for pickup in remaining_items:
         if pickup.item_category in categories:
-            yield pickup
+            if relevant_resources is None or any(resource in relevant_resources
+                                                 for resource, _ in pickup.resource_gain(database)):
+                yield pickup
 
 
 def remove_pickup_entry_from_list(available_item_pickups: Tuple[PickupEntry, ...],

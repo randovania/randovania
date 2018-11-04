@@ -1,7 +1,8 @@
+import pprint
 from random import Random
 from typing import Tuple, List
+from unittest.mock import MagicMock
 
-import networkx
 import pytest
 
 from randovania.game_description import data_reader
@@ -9,9 +10,9 @@ from randovania.game_description.node import ResourceNode
 from randovania.games.prime import binary_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.generator import gimme_reach, get_actions_of_reach, add_resource_gain_to_state, \
-    get_safe_actions
-from randovania.resolver.generator_explorer import PathDetail, GeneratorReach
+from randovania.resolver.generator import get_actions_of_reach, add_resource_gain_to_state, \
+    gimme_reach_with_dangerous
+from randovania.resolver.generator_explorer import PathDetail, GeneratorReach, filter_reachable, filter_pickup_nodes
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
@@ -54,8 +55,9 @@ def _test_data():
 def _create_reaches_and_compare(logic: Logic, state: State,
                                 patches: GamePatches,
                                 ) -> Tuple[GeneratorReach, GeneratorReach]:
-    first_reach = gimme_reach(logic, state, patches)
-    second_reach = gimme_reach(logic, first_reach.state, patches)
+    rng = MagicMock()
+    first_reach = gimme_reach_with_dangerous(logic, state, patches, rng)
+    second_reach = gimme_reach_with_dangerous(logic, first_reach.state, patches, rng)
 
     assert first_reach.is_safe_node(first_reach.state.node)
     assert second_reach.is_safe_node(first_reach.state.node)
@@ -87,7 +89,8 @@ def test_calculate_reach_with_seeds():
     categories = {"translator", "major"}
     item_pool = calculate_item_pool(configuration, game)
     rng = Random(50000)
-    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(item_pool, categories))))
+    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
+        item_pool, categories, game.resource_database, game.relevant_resources))))
 
     for pickup in available_pickups[1:]:
         add_resource_gain_to_state(state, pickup.resource_gain(logic.game.resource_database))
@@ -95,8 +98,8 @@ def test_calculate_reach_with_seeds():
     first_reach, second_reach = _create_reaches_and_compare(logic, state, patches)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
-    assert (len(list(first_reach.nodes)), len(first_actions)) == (456, 10)
-    assert (len(list(second_reach.nodes)), len(second_actions)) == (456, 10)
+    assert (len(list(first_reach.nodes)), len(first_actions)) == (821, 1)
+    assert (len(list(second_reach.nodes)), len(second_actions)) == (821, 1)
 
 
 def test_calculate_reach_with_all_pickups():
@@ -109,5 +112,10 @@ def test_calculate_reach_with_all_pickups():
     first_reach, second_reach = _create_reaches_and_compare(logic, state, patches)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
-    assert (len(list(first_reach.nodes)), len(first_actions)) == (554, 17)
-    assert (len(list(second_reach.nodes)), len(second_actions)) == (554, 17)
+    found_pickups = set(filter_pickup_nodes(filter_reachable(second_reach.nodes, first_reach)))
+    all_pickups = set(filter_pickup_nodes(logic.game.all_nodes))
+
+    # assert (len(list(first_reach.nodes)), len(first_actions)) == (898, 9)
+    # assert (len(list(second_reach.nodes)), len(second_actions)) == (898, 9)
+    pprint.pprint(first_actions)
+    assert found_pickups == all_pickups

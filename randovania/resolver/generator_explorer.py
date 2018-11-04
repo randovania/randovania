@@ -5,7 +5,7 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 import networkx
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, is_resource_node, ResourceNode
+from randovania.game_description.node import Node, is_resource_node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources import ResourceInfo
 from randovania.resolver.logic import Logic
@@ -76,6 +76,12 @@ def filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
             yield node
 
 
+def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
+    for node in nodes:
+        if isinstance(node, PickupNode):
+            yield node
+
+
 def filter_uncollected(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
         if not reach.state.has_resource(resource_node.resource(reach.state.resource_database)):
@@ -101,30 +107,6 @@ def _best_path(old_path: Optional[Path], new_path: Path) -> Path:
         return new_path
     else:
         return old_path
-
-
-class UnreachablePaths:
-    _expanded: RequirementSet
-    _paths: List[Tuple[Node, PathDetail, RequirementSet]]
-
-    def __init__(self):
-        self._expanded = RequirementSet.impossible()
-        self._paths = []
-
-    def add_new(self, previous: Node, previous_detail: PathDetail, requirements: RequirementSet):
-        self._paths.append((previous, previous_detail, requirements))
-        self._expanded = self._expanded.expand_alternatives(requirements)
-
-    @property
-    def expanded_alternatives(self) -> RequirementSet:
-        return self._expanded
-
-    def satisfied_paths(self, target_node: Node, state: State) -> Iterator[Path]:
-        for previous, previous_detail, requirements in self._paths:
-            difficulty = requirements.minimum_satisfied_difficulty(state.resources,
-                                                                   state.resource_database)
-            if difficulty is not None:
-                yield Path(previous, target_node, previous_detail.extend_difficulty(difficulty))
 
 
 class GeneratorReach:
@@ -292,6 +274,9 @@ class GeneratorReach:
             del self._unreachable_paths[edge]
 
         self._expand_graph(paths_to_check)
+
+    def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
+        return networkx.shortest_path(self._digraph, node)
 
 
 def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[RequirementSet]:
