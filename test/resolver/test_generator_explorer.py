@@ -11,7 +11,7 @@ from randovania.games.prime import binary_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.generator import get_actions_of_reach, add_resource_gain_to_state, \
-    gimme_reach_with_dangerous
+    gimme_reach_with_dangerous, _filter_pickups, _pickup_nodes_that_can_escape, gimme_reach, _state_with_pickup
 from randovania.resolver.generator_explorer import PathDetail, GeneratorReach, filter_reachable, filter_pickup_nodes
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
@@ -55,9 +55,8 @@ def _test_data():
 def _create_reaches_and_compare(logic: Logic, state: State,
                                 patches: GamePatches,
                                 ) -> Tuple[GeneratorReach, GeneratorReach]:
-    rng = MagicMock()
-    first_reach = gimme_reach_with_dangerous(logic, state, patches, rng)
-    second_reach = gimme_reach_with_dangerous(logic, first_reach.state, patches, rng)
+    first_reach = gimme_reach_with_dangerous(logic, state, patches)
+    second_reach = gimme_reach_with_dangerous(logic, first_reach.state, patches)
 
     assert first_reach.is_safe_node(first_reach.state.node)
     assert second_reach.is_safe_node(first_reach.state.node)
@@ -92,11 +91,35 @@ def test_calculate_reach_with_seeds():
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
         item_pool, categories, game.resource_database, game.relevant_resources))))
 
-    for pickup in available_pickups[1:]:
+    available_pickups = available_pickups[-5:]
+
+    print("Major items: {}".format([item.item for item in available_pickups]))
+
+    for pickup in available_pickups[:]:
         add_resource_gain_to_state(state, pickup.resource_gain(logic.game.resource_database))
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state, patches)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
+
+    for action in first_actions:
+        print("Safe: {}; Dangerous: {}; Action: {}".format(
+            first_reach.is_safe_node(action),
+            action.resource(game.resource_database) in game.dangerous_resources,
+            game.node_name(action)
+        ))
+
+    escape_state = _state_with_pickup(first_reach.state, available_pickups[-6])
+    total_pickup_nodes = list(_filter_pickups(filter_reachable(first_reach.nodes, first_reach)))
+    pickup_options = _pickup_nodes_that_can_escape(total_pickup_nodes,
+                                                   gimme_reach(logic, escape_state, patches),
+                                                   set(first_reach.safe_nodes))
+
+    for option in pickup_options:
+        print("Safe: {}; Dangerous: {}; Option: {}".format(
+            first_reach.is_safe_node(option),
+            option.resource(game.resource_database) in game.dangerous_resources,
+            game.node_name(option)
+        ))
 
     assert (len(list(first_reach.nodes)), len(first_actions)) == (821, 1)
     assert (len(list(second_reach.nodes)), len(second_actions)) == (821, 1)

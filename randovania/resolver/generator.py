@@ -175,20 +175,19 @@ def add_resource_gain_to_state(state: State, resource_gain: ResourceGain):
 
 
 def gimme_reach_with_dangerous(logic: Logic, initial_state: State,
-                               patches: GamePatches, rng: Random,) -> GeneratorReach:
+                               patches: GamePatches) -> GeneratorReach:
 
     previous_reach = gimme_reach(logic, initial_state, patches)
-    actions = shuffle(rng, sorted(get_actions_of_reach(previous_reach)))
     previous_safe_nodes = set(previous_reach.safe_nodes)
 
-    for action in actions:
+    for action in get_actions_of_reach(previous_reach):
         next_reach = gimme_reach(logic, previous_reach.state.act_on_node(action, patches.pickup_mapping), patches)
         next_safe_nodes = set(next_reach.safe_nodes)
         next_better = previous_safe_nodes <= next_safe_nodes
 
         if next_better:
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
-            return gimme_reach_with_dangerous(logic, next_reach.state, patches, rng)
+            return gimme_reach_with_dangerous(logic, next_reach.state, patches)
         else:
             if next_reach.is_reachable_node(initial_state.node):
                 next_next_state = next_reach.state.copy()
@@ -197,7 +196,7 @@ def gimme_reach_with_dangerous(logic: Logic, initial_state: State,
                 next_reach = gimme_reach(logic, next_next_state, patches)
                 if previous_safe_nodes <= set(next_reach.safe_nodes):
                     # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
-                    return gimme_reach_with_dangerous(logic, next_reach.state, patches, rng)
+                    return gimme_reach_with_dangerous(logic, next_reach.state, patches)
             else:
                 pass
 
@@ -236,7 +235,7 @@ def _do_stuff(logic: Logic, initial_state: State,
         for other_pickup in remaining_pickups:
             add_resource_gain_to_state(state, other_pickup.resource_gain(logic.game.resource_database))
 
-        reach = gimme_reach_with_dangerous(logic, state, patches, rng)
+        reach = gimme_reach_with_dangerous(logic, state, patches)
         debug.print_actions_of_reach(reach)
         escape_state = _state_with_pickup(reach.state, pickup)
 
