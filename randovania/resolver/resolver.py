@@ -8,7 +8,7 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.logic import Logic
-from randovania.resolver.reach import Reach
+from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State
 
 
@@ -42,7 +42,7 @@ def advance_depth(state: State,
     if logic.game.victory_condition.satisfied(state.resources, state.resource_database):
         return state
 
-    reach = Reach.calculate_reach(logic, state)
+    reach = ResolverReach.calculate_reach(logic, state)
     debug.log_new_advance(state, reach, logic)
 
     for action in reach.satisfiable_actions(state):

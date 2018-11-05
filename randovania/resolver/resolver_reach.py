@@ -9,7 +9,7 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
 
-class Reach:
+class ResolverReach:
     _nodes: Tuple[Node, ...]
     path_to_node: Dict[Node, Tuple[Node, ...]]
     _satisfiable_requirements: SatisfiableRequirements
@@ -41,7 +41,7 @@ class Reach:
     @classmethod
     def calculate_reach(cls,
                         logic: Logic,
-                        initial_state: State) -> "Reach":
+                        initial_state: State) -> "ResolverReach":
 
         checked_nodes = set()
         nodes_to_check: List[Node] = [initial_state.node]
@@ -92,7 +92,7 @@ class Reach:
         else:
             satisfiable_requirements = frozenset()
 
-        return Reach(reach_nodes, path_to_node, satisfiable_requirements, logic)
+        return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements, logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:

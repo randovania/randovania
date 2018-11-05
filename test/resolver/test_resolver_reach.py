@@ -1,15 +1,13 @@
 from unittest.mock import MagicMock
 
-import networkx
-
 from randovania.game_description.node import EventNode
-from randovania.resolver.reach import Reach
+from randovania.resolver.resolver_reach import ResolverReach
 
 
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = Reach([], {}, frozenset(), MagicMock())
+    reach = ResolverReach([], {}, frozenset(), MagicMock())
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -18,7 +16,7 @@ def test_possible_actions_empty():
 def test_possible_actions_no_resources():
     state = MagicMock()
 
-    reach = Reach([MagicMock(), MagicMock()], {}, frozenset(), MagicMock())
+    reach = ResolverReach([MagicMock(), MagicMock()], {}, frozenset(), MagicMock())
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -31,7 +29,7 @@ def test_possible_actions_with_event():
     state.has_resource.return_value = False
 
     # Run
-    reach = Reach([event], {}, frozenset(), logic)
+    reach = ResolverReach([event], {}, frozenset(), logic)
     options = list(reach.possible_actions(state))
 
     # Assert
