@@ -84,7 +84,7 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def filter_uncollected(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if not reach.state.has_resource(resource_node.resource(reach.state.resource_database)):
+        if not reach.state.has_resource(resource_node.resource()):
             yield resource_node
 
 
@@ -98,7 +98,7 @@ def filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
                                  game: GameDescription,
                                  ) -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.resource(game.resource_database) not in game.dangerous_resources:
+        if resource_node.resource() not in game.dangerous_resources:
             yield resource_node
 
 
@@ -192,7 +192,7 @@ class GeneratorReach:
         if path.detail.reachability:
             # We can't advance past a resource node if we haven't collected it
             if is_resource_node(path.node):
-                return self._state.has_resource(path.node.resource(self._logic.game.resource_database))
+                return self._state.has_resource(path.node.resource())
             else:
                 return True
         else:
@@ -283,7 +283,7 @@ def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[R
     extra_requirement = None
 
     if is_resource_node(node):
-        node_resource = node.resource(game.resource_database)
+        node_resource = node.resource()
         if node_resource in game.dangerous_resources:
             extra_requirement = RequirementSet([RequirementList.with_single_resource(node_resource)])
 

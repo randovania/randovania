@@ -43,7 +43,7 @@ class State:
     def collect_resource_node(self, node: ResourceNode,
                               pickup_mapping: List[Optional[int]]) -> "State":
 
-        resource = node.resource(self.resource_database)
+        resource = node.resource()
         if self.has_resource(resource):
             raise ValueError(
                 "Trying to collect an already collected resource '{}'".format(

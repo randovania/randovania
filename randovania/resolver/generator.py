@@ -352,7 +352,6 @@ def reach_with_all_safe_events(logic: Logic,
                                initial_state: State,
                                ) -> Tuple[State, Reach]:
     dangerous_resources = logic.game.dangerous_resources
-    resource_database = initial_state.resource_database
 
     state = initial_state
 
@@ -365,7 +364,7 @@ def reach_with_all_safe_events(logic: Logic,
 
         new_state = state
         for action in reach.possible_actions(state):
-            new_resource = action.resource(resource_database)
+            new_resource = action.resource()
             if is_resource_node(action) and new_resource not in dangerous_resources and new_state.has_resource(
                     new_state):
                 potential_new_state = new_state.act_on_node(action, patches.pickup_mapping)
