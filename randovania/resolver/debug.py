@@ -5,7 +5,7 @@ from randovania.game_description.game_description import Area, GameDescription
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources import PickupEntry, PickupIndex
-from randovania.resolver.generator_explorer import GeneratorReach
+from randovania.resolver.generator_reach import GeneratorReach, get_uncollected_resource_nodes_of_reach
 from randovania.resolver.logic import Logic
 
 _DEBUG_LEVEL = 0
@@ -20,6 +20,7 @@ def n(node: Node, with_world=False) -> str:
 
 def pretty_print_area(area: Area):
     print(area.name)
+    print("Asset id: {}".format(area.area_asset_id))
     for node in area.nodes:
         print(">", node.name, type(node))
         for target_node, requirements in _gd.potential_nodes_from(node):
@@ -54,7 +55,7 @@ def log_resolve_start():
     _current_indent = 0
 
 
-def log_new_advance(state: "State", reach: "Reach", logic: Logic):
+def log_new_advance(state: "State", reach: "ResolverReach", logic: Logic):
     global _current_indent
     increment_attempts()
     _current_indent += 1
@@ -62,7 +63,7 @@ def log_new_advance(state: "State", reach: "Reach", logic: Logic):
         if hasattr(state.node, "resource"):
             resource = state.node.resource()
             if isinstance(resource, PickupIndex):
-                resource = state.resource_database.pickups[logic.patches.pickup_mapping[resource.index]]
+                resource = logic.patches.pickup_assignment[resource]
         else:
             resource = None
 
@@ -128,12 +129,11 @@ def print_distribute_place_item(pickup_node, item: PickupEntry, logic):
 
 
 def print_actions_of_reach(reach: GeneratorReach):
-    from randovania.resolver.generator import get_actions_of_reach
     if _DEBUG_LEVEL <= 1:
         return
 
     logic = reach.logic
-    actions = get_actions_of_reach(reach)
+    actions = get_uncollected_resource_nodes_of_reach(reach)
 
     for action in actions:
         print("++ Safe? {1} -- {0} -- Dangerous? {2}".format(

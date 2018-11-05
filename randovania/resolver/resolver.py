@@ -1,7 +1,7 @@
 from typing import Optional
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
+from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources import PickupIndex
 from randovania.resolver import debug
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -66,7 +66,6 @@ def advance_depth(state: State,
 def resolve(configuration: LayoutConfiguration,
             game: GameDescription,
             patches: GamePatches) -> Optional[State]:
-
     logic, starting_state = logic_bootstrap(configuration, game, patches)
     debug.log_resolve_start()
     return advance_depth(starting_state, logic)

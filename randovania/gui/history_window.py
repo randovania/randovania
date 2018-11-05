@@ -65,7 +65,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.layout_history_scroll.hide()  # But hide it for now
 
         # Keep the Layout Description visualizer ready, but invisible.
-        self._create_pickup_spoilers(self.resource_database)
+        self._create_pickup_spoilers(self.pickup_database)
 
         size_policy = self.layout_info_tab.sizePolicy()
         size_policy.setRetainSizeWhenHidden(True)
