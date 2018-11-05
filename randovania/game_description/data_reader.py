@@ -9,7 +9,7 @@ from randovania.game_description.node import GenericNode, DockNode, TeleporterNo
     is_resource_node
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
-    ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase
+    ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase, PickupDatabase
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -205,7 +205,12 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
         version=read_resource_info_array(data["versions"]),
         misc=read_resource_info_array(data["misc"]),
         difficulty=read_resource_info_array(data["difficulty"]),
-        pickups=read_pickup_info_array(data["pickups"])
+    )
+
+
+def read_pickup_database(data: Dict) -> PickupDatabase:
+    return PickupDatabase(
+        pickups=read_pickup_info_array(data["pickups"]),
     )
 
 
@@ -224,6 +229,7 @@ def decode_data(data: Dict,
     game_name = data["game_name"]
 
     resource_database = read_resource_database(data["resource_database"])
+    pickup_database = read_pickup_database(data)
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
     worlds = WorldReader(resource_database,
@@ -241,6 +247,7 @@ def decode_data(data: Dict,
         game=game,
         game_name=game_name,
         resource_database=resource_database,
+        pickup_database=pickup_database,
         dock_weakness_database=dock_weakness_database,
         worlds=worlds,
         victory_condition=victory_condition,

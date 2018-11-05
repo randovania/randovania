@@ -8,8 +8,8 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QFileDialog
 
-from randovania.game_description.data_reader import read_resource_database
-from randovania.game_description.resources import PickupEntry, ResourceDatabase
+from randovania.game_description.data_reader import read_resource_database, read_pickup_database
+from randovania.game_description.resources import PickupEntry, ResourceDatabase, PickupDatabase
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
@@ -54,7 +54,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.background_processor = background_processor
 
         data = binary_data.decode_default_prime2()
-        self.resource_database = read_resource_database(data["resource_database"])
+        self.pickup_database = read_pickup_database(data)
 
         self.layout_history_content_layout.setAlignment(Qt.AlignTop)
 
@@ -86,17 +86,17 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.selected_layout_change_signal.emit(layout)
 
     # Layout Visualization
-    def _create_pickup_spoilers(self, resource_database: ResourceDatabase):
+    def _create_pickup_spoilers(self, pickup_database: PickupDatabase):
         pickup_by_world: Dict[str, List[PickupEntry]] = collections.defaultdict(list)
 
-        for pickup in resource_database.pickups:
+        for pickup in pickup_database.pickups:
             pickup_by_world[pickup.world].append(pickup)
 
         self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
         self.pickup_spoiler_show_all_button.currently_show_all = True
 
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
-        for pickup in sorted(resource_database.pickups, key=lambda p: p.item):
+        for pickup in sorted(pickup_database.pickups, key=lambda p: p.item):
             self.pickup_spoiler_pickup_combobox.addItem(pickup.item)
 
         for world, pickups in pickup_by_world.items():
@@ -165,7 +165,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         for i, pickup_button in enumerate(self.pickup_spoiler_buttons):
             mapping = layout.pickup_mapping[i]
             if mapping is not None:
-                pickup = self.resource_database.pickups[mapping]
+                pickup = self.pickup_database.pickups[mapping]
                 pickup_button.item_name = pickup.item
             else:
                 pickup_button.item_name = "Nothing"

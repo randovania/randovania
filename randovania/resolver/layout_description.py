@@ -30,7 +30,7 @@ def _pickup_mapping_to_item_locations(game: GameDescription,
                 if isinstance(node, PickupNode):
                     new_index = pickup_mapping[node.pickup_index.index]
                     if new_index is not None:
-                        item_name = game.resource_database.pickups[new_index].item
+                        item_name = game.pickup_database.pickups[new_index].item
                     else:
                         item_name = "Nothing"
                     items_in_world[game.node_name(node)] = item_name
@@ -60,10 +60,10 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
 
 def _item_locations_to_pickup_mapping(locations: Dict[str, Dict[str, str]]) -> Tuple[Optional[int], ...]:
     game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
-    pickup_mapping = [None] * len(game.resource_database.pickups)
+    pickup_mapping = [None] * len(game.pickup_database.pickups)
 
     pickup_index_by_name = {
-        pickup.item: i for i, pickup in enumerate(game.resource_database.pickups)
+        pickup.item: i for i, pickup in enumerate(game.pickup_database.pickups)
     }
 
     for world_name, world_data in locations.items():

@@ -41,11 +41,11 @@ def calculate_item_pool(configuration: LayoutConfiguration,
         )
 
     item_pool = list(itertools.chain.from_iterable(split_pickups.values()))
-    quantity_delta = len(item_pool) - len(game.resource_database.pickups)
+    quantity_delta = len(item_pool) - len(game.pickup_database.pickups)
     if quantity_delta > 0:
         raise GenerationFailure(
             "Invalid configuration: requested {} more items than available slots ({}).".format(
-                quantity_delta, len(game.resource_database.pickups)
+                quantity_delta, len(game.pickup_database.pickups)
             ),
             configuration=configuration,
             seed_number=-1
