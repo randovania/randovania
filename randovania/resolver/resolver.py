@@ -48,7 +48,7 @@ def advance_depth(state: State,
     for action in reach.satisfiable_actions(state):
         new_state = advance_depth(
             state=state.act_on_node(action,
-                                    logic.patches.pickup_mapping,
+                                    logic.patches,
                                     path=reach.path_to_node[action]
                                     ),
             logic=logic)
@@ -66,6 +66,7 @@ def advance_depth(state: State,
 def resolve(configuration: LayoutConfiguration,
             game: GameDescription,
             patches: GamePatches) -> Optional[State]:
+
     logic, starting_state = logic_bootstrap(configuration, game, patches)
     debug.log_resolve_start()
     return advance_depth(starting_state, logic)

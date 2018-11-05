@@ -53,16 +53,27 @@ class PickupEntry(NamedTuple):
     world: str
     room: str
     item: str
-    resources: Dict[str, int]
+    resources: Dict[SimpleResourceInfo, int]
     item_category: str
 
     def __hash__(self):
         return hash(self.item)
 
-    def resource_gain(self,
-                      database: "ResourceDatabase") -> ResourceGain:
-        for name, value in self.resources.items():
-            yield find_resource_info_with_long_name(database.item, name), value
+    @classmethod
+    def from_data(cls, data: Dict, database: "ResourceDatabase") -> "PickupEntry":
+        return PickupEntry(
+            world=data["world"],
+            room=data["room"],
+            item=data["item"],
+            item_category=data["item_category"],
+            resources={
+                find_resource_info_with_long_name(database.item, name): quantity
+                for name, quantity in data["resources"].items()
+            },
+        )
+
+    def resource_gain(self) -> ResourceGain:
+        yield from self.resources.items()
 
     def __str__(self):
         return "Pickup {}".format(self.item)

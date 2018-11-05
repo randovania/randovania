@@ -46,8 +46,9 @@ def read_damage_resource_info_array(data: List[Dict]) -> List[DamageResourceInfo
     return read_array(data, read_damage_resource_info)
 
 
-def read_pickup_info_array(data: List[Dict]) -> List[PickupEntry]:
-    return read_array(data, lambda pickup: PickupEntry(**pickup))
+def read_pickup_info_array(data: List[Dict],
+                           resource_database: ResourceDatabase) -> List[PickupEntry]:
+    return read_array(data, lambda pickup: PickupEntry.from_data(pickup, resource_database))
 
 
 # Requirement
@@ -208,9 +209,10 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
     )
 
 
-def read_pickup_database(data: Dict) -> PickupDatabase:
+def read_pickup_database(data: Dict,
+                         resource_database: ResourceDatabase) -> PickupDatabase:
     return PickupDatabase(
-        pickups=read_pickup_info_array(data["pickups"]),
+        pickups=read_pickup_info_array(data["pickups"], resource_database),
     )
 
 
@@ -229,7 +231,7 @@ def decode_data(data: Dict,
     game_name = data["game_name"]
 
     resource_database = read_resource_database(data["resource_database"])
-    pickup_database = read_pickup_database(data)
+    pickup_database = read_pickup_database(data, resource_database)
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
     worlds = WorldReader(resource_database,

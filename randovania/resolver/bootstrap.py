@@ -2,12 +2,12 @@ import copy
 from typing import Tuple, Set
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources
+from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources, ResourceType
 from randovania.resolver import debug
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutEnabledFlag
 from randovania.resolver.logic import Logic
-from randovania.resolver.state import State
+from randovania.resolver.state import State, add_resource_gain_to_state
 
 _items_to_not_add_in_minimal_restrictions = {
     # Dark Visor
@@ -116,6 +116,38 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
             resources[item] = _minimal_restrictions_custom_item_count.get(item.index, 1)
 
 
+def calculate_starting_state(logic: Logic) -> "State":
+    game = logic.game
+
+    starting_world = game.world_by_asset_id(game.starting_world_asset_id)
+    starting_area = starting_world.area_by_asset_id(game.starting_area_asset_id)
+    starting_node = starting_area.nodes[starting_area.default_node_index]
+
+    starting_state = State(
+        {
+            # "No Requirements"
+            game.resource_database.trivial_resource(): 1
+        },
+        starting_node,
+        None,
+        game.resource_database
+    )
+
+    add_resource_gain_to_state(starting_state, game.starting_items)
+    if logic.configuration.item_loss == LayoutEnabledFlag.ENABLED:
+        # TODO: not hardcode this data here.
+        # TODO: actually lose the items when trigger the Item Loss cutscene
+        # These ids are all events you trigger before reaching the IL cutscene in echoes
+        # We're giving these items right now because you need the items you lose to be able to get here.
+        for event_id in (71, 78, 2, 4):
+            resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
+            starting_state.resources[resource] = 1
+    else:
+        add_resource_gain_to_state(starting_state, game.item_loss_items)
+
+    return starting_state
+
+
 def logic_bootstrap(configuration: LayoutConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
@@ -133,7 +165,7 @@ def logic_bootstrap(configuration: LayoutConfiguration,
 
     game = copy.deepcopy(game)
     logic = Logic(game, configuration, patches)
-    starting_state = State.calculate_starting_state(logic)
+    starting_state = calculate_starting_state(logic)
 
     if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS:
         _add_minimal_restrictions_initial_resources(starting_state.resources,

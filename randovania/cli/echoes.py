@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
+from randovania.game_description.resources import PickupIndex
 from randovania.resolver import debug, generator, resolver
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, \
@@ -66,8 +67,10 @@ def validate_command_logic(args):
 
     game = data_reader.decode_data(data, [])
     patches = GamePatches(
-        configuration.item_loss == LayoutEnabledFlag.ENABLED,
-        list(range(len(game.pickup_database.pickups)))
+        {
+            PickupIndex(i): pickup
+            for i, pickup in enumerate(game.pickup_database.pickups)
+        }
     )
 
     final_state_by_resolve = resolver.resolve(

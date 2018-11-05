@@ -26,7 +26,6 @@ def _database() -> ResourceDatabase:
         difficulty=[
             SimpleResourceInfo(0, "Difficulty", "Difficulty", ""),
         ],
-        pickups=[]
     )
 
 

@@ -17,7 +17,6 @@ def test_simple_round_trip():
             "versions": [],
             "misc": [],
             "difficulty": [],
-            "pickups": [],
         },
         "starting_world_asset_id": 1006255871,
         "starting_area_asset_id": 1655756413,
@@ -28,13 +27,14 @@ def test_simple_round_trip():
             "door": [],
             "portal": []
         },
+        "pickups": [],
         "worlds": [],
     }
 
     s = io.StringIO()
     s_io: TextIO = s
     json.dump({
-        "pickups": sample_data["resource_database"]["pickups"],
+        "pickups": sample_data["pickups"],
         "starting_world_asset_id": sample_data["starting_world_asset_id"],
         "starting_area_asset_id": sample_data["starting_area_asset_id"],
         "victory_condition": sample_data["victory_condition"],

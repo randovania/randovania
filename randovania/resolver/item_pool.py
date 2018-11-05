@@ -10,9 +10,8 @@ from randovania.resolver.layout_configuration import LayoutConfiguration
 def calculate_item_pool(configuration: LayoutConfiguration,
                         game: GameDescription,
                         ) -> List[PickupEntry]:
-    split_pickups = game.resource_database.pickups_split_by_name()
-    useless_item = split_pickups["Energy Transfer Module"][0]
 
+    split_pickups = game.pickup_database.pickups_split_by_name()
     pickups_with_configured_quantity = configuration.pickups_with_configured_quantity
 
     for pickup_name, pickup_list in split_pickups.items():
@@ -51,20 +50,16 @@ def calculate_item_pool(configuration: LayoutConfiguration,
             seed_number=-1
         )
 
-    elif quantity_delta < 0:
-        item_pool.extend([useless_item] * -quantity_delta)
-
     return item_pool
 
 
 def calculate_available_pickups(remaining_items: Iterator[PickupEntry],
                                 categories: Set[str],
-                                database: ResourceDatabase,
                                 relevant_resources: Optional[FrozenSet[ResourceInfo]]) -> Iterator[PickupEntry]:
     for pickup in remaining_items:
         if pickup.item_category in categories:
             if relevant_resources is None or any(resource in relevant_resources
-                                                 for resource, _ in pickup.resource_gain(database)):
+                                                 for resource, _ in pickup.resource_gain()):
                 yield pickup
 
 
