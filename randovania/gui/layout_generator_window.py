@@ -6,7 +6,7 @@ from PyQt5.QtCore import pyqtSignal, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QSpinBox
 
-from randovania.game_description.data_reader import read_resource_database
+from randovania.game_description.data_reader import read_resource_database, read_pickup_database
 from randovania.games.prime import binary_data
 from randovania.gui import tab_service
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
@@ -236,11 +236,10 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
 
     def _create_item_toggles(self):
         options = application_options()
-        data = binary_data.decode_default_prime2()
-        resource_database = read_resource_database(data["resource_database"])
+        pickup_database = read_pickup_database(binary_data.decode_default_prime2())
 
-        split_pickups = resource_database.pickups_split_by_name()
-        self._maximum_item_count = len(resource_database.pickups)
+        split_pickups = pickup_database.pickups_split_by_name()
+        self._maximum_item_count = len(pickup_database.pickups)
 
         # TODO: Very specific logic that should be provided by data
         split_pickups.pop("Energy Transfer Module")

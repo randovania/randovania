@@ -202,13 +202,13 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
             "versions": versions,
             "misc": misc,
             "difficulty": difficulty,
-            "pickups": extra["pickups"]
         },
         "starting_world_asset_id": extra["starting_world_asset_id"],
         "starting_area_asset_id": extra["starting_area_asset_id"],
         "starting_items": extra["starting_items"],
         "item_loss_items": extra["item_loss_items"],
         "victory_condition": extra["victory_condition"],
+        "pickups": extra["pickups"],
         "dock_weakness_database": dock_weakness_database,
         "worlds": worlds,
     }

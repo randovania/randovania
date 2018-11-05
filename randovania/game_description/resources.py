@@ -103,7 +103,6 @@ class ResourceDatabase(NamedTuple):
     version: List[SimpleResourceInfo]
     misc: List[SimpleResourceInfo]
     difficulty: List[SimpleResourceInfo]
-    pickups: List[PickupEntry]
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
@@ -145,6 +144,10 @@ class ResourceDatabase(NamedTuple):
     @property
     def energy_tank(self):
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
+
+
+class PickupDatabase(NamedTuple):
+    pickups: List[PickupEntry]
 
     def pickups_split_by_name(self) -> Dict[str, List[PickupEntry]]:
         result = {}

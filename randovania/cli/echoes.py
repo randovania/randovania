@@ -67,7 +67,7 @@ def validate_command_logic(args):
     game = data_reader.decode_data(data, [])
     patches = GamePatches(
         configuration.item_loss == LayoutEnabledFlag.ENABLED,
-        list(range(len(game.resource_database.pickups)))
+        list(range(len(game.pickup_database.pickups)))
     )
 
     final_state_by_resolve = resolver.resolve(
