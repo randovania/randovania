@@ -171,7 +171,7 @@ class WorldReader:
 
             extra_requirement = None
             if is_resource_node(nodes[i]) and self.add_self_as_requirement_to_resources:
-                extra_requirement = RequirementList.with_single_resource(nodes[i].resource(self.resource_database))
+                extra_requirement = RequirementList.with_single_resource(nodes[i].resource())
 
             for j, target in enumerate(origin):
                 if target:

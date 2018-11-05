@@ -46,14 +46,14 @@ class PickupNode(NamedTuple):
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
-    def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
+    def resource(self) -> ResourceInfo:
         return self.pickup_index
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
                                  pickup_mapping: List[Optional[int]]
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
-        yield self.resource(resource_database), 1
+        yield self.resource(), 1
 
         new_index = pickup_mapping[self.pickup_index.index]
         if new_index is not None:
@@ -68,14 +68,14 @@ class EventNode(NamedTuple):
     def __repr__(self):
         return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
 
-    def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
+    def resource(self) -> ResourceInfo:
         return self.event
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,
                                  pickup_mapping: List[Optional[int]]
                                  ) -> Iterator[Tuple[ResourceInfo, int]]:
-        yield self.resource(resource_database), 1
+        yield self.resource(), 1
 
 
 ResourceNode = Union[PickupNode, EventNode]

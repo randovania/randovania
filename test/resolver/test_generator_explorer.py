@@ -104,7 +104,7 @@ def test_calculate_reach_with_seeds():
     for action in first_actions:
         print("Safe: {}; Dangerous: {}; Action: {}".format(
             first_reach.is_safe_node(action),
-            action.resource(game.resource_database) in game.dangerous_resources,
+            action.resource() in game.dangerous_resources,
             game.node_name(action)
         ))
 
@@ -117,7 +117,7 @@ def test_calculate_reach_with_seeds():
     for option in pickup_options:
         print("Safe: {}; Dangerous: {}; Option: {}".format(
             first_reach.is_safe_node(option),
-            option.resource(game.resource_database) in game.dangerous_resources,
+            option.resource() in game.dangerous_resources,
             game.node_name(option)
         ))
 

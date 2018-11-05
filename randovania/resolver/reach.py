@@ -126,5 +126,5 @@ class Reach:
             if not is_resource_node(node):
                 continue
 
-            if not state.has_resource(node.resource(state.resource_database)):
+            if not state.has_resource(node.resource()):
                 yield node

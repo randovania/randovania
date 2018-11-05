@@ -60,7 +60,7 @@ def log_new_advance(state: "State", reach: "Reach", logic: Logic):
     _current_indent += 1
     if _DEBUG_LEVEL > 0:
         if hasattr(state.node, "resource"):
-            resource = state.node.resource(state.resource_database)
+            resource = state.node.resource()
             if isinstance(resource, PickupIndex):
                 resource = state.resource_database.pickups[logic.patches.pickup_mapping[resource.index]]
         else:
@@ -139,5 +139,5 @@ def print_actions_of_reach(reach: GeneratorReach):
         print("++ Safe? {1} -- {0} -- Dangerous? {2}".format(
             logic.game.node_name(action),
             reach.is_safe_node(action),
-            action.resource(logic.game.resource_database) in logic.game.dangerous_resources
+            action.resource() in logic.game.dangerous_resources
         ))
