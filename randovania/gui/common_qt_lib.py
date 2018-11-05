@@ -1,7 +1,11 @@
+import functools
 from typing import Iterator, Optional
 
 from PyQt5.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow
 
+from randovania.game_description.data_reader import read_resource_database, read_pickup_database
+from randovania.game_description.resources import ResourceDatabase, PickupDatabase
+from randovania.games.prime import binary_data
 from randovania.interface_common.options import Options
 
 
@@ -25,6 +29,17 @@ def application_options() -> Options:
 
 def lock_application(value: bool):
     QApplication.instance().main_window.setEnabled(value)
+
+
+@functools.lru_cache()
+def default_prime2_resource_database() -> ResourceDatabase:
+    return read_resource_database(binary_data.decode_default_prime2()["resource_database"])
+
+
+@functools.lru_cache()
+def default_prime2_pickup_database() -> PickupDatabase:
+    return read_pickup_database(binary_data.decode_default_prime2(),
+                                default_prime2_resource_database())
 
 
 def prompt_user_for_input_iso(window: QMainWindow) -> Optional[str]:

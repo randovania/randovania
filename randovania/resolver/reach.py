@@ -114,8 +114,7 @@ class Reach:
 
             # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
             for action in self.possible_actions(state):
-                for resource, amount in action.resource_gain_on_collect(state.resource_database,
-                                                                        self._logic.patches.pickup_mapping):
+                for resource, amount in action.resource_gain_on_collect(self._logic.patches):
                     if resource in interesting_resources:
                         yield action
                         break

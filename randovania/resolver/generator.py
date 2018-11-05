@@ -1,5 +1,4 @@
 import copy
-import copy
 import multiprocessing.dummy
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, Dict, TypeVar, Iterable, Union, Set
@@ -10,11 +9,11 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription, calculate_interesting_resources
 from randovania.game_description.node import EventNode, Node, PickupNode, is_resource_node, ResourceNode
 from randovania.game_description.resources import ResourceInfo, ResourceDatabase, CurrentResources, PickupEntry, \
-    PickupIndex, ResourceGain
+    PickupIndex
 from randovania.resolver import debug, resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.game_patches import GamePatches, PickupAssignment
 from randovania.resolver.generator_explorer import filter_resource_nodes, filter_uncollected, filter_reachable, \
     GeneratorReach, filter_out_dangerous_actions
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups, \
@@ -25,7 +24,7 @@ from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.reach import Reach
-from randovania.resolver.state import State
+from randovania.resolver.state import State, add_resource_gain_to_state
 
 T = TypeVar("T")
 
@@ -151,7 +150,7 @@ def gimme_reach(logic: Logic, initial_state: State, patches: GamePatches) -> Gen
             action = next(get_safe_actions(reach))
         except StopIteration:
             break
-        reach.advance_to(reach.state.act_on_node(action, patches.pickup_mapping))
+        reach.advance_to(reach.state.act_on_node(action, patches))
 
     return reach
 
@@ -161,17 +160,11 @@ def get_actions_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
 
 
 def _filter_unassigned_pickup_nodes(nodes: Iterator[Node],
-                                    item_mapping: List[Optional[int]],
+                                    pickup_assignment: PickupAssignment,
                                     ) -> Iterator[PickupNode]:
     for node in nodes:
-        if isinstance(node, PickupNode) and item_mapping[node.pickup_index.index] is None:
+        if isinstance(node, PickupNode) and node.pickup_index not in pickup_assignment:
             yield node
-
-
-def add_resource_gain_to_state(state: State, resource_gain: ResourceGain):
-    for resource, quantity in resource_gain:
-        state.resources[resource] = state.resources.get(resource, 0)
-        state.resources[resource] += quantity
 
 
 def gimme_reach_with_dangerous(logic: Logic, initial_state: State,
@@ -181,7 +174,7 @@ def gimme_reach_with_dangerous(logic: Logic, initial_state: State,
     previous_safe_nodes = set(previous_reach.safe_nodes)
 
     for action in get_actions_of_reach(previous_reach):
-        next_reach = gimme_reach(logic, previous_reach.state.act_on_node(action, patches.pickup_mapping), patches)
+        next_reach = gimme_reach(logic, previous_reach.state.act_on_node(action, patches), patches)
         next_safe_nodes = set(next_reach.safe_nodes)
         next_better = previous_safe_nodes <= next_safe_nodes
 
@@ -207,7 +200,7 @@ def _state_with_pickup(state: State,
                        pickup: PickupEntry,) -> State:
 
     new_state = state.copy()
-    add_resource_gain_to_state(new_state, pickup.resource_gain(state.resource_database))
+    add_resource_gain_to_state(new_state, pickup.resource_gain())
     return new_state
 
 
@@ -222,9 +215,10 @@ def _pickup_nodes_that_can_escape(pickup_nodes: Iterator[PickupNode],
 def _do_stuff(logic: Logic, initial_state: State,
               patches: GamePatches,
               available_pickups: Tuple[PickupEntry],
-              rng: Random):
-    item_mapping = copy.copy(patches.pickup_mapping)
+              rng: Random,
+              ) -> PickupAssignment:
 
+    pickup_assignment = copy.copy(patches.pickup_assignment)
     print("Major items: {}".format([item.item for item in available_pickups]))
 
     for i, pickup in enumerate(available_pickups):
@@ -240,7 +234,7 @@ def _do_stuff(logic: Logic, initial_state: State,
         escape_state = _state_with_pickup(reach.state, pickup)
 
         total_pickup_nodes = list(_filter_pickups(filter_reachable(reach.nodes, reach)))
-        pickup_nodes = list(_filter_unassigned_pickup_nodes(total_pickup_nodes, item_mapping))
+        pickup_nodes = list(_filter_unassigned_pickup_nodes(total_pickup_nodes, pickup_assignment))
         num_nodes = len(pickup_nodes)
         actions_weights = {
             node: len(path)
@@ -263,9 +257,9 @@ def _do_stuff(logic: Logic, initial_state: State,
                                                                                       len(total_pickup_nodes)
                                                                                       ))
 
-        item_mapping[pickup_node.pickup_index.index] = logic.game.resource_database.pickups.index(pickup)
+        pickup_assignment[pickup_node.pickup_index] = pickup
 
-    return item_mapping
+    return pickup_assignment
 
 
 def _create_patches(
@@ -276,17 +270,14 @@ def _create_patches(
 ) -> GamePatches:
     rng = Random(seed_number)
 
-    patches = GamePatches(
-        configuration.item_loss == LayoutEnabledFlag.ENABLED,
-        [None] * len(game.resource_database.pickups)
-    )
+    patches = GamePatches({})
 
     categories = {"translator", "major"}
 
     if configuration.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
-        for i, pickup in enumerate(game.resource_database.pickups):
+        for i, pickup in enumerate(game.pickup_database.pickups):
             if pickup.item_category == "sky_temple_key":
-                patches.pickup_mapping[i] = i
+                patches.pickup_assignment[PickupIndex(i)] = pickup
 
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
@@ -295,7 +286,6 @@ def _create_patches(
     available_pickups = tuple(shuffle(rng,
                                       sorted(calculate_available_pickups(item_pool,
                                                                          categories,
-                                                                         logic.game.resource_database,
                                                                          logic.game.relevant_resources))))
     remaining_items = [
         pickup for pickup in sorted(item_pool)
@@ -305,17 +295,12 @@ def _create_patches(
     new_pickup_mapping = _do_stuff(logic, state, patches, available_pickups, rng)
     rng.shuffle(remaining_items)
 
-    for i, index in enumerate(new_pickup_mapping):
-        if index is not None:
-            continue
-        new_pickup_mapping[i] = game.resource_database.pickups.index(remaining_items.pop())
+    for pickup_node in _filter_unassigned_pickup_nodes(game.all_nodes, new_pickup_mapping):
+        new_pickup_mapping[pickup_node.pickup_index] = remaining_items.pop()
 
     assert not remaining_items
 
-    return GamePatches(
-        patches.item_loss_enabled,
-        new_pickup_mapping
-    )
+    return GamePatches(new_pickup_mapping)
 
 
 def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:

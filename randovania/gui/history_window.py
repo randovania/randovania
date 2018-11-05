@@ -12,7 +12,7 @@ from randovania.game_description.data_reader import read_resource_database, read
 from randovania.game_description.resources import PickupEntry, ResourceDatabase, PickupDatabase
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
+from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso, default_prime2_pickup_database
 from randovania.gui.history_window_ui import Ui_HistoryWindow
 from randovania.interface_common import simplified_patcher
 from randovania.resolver.layout_description import LayoutDescription
@@ -53,8 +53,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.main_window = main_window
         self.background_processor = background_processor
 
-        data = binary_data.decode_default_prime2()
-        self.pickup_database = read_pickup_database(data)
+        self.pickup_database = default_prime2_pickup_database()
 
         self.layout_history_content_layout.setAlignment(Qt.AlignTop)
 

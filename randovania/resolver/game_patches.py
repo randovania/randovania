@@ -1,4 +1,8 @@
-from typing import NamedTuple, List, Optional
+from typing import NamedTuple, Dict
+
+from randovania.game_description.resources import PickupIndex, PickupEntry
+
+PickupAssignment = Dict[PickupIndex, PickupEntry]
 
 
 class GamePatches(NamedTuple):
@@ -7,5 +11,4 @@ class GamePatches(NamedTuple):
     * Swapping pickup locations
     """
 
-    item_loss_enabled: bool
-    pickup_mapping: List[Optional[int]]
+    pickup_assignment: PickupAssignment

@@ -8,7 +8,7 @@ class GenerationFailure(Exception):
         self.seed_number = seed_number
 
     def __str__(self) -> str:
-        return "Generation Failure: {} received for {} with config {}".format(
+        return "Generation Failure: '{}' received for seed {} with config {}".format(
             super().__str__(),
             self.seed_number,
             self.configuration.as_str
