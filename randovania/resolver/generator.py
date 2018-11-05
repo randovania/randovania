@@ -23,7 +23,7 @@ from randovania.resolver.layout_configuration import LayoutConfiguration, Layout
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import shuffle
-from randovania.resolver.reach import Reach
+from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_resource_gain_to_state
 
 T = TypeVar("T")
@@ -324,7 +324,7 @@ class VictoryReached(Exception):
         self.state = state
 
 
-def _can_reach_safe_node(with_event_state: State, logic: Logic, reach: Reach) -> bool:
+def _can_reach_safe_node(with_event_state: State, logic: Logic, reach: ResolverReach) -> bool:
     return any(
         reach.is_safe(target_node) and requirements.satisfied(with_event_state.resources,
                                                               with_event_state.resource_database)
@@ -335,7 +335,7 @@ def _can_reach_safe_node(with_event_state: State, logic: Logic, reach: Reach) ->
 def reach_with_all_safe_events(logic: Logic,
                                patches: GamePatches,
                                initial_state: State,
-                               ) -> Tuple[State, Reach]:
+                               ) -> Tuple[State, ResolverReach]:
     dangerous_resources = logic.game.dangerous_resources
 
     state = initial_state
@@ -344,7 +344,7 @@ def reach_with_all_safe_events(logic: Logic,
     has_safe_event = True
     while has_safe_event:
         state.node = initial_state.node
-        reach = Reach.calculate_reach(logic, state)
+        reach = ResolverReach.calculate_reach(logic, state)
         has_safe_event = False
 
         new_state = state
@@ -373,7 +373,7 @@ def _does_pickup_satisfies(pickup: PickupEntry,
 
 def _get_items_that_satisfies(available_item_pickups: Iterator[PickupEntry],
                               pickup_state_without_item: State,
-                              pickup_reach_without_item: Reach,
+                              pickup_reach_without_item: ResolverReach,
                               database: ResourceDatabase,
                               ) -> Iterator[PickupEntry]:
     interesting_resources = calculate_interesting_resources(
@@ -422,7 +422,7 @@ def _iterate_with_weights(potential_actions: List[T],
         yield pickup_node
 
 
-def _pickup_indices_in_reach(reach: Reach) -> Iterator[PickupIndex]:
+def _pickup_indices_in_reach(reach: ResolverReach) -> Iterator[PickupIndex]:
     for node in reach.nodes:
         if isinstance(node, PickupNode):
             yield node.pickup_index
@@ -568,7 +568,7 @@ def _old_code():
         before_state = pickups_with_path[pickup_node]
 
         pickup_state_without_item = before_state.act_on_node(pickup_node, patches.pickup_mapping)
-        pickup_reach_without_item = Reach.calculate_reach(logic, pickup_state_without_item)
+        pickup_reach_without_item = ResolverReach.calculate_reach(logic, pickup_state_without_item)
 
         for item in shuffle(rng, _get_items_that_satisfies(available_item_pickups,
                                                            pickup_state_without_item,
@@ -577,7 +577,7 @@ def _old_code():
 
             new_patches = _add_item_to_node(item, pickup_node, patches, logic.game.resource_database)
             pickup_state_with_item = before_state.act_on_node(pickup_node, new_patches.pickup_mapping)
-            pickup_reach_with_item = Reach.calculate_reach(logic, pickup_state_with_item)
+            pickup_reach_with_item = ResolverReach.calculate_reach(logic, pickup_state_with_item)
 
             if pickup_reach_without_item.nodes == pickup_reach_with_item.nodes:
                 continue
