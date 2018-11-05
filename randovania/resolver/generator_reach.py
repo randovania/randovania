@@ -1,3 +1,4 @@
+import copy
 import math
 from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
@@ -116,19 +117,39 @@ class GeneratorReach:
     _last_path_for_node: Dict[Node, Path]
     _unreachable_paths: Dict[Tuple[Node, Node], Tuple[RequirementSet, PathDetail]]
 
+    def __deepcopy__(self, memodict):
+        reach = GeneratorReach(
+            self._logic,
+            self._state,
+            copy.deepcopy(self._digraph, memodict)
+        )
+        reach._bad_reachability_sources = copy.deepcopy(self._bad_reachability_sources, memodict)
+        reach._last_path_for_node = copy.deepcopy(self._last_path_for_node, memodict)
+        reach._unreachable_paths = copy.deepcopy(self._unreachable_paths, memodict)
+        return reach
+
     def __init__(self,
                  logic: Logic,
-                 initial_state: State,
+                 state: State,
+                 graph: networkx.DiGraph
                  ):
 
         self._logic = logic
-        self._state = initial_state
-        self._digraph = networkx.DiGraph()
+        self._state = state
+        self._digraph = graph
         self._bad_reachability_sources = set()
         self._last_path_for_node = {}
         self._unreachable_paths = {}
 
-        self._expand_graph([Path(None, self._state.node, PathDetail(True, 0))])
+    @classmethod
+    def reach_from_state(cls,
+                         logic: Logic,
+                         initial_state: State,
+                         ) -> "GeneratorReach":
+
+        reach = cls(logic, initial_state, networkx.DiGraph())
+        reach._expand_graph([Path(None, initial_state.node, PathDetail(True, 0))])
+        return reach
 
     def _update_bad_reachability_source(self, path: Path, can_advance: bool):
         if can_advance:
@@ -323,7 +344,7 @@ def reach_with_all_safe_resources(logic: Logic,
                                   initial_state: State,
                                   patches: GamePatches) -> GeneratorReach:
 
-    reach = GeneratorReach(logic, initial_state)
+    reach = GeneratorReach.reach_from_state(logic, initial_state)
     collect_all_safe_resources_in_reach(reach, patches)
     return reach
 
@@ -343,24 +364,29 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach,
     previous_safe_nodes = set(previous_reach.safe_nodes)
 
     for action in get_uncollected_resource_nodes_of_reach(previous_reach):
-        next_reach = reach_with_all_safe_resources(logic, initial_state.act_on_node(action, patches), patches)
-        next_safe_nodes = set(next_reach.safe_nodes)
-        next_better = previous_safe_nodes <= next_safe_nodes
+        if action.resource() in logic.game.dangerous_resources:
+            print("Trying to collect {}, but it's dangerous! Starting from scratch".format(action.name))
+            next_reach = reach_with_all_safe_resources(logic, initial_state.act_on_node(action, patches), patches)
+        else:
+            print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
+            next_reach = copy.deepcopy(previous_reach)
+            next_reach.advance_to(next_reach.state.act_on_node(action, patches))
+            collect_all_safe_resources_in_reach(next_reach, patches)
 
-        if next_better:
+        if previous_safe_nodes <= set(next_reach.safe_nodes):
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
             return advance_reach_with_possible_unsafe_resources(next_reach, patches)
-        else:
-            if next_reach.is_reachable_node(initial_state.node):
-                next_next_state = next_reach.state.copy()
-                next_next_state.node = initial_state.node
 
-                next_reach = reach_with_all_safe_resources(logic, next_next_state, patches)
-                if previous_safe_nodes <= set(next_reach.safe_nodes):
-                    # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
-                    return advance_reach_with_possible_unsafe_resources(next_reach, patches)
-            else:
-                pass
+        if next_reach.is_reachable_node(initial_state.node):
+            next_next_state = next_reach.state.copy()
+            next_next_state.node = initial_state.node
+
+            next_reach = reach_with_all_safe_resources(logic, next_next_state, patches)
+            if previous_safe_nodes <= set(next_reach.safe_nodes):
+                # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
+                return advance_reach_with_possible_unsafe_resources(next_reach, patches)
+        else:
+            pass
 
     # We couldn't improve this reach, so just return it
     return previous_reach
