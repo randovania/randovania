@@ -63,13 +63,13 @@ class PickupNode(NamedTuple):
 class EventNode(NamedTuple):
     name: str
     heal: bool
-    event_index: int
+    event: ResourceInfo
 
     def __repr__(self):
-        return "EventNode({!r} -> {})".format(self.name, self.event_index)
+        return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
 
     def resource(self, resource_database: ResourceDatabase) -> ResourceInfo:
-        return resource_database.get_by_type_and_index(ResourceType.EVENT, self.event_index)
+        return self.event
 
     def resource_gain_on_collect(self,
                                  resource_database: ResourceDatabase,

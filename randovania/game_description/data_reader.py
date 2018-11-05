@@ -155,7 +155,8 @@ class WorldReader:
                                   instance_id)
 
         elif node_type == 4:
-            return EventNode(name, heal, data["event_index"])
+            return EventNode(name, heal,
+                             self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))
