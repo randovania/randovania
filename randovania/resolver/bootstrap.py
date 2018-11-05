@@ -133,16 +133,16 @@ def calculate_starting_state(logic: Logic) -> "State":
         game.resource_database
     )
 
+    # TODO: not hardcode this data here.
+    # TODO: actually lose the items when trigger the Item Loss cutscene
+    # These ids are all events you trigger before reaching the IL cutscene in echoes
+    # We're giving these items right now because you need the items you lose to be able to get here.
+    for event_id in (71, 78, 2, 4):
+        resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
+        starting_state.resources[resource] = 1
+
     add_resource_gain_to_state(starting_state, game.starting_items)
-    if logic.configuration.item_loss == LayoutEnabledFlag.ENABLED:
-        # TODO: not hardcode this data here.
-        # TODO: actually lose the items when trigger the Item Loss cutscene
-        # These ids are all events you trigger before reaching the IL cutscene in echoes
-        # We're giving these items right now because you need the items you lose to be able to get here.
-        for event_id in (71, 78, 2, 4):
-            resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
-            starting_state.resources[resource] = 1
-    else:
+    if logic.configuration.item_loss != LayoutEnabledFlag.ENABLED:
         add_resource_gain_to_state(starting_state, game.item_loss_items)
 
     return starting_state

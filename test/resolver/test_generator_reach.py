@@ -10,8 +10,10 @@ from randovania.game_description.node import ResourceNode
 from randovania.games.prime import binary_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.generator import get_actions_of_reach, gimme_reach_with_dangerous, _filter_pickups, _pickup_nodes_that_can_escape, gimme_reach, _state_with_pickup
-from randovania.resolver.generator_explorer import PathDetail, GeneratorReach, filter_reachable, filter_pickup_nodes
+from randovania.resolver.generator import _filter_pickups, _state_with_pickup
+from randovania.resolver.generator_reach import PathDetail, GeneratorReach, filter_reachable, filter_pickup_nodes, \
+    reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, advance_reach_with_possible_unsafe_resources, \
+    pickup_nodes_that_can_reach
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
@@ -48,11 +50,15 @@ def _test_data():
     return logic, state
 
 
-def _create_reaches_and_compare(logic: Logic, state: State,
-                                patches: GamePatches,
+def _create_reach_with_unsafe(logic: Logic, state: State, patches: GamePatches) -> GeneratorReach:
+    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, state, patches), patches)
+
+
+def _create_reaches_and_compare(logic: Logic, state: State, patches: GamePatches,
                                 ) -> Tuple[GeneratorReach, GeneratorReach]:
-    first_reach = gimme_reach_with_dangerous(logic, state, patches)
-    second_reach = gimme_reach_with_dangerous(logic, first_reach.state, patches)
+
+    first_reach = _create_reach_with_unsafe(logic, state, patches)
+    second_reach = _create_reach_with_unsafe(logic, first_reach.state, patches)
 
     assert first_reach.is_safe_node(first_reach.state.node)
     assert second_reach.is_safe_node(first_reach.state.node)
@@ -68,8 +74,8 @@ def _create_reaches_and_compare(logic: Logic, state: State,
 def _compare_actions(first_reach: GeneratorReach,
                      second_reach: GeneratorReach,
                      ) -> Tuple[List[ResourceNode], List[ResourceNode]]:
-    first_actions = get_actions_of_reach(first_reach)
-    second_actions = get_actions_of_reach(second_reach)
+    first_actions = get_uncollected_resource_nodes_of_reach(first_reach)
+    second_actions = get_uncollected_resource_nodes_of_reach(second_reach)
     assert set(first_actions) == set(second_actions)
 
     return first_actions, second_actions
@@ -106,9 +112,9 @@ def test_calculate_reach_with_seeds():
 
     escape_state = _state_with_pickup(first_reach.state, available_pickups[-6])
     total_pickup_nodes = list(_filter_pickups(filter_reachable(first_reach.nodes, first_reach)))
-    pickup_options = _pickup_nodes_that_can_escape(total_pickup_nodes,
-                                                   gimme_reach(logic, escape_state, patches),
-                                                   set(first_reach.safe_nodes))
+    pickup_options = pickup_nodes_that_can_reach(total_pickup_nodes,
+                                                 reach_with_all_safe_resources(logic, escape_state, patches),
+                                                 set(first_reach.safe_nodes))
 
     for option in pickup_options:
         print("Safe: {}; Dangerous: {}; Option: {}".format(

@@ -1,4 +1,3 @@
-import collections
 import math
 from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
@@ -6,8 +5,8 @@ import networkx
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, is_resource_node, ResourceNode, PickupNode
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
-from randovania.game_description.resources import ResourceInfo
+from randovania.game_description.requirements import RequirementSet, RequirementList
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
@@ -288,3 +287,88 @@ def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[R
             extra_requirement = RequirementSet([RequirementList.with_single_resource(node_resource)])
 
     return extra_requirement
+
+
+def get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
+    return filter_out_dangerous_actions(
+        _uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
+        reach.logic.game
+    )
+
+
+def _uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
+    return filter_uncollected(filter_resource_nodes(nodes), reach)
+
+
+def get_uncollected_resource_nodes_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
+    return [node for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach)]
+
+
+def collect_all_safe_resources_in_reach(reach, patches):
+    """
+
+    :param reach:
+    :param patches:
+    :return:
+    """
+    while True:
+        try:
+            action = next(get_safe_resources(reach))
+        except StopIteration:
+            break
+        reach.advance_to(reach.state.act_on_node(action, patches))
+
+
+def reach_with_all_safe_resources(logic: Logic,
+                                  initial_state: State,
+                                  patches: GamePatches) -> GeneratorReach:
+
+    reach = GeneratorReach(logic, initial_state)
+    collect_all_safe_resources_in_reach(reach, patches)
+    return reach
+
+
+def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach,
+                                                 patches: GamePatches) -> GeneratorReach:
+    """
+    Create a new GeneratorReach that collected actions not considered safe, but expanded the safe_nodes set
+    :param previous_reach:
+    :param patches:
+    :return:
+    """
+
+    logic = previous_reach.logic
+    initial_state = previous_reach.state
+
+    previous_safe_nodes = set(previous_reach.safe_nodes)
+
+    for action in get_uncollected_resource_nodes_of_reach(previous_reach):
+        next_reach = reach_with_all_safe_resources(logic, initial_state.act_on_node(action, patches), patches)
+        next_safe_nodes = set(next_reach.safe_nodes)
+        next_better = previous_safe_nodes <= next_safe_nodes
+
+        if next_better:
+            # print("Non-safe {} was good".format(logic.game.node_name(action)))
+            return advance_reach_with_possible_unsafe_resources(next_reach, patches)
+        else:
+            if next_reach.is_reachable_node(initial_state.node):
+                next_next_state = next_reach.state.copy()
+                next_next_state.node = initial_state.node
+
+                next_reach = reach_with_all_safe_resources(logic, next_next_state, patches)
+                if previous_safe_nodes <= set(next_reach.safe_nodes):
+                    # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
+                    return advance_reach_with_possible_unsafe_resources(next_reach, patches)
+            else:
+                pass
+
+    # We couldn't improve this reach, so just return it
+    return previous_reach
+
+
+def pickup_nodes_that_can_reach(pickup_nodes: Iterator[PickupNode],
+                                reach: GeneratorReach,
+                                safe_nodes: Set[Node]) -> Iterator[PickupNode]:
+    for pickup_node in pickup_nodes:
+        if pickup_node in safe_nodes or set(reach.shortest_path_from(pickup_node).keys()).intersection(safe_nodes):
+            yield pickup_node
