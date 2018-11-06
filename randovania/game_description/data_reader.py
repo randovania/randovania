@@ -1,6 +1,6 @@
 import functools
 from functools import partial
-from typing import List, Callable, TypeVar, Tuple, Dict
+from typing import List, Callable, TypeVar, Tuple, Dict, Optional
 
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.game_description.echoes_elevator import Elevator
@@ -63,33 +63,30 @@ def read_individual_requirement(data: Dict, resource_database: ResourceDatabase
 
 
 def read_requirement_list(data: List[Dict],
-                          resource_database: ResourceDatabase) -> RequirementList:
+                          resource_database: ResourceDatabase,
+                          ) -> Optional[RequirementList]:
+
     individuals = read_array(data, lambda x: read_individual_requirement(x, resource_database=resource_database))
-
-    difficulty = 0
-    for individual in individuals:
-        if individual.resource == resource_database.difficulty_resource:
-            assert not individual.negate, "We shouldn't have a negate requirement for difficulty"
-            difficulty = individual.amount
-
-    return RequirementList(difficulty, individuals)
+    return RequirementList.without_misc_resources(individuals, resource_database)
 
 
 def read_requirement_set(data: List[List[Dict]],
                          resource_database: ResourceDatabase) -> RequirementSet:
-    return RequirementSet(read_array(data, lambda x: read_requirement_list(x, resource_database=resource_database))
-                          ).simplify({}, resource_database)
+
+    alternatives = read_array(data, lambda x: read_requirement_list(x, resource_database=resource_database))
+    return RequirementSet(alternative for alternative in alternatives if alternative is not None)
 
 
 # Dock Weakness
 
 
 def read_dock_weakness_database(data: Dict,
-                                resource_database: ResourceDatabase) -> DockWeaknessDatabase:
+                                resource_database: ResourceDatabase,
+                                ) -> DockWeaknessDatabase:
+
     def read_dock_weakness(item: Dict) -> DockWeakness:
         return DockWeakness(item["index"], item["name"], item["is_blast_door"],
-                            read_requirement_set(item["requirement_set"],
-                                                 resource_database).simplify({}, resource_database))
+                            read_requirement_set(item["requirement_set"], resource_database))
 
     door_types = read_array(data["door"], read_dock_weakness)
     portal_types = read_array(data["portal"], read_dock_weakness)

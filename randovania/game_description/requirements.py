@@ -84,6 +84,29 @@ class RequirementList:
     def with_single_resource(cls, resource: ResourceInfo) -> "RequirementList":
         return cls(0, [IndividualRequirement(resource, 1, False)])
 
+    @classmethod
+    def without_misc_resources(cls,
+                               items: Iterable[IndividualRequirement],
+                               database: ResourceDatabase,) -> Optional["RequirementList"]:
+
+        difficulty = 0
+
+        to_add = []
+        for individual in items:
+            if individual.resource == database.impossible_resource():
+                return None
+
+            elif individual.resource == database.trivial_resource():
+                continue
+
+            if individual.resource == database.difficulty_resource:
+                assert not individual.negate, "We shouldn't have a negate requirement for difficulty"
+                difficulty = individual.amount
+
+            to_add.append(individual)
+
+        return cls(difficulty, to_add)
+
     def __eq__(self, other):
         return isinstance(
             other, RequirementList) and self.items == other.items
@@ -129,17 +152,12 @@ class RequirementList:
         """
         items = []
         for item in self.values():
-            # The impossible resource is always impossible.
-            if item.resource == database.impossible_resource():
-                return None
-
             if item.resource in static_resources:
                 # If the resource is a static resource, we either remove it from the list or
                 # consider this list impossible
                 if not item.satisfied(static_resources, database):
                     return None
-
-            elif item.resource != database.trivial_resource():
+            else:
                 # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
                 items.append(item)
 

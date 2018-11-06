@@ -298,6 +298,15 @@ class GeneratorReach:
     def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
         return networkx.shortest_path(self._digraph, node)
 
+    def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
+        results = {}
+        for (_, node), (requirements, _) in self._unreachable_paths.items():
+            if node in results:
+                results[node] = results[node].expand_alternatives(requirements)
+            else:
+                results[node] = requirements
+        return results
+
 
 def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[RequirementSet]:
     extra_requirement = None
@@ -322,7 +331,7 @@ def _uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iter
 
 
 def get_uncollected_resource_nodes_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
-    return [node for node in _uncollected_resources(filter_reachable(reach.nodes, reach), reach)]
+    return list(_uncollected_resources(filter_reachable(reach.nodes, reach), reach))
 
 
 def collect_all_safe_resources_in_reach(reach, patches):
