@@ -80,9 +80,6 @@ def create_convert_database_command(sub_parsers):
 def view_area_command_logic(args):
     gd = load_game_description(args)
 
-    if args.simplify:
-        resolver.simplify_connections(gd, {})
-
     for world in gd.worlds:
         if world.name == args.world:
             for area in world.areas:
