@@ -93,7 +93,7 @@ def test_calculate_reach_with_seeds():
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
         item_pool, categories, game.relevant_resources))))
 
-    remaining_pickups = available_pickups[-5:]
+    remaining_pickups = available_pickups[1:]
 
     print("Major items: {}".format([item.item for item in remaining_pickups]))
 
