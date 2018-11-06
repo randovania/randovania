@@ -1,5 +1,3 @@
-import functools
-from functools import partial
 from typing import List, Callable, TypeVar, Tuple, Dict, Optional
 
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
@@ -9,7 +7,8 @@ from randovania.game_description.node import GenericNode, DockNode, TeleporterNo
     is_resource_node
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
-    ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase, PickupDatabase
+    ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase, PickupDatabase, \
+    find_resource_info_with_id
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -19,32 +18,37 @@ def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
     return [item_reader(item) for item in data]
 
 
-def read_damage_reduction(data: Dict) -> DamageReduction:
-    return DamageReduction(data["index"], data["multiplier"])
-
-
-def read_damage_reductions(data: List[Dict]) -> Tuple[DamageReduction, ...]:
-    return tuple(read_array(data, read_damage_reduction))
-
-
 def read_resource_info(data: Dict, resource_type: str = "") -> SimpleResourceInfo:
     return SimpleResourceInfo(data["index"], data["long_name"],
                               data["short_name"], resource_type)
 
 
 def read_resource_info_array(data: List[Dict], resource_type: str = "") -> List[SimpleResourceInfo]:
-    return read_array(data, functools.partial(read_resource_info, resource_type=resource_type))
+    return read_array(data, lambda info: read_resource_info(info, resource_type=resource_type))
 
 
-def read_damage_resource_info(data: Dict) -> DamageResourceInfo:
+# Damage
+
+def read_damage_reduction(data: Dict, items: List[SimpleResourceInfo]) -> DamageReduction:
+    return DamageReduction(find_resource_info_with_id(items, data["index"]),
+                           data["multiplier"])
+
+
+def read_damage_reductions(data: List[Dict], items: List[SimpleResourceInfo]) -> Tuple[DamageReduction, ...]:
+    return tuple(read_array(data, lambda info: read_damage_reduction(info, items)))
+
+
+def read_damage_resource_info(data: Dict, items: List[SimpleResourceInfo]) -> DamageResourceInfo:
     return DamageResourceInfo(data["index"], data["long_name"],
                               data["short_name"],
-                              read_damage_reductions(data["reductions"]))
+                              read_damage_reductions(data["reductions"], items))
 
 
-def read_damage_resource_info_array(data: List[Dict]) -> List[DamageResourceInfo]:
-    return read_array(data, read_damage_resource_info)
+def read_damage_resource_info_array(data: List[Dict], items: List[SimpleResourceInfo]) -> List[DamageResourceInfo]:
+    return read_array(data, lambda info: read_damage_resource_info(info, items))
 
+
+# Pickup
 
 def read_pickup_info_array(data: List[Dict],
                            resource_database: ResourceDatabase) -> List[PickupEntry]:
@@ -195,11 +199,12 @@ class WorldReader:
 
 
 def read_resource_database(data: Dict) -> ResourceDatabase:
+    item = read_resource_info_array(data["items"], "I")
     return ResourceDatabase(
-        item=read_resource_info_array(data["items"], "I"),
+        item=item,
         event=read_resource_info_array(data["events"], "E"),
         trick=read_resource_info_array(data["tricks"], "T"),
-        damage=read_damage_resource_info_array(data["damage"]),
+        damage=read_damage_resource_info_array(data["damage"], item),
         version=read_resource_info_array(data["versions"]),
         misc=read_resource_info_array(data["misc"]),
         difficulty=read_resource_info_array(data["difficulty"]),
