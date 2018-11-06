@@ -11,7 +11,7 @@ def _calculate_reduction(resource: DamageResourceInfo,
     multiplier = 1
 
     for reduction in resource.reductions:
-        if current_resources.get(database.get_by_type_and_index(ResourceType.ITEM, reduction.inventory_index), 0) > 0:
+        if current_resources.get(reduction.inventory_item, 0) > 0:
             multiplier *= reduction.damage_multiplier
 
     return multiplier

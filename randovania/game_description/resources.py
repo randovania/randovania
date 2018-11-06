@@ -13,7 +13,7 @@ class SimpleResourceInfo(NamedTuple):
 
 
 class DamageReduction(NamedTuple):
-    inventory_index: int
+    inventory_item: SimpleResourceInfo
     damage_multiplier: float
 
 
@@ -79,7 +79,7 @@ class PickupEntry(NamedTuple):
         return "Pickup {}".format(self.item)
 
 
-def _find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
+def find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
     for info in info_list:
         if info.index == index:
             return info
@@ -136,7 +136,7 @@ class ResourceDatabase(NamedTuple):
 
     def get_by_type_and_index(self, resource_type: ResourceType,
                               index: int) -> ResourceInfo:
-        return _find_resource_info_with_id(
+        return find_resource_info_with_id(
             self.get_by_type(resource_type), index)
 
     def trivial_resource(self) -> ResourceInfo:

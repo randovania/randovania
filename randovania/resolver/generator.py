@@ -287,6 +287,7 @@ def _create_patches(
         if pickup not in available_pickups
     ]
 
+    # new_pickup_mapping = _random_assumed_filler(logic, state, patches, available_pickups, rng)
     new_pickup_mapping = _retcon_playthrough_filler(logic, state, patches, available_pickups, rng)
     rng.shuffle(remaining_items)
 
