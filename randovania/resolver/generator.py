@@ -1,4 +1,5 @@
 import copy
+import itertools
 import multiprocessing.dummy
 from random import Random
 from typing import List, Tuple, Iterator, Optional, FrozenSet, Callable, Dict, TypeVar, Iterable, Union, Set
@@ -16,7 +17,7 @@ from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.game_patches import GamePatches, PickupAssignment
 from randovania.resolver.generator_reach import filter_reachable, \
     reach_with_all_safe_resources, advance_reach_with_possible_unsafe_resources, pickup_nodes_that_can_reach, \
-    collect_all_safe_resources_in_reach, get_uncollected_resource_nodes_of_reach
+    collect_all_safe_resources_in_reach, get_uncollected_resource_nodes_of_reach, GeneratorReach
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups, \
     remove_pickup_entry_from_list
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutMode, \
@@ -143,6 +144,7 @@ def _filter_unassigned_pickup_nodes(nodes: Iterator[Node],
 def _state_with_pickup(state: State,
                        pickup: PickupEntry, ) -> State:
     new_state = state.copy()
+    new_state.previous_state = state
     add_resource_gain_to_state(new_state, pickup.resource_gain())
     return new_state
 
@@ -208,6 +210,25 @@ def _random_assumed_filler(logic: Logic,
     return pickup_assignment
 
 
+def _iterator_length(x: Iterator) -> int:
+    return len(list(x))
+
+
+def _count_reachable_pickups(reach: GeneratorReach) -> int:
+    return _iterator_length(_filter_pickups(filter_reachable(reach.nodes, reach)))
+
+
+def _create_reach_for_action(base_reach: GeneratorReach,
+                             state: State,
+                             patches: GamePatches,
+                             ) -> GeneratorReach:
+
+    potential_reach = copy.deepcopy(base_reach)
+    potential_reach.advance_to(state)
+    collect_all_safe_resources_in_reach(potential_reach, patches)
+    return potential_reach
+
+
 def _retcon_playthrough_filler(logic: Logic,
                                initial_state: State,
                                patches: GamePatches,
@@ -222,27 +243,65 @@ def _retcon_playthrough_filler(logic: Logic,
         patches)
 
     while True:
+        print("=============================================")
+        print("=============================================")
+        print("=============================================")
+        print("=============================================")
         actions = get_uncollected_resource_nodes_of_reach(reach)
+        current_safe_reach = _count_reachable_pickups(reach)
 
         reach_for_action = {}
         actions_weights = {}
 
-        print("* Unreachable nodes:")
-        print(reach.unreachable_nodes_with_requirements())
+        progression_resources = frozenset(itertools.chain.from_iterable(
+            requirements.progression_resources
+            for requirements in reach.unreachable_nodes_with_requirements().values()
+        ))
+        progression_pickups = [
+            pickup
+            for pickup in available_pickups
+            if set(pickup.resources.keys()).intersection(progression_resources)
+        ]
+        print("\n\n* Progression pickups: {}".format([item.item for item in progression_pickups]))
+
+        for progression in progression_pickups:
+            potential_reach = _create_reach_for_action(reach,
+                                                       _state_with_pickup(reach.state, progression),
+                                                       patches)
+
+            potential_nodes = [
+                node
+                for node in _filter_pickups(filter_reachable(potential_reach.nodes, potential_reach))
+                if node not in set(filter_reachable(reach.nodes, reach))
+            ]
+
+            paths = potential_reach.shortest_path_from(reach.state.node)
+
+            def _path_to_str(path: Iterator[Node]):
+                return str([logic.game.node_name(node) for node in path])
+
+            print("\n==> {} at {}:\n{}".format(
+                progression.name,
+                logic.game.node_name(potential_reach.state.node),
+                "\n".join(
+                    _path_to_str(paths.get(node)) if node in paths else "WHY?!"
+                    for node in potential_nodes
+                )
+            ))
+            reach_for_action[progression] = potential_reach
+            actions_weights[progression] = _count_reachable_pickups(potential_reach) - current_safe_reach
 
         for action in actions:
-            potential_reach = copy.deepcopy(reach)
-
-            potential_reach.advance_to(reach.state.act_on_node(action, patches))
-            collect_all_safe_resources_in_reach(potential_reach, patches)
-            num_safe_nodes = len(list(potential_reach.safe_nodes))
+            potential_reach = _create_reach_for_action(reach,
+                                                       reach.state.act_on_node(action, patches),
+                                                       patches)
 
             reach_for_action[action] = potential_reach
-            actions_weights[action] = num_safe_nodes
+            actions_weights[action] = _count_reachable_pickups(potential_reach) + 1
 
-        print("\n== From {}, actions:".format(reach.state.node.name))
-        for action in actions:
-            print("* {} with weight {}".format(action.name, actions_weights[action]))
+        # print("== From {}, actions:".format(logic.game.node_name(reach.state.node)))
+        # for action, weight in actions_weights.items():
+        #     print("* {} with weight {}".format(action.name, weight))
 
         try:
             action = next(_iterate_with_weights(actions, actions_weights, rng))

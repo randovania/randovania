@@ -301,6 +301,7 @@ class GeneratorReach:
     def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
         results = {}
         for (_, node), (requirements, _) in self._unreachable_paths.items():
+            requirements = requirements.simplify(self.state.resources, self.logic.game.resource_database)
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
