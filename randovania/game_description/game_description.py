@@ -243,9 +243,7 @@ def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
     yield database.energy_tank
-    yield database.get_by_type_and_index(
-        ResourceType.ITEM,
-        resource.reductions[0].inventory_index)
+    yield resource.reductions[0].inventory_item
 
 
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
