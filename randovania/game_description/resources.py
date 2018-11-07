@@ -59,6 +59,10 @@ class PickupEntry(NamedTuple):
     def __hash__(self):
         return hash(self.item)
 
+    @property
+    def name(self) -> str:
+        return self.item
+
     @classmethod
     def from_data(cls, data: Dict, database: "ResourceDatabase") -> "PickupEntry":
         return PickupEntry(
