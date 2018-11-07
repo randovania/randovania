@@ -5,9 +5,7 @@ from randovania.game_description.resources import ResourceInfo, CurrentResources
     ResourceDatabase, SimpleResourceInfo
 
 
-def _calculate_reduction(resource: DamageResourceInfo,
-                         current_resources: CurrentResources,
-                         database: ResourceDatabase) -> float:
+def _calculate_reduction(resource: DamageResourceInfo, current_resources: CurrentResources) -> float:
     multiplier = 1
 
     for reduction in resource.reductions:
@@ -42,7 +40,7 @@ class IndividualRequirement(NamedTuple):
             # TODO: actually implement the damage resources
 
             current_energy = current_resources.get(database.energy_tank, 0) * 100
-            damage = _calculate_reduction(self.resource, current_resources, database) * self.amount
+            damage = _calculate_reduction(self.resource, current_resources) * self.amount
 
             return current_energy >= damage
 
@@ -152,7 +150,7 @@ class RequirementList:
         """
         items = []
         for item in self.values():
-            if item.resource in static_resources:
+            if static_resources.get(item.resource) is not None:
                 # If the resource is a static resource, we either remove it from the list or
                 # consider this list impossible
                 if not item.satisfied(static_resources, database):
@@ -331,6 +329,15 @@ class RequirementSet:
         """
         for alternative in self.alternatives:
             yield from alternative.dangerous_resources
+            
+    @property
+    def progression_resources(self) -> FrozenSet[SimpleResourceInfo]:
+        return frozenset(
+            individual.resource
+            for alternative in self.alternatives
+            for individual in alternative.values()
+            if isinstance(individual.resource, SimpleResourceInfo) and not individual.negate
+        )
 
 
 SatisfiableRequirements = FrozenSet[RequirementList]
