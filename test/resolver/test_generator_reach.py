@@ -1,7 +1,6 @@
 import pprint
 from random import Random
 from typing import Tuple, List
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -11,8 +10,9 @@ from randovania.games.prime import binary_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.generator import _filter_pickups, _state_with_pickup
-from randovania.resolver.generator_reach import PathDetail, GeneratorReach, filter_reachable, filter_pickup_nodes, \
-    reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, advance_reach_with_possible_unsafe_resources, \
+from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
+    reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
+    advance_reach_with_possible_unsafe_resources, \
     pickup_nodes_that_can_reach
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
@@ -22,15 +22,6 @@ from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State, add_resource_gain_to_state
 
 
-@pytest.mark.parametrize(["old_path", "new_path", "expected"], [
-    (PathDetail(True, 0), PathDetail(True, 0), False),
-    (PathDetail(False, 0), PathDetail(False, 0), False),
-    (PathDetail(True, 0), PathDetail(True, 1), False),
-    (PathDetail(True, 5), PathDetail(False, 0), False),
-    (PathDetail(False, 0), PathDetail(True, 5), True),
-])
-def test_is_path_better(old_path: PathDetail, new_path: PathDetail, expected: bool):
-    assert new_path.is_better(old_path) == expected
 
 
 def _test_data():
@@ -123,8 +114,8 @@ def test_calculate_reach_with_seeds():
             game.node_name(option)
         ))
 
-    assert (len(list(first_reach.nodes)), len(first_actions)) == (821, 1)
-    assert (len(list(second_reach.nodes)), len(second_actions)) == (821, 1)
+    assert (821, 1) == (len(list(first_reach.nodes)), len(first_actions))
+    assert (821, 1) == (len(list(second_reach.nodes)), len(second_actions))
 
 
 def test_calculate_reach_with_all_pickups():
@@ -143,4 +134,4 @@ def test_calculate_reach_with_all_pickups():
     # assert (len(list(first_reach.nodes)), len(first_actions)) == (898, 9)
     # assert (len(list(second_reach.nodes)), len(second_actions)) == (898, 9)
     pprint.pprint(first_actions)
-    assert found_pickups == all_pickups
+    assert all_pickups == found_pickups
