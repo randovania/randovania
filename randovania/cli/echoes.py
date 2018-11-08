@@ -40,6 +40,10 @@ def add_layout_configuration_arguments(parser):
 
 
 def get_layout_configuration_from_args(args) -> LayoutConfiguration:
+    from randovania.interface_common.options import Options
+    options = Options()
+    options.load_from_disk()
+
     return LayoutConfiguration(
         logic=LayoutLogic(args.logic),
         mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
@@ -48,7 +52,7 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
         elevators=LayoutRandomizedFlag.VANILLA,
         hundo_guaranteed=LayoutEnabledFlag.DISABLED,
         difficulty=LayoutDifficulty.NORMAL,
-        pickup_quantities={}
+        pickup_quantities=options.layout_configuration.pickup_quantities
     )
 
 

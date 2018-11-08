@@ -8,6 +8,7 @@ from randovania.game_description import echoes_elevator, data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
 from randovania.games.prime import binary_data
+from randovania.resolver.game_patches import PickupAssignment
 from randovania.resolver.layout_configuration import LayoutConfiguration
 
 
@@ -16,9 +17,9 @@ class SolverPath(NamedTuple):
     previous_nodes: Tuple[str, ...]
 
 
-def _pickup_mapping_to_item_locations(game: GameDescription,
-                                      pickup_mapping: Tuple[int, ...],
-                                      ) -> Dict[str, Dict[str, str]]:
+def _pickup_assignment_to_item_locations(game: GameDescription,
+                                         pickup_assignment: PickupAssignment,
+                                         ) -> Dict[str, Dict[str, str]]:
     items_locations = {}
 
     for world in game.worlds:
@@ -28,9 +29,8 @@ def _pickup_mapping_to_item_locations(game: GameDescription,
         for area in world.areas:
             for node in area.nodes:
                 if isinstance(node, PickupNode):
-                    new_index = pickup_mapping[node.pickup_index.index]
-                    if new_index is not None:
-                        item_name = game.pickup_database.pickups[new_index].item
+                    if node.pickup_index in pickup_assignment:
+                        item_name = pickup_assignment[node.pickup_index].item
                     else:
                         item_name = "Nothing"
                     items_in_world[game.node_name(node)] = item_name
@@ -58,12 +58,13 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
     )
 
 
-def _item_locations_to_pickup_mapping(locations: Dict[str, Dict[str, str]]) -> Tuple[Optional[int], ...]:
+def _item_locations_to_pickup_assignment(locations: Dict[str, Dict[str, str]]) -> PickupAssignment:
     game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
-    pickup_mapping = [None] * len(game.pickup_database.pickups)
+    pickup_assignment = {}
 
-    pickup_index_by_name = {
-        pickup.item: i for i, pickup in enumerate(game.pickup_database.pickups)
+    pickup_by_name = {
+        pickup.name: pickup
+        for pickup in game.pickup_database.pickups
     }
 
     for world_name, world_data in locations.items():
@@ -72,8 +73,8 @@ def _item_locations_to_pickup_mapping(locations: Dict[str, Dict[str, str]]) -> T
         for area in world.areas:
             areas_by_name[area.name].append(area)
 
-        for location_name, item in world_data.items():
-            if item == "Nothing":
+        for location_name, name in world_data.items():
+            if name == "Nothing":
                 continue
 
             area_name, node_name = location_name.split("/", maxsplit=1)
@@ -85,16 +86,16 @@ def _item_locations_to_pickup_mapping(locations: Dict[str, Dict[str, str]]) -> T
                     node = nodes[0]
                     break
 
-            pickup_mapping[node.pickup_index.index] = pickup_index_by_name[item]
+            pickup_assignment[node.pickup_index] = pickup_by_name[name]
 
-    return tuple(pickup_mapping)
+    return pickup_assignment
 
 
 class LayoutDescription(NamedTuple):
     version: str
     configuration: LayoutConfiguration
     seed_number: int
-    pickup_mapping: Tuple[Optional[int], ...]
+    pickup_assignment: PickupAssignment
     solver_path: Tuple[SolverPath, ...]
 
     @classmethod
@@ -111,7 +112,7 @@ class LayoutDescription(NamedTuple):
             version=version,
             configuration=LayoutConfiguration.from_json_dict(json_dict["info"]["configuration"]),
             seed_number=seed,
-            pickup_mapping=_item_locations_to_pickup_mapping(json_dict["locations"]),
+            pickup_assignment=_item_locations_to_pickup_assignment(json_dict["locations"]),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
 
@@ -131,7 +132,7 @@ class LayoutDescription(NamedTuple):
             },
             "locations": {
                 key: value
-                for key, value in sorted(_pickup_mapping_to_item_locations(game, self.pickup_mapping).items())
+                for key, value in sorted(_pickup_assignment_to_item_locations(game, self.pickup_assignment).items())
             },
             "elevators": {
                 _elevator_to_location(game, elevator): _elevator_to_location(game, elevator.connected_elevator)
@@ -162,5 +163,5 @@ class LayoutDescription(NamedTuple):
             seed_number=self.seed_number,
             configuration=self.configuration,
             version=self.version,
-            pickup_mapping=self.pickup_mapping,
+            pickup_assignment=self.pickup_assignment,
             solver_path=())

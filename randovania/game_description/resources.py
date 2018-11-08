@@ -39,6 +39,12 @@ class PickupIndex:
     def __repr__(self):
         return "PickupIndex {}".format(self._index)
 
+    def __hash__(self):
+        return self._index
+
+    def __eq__(self, other):
+        return isinstance(other, PickupIndex) and other._index == self._index
+
     @property
     def index(self) -> int:
         return self._index
