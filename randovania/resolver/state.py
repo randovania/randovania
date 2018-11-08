@@ -3,7 +3,7 @@ from typing import Optional, Tuple, Iterator
 
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.resources import ResourceInfo, CurrentResources, ResourceDatabase, PickupIndex, \
-    ResourceGain
+    ResourceGain, PickupEntry
 from randovania.resolver.game_patches import GamePatches
 
 
@@ -78,3 +78,18 @@ def add_resource_gain_to_state(state: State, resource_gain: ResourceGain):
     for resource, quantity in resource_gain:
         state.resources[resource] = state.resources.get(resource, 0)
         state.resources[resource] += quantity
+
+
+def state_with_pickup(state: State,
+                      pickup: PickupEntry,
+                      ) -> State:
+    """
+    Returns a new State that follows the given State and also has the resource gain of the given pickup
+    :param state:
+    :param pickup:
+    :return:
+    """
+    new_state = state.copy()
+    new_state.previous_state = state
+    add_resource_gain_to_state(new_state, pickup.resource_gain())
+    return new_state

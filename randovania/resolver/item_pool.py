@@ -12,6 +12,7 @@ def calculate_item_pool(configuration: LayoutConfiguration,
                         ) -> List[PickupEntry]:
 
     split_pickups = game.pickup_database.pickups_split_by_name()
+    useless_item = split_pickups["Energy Transfer Module"][0]
     pickups_with_configured_quantity = configuration.pickups_with_configured_quantity
 
     for pickup_name, pickup_list in split_pickups.items():
@@ -49,6 +50,9 @@ def calculate_item_pool(configuration: LayoutConfiguration,
             configuration=configuration,
             seed_number=-1
         )
+
+    elif quantity_delta < 0:
+        item_pool.extend([useless_item] * -quantity_delta)
 
     return item_pool
 

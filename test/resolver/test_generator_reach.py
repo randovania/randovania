@@ -9,7 +9,7 @@ from randovania.game_description.node import ResourceNode
 from randovania.games.prime import binary_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.generator import _filter_pickups, _state_with_pickup
+from randovania.resolver.generator import _filter_pickups
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources, \
@@ -19,9 +19,7 @@ from randovania.resolver.layout_configuration import LayoutConfiguration, Layout
     LayoutEnabledFlag, LayoutDifficulty
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import shuffle
-from randovania.resolver.state import State, add_resource_gain_to_state
-
-
+from randovania.resolver.state import State, add_resource_gain_to_state, state_with_pickup
 
 
 def _test_data():
@@ -101,7 +99,7 @@ def test_calculate_reach_with_seeds():
             game.node_name(action)
         ))
 
-    escape_state = _state_with_pickup(first_reach.state, available_pickups[-6])
+    escape_state = state_with_pickup(first_reach.state, available_pickups[-6])
     total_pickup_nodes = list(_filter_pickups(filter_reachable(first_reach.nodes, first_reach)))
     pickup_options = pickup_nodes_that_can_reach(total_pickup_nodes,
                                                  reach_with_all_safe_resources(logic, escape_state, patches),

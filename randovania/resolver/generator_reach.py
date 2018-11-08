@@ -120,6 +120,7 @@ class GeneratorReach:
 
     def _expand_graph(self, paths_to_check: List[Path]):
         # print("!! _expand_graph", len(paths_to_check))
+        self._reachable_paths = None
         while paths_to_check:
             path = paths_to_check.pop(0)
 
@@ -135,7 +136,6 @@ class GeneratorReach:
                     self._unreachable_paths[path.node, target_node] = requirements
 
         self._calculate_safe_nodes()
-        self._reachable_paths = None
 
     def _can_advance(self,
                      node: Node,
@@ -182,6 +182,16 @@ class GeneratorReach:
             return all(self._can_advance(p) for p in self._reachable_paths[node][:-1])
         else:
             return False
+
+    @property
+    def connected_nodes(self) -> Iterator[Node]:
+        """
+        An iterator of all nodes there's an path from the reach's starting point. Similar to is_reachable_node
+        :return:
+        """
+        self._calculate_reachable_paths()
+        for node in self._reachable_paths.keys():
+            yield node
 
     @property
     def state(self) -> State:
@@ -253,17 +263,17 @@ def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[R
 
 def get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
     return filter_out_dangerous_actions(
-        _uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
+        uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
         reach.logic.game
     )
 
 
-def _uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
+def uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
     return filter_uncollected(filter_resource_nodes(nodes), reach)
 
 
 def get_uncollected_resource_nodes_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
-    return list(_uncollected_resources(filter_reachable(reach.nodes, reach), reach))
+    return list(uncollected_resources(filter_reachable(reach.nodes, reach), reach))
 
 
 def collect_all_safe_resources_in_reach(reach, patches):
@@ -300,16 +310,17 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach,
     """
 
     logic = previous_reach.logic
+    collect_all_safe_resources_in_reach(previous_reach, patches)
     initial_state = previous_reach.state
 
     previous_safe_nodes = set(previous_reach.safe_nodes)
 
     for action in get_uncollected_resource_nodes_of_reach(previous_reach):
         if action.resource() in logic.game.dangerous_resources:
-            print("Trying to collect {}, but it's dangerous! Starting from scratch".format(action.name))
+            # print("Trying to collect {}, but it's dangerous! Starting from scratch".format(action.name))
             next_reach = reach_with_all_safe_resources(logic, initial_state.act_on_node(action, patches), patches)
         else:
-            print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
+            # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
             next_reach = copy.deepcopy(previous_reach)
             next_reach.advance_to(next_reach.state.act_on_node(action, patches))
             collect_all_safe_resources_in_reach(next_reach, patches)
@@ -339,3 +350,21 @@ def pickup_nodes_that_can_reach(pickup_nodes: Iterator[PickupNode],
     for pickup_node in pickup_nodes:
         if pickup_node in safe_nodes or set(reach.shortest_path_from(pickup_node).keys()).intersection(safe_nodes):
             yield pickup_node
+
+
+def advance_to_with_reach_copy(base_reach: GeneratorReach,
+                               state: State,
+                               patches: GamePatches,
+                               ) -> GeneratorReach:
+    """
+    Copies the given Reach, advances to the given State and collect all possible resources.
+    :param base_reach:
+    :param state:
+    :param patches:
+    :return:
+    """
+
+    potential_reach = copy.deepcopy(base_reach)
+    potential_reach.advance_to(state)
+    collect_all_safe_resources_in_reach(potential_reach, patches)
+    return advance_reach_with_possible_unsafe_resources(potential_reach, patches)

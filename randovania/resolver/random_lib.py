@@ -1,5 +1,5 @@
 from random import Random
-from typing import Iterator, List, TypeVar
+from typing import Iterator, List, TypeVar, Dict
 
 T = TypeVar('T')
 
@@ -14,3 +14,29 @@ def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
     result = list(x)
     rng.shuffle(result)
     return result
+
+
+def iterate_with_weights(items: List[T],
+                         item_weights: Dict[T, float],
+                         rng: Random,
+                         )-> Iterator[T]:
+    """
+    Iterates over the given list randomly, with each item having the probability listed in item_weigths
+    :param items:
+    :param item_weights:
+    :param rng:
+    :return:
+    """
+
+    items = list(items)
+    weights = [item_weights[action] for action in items]
+
+    while items:
+        pickup_node = rng.choices(items, weights)[0]
+
+        # Remove the pickup_node from the potential list, along with it's weight
+        index = items.index(pickup_node)
+        items.pop(index)
+        weights.pop(index)
+
+        yield pickup_node
