@@ -7,7 +7,7 @@ from typing import Tuple, Iterator, NamedTuple, Set, Optional, Union, Dict, Froz
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, PickupNode, Node
 from randovania.game_description.requirements import RequirementList
-from randovania.game_description.resources import PickupEntry, PickupIndex, SimpleResourceInfo
+from randovania.game_description.resources import PickupEntry, PickupIndex
 from randovania.resolver.game_patches import GamePatches, PickupAssignment
 from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
@@ -42,22 +42,26 @@ class UncollectedState(NamedTuple):
 def find_pickup_node_with_index(index: PickupIndex,
                                 haystack: Iterator[Node],
                                 ) -> PickupNode:
-
     for node in haystack:
         if isinstance(node, PickupNode) and node.pickup_index == index:
             return node
 
 
-def retcon_calculate_weights_for(reach: GeneratorReach,
-                                 new_state: State,
-                                 pickup_assignment: PickupAssignment,
-                                 current_uncollected: UncollectedState,
-                                 name: str
-                                 ) -> Optional[Tuple[GeneratorReach, float]]:
-    potential_reach = advance_to_with_reach_copy(reach,
-                                                 new_state,
-                                                 reach.logic.patches)
+def _calculate_reach_for_progression(reach: GeneratorReach,
+                                     progression: PickupEntry,
+                                     reach_for_pickup: Dict[PickupEntry, GeneratorReach],
+                                     ):
 
+    return advance_to_with_reach_copy(reach,
+                                      state_with_pickup(reach.state, progression),
+                                      reach.logic.patches)
+
+
+def _calculate_weights_for(potential_reach: GeneratorReach,
+                           pickup_assignment: PickupAssignment,
+                           current_uncollected: UncollectedState,
+                           name: str
+                           ) -> Optional[Tuple[GeneratorReach, float]]:
     potential_uncollected = UncollectedState.from_reach(potential_reach, pickup_assignment) - current_uncollected
     weight = len(potential_uncollected.resources) + len(potential_uncollected.indices)
 
@@ -107,6 +111,7 @@ def retcon_playthrough_filler(logic: Logic,
         patches)
 
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
+    reach_for_pickup: Dict[PickupEntry, GeneratorReach] = {}
 
     while True:
         current_uncollected = UncollectedState.from_reach(reach, pickup_assignment)
@@ -158,21 +163,25 @@ def retcon_playthrough_filler(logic: Logic,
         if current_uncollected.indices:
             total_options += len(progression_pickups)
             for progression in progression_pickups:
-                potential_result = retcon_calculate_weights_for(reach,
-                                                                state_with_pickup(reach.state, progression),
-                                                                pickup_assignment,
-                                                                current_uncollected,
-                                                                progression.name)
+                potential_result = _calculate_weights_for(_calculate_reach_for_progression(reach,
+                                                                                           progression,
+                                                                                           reach_for_pickup),
+                                                          pickup_assignment,
+                                                          current_uncollected,
+                                                          progression.name)
                 update_for_option()
                 if potential_result is not None:
                     reach_for_action[progression], actions_weights[progression] = potential_result
 
         for resource in uncollected_resource_nodes:
-            potential_result = retcon_calculate_weights_for(reach,
-                                                            reach.state.act_on_node(resource, patches),
-                                                            pickup_assignment,
-                                                            current_uncollected,
-                                                            resource.name)
+
+            potential_result = _calculate_weights_for(
+                advance_to_with_reach_copy(reach,
+                                           reach.state.act_on_node(resource, patches),
+                                           reach.logic.patches),
+                pickup_assignment,
+                current_uncollected,
+                resource.name)
             update_for_option()
             if potential_result is not None:
                 reach_for_action[resource], actions_weights[resource] = potential_result
