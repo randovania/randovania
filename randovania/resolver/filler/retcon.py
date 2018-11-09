@@ -2,7 +2,7 @@ import collections
 import copy
 import itertools
 from random import Random
-from typing import Tuple, Iterator, NamedTuple, Set, Optional, Union, Dict, FrozenSet
+from typing import Tuple, Iterator, NamedTuple, Set, Optional, Union, Dict, FrozenSet, Callable
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, PickupNode, Node
@@ -95,6 +95,7 @@ def retcon_playthrough_filler(logic: Logic,
                               patches: GamePatches,
                               available_pickups: Tuple[PickupEntry],
                               rng: Random,
+                              status_update: Callable[[str], None]
                               ) -> PickupAssignment:
     pickup_assignment = copy.copy(patches.pickup_assignment)
     print("Major items: {}".format([item.item for item in available_pickups]))
@@ -184,6 +185,7 @@ def retcon_playthrough_filler(logic: Logic,
             pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
             pickup_assignment[pickup_index] = action
 
+            status_update("Placed {} items so far.".format(len(pickup_assignment)))
             print("\n--> Placing {} at {}".format(
                 action.name,
                 logic.game.node_name(find_pickup_node_with_index(pickup_index, logic.game.all_nodes), with_world=True)))

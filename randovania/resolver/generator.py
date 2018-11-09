@@ -153,7 +153,10 @@ def _create_patches(
                                       sorted(calculate_available_pickups(item_pool,
                                                                          categories, None))))
 
-    new_pickup_mapping = retcon_playthrough_filler(logic, state, patches, available_pickups, rng)
+    new_pickup_mapping = retcon_playthrough_filler(
+        logic, state, patches, available_pickups, rng,
+        status_update
+    )
 
     assigned_pickups = set(new_pickup_mapping.values())
     remaining_items = [
