@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, Q
     QFileDialog
 
 from randovania.game_description.data_reader import read_resource_database, read_pickup_database
-from randovania.game_description.resources import PickupEntry, ResourceDatabase, PickupDatabase
+from randovania.game_description.resources import PickupEntry, ResourceDatabase, PickupDatabase, PickupIndex
 from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso, default_prime2_pickup_database
@@ -162,9 +162,8 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.layout_difficulty_value_label.setText(configuration.difficulty.value)
 
         for i, pickup_button in enumerate(self.pickup_spoiler_buttons):
-            mapping = layout.pickup_mapping[i]
-            if mapping is not None:
-                pickup = self.pickup_database.pickups[mapping]
+            pickup = layout.pickup_assignment.get(PickupIndex(i))
+            if pickup is not None:
                 pickup_button.item_name = pickup.item
             else:
                 pickup_button.item_name = "Nothing"
