@@ -51,7 +51,8 @@ def find_pickup_node_with_index(index: PickupIndex,
 def retcon_calculate_weights_for(reach: GeneratorReach,
                                  new_state: State,
                                  pickup_assignment: PickupAssignment,
-                                 current_uncollected: UncollectedState
+                                 current_uncollected: UncollectedState,
+                                 name: str
                                  ) -> Optional[Tuple[GeneratorReach, float]]:
     potential_reach = advance_to_with_reach_copy(reach,
                                                  new_state,
@@ -82,9 +83,9 @@ def retcon_calculate_weights_for(reach: GeneratorReach,
     # else:
     #     messages = ""
 
+    print("{} - {}".format(name, weight))
     if weight > 0:
         return potential_reach, weight
-        # print("\n{} - {}:{}".format(progression.name, weight, messages))
 
 
 Action = Union[ResourceNode, PickupEntry]
@@ -99,6 +100,7 @@ def retcon_playthrough_filler(logic: Logic,
                               ) -> PickupAssignment:
     pickup_assignment = copy.copy(patches.pickup_assignment)
     print("Major items: {}".format([item.item for item in available_pickups]))
+    last_message = "Starting."
 
     reach = advance_reach_with_possible_unsafe_resources(
         reach_with_all_safe_resources(logic, initial_state, patches),
@@ -144,20 +146,34 @@ def retcon_playthrough_filler(logic: Logic,
         for pickup_index in reach.state.collected_pickup_indices:
             pickup_index_seen_count[pickup_index] += 1
 
+        uncollected_resource_nodes = get_uncollected_resource_nodes_of_reach(reach)
+        total_options = len(uncollected_resource_nodes)
+        options_considered = 0
+
+        def update_for_option():
+            nonlocal options_considered
+            options_considered += 1
+            status_update("{} Checked {} of {} options.".format(last_message, options_considered, total_options))
+
         if current_uncollected.indices:
+            total_options += len(progression_pickups)
             for progression in progression_pickups:
                 potential_result = retcon_calculate_weights_for(reach,
                                                                 state_with_pickup(reach.state, progression),
                                                                 pickup_assignment,
-                                                                current_uncollected)
+                                                                current_uncollected,
+                                                                progression.name)
+                update_for_option()
                 if potential_result is not None:
                     reach_for_action[progression], actions_weights[progression] = potential_result
 
-        for resource in get_uncollected_resource_nodes_of_reach(reach):
+        for resource in uncollected_resource_nodes:
             potential_result = retcon_calculate_weights_for(reach,
                                                             reach.state.act_on_node(resource, patches),
                                                             pickup_assignment,
-                                                            current_uncollected)
+                                                            current_uncollected,
+                                                            resource.name)
+            update_for_option()
             if potential_result is not None:
                 reach_for_action[resource], actions_weights[resource] = potential_result
 
@@ -172,7 +188,7 @@ def retcon_playthrough_filler(logic: Logic,
             if progression_pickups:
                 action = rng.choice(progression_pickups)
             else:
-                raise RuntimeError("We have no more actions, ohno. Pickups left: {}".format([pickup.name for pickup in pickups_left]))
+                raise RuntimeError("We have no more actions, ohno. Pickups left: {}".format(list(pickups_left.keys())))
 
         if isinstance(action, PickupEntry):
             next_state = state_with_pickup(reach.state, action)
@@ -185,12 +201,15 @@ def retcon_playthrough_filler(logic: Logic,
             pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
             pickup_assignment[pickup_index] = action
 
-            status_update("Placed {} items so far.".format(len(pickup_assignment)))
+            last_message = "Placed {} items so far, {} left.".format(len(pickup_assignment), len(pickups_left) - 1)
+            status_update(last_message)
             print("\n--> Placing {} at {}".format(
                 action.name,
                 logic.game.node_name(find_pickup_node_with_index(pickup_index, logic.game.all_nodes), with_world=True)))
 
         else:
+            last_message = "Triggered an event {} options.".format(options_considered)
+            status_update(last_message)
             print("\n--> Collecting {}".format(logic.game.node_name(action, with_world=True)))
             next_state = reach.state.act_on_node(action, patches)
 
