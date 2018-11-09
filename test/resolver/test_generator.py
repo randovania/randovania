@@ -1,10 +1,13 @@
+from typing import Iterable
 from unittest.mock import MagicMock
 
 import pytest
 
 import randovania.resolver.exceptions
 from randovania import VERSION
+from randovania.game_description.resources import PickupIndex
 from randovania.games.prime import binary_data
+from randovania.gui.common_qt_lib import default_prime2_pickup_database
 from randovania.resolver import generator, debug
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
@@ -14,12 +17,16 @@ from randovania.resolver.layout_description import LayoutDescription
 def _create_test_layout_description(
         seed_number: int,
         configuration: LayoutConfiguration,
-        pickup_mapping):
+        pickup_mapping: Iterable[int]):
+    pickup_database = default_prime2_pickup_database()
     return LayoutDescription(
         seed_number=seed_number,
         configuration=configuration,
         version=VERSION,
-        pickup_mapping=pickup_mapping,
+        pickup_assignment={
+            PickupIndex(i): pickup_database.pickups[item_index]
+            for i, item_index in enumerate(pickup_mapping)
+        },
         solver_path=())
 
 
