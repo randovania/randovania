@@ -9,6 +9,7 @@ import py
 from randovania import get_data_path
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
 from randovania.games.prime import claris_random
+from randovania.games.prime.claris_randomzer_pickups import create_empty_index_array, get_index_by_pickup_name
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.options import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
@@ -131,9 +132,13 @@ def apply_layout(
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     _create_pak_backups(game_root, backup_files_path, status_update)
 
+    indices = create_empty_index_array()
+    for index, pickup in layout.pickup_assignment.items():
+        indices[index.index] = get_index_by_pickup_name(pickup.name)
+
     args += [
         "-s", str(layout.seed_number),
-        "-p", ",".join(str(pickup) for pickup in layout.pickup_mapping),
+        "-p", ",".join(str(index) for index in indices),
     ]
     if layout.configuration.item_loss == LayoutEnabledFlag.DISABLED:
         args.append("-i")
