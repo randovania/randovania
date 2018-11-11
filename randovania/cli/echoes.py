@@ -115,12 +115,15 @@ def distribute_command_logic(args):
 
     print("Using seed: {}".format(seed_number))
 
+    before = time.perf_counter()
     layout_description = generator.generate_list(
         data=data,
         seed_number=seed_number,
         configuration=get_layout_configuration_from_args(args),
         status_update=status_update
     )
+    after = time.perf_counter()
+    print("Took {} seconds".format(after - before))
     layout_description.save_to_file(args.output_file)
 
 
