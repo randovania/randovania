@@ -66,7 +66,9 @@ class GeneratorReach:
     _state: State
     _logic: Logic
     _reachable_paths: Optional[Dict[Node, List[Node]]]
+    _node_reachable_cache: Dict[Node, bool]
     _unreachable_paths: Dict[Tuple[Node, Node], RequirementSet]
+    _safe_nodes: Optional[Set[Node]]
 
     def __deepcopy__(self, memodict):
         reach = GeneratorReach(
@@ -76,6 +78,7 @@ class GeneratorReach:
         )
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._reachable_paths = self._reachable_paths
+        reach._safe_nodes = self._safe_nodes
         return reach
 
     def __init__(self,
@@ -89,6 +92,7 @@ class GeneratorReach:
         self._digraph = graph
         self._unreachable_paths = {}
         self._reachable_paths = None
+        self._node_reachable_cache = {}
 
     @classmethod
     def reach_from_state(cls,
@@ -132,7 +136,7 @@ class GeneratorReach:
                 else:
                     self._unreachable_paths[path.node, target_node] = requirements
 
-        self._calculate_safe_nodes()
+        self._safe_nodes = None
 
     def _can_advance(self,
                      node: Node,
@@ -149,14 +153,10 @@ class GeneratorReach:
             return True
 
     def _calculate_safe_nodes(self):
-        self._connected_components = list(networkx.strongly_connected_components(self._digraph))
-        self._safe_components = [
-            component
-            for component in self._connected_components
-            if self._state.node in component
-        ]
+        if self._safe_nodes is not None:
+            return
 
-        self._safe_nodes = None
+        self._connected_components = list(networkx.strongly_connected_components(self._digraph))
         for component in self._connected_components:
             if self._state.node in component:
                 assert self._safe_nodes is None
@@ -171,12 +171,18 @@ class GeneratorReach:
         self._reachable_paths = networkx.shortest_path(
             self._digraph,
             source=self.state.node,
-            weight=lambda source, target, attributes: 1 if self._can_advance(target) else 0)
+            weight=lambda source, target, attributes: 0 if self._can_advance(target) else 1)
 
     def is_reachable_node(self, node: Node) -> bool:
+        cached_value = self._node_reachable_cache.get(node)
+        if cached_value is not None:
+            return cached_value
+
         self._calculate_reachable_paths()
+
         if node in self._reachable_paths:
-            return all(self._can_advance(p) for p in self._reachable_paths[node][:-1])
+            self._node_reachable_cache[node] = all(self._can_advance(p) for p in self._reachable_paths[node][:-1])
+            return self._node_reachable_cache[node]
         else:
             return False
 
@@ -205,15 +211,23 @@ class GeneratorReach:
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
+        self._calculate_safe_nodes()
         for node in sorted(self._safe_nodes):
             yield node
 
     def is_safe_node(self, node: Node) -> bool:
+        self._calculate_safe_nodes()
         return node in self._safe_nodes
 
     def advance_to(self, new_state: State) -> None:
         assert new_state.previous_state == self.state
-        assert self.is_reachable_node(new_state.node)
+        # assert self.is_reachable_node(new_state.node)
+
+        if self.is_safe_node(new_state.node):
+            for node, _ in list(filter(lambda x: not x[1], self._node_reachable_cache.items())):
+                del self._node_reachable_cache[node]
+        else:
+            self._node_reachable_cache = {}
 
         self._state = new_state
 
