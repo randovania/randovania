@@ -70,6 +70,7 @@ class IndividualRequirement(NamedTuple):
 class RequirementList:
     difficulty_level: int
     items: FrozenSet[IndividualRequirement]
+    _cached_hash: Optional[int] = None
 
     def __deepcopy__(self, memodict):
         return self
@@ -112,8 +113,10 @@ class RequirementList:
     def __lt__(self, other: "RequirementList"):
         return self.items < other.items
 
-    def __hash__(self):
-        return hash(self.items)
+    def __hash__(self) -> int:
+        if self._cached_hash is None:
+            self._cached_hash = hash(self.items)
+        return self._cached_hash
 
     def __repr__(self):
         return repr(self.items)
@@ -205,6 +208,7 @@ class RequirementSet:
     For example, going from A to B may be possible by having Grapple+Space Jump or Screw Attack.
     """
     alternatives: FrozenSet[RequirementList]
+    _cached_hash: Optional[int] = None
 
     def __init__(self, alternatives: Iterable[RequirementList]):
         """
@@ -219,12 +223,17 @@ class RequirementSet:
             if not any(other < requirement for other in input_set)
         )
 
+    def __deepcopy__(self, memodict):
+        return self
+
     def __eq__(self, other):
         return isinstance(
             other, RequirementSet) and self.alternatives == other.alternatives
 
-    def __hash__(self):
-        return hash(self.alternatives)
+    def __hash__(self) -> int:
+        if self._cached_hash is None:
+            self._cached_hash = hash(self.alternatives)
+        return self._cached_hash
 
     def __repr__(self):
         return repr(self.alternatives)
