@@ -70,6 +70,7 @@ class GeneratorReach:
     _node_reachable_cache: Dict[Node, bool]
     _unreachable_paths: Dict[Tuple[Node, Node], RequirementSet]
     _safe_nodes: Optional[Set[Node]]
+    _is_node_safe_cache: Dict[Node, bool]
 
     def __deepcopy__(self, memodict):
         reach = GeneratorReach(
@@ -81,6 +82,9 @@ class GeneratorReach:
         reach._reachable_paths = self._reachable_paths
         reach._reachable_costs = self._reachable_costs
         reach._safe_nodes = self._safe_nodes
+
+        reach._node_reachable_cache = copy.copy(self._node_reachable_cache)
+        reach._is_node_safe_cache = copy.copy(self._is_node_safe_cache)
         return reach
 
     def __init__(self,
@@ -95,6 +99,7 @@ class GeneratorReach:
         self._unreachable_paths = {}
         self._reachable_paths = None
         self._node_reachable_cache = {}
+        self._is_node_safe_cache = {}
 
     @classmethod
     def reach_from_state(cls,
@@ -220,13 +225,18 @@ class GeneratorReach:
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
-        self._calculate_safe_nodes()
-        for node in sorted(self._safe_nodes):
-            yield node
+        for node in self.nodes:
+            if self.is_safe_node(node):
+                yield node
 
     def is_safe_node(self, node: Node) -> bool:
+        is_safe = self._is_node_safe_cache.get(node)
+        if is_safe is not None:
+            return is_safe
+
         self._calculate_safe_nodes()
-        return node in self._safe_nodes
+        self._is_node_safe_cache[node] = node in self._safe_nodes
+        return self._is_node_safe_cache[node]
 
     def advance_to(self, new_state: State) -> None:
         assert new_state.previous_state == self.state
@@ -235,8 +245,12 @@ class GeneratorReach:
         if self.is_safe_node(new_state.node):
             for node, _ in list(filter(lambda x: not x[1], self._node_reachable_cache.items())):
                 del self._node_reachable_cache[node]
+
+            for node, _ in list(filter(lambda x: not x[1], self._is_node_safe_cache.items())):
+                del self._is_node_safe_cache[node]
         else:
             self._node_reachable_cache = {}
+            self._is_node_safe_cache = {}
 
         self._state = new_state
 
