@@ -4,9 +4,8 @@ from typing import List
 
 from randovania.games.prime import iso_packager, claris_randomizer, binary_data
 from randovania.gui.common_qt_lib import application_options
-from randovania.interface_common import status_update_lib
+from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
-from randovania.resolver import echoes
 from randovania.resolver.layout_description import LayoutDescription
 
 

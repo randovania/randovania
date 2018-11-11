@@ -59,30 +59,31 @@ def generate_list(data: Dict,
     if status_update is None:
         status_update = id
 
-    try:
-        with multiprocessing.dummy.Pool(1) as dummy_pool:
-            new_patches = _create_patches(
-                **{
-                    "seed_number": seed_number,
-                    "configuration": configuration,
-                    "game": data_reader.decode_data(data, elevators, False),
-                    "status_update": status_update
-                })
-            # new_patches = dummy_pool.apply_async(
-            #     func=_create_patches,
-            #     kwds={
-            #         "seed_number": seed_number,
-            #         "configuration": configuration,
-            #         "game": data_reader.decode_data(data, elevators),
-            #         "status_update": status_update
-            #     }
-            # ).get(120)
-    except multiprocessing.TimeoutError:
-        raise GenerationFailure(
-            "Timeout reached when generating patches.",
-            configuration=configuration,
-            seed_number=seed_number
-        )
+    new_patches = _create_patches(
+        **{
+            "seed_number": seed_number,
+            "configuration": configuration,
+            "game": data_reader.decode_data(data, elevators, False),
+            "status_update": status_update
+        })
+
+    # try:
+    #     with multiprocessing.dummy.Pool(1) as dummy_pool:
+    #         new_patches = dummy_pool.apply_async(
+    #             func=_create_patches,
+    #             kwds={
+    #                 "seed_number": seed_number,
+    #                 "configuration": configuration,
+    #                 "game": data_reader.decode_data(data, elevators),
+    #                 "status_update": status_update
+    #             }
+    #         ).get(120)
+    # except multiprocessing.TimeoutError:
+    #     raise GenerationFailure(
+    #         "Timeout reached when generating patches.",
+    #         configuration=configuration,
+    #         seed_number=seed_number
+    #     )
 
     if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS or True:
         # For minimal restrictions, the solver path will take paths that are just impossible.
