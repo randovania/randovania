@@ -66,6 +66,7 @@ class GeneratorReach:
     _state: State
     _logic: Logic
     _reachable_paths: Optional[Dict[Node, List[Node]]]
+    _reachable_costs: Optional[Dict[Node, int]]
     _node_reachable_cache: Dict[Node, bool]
     _unreachable_paths: Dict[Tuple[Node, Node], RequirementSet]
     _safe_nodes: Optional[Set[Node]]
@@ -78,6 +79,7 @@ class GeneratorReach:
         )
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._reachable_paths = self._reachable_paths
+        reach._reachable_costs = self._reachable_costs
         reach._safe_nodes = self._safe_nodes
         return reach
 
@@ -168,9 +170,9 @@ class GeneratorReach:
         if self._reachable_paths is not None:
             return
 
-        self._reachable_paths = networkx.shortest_path(
+        self._reachable_costs, self._reachable_paths = networkx.multi_source_dijkstra(
             self._digraph,
-            source=self.state.node,
+            {self.state.node},
             weight=lambda source, target, attributes: 0 if self._can_advance(target) else 1)
 
     def is_reachable_node(self, node: Node) -> bool:
@@ -180,8 +182,15 @@ class GeneratorReach:
 
         self._calculate_reachable_paths()
 
-        if node in self._reachable_paths:
-            self._node_reachable_cache[node] = all(self._can_advance(p) for p in self._reachable_paths[node][:-1])
+        cost = self._reachable_costs.get(node)
+        if cost is not None:
+            if cost == 0:
+                self._node_reachable_cache[node] = True
+            elif cost == 1:
+                self._node_reachable_cache[node] = (not self._can_advance(node))
+            else:
+                self._node_reachable_cache[node] = False
+
             return self._node_reachable_cache[node]
         else:
             return False
