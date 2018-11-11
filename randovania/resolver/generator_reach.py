@@ -318,11 +318,14 @@ def collect_all_safe_resources_in_reach(reach, patches):
     :return:
     """
     while True:
-        try:
-            action = next(get_safe_resources(reach))
-        except StopIteration:
+        actions = list(get_safe_resources(reach))
+        if not actions:
             break
-        reach.advance_to(reach.state.act_on_node(action, patches))
+
+        for action in actions:
+            if not reach.state.has_resource(action.resource()):
+                assert reach.is_safe_node(action)
+                reach.advance_to(reach.state.act_on_node(action, patches))
 
 
 def reach_with_all_safe_resources(logic: Logic,
