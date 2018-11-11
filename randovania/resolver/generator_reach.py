@@ -65,7 +65,6 @@ class GeneratorReach:
     _digraph: networkx.DiGraph
     _state: State
     _logic: Logic
-    _bad_reachability_sources: Set[Node]
     _reachable_paths: Optional[Dict[Node, List[Node]]]
     _unreachable_paths: Dict[Tuple[Node, Node], RequirementSet]
 
@@ -73,10 +72,9 @@ class GeneratorReach:
         reach = GeneratorReach(
             self._logic,
             self._state,
-            copy.deepcopy(self._digraph, memodict)
+            self._digraph.copy()
         )
-        reach._bad_reachability_sources = copy.deepcopy(self._bad_reachability_sources, memodict)
-        reach._unreachable_paths = copy.deepcopy(self._unreachable_paths, memodict)
+        reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._reachable_paths = self._reachable_paths
         return reach
 
@@ -89,7 +87,6 @@ class GeneratorReach:
         self._logic = logic
         self._state = state
         self._digraph = graph
-        self._bad_reachability_sources = set()
         self._unreachable_paths = {}
         self._reachable_paths = None
 
