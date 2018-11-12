@@ -296,10 +296,15 @@ def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[R
 
 
 def get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
-    return filter_out_dangerous_actions(
-        uncollected_resources(filter_reachable(reach.safe_nodes, reach), reach),
-        reach.logic.game
+    generator = filter_reachable(
+        filter_out_dangerous_actions(
+            uncollected_resources(reach.nodes, reach),
+            reach.logic.game),
+        reach
     )
+    for node in generator:
+        if reach.is_safe_node(node):
+            yield node
 
 
 def uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
