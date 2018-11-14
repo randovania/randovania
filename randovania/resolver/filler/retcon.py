@@ -185,14 +185,10 @@ def retcon_playthrough_filler(logic: Logic,
             update_for_option()
             if potential_result is not None:
                 reach_for_action[resource], actions_weights[resource] = potential_result
-
-        for action, weight in actions_weights.items():
-            print("* {} with weight {}, {} actions".format(action.name, weight,
-                                                           len(get_uncollected_resource_nodes_of_reach(
-                                                               reach_for_action[action]))))
+                # actions_weights[resource] *= 10
 
         try:
-            action = next(iterate_with_weights(list(reach_for_action.keys()), actions_weights, rng))
+            action = next(iterate_with_weights(list(actions_weights.keys()), actions_weights, rng))
         except StopIteration:
             if progression_pickups:
                 action = rng.choice(progression_pickups)
