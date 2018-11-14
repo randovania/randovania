@@ -238,11 +238,13 @@ class GeneratorReach:
         self._is_node_safe_cache[node] = node in self._safe_nodes
         return self._is_node_safe_cache[node]
 
-    def advance_to(self, new_state: State) -> None:
+    def advance_to(self, new_state: State,
+                   is_safe: bool = False,
+                   ) -> None:
         assert new_state.previous_state == self.state
         # assert self.is_reachable_node(new_state.node)
 
-        if self.is_safe_node(new_state.node):
+        if is_safe or self.is_safe_node(new_state.node):
             for node, _ in list(filter(lambda x: not x[1], self._node_reachable_cache.items())):
                 del self._node_reachable_cache[node]
 
@@ -269,6 +271,28 @@ class GeneratorReach:
             del self._unreachable_paths[edge]
 
         self._expand_graph(paths_to_check)
+
+    def act_on(self, node: ResourceNode) -> None:
+        new_dangerous_resources = set(
+            resource
+            for resource, quantity in node.resource_gain_on_collect(self.logic.patches)
+            if resource in self.logic.game.dangerous_resources
+        )
+        new_state = self.state.act_on_node(node, self.logic.patches)
+
+        if new_dangerous_resources:
+            edges_to_remove = []
+            for source, target, attributes in self._digraph.edges.data():
+                requirements: RequirementSet = attributes["requirements"]
+                dangerous = requirements.dangerous_resources
+                if dangerous and new_dangerous_resources.intersection(dangerous):
+                    if not requirements.satisfied(new_state.resources, new_state.resource_database):
+                        edges_to_remove.append((source, target))
+
+            for edge in edges_to_remove:
+                self._digraph.remove_edge(*edge)
+
+        self.advance_to(new_state)
 
     def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
         return networkx.shortest_path(self._digraph, node)
@@ -329,8 +353,8 @@ def collect_all_safe_resources_in_reach(reach, patches):
 
         for action in actions:
             if not reach.state.has_resource(action.resource()):
-                assert reach.is_safe_node(action)
-                reach.advance_to(reach.state.act_on_node(action, patches))
+                # assert reach.is_safe_node(action)
+                reach.advance_to(reach.state.act_on_node(action, patches), is_safe=True)
 
 
 def reach_with_all_safe_resources(logic: Logic,
@@ -358,14 +382,10 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach,
     previous_safe_nodes = set(previous_reach.safe_nodes)
 
     for action in get_uncollected_resource_nodes_of_reach(previous_reach):
-        if action.resource() in logic.game.dangerous_resources:
-            # print("Trying to collect {}, but it's dangerous! Starting from scratch".format(action.name))
-            next_reach = reach_with_all_safe_resources(logic, initial_state.act_on_node(action, patches), patches)
-        else:
-            # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
-            next_reach = copy.deepcopy(previous_reach)
-            next_reach.advance_to(next_reach.state.act_on_node(action, patches))
-            collect_all_safe_resources_in_reach(next_reach, patches)
+        # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
+        next_reach = copy.deepcopy(previous_reach)
+        next_reach.act_on(action)
+        collect_all_safe_resources_in_reach(next_reach, patches)
 
         if previous_safe_nodes <= set(next_reach.safe_nodes):
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
@@ -409,4 +429,5 @@ def advance_to_with_reach_copy(base_reach: GeneratorReach,
     potential_reach = copy.deepcopy(base_reach)
     potential_reach.advance_to(state)
     collect_all_safe_resources_in_reach(potential_reach, patches)
+    # return potential_reach
     return advance_reach_with_possible_unsafe_resources(potential_reach, patches)
