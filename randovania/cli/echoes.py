@@ -123,7 +123,10 @@ def distribute_command_logic(args):
         status_update=status_update
     )
     after = time.perf_counter()
-    print("Took {} seconds".format(after - before))
+    print("Took {} seconds. Hash: {}".format(
+        after - before,
+        hash(tuple(layout_description.pickup_assignment.items()))
+    ))
     layout_description.save_to_file(args.output_file)
 
 
