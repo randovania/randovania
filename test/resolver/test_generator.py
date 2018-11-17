@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, List
 from unittest.mock import MagicMock
 
 import pytest
@@ -41,12 +41,12 @@ _test_descriptions = [
                                           hundo_guaranteed=LayoutEnabledFlag.DISABLED,
                                           difficulty=LayoutDifficulty.NORMAL,
                                           pickup_quantities={}),
-        pickup_mapping=(100, 90, 118, 73, 95, 46, 25, 17, 52, 32, 69, 101, 80, 1, 103, 117, 31, 107, 97, 10, 23, 82, 67,
-                        88, 54, 110, 44, 109, 61, 74, 26, 37, 38, 6, 28, 79, 57, 8, 112, 12, 24, 83, 3, 30, 51, 96, 78,
-                        102, 4, 39, 94, 58, 27, 115, 36, 34, 75, 70, 47, 45, 87, 66, 18, 116, 50, 20, 49, 63, 22, 65,
-                        48, 71, 60, 89, 56, 5, 114, 40, 72, 0, 33, 15, 16, 59, 43, 113, 64, 84, 11, 76, 21, 13, 14, 7,
-                        29, 99, 92, 85, 42, 93, 9, 77, 19, 41, 55, 81, 108, 111, 91, 35, 2, 53, 105, 62, 106, 68, 98,
-                        86, 104),
+        pickup_mapping=(84, 78, 69, 34, 110, 107, 103, 0, 13, 37, 116, 100, 23, 88, 109, 49, 92, 45, 79, 67, 38, 75, 20,
+                        96, 90, 50, 82, 41, 40, 46, 7, 74, 17, 73, 93, 43, 65, 57, 58, 55, 53, 12, 24, 101, 63, 42, 52,
+                        85, 117, 77, 10, 80, 2, 72, 94, 104, 102, 25, 56, 98, 115, 9, 59, 112, 108, 70, 39, 89, 29, 26,
+                        91, 95, 8, 6, 31, 86, 5, 105, 99, 3, 36, 64, 83, 48, 16, 19, 87, 30, 28, 68, 71, 61, 113, 118,
+                        81, 76, 18, 22, 62, 66, 21, 51, 11, 111, 47, 114, 54, 33, 32, 97, 1, 27, 35, 4, 44, 15, 14, 60,
+                        106),
     ),
     _create_test_layout_description(
         seed_number=50000,
@@ -140,7 +140,7 @@ def test_compare_generated_with_data(benchmark, layout_description: LayoutDescri
     status_update = MagicMock()
 
     data = binary_data.decode_default_prime2()
-    generated_description = benchmark.pedantic(
+    generated_description: LayoutDescription = benchmark.pedantic(
         generator.generate_list,
         args=(
             data,
@@ -153,8 +153,13 @@ def test_compare_generated_with_data(benchmark, layout_description: LayoutDescri
         iterations=1,
         rounds=1)
 
-    print(generated_description.pickup_assignment)
-    # assert generated_description.without_solver_path == layout_description
+    pickup_database = default_prime2_pickup_database()
+    indices: List[int] = [None] * len(pickup_database.pickups)
+    for index, pickup in generated_description.pickup_assignment.items():
+        indices[index.index] = pickup_database.pickups.index(pickup)
+    print(indices)
+
+    assert generated_description.without_solver_path == layout_description
 
 
 @pytest.mark.skip(reason="generating is taking too long")
