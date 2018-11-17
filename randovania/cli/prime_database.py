@@ -3,9 +3,10 @@ import csv
 import json
 import os
 from argparse import ArgumentParser
-from typing import Dict, BinaryIO
+from typing import Dict, BinaryIO, Optional
 
 from randovania import get_data_path
+from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name
 from randovania.games.prime import binary_data
 from randovania.resolver import resolver, debug
 from randovania.game_description import data_reader
@@ -178,32 +179,41 @@ def export_areas_command(sub_parsers):
     parser.set_defaults(func=export_areas_command_logic)
 
 
-def list_paths_with_difficulty_logic(args):
-    gd = load_game_description(args)
-
-    difficulty_resource = gd.resource_database.difficulty_resource
+def _list_paths_with_resource(game: GameDescription,
+                              resource: ResourceInfo,
+                              needed_quantity: Optional[int]):
     count = 0
 
-    for world in gd.worlds:
+    for world in game.worlds:
         for area in world.areas:
             for source, connection in area.connections.items():
                 for target, requirements in connection.items():
                     for alternative in requirements.alternatives:
-                        difficulty_invididual = alternative.get(difficulty_resource)
-                        alternative_difficulty = difficulty_invididual.amount if difficulty_invididual is not None else 0
+                        individual = alternative.get(resource)
+                        if individual is None:
+                            continue
 
-                        if alternative_difficulty == args.difficulty:
+                        if needed_quantity is None or needed_quantity == individual.amount:
                             print("At {0.name}/{1.name}, from {2} to {3}:\n{4}\n".format(
                                 world,
                                 area,
                                 source.name,
                                 target.name,
                                 sorted(individual for individual in alternative.values()
-                                       if individual.resource != difficulty_resource)
+                                       if individual.resource != resource)
                             ))
                             count += 1
 
     print("Total routes: {}".format(count))
+
+
+def list_paths_with_difficulty_logic(args):
+    gd = load_game_description(args)
+    _list_paths_with_resource(
+        gd,
+        gd.resource_database.difficulty_resource,
+        args.difficulty
+    )
 
 
 def list_paths_with_difficulty_command(sub_parsers):
@@ -215,6 +225,32 @@ def list_paths_with_difficulty_command(sub_parsers):
     add_data_file_argument(parser)
     parser.add_argument("difficulty", type=int)
     parser.set_defaults(func=list_paths_with_difficulty_logic)
+
+
+def list_paths_with_resource_logic(args):
+    gd = load_game_description(args)
+
+    try:
+        resource = find_resource_info_with_long_name(gd.resource_database.item, args.resource)
+    except ValueError:
+        resource = find_resource_info_with_long_name(gd.resource_database.event, args.resource)
+
+    _list_paths_with_resource(
+        gd,
+        resource,
+        None
+    )
+
+
+def list_paths_with_resource_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "list-resource-usage",
+        help="List all connections that needs the resource.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+    add_data_file_argument(parser)
+    parser.add_argument("resource", type=str)
+    parser.set_defaults(func=list_paths_with_resource_logic)
 
 
 def create_subparsers(sub_parsers):
@@ -229,6 +265,7 @@ def create_subparsers(sub_parsers):
     consistency_check_command(sub_parsers)
     export_areas_command(sub_parsers)
     list_paths_with_difficulty_command(sub_parsers)
+    list_paths_with_resource_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:
