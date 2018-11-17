@@ -10,7 +10,8 @@ from randovania.game_description.data_reader import read_resource_database, read
 from randovania.games.prime import binary_data
 from randovania.gui import tab_service
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso, default_prime2_pickup_database
+from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
+from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
