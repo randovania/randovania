@@ -7,7 +7,7 @@ import randovania.resolver.exceptions
 from randovania import VERSION
 from randovania.game_description.resources import PickupIndex
 from randovania.games.prime import binary_data
-from randovania.gui.common_qt_lib import default_prime2_pickup_database
+from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.resolver import generator, debug
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
