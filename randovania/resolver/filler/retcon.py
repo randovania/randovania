@@ -8,6 +8,7 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.node import ResourceNode, PickupNode, Node
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources import PickupEntry, PickupIndex
+from randovania.resolver import debug
 from randovania.resolver.game_patches import GamePatches, PickupAssignment
 from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
@@ -87,7 +88,9 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
     # else:
     #     messages = ""
 
-    print("{} - {}".format(name, weight))
+    if debug._DEBUG_LEVEL > 1:
+        print("{} - {}".format(name, weight))
+
     if weight > 0:
         return potential_reach, weight
 
@@ -123,7 +126,6 @@ def retcon_playthrough_filler(logic: Logic,
             pickup.name: pickup
             for pickup in available_pickups if pickup not in pickup_assignment.values()
         }
-        print("pickups_left:", list(pickups_left.keys()))
 
         if not pickups_left:
             print("Finished because we have nothing else to distribute")
@@ -143,10 +145,8 @@ def retcon_playthrough_filler(logic: Logic,
             for pickup in pickups_left.values()
             if set(pickup.resources.keys()).intersection(interesting_resources)
         ]
-        print("\n\n===============================")
-        print("\n>>> From {}, {} open pickup indices, {} open resources, actions:".format(
-            logic.game.node_name(reach.state.node, with_world=True),
-            len(current_uncollected.indices), len(current_uncollected.resources)))
+
+        print_retcon_loop_start(current_uncollected, logic, pickups_left, reach)
 
         for pickup_index in reach.state.collected_pickup_indices:
             pickup_index_seen_count[pickup_index] += 1
@@ -208,9 +208,7 @@ def retcon_playthrough_filler(logic: Logic,
 
             last_message = "Placed {} items so far, {} left.".format(len(pickup_assignment), len(pickups_left) - 1)
             status_update(last_message)
-            print("\n--> Placing {} at {}".format(
-                action.name,
-                logic.game.node_name(find_pickup_node_with_index(pickup_index, logic.game.all_nodes), with_world=True)))
+            print_retcon_place_pickup(action, logic, pickup_index)
 
         else:
             last_message = "Triggered an event {} options.".format(options_considered)
@@ -226,6 +224,29 @@ def retcon_playthrough_filler(logic: Logic,
             break
 
     return pickup_assignment
+
+
+def print_retcon_loop_start(current_uncollected, logic, pickups_left, reach):
+    if debug._DEBUG_LEVEL > 0:
+        if debug._DEBUG_LEVEL > 1:
+            extra = ", pickups_left: {}".format(list(pickups_left.keys()))
+        else:
+            extra = ""
+
+        print("\n\n===============================")
+        print("\n>>> From {}, {} open pickup indices, {} open resources{}".format(
+            logic.game.node_name(reach.state.node, with_world=True),
+            len(current_uncollected.indices),
+            len(current_uncollected.resources),
+            extra
+        ))
+
+
+def print_retcon_place_pickup(action, logic, pickup_index):
+    if debug._DEBUG_LEVEL > 0:
+        print("\n--> Placing {} at {}".format(
+            action.name,
+            logic.game.node_name(find_pickup_node_with_index(pickup_index, logic.game.all_nodes), with_world=True)))
 
 
 def _filter_unassigned_pickup_indices(indices: Iterator[PickupIndex],
