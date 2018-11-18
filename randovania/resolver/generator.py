@@ -1,4 +1,3 @@
-import multiprocessing.dummy
 from random import Random
 from typing import Tuple, Iterator, Optional, Callable, Dict, TypeVar, Union
 
@@ -6,14 +5,15 @@ import randovania.games.prime.claris_randomizer
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, PickupNode, ResourceNode
+from randovania.game_description.node import ResourceNode
 from randovania.game_description.resources import PickupEntry, \
     PickupIndex
 from randovania.resolver import resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
-from randovania.resolver.game_patches import GamePatches, PickupAssignment
+from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutLogic
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
@@ -85,27 +85,21 @@ def generate_list(data: Dict,
     #         seed_number=seed_number
     #     )
 
-    if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS or True:
-        # For minimal restrictions, the solver path will take paths that are just impossible.
-        # Let's just not include a path instead of including a lie.
-        solver_path = ()
-
-    else:
-        game = data_reader.decode_data(data, elevators)
-        final_state_by_resolve = resolver.resolve(
+    game = data_reader.decode_data(data, elevators)
+    final_state_by_resolve = resolver.resolve(
+        configuration=configuration,
+        game=game,
+        patches=new_patches
+    )
+    if final_state_by_resolve is None:
+        # Why is final_state_by_distribution not OK?
+        raise GenerationFailure(
+            "Generated patches was impossible for the solver.",
             configuration=configuration,
-            game=game,
-            patches=new_patches
+            seed_number=seed_number
         )
-        if final_state_by_resolve is None:
-            # Why is final_state_by_distribution not OK?
-            raise GenerationFailure(
-                "Generated patches was impossible for the solver.",
-                configuration=configuration,
-                seed_number=seed_number
-            )
-        else:
-            solver_path = _state_to_solver_path(final_state_by_resolve, game)
+    else:
+        solver_path = _state_to_solver_path(final_state_by_resolve, game)
 
     return LayoutDescription(
         seed_number=seed_number,
@@ -117,14 +111,6 @@ def generate_list(data: Dict,
 
 
 Action = Union[ResourceNode, PickupEntry]
-
-
-def _filter_unassigned_pickup_nodes(nodes: Iterator[Node],
-                                    pickup_assignment: PickupAssignment,
-                                    ) -> Iterator[PickupNode]:
-    for node in nodes:
-        if isinstance(node, PickupNode) and node.pickup_index not in pickup_assignment:
-            yield node
 
 
 def _create_patches(
@@ -166,7 +152,7 @@ def _create_patches(
     ]
     rng.shuffle(remaining_items)
 
-    for pickup_node in _filter_unassigned_pickup_nodes(game.all_nodes, new_pickup_mapping):
+    for pickup_node in filter_unassigned_pickup_nodes(game.all_nodes, new_pickup_mapping):
         new_pickup_mapping[pickup_node.pickup_index] = remaining_items.pop()
 
     assert not remaining_items
