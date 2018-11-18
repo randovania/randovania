@@ -123,7 +123,7 @@ class RequirementList:
 
     def __str__(self) -> str:
         if self.items:
-            return str(self.items)
+            return ", ".join(map(str, sorted(self.items)))
         else:
             return "Trivial"
 
@@ -245,8 +245,10 @@ class RequirementSet:
         elif self == RequirementSet.trivial():
             to_print.append("Trivial")
         else:
-            for alternative in self.alternatives:
-                to_print.append(", ".join(map(str, sorted(alternative.values()))))
+            to_print.extend(
+                str(alternative)
+                for alternative in self.alternatives
+            )
         for line in sorted(to_print):
             print(indent + line)
 

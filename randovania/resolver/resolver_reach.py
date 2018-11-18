@@ -45,7 +45,6 @@ class ResolverReach:
 
         checked_nodes = set()
         nodes_to_check: List[Node] = [initial_state.node]
-        path_to_node: Dict[Node, Tuple[Node, ...]] = {}
 
         reach_nodes: List[Node] = []
         requirements_by_node: Dict[Node, Set[RequirementList]] = defaultdict(set)
