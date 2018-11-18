@@ -174,8 +174,8 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     difficulty_level, static_resources = static_resources_for_layout_logic(configuration.logic, game.resource_database)
 
     starting_state.resources = merge_resources(static_resources, starting_state.resources)
-    game.simplify_connections(starting_state.resources)
-
     starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level
+
+    game.simplify_connections(starting_state.resources)
 
     return logic, starting_state
