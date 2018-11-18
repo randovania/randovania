@@ -11,6 +11,7 @@ from randovania.resolver import debug, generator, resolver
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, \
     LayoutRandomizedFlag, LayoutEnabledFlag, LayoutDifficulty
+from randovania.resolver.layout_description import LayoutDescription
 
 __all__ = ["create_subparsers"]
 
@@ -53,24 +54,33 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
 
 
 def validate_command_logic(args):
+    debug._DEBUG_LEVEL = args.debug
     data = prime_database.decode_data_file(args)
-    configuration = LayoutConfiguration(
-        logic=LayoutLogic(args.logic),
-        mode=LayoutMode.STANDARD,
-        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-        item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
-        elevators=LayoutRandomizedFlag.VANILLA,
-        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-        difficulty=LayoutDifficulty.NORMAL,
-        pickup_quantities={}
-    )
 
     game = data_reader.decode_data(data, [])
-    patches = GamePatches(
-        {
+
+    if args.layout_file is not None:
+        description = LayoutDescription.from_file(args.layout_file)
+        configuration = description.configuration
+        pickup_assignment = description.pickup_assignment
+    else:
+        configuration = LayoutConfiguration(
+            logic=LayoutLogic.NO_GLITCHES,
+            mode=LayoutMode.STANDARD,
+            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            item_loss=LayoutEnabledFlag.ENABLED,
+            elevators=LayoutRandomizedFlag.VANILLA,
+            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+            difficulty=LayoutDifficulty.NORMAL,
+            pickup_quantities={}
+        )
+        pickup_assignment = {
             PickupIndex(i): pickup
             for i, pickup in enumerate(game.pickup_database.pickups)
         }
+
+    patches = GamePatches(
+        pickup_assignment
     )
 
     final_state_by_resolve = resolver.resolve(
@@ -89,16 +99,16 @@ def add_validate_command(sub_parsers):
 
     prime_database.add_data_file_argument(parser)
     parser.add_argument(
-        "--logic",
-        type=str,
-        choices=[layout.value for layout in LayoutLogic],
-        default=LayoutLogic.NO_GLITCHES.value,
-        help="The logic difficulty to use.")
+        "--debug",
+        choices=range(4),
+        type=int,
+        default=0,
+        help="The level of debug logging to print.")
     parser.add_argument(
-        "--skip-item-loss",
-        action="store_true",
-        help="Disables the item loss cutscene, disabling losing your items."
-    )
+        "layout_file",
+        type=str,
+        nargs="?",
+        help="The layout seed log file to validate.")
     parser.set_defaults(func=validate_command_logic)
 
 
