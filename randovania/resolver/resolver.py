@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union, Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementSet, RequirementList
@@ -12,11 +12,14 @@ from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State
 
 
-def _simplify_requirement_list(self: RequirementList) -> Optional[RequirementList]:
+def _simplify_requirement_list(self: RequirementList, state: State) -> Optional[RequirementList]:
     items = []
     for item in self.values():
         if item.negate:
             return None
+
+        if item.satisfied(state.resources, state.resource_database):
+            continue
 
         if not isinstance(item.resource, PickupIndex):
             # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
@@ -25,9 +28,10 @@ def _simplify_requirement_list(self: RequirementList) -> Optional[RequirementLis
     return RequirementList(self.difficulty_level, items)
 
 
-def _simplify_requirement_set_for_additional_requirements(requirements: RequirementSet) -> RequirementSet:
+def _simplify_requirement_set_for_additional_requirements(requirements: RequirementSet,
+                                                          state: State) -> RequirementSet:
     new_alternatives = [
-        _simplify_requirement_list(alternative)
+        _simplify_requirement_list(alternative, state)
         for alternative in requirements.alternatives
     ]
     return RequirementSet(alternative
@@ -37,16 +41,16 @@ def _simplify_requirement_set_for_additional_requirements(requirements: Requirem
                           if alternative is not None)
 
 
-def advance_depth(state: State,
-                  logic: Logic) -> Optional[State]:
+def _inner_advance_depth(state: State, logic: Logic) -> Tuple[Optional[State], bool]:
     if logic.game.victory_condition.satisfied(state.resources, state.resource_database):
-        return state
+        return state, True
 
     reach = ResolverReach.calculate_reach(logic, state)
     debug.log_new_advance(state, reach, logic)
 
+    has_action = False
     for action in reach.satisfiable_actions(state):
-        new_state = advance_depth(
+        new_result = _inner_advance_depth(
             state=state.act_on_node(action,
                                     logic.patches,
                                     path=reach.path_to_node[action]
@@ -54,13 +58,21 @@ def advance_depth(state: State,
             logic=logic)
 
         # We got a positive result. Send it back up
-        if new_state:
-            return new_state
+        if new_result[0] is not None:
+            return new_result
+        else:
+            has_action = True
 
-    debug.log_rollback(state)
-    logic.additional_requirements[state.node] = _simplify_requirement_set_for_additional_requirements(
-        reach.satisfiable_as_requirement_set)
-    return None
+    debug.log_rollback(state, has_action)
+    if not has_action:
+        logic.additional_requirements[state.node] = _simplify_requirement_set_for_additional_requirements(
+            reach.satisfiable_as_requirement_set, state)
+
+    return None, has_action
+
+
+def advance_depth(state: State, logic: Logic) -> Optional[State]:
+    return _inner_advance_depth(state, logic)[0]
 
 
 def resolve(configuration: LayoutConfiguration,

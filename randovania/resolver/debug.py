@@ -73,10 +73,10 @@ def log_new_advance(state: "State", reach: "ResolverReach", logic: Logic):
                 print("{}: {}".format(_indent(), n(node)))
 
 
-def log_rollback(state):
+def log_rollback(state, has_action):
     global _current_indent
     if _DEBUG_LEVEL > 1:
-        print("{}* Rollback {}".format(_indent(), n(state.node)))
+        print("{}* Rollback {}; Had action? {}".format(_indent(), n(state.node), has_action))
     _current_indent -= 1
 
 
