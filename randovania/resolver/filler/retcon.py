@@ -103,7 +103,7 @@ def retcon_playthrough_filler(logic: Logic,
                               patches: GamePatches,
                               available_pickups: Tuple[PickupEntry],
                               rng: Random,
-                              status_update: Callable[[str], None]
+                              status_update: Callable[[str], None],
                               ) -> PickupAssignment:
     pickup_assignment = copy.copy(patches.pickup_assignment)
     print("Major items: {}".format([item.item for item in available_pickups]))

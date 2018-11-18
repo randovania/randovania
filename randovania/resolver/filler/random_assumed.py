@@ -1,12 +1,12 @@
 import copy
 from random import Random
-from typing import Tuple, Iterator
+from typing import Tuple, Iterator, Callable
 
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.resources import PickupEntry
 from randovania.resolver import debug
 from randovania.resolver.game_patches import GamePatches, PickupAssignment
-from randovania.resolver.generator import _filter_unassigned_pickup_nodes
+from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.generator_reach import advance_reach_with_possible_unsafe_resources, \
     reach_with_all_safe_resources, collect_all_safe_resources_in_reach, filter_reachable, pickup_nodes_that_can_reach
 from randovania.resolver.logic import Logic
@@ -14,12 +14,13 @@ from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, add_resource_gain_to_state, state_with_pickup
 
 
-def _random_assumed_filler(logic: Logic,
-                           initial_state: State,
-                           patches: GamePatches,
-                           available_pickups: Tuple[PickupEntry],
-                           rng: Random,
-                           ) -> PickupAssignment:
+def random_assumed_filler(logic: Logic,
+                          initial_state: State,
+                          patches: GamePatches,
+                          available_pickups: Tuple[PickupEntry],
+                          rng: Random,
+                          status_update: Callable[[str], None],
+                          ) -> PickupAssignment:
     pickup_assignment = copy.copy(patches.pickup_assignment)
     print("Major items: {}".format([item.item for item in available_pickups]))
 
@@ -47,7 +48,7 @@ def _random_assumed_filler(logic: Logic,
         escape_state = state_with_pickup(reach.state, pickup)
 
         total_pickup_nodes = list(_filter_pickups(filter_reachable(reach.nodes, reach)))
-        pickup_nodes = list(_filter_unassigned_pickup_nodes(total_pickup_nodes, pickup_assignment))
+        pickup_nodes = list(filter_unassigned_pickup_nodes(total_pickup_nodes, pickup_assignment))
         num_nodes = len(pickup_nodes)
         actions_weights = {
             node: len(path)
