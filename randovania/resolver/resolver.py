@@ -1,4 +1,4 @@
-from typing import Optional, Union, Tuple
+from typing import Optional, Union, Tuple, Callable
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementSet, RequirementList
@@ -41,12 +41,13 @@ def _simplify_requirement_set_for_additional_requirements(requirements: Requirem
                           if alternative is not None)
 
 
-def _inner_advance_depth(state: State, logic: Logic) -> Tuple[Optional[State], bool]:
+def _inner_advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Tuple[Optional[State], bool]:
     if logic.game.victory_condition.satisfied(state.resources, state.resource_database):
         return state, True
 
     reach = ResolverReach.calculate_reach(logic, state)
     debug.log_new_advance(state, reach, logic)
+    status_update("Resolving... {} total resources".format(len(state.resources)))
 
     has_action = False
     for action in reach.satisfiable_actions(state):
@@ -55,7 +56,8 @@ def _inner_advance_depth(state: State, logic: Logic) -> Tuple[Optional[State], b
                                     logic.patches,
                                     path=reach.path_to_node[action]
                                     ),
-            logic=logic)
+            logic=logic,
+            status_update=status_update)
 
         # We got a positive result. Send it back up
         if new_result[0] is not None:
@@ -71,13 +73,19 @@ def _inner_advance_depth(state: State, logic: Logic) -> Tuple[Optional[State], b
     return None, has_action
 
 
-def advance_depth(state: State, logic: Logic) -> Optional[State]:
-    return _inner_advance_depth(state, logic)[0]
+def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Optional[State]:
+    return _inner_advance_depth(state, logic, status_update)[0]
 
 
 def resolve(configuration: LayoutConfiguration,
             game: GameDescription,
-            patches: GamePatches) -> Optional[State]:
+            patches: GamePatches,
+            status_update: Optional[Callable[[str], None]] = None
+            ) -> Optional[State]:
+
+    if status_update is None:
+        status_update = lambda s: None
+
     logic, starting_state = logic_bootstrap(configuration, game, patches)
     debug.log_resolve_start()
-    return advance_depth(starting_state, logic)
+    return advance_depth(starting_state, logic, status_update)

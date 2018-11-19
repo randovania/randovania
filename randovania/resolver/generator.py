@@ -89,7 +89,8 @@ def generate_list(data: Dict,
     final_state_by_resolve = resolver.resolve(
         configuration=configuration,
         game=game,
-        patches=new_patches
+        patches=new_patches,
+        status_update=status_update
     )
     if final_state_by_resolve is None:
         # Why is final_state_by_distribution not OK?
