@@ -16,6 +16,7 @@ from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow
 from randovania.interface_common.update_checker import get_latest_version
+from randovania.resolver import debug
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
@@ -35,6 +36,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.setWindowTitle("Randovania {}".format(VERSION))
         self.is_preview_mode = preview
         self.setAcceptDrops(True)
+
+        if preview:
+            debug._DEBUG_LEVEL = 2
 
         # Signals
         self.newer_version_signal.connect(self.display_new_version)
