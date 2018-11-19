@@ -190,10 +190,11 @@ def retcon_playthrough_filler(logic: Logic,
         try:
             action = next(iterate_with_weights(list(actions_weights.keys()), actions_weights, rng))
         except StopIteration:
-            if progression_pickups:
+            if progression_pickups and current_uncollected.indices:
                 action = rng.choice(progression_pickups)
             else:
-                raise RuntimeError("We have no more actions, ohno. Pickups left: {}".format(list(pickups_left.keys())))
+                raise RuntimeError("Unable to generate, no actions found after placing {} items.".format(
+                    len(pickup_assignment)))
 
         if isinstance(action, PickupEntry):
             next_state = state_with_pickup(reach.state, action)
