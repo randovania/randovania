@@ -2,6 +2,9 @@ from randovania.resolver.layout_configuration import LayoutConfiguration
 
 
 class GenerationFailure(Exception):
+    configuration: LayoutConfiguration
+    seed_number: int
+
     def __init__(self, reason: str, configuration: LayoutConfiguration, seed_number: int):
         super().__init__(reason)
         self.configuration = configuration
@@ -13,3 +16,6 @@ class GenerationFailure(Exception):
             self.seed_number,
             self.configuration.as_str
         )
+
+    def __reduce__(self):
+        return GenerationFailure, (super().__str__(), self.configuration, self.seed_number)
