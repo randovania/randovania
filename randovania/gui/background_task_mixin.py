@@ -1,4 +1,5 @@
 import threading
+import traceback
 from typing import Optional
 
 from PyQt5.QtCore import pyqtSignal
@@ -27,6 +28,7 @@ class BackgroundTaskMixin:
             except AbortBackgroundTask:
                 pass
             except Exception as e:
+                traceback.print_exc()
                 progress_update("Error: {}".format(e), -1)
             finally:
                 self.background_tasks_button_lock_signal.emit(True)
