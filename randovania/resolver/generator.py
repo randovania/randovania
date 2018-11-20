@@ -1,3 +1,4 @@
+import multiprocessing.dummy
 from random import Random
 from typing import Tuple, Iterator, Optional, Callable, Dict, TypeVar, Union
 
@@ -59,48 +60,43 @@ def generate_list(data: Dict,
     if status_update is None:
         status_update = id
 
-    new_patches = _create_patches(
-        **{
-            "seed_number": seed_number,
+    create_patches_params = {
+        "seed_number": seed_number,
+        "configuration": configuration,
+        "game": data_reader.decode_data(data, elevators, False),
+        "status_update": status_update
+    }
+    resolver_game = data_reader.decode_data(data, elevators)
+
+    def create_failure(message: str):
+        return GenerationFailure(message, configuration=configuration, seed_number=seed_number)
+
+    with multiprocessing.dummy.Pool(1) as dummy_pool:
+        patches_async = dummy_pool.apply_async(func=_create_patches,
+                                               kwds=create_patches_params)
+        try:
+            new_patches = patches_async.get(120)
+        except multiprocessing.TimeoutError:
+            raise create_failure("Timeout reached when generating patches.")
+
+        resolve_params = {
             "configuration": configuration,
-            "game": data_reader.decode_data(data, elevators, False),
-            "status_update": status_update
-        })
+            "game": resolver_game,
+            "patches": new_patches,
+            "status_update": status_update,
+        }
+        final_state_async = dummy_pool.apply_async(func=resolver.resolve,
+                                                   kwds=resolve_params)
+        try:
+            final_state_by_resolve = final_state_async.get(60)
+        except multiprocessing.TimeoutError:
+            raise create_failure("Timeout reached when calculating solver path.")
 
-    # try:
-    #     with multiprocessing.dummy.Pool(1) as dummy_pool:
-    #         new_patches = dummy_pool.apply_async(
-    #             func=_create_patches,
-    #             kwds={
-    #                 "seed_number": seed_number,
-    #                 "configuration": configuration,
-    #                 "game": data_reader.decode_data(data, elevators),
-    #                 "status_update": status_update
-    #             }
-    #         ).get(120)
-    # except multiprocessing.TimeoutError:
-    #     raise GenerationFailure(
-    #         "Timeout reached when generating patches.",
-    #         configuration=configuration,
-    #         seed_number=seed_number
-    #     )
-
-    game = data_reader.decode_data(data, elevators)
-    final_state_by_resolve = resolver.resolve(
-        configuration=configuration,
-        game=game,
-        patches=new_patches,
-        status_update=status_update
-    )
     if final_state_by_resolve is None:
         # Why is final_state_by_distribution not OK?
-        raise GenerationFailure(
-            "Generated patches was impossible for the solver.",
-            configuration=configuration,
-            seed_number=seed_number
-        )
+        raise create_failure("Generated patches was impossible for the solver.")
     else:
-        solver_path = _state_to_solver_path(final_state_by_resolve, game)
+        solver_path = _state_to_solver_path(final_state_by_resolve, resolver_game)
 
     return LayoutDescription(
         seed_number=seed_number,
