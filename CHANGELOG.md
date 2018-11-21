@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.16.0] - 2018-11-20
 - Updated item distribution: seeds are now less likely to have all items in the beginning, and some items less likely to appear in vanilla locations.
 - Item Mode (Standard/Major Items) removed for now.
 
