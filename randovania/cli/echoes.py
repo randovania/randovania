@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
 from randovania.game_description.resources import PickupIndex
+from randovania.games.prime import claris_randomizer
 from randovania.resolver import debug, generator, resolver
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, \
@@ -57,12 +58,13 @@ def validate_command_logic(args):
     debug._DEBUG_LEVEL = args.debug
     data = prime_database.decode_data_file(args)
 
-    game = data_reader.decode_data(data, [])
-
     if args.layout_file is not None:
         description = LayoutDescription.from_file(args.layout_file)
         configuration = description.configuration
         pickup_assignment = description.pickup_assignment
+        elevators = claris_randomizer.elevator_list_for_configuration(configuration, description.seed_number)
+        game = data_reader.decode_data(data, elevators)
+
     else:
         configuration = LayoutConfiguration(
             logic=LayoutLogic.NO_GLITCHES,
@@ -74,6 +76,7 @@ def validate_command_logic(args):
             difficulty=LayoutDifficulty.NORMAL,
             pickup_quantities={}
         )
+        game = data_reader.decode_data(data, [])
         pickup_assignment = {
             PickupIndex(i): pickup
             for i, pickup in enumerate(game.pickup_database.pickups)
