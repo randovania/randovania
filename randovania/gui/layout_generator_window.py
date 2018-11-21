@@ -78,6 +78,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     def __init__(self, tab_service: tab_service, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
+        self.mode_group.hide()
 
         self.tab_service = tab_service
         self.background_processor = background_processor
