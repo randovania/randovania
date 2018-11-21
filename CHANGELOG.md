@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Updated item distribution: seeds are now less likely to have all items in the beginning, and some items less likely to appear in vanilla locations.
+- Item Mode (Standard/Major Items) removed for now.
 
 ## [0.15.0] - 2018-10-27
 - Added a timeout of 2 minutes to seed generation.
