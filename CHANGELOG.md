@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Updated item distribution: seeds are now less likely to have all items in the beginning, and some items less likely to appear in vanilla locations.
 
 ## [0.15.0] - 2018-10-27
 - Added a timeout of 2 minutes to seed generation.
