@@ -1,8 +1,6 @@
-from typing import NamedTuple, Dict
+from typing import NamedTuple
 
-from randovania.game_description.resources import PickupIndex, PickupEntry
-
-PickupAssignment = Dict[PickupIndex, PickupEntry]
+from randovania.game_description.resources import PickupAssignment
 
 
 class GamePatches(NamedTuple):

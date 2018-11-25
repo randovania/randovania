@@ -23,10 +23,7 @@ def _create_test_layout_description(
         seed_number=seed_number,
         configuration=configuration,
         version=VERSION,
-        pickup_assignment={
-            PickupIndex(i): pickup_database.pickups[item_index]
-            for i, item_index in enumerate(pickup_mapping)
-        },
+        pickup_assignment=pickup_database.original_pickup_mapping,
         solver_path=())
 
 
@@ -153,9 +150,9 @@ def test_compare_generated_with_data(benchmark, layout_description: LayoutDescri
         rounds=1)
 
     pickup_database = default_prime2_pickup_database()
-    indices: List[int] = [None] * len(pickup_database.pickups)
+    indices: List[int] = [None] * pickup_database.total_pickup_count
     for index, pickup in generated_description.pickup_assignment.items():
-        indices[index.index] = pickup_database.pickups.index(pickup)
+        indices[index.index] = pickup_database.original_index(pickup).index
     print(indices)
 
     assert generated_description.without_solver_path == layout_description

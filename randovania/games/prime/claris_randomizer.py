@@ -9,12 +9,15 @@ import py
 from randovania import get_data_path
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
 from randovania.games.prime import claris_random
-from randovania.games.prime.claris_randomzer_pickups import create_empty_index_array, get_index_by_pickup_name
 from randovania.interface_common import status_update_lib
+from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.interface_common.options import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
+
+
+_USELESS_PICKUP_NAME = "Energy Transfer Module"
 
 
 def _get_randomizer_folder() -> str:
@@ -132,9 +135,12 @@ def apply_layout(
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     _create_pak_backups(game_root, backup_files_path, status_update)
 
-    indices = create_empty_index_array()
+    pickup_database = default_prime2_pickup_database()
+    useless_pickup = pickup_database.pickup_by_name(_USELESS_PICKUP_NAME)
+
+    indices = [pickup_database.original_index(useless_pickup).index] * pickup_database.total_pickup_count
     for index, pickup in layout.pickup_assignment.items():
-        indices[index.index] = get_index_by_pickup_name(pickup.name)
+        indices[index.index] = pickup_database.original_index(pickup).index
 
     args += [
         "-s", str(layout.seed_number),

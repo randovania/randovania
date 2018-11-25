@@ -48,13 +48,6 @@ def read_damage_resource_info_array(data: List[Dict], items: List[SimpleResource
     return read_array(data, lambda info: read_damage_resource_info(info, items))
 
 
-# Pickup
-
-def read_pickup_info_array(data: List[Dict],
-                           resource_database: ResourceDatabase) -> List[PickupEntry]:
-    return read_array(data, lambda pickup: PickupEntry.from_data(pickup, resource_database))
-
-
 # Requirement
 
 
@@ -214,8 +207,16 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
 
 def read_pickup_database(data: Dict,
                          resource_database: ResourceDatabase) -> PickupDatabase:
+
+    pickups = [PickupEntry.from_data(item, resource_database) for item in data["pickups"]]
+    original_pickup_mapping = {
+        PickupIndex(i): next(pickup for pickup in pickups if pickup.name == name)
+        for i, name in enumerate(data["original_pickup_indices_values"])
+    }
+
     return PickupDatabase(
-        pickups=read_pickup_info_array(data["pickups"], resource_database),
+        pickups=pickups,
+        original_pickup_mapping=original_pickup_mapping
     )
 
 

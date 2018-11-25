@@ -165,8 +165,21 @@ class ResourceDatabase(NamedTuple):
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
 
 
+PickupAssignment = Dict[PickupIndex, PickupEntry]
+
+
 class PickupDatabase(NamedTuple):
     pickups: List[PickupEntry]
+    original_pickup_mapping: PickupAssignment
+
+    @property
+    def total_pickup_count(self) -> int:
+        return len(self.pickups)
+
+    @property
+    def all_pickup_names(self) -> Iterator[str]:
+        for pickup in self.pickups:
+            yield pickup.name
 
     def pickups_split_by_name(self) -> Dict[str, List[PickupEntry]]:
         result = {}
@@ -174,6 +187,18 @@ class PickupDatabase(NamedTuple):
             result[pickup.name] = result.get(pickup.name, [])
             result[pickup.name].append(pickup)
         return result
+
+    def original_index(self, pickup: PickupEntry) -> PickupIndex:
+        for index, p in self.original_pickup_mapping.items():
+            if p == pickup:
+                return index
+        raise ValueError("Unknown pickup: {}".format(pickup))
+
+    def pickup_by_name(self, pickup_name: str) -> PickupEntry:
+        for pickup in self.pickups:
+            if pickup.name == pickup_name:
+                return pickup
+        raise ValueError("Unknown pickup: {}".format(pickup_name))
 
 
 def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResources:

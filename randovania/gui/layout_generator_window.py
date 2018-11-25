@@ -240,7 +240,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         pickup_database = default_prime2_pickup_database()
 
         split_pickups = pickup_database.pickups_split_by_name()
-        self._maximum_item_count = len(pickup_database.pickups)
+        self._maximum_item_count = pickup_database.total_pickup_count
 
         # TODO: Very specific logic that should be provided by data
         split_pickups.pop("Energy Transfer Module")

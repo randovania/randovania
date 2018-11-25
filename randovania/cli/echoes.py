@@ -77,10 +77,7 @@ def validate_command_logic(args):
             pickup_quantities={}
         )
         game = data_reader.decode_data(data, [])
-        pickup_assignment = {
-            PickupIndex(i): pickup
-            for i, pickup in enumerate(game.pickup_database.pickups)
-        }
+        pickup_assignment = game.pickup_database.original_pickup_mapping
 
     patches = GamePatches(
         pickup_assignment
