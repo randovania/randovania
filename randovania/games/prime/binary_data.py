@@ -135,17 +135,17 @@ def read_area(source: BinarySource) -> Dict:
 
     nodes = [read_node(source) for _ in range(node_count)]
 
-    connections = [[
-        read_requirement_set(source) if origin != target else None
-        for target in range(node_count)
-    ] for origin in range(node_count)]
+    for origin in nodes:
+        origin["connections"] = {}
+        for target in nodes:
+            if origin != target:
+                origin["connections"][target["name"]] = read_requirement_set(source)
 
     return {
         "name": name,
         "asset_id": asset_id,
         "default_node_index": default_node_index,
-        "nodes": nodes,
-        "connections": connections,
+        "nodes": nodes
     }
 
 
@@ -328,10 +328,10 @@ def encode(data: Dict, x: BinaryIO):
         for node in item["nodes"]:
             write_node(_writer, node)
 
-        for outer in item["connections"]:
-            for inner in outer:
-                if inner is not None:
-                    write_requirement_set(_writer, inner)
+        for origin in item["nodes"]:
+            for target in item["nodes"]:
+                if origin != target:
+                    write_requirement_set(_writer, origin["connections"][target["name"]])
 
     def write_world(_writer: BinaryWriter, item: Dict):
         _writer.write_string(item["name"])

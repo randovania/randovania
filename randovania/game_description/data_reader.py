@@ -123,9 +123,9 @@ class WorldReader:
         self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
     def read_node(self, data: Dict) -> Node:
-        name = data["name"]
-        heal = data["heal"]
-        node_type = data["node_type"]
+        name: str = data["name"]
+        heal: bool = data["heal"]
+        node_type: int = data["node_type"]
 
         if node_type == 0:
             self.generic_index += 1
@@ -166,23 +166,24 @@ class WorldReader:
     def read_area(self, data: Dict) -> Area:
         name = data["name"]
         nodes = read_array(data["nodes"], self.read_node)
+        nodes_by_name = {node.name: node for node in nodes}
 
         connections = {}
-        for i, origin in enumerate(data["connections"]):
-            connections[nodes[i]] = {}
+        for i, origin_data in enumerate(data["nodes"]):
+            origin = nodes[i]
+            connections[origin] = {}
 
             extra_requirement = None
-            if is_resource_node(nodes[i]) and self.add_self_as_requirement_to_resources:
-                extra_requirement = RequirementList.with_single_resource(nodes[i].resource())
+            if is_resource_node(origin) and self.add_self_as_requirement_to_resources:
+                extra_requirement = RequirementList.with_single_resource(origin.resource())
 
-            for j, target in enumerate(origin):
-                if target:
-                    the_set = read_requirement_set(target, self.resource_database)
-                    if extra_requirement is not None:
-                        the_set = the_set.union(RequirementSet([extra_requirement]))
+            for target_name, target_requirements in origin_data["connections"].items():
+                the_set = read_requirement_set(target_requirements, self.resource_database)
+                if extra_requirement is not None:
+                    the_set = the_set.union(RequirementSet([extra_requirement]))
 
-                    if the_set != RequirementSet.impossible():
-                        connections[nodes[i]][nodes[j]] = the_set
+                if the_set != RequirementSet.impossible():
+                    connections[origin][nodes_by_name[target_name]] = the_set
 
         return Area(name, data["asset_id"], data["default_node_index"], nodes,
                     connections)
