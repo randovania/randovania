@@ -95,6 +95,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         self.create_layout_button.clicked.connect(self._create_new_layout_pressed)
         self.view_details_button.clicked.connect(self._view_layout_details)
 
+        self.itemquantity_total_label.keep_visible_with_help_disabled = True
         self._create_item_toggles()
 
         # Update with Options
@@ -109,7 +110,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
 
         for layouts in self.scroll_area_widget_contents.children():
             for element in layouts.children():
-                if isinstance(element, QLabel):
+                if isinstance(element, QLabel) and not getattr(element, "keep_visible_with_help_disabled", False):
                     element.setVisible(enabled)
 
     def get_current_seed_number_or_random_one(self) -> int:
@@ -250,6 +251,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
             column = (i // num_rows) * 2
             pickup_label = QLabel(self.itemquantity_group)
             pickup_label.setText(pickup)
+            pickup_label.keep_visible_with_help_disabled = True
             self.gridLayout_2.addWidget(pickup_label, row, column, 1, 1)
 
             original_quantity = len(split_pickups[pickup])

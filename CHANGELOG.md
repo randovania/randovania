@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Fixed: pressing the Reset button in the Item Quantity works properly.
+- Fixed: hiding help in Layout Generation will no longer hide the item names in Item Quantity.
 
 ## [0.16.0] - 2018-11-20
 - Updated item distribution: seeds are now less likely to have all items in the beginning, and some items less likely to appear in vanilla locations.
