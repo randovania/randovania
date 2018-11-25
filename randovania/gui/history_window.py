@@ -168,7 +168,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         for pickup_button in self.pickup_spoiler_buttons:
             pickup = layout.pickup_assignment.get(pickup_button.pickup_index)
             if pickup is not None:
-                pickup_button.item_name = pickup.item
+                pickup_button.item_name = pickup.name
             else:
                 pickup_button.item_name = "Nothing"
 

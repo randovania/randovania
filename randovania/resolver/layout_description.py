@@ -30,7 +30,7 @@ def _pickup_assignment_to_item_locations(game: GameDescription,
             for node in area.nodes:
                 if isinstance(node, PickupNode):
                     if node.pickup_index in pickup_assignment:
-                        item_name = pickup_assignment[node.pickup_index].item
+                        item_name = pickup_assignment[node.pickup_index].name
                     else:
                         item_name = "Nothing"
                     items_in_world[game.node_name(node)] = item_name

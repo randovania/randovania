@@ -123,7 +123,7 @@ def print_distribute_fill_pickup_index(pickup_index: PickupIndex, action: Pickup
 def print_distribute_place_item(pickup_node, item: PickupEntry, logic):
     if _DEBUG_LEVEL > 1:
         print("Placed {} at {} after {} sightings".format(
-            item.item,
+            item.name,
             n(pickup_node, with_world=True),
             logic.node_sightings[pickup_node]))
 

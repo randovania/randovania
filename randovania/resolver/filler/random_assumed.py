@@ -22,7 +22,7 @@ def random_assumed_filler(logic: Logic,
                           status_update: Callable[[str], None],
                           ) -> PickupAssignment:
     pickup_assignment = copy.copy(patches.pickup_assignment)
-    print("Major items: {}".format([item.item for item in available_pickups]))
+    print("Major items: {}".format([item.name for item in available_pickups]))
 
     base_reach = advance_reach_with_possible_unsafe_resources(
         reach_with_all_safe_resources(logic, initial_state, patches),
@@ -32,7 +32,7 @@ def random_assumed_filler(logic: Logic,
 
     previous_reach = base_reach
     for pickup in reversed(available_pickups):
-        print("** Preparing reach for {}".format(pickup.item))
+        print("** Preparing reach for {}".format(pickup.name))
         new_reach = copy.deepcopy(previous_reach)
         add_resource_gain_to_state(new_reach.state, pickup.resource_gain())
         new_reach.state.previous_state = new_reach.state
@@ -59,14 +59,14 @@ def random_assumed_filler(logic: Logic,
             pickup_node = next(pickup_nodes_that_can_reach(iterate_with_weights(pickup_nodes, actions_weights, rng),
                                                            reach_with_all_safe_resources(logic, escape_state, patches),
                                                            set(reach.safe_nodes)))
-            print("Placed {} at {}. Had {} available of {} nodes.".format(pickup.item,
+            print("Placed {} at {}. Had {} available of {} nodes.".format(pickup.name,
                                                                           logic.game.node_name(pickup_node, True),
                                                                           num_nodes,
                                                                           len(total_pickup_nodes)))
 
         except StopIteration:
             print("\n".join(logic.game.node_name(node, True) for node in reach.safe_nodes))
-            raise Exception("Couldn't place {}. Had {} available of {} nodes.".format(pickup.item,
+            raise Exception("Couldn't place {}. Had {} available of {} nodes.".format(pickup.name,
                                                                                       num_nodes,
                                                                                       len(total_pickup_nodes)
                                                                                       ))

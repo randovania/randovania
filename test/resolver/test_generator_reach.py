@@ -84,7 +84,7 @@ def test_calculate_reach_with_seeds():
 
     remaining_pickups = available_pickups[1:]
 
-    print("Major items: {}".format([item.item for item in remaining_pickups]))
+    print("Major items: {}".format([item.name for item in remaining_pickups]))
 
     for pickup in remaining_pickups[:]:
         add_resource_gain_to_state(state, pickup.resource_gain())
