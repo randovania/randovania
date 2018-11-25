@@ -123,9 +123,9 @@ def _create_patches(
     categories = {"translator", "major", "energy_tank"}
 
     if configuration.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
-        for i, pickup in enumerate(game.pickup_database.pickups):
+        for index, pickup in game.pickup_database.original_pickup_mapping:
             if pickup.item_category == "sky_temple_key":
-                patches.pickup_assignment[PickupIndex(i)] = pickup
+                patches.pickup_assignment[index] = pickup
     else:
         categories.add("sky_temple_key")
 

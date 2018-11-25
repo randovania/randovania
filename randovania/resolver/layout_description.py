@@ -8,7 +8,7 @@ from randovania.game_description import echoes_elevator, data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
 from randovania.games.prime import binary_data
-from randovania.resolver.game_patches import PickupAssignment
+from randovania.game_description.resources import PickupAssignment
 from randovania.resolver.layout_configuration import LayoutConfiguration
 
 

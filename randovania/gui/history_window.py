@@ -86,7 +86,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
     def _create_pickup_spoiler_combobox(self):
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
 
-        pickup_names = set(pickup.name for pickup in default_prime2_pickup_database().pickups)
+        pickup_names = set(default_prime2_pickup_database().all_pickup_names)
         for pickup_name in sorted(pickup_names):
             self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
 

@@ -7,9 +7,9 @@ from typing import Tuple, Iterator, NamedTuple, Set, Optional, Union, Dict, Froz
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, PickupNode, Node
 from randovania.game_description.requirements import RequirementList
-from randovania.game_description.resources import PickupEntry, PickupIndex
+from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment
 from randovania.resolver import debug
-from randovania.resolver.game_patches import GamePatches, PickupAssignment
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_uncollected_resource_nodes_of_reach, advance_to_with_reach_copy
