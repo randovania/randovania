@@ -56,25 +56,23 @@ CurrentResources = Dict[ResourceInfo, int]
 
 
 class PickupEntry(NamedTuple):
-    world: str
-    room: str
-    item: str
+    name: str
     resources: Dict[SimpleResourceInfo, int]
     item_category: str
 
     def __hash__(self):
-        return hash(self.item)
+        return hash(self.name)
 
-    @property
-    def name(self) -> str:
-        return self.item
+    def __lt__(self, other):
+        return self.name < other.name
+
+    def __eq__(self, other):
+        return isinstance(other, PickupEntry) and self.name == other.name
 
     @classmethod
     def from_data(cls, data: Dict, database: "ResourceDatabase") -> "PickupEntry":
         return PickupEntry(
-            world=data["world"],
-            room=data["room"],
-            item=data["item"],
+            name=data["item"],
             item_category=data["item_category"],
             resources={
                 find_resource_info_with_long_name(database.item, name): quantity
@@ -86,7 +84,7 @@ class PickupEntry(NamedTuple):
         yield from self.resources.items()
 
     def __str__(self):
-        return "Pickup {}".format(self.item)
+        return "Pickup {}".format(self.name)
 
 
 def find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
@@ -173,8 +171,8 @@ class PickupDatabase(NamedTuple):
     def pickups_split_by_name(self) -> Dict[str, List[PickupEntry]]:
         result = {}
         for pickup in self.pickups:
-            result[pickup.item] = result.get(pickup.item, [])
-            result[pickup.item].append(pickup)
+            result[pickup.name] = result.get(pickup.name, [])
+            result[pickup.name].append(pickup)
         return result
 
 
