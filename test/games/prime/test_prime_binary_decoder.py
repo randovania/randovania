@@ -27,7 +27,8 @@ def test_simple_round_trip():
             "door": [],
             "portal": []
         },
-        "pickups": [],
+        "pickups": {},
+        "original_pickup_indices_values": [],
         "worlds": [],
     }
 
@@ -35,6 +36,7 @@ def test_simple_round_trip():
     s_io: TextIO = s
     json.dump({
         "pickups": sample_data["pickups"],
+        "original_pickup_indices_values": sample_data["original_pickup_indices_values"],
         "starting_world_asset_id": sample_data["starting_world_asset_id"],
         "starting_area_asset_id": sample_data["starting_area_asset_id"],
         "victory_condition": sample_data["victory_condition"],

@@ -121,7 +121,7 @@ def test_calculate_reach_with_all_pickups():
     logic, state = _test_data()
     patches = logic.patches
 
-    for pickup in logic.game.pickup_database.pickups:
+    for pickup in logic.game.pickup_database.original_pickup_mapping.values():
         add_resource_gain_to_state(state, pickup.resource_gain())
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state, patches)

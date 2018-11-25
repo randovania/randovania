@@ -62,11 +62,6 @@ def _item_locations_to_pickup_assignment(locations: Dict[str, Dict[str, str]]) -
     game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
     pickup_assignment = {}
 
-    pickup_by_name = {
-        pickup.name: pickup
-        for pickup in game.pickup_database.pickups
-    }
-
     for world_name, world_data in locations.items():
         world = [world for world in game.worlds if world.name == world_name][0]
         areas_by_name = collections.defaultdict(list)
@@ -86,7 +81,7 @@ def _item_locations_to_pickup_assignment(locations: Dict[str, Dict[str, str]]) -
                     node = nodes[0]
                     break
 
-            pickup_assignment[node.pickup_index] = pickup_by_name[name]
+            pickup_assignment[node.pickup_index] = game.pickup_database.pickup_by_name(name)
 
     return pickup_assignment
 

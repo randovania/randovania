@@ -208,9 +208,12 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
 def read_pickup_database(data: Dict,
                          resource_database: ResourceDatabase) -> PickupDatabase:
 
-    pickups = [PickupEntry.from_data(item, resource_database) for item in data["pickups"]]
+    pickups = {
+        name: PickupEntry.from_data(name, item, resource_database)
+        for name, item in data["pickups"].items()
+    }
     original_pickup_mapping = {
-        PickupIndex(i): next(pickup for pickup in pickups if pickup.name == name)
+        PickupIndex(i): pickups[name]
         for i, name in enumerate(data["original_pickup_indices_values"])
     }
 

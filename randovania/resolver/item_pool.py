@@ -1,3 +1,4 @@
+import copy
 import itertools
 from typing import List, Iterator, Set, Tuple, FrozenSet, Optional
 
@@ -11,27 +12,19 @@ def calculate_item_pool(configuration: LayoutConfiguration,
                         game: GameDescription,
                         ) -> List[PickupEntry]:
 
-    split_pickups = game.pickup_database.pickups_split_by_name()
-    useless_item = split_pickups["Energy Transfer Module"][0]
-    pickups_with_configured_quantity = configuration.pickups_with_configured_quantity
+    pickups_with_configured_quantity = copy.copy(configuration.pickups_with_configured_quantity)
 
-    for pickup_name, pickup_list in split_pickups.items():
-        if pickup_name in pickups_with_configured_quantity:
-            configured_quantity = configuration.quantity_for_pickup(pickup_name)
-            pickups_with_configured_quantity.remove(pickup_name)
+    useless_item = game.pickup_database.pickup_by_name("Energy Transfer Module")
+    item_pool: List[PickupEntry] = []
+
+    for pickup in game.pickup_database.pickups.values():
+        if pickup.name in pickups_with_configured_quantity:
+            configured_quantity = configuration.quantity_for_pickup(pickup.name)
+            pickups_with_configured_quantity.remove(pickup.name)
         else:
-            configured_quantity = len(pickup_list)
+            configured_quantity = game.pickup_database.original_quantity_for(pickup)
 
-        quantity_delta = configured_quantity - len(pickup_list)
-
-        if quantity_delta > 0:
-            # We need more: copy the last element
-            pickup_list.extend(pickup_list[-1:] * quantity_delta)
-
-        elif quantity_delta < 0:
-            # We need less: drop the end of the list
-            # Yes, the index of the following slice should be negative
-            del pickup_list[quantity_delta:]
+        item_pool.extend([pickup] * configured_quantity)
 
     if pickups_with_configured_quantity:
         raise GenerationFailure(
@@ -40,12 +33,11 @@ def calculate_item_pool(configuration: LayoutConfiguration,
             seed_number=-1
         )
 
-    item_pool = list(itertools.chain.from_iterable(split_pickups.values()))
-    quantity_delta = len(item_pool) - len(game.pickup_database.pickups)
+    quantity_delta = len(item_pool) - game.pickup_database.total_pickup_count
     if quantity_delta > 0:
         raise GenerationFailure(
             "Invalid configuration: requested {} more items than available slots ({}).".format(
-                quantity_delta, len(game.pickup_database.pickups)
+                quantity_delta, game.pickup_database.total_pickup_count
             ),
             configuration=configuration,
             seed_number=-1

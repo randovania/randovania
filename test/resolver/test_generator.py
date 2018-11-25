@@ -23,7 +23,10 @@ def _create_test_layout_description(
         seed_number=seed_number,
         configuration=configuration,
         version=VERSION,
-        pickup_assignment=pickup_database.original_pickup_mapping,
+        pickup_assignment={
+            PickupIndex(i): pickup_database.original_pickup_mapping[PickupIndex(new_index)]
+            for i, new_index in enumerate(pickup_mapping)
+        },
         solver_path=())
 
 
@@ -38,11 +41,11 @@ _test_descriptions = [
                                           hundo_guaranteed=LayoutEnabledFlag.DISABLED,
                                           difficulty=LayoutDifficulty.NORMAL,
                                           pickup_quantities={}),
-        pickup_mapping=[0, 0, 7, 39, 115, 0, 0, 0, 0, 38, 79, 0, 0, 13, 27, 0, 46, 117, 109, 0, 8, 23, 37, 44, 15, 100,
-                        17, 0, 0, 86, 0, 88, 59, 50, 0, 112, 4, 74, 43, 0, 0, 52, 19, 0, 4, 8, 8, 75, 57, 0, 0, 0, 0, 0,
-                        0, 4, 17, 24, 0, 0, 76, 102, 0, 0, 116, 9, 8, 4, 4, 11, 0, 0, 0, 118, 69, 0, 0, 0, 0, 4, 0, 8,
-                        92, 1, 17, 0, 8, 83, 4, 68, 8, 0, 0, 0, 0, 0, 106, 0, 0, 0, 114, 4, 0, 21, 0, 4, 4, 53, 4, 0, 4,
-                        4, 0, 17, 45, 82, 0, 8, 91],
+        pickup_mapping=[2, 2, 46, 4, 2, 2, 2, 116, 2, 44, 112, 8, 0, 13, 114, 17, 2, 82, 115, 2, 8, 8, 37, 23, 117, 2,
+                        52, 50, 2, 4, 76, 4, 2, 75, 2, 57, 38, 8, 8, 2, 2, 4, 17, 2, 74, 2, 4, 83, 2, 43, 106, 2, 21,
+                        11, 2, 91, 2, 4, 4, 8, 2, 79, 2, 2, 27, 2, 8, 1, 2, 2, 2, 4, 86, 2, 8, 2, 69, 102, 4, 2, 2, 88,
+                        4, 15, 19, 2, 100, 2, 2, 2, 2, 53, 2, 2, 7, 2, 4, 2, 2, 2, 2, 39, 59, 24, 109, 45, 118, 17, 4,
+                        68, 4, 2, 4, 2, 2, 17, 2, 92, 2],
     ),
     _create_test_layout_description(
         seed_number=50000,

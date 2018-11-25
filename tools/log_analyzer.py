@@ -32,9 +32,9 @@ def sort_by_contents(data: dict) -> dict:
     }
 
 
-def calculate_stddev(split_pickups: Dict[str, List[PickupEntry]], item_counts: Dict[str, float]) -> float:
+def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]) -> float:
     balanced_freq = {
-        item: count / len(split_pickups[item])
+        item: count / pickup_count[item]
         for item, count in item_counts.items()
     }
     return stdev(balanced_freq.values())
@@ -53,10 +53,13 @@ def create_report(seeds_dir: str, output_file: str):
         seed_count += 1
 
     pickup_database = default_prime2_pickup_database()
-    split_pickups = pickup_database.pickups_split_by_name()
+    pickup_count = {
+        pickup.name: pickup_database.original_quantity_for(pickup)
+        for pickup in pickup_database.pickups.values()
+    }
 
     stddev_by_location = {
-        location: calculate_stddev(split_pickups, locations[location])
+        location: calculate_stddev(pickup_count, locations[location])
         for location in locations.keys()
     }
 
