@@ -70,9 +70,9 @@ class PickupEntry(NamedTuple):
         return isinstance(other, PickupEntry) and self.name == other.name
 
     @classmethod
-    def from_data(cls, data: Dict, database: "ResourceDatabase") -> "PickupEntry":
+    def from_data(cls, name: str, data: Dict, database: "ResourceDatabase") -> "PickupEntry":
         return PickupEntry(
-            name=data["item"],
+            name=name,
             item_category=data["item_category"],
             resources={
                 find_resource_info_with_long_name(database.item, name): quantity
@@ -169,24 +169,19 @@ PickupAssignment = Dict[PickupIndex, PickupEntry]
 
 
 class PickupDatabase(NamedTuple):
-    pickups: List[PickupEntry]
+    pickups: Dict[str, PickupEntry]
     original_pickup_mapping: PickupAssignment
 
     @property
     def total_pickup_count(self) -> int:
-        return len(self.pickups)
+        return len(self.original_pickup_mapping)
 
     @property
     def all_pickup_names(self) -> Iterator[str]:
-        for pickup in self.pickups:
-            yield pickup.name
+        yield from self.pickups.keys()
 
-    def pickups_split_by_name(self) -> Dict[str, List[PickupEntry]]:
-        result = {}
-        for pickup in self.pickups:
-            result[pickup.name] = result.get(pickup.name, [])
-            result[pickup.name].append(pickup)
-        return result
+    def original_quantity_for(self, pickup: PickupEntry) -> int:
+        return sum(1 for original in self.original_pickup_mapping.values() if original == pickup)
 
     def original_index(self, pickup: PickupEntry) -> PickupIndex:
         for index, p in self.original_pickup_mapping.items():
@@ -195,10 +190,7 @@ class PickupDatabase(NamedTuple):
         raise ValueError("Unknown pickup: {}".format(pickup))
 
     def pickup_by_name(self, pickup_name: str) -> PickupEntry:
-        for pickup in self.pickups:
-            if pickup.name == pickup_name:
-                return pickup
-        raise ValueError("Unknown pickup: {}".format(pickup_name))
+        return self.pickups[pickup_name]
 
 
 def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResources:

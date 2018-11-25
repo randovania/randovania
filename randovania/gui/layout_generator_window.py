@@ -239,36 +239,36 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         options = application_options()
         pickup_database = default_prime2_pickup_database()
 
-        split_pickups = pickup_database.pickups_split_by_name()
         self._maximum_item_count = pickup_database.total_pickup_count
+        pickup_names = set(pickup_database.all_pickup_names)
 
         # TODO: Very specific logic that should be provided by data
-        split_pickups.pop("Energy Transfer Module")
+        pickup_names.remove("Energy Transfer Module")
 
-        num_rows = len(split_pickups) / 2
-        for i, pickup in enumerate(sorted(split_pickups.keys())):
+        num_rows = len(pickup_names) / 2
+        for i, pickup_name in enumerate(sorted(pickup_names)):
             row = 3 + i % num_rows
             column = (i // num_rows) * 2
             pickup_label = QLabel(self.itemquantity_group)
-            pickup_label.setText(pickup)
+            pickup_label.setText(pickup_name)
             pickup_label.keep_visible_with_help_disabled = True
             self.gridLayout_2.addWidget(pickup_label, row, column, 1, 1)
 
-            original_quantity = len(split_pickups[pickup])
-            value = options.quantity_for_pickup(pickup)
+            original_quantity = pickup_database.original_quantity_for(pickup_database.pickup_by_name(pickup_name))
+            value = options.quantity_for_pickup(pickup_name)
             if value is None:
                 value = original_quantity
             self._total_item_count += value
 
             spin_box = CustomSpinBox(self.itemquantity_group)
-            spin_box.pickup_name = pickup
+            spin_box.pickup_name = pickup_name
             spin_box.original_quantity = original_quantity
             spin_box.previous_value = value
             spin_box.setValue(value)
             spin_box.setFixedWidth(75)
             spin_box.setMaximum(self._maximum_item_count)
             spin_box.valueChanged.connect(functools.partial(self._change_item_quantity, spin_box))
-            self._spinbox_for_item[pickup] = spin_box
+            self._spinbox_for_item[pickup_name] = spin_box
             self.gridLayout_2.addWidget(spin_box, row, column + 1, 1, 1)
 
         self._update_item_quantity_total_label()
@@ -276,10 +276,11 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     def _reset_item_quantities(self):
         self._bulk_changing_quantity = True
 
-        for pickup, pickup_list in default_prime2_pickup_database().pickups_split_by_name().items():
-            if pickup not in self._spinbox_for_item:
-                continue
-            self._spinbox_for_item[pickup].setValue(len(pickup_list))
+        pickup_database = default_prime2_pickup_database()
+        for pickup_name in pickup_database.all_pickup_names:
+            if pickup_name in self._spinbox_for_item:
+                self._spinbox_for_item[pickup_name].setValue(
+                    pickup_database.original_quantity_for(pickup_database.pickup_by_name(pickup_name)))
 
         application_options().save_to_disk()
         self._bulk_changing_quantity = False
