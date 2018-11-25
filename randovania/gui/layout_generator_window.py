@@ -6,15 +6,13 @@ from PyQt5.QtCore import pyqtSignal, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QSpinBox
 
-from randovania.game_description.data_reader import read_resource_database, read_pickup_database
-from randovania.games.prime import binary_data
 from randovania.gui import tab_service
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
-from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
+from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
@@ -276,11 +274,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     def _reset_item_quantities(self):
         self._bulk_changing_quantity = True
 
-        data = binary_data.decode_default_prime2()
-        resource_database = read_resource_database(data["resource_database"])
-        split_pickups = resource_database.pickups_split_by_name()
-
-        for pickup, pickup_list in split_pickups.items():
+        for pickup, pickup_list in default_prime2_pickup_database().pickups_split_by_name().items():
             if pickup not in self._spinbox_for_item:
                 continue
             self._spinbox_for_item[pickup].setValue(len(pickup_list))
