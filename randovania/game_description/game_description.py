@@ -37,6 +37,15 @@ class World(NamedTuple):
     def __repr__(self):
         return "World[{}]".format(self.name)
 
+    @property
+    def all_nodes(self) -> Iterator[Node]:
+        """
+        Iterates over all nodes in all areas of this world.
+        :return:
+        """
+        for area in self.areas:
+            yield from area.nodes
+
     def area_by_asset_id(self, asset_id: int) -> Area:
         for area in self.areas:
             if area.area_asset_id == asset_id:
@@ -131,8 +140,8 @@ class GameDescription:
 
     @property
     def all_nodes(self) -> Iterator[Node]:
-        for area in self.all_areas:
-            yield from area.nodes
+        for world in self.worlds:
+            yield from world.all_nodes
 
     def node_name(self, node: Node, with_world=False) -> str:
         prefix = "{}/".format(self.nodes_to_world(node).name) if with_world else ""

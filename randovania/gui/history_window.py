@@ -1,14 +1,15 @@
-import collections
 import functools
 from functools import partial
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QFileDialog
 
-from randovania.game_description.resources import PickupEntry, PickupDatabase, PickupIndex
+from randovania.game_description import data_reader
+from randovania.game_description.node import PickupNode
+from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
 from randovania.gui.history_window_ui import Ui_HistoryWindow
@@ -52,8 +53,6 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.main_window = main_window
         self.background_processor = background_processor
 
-        self.pickup_database = default_prime2_pickup_database()
-
         self.layout_history_content_layout.setAlignment(Qt.AlignTop)
 
         # signals
@@ -64,7 +63,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.layout_history_scroll.hide()  # But hide it for now
 
         # Keep the Layout Description visualizer ready, but invisible.
-        self._create_pickup_spoilers(self.pickup_database)
+        self._create_pickup_spoilers()
 
         size_policy = self.layout_info_tab.sizePolicy()
         size_policy.setRetainSizeWhenHidden(True)
@@ -84,34 +83,39 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.selected_layout_change_signal.emit(layout)
 
     # Layout Visualization
-    def _create_pickup_spoilers(self, pickup_database: PickupDatabase):
-        pickup_by_world: Dict[str, List[PickupEntry]] = collections.defaultdict(list)
+    def _create_pickup_spoiler_combobox(self):
+        self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
 
-        for pickup in pickup_database.pickups:
-            pickup_by_world[pickup.world].append(pickup)
+        pickup_names = set(pickup.name for pickup in default_prime2_pickup_database().pickups)
+        for pickup_name in sorted(pickup_names):
+            self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
 
+    def _create_pickup_spoilers(self):
         self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
         self.pickup_spoiler_show_all_button.currently_show_all = True
 
-        self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
-        for pickup in sorted(pickup_database.pickups, key=lambda p: p.item):
-            self.pickup_spoiler_pickup_combobox.addItem(pickup.item)
+        self._create_pickup_spoiler_combobox()
 
-        for world, pickups in pickup_by_world.items():
+        game_description = data_reader.decode_data(binary_data.decode_default_prime2(), [])
+        for world in game_description.worlds:
             group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
-            group_box.setTitle(world)
+            group_box.setTitle(world.name)
             vertical_layout = QVBoxLayout(group_box)
             vertical_layout.setContentsMargins(8, 4, 8, 4)
             vertical_layout.setSpacing(2)
             group_box.vertical_layout = vertical_layout
 
             vertical_layout.horizontal_layouts = []
-            for pickup in pickups:
+
+            for node in world.all_nodes:
+                if not isinstance(node, PickupNode):
+                    continue
+
                 horizontal_layout = QHBoxLayout()
                 horizontal_layout.setSpacing(2)
 
                 label = QLabel(group_box)
-                label.setText(pickup.room)
+                label.setText(game_description.node_name(node))
                 horizontal_layout.addWidget(label)
                 horizontal_layout.label = label
 
@@ -119,8 +123,9 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
                 push_button.setFlat(True)
                 push_button.setText("Hidden")
                 push_button.item_is_hidden = True
+                push_button.pickup_index = node.pickup_index
                 push_button.clicked.connect(partial(self._toggle_pickup_spoiler, push_button))
-                push_button.item_name = pickup.item
+                push_button.item_name = "Nothing was Set, ohno"
                 push_button.row = horizontal_layout
                 horizontal_layout.addWidget(push_button)
                 horizontal_layout.button = push_button
@@ -160,8 +165,8 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         self.layout_hundo_value_label.setText(configuration.hundo_guaranteed.value)
         self.layout_difficulty_value_label.setText(configuration.difficulty.value)
 
-        for i, pickup_button in enumerate(self.pickup_spoiler_buttons):
-            pickup = layout.pickup_assignment.get(PickupIndex(i))
+        for pickup_button in self.pickup_spoiler_buttons:
+            pickup = layout.pickup_assignment.get(pickup_button.pickup_index)
             if pickup is not None:
                 pickup_button.item_name = pickup.item
             else:
