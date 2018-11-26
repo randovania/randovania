@@ -10,6 +10,9 @@ from randovania.binary_file import BinarySource, BinaryWriter
 X = TypeVar('X')
 current_format_version = 6
 
+_IMPOSSIBLE_SET = [[{'requirement_type': 5, 'requirement_index': 1, 'amount': 1, 'negate': False}]]
+_TRIVIAL_LIST = [{'requirement_type': 5, 'requirement_index': 0, 'amount': 1, 'negate': False}]
+
 
 def read_array(source: BinarySource,
                item_reader: Callable[[BinarySource], X]) -> List[X]:
@@ -66,11 +69,19 @@ def read_individual_requirement(source: BinarySource) -> Dict:
 
 
 def read_requirement_list(source: BinarySource) -> List[Dict]:
-    return read_array(source, read_individual_requirement)
+    result = read_array(source, read_individual_requirement)
+    if result == _TRIVIAL_LIST:
+        return []
+    else:
+        return result
 
 
 def read_requirement_set(source: BinarySource) -> List[List[Dict]]:
-    return read_array(source, read_requirement_list)
+    result = read_array(source, read_requirement_list)
+    if result == _IMPOSSIBLE_SET:
+        return []
+    else:
+        return result
 
 
 # Dock Weakness
@@ -139,7 +150,9 @@ def read_area(source: BinarySource) -> Dict:
         origin["connections"] = {}
         for target in nodes:
             if origin != target:
-                origin["connections"][target["name"]] = read_requirement_set(source)
+                requirement_set = read_requirement_set(source)
+                if requirement_set != _IMPOSSIBLE_SET:
+                    origin["connections"][target["name"]] = requirement_set
 
     return {
         "name": name,
