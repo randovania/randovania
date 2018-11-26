@@ -93,10 +93,10 @@ class RequirementList:
         to_add = []
         for individual in items:
             if individual.resource == database.impossible_resource():
-                return None
+                raise Exception("Impossible resource found in a RequirementList")
 
             elif individual.resource == database.trivial_resource():
-                continue
+                raise Exception("Trivial resource found in a RequirementList")
 
             if individual.resource == database.difficulty_resource:
                 assert not individual.negate, "We shouldn't have a negate requirement for difficulty"
