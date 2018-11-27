@@ -7,7 +7,7 @@ from typing import Dict, List
 import py
 
 from randovania.game_description.resources import PickupEntry
-from randovania.interface_common.echoes import default_prime2_pickup_database
+from randovania.game_description.default_database import default_prime2_pickup_database
 
 
 def read_json(path: str) -> dict:

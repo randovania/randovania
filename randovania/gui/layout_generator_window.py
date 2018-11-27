@@ -12,7 +12,7 @@ from randovania.gui.common_qt_lib import application_options, prompt_user_for_in
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common import simplified_patcher
-from randovania.interface_common.echoes import default_prime2_pickup_database
+from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure

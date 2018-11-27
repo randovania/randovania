@@ -7,14 +7,12 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QFileDialog
 
-from randovania.game_description import data_reader
+from randovania.game_description.default_database import default_prime2_pickup_database, default_prime2_game_description
 from randovania.game_description.node import PickupNode
-from randovania.games.prime import binary_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
 from randovania.gui.history_window_ui import Ui_HistoryWindow
 from randovania.interface_common import simplified_patcher
-from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -96,7 +94,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
         self._create_pickup_spoiler_combobox()
 
-        game_description = data_reader.decode_data(binary_data.decode_default_prime2(), [])
+        game_description = default_prime2_game_description()
         for world in game_description.worlds:
             group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
             group_box.setTitle(world.name)

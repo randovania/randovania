@@ -1,15 +1,20 @@
-from typing import Iterable, List
-from unittest.mock import MagicMock
+import copy
+from typing import Iterable, List, Tuple, Callable, Union
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 import randovania.resolver.exceptions
 from randovania import VERSION
-from randovania.game_description.resources import PickupIndex
-from randovania.games.prime import binary_data
-from randovania.interface_common.echoes import default_prime2_pickup_database
+from randovania.game_description.default_database import default_prime2_pickup_database, default_prime2_game_description
+from randovania.game_description.resources import PickupIndex, PickupEntry
+from randovania.games.prime import default_data
 from randovania.resolver import generator, debug
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, LayoutRandomizedFlag, \
+from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
+from randovania.resolver.game_patches import GamePatches
+from randovania.resolver.item_pool import calculate_available_pickups
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, \
+    LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
 from randovania.resolver.layout_description import LayoutDescription
 
@@ -114,7 +119,7 @@ def _layout_description(request):
 def test_generate_seed_with_invalid_quantity_configuration():
     # Setup
     status_update = MagicMock()
-    data = binary_data.decode_default_prime2()
+    data = default_data.decode_default_prime2()
 
     configuration = LayoutConfiguration(
         trick_level=LayoutTrickLevel.NO_TRICKS,
@@ -138,7 +143,7 @@ def test_compare_generated_with_data(benchmark, layout_description: LayoutDescri
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
 
-    data = binary_data.decode_default_prime2()
+    data = default_data.decode_default_prime2()
     generated_description: LayoutDescription = benchmark.pedantic(
         generator.generate_list,
         args=(
@@ -167,7 +172,7 @@ def test_generate_twice():
     status_update = MagicMock()
     layout_description = _test_descriptions[0]
 
-    data = binary_data.decode_default_prime2()
+    data = default_data.decode_default_prime2()
     generated_description = generator.generate_list(
         data,
         layout_description.seed_number,
@@ -197,3 +202,61 @@ def test_generate_simple(simple_data: dict):
         10,
         configuration,
         status_update=status_update)
+
+
+def _create_patches_filler(logic, initial_state,
+                           patches: GamePatches,
+                           available_pickups: Tuple[PickupEntry, ...], rng, status_update):
+    mapping = copy.copy(patches.pickup_assignment)
+
+    i = 0
+    for pickup in available_pickups:
+        while PickupIndex(i) in mapping:
+            i += 1
+        mapping[PickupIndex(i)] = pickup
+        i += 1
+
+    return mapping
+
+
+@patch("randovania.resolver.generator.retcon_playthrough_filler", side_effect=_create_patches_filler, autospec=True)
+@patch("randovania.resolver.generator.calculate_item_pool", autospec=True)
+@patch("randovania.resolver.generator.Random", autospec=True)
+def test_create_patches(mock_random: MagicMock,
+                        mock_calculate_item_pool: MagicMock,
+                        mock_retcon_playthrough_filler: MagicMock,
+                        ):
+    # Setup
+    seed_number: int = MagicMock()
+    game = default_prime2_game_description()
+    status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
+    configuration = LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
+                                        mode=LayoutMode.STANDARD,
+                                        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                        item_loss=LayoutEnabledFlag.DISABLED,
+                                        elevators=LayoutRandomizedFlag.VANILLA,
+                                        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+                                        difficulty=LayoutDifficulty.NORMAL,
+                                        pickup_quantities={})
+    mock_calculate_item_pool.return_value = list(sorted(game.pickup_database.original_pickup_mapping.values()))
+
+    remaining_items = list(mock_calculate_item_pool.return_value)
+    progression = calculate_available_pickups(mock_calculate_item_pool.return_value,
+                                              {"translator", "major", "energy_tank", "sky_temple_key"}, None)
+
+    expected_result = {}
+    for i, pickup in enumerate(progression):
+        expected_result[PickupIndex(i)] = pickup
+        remaining_items.remove(pickup)
+
+    for pickup_node in filter_unassigned_pickup_nodes(game.all_nodes, expected_result):
+        expected_result[pickup_node.pickup_index] = remaining_items.pop()
+
+    # Run
+    patches = generator._create_patches(seed_number, configuration, game, status_update)
+
+    # Assert
+    mock_random.assert_called_once_with(seed_number)
+    mock_calculate_item_pool.assert_called_once_with(configuration, game)
+    mock_retcon_playthrough_filler.assert_called_once()
+    assert patches.pickup_assignment == expected_result

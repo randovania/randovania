@@ -6,7 +6,7 @@ import pytest
 
 from randovania.game_description import data_reader
 from randovania.game_description.node import ResourceNode
-from randovania.games.prime import binary_data
+from randovania.games.prime import default_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.filler.random_assumed import _filter_pickups
 from randovania.resolver.game_patches import GamePatches
@@ -24,7 +24,7 @@ from randovania.resolver.state import State, add_resource_gain_to_state, state_w
 
 
 def _test_data():
-    data = binary_data.decode_default_prime2()
+    data = default_data.decode_default_prime2()
     game = data_reader.decode_data(data, [], False)
     configuration = LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
                                         mode=LayoutMode.STANDARD,
@@ -46,7 +46,6 @@ def _create_reach_with_unsafe(logic: Logic, state: State, patches: GamePatches) 
 
 def _create_reaches_and_compare(logic: Logic, state: State, patches: GamePatches,
                                 ) -> Tuple[GeneratorReach, GeneratorReach]:
-
     first_reach = _create_reach_with_unsafe(logic, state, patches)
     second_reach = _create_reach_with_unsafe(logic, first_reach.state, patches)
 

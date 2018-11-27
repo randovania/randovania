@@ -101,7 +101,7 @@ Action = Union[ResourceNode, PickupEntry]
 def retcon_playthrough_filler(logic: Logic,
                               initial_state: State,
                               patches: GamePatches,
-                              available_pickups: Tuple[PickupEntry],
+                              available_pickups: Tuple[PickupEntry, ...],
                               rng: Random,
                               status_update: Callable[[str], None],
                               ) -> PickupAssignment:

@@ -7,7 +7,7 @@ from randovania.game_description.data_reader import WorldReader, read_resource_d
 from randovania.game_description.game_description import World, Area
 from randovania.game_description.node import Node
 from randovania.game_description.requirements import RequirementList, IndividualRequirement, RequirementSet
-from randovania.games.prime import binary_data
+from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 
@@ -30,7 +30,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.verticalLayout.setAlignment(Qt.AlignTop)
 
         self.nodeInfoBox.hide()
-        data = binary_data.decode_default_prime2()
+        data = default_data.decode_default_prime2()
 
         resource_database = read_resource_database(data["resource_database"])
         dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)

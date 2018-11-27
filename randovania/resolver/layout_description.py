@@ -1,14 +1,14 @@
 import collections
 import json
 from distutils.version import StrictVersion
-from typing import NamedTuple, Tuple, Dict, Optional, List
+from typing import NamedTuple, Tuple, Dict, List
 
-import randovania.games.prime.claris_randomizer
-from randovania.game_description import echoes_elevator, data_reader
+from randovania.game_description import echoes_elevator
+from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
-from randovania.games.prime import binary_data
 from randovania.game_description.resources import PickupAssignment
+from randovania.games.prime import claris_randomizer
 from randovania.resolver.layout_configuration import LayoutConfiguration
 
 
@@ -59,7 +59,7 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
 
 
 def _item_locations_to_pickup_assignment(locations: Dict[str, Dict[str, str]]) -> PickupAssignment:
-    game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
+    game = default_prime2_game_description()
     pickup_assignment = {}
 
     for world_name, world_data in locations.items():
@@ -126,7 +126,7 @@ class LayoutDescription(NamedTuple):
 
     @property
     def as_json(self) -> dict:
-        game = data_reader.decode_data(binary_data.decode_default_prime2(), [])
+        game = default_prime2_game_description()
         return {
             "info": {
                 "version": self.version,
@@ -139,9 +139,7 @@ class LayoutDescription(NamedTuple):
             },
             "elevators": {
                 _elevator_to_location(game, elevator): _elevator_to_location(game, elevator.connected_elevator)
-                for elevator in
-                randovania.games.prime.claris_randomizer.elevator_list_for_configuration(self.configuration,
-                                                                                         self.seed_number)
+                for elevator in claris_randomizer.elevator_list_for_configuration(self.configuration, self.seed_number)
             },
             "playthrough": [
                 {

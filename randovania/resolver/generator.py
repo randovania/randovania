@@ -2,13 +2,12 @@ import multiprocessing.dummy
 from random import Random
 from typing import Tuple, Iterator, Optional, Callable, Dict, TypeVar, Union
 
-import randovania.games.prime.claris_randomizer
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import ResourceNode
-from randovania.game_description.resources import PickupEntry, \
-    PickupIndex
+from randovania.game_description.resources import PickupEntry
+from randovania.games.prime import claris_randomizer
 from randovania.resolver import resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
@@ -16,7 +15,7 @@ from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutTrickLevel
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State
@@ -56,7 +55,7 @@ def generate_list(data: Dict,
                   configuration: LayoutConfiguration,
                   status_update: Optional[Callable[[str], None]]
                   ) -> LayoutDescription:
-    elevators = randovania.games.prime.claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
+    elevators = claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
     if status_update is None:
         status_update = id
 
@@ -123,7 +122,7 @@ def _create_patches(
     categories = {"translator", "major", "energy_tank"}
 
     if configuration.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
-        for index, pickup in game.pickup_database.original_pickup_mapping:
+        for index, pickup in game.pickup_database.original_pickup_mapping.items():
             if pickup.item_category == "sky_temple_key":
                 patches.pickup_assignment[index] = pickup
     else:
@@ -132,10 +131,8 @@ def _create_patches(
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    item_pool = calculate_item_pool(configuration, game)
-    available_pickups = tuple(shuffle(rng,
-                                      sorted(calculate_available_pickups(item_pool,
-                                                                         categories, None))))
+    item_pool = list(sorted(calculate_item_pool(configuration, game)))
+    available_pickups = tuple(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
     new_pickup_mapping = retcon_playthrough_filler(
         logic, state, patches, available_pickups, rng,
@@ -144,7 +141,7 @@ def _create_patches(
 
     assigned_pickups = set(new_pickup_mapping.values())
     remaining_items = [
-        pickup for pickup in sorted(item_pool)
+        pickup for pickup in item_pool
         if pickup not in assigned_pickups
     ]
     rng.shuffle(remaining_items)
