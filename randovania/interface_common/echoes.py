@@ -1,11 +1,6 @@
-import functools
 import multiprocessing
 import traceback
 from typing import Dict, Callable, Union
-
-from randovania.game_description.data_reader import read_resource_database, read_pickup_database
-from randovania.game_description.resources import ResourceDatabase, PickupDatabase
-from randovania.games.prime import binary_data
 
 from randovania.resolver import generator, debug
 from randovania.resolver.layout_configuration import LayoutConfiguration
@@ -59,14 +54,3 @@ def generate_layout(data: Dict,
         raise result
     else:
         return result
-
-
-@functools.lru_cache()
-def default_prime2_resource_database() -> ResourceDatabase:
-    return read_resource_database(binary_data.decode_default_prime2()["resource_database"])
-
-
-@functools.lru_cache()
-def default_prime2_pickup_database() -> PickupDatabase:
-    return read_pickup_database(binary_data.decode_default_prime2(),
-                                default_prime2_resource_database())

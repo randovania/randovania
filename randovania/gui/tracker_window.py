@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QTreeWidgetItem, QListWidgetItem
 
 from randovania.game_description import data_reader
-from randovania.games.prime import binary_data
+from randovania.games.prime import default_data
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 
 
@@ -11,7 +11,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         super().__init__()
         self.setupUi(self)
 
-        data = binary_data.decode_default_prime2()
+        data = default_data.decode_default_prime2()
         resource_database = data_reader.read_resource_database(data["resource_database"])
 
         self.items_tree_widget.setSortingEnabled(False)

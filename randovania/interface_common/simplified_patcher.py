@@ -2,7 +2,7 @@ import os
 import shutil
 from typing import List
 
-from randovania.games.prime import iso_packager, claris_randomizer, binary_data
+from randovania.games.prime import iso_packager, claris_randomizer, default_data
 from randovania.gui.common_qt_lib import application_options
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
@@ -48,7 +48,7 @@ def generate_layout(seed_number: int, progress_update: ProgressUpdateCallable) -
     layout_configuration = application_options().layout_configuration
 
     return echoes.generate_layout(
-        data=binary_data.decode_default_prime2(),
+        data=default_data.decode_default_prime2(),
         seed_number=seed_number,
         configuration=layout_configuration,
         status_update=ConstantPercentageCallback(progress_update, -1)

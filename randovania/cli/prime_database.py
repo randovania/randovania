@@ -6,11 +6,11 @@ from argparse import ArgumentParser
 from typing import Dict, BinaryIO, Optional
 
 from randovania import get_data_path
-from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name
-from randovania.games.prime import binary_data
-from randovania.resolver import resolver, debug
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import consistency_check, GameDescription
+from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name
+from randovania.games.prime import binary_data, default_data
+from randovania.resolver import debug
 
 
 def decode_data_file(args) -> Dict:
@@ -20,7 +20,7 @@ def decode_data_file(args) -> Dict:
 
     data_file_path = args.binary_database
     if data_file_path is None:
-        return binary_data.decode_default_prime2()
+        return default_data.decode_default_prime2()
     else:
         return binary_data.decode_file_path(
             data_file_path,
