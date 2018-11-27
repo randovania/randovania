@@ -7,7 +7,7 @@ import py
 from appdirs import AppDirs
 
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
-    LayoutDifficulty, LayoutLogic, LayoutMode
+    LayoutDifficulty, LayoutTrickLevel, LayoutMode
 
 dirs = AppDirs("Randovania", False)
 
@@ -85,13 +85,13 @@ class Options:
         self.raw_data["display_generate_help"] = value
 
     @property
-    def layout_configuration_logic(self) -> LayoutLogic:
+    def layout_configuration_logic(self) -> LayoutTrickLevel:
         # TODO: detect invalid values
-        return LayoutLogic(self.raw_data["layout_logic"])
+        return LayoutTrickLevel(self.raw_data["layout_logic"])
 
     @layout_configuration_logic.setter
-    def layout_configuration_logic(self, value: LayoutLogic):
-        self.raw_data["layout_logic"] = LayoutLogic(value.value).value
+    def layout_configuration_logic(self, value: LayoutTrickLevel):
+        self.raw_data["layout_logic"] = LayoutTrickLevel(value.value).value
 
     @property
     def layout_configuration_mode(self) -> LayoutMode:
@@ -160,7 +160,7 @@ def _default_options() -> Dict[str, Any]:
     options["display_generate_help"] = True
     options["include_menu_mod"] = False
 
-    options["layout_logic"] = LayoutLogic.NO_GLITCHES.value
+    options["layout_logic"] = LayoutTrickLevel.NO_TRICKS.value
     options["layout_mode"] = LayoutMode.STANDARD.value
     options["layout_sky_temple_keys"] = LayoutRandomizedFlag.RANDOMIZED.value
     options["layout_elevators"] = LayoutRandomizedFlag.VANILLA.value

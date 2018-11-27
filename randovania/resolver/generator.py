@@ -16,7 +16,7 @@ from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutLogic
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutTrickLevel
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State

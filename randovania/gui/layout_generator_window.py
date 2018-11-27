@@ -16,7 +16,7 @@ from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutLogic, LayoutMode, LayoutEnabledFlag
+from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutMode, LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -59,7 +59,7 @@ class CustomSpinBox(QSpinBox):
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     tab_service: tab_service
     _last_generated_layout: Optional[LayoutDescription] = None
-    _layout_logic_radios: Dict[LayoutLogic, QRadioButton]
+    _layout_logic_radios: Dict[LayoutTrickLevel, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
     _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _sky_temple_radios: Dict[LayoutRandomizedFlag, QRadioButton]
@@ -189,13 +189,13 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     def setup_layout_radio_data(self, options: Options):
         # Setup config values to radio maps
         self._layout_logic_radios = {
-            LayoutLogic.NO_GLITCHES: self.logic_noglitches_radio,
-            LayoutLogic.TRIVIAL: self.logic_trivial_radio,
-            LayoutLogic.EASY: self.logic_easy_radio,
-            LayoutLogic.NORMAL: self.logic_normal_radio,
-            LayoutLogic.HARD: self.logic_hard_radio,
-            LayoutLogic.HYPERMODE: self.logic_hypermode_radio,
-            LayoutLogic.MINIMAL_RESTRICTIONS: self.logic_minimalrestrictions_radio,
+            LayoutTrickLevel.NO_TRICKS: self.logic_noglitches_radio,
+            LayoutTrickLevel.TRIVIAL: self.logic_trivial_radio,
+            LayoutTrickLevel.EASY: self.logic_easy_radio,
+            LayoutTrickLevel.NORMAL: self.logic_normal_radio,
+            LayoutTrickLevel.HARD: self.logic_hard_radio,
+            LayoutTrickLevel.HYPERMODE: self.logic_hypermode_radio,
+            LayoutTrickLevel.MINIMAL_RESTRICTIONS: self.logic_minimalrestrictions_radio,
         }
         self._mode_radios = {
             LayoutMode.STANDARD: self.mode_standard_radio,
