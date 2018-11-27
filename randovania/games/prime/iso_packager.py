@@ -2,7 +2,10 @@ import multiprocessing
 import os
 from distutils.version import StrictVersion
 
-import nod
+try:
+    import nod
+except ImportError:
+    node = None
 
 from randovania.games.prime import claris_randomizer
 from randovania.interface_common.options import validate_game_files_path
@@ -141,3 +144,7 @@ def pack_iso(iso: str,
         on_finish_message="Finished packing ISO",
         progress_update=progress_update
     )
+
+
+def can_process_iso() -> bool:
+    return nod is not None
