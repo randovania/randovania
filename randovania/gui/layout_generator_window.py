@@ -215,7 +215,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         }
 
         # Check the correct radio element
-        self._layout_logic_radios[options.layout_configuration_logic].setChecked(True)
+        self._layout_logic_radios[options.layout_configuration_trick_level].setChecked(True)
         self._mode_radios[options.layout_configuration_mode].setChecked(True)
         self._elevators_radios[options.layout_configuration_elevators].setChecked(True)
         self._sky_temple_radios[options.layout_configuration_sky_temple_keys].setChecked(True)
