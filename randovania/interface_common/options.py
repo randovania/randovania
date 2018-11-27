@@ -9,7 +9,7 @@ from appdirs import AppDirs
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
     LayoutDifficulty, LayoutTrickLevel, LayoutMode
 
-dirs = AppDirs("Randovania", False)
+_DEFAULT_DIRS = AppDirs("Randovania", False)
 
 
 def _convert_logic(new_options: dict):
@@ -25,12 +25,17 @@ _FIELDS_TO_MIGRATE = {
 
 
 class Options:
-    def __init__(self):
+    def __init__(self, dirs: AppDirs):
         self.raw_data = _default_options()
+        self._dirs = dirs
+
+    @classmethod
+    def with_default_dirs(cls) -> "Options":
+        return cls(_DEFAULT_DIRS)
 
     def load_from_disk(self):
         try:
-            with open(os.path.join(dirs.user_data_dir, "config.json")) as options_file:
+            with open(os.path.join(self._dirs.user_data_dir, "config.json")) as options_file:
                 new_options = json.load(options_file)["options"]
 
             for old_option_name, converter in _FIELDS_TO_MIGRATE.items():
@@ -45,7 +50,7 @@ class Options:
             pass
 
     def save_to_disk(self):
-        config_folder = py.path.local(dirs.user_data_dir)
+        config_folder = py.path.local(self._dirs.user_data_dir)
         config_folder.ensure_dir()
         with config_folder.join("config.json").open("w") as options_file:
             json.dump({
@@ -71,7 +76,7 @@ class Options:
 
     @property
     def backup_files_path(self) -> str:
-        return os.path.join(dirs.user_data_dir, "backup")
+        return os.path.join(self._dirs.user_data_dir, "backup")
 
     @property
     def game_files_path(self) -> str:
@@ -186,7 +191,7 @@ def _default_options() -> Dict[str, Any]:
 
 
 def default_files_location() -> str:
-    return os.path.join(dirs.user_data_dir, "extracted_game")
+    return os.path.join(_DEFAULT_DIRS.user_data_dir, "extracted_game")
 
 
 def validate_game_files_path(game_files_path: str):
