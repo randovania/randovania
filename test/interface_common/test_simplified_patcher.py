@@ -32,3 +32,26 @@ def test_delete_files_location(mock_application_options: MagicMock,
     # Assert
     assert not tmpdir.join("games_files").exists()
     assert not tmpdir.join("backup_files").exists()
+
+
+@patch("randovania.interface_common.simplified_patcher.iso_packager.unpack_iso", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.delete_files_location", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
+def test_unpack_iso(mock_application_options: MagicMock,
+                    mock_delete_files_location: MagicMock,
+                    mock_unpack_iso: MagicMock,
+                    ):
+    # Setup
+    input_iso = MagicMock()
+    progress_update = MagicMock()
+
+    # Run
+    simplified_patcher.unpack_iso(input_iso, progress_update)
+
+    # Assert
+    mock_delete_files_location.assert_called_once_with()
+    mock_unpack_iso.assert_called_once_with(
+        iso=input_iso,
+        game_files_path=mock_application_options.return_value.game_files_path,
+        progress_update=progress_update,
+    )
