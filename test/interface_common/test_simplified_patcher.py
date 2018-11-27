@@ -2,7 +2,9 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
+from randovania.games.prime import default_data
 from randovania.interface_common import simplified_patcher
+from randovania.interface_common.status_update_lib import ConstantPercentageCallback
 
 
 @pytest.mark.parametrize("games_path_exist", [False, True])
@@ -54,4 +56,25 @@ def test_unpack_iso(mock_application_options: MagicMock,
         iso=input_iso,
         game_files_path=mock_application_options.return_value.game_files_path,
         progress_update=progress_update,
+    )
+
+
+@patch("randovania.interface_common.echoes.generate_layout", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
+def test_generate_layout(mock_application_options: MagicMock,
+                         mock_generate_layout: MagicMock,
+                         ):
+    # Setup
+    seed_number = MagicMock()
+    progress_update = MagicMock()
+
+    # Run
+    simplified_patcher.generate_layout(seed_number, progress_update)
+
+    # Assert
+    mock_generate_layout.assert_called_once_with(
+        data=default_data.decode_default_prime2(),
+        seed_number=seed_number,
+        configuration=mock_application_options.return_value.layout_configuration,
+        status_update=ConstantPercentageCallback(progress_update, -1)
     )
