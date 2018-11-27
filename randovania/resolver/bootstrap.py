@@ -5,7 +5,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources, ResourceType
 from randovania.resolver import debug
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutEnabledFlag
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutEnabledFlag
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State, add_resource_gain_to_state
 
@@ -37,7 +37,7 @@ _minimal_restrictions_custom_item_count = {
 }
 
 
-def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
+def expand_layout_logic(logic: LayoutTrickLevel) -> Tuple[int, Set[int]]:
     """
 
     :param logic:
@@ -63,24 +63,24 @@ def expand_layout_logic(logic: LayoutLogic) -> Tuple[int, Set[int]]:
 
     # Skipping Controller Reset and Exclude from Room Randomizer
 
-    if logic == LayoutLogic.NO_GLITCHES:
+    if logic == LayoutTrickLevel.NO_TRICKS:
         return 0, set()
-    elif logic == LayoutLogic.TRIVIAL:
+    elif logic == LayoutTrickLevel.TRIVIAL:
         return 1, set()
-    elif logic == LayoutLogic.EASY:
+    elif logic == LayoutTrickLevel.EASY:
         return 2, tricks
-    elif logic == LayoutLogic.NORMAL:
+    elif logic == LayoutTrickLevel.NORMAL:
         return 3, tricks
-    elif logic == LayoutLogic.HARD:
+    elif logic == LayoutTrickLevel.HARD:
         return 4, tricks
-    elif logic == LayoutLogic.HYPERMODE or logic == LayoutLogic.MINIMAL_RESTRICTIONS:
+    elif logic == LayoutTrickLevel.HYPERMODE or logic == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
         return 5, tricks
     else:
         raise RuntimeError("Unsupported logic")
 
 
 def static_resources_for_layout_logic(
-        layout_logic: LayoutLogic,
+        layout_logic: LayoutTrickLevel,
         resource_database: ResourceDatabase,
 ) -> Tuple[int, CurrentResources]:
     """
@@ -167,11 +167,11 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     logic = Logic(game, configuration, patches)
     starting_state = calculate_starting_state(logic)
 
-    if configuration.logic == LayoutLogic.MINIMAL_RESTRICTIONS:
+    if configuration.trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
         _add_minimal_restrictions_initial_resources(starting_state.resources,
                                                     game.resource_database)
 
-    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.logic, game.resource_database)
+    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level, game.resource_database)
 
     starting_state.resources = merge_resources(static_resources, starting_state.resources)
     starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level

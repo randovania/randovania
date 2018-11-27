@@ -10,7 +10,7 @@ from randovania.game_description.resources import PickupIndex
 from randovania.games.prime import claris_randomizer
 from randovania.resolver import debug, generator, resolver
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, \
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, \
     LayoutRandomizedFlag, LayoutEnabledFlag, LayoutDifficulty
 from randovania.resolver.layout_description import LayoutDescription
 
@@ -19,11 +19,11 @@ __all__ = ["create_subparsers"]
 
 def add_layout_configuration_arguments(parser):
     parser.add_argument(
-        "--logic",
+        "--trick-level",
         type=str,
-        choices=[layout.value for layout in LayoutLogic],
-        default=LayoutLogic.NO_GLITCHES.value,
-        help="The logic difficulty to use.")
+        choices=[layout.value for layout in LayoutTrickLevel],
+        default=LayoutTrickLevel.NO_TRICKS.value,
+        help="The level of tricks to use.")
     parser.add_argument(
         "--major-items-mode",
         default=False,
@@ -43,7 +43,7 @@ def add_layout_configuration_arguments(parser):
 
 def get_layout_configuration_from_args(args) -> LayoutConfiguration:
     return LayoutConfiguration(
-        logic=LayoutLogic(args.logic),
+        trick_level=LayoutTrickLevel(args.trick_level),
         mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
         sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
         item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
@@ -67,7 +67,7 @@ def validate_command_logic(args):
 
     else:
         configuration = LayoutConfiguration(
-            logic=LayoutLogic.NO_GLITCHES,
+            logic=LayoutTrickLevel.NO_TRICKS,
             mode=LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED,

@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock, ANY
 
 from randovania.cli import echoes
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
 
 
@@ -12,7 +12,7 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
                                   ):
     # Setup
     args = MagicMock()
-    args.logic = "hard"
+    args.trick_level = LayoutTrickLevel.HARD.value
     args.major_items_mode = False
     args.vanilla_sky_temple_keys = False
     args.skip_item_loss = True
@@ -27,7 +27,7 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
         data=mock_decode_data_file.return_value,
         seed_number=args.seed,
         configuration=LayoutConfiguration(
-            logic=LayoutLogic.HARD,
+            trick_level=LayoutTrickLevel.HARD,
             mode=LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.DISABLED,

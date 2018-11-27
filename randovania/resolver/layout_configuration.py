@@ -2,8 +2,8 @@ from enum import Enum
 from typing import NamedTuple, List, Optional, Set
 
 
-class LayoutLogic(Enum):
-    NO_GLITCHES = "no-glitches"
+class LayoutTrickLevel(Enum):
+    NO_TRICKS = "no-tricks"
     TRIVIAL = "trivial"
     EASY = "easy"
     NORMAL = "normal"
@@ -32,7 +32,7 @@ class LayoutDifficulty(Enum):
 
 
 class LayoutConfiguration(NamedTuple):
-    logic: LayoutLogic
+    trick_level: LayoutTrickLevel
     mode: LayoutMode
     sky_temple_keys: LayoutRandomizedFlag
     item_loss: LayoutEnabledFlag
@@ -52,7 +52,7 @@ class LayoutConfiguration(NamedTuple):
     def as_json(self) -> dict:
         return {
             "game": "mp2-echoes",
-            "logic": self.logic.value,
+            "trick_level": self.trick_level.value,
             "mode": self.mode.value,
             "sky_temple_keys": self.sky_temple_keys.value,
             "item_loss": self.item_loss.value,
@@ -64,7 +64,7 @@ class LayoutConfiguration(NamedTuple):
 
     @property
     def as_str(self) -> str:
-        strings: List[str] = [self.logic.value, self.mode.value]
+        strings: List[str] = [self.trick_level.value, self.mode.value]
 
         if self.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
             strings.append("vanilla-sky-temple-keys")
@@ -83,7 +83,7 @@ class LayoutConfiguration(NamedTuple):
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return LayoutConfiguration(
-            logic=LayoutLogic(json_dict["logic"]),
+            trick_level=LayoutTrickLevel(json_dict["trick_level"]),
             mode=LayoutMode(json_dict["mode"]),
             sky_temple_keys=LayoutRandomizedFlag(json_dict["sky_temple_keys"]),
             item_loss=LayoutEnabledFlag(json_dict["item_loss"]),

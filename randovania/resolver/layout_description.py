@@ -96,16 +96,24 @@ class LayoutDescription(NamedTuple):
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
         version = json_dict["info"]["version"]
-        if StrictVersion(version) < StrictVersion("0.12.0"):
-            seed = json_dict["info"]["configuration"]["seed"]
+        version_as_obj = StrictVersion(version)
+        configuration = json_dict["info"]["configuration"]
+
+        if version_as_obj < StrictVersion("0.12.0"):
+            seed = configuration["seed"]
         else:
             seed = json_dict["info"]["seed"]
+
+        if version_as_obj < StrictVersion("0.17.0"):
+            configuration["trick_level"] = configuration.pop("logic")
+            if configuration["trick_level"] == "no-glitches":
+                configuration["trick_level"] = "no-tricks"
 
         # TODO: add try/catch to throw convert potential errors in "seed from future version broke"
 
         return LayoutDescription(
             version=version,
-            configuration=LayoutConfiguration.from_json_dict(json_dict["info"]["configuration"]),
+            configuration=LayoutConfiguration.from_json_dict(configuration),
             seed_number=seed,
             pickup_assignment=_item_locations_to_pickup_assignment(json_dict["locations"]),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),

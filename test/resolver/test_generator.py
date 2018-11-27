@@ -9,7 +9,7 @@ from randovania.game_description.resources import PickupIndex
 from randovania.games.prime import binary_data
 from randovania.interface_common.echoes import default_prime2_pickup_database
 from randovania.resolver import generator, debug
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
 from randovania.resolver.layout_description import LayoutDescription
 
@@ -33,7 +33,7 @@ def _create_test_layout_description(
 _test_descriptions = [
     _create_test_layout_description(
         seed_number=1027649936,
-        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+        configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
                                           mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
@@ -49,7 +49,7 @@ _test_descriptions = [
     ),
     _create_test_layout_description(
         seed_number=50000,
-        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+        configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
                                           mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
@@ -66,7 +66,7 @@ _test_descriptions = [
     ),
     _create_test_layout_description(
         seed_number=50000,
-        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+        configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
                                           mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
@@ -85,7 +85,7 @@ _test_descriptions = [
     ),
     _create_test_layout_description(
         seed_number=50000,
-        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+        configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
                                           mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
@@ -117,7 +117,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
     data = binary_data.decode_default_prime2()
 
     configuration = LayoutConfiguration(
-        logic=LayoutLogic.NO_GLITCHES,
+        trick_level=LayoutTrickLevel.NO_TRICKS,
         mode=LayoutMode.STANDARD,
         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
         item_loss=LayoutEnabledFlag.ENABLED,
@@ -183,7 +183,7 @@ def test_generate_twice():
 @pytest.mark.skip(reason="simple data is broken")
 def test_generate_simple(simple_data: dict):
     status_update = MagicMock()
-    configuration = LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+    configuration = LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
                                         mode=LayoutMode.STANDARD,
                                         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                         item_loss=LayoutEnabledFlag.DISABLED,

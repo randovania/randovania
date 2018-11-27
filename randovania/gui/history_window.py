@@ -157,7 +157,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
         configuration = layout.configuration
         self.layout_seed_value_label.setText(str(layout.seed_number))
-        self.layout_logic_value_label.setText(configuration.logic.value)
+        self.layout_trick_value_label.setText(configuration.trick_level.value)
         self.layout_mode_value_label.setText(configuration.mode.value)
         self.layout_keys_value_label.setText(configuration.sky_temple_keys.value)
         self.layout_item_loss_value_label.setText(configuration.item_loss.value)

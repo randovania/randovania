@@ -8,14 +8,15 @@ from randovania.game_description import data_reader
 from randovania.game_description.node import ResourceNode
 from randovania.games.prime import binary_data
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.filler.random_assumed import _filter_pickups
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources, \
     pickup_nodes_that_can_reach
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutLogic, LayoutMode, LayoutRandomizedFlag, \
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, \
+    LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutDifficulty
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import shuffle
@@ -25,7 +26,7 @@ from randovania.resolver.state import State, add_resource_gain_to_state, state_w
 def _test_data():
     data = binary_data.decode_default_prime2()
     game = data_reader.decode_data(data, [], False)
-    configuration = LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+    configuration = LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
                                         mode=LayoutMode.STANDARD,
                                         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                         item_loss=LayoutEnabledFlag.ENABLED,
