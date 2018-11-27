@@ -1,3 +1,4 @@
+import os
 from unittest.mock import patch, MagicMock
 
 import pytest
@@ -100,3 +101,31 @@ def test_generate_layout(mock_application_options: MagicMock,
         ),
         status_update=ConstantPercentageCallback(progress_update, -1)
     )
+
+
+@patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.unpack_iso", autospec=True)
+def test_internal_patch_iso(mock_unpack_iso: MagicMock,
+                            mock_apply_layout: MagicMock,
+                            mock_pack_iso: MagicMock,
+                            ):
+    # Setup
+    layout = MagicMock()
+    layout.seed_number = 1234
+    layout.configuration.as_str = "layout"
+
+    name = "Echoes Randomizer - layout_1234"
+    input_iso = os.path.join("fun", "game.iso")
+    output_iso = os.path.join("fun", name + ".iso")
+    output_json = os.path.join("fun", name + ".json")
+    updaters = [MagicMock(), MagicMock(), MagicMock()]
+
+    # Run
+    simplified_patcher._internal_patch_iso(updaters, input_iso, layout)
+
+    # Assert
+    mock_unpack_iso.assert_called_once_with(input_iso=input_iso, progress_update=updaters[0])
+    mock_apply_layout.assert_called_once_with(layout=layout, progress_update=updaters[1])
+    mock_pack_iso.assert_called_once_with(output_iso=output_iso, progress_update=updaters[2])
+    layout.save_to_file.assert_called_once_with(output_json)
