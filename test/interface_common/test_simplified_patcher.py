@@ -6,6 +6,8 @@ from randovania.games.prime import default_data
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ConstantPercentageCallback
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, \
+    LayoutRandomizedFlag, LayoutEnabledFlag, LayoutDifficulty
 
 
 @pytest.mark.parametrize("games_path_exist", [False, True])
@@ -77,6 +79,7 @@ def test_generate_layout(mock_application_options: MagicMock,
     # Setup
     seed_number = MagicMock()
     progress_update = MagicMock()
+    mock_application_options.return_value = Options.with_default_dirs()
 
     # Run
     simplified_patcher.generate_layout(seed_number, progress_update)
@@ -85,6 +88,15 @@ def test_generate_layout(mock_application_options: MagicMock,
     mock_generate_layout.assert_called_once_with(
         data=default_data.decode_default_prime2(),
         seed_number=seed_number,
-        configuration=mock_application_options.return_value.layout_configuration,
+        configuration=LayoutConfiguration(
+            trick_level=LayoutTrickLevel.NO_TRICKS,
+            mode=LayoutMode.STANDARD,
+            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            item_loss=LayoutEnabledFlag.ENABLED,
+            elevators=LayoutRandomizedFlag.VANILLA,
+            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
+            difficulty=LayoutDifficulty.NORMAL,
+            pickup_quantities={},
+        ),
         status_update=ConstantPercentageCallback(progress_update, -1)
     )
