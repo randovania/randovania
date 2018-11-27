@@ -51,6 +51,11 @@ def test_unpack_iso(mock_application_options: MagicMock,
     # Setup
     input_iso = MagicMock()
     progress_update = MagicMock()
+    game_files_path = MagicMock()
+
+    options = Options.with_default_dirs()
+    options.game_files_path = game_files_path
+    mock_application_options.return_value = options
 
     # Run
     simplified_patcher.unpack_iso(input_iso, progress_update)
@@ -59,7 +64,7 @@ def test_unpack_iso(mock_application_options: MagicMock,
     mock_delete_files_location.assert_called_once_with()
     mock_unpack_iso.assert_called_once_with(
         iso=input_iso,
-        game_files_path=mock_application_options.return_value.game_files_path,
+        game_files_path=game_files_path,
         progress_update=progress_update,
     )
 
