@@ -12,6 +12,18 @@ from randovania.resolver.layout_configuration import LayoutConfiguration, Layout
 dirs = AppDirs("Randovania", False)
 
 
+def _convert_logic(new_options: dict):
+    trick_level = new_options.pop("layout_logic")
+    if trick_level == "no-glitches":
+        trick_level = "no-tricks"
+    new_options["layout_trick_level"] = trick_level
+
+
+_FIELDS_TO_MIGRATE = {
+    "layout_logic": _convert_logic
+}
+
+
 class Options:
     def __init__(self):
         self.raw_data = _default_options()
@@ -20,6 +32,10 @@ class Options:
         try:
             with open(os.path.join(dirs.user_data_dir, "config.json")) as options_file:
                 new_options = json.load(options_file)["options"]
+
+            for old_option_name, converter in _FIELDS_TO_MIGRATE.items():
+                if old_option_name in new_options:
+                    converter(new_options)
 
             for option_name in self.raw_data.keys():
                 if option_name in new_options:
@@ -85,12 +101,12 @@ class Options:
         self.raw_data["display_generate_help"] = value
 
     @property
-    def layout_configuration_logic(self) -> LayoutTrickLevel:
+    def layout_configuration_trick_level(self) -> LayoutTrickLevel:
         # TODO: detect invalid values
-        return LayoutTrickLevel(self.raw_data["layout_logic"])
+        return LayoutTrickLevel(self.raw_data["layout_trick_level"])
 
-    @layout_configuration_logic.setter
-    def layout_configuration_logic(self, value: LayoutTrickLevel):
+    @layout_configuration_trick_level.setter
+    def layout_configuration_trick_level(self, value: LayoutTrickLevel):
         self.raw_data["layout_logic"] = LayoutTrickLevel(value.value).value
 
     @property
@@ -141,7 +157,7 @@ class Options:
     @property
     def layout_configuration(self) -> LayoutConfiguration:
         return LayoutConfiguration(
-            logic=self.layout_configuration_logic,
+            trick_level=self.layout_configuration_trick_level,
             mode=self.layout_configuration_mode,
             sky_temple_keys=self.layout_configuration_sky_temple_keys,
             item_loss=self.layout_configuration_item_loss,
@@ -160,7 +176,7 @@ def _default_options() -> Dict[str, Any]:
     options["display_generate_help"] = True
     options["include_menu_mod"] = False
 
-    options["layout_logic"] = LayoutTrickLevel.NO_TRICKS.value
+    options["layout_trick_level"] = LayoutTrickLevel.NO_TRICKS.value
     options["layout_mode"] = LayoutMode.STANDARD.value
     options["layout_sky_temple_keys"] = LayoutRandomizedFlag.RANDOMIZED.value
     options["layout_elevators"] = LayoutRandomizedFlag.VANILLA.value
