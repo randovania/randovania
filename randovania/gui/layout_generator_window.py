@@ -1,22 +1,18 @@
 import functools
-import random
 from typing import Dict, Optional
 
 from PyQt5.QtCore import pyqtSignal, Qt, QEvent
-from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QSpinBox
 
+from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.gui import tab_service
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
+from randovania.gui.common_qt_lib import application_options
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
-from randovania.interface_common import simplified_patcher
-from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.interface_common.options import Options
-from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutMode, LayoutEnabledFlag
+from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutMode, \
+    LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -89,11 +85,11 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         self.itemquantity_reset_button.clicked.connect(self._reset_item_quantities)
 
         # All code for the Randomize button
-        self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
+        # self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
 
         # self.setup_initial_combo_selection()
-        self.create_layout_button.clicked.connect(self._create_new_layout_pressed)
-        self.view_details_button.clicked.connect(self._view_layout_details)
+        # self.create_layout_button.clicked.connect(self._create_new_layout_pressed)
+        # self.view_details_button.clicked.connect(self._view_layout_details)
 
         self.itemquantity_total_label.keep_visible_with_help_disabled = True
         self._create_item_toggles()
@@ -113,13 +109,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
                 if isinstance(element, QLabel) and not getattr(element, "keep_visible_with_help_disabled", False):
                     element.setVisible(enabled)
 
-    def get_current_seed_number_or_random_one(self) -> int:
-        seed = self.seed_number_edit.text()
-        if seed == "":
-            return random.randint(0, 2 ** 31)
-        else:
-            return int(seed)
-
     def setup_initial_combo_selection(self):
         self.keys_selection_combo.setCurrentIndex(1)
         self.guaranteed_100_selection_combo.setCurrentIndex(1)
@@ -137,54 +126,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         window: HistoryWindow = self.tab_service.get_tab(HistoryWindow)
         window.change_selected_layout(self._last_generated_layout)
         self.tab_service.focus_tab(window)
-
-    def _try_generate_layout(self, job, progress_update: ProgressUpdateCallable):
-        try:
-            resulting_layout = job(
-                seed_number=self.get_current_seed_number_or_random_one(),
-                progress_update=progress_update)
-            self.layout_generated_signal.emit(resulting_layout)
-            progress_update("Success!", 1)
-
-        except GenerationFailure as generate_exception:
-            self.failed_to_generate_signal.emit(generate_exception)
-            progress_update("Generation Failure: {}".format(generate_exception), -1)
-
-    def randomize_game_simplified(self):
-        input_iso = prompt_user_for_input_iso(self)
-        if input_iso is None:
-            return
-
-        self.randomize_given_iso(input_iso)
-
-    def randomize_given_iso(self, input_iso: str):
-        self.background_processor.run_in_background_thread(
-            functools.partial(
-                self._try_generate_layout,
-                job=functools.partial(
-                    simplified_patcher.create_layout_then_patch_iso,
-                    input_iso=input_iso,
-                )
-            ),
-            "Randomizing...")
-
-    def create_new_layout(self):
-        self.background_processor.run_in_background_thread(
-            functools.partial(
-                self._try_generate_layout,
-                job=simplified_patcher.generate_layout
-            ),
-            "Creating a layout...")
-
-    def _create_new_layout_pressed(self):
-        """
-        Listener to the "Randomize" button. This does the whole process when "advanced mode" is disabled, just generates
-        layouts if enabled.
-        """
-        if application_options().advanced_options:
-            self.create_new_layout()
-        else:
-            self.randomize_game_simplified()
 
     def setup_layout_radio_data(self, options: Options):
         # Setup config values to radio maps
@@ -304,4 +245,5 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
 
     # Progress
     def enable_buttons_with_background_tasks(self, value: bool):
-        self.create_layout_button.setEnabled(value)
+        # self.create_layout_button.setEnabled(value)
+        pass
