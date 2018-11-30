@@ -50,15 +50,15 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.tabs = []
 
         self.tab_windows = [
-            (LayoutGeneratorWindow, "Randomize"),
+            (ISOManagementWindow, "ROM Settings"),
+            (LayoutGeneratorWindow, "Logic Settings"),
             (HistoryWindow, "Layout Details"),
             (DataEditorWindow, "Data Visualizer"),
-            (ISOManagementWindow, "Advanced"),
         ]
 
-        if preview:
-            self._tracker_window = TrackerWindow()
-            self._tracker_window.show()
+        # if preview:
+        #     self._tracker_window = TrackerWindow()
+        #     self._tracker_window.show()
 
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self, self))
