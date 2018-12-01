@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from unittest.mock import patch, MagicMock, ANY
 
 import pytest
@@ -20,10 +21,9 @@ def test_delete_files_location(mock_application_options: MagicMock,
                                backup_path_exist: bool,
                                ):
     # Setup
-    mock_dirs = MagicMock()
-    mock_dirs.user_data_dir = str(tmpdir.join("user_data_dir"))
+    data_dir = Path(str(tmpdir.join("user_data_dir")))
 
-    options = Options(mock_dirs)
+    options = Options(data_dir)
     options.game_files_path = str(tmpdir.join("games_files"))
     mock_application_options.return_value = options
 
@@ -56,7 +56,7 @@ def test_unpack_iso(mock_application_options: MagicMock,
     progress_update = MagicMock()
     game_files_path = MagicMock()
 
-    options = Options.with_default_dirs()
+    options = Options.with_default_data_dir()
     options.game_files_path = game_files_path
     mock_application_options.return_value = options
 
@@ -84,7 +84,7 @@ def test_generate_layout(mock_application_options: MagicMock,
     # Setup
     seed_number = MagicMock()
     progress_update = MagicMock()
-    mock_application_options.return_value = Options.with_default_dirs()
+    mock_application_options.return_value = Options.with_default_data_dir()
 
     # Run
     simplified_patcher.generate_layout(seed_number, progress_update)
