@@ -12,7 +12,7 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
 
-class Path(NamedTuple):
+class GraphPath(NamedTuple):
     previous_node: Optional[Node]
     node: Node
     requirements: RequirementSet
@@ -108,7 +108,7 @@ class GeneratorReach:
                          ) -> "GeneratorReach":
 
         reach = cls(logic, initial_state, networkx.DiGraph())
-        reach._expand_graph([Path(None, initial_state.node, RequirementSet.trivial())])
+        reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 
     def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet, bool]]:
@@ -126,7 +126,7 @@ class GeneratorReach:
             satisfied = requirements.satisfied(self._state.resources, self._state.resource_database)
             yield target_node, requirements, satisfied
 
-    def _expand_graph(self, paths_to_check: List[Path]):
+    def _expand_graph(self, paths_to_check: List[GraphPath]):
         # print("!! _expand_graph", len(paths_to_check))
         self._reachable_paths = None
         while paths_to_check:
@@ -139,7 +139,7 @@ class GeneratorReach:
 
             for target_node, requirements, satisfied in self._potential_nodes_from(path.node):
                 if satisfied:
-                    paths_to_check.append(Path(path.node, target_node, requirements))
+                    paths_to_check.append(GraphPath(path.node, target_node, requirements))
                 else:
                     self._unreachable_paths[path.node, target_node] = requirements
 
@@ -256,7 +256,7 @@ class GeneratorReach:
 
         self._state = new_state
 
-        paths_to_check: List[Path] = []
+        paths_to_check: List[GraphPath] = []
 
         edges_to_remove = []
         # Check if we can expand the corners of our graph
@@ -264,7 +264,7 @@ class GeneratorReach:
         for edge, requirements in self._unreachable_paths.items():
             if requirements.satisfied(self._state.resources, self._state.resource_database):
                 from_node, to_node = edge
-                paths_to_check.append(Path(from_node, to_node, requirements))
+                paths_to_check.append(GraphPath(from_node, to_node, requirements))
                 edges_to_remove.append(edge)
 
         for edge in edges_to_remove:
