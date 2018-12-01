@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Renamed "Logic" to "Trick Level" and "No Glitches" to "No Tricks". Appropriate labels in the GUI and files
 changed to match.
 
+## [0.16.2] - 2018-12-01
+- Fixed: adding multiples of an item now works properly.
+
 ## [0.16.1] - 2018-11-25
 - Fixed: pressing the Reset button in the Item Quantity works properly.
 - Fixed: hiding help in Layout Generation will no longer hide the item names in Item Quantity.

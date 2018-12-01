@@ -139,11 +139,9 @@ def _create_patches(
         status_update
     )
 
-    assigned_pickups = set(new_pickup_mapping.values())
-    remaining_items = [
-        pickup for pickup in item_pool
-        if pickup not in assigned_pickups
-    ]
+    remaining_items = list(sorted(item_pool))
+    for assigned_pickup in new_pickup_mapping.values():
+        remaining_items.remove(assigned_pickup)
     rng.shuffle(remaining_items)
 
     for pickup_node in filter_unassigned_pickup_nodes(game.all_nodes, new_pickup_mapping):
