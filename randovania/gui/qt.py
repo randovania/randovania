@@ -23,7 +23,7 @@ def run(args):
 
     sys.excepthook = catch_exceptions
 
-    app.options = Options.with_default_dirs()
+    app.options = Options.with_default_data_dir()
     app.options.load_from_disk()
 
     from randovania.gui.main_window import MainWindow

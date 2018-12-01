@@ -4,13 +4,9 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Dict, Any, Optional
 
-import py
-from appdirs import AppDirs
-
+from randovania.interface_common import persistence
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
     LayoutDifficulty, LayoutTrickLevel, LayoutMode
-
-_DEFAULT_DIRS = AppDirs("Randovania", False)
 
 
 def _convert_logic(new_options: dict):
@@ -26,17 +22,17 @@ _FIELDS_TO_MIGRATE = {
 
 
 class Options:
-    def __init__(self, dirs: AppDirs):
+    def __init__(self, data_dir: Path):
         self.raw_data = _default_options()
-        self._dirs = dirs
+        self._data_dir = data_dir
 
     @classmethod
-    def with_default_dirs(cls) -> "Options":
-        return cls(_DEFAULT_DIRS)
+    def with_default_data_dir(cls) -> "Options":
+        return cls(persistence.user_data_dir())
 
     def load_from_disk(self):
         try:
-            with open(os.path.join(self._dirs.user_data_dir, "config.json")) as options_file:
+            with self._data_dir.joinpath("config.json").open() as options_file:
                 new_options = json.load(options_file)["options"]
 
             for old_option_name, converter in _FIELDS_TO_MIGRATE.items():
@@ -51,9 +47,8 @@ class Options:
             pass
 
     def save_to_disk(self):
-        config_folder = Path(self._dirs.user_data_dir)
-        config_folder.mkdir(parents=True, exist_ok=True)
-        with config_folder.joinpath("config.json").open("w") as options_file:
+        self._data_dir.mkdir(parents=True, exist_ok=True)
+        with self._data_dir.joinpath("config.json").open("w") as options_file:
             json.dump({
                 "version": 1,
                 "options": self.raw_data
@@ -77,10 +72,12 @@ class Options:
 
     @property
     def backup_files_path(self) -> str:
-        return os.path.join(self._dirs.user_data_dir, "backup")
+        # TODO: return a Path
+        return str(self._data_dir.joinpath("backup"))
 
     @property
     def game_files_path(self) -> str:
+        # TODO: return a Path
         result = self.raw_data["game_files_path"]
         if result is None:
             return default_files_location()
@@ -192,7 +189,8 @@ def _default_options() -> Dict[str, Any]:
 
 
 def default_files_location() -> str:
-    return os.path.join(_DEFAULT_DIRS.user_data_dir, "extracted_game")
+    # TODO: return a Path
+    return str(persistence.user_data_dir() / "extracted_game")
 
 
 def validate_game_files_path(game_files_path: str):
