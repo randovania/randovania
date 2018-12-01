@@ -86,28 +86,28 @@ _test_descriptions = [
     ),
     _create_test_layout_description(
         seed_number=50000,
-        configuration=LayoutConfiguration(logic=LayoutLogic.NO_GLITCHES,
+        configuration=LayoutConfiguration(logic=LayoutLogic.HYPERMODE,
                                           mode=LayoutMode.STANDARD,
-                                          sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                          sky_temple_keys=LayoutRandomizedFlag.VANILLA,
                                           item_loss=LayoutEnabledFlag.ENABLED,
                                           elevators=LayoutRandomizedFlag.VANILLA,
                                           hundo_guaranteed=LayoutEnabledFlag.DISABLED,
                                           difficulty=LayoutDifficulty.NORMAL,
                                           pickup_quantities={
-                                              "Sky Temple Key 1": 2,
+                                              "Light Suit": 2,
                                               "Darkburst": 0
                                           }),
-        pickup_mapping=(108, 90, 1, 58, 48, 101, 20, 12, 38, 2, 100, 4, 6, 88, 39, 70, 33, 93, 115, 3, 23, 82, 60, 46,
-                        110, 105, 102, 67, 41, 77, 65, 37, 8, 118, 30, 24, 36, 74, 81, 53, 99, 69, 61, 26, 73, 59, 52,
-                        45, 87, 76, 0, 42, 78, 5, 44, 79, 86, 57, 89, 94, 68, 71, 13, 14, 97, 83, 98, 62, 80, 40, 116,
-                        28, 107, 96, 21, 45, 64, 103, 84, 19, 31, 113, 56, 55, 104, 109, 95, 10, 92, 91, 51, 34, 22,
-                        25, 17, 9, 18, 50, 32, 47, 11, 85, 49, 43, 114, 35, 29, 111, 15, 63, 72, 7, 112, 75, 106, 66,
-                        16, 54, 117),
+        pickup_mapping=[81, 43, 78, 56, 40, 7, 23, 64, 74, 84, 54, 11, 3, 6, 13, 15, 105, 85, 20, 19, 5, 38, 1, 75, 31,
+                        30, 71, 116, 108, 72, 9, 55, 70, 86, 66, 8, 95, 65, 17, 52, 93, 57, 115, 46, 111, 45, 16, 32,
+                        12, 73, 109, 88, 114, 53, 107, 92, 50, 37, 62, 48, 25, 77, 18, 14, 63, 96, 42, 113, 68, 76, 26,
+                        29, 44, 98, 4, 60, 89, 94, 2, 101, 69, 21, 34, 61, 24, 28, 110, 103, 67, 79, 36, 91, 99, 102,
+                        118, 47, 82, 83, 22, 80, 49, 51, 87, 33, 112, 39, 106, 10, 90, 41, 0, 104, 58, 100, 35, 59, 97,
+                        117, 24],
     ),
 ]
 
 
-@pytest.fixture(params=[_test_descriptions[0]], name="layout_description")
+@pytest.fixture(params=[_test_descriptions[0], _test_descriptions[-1]], name="layout_description")
 def _layout_description(request):
     yield request.param
 
