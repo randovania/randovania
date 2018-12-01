@@ -1,9 +1,11 @@
 import datetime
+import json
+import logging
 import threading
+from pathlib import Path
 from typing import Callable, Optional, NamedTuple
 
 import requests
-from dataset import Table
 
 from randovania import VERSION
 from randovania.interface_common import persistence
@@ -16,24 +18,30 @@ class VersionDescription(NamedTuple):
     html_url: str
 
 
-def _table() -> Table:
-    db = persistence.db()
-    return db.create_table(
-        "update_checker",
-        primary_id='source',
-        primary_type=db.types.string(25)
-    )
+def _last_check_file() -> Path:
+    return persistence.user_data_dir() / "last_version_check.json"
 
 
 def _is_recent(last_check) -> bool:
-    return (datetime.datetime.now() - last_check["last_check"]) <= datetime.timedelta(days=1)
+    last_check_date = datetime.datetime.fromisoformat(last_check["last_check"])
+    return (datetime.datetime.now() - last_check_date) <= datetime.timedelta(days=1)
 
 
 def _read_from_persisted() -> Optional[VersionDescription]:
-    last_check = _table().find_one(source='github')
-    if last_check is not None and _is_recent(last_check):
-        return VersionDescription(last_check["tag_name"], last_check["html_url"])
-    else:
+    try:
+        with _last_check_file().open() as open_file:
+            last_check = json.load(open_file)
+
+        if _is_recent(last_check):
+            return VersionDescription(last_check["tag_name"], last_check["html_url"])
+        else:
+            return None
+
+    except json.JSONDecodeError as e:
+        logging.warning("Unable to decode persisted last update check: %s", str(e))
+        return None
+
+    except FileNotFoundError:
         return None
 
 
@@ -47,14 +55,14 @@ def _download_from_github() -> Optional[VersionDescription]:
 
 
 def _persist_version(version: VersionDescription):
-    _table().upsert(
-        {
+    _last_check_file().parent.mkdir(parents=True, exist_ok=True)
+    with _last_check_file().open("w") as open_file:
+        json.dump({
             "source": "github",
-            "last_check": datetime.datetime.now(),
+            "last_check": datetime.datetime.now().isoformat(),
             "tag_name": version.tag_name,
             "html_url": version.html_url,
-        },
-        ["source"])
+        }, open_file, default=str)
 
 
 def _get_latest_version_work(on_result: Callable[[str, str], None]):
