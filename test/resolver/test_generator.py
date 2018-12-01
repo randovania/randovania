@@ -92,7 +92,7 @@ _test_descriptions = [
         seed_number=50000,
         configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.HYPERMODE,
                                           mode=LayoutMode.STANDARD,
-                                          sky_temple_keys=LayoutRandomizedFlag.VANILLA,
+                                          sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
                                           elevators=LayoutRandomizedFlag.VANILLA,
                                           hundo_guaranteed=LayoutEnabledFlag.DISABLED,
@@ -101,12 +101,12 @@ _test_descriptions = [
                                               "Light Suit": 2,
                                               "Darkburst": 0
                                           }),
-        pickup_mapping=[81, 43, 78, 56, 40, 7, 23, 64, 74, 84, 54, 11, 3, 6, 13, 15, 105, 85, 20, 19, 5, 38, 1, 75, 31,
-                        30, 71, 116, 108, 72, 9, 55, 70, 86, 66, 8, 95, 65, 17, 52, 93, 57, 115, 46, 111, 45, 16, 32,
-                        12, 73, 109, 88, 114, 53, 107, 92, 50, 37, 62, 48, 25, 77, 18, 14, 63, 96, 42, 113, 68, 76, 26,
-                        29, 44, 98, 4, 60, 89, 94, 2, 101, 69, 21, 34, 61, 24, 28, 110, 103, 67, 79, 36, 91, 99, 102,
-                        118, 47, 82, 83, 22, 80, 49, 51, 87, 33, 112, 39, 106, 10, 90, 41, 0, 104, 58, 100, 35, 59, 97,
-                        117, 24],
+        pickup_mapping=[8, 15, 2, 4, 112, 109, 23, 2, 102, 44, 4, 2, 2, 17, 86, 91, 2, 8, 7, 4, 52, 8, 8, 38, 45, 2, 4,
+                        2, 2, 50, 4, 75, 2, 2, 8, 2, 13, 82, 4, 2, 4, 2, 2, 17, 8, 118, 4, 8, 2, 83, 4, 2, 4, 21, 88, 4,
+                        57, 2, 2, 2, 2, 2, 11, 43, 2, 115, 2, 2, 2, 2, 2, 74, 2, 2, 2, 2, 17, 76, 79, 2, 2, 2, 2, 17,
+                        24, 2, 68, 4, 114, 106, 53, 1, 2, 69, 39, 4, 2, 2, 24, 2, 37, 2, 92, 46, 2, 0, 117, 116, 2, 2,
+                        2, 59, 4, 2, 19, 100, 2, 2, 8]
+        ,
     ),
 ]
 
