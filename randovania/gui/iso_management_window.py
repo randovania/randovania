@@ -2,6 +2,7 @@ import functools
 import os
 import random
 import shutil
+from pathlib import Path
 from typing import Optional
 
 from PyQt5 import QtCore
@@ -166,7 +167,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         self.randomize_given_iso(input_iso)
 
-    def randomize_given_iso(self, input_iso: str):
+    def randomize_given_iso(self, input_iso: Path):
         self.background_processor.run_in_background_thread(
             functools.partial(
                 self._try_generate_layout,

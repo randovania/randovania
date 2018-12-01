@@ -1,6 +1,7 @@
 import collections
 import json
 from distutils.version import StrictVersion
+from pathlib import Path
 from typing import NamedTuple, Tuple, Dict, List
 
 from randovania.game_description import echoes_elevator
@@ -150,8 +151,8 @@ class LayoutDescription(NamedTuple):
             ]
         }
 
-    def save_to_file(self, json_path: str):
-        with open(json_path, "w") as open_file:
+    def save_to_file(self, json_path: Path):
+        with json_path.open("w") as open_file:
             json.dump(self.as_json, open_file, indent=4, separators=(',', ': '))
 
     @property

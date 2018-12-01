@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Iterator, Optional
 
 from PyQt5.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow
@@ -27,7 +28,7 @@ def lock_application(value: bool):
     QApplication.instance().main_window.setEnabled(value)
 
 
-def prompt_user_for_input_iso(window: QMainWindow) -> Optional[str]:
+def prompt_user_for_input_iso(window: QMainWindow) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a vanilla Game ISO
     :param window:
@@ -35,5 +36,5 @@ def prompt_user_for_input_iso(window: QMainWindow) -> Optional[str]:
     """
     open_result = QFileDialog.getOpenFileName(window, caption="Select the vanilla Game ISO.", filter="*.iso")
     if not open_result or open_result == ("", ""):
-        return
-    return open_result[0]
+        return None
+    return Path(open_result[0])

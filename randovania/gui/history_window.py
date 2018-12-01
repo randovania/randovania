@@ -1,5 +1,6 @@
 import functools
 from functools import partial
+from pathlib import Path
 from typing import List, Optional
 
 from PyQt5 import QtCore
@@ -246,8 +247,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
             return
 
         json_path, extension = open_result
-
-        self.current_layout_description.save_to_file(json_path)
+        self.current_layout_description.save_to_file(Path(json_path))
 
     def import_layout(self):
         open_result = QFileDialog.getOpenFileName(

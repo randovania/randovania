@@ -1,5 +1,6 @@
 import os
 import shutil
+from pathlib import Path
 from typing import List
 
 from randovania.games.prime import iso_packager, claris_randomizer, default_data
@@ -13,15 +14,17 @@ def delete_files_location():
     options = application_options()
 
     game_files_path = options.game_files_path
-    if os.path.exists(game_files_path):
+    if game_files_path.exists():
         shutil.rmtree(game_files_path)
 
     backup_files_path = options.backup_files_path
-    if os.path.exists(backup_files_path):
+    if backup_files_path.exists():
         shutil.rmtree(backup_files_path)
 
 
-def unpack_iso(input_iso: str, progress_update: ProgressUpdateCallable):
+def unpack_iso(input_iso: Path,
+               progress_update: ProgressUpdateCallable,
+               ):
     """
     Unpacks the given ISO to the files listed in application_options
     :param input_iso:
@@ -79,7 +82,9 @@ def apply_layout(layout: LayoutDescription, progress_update: ProgressUpdateCalla
     )
 
 
-def pack_iso(output_iso: str, progress_update: ProgressUpdateCallable):
+def pack_iso(output_iso: Path,
+             progress_update: ProgressUpdateCallable,
+             ):
     """
     Unpacks the files listed in application_options to the given path
     :param output_iso:
@@ -97,15 +102,15 @@ def pack_iso(output_iso: str, progress_update: ProgressUpdateCallable):
 
 
 def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
-                        input_iso: str,
+                        input_iso: Path,
                         layout: LayoutDescription,
                         ):
     layout_configuration = layout.configuration
 
     output_name = "Echoes Randomizer - {}_{}".format(layout_configuration.as_str, layout.seed_number)
-    base_directory = os.path.dirname(input_iso)
-    output_iso = os.path.join(base_directory, "{}.iso".format(output_name))
-    output_json = os.path.join(base_directory, "{}.json".format(output_name))
+    base_directory: Path = input_iso.parent
+    output_iso = base_directory.joinpath("{}.iso".format(output_name))
+    output_json = base_directory.joinpath("{}.json".format(output_name))
 
     # Unpack ISO
     unpack_iso(input_iso=input_iso, progress_update=updaters[0])
@@ -117,11 +122,12 @@ def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
     pack_iso(output_iso=output_iso, progress_update=updaters[2])
 
     # Save the layout to a file
+    # TODO
     layout.save_to_file(output_json)
 
 
 def patch_iso_with_existing_layout(progress_update: ProgressUpdateCallable,
-                                   input_iso: str,
+                                   input_iso: Path,
                                    layout: LayoutDescription,
                                    ):
     _internal_patch_iso(
@@ -135,7 +141,7 @@ def patch_iso_with_existing_layout(progress_update: ProgressUpdateCallable,
 
 
 def create_layout_then_patch_iso(progress_update: ProgressUpdateCallable,
-                                 input_iso: str,
+                                 input_iso: Path,
                                  seed_number: int,
                                  ) -> LayoutDescription:
     updaters = status_update_lib.split_progress_update(

@@ -71,21 +71,19 @@ class Options:
         self.raw_data["include_menu_mod"] = value
 
     @property
-    def backup_files_path(self) -> str:
-        # TODO: return a Path
-        return str(self._data_dir.joinpath("backup"))
+    def backup_files_path(self) -> Path:
+        return self._data_dir.joinpath("backup")
 
     @property
-    def game_files_path(self) -> str:
-        # TODO: return a Path
+    def game_files_path(self) -> Path:
         result = self.raw_data["game_files_path"]
         if result is None:
             return default_files_location()
-        return result
+        return Path(result)
 
     @game_files_path.setter
-    def game_files_path(self, value: Optional[str]):
-        self.raw_data["game_files_path"] = value
+    def game_files_path(self, value: Optional[Path]):
+        self.raw_data["game_files_path"] = str(value)
 
     @property
     def advanced_options(self) -> bool:
@@ -188,17 +186,16 @@ def _default_options() -> Dict[str, Any]:
     return options
 
 
-def default_files_location() -> str:
-    # TODO: return a Path
-    return str(persistence.user_data_dir() / "extracted_game")
+def default_files_location() -> Path:
+    return persistence.user_data_dir() / "extracted_game"
 
 
-def validate_game_files_path(game_files_path: str):
-    if not os.path.isdir(game_files_path):
+def validate_game_files_path(game_files_path: Path):
+    if not game_files_path.is_dir():
         raise ValueError("Not a directory")
 
     required_files = ["default.dol", "FrontEnd.pak", "Metroid1.pak", "Metroid2.pak"]
-    missing_files = [os.path.isfile(os.path.join(game_files_path, required_file))
+    missing_files = [(game_files_path / required_file).is_file()
                      for required_file in required_files]
 
     if not all(missing_files):
