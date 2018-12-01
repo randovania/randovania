@@ -226,6 +226,7 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
 
 
 def decode_file_path(binary_file_path: str, extra_file_path: str) -> Dict:
+    # TODO: use Path
     with open(binary_file_path, "rb") as binary_io:  # type: BinaryIO
         with open(extra_file_path, "r") as extra:
             return decode(binary_io, extra)
