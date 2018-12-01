@@ -44,7 +44,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Games/Entertainment',
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=[
         'py',
         'PyQt5>=5.8',
