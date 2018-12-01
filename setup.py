@@ -51,7 +51,6 @@ setup(
         'appdirs',
         'nod>=1.1',
         'requests',
-        'dataset',
         'networkx',
     ],
     entry_points={
