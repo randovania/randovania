@@ -37,9 +37,9 @@ before_install:
 - python --version
 
 install:
-# Install a custom pip version that is able to install manylinux2010 wheels.
-# TODO: when upstream, remove this fork
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install git+https://github.com/pypa/pip; fi
+# Install git head of pip to be able to install a manylinux2010 wheel of nod
+# TODO: there's a bug in latest pip that breaks installing PyInstaller, so revert the pip after installing nod
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install git+https://github.com/pypa/pip; python -m pip install nod; python -m pip install --upgrade --force pip; fi
 - python -m pip install -r requirements.txt
 - python -m pip install -e .
 - python -m pip uninstall -y randovania
