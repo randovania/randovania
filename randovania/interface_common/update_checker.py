@@ -29,7 +29,7 @@ def _is_recent(last_check) -> bool:
     return (datetime.datetime.now() - last_check["last_check"]) <= datetime.timedelta(days=1)
 
 
-def _read_from_db() -> Optional[VersionDescription]:
+def _read_from_persisted() -> Optional[VersionDescription]:
     last_check = _table().find_one(source='github')
     if last_check is not None and _is_recent(last_check):
         return VersionDescription(last_check["tag_name"], last_check["html_url"])
@@ -58,7 +58,7 @@ def _persist_version(version: VersionDescription):
 
 
 def _get_latest_version_work(on_result: Callable[[str, str], None]):
-    version = _read_from_db()
+    version = _read_from_persisted()
 
     if version is None:
         version = _download_from_github()
