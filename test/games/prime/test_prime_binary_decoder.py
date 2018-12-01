@@ -56,7 +56,7 @@ def test_simple_round_trip():
 
 
 def test_complex_encode(test_files_dir):
-    with test_files_dir.join("prime_data_as_json.json").open("r") as data_file:
+    with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         data = json.load(data_file)
     b = io.BytesIO()
     b_io = b  # type: BinaryIO
@@ -65,19 +65,19 @@ def test_complex_encode(test_files_dir):
     binary_data.encode(data, b_io)
 
     # Assert
-    assert test_files_dir.join(
-        "prime_data_as_binary.bin").read_binary() == b.getvalue()
+    assert test_files_dir.joinpath(
+        "prime_data_as_binary.bin").read_bytes() == b.getvalue()
 
 
 def test_complex_decode(test_files_dir):
     # Run
     decoded_data = binary_data.decode_file_path(
-        str(test_files_dir.join("prime_data_as_binary.bin")),
-        str(test_files_dir.join("prime_extra_data.json"))
+        str(test_files_dir.joinpath("prime_data_as_binary.bin")),
+        str(test_files_dir.joinpath("prime_extra_data.json"))
     )
 
     # Assert
-    with test_files_dir.join("prime_data_as_json.json").open("r") as data_file:
+    with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         saved_data = json.load(data_file)
 
     assert decoded_data == saved_data
