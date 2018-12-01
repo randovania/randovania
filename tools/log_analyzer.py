@@ -1,17 +1,15 @@
 import argparse
 import collections
 import json
+from pathlib import Path
 from statistics import stdev
-from typing import Dict, List
+from typing import Dict
 
-import py
-
-from randovania.game_description.resources import PickupEntry
 from randovania.game_description.default_database import default_prime2_pickup_database
 
 
-def read_json(path: str) -> dict:
-    with open(path) as x:
+def read_json(path: Path) -> dict:
+    with path.open() as x:
         return json.load(x)
 
 
@@ -48,7 +46,7 @@ def create_report(seeds_dir: str, output_file: str):
     locations = collections.defaultdict(item_creator)
 
     seed_count = 0
-    for seed in py.path.local(seeds_dir).visit("*.json"):
+    for seed in Path(seeds_dir).glob("**/*.json"):
         accumulate_results(read_json(seed), items, locations)
         seed_count += 1
 

@@ -1,6 +1,7 @@
 import json
 import os
 from collections import OrderedDict
+from pathlib import Path
 from typing import Dict, Any, Optional
 
 import py
@@ -50,9 +51,9 @@ class Options:
             pass
 
     def save_to_disk(self):
-        config_folder = py.path.local(self._dirs.user_data_dir)
-        config_folder.ensure_dir()
-        with config_folder.join("config.json").open("w") as options_file:
+        config_folder = Path(self._dirs.user_data_dir)
+        config_folder.mkdir(parents=True, exist_ok=True)
+        with config_folder.joinpath("config.json").open("w") as options_file:
             json.dump({
                 "version": 1,
                 "options": self.raw_data
