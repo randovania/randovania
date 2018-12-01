@@ -4,7 +4,7 @@ import shutil
 import subprocess
 from collections import defaultdict
 from pathlib import Path
-from typing import Callable, List, Optional, Dict
+from typing import Callable, List, Optional, Dict, Union
 
 import py
 
@@ -22,28 +22,30 @@ from randovania.resolver.layout_description import LayoutDescription
 _USELESS_PICKUP_NAME = "Energy Transfer Module"
 
 
-def _get_randomizer_folder() -> str:
-    return os.path.join(get_data_path(), "ClarisPrimeRandomizer")
+def _get_randomizer_folder() -> Path:
+    return Path(get_data_path(), "ClarisPrimeRandomizer")
 
 
-def _get_randomizer_path() -> str:
-    return os.path.join(_get_randomizer_folder(), "Randomizer.exe")
+def _get_randomizer_path() -> Path:
+    return _get_randomizer_folder().joinpath("Randomizer.exe")
 
 
-def _get_menu_mod_path() -> str:
-    return os.path.join(get_data_path(), "ClarisEchoesMenu", "EchoesMenu.exe")
+def _get_menu_mod_path() -> Path:
+    return Path(get_data_path(), "ClarisEchoesMenu", "EchoesMenu.exe")
 
 
-def has_randomizer_binary():
-    return os.path.isfile(_get_randomizer_path())
+def has_randomizer_binary() -> bool:
+    return _get_randomizer_path().is_file()
 
 
-def _run_with_args(args: List[str],
+def _run_with_args(args: List[Union[str, Path]],
                    finish_string: str,
                    status_update: Callable[[str], None]):
-    print("Invoking external tool with: ", args)
     finished_updates = False
-    with subprocess.Popen(args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
+
+    new_args = [str(arg) for arg in args]
+    print("Invoking external tool with: ", new_args)
+    with subprocess.Popen(new_args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
         try:
             for line in process.stdout:
                 x = line.strip()
@@ -57,10 +59,11 @@ def _run_with_args(args: List[str],
             raise
 
 
-def _base_args(game_root: str,
+def _base_args(game_root: Path,
                hud_memo_popup_removal: bool,
                ) -> List[str]:
-    game_files = os.path.join(game_root, "files")
+
+    game_files = game_root / "files"
     validate_game_files_path(game_files)
 
     args = [
@@ -74,12 +77,12 @@ def _base_args(game_root: str,
 
 
 def _ensure_no_menu_mod(
-        game_root: str,
-        backup_files_path: str,
+        game_root: Path,
+        backup_files_path: Path,
         status_update: Callable[[str], None],
 ):
-    pak_folder = Path(backup_files_path, "mp2_paks")
-    files_folder = Path(game_root, "files")
+    pak_folder = backup_files_path.joinpath("mp2_paks")
+    files_folder = game_root.joinpath("files")
     menu_mod_txt = files_folder.joinpath("menu_mod.txt")
 
     if menu_mod_txt.is_file() and pak_folder.is_dir():
@@ -93,14 +96,14 @@ def _ensure_no_menu_mod(
 
 
 def _create_pak_backups(
-        game_root: str,
-        backup_files_path: str,
+        game_root: Path,
+        backup_files_path: Path,
         status_update: Callable[[str], None],
 ):
-    pak_folder = Path(backup_files_path, "mp2_paks")
+    pak_folder = backup_files_path.joinpath("mp2_paks")
     pak_folder.mkdir(parents=True, exist_ok=True)
 
-    files_folder = Path(game_root, "files")
+    files_folder = game_root.joinpath("files")
     for pak in ["MiscData.pak"] + ["Metroid{}.pak".format(i) for i in range(1, 6)]:
         target_file = pak_folder.joinpath(pak)
         if not target_file.exists():
@@ -109,10 +112,10 @@ def _create_pak_backups(
 
 
 def _add_menu_mod_to_files(
-        game_root: str,
+        game_root: Path,
         status_update: Callable[[str], None],
 ):
-    files_folder = Path(game_root, "files")
+    files_folder = game_root.joinpath("files")
     _run_with_args(
         [
             _get_menu_mod_path(),
@@ -128,8 +131,8 @@ def apply_layout(
         layout: LayoutDescription,
         hud_memo_popup_removal: bool,
         include_menu_mod: bool,
-        game_root: str,
-        backup_files_path: str,
+        game_root: Path,
+        backup_files_path: Path,
         progress_update: ProgressUpdateCallable,
 ):
     args = _base_args(game_root,
@@ -157,18 +160,19 @@ def apply_layout(
     if layout.configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
 
-    layout.save_to_file(os.path.join(game_root, "files", "randovania.json"))
+    layout.save_to_file(game_root.joinpath("files", "randovania.json"))
     _run_with_args(args, "Randomized!", status_update)
 
     if include_menu_mod:
         _add_menu_mod_to_files(game_root, status_update)
 
 
-def disable_echoes_attract_videos(game_root: str,
-                                  status_update: Callable[[str], None]):
-    game_files = os.path.join(game_root, "files")
+def disable_echoes_attract_videos(game_root: Path,
+                                  status_update: Callable[[str], None],
+                                  ):
+    game_files = game_root.joinpath("files")
     args = [
-        os.path.join(_get_randomizer_folder(), "DisableEchoesAttractVideos.exe"),
+        _get_randomizer_folder().joinpath("DisableEchoesAttractVideos.exe"),
         game_files
     ]
     with subprocess.Popen(args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
@@ -181,7 +185,8 @@ def disable_echoes_attract_videos(game_root: str,
             raise
 
 
-def try_randomize_elevators(randomizer: claris_random.Random) -> Optional[List[Elevator]]:
+def try_randomize_elevators(randomizer: claris_random.Random,
+                            ) -> Optional[List[Elevator]]:
     elevator_database: List[Elevator] = copy.deepcopy(echoes_elevators)
 
     elevator_list = copy.copy(elevator_database)

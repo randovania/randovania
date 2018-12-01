@@ -1,3 +1,4 @@
+from pathlib import Path
 from unittest.mock import patch, MagicMock, ANY
 
 from randovania.cli import echoes
@@ -17,6 +18,7 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
     args.vanilla_sky_temple_keys = False
     args.skip_item_loss = True
     args.seed = 15000
+    args.output_file = "asdfasdf/qwerqwerqwer/zxcvzxcv.json"
 
     # Run
     echoes.distribute_command_logic(args)
@@ -40,4 +42,4 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
     )
 
     save_file_mock: MagicMock = mock_generate_list.return_value.save_to_file
-    save_file_mock.assert_called_once_with(args.output_file)
+    save_file_mock.assert_called_once_with(Path(args.output_file))

@@ -55,10 +55,7 @@ def test_unpack_iso(mock_application_options: MagicMock,
     input_iso = MagicMock()
     progress_update = MagicMock()
     game_files_path = MagicMock()
-
-    options = Options.with_default_data_dir()
-    options.game_files_path = game_files_path
-    mock_application_options.return_value = options
+    mock_application_options.return_value.game_files_path = game_files_path
 
     # Run
     simplified_patcher.unpack_iso(input_iso, progress_update)
@@ -121,9 +118,9 @@ def test_internal_patch_iso(mock_unpack_iso: MagicMock,
     layout.configuration.as_str = "layout"
 
     name = "Echoes Randomizer - layout_1234"
-    input_iso = os.path.join("fun", "game.iso")
-    output_iso = os.path.join("fun", name + ".iso")
-    output_json = os.path.join("fun", name + ".json")
+    input_iso = Path("fun", "game.iso")
+    output_iso = Path("fun", name + ".iso")
+    output_json = Path("fun", name + ".json")
     updaters = [MagicMock(), MagicMock(), MagicMock()]
 
     # Run

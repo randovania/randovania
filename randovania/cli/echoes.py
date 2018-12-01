@@ -3,6 +3,7 @@ import os
 import random
 import time
 from argparse import ArgumentParser
+from pathlib import Path
 
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
@@ -137,7 +138,7 @@ def distribute_command_logic(args):
         after - before,
         hash(tuple(layout_description.pickup_assignment.items()))
     ))
-    layout_description.save_to_file(args.output_file)
+    layout_description.save_to_file(Path(args.output_file))
 
 
 def add_distribute_command(sub_parsers):
@@ -174,7 +175,7 @@ def batch_distribute_helper(args, seed_number) -> float:
     description = generator.generate_list(data, seed_number, configuration, None)
     delta_time = time.perf_counter() - start_time
 
-    description.save_to_file(os.path.join(args.output_dir, "{}.json".format(description.seed_number)))
+    description.save_to_file(Path(args.output_dir, "{}.json".format(description.seed_number)))
     return delta_time
 
 
