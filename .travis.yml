@@ -12,18 +12,23 @@ matrix:
       env:
         - INCLUDE_SDIST=true
 
-    # TODO: when py-nod works on mac again, uncomment
-    # - os: osx
-    #   osx_image: xcode9.4
-    #   language: generic
-    #   env:
-    #     - PYENV_VERSION=3.6.5
+    - os: linux
+      python: 3.7
+      env:
+        - INCLUDE_SDIST=true
 
-    # - os: osx
-    #   osx_image: xcode9.4
-    #   language: generic
-    #   env:
-    #     - PYENV_VERSION=3.7.0
+    # TODO: when py-nod works on mac again, uncomment
+    - os: osx
+      osx_image: xcode10.1
+      language: generic
+      env:
+        - PYENV_VERSION=3.6.5
+
+    - os: osx
+      osx_image: xcode10.1
+      language: generic
+      env:
+        - PYENV_VERSION=3.7.1
 
 deploy:
   provider: script
@@ -44,7 +49,7 @@ before_install:
 install:
 # Install a custom pip version that is able to install manylinux2010 wheels.
 # TODO: when upstream, remove this fork
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install git+https://github.com/wtolson/pip@manylinux2010; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install git+https://github.com/pypa/pip; fi
 - python -m pip install -r requirements.txt
 - python -m pip install -e .
 - python -m pip uninstall -y randovania
