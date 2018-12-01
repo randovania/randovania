@@ -1,5 +1,5 @@
 import os
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, ANY
 
 import pytest
 
@@ -72,10 +72,14 @@ def test_unpack_iso(mock_application_options: MagicMock,
     )
 
 
+@patch("randovania.interface_common.simplified_patcher.ConstantPercentageCallback", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.default_data.decode_default_prime2", autospec=True)
 @patch("randovania.interface_common.echoes.generate_layout", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
 def test_generate_layout(mock_application_options: MagicMock,
                          mock_generate_layout: MagicMock,
+                         mock_decode_default_prime2: MagicMock,
+                         mock_constant_percentage_callback: MagicMock,
                          ):
     # Setup
     seed_number = MagicMock()
@@ -86,8 +90,9 @@ def test_generate_layout(mock_application_options: MagicMock,
     simplified_patcher.generate_layout(seed_number, progress_update)
 
     # Assert
+    mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
     mock_generate_layout.assert_called_once_with(
-        data=default_data.decode_default_prime2(),
+        data=mock_decode_default_prime2.return_value,
         seed_number=seed_number,
         configuration=LayoutConfiguration(
             trick_level=LayoutTrickLevel.NO_TRICKS,
@@ -99,7 +104,7 @@ def test_generate_layout(mock_application_options: MagicMock,
             difficulty=LayoutDifficulty.NORMAL,
             pickup_quantities={},
         ),
-        status_update=ConstantPercentageCallback(progress_update, -1)
+        status_update=mock_constant_percentage_callback.return_value
     )
 
 
