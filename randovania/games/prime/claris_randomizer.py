@@ -1,7 +1,9 @@
 import copy
 import os
+import shutil
 import subprocess
 from collections import defaultdict
+from pathlib import Path
 from typing import Callable, List, Optional, Dict
 
 import py
@@ -76,15 +78,18 @@ def _ensure_no_menu_mod(
         backup_files_path: str,
         status_update: Callable[[str], None],
 ):
-    pak_folder = py.path.local(backup_files_path).join("mp2_paks")
-    files_folder = py.path.local(game_root).join("files")
-    menu_mod_txt = files_folder.join("menu_mod.txt")
+    pak_folder = Path(backup_files_path, "mp2_paks")
+    files_folder = Path(game_root, "files")
+    menu_mod_txt = files_folder.joinpath("menu_mod.txt")
 
-    if menu_mod_txt.isfile() and pak_folder.isdir():
-        for pak in pak_folder.visit("*.pak"):
-            status_update("Restoring {} from backup".format(pak.relto(pak_folder)))
-            pak.copy(files_folder.join(pak.relto(pak_folder)))
-        menu_mod_txt.remove()
+    if menu_mod_txt.is_file() and pak_folder.is_dir():
+        for pak in pak_folder.glob("**/*.pak"):
+
+            relative = pak.relative_to(pak_folder)
+            status_update("Restoring {} from backup".format(relative))
+            shutil.copy(pak, files_folder.joinpath(relative))
+
+        menu_mod_txt.unlink()
 
 
 def _create_pak_backups(
@@ -92,30 +97,31 @@ def _create_pak_backups(
         backup_files_path: str,
         status_update: Callable[[str], None],
 ):
-    pak_folder = py.path.local(backup_files_path).join("mp2_paks")
-    pak_folder.ensure_dir()
+    pak_folder = Path(backup_files_path, "mp2_paks")
+    pak_folder.mkdir(parents=True, exist_ok=True)
 
-    files_folder = py.path.local(game_root).join("files")
+    files_folder = Path(game_root, "files")
     for pak in ["MiscData.pak"] + ["Metroid{}.pak".format(i) for i in range(1, 6)]:
-        if not pak_folder.join(pak).exists():
+        target_file = pak_folder.joinpath(pak)
+        if not target_file.exists():
             status_update("Backing up {}".format(pak))
-            files_folder.join(pak).copy(pak_folder.join(pak))
+            shutil.copy(files_folder.joinpath(pak), target_file)
 
 
 def _add_menu_mod_to_files(
         game_root: str,
         status_update: Callable[[str], None],
 ):
-    files_folder = py.path.local(game_root).join("files")
+    files_folder = Path(game_root, "files")
     _run_with_args(
         [
             _get_menu_mod_path(),
-            str(files_folder)
+            files_folder
         ],
         "Done!",
         status_update
     )
-    files_folder.join("menu_mod.txt").ensure()
+    files_folder.joinpath("menu_mod.txt").write_bytes(b"")
 
 
 def apply_layout(

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Changed: Renamed "Logic" to "Trick Level" and "No Glitches" to "No Tricks". Appropriate labels in the GUI and files
 changed to match.
+- Internal: no longer using the py.path and dataset libraries
 
 ## [0.16.2] - 2018-12-01
 - Fixed: adding multiples of an item now works properly.

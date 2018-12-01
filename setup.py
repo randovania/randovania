@@ -46,7 +46,6 @@ setup(
     ],
     python_requires=">=3.7",
     install_requires=[
-        'py',
         'PyQt5>=5.8',
         'appdirs',
         'nod>=1.1',
