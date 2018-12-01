@@ -10,6 +10,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data", "data")
              ],
              hiddenimports=[
+                 "py._builtin",
                  "py._path",
                  "py._path.common",
                  "py._path.local",
