@@ -151,6 +151,8 @@ def retcon_playthrough_filler(logic: Logic,
         for pickup_index in reach.state.collected_pickup_indices:
             pickup_index_seen_count[pickup_index] += 1
 
+        print_new_pickup_indices(logic, reach, pickup_index_seen_count)
+
         uncollected_resource_nodes = get_uncollected_resource_nodes_of_reach(reach)
         total_options = len(uncollected_resource_nodes)
         options_considered = 0
@@ -248,6 +250,24 @@ def print_retcon_place_pickup(action, logic, pickup_index):
         print("\n--> Placing {} at {}".format(
             action.name,
             logic.game.node_name(find_pickup_node_with_index(pickup_index, logic.game.all_nodes), with_world=True)))
+
+
+def print_new_pickup_indices(logic: Logic,
+                             reach: GeneratorReach,
+                             pickup_index_seen_count: Dict[PickupIndex, int],
+                             ):
+    if debug._DEBUG_LEVEL > 0:
+        for index, count in pickup_index_seen_count.items():
+            if count == 1:
+                node = find_pickup_node_with_index(index, logic.game.all_nodes)
+                print("-> New Pickup Node: {}".format(
+                    logic.game.node_name(node,
+                                         with_world=True)))
+                if debug._DEBUG_LEVEL > 1:
+                    paths = reach.shortest_path_from(node)
+                    path = paths.get(reach.state.node, [])
+                    print([node.name for node in path])
+        print("")
 
 
 def _filter_unassigned_pickup_indices(indices: Iterator[PickupIndex],
