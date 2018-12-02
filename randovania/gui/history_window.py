@@ -232,7 +232,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
         self.background_processor.run_in_background_thread(
             functools.partial(
-                simplified_patcher.patch_iso_with_existing_layout,
+                simplified_patcher.patch_game_with_existing_layout,
                 layout=self.current_layout_description,
                 input_iso=input_iso,
             ),
