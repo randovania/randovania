@@ -1,6 +1,7 @@
 import functools
 import random
 from pathlib import Path
+from typing import Optional
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
@@ -10,10 +11,12 @@ from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, persist_bool_option, prompt_user_for_input_iso, \
     prompt_user_for_seed_log
+from randovania.gui.history_window import HistoryWindow
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 from randovania.interface_common import simplified_patcher, game_workdir
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
+from randovania.resolver.layout_description import LayoutDescription
 
 
 def show_failed_generation_exception(exception: GenerationFailure):
@@ -25,8 +28,10 @@ def show_failed_generation_exception(exception: GenerationFailure):
 class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     _has_game: bool
     _current_lock_state: bool = True
+    _last_generated_layout: Optional[LayoutDescription] = None
 
     loaded_game_updated = pyqtSignal()
+    layout_generated_signal = pyqtSignal(LayoutDescription)
     failed_to_generate_signal = pyqtSignal(GenerationFailure)
 
     def __init__(self, main_window, background_processor: BackgroundTaskMixin):
@@ -38,6 +43,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         # Progress
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.layout_generated_signal.connect(self._on_layout_generated)
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
 
         # ISO Packing
@@ -239,3 +245,17 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         """
         self._ensure_seed_number_exists()
         self.create_new_layout()
+
+    # Layout Details
+    def _on_layout_generated(self, layout: LayoutDescription):
+        self._last_generated_layout = layout
+        self.tab_service.get_tab(HistoryWindow).add_new_layout_to_history(layout)
+        self.view_details_button.setEnabled(True)
+
+    def _view_layout_details(self):
+        if self._last_generated_layout is None:
+            raise RuntimeError("_view_layout_details should never be called without a _last_generated_layout")
+
+        window: HistoryWindow = self.tab_service.get_tab(HistoryWindow)
+        window.change_selected_layout(self._last_generated_layout)
+        self.tab_service.focus_tab(window)

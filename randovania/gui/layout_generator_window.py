@@ -1,19 +1,17 @@
 import functools
-from typing import Dict, Optional
+from typing import Dict
 
-from PyQt5.QtCore import pyqtSignal, Qt, QEvent
+from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton, QSpinBox
 
 from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.gui import tab_service
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
-from randovania.gui.history_window import HistoryWindow
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
 from randovania.interface_common.options import Options
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutMode, \
     LayoutEnabledFlag
-from randovania.resolver.layout_description import LayoutDescription
 
 
 def _update_options_when_true(field_name: str, new_value, checked: bool):
@@ -48,7 +46,6 @@ class CustomSpinBox(QSpinBox):
 
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     tab_service: tab_service
-    _last_generated_layout: Optional[LayoutDescription] = None
     _layout_logic_radios: Dict[LayoutTrickLevel, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
     _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
@@ -59,8 +56,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
 
     _total_item_count = 0
     _maximum_item_count = 0
-
-    layout_generated_signal = pyqtSignal(LayoutDescription)
 
     def __init__(self, tab_service: tab_service, background_processor: BackgroundTaskMixin):
         super().__init__()
@@ -73,7 +68,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         # Connect to Events
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.display_help_box.toggled.connect(self.update_help_display)
-        self.layout_generated_signal.connect(self._on_layout_generated)
         self.itemquantity_reset_button.clicked.connect(self._reset_item_quantities)
 
         # All code for the Randomize button
@@ -104,20 +98,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     def setup_initial_combo_selection(self):
         self.keys_selection_combo.setCurrentIndex(1)
         self.guaranteed_100_selection_combo.setCurrentIndex(1)
-
-    def _on_layout_generated(self, layout: LayoutDescription):
-        self._last_generated_layout = layout
-        self.tab_service.get_tab(HistoryWindow).add_new_layout_to_history(layout)
-
-        self.view_details_button.setEnabled(True)
-
-    def _view_layout_details(self):
-        if self._last_generated_layout is None:
-            raise RuntimeError("_view_layout_details should never be called without a _last_generated_layout")
-
-        window: HistoryWindow = self.tab_service.get_tab(HistoryWindow)
-        window.change_selected_layout(self._last_generated_layout)
-        self.tab_service.focus_tab(window)
 
     def setup_layout_radio_data(self, options: Options):
         # Setup config values to radio maps
