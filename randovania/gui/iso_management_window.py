@@ -13,6 +13,7 @@ from randovania.gui.common_qt_lib import application_options, persist_bool_optio
     prompt_user_for_seed_log
 from randovania.gui.history_window import HistoryWindow
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
+from randovania.gui.tab_service import TabService
 from randovania.interface_common import simplified_patcher, game_workdir
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
@@ -26,6 +27,7 @@ def show_failed_generation_exception(exception: GenerationFailure):
 
 
 class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
+    tab_service: TabService
     _has_game: bool
     _current_lock_state: bool = True
     _last_generated_layout: Optional[LayoutDescription] = None
@@ -34,12 +36,14 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     layout_generated_signal = pyqtSignal(LayoutDescription)
     failed_to_generate_signal = pyqtSignal(GenerationFailure)
 
-    def __init__(self, main_window, background_processor: BackgroundTaskMixin):
+    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
+        self.tab_service = tab_service
         self.background_processor = background_processor
 
         options = application_options()
+        output_directory = options.output_directory
 
         # Progress
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -52,6 +56,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.export_game_button.hide()
         self.export_game_button.clicked.connect(self.export_game)
         self.clear_game_button.clicked.connect(self.delete_loaded_game)
+        self.output_folder_edit.setText(str(output_directory) if output_directory is not None else "")
         self.output_folder_edit.textChanged.connect(self._on_new_output_directory)
         self.output_folder_button.clicked.connect(self._change_output_folder)
 
@@ -125,8 +130,13 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.background_processor.run_in_background_thread(work, "Will pack ISO")
 
     def _on_new_output_directory(self, output_folder: str):
+        output_folder = Path(output_folder)
+
         options = application_options()
-        options.output_directory = Path(output_folder)
+        if output_folder.is_dir():
+            options.output_directory = output_folder
+        else:
+            options.output_directory = None
         options.save_to_disk()
 
     def _change_output_folder(self):
@@ -250,7 +260,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     def _on_layout_generated(self, layout: LayoutDescription):
         self._last_generated_layout = layout
         self.tab_service.get_tab(HistoryWindow).add_new_layout_to_history(layout)
-        self.view_details_button.setEnabled(True)
+        # self.view_details_button.setEnabled(True)
 
     def _view_layout_details(self):
         if self._last_generated_layout is None:

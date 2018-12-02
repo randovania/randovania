@@ -5,10 +5,10 @@ from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton, QSpinBox
 
 from randovania.game_description.default_database import default_prime2_pickup_database
-from randovania.gui import tab_service
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
 from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
+from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutMode, \
     LayoutEnabledFlag
@@ -45,7 +45,6 @@ class CustomSpinBox(QSpinBox):
 
 
 class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
-    tab_service: tab_service
     _layout_logic_radios: Dict[LayoutTrickLevel, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
     _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
@@ -57,12 +56,11 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     _total_item_count = 0
     _maximum_item_count = 0
 
-    def __init__(self, tab_service: tab_service, background_processor: BackgroundTaskMixin):
+    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
         self.mode_group.hide()
 
-        self.tab_service = tab_service
         self.background_processor = background_processor
 
         # Connect to Events

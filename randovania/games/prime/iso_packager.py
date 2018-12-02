@@ -144,10 +144,10 @@ def pack_iso(iso: Path,
     if nod_version < StrictVersion("1.1.0"):
         raise RuntimeError("Installed nod version ({}) is older than required 1.1.0".format(nod_version))
 
-    if disable_attract_if_necessary and nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:
+    if disable_attract_if_necessary and nod.DiscBuilderGCN.calculate_total_size_required(str(game_files_path)) is None:
         _disable_attract_videos(game_files_path, progress_update)
 
-    if nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:
+    if nod.DiscBuilderGCN.calculate_total_size_required(str(game_files_path)) is None:
         raise RuntimeError("Image built with given directory would pass the maximum size.")
 
     _shared_process_code(
