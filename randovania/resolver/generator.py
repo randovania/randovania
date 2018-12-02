@@ -89,11 +89,11 @@ def generate_list(data: Dict,
         try:
             final_state_by_resolve = final_state_async.get(60)
         except multiprocessing.TimeoutError:
-            raise create_failure("Timeout reached when calculating solver path.")
+            raise create_failure("Timeout reached when validating possibility")
 
     if final_state_by_resolve is None:
         # Why is final_state_by_distribution not OK?
-        raise create_failure("Generated patches was impossible for the solver.")
+        raise create_failure("Generated seed was considered impossible by the solver")
     else:
         solver_path = _state_to_solver_path(final_state_by_resolve, resolver_game)
 
