@@ -102,51 +102,44 @@ def pack_iso(output_iso: Path,
 
 
 def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
-                        input_iso: Path,
                         layout: LayoutDescription,
                         ):
     layout_configuration = layout.configuration
 
     output_name = "Echoes Randomizer - {}_{}".format(layout_configuration.as_str, layout.seed_number)
-    base_directory: Path = input_iso.parent
-    output_iso = base_directory.joinpath("{}.iso".format(output_name))
-    output_json = base_directory.joinpath("{}.json".format(output_name))
-
-    # Unpack ISO
-    unpack_iso(input_iso=input_iso, progress_update=updaters[0])
+    output_directory = application_options().output_directory
+    output_iso = output_directory.joinpath("{}.iso".format(output_name))
+    output_json = output_directory.joinpath("{}.json".format(output_name))
 
     # Patch ISO
-    apply_layout(layout=layout, progress_update=updaters[1])
+    apply_layout(layout=layout, progress_update=updaters[0])
 
     # Pack ISO
-    pack_iso(output_iso=output_iso, progress_update=updaters[2])
+    pack_iso(output_iso=output_iso, progress_update=updaters[1])
 
     # Save the layout to a file
-    # TODO
     layout.save_to_file(output_json)
 
 
-def patch_iso_with_existing_layout(progress_update: ProgressUpdateCallable,
-                                   input_iso: Path,
-                                   layout: LayoutDescription,
-                                   ):
+def patch_game_with_existing_layout(progress_update: ProgressUpdateCallable,
+                                    input_iso: Path,
+                                    layout: LayoutDescription,
+                                    ):
     _internal_patch_iso(
         updaters=status_update_lib.split_progress_update(
             progress_update,
-            3
+            2
         ),
-        input_iso=input_iso,
         layout=layout
     )
 
 
-def create_layout_then_patch_iso(progress_update: ProgressUpdateCallable,
-                                 input_iso: Path,
-                                 seed_number: int,
-                                 ) -> LayoutDescription:
+def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
+                                  seed_number: int,
+                                  ) -> LayoutDescription:
     updaters = status_update_lib.split_progress_update(
         progress_update,
-        4
+        3
     )
 
     # Create a LayoutDescription
@@ -154,7 +147,6 @@ def create_layout_then_patch_iso(progress_update: ProgressUpdateCallable,
 
     _internal_patch_iso(
         updaters=updaters[1:],
-        input_iso=input_iso,
         layout=resulting_layout
     )
 

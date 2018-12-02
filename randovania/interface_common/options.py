@@ -81,8 +81,22 @@ class Options:
         return Path(result)
 
     @game_files_path.setter
-    def game_files_path(self, value: Optional[Path]):
+    def game_files_path(self, value: Path):
         self.raw_data["game_files_path"] = str(value)
+
+    @property
+    def output_directory(self) -> Optional[Path]:
+        result = self.raw_data["output_directory"]
+        if result is not None:
+            return Path(result)
+        return None
+
+    @output_directory.setter
+    def output_directory(self, value: Optional[Path]):
+        if value is not None:
+            self.raw_data["output_directory"] = str(value)
+        else:
+            self.raw_data["output_directory"] = None
 
     @property
     def advanced_options(self) -> bool:
@@ -182,6 +196,7 @@ def _default_options() -> Dict[str, Any]:
     options["layout_elevators"] = LayoutRandomizedFlag.VANILLA.value
     options["layout_item_loss"] = LayoutEnabledFlag.ENABLED.value
     options["quantity_for_pickup"] = {}
+    options["output_directory"] = None
     return options
 
 

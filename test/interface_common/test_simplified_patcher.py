@@ -107,8 +107,8 @@ def test_generate_layout(mock_application_options: MagicMock,
 
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.unpack_iso", autospec=True)
-def test_internal_patch_iso(mock_unpack_iso: MagicMock,
+@patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
+def test_internal_patch_iso(mock_application_options: MagicMock,
                             mock_apply_layout: MagicMock,
                             mock_pack_iso: MagicMock,
                             ):
@@ -116,46 +116,43 @@ def test_internal_patch_iso(mock_unpack_iso: MagicMock,
     layout = MagicMock()
     layout.seed_number = 1234
     layout.configuration.as_str = "layout"
+    mock_application_options.return_value.output_directory = Path("fun")
 
     name = "Echoes Randomizer - layout_1234"
-    input_iso = Path("fun", "game.iso")
     output_iso = Path("fun", name + ".iso")
     output_json = Path("fun", name + ".json")
-    updaters = [MagicMock(), MagicMock(), MagicMock()]
+    updaters = [MagicMock(), MagicMock()]
 
     # Run
-    simplified_patcher._internal_patch_iso(updaters, input_iso, layout)
+    simplified_patcher._internal_patch_iso(updaters, layout)
 
     # Assert
-    mock_unpack_iso.assert_called_once_with(input_iso=input_iso, progress_update=updaters[0])
-    mock_apply_layout.assert_called_once_with(layout=layout, progress_update=updaters[1])
-    mock_pack_iso.assert_called_once_with(output_iso=output_iso, progress_update=updaters[2])
+    mock_apply_layout.assert_called_once_with(layout=layout, progress_update=updaters[0])
+    mock_pack_iso.assert_called_once_with(output_iso=output_iso, progress_update=updaters[1])
     layout.save_to_file.assert_called_once_with(output_json)
 
 
 @patch("randovania.interface_common.simplified_patcher._internal_patch_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.generate_layout", autospec=True)
 @patch("randovania.interface_common.status_update_lib.split_progress_update", autospec=True)
-def test_create_layout_then_patch_iso(mock_split_progress_update: MagicMock,
-                                      mock_generate_layout: MagicMock,
-                                      mock_internal_patch_iso: MagicMock,
-                                      ):
+def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
+                                       mock_generate_layout: MagicMock,
+                                       mock_internal_patch_iso: MagicMock,
+                                       ):
     # Setup
     progress_update = MagicMock()
-    input_iso = MagicMock()
     seed_number = MagicMock()
     updaters = [MagicMock(), MagicMock(), MagicMock(), MagicMock()]
     mock_split_progress_update.return_value = updaters
 
     # Run
-    result = simplified_patcher.create_layout_then_patch_iso(progress_update, input_iso, seed_number)
+    result = simplified_patcher.create_layout_then_export_iso(progress_update, seed_number)
 
     # Assert
-    mock_split_progress_update.assert_called_once_with(progress_update, 4)
+    mock_split_progress_update.assert_called_once_with(progress_update, 3)
     mock_generate_layout.assert_called_once_with(seed_number=seed_number, progress_update=updaters[0])
     mock_internal_patch_iso.assert_called_once_with(
         updaters=updaters[1:],
-        input_iso=input_iso,
         layout=mock_generate_layout.return_value
     )
     assert result == mock_generate_layout.return_value

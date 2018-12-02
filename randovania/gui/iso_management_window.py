@@ -183,14 +183,11 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             self.failed_to_generate_signal.emit(generate_exception)
             progress_update("Generation Failure: {}".format(generate_exception), -1)
 
-    def randomize_loaded_game(self, input_iso: Path):
+    def randomize_loaded_game(self):
         self.background_processor.run_in_background_thread(
             functools.partial(
                 self._try_generate_layout,
-                job=functools.partial(
-                    simplified_patcher.create_layout_then_patch_iso,
-                    input_iso=input_iso,
-                )
+                job=simplified_patcher.create_layout_then_export_iso
             ),
             "Randomizing...")
 
