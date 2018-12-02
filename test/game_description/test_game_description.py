@@ -3,6 +3,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import game_description
+from randovania.game_description.game_description import Area
+from randovania.game_description.node import Node
+from randovania.game_description.requirements import RequirementSet
 
 
 @pytest.mark.parametrize(["danger_a", "danger_b", "expected_result"], [
@@ -13,24 +16,33 @@ from randovania.game_description import game_description
     (["a"], ["a"], ["a"]),
 ])
 def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
-    area_a = MagicMock()
-    area_b = MagicMock()
-    set_a = MagicMock()
-    set_b = MagicMock()
+    set_a: RequirementSet = MagicMock()
+    set_b: RequirementSet = MagicMock()
 
     set_a.dangerous_resources = danger_a
     set_b.dangerous_resources = danger_b
 
-    area_a.connections = {
-        "n1": {
-            "n2": set_a
+    n1: Node = "n1"
+    n2: Node = "n2"
+
+    area_a = Area(
+        "area_a", 0, 0, [n1, n2],
+        {
+            n1: {
+                n2: set_a
+            },
+            n2: {}
         }
-    }
-    area_b.connections = {
-        "n1": {
-            "n2": set_b
+    )
+    area_b = Area(
+        "area_b", 0, 0, [n1, n2],
+        {
+            n1: {},
+            n2: {
+                n1: set_b
+            }
         }
-    }
+    )
 
     # Run
     result = game_description._calculate_dangerous_resources([area_a, area_b])
