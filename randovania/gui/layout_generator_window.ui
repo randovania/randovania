@@ -21,8 +21,33 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="display_help_box">
+      <property name="minimumSize">
+       <size>
+        <width>130</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Display Help</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0" colspan="2">
      <widget class="QScrollArea" name="scroll_area">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -30,9 +55,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-337</y>
-         <width>768</width>
-         <height>1057</height>
+         <y>0</y>
+         <width>767</width>
+         <height>956</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
@@ -454,22 +479,6 @@ Since there aren't many checks, out of bounds tricks will probably be necessary 
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QCheckBox" name="display_help_box">
-      <property name="minimumSize">
-       <size>
-        <width>130</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Display Help</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
      </widget>
     </item>
    </layout>

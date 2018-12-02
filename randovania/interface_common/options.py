@@ -1,5 +1,4 @@
 import json
-import os
 from collections import OrderedDict
 from pathlib import Path
 from typing import Dict, Any, Optional
@@ -188,21 +187,6 @@ def _default_options() -> Dict[str, Any]:
 
 def default_files_location() -> Path:
     return persistence.user_data_dir() / "extracted_game"
-
-
-def validate_game_files_path(game_files_path: Path):
-    if not game_files_path.is_dir():
-        raise ValueError("Not a directory")
-
-    required_files = ["default.dol", "FrontEnd.pak", "Metroid1.pak", "Metroid2.pak"]
-    missing_files = [(game_files_path / required_file).is_file()
-                     for required_file in required_files]
-
-    if not all(missing_files):
-        raise ValueError("Is not a valid game folder. Missing files: {}".format([
-            filename for filename, exists in zip(required_files, missing_files)
-            if not exists
-        ]))
 
 
 MAX_DIFFICULTY = 5
