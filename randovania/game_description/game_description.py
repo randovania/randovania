@@ -54,13 +54,13 @@ class World(NamedTuple):
 
 
 def _calculate_dangerous_resources(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
-    yield from itertools.chain.from_iterable(
-        requirement_set.dangerous_resources
+    for area in areas:
+        for node in area.nodes:
+            if isinstance(node, DockNode):
+                yield from node.dock_weakness.requirements.dangerous_resources
 
-        for area in areas
-        for node_connection in area.connections.values()
-        for requirement_set in node_connection.values()
-    )
+            for connection in area.connections[node].values():
+                yield from connection.dangerous_resources
 
 
 class GameDescription:
