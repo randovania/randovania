@@ -12,7 +12,7 @@ from randovania.gui.common_qt_lib import prompt_user_for_seed_log
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
-from randovania.gui.layout_generator_window import LayoutGeneratorWindow
+from randovania.gui.logic_settings_window import LogicSettingsWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.tab_windows = [
             (ISOManagementWindow, "ROM Settings"),
-            (LayoutGeneratorWindow, "Logic Settings"),
+            (LogicSettingsWindow, "Logic Settings"),
         ]
 
         for i, tab in enumerate(self.tab_windows):
@@ -86,7 +86,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         for url in event.mimeData().urls():
             iso_path = url.toLocalFile()
             if os.path.splitext(iso_path)[1] == ".iso":
-                self.get_tab(LayoutGeneratorWindow).randomize_given_iso(iso_path)
+                self.get_tab(LogicSettingsWindow).randomize_given_iso(iso_path)
                 return
 
     def display_new_version(self, new_version: str, new_version_url: str):

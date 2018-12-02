@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton, QSpinBox
 from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
-from randovania.gui.layout_generator_window_ui import Ui_LayoutGeneratorWindow
+from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutMode, \
@@ -44,7 +44,7 @@ class CustomSpinBox(QSpinBox):
         return super().eventFilter(obj, event)
 
 
-class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
+class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     _layout_logic_radios: Dict[LayoutTrickLevel, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
     _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
