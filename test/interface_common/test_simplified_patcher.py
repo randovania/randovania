@@ -22,14 +22,12 @@ def test_delete_files_location(mock_application_options: MagicMock,
                                ):
     # Setup
     data_dir = Path(str(tmpdir.join("user_data_dir")))
+    mock_application_options.return_value = Options(data_dir)
 
-    options = Options(data_dir)
-    options.game_files_path = str(tmpdir.join("games_files"))
-    mock_application_options.return_value = options
-
+    game_files = tmpdir.join("user_data_dir", "extracted_game")
     if games_path_exist:
-        tmpdir.join("games_files").ensure_dir()
-        tmpdir.join("games_files", "random.txt").write_text("yay", "utf-8")
+        game_files.ensure_dir()
+        game_files.join("random.txt").write_text("yay", "utf-8")
 
     backup_files = tmpdir.join("user_data_dir", "backup")
     if backup_path_exist:
@@ -40,7 +38,7 @@ def test_delete_files_location(mock_application_options: MagicMock,
     simplified_patcher.delete_files_location()
 
     # Assert
-    assert not tmpdir.join("games_files").exists()
+    assert not game_files.exists()
     assert not backup_files.exists()
 
 
@@ -54,8 +52,6 @@ def test_unpack_iso(mock_application_options: MagicMock,
     # Setup
     input_iso = MagicMock()
     progress_update = MagicMock()
-    game_files_path = MagicMock()
-    mock_application_options.return_value.game_files_path = game_files_path
 
     # Run
     simplified_patcher.unpack_iso(input_iso, progress_update)
@@ -64,7 +60,7 @@ def test_unpack_iso(mock_application_options: MagicMock,
     mock_delete_files_location.assert_called_once_with()
     mock_unpack_iso.assert_called_once_with(
         iso=input_iso,
-        game_files_path=game_files_path,
+        game_files_path=mock_application_options.return_value.game_files_path,
         progress_update=progress_update,
     )
 

@@ -75,14 +75,7 @@ class Options:
 
     @property
     def game_files_path(self) -> Path:
-        result = self.raw_data["game_files_path"]
-        if result is None:
-            return default_files_location()
-        return Path(result)
-
-    @game_files_path.setter
-    def game_files_path(self, value: Path):
-        self.raw_data["game_files_path"] = str(value)
+        return self._data_dir.joinpath("extracted_game")
 
     @property
     def output_directory(self) -> Optional[Path]:
@@ -188,7 +181,7 @@ def _default_options() -> Dict[str, Any]:
     options["game_files_path"] = None
     options["show_advanced_options"] = False
     options["display_generate_help"] = True
-    options["include_menu_mod"] = False
+    options["include_menu_mod"] = True
 
     options["layout_trick_level"] = LayoutTrickLevel.NO_TRICKS.value
     options["layout_mode"] = LayoutMode.STANDARD.value
@@ -198,10 +191,6 @@ def _default_options() -> Dict[str, Any]:
     options["quantity_for_pickup"] = {}
     options["output_directory"] = None
     return options
-
-
-def default_files_location() -> Path:
-    return persistence.user_data_dir() / "extracted_game"
 
 
 MAX_DIFFICULTY = 5
