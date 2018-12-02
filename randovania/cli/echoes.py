@@ -60,7 +60,7 @@ def validate_command_logic(args):
     data = prime_database.decode_data_file(args)
 
     if args.layout_file is not None:
-        description = LayoutDescription.from_file(args.layout_file)
+        description = LayoutDescription.from_file(Path(args.layout_file))
         configuration = description.configuration
         pickup_assignment = description.pickup_assignment
         elevators = claris_randomizer.elevator_list_for_configuration(configuration, description.seed_number)
@@ -68,7 +68,7 @@ def validate_command_logic(args):
 
     else:
         configuration = LayoutConfiguration(
-            logic=LayoutTrickLevel.NO_TRICKS,
+            trick_level=LayoutTrickLevel.NO_TRICKS,
             mode=LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED,

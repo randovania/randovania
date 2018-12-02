@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>560</height>
+    <height>588</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -134,7 +134,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="QMenuBar" name="menu_bar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -143,7 +143,31 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_open">
+    <property name="title">
+     <string>Open</string>
+    </property>
+    <addaction name="menu_action_data_visualizer"/>
+    <addaction name="menu_action_existing_seed_details"/>
+    <addaction name="menu_action_tracker"/>
+   </widget>
+   <addaction name="menu_open"/>
   </widget>
+  <action name="menu_action_data_visualizer">
+   <property name="text">
+    <string>Data Visualizer</string>
+   </property>
+  </action>
+  <action name="menu_action_existing_seed_details">
+   <property name="text">
+    <string>Existing Seed Details</string>
+   </property>
+  </action>
+  <action name="menu_action_tracker">
+   <property name="text">
+    <string>Tracker</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
