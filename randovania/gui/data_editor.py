@@ -21,7 +21,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     radio_button_to_node: Dict[QRadioButton, Node] = {}
     connection_widgets: List[QWidget] = []
 
-    def __init__(self, main_window, background_processor: BackgroundTaskMixin):
+    def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.worldSelectorBox.currentIndexChanged.connect(self.on_select_world)

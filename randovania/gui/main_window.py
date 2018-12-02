@@ -8,8 +8,9 @@ from PyQt5.QtWidgets import QMainWindow, QAction
 
 from randovania import VERSION
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.common_qt_lib import prompt_user_for_seed_log
 from randovania.gui.data_editor import DataEditorWindow
-from randovania.gui.history_window import HistoryWindow
+from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.layout_generator_window import LayoutGeneratorWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
@@ -46,19 +47,19 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.progress_update_signal.connect(self.update_progress)
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
+        # Menu Bar
+        self.menu_action_tracker.setVisible(preview)
+        self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
+        self.menu_action_existing_seed_details.triggered.connect(self._open_existing_seed_details)
+        self.menu_action_tracker.triggered.connect(self._open_tracker)
+
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
 
         self.tab_windows = [
             (ISOManagementWindow, "ROM Settings"),
             (LayoutGeneratorWindow, "Logic Settings"),
-            (HistoryWindow, "Layout Details"),
-            (DataEditorWindow, "Data Visualizer"),
         ]
-
-        # if preview:
-        #     self._tracker_window = TrackerWindow()
-        #     self._tracker_window.show()
 
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self, self))
@@ -92,7 +93,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         if self.menu_new_version is None:
             self.menu_new_version = QAction("", self)
             self.menu_new_version.triggered.connect(self.open_version_link)
-            self.menuBar.addAction(self.menu_new_version)
+            self.menu_bar.addAction(self.menu_new_version)
 
         self.menu_new_version.setText("New version available: {}".format(new_version))
         self._current_version_url = new_version_url
@@ -102,6 +103,23 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             raise RuntimeError("Called open_version_link, but _current_version_url is None")
 
         QDesktopServices.openUrl(QUrl(self._current_version_url))
+
+    # Menu Actions
+    def _open_data_visualizer(self):
+        self._data_visualizer = DataEditorWindow()
+        self._data_visualizer.show()
+
+    def _open_existing_seed_details(self):
+        json_path = prompt_user_for_seed_log(self)
+        if json_path is None:
+            return
+
+        self._seed_details = SeedDetailsWindow(json_path)
+        self._seed_details.show()
+
+    def _open_tracker(self):
+        self._tracker = TrackerWindow()
+        self._tracker.show()
 
     # Background Process
 

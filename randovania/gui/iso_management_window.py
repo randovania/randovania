@@ -11,7 +11,7 @@ from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, persist_bool_option, prompt_user_for_input_iso, \
     prompt_user_for_seed_log
-from randovania.gui.history_window import HistoryWindow
+from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common import simplified_patcher, game_workdir
@@ -259,13 +259,13 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     # Layout Details
     def _on_layout_generated(self, layout: LayoutDescription):
         self._last_generated_layout = layout
-        self.tab_service.get_tab(HistoryWindow).add_new_layout_to_history(layout)
+        self.tab_service.get_tab(SeedDetailsWindow).add_new_layout_to_history(layout)
         # self.view_details_button.setEnabled(True)
 
     def _view_layout_details(self):
         if self._last_generated_layout is None:
             raise RuntimeError("_view_layout_details should never be called without a _last_generated_layout")
 
-        window: HistoryWindow = self.tab_service.get_tab(HistoryWindow)
+        window: SeedDetailsWindow = self.tab_service.get_tab(SeedDetailsWindow)
         window.change_selected_layout(self._last_generated_layout)
         self.tab_service.focus_tab(window)

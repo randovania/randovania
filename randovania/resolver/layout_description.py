@@ -121,8 +121,8 @@ class LayoutDescription(NamedTuple):
         )
 
     @classmethod
-    def from_file(cls, json_path: str) -> "LayoutDescription":
-        with open(json_path, "r") as open_file:
+    def from_file(cls, json_path: Path) -> "LayoutDescription":
+        with json_path.open("r") as open_file:
             return cls.from_json_dict(json.load(open_file))
 
     @property

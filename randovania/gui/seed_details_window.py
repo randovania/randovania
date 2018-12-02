@@ -1,19 +1,13 @@
-import functools
 from functools import partial
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
-    QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
 from randovania.game_description.default_database import default_prime2_pickup_database, default_prime2_game_description
 from randovania.game_description.node import PickupNode
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options, prompt_user_for_input_iso
-from randovania.gui.history_window_ui import Ui_HistoryWindow
-from randovania.interface_common import simplified_patcher
+from randovania.gui.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -37,49 +31,22 @@ def _hide_pickup_spoiler(button):
     button.item_is_hidden = True
 
 
-class HistoryWindow(QMainWindow, Ui_HistoryWindow):
+class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton] = []
     pickup_spoiler_buttons: List[QPushButton] = []
-    current_layout_description: Optional[LayoutDescription] = None
+    layout_description: LayoutDescription
 
-    selected_layout_change_signal = pyqtSignal(LayoutDescription)
-
-    def __init__(self, main_window, background_processor: BackgroundTaskMixin):
+    def __init__(self, json_path: Path):
         super().__init__()
         self.setupUi(self)
-
-        self.main_window = main_window
-        self.background_processor = background_processor
-
-        self.layout_history_content_layout.setAlignment(Qt.AlignTop)
-
-        # signals
-        self.selected_layout_change_signal.connect(self.update_layout_description)
-
-        # Fill the history page
-        self.create_history_items()
-        self.layout_history_scroll.hide()  # But hide it for now
+        self.layout_description = LayoutDescription.from_file(json_path)
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers()
 
-        size_policy = self.layout_info_tab.sizePolicy()
-        size_policy.setRetainSizeWhenHidden(True)
-        self.layout_info_tab.setSizePolicy(size_policy)
-        self.layout_info_tab.hide()
-
-        # Exporting
-        self.apply_layout_button.clicked.connect(self.apply_layout)
-        self.export_layout_button.clicked.connect(self.export_layout)
-        self.import_layout_button.clicked.connect(self.import_layout)
-
-    # Layout History
-    def add_new_layout_to_history(self, layout: LayoutDescription):
-        self.change_selected_layout(layout)
-
-    def change_selected_layout(self, layout: LayoutDescription):
-        self.selected_layout_change_signal.emit(layout)
+        # And update
+        self.update_layout_description(self.layout_description)
 
     # Layout Visualization
     def _create_pickup_spoiler_combobox(self):
@@ -135,13 +102,6 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
 
             self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
 
-    def create_history_items(self):
-        is_first = True
-        for node in []:
-            button = self.create_history_item(node)
-            button.setChecked(is_first)
-            is_first = False
-
     def create_history_item(self, node):
         button = QRadioButton(self.layout_history_content)
         button.toggled.connect(self.on_select_node)
@@ -151,7 +111,7 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
         return button
 
     def update_layout_description(self, layout: LayoutDescription):
-        self.current_layout_description = layout
+        self.layout_description = layout
         self.layout_info_tab.show()
 
         configuration = layout.configuration
@@ -206,52 +166,3 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
             visible = text == "None" or text == button.item_name
             button.setVisible(visible)
             button.row.label.setVisible(visible)
-
-    # Exporting
-    def apply_layout(self):
-        if self.current_layout_description is None:
-            raise RuntimeError("Trying to apply_layout, but current_layout_description is None")
-
-        if application_options().advanced_options:
-            self.apply_layout_advanced()
-        else:
-            self.apply_layout_simplified()
-
-    def apply_layout_advanced(self):
-        self.background_processor.run_in_background_thread(
-            functools.partial(
-                simplified_patcher.apply_layout,
-                layout=self.current_layout_description
-            ),
-            "Patching game files...")
-
-    def apply_layout_simplified(self):
-        self.background_processor.run_in_background_thread(
-            functools.partial(
-                simplified_patcher.patch_game_with_existing_layout,
-                layout=self.current_layout_description,
-            ),
-            "Patching ISO...")
-
-    def export_layout(self):
-        open_result = QFileDialog.getSaveFileName(
-            self,
-            caption="Select a file to export the layout to...",
-            filter="*.json")
-        if not open_result or open_result == ("", ""):
-            return
-
-        json_path, extension = open_result
-        self.current_layout_description.save_to_file(Path(json_path))
-
-    def import_layout(self):
-        open_result = QFileDialog.getOpenFileName(
-            self,
-            caption="Select a layout file to import...",
-            filter="*.json")
-
-        if not open_result or open_result == ("", ""):
-            return
-
-        json_path, extension = open_result
-        self.add_new_layout_to_history(LayoutDescription.from_file(json_path))

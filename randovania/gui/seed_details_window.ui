@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HistoryWindow</class>
- <widget class="QMainWindow" name="HistoryWindow">
+ <class>SeedDetailsWindow</class>
+ <widget class="QMainWindow" name="SeedDetailsWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Hello, world!</string>
+   <string>Seed Details</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="maximumSize">
@@ -24,14 +24,14 @@
     <enum>Qt::LeftToRight</enum>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1" rowspan="3">
+    <item row="0" column="0" rowspan="3">
      <widget class="QTabWidget" name="layout_info_tab">
       <property name="currentIndex">
        <number>0</number>
       </property>
       <widget class="QWidget" name="details_tab">
        <attribute name="title">
-        <string>Layout Details</string>
+        <string>Configuration</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
@@ -48,16 +48,6 @@
          <widget class="QLabel" name="layout_seed_value_label">
           <property name="text">
            <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="layout_trick_text_label">
-          <property name="text">
-           <string>Trick Level</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -85,6 +75,16 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="layout_trick_text_label">
+          <property name="text">
+           <string>Trick Level</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
         <item row="3" column="0">
          <widget class="QLabel" name="layout_keys_text_label">
           <property name="text">
@@ -95,8 +95,8 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QLabel" name="layout_keys_value_label">
+        <item row="4" column="1">
+         <widget class="QLabel" name="layout_item_loss_value_label">
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -112,13 +112,6 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="layout_item_loss_value_label">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
         <item row="5" column="0">
          <widget class="QLabel" name="layout_elevators_text_label">
           <property name="text">
@@ -129,8 +122,8 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="layout_elevators_value_label">
+        <item row="3" column="1">
+         <widget class="QLabel" name="layout_keys_value_label">
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -153,13 +146,10 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="layout_difficulty_text_label">
+        <item row="5" column="1">
+         <widget class="QLabel" name="layout_elevators_value_label">
           <property name="text">
-           <string>Difficulty:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <string>TextLabel</string>
           </property>
          </widget>
         </item>
@@ -170,17 +160,13 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="0" colspan="2">
-         <widget class="QPushButton" name="apply_layout_button">
+        <item row="7" column="0">
+         <widget class="QLabel" name="layout_difficulty_text_label">
           <property name="text">
-           <string>Apply to an ISO</string>
+           <string>Difficulty:</string>
           </property>
-         </widget>
-        </item>
-        <item row="9" column="0" colspan="2">
-         <widget class="QPushButton" name="export_layout_button">
-          <property name="text">
-           <string>Export as file</string>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -229,8 +215,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>84</width>
-             <height>28</height>
+             <width>796</width>
+             <height>493</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -280,8 +266,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>275</width>
-             <height>46</height>
+             <width>796</width>
+             <height>521</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -305,65 +291,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QGroupBox" name="history_box">
-      <property name="minimumSize">
-       <size>
-        <width>250</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>History</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="1" column="1" colspan="2">
-        <widget class="QScrollArea" name="layout_history_scroll">
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOn</enum>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QAbstractScrollArea::AdjustToContents</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <widget class="QWidget" name="layout_history_content">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>210</width>
-            <height>468</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <layout class="QVBoxLayout" name="layout_history_content_layout"/>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QPushButton" name="import_layout_button">
-         <property name="text">
-          <string>Import from file</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </widget>
     </item>
    </layout>
