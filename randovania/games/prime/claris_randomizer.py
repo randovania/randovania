@@ -172,8 +172,8 @@ def disable_echoes_attract_videos(game_root: Path,
                                   ):
     game_files = game_root.joinpath("files")
     args = [
-        _get_randomizer_folder().joinpath("DisableEchoesAttractVideos.exe"),
-        game_files
+        str(_get_randomizer_folder().joinpath("DisableEchoesAttractVideos.exe")),
+        str(game_files)
     ]
     with subprocess.Popen(args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
         try:
