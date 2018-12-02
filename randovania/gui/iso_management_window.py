@@ -4,15 +4,22 @@ from pathlib import Path
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options, persist_bool_option, prompt_user_for_input_iso
+from randovania.gui.common_qt_lib import application_options, persist_bool_option, prompt_user_for_input_iso, \
+    prompt_user_for_seed_log
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 from randovania.interface_common import simplified_patcher, game_workdir
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
+
+
+def show_failed_generation_exception(exception: GenerationFailure):
+    QMessageBox.critical(None,
+                         "An error occurred while generating a seed",
+                         "{}\n\nSome errors are expected to occur, please try again.".format(exception))
 
 
 class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
@@ -20,6 +27,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     _current_lock_state: bool = True
 
     loaded_game_updated = pyqtSignal()
+    failed_to_generate_signal = pyqtSignal(GenerationFailure)
 
     def __init__(self, main_window, background_processor: BackgroundTaskMixin):
         super().__init__()
@@ -30,6 +38,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         # Progress
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.failed_to_generate_signal.connect(show_failed_generation_exception)
 
         # ISO Packing
         self.loaded_game_updated.connect(self._update_displayed_game)
@@ -37,6 +46,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.export_game_button.hide()
         self.export_game_button.clicked.connect(self.export_game)
         self.clear_game_button.clicked.connect(self.delete_loaded_game)
+        self.output_folder_edit.textChanged.connect(self._on_new_output_directory)
         self.output_folder_button.clicked.connect(self._change_output_folder)
 
         # Seed/Permalink
@@ -66,6 +76,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
         self._refresh_game_buttons_state()
+        self.randomize_and_export_button.setEnabled(value)
         self.create_log_button.setEnabled(value)
 
     # ISO Packing
@@ -107,12 +118,24 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         self.background_processor.run_in_background_thread(work, "Will pack ISO")
 
+    def _on_new_output_directory(self, output_folder: str):
+        options = application_options()
+        options.output_directory = Path(output_folder)
+        options.save_to_disk()
+
     def _change_output_folder(self):
         folder = QFileDialog.getExistingDirectory(self)
         if not folder or folder == "":
             return
 
         self.output_folder_edit.setText(folder)
+
+    def _check_input_output_configured(self):
+        if not self._has_game:
+            raise ValueError("No game available. Please load one using 'Load Game'")
+
+        if application_options().output_directory is None:
+            raise ValueError("No output directory. Please select one using 'Select Folder'")
 
     def _update_displayed_game(self):
         result = game_workdir.discover_game(application_options().game_files_path)
@@ -129,13 +152,11 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
     def _refresh_game_buttons_state(self):
         """
-        Relevant after loading a new game or when changing background task lock
-        :return:
+        Relevant after loading a new game or when changing background task lock.
         """
         self.load_game_button.setEnabled(self._current_lock_state)
         self.export_game_button.setEnabled(self._current_lock_state and self._has_game)
         self.clear_game_button.setEnabled(self._current_lock_state and self._has_game)
-        self.randomize_and_export_button.setEnabled(self._current_lock_state and self._has_game)
 
     # Seed Number / Permalink
     def get_current_seed_number(self) -> int:
@@ -163,11 +184,9 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         print(permalink)
 
     def _create_permalink_from_file(self):
-        open_result = QFileDialog.getSaveFileName(self, filter="*.json")
-        if not open_result or open_result == ("", ""):
+        json_path = prompt_user_for_seed_log(self)
+        if json_path is None:
             return
-
-        json_path, extension = open_result
         print(json_path)
 
     # Randomize
@@ -203,6 +222,14 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         """
         Listener to the "Randomize" button.
         """
+        try:
+            self._check_input_output_configured()
+        except ValueError as e:
+            QMessageBox.warning(self,
+                                "Missing configuration",
+                                str(e))
+            return
+
         self._ensure_seed_number_exists()
         self.randomize_loaded_game()
 

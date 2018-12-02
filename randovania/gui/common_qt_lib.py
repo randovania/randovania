@@ -38,3 +38,15 @@ def prompt_user_for_input_iso(window: QMainWindow) -> Optional[Path]:
     if not open_result or open_result == ("", ""):
         return None
     return Path(open_result[0])
+
+
+def prompt_user_for_seed_log(window: QMainWindow) -> Optional[Path]:
+    """
+    Shows an QFileDialog asking the user for a Randovania seed log
+    :param window:
+    :return: A string if the user selected a file, None otherwise
+    """
+    open_result = QFileDialog.getOpenFileName(window, caption="Select a Randovania seed log.", filter="*.json")
+    if not open_result or open_result == ("", ""):
+        return None
+    return Path(open_result[0])

@@ -122,7 +122,6 @@ def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
 
 
 def patch_game_with_existing_layout(progress_update: ProgressUpdateCallable,
-                                    input_iso: Path,
                                     layout: LayoutDescription,
                                     ):
     _internal_patch_iso(

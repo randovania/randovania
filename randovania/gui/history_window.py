@@ -226,15 +226,10 @@ class HistoryWindow(QMainWindow, Ui_HistoryWindow):
             "Patching game files...")
 
     def apply_layout_simplified(self):
-        input_iso = prompt_user_for_input_iso(self)
-        if input_iso is None:
-            return
-
         self.background_processor.run_in_background_thread(
             functools.partial(
                 simplified_patcher.patch_game_with_existing_layout,
                 layout=self.current_layout_description,
-                input_iso=input_iso,
             ),
             "Patching ISO...")
 

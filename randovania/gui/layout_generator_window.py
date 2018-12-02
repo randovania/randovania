@@ -2,7 +2,7 @@ import functools
 from typing import Dict, Optional
 
 from PyQt5.QtCore import pyqtSignal, Qt, QEvent
-from PyQt5.QtWidgets import QMainWindow, QLabel, QMessageBox, QRadioButton, QSpinBox
+from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton, QSpinBox
 
 from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.gui import tab_service
@@ -21,12 +21,6 @@ def _update_options_when_true(field_name: str, new_value, checked: bool):
         options = application_options()
         setattr(options, field_name, new_value)
         options.save_to_disk()
-
-
-def show_failed_generation_exception(exception: Exception):
-    QMessageBox.critical(None,
-                         "An exception was raised",
-                         "An unhandled Exception occurred:\n{}".format(exception))
 
 
 class CustomSpinBox(QSpinBox):
@@ -67,7 +61,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
     _maximum_item_count = 0
 
     layout_generated_signal = pyqtSignal(LayoutDescription)
-    failed_to_generate_signal = pyqtSignal(Exception)
 
     def __init__(self, tab_service: tab_service, background_processor: BackgroundTaskMixin):
         super().__init__()
@@ -80,7 +73,6 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
         # Connect to Events
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.display_help_box.toggled.connect(self.update_help_display)
-        self.failed_to_generate_signal.connect(show_failed_generation_exception)
         self.layout_generated_signal.connect(self._on_layout_generated)
         self.itemquantity_reset_button.clicked.connect(self._reset_item_quantities)
 
@@ -164,7 +156,7 @@ class LayoutGeneratorWindow(QMainWindow, Ui_LayoutGeneratorWindow):
 
         # Connect the options changed events, after setting the initial values
         field_name_to_mapping = {
-            "layout_configuration_logic": self._layout_logic_radios,
+            "layout_configuration_trick_level": self._layout_logic_radios,
             "layout_configuration_mode": self._mode_radios,
             "layout_configuration_item_loss": self._item_loss_radios,
             "layout_configuration_elevators": self._elevators_radios,
