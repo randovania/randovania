@@ -1,10 +1,8 @@
 import functools
 from typing import Dict
 
-from PyQt5.QtCore import Qt, QEvent
-from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton, QSpinBox
+from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton
 
-from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
@@ -21,62 +19,20 @@ def _update_options_when_true(field_name: str, new_value, checked: bool):
         options.save_to_disk()
 
 
-class CustomSpinBox(QSpinBox):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.installEventFilter(self)
-        self.setFocusPolicy(Qt.StrongFocus)
-
-    def focusInEvent(self, event: QEvent):
-        self.setFocusPolicy(Qt.WheelFocus)
-
-    def focusOutEvent(self, event: QEvent):
-        self.setFocusPolicy(Qt.StrongFocus)
-
-    def eventFilter(self, obj: QSpinBox, event: QEvent) -> bool:
-        if event.type() == QEvent.Wheel and isinstance(obj, QSpinBox):
-            if obj.focusPolicy() == Qt.WheelFocus:
-                event.accept()
-                return False
-            else:
-                event.ignore()
-                return True
-        return super().eventFilter(obj, event)
-
-
 class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     _layout_logic_radios: Dict[LayoutTrickLevel, QRadioButton]
     _mode_radios: Dict[LayoutMode, QRadioButton]
     _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _sky_temple_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _item_loss_radios: Dict[LayoutEnabledFlag, QRadioButton]
-    _spinbox_for_item: Dict[str, QSpinBox] = {}
-    _bulk_changing_quantity = False
-
-    _total_item_count = 0
-    _maximum_item_count = 0
 
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
         self.mode_group.hide()
 
-        self.background_processor = background_processor
-
         # Connect to Events
-        background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.display_help_box.toggled.connect(self.update_help_display)
-        self.itemquantity_reset_button.clicked.connect(self._reset_item_quantities)
-
-        # All code for the Randomize button
-        # self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
-
-        # self.setup_initial_combo_selection()
-        # self.create_layout_button.clicked.connect(self._create_new_layout_pressed)
-        # self.view_details_button.clicked.connect(self._view_layout_details)
-
-        self.itemquantity_total_label.keep_visible_with_help_disabled = True
-        self._create_item_toggles()
 
         # Update with Options
         options = application_options()
@@ -90,7 +46,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
         for layouts in self.scroll_area_widget_contents.children():
             for element in layouts.children():
-                if isinstance(element, QLabel) and not getattr(element, "keep_visible_with_help_disabled", False):
+                if isinstance(element, QLabel):
                     element.setVisible(enabled)
 
     def setup_initial_combo_selection(self):
@@ -142,78 +98,4 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         }
         for field_name, mapping in field_name_to_mapping.items():
             for value, radio in mapping.items():
-                radio.toggled.connect(
-                    functools.partial(
-                        _update_options_when_true, field_name, value))
-
-    def _create_item_toggles(self):
-        options = application_options()
-        pickup_database = default_prime2_pickup_database()
-
-        self._maximum_item_count = pickup_database.total_pickup_count
-        pickup_names = set(pickup_database.all_pickup_names)
-
-        # TODO: Very specific logic that should be provided by data
-        pickup_names.remove("Energy Transfer Module")
-
-        num_rows = len(pickup_names) / 2
-        for i, pickup_name in enumerate(sorted(pickup_names)):
-            row = 3 + i % num_rows
-            column = (i // num_rows) * 2
-            pickup_label = QLabel(self.itemquantity_group)
-            pickup_label.setText(pickup_name)
-            pickup_label.keep_visible_with_help_disabled = True
-            self.gridLayout_2.addWidget(pickup_label, row, column, 1, 1)
-
-            original_quantity = pickup_database.original_quantity_for(pickup_database.pickup_by_name(pickup_name))
-            value = options.quantity_for_pickup(pickup_name)
-            if value is None:
-                value = original_quantity
-            self._total_item_count += value
-
-            spin_box = CustomSpinBox(self.itemquantity_group)
-            spin_box.pickup_name = pickup_name
-            spin_box.original_quantity = original_quantity
-            spin_box.previous_value = value
-            spin_box.setValue(value)
-            spin_box.setFixedWidth(75)
-            spin_box.setMaximum(self._maximum_item_count)
-            spin_box.valueChanged.connect(functools.partial(self._change_item_quantity, spin_box))
-            self._spinbox_for_item[pickup_name] = spin_box
-            self.gridLayout_2.addWidget(spin_box, row, column + 1, 1, 1)
-
-        self._update_item_quantity_total_label()
-
-    def _reset_item_quantities(self):
-        self._bulk_changing_quantity = True
-
-        pickup_database = default_prime2_pickup_database()
-        for pickup_name in pickup_database.all_pickup_names:
-            if pickup_name in self._spinbox_for_item:
-                self._spinbox_for_item[pickup_name].setValue(
-                    pickup_database.original_quantity_for(pickup_database.pickup_by_name(pickup_name)))
-
-        application_options().save_to_disk()
-        self._bulk_changing_quantity = False
-
-    def _change_item_quantity(self, spin_box: QSpinBox, new_quantity: int):
-        self._total_item_count -= spin_box.previous_value
-        self._total_item_count += new_quantity
-        spin_box.previous_value = new_quantity
-        self._update_item_quantity_total_label()
-
-        options = application_options()
-        options.set_quantity_for_pickup(
-            spin_box.pickup_name, new_quantity if new_quantity != spin_box.original_quantity else None)
-
-        if not self._bulk_changing_quantity:
-            options.save_to_disk()
-
-    def _update_item_quantity_total_label(self):
-        self.itemquantity_total_label.setText("Total Pickups: {}/{}".format(
-            self._total_item_count, self._maximum_item_count))
-
-    # Progress
-    def enable_buttons_with_background_tasks(self, value: bool):
-        # self.create_layout_button.setEnabled(value)
-        pass
+                radio.toggled.connect(functools.partial(_update_options_when_true, field_name, value))
