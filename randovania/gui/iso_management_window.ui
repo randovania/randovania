@@ -445,7 +445,7 @@
           </palette>
          </property>
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If locked, load a game first.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Creates a new seed based on the current settings and then creates an ISO in the output folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="autoFillBackground">
           <bool>true</bool>
@@ -455,17 +455,23 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="patch_game_button">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="randomize_log_only_button">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Creates a new seed based on the current settings and then exports only it's log to the output folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="text">
-          <string>Patch game only</string>
+          <string>Create only log file</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="create_log_button">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="create_from_log_button">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Imports a log file and creates an ISO with the same seed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="text">
-          <string>Create only log file</string>
+          <string>Create from log file</string>
          </property>
         </widget>
        </item>
@@ -473,7 +479,7 @@
      </widget>
     </item>
     <item row="3" column="0" colspan="2">
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="permalink_box">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -488,20 +494,16 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="reset_settings_button">
-         <property name="text">
-          <string>Reset Settings</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <widget class="QLineEdit" name="permalink_edit"/>
        </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="permalink_import_log_button">
+       <item row="1" column="0" colspan="2">
+        <widget class="QPushButton" name="reset_settings_button">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resets all seed-affecting settings to their default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="text">
-          <string>Import from log file</string>
+          <string>Reset Settings</string>
          </property>
         </widget>
        </item>
@@ -611,7 +613,7 @@
      </widget>
     </item>
     <item row="0" column="2" rowspan="4" colspan="2">
-     <widget class="QGroupBox" name="game_patching">
+     <widget class="QGroupBox" name="game_patching_box">
       <property name="title">
        <string>Game Patching</string>
       </property>
@@ -712,7 +714,7 @@
           </font>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;All options in this box, as well as in the Logic Settings tab, change the seed.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;All options in this box, as well as in the Logic Settings and Item Quantities tabs, change the seed.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>

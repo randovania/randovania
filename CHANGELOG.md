@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- New: Reorganized GUI!
+  - Seed Details and Data Visualizer are now different windows opened via the menu bar.
+  - There are now three tabs: ROM Settings, Logic Settings and Item Quantities.
+- New: Option to disable generating an spoiler. 
 - Changed: Renamed "Logic" to "Trick Level" and "No Glitches" to "No Tricks". Appropriate labels in the GUI and files
 changed to match.
 - Internal: no longer using the py.path and dataset libraries

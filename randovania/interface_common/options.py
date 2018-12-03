@@ -54,6 +54,14 @@ class Options:
             }, options_file)
 
     @property
+    def create_spoiler(self) -> bool:
+        return self.raw_data["create_spoiler"]
+
+    @create_spoiler.setter
+    def create_spoiler(self, value: bool):
+        self.raw_data["create_spoiler"] = value
+
+    @property
     def hud_memo_popup_removal(self) -> bool:
         return self.raw_data["hud_memo_popup_removal"]
 
@@ -177,8 +185,8 @@ class Options:
 
 def _default_options() -> Dict[str, Any]:
     options: Dict[str, Any] = OrderedDict()
+    options["create_spoiler"] = True
     options["hud_memo_popup_removal"] = True
-    options["game_files_path"] = None
     options["show_advanced_options"] = False
     options["display_generate_help"] = True
     options["include_menu_mod"] = True
