@@ -1,7 +1,7 @@
 import functools
 import random
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Iterator, Callable
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QIntValidator
@@ -33,7 +33,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     _last_generated_layout: Optional[LayoutDescription] = None
 
     loaded_game_updated = pyqtSignal()
-    layout_generated_signal = pyqtSignal(LayoutDescription)
     failed_to_generate_signal = pyqtSignal(GenerationFailure)
 
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
@@ -47,7 +46,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         # Progress
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
-        self.layout_generated_signal.connect(self._on_layout_generated)
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
 
         # ISO Packing
@@ -66,29 +64,55 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.seed_number_button.clicked.connect(self._generate_new_seed_number)
 
         self.permalink_import_button.clicked.connect(self._import_permalink_from_field)
-        self.permalink_import_log_button.clicked.connect(self._create_permalink_from_file)
 
         # Randomize
         self.randomize_and_export_button.clicked.connect(self._randomize_and_export)
-        self.create_log_button.clicked.connect(self._create_log_file_pressed)
-        self.patch_game_button.hide()
+        self.randomize_log_only_button.clicked.connect(self._create_log_file_pressed)
+        self.create_from_log_button.clicked.connect(self._randomize_from_file)
 
         # Game Patching
-        self.create_spoiler_check.setChecked(True)  # TODO
-        self.remove_hud_popup_check.stateChanged.connect(persist_bool_option("include_spoiler"))
+        self.create_spoiler_check.setChecked(options.create_spoiler)
+        self.create_spoiler_check.stateChanged.connect(self._persist_option_then_notify("create_spoiler"))
         self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
-        self.remove_hud_popup_check.stateChanged.connect(persist_bool_option("hud_memo_popup_removal"))
+        self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
         self.include_menu_mod_check.setChecked(options.include_menu_mod)
-        self.include_menu_mod_check.stateChanged.connect(persist_bool_option("include_menu_mod"))
+        self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
 
         # Post setup update
         self.loaded_game_updated.emit()
+        self._on_settings_changed()
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
         self._refresh_game_buttons_state()
-        self.randomize_and_export_button.setEnabled(value)
-        self.create_log_button.setEnabled(value)
+        self._refresh_randomize_button_state()
+
+    def _persist_option_then_notify(self, attribute_name: str):
+        persist = persist_bool_option(attribute_name)
+
+        def wrap(value: bool):
+            persist(value)
+            self._on_settings_changed()
+
+        return wrap
+
+    def _on_settings_changed(self):
+        self.permalink_edit.setText("LIES!")
+        self._refresh_randomize_button_state()
+
+    # Checks
+
+    def _check_has_input_game(self):
+        if not self._has_game:
+            raise ValueError("No game available. Please load one using 'Load Game'")
+
+    def _check_has_output_directory(self):
+        if application_options().output_directory is None:
+            raise ValueError("No output directory. Please select one using 'Select Folder'")
+
+    def _ensure_seed_number_exists(self):
+        if self.seed_number_edit.text() == "":
+            self._generate_new_seed_number()
 
     # ISO Packing
     def load_game(self):
@@ -146,13 +170,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         self.output_folder_edit.setText(folder)
 
-    def _check_input_output_configured(self):
-        if not self._has_game:
-            raise ValueError("No game available. Please load one using 'Load Game'")
-
-        if application_options().output_directory is None:
-            raise ValueError("No output directory. Please select one using 'Select Folder'")
-
     def _update_displayed_game(self):
         result = game_workdir.discover_game(application_options().game_files_path)
 
@@ -182,90 +199,99 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         else:
             return int(seed)
 
-    def _ensure_seed_number_exists(self):
-        if self.seed_number_edit.text() == "":
-            self._generate_new_seed_number()
-
     def _on_new_seed_number(self):
-        self._update_permalink()
+        self._on_settings_changed()
 
     def _generate_new_seed_number(self):
         self.seed_number_edit.setText(str(random.randint(0, 2 ** 31)))
-
-    def _update_permalink(self):
-        self.permalink_edit.setText("LIES!")
 
     def _import_permalink_from_field(self):
         permalink = self.permalink_edit.text()
         print(permalink)
 
-    def _create_permalink_from_file(self):
-        json_path = prompt_user_for_seed_log(self)
-        if json_path is None:
-            return
-        print(json_path)
-
     # Randomize
+    def _refresh_randomize_button_state(self):
+        self.randomize_and_export_button.setEnabled(self._current_lock_state)
+        self.randomize_log_only_button.setEnabled(self._current_lock_state and application_options().create_spoiler)
+        self.create_from_log_button.setEnabled(self._current_lock_state)
+
     def _try_generate_layout(self, job, progress_update: ProgressUpdateCallable):
         try:
-            resulting_layout = job(
-                seed_number=self.get_current_seed_number(),
+            job(seed_number=self.get_current_seed_number(),
                 progress_update=progress_update)
-            self.layout_generated_signal.emit(resulting_layout)
             progress_update("Success!", 1)
 
         except GenerationFailure as generate_exception:
             self.failed_to_generate_signal.emit(generate_exception)
             progress_update("Generation Failure: {}".format(generate_exception), -1)
 
-    def randomize_loaded_game(self):
-        self.background_processor.run_in_background_thread(
-            functools.partial(
-                self._try_generate_layout,
-                job=simplified_patcher.create_layout_then_export_iso
-            ),
-            "Randomizing...")
+    def _background_exporter(self, job, message: str, **kawgs):
+        def work(progress_update: ProgressUpdateCallable):
+            try:
+                job(progress_update=progress_update, **kawgs)
+                progress_update("Success!", 1)
 
-    def create_new_layout(self):
-        self.background_processor.run_in_background_thread(
-            functools.partial(
-                self._try_generate_layout,
-                job=simplified_patcher.generate_layout
-            ),
-            "Creating a layout...")
+            except GenerationFailure as generate_exception:
+                self.failed_to_generate_signal.emit(generate_exception)
+                progress_update("Generation Failure: {}".format(generate_exception), -1)
+
+        self.background_processor.run_in_background_thread(work, message)
+
+    def _pre_export_checks(self,
+                           checks: Iterator[Callable[[], None]],
+                           ) -> bool:
+        try:
+            for check in checks:
+                check()
+            return True
+
+        except ValueError as e:
+            QMessageBox.warning(self,
+                                "Missing configuration",
+                                str(e))
+            return False
 
     def _randomize_and_export(self):
         """
         Listener to the "Randomize" button.
         """
-        try:
-            self._check_input_output_configured()
-        except ValueError as e:
-            QMessageBox.warning(self,
-                                "Missing configuration",
-                                str(e))
+        if not self._pre_export_checks([self._check_has_input_game,
+                                        self._check_has_output_directory,
+                                        self._ensure_seed_number_exists]):
             return
 
-        self._ensure_seed_number_exists()
-        self.randomize_loaded_game()
+        self._background_exporter(
+            simplified_patcher.create_layout_then_export_iso,
+            message="Randomizing...",
+            seed_number=self.get_current_seed_number()
+        )
 
     def _create_log_file_pressed(self):
         """
         Listener to the "Create only log file" button.
         """
-        self._ensure_seed_number_exists()
-        self.create_new_layout()
+        if not self._pre_export_checks([self._check_has_output_directory,
+                                        self._ensure_seed_number_exists]):
+            return
 
-    # Layout Details
-    def _on_layout_generated(self, layout: LayoutDescription):
-        self._last_generated_layout = layout
-        self.tab_service.get_tab(SeedDetailsWindow).add_new_layout_to_history(layout)
-        # self.view_details_button.setEnabled(True)
+        self._background_exporter(
+            simplified_patcher.create_layout_then_export,
+            message="Creating a layout...",
+            seed_number=self.get_current_seed_number()
+        )
 
-    def _view_layout_details(self):
-        if self._last_generated_layout is None:
-            raise RuntimeError("_view_layout_details should never be called without a _last_generated_layout")
+    def _randomize_from_file(self):
+        if not self._pre_export_checks([self._check_has_output_directory]):
+            return
 
-        window: SeedDetailsWindow = self.tab_service.get_tab(SeedDetailsWindow)
-        window.change_selected_layout(self._last_generated_layout)
-        self.tab_service.focus_tab(window)
+        json_path = prompt_user_for_seed_log(self)
+        if json_path is None:
+            return
+
+        layout = LayoutDescription.from_file(json_path)
+
+        self._background_exporter(
+            simplified_patcher.patch_game_with_existing_layout,
+            message="Randomizing...",
+            layout=layout
+        )

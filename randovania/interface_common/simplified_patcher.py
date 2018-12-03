@@ -1,4 +1,3 @@
-import os
 import shutil
 from pathlib import Path
 from typing import List
@@ -101,21 +100,37 @@ def pack_iso(output_iso: Path,
     )
 
 
+def _output_name_for(layout: LayoutDescription) -> str:
+    return "Echoes Randomizer - {}_{}".format(layout.configuration.as_str, layout.seed_number)
+
+
 def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
                         layout: LayoutDescription,
                         ):
-    layout_configuration = layout.configuration
-
-    output_name = "Echoes Randomizer - {}_{}".format(layout_configuration.as_str, layout.seed_number)
-    output_directory = application_options().output_directory
-    output_iso = output_directory.joinpath("{}.iso".format(output_name))
-    output_json = output_directory.joinpath("{}.json".format(output_name))
+    options = application_options()
+    output_iso = options.output_directory.joinpath("{}.iso".format(_output_name_for(layout)))
 
     # Patch ISO
     apply_layout(layout=layout, progress_update=updaters[0])
 
     # Pack ISO
-    pack_iso(output_iso=output_iso, progress_update=updaters[1])
+    pack_iso(output_iso=output_iso,
+             progress_update=updaters[1])
+
+    # Save the layout to a file
+    if options.create_spoiler:
+        export_layout(layout)
+
+
+def export_layout(layout: LayoutDescription,
+                  ):
+    """
+    Creates a seed log file for the given layout.
+    :param layout:
+    :return:
+    """
+
+    output_json = application_options().output_directory.joinpath("{}.json".format(_output_name_for(layout)))
 
     # Save the layout to a file
     layout.save_to_file(output_json)
@@ -148,5 +163,16 @@ def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
         updaters=updaters[1:],
         layout=resulting_layout
     )
+
+    return resulting_layout
+
+
+def create_layout_then_export(progress_update: ProgressUpdateCallable,
+                              seed_number: int,
+                              ) -> LayoutDescription:
+
+    # Create a LayoutDescription
+    resulting_layout = generate_layout(seed_number=seed_number, progress_update=progress_update)
+    export_layout(resulting_layout)
 
     return resulting_layout
