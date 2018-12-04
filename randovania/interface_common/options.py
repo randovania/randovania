@@ -53,6 +53,12 @@ class Options:
                 "options": self.raw_data
             }, options_file)
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.save_to_disk()
+
     @property
     def create_spoiler(self) -> bool:
         return self.raw_data["create_spoiler"]
