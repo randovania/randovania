@@ -26,11 +26,6 @@ def add_layout_configuration_arguments(parser):
         default=LayoutTrickLevel.NO_TRICKS.value,
         help="The level of tricks to use.")
     parser.add_argument(
-        "--major-items-mode",
-        default=False,
-        action="store_true",
-        help="If set, will use the Major Item mode")
-    parser.add_argument(
         "--vanilla-sky-temple-keys",
         default=False,
         action="store_true",
@@ -45,12 +40,9 @@ def add_layout_configuration_arguments(parser):
 def get_layout_configuration_from_args(args) -> LayoutConfiguration:
     return LayoutConfiguration(
         trick_level=LayoutTrickLevel(args.trick_level),
-        mode=LayoutMode.MAJOR_ITEMS if args.major_items_mode else LayoutMode.STANDARD,
         sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
         item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
-        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-        difficulty=LayoutDifficulty.NORMAL,
         pickup_quantities={}
     )
 
@@ -69,12 +61,9 @@ def validate_command_logic(args):
     else:
         configuration = LayoutConfiguration(
             trick_level=LayoutTrickLevel.NO_TRICKS,
-            mode=LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
-            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-            difficulty=LayoutDifficulty.NORMAL,
             pickup_quantities={}
         )
         game = data_reader.decode_data(data, [])

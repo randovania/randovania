@@ -179,12 +179,9 @@ class Options:
     def layout_configuration(self) -> LayoutConfiguration:
         return LayoutConfiguration(
             trick_level=self.layout_configuration_trick_level,
-            mode=self.layout_configuration_mode,
             sky_temple_keys=self.layout_configuration_sky_temple_keys,
             item_loss=self.layout_configuration_item_loss,
             elevators=self.layout_configuration_elevators,
-            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-            difficulty=LayoutDifficulty.NORMAL,
             pickup_quantities=self.raw_data["quantity_for_pickup"],
         )
 
