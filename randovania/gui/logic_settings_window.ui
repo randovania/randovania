@@ -55,159 +55,12 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-521</y>
+         <y>0</y>
          <width>770</width>
-         <height>944</height>
+         <height>919</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0" rowspan="3">
-         <widget class="QGroupBox" name="logic_group">
-          <property name="title">
-           <string>Trick Level</string>
-          </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="QLabel" name="logic_description_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;There are logic rules in place which prevent you from being locked out of progression and guaranteeing that you’ll be able to finish the game every time regardless of the distribution of items. More advanced trick levels assumes more knowledge of how the game works and ability to abuse game mechanics.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="logic_noglitches_radio">
-             <property name="text">
-              <string>No Tricks</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="logic_noglitches_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;This mode requires no knowledge about the game, nor does it require any abuse of game mechanics, making it ideal for casual and first time players.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;This logic is designed to prevent players from getting stuck in as many locations as possible, but it is still possible to softlock when you enter a room that you're unable to leave (ex: vanilla beam rooms without the necessary beam to escape, Dark World without Light Beam/Anihhilator Beam).&lt;br/&gt;&lt;br/&gt;Warning: It may be &lt;span style=&quot; font-style:italic;&quot;&gt;necessary&lt;/span&gt; to enter Dark World without a way to escape if that item is located in the Dark World.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="logic_trivial_radio">
-             <property name="text">
-              <string>Trivial</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="logic_trivial_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;This mode includes strategies that abuses oversights in the game, such as being able to activate the Hive Dynamo Works portal from the other side of the chasm and bomb jumping in Temple Assembly Site.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="logic_easy_radio">
-             <property name="text">
-              <string>Easy</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="logic_easy_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode assumes you can do simple tricks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="logic_normal_radio">
-             <property name="text">
-              <string>Normal</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="logic_normal_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode expands on the Easy mode, including more difficult to execute tricks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="logic_hard_radio">
-             <property name="text">
-              <string>Hard</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="logic_hard_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode expands on Normal with additional tricks, such as Grand Abyss scan dash.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="logic_hypermode_radio">
-             <property name="text">
-              <string>Hypermode</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="logic_hypermode_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode considers every single trick and path known to Randovania as valid, such as Polluted Mire without Space Jump. No OOB is included.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="logic_minimalrestrictions_radio">
-             <property name="text">
-              <string>Minimal Checking</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="logic_minimalrestrictions_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Since there aren't many checks, out of bounds tricks will probably be necessary for many items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
         <item row="2" column="1">
          <widget class="QGroupBox" name="skytemple_group">
           <property name="toolTip">
@@ -255,6 +108,52 @@
             <widget class="QLabel" name="skytemple_randomized_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sky Temple Keys are shuffled along with everything else.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QGroupBox" name="mode_group">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;There is a single item pool with all expansions, energy tanks, temple keys, sky temple keys, translators and upgrades.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="title">
+           <string>Mode</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QRadioButton" name="mode_standard_radio">
+             <property name="text">
+              <string>Standard</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="mode_standard_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;There is a single item pool with all expansions, energy tanks, temple keys, sky temple keys, translators and upgrades.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="mode_major_items_radio">
+             <property name="text">
+              <string>Major Items</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="mode_major_items_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;The are two items pools where items are shuffled between:&lt;br/&gt;Expansions Pool: all Missile, Power Bomb and Beam Ammo expansions&lt;br/&gt;Major Pool: all Keys, Translators, Energy Tanks and Suit Upgrades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -376,26 +275,31 @@
           </layout>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QGroupBox" name="mode_group">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;There is a single item pool with all expansions, energy tanks, temple keys, sky temple keys, translators and upgrades.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="logic_group">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>350</height>
+           </size>
           </property>
           <property name="title">
-           <string>Mode</string>
+           <string>Trick Level</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QRadioButton" name="mode_standard_radio">
+            <widget class="QLabel" name="logic_description_label">
              <property name="text">
-              <string>Standard</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;There are logic rules in place which prevent you from being locked out of progression and guaranteeing that you’ll be able to finish the game every time regardless of the distribution of items. More advanced trick levels assumes more knowledge of how the game works and ability to abuse game mechanics.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;No matter the level, it is always possible to softlock when you enter a room or area that you're unable to leave. For example, vanilla beam rooms without the necessary beam to escape, Dark World without Light Beam/Anihhilator Beam, Torvus Bog without Super Missile.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;However, it may be &lt;span style=&quot; font-style:italic;&quot;&gt;necessary&lt;/span&gt; to enter Dark World without a way to escape if that item is located in the Dark World.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="mode_standard_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;There is a single item pool with all expansions, energy tanks, temple keys, sky temple keys, translators and upgrades.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -403,16 +307,129 @@
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="mode_major_items_radio">
+            <widget class="QComboBox" name="logic_combo_box">
+             <item>
+              <property name="text">
+               <string>No Tricks</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Trivial</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Easy</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Normal</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hard</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hypermode</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Minimal Checking</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="logic_noglitches_label">
              <property name="text">
-              <string>Major Items</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;This mode requires no knowledge about the game, nor does it require any abuse of game mechanics, making it ideal for casual and first time players.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="mode_major_items_label">
+            <widget class="QLabel" name="logic_trivial_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;The are two items pools where items are shuffled between:&lt;br/&gt;Expansions Pool: all Missile, Power Bomb and Beam Ammo expansions&lt;br/&gt;Major Pool: all Keys, Translators, Energy Tanks and Suit Upgrades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;This mode includes strategies that abuses oversights in the game, such as being able to activate the Hive Dynamo Works portal from the other side of the chasm and bomb jumping in Temple Assembly Site.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="logic_easy_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode assumes you can do simple tricks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="logic_normal_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode expands on the Easy mode, including more difficult to execute tricks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="logic_hard_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode expands on Normal with additional tricks, such as Grand Abyss scan dash.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="logic_hypermode_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This mode considers every single trick and path known to Randovania as valid, such as Polluted Mire without Space Jump. No OOB is included.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="logic_minimalrestrictions_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Since there aren't many checks, out of bounds tricks will probably be necessary for many items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

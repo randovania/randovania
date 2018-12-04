@@ -10,11 +10,11 @@ from randovania import VERSION
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import prompt_user_for_seed_log
 from randovania.gui.data_editor import DataEditorWindow
-from randovania.gui.item_quantities_window import ItemQuantitiesWindow
-from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
+from randovania.gui.item_quantities_window import ItemQuantitiesWindow
 from randovania.gui.logic_settings_window import LogicSettingsWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow
 from randovania.interface_common.update_checker import get_latest_version
