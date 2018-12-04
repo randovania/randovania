@@ -1,28 +1,35 @@
 import functools
 from typing import Dict
 
-from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QMainWindow, QLabel, QRadioButton, QComboBox
 
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutMode, \
-    LayoutEnabledFlag
+from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutEnabledFlag
 
 
 def _update_options_when_true(field_name: str, new_value, checked: bool):
     if checked:
-        options = application_options()
-        setattr(options, field_name, new_value)
-        options.save_to_disk()
+        with application_options() as options:
+            setattr(options, field_name, new_value)
+
+
+def _update_options_by_value(combo: QComboBox, new_index: int):
+    with application_options() as options:
+        setattr(options, combo.options_field_name, combo.currentData())
+
+
+def _on_item_loss_changed(new_value: bool):
+    with application_options() as options:
+        options.layout_configuration_item_loss = LayoutEnabledFlag.ENABLED if new_value else LayoutEnabledFlag.DISABLED
 
 
 class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
-    _layout_logic_radios: Dict[LayoutTrickLevel, QRadioButton]
     _layout_logic_labels: Dict[LayoutTrickLevel, QLabel]
-    _mode_radios: Dict[LayoutMode, QRadioButton]
     _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _sky_temple_radios: Dict[LayoutRandomizedFlag, QRadioButton]
     _item_loss_radios: Dict[LayoutEnabledFlag, QRadioButton]
@@ -30,30 +37,20 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
         super().__init__()
         self.setupUi(self)
-        self.mode_group.hide()
-
-        # Connect to Events
-        self.display_help_box.toggled.connect(self.update_help_display)
 
         # Update with Options
         options = application_options()
         self.setup_trick_level_elements(options)
-        self.setup_layout_radio_data(options)
-        self.display_help_box.setChecked(options.display_generate_help)
+        self.setup_elevator_elements(options)
+        self.setup_item_loss_elements(options)
+        self.setup_sky_temple_elements(options)
 
-    def update_help_display(self, enabled: bool):
-        options = application_options()
-        options.display_generate_help = enabled
-        options.save_to_disk()
-
-        for layouts in self.scroll_area_widget_contents.children():
-            for element in layouts.children():
-                if isinstance(element, QLabel):
-                    element.setVisible(enabled)
+        # Alignment
+        self.vertical_layout_left.setAlignment(QtCore.Qt.AlignTop)
+        self.vertical_layout_right.setAlignment(QtCore.Qt.AlignTop)
 
     def setup_initial_combo_selection(self):
         self.keys_selection_combo.setCurrentIndex(1)
-        self.guaranteed_100_selection_combo.setCurrentIndex(1)
 
     def setup_trick_level_elements(self, options: Options):
         # logic_combo_box
@@ -74,41 +71,32 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.logic_combo_box.currentIndexChanged.connect(self._on_trick_level_changed)
         self._on_trick_level_changed()
 
-    def setup_layout_radio_data(self, options: Options):
+    def setup_elevator_elements(self, options: Options):
+        self.elevators_combo.setItemData(0, LayoutRandomizedFlag.VANILLA)
+        self.elevators_combo.setItemData(1, LayoutRandomizedFlag.RANDOMIZED)
+
+        self.elevators_combo.options_field_name = "layout_configuration_elevators"
+        self.elevators_combo.setCurrentIndex(self.elevators_combo.findData(options.layout_configuration_elevators))
+        self.elevators_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
+                                                                           self.elevators_combo))
+
+    def setup_item_loss_elements(self, options: Options):
+        self.itemloss_check.setChecked(options.layout_configuration_item_loss == LayoutEnabledFlag.ENABLED)
+        self.itemloss_check.stateChanged.connect(_on_item_loss_changed)
+
+    def setup_sky_temple_elements(self, options: Options):
         # Setup config values to radio maps
-        self._mode_radios = {
-            LayoutMode.STANDARD: self.mode_standard_radio,
-            LayoutMode.MAJOR_ITEMS: self.mode_major_items_radio
-        }
-        self._item_loss_radios = {
-            LayoutEnabledFlag.ENABLED: self.itemloss_enabled_radio,
-            LayoutEnabledFlag.DISABLED: self.itemloss_disabled_radio,
-        }
-        self._elevators_radios = {
-            LayoutRandomizedFlag.VANILLA: self.elevators_vanilla_radio,
-            LayoutRandomizedFlag.RANDOMIZED: self.elevators_randomized_radio,
-        }
         self._sky_temple_radios = {
             LayoutRandomizedFlag.VANILLA: self.skytemple_vanilla_radio,
             LayoutRandomizedFlag.RANDOMIZED: self.skytemple_randomized_radio,
         }
 
         # Check the correct radio element
-        self._mode_radios[options.layout_configuration_mode].setChecked(True)
-        self._elevators_radios[options.layout_configuration_elevators].setChecked(True)
         self._sky_temple_radios[options.layout_configuration_sky_temple_keys].setChecked(True)
-        self._item_loss_radios[options.layout_configuration_item_loss].setChecked(True)
 
         # Connect the options changed events, after setting the initial values
-        field_name_to_mapping = {
-            "layout_configuration_mode": self._mode_radios,
-            "layout_configuration_item_loss": self._item_loss_radios,
-            "layout_configuration_elevators": self._elevators_radios,
-            "layout_configuration_sky_temple_keys": self._sky_temple_radios,
-        }
-        for field_name, mapping in field_name_to_mapping.items():
-            for value, radio in mapping.items():
-                radio.toggled.connect(functools.partial(_update_options_when_true, field_name, value))
+        for value, radio in self._sky_temple_radios.items():
+            radio.toggled.connect(functools.partial(_update_options_when_true, "layout_configuration_sky_temple_keys", value))
 
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()
