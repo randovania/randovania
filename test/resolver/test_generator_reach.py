@@ -27,12 +27,9 @@ def _test_data():
     data = default_data.decode_default_prime2()
     game = data_reader.decode_data(data, [], False)
     configuration = LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                        mode=LayoutMode.STANDARD,
                                         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                         item_loss=LayoutEnabledFlag.ENABLED,
                                         elevators=LayoutRandomizedFlag.VANILLA,
-                                        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-                                        difficulty=LayoutDifficulty.NORMAL,
                                         pickup_quantities={})
 
     patches = GamePatches({})

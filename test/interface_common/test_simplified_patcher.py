@@ -89,12 +89,9 @@ def test_generate_layout(mock_application_options: MagicMock,
         seed_number=seed_number,
         configuration=LayoutConfiguration(
             trick_level=LayoutTrickLevel.NO_TRICKS,
-            mode=LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
-            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-            difficulty=LayoutDifficulty.NORMAL,
             pickup_quantities={},
         ),
         status_update=mock_constant_percentage_callback.return_value

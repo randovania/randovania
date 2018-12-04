@@ -30,12 +30,9 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
         seed_number=args.seed,
         configuration=LayoutConfiguration(
             trick_level=LayoutTrickLevel.HARD,
-            mode=LayoutMode.STANDARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.DISABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
-            hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-            difficulty=LayoutDifficulty.NORMAL,
             pickup_quantities={}
         ),
         status_update=ANY

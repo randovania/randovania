@@ -39,12 +39,9 @@ _test_descriptions = [
     _create_test_layout_description(
         seed_number=1027649936,
         configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                          mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
                                           elevators=LayoutRandomizedFlag.VANILLA,
-                                          hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-                                          difficulty=LayoutDifficulty.NORMAL,
                                           pickup_quantities={}),
         pickup_mapping=[2, 2, 46, 4, 2, 2, 2, 116, 2, 44, 112, 8, 0, 13, 114, 17, 2, 82, 115, 2, 8, 8, 37, 23, 117, 2,
                         52, 50, 2, 4, 76, 4, 2, 75, 2, 57, 38, 8, 8, 2, 2, 4, 17, 2, 74, 2, 4, 83, 2, 43, 106, 2, 21,
@@ -55,12 +52,9 @@ _test_descriptions = [
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                          mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
                                           elevators=LayoutRandomizedFlag.VANILLA,
-                                          hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-                                          difficulty=LayoutDifficulty.NORMAL,
                                           pickup_quantities={}),
         pickup_mapping=(113, 59, 76, 2, 62, 3, 115, 114, 1, 69, 73, 53, 81, 88, 56, 92, 93, 43, 15, 67, 23, 82, 22, 46,
                         21, 17, 70, 5, 94, 96, 19, 71, 107, 112, 47, 97, 4, 74, 57, 77, 95, 44, 116, 13, 91, 42, 37, 48,
@@ -72,12 +66,9 @@ _test_descriptions = [
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                          mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
                                           elevators=LayoutRandomizedFlag.VANILLA,
-                                          hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-                                          difficulty=LayoutDifficulty.NORMAL,
                                           pickup_quantities={
                                               "Missile Expansion": 0
                                           }),
@@ -91,12 +82,9 @@ _test_descriptions = [
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration(trick_level=LayoutTrickLevel.HYPERMODE,
-                                          mode=LayoutMode.STANDARD,
                                           sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                           item_loss=LayoutEnabledFlag.ENABLED,
                                           elevators=LayoutRandomizedFlag.VANILLA,
-                                          hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-                                          difficulty=LayoutDifficulty.NORMAL,
                                           pickup_quantities={
                                               "Light Suit": 2,
                                               "Darkburst": 0
@@ -123,12 +111,9 @@ def test_generate_seed_with_invalid_quantity_configuration():
 
     configuration = LayoutConfiguration(
         trick_level=LayoutTrickLevel.NO_TRICKS,
-        mode=LayoutMode.STANDARD,
         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
         item_loss=LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
-        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-        difficulty=LayoutDifficulty.NORMAL,
         pickup_quantities={"Undefined Item": 5})
 
     # Run
@@ -231,12 +216,9 @@ def test_create_patches(mock_random: MagicMock,
     game = default_prime2_game_description()
     status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
     configuration = LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                        mode=LayoutMode.STANDARD,
                                         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                         item_loss=LayoutEnabledFlag.DISABLED,
                                         elevators=LayoutRandomizedFlag.VANILLA,
-                                        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-                                        difficulty=LayoutDifficulty.NORMAL,
                                         pickup_quantities={})
     mock_calculate_item_pool.return_value = list(sorted(game.pickup_database.original_pickup_mapping.values()))
 

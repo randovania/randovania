@@ -33,12 +33,9 @@ class LayoutDifficulty(Enum):
 
 class LayoutConfiguration(NamedTuple):
     trick_level: LayoutTrickLevel
-    mode: LayoutMode
     sky_temple_keys: LayoutRandomizedFlag
     item_loss: LayoutEnabledFlag
     elevators: LayoutRandomizedFlag
-    hundo_guaranteed: LayoutEnabledFlag
-    difficulty: LayoutDifficulty
     pickup_quantities: dict
 
     def quantity_for_pickup(self, pickup_name: str) -> Optional[int]:
@@ -53,18 +50,15 @@ class LayoutConfiguration(NamedTuple):
         return {
             "game": "mp2-echoes",
             "trick_level": self.trick_level.value,
-            "mode": self.mode.value,
             "sky_temple_keys": self.sky_temple_keys.value,
             "item_loss": self.item_loss.value,
             "elevators": self.elevators.value,
-            "hundo_guaranteed": self.hundo_guaranteed.value,
-            "difficulty": self.difficulty.value,
             "pickup_quantities": self.pickup_quantities,
         }
 
     @property
     def as_str(self) -> str:
-        strings: List[str] = [self.trick_level.value, self.mode.value]
+        strings: List[str] = [self.trick_level.value]
 
         if self.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
             strings.append("vanilla-sky-temple-keys")
@@ -84,11 +78,8 @@ class LayoutConfiguration(NamedTuple):
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return LayoutConfiguration(
             trick_level=LayoutTrickLevel(json_dict["trick_level"]),
-            mode=LayoutMode(json_dict["mode"]),
             sky_temple_keys=LayoutRandomizedFlag(json_dict["sky_temple_keys"]),
             item_loss=LayoutEnabledFlag(json_dict["item_loss"]),
             elevators=LayoutRandomizedFlag(json_dict["elevators"]),
-            hundo_guaranteed=LayoutEnabledFlag(json_dict["hundo_guaranteed"]),
-            difficulty=LayoutDifficulty(json_dict["difficulty"]),
             pickup_quantities=json_dict["pickup_quantities"],
         )
