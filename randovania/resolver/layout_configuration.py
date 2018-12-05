@@ -1,8 +1,34 @@
+import dataclasses
+import math
+from dataclasses import dataclass
 from enum import Enum
-from typing import NamedTuple, List, Optional, Set
+from typing import List, Optional, Set, Iterator, Dict
 
 
-class LayoutTrickLevel(Enum):
+class BitPackEnum:
+    @classmethod
+    def bit_pack_format(cls: Enum) -> str:
+        return "u{}".format(math.ceil(math.log2(len(cls.__members__))))
+
+    def bit_pack_arguments(self) -> Iterator[int]:
+        cls: Enum = self.__class__
+        yield list(cls.__members__.values()).index(self)
+
+
+class BitPackDataClass:
+    @classmethod
+    def bit_pack_format(cls) -> str:
+        return "".join(
+            field.type.bit_pack_format()
+            for field in dataclasses.fields(cls)
+        )
+
+    def bit_pack_arguments(self) -> Iterator[int]:
+        for field in dataclasses.fields(self):
+            yield from getattr(self, field.name).bit_pack_arguments()
+
+
+class LayoutTrickLevel(BitPackEnum, Enum):
     NO_TRICKS = "no-tricks"
     TRIVIAL = "trivial"
     EASY = "easy"
@@ -12,38 +38,69 @@ class LayoutTrickLevel(Enum):
     MINIMAL_RESTRICTIONS = "minimal-restrictions"
 
 
-class LayoutMode(Enum):
+class LayoutMode(BitPackEnum, Enum):
     STANDARD = "standard"
     MAJOR_ITEMS = "major-items"
 
 
-class LayoutRandomizedFlag(Enum):
+class LayoutRandomizedFlag(BitPackEnum, Enum):
     VANILLA = "vanilla"
     RANDOMIZED = "randomized"
 
 
-class LayoutEnabledFlag(Enum):
+class LayoutEnabledFlag(BitPackEnum, Enum):
     ENABLED = "enabled"
     DISABLED = "disabled"
 
 
-class LayoutDifficulty(Enum):
+class LayoutDifficulty(BitPackEnum, Enum):
     NORMAL = "normal"
 
 
-class LayoutConfiguration(NamedTuple):
+class PickupQuantities:
+    pickup_quantities: Dict[str, int]
+
+    def __init__(self, pickup_quantities: Dict[str, int]):
+        self.pickup_quantities = pickup_quantities
+
+    @classmethod
+    def bit_pack_format(cls) -> str:
+        return ""
+
+    def bit_pack_arguments(self) -> Iterator[int]:
+        yield from ()
+
+    def __eq__(self, other):
+        return isinstance(other, PickupQuantities) and self.pickup_quantities == other.pickup_quantities
+
+
+@dataclass(frozen=True)
+class LayoutConfiguration(BitPackDataClass):
     trick_level: LayoutTrickLevel
     sky_temple_keys: LayoutRandomizedFlag
     item_loss: LayoutEnabledFlag
     elevators: LayoutRandomizedFlag
-    pickup_quantities: dict
+    pickup_quantities: PickupQuantities
+
+    def __init__(self,
+                 trick_level: LayoutTrickLevel,
+                 sky_temple_keys: LayoutRandomizedFlag,
+                 item_loss: LayoutEnabledFlag,
+                 elevators: LayoutRandomizedFlag,
+                 pickup_quantities: Dict[str, int],
+                 ):
+        object.__setattr__(self, "trick_level", trick_level)
+        object.__setattr__(self, "sky_temple_keys", sky_temple_keys)
+        object.__setattr__(self, "item_loss", item_loss)
+        object.__setattr__(self, "elevators", elevators)
+        object.__setattr__(self, "pickup_quantities", PickupQuantities(pickup_quantities))
 
     def quantity_for_pickup(self, pickup_name: str) -> Optional[int]:
-        return self.pickup_quantities.get(pickup_name)
+        return self.pickup_quantities.pickup_quantities.get(pickup_name)
 
     @property
     def pickups_with_configured_quantity(self) -> Set[str]:
-        return set(self.pickup_quantities.keys())
+        return set(self.pickup_quantities.pickup_quantities.keys())
 
     @property
     def as_json(self) -> dict:
@@ -53,7 +110,7 @@ class LayoutConfiguration(NamedTuple):
             "sky_temple_keys": self.sky_temple_keys.value,
             "item_loss": self.item_loss.value,
             "elevators": self.elevators.value,
-            "pickup_quantities": self.pickup_quantities,
+            "pickup_quantities": self.pickup_quantities.pickup_quantities,
         }
 
     @property

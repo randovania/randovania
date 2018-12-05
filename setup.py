@@ -51,6 +51,7 @@ setup(
         'nod>=1.1',
         'requests',
         'networkx',
+        'bitstruct',
     ],
     entry_points={
         'console_scripts': [
