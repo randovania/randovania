@@ -2,7 +2,10 @@ import dataclasses
 import math
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Set, Iterator, Dict
+from typing import List, Optional, Iterator, Dict
+
+from randovania.game_description.default_database import default_prime2_pickup_database
+from randovania.game_description.resources import PickupEntry
 
 
 class BitPackEnum:
@@ -58,10 +61,10 @@ class LayoutDifficulty(BitPackEnum, Enum):
 
 
 class PickupQuantities:
-    pickup_quantities: Dict[str, int]
+    _pickup_quantities: Dict[PickupEntry, int]
 
     def __init__(self, pickup_quantities: Dict[str, int]):
-        self.pickup_quantities = pickup_quantities
+        self._pickup_quantities = pickup_quantities
 
     @classmethod
     def bit_pack_format(cls) -> str:
@@ -71,7 +74,16 @@ class PickupQuantities:
         yield from ()
 
     def __eq__(self, other):
-        return isinstance(other, PickupQuantities) and self.pickup_quantities == other.pickup_quantities
+        return isinstance(other, PickupQuantities) and self._pickup_quantities == other._pickup_quantities
+
+    def __iter__(self):
+        return iter(self._pickup_quantities)
+
+    def get(self, pickup: PickupEntry) -> int:
+        return self._pickup_quantities[pickup]
+
+    def items(self):
+        return self._pickup_quantities.items()
 
 
 @dataclass(frozen=True)
@@ -82,25 +94,8 @@ class LayoutConfiguration(BitPackDataClass):
     elevators: LayoutRandomizedFlag
     pickup_quantities: PickupQuantities
 
-    def __init__(self,
-                 trick_level: LayoutTrickLevel,
-                 sky_temple_keys: LayoutRandomizedFlag,
-                 item_loss: LayoutEnabledFlag,
-                 elevators: LayoutRandomizedFlag,
-                 pickup_quantities: Dict[str, int],
-                 ):
-        object.__setattr__(self, "trick_level", trick_level)
-        object.__setattr__(self, "sky_temple_keys", sky_temple_keys)
-        object.__setattr__(self, "item_loss", item_loss)
-        object.__setattr__(self, "elevators", elevators)
-        object.__setattr__(self, "pickup_quantities", PickupQuantities(pickup_quantities))
-
-    def quantity_for_pickup(self, pickup_name: str) -> Optional[int]:
-        return self.pickup_quantities.pickup_quantities.get(pickup_name)
-
-    @property
-    def pickups_with_configured_quantity(self) -> Set[str]:
-        return set(self.pickup_quantities.pickup_quantities.keys())
+    def quantity_for_pickup(self, pickup: PickupEntry) -> Optional[int]:
+        return self.pickup_quantities.get(pickup)
 
     @property
     def as_json(self) -> dict:
@@ -110,7 +105,10 @@ class LayoutConfiguration(BitPackDataClass):
             "sky_temple_keys": self.sky_temple_keys.value,
             "item_loss": self.item_loss.value,
             "elevators": self.elevators.value,
-            "pickup_quantities": self.pickup_quantities.pickup_quantities,
+            "pickup_quantities": {
+                pickup.name: quantity
+                for pickup, quantity in self.pickup_quantities.items()
+            },
         }
 
     @property
@@ -133,10 +131,42 @@ class LayoutConfiguration(BitPackDataClass):
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
-        return LayoutConfiguration(
+        return cls.from_params(
             trick_level=LayoutTrickLevel(json_dict["trick_level"]),
             sky_temple_keys=LayoutRandomizedFlag(json_dict["sky_temple_keys"]),
             item_loss=LayoutEnabledFlag(json_dict["item_loss"]),
             elevators=LayoutRandomizedFlag(json_dict["elevators"]),
             pickup_quantities=json_dict["pickup_quantities"],
+        )
+
+    @classmethod
+    def from_params(cls,
+                    trick_level: LayoutTrickLevel,
+                    sky_temple_keys: LayoutRandomizedFlag,
+                    item_loss: LayoutEnabledFlag,
+                    elevators: LayoutRandomizedFlag,
+                    pickup_quantities: Dict[str, int],
+                    ) -> "LayoutConfiguration":
+
+        pickup_database = default_prime2_pickup_database()
+
+        quantities = {
+            pickup: pickup_database.original_quantity_for(pickup)
+            for pickup in pickup_database.pickups.values()
+        }
+        for name, quantity in pickup_quantities.items():
+            quantities[pickup_database.pickup_by_name(name)] = quantity
+
+        if sum(quantities.values()) > pickup_database.total_pickup_count:
+            raise ValueError(
+                "Invalid pickup_quantities. {} along with unmapped original pickups sum to more than {}".format(
+                    pickup_quantities, pickup_database.total_pickup_count
+                ))
+
+        return LayoutConfiguration(
+            trick_level=trick_level,
+            sky_temple_keys=sky_temple_keys,
+            item_loss=item_loss,
+            elevators=elevators,
+            pickup_quantities=PickupQuantities(quantities)
         )

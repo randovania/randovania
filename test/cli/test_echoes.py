@@ -28,7 +28,7 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
     mock_generate_list.assert_called_once_with(
         data=mock_decode_data_file.return_value,
         seed_number=args.seed,
-        configuration=LayoutConfiguration(
+        configuration=LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.HARD,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.DISABLED,

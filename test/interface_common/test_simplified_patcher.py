@@ -87,7 +87,7 @@ def test_generate_layout(mock_application_options: MagicMock,
     mock_generate_layout.assert_called_once_with(
         data=mock_decode_default_prime2.return_value,
         seed_number=seed_number,
-        configuration=LayoutConfiguration(
+        configuration=LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.NO_TRICKS,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED,

@@ -12,26 +12,19 @@ def calculate_item_pool(configuration: LayoutConfiguration,
                         game: GameDescription,
                         ) -> List[PickupEntry]:
 
-    pickups_with_configured_quantity = copy.copy(configuration.pickups_with_configured_quantity)
-
     useless_item = game.pickup_database.pickup_by_name("Energy Transfer Module")
     item_pool: List[PickupEntry] = []
 
-    for pickup in game.pickup_database.pickups.values():
-        if pickup.name in pickups_with_configured_quantity:
-            configured_quantity = configuration.quantity_for_pickup(pickup.name)
-            pickups_with_configured_quantity.remove(pickup.name)
-        else:
-            configured_quantity = game.pickup_database.original_quantity_for(pickup)
-
-        item_pool.extend([pickup] * configured_quantity)
-
-    if pickups_with_configured_quantity:
+    symmetric_difference = set(configuration.pickup_quantities) ^ set(game.pickup_database.pickups.values())
+    if symmetric_difference:
         raise GenerationFailure(
-            "Invalid configuration: has custom quantity for unknown pickups: {}".format(pickups_with_configured_quantity),
+            "Invalid configuration: diverging pickups in configuration: {}".format(symmetric_difference),
             configuration=configuration,
             seed_number=-1
         )
+
+    for pickup, quantity in configuration.pickup_quantities.items():
+        item_pool.extend([pickup] * quantity)
 
     quantity_delta = len(item_pool) - game.pickup_database.total_pickup_count
     if quantity_delta > 0:
