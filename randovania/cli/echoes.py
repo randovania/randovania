@@ -38,7 +38,7 @@ def add_layout_configuration_arguments(parser):
 
 
 def get_layout_configuration_from_args(args) -> LayoutConfiguration:
-    return LayoutConfiguration(
+    return LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel(args.trick_level),
         sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
         item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
@@ -59,7 +59,7 @@ def validate_command_logic(args):
         game = data_reader.decode_data(data, elevators)
 
     else:
-        configuration = LayoutConfiguration(
+        configuration = LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.NO_TRICKS,
             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
             item_loss=LayoutEnabledFlag.ENABLED,

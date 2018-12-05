@@ -1,8 +1,7 @@
+import dataclasses
 import math
-from enum import Enum
 
 import bitstruct
-import dataclasses
 
 from randovania.resolver.layout_configuration import LayoutTrickLevel, LayoutConfiguration, LayoutRandomizedFlag, \
     LayoutEnabledFlag
@@ -40,11 +39,11 @@ def do_pack(value: LayoutConfiguration):
 def main():
     print(pack(LayoutTrickLevel, LayoutTrickLevel.NO_TRICKS))
 
-    config = LayoutConfiguration(trick_level=LayoutTrickLevel.HYPERMODE,
-                                 sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-                                 item_loss=LayoutEnabledFlag.ENABLED,
-                                 elevators=LayoutRandomizedFlag.VANILLA,
-                                 pickup_quantities={})
+    config = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
+                                             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                             item_loss=LayoutEnabledFlag.ENABLED,
+                                             elevators=LayoutRandomizedFlag.VANILLA,
+                                             pickup_quantities={})
     do_pack(config)
 
     cf = bitstruct.compile('u1u3u4u16')

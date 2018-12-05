@@ -177,7 +177,7 @@ class Options:
 
     @property
     def layout_configuration(self) -> LayoutConfiguration:
-        return LayoutConfiguration(
+        return LayoutConfiguration.from_params(
             trick_level=self.layout_configuration_trick_level,
             sky_temple_keys=self.layout_configuration_sky_temple_keys,
             item_loss=self.layout_configuration_item_loss,
