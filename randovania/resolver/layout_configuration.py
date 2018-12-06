@@ -220,3 +220,23 @@ class LayoutConfiguration(BitPackDataClass):
             elevators=elevators,
             pickup_quantities=PickupQuantities(pickup_database, quantities)
         )
+
+
+@dataclass(frozen=True)
+class Permalink:
+    seed_number: int
+    configuration: LayoutConfiguration
+
+    @classmethod
+    def current_version(cls) -> int:
+        return 0
+
+    def bit_pack_format(self) -> Iterator[int]:
+        yield 16
+        yield 2 ** 31
+        yield from self.configuration.bit_pack_format()
+
+    def bit_pack_arguments(self) -> Iterator[int]:
+        yield self.current_version()
+        yield self.seed_number
+        yield from self.configuration.bit_pack_arguments()
