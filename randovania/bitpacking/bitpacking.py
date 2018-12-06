@@ -1,10 +1,11 @@
+import base64
+import bz2
 import dataclasses
+import lzma
 import math
+from typing import Iterator
 
 import bitstruct
-
-from randovania.resolver.layout_configuration import LayoutTrickLevel, LayoutConfiguration, LayoutRandomizedFlag, \
-    LayoutEnabledFlag
 
 
 def do_stuff(quantity):
@@ -18,17 +19,41 @@ def pack(enum_class, value):
     return compiled.pack(enum_list.index(value))
 
 
-def do_pack(value: LayoutConfiguration):
+class BitPackValue:
+    def bit_pack_format(self) -> Iterator[int]:
+        raise NotImplementedError()
+
+    def bit_pack_arguments(self) -> Iterator[int]:
+        raise NotImplementedError()
+
+
+def pack_value(value: BitPackValue):
+    # for i, (count, v) in enumerate(zip(value.bit_pack_format(), value.bit_pack_arguments())):
+    #     f = "u{}".format(math.ceil(math.log2(count)))
+    #     print(i, count, v, f)
+    #     print(bitstruct.pack(f, v))
+    # return
+    f = "".join(
+        "u{}".format(math.ceil(math.log2(v)))
+        for v in value.bit_pack_format()
+    )
+    print(f)
+    compiled = bitstruct.compile(f)
+    return compiled.pack(*value.bit_pack_arguments())
+
+
+def do_pack(value):
     object_class = type(value)
 
     print("===============")
     for x in dataclasses.fields(value):
         print(x.name, x.type, getattr(value, x.name))
 
-    print("===============")
-    print(value.bit_pack_format())
-    print(list(value.bit_pack_arguments()))
-    print("===============")
+    print("=========!!!======")
+    uncompressed = pack_value(value)
+    print(len(uncompressed), uncompressed)
+    print("base64", base64.b64encode(uncompressed))
+    print("=========!!!======")
     # print(">>>>>>>>", LayoutTrickLevel.bit_pack_format())
 
     # for field_name, field_type in value.__annotations__.items():
@@ -37,17 +62,17 @@ def do_pack(value: LayoutConfiguration):
 
 
 def main():
-    print(pack(LayoutTrickLevel, LayoutTrickLevel.NO_TRICKS))
+    from randovania.resolver.layout_configuration import LayoutTrickLevel, LayoutConfiguration, LayoutRandomizedFlag, \
+        LayoutEnabledFlag
 
     config = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
                                              sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                              item_loss=LayoutEnabledFlag.ENABLED,
                                              elevators=LayoutRandomizedFlag.VANILLA,
-                                             pickup_quantities={})
+                                             pickup_quantities={
+                                                 "Space Jump Boots": 0
+                                             })
     do_pack(config)
-
-    cf = bitstruct.compile('u1u3u4u16')
-    print(cf.pack(1, 2, 3, 4))
 
 
 if __name__ == "__main__":
