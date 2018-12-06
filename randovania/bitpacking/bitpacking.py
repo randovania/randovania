@@ -43,11 +43,6 @@ def pack_value(value: BitPackValue):
 
 
 def do_pack(value):
-    object_class = type(value)
-
-    print("===============")
-    for x in dataclasses.fields(value):
-        print(x.name, x.type, getattr(value, x.name))
 
     print("=========!!!======")
     uncompressed = pack_value(value)
@@ -68,11 +63,14 @@ def main():
     config = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
                                              sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                              item_loss=LayoutEnabledFlag.ENABLED,
-                                             elevators=LayoutRandomizedFlag.VANILLA,
+                                             elevators=LayoutRandomizedFlag.RANDOMIZED,
                                              pickup_quantities={
                                                  "Space Jump Boots": 0
                                              })
+
+    from randovania.resolver.layout_configuration import Permalink
     do_pack(config)
+    do_pack(Permalink(50000, config))
 
 
 if __name__ == "__main__":
