@@ -1,30 +1,27 @@
 import dataclasses
-import math
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Iterator, Dict
+from typing import List, Optional, Iterator, Dict, Tuple
 
+from randovania.bitpacking.bitpacking import BitPackValue
 from randovania.game_description.default_database import default_prime2_pickup_database
-from randovania.game_description.resources import PickupEntry
+from randovania.game_description.resources import PickupEntry, PickupDatabase
 
 
-class BitPackEnum:
-    @classmethod
-    def bit_pack_format(cls: Enum) -> str:
-        return "u{}".format(math.ceil(math.log2(len(cls.__members__))))
+class BitPackEnum(BitPackValue):
+    def bit_pack_format(self) -> Iterator[int]:
+        cls: Enum = self.__class__
+        yield len(cls.__members__)
 
     def bit_pack_arguments(self) -> Iterator[int]:
         cls: Enum = self.__class__
         yield list(cls.__members__.values()).index(self)
 
 
-class BitPackDataClass:
-    @classmethod
-    def bit_pack_format(cls) -> str:
-        return "".join(
-            field.type.bit_pack_format()
-            for field in dataclasses.fields(cls)
-        )
+class BitPackDataClass(BitPackValue):
+    def bit_pack_format(self) -> Iterator[int]:
+        for field in dataclasses.fields(self):
+            yield from getattr(self, field.name).bit_pack_format()
 
     def bit_pack_arguments(self) -> Iterator[int]:
         for field in dataclasses.fields(self):
@@ -61,17 +58,70 @@ class LayoutDifficulty(BitPackEnum, Enum):
 
 
 class PickupQuantities:
+    _database: PickupDatabase
     _pickup_quantities: Dict[PickupEntry, int]
+    _bit_pack_data: Optional[List[Tuple[int, int]]] = None
 
-    def __init__(self, pickup_quantities: Dict[str, int]):
+    def __init__(self, database: PickupDatabase, pickup_quantities: Dict[str, int]):
+        self._database = database
         self._pickup_quantities = pickup_quantities
 
-    @classmethod
-    def bit_pack_format(cls) -> str:
-        return ""
+    def _calculate_bit_pack(self):
+        if self._bit_pack_data is not None:
+            return
+        self._bit_pack_data = []
+
+        zero_quantity_pickups = []
+        one_quantity_pickups = []
+        multiple_quantity_pickups = []
+
+        for pickup, quantity in sorted(self._pickup_quantities.items(), key=lambda x: x[1], reverse=True):
+            if quantity == 0:
+                array = zero_quantity_pickups
+            elif quantity == 1:
+                array = one_quantity_pickups
+            else:
+                array = multiple_quantity_pickups
+            array.append(pickup)
+
+        pickup_list = list(self._database.pickups.values())
+        total_pickup_count = self._database.total_pickup_count
+
+        self._bit_pack_data.append((len(pickup_list), len(zero_quantity_pickups)))
+        self._bit_pack_data.append((len(pickup_list) - len(zero_quantity_pickups), len(one_quantity_pickups)))
+
+        # print("zero!")
+
+        for pickup in zero_quantity_pickups:
+            self._bit_pack_data.append((len(pickup_list), pickup_list.index(pickup)))
+            # print(self._bit_pack_data[-1])
+            pickup_list.remove(pickup)
+
+        # print("many!")
+
+        for pickup in multiple_quantity_pickups:
+            self._bit_pack_data.append((len(pickup_list), pickup_list.index(pickup)))
+            pickup_list.remove(pickup)
+            # print(self._bit_pack_data[-1])
+
+            quantity = self._pickup_quantities[pickup]
+            if total_pickup_count != quantity:
+                self._bit_pack_data.append((total_pickup_count, quantity))
+                # print("!!!", self._bit_pack_data[-1])
+            total_pickup_count -= quantity
+
+        # print("one!")
+        assert total_pickup_count >= len(one_quantity_pickups) == len(pickup_list)
+
+    def bit_pack_format(self) -> Iterator[int]:
+        self._calculate_bit_pack()
+        for item in self._bit_pack_data:
+            yield item[0]
 
     def bit_pack_arguments(self) -> Iterator[int]:
-        yield from ()
+        self._calculate_bit_pack()
+        for item in self._bit_pack_data:
+            yield item[1]
 
     def __eq__(self, other):
         return isinstance(other, PickupQuantities) and self._pickup_quantities == other._pickup_quantities
@@ -168,5 +218,5 @@ class LayoutConfiguration(BitPackDataClass):
             sky_temple_keys=sky_temple_keys,
             item_loss=item_loss,
             elevators=elevators,
-            pickup_quantities=PickupQuantities(quantities)
+            pickup_quantities=PickupQuantities(pickup_database, quantities)
         )
