@@ -86,18 +86,11 @@ def pack(enum_class, value):
 
 
 def pack_value(value: BitPackValue):
-    # for i, (count, v) in enumerate(zip(value.bit_pack_format(), value.bit_pack_arguments())):
-    #     f = "u{}".format(math.ceil(math.log2(count)))
-    #     print(i, count, v, f)
-    #     print(bitstruct.pack(f, v))
-    # return
     f = "".join(
         "u{}".format(_bits_for_number(v))
         for v in value.bit_pack_format()
     )
-    print(f)
-    compiled = bitstruct.compile(f)
-    return compiled.pack(*value.bit_pack_arguments())
+    return bitstruct.compile(f).pack(*value.bit_pack_arguments())
 
 
 def do_pack(value):
