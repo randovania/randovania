@@ -11,6 +11,22 @@ class PermalinkConfiguration(BitPackDataClass):
     disable_hud_popup: LayoutEnabledFlag
     menu_mod: LayoutEnabledFlag
 
+    @property
+    def as_json(self) -> dict:
+        return {
+            "spoiler": self.spoiler.value,
+            "disable_hud_popup": self.disable_hud_popup.value,
+            "menu_mod": self.menu_mod.value,
+        }
+
+    @classmethod
+    def from_json_dict(cls, json_dict: dict) -> "PermalinkConfiguration":
+        return PermalinkConfiguration(
+            spoiler=LayoutEnabledFlag(json_dict["spoiler"]),
+            disable_hud_popup=LayoutEnabledFlag(json_dict["disable_hud_popup"]),
+            menu_mod=LayoutEnabledFlag(json_dict["menu_mod"]),
+        )
+
 
 _PERMALINK_MAX_VERSION = 16
 _PERMALINK_MAX_SEED = 2 ** 31
