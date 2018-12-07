@@ -128,14 +128,14 @@ def main():
                                                  "Space Jump Boots": 0
                                              })
 
-    from randovania.resolver.layout_configuration import PermalinkConfiguration
+    from randovania.resolver.permalink import PermalinkConfiguration
     perma_config = PermalinkConfiguration(
         spoiler=LayoutEnabledFlag.ENABLED,
         disable_hud_popup=LayoutEnabledFlag.ENABLED,
         menu_mod=LayoutEnabledFlag.ENABLED,
     )
 
-    from randovania.resolver.layout_configuration import Permalink
+    from randovania.resolver.permalink import Permalink
     do_pack(config)
 
     permalink = Permalink(
