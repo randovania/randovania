@@ -1,31 +1,10 @@
-import dataclasses
 from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional, Iterator, Dict, Tuple
 
-from randovania.bitpacking.bitpacking import BitPackValue
+from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass, BitPackDecoder
 from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.game_description.resources import PickupEntry, PickupDatabase
-
-
-class BitPackEnum(BitPackValue):
-    def bit_pack_format(self) -> Iterator[int]:
-        cls: Enum = self.__class__
-        yield len(cls.__members__)
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        cls: Enum = self.__class__
-        yield list(cls.__members__.values()).index(self)
-
-
-class BitPackDataClass(BitPackValue):
-    def bit_pack_format(self) -> Iterator[int]:
-        for field in dataclasses.fields(self):
-            yield from getattr(self, field.name).bit_pack_format()
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        for field in dataclasses.fields(self):
-            yield from getattr(self, field.name).bit_pack_arguments()
 
 
 class LayoutTrickLevel(BitPackEnum, Enum):
@@ -62,7 +41,7 @@ class PickupQuantities:
     _pickup_quantities: Dict[PickupEntry, int]
     _bit_pack_data: Optional[List[Tuple[int, int]]] = None
 
-    def __init__(self, database: PickupDatabase, pickup_quantities: Dict[str, int]):
+    def __init__(self, database: PickupDatabase, pickup_quantities: Dict[PickupEntry, int]):
         self._database = database
         self._pickup_quantities = pickup_quantities
 
@@ -89,6 +68,10 @@ class PickupQuantities:
 
         self._bit_pack_data.append((len(pickup_list), len(zero_quantity_pickups)))
         self._bit_pack_data.append((len(pickup_list) - len(zero_quantity_pickups), len(one_quantity_pickups)))
+
+        # print("zero count", len(zero_quantity_pickups))
+        # print("one count", len(one_quantity_pickups))
+        # print("many count", len(multiple_quantity_pickups))
 
         # print("zero!")
 
@@ -122,6 +105,40 @@ class PickupQuantities:
         self._calculate_bit_pack()
         for item in self._bit_pack_data:
             yield item[1]
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "PickupQuantities":
+        pickup_database = default_prime2_pickup_database()
+
+        pickup_list = list(pickup_database.pickups.values())
+        total_pickup_count = pickup_database.total_pickup_count
+        pickup_quantities = {}
+
+        zero_quantity_pickups = decoder.decode(len(pickup_list))[0]
+        one_quantity_pickups = decoder.decode(len(pickup_list) - zero_quantity_pickups)[0]
+        multiple_quantity_pickups = len(pickup_list) - zero_quantity_pickups - one_quantity_pickups
+
+        # zero
+        for _ in range(zero_quantity_pickups):
+            index = decoder.decode(len(pickup_list))[0]
+            pickup_quantities[pickup_list.pop(index)] = 0
+
+        # multi
+        for i in range(multiple_quantity_pickups):
+            index = decoder.decode(len(pickup_list))[0]
+            if i != multiple_quantity_pickups - 1 or one_quantity_pickups > 0:
+                quantity = decoder.decode(total_pickup_count)[0]
+            else:
+                quantity = total_pickup_count
+            pickup_quantities[pickup_list.pop(index)] = quantity
+            total_pickup_count -= quantity
+
+        # one
+        assert len(pickup_list) == one_quantity_pickups
+        for one_pickup in pickup_list:
+            pickup_quantities[one_pickup] = 1
+
+        return PickupQuantities(pickup_database, pickup_quantities)
 
     def __eq__(self, other):
         return isinstance(other, PickupQuantities) and self._pickup_quantities == other._pickup_quantities
@@ -223,20 +240,51 @@ class LayoutConfiguration(BitPackDataClass):
 
 
 @dataclass(frozen=True)
+class PermalinkConfiguration(BitPackDataClass):
+    spoiler: LayoutEnabledFlag
+    disable_hud_popup: LayoutEnabledFlag
+    menu_mod: LayoutEnabledFlag
+
+
+_PERMALINK_MAX_VERSION = 16
+_PERMALINK_MAX_SEED = 2 ** 31
+
+
+@dataclass(frozen=True)
 class Permalink:
     seed_number: int
-    configuration: LayoutConfiguration
+    permalink_configuration: PermalinkConfiguration
+    layout_configuration: LayoutConfiguration
 
     @classmethod
     def current_version(cls) -> int:
+        # When this reaches _PERMALINK_MAX_VERSION, we need to change how we decode to avoid breaking version detection
+        # for previous Randovania versions
         return 0
 
     def bit_pack_format(self) -> Iterator[int]:
-        yield 16
-        yield 2 ** 31
-        yield from self.configuration.bit_pack_format()
+        yield _PERMALINK_MAX_VERSION
+        yield _PERMALINK_MAX_SEED
+        yield from self.permalink_configuration.bit_pack_format()
+        yield from self.layout_configuration.bit_pack_format()
 
     def bit_pack_arguments(self) -> Iterator[int]:
         yield self.current_version()
         yield self.seed_number
-        yield from self.configuration.bit_pack_arguments()
+        yield from self.permalink_configuration.bit_pack_arguments()
+        yield from self.layout_configuration.bit_pack_arguments()
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "Permalink":
+        version, seed = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED)
+
+        if version != cls.current_version():
+            raise Exception("Unsupported Permalink version.")
+
+        permalink_configuration = PermalinkConfiguration.bit_pack_unpack(decoder)
+        layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder)
+        return Permalink(
+            seed,
+            permalink_configuration,
+            layout_configuration
+        )
