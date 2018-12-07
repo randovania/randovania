@@ -3,7 +3,6 @@ from enum import Enum
 from typing import List, Optional, Dict
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
-from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.game_description.resources import PickupEntry
 from randovania.resolver.pickup_quantities import PickupQuantities
 
@@ -56,10 +55,7 @@ class LayoutConfiguration(BitPackDataClass):
             "sky_temple_keys": self.sky_temple_keys.value,
             "item_loss": self.item_loss.value,
             "elevators": self.elevators.value,
-            "pickup_quantities": {
-                pickup.name: quantity
-                for pickup, quantity in self.pickup_quantities.items()
-            },
+            "pickup_quantities": self.pickup_quantities.as_json,
         }
 
     @property
@@ -75,6 +71,7 @@ class LayoutConfiguration(BitPackDataClass):
         if self.elevators == LayoutRandomizedFlag.RANDOMIZED:
             strings.append("randomized-elevators")
 
+        # TODO: this is wrong
         if self.pickup_quantities:
             strings.append("customized-quantities")
 
@@ -99,27 +96,10 @@ class LayoutConfiguration(BitPackDataClass):
                     pickup_quantities: Dict[str, int],
                     ) -> "LayoutConfiguration":
 
-        pickup_database = default_prime2_pickup_database()
-
-        quantities = {
-            pickup: pickup_database.original_quantity_for(pickup)
-            for pickup in pickup_database.pickups.values()
-        }
-        for name, quantity in pickup_quantities.items():
-            quantities[pickup_database.pickup_by_name(name)] = quantity
-
-        if sum(quantities.values()) > pickup_database.total_pickup_count:
-            raise ValueError(
-                "Invalid pickup_quantities. {} along with unmapped original pickups sum to more than {}".format(
-                    pickup_quantities, pickup_database.total_pickup_count
-                ))
-
         return LayoutConfiguration(
             trick_level=trick_level,
             sky_temple_keys=sky_temple_keys,
             item_loss=item_loss,
             elevators=elevators,
-            pickup_quantities=PickupQuantities(pickup_database, quantities)
+            pickup_quantities=PickupQuantities.from_params(pickup_quantities)
         )
-
-

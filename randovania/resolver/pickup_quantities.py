@@ -120,3 +120,29 @@ class PickupQuantities(BitPackValue):
 
     def items(self):
         return self._pickup_quantities.items()
+
+    @property
+    def as_json(self) -> dict:
+        return {
+            pickup.name: quantity
+            for pickup, quantity in self._pickup_quantities.items()
+        }
+
+    @classmethod
+    def from_params(cls, pickup_quantities: Dict[str, int]) -> "PickupQuantities":
+        pickup_database = default_prime2_pickup_database()
+
+        quantities = {
+            pickup: pickup_database.original_quantity_for(pickup)
+            for pickup in pickup_database.pickups.values()
+        }
+        for name, quantity in pickup_quantities.items():
+            quantities[pickup_database.pickup_by_name(name)] = quantity
+
+        if sum(quantities.values()) > pickup_database.total_pickup_count:
+            raise ValueError(
+                "Invalid pickup_quantities. {} along with unmapped original pickups sum to more than {}".format(
+                    pickup_quantities, pickup_database.total_pickup_count
+                ))
+
+        return PickupQuantities(pickup_database, quantities)
