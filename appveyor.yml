@@ -38,7 +38,7 @@ test_script:
   - "%PYTHON%\\python.exe setup.py bdist_wheel"
   - "%PYTHON%\\python.exe -m pytest --cov randovania"
   - "%PYTHON%\\python.exe create_windows_release.py"
-  - dist\randovania.exe --version
+  - dist\randovania\randovania.exe --version
 
 # after_test:
   # This step builds your wheels.
