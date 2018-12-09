@@ -65,6 +65,20 @@ def test_load_from_disk_with_data(mock_read_persisted_options: MagicMock,
     )
 
 
+# TODO: test with an actual field as well
+def test_serialize_fields(option: Options):
+    # Setup
+
+    # Run
+    result = option._serialize_fields()
+
+    # Assert
+    assert result == {
+        "version": 2,
+        "options": {}
+    }
+
+
 _sample_layout_configurations = [
     {
         "trick_level": trick_level,

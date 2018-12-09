@@ -120,25 +120,25 @@ class Options:
             if value is not None:
                 self._set_field(field_name, serializer.decode(value))
 
-    def save_to_disk(self):
-        self._data_dir.mkdir(parents=True, exist_ok=True)
-
+    def _serialize_fields(self) -> dict:
         data_to_persist = {}
         for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
             value = getattr(self, "_" + field_name, None)
             if value is not None:
                 data_to_persist[field_name] = serializer.encode(value)
 
+        return {
+            "version": 2,
+            "options": data_to_persist
+        }
+
+    def save_to_disk(self):
+        data_to_persist = self._serialize_fields()
+
+        self._data_dir.mkdir(parents=True, exist_ok=True)
         with self._data_dir.joinpath("config.json").open("w") as options_file:
-            json.dump(
-                {
-                    "version": 2,
-                    "options": data_to_persist
-                },
-                options_file,
-                indent=4,
-                separators=(',', ': ')
-            )
+            json.dump(data_to_persist, options_file,
+                      indent=4, separators=(',', ': '))
 
     def __enter__(self):
         return self
