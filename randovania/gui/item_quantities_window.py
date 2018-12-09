@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import QMainWindow, QLabel, QSpinBox
 
 from randovania.game_description.default_database import default_prime2_pickup_database
+from randovania.game_description.resources import PickupEntry
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options
 from randovania.gui.item_quantities_window_ui import Ui_ItemQuantitiesWindow
@@ -35,7 +36,7 @@ class CustomSpinBox(QSpinBox):
 
 
 class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
-    _spinbox_for_item: Dict[str, QSpinBox] = {}
+    _spinbox_for_item: Dict[PickupEntry, QSpinBox] = {}
     _bulk_changing_quantity = False
 
     _total_item_count = 0
@@ -55,35 +56,36 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         pickup_database = default_prime2_pickup_database()
 
         self._maximum_item_count = pickup_database.total_pickup_count
-        pickup_names = set(pickup_database.all_pickup_names)
+        pickups = set(pickup_database.pickups.values())
 
         # TODO: Very specific logic that should be provided by data
-        pickup_names.remove("Energy Transfer Module")
+        pickups.remove(pickup_database.pickup_by_name("Energy Transfer Module"))
 
-        num_rows = len(pickup_names) / 2
-        for i, pickup_name in enumerate(sorted(pickup_names)):
+        num_rows = len(pickups) / 2
+        for i, pickup in enumerate(sorted(pickups, key=lambda pickup: pickup.name)):
             row = 3 + i % num_rows
             column = (i // num_rows) * 2
             pickup_label = QLabel(self.scroll_area_widget_contents)
-            pickup_label.setText(pickup_name)
+            pickup_label.setText(pickup.name)
             pickup_label.keep_visible_with_help_disabled = True
             self.gridLayout_3.addWidget(pickup_label, row, column, 1, 1)
 
-            original_quantity = pickup_database.original_quantity_for(pickup_database.pickup_by_name(pickup_name))
-            value = options.quantity_for_pickup(pickup_name)
+            original_quantity = pickup_database.original_quantity_for(pickup)
+            # FIXME: this needs the actual pickup now
+            value = options.quantity_for_pickup(pickup)
             if value is None:
                 value = original_quantity
             self._total_item_count += value
 
             spin_box = CustomSpinBox(self.scroll_area_widget_contents)
-            spin_box.pickup_name = pickup_name
+            spin_box.pickup = pickup
             spin_box.original_quantity = original_quantity
             spin_box.previous_value = value
             spin_box.setValue(value)
             spin_box.setFixedWidth(75)
             spin_box.setMaximum(self._maximum_item_count)
             spin_box.valueChanged.connect(functools.partial(self._change_item_quantity, spin_box))
-            self._spinbox_for_item[pickup_name] = spin_box
+            self._spinbox_for_item[pickup] = spin_box
             self.gridLayout_3.addWidget(spin_box, row, column + 1, 1, 1)
 
         self._update_item_quantity_total_label()
@@ -92,10 +94,9 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         self._bulk_changing_quantity = True
 
         pickup_database = default_prime2_pickup_database()
-        for pickup_name in pickup_database.all_pickup_names:
-            if pickup_name in self._spinbox_for_item:
-                self._spinbox_for_item[pickup_name].setValue(
-                    pickup_database.original_quantity_for(pickup_database.pickup_by_name(pickup_name)))
+        for pickup in pickup_database.pickups.values():
+            if pickup in self._spinbox_for_item:
+                self._spinbox_for_item[pickup].setValue(pickup_database.original_quantity_for(pickup))
 
         application_options().save_to_disk()
         self._bulk_changing_quantity = False
@@ -107,8 +108,7 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         self._update_item_quantity_total_label()
 
         options = application_options()
-        options.set_quantity_for_pickup(
-            spin_box.pickup_name, new_quantity if new_quantity != spin_box.original_quantity else None)
+        options.set_quantity_for_pickup(spin_box.pickup, new_quantity)
 
         if not self._bulk_changing_quantity:
             options.save_to_disk()

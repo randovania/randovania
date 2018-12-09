@@ -69,7 +69,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
         self.logic_combo_box.setCurrentIndex(self.logic_combo_box.findData(options.layout_configuration_trick_level))
         self.logic_combo_box.currentIndexChanged.connect(self._on_trick_level_changed)
-        self._on_trick_level_changed()
+        self._refresh_trick_level_labels()
 
     def setup_elevator_elements(self, options: Options):
         self.elevators_combo.setItemData(0, LayoutRandomizedFlag.VANILLA)
@@ -101,7 +101,9 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()
         _update_options_when_true("layout_configuration_trick_level", trick_level, True)
+        self._refresh_trick_level_labels()
 
+    def _refresh_trick_level_labels(self):
         for label in self._layout_logic_labels.values():
             label.hide()
-        self._layout_logic_labels[trick_level].show()
+        self._layout_logic_labels[self.logic_combo_box.currentData()].show()

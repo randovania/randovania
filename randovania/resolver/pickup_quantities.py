@@ -122,10 +122,19 @@ class PickupQuantities(BitPackValue):
         return self._pickup_quantities.items()
 
     @property
+    def pickups_with_custom_quantities(self) -> Dict[PickupEntry, int]:
+        return {
+            pickup: quantity
+            for pickup, quantity in self._pickup_quantities.items()
+            if self._database.original_quantity_for(pickup) != quantity
+        }
+
+    @property
     def as_json(self) -> dict:
         return {
             pickup.name: quantity
             for pickup, quantity in self._pickup_quantities.items()
+            if self._database.original_quantity_for(pickup) != quantity
         }
 
     @classmethod
@@ -139,10 +148,14 @@ class PickupQuantities(BitPackValue):
         for name, quantity in pickup_quantities.items():
             quantities[pickup_database.pickup_by_name(name)] = quantity
 
-        if sum(quantities.values()) > pickup_database.total_pickup_count:
+        return PickupQuantities(pickup_database, quantities)
+
+    def with_new_quantities(self, pickup_quantities: Dict[PickupEntry, int]) -> "PickupQuantities":
+        return PickupQuantities(self._database, pickup_quantities)
+
+    def validate_total_quantities(self):
+        if sum(self._pickup_quantities.values()) > self._database.total_pickup_count:
             raise ValueError(
                 "Invalid pickup_quantities. {} along with unmapped original pickups sum to more than {}".format(
-                    pickup_quantities, pickup_database.total_pickup_count
+                    self.pickups_with_custom_quantities, self._database.total_pickup_count
                 ))
-
-        return PickupQuantities(pickup_database, quantities)

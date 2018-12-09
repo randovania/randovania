@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator, Optional, Callable
 
 from PyQt5.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow
 
@@ -11,11 +11,10 @@ def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
         checkbox.setChecked(new_status)
 
 
-def persist_bool_option(attribute_name: str):
+def persist_bool_option(attribute_name: str) -> Callable[[bool], None]:
     def callback(value: bool):
-        options = application_options()
-        setattr(options, attribute_name, value)
-        options.save_to_disk()
+        with application_options() as options:
+            setattr(options, attribute_name, value)
 
     return callback
 

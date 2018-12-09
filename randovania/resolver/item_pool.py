@@ -15,6 +15,15 @@ def calculate_item_pool(configuration: LayoutConfiguration,
     useless_item = game.pickup_database.pickup_by_name("Energy Transfer Module")
     item_pool: List[PickupEntry] = []
 
+    try:
+        configuration.pickup_quantities.validate_total_quantities()
+    except ValueError as e:
+        raise GenerationFailure(
+            "Invalid configuration: {}".format(e),
+            configuration=configuration,
+            seed_number=-1
+        )
+
     symmetric_difference = set(configuration.pickup_quantities) ^ set(game.pickup_database.pickups.values())
     if symmetric_difference:
         raise GenerationFailure(
