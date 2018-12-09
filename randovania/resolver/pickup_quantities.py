@@ -118,6 +118,9 @@ class PickupQuantities(BitPackValue):
     def get(self, pickup: PickupEntry) -> int:
         return self._pickup_quantities[pickup]
 
+    def pickups(self) -> Iterator[PickupEntry]:
+        yield from self._pickup_quantities.keys()
+
     def items(self):
         return self._pickup_quantities.items()
 
@@ -157,5 +160,6 @@ class PickupQuantities(BitPackValue):
         if sum(self._pickup_quantities.values()) > self._database.total_pickup_count:
             raise ValueError(
                 "Invalid pickup_quantities. {} along with unmapped original pickups sum to more than {}".format(
-                    self.pickups_with_custom_quantities, self._database.total_pickup_count
+                    self.as_json,
+                    self._database.total_pickup_count
                 ))
