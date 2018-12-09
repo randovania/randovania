@@ -24,10 +24,12 @@ def calculate_item_pool(configuration: LayoutConfiguration,
             seed_number=-1
         )
 
-    symmetric_difference = set(configuration.pickup_quantities) ^ set(game.pickup_database.pickups.values())
+    symmetric_difference = set(configuration.pickup_quantities.pickups()) ^ set(game.pickup_database.pickups.values())
     if symmetric_difference:
         raise GenerationFailure(
-            "Invalid configuration: diverging pickups in configuration: {}".format(symmetric_difference),
+            "Invalid configuration: diverging pickups in configuration: {}".format(
+                [pickup.name for pickup in symmetric_difference]
+            ),
             configuration=configuration,
             seed_number=-1
         )

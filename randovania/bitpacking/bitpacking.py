@@ -40,6 +40,9 @@ class BitPackValue:
 
 
 class BitPackEnum(BitPackValue):
+    def __reduce__(self):
+        return None
+
     def bit_pack_format(self) -> Iterator[int]:
         cls: Enum = self.__class__
         yield len(cls.__members__)
