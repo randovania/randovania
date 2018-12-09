@@ -295,7 +295,10 @@ class GeneratorReach:
         self.advance_to(new_state)
 
     def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
-        return networkx.shortest_path(self._digraph, node)
+        if node in self._digraph:
+            return networkx.shortest_path(self._digraph, node)
+        else:
+            return {}
 
     def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
         results = {}

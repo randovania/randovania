@@ -236,6 +236,3 @@ class Options:
         self._layout_configuration = dataclasses.replace(
             self.layout_configuration,
             pickup_quantities=old_pickup_quantities.with_new_quantities(quantities))
-
-
-MAX_DIFFICULTY = 5
