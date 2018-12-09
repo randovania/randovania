@@ -109,12 +109,12 @@ def test_generate_seed_with_invalid_quantity_configuration():
     status_update = MagicMock()
     data = default_data.decode_default_prime2()
 
-    configuration = LayoutConfiguration(
+    configuration = LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel.NO_TRICKS,
         sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
         item_loss=LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
-        pickup_quantities={"Undefined Item": 5})
+        pickup_quantities={"Light Suit": 5})
 
     # Run
     with pytest.raises(randovania.resolver.exceptions.GenerationFailure):
