@@ -173,14 +173,11 @@ def test_generate_twice():
 @pytest.mark.skip(reason="simple data is broken")
 def test_generate_simple(simple_data: dict):
     status_update = MagicMock()
-    configuration = LayoutConfiguration(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                        mode=LayoutMode.STANDARD,
-                                        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-                                        item_loss=LayoutEnabledFlag.DISABLED,
-                                        elevators=LayoutRandomizedFlag.VANILLA,
-                                        hundo_guaranteed=LayoutEnabledFlag.DISABLED,
-                                        difficulty=LayoutDifficulty.NORMAL,
-                                        pickup_quantities={})
+    configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
+                                                    sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                    item_loss=LayoutEnabledFlag.DISABLED,
+                                                    elevators=LayoutRandomizedFlag.VANILLA,
+                                                    pickup_quantities={})
 
     generated_description = generator.generate_list(
         simple_data,

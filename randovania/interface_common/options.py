@@ -99,18 +99,26 @@ class Options:
     def with_default_data_dir(cls) -> "Options":
         return cls(persistence.user_data_dir())
 
-    def load_from_disk(self):
+    def _read_persisted_options(self) -> Optional[dict]:
         try:
             with self._data_dir.joinpath("config.json").open() as options_file:
-                persisted_data = json.load(options_file)
+                return json.load(options_file)
         except FileNotFoundError:
+            return None
+
+    def _set_field(self, field_name: str, value):
+        setattr(self, "_" + field_name, value)
+
+    def load_from_disk(self):
+        persisted_data = self._read_persisted_options()
+        if persisted_data is None:
             return
 
         persisted_options = _get_persisted_options_from_data(persisted_data)
         for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
             value = persisted_options.get(field_name, None)
             if value is not None:
-                setattr(self, "_" + field_name, serializer.decode(value))
+                self._set_field(field_name, serializer.decode(value))
 
     def save_to_disk(self):
         self._data_dir.mkdir(parents=True, exist_ok=True)
