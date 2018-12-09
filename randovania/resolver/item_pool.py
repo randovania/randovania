@@ -1,9 +1,8 @@
-import copy
 import itertools
 from typing import List, Iterator, Set, Tuple, FrozenSet, Optional
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources import PickupEntry, ResourceInfo, ResourceDatabase
+from randovania.game_description.resources import PickupEntry, ResourceInfo
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutConfiguration
 
@@ -24,11 +23,13 @@ def calculate_item_pool(configuration: LayoutConfiguration,
             seed_number=-1
         )
 
-    symmetric_difference = set(configuration.pickup_quantities.pickups()) ^ set(game.pickup_database.pickups.values())
-    if symmetric_difference:
+    quantities_pickups = set(configuration.pickup_quantities.pickups())
+    database_pickups = set(game.pickup_database.pickups.values())
+    if quantities_pickups != database_pickups:
         raise GenerationFailure(
-            "Invalid configuration: diverging pickups in configuration: {}".format(
-                [pickup.name for pickup in symmetric_difference]
+            "Invalid configuration - diverging pickups in configuration.\nPickups in quantities: {}\nPickups in database: {}".format(
+                [pickup.name for pickup in quantities_pickups],
+                [pickup.name for pickup in database_pickups],
             ),
             configuration=configuration,
             seed_number=-1

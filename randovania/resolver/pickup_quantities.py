@@ -143,23 +143,27 @@ class PickupQuantities(BitPackValue):
     @classmethod
     def from_params(cls, pickup_quantities: Dict[str, int]) -> "PickupQuantities":
         pickup_database = default_prime2_pickup_database()
-
         quantities = {
-            pickup: pickup_database.original_quantity_for(pickup)
-            for pickup in pickup_database.pickups.values()
+            pickup_database.pickup_by_name(name): quantity
+            for name, quantity in pickup_quantities.items()
         }
-        for name, quantity in pickup_quantities.items():
-            quantities[pickup_database.pickup_by_name(name)] = quantity
-
-        return PickupQuantities(pickup_database, quantities)
+        return PickupQuantities(pickup_database, quantities)._add_missing_pickups_to_quantities()
 
     def with_new_quantities(self, pickup_quantities: Dict[PickupEntry, int]) -> "PickupQuantities":
-        return PickupQuantities(self._database, pickup_quantities)
+        return PickupQuantities(self._database, pickup_quantities)._add_missing_pickups_to_quantities()
+
+    def _add_missing_pickups_to_quantities(self) -> "PickupQuantities":
+        for pickup in self._database.pickups.values():
+            if pickup not in self._pickup_quantities:
+                self._pickup_quantities[pickup] = self._database.original_quantity_for(pickup)
+
+        return self
 
     def validate_total_quantities(self):
-        if sum(self._pickup_quantities.values()) > self._database.total_pickup_count:
+        total = sum(self._pickup_quantities.values())
+        if total > self._database.total_pickup_count:
             raise ValueError(
-                "Invalid pickup_quantities. {} along with unmapped original pickups sum to more than {}".format(
+                "Invalid pickup_quantities. \n{} along with unmapped original pickups sum to more than {}".format(
                     self.as_json,
                     self._database.total_pickup_count
                 ))
