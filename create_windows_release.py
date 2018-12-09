@@ -1,7 +1,9 @@
 import os
+import shutil
 import subprocess
 import sys
 import zipfile
+from pathlib import Path
 
 import markdown as markdown
 
@@ -9,9 +11,16 @@ from randovania import VERSION
 
 zip_folder = "randovania-{}".format(VERSION)
 
+package_folder = Path("dist", "randovania")
+shutil.rmtree(package_folder, ignore_errors=True)
+
 subprocess.run([sys.executable, "-m", "PyInstaller", "randovania.spec"])
-with zipfile.ZipFile("dist/{}.zip".format(zip_folder), "w") as release_zip:
-    release_zip.write("dist/randovania.exe", "{}/randovania.exe".format(zip_folder))
+
+with zipfile.ZipFile("dist/{}.zip".format(zip_folder), "w", compression=zipfile.ZIP_BZIP2) as release_zip:
+    for f in package_folder.glob("**/*"):
+        print("Adding", f)
+        release_zip.write(f, "{}/{}".format(zip_folder, f.relative_to(package_folder)))
+
     with open("README.md") as readme_file:
         readme_html = markdown.markdown(readme_file.read())
         release_zip.writestr(zip_folder + "/README.html", readme_html)
