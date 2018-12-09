@@ -44,7 +44,7 @@ class LayoutConfiguration(BitPackDataClass):
     elevators: LayoutRandomizedFlag
     pickup_quantities: PickupQuantities
 
-    def quantity_for_pickup(self, pickup: PickupEntry) -> Optional[int]:
+    def quantity_for_pickup(self, pickup: PickupEntry) -> int:
         return self.pickup_quantities.get(pickup)
 
     @property
@@ -71,8 +71,7 @@ class LayoutConfiguration(BitPackDataClass):
         if self.elevators == LayoutRandomizedFlag.RANDOMIZED:
             strings.append("randomized-elevators")
 
-        # TODO: this is wrong
-        if self.pickup_quantities:
+        if self.pickup_quantities.pickups_with_custom_quantities:
             strings.append("customized-quantities")
 
         return "_".join(strings)
@@ -102,4 +101,14 @@ class LayoutConfiguration(BitPackDataClass):
             item_loss=item_loss,
             elevators=elevators,
             pickup_quantities=PickupQuantities.from_params(pickup_quantities)
+        )
+
+    @classmethod
+    def default(cls) -> "LayoutConfiguration":
+        return cls.from_params(
+            trick_level=LayoutTrickLevel.NO_TRICKS,
+            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            item_loss=LayoutEnabledFlag.ENABLED,
+            elevators=LayoutRandomizedFlag.VANILLA,
+            pickup_quantities={}
         )

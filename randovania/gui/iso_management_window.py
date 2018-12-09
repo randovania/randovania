@@ -90,8 +90,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     def _persist_option_then_notify(self, attribute_name: str):
         persist = persist_bool_option(attribute_name)
 
-        def wrap(value: bool):
-            persist(value)
+        def wrap(value: int):
+            persist(bool(value))
             self._on_settings_changed()
 
         return wrap
@@ -156,12 +156,11 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     def _on_new_output_directory(self, output_folder: str):
         output_folder = Path(output_folder)
 
-        options = application_options()
-        if output_folder.is_dir():
-            options.output_directory = output_folder
-        else:
-            options.output_directory = None
-        options.save_to_disk()
+        with application_options() as options:
+            if output_folder.is_dir():
+                options.output_directory = output_folder
+            else:
+                options.output_directory = None
 
     def _change_output_folder(self):
         folder = QFileDialog.getExistingDirectory(self)

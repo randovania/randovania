@@ -1,28 +1,98 @@
+import dataclasses
 import json
-from collections import OrderedDict
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Optional, TypeVar, Callable, Any
 
+from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
-    LayoutDifficulty, LayoutTrickLevel, LayoutMode
+    LayoutTrickLevel
+from randovania.resolver.patcher_configuration import PatcherConfiguration
 
 
-def _convert_logic(new_options: dict):
-    trick_level = new_options.pop("layout_logic")
-    if trick_level == "no-glitches":
-        trick_level = "no-tricks"
-    new_options["layout_trick_level"] = trick_level
+def _convert_logic(layout_logic: str) -> str:
+    if layout_logic == "no-glitches":
+        return "no-tricks"
+    return layout_logic
 
 
-_FIELDS_TO_MIGRATE = {
-    "layout_logic": _convert_logic
+T = TypeVar("T")
+
+
+def identity(v: T) -> T:
+    return v
+
+
+@dataclasses.dataclass(frozen=True)
+class Serializer:
+    encode: Callable[[Any], Any]
+    decode: Callable[[Any], Any]
+
+
+_SERIALIZER_FOR_FIELD = {
+    "show_advanced_options": Serializer(identity, bool),
+    "create_spoiler": Serializer(identity, bool),
+    "output_directory": Serializer(str, Path),
+    "patcher_configuration": Serializer(lambda p: p.as_json, PatcherConfiguration.from_json_dict),
+    "layout_configuration": Serializer(lambda p: p.as_json, LayoutConfiguration.from_json_dict),
 }
 
 
+def _get_persisted_options_from_data(persisted_data: dict) -> dict:
+    version = persisted_data.get("version", 0)
+    if version < 1 or version > 2:
+        return {}
+
+    if version == 2:
+        return persisted_data["options"]
+
+    options = persisted_data["options"]
+    results = {}
+
+    try:
+        results["patcher_configuration"] = {
+            "disable_hud_popup": options["hud_memo_popup_removal"],
+            "menu_mod": options["include_menu_mod"],
+        }
+    except KeyError as e:
+        print("Unable to port patcher_configuration to new version, got {}".format(e))
+
+    try:
+        results["layout_configuration"] = {
+            "trick_level": _convert_logic(options["layout_logic"]),
+            "sky_temple_keys": options["sky_temple_keys"],
+            "item_loss": options["item_loss"],
+            "elevators": options["elevators"],
+            "pickup_quantities": options["pickup_quantities"],
+        }
+    except KeyError as e:
+        print("Unable to port layout_configuration to new version, got {}".format(e))
+
+    return {}
+
+
+def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -> T:
+    """
+    Returns the given value is if it's not None, otherwise call default_factory
+    :param value:
+    :param default_factory:
+    :return:
+    """
+    if value is None:
+        return default_factory()
+    else:
+        return value
+
+
 class Options:
+    _data_dir: Path
+    _show_advanced_options: Optional[bool] = None
+    _create_spoiler: Optional[bool] = None
+    _output_directory: Optional[Path] = None
+    _patcher_configuration: Optional[PatcherConfiguration] = None
+    _layout_configuration: Optional[LayoutConfiguration] = None
+
     def __init__(self, data_dir: Path):
-        self.raw_data = _default_options()
         self._data_dir = data_dir
 
     @classmethod
@@ -32,26 +102,35 @@ class Options:
     def load_from_disk(self):
         try:
             with self._data_dir.joinpath("config.json").open() as options_file:
-                new_options = json.load(options_file)["options"]
-
-            for old_option_name, converter in _FIELDS_TO_MIGRATE.items():
-                if old_option_name in new_options:
-                    converter(new_options)
-
-            for option_name in self.raw_data.keys():
-                if option_name in new_options:
-                    self.raw_data[option_name] = new_options[option_name]
-
+                persisted_data = json.load(options_file)
         except FileNotFoundError:
-            pass
+            return
+
+        persisted_options = _get_persisted_options_from_data(persisted_data)
+        for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
+            value = persisted_options.get(field_name, None)
+            if value is not None:
+                setattr(self, "_" + field_name, serializer.decode(value))
 
     def save_to_disk(self):
         self._data_dir.mkdir(parents=True, exist_ok=True)
+
+        data_to_persist = {}
+        for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
+            value = getattr(self, "_" + field_name, None)
+            if value is not None:
+                data_to_persist[field_name] = serializer.encode(value)
+
         with self._data_dir.joinpath("config.json").open("w") as options_file:
-            json.dump({
-                "version": 1,
-                "options": self.raw_data
-            }, options_file)
+            json.dump(
+                {
+                    "version": 2,
+                    "options": data_to_persist
+                },
+                options_file,
+                indent=4,
+                separators=(',', ': ')
+            )
 
     def __enter__(self):
         return self
@@ -59,29 +138,7 @@ class Options:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.save_to_disk()
 
-    @property
-    def create_spoiler(self) -> bool:
-        return self.raw_data["create_spoiler"]
-
-    @create_spoiler.setter
-    def create_spoiler(self, value: bool):
-        self.raw_data["create_spoiler"] = value
-
-    @property
-    def hud_memo_popup_removal(self) -> bool:
-        return self.raw_data["hud_memo_popup_removal"]
-
-    @hud_memo_popup_removal.setter
-    def hud_memo_popup_removal(self, value: bool):
-        self.raw_data["hud_memo_popup_removal"] = value
-
-    @property
-    def include_menu_mod(self) -> bool:
-        return self.raw_data["include_menu_mod"]
-
-    @include_menu_mod.setter
-    def include_menu_mod(self, value: bool):
-        self.raw_data["include_menu_mod"] = value
+    # Files paths
 
     @property
     def backup_files_path(self) -> Path:
@@ -91,117 +148,94 @@ class Options:
     def game_files_path(self) -> Path:
         return self._data_dir.joinpath("extracted_game")
 
+    # Access to Direct fields
+
+    @property
+    def create_spoiler(self) -> bool:
+        return _return_with_default(self._create_spoiler, lambda: True)
+
+    @create_spoiler.setter
+    def create_spoiler(self, value: bool):
+        self._create_spoiler = value
+
     @property
     def output_directory(self) -> Optional[Path]:
-        result = self.raw_data["output_directory"]
-        if result is not None:
-            return Path(result)
-        return None
+        return self._output_directory
 
     @output_directory.setter
     def output_directory(self, value: Optional[Path]):
-        if value is not None:
-            self.raw_data["output_directory"] = str(value)
-        else:
-            self.raw_data["output_directory"] = None
+        self._output_directory = value
 
     @property
-    def advanced_options(self) -> bool:
-        return self.raw_data["show_advanced_options"]
-
-    @advanced_options.setter
-    def advanced_options(self, value: bool):
-        self.raw_data["show_advanced_options"] = value
-
-    @property
-    def display_generate_help(self) -> bool:
-        return self.raw_data["display_generate_help"]
-
-    @display_generate_help.setter
-    def display_generate_help(self, value: bool):
-        self.raw_data["display_generate_help"] = value
-
-    @property
-    def layout_configuration_trick_level(self) -> LayoutTrickLevel:
-        # TODO: detect invalid values
-        return LayoutTrickLevel(self.raw_data["layout_trick_level"])
-
-    @layout_configuration_trick_level.setter
-    def layout_configuration_trick_level(self, value: LayoutTrickLevel):
-        self.raw_data["layout_logic"] = LayoutTrickLevel(value.value).value
-
-    @property
-    def layout_configuration_mode(self) -> LayoutMode:
-        # TODO: detect invalid values
-        return LayoutMode(self.raw_data["layout_mode"])
-
-    @layout_configuration_mode.setter
-    def layout_configuration_mode(self, value: LayoutMode):
-        self.raw_data["layout_mode"] = LayoutMode(value.value).value
-
-    @property
-    def layout_configuration_sky_temple_keys(self) -> LayoutRandomizedFlag:
-        # TODO: detect invalid values
-        return LayoutRandomizedFlag(self.raw_data["layout_sky_temple_keys"])
-
-    @layout_configuration_sky_temple_keys.setter
-    def layout_configuration_sky_temple_keys(self, value: LayoutRandomizedFlag):
-        self.raw_data["layout_sky_temple_keys"] = LayoutRandomizedFlag(value.value).value
-
-    @property
-    def layout_configuration_elevators(self) -> LayoutRandomizedFlag:
-        # TODO: detect invalid values
-        return LayoutRandomizedFlag(self.raw_data["layout_elevators"])
-
-    @layout_configuration_elevators.setter
-    def layout_configuration_elevators(self, value: LayoutRandomizedFlag):
-        self.raw_data["layout_elevators"] = LayoutRandomizedFlag(value.value).value
-
-    @property
-    def layout_configuration_item_loss(self) -> LayoutEnabledFlag:
-        # TODO: detect invalid values
-        return LayoutEnabledFlag(self.raw_data["layout_item_loss"])
-
-    @layout_configuration_item_loss.setter
-    def layout_configuration_item_loss(self, value: LayoutEnabledFlag):
-        self.raw_data["layout_item_loss"] = LayoutEnabledFlag(value.value).value
-
-    def quantity_for_pickup(self, pickup_name: str) -> Optional[int]:
-        return self.raw_data["quantity_for_pickup"].get(pickup_name)
-
-    def set_quantity_for_pickup(self, pickup_name: str, new_quantity: Optional[int]) -> None:
-        if new_quantity is not None:
-            self.raw_data["quantity_for_pickup"][pickup_name] = new_quantity
-        elif pickup_name in self.raw_data["quantity_for_pickup"]:
-            del self.raw_data["quantity_for_pickup"][pickup_name]
+    def patcher_configuration(self) -> PatcherConfiguration:
+        return _return_with_default(self._patcher_configuration, PatcherConfiguration.default)
 
     @property
     def layout_configuration(self) -> LayoutConfiguration:
-        return LayoutConfiguration.from_params(
-            trick_level=self.layout_configuration_trick_level,
-            sky_temple_keys=self.layout_configuration_sky_temple_keys,
-            item_loss=self.layout_configuration_item_loss,
-            elevators=self.layout_configuration_elevators,
-            pickup_quantities=self.raw_data["quantity_for_pickup"],
-        )
+        return _return_with_default(self._layout_configuration, LayoutConfiguration.default)
 
+    # Access to fields inside PatcherConfiguration
 
-def _default_options() -> Dict[str, Any]:
-    options: Dict[str, Any] = OrderedDict()
-    options["create_spoiler"] = True
-    options["hud_memo_popup_removal"] = True
-    options["show_advanced_options"] = False
-    options["display_generate_help"] = True
-    options["include_menu_mod"] = True
+    @property
+    def hud_memo_popup_removal(self) -> bool:
+        return self.patcher_configuration.disable_hud_popup
 
-    options["layout_trick_level"] = LayoutTrickLevel.NO_TRICKS.value
-    options["layout_mode"] = LayoutMode.STANDARD.value
-    options["layout_sky_temple_keys"] = LayoutRandomizedFlag.RANDOMIZED.value
-    options["layout_elevators"] = LayoutRandomizedFlag.VANILLA.value
-    options["layout_item_loss"] = LayoutEnabledFlag.ENABLED.value
-    options["quantity_for_pickup"] = {}
-    options["output_directory"] = None
-    return options
+    @hud_memo_popup_removal.setter
+    def hud_memo_popup_removal(self, value: bool):
+        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, disable_hud_popup=value)
+
+    @property
+    def include_menu_mod(self) -> bool:
+        return self.patcher_configuration.menu_mod
+
+    @include_menu_mod.setter
+    def include_menu_mod(self, value: bool):
+        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, menu_mod=value)
+
+    # Access to fields inside LayoutConfiguration
+
+    @property
+    def layout_configuration_trick_level(self) -> LayoutTrickLevel:
+        return self.layout_configuration.trick_level
+
+    @layout_configuration_trick_level.setter
+    def layout_configuration_trick_level(self, value: LayoutTrickLevel):
+        self._layout_configuration = dataclasses.replace(self.layout_configuration, trick_level=value)
+
+    @property
+    def layout_configuration_sky_temple_keys(self) -> LayoutRandomizedFlag:
+        return self.layout_configuration.sky_temple_keys
+
+    @layout_configuration_sky_temple_keys.setter
+    def layout_configuration_sky_temple_keys(self, value: LayoutRandomizedFlag):
+        self._layout_configuration = dataclasses.replace(self.layout_configuration, sky_temple_keys=value)
+
+    @property
+    def layout_configuration_elevators(self) -> LayoutRandomizedFlag:
+        return self.layout_configuration.elevators
+
+    @layout_configuration_elevators.setter
+    def layout_configuration_elevators(self, value: LayoutRandomizedFlag):
+        self._layout_configuration = dataclasses.replace(self.layout_configuration, elevators=value)
+
+    @property
+    def layout_configuration_item_loss(self) -> LayoutEnabledFlag:
+        return self.layout_configuration.item_loss
+
+    @layout_configuration_item_loss.setter
+    def layout_configuration_item_loss(self, value: LayoutEnabledFlag):
+        self._layout_configuration = dataclasses.replace(self.layout_configuration, item_loss=value)
+
+    def quantity_for_pickup(self, pickup: PickupEntry) -> int:
+        return self.layout_configuration.quantity_for_pickup(pickup)
+
+    def set_quantity_for_pickup(self, pickup: PickupEntry, new_quantity: int) -> None:
+        old_pickup_quantities = self.layout_configuration.pickup_quantities
+        quantities = old_pickup_quantities.pickups_with_custom_quantities
+        quantities[pickup] = new_quantity
+        self._layout_configuration = dataclasses.replace(
+            self.layout_configuration,
+            pickup_quantities=old_pickup_quantities.with_new_quantities(quantities))
 
 
 MAX_DIFFICULTY = 5
