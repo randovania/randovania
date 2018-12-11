@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QMainWindow, QAction
 from randovania import VERSION
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import prompt_user_for_seed_log
+from randovania.gui.common_qt_lib import prompt_user_for_seed_log, application_options
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.item_quantities_window import ItemQuantitiesWindow
@@ -64,8 +64,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             (ItemQuantitiesWindow, "Item Quantities"),
         ]
 
+        options = application_options()
         for i, tab in enumerate(self.tab_windows):
-            self.windows.append(tab[0](self, self))
+            self.windows.append(tab[0](self, self, options))
             self.tabs.append(self.windows[i].centralWidget)
             self.tabWidget.insertTab(i, self.tabs[i], _translate("MainWindow", tab[1]))
 

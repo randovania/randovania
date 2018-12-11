@@ -8,8 +8,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options, persist_bool_option, prompt_user_for_input_iso, \
-    prompt_user_for_seed_log
+from randovania.gui.common_qt_lib import prompt_user_for_input_iso, prompt_user_for_seed_log
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common import simplified_patcher, game_workdir
@@ -27,21 +26,21 @@ def show_failed_generation_exception(exception: GenerationFailure):
 
 class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     tab_service: TabService
+    _options: Options
     _has_game: bool
     _current_lock_state: bool = True
     _last_generated_layout: Optional[LayoutDescription] = None
-    _options: Options
 
     loaded_game_updated = pyqtSignal()
     failed_to_generate_signal = pyqtSignal(GenerationFailure)
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
+    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
         self.setupUi(self)
         self.tab_service = tab_service
         self.background_processor = background_processor
 
-        self._options = application_options()
+        self._options = options
         output_directory = self._options.output_directory
 
         # Progress
@@ -88,13 +87,12 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self._refresh_randomize_button_state()
 
     def _persist_option_then_notify(self, attribute_name: str):
-        persist = persist_bool_option(attribute_name)
-
-        def wrap(value: int):
-            persist(bool(value))
+        def persist(value: int):
+            with self._options as options:
+                setattr(options, attribute_name, bool(value))
             self._on_settings_changed()
 
-        return wrap
+        return persist
 
     def _on_settings_changed(self):
         self.permalink_edit.setText("LIES!")
