@@ -1,4 +1,3 @@
-import functools
 import random
 from pathlib import Path
 from typing import Optional, Iterator, Callable
@@ -11,7 +10,6 @@ from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import application_options, persist_bool_option, prompt_user_for_input_iso, \
     prompt_user_for_seed_log
-from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common import simplified_patcher, game_workdir
