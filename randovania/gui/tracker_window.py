@@ -7,11 +7,10 @@ from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
-    def __init__(self):
+    def __init__(self, data: dict):
         super().__init__()
         self.setupUi(self)
 
-        data = default_data.decode_default_prime2()
         resource_database = data_reader.read_resource_database(data["resource_database"])
 
         self.items_tree_widget.setSortingEnabled(False)

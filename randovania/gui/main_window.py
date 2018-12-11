@@ -7,6 +7,7 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QMainWindow, QAction
 
 from randovania import VERSION
+from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import prompt_user_for_seed_log
 from randovania.gui.data_editor import DataEditorWindow
@@ -108,7 +109,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     # Menu Actions
     def _open_data_visualizer(self):
-        self._data_visualizer = DataEditorWindow()
+        self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2())
         self._data_visualizer.show()
 
     def _open_existing_seed_details(self):
@@ -120,7 +121,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self._seed_details.show()
 
     def _open_tracker(self):
-        self._tracker = TrackerWindow()
+        self._tracker = TrackerWindow(default_data.decode_default_prime2())
         self._tracker.show()
 
     # Background Process
