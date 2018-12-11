@@ -49,12 +49,9 @@ def generate_layout(seed_number: int, progress_update: ProgressUpdateCallable) -
     """
     layout_configuration = application_options().layout_configuration
 
-    return echoes.generate_layout(
-        data=default_data.decode_default_prime2(),
-        seed_number=seed_number,
-        configuration=layout_configuration,
-        status_update=ConstantPercentageCallback(progress_update, -1)
-    )
+    return echoes.generate_layout(seed_number=seed_number,
+                                  configuration=layout_configuration,
+                                  status_update=ConstantPercentageCallback(progress_update, -1))
 
 
 def apply_layout(layout: LayoutDescription, progress_update: ProgressUpdateCallable):

@@ -8,7 +8,6 @@ from randovania.resolver.layout_description import LayoutDescription
 
 
 def _generate_layout_worker(output_pipe,
-                            data: Dict,
                             seed_number: int,
                             configuration: LayoutConfiguration,
                             debug_level: int):
@@ -17,7 +16,7 @@ def _generate_layout_worker(output_pipe,
             output_pipe.send(message)
 
         debug._DEBUG_LEVEL = debug_level
-        layout_description = generator.generate_list(data,
+        layout_description = generator.generate_list(configuration.game_data,
                                                      seed_number,
                                                      configuration,
                                                      status_update=status_update)
@@ -27,16 +26,15 @@ def _generate_layout_worker(output_pipe,
         output_pipe.send(e)
 
 
-def generate_layout(data: Dict,
-                    seed_number: int,
+def generate_layout(seed_number: int,
                     configuration: LayoutConfiguration,
-                    status_update: Callable[[str], None]
+                    status_update: Callable[[str], None],
                     ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
 
     process = multiprocessing.Process(
         target=_generate_layout_worker,
-        args=(output_pipe, data, seed_number, configuration, debug._DEBUG_LEVEL)
+        args=(output_pipe, seed_number, configuration, debug._DEBUG_LEVEL)
     )
     process.start()
     try:
