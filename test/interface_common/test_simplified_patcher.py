@@ -66,41 +66,38 @@ def test_unpack_iso(mock_application_options: MagicMock,
 
 
 @patch("randovania.interface_common.simplified_patcher.ConstantPercentageCallback", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.default_data.decode_default_prime2", autospec=True)
 @patch("randovania.interface_common.echoes.generate_layout", autospec=True)
 def test_generate_layout(mock_generate_layout: MagicMock,
-                         mock_decode_default_prime2: MagicMock,
                          mock_constant_percentage_callback: MagicMock,
                          ):
     # Setup
     seed_number: int = MagicMock()
-    configuration: LayoutConfiguration = MagicMock()
+    options: Options = MagicMock()
     progress_update = MagicMock()
 
     # Run
-    simplified_patcher.generate_layout(seed_number, configuration, progress_update)
+    simplified_patcher.generate_layout(seed_number, options, progress_update)
 
     # Assert
     mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
     mock_generate_layout.assert_called_once_with(
         seed_number=seed_number,
-        configuration=configuration,
+        configuration=options.layout_configuration,
         status_update=mock_constant_percentage_callback.return_value
     )
 
 
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
-def test_internal_patch_iso(mock_application_options: MagicMock,
-                            mock_apply_layout: MagicMock,
+def test_internal_patch_iso(mock_apply_layout: MagicMock,
                             mock_pack_iso: MagicMock,
                             ):
     # Setup
     layout = MagicMock()
     layout.seed_number = 1234
     layout.configuration.as_str = "layout"
-    mock_application_options.return_value.output_directory = Path("fun")
+    options = MagicMock()
+    options.output_directory = Path("fun")
 
     name = "Echoes Randomizer - layout_1234"
     output_iso = Path("fun", name + ".iso")
@@ -108,7 +105,7 @@ def test_internal_patch_iso(mock_application_options: MagicMock,
     updaters = [MagicMock(), MagicMock()]
 
     # Run
-    simplified_patcher._internal_patch_iso(updaters, layout)
+    simplified_patcher._internal_patch_iso(updaters, layout, options)
 
     # Assert
     mock_apply_layout.assert_called_once_with(layout=layout, progress_update=updaters[0])
@@ -125,7 +122,7 @@ def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
                                        ):
     # Setup
     progress_update = MagicMock()
-    layout_configuration: LayoutConfiguration = MagicMock()
+    options: Options = MagicMock()
     seed_number: int = MagicMock()
 
     updaters = [MagicMock(), MagicMock(), MagicMock(), MagicMock()]
@@ -134,15 +131,16 @@ def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
     # Run
     result = simplified_patcher.create_layout_then_export_iso(progress_update,
                                                               seed_number,
-                                                              layout_configuration)
+                                                              options)
 
     # Assert
     mock_split_progress_update.assert_called_once_with(progress_update, 3)
     mock_generate_layout.assert_called_once_with(seed_number=seed_number,
-                                                 layout_configuration=layout_configuration,
+                                                 options=options,
                                                  progress_update=updaters[0])
     mock_internal_patch_iso.assert_called_once_with(
         updaters=updaters[1:],
-        layout=mock_generate_layout.return_value
+        layout=mock_generate_layout.return_value,
+        options=options,
     )
     assert result == mock_generate_layout.return_value

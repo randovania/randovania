@@ -226,7 +226,9 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
                              message: str, **kawgs):
         def work(progress_update: ProgressUpdateCallable):
             try:
-                job(progress_update=progress_update, **kawgs)
+                job(progress_update=progress_update,
+                    options=application_options(),
+                    **kawgs)
                 progress_update("Success!", 1)
 
             except GenerationFailure as generate_exception:
@@ -262,7 +264,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             simplified_patcher.create_layout_then_export_iso,
             message="Randomizing...",
             seed_number=self.get_current_seed_number(),
-            layout_configuration=application_options().layout_configuration,
         )
 
     def _create_log_file_pressed(self):
@@ -277,7 +278,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             simplified_patcher.create_layout_then_export,
             message="Creating a layout...",
             seed_number=self.get_current_seed_number(),
-            layout_configuration=application_options().layout_configuration,
         )
 
     def _randomize_from_file(self):
