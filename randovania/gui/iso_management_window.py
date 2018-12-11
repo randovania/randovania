@@ -222,7 +222,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             self.failed_to_generate_signal.emit(generate_exception)
             progress_update("Generation Failure: {}".format(generate_exception), -1)
 
-    def _background_exporter(self, job, message: str, **kawgs):
+    def _background_exporter(self, job,
+                             message: str, **kawgs):
         def work(progress_update: ProgressUpdateCallable):
             try:
                 job(progress_update=progress_update, **kawgs)
@@ -260,7 +261,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self._background_exporter(
             simplified_patcher.create_layout_then_export_iso,
             message="Randomizing...",
-            seed_number=self.get_current_seed_number()
+            seed_number=self.get_current_seed_number(),
+            layout_configuration=application_options().layout_configuration,
         )
 
     def _create_log_file_pressed(self):
@@ -274,7 +276,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self._background_exporter(
             simplified_patcher.create_layout_then_export,
             message="Creating a layout...",
-            seed_number=self.get_current_seed_number()
+            seed_number=self.get_current_seed_number(),
+            layout_configuration=application_options().layout_configuration,
         )
 
     def _randomize_from_file(self):
