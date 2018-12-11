@@ -2,18 +2,19 @@ import shutil
 from pathlib import Path
 from typing import List
 
-from randovania.games.prime import iso_packager, claris_randomizer, default_data
-from randovania.gui.common_qt_lib import application_options
+from randovania.games.prime import iso_packager, claris_randomizer
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
-from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 
 
-def delete_files_location():
-    options = application_options()
-
+def delete_files_location(options: Options, ):
+    """
+    Deletes an extracted game in given options.
+    :param options:
+    :return:
+    """
     game_files_path = options.game_files_path
     if game_files_path.exists():
         shutil.rmtree(game_files_path)
@@ -24,17 +25,19 @@ def delete_files_location():
 
 
 def unpack_iso(input_iso: Path,
+               options: Options,
                progress_update: ProgressUpdateCallable,
                ):
     """
-    Unpacks the given ISO to the files listed in application_options
+    Unpacks the given ISO to the files listed in options
     :param input_iso:
+    :param options:
     :param progress_update:
     :return:
     """
-    game_files_path = application_options().game_files_path
+    game_files_path = options.game_files_path
 
-    delete_files_location()
+    delete_files_location(options)
     iso_packager.unpack_iso(
         iso=input_iso,
         game_files_path=game_files_path,
@@ -58,15 +61,16 @@ def generate_layout(seed_number: int,
                                   status_update=ConstantPercentageCallback(progress_update, -1))
 
 
-def apply_layout(layout: LayoutDescription, progress_update: ProgressUpdateCallable):
+def apply_layout(layout: LayoutDescription,
+                 options: Options,
+                 progress_update: ProgressUpdateCallable):
     """
-    Applies the given LayoutDescription to the files listed in application_options
+    Applies the given LayoutDescription to the files listed in options
+    :param options:
     :param layout:
     :param progress_update:
     :return:
     """
-    options = application_options()
-
     game_files_path = options.game_files_path
     backup_files_path = options.backup_files_path
     hud_memo_popup_removal = options.hud_memo_popup_removal
@@ -83,15 +87,17 @@ def apply_layout(layout: LayoutDescription, progress_update: ProgressUpdateCalla
 
 
 def pack_iso(output_iso: Path,
+             options: Options,
              progress_update: ProgressUpdateCallable,
              ):
     """
-    Unpacks the files listed in application_options to the given path
+    Unpacks the files listed in options to the given path
     :param output_iso:
+    :param options:
     :param progress_update:
     :return:
     """
-    game_files_path = application_options().game_files_path
+    game_files_path = options.game_files_path
 
     iso_packager.pack_iso(
         iso=output_iso,
@@ -112,10 +118,13 @@ def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
     output_iso = options.output_directory.joinpath("{}.iso".format(_output_name_for(layout)))
 
     # Patch ISO
-    apply_layout(layout=layout, progress_update=updaters[0])
+    apply_layout(layout=layout,
+                 options=options,
+                 progress_update=updaters[0])
 
     # Pack ISO
     pack_iso(output_iso=output_iso,
+             options=options,
              progress_update=updaters[1])
 
     # Save the layout to a file
