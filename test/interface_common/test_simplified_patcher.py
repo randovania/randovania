@@ -50,7 +50,7 @@ def test_unpack_iso(mock_application_options: MagicMock,
                     mock_unpack_iso: MagicMock,
                     ):
     # Setup
-    input_iso = MagicMock()
+    input_iso: Path = MagicMock()
     progress_update = MagicMock()
 
     # Run
@@ -68,32 +68,23 @@ def test_unpack_iso(mock_application_options: MagicMock,
 @patch("randovania.interface_common.simplified_patcher.ConstantPercentageCallback", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.default_data.decode_default_prime2", autospec=True)
 @patch("randovania.interface_common.echoes.generate_layout", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
-def test_generate_layout(mock_application_options: MagicMock,
-                         mock_generate_layout: MagicMock,
+def test_generate_layout(mock_generate_layout: MagicMock,
                          mock_decode_default_prime2: MagicMock,
                          mock_constant_percentage_callback: MagicMock,
                          ):
     # Setup
-    seed_number = MagicMock()
+    seed_number: int = MagicMock()
+    configuration: LayoutConfiguration = MagicMock()
     progress_update = MagicMock()
-    mock_application_options.return_value = Options.with_default_data_dir()
 
     # Run
-    simplified_patcher.generate_layout(seed_number, progress_update)
+    simplified_patcher.generate_layout(seed_number, configuration, progress_update)
 
     # Assert
     mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
     mock_generate_layout.assert_called_once_with(
-        data=mock_decode_default_prime2.return_value,
         seed_number=seed_number,
-        configuration=LayoutConfiguration.from_params(
-            trick_level=LayoutTrickLevel.NO_TRICKS,
-            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-            item_loss=LayoutEnabledFlag.ENABLED,
-            elevators=LayoutRandomizedFlag.VANILLA,
-            pickup_quantities={},
-        ),
+        configuration=configuration,
         status_update=mock_constant_percentage_callback.return_value
     )
 
@@ -134,16 +125,22 @@ def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
                                        ):
     # Setup
     progress_update = MagicMock()
-    seed_number = MagicMock()
+    layout_configuration: LayoutConfiguration = MagicMock()
+    seed_number: int = MagicMock()
+
     updaters = [MagicMock(), MagicMock(), MagicMock(), MagicMock()]
     mock_split_progress_update.return_value = updaters
 
     # Run
-    result = simplified_patcher.create_layout_then_export_iso(progress_update, seed_number)
+    result = simplified_patcher.create_layout_then_export_iso(progress_update,
+                                                              seed_number,
+                                                              layout_configuration)
 
     # Assert
     mock_split_progress_update.assert_called_once_with(progress_update, 3)
-    mock_generate_layout.assert_called_once_with(seed_number=seed_number, progress_update=updaters[0])
+    mock_generate_layout.assert_called_once_with(seed_number=seed_number,
+                                                 layout_configuration=layout_configuration,
+                                                 progress_update=updaters[0])
     mock_internal_patch_iso.assert_called_once_with(
         updaters=updaters[1:],
         layout=mock_generate_layout.return_value

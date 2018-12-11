@@ -6,6 +6,7 @@ from randovania.games.prime import iso_packager, claris_randomizer, default_data
 from randovania.gui.common_qt_lib import application_options
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
+from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -40,15 +41,17 @@ def unpack_iso(input_iso: Path,
     )
 
 
-def generate_layout(seed_number: int, progress_update: ProgressUpdateCallable) -> LayoutDescription:
+def generate_layout(seed_number: int,
+                    layout_configuration: LayoutConfiguration,
+                    progress_update: ProgressUpdateCallable,
+                    ) -> LayoutDescription:
     """
-    Creates a LayoutDescription for the given seed_number and the configuration in application_options
+    Creates a LayoutDescription for the given seed_number and configuration
     :param seed_number:
+    :param layout_configuration:
     :param progress_update:
     :return:
     """
-    layout_configuration = application_options().layout_configuration
-
     return echoes.generate_layout(seed_number=seed_number,
                                   configuration=layout_configuration,
                                   status_update=ConstantPercentageCallback(progress_update, -1))
@@ -147,14 +150,24 @@ def patch_game_with_existing_layout(progress_update: ProgressUpdateCallable,
 
 def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
                                   seed_number: int,
+                                  layout_configuration: LayoutConfiguration,
                                   ) -> LayoutDescription:
+    """
+    Creates a new layout with the given configuration and seed, then patches and exports an ISO
+    :param progress_update:
+    :param seed_number:
+    :param layout_configuration:
+    :return:
+    """
     updaters = status_update_lib.split_progress_update(
         progress_update,
         3
     )
 
     # Create a LayoutDescription
-    resulting_layout = generate_layout(seed_number=seed_number, progress_update=updaters[0])
+    resulting_layout = generate_layout(seed_number=seed_number,
+                                       layout_configuration=layout_configuration,
+                                       progress_update=updaters[0])
 
     _internal_patch_iso(
         updaters=updaters[1:],
@@ -166,10 +179,20 @@ def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
 
 def create_layout_then_export(progress_update: ProgressUpdateCallable,
                               seed_number: int,
+                              layout_configuration: LayoutConfiguration,
                               ) -> LayoutDescription:
+    """
+    Creates a new layout with the given configuration and seed, then exports just it
+    :param progress_update:
+    :param seed_number:
+    :param layout_configuration:
+    :return:
+    """
 
     # Create a LayoutDescription
-    resulting_layout = generate_layout(seed_number=seed_number, progress_update=progress_update)
+    resulting_layout = generate_layout(seed_number=seed_number,
+                                       layout_configuration=layout_configuration,
+                                       progress_update=progress_update)
     export_layout(resulting_layout)
 
     return resulting_layout
