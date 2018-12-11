@@ -4,6 +4,7 @@ from typing import List, Optional, Dict
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.game_description.resources import PickupEntry
+from randovania.games.prime import default_data
 from randovania.resolver.pickup_quantities import PickupQuantities
 
 
@@ -46,6 +47,10 @@ class LayoutConfiguration(BitPackDataClass):
 
     def quantity_for_pickup(self, pickup: PickupEntry) -> int:
         return self.pickup_quantities.get(pickup)
+
+    @property
+    def game_data(self) -> dict:
+        return default_data.decode_default_prime2()
 
     @property
     def as_json(self) -> dict:
