@@ -7,9 +7,9 @@ from PyQt5.QtWidgets import QMainWindow, QLabel, QSpinBox
 from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.game_description.resources import PickupEntry
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import application_options
 from randovania.gui.item_quantities_window_ui import Ui_ItemQuantitiesWindow
 from randovania.gui.tab_service import TabService
+from randovania.interface_common.options import Options
 
 
 class CustomSpinBox(QSpinBox):
@@ -36,15 +36,17 @@ class CustomSpinBox(QSpinBox):
 
 
 class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
+    _options: Options
     _spinbox_for_item: Dict[PickupEntry, QSpinBox] = {}
     _bulk_changing_quantity = False
 
     _total_item_count = 0
     _maximum_item_count = 0
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin):
+    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
         self.setupUi(self)
+        self._options = options
 
         # Connect to Events
         self.itemquantity_reset_button.clicked.connect(self._reset_item_quantities)
@@ -52,7 +54,6 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         self._create_item_toggles()
 
     def _create_item_toggles(self):
-        options = application_options()
         pickup_database = default_prime2_pickup_database()
 
         self._maximum_item_count = pickup_database.total_pickup_count
@@ -71,8 +72,7 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
             self.gridLayout_3.addWidget(pickup_label, row, column, 1, 1)
 
             original_quantity = pickup_database.original_quantity_for(pickup)
-            # FIXME: this needs the actual pickup now
-            value = options.quantity_for_pickup(pickup)
+            value = self._options.quantity_for_pickup(pickup)
             if value is None:
                 value = original_quantity
             self._total_item_count += value
@@ -98,7 +98,7 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
             if pickup in self._spinbox_for_item:
                 self._spinbox_for_item[pickup].setValue(pickup_database.original_quantity_for(pickup))
 
-        application_options().save_to_disk()
+        self._options.save_to_disk()
         self._bulk_changing_quantity = False
 
     def _change_item_quantity(self, spin_box: QSpinBox, new_quantity: int):
@@ -107,11 +107,10 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         spin_box.previous_value = new_quantity
         self._update_item_quantity_total_label()
 
-        options = application_options()
-        options.set_quantity_for_pickup(spin_box.pickup, new_quantity)
+        self._options.set_quantity_for_pickup(spin_box.pickup, new_quantity)
 
         if not self._bulk_changing_quantity:
-            options.save_to_disk()
+            self._options.save_to_disk()
 
     def _update_item_quantity_total_label(self):
         self.itemquantity_total_label.setText("Total Pickups: {}/{}".format(

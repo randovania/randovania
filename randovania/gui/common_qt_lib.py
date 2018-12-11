@@ -11,14 +11,6 @@ def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
         checkbox.setChecked(new_status)
 
 
-def persist_bool_option(attribute_name: str) -> Callable[[bool], None]:
-    def callback(value: bool):
-        with application_options() as options:
-            setattr(options, attribute_name, value)
-
-    return callback
-
-
 def application_options() -> Options:
     return QApplication.instance().options
 
