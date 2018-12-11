@@ -11,10 +11,6 @@ def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
         checkbox.setChecked(new_status)
 
 
-def application_options() -> Options:
-    return QApplication.instance().options
-
-
 def lock_application(value: bool):
     QApplication.instance().main_window.setEnabled(value)
 

@@ -23,11 +23,11 @@ def run(args):
 
     sys.excepthook = catch_exceptions
 
-    app.options = Options.with_default_data_dir()
-    app.options.load_from_disk()
+    options = Options.with_default_data_dir()
+    options.load_from_disk()
 
     from randovania.gui.main_window import MainWindow
-    main_window = MainWindow(getattr(args, "preview", False))
+    main_window = MainWindow(options, getattr(args, "preview", False))
     app.main_window = main_window
     main_window.show()
     sys.exit(app.exec_())
