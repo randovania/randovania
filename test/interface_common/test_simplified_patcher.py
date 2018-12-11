@@ -1,28 +1,21 @@
-import os
 from pathlib import Path
-from unittest.mock import patch, MagicMock, ANY
+from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.games.prime import default_data
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
-from randovania.interface_common.status_update_lib import ConstantPercentageCallback
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, \
-    LayoutRandomizedFlag, LayoutEnabledFlag, LayoutDifficulty
 
 
 @pytest.mark.parametrize("games_path_exist", [False, True])
 @pytest.mark.parametrize("backup_path_exist", [False, True])
-@patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
-def test_delete_files_location(mock_application_options: MagicMock,
-                               tmpdir,
+def test_delete_files_location(tmpdir,
                                games_path_exist: bool,
                                backup_path_exist: bool,
                                ):
     # Setup
     data_dir = Path(str(tmpdir.join("user_data_dir")))
-    mock_application_options.return_value = Options(data_dir)
+    options = Options(data_dir)
 
     game_files = tmpdir.join("user_data_dir", "extracted_game")
     if games_path_exist:
@@ -35,7 +28,7 @@ def test_delete_files_location(mock_application_options: MagicMock,
         backup_files.join("random.txt").write_text("yay", "utf-8")
 
     # Run
-    simplified_patcher.delete_files_location()
+    simplified_patcher.delete_files_location(options)
 
     # Assert
     assert not game_files.exists()
@@ -44,23 +37,22 @@ def test_delete_files_location(mock_application_options: MagicMock,
 
 @patch("randovania.interface_common.simplified_patcher.iso_packager.unpack_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.delete_files_location", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.application_options", autospec=True)
-def test_unpack_iso(mock_application_options: MagicMock,
-                    mock_delete_files_location: MagicMock,
+def test_unpack_iso(mock_delete_files_location: MagicMock,
                     mock_unpack_iso: MagicMock,
                     ):
     # Setup
     input_iso: Path = MagicMock()
+    options: Options = MagicMock()
     progress_update = MagicMock()
 
     # Run
-    simplified_patcher.unpack_iso(input_iso, progress_update)
+    simplified_patcher.unpack_iso(input_iso, options, progress_update)
 
     # Assert
-    mock_delete_files_location.assert_called_once_with()
+    mock_delete_files_location.assert_called_once_with(options)
     mock_unpack_iso.assert_called_once_with(
         iso=input_iso,
-        game_files_path=mock_application_options.return_value.game_files_path,
+        game_files_path=options.game_files_path,
         progress_update=progress_update,
     )
 
@@ -108,8 +100,8 @@ def test_internal_patch_iso(mock_apply_layout: MagicMock,
     simplified_patcher._internal_patch_iso(updaters, layout, options)
 
     # Assert
-    mock_apply_layout.assert_called_once_with(layout=layout, progress_update=updaters[0])
-    mock_pack_iso.assert_called_once_with(output_iso=output_iso, progress_update=updaters[1])
+    mock_apply_layout.assert_called_once_with(layout=layout, options=options, progress_update=updaters[0])
+    mock_pack_iso.assert_called_once_with(output_iso=output_iso, options=options, progress_update=updaters[1])
     layout.save_to_file.assert_called_once_with(output_json)
 
 
