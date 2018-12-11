@@ -13,6 +13,7 @@ from randovania.gui.common_qt_lib import application_options, persist_bool_optio
 from randovania.gui.iso_management_window_ui import Ui_ISOManagementWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common import simplified_patcher, game_workdir
+from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_description import LayoutDescription
@@ -29,6 +30,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     _has_game: bool
     _current_lock_state: bool = True
     _last_generated_layout: Optional[LayoutDescription] = None
+    _options: Options
 
     loaded_game_updated = pyqtSignal()
     failed_to_generate_signal = pyqtSignal(GenerationFailure)
@@ -39,8 +41,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.tab_service = tab_service
         self.background_processor = background_processor
 
-        options = application_options()
-        output_directory = options.output_directory
+        self._options = application_options()
+        output_directory = self._options.output_directory
 
         # Progress
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -69,11 +71,11 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.create_from_log_button.clicked.connect(self._randomize_from_file)
 
         # Game Patching
-        self.create_spoiler_check.setChecked(options.create_spoiler)
+        self.create_spoiler_check.setChecked(self._options.create_spoiler)
         self.create_spoiler_check.stateChanged.connect(self._persist_option_then_notify("create_spoiler"))
-        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
+        self.remove_hud_popup_check.setChecked(self._options.hud_memo_popup_removal)
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
-        self.include_menu_mod_check.setChecked(options.include_menu_mod)
+        self.include_menu_mod_check.setChecked(self._options.include_menu_mod)
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
 
         # Post setup update
@@ -105,7 +107,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             raise ValueError("No game available. Please load one using 'Load Game'")
 
     def _check_has_output_directory(self):
-        if application_options().output_directory is None:
+        if self._options.output_directory is None:
             raise ValueError("No output directory. Please select one using 'Select Folder'")
 
     def _ensure_seed_number_exists(self):
@@ -118,7 +120,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         if iso is None:
             return
 
-        game_files_path = application_options().game_files_path
+        game_files_path = self._options.game_files_path
 
         def work(progress_update: ProgressUpdateCallable):
             unpack_iso(
@@ -139,7 +141,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             return
 
         iso, extension = open_result
-        game_files_path = application_options().game_files_path
+        game_files_path = self._options.game_files_path
 
         def work(progress_update: ProgressUpdateCallable):
             pack_iso(
@@ -154,7 +156,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     def _on_new_output_directory(self, output_folder: str):
         output_folder = Path(output_folder)
 
-        with application_options() as options:
+        with self._options as options:
             if output_folder.is_dir():
                 options.output_directory = output_folder
             else:
@@ -168,7 +170,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.output_folder_edit.setText(folder)
 
     def _update_displayed_game(self):
-        result = game_workdir.discover_game(application_options().game_files_path)
+        result = game_workdir.discover_game(self._options.game_files_path)
 
         if result is None:
             self._has_game = False
@@ -209,7 +211,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     # Randomize
     def _refresh_randomize_button_state(self):
         self.randomize_and_export_button.setEnabled(self._current_lock_state)
-        self.randomize_log_only_button.setEnabled(self._current_lock_state and application_options().create_spoiler)
+        self.randomize_log_only_button.setEnabled(self._current_lock_state and self._options.create_spoiler)
         self.create_from_log_button.setEnabled(self._current_lock_state)
 
     def _try_generate_layout(self, job, progress_update: ProgressUpdateCallable):
@@ -227,7 +229,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         def work(progress_update: ProgressUpdateCallable):
             try:
                 job(progress_update=progress_update,
-                    options=application_options(),
+                    options=self._options,
                     **kawgs)
                 progress_update("Success!", 1)
 
