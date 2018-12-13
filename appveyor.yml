@@ -38,7 +38,6 @@ test_script:
   # to put the Python version you want to use on PATH.
   - "%PYTHON%\\python.exe setup.py bdist_wheel"
   - "%PYTHON%\\python.exe -m pytest --cov randovania"
-  - codecov
   - "%PYTHON%\\python.exe create_windows_release.py"
   - dist\randovania\randovania.exe --version
 
@@ -58,10 +57,11 @@ artifacts:
   - path: dist\*.zip
     name: release
 
-#on_success:
+on_success:
 #  You can use this step to upload your artifacts to a public website.
 #  See Appveyor's documentation for more details. Or you can simply
 #  access your wheels from the Appveyor "artifacts" tab for your build.
+  - codecov
 
 deploy:
   description: 'Release description'
