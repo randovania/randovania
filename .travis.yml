@@ -45,12 +45,14 @@ install:
 # TODO: investigate this
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install pytest-xvfb; fi
 - python -m pip install -e .
+- python -m pip install codecov
 - python -m pip uninstall -y randovania
 
 script:
 - python setup.py bdist_wheel
 - python -m pip install --upgrade dist/*
 - python -m pytest --cov randovania
+- codecov
 - if [[ "$INCLUDE_SDIST" == "true" ]]; then python setup.py sdist; fi
 
 after_success:
