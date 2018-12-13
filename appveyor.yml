@@ -24,6 +24,7 @@ install:
   - "%PYTHON%\\python.exe -m pip install https://github.com/enthought/pywin32-ctypes/archive/master.zip"
   - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
   - "%PYTHON%\\python.exe -m pip install -e ."
+  - "%PYTHON%\\python.exe -m pip install codecov"
 
 build: off
 
@@ -37,6 +38,7 @@ test_script:
   # to put the Python version you want to use on PATH.
   - "%PYTHON%\\python.exe setup.py bdist_wheel"
   - "%PYTHON%\\python.exe -m pytest --cov randovania"
+  - codecov
   - "%PYTHON%\\python.exe create_windows_release.py"
   - dist\randovania\randovania.exe --version
 
