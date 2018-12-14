@@ -86,3 +86,50 @@ def test_base_args(mock_get_data_path: MagicMock,
 
     assert results == expected_results
     mock_validate_game_files_path.assert_called_once_with(Path("root", "files"))
+
+
+@pytest.mark.parametrize("has_menu_mod", [False, True])
+@pytest.mark.parametrize("has_backup", [False, True])
+@patch("shutil.copy", autospec=True)
+def test_ensure_no_menu_mod(mock_copy: MagicMock,
+                            tmpdir,
+                            has_menu_mod: bool,
+                            has_backup: bool,
+                            ):
+    # Setup
+    game_root = Path(tmpdir.join("root"))
+    backup_files_path = Path(tmpdir.join("backup"))
+    status_update = MagicMock()
+    files_folder = game_root.joinpath("files")
+    mod_txt = files_folder.joinpath("menu_mod.txt")
+    paks = ("1.pak", "2.pak")
+
+    if has_menu_mod:
+        mod_txt.parent.mkdir(parents=True)
+        mod_txt.write_bytes(b"")
+
+    if has_backup:
+        pak_folder = backup_files_path.joinpath("mp2_paks")
+        pak_folder.mkdir(parents=True)
+        for pak in paks:
+            pak_folder.joinpath(pak).write_bytes(b"")
+
+    # Run
+    claris_randomizer._ensure_no_menu_mod(game_root, backup_files_path, status_update)
+
+    # Assert
+    if has_menu_mod:
+        assert mod_txt.exists() != has_backup
+
+    if has_menu_mod and has_backup:
+        status_update.assert_has_calls([
+            call("Restoring {} from backup".format(pak_name))
+            for pak_name in paks
+        ])
+        mock_copy.assert_has_calls([
+            call(backup_files_path.joinpath("mp2_paks", pak_name), files_folder.joinpath(pak_name))
+            for pak_name in paks
+        ])
+    else:
+        status_update.assert_not_called()
+        mock_copy.assert_not_called()
