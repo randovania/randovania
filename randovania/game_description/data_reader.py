@@ -269,7 +269,7 @@ def decode_data(data: Dict,
 
 def read_databases(data: Dict,
                    ) -> Tuple[ResourceDatabase, PickupDatabase]:
-    resource = read_resource_database(data)
+    resource = read_resource_database(data["resource_database"])
     pickup = read_pickup_database(data, resource)
 
     return resource, pickup
