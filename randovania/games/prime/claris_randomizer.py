@@ -91,6 +91,9 @@ def _ensure_no_menu_mod(
         menu_mod_txt.unlink()
 
 
+_ECHOES_PAKS = tuple(["MiscData.pak"] + ["Metroid{}.pak".format(i) for i in range(1, 6)])
+
+
 def _create_pak_backups(
         game_root: Path,
         backup_files_path: Path,
@@ -100,7 +103,7 @@ def _create_pak_backups(
     pak_folder.mkdir(parents=True, exist_ok=True)
 
     files_folder = game_root.joinpath("files")
-    for pak in ["MiscData.pak"] + ["Metroid{}.pak".format(i) for i in range(1, 6)]:
+    for pak in _ECHOES_PAKS:
         target_file = pak_folder.joinpath(pak)
         if not target_file.exists():
             status_update("Backing up {}".format(pak))

@@ -1,5 +1,6 @@
 import subprocess
 from pathlib import Path
+from typing import Optional
 from unittest.mock import patch, MagicMock, call
 
 import pytest
@@ -133,3 +134,52 @@ def test_ensure_no_menu_mod(mock_copy: MagicMock,
     else:
         status_update.assert_not_called()
         mock_copy.assert_not_called()
+
+
+@pytest.mark.parametrize("missing_pak", claris_randomizer._ECHOES_PAKS)
+@patch("shutil.copy", autospec=True)
+def test_create_pak_backups(mock_copy: MagicMock,
+                            tmpdir,
+                            missing_pak: str
+                            ):
+    # Setup
+    game_root = Path(tmpdir.join("root"))
+    backup_files_path = Path(tmpdir.join("backup"))
+    status_update = MagicMock()
+
+    pak_folder = backup_files_path.joinpath("mp2_paks")
+    pak_folder.mkdir(parents=True)
+    for pak in claris_randomizer._ECHOES_PAKS:
+        if pak != missing_pak:
+            pak_folder.joinpath(pak).write_bytes(b"")
+
+    # Run
+    claris_randomizer._create_pak_backups(game_root, backup_files_path, status_update)
+
+    # Assert
+    status_update.assert_called_once_with("Backing up {}".format(missing_pak))
+    mock_copy.assert_called_once_with(game_root.joinpath("files", missing_pak),
+                                      pak_folder.joinpath(missing_pak))
+
+
+@patch("shutil.copy", autospec=True)
+def test_create_pak_backups_no_existing(mock_copy: MagicMock,
+                                        tmpdir,
+                                        ):
+    # Setup
+    game_root = Path(tmpdir.join("root"))
+    backup_files_path = Path(tmpdir.join("backup"))
+    status_update = MagicMock()
+
+    # Run
+    claris_randomizer._create_pak_backups(game_root, backup_files_path, status_update)
+
+    # Assert
+    status_update.assert_has_calls([
+        call("Backing up {}".format(pak))
+        for pak in claris_randomizer._ECHOES_PAKS
+    ])
+    mock_copy.assert_has_calls([
+        call(game_root.joinpath("files", pak), backup_files_path.joinpath("mp2_paks", pak))
+        for pak in claris_randomizer._ECHOES_PAKS
+    ])
