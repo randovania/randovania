@@ -6,16 +6,16 @@ import pytest
 
 import randovania.resolver.exceptions
 from randovania import VERSION
-from randovania.game_description.default_database import default_prime2_pickup_database, default_prime2_game_description
-from randovania.game_description.resources import PickupIndex, PickupEntry
+from randovania.game_description import data_reader
+from randovania.game_description.default_database import default_prime2_game_description
+from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
 from randovania.games.prime import default_data
 from randovania.resolver import generator, debug
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_available_pickups
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, \
-    LayoutRandomizedFlag, \
-    LayoutEnabledFlag, LayoutDifficulty
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+    LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
 
 
@@ -23,7 +23,8 @@ def _create_test_layout_description(
         seed_number: int,
         configuration: LayoutConfiguration,
         pickup_mapping: Iterable[int]):
-    pickup_database = default_prime2_pickup_database()
+
+    pickup_database = data_reader.read_databases(configuration.game_data)[1]
     return LayoutDescription(
         seed_number=seed_number,
         configuration=configuration,
@@ -124,7 +125,9 @@ def test_generate_seed_with_invalid_quantity_configuration():
 
 
 # @pytest.mark.skip(reason="generating is taking too long")
-def test_compare_generated_with_data(benchmark, layout_description: LayoutDescription):
+def test_compare_generated_with_data(benchmark,
+                                     layout_description: LayoutDescription,
+                                     echoes_pickup_database: PickupDatabase):
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
 
@@ -142,10 +145,9 @@ def test_compare_generated_with_data(benchmark, layout_description: LayoutDescri
         iterations=1,
         rounds=1)
 
-    pickup_database = default_prime2_pickup_database()
-    indices: List[int] = [None] * pickup_database.total_pickup_count
+    indices: List[int] = [None] * echoes_pickup_database.total_pickup_count
     for index, pickup in generated_description.pickup_assignment.items():
-        indices[index.index] = pickup_database.original_index(pickup).index
+        indices[index.index] = echoes_pickup_database.original_index(pickup).index
     print(indices)
 
     assert generated_description.without_solver_path == layout_description
