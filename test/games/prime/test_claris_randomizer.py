@@ -1,4 +1,5 @@
 import subprocess
+from pathlib import Path
 from unittest.mock import patch, MagicMock, call
 
 import pytest
@@ -58,3 +59,30 @@ def test_run_with_args_failure(mock_popen: MagicMock,
     # Assert
     mock_popen.assert_called_once_with([], stdout=subprocess.PIPE, bufsize=0, universal_newlines=True)
     process.kill.assert_called_once_with()
+
+
+@pytest.mark.parametrize("hud_memo_popup_removal", [False, True])
+@patch("randovania.games.prime.claris_randomizer.validate_game_files_path", autospec=True)
+@patch("randovania.games.prime.claris_randomizer.get_data_path", autospec=True)
+def test_base_args(mock_get_data_path: MagicMock,
+                   mock_validate_game_files_path: MagicMock,
+                   hud_memo_popup_removal: bool
+                   ):
+    # Setup
+    mock_get_data_path.return_value = Path("data")
+    game_root = Path("root")
+
+    # Run
+    results = claris_randomizer._base_args(game_root, hud_memo_popup_removal)
+
+    # Assert
+    expected_results = [
+        Path("data", "ClarisPrimeRandomizer", "Randomizer.exe"),
+        Path("root", "files"),
+        "-r"
+    ]
+    if hud_memo_popup_removal:
+        expected_results.append("-h")
+
+    assert results == expected_results
+    mock_validate_game_files_path.assert_called_once_with(Path("root", "files"))
