@@ -126,6 +126,17 @@ def _add_menu_mod_to_files(
     files_folder.joinpath("menu_mod.txt").write_bytes(b"")
 
 
+def _calculate_indices(layout: LayoutDescription) -> List[int]:
+    pickup_database = default_prime2_pickup_database()
+    useless_pickup = pickup_database.pickup_by_name(_USELESS_PICKUP_NAME)
+
+    indices = [pickup_database.original_index(useless_pickup).index] * pickup_database.total_pickup_count
+    for index, pickup in layout.pickup_assignment.items():
+        indices[index.index] = pickup_database.original_index(pickup).index
+
+    return indices
+
+
 def apply_layout(
         layout: LayoutDescription,
         hud_memo_popup_removal: bool,
@@ -143,12 +154,7 @@ def apply_layout(
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     _create_pak_backups(game_root, backup_files_path, status_update)
 
-    pickup_database = default_prime2_pickup_database()
-    useless_pickup = pickup_database.pickup_by_name(_USELESS_PICKUP_NAME)
-
-    indices = [pickup_database.original_index(useless_pickup).index] * pickup_database.total_pickup_count
-    for index, pickup in layout.pickup_assignment.items():
-        indices[index.index] = pickup_database.original_index(pickup).index
+    indices = _calculate_indices(layout)
 
     args += [
         "-s", str(layout.seed_number),
