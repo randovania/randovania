@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Callable, List, Optional, Dict, Union
 
 from randovania import get_data_path
-from randovania.game_description.default_database import default_prime2_pickup_database
+from randovania.game_description import data_reader
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
 from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
@@ -127,7 +127,7 @@ def _add_menu_mod_to_files(
 
 
 def _calculate_indices(layout: LayoutDescription) -> List[int]:
-    pickup_database = default_prime2_pickup_database()
+    pickup_database = data_reader.read_databases(layout.configuration.game_data)[1]
     useless_pickup = pickup_database.pickup_by_name(_USELESS_PICKUP_NAME)
 
     indices = [pickup_database.original_index(useless_pickup).index] * pickup_database.total_pickup_count
