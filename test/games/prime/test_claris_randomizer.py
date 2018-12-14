@@ -5,6 +5,7 @@ from unittest.mock import patch, MagicMock, call
 import pytest
 
 from randovania.games.prime import claris_randomizer
+from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag
 
 
 @patch("subprocess.Popen", autospec=True)
@@ -207,3 +208,71 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
         status_update
     )
     assert game_root.joinpath("files", "menu_mod.txt").is_file()
+
+
+@pytest.mark.parametrize("include_menu_mod", [False, True])
+@pytest.mark.parametrize("elevators", [False, True])
+@pytest.mark.parametrize("item_loss", [False, True])
+@pytest.mark.parametrize("seed_number", [1000, 8500])
+@patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._calculate_indices", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._create_pak_backups", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._ensure_no_menu_mod", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._base_args", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
+def test_apply_layout(mock_run_with_args: MagicMock,
+                      mock_base_args: MagicMock,
+                      mock_ensure_no_menu_mod: MagicMock,
+                      mock_create_pak_backups: MagicMock,
+                      mock_calculate_indices: MagicMock,
+                      mock_add_menu_mod_to_files: MagicMock,
+                      mock_create_progress_update_from_successive_messages: MagicMock,
+                      seed_number: int,
+                      item_loss: bool,
+                      elevators: bool,
+                      include_menu_mod: bool,
+                      ):
+    # Setup
+    layout = MagicMock()
+    layout.seed_number = seed_number
+    layout.configuration.item_loss = LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED
+    layout.configuration.elevators = LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA
+
+    game_root = MagicMock()
+    backup_files_path = MagicMock()
+    progress_update = MagicMock()
+    hud_memo_popup_removal = MagicMock()
+    status_update = mock_create_progress_update_from_successive_messages.return_value
+
+    mock_calculate_indices.return_value = [10, 25, 1, 2, 5, 1]
+    mock_base_args.return_value = []
+    expected_args = [
+        "-s", str(seed_number),
+        "-p", "10,25,1,2,5,1"
+    ]
+    if not item_loss:
+        expected_args.append("-i")
+    if elevators:
+        expected_args.append("-v")
+
+    # Run
+    claris_randomizer.apply_layout(layout, hud_memo_popup_removal, include_menu_mod,
+                                   game_root, backup_files_path, progress_update)
+
+    # Assert
+    mock_base_args.assert_called_once_with(game_root, hud_memo_popup_removal=hud_memo_popup_removal)
+    mock_create_progress_update_from_successive_messages.assert_called_once_with(
+        progress_update,
+        400 if include_menu_mod else 100
+    )
+    mock_ensure_no_menu_mod.assert_called_once_with(game_root, backup_files_path, status_update)
+    mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
+    mock_calculate_indices.assert_called_once_with(layout)
+    game_root.joinpath.assert_called_once_with("files", "randovania.json")
+    layout.save_to_file.assert_called_once_with(game_root.joinpath.return_value)
+    mock_run_with_args.assert_called_once_with(expected_args, "Randomized!", status_update)
+    if include_menu_mod:
+        mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
+    else:
+        mock_add_menu_mod_to_files.assert_not_called()
