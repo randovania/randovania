@@ -1,23 +1,19 @@
 import copy
-import os
 import shutil
 import subprocess
 from collections import defaultdict
 from pathlib import Path
 from typing import Callable, List, Optional, Dict, Union
 
-import py
-
 from randovania import get_data_path
+from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
 from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
-from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
-
 
 _USELESS_PICKUP_NAME = "Energy Transfer Module"
 
