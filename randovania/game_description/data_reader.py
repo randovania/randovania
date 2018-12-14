@@ -265,3 +265,11 @@ def decode_data(data: Dict,
         starting_items=starting_items,
         item_loss_items=item_loss_items,
     )
+
+
+def read_databases(data: Dict,
+                   ) -> Tuple[ResourceDatabase, PickupDatabase]:
+    resource = read_resource_database(data)
+    pickup = read_pickup_database(data, resource)
+
+    return resource, pickup
