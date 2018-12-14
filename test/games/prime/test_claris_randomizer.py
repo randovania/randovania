@@ -124,14 +124,15 @@ def test_ensure_no_menu_mod(mock_copy: MagicMock,
         assert mod_txt.exists() != has_backup
 
     if has_menu_mod and has_backup:
+        # In any order, because file systems don't have guaranteed order
         status_update.assert_has_calls([
             call("Restoring {} from backup".format(pak_name))
             for pak_name in paks
-        ])
+        ], any_order=True)
         mock_copy.assert_has_calls([
             call(backup_files_path.joinpath("mp2_paks", pak_name), files_folder.joinpath(pak_name))
             for pak_name in paks
-        ])
+        ], any_order=True)
     else:
         status_update.assert_not_called()
         mock_copy.assert_not_called()
