@@ -1,6 +1,5 @@
 import subprocess
 from pathlib import Path
-from typing import Optional
 from unittest.mock import patch, MagicMock, call
 
 import pytest
@@ -183,3 +182,28 @@ def test_create_pak_backups_no_existing(mock_copy: MagicMock,
         call(game_root.joinpath("files", pak), backup_files_path.joinpath("mp2_paks", pak))
         for pak in claris_randomizer._ECHOES_PAKS
     ])
+
+
+@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
+@patch("randovania.games.prime.claris_randomizer.get_data_path", autospec=True)
+def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
+                               mock_run_with_args: MagicMock,
+                               tmpdir,
+                               ):
+    # Setup
+    mock_get_data_path.return_value = Path("data")
+    game_root = Path(tmpdir.join("root"))
+    status_update = MagicMock()
+    game_root.joinpath("files").mkdir(parents=True)
+
+    # Run
+    claris_randomizer._add_menu_mod_to_files(game_root, status_update)
+
+    # Assert
+    mock_run_with_args.assert_called_once_with(
+        [Path("data", "ClarisEchoesMenu", "EchoesMenu.exe"),
+         game_root.joinpath("files")],
+        "Done!",
+        status_update
+    )
+    assert game_root.joinpath("files", "menu_mod.txt").is_file()
