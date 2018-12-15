@@ -183,6 +183,52 @@ def test_shared_process_code_failure():
     assert str(exception.value) == "You got an error!"
 
 
+@patch("randovania.games.prime.iso_packager._shared_process_code", autospec=True)
+def test_unpack_iso_success(mock_shared_process_code: MagicMock,
+                            ):
+    # Setup
+    iso = MagicMock()
+    game_files_path = MagicMock()
+    progress_update = MagicMock()
+
+    # Run
+    iso_packager.unpack_iso(iso, game_files_path, progress_update)
+
+    # Assert
+    game_files_path.mkdir.assert_called_once_with(parents=True, exist_ok=True)
+    mock_shared_process_code.assert_called_once_with(
+        target=iso_packager._disc_unpack_process,
+        iso=iso,
+        game_files_path=game_files_path,
+        on_finish_message="Finished extracting ISO",
+        progress_update=progress_update
+    )
+
+
+@patch("randovania.games.prime.iso_packager._shared_process_code", autospec=True)
+def test_unpack_iso_failure(mock_shared_process_code: MagicMock,
+                            ):
+    # Setup
+    iso = MagicMock()
+    game_files_path = MagicMock()
+    progress_update = MagicMock()
+    exception_message = "Nah, don't wanna"
+
+    def raise_exception(*args, **kwargs):
+        raise OSError(exception_message)
+
+    game_files_path.mkdir.side_effect = raise_exception
+
+    # Run
+    with pytest.raises(RuntimeError) as exception:
+        iso_packager.unpack_iso(iso, game_files_path, progress_update)
+
+    # Assert
+    game_files_path.mkdir.assert_called_once_with(parents=True, exist_ok=True)
+    mock_shared_process_code.assert_not_called()
+    assert str(exception.value) == "Unable to create files dir {}:\n{}".format(game_files_path, exception_message)
+
+
 def test_can_process_iso_success():
     assert iso_packager.can_process_iso()
 
