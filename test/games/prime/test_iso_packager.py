@@ -286,6 +286,87 @@ def test_disable_attract_videos(mock_shared_process_code: MagicMock,
         )
 
 
+@pytest.mark.parametrize("disable_attract_if_necessary", [False, True])
+@pytest.mark.parametrize("disable_attract_is_necessary", [False, True])
+@pytest.mark.parametrize("iso_too_big", [False, True])
+@patch("randovania.games.prime.iso_packager.nod")
+@patch("randovania.games.prime.iso_packager._shared_process_code", autospec=True)
+@patch("randovania.games.prime.iso_packager._disable_attract_videos", autospec=True)
+@patch("randovania.games.prime.iso_packager.validate_game_files_path", autospec=True)
+def test_pack_iso(mock_validate_game_files_path: MagicMock,
+                  mock_disable_attract_videos: MagicMock,
+                  mock_shared_process_code: MagicMock,
+                  mock_nod: MagicMock,
+                  disable_attract_if_necessary: bool,
+                  disable_attract_is_necessary: bool,
+                  iso_too_big: bool):
+    # Setup
+    iso = MagicMock()
+    game_files_path = MagicMock()
+    progress_update = MagicMock()
+
+    sizes = [None if iso_too_big else 1]
+    if disable_attract_if_necessary:
+        sizes.insert(0, None if disable_attract_is_necessary else 1)
+
+    mock_calculate_total_size_required = mock_nod.DiscBuilderGCN.calculate_total_size_required
+    mock_calculate_total_size_required.side_effect = sizes
+    mock_nod.VERSION = "1.1.0"
+
+    def run():
+        iso_packager.pack_iso(iso, game_files_path, disable_attract_if_necessary, progress_update)
+
+    # Run
+    if iso_too_big:
+        with pytest.raises(RuntimeError) as exception:
+            run()
+        assert str(exception.value) == "Image built with given directory would pass the maximum size."
+    else:
+        run()
+
+    # Assert
+    mock_validate_game_files_path.assert_called_once_with(game_files_path.joinpath.return_value)
+
+    if disable_attract_if_necessary and disable_attract_is_necessary:
+        mock_disable_attract_videos.assert_called_once_with(game_files_path, progress_update)
+    else:
+        mock_disable_attract_videos.assert_not_called()
+
+    mock_calculate_total_size_required.assert_has_calls([
+        call(str(game_files_path))
+        for _ in sizes
+    ])
+
+    if iso_too_big:
+        mock_shared_process_code.assert_not_called()
+    else:
+        mock_shared_process_code.assert_called_once_with(
+            target=iso_packager._disc_pack_process,
+            iso=iso,
+            game_files_path=game_files_path,
+            on_finish_message="Finished packing ISO",
+            progress_update=progress_update
+        )
+
+
+@patch("randovania.games.prime.iso_packager.nod")
+@patch("randovania.games.prime.iso_packager.validate_game_files_path", autospec=True)
+def test_pack_iso_invalid_version(mock_validate_game_files_path: MagicMock,
+                                  mock_nod: MagicMock,
+                                  ):
+    # Setup
+    game_files_path = MagicMock()
+    mock_nod.VERSION = "1.0.0"
+
+    # Run
+    with pytest.raises(RuntimeError) as exception:
+        iso_packager.pack_iso(None, game_files_path, None, None)
+
+    # Assert
+    mock_validate_game_files_path.assert_called_once_with(game_files_path.joinpath.return_value)
+    assert str(exception.value) == "Installed nod version (1.0) is older than required 1.1.0"
+
+
 def test_can_process_iso_success():
     assert iso_packager.can_process_iso()
 
