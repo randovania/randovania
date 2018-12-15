@@ -69,6 +69,54 @@ def test_disc_unpack_process_invalid(mock_open_disc_from_image: MagicMock,
     )
 
 
+@patch("nod.DiscBuilderGCN", autospec=True)
+def test_disc_pack_process_success(mock_disc_builder: MagicMock,
+                                   ):
+    # Setup
+    status_queue = MagicMock()
+    iso = MagicMock()
+    game_files_path = MagicMock()
+    disc_builder = mock_disc_builder.return_value
+
+    def builder_side_effect(_, callback):
+        callback(50, "file one", 123456)
+        return disc_builder
+
+    mock_disc_builder.side_effect = builder_side_effect
+
+    # Run
+    iso_packager._disc_pack_process(status_queue, iso, game_files_path)
+
+    # Assert
+    mock_disc_builder.assert_called_once_with(str(iso), ANY)
+    disc_builder.build_from_directory.assert_called_once_with(str(game_files_path))
+    status_queue.send.assert_has_calls([
+        call((False, "file one", 50)),
+        call((True, None, 100)),
+    ])
+
+
+@patch("nod.DiscBuilderGCN", autospec=True)
+def test_disc_pack_process_failure(mock_disc_builder: MagicMock,
+                                   ):
+    # Setup
+    status_queue = MagicMock()
+    iso = MagicMock()
+    game_files_path = MagicMock()
+
+    def builder_side_effect(_, __):
+        raise RuntimeError("Failure to do stuff")
+
+    mock_disc_builder.side_effect = builder_side_effect
+
+    # Run
+    iso_packager._disc_pack_process(status_queue, iso, game_files_path)
+
+    # Assert
+    mock_disc_builder.assert_called_once_with(str(iso), ANY)
+    status_queue.send.assert_called_once_with((True, "Failure to do stuff", 0))
+
+
 def test_can_process_iso_success():
     assert iso_packager.can_process_iso()
 
