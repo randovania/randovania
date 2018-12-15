@@ -108,10 +108,7 @@ def test_disc_pack_process_failure(mock_disc_builder: MagicMock,
     iso = MagicMock()
     game_files_path = MagicMock()
 
-    def builder_side_effect(_, __):
-        raise RuntimeError("Failure to do stuff")
-
-    mock_disc_builder.side_effect = builder_side_effect
+    mock_disc_builder.side_effect = RuntimeError("Failure to do stuff")
 
     # Run
     iso_packager._disc_pack_process(status_queue, iso, game_files_path)
@@ -215,10 +212,7 @@ def test_unpack_iso_failure(mock_shared_process_code: MagicMock,
     progress_update = MagicMock()
     exception_message = "Nah, don't wanna"
 
-    def raise_exception(*args, **kwargs):
-        raise OSError(exception_message)
-
-    game_files_path.mkdir.side_effect = raise_exception
+    game_files_path.mkdir.side_effect = OSError(exception_message)
 
     # Run
     with pytest.raises(RuntimeError) as exception:
