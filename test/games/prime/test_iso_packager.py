@@ -1,5 +1,6 @@
 import sys
 from multiprocessing import connection
+from pathlib import Path
 from unittest.mock import patch, MagicMock, ANY, call
 
 import pytest
@@ -253,6 +254,36 @@ def test_disable_attract_videos_helper(mock_disable_echoes_attract_videos: Magic
         call((False, "Have an update!", -1)),
         call((True, None, -1)),
     ])
+
+
+@pytest.mark.parametrize("already_disabled", [False, True])
+@patch("randovania.games.prime.iso_packager._shared_process_code", autospec=True)
+def test_disable_attract_videos(mock_shared_process_code: MagicMock,
+                                tmpdir,
+                                already_disabled: bool,
+                                ):
+    # Setup
+    game_files_path = Path(tmpdir)
+    progress_update = MagicMock()
+
+    if already_disabled:
+        game_files_path.joinpath("files").mkdir(parents=True)
+        game_files_path.joinpath("files", "attract_videos_disabled.txt").write_bytes(b"")
+
+    # Run
+    iso_packager._disable_attract_videos(game_files_path, progress_update)
+
+    # Assert
+    if already_disabled:
+        mock_shared_process_code.assert_not_called()
+    else:
+        mock_shared_process_code.assert_called_once_with(
+            target=iso_packager._disable_attract_videos_helper,
+            iso=ANY,
+            game_files_path=game_files_path,
+            on_finish_message="Finished disabling attract videos.",
+            progress_update=progress_update
+        )
 
 
 def test_can_process_iso_success():
