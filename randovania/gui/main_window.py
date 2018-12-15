@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Optional
 
 from PyQt5 import QtCore
@@ -90,7 +91,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         for url in event.mimeData().urls():
             iso_path = url.toLocalFile()
             if os.path.splitext(iso_path)[1] == ".iso":
-                self.get_tab(LogicSettingsWindow).randomize_given_iso(iso_path)
+                self.get_tab(ISOManagementWindow).load_game(Path(iso_path))
                 return
 
     def display_new_version(self, new_version: str, new_version_url: str):

@@ -49,7 +49,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         # ISO Packing
         self.loaded_game_updated.connect(self._update_displayed_game)
-        self.load_game_button.clicked.connect(self.load_game)
+        self.load_game_button.clicked.connect(self._load_game_button)
         self.export_game_button.hide()
         self.export_game_button.clicked.connect(self.export_game)
         self.clear_game_button.clicked.connect(self.delete_loaded_game)
@@ -113,11 +113,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             self._generate_new_seed_number()
 
     # ISO Packing
-    def load_game(self):
-        iso = prompt_user_for_input_iso(self)
-        if iso is None:
-            return
-
+    def load_game(self, iso: Path):
         game_files_path = self._options.game_files_path
 
         def work(progress_update: ProgressUpdateCallable):
@@ -129,6 +125,11 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             self.loaded_game_updated.emit()
 
         self.background_processor.run_in_background_thread(work, "Will unpack ISO")
+
+    def _load_game_button(self):
+        iso = prompt_user_for_input_iso(self)
+        if iso is not None:
+            self.load_game(iso)
 
     def delete_loaded_game(self):
         self.loaded_game_updated.emit()
