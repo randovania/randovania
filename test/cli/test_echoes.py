@@ -2,8 +2,8 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock, ANY
 
 from randovania.cli import echoes
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, LayoutRandomizedFlag, \
-    LayoutEnabledFlag, LayoutDifficulty
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+    LayoutEnabledFlag
 
 
 @patch("randovania.cli.prime_database.decode_data_file", autospec=True)
