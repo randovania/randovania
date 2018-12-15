@@ -398,3 +398,39 @@ def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
 
     # Assert
     assert connected_ids == expected_ids
+
+
+@patch("randovania.games.prime.claris_random.Random", autospec=True)
+@patch("randovania.games.prime.claris_randomizer.try_randomize_elevators", autospec=True)
+def test_elevator_list_for_configuration_randomized(mock_try_randomize_elevators: MagicMock,
+                                                    mock_random: MagicMock):
+    # Setup
+    configuration = MagicMock()
+    configuration.elevators = LayoutRandomizedFlag.RANDOMIZED
+    seed_number = MagicMock()
+
+    # Run
+    result = claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
+
+    # Assert
+    mock_random.assert_called_once_with(seed_number)
+    mock_try_randomize_elevators.assert_called_once_with(mock_random.return_value)
+    assert result == mock_try_randomize_elevators.return_value
+
+
+@patch("randovania.games.prime.claris_random.Random", autospec=True)
+@patch("randovania.games.prime.claris_randomizer.try_randomize_elevators", autospec=True)
+def test_elevator_list_for_configuration_vanilla(mock_try_randomize_elevators: MagicMock,
+                                                    mock_random: MagicMock):
+    # Setup
+    configuration = MagicMock()
+    configuration.elevators = LayoutRandomizedFlag.VANILLA
+    seed_number = MagicMock()
+
+    # Run
+    result = claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
+
+    # Assert
+    mock_random.assert_not_called()
+    mock_try_randomize_elevators.assert_not_called()
+    assert result == []
