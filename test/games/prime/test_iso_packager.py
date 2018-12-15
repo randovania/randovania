@@ -1,5 +1,8 @@
 import sys
+from multiprocessing import connection
 from unittest.mock import patch, MagicMock, ANY, call
+
+import pytest
 
 from randovania.games.prime import iso_packager
 
@@ -21,7 +24,7 @@ def test_disc_unpack_process_valid(mock_open_disc_from_image: MagicMock,
     data_partition = disc.get_data_partition.return_value
 
     def set_progress_side_effect(callable):
-        callable("first path", 50)
+        callable("first path", 0.5)
 
     context = mock_extraction_context.return_value
     context.set_progress_callback.side_effect = set_progress_side_effect
@@ -37,7 +40,7 @@ def test_disc_unpack_process_valid(mock_open_disc_from_image: MagicMock,
     data_partition.extract_to_directory.assert_called_once_with(str(game_files_path), context)
 
     output_pipe.send.assert_has_calls([
-        call((False, "first path", 50)),
+        call((False, "first path", 0.5)),
         call((True, None, 100)),
     ])
 
@@ -79,7 +82,7 @@ def test_disc_pack_process_success(mock_disc_builder: MagicMock,
     disc_builder = mock_disc_builder.return_value
 
     def builder_side_effect(_, callback):
-        callback(50, "file one", 123456)
+        callback(0.5, "file one", 123456)
         return disc_builder
 
     mock_disc_builder.side_effect = builder_side_effect
@@ -91,7 +94,7 @@ def test_disc_pack_process_success(mock_disc_builder: MagicMock,
     mock_disc_builder.assert_called_once_with(str(iso), ANY)
     disc_builder.build_from_directory.assert_called_once_with(str(game_files_path))
     status_queue.send.assert_has_calls([
-        call((False, "file one", 50)),
+        call((False, "file one", 0.5)),
         call((True, None, 100)),
     ])
 
@@ -115,6 +118,69 @@ def test_disc_pack_process_failure(mock_disc_builder: MagicMock,
     # Assert
     mock_disc_builder.assert_called_once_with(str(iso), ANY)
     status_queue.send.assert_called_once_with((True, "Failure to do stuff", 0))
+
+
+def test_shared_process_code_success():
+    # Setup
+    mock_target = MagicMock()
+    iso = MagicMock()
+    game_files_path = MagicMock()
+    on_finish_message = MagicMock()
+    progress_update = MagicMock()
+
+    process = MagicMock()
+
+    def process_effect(target, args):
+        output_pipe: connection.Connection = args[0]
+        output_pipe.send((False, "Message 1", 0.2))
+        output_pipe.send((False, "Message 2", 0.5))
+        output_pipe.send((True, None, 100))
+        return process
+
+    # Run
+    with patch("multiprocessing.Process", side_effect=process_effect, autospec=True) as mock_process:
+        iso_packager._shared_process_code(mock_target, iso, game_files_path, on_finish_message, progress_update)
+
+    mock_process.assert_called_once_with(target=mock_target, args=(ANY, iso, game_files_path))
+    process.start.assert_called_once_with()
+    process.terminate.assert_called_once_with()
+    progress_update.assert_has_calls([
+        call("", 0),
+        call("Message 1", 0.2),
+        call("Message 2", 0.5),
+        call(on_finish_message, 1),
+    ])
+
+
+def test_shared_process_code_failure():
+    # Setup
+    mock_target = MagicMock()
+    iso = MagicMock()
+    game_files_path = MagicMock()
+    on_finish_message = MagicMock()
+    progress_update = MagicMock()
+
+    process = MagicMock()
+
+    def process_effect(target, args):
+        output_pipe: connection.Connection = args[0]
+        output_pipe.send((False, "Message 1", 0.2))
+        output_pipe.send((True, "You got an error!", 100))
+        return process
+
+    # Run
+    with patch("multiprocessing.Process", side_effect=process_effect, autospec=True) as mock_process:
+        with pytest.raises(RuntimeError) as exception:
+            iso_packager._shared_process_code(mock_target, iso, game_files_path, on_finish_message, progress_update)
+
+    mock_process.assert_called_once_with(target=mock_target, args=(ANY, iso, game_files_path))
+    process.start.assert_called_once_with()
+    process.terminate.assert_called_once_with()
+    progress_update.assert_has_calls([
+        call("", 0),
+        call("Message 1", 0.2),
+    ])
+    assert str(exception.value) == "You got an error!"
 
 
 def test_can_process_iso_success():
