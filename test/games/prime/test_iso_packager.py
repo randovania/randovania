@@ -36,7 +36,7 @@ def test_disc_unpack_process_valid(mock_open_disc_from_image: MagicMock,
     # Assert
     mock_open_disc_from_image.assert_called_once_with(str(iso))
     disc.get_data_partition.assert_called_once_with()
-    mock_extraction_context.called_once_with()
+    mock_extraction_context.assert_called_once_with()
     context.set_progress_callback.assert_called_once_with(ANY)
     data_partition.extract_to_directory.assert_called_once_with(str(game_files_path), context)
 
