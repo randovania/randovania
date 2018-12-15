@@ -30,10 +30,6 @@ def _get_menu_mod_path() -> Path:
     return Path(get_data_path(), "ClarisEchoesMenu", "EchoesMenu.exe")
 
 
-def has_randomizer_binary() -> bool:
-    return _get_randomizer_path().is_file()
-
-
 def _run_with_args(args: List[Union[str, Path]],
                    finish_string: str,
                    status_update: Callable[[str], None]):
