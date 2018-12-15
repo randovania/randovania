@@ -1,12 +1,18 @@
 import subprocess
 from pathlib import Path
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer
 from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag
+
+
+class CustomException(Exception):
+    @classmethod
+    def do_raise(cls, x):
+        raise CustomException("test exception")
 
 
 @patch("subprocess.Popen", autospec=True)
@@ -45,11 +51,6 @@ def test_run_with_args_success(mock_popen: MagicMock,
 def test_run_with_args_failure(mock_popen: MagicMock,
                                ):
     # Setup
-    class CustomException(Exception):
-        @classmethod
-        def do_raise(cls, x):
-            raise CustomException("test exception")
-
     finish_string = "We are done!"
     process = mock_popen.return_value.__enter__.return_value
     process.stdout = [" line 1"]
@@ -317,3 +318,64 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
     else:
         mock_add_menu_mod_to_files.assert_not_called()
+
+
+@patch("randovania.games.prime.claris_randomizer._get_randomizer_folder", autospec=True)
+@patch("subprocess.Popen", autospec=True)
+def test_disable_echoes_attract_videos_success(mock_popen: MagicMock,
+                                               mock_get_randomizer_folder: MagicMock,
+                                               ):
+    # Setup
+    mock_get_randomizer_folder.return_value = Path("randomizer_folder")
+    game_root = Path("game_folder")
+    status_update = MagicMock()
+
+    process = mock_popen.return_value.__enter__.return_value
+    process.stdout = [
+        " line 1",
+        "line 2 ",
+        "   ",
+        " line 3 "
+    ]
+
+    # Run
+    claris_randomizer.disable_echoes_attract_videos(game_root, status_update)
+
+    # Assert
+    mock_get_randomizer_folder.assert_called_once_with()
+    mock_popen.assert_called_once_with(
+        [str(Path("randomizer_folder", "DisableEchoesAttractVideos.exe")),
+         str(Path("game_folder", "files"))],
+        stdout=subprocess.PIPE, bufsize=0, universal_newlines=True
+    )
+    status_update.assert_has_calls([
+        call("line 1"),
+        call("line 2"),
+        call(""),
+        call("line 3"),
+    ])
+    process.kill.assert_not_called()
+
+
+@patch("randovania.games.prime.claris_randomizer._get_randomizer_folder", autospec=True)
+@patch("subprocess.Popen", autospec=True)
+def test_disable_echoes_attract_videos_failure(mock_popen: MagicMock,
+                                               mock_get_randomizer_folder: MagicMock,
+                                               ):
+    # Setup
+    game_root = MagicMock()
+    status_update = MagicMock(side_effect=CustomException.do_raise)
+    process = mock_popen.return_value.__enter__.return_value
+    process.stdout = [
+        " line 1",
+    ]
+
+    # Run
+    with pytest.raises(CustomException):
+        claris_randomizer.disable_echoes_attract_videos(game_root, status_update)
+
+    # Assert
+    mock_get_randomizer_folder.assert_called_once_with()
+    mock_popen.assert_called_once_with(ANY, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True)
+    status_update.assert_called_once_with("line 1")
+    process.kill.assert_called_once_with()
