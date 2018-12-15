@@ -1,11 +1,12 @@
 import subprocess
 from pathlib import Path
+from typing import List
 from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
 from randovania.game_description.resources import PickupDatabase
-from randovania.games.prime import claris_randomizer
+from randovania.games.prime import claris_randomizer, claris_random
 from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag
 
 
@@ -379,3 +380,21 @@ def test_disable_echoes_attract_videos_failure(mock_popen: MagicMock,
     mock_popen.assert_called_once_with(ANY, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True)
     status_update.assert_called_once_with("line 1")
     process.kill.assert_called_once_with()
+
+
+@pytest.mark.parametrize(["seed_number", "expected_ids"], [
+    (5000, [38, 1245332, 129, 2162826, 393260, 122, 1245307, 3342446, 4522032,
+            3538975, 152, 1638535, 1966093, 2097251, 524321, 589851, 1572998, 2949235]),
+    (9000, [129, 2949235, 2162826, 1245307, 122, 1245332, 4522032, 38, 1638535,
+            3342446, 2097251, 1572998, 589851, 1966093, 152, 393260, 3538975, 524321]),
+])
+def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
+    # Setup
+    rng = claris_random.Random(seed_number)
+
+    # Run
+    result = claris_randomizer.try_randomize_elevators(rng)
+    connected_ids = [elevator.connected_elevator.instance_id for elevator in result]
+
+    # Assert
+    assert connected_ids == expected_ids
