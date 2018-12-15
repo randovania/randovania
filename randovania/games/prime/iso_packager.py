@@ -1,12 +1,11 @@
 import multiprocessing
-import os
 from distutils.version import StrictVersion
 from pathlib import Path
 
 try:
     import nod
 except ImportError:
-    node = None
+    nod = None
 
 from randovania.games.prime import claris_randomizer
 from randovania.interface_common.game_workdir import validate_game_files_path
