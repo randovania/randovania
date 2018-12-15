@@ -229,6 +229,32 @@ def test_unpack_iso_failure(mock_shared_process_code: MagicMock,
     assert str(exception.value) == "Unable to create files dir {}:\n{}".format(game_files_path, exception_message)
 
 
+@patch("randovania.games.prime.claris_randomizer.disable_echoes_attract_videos", autospec=True)
+def test_disable_attract_videos_helper(mock_disable_echoes_attract_videos: MagicMock,
+                                       ):
+    # Setup
+    output_pipe = MagicMock()
+    game_files_path = MagicMock()
+
+    def side_effect(_, progress_update):
+        progress_update("Have an update!")
+        pass
+
+    mock_disable_echoes_attract_videos.side_effect = side_effect
+
+    # Run
+    iso_packager._disable_attract_videos_helper(output_pipe, None, game_files_path)
+
+    # Assert
+    mock_disable_echoes_attract_videos.assert_called_once_with(game_files_path, ANY)
+    game_files_path.joinpath.assert_called_once_with("files", "attract_videos_disabled.txt")
+    game_files_path.joinpath.return_value.write_bytes.assert_called_once_with(b"")
+    output_pipe.send.assert_has_calls([
+        call((False, "Have an update!", -1)),
+        call((True, None, -1)),
+    ])
+
+
 def test_can_process_iso_success():
     assert iso_packager.can_process_iso()
 
