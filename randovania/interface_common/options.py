@@ -62,15 +62,15 @@ def _get_persisted_options_from_data(persisted_data: dict) -> dict:
     try:
         results["layout_configuration"] = {
             "trick_level": _convert_logic(options["layout_logic"]),
-            "sky_temple_keys": options["sky_temple_keys"],
-            "item_loss": options["item_loss"],
-            "elevators": options["elevators"],
-            "pickup_quantities": options["pickup_quantities"],
+            "sky_temple_keys": options["layout_sky_temple_keys"],
+            "item_loss": options["layout_item_loss"],
+            "elevators": options["layout_elevators"],
+            "pickup_quantities": options["quantity_for_pickup"],
         }
     except KeyError as e:
         print("Unable to port layout_configuration to new version, got {}".format(e))
 
-    return {}
+    return results
 
 
 def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -> T:

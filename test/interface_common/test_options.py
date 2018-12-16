@@ -16,6 +16,34 @@ def _option() -> Options:
     return Options(MagicMock())
 
 
+def test_migrate_from_v1():
+    old_data = {"version": 1,
+                "options": {"hud_memo_popup_removal": True,
+                            "game_files_path": None,
+                            "show_advanced_options": False,
+                            "display_generate_help": True, "include_menu_mod": False, "layout_logic": "normal",
+                            "layout_mode": "standard", "layout_sky_temple_keys": "randomized",
+                            "layout_elevators": "vanilla", "layout_item_loss": "enabled", "quantity_for_pickup": {}}}
+
+    # Run
+    new_data = randovania.interface_common.options._get_persisted_options_from_data(old_data)
+
+    # Assert
+    assert new_data == {
+        "patcher_configuration": {
+            "disable_hud_popup": True,
+            "menu_mod": False
+        },
+        "layout_configuration": {
+            "trick_level": "normal",
+            "sky_temple_keys": "randomized",
+            "item_loss": "enabled",
+            "elevators": "vanilla",
+            "pickup_quantities": {},
+        }
+    }
+
+
 @patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
 def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMock,
                                                      option: Options):
@@ -209,5 +237,3 @@ def test_edit_during_options_changed(tmpdir):
     # Assert
     assert option.output_directory == Path("final")
     assert option.output_directory == second_option.output_directory
-
-
