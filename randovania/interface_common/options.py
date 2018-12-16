@@ -88,6 +88,8 @@ def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -
 
 class Options:
     _data_dir: Path
+    _nested_autosave_level: int = 0
+
     _show_advanced_options: Optional[bool] = None
     _seed_number: int
     _create_spoiler: Optional[bool] = None
@@ -145,10 +147,13 @@ class Options:
                       indent=4, separators=(',', ': '))
 
     def __enter__(self):
+        self._nested_autosave_level += 1
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.save_to_disk()
+        self._nested_autosave_level -= 1
+        if self._nested_autosave_level == 0:
+            self.save_to_disk()
 
     # Files paths
 

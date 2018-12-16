@@ -26,6 +26,18 @@ def test_save_with_context_manager(mock_save_to_disk: MagicMock,
     mock_save_to_disk.assert_called_once_with(option)
 
 
+@patch("randovania.interface_common.options.Options.save_to_disk", autospec=True)
+def test_single_save_with_nested_context_manager(mock_save_to_disk: MagicMock,
+                                                 option: Options):
+    # Run
+    with option:
+        with option:
+            pass
+
+    # Assert
+    mock_save_to_disk.assert_called_once_with(option)
+
+
 @patch("randovania.interface_common.options._get_persisted_options_from_data", autospec=True)
 @patch("randovania.interface_common.options.Options._read_persisted_options", return_value=None, autospec=True)
 def test_load_from_disk_no_data(mock_read_persisted_options: MagicMock,
