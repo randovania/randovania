@@ -5,37 +5,37 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import PickupEntry, ResourceInfo
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.permalink import Permalink
 
 
-def calculate_item_pool(configuration: LayoutConfiguration,
+def calculate_item_pool(permalink: Permalink,
                         game: GameDescription,
                         ) -> List[PickupEntry]:
 
     useless_item = game.pickup_database.pickup_by_name("Energy Transfer Module")
     item_pool: List[PickupEntry] = []
+    pickup_quantities = permalink.layout_configuration.pickup_quantities
 
     try:
-        configuration.pickup_quantities.validate_total_quantities()
+        pickup_quantities.validate_total_quantities()
     except ValueError as e:
         raise GenerationFailure(
             "Invalid configuration: {}".format(e),
-            configuration=configuration,
-            seed_number=-1
+            permalink=permalink,
         )
 
-    quantities_pickups = set(configuration.pickup_quantities.pickups())
+    quantities_pickups = set(pickup_quantities.pickups())
     database_pickups = set(game.pickup_database.pickups.values())
     if quantities_pickups != database_pickups:
         raise GenerationFailure(
-            "Invalid configuration - diverging pickups in configuration.\nPickups in quantities: {}\nPickups in database: {}".format(
+            "Diverging pickups in configuration.\nPickups in quantities: {}\nPickups in database: {}".format(
                 [pickup.name for pickup in quantities_pickups],
                 [pickup.name for pickup in database_pickups],
             ),
-            configuration=configuration,
-            seed_number=-1
+            permalink=permalink,
         )
 
-    for pickup, quantity in configuration.pickup_quantities.items():
+    for pickup, quantity in pickup_quantities.items():
         item_pool.extend([pickup] * quantity)
 
     quantity_delta = len(item_pool) - game.pickup_database.total_pickup_count
@@ -44,8 +44,7 @@ def calculate_item_pool(configuration: LayoutConfiguration,
             "Invalid configuration: requested {} more items than available slots ({}).".format(
                 quantity_delta, game.pickup_database.total_pickup_count
             ),
-            configuration=configuration,
-            seed_number=-1
+            permalink=permalink,
         )
 
     elif quantity_delta < 0:

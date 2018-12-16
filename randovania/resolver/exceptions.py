@@ -1,21 +1,18 @@
-from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.permalink import Permalink
 
 
 class GenerationFailure(Exception):
-    configuration: LayoutConfiguration
-    seed_number: int
+    permalink: Permalink
 
-    def __init__(self, reason: str, configuration: LayoutConfiguration, seed_number: int):
+    def __init__(self, reason: str, permalink: Permalink):
         super().__init__(reason)
-        self.configuration = configuration
-        self.seed_number = seed_number
+        self.permalink = permalink
 
     def __str__(self) -> str:
-        return "{} occurred for seed {} with config {}".format(
+        return "{} occurred for permalink {}".format(
             super().__str__(),
-            self.seed_number,
-            self.configuration.as_str
+            self.permalink.as_str
         )
 
     def __reduce__(self):
-        return GenerationFailure, (super().__str__(), self.configuration, self.seed_number)
+        return GenerationFailure, (super().__str__(), self.permalink)
