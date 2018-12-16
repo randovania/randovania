@@ -221,7 +221,7 @@ def test_create_patches(mock_random: MagicMock,
                         mock_retcon_playthrough_filler: MagicMock,
                         ):
     # Setup
-    seed_number: int = MagicMock()
+    seed_number: int = 91319
     game = default_prime2_game_description()
     status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
     configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
@@ -229,6 +229,12 @@ def test_create_patches(mock_random: MagicMock,
                                                     item_loss=LayoutEnabledFlag.DISABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={})
+    permalink = Permalink(
+        seed_number=seed_number,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration.default(),
+        layout_configuration=configuration,
+    )
     mock_calculate_item_pool.return_value = list(sorted(game.pickup_database.original_pickup_mapping.values()))
 
     remaining_items = list(mock_calculate_item_pool.return_value)
@@ -244,10 +250,10 @@ def test_create_patches(mock_random: MagicMock,
         expected_result[pickup_node.pickup_index] = remaining_items.pop()
 
     # Run
-    patches = generator._create_patches(seed_number, configuration, game, status_update)
+    patches = generator._create_patches(permalink, game, status_update)
 
     # Assert
     mock_random.assert_called_once_with(seed_number)
-    mock_calculate_item_pool.assert_called_once_with(configuration, game)
+    mock_calculate_item_pool.assert_called_once_with(permalink, game)
     mock_retcon_playthrough_filler.assert_called_once()
     assert patches.pickup_assignment == expected_result

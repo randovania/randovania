@@ -1,4 +1,3 @@
-import base64
 import dataclasses
 import math
 from enum import Enum
@@ -77,76 +76,9 @@ class BitPackDataClass(BitPackValue):
         return cls(**args)
 
 
-def do_stuff(quantity):
-    x = math.ceil(math.log2(quantity))
-    return bitstruct.compile('u{}'.format(x))
-
-
-def pack(enum_class, value):
-    enum_list = list(enum_class)
-    compiled = do_stuff(len(enum_list))
-    return compiled.pack(enum_list.index(value))
-
-
-def pack_value(value: BitPackValue):
+def pack_value(value: BitPackValue) -> bytes:
     f = "".join(
         "u{}".format(_bits_for_number(v))
         for v in value.bit_pack_format()
     )
     return bitstruct.compile(f).pack(*value.bit_pack_arguments())
-
-
-def do_pack(value):
-
-    print("=========!!!======")
-    uncompressed = pack_value(value)
-    print(len(uncompressed), uncompressed)
-    print("base64", base64.b64encode(uncompressed))
-    print("=========!!!======")
-    # print(">>>>>>>>", LayoutTrickLevel.bit_pack_format())
-
-    # for field_name, field_type in value.__annotations__.items():
-    #     if issubclass(field_type, Enum):
-    #         print(field_name, len(field_type))
-
-    return uncompressed
-
-
-def main():
-    from randovania.resolver.layout_configuration import LayoutTrickLevel, LayoutConfiguration, LayoutRandomizedFlag, \
-        LayoutEnabledFlag
-
-    config = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
-                                             sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-                                             item_loss=LayoutEnabledFlag.ENABLED,
-                                             elevators=LayoutRandomizedFlag.RANDOMIZED,
-                                             pickup_quantities={
-                                                 "Space Jump Boots": 0
-                                             })
-
-    from randovania.resolver.patcher_configuration import PatcherConfiguration
-    perma_config = PatcherConfiguration(
-        spoiler=LayoutEnabledFlag.ENABLED,
-        disable_hud_popup=LayoutEnabledFlag.ENABLED,
-        menu_mod=LayoutEnabledFlag.ENABLED,
-    )
-
-    from randovania.resolver.permalink import Permalink
-    do_pack(config)
-
-    permalink = Permalink(
-        50000,
-        permalink_configuration=perma_config,
-        layout_configuration=config
-    )
-
-    encoded = do_pack(permalink)
-
-    decoder = BitPackDecoder(encoded)
-    decoded_permalink = Permalink.bit_pack_unpack(decoder)
-
-    print(permalink == decoded_permalink)
-
-
-if __name__ == "__main__":
-    main()

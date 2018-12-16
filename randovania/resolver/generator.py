@@ -60,8 +60,7 @@ def generate_list(data: Dict,
         status_update = id
 
     create_patches_params = {
-        "seed_number": permalink.seed_number,
-        "configuration": permalink.layout_configuration,
+        "permalink": permalink,
         "game": data_reader.decode_data(data, elevators, False),
         "status_update": status_update
     }
@@ -110,13 +109,13 @@ Action = Union[ResourceNode, PickupEntry]
 
 
 def _create_patches(
-        seed_number: int,
-        configuration: LayoutConfiguration,
+        permalink: Permalink,
         game: GameDescription,
         status_update: Callable[[str], None],
 ) -> GamePatches:
-    rng = Random(seed_number)
 
+    rng = Random(permalink.seed_number)
+    configuration = permalink.layout_configuration
     patches = GamePatches({})
 
     categories = {"translator", "major", "energy_tank"}
@@ -131,7 +130,7 @@ def _create_patches(
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    item_pool = list(sorted(calculate_item_pool(configuration, game)))
+    item_pool = list(sorted(calculate_item_pool(permalink, game)))
     available_pickups = tuple(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
     new_pickup_mapping = retcon_playthrough_filler(

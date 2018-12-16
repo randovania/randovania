@@ -18,6 +18,8 @@ from randovania.resolver.item_pool import calculate_item_pool, calculate_availab
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag
 from randovania.resolver.logic import Logic
+from randovania.resolver.patcher_configuration import PatcherConfiguration
+from randovania.resolver.permalink import Permalink
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State, add_resource_gain_to_state, state_with_pickup
 
@@ -30,10 +32,16 @@ def _test_data():
                                                     item_loss=LayoutEnabledFlag.ENABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={})
+    permalink = Permalink(
+        seed_number=15000,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration.default(),
+        layout_configuration=configuration,
+    )
 
     patches = GamePatches({})
     logic, state = logic_bootstrap(configuration, game, patches)
-    return logic, state
+    return logic, state, permalink
 
 
 def _create_reach_with_unsafe(logic: Logic, state: State, patches: GamePatches) -> GeneratorReach:
@@ -67,13 +75,12 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 def test_calculate_reach_with_seeds():
-    logic, state = _test_data()
-    configuration = logic.configuration
+    logic, state, permalink = _test_data()
     game = logic.game
     patches = logic.patches
 
     categories = {"translator", "major"}
-    item_pool = calculate_item_pool(configuration, game)
+    item_pool = calculate_item_pool(permalink, game)
     rng = Random(50000)
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
         item_pool, categories, game.relevant_resources))))
@@ -114,7 +121,7 @@ def test_calculate_reach_with_seeds():
 
 @pytest.mark.skip(reason="can't reach dark visor")
 def test_calculate_reach_with_all_pickups():
-    logic, state = _test_data()
+    logic, state, _ = _test_data()
     patches = logic.patches
 
     for pickup in logic.game.pickup_database.original_pickup_mapping.values():
