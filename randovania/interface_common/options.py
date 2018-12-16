@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import random
 from pathlib import Path
 from typing import Optional, TypeVar, Callable, Any
 
@@ -8,6 +9,7 @@ from randovania.interface_common import persistence
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
     LayoutTrickLevel
 from randovania.resolver.patcher_configuration import PatcherConfiguration
+from randovania.resolver.permalink import Permalink
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -86,6 +88,7 @@ def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -
 
 class Options:
     _data_dir: Path
+    seed_number: int
     _show_advanced_options: Optional[bool] = None
     _create_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
@@ -94,6 +97,7 @@ class Options:
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
+        self.seed_number = random.randint(0, 2 ** 31)
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
@@ -181,6 +185,23 @@ class Options:
     @property
     def layout_configuration(self) -> LayoutConfiguration:
         return _return_with_default(self._layout_configuration, LayoutConfiguration.default)
+
+    # Permalink
+    @property
+    def permalink(self) -> Permalink:
+        return Permalink(
+            seed_number=self.seed_number,
+            spoiler=self.create_spoiler,
+            patcher_configuration=self.patcher_configuration,
+            layout_configuration=self.layout_configuration,
+        )
+
+    @permalink.setter
+    def permalink(self, value: Permalink):
+        self.seed_number = value.seed_number
+        self._create_spoiler = value.spoiler
+        self._patcher_configuration = value.patcher_configuration
+        self._layout_configuration = value.layout_configuration
 
     # Access to fields inside PatcherConfiguration
 

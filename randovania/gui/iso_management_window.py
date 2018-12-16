@@ -95,7 +95,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         return persist
 
     def _on_settings_changed(self):
-        self.permalink_edit.setText("LIES!")
+        self.permalink_edit.setText(self._options.permalink.as_str)
         self._refresh_randomize_button_state()
 
     # Checks
@@ -201,7 +201,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self._on_settings_changed()
 
     def _generate_new_seed_number(self):
-        self.seed_number_edit.setText(str(random.randint(0, 2 ** 31)))
+        self._options.seed_number = random.randint(0, 2 ** 31)
+        self.seed_number_edit.setText(str(self._options.seed_number))
 
     def _import_permalink_from_field(self):
         permalink = self.permalink_edit.text()
