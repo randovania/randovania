@@ -38,7 +38,6 @@ class CustomSpinBox(QSpinBox):
 class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
     _options: Options
     _spinbox_for_item: Dict[PickupEntry, QSpinBox] = {}
-    _bulk_changing_quantity = False
 
     _total_item_count = 0
     _maximum_item_count = 0
@@ -91,15 +90,11 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         self._update_item_quantity_total_label()
 
     def _reset_item_quantities(self):
-        self._bulk_changing_quantity = True
-
-        pickup_database = default_prime2_pickup_database()
-        for pickup in pickup_database.pickups.values():
-            if pickup in self._spinbox_for_item:
-                self._spinbox_for_item[pickup].setValue(pickup_database.original_quantity_for(pickup))
-
-        self._options.save_to_disk()
-        self._bulk_changing_quantity = False
+        with self._options:
+            pickup_database = default_prime2_pickup_database()
+            for pickup in pickup_database.pickups.values():
+                if pickup in self._spinbox_for_item:
+                    self._spinbox_for_item[pickup].setValue(pickup_database.original_quantity_for(pickup))
 
     def _change_item_quantity(self, spin_box: QSpinBox, new_quantity: int):
         self._total_item_count -= spin_box.previous_value
@@ -107,10 +102,8 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         spin_box.previous_value = new_quantity
         self._update_item_quantity_total_label()
 
-        self._options.set_quantity_for_pickup(spin_box.pickup, new_quantity)
-
-        if not self._bulk_changing_quantity:
-            self._options.save_to_disk()
+        with self._options as options:
+            options.set_quantity_for_pickup(spin_box.pickup, new_quantity)
 
     def _update_item_quantity_total_label(self):
         self.itemquantity_total_label.setText("Total Pickups: {}/{}".format(
