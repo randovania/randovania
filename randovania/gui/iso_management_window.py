@@ -16,6 +16,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.layout_description import LayoutDescription
+from randovania.resolver.permalink import Permalink
 
 
 def show_failed_generation_exception(exception: GenerationFailure):
@@ -62,6 +63,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.seed_number_edit.textChanged.connect(self._on_new_seed_number)
         self.seed_number_button.clicked.connect(self._generate_new_seed_number)
 
+        self.permalink_edit.textChanged.connect(self._on_permalink_changed)
         self.permalink_import_button.clicked.connect(self._import_permalink_from_field)
 
         # Randomize
@@ -212,9 +214,27 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     def _generate_new_seed_number(self):
         self.seed_number_edit.setText(str(random.randint(0, 2 ** 31)))
 
+    def _get_permalink_from_field(self) -> Permalink:
+        return Permalink.from_str(self.permalink_edit.text())
+
+    def _on_permalink_changed(self, value: str):
+        self.permalink_edit.setStyleSheet("")
+        try:
+            self._get_permalink_from_field()
+            # Ignoring return value: we only want to know if it's valid
+        except ValueError:
+            self.permalink_edit.setStyleSheet("border: 1px solid red")
+
     def _import_permalink_from_field(self):
-        permalink = self.permalink_edit.text()
-        print(permalink)
+        try:
+            permalink = self._get_permalink_from_field()
+            with self._options as options:
+                options.permalink = permalink
+
+        except ValueError as e:
+            QMessageBox.warning(self,
+                                "Invalid permalink",
+                                str(e))
 
     # Randomize
     def _refresh_randomize_button_state(self):
