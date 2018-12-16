@@ -55,3 +55,21 @@ class Permalink(BitPackValue):
             patcher_configuration,
             layout_configuration
         )
+
+    @classmethod
+    def from_json_dict(cls, param: dict) -> "Permalink":
+        return Permalink(
+            seed_number=param["seed"],
+            spoiler=param["spoiler"],
+            patcher_configuration=PatcherConfiguration.from_json_dict(param["patcher_configuration"]),
+            layout_configuration=LayoutConfiguration.from_json_dict(param["layout_configuration"]),
+        )
+
+    @property
+    def as_json(self) -> dict:
+        return {
+            "seed": self.seed_number,
+            "spoiler": self.spoiler,
+            "patcher_configuration": self.patcher_configuration.as_json,
+            "layout_configuration": self.layout_configuration.as_json,
+        }

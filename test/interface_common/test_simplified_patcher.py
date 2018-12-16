@@ -5,6 +5,7 @@ import pytest
 
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
+from randovania.resolver.permalink import Permalink
 
 
 @pytest.mark.parametrize("games_path_exist", [False, True])
@@ -63,7 +64,7 @@ def test_generate_layout(mock_generate_layout: MagicMock,
                          mock_constant_percentage_callback: MagicMock,
                          ):
     # Setup
-    seed_number: int = MagicMock()
+    seed_number: int = 58000
     options: Options = MagicMock()
     progress_update = MagicMock()
 
@@ -73,8 +74,12 @@ def test_generate_layout(mock_generate_layout: MagicMock,
     # Assert
     mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
     mock_generate_layout.assert_called_once_with(
-        seed_number=seed_number,
-        configuration=options.layout_configuration,
+        permalink=Permalink(
+            seed_number=seed_number,
+            spoiler=options.create_spoiler,
+            patcher_configuration=options.patcher_configuration,
+            layout_configuration=options.layout_configuration,
+        ),
         status_update=mock_constant_percentage_callback.return_value
     )
 

@@ -17,6 +17,7 @@ from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
+from randovania.resolver.permalink import Permalink
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State
 
@@ -51,24 +52,23 @@ def _state_to_solver_path(final_state: State,
 
 
 def generate_list(data: Dict,
-                  seed_number: int,
-                  configuration: LayoutConfiguration,
+                  permalink: Permalink,
                   status_update: Optional[Callable[[str], None]]
                   ) -> LayoutDescription:
-    elevators = claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
+    elevators = claris_randomizer.elevator_list_for_configuration(permalink.layout_configuration, permalink.seed_number)
     if status_update is None:
         status_update = id
 
     create_patches_params = {
-        "seed_number": seed_number,
-        "configuration": configuration,
+        "seed_number": permalink.seed_number,
+        "configuration": permalink.layout_configuration,
         "game": data_reader.decode_data(data, elevators, False),
         "status_update": status_update
     }
     resolver_game = data_reader.decode_data(data, elevators)
 
     def create_failure(message: str):
-        return GenerationFailure(message, configuration=configuration, seed_number=seed_number)
+        return GenerationFailure(message, permalink=permalink)
 
     with multiprocessing.dummy.Pool(1) as dummy_pool:
         patches_async = dummy_pool.apply_async(func=_create_patches,
@@ -79,7 +79,7 @@ def generate_list(data: Dict,
             raise create_failure("Timeout reached when generating patches.")
 
         resolve_params = {
-            "configuration": configuration,
+            "configuration": permalink.layout_configuration,
             "game": resolver_game,
             "patches": new_patches,
             "status_update": status_update,
@@ -97,9 +97,9 @@ def generate_list(data: Dict,
     else:
         solver_path = _state_to_solver_path(final_state_by_resolve, resolver_game)
 
+    # TODO: USE PERMALINK
     return LayoutDescription(
-        seed_number=seed_number,
-        configuration=configuration,
+        permalink=permalink,
         version=VERSION,
         pickup_assignment=new_patches.pickup_assignment,
         solver_path=solver_path

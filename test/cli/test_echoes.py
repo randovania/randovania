@@ -4,6 +4,8 @@ from unittest.mock import patch, MagicMock, ANY
 from randovania.cli import echoes
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag
+from randovania.resolver.patcher_configuration import PatcherConfiguration
+from randovania.resolver.permalink import Permalink
 
 
 @patch("randovania.cli.prime_database.decode_data_file", autospec=True)
@@ -27,13 +29,17 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
     mock_decode_data_file.assert_called_once_with(args)
     mock_generate_list.assert_called_once_with(
         data=mock_decode_data_file.return_value,
-        seed_number=args.seed,
-        configuration=LayoutConfiguration.from_params(
-            trick_level=LayoutTrickLevel.HARD,
-            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-            item_loss=LayoutEnabledFlag.DISABLED,
-            elevators=LayoutRandomizedFlag.VANILLA,
-            pickup_quantities={}
+        permalink=Permalink(
+            seed_number=args.seed,
+            spoiler=True,
+            patcher_configuration=PatcherConfiguration.default(),
+            layout_configuration=LayoutConfiguration.from_params(
+                trick_level=LayoutTrickLevel.HARD,
+                sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                item_loss=LayoutEnabledFlag.DISABLED,
+                elevators=LayoutRandomizedFlag.VANILLA,
+                pickup_quantities={}
+            ),
         ),
         status_update=ANY
     )

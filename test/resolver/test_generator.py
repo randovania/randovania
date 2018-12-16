@@ -17,6 +17,8 @@ from randovania.resolver.item_pool import calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
+from randovania.resolver.patcher_configuration import PatcherConfiguration
+from randovania.resolver.permalink import Permalink
 
 
 def _create_test_layout_description(
@@ -26,8 +28,12 @@ def _create_test_layout_description(
 
     pickup_database = data_reader.read_databases(configuration.game_data)[1]
     return LayoutDescription(
-        seed_number=seed_number,
-        configuration=configuration,
+        permalink=Permalink(
+            seed_number=seed_number,
+            spoiler=True,
+            patcher_configuration=PatcherConfiguration.default(),
+            layout_configuration=configuration,
+        ),
         version=VERSION,
         pickup_assignment={
             PickupIndex(i): pickup_database.original_pickup_mapping[PickupIndex(new_index)]
@@ -117,11 +123,16 @@ def test_generate_seed_with_invalid_quantity_configuration():
         elevators=LayoutRandomizedFlag.VANILLA,
         pickup_quantities={"Light Suit": 5})
 
+    permalink = Permalink(
+        seed_number=50,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration.default(),
+        layout_configuration=configuration,
+    )
+
     # Run
     with pytest.raises(randovania.resolver.exceptions.GenerationFailure):
-        generator.generate_list(
-            data, 50, configuration,
-            status_update=status_update)
+        generator.generate_list(data, permalink, status_update=status_update)
 
 
 # @pytest.mark.skip(reason="generating is taking too long")
@@ -136,8 +147,7 @@ def test_compare_generated_with_data(benchmark,
         generator.generate_list,
         args=(
             data,
-            layout_description.seed_number,
-            layout_description.configuration,
+            layout_description.permalink,
         ),
         kwargs={
             'status_update': status_update

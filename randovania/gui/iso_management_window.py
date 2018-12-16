@@ -213,16 +213,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.randomize_log_only_button.setEnabled(self._current_lock_state and self._options.create_spoiler)
         self.create_from_log_button.setEnabled(self._current_lock_state)
 
-    def _try_generate_layout(self, job, progress_update: ProgressUpdateCallable):
-        try:
-            job(seed_number=self.get_current_seed_number(),
-                progress_update=progress_update)
-            progress_update("Success!", 1)
-
-        except GenerationFailure as generate_exception:
-            self.failed_to_generate_signal.emit(generate_exception)
-            progress_update("Generation Failure: {}".format(generate_exception), -1)
-
     def _background_exporter(self, job,
                              message: str, **kawgs):
         def work(progress_update: ProgressUpdateCallable):
