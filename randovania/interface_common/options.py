@@ -88,8 +88,8 @@ def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -
 
 class Options:
     _data_dir: Path
-    seed_number: int
     _show_advanced_options: Optional[bool] = None
+    _seed_number: int
     _create_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
     _patcher_configuration: Optional[PatcherConfiguration] = None
@@ -97,7 +97,7 @@ class Options:
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
-        self.seed_number = random.randint(0, 2 ** 31)
+        self._seed_number = random.randint(0, 2 ** 31)
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
@@ -161,6 +161,13 @@ class Options:
         return self._data_dir.joinpath("extracted_game")
 
     # Access to Direct fields
+    @property
+    def seed_number(self) -> int:
+        return self._seed_number
+
+    @seed_number.setter
+    def seed_number(self, value: int):
+        self._seed_number = value
 
     @property
     def create_spoiler(self) -> bool:
@@ -198,7 +205,7 @@ class Options:
 
     @permalink.setter
     def permalink(self, value: Permalink):
-        self.seed_number = value.seed_number
+        self._seed_number = value.seed_number
         self._create_spoiler = value.spoiler
         self._patcher_configuration = value.patcher_configuration
         self._layout_configuration = value.layout_configuration
