@@ -170,6 +170,15 @@ class Options:
 
     on_options_changed = property(fset=_set_on_options_changed)
 
+    # Reset
+
+    def reset_to_defaults(self):
+        self._check_editable_and_mark_dirty()
+        self._show_advanced_options = None
+        self._create_spoiler = None
+        self._patcher_configuration = None
+        self._layout_configuration = None
+
     # Files paths
 
     @property
