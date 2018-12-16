@@ -1,5 +1,5 @@
 import base64
-import logging
+import binascii
 from dataclasses import dataclass
 from typing import Iterator
 
@@ -50,7 +50,7 @@ class Permalink(BitPackValue):
         version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED, 2)
 
         if version != cls.current_version():
-            raise Exception("Unsupported Permalink version.")
+            raise ValueError("Unsupported Permalink version.")
 
         patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder)
         layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder)
@@ -82,6 +82,22 @@ class Permalink(BitPackValue):
     @property
     def as_str(self) -> str:
         try:
-            return base64.b64encode(bitpacking.pack_value(self)).decode("utf-8")
+            b = bitpacking.pack_value(self)
+            b += bytes([sum(b) % 256])
+            return base64.b64encode(b).decode("utf-8")
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
+
+    @classmethod
+    def from_str(cls, param: str) -> "Permalink":
+        try:
+            b = base64.b64decode(param.encode("utf-8"), validate=True)
+            checksum = sum(b[:-1]) % 256
+            if checksum != b[-1]:
+                raise ValueError("Incorrect checksum")
+
+            decoder = BitPackDecoder(b)
+            return Permalink.bit_pack_unpack(decoder)
+
+        except binascii.Error as e:
+            raise ValueError("Unable to base64 decode: {}".format(e))
