@@ -93,7 +93,7 @@ class Options:
     _is_dirty: bool = False
 
     _show_advanced_options: Optional[bool] = None
-    _seed_number: int
+    _seed_number: Optional[int] = None
     _create_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
     _patcher_configuration: Optional[PatcherConfiguration] = None
@@ -101,7 +101,6 @@ class Options:
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
-        self._seed_number = random.randint(0, 2 ** 31)
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
@@ -180,11 +179,11 @@ class Options:
 
     # Access to Direct fields
     @property
-    def seed_number(self) -> int:
+    def seed_number(self) -> Optional[int]:
         return self._seed_number
 
     @seed_number.setter
-    def seed_number(self, value: int):
+    def seed_number(self, value: Optional[int]):
         self._check_editable_and_mark_dirty()
         self._seed_number = value
 
@@ -216,7 +215,10 @@ class Options:
 
     # Permalink
     @property
-    def permalink(self) -> Permalink:
+    def permalink(self) -> Optional[Permalink]:
+        if self.seed_number is None:
+            return None
+
         return Permalink(
             seed_number=self.seed_number,
             spoiler=self.create_spoiler,

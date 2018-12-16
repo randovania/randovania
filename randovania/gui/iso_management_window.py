@@ -59,7 +59,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         # Seed/Permalink
         self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
-        self.seed_number_edit.setText(str(options.seed_number))
         self.seed_number_edit.textChanged.connect(self._on_new_seed_number)
         self.seed_number_button.clicked.connect(self._generate_new_seed_number)
 
@@ -71,11 +70,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.create_from_log_button.clicked.connect(self._randomize_from_file)
 
         # Game Patching
-        self.create_spoiler_check.setChecked(self._options.create_spoiler)
         self.create_spoiler_check.stateChanged.connect(self._persist_option_then_notify("create_spoiler"))
-        self.remove_hud_popup_check.setChecked(self._options.hud_memo_popup_removal)
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
-        self.include_menu_mod_check.setChecked(self._options.include_menu_mod)
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
 
         # Post setup update
@@ -94,7 +90,22 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         return persist
 
     def on_options_changed(self):
-        self.permalink_edit.setText(self._options.permalink.as_str)
+        seed_number = self._options.seed_number
+        if seed_number is not None:
+            self.seed_number_edit.setText(str(seed_number))
+        else:
+            self.seed_number_edit.setText("")
+
+        self.create_spoiler_check.setChecked(self._options.create_spoiler)
+        self.remove_hud_popup_check.setChecked(self._options.hud_memo_popup_removal)
+        self.include_menu_mod_check.setChecked(self._options.include_menu_mod)
+
+        permalink = self._options.permalink
+        if permalink is not None:
+            self.permalink_edit.setText(permalink.as_str)
+        else:
+            self.permalink_edit.setText("")
+
         self._refresh_randomize_button_state()
 
     # Checks
@@ -107,9 +118,9 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         if self._options.output_directory is None:
             raise ValueError("No output directory. Please select one using 'Select Folder'")
 
-    def _ensure_seed_number_exists(self):
-        if self.seed_number_edit.text() == "":
-            self._generate_new_seed_number()
+    def _check_seed_number_exists(self):
+        if self._options.seed_number is None:
+            raise ValueError("No seed number. Please write one or press 'New seed'")
 
     # ISO Packing
     def load_game(self, iso: Path):
@@ -189,16 +200,14 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.clear_game_button.setEnabled(self._current_lock_state and self._has_game)
 
     # Seed Number / Permalink
-    def get_current_seed_number(self) -> int:
-        seed = self.seed_number_edit.text()
-        if seed == "":
-            raise RuntimeError("Invalid seed number. Did you forget to call _ensure_seed_number_exists?")
-        else:
-            return int(seed)
-
     def _on_new_seed_number(self, value: str):
+        try:
+            seed = int(value)
+        except ValueError:
+            seed = None
+
         with self._options as options:
-            options.seed_number = int(value)
+            options.seed_number = seed
 
     def _generate_new_seed_number(self):
         self.seed_number_edit.setText(str(random.randint(0, 2 ** 31)))
@@ -248,13 +257,13 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         """
         if not self._pre_export_checks([self._check_has_input_game,
                                         self._check_has_output_directory,
-                                        self._ensure_seed_number_exists]):
+                                        self._check_seed_number_exists]):
             return
 
         self._background_exporter(
             simplified_patcher.create_layout_then_export_iso,
             message="Randomizing...",
-            seed_number=self.get_current_seed_number(),
+            seed_number=self._options.seed_number,
         )
 
     def _create_log_file_pressed(self):
@@ -262,13 +271,13 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         Listener to the "Create only log file" button.
         """
         if not self._pre_export_checks([self._check_has_output_directory,
-                                        self._ensure_seed_number_exists]):
+                                        self._check_seed_number_exists]):
             return
 
         self._background_exporter(
             simplified_patcher.create_layout_then_export,
             message="Creating a layout...",
-            seed_number=self.get_current_seed_number(),
+            seed_number=self._options.seed_number,
         )
 
     def _randomize_from_file(self):
