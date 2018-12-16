@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional, Dict
+from typing import List, Dict
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.game_description.resources import PickupEntry

@@ -1,4 +1,3 @@
-import dataclasses
 from typing import Dict
 
 RANDOMIZER_VERSION = "3.2"
