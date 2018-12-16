@@ -92,6 +92,8 @@ class Permalink(BitPackValue):
     def from_str(cls, param: str) -> "Permalink":
         try:
             b = base64.b64decode(param.encode("utf-8"), validate=True)
+            if len(b) < 2:
+                raise ValueError("Data too small")
             checksum = sum(b[:-1]) % 256
             if checksum != b[-1]:
                 raise ValueError("Incorrect checksum")
