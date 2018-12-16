@@ -187,7 +187,7 @@ def disable_echoes_attract_videos(game_root: Path,
 
 
 def try_randomize_elevators(randomizer: claris_random.Random,
-                            ) -> Optional[List[Elevator]]:
+                            ) -> List[Elevator]:
     elevator_database: List[Elevator] = copy.deepcopy(echoes_elevators)
 
     elevator_list = copy.copy(elevator_database)
@@ -230,7 +230,7 @@ def try_randomize_elevators(randomizer: claris_random.Random,
             celevator_list3 = celevator_list1
         else:
             # Randomization failed
-            return None
+            return try_randomize_elevators(randomizer)
 
     return elevator_database
 
