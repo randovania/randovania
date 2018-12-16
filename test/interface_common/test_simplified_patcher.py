@@ -5,6 +5,9 @@ import pytest
 
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
+from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.layout_description import LayoutDescription
+from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 
 
@@ -84,6 +87,27 @@ def test_generate_layout(mock_generate_layout: MagicMock,
     )
 
 
+def test_output_name_for():
+    # Setup
+    layout = LayoutDescription(
+        permalink=Permalink(
+            seed_number=15000,
+            spoiler=True,
+            patcher_configuration=PatcherConfiguration.default(),
+            layout_configuration=LayoutConfiguration.default(),
+        ),
+        version="0.15.0",
+        pickup_assignment={},
+        solver_path=()
+    )
+
+    # Run
+    result = simplified_patcher._output_name_for(layout)
+
+    # Assert
+    assert result == "Echoes Randomizer - AAAHUxxALWmCI50gIQA="
+
+
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
 def test_internal_patch_iso(mock_apply_layout: MagicMock,
@@ -92,11 +116,11 @@ def test_internal_patch_iso(mock_apply_layout: MagicMock,
     # Setup
     layout = MagicMock()
     layout.seed_number = 1234
-    layout.configuration.as_str = "layout"
+    layout.permalink.as_str = "layout"
     options = MagicMock()
     options.output_directory = Path("fun")
 
-    name = "Echoes Randomizer - layout_1234"
+    name = "Echoes Randomizer - layout"
     output_iso = Path("fun", name + ".iso")
     output_json = Path("fun", name + ".json")
     updaters = [MagicMock(), MagicMock()]
@@ -108,6 +132,10 @@ def test_internal_patch_iso(mock_apply_layout: MagicMock,
     mock_apply_layout.assert_called_once_with(layout=layout, options=options, progress_update=updaters[0])
     mock_pack_iso.assert_called_once_with(output_iso=output_iso, options=options, progress_update=updaters[1])
     layout.save_to_file.assert_called_once_with(output_json)
+
+
+def test_export_layout():
+    pass
 
 
 @patch("randovania.interface_common.simplified_patcher._internal_patch_iso", autospec=True)

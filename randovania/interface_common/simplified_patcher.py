@@ -114,7 +114,7 @@ def pack_iso(output_iso: Path,
 
 
 def _output_name_for(layout: LayoutDescription) -> str:
-    return "Echoes Randomizer - {}_{}".format(layout.configuration.as_str, layout.seed_number)
+    return "Echoes Randomizer - {}".format(layout.permalink.as_str)
 
 
 def _internal_patch_iso(updaters: List[ProgressUpdateCallable],

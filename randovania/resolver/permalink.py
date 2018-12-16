@@ -1,6 +1,8 @@
+import base64
 from dataclasses import dataclass
 from typing import Iterator
 
+from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.patcher_configuration import PatcherConfiguration
@@ -73,3 +75,7 @@ class Permalink(BitPackValue):
             "patcher_configuration": self.patcher_configuration.as_json,
             "layout_configuration": self.layout_configuration.as_json,
         }
+
+    @property
+    def as_str(self) -> str:
+        return base64.b64encode(bitpacking.pack_value(self)).decode("utf-8")
