@@ -1,5 +1,4 @@
 import copy
-import math
 from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 import networkx

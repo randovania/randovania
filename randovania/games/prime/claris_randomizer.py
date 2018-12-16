@@ -3,7 +3,7 @@ import shutil
 import subprocess
 from collections import defaultdict
 from pathlib import Path
-from typing import Callable, List, Optional, Dict, Union
+from typing import Callable, List, Dict, Union
 
 from randovania import get_data_path
 from randovania.game_description import data_reader

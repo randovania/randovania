@@ -9,7 +9,6 @@ from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
-from randovania.games.prime import default_data
 from randovania.resolver import generator, debug
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.game_patches import GamePatches

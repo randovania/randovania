@@ -1,9 +1,7 @@
 from pathlib import Path
-from typing import Iterator, Optional, Callable
+from typing import Iterator, Optional
 
 from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow
-
-from randovania.interface_common.options import Options
 
 
 def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):

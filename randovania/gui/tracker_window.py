@@ -1,7 +1,6 @@
 from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QListWidgetItem
 
 from randovania.game_description import data_reader
-from randovania.games.prime import default_data
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 
 

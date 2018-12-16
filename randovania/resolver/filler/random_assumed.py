@@ -5,8 +5,8 @@ from typing import Tuple, Iterator, Callable
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.resources import PickupEntry, PickupAssignment
 from randovania.resolver import debug
-from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.generator_reach import advance_reach_with_possible_unsafe_resources, \
     reach_with_all_safe_resources, collect_all_safe_resources_in_reach, filter_reachable, pickup_nodes_that_can_reach
 from randovania.resolver.logic import Logic

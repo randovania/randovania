@@ -1,7 +1,7 @@
-from typing import NamedTuple, Union, List, Optional, Dict
+from typing import NamedTuple, Union
 
 from randovania.game_description.dock import DockWeakness
-from randovania.game_description.resources import PickupIndex, ResourceDatabase, ResourceInfo, ResourceGain, PickupEntry
+from randovania.game_description.resources import PickupIndex, ResourceInfo, ResourceGain
 from randovania.resolver.game_patches import GamePatches
 
 

@@ -1,9 +1,8 @@
 import multiprocessing
 import traceback
-from typing import Dict, Callable, Union
+from typing import Callable, Union
 
 from randovania.resolver import generator, debug
-from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.permalink import Permalink
 

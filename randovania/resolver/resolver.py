@@ -1,4 +1,4 @@
-from typing import Optional, Union, Tuple, Callable
+from typing import Optional, Tuple, Callable
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementSet, RequirementList
