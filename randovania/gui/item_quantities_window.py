@@ -90,13 +90,11 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         self._update_item_quantity_total_label()
 
     def _reset_item_quantities(self):
-        with self._options:
-            pickup_database = default_prime2_pickup_database()
-            for pickup in pickup_database.pickups.values():
-                if pickup in self._spinbox_for_item:
-                    self._spinbox_for_item[pickup].setValue(pickup_database.original_quantity_for(pickup))
+        with self._options as options:
+            options.set_pickup_quantities({})
 
     def _change_item_quantity(self, spin_box: QSpinBox, new_quantity: int):
+        """Changes the value for a specific spin box"""
         self._total_item_count -= spin_box.previous_value
         self._total_item_count += new_quantity
         spin_box.previous_value = new_quantity
@@ -108,3 +106,9 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
     def _update_item_quantity_total_label(self):
         self.itemquantity_total_label.setText("Total Pickups: {}/{}".format(
             self._total_item_count, self._maximum_item_count))
+
+    # Options
+    def on_options_changed(self):
+        for pickup, quantity in self._options.layout_configuration.pickup_quantities.items():
+            if pickup in self._spinbox_for_item:
+                self._spinbox_for_item[pickup].setValue(quantity)

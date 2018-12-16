@@ -16,33 +16,40 @@ def _option() -> Options:
     return Options(MagicMock())
 
 
-@patch("randovania.interface_common.options.Options.save_to_disk", autospec=True)
+@patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
 def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMock,
                                                      option: Options):
+    # Setup
+    settings_changed = MagicMock()
+    option.on_settings_changed = settings_changed
+
     # Run
     with option:
         pass
 
     # Assert
     mock_save_to_disk.assert_not_called()
+    settings_changed.assert_not_called()
 
 
-@patch("randovania.interface_common.options.Options.save_to_disk", autospec=True)
+@patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
 def test_save_with_context_manager(mock_save_to_disk: MagicMock,
                                    option: Options):
     # Setup
+    settings_changed = MagicMock()
     option._output_directory = Path("start")
+    option.on_settings_changed = settings_changed
 
     # Run
     with option:
         option.output_directory = Path("end")
-        pass
 
     # Assert
     mock_save_to_disk.assert_called_once_with(option)
+    settings_changed.assert_called_once_with()
 
 
-@patch("randovania.interface_common.options.Options.save_to_disk", autospec=True)
+@patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
 def test_single_save_with_nested_context_manager(mock_save_to_disk: MagicMock,
                                                  option: Options):
     # Setup

@@ -26,10 +26,12 @@ from randovania.resolver import debug
 
 class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     newer_version_signal = pyqtSignal(str, str)
+    options_changed_signal = pyqtSignal()
     is_preview_mode: bool = False
 
     menu_new_version: Optional[QAction] = None
     _current_version_url: Optional[str] = None
+    _options: Options
 
     @property
     def _tab_widget(self):
@@ -50,6 +52,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.progress_update_signal.connect(self.update_progress)
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
+        self.options_changed_signal.connect(self.on_options_changed)
 
         # Menu Bar
         self.menu_action_tracker.setVisible(preview)
@@ -71,8 +74,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             self.tabs.append(self.windows[i].centralWidget)
             self.tabWidget.insertTab(i, self.tabs[i], _translate("MainWindow", tab[1]))
 
-        self.tabWidget.setCurrentIndex(0)
+        # Setting this event only now, so all options changed trigger only once
+        options.on_settings_changed = self.options_changed_signal.emit
+        self._options = options
+        self.on_options_changed()
 
+        self.tabWidget.setCurrentIndex(0)
         get_latest_version(self.newer_version_signal.emit)
 
     def closeEvent(self, event):
@@ -108,6 +115,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             raise RuntimeError("Called open_version_link, but _current_version_url is None")
 
         QDesktopServices.openUrl(QUrl(self._current_version_url))
+
+    # Options
+    def on_options_changed(self):
+        for window in self.windows:
+            window.on_options_changed()
 
     # Menu Actions
     def _open_data_visualizer(self):

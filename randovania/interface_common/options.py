@@ -2,7 +2,7 @@ import dataclasses
 import json
 import random
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any
+from typing import Optional, TypeVar, Callable, Any, Dict
 
 from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
@@ -88,6 +88,7 @@ def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -
 
 class Options:
     _data_dir: Path
+    _on_settings_changed: Optional[Callable[[], None]] = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
 
@@ -139,7 +140,8 @@ class Options:
             "options": data_to_persist
         }
 
-    def save_to_disk(self):
+    def _save_to_disk(self):
+        """Serializes the fields of this Option and writes then to a file."""
         self._is_dirty = False
         data_to_persist = self._serialize_fields()
 
@@ -153,10 +155,18 @@ class Options:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self._nested_autosave_level -= 1
-        if self._nested_autosave_level == 0:
+        if self._nested_autosave_level == 1:
             if self._is_dirty:
-                self.save_to_disk()
+                self._save_to_disk()
+                if self._on_settings_changed is not None:
+                    self._on_settings_changed()
+        self._nested_autosave_level -= 1
+
+    # Events
+    def _set_on_settings_changed(self, value):
+        self._on_settings_changed = value
+
+    on_settings_changed = property(fset=_set_on_settings_changed)
 
     # Files paths
 
@@ -175,6 +185,7 @@ class Options:
 
     @seed_number.setter
     def seed_number(self, value: int):
+        self._check_editable_and_mark_dirty()
         self._seed_number = value
 
     @property
@@ -283,13 +294,18 @@ class Options:
         return self.layout_configuration.quantity_for_pickup(pickup)
 
     def set_quantity_for_pickup(self, pickup: PickupEntry, new_quantity: int) -> None:
-        self._check_editable_and_mark_dirty()
-        old_pickup_quantities = self.layout_configuration.pickup_quantities
-        quantities = old_pickup_quantities.pickups_with_custom_quantities
+        """Changes the quantities for one specific pickup."""
+        quantities = self.layout_configuration.pickup_quantities.pickups_with_custom_quantities
         quantities[pickup] = new_quantity
+        self.set_pickup_quantities(quantities)
+
+    def set_pickup_quantities(self, quantities: Dict[PickupEntry, int]):
+        """Changes the quantities for all pickups"""
+        self._check_editable_and_mark_dirty()
+
         self._layout_configuration = dataclasses.replace(
             self.layout_configuration,
-            pickup_quantities=old_pickup_quantities.with_new_quantities(quantities))
+            pickup_quantities=self.layout_configuration.pickup_quantities.with_new_quantities(quantities))
 
     def _check_editable_and_mark_dirty(self):
         """Checks if _nested_autosave_level is not 0 and marks at least one value was changed."""
