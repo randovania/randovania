@@ -59,6 +59,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         # Seed/Permalink
         self.seed_number_edit.setValidator(QIntValidator(0, 2 ** 31 - 1))
+        self.seed_number_edit.setText(str(options.seed_number))
         self.seed_number_edit.textChanged.connect(self._on_new_seed_number)
         self.seed_number_button.clicked.connect(self._generate_new_seed_number)
 
@@ -197,12 +198,12 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         else:
             return int(seed)
 
-    def _on_new_seed_number(self):
+    def _on_new_seed_number(self, value: str):
+        self._options.seed_number = int(value)
         self._on_settings_changed()
 
     def _generate_new_seed_number(self):
-        self._options.seed_number = random.randint(0, 2 ** 31)
-        self.seed_number_edit.setText(str(self._options.seed_number))
+        self.seed_number_edit.setText(str(random.randint(0, 2 ** 31)))
 
     def _import_permalink_from_field(self):
         permalink = self.permalink_edit.text()
