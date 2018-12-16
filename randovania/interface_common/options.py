@@ -156,8 +156,11 @@ class Options:
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self._nested_autosave_level == 1:
             if self._is_dirty:
+                # TODO: maybe it should be an error to change options to different values in on_options_changed?
+                # previous = self._serialize_fields()
                 if self._on_options_changed is not None:
                     self._on_options_changed()
+                # assert previous == self._serialize_fields()
                 self._save_to_disk()
         self._nested_autosave_level -= 1
 
