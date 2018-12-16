@@ -104,3 +104,12 @@ class Permalink(BitPackValue):
 
         except binascii.Error as e:
             raise ValueError("Unable to base64 decode: {}".format(e))
+
+    @classmethod
+    def default(cls) -> "Permalink":
+        return Permalink(
+            seed_number=0,
+            spoiler=True,
+            patcher_configuration=PatcherConfiguration.default(),
+            layout_configuration=LayoutConfiguration.default(),
+        )
