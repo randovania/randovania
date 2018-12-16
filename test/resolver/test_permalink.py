@@ -72,3 +72,34 @@ def test_round_trip(spoiler: bool,
 
     # Assert
     assert link == after
+
+
+def test_decode_v0():
+    # This test should break whenever we change how permalinks are created
+    # When this happens, we must bump the permalink version and change the tests
+    encoded = "AAAAfR5QLERzIpgS4ICCAHw="
+    expected = Permalink(
+        seed_number=1000,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration(
+            disable_hud_popup=True,
+            menu_mod=True,
+        ),
+        layout_configuration=LayoutConfiguration.from_params(
+            trick_level=LayoutTrickLevel.HARD,
+            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            item_loss=LayoutEnabledFlag.ENABLED,
+            elevators=LayoutRandomizedFlag.RANDOMIZED,
+            pickup_quantities={
+                "Missile Expansion": 10,
+                "Light Suit": 9,
+            },
+        ),
+    )
+
+    # Run
+    link = Permalink.from_str(encoded)
+
+    # Assert
+    assert link == expected
+
