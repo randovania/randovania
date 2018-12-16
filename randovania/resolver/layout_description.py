@@ -101,10 +101,14 @@ class LayoutDescription(NamedTuple):
             raise RuntimeError("Unsupported log file version '{}'.".format(version))
 
         # TODO: add try/catch to throw convert potential errors in "seed from future version broke"
+        permalink = Permalink.from_json_dict(json_dict["info"]["permalink"])
+
+        if not permalink.spoiler:
+            raise ValueError("Unable to read details of seed log with spoiler disabled")
 
         return LayoutDescription(
             version=version,
-            permalink=Permalink.from_json_dict(json_dict["info"]["permalink"]),
+            permalink=permalink,
             pickup_assignment=_item_locations_to_pickup_assignment(json_dict["locations"]),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
@@ -116,30 +120,35 @@ class LayoutDescription(NamedTuple):
 
     @property
     def as_json(self) -> dict:
-        from randovania.games.prime import claris_randomizer
-        game = default_prime2_game_description()
-        return {
+        result = {
             "info": {
                 "version": self.version,
                 "permalink": self.permalink.as_json,
-            },
-            "locations": {
+            }
+        }
+
+        if self.permalink.spoiler:
+            from randovania.games.prime import claris_randomizer
+            game = default_prime2_game_description()
+
+            result["locations"] = {
                 key: value
                 for key, value in sorted(_pickup_assignment_to_item_locations(game, self.pickup_assignment).items())
-            },
-            "elevators": {
+            }
+            result["elevators"] = {
                 _elevator_to_location(game, elevator): _elevator_to_location(game, elevator.connected_elevator)
                 for elevator in claris_randomizer.elevator_list_for_configuration(self.permalink.layout_configuration,
                                                                                   self.permalink.seed_number)
-            },
-            "playthrough": [
+            }
+            result["playthrough"] = [
                 {
                     "path_from_previous": path.previous_nodes,
                     "node": path.node_name,
                 }
                 for path in self.solver_path
             ]
-        }
+
+        return result
 
     def save_to_file(self, json_path: Path):
         with json_path.open("w") as open_file:
