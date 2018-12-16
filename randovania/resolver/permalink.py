@@ -20,6 +20,8 @@ class Permalink(BitPackValue):
     layout_configuration: LayoutConfiguration
 
     def __post_init__(self):
+        if self.seed_number is None:
+            raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
 
