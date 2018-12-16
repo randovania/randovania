@@ -11,6 +11,7 @@ from randovania.game_description.node import PickupNode
 from randovania.game_description.resources import PickupAssignment
 from randovania.games.prime import claris_randomizer
 from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.permalink import Permalink
 
 
 class SolverPath(NamedTuple):
@@ -89,8 +90,7 @@ def _item_locations_to_pickup_assignment(locations: Dict[str, Dict[str, str]]) -
 
 class LayoutDescription(NamedTuple):
     version: str
-    configuration: LayoutConfiguration
-    seed_number: int
+    permalink: Permalink
     pickup_assignment: PickupAssignment
     solver_path: Tuple[SolverPath, ...]
 
@@ -98,24 +98,15 @@ class LayoutDescription(NamedTuple):
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
         version = json_dict["info"]["version"]
         version_as_obj = StrictVersion(version)
-        configuration = json_dict["info"]["configuration"]
-
-        if version_as_obj < StrictVersion("0.12.0"):
-            seed = configuration["seed"]
-        else:
-            seed = json_dict["info"]["seed"]
 
         if version_as_obj < StrictVersion("0.17.0"):
-            configuration["trick_level"] = configuration.pop("logic")
-            if configuration["trick_level"] == "no-glitches":
-                configuration["trick_level"] = "no-tricks"
+            raise RuntimeError("Unsupported log file version '{}'.".format(version))
 
         # TODO: add try/catch to throw convert potential errors in "seed from future version broke"
 
         return LayoutDescription(
             version=version,
-            configuration=LayoutConfiguration.from_json_dict(configuration),
-            seed_number=seed,
+            permalink=Permalink.from_json_dict(json_dict["info"]),
             pickup_assignment=_item_locations_to_pickup_assignment(json_dict["locations"]),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
@@ -131,8 +122,7 @@ class LayoutDescription(NamedTuple):
         return {
             "info": {
                 "version": self.version,
-                "seed": self.seed_number,
-                "configuration": self.configuration.as_json,
+                "permalink": self.permalink.as_json,
             },
             "locations": {
                 key: value
@@ -140,7 +130,8 @@ class LayoutDescription(NamedTuple):
             },
             "elevators": {
                 _elevator_to_location(game, elevator): _elevator_to_location(game, elevator.connected_elevator)
-                for elevator in claris_randomizer.elevator_list_for_configuration(self.configuration, self.seed_number)
+                for elevator in claris_randomizer.elevator_list_for_configuration(self.permalink.layout_configuration,
+                                                                                  self.permalink.seed_number)
             },
             "playthrough": [
                 {
@@ -162,8 +153,7 @@ class LayoutDescription(NamedTuple):
         :return:
         """
         return LayoutDescription(
-            seed_number=self.seed_number,
-            configuration=self.configuration,
+            permalink=self.permalink,
             version=self.version,
             pickup_assignment=self.pickup_assignment,
             solver_path=())

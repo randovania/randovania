@@ -7,13 +7,14 @@ from pathlib import Path
 
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
-from randovania.game_description.resources import PickupIndex
 from randovania.games.prime import claris_randomizer
 from randovania.resolver import debug, generator, resolver
 from randovania.resolver.game_patches import GamePatches
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutMode, \
-    LayoutRandomizedFlag, LayoutEnabledFlag, LayoutDifficulty
+from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+    LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription
+from randovania.resolver.patcher_configuration import PatcherConfiguration
+from randovania.resolver.permalink import Permalink
 
 __all__ = ["create_subparsers"]
 
@@ -53,9 +54,9 @@ def validate_command_logic(args):
 
     if args.layout_file is not None:
         description = LayoutDescription.from_file(Path(args.layout_file))
-        configuration = description.configuration
+        configuration = description.permalink.layout_configuration
         pickup_assignment = description.pickup_assignment
-        elevators = claris_randomizer.elevator_list_for_configuration(configuration, description.seed_number)
+        elevators = claris_randomizer.elevator_list_for_configuration(configuration, description.permalink.seed_number)
         game = data_reader.decode_data(data, elevators)
 
     else:
@@ -114,12 +115,17 @@ def distribute_command_logic(args):
         seed_number = random.randint(0, 2 ** 31)
 
     print("Using seed: {}".format(seed_number))
+    permalink = Permalink(
+        seed_number=seed_number,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration.default(),
+        layout_configuration=get_layout_configuration_from_args(args),
+    )
 
     before = time.perf_counter()
     layout_description = generator.generate_list(
         data=data,
-        seed_number=seed_number,
-        configuration=get_layout_configuration_from_args(args),
+        permalink=permalink,
         status_update=status_update
     )
     after = time.perf_counter()
@@ -159,12 +165,18 @@ def add_distribute_command(sub_parsers):
 def batch_distribute_helper(args, seed_number) -> float:
     data = prime_database.decode_data_file(args)
     configuration = get_layout_configuration_from_args(args)
+    permalink = Permalink(
+        seed_number=seed_number,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration.default(),
+        layout_configuration=configuration,
+    )
 
     start_time = time.perf_counter()
-    description = generator.generate_list(data, seed_number, configuration, None)
+    description = generator.generate_list(data, permalink, None)
     delta_time = time.perf_counter() - start_time
 
-    description.save_to_file(Path(args.output_dir, "{}.json".format(description.seed_number)))
+    description.save_to_file(Path(args.output_dir, "{}.json".format(seed_number)))
     return delta_time
 
 

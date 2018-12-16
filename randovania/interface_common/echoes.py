@@ -5,20 +5,19 @@ from typing import Dict, Callable, Union
 from randovania.resolver import generator, debug
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
+from randovania.resolver.permalink import Permalink
 
 
 def _generate_layout_worker(output_pipe,
-                            seed_number: int,
-                            configuration: LayoutConfiguration,
+                            permalink: Permalink,
                             debug_level: int):
     try:
         def status_update(message: str):
             output_pipe.send(message)
 
         debug._DEBUG_LEVEL = debug_level
-        layout_description = generator.generate_list(configuration.game_data,
-                                                     seed_number,
-                                                     configuration,
+        layout_description = generator.generate_list(permalink.layout_configuration.game_data,
+                                                     permalink,
                                                      status_update=status_update)
         output_pipe.send(layout_description)
     except Exception as e:
@@ -26,15 +25,14 @@ def _generate_layout_worker(output_pipe,
         output_pipe.send(e)
 
 
-def generate_layout(seed_number: int,
-                    configuration: LayoutConfiguration,
+def generate_layout(permalink: Permalink,
                     status_update: Callable[[str], None],
                     ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
 
     process = multiprocessing.Process(
         target=_generate_layout_worker,
-        args=(output_pipe, seed_number, configuration, debug._DEBUG_LEVEL)
+        args=(output_pipe, permalink, debug._DEBUG_LEVEL)
     )
     process.start()
     try:
