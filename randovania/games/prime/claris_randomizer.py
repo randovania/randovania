@@ -122,19 +122,19 @@ def _add_menu_mod_to_files(
     files_folder.joinpath("menu_mod.txt").write_bytes(b"")
 
 
-def _calculate_indices(layout: LayoutDescription) -> List[int]:
-    pickup_database = data_reader.read_databases(layout.configuration.game_data)[1]
+def _calculate_indices(description: LayoutDescription) -> List[int]:
+    pickup_database = data_reader.read_databases(description.permalink.layout_configuration.game_data)[1]
     useless_pickup = pickup_database.pickup_by_name(_USELESS_PICKUP_NAME)
 
     indices = [pickup_database.original_index(useless_pickup).index] * pickup_database.total_pickup_count
-    for index, pickup in layout.pickup_assignment.items():
+    for index, pickup in description.pickup_assignment.items():
         indices[index.index] = pickup_database.original_index(pickup).index
 
     return indices
 
 
 def apply_layout(
-        layout: LayoutDescription,
+        description: LayoutDescription,
         hud_memo_popup_removal: bool,
         include_menu_mod: bool,
         game_root: Path,
@@ -150,18 +150,18 @@ def apply_layout(
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     _create_pak_backups(game_root, backup_files_path, status_update)
 
-    indices = _calculate_indices(layout)
+    indices = _calculate_indices(description)
 
     args += [
-        "-s", str(layout.seed_number),
+        "-s", str(description.permalink.seed_number),
         "-p", ",".join(str(index) for index in indices),
     ]
-    if layout.configuration.item_loss == LayoutEnabledFlag.DISABLED:
+    if description.permalink.layout_configuration.item_loss == LayoutEnabledFlag.DISABLED:
         args.append("-i")
-    if layout.configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
+    if description.permalink.layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
 
-    layout.save_to_file(game_root.joinpath("files", "randovania.json"))
+    description.save_to_file(game_root.joinpath("files", "randovania.json"))
     _run_with_args(args, "Randomized!", status_update)
 
     if include_menu_mod:

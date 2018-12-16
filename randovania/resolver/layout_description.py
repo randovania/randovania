@@ -9,8 +9,6 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources import PickupAssignment
-from randovania.games.prime import claris_randomizer
-from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.permalink import Permalink
 
 
@@ -106,7 +104,7 @@ class LayoutDescription(NamedTuple):
 
         return LayoutDescription(
             version=version,
-            permalink=Permalink.from_json_dict(json_dict["info"]),
+            permalink=Permalink.from_json_dict(json_dict["info"]["permalink"]),
             pickup_assignment=_item_locations_to_pickup_assignment(json_dict["locations"]),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
@@ -118,6 +116,7 @@ class LayoutDescription(NamedTuple):
 
     @property
     def as_json(self) -> dict:
+        from randovania.games.prime import claris_randomizer
         game = default_prime2_game_description()
         return {
             "info": {

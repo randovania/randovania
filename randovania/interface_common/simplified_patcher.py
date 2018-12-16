@@ -83,7 +83,7 @@ def apply_layout(layout: LayoutDescription,
     include_menu_mod = options.include_menu_mod
 
     claris_randomizer.apply_layout(
-        layout=layout,
+        description=layout,
         hud_memo_popup_removal=hud_memo_popup_removal,
         include_menu_mod=include_menu_mod,
         game_root=game_files_path,

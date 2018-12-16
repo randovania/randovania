@@ -1,19 +1,34 @@
 import subprocess
 from pathlib import Path
-from typing import List
+from typing import List, Union
 from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
+import randovania
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
-from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag
+from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
+from randovania.resolver.layout_description import LayoutDescription
+from randovania.resolver.permalink import Permalink
+
+LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
 
 class CustomException(Exception):
     @classmethod
     def do_raise(cls, x):
         raise CustomException("test exception")
+
+
+@pytest.fixture(name="description")
+def _description() -> LayoutDescriptionMock:
+    return MagicMock(spec=LayoutDescription(
+        permalink=Permalink.default(),
+        version=randovania.VERSION,
+        pickup_assignment={},
+        solver_path=()
+    ))
 
 
 @patch("subprocess.Popen", autospec=True)
@@ -219,15 +234,15 @@ def test_calculate_indices_no_item(mock_read_databases: MagicMock,
                                    echoes_pickup_database: PickupDatabase,
                                    ):
     # Setup
-    layout = MagicMock()
-    layout.pickup_assignment = {}
+    description = MagicMock()
+    description.pickup_assignment = {}
     mock_read_databases.return_value = (None, echoes_pickup_database)
 
     # Run
-    result = claris_randomizer._calculate_indices(layout)
+    result = claris_randomizer._calculate_indices(description)
 
     # Assert
-    mock_read_databases.assert_called_once_with(layout.configuration.game_data)
+    mock_read_databases.assert_called_once_with(description.permalink.layout_configuration.game_data)
     useless_pickup = echoes_pickup_database.pickup_by_name(claris_randomizer._USELESS_PICKUP_NAME)
     useless_index = echoes_pickup_database.original_index(useless_pickup)
     assert result == [useless_index.index] * echoes_pickup_database.total_pickup_count
@@ -236,17 +251,17 @@ def test_calculate_indices_no_item(mock_read_databases: MagicMock,
 @patch("randovania.game_description.data_reader.read_databases", autospec=True)
 def test_calculate_indices_original(mock_read_databases: MagicMock,
                                     echoes_pickup_database: PickupDatabase,
+                                    description: LayoutDescriptionMock,
                                     ):
     # Setup
-    layout = MagicMock()
-    layout.pickup_assignment = echoes_pickup_database.original_pickup_mapping
+    description.pickup_assignment = echoes_pickup_database.original_pickup_mapping
     mock_read_databases.return_value = (None, echoes_pickup_database)
 
     # Run
-    result = claris_randomizer._calculate_indices(layout)
+    result = claris_randomizer._calculate_indices(description)
 
     # Assert
-    mock_read_databases.assert_called_once_with(layout.configuration.game_data)
+    mock_read_databases.assert_called_once_with(description.permalink.layout_configuration.game_data)
     assert result == [
         echoes_pickup_database.original_index(pickup).index
         for pickup in echoes_pickup_database.original_pickup_mapping.values()
@@ -275,12 +290,12 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                       item_loss: bool,
                       elevators: bool,
                       include_menu_mod: bool,
+                      description: LayoutDescriptionMock,
                       ):
     # Setup
-    layout = MagicMock()
-    layout.seed_number = seed_number
-    layout.configuration.item_loss = LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED
-    layout.configuration.elevators = LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA
+    description.permalink.seed_number = seed_number
+    description.permalink.layout_configuration.item_loss = LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED
+    description.permalink.layout_configuration.elevators = LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA
 
     game_root = MagicMock()
     backup_files_path = MagicMock()
@@ -300,7 +315,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         expected_args.append("-v")
 
     # Run
-    claris_randomizer.apply_layout(layout, hud_memo_popup_removal, include_menu_mod,
+    claris_randomizer.apply_layout(description, hud_memo_popup_removal, include_menu_mod,
                                    game_root, backup_files_path, progress_update)
 
     # Assert
@@ -311,9 +326,9 @@ def test_apply_layout(mock_run_with_args: MagicMock,
     )
     mock_ensure_no_menu_mod.assert_called_once_with(game_root, backup_files_path, status_update)
     mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
-    mock_calculate_indices.assert_called_once_with(layout)
+    mock_calculate_indices.assert_called_once_with(description)
     game_root.joinpath.assert_called_once_with("files", "randovania.json")
-    layout.save_to_file.assert_called_once_with(game_root.joinpath.return_value)
+    description.save_to_file.assert_called_once_with(game_root.joinpath.return_value)
     mock_run_with_args.assert_called_once_with(expected_args, "Randomized!", status_update)
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
@@ -408,7 +423,7 @@ def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
 def test_elevator_list_for_configuration_randomized(mock_try_randomize_elevators: MagicMock,
                                                     mock_random: MagicMock):
     # Setup
-    configuration = MagicMock()
+    configuration = MagicMock(spec=LayoutConfiguration.default())
     configuration.elevators = LayoutRandomizedFlag.RANDOMIZED
     seed_number = MagicMock()
 
@@ -424,9 +439,9 @@ def test_elevator_list_for_configuration_randomized(mock_try_randomize_elevators
 @patch("randovania.games.prime.claris_random.Random", autospec=True)
 @patch("randovania.games.prime.claris_randomizer.try_randomize_elevators", autospec=True)
 def test_elevator_list_for_configuration_vanilla(mock_try_randomize_elevators: MagicMock,
-                                                    mock_random: MagicMock):
+                                                 mock_random: MagicMock):
     # Setup
-    configuration = MagicMock()
+    configuration = MagicMock(spec=LayoutConfiguration.default())
     configuration.elevators = LayoutRandomizedFlag.VANILLA
     seed_number = MagicMock()
 
