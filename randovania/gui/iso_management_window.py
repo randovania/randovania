@@ -66,6 +66,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.permalink_edit.textChanged.connect(self._on_permalink_changed)
         self.permalink_import_button.clicked.connect(self._import_permalink_from_field)
 
+        self.reset_settings_button.clicked.connect(self._reset_settings)
+
         # Randomize
         self.randomize_and_export_button.clicked.connect(self._randomize_and_export)
         self.randomize_log_only_button.clicked.connect(self._create_log_file_pressed)
@@ -235,6 +237,10 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             QMessageBox.warning(self,
                                 "Invalid permalink",
                                 str(e))
+
+    def _reset_settings(self):
+        with self._options as options:
+            options.reset_to_defaults()
 
     # Randomize
     def _refresh_randomize_button_state(self):
