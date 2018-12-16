@@ -21,7 +21,7 @@ def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMoc
                                                      option: Options):
     # Setup
     settings_changed = MagicMock()
-    option.on_settings_changed = settings_changed
+    option.on_options_changed = settings_changed
 
     # Run
     with option:
@@ -38,7 +38,7 @@ def test_save_with_context_manager(mock_save_to_disk: MagicMock,
     # Setup
     settings_changed = MagicMock()
     option._output_directory = Path("start")
-    option.on_settings_changed = settings_changed
+    option.on_options_changed = settings_changed
 
     # Run
     with option:
@@ -186,3 +186,7 @@ def test_edit_layout_quantity(option: Options,
 
     # Assert
     assert option.layout_configuration == LayoutConfiguration.from_params(**initial_layout_configuration_params)
+
+
+def test_edit_during_options_changed():
+    pass

@@ -88,7 +88,7 @@ def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -
 
 class Options:
     _data_dir: Path
-    _on_settings_changed: Optional[Callable[[], None]] = None
+    _on_options_changed: Optional[Callable[[], None]] = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
 
@@ -157,15 +157,15 @@ class Options:
         if self._nested_autosave_level == 1:
             if self._is_dirty:
                 self._save_to_disk()
-                if self._on_settings_changed is not None:
-                    self._on_settings_changed()
+                if self._on_options_changed is not None:
+                    self._on_options_changed()
         self._nested_autosave_level -= 1
 
     # Events
-    def _set_on_settings_changed(self, value):
-        self._on_settings_changed = value
+    def _set_on_options_changed(self, value):
+        self._on_options_changed = value
 
-    on_settings_changed = property(fset=_set_on_settings_changed)
+    on_options_changed = property(fset=_set_on_options_changed)
 
     # Files paths
 
