@@ -16,9 +16,7 @@ def _generate_layout_worker(output_pipe,
             output_pipe.send(message)
 
         debug._DEBUG_LEVEL = debug_level
-        layout_description = generator.generate_list(permalink.layout_configuration.game_data,
-                                                     permalink,
-                                                     status_update=status_update)
+        layout_description = generator.generate_list(permalink, status_update=status_update)
         output_pipe.send(layout_description)
     except Exception as e:
         traceback.print_exc()

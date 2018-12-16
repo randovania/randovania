@@ -105,7 +105,6 @@ def add_validate_command(sub_parsers):
 
 def distribute_command_logic(args):
     debug._DEBUG_LEVEL = args.debug
-    data = prime_database.decode_data_file(args)
 
     def status_update(s):
         pass
@@ -123,11 +122,7 @@ def distribute_command_logic(args):
     )
 
     before = time.perf_counter()
-    layout_description = generator.generate_list(
-        data=data,
-        permalink=permalink,
-        status_update=status_update
-    )
+    layout_description = generator.generate_list(permalink=permalink, status_update=status_update)
     after = time.perf_counter()
     print("Took {} seconds. Hash: {}".format(
         after - before,
@@ -173,7 +168,7 @@ def batch_distribute_helper(args, seed_number) -> float:
     )
 
     start_time = time.perf_counter()
-    description = generator.generate_list(data, permalink, None)
+    description = generator.generate_list(permalink, None)
     delta_time = time.perf_counter() - start_time
 
     description.save_to_file(Path(args.output_dir, "{}.json".format(seed_number)))

@@ -114,7 +114,6 @@ def _layout_description(request):
 def test_generate_seed_with_invalid_quantity_configuration():
     # Setup
     status_update = MagicMock()
-    data = default_data.decode_default_prime2()
 
     configuration = LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel.NO_TRICKS,
@@ -132,7 +131,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
 
     # Run
     with pytest.raises(randovania.resolver.exceptions.GenerationFailure):
-        generator.generate_list(data, permalink, status_update=status_update)
+        generator.generate_list(permalink, status_update=status_update)
 
 
 # @pytest.mark.skip(reason="generating is taking too long")
@@ -142,11 +141,9 @@ def test_compare_generated_with_data(benchmark,
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
 
-    data = default_data.decode_default_prime2()
     generated_description: LayoutDescription = benchmark.pedantic(
         generator.generate_list,
         args=(
-            data,
             layout_description.permalink,
         ),
         kwargs={
@@ -169,17 +166,8 @@ def test_generate_twice():
     status_update = MagicMock()
     layout_description = _test_descriptions[0]
 
-    data = default_data.decode_default_prime2()
-    generated_description = generator.generate_list(
-        data,
-        layout_description.seed_number,
-        layout_description.configuration,
-        status_update=status_update)
-
-    assert generated_description == generator.generate_list(data,
-                                                            layout_description.seed_number,
-                                                            layout_description.configuration,
-                                                            status_update=status_update)
+    generated_description = generator.generate_list(layout_description.permalink, status_update)
+    assert generated_description == generator.generate_list(layout_description.permalink, status_update)
 
 
 @pytest.mark.skip(reason="simple data is broken")
@@ -191,11 +179,7 @@ def test_generate_simple(simple_data: dict):
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={})
 
-    generated_description = generator.generate_list(
-        simple_data,
-        10,
-        configuration,
-        status_update=status_update)
+    generated_description = generator.generate_list(configuration, status_update)
 
 
 def _create_patches_filler(logic, initial_state,

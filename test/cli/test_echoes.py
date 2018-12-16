@@ -8,10 +8,8 @@ from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 
 
-@patch("randovania.cli.prime_database.decode_data_file", autospec=True)
 @patch("randovania.resolver.generator.generate_list", autospec=True)
 def test_distribute_command_logic(mock_generate_list: MagicMock,
-                                  mock_decode_data_file: MagicMock,
                                   ):
     # Setup
     args = MagicMock()
@@ -26,9 +24,7 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
     echoes.distribute_command_logic(args)
 
     # Assert
-    mock_decode_data_file.assert_called_once_with(args)
     mock_generate_list.assert_called_once_with(
-        data=mock_decode_data_file.return_value,
         permalink=Permalink(
             seed_number=args.seed,
             spoiler=True,

@@ -51,13 +51,14 @@ def _state_to_solver_path(final_state: State,
     )
 
 
-def generate_list(data: Dict,
-                  permalink: Permalink,
-                  status_update: Optional[Callable[[str], None]]
+def generate_list(permalink: Permalink,
+                  status_update: Optional[Callable[[str], None]],
                   ) -> LayoutDescription:
     elevators = claris_randomizer.elevator_list_for_configuration(permalink.layout_configuration, permalink.seed_number)
     if status_update is None:
         status_update = id
+
+    data = permalink.layout_configuration.game_data
 
     create_patches_params = {
         "permalink": permalink,
