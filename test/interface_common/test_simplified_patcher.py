@@ -67,22 +67,16 @@ def test_generate_layout(mock_generate_layout: MagicMock,
                          mock_constant_percentage_callback: MagicMock,
                          ):
     # Setup
-    seed_number: int = 58000
     options: Options = MagicMock()
     progress_update = MagicMock()
 
     # Run
-    simplified_patcher.generate_layout(seed_number, options, progress_update)
+    simplified_patcher.generate_layout(options, progress_update)
 
     # Assert
     mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
     mock_generate_layout.assert_called_once_with(
-        permalink=Permalink(
-            seed_number=seed_number,
-            spoiler=options.create_spoiler,
-            patcher_configuration=options.patcher_configuration,
-            layout_configuration=options.layout_configuration,
-        ),
+        permalink=options.permalink,
         status_update=mock_constant_percentage_callback.return_value
     )
 
@@ -148,20 +142,16 @@ def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
     # Setup
     progress_update = MagicMock()
     options: Options = MagicMock()
-    seed_number: int = MagicMock()
 
     updaters = [MagicMock(), MagicMock(), MagicMock(), MagicMock()]
     mock_split_progress_update.return_value = updaters
 
     # Run
-    result = simplified_patcher.create_layout_then_export_iso(progress_update,
-                                                              seed_number,
-                                                              options)
+    result = simplified_patcher.create_layout_then_export_iso(progress_update, options)
 
     # Assert
     mock_split_progress_update.assert_called_once_with(progress_update, 3)
-    mock_generate_layout.assert_called_once_with(seed_number=seed_number,
-                                                 options=options,
+    mock_generate_layout.assert_called_once_with(options=options,
                                                  progress_update=updaters[0])
     mock_internal_patch_iso.assert_called_once_with(
         updaters=updaters[1:],

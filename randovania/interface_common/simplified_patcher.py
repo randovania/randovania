@@ -46,24 +46,17 @@ def unpack_iso(input_iso: Path,
     )
 
 
-def generate_layout(seed_number: int,
-                    options: Options,
+def generate_layout(options: Options,
                     progress_update: ProgressUpdateCallable,
                     ) -> LayoutDescription:
     """
-    Creates a LayoutDescription for the given seed number and configured layout
-    :param seed_number:
+    Creates a LayoutDescription for the configured permalink
     :param options:
     :param progress_update:
     :return:
     """
     return echoes.generate_layout(
-        permalink=Permalink(
-            seed_number=seed_number,
-            spoiler=options.create_spoiler,
-            patcher_configuration=options.patcher_configuration,
-            layout_configuration=options.layout_configuration,
-        ),
+        permalink=options.permalink,
         status_update=ConstantPercentageCallback(progress_update, -1))
 
 
@@ -176,13 +169,11 @@ def patch_game_with_existing_layout(progress_update: ProgressUpdateCallable,
 
 
 def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
-                                  seed_number: int,
                                   options: Options,
                                   ) -> LayoutDescription:
     """
     Creates a new layout with the given seed and configured layout, then patches and exports an ISO
     :param progress_update:
-    :param seed_number:
     :param options:
     :return:
     """
@@ -192,8 +183,7 @@ def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
     )
 
     # Create a LayoutDescription
-    resulting_layout = generate_layout(seed_number=seed_number,
-                                       options=options,
+    resulting_layout = generate_layout(options=options,
                                        progress_update=updaters[0])
 
     _internal_patch_iso(
@@ -206,20 +196,17 @@ def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
 
 
 def create_layout_then_export(progress_update: ProgressUpdateCallable,
-                              seed_number: int,
                               options: Options,
                               ) -> LayoutDescription:
     """
     Creates a new layout with the given seed and configured layout, then exports that layout
     :param progress_update:
-    :param seed_number:
     :param options:
     :return:
     """
 
     # Create a LayoutDescription
-    resulting_layout = generate_layout(seed_number=seed_number,
-                                       options=options,
+    resulting_layout = generate_layout(options=options,
                                        progress_update=progress_update)
     export_layout(resulting_layout, options)
 
