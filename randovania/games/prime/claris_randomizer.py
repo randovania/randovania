@@ -135,19 +135,24 @@ def _calculate_indices(description: LayoutDescription) -> List[int]:
     return indices
 
 
-def apply_layout(
-        description: LayoutDescription,
-        hud_memo_popup_removal: bool,
-        include_menu_mod: bool,
-        game_root: Path,
-        backup_files_path: Path,
-        progress_update: ProgressUpdateCallable,
-):
-    args = _base_args(game_root,
-                      hud_memo_popup_removal=hud_memo_popup_removal)
+def apply_layout(description: LayoutDescription,
+                 game_root: Path,
+                 backup_files_path: Path,
+                 progress_update: ProgressUpdateCallable):
+    """
+    Applies the modifications listed in the given LayoutDescription to the game in game_root.
+    :param description:
+    :param game_root:
+    :param backup_files_path: Path to use as pak backup, to remove/add menu mod.
+    :param progress_update:
+    :return:
+    """
+
+    patcher_configuration = description.permalink.patcher_configuration
+    args = _base_args(game_root, hud_memo_popup_removal=patcher_configuration.disable_hud_popup)
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
-        progress_update, 400 if include_menu_mod else 100)
+        progress_update, 400 if patcher_configuration.menu_mod else 100)
 
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     _create_pak_backups(game_root, backup_files_path, status_update)
@@ -166,7 +171,7 @@ def apply_layout(
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
     _run_with_args(args, "Randomized!", status_update)
 
-    if include_menu_mod:
+    if patcher_configuration.menu_mod:
         _add_menu_mod_to_files(game_root, status_update)
 
 

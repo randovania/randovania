@@ -71,17 +71,11 @@ def apply_layout(layout: LayoutDescription,
     """
     game_files_path = options.game_files_path
     backup_files_path = options.backup_files_path
-    hud_memo_popup_removal = options.hud_memo_popup_removal
-    include_menu_mod = options.include_menu_mod
 
-    claris_randomizer.apply_layout(
-        description=layout,
-        hud_memo_popup_removal=hud_memo_popup_removal,
-        include_menu_mod=include_menu_mod,
-        game_root=game_files_path,
-        backup_files_path=backup_files_path,
-        progress_update=progress_update
-    )
+    claris_randomizer.apply_layout(description=layout,
+                                   game_root=game_files_path,
+                                   backup_files_path=backup_files_path,
+                                   progress_update=progress_update)
 
 
 def pack_iso(output_iso: Path,

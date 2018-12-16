@@ -10,6 +10,7 @@ from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
 from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
+from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
@@ -293,14 +294,26 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                       description: LayoutDescriptionMock,
                       ):
     # Setup
-    description.permalink.seed_number = seed_number
-    description.permalink.layout_configuration.item_loss = LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED
-    description.permalink.layout_configuration.elevators = LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA
+    hud_memo_popup_removal: bool = MagicMock()
+    description.permalink = Permalink(
+        seed_number=seed_number,
+        spoiler=False,
+        patcher_configuration=PatcherConfiguration(
+            disable_hud_popup=hud_memo_popup_removal,
+            menu_mod=include_menu_mod,
+        ),
+        layout_configuration=LayoutConfiguration.from_params(
+            trick_level=MagicMock(),
+            sky_temple_keys=MagicMock(),
+            item_loss=LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED,
+            elevators=LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA,
+            pickup_quantities={},
+        )
+    )
 
-    game_root = MagicMock()
+    game_root = MagicMock(spec=Path())
     backup_files_path = MagicMock()
     progress_update = MagicMock()
-    hud_memo_popup_removal = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
 
     mock_calculate_indices.return_value = [10, 25, 1, 2, 5, 1]
@@ -315,8 +328,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         expected_args.append("-v")
 
     # Run
-    claris_randomizer.apply_layout(description, hud_memo_popup_removal, include_menu_mod,
-                                   game_root, backup_files_path, progress_update)
+    claris_randomizer.apply_layout(description, game_root, backup_files_path, progress_update)
 
     # Assert
     mock_base_args.assert_called_once_with(game_root, hud_memo_popup_removal=hud_memo_popup_removal)
