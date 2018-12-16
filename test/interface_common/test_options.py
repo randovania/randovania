@@ -1,4 +1,5 @@
 import itertools
+from pathlib import Path
 from typing import List
 from unittest.mock import patch, MagicMock, call
 
@@ -16,10 +17,25 @@ def _option() -> Options:
 
 
 @patch("randovania.interface_common.options.Options.save_to_disk", autospec=True)
-def test_save_with_context_manager(mock_save_to_disk: MagicMock,
-                                   option: Options):
+def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMock,
+                                                     option: Options):
     # Run
     with option:
+        pass
+
+    # Assert
+    mock_save_to_disk.assert_not_called()
+
+
+@patch("randovania.interface_common.options.Options.save_to_disk", autospec=True)
+def test_save_with_context_manager(mock_save_to_disk: MagicMock,
+                                   option: Options):
+    # Setup
+    option._output_directory = Path("start")
+
+    # Run
+    with option:
+        option.output_directory = Path("end")
         pass
 
     # Assert
@@ -29,13 +45,26 @@ def test_save_with_context_manager(mock_save_to_disk: MagicMock,
 @patch("randovania.interface_common.options.Options.save_to_disk", autospec=True)
 def test_single_save_with_nested_context_manager(mock_save_to_disk: MagicMock,
                                                  option: Options):
+    # Setup
+    option._output_directory = Path("start")
+
     # Run
     with option:
+        option.output_directory = Path("end")
         with option:
             pass
 
     # Assert
     mock_save_to_disk.assert_called_once_with(option)
+
+
+def test_changing_field_without_context_manager_should_error(option: Options):
+    # Run
+    with pytest.raises(AssertionError) as exception:
+        option.output_directory = Path("start")
+
+    # Assert
+    assert str(exception.value) == "Attempting to edit an Options, but it wasn't made editable"
 
 
 @patch("randovania.interface_common.options._get_persisted_options_from_data", autospec=True)
@@ -127,6 +156,7 @@ def test_edit_layout_trick_level(option: Options,
                                  new_trick_level: LayoutTrickLevel):
     # Setup
     option._layout_configuration = LayoutConfiguration.from_params(**initial_layout_configuration_params)
+    option._nested_autosave_level = 1
 
     # Run
     initial_layout_configuration_params["trick_level"] = new_trick_level
@@ -140,6 +170,7 @@ def test_edit_layout_quantity(option: Options,
                               initial_layout_configuration_params: dict):
     # Setup
     option._layout_configuration = LayoutConfiguration.from_params(**initial_layout_configuration_params)
+    option._nested_autosave_level = 1
     pickup = next(option._layout_configuration.pickup_quantities.pickups())
 
     # Run

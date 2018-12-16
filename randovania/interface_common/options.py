@@ -89,6 +89,7 @@ def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -
 class Options:
     _data_dir: Path
     _nested_autosave_level: int = 0
+    _is_dirty: bool = False
 
     _show_advanced_options: Optional[bool] = None
     _seed_number: int
@@ -139,6 +140,7 @@ class Options:
         }
 
     def save_to_disk(self):
+        self._is_dirty = False
         data_to_persist = self._serialize_fields()
 
         self._data_dir.mkdir(parents=True, exist_ok=True)
@@ -153,7 +155,8 @@ class Options:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._nested_autosave_level -= 1
         if self._nested_autosave_level == 0:
-            self.save_to_disk()
+            if self._is_dirty:
+                self.save_to_disk()
 
     # Files paths
 
@@ -180,6 +183,7 @@ class Options:
 
     @create_spoiler.setter
     def create_spoiler(self, value: bool):
+        self._check_editable_and_mark_dirty()
         self._create_spoiler = value
 
     @property
@@ -188,6 +192,7 @@ class Options:
 
     @output_directory.setter
     def output_directory(self, value: Optional[Path]):
+        self._check_editable_and_mark_dirty()
         self._output_directory = value
 
     @property
@@ -210,6 +215,7 @@ class Options:
 
     @permalink.setter
     def permalink(self, value: Permalink):
+        self._check_editable_and_mark_dirty()
         self._seed_number = value.seed_number
         self._create_spoiler = value.spoiler
         self._patcher_configuration = value.patcher_configuration
@@ -223,6 +229,7 @@ class Options:
 
     @hud_memo_popup_removal.setter
     def hud_memo_popup_removal(self, value: bool):
+        self._check_editable_and_mark_dirty()
         self._patcher_configuration = dataclasses.replace(self.patcher_configuration, disable_hud_popup=value)
 
     @property
@@ -231,6 +238,7 @@ class Options:
 
     @include_menu_mod.setter
     def include_menu_mod(self, value: bool):
+        self._check_editable_and_mark_dirty()
         self._patcher_configuration = dataclasses.replace(self.patcher_configuration, menu_mod=value)
 
     # Access to fields inside LayoutConfiguration
@@ -241,6 +249,7 @@ class Options:
 
     @layout_configuration_trick_level.setter
     def layout_configuration_trick_level(self, value: LayoutTrickLevel):
+        self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, trick_level=value)
 
     @property
@@ -249,6 +258,7 @@ class Options:
 
     @layout_configuration_sky_temple_keys.setter
     def layout_configuration_sky_temple_keys(self, value: LayoutRandomizedFlag):
+        self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, sky_temple_keys=value)
 
     @property
@@ -257,6 +267,7 @@ class Options:
 
     @layout_configuration_elevators.setter
     def layout_configuration_elevators(self, value: LayoutRandomizedFlag):
+        self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, elevators=value)
 
     @property
@@ -265,15 +276,22 @@ class Options:
 
     @layout_configuration_item_loss.setter
     def layout_configuration_item_loss(self, value: LayoutEnabledFlag):
+        self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, item_loss=value)
 
     def quantity_for_pickup(self, pickup: PickupEntry) -> int:
         return self.layout_configuration.quantity_for_pickup(pickup)
 
     def set_quantity_for_pickup(self, pickup: PickupEntry, new_quantity: int) -> None:
+        self._check_editable_and_mark_dirty()
         old_pickup_quantities = self.layout_configuration.pickup_quantities
         quantities = old_pickup_quantities.pickups_with_custom_quantities
         quantities[pickup] = new_quantity
         self._layout_configuration = dataclasses.replace(
             self.layout_configuration,
             pickup_quantities=old_pickup_quantities.with_new_quantities(quantities))
+
+    def _check_editable_and_mark_dirty(self):
+        """Checks if _nested_autosave_level is not 0 and marks at least one value was changed."""
+        assert self._nested_autosave_level != 0, "Attempting to edit an Options, but it wasn't made editable"
+        self._is_dirty = True
