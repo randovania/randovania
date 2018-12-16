@@ -115,7 +115,7 @@ def _create_patches(
         status_update: Callable[[str], None],
 ) -> GamePatches:
 
-    rng = Random(permalink.seed_number)
+    rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
     patches = GamePatches({})
 

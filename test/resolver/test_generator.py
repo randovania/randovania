@@ -25,7 +25,6 @@ def _create_test_layout_description(
         seed_number: int,
         configuration: LayoutConfiguration,
         pickup_mapping: Iterable[int]):
-
     pickup_database = data_reader.read_databases(configuration.game_data)[1]
     return LayoutDescription(
         permalink=Permalink(
@@ -42,19 +41,23 @@ def _create_test_layout_description(
         solver_path=())
 
 
+# TODO: this permalink is impossible for solver: B6gWMhxALWmCI50gIQBs
+
+
 _test_descriptions = [
     _create_test_layout_description(
-        seed_number=1027649936,
+        seed_number=1027649986,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
                                                       sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={}),
-        pickup_mapping=[2, 2, 46, 4, 2, 2, 2, 116, 2, 44, 112, 8, 0, 13, 114, 17, 2, 82, 115, 2, 8, 8, 37, 23, 117, 2,
-                        52, 50, 2, 4, 76, 4, 2, 75, 2, 57, 38, 8, 8, 2, 2, 4, 17, 2, 74, 2, 4, 83, 2, 43, 106, 2, 21,
-                        11, 2, 91, 2, 4, 4, 8, 2, 79, 2, 2, 27, 2, 8, 1, 2, 2, 2, 4, 86, 2, 8, 2, 69, 102, 4, 2, 2, 88,
-                        4, 15, 19, 2, 100, 2, 2, 2, 2, 53, 2, 2, 7, 2, 4, 2, 2, 2, 2, 39, 59, 24, 109, 45, 118, 17, 4,
-                        68, 4, 2, 4, 2, 2, 17, 2, 92, 2],
+        pickup_mapping=[46, 2, 2, 8, 4, 38, 8, 116, 8, 2, 4, 2, 4, 13, 2, 4, 1, 11, 2, 4, 2, 23, 37, 4, 19, 2, 76, 100,
+                        52, 2, 2, 2, 86, 2, 2, 4, 27, 2, 50, 57, 112, 92, 2, 2, 109, 115, 2, 59, 2, 106, 0, 88, 2, 7, 8,
+                        2, 2, 43, 8, 68, 2, 39, 2, 2, 2, 79, 4, 74, 114, 8, 2, 2, 44, 24, 2, 17, 2, 4, 17, 2, 4, 2, 75,
+                        17, 2, 2, 21, 69, 2, 91, 102, 4, 2, 2, 2, 2, 2, 53, 2, 2, 82, 8, 2, 83, 15, 8, 117, 2, 4, 4, 45,
+                        2, 118, 2, 2, 4, 2, 17, 2]
+        ,
     ),
     _create_test_layout_description(
         seed_number=50000,
@@ -63,12 +66,11 @@ _test_descriptions = [
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={}),
-        pickup_mapping=(113, 59, 76, 2, 62, 3, 115, 114, 1, 69, 73, 53, 81, 88, 56, 92, 93, 43, 15, 67, 23, 82, 22, 46,
-                        21, 17, 70, 5, 94, 96, 19, 71, 107, 112, 47, 97, 4, 74, 57, 77, 95, 44, 116, 13, 91, 42, 37, 48,
-                        38, 86, 85, 45, 52, 27, 102, 32, 80, 8, 66, 75, 117, 78, 118, 90, 30, 35, 33, 49, 109, 105, 9,
-                        36, 18, 54, 68, 51, 31, 63, 79, 10, 103, 98, 61, 55, 20, 104, 65, 87, 25, 101, 12, 41, 100, 106,
-                        11, 60, 6, 110, 24, 28, 108, 58, 34, 111, 0, 72, 64, 99, 7, 29, 83, 84, 39, 14, 40, 16, 89, 26,
-                        50),
+        pickup_mapping=[2, 88, 4, 7, 4, 38, 23, 76, 2, 2, 2, 46, 57, 82, 24, 2, 106, 83, 2, 39, 37, 8, 69, 2, 15, 2, 52,
+                        109, 1, 19, 2, 2, 91, 8, 2, 75, 8, 86, 2, 2, 79, 4, 43, 4, 2, 13, 0, 2, 2, 2, 4, 2, 4, 2, 4, 2,
+                        74, 2, 2, 116, 2, 2, 2, 2, 2, 2, 2, 2, 68, 50, 2, 4, 21, 2, 2, 2, 112, 4, 45, 4, 8, 4, 17, 4, 2,
+                        100, 2, 115, 8, 2, 24, 2, 4, 44, 17, 2, 2, 2, 102, 118, 11, 8, 2, 4, 2, 17, 92, 53, 2, 2, 59,
+                        114, 2, 2, 8, 17, 8, 2, 117],
     ),
     _create_test_layout_description(
         seed_number=50000,
@@ -96,11 +98,11 @@ _test_descriptions = [
                                                           "Light Suit": 2,
                                                           "Darkburst": 0
                                                       }),
-        pickup_mapping=[8, 15, 2, 4, 112, 109, 23, 2, 102, 44, 4, 2, 2, 17, 86, 91, 2, 8, 7, 4, 52, 8, 8, 38, 45, 2, 4,
-                        2, 2, 50, 4, 75, 2, 2, 8, 2, 13, 82, 4, 2, 4, 2, 2, 17, 8, 118, 4, 8, 2, 83, 4, 2, 4, 21, 88, 4,
-                        57, 2, 2, 2, 2, 2, 11, 43, 2, 115, 2, 2, 2, 2, 2, 74, 2, 2, 2, 2, 17, 76, 79, 2, 2, 2, 2, 17,
-                        24, 2, 68, 4, 114, 106, 53, 1, 2, 69, 39, 4, 2, 2, 24, 2, 37, 2, 92, 46, 2, 0, 117, 116, 2, 2,
-                        2, 59, 4, 2, 19, 100, 2, 2, 8]
+        pickup_mapping=[2, 88, 4, 7, 4, 38, 23, 76, 2, 2, 2, 46, 57, 82, 24, 2, 106, 83, 2, 39, 37, 8, 69, 2, 15, 2, 52,
+                        109, 1, 19, 2, 2, 91, 8, 2, 75, 8, 86, 2, 2, 79, 4, 43, 4, 2, 13, 0, 2, 2, 2, 4, 2, 4, 2, 4, 2,
+                        74, 2, 2, 116, 2, 2, 2, 2, 2, 2, 2, 2, 68, 50, 2, 4, 21, 2, 2, 2, 112, 4, 45, 4, 8, 4, 17, 4, 2,
+                        100, 2, 115, 8, 2, 24, 2, 4, 44, 17, 2, 2, 2, 102, 118, 11, 8, 2, 4, 2, 17, 92, 53, 2, 2, 59,
+                        114, 2, 2, 8, 17, 8, 2, 117]
         ,
     ),
 ]
@@ -237,7 +239,7 @@ def test_create_patches(mock_random: MagicMock,
     patches = generator._create_patches(permalink, game, status_update)
 
     # Assert
-    mock_random.assert_called_once_with(seed_number)
+    mock_random.assert_called_once_with(permalink.as_str)
     mock_calculate_item_pool.assert_called_once_with(permalink, game)
     mock_retcon_playthrough_filler.assert_called_once()
     assert patches.pickup_assignment == expected_result
