@@ -110,19 +110,19 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self._history_items.append(button)
         return button
 
-    def update_layout_description(self, layout: LayoutDescription):
-        self.layout_description = layout
+    def update_layout_description(self, description: LayoutDescription):
+        self.layout_description = description
         self.layout_info_tab.show()
 
-        configuration = layout.configuration
-        self.layout_seed_value_label.setText(str(layout.seed_number))
+        configuration = description.permalink.layout_configuration
+        self.layout_seed_value_label.setText(str(description.permalink.seed_number))
         self.layout_trick_value_label.setText(configuration.trick_level.value)
         self.layout_keys_value_label.setText(configuration.sky_temple_keys.value)
         self.layout_item_loss_value_label.setText(configuration.item_loss.value)
         self.layout_elevators_value_label.setText(configuration.elevators.value)
 
         for pickup_button in self.pickup_spoiler_buttons:
-            pickup = layout.pickup_assignment.get(pickup_button.pickup_index)
+            pickup = description.pickup_assignment.get(pickup_button.pickup_index)
             if pickup is not None:
                 pickup_button.item_name = pickup.name
             else:
