@@ -188,5 +188,26 @@ def test_edit_layout_quantity(option: Options,
     assert option.layout_configuration == LayoutConfiguration.from_params(**initial_layout_configuration_params)
 
 
-def test_edit_during_options_changed():
-    pass
+def test_edit_during_options_changed(tmpdir):
+    # Setup
+    option = Options(Path(tmpdir))
+    option._output_directory = Path("start")
+
+    def on_changed():
+        with option:
+            option.output_directory = Path("final")
+
+    option.on_options_changed = on_changed
+
+    # Run
+    with option:
+        option.output_directory = Path("middle")
+
+    second_option = Options(Path(tmpdir))
+    second_option.load_from_disk()
+
+    # Assert
+    assert option.output_directory == Path("final")
+    assert option.output_directory == second_option.output_directory
+
+

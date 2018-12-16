@@ -156,9 +156,9 @@ class Options:
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self._nested_autosave_level == 1:
             if self._is_dirty:
-                self._save_to_disk()
                 if self._on_options_changed is not None:
                     self._on_options_changed()
+                self._save_to_disk()
         self._nested_autosave_level -= 1
 
     # Events
