@@ -49,9 +49,6 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.vertical_layout_left.setAlignment(QtCore.Qt.AlignTop)
         self.vertical_layout_right.setAlignment(QtCore.Qt.AlignTop)
 
-    def setup_initial_combo_selection(self):
-        self.keys_selection_combo.setCurrentIndex(1)
-
     def setup_trick_level_elements(self, options: Options):
         # logic_combo_box
         self._layout_logic_labels = {
@@ -67,22 +64,18 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         for i, trick_level in enumerate(LayoutTrickLevel):
             self.logic_combo_box.setItemData(i, trick_level)
 
-        self.logic_combo_box.setCurrentIndex(self.logic_combo_box.findData(options.layout_configuration_trick_level))
         self.logic_combo_box.currentIndexChanged.connect(self._on_trick_level_changed)
-        self._refresh_trick_level_labels()
 
     def setup_elevator_elements(self, options: Options):
         self.elevators_combo.setItemData(0, LayoutRandomizedFlag.VANILLA)
         self.elevators_combo.setItemData(1, LayoutRandomizedFlag.RANDOMIZED)
 
         self.elevators_combo.options_field_name = "layout_configuration_elevators"
-        self.elevators_combo.setCurrentIndex(self.elevators_combo.findData(options.layout_configuration_elevators))
         self.elevators_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
                                                                            self._options,
                                                                            self.elevators_combo))
 
     def setup_item_loss_elements(self, options: Options):
-        self.itemloss_check.setChecked(options.layout_configuration_item_loss == LayoutEnabledFlag.ENABLED)
         self.itemloss_check.stateChanged.connect(functools.partial(_on_item_loss_changed, self._options))
 
     def setup_sky_temple_elements(self, options: Options):
@@ -91,9 +84,6 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             LayoutRandomizedFlag.VANILLA: self.skytemple_vanilla_radio,
             LayoutRandomizedFlag.RANDOMIZED: self.skytemple_randomized_radio,
         }
-
-        # Check the correct radio element
-        self._sky_temple_radios[options.layout_configuration_sky_temple_keys].setChecked(True)
 
         # Connect the options changed events, after setting the initial values
         for value, radio in self._sky_temple_radios.items():
@@ -105,9 +95,22 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()
         _update_options_when_true(self._options, "layout_configuration_trick_level", trick_level, True)
-        self._refresh_trick_level_labels()
 
-    def _refresh_trick_level_labels(self):
+    # Options
+    def on_options_changed(self):
+        # Trick Level
+        trick_level = self._options.layout_configuration_trick_level
         for label in self._layout_logic_labels.values():
             label.hide()
-        self._layout_logic_labels[self.logic_combo_box.currentData()].show()
+        self.logic_combo_box.setCurrentIndex(self.logic_combo_box.findData(trick_level))
+        self._layout_logic_labels[trick_level].show()
+
+        # Elevator
+        self.elevators_combo.setCurrentIndex(
+            self.elevators_combo.findData(self._options.layout_configuration_elevators))
+
+        # Item Loss
+        self.itemloss_check.setChecked(self._options.layout_configuration_item_loss == LayoutEnabledFlag.ENABLED)
+
+        # Sky Temple Keys
+        self._sky_temple_radios[self._options.layout_configuration_sky_temple_keys].setChecked(True)

@@ -1,4 +1,5 @@
 import base64
+import logging
 from dataclasses import dataclass
 from typing import Iterator
 
@@ -78,4 +79,7 @@ class Permalink(BitPackValue):
 
     @property
     def as_str(self) -> str:
-        return base64.b64encode(bitpacking.pack_value(self)).decode("utf-8")
+        try:
+            return base64.b64encode(bitpacking.pack_value(self)).decode("utf-8")
+        except ValueError as e:
+            return "Unable to create Permalink: {}".format(e)

@@ -80,7 +80,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         # Post setup update
         self.loaded_game_updated.emit()
-        self._on_settings_changed()
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
@@ -91,11 +90,10 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         def persist(value: int):
             with self._options as options:
                 setattr(options, attribute_name, bool(value))
-            self._on_settings_changed()
 
         return persist
 
-    def _on_settings_changed(self):
+    def on_options_changed(self):
         self.permalink_edit.setText(self._options.permalink.as_str)
         self._refresh_randomize_button_state()
 
@@ -199,8 +197,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             return int(seed)
 
     def _on_new_seed_number(self, value: str):
-        self._options.seed_number = int(value)
-        self._on_settings_changed()
+        with self._options as options:
+            options.seed_number = int(value)
 
     def _generate_new_seed_number(self):
         self.seed_number_edit.setText(str(random.randint(0, 2 ** 31)))

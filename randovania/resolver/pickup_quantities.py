@@ -17,7 +17,7 @@ class PickupQuantities(BitPackValue):
     def _calculate_bit_pack(self):
         if self._bit_pack_data is not None:
             return
-        self._bit_pack_data = []
+        bit_pack_data = []
 
         zero_quantity_pickups = []
         one_quantity_pickups = []
@@ -35,8 +35,8 @@ class PickupQuantities(BitPackValue):
         pickup_list = list(self._database.pickups.values())
         total_pickup_count = self._database.total_pickup_count
 
-        self._bit_pack_data.append((len(pickup_list), len(zero_quantity_pickups)))
-        self._bit_pack_data.append((len(pickup_list) - len(zero_quantity_pickups), len(one_quantity_pickups)))
+        bit_pack_data.append((len(pickup_list), len(zero_quantity_pickups)))
+        bit_pack_data.append((len(pickup_list) - len(zero_quantity_pickups), len(one_quantity_pickups)))
 
         # print("zero count", len(zero_quantity_pickups))
         # print("one count", len(one_quantity_pickups))
@@ -45,25 +45,31 @@ class PickupQuantities(BitPackValue):
         # print("zero!")
 
         for pickup in zero_quantity_pickups:
-            self._bit_pack_data.append((len(pickup_list), pickup_list.index(pickup)))
+            bit_pack_data.append((len(pickup_list), pickup_list.index(pickup)))
             # print(self._bit_pack_data[-1])
             pickup_list.remove(pickup)
 
         # print("many!")
 
         for pickup in multiple_quantity_pickups:
-            self._bit_pack_data.append((len(pickup_list), pickup_list.index(pickup)))
+            bit_pack_data.append((len(pickup_list), pickup_list.index(pickup)))
             pickup_list.remove(pickup)
             # print(self._bit_pack_data[-1])
 
             quantity = self._pickup_quantities[pickup]
             if total_pickup_count != quantity:
-                self._bit_pack_data.append((total_pickup_count, quantity))
+                bit_pack_data.append((total_pickup_count, quantity))
                 # print("!!!", self._bit_pack_data[-1])
             total_pickup_count -= quantity
 
         # print("one!")
-        assert total_pickup_count >= len(one_quantity_pickups) == len(pickup_list)
+        if not (total_pickup_count >= len(one_quantity_pickups) == len(pickup_list)):
+            self.validate_total_quantities()
+            raise ValueError("Unable to pack PickupQuantities: total {}, ones: {}, list_size: {}".format(
+                total_pickup_count, len(one_quantity_pickups), len(pickup_list)
+            ))
+
+        self._bit_pack_data = bit_pack_data
 
     def bit_pack_format(self) -> Iterator[int]:
         self._calculate_bit_pack()
@@ -163,7 +169,7 @@ class PickupQuantities(BitPackValue):
         total = sum(self._pickup_quantities.values())
         if total > self._database.total_pickup_count:
             raise ValueError(
-                "Invalid pickup_quantities. \n{} along with unmapped original pickups sum to more than {}".format(
+                "Invalid pickup_quantities. \n{} implies into more than {} pickups".format(
                     self.as_json,
                     self._database.total_pickup_count
                 ))
