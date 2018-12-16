@@ -52,7 +52,6 @@ def test_create_log_file_pressed(mock_pre_export_checks: MagicMock,
             default_iso_window,
             simplified_patcher.create_layout_then_export,
             message="Creating a layout...",
-            seed_number=default_iso_window._options.seed_number,
         )
     else:
         mock_background_exporter.assert_not_called()
