@@ -73,6 +73,7 @@ class Permalink(BitPackValue):
     @property
     def as_json(self) -> dict:
         return {
+            "link": self.as_str,
             "seed": self.seed_number,
             "spoiler": self.spoiler,
             "patcher_configuration": self.patcher_configuration.as_json,
