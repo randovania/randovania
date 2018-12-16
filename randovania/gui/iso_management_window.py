@@ -289,7 +289,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self._background_exporter(
             simplified_patcher.create_layout_then_export_iso,
             message="Randomizing...",
-            seed_number=self._options.seed_number,
         )
 
     def _create_log_file_pressed(self):
@@ -303,7 +302,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self._background_exporter(
             simplified_patcher.create_layout_then_export,
             message="Creating a layout...",
-            seed_number=self._options.seed_number,
         )
 
     def _randomize_from_file(self):
