@@ -105,7 +105,7 @@ def test_output_name_for():
     result = simplified_patcher._output_name_for(layout)
 
     # Assert
-    assert result == "Echoes Randomizer - AAAHUxxALWmCI50gIQA="
+    assert result == "Echoes Randomizer - AAAHUxxALWmCI50gIQDP"
 
 
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
