@@ -39,7 +39,7 @@ def _test_data():
         layout_configuration=configuration,
     )
 
-    patches = GamePatches({})
+    patches = GamePatches.empty()
     logic, state = logic_bootstrap(configuration, game, patches)
     return logic, state, permalink
 
@@ -83,7 +83,7 @@ def test_calculate_reach_with_seeds():
     item_pool = calculate_item_pool(permalink, game)
     rng = Random(50000)
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
-        item_pool, categories, game.relevant_resources))))
+        item_pool, categories, game.calculate_relevant_resources(logic.patches)))))
 
     remaining_pickups = available_pickups[1:]
 

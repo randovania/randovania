@@ -3,7 +3,6 @@ from typing import NamedTuple, Union
 
 from randovania.game_description.dock import DockWeakness
 from randovania.game_description.resources import PickupIndex, ResourceInfo, ResourceGain
-from randovania.resolver.game_patches import GamePatches
 
 
 class GenericNode(NamedTuple):
@@ -16,7 +15,7 @@ class GenericNode(NamedTuple):
         return False
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, order=True)
 class DockConnection:
     area_asset_id: int
     dock_index: int
@@ -40,7 +39,7 @@ class DockNode(NamedTuple):
         return False
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, order=True)
 class TeleporterConnection:
     world_asset_id: int
     area_asset_id: int
@@ -81,8 +80,7 @@ class PickupNode(NamedTuple):
     def resource(self) -> ResourceInfo:
         return self.pickup_index
 
-    def resource_gain_on_collect(self, patches: GamePatches,
-                                 ) -> ResourceGain:
+    def resource_gain_on_collect(self, patches) -> ResourceGain:
         yield self.resource(), 1
 
         pickup = patches.pickup_assignment.get(self.pickup_index)
@@ -105,8 +103,7 @@ class EventNode(NamedTuple):
     def resource(self) -> ResourceInfo:
         return self.event
 
-    def resource_gain_on_collect(self, patches: GamePatches,
-                                 ) -> ResourceGain:
+    def resource_gain_on_collect(self, patches) -> ResourceGain:
         yield self.resource(), 1
 
 
