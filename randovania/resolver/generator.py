@@ -69,7 +69,9 @@ def generate_list(permalink: Permalink,
     def create_failure(message: str):
         return GenerationFailure(message, permalink=permalink)
 
+    new_patches = None
     final_state_by_resolve = None
+
     with multiprocessing.dummy.Pool(1) as dummy_pool:
         patches_async = dummy_pool.apply_async(func=_create_patches,
                                                kwds=create_patches_params)
@@ -100,7 +102,7 @@ def generate_list(permalink: Permalink,
     return LayoutDescription(
         permalink=permalink,
         version=VERSION,
-        pickup_assignment=new_patches.pickup_assignment,
+        patches=new_patches,
         solver_path=solver_path
     )
 
@@ -116,15 +118,17 @@ def _create_patches(
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
-    patches = GamePatches.empty()
-
     if configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
-        for elevator in claris_randomizer.try_randomize_elevators(claris_random.Random(permalink.seed_number)):
-            patches.elevator_connection[elevator.instance_id] = TeleporterConnection(
-                elevator.connected_elevator.world_asset_id,
-                elevator.connected_elevator.area_asset_id
-            )
+        elevator_connection = claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number)
+    else:
+        elevator_connection = {}
 
+    patches = GamePatches(
+        {},
+        elevator_connection,
+        {},
+        {}
+    )
     categories = {"translator", "major", "energy_tank"}
 
     if configuration.sky_temple_keys == LayoutRandomizedFlag.VANILLA:

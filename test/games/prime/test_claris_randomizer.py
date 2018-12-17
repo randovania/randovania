@@ -6,8 +6,10 @@ from unittest.mock import patch, MagicMock, call, ANY
 import pytest
 
 import randovania
+from randovania.game_description.node import TeleporterConnection
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration
@@ -25,9 +27,9 @@ class CustomException(Exception):
 @pytest.fixture(name="description")
 def _description() -> LayoutDescriptionMock:
     return MagicMock(spec=LayoutDescription(
-        permalink=Permalink.default(),
         version=randovania.VERSION,
-        pickup_assignment={},
+        permalink=Permalink.default(),
+        patches=GamePatches.empty(),
         solver_path=()
     ))
 
@@ -432,35 +434,22 @@ def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
 
 @patch("randovania.games.prime.claris_random.Random", autospec=True)
 @patch("randovania.games.prime.claris_randomizer.try_randomize_elevators", autospec=True)
-def test_elevator_list_for_configuration_randomized(mock_try_randomize_elevators: MagicMock,
-                                                    mock_random: MagicMock):
+def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: MagicMock,
+                                              mock_random: MagicMock):
     # Setup
-    configuration = MagicMock(spec=LayoutConfiguration.default())
-    configuration.elevators = LayoutRandomizedFlag.RANDOMIZED
-    seed_number = MagicMock()
+    seed_number: int = MagicMock()
+    elevator = MagicMock()
+    mock_try_randomize_elevators.return_value = [
+        elevator
+    ]
 
     # Run
-    result = claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
+    result = claris_randomizer.elevator_connections_for_seed_number(seed_number)
 
     # Assert
     mock_random.assert_called_once_with(seed_number)
     mock_try_randomize_elevators.assert_called_once_with(mock_random.return_value)
-    assert result == mock_try_randomize_elevators.return_value
-
-
-@patch("randovania.games.prime.claris_random.Random", autospec=True)
-@patch("randovania.games.prime.claris_randomizer.try_randomize_elevators", autospec=True)
-def test_elevator_list_for_configuration_vanilla(mock_try_randomize_elevators: MagicMock,
-                                                 mock_random: MagicMock):
-    # Setup
-    configuration = MagicMock(spec=LayoutConfiguration.default())
-    configuration.elevators = LayoutRandomizedFlag.VANILLA
-    seed_number = MagicMock()
-
-    # Run
-    result = claris_randomizer.elevator_list_for_configuration(configuration, seed_number)
-
-    # Assert
-    mock_random.assert_not_called()
-    mock_try_randomize_elevators.assert_not_called()
-    assert result == []
+    assert result == {
+        elevator.instance_id: TeleporterConnection(elevator.connected_elevator.world_asset_id,
+                                                   elevator.connected_elevator.area_asset_id)
+    }

@@ -1,9 +1,10 @@
 """Classes that describes the raw data of a game world."""
 import copy
+import re
 from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet, Iterable
 
 from randovania.game_description.dock import DockWeaknessDatabase
-from randovania.game_description.node import DockNode, TeleporterNode, Node
+from randovania.game_description.node import DockNode, TeleporterNode, Node, DockConnection, TeleporterConnection
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
 from randovania.game_description.resources import ResourceInfo, \
     ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
@@ -152,6 +153,26 @@ class GameDescription:
         prefix = "{}/".format(self.nodes_to_world(node).name) if with_world else ""
         return "{}{}/{}".format(prefix, self.nodes_to_area(node).name, node.name)
 
+    def node_from_name(self, name: str) -> Node:
+        match = re.match("(?:([^/]+)/)?([^/]+)/([^/]+)", name)
+        if match is None:
+            raise ValueError("Invalid name: {}".format(name))
+
+        world_name, area_name, node_name = match.group(1, 2, 3)
+        for world in self.worlds:
+            if world_name is not None and world.name != world_name:
+                continue
+
+            for area in world.areas:
+                if area.name != area_name:
+                    continue
+
+                for node in area.nodes:
+                    if node.name == node_name:
+                        return node
+
+        raise ValueError("Unknown name: {}".format(name))
+
     def nodes_to_world(self, node: Node) -> World:
         return self._nodes_to_world[node]
 
@@ -170,7 +191,9 @@ class GameDescription:
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node:
         connection = patches.elevator_connection.get(node.teleporter_instance_id, node.default_connection)
+        return self.resolve_teleporter_connection(connection)
 
+    def resolve_teleporter_connection(self, connection: TeleporterConnection) -> Node:
         world = self.world_by_asset_id(connection.world_asset_id)
         area = world.area_by_asset_id(connection.area_asset_id)
         if area.default_node_index == 255:

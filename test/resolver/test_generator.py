@@ -26,17 +26,20 @@ def _create_test_layout_description(
         pickup_mapping: Iterable[int]):
     pickup_database = data_reader.read_databases(configuration.game_data)[1]
     return LayoutDescription(
+        version=VERSION,
         permalink=Permalink(
             seed_number=seed_number,
             spoiler=True,
             patcher_configuration=PatcherConfiguration.default(),
             layout_configuration=configuration,
         ),
-        version=VERSION,
-        pickup_assignment={
-            PickupIndex(i): pickup_database.original_pickup_mapping[PickupIndex(new_index)]
-            for i, new_index in enumerate(pickup_mapping)
-        },
+        patches=GamePatches(
+            {
+                PickupIndex(i): pickup_database.original_pickup_mapping[PickupIndex(new_index)]
+                for i, new_index in enumerate(pickup_mapping)
+            },
+            {}, {}, {}
+        ),
         solver_path=())
 
 
@@ -154,7 +157,7 @@ def test_compare_generated_with_data(benchmark,
         rounds=1)
 
     indices: List[int] = [None] * echoes_pickup_database.total_pickup_count
-    for index, pickup in generated_description.pickup_assignment.items():
+    for index, pickup in generated_description.patches.pickup_assignment.items():
         indices[index.index] = echoes_pickup_database.original_index(pickup).index
     print(indices)
 

@@ -8,11 +8,12 @@ from typing import Callable, List, Dict, Union
 from randovania import get_data_path
 from randovania.game_description import data_reader
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
+from randovania.game_description.node import TeleporterConnection
 from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
+from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag
 from randovania.resolver.layout_description import LayoutDescription
 
 _USELESS_PICKUP_NAME = "Energy Transfer Module"
@@ -240,8 +241,12 @@ def try_randomize_elevators(randomizer: claris_random.Random,
     return elevator_database
 
 
-def elevator_list_for_configuration(configuration: LayoutConfiguration, seed_number: int) -> List[Elevator]:
-    if configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
-        return try_randomize_elevators(claris_random.Random(seed_number))
-    else:
-        return []
+def elevator_connections_for_seed_number(seed_number: int,
+                                         ) -> Dict[int, TeleporterConnection]:
+    elevator_connection = {}
+    for elevator in try_randomize_elevators(claris_random.Random(seed_number)):
+        elevator_connection[elevator.instance_id] = TeleporterConnection(
+            elevator.connected_elevator.world_asset_id,
+            elevator.connected_elevator.area_asset_id
+        )
+    return elevator_connection

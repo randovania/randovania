@@ -5,6 +5,7 @@ import pytest
 
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration
@@ -84,14 +85,14 @@ def test_generate_layout(mock_generate_layout: MagicMock,
 def test_output_name_for():
     # Setup
     layout = LayoutDescription(
+        version="0.15.0",
         permalink=Permalink(
             seed_number=15000,
             spoiler=True,
             patcher_configuration=PatcherConfiguration.default(),
             layout_configuration=LayoutConfiguration.default(),
         ),
-        version="0.15.0",
-        pickup_assignment={},
+        patches=GamePatches.empty(),
         solver_path=()
     )
 

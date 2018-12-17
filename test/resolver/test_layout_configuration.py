@@ -4,6 +4,9 @@ from typing import Tuple, Dict
 import pytest
 
 import randovania
+from randovania.game_description import data_reader
+from randovania.games.prime import claris_randomizer
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutTrickLevel, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription, SolverPath, _item_locations_to_pickup_assignment
 from randovania.resolver.patcher_configuration import PatcherConfiguration
@@ -33,10 +36,16 @@ def test_round_trip_default(permalink: Permalink,
                             item_locations: Dict[str, Dict[str, str]],
                             solver_path: Tuple[SolverPath, ...]
                             ):
+
+    game = data_reader.decode_data(permalink.layout_configuration.game_data)
     original = LayoutDescription(
         version=randovania.VERSION,
         permalink=permalink,
-        pickup_assignment=_item_locations_to_pickup_assignment(item_locations),
+        patches=GamePatches(
+            _item_locations_to_pickup_assignment(game, item_locations),
+            claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number),
+            {}, {}
+        ),
         solver_path=solver_path,
     )
 
