@@ -52,12 +52,15 @@ class World(NamedTuple):
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
 
-def _calculate_dangerous_resources(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
+def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[SimpleResourceInfo]:
+    for list_by_type in db:
+        for dock_weakness in list_by_type:
+            yield from dock_weakness.requirements.dangerous_resources
+
+
+def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
     for area in areas:
         for node in area.nodes:
-            if isinstance(node, DockNode):
-                yield from node.dock_weakness.requirements.dangerous_resources
-
             for connection in area.connections[node].values():
                 yield from connection.dangerous_resources
 
@@ -122,7 +125,9 @@ class GameDescription:
         self.item_loss_items = item_loss_items
         self.worlds = worlds
 
-        self.dangerous_resources = frozenset(_calculate_dangerous_resources(self.all_areas))
+        self.dangerous_resources = frozenset(
+            _calculate_dangerous_resources_in_areas(self.all_areas)) | frozenset(
+            _calculate_dangerous_resources_in_db(self.dock_weakness_database))
 
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
@@ -154,12 +159,16 @@ class GameDescription:
 
     def resolve_dock_node(self, node: DockNode) -> Node:
         world = self.nodes_to_world(node)
-        area = world.area_by_asset_id(node.connected_area_asset_id)
-        return area.node_with_dock_index(node.connected_dock_index)
+        connection = node.default_connection
+
+        area = world.area_by_asset_id(connection.area_asset_id)
+        return area.node_with_dock_index(connection.dock_index)
 
     def resolve_teleporter_node(self, node: TeleporterNode) -> Node:
-        world = self.world_by_asset_id(node.destination_world_asset_id)
-        area = world.area_by_asset_id(node.destination_area_asset_id)
+        connection = node.default_connection
+
+        world = self.world_by_asset_id(connection.world_asset_id)
+        area = world.area_by_asset_id(connection.area_asset_id)
         if area.default_node_index == 255:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
         return area.nodes[area.default_node_index]
@@ -175,7 +184,7 @@ class GameDescription:
             # Includes opening form behind with different criteria
             try:
                 target_node = self.resolve_dock_node(node)
-                yield target_node, node.dock_weakness.requirements
+                yield target_node, node.default_dock_weakness.requirements
             except IndexError:
                 # TODO: fix data to not having docks pointing to nothing
                 yield None, RequirementSet.impossible()

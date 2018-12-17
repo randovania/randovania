@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import NamedTuple, Union
 
 from randovania.game_description.dock import DockWeakness
@@ -15,33 +16,47 @@ class GenericNode(NamedTuple):
         return False
 
 
+@dataclass(frozen=True)
+class DockConnection:
+    area_asset_id: int
+    dock_index: int
+
+    def __repr__(self):
+        return "{}/{}".format(self.area_asset_id, self.dock_index)
+
+
 class DockNode(NamedTuple):
     name: str
     heal: bool
     dock_index: int
-    connected_area_asset_id: int
-    connected_dock_index: int
-    dock_weakness: DockWeakness
+    default_connection: DockConnection
+    default_dock_weakness: DockWeakness
 
     def __repr__(self):
-        return "DockNode({!r}/{} -> {}/{})".format(self.name, self.dock_index,
-                                                   self.connected_area_asset_id, self.connected_dock_index)
+        return "DockNode({!r}/{} -> {})".format(self.name, self.dock_index, self.default_connection)
 
     @property
     def is_resource_node(self) -> bool:
         return False
 
 
+@dataclass(frozen=True)
+class TeleporterConnection:
+    world_asset_id: int
+    area_asset_id: int
+
+    def __repr__(self):
+        return "{}/{}".format(self.world_asset_id, self.area_asset_id)
+
+
 class TeleporterNode(NamedTuple):
     name: str
     heal: bool
-    destination_world_asset_id: int
-    destination_area_asset_id: int
     teleporter_instance_id: int
+    default_connection: TeleporterConnection
 
     def __repr__(self):
-        return "TeleporterNode({!r} -> {}/{})".format(
-            self.name, self.destination_world_asset_id, self.destination_area_asset_id)
+        return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)
 
     @property
     def is_resource_node(self) -> bool:

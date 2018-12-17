@@ -45,7 +45,7 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
     )
 
     # Run
-    result = game_description._calculate_dangerous_resources([area_a, area_b])
+    result = game_description._calculate_dangerous_resources_in_areas([area_a, area_b])
 
     # Assert
     assert set(result) == set(expected_result)
