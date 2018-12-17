@@ -33,7 +33,6 @@ def test_round_trip_default(permalink: Permalink,
                             item_locations: Dict[str, Dict[str, str]],
                             solver_path: Tuple[SolverPath, ...]
                             ):
-
     original = LayoutDescription(
         version=randovania.VERSION,
         permalink=permalink,

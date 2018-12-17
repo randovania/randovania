@@ -362,7 +362,6 @@ def collect_all_safe_resources_in_reach(reach, patches):
 def reach_with_all_safe_resources(logic: Logic,
                                   initial_state: State,
                                   patches: GamePatches) -> GeneratorReach:
-
     reach = GeneratorReach.reach_from_state(logic, initial_state)
     collect_all_safe_resources_in_reach(reach, patches)
     return reach

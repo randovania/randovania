@@ -52,7 +52,6 @@ def _calculate_reach_for_progression(reach: GeneratorReach,
                                      progression: PickupEntry,
                                      reach_for_pickup: Dict[PickupEntry, GeneratorReach],
                                      ):
-
     return advance_to_with_reach_copy(reach,
                                       state_with_pickup(reach.state, progression),
                                       reach.logic.patches)

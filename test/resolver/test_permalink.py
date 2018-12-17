@@ -102,4 +102,3 @@ def test_decode_v0():
 
     # Assert
     assert link == expected
-

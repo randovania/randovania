@@ -56,7 +56,6 @@ def _run_with_args(args: List[Union[str, Path]],
 def _base_args(game_root: Path,
                hud_memo_popup_removal: bool,
                ) -> List[str]:
-
     game_files = game_root / "files"
     validate_game_files_path(game_files)
 
@@ -81,7 +80,6 @@ def _ensure_no_menu_mod(
 
     if menu_mod_txt.is_file() and pak_folder.is_dir():
         for pak in pak_folder.glob("**/*.pak"):
-
             relative = pak.relative_to(pak_folder)
             status_update("Restoring {} from backup".format(relative))
             shutil.copy(pak, files_folder.joinpath(relative))

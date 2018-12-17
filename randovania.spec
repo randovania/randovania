@@ -2,7 +2,6 @@
 
 block_cipher = None
 
-
 a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              pathex=[],
              binaries=[],
@@ -18,7 +17,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              cipher=block_cipher,
              noarchive=False)
 pyz = PYZ(a.pure, a.zipped_data,
-             cipher=block_cipher)
+          cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
           [],
@@ -27,7 +26,7 @@ exe = EXE(pyz,
           debug=False,
           strip=False,
           upx=False,
-          console=True )
+          console=True)
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

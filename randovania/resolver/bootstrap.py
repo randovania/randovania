@@ -171,7 +171,8 @@ def logic_bootstrap(configuration: LayoutConfiguration,
         _add_minimal_restrictions_initial_resources(starting_state.resources,
                                                     game.resource_database)
 
-    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level, game.resource_database)
+    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level,
+                                                                           game.resource_database)
 
     starting_state.resources = merge_resources(static_resources, starting_state.resources)
     starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level

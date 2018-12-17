@@ -23,4 +23,3 @@ def test_remove_pickup_entry_from_list():
         PickupEntry("Item A", {}, ""),
         PickupEntry("Item C", {}, ""),
     )
-

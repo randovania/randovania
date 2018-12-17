@@ -62,14 +62,12 @@ def read_individual_requirement(data: Dict, resource_database: ResourceDatabase
 def read_requirement_list(data: List[Dict],
                           resource_database: ResourceDatabase,
                           ) -> Optional[RequirementList]:
-
     individuals = read_array(data, lambda x: read_individual_requirement(x, resource_database=resource_database))
     return RequirementList.without_misc_resources(individuals, resource_database)
 
 
 def read_requirement_set(data: List[List[Dict]],
                          resource_database: ResourceDatabase) -> RequirementSet:
-
     alternatives = read_array(data, lambda x: read_requirement_list(x, resource_database=resource_database))
     return RequirementSet(alternative for alternative in alternatives if alternative is not None)
 
@@ -80,7 +78,6 @@ def read_requirement_set(data: List[List[Dict]],
 def read_dock_weakness_database(data: Dict,
                                 resource_database: ResourceDatabase,
                                 ) -> DockWeaknessDatabase:
-
     def read_dock_weakness(item: Dict) -> DockWeakness:
         return DockWeakness(item["index"], item["name"], item["is_blast_door"],
                             read_requirement_set(item["requirement_set"], resource_database))
@@ -207,7 +204,6 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
 
 def read_pickup_database(data: Dict,
                          resource_database: ResourceDatabase) -> PickupDatabase:
-
     pickups = {
         name: PickupEntry.from_data(name, item, resource_database)
         for name, item in data["pickups"].items()
