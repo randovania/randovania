@@ -116,7 +116,8 @@ def _create_patches(
 ) -> GamePatches:
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
-    patches = GamePatches({})
+
+    patches = GamePatches.empty()
 
     categories = {"translator", "major", "energy_tank"}
 
@@ -148,4 +149,4 @@ def _create_patches(
 
     assert not remaining_items
 
-    return GamePatches(new_pickup_mapping)
+    return GamePatches(new_pickup_mapping, {}, {}, {})

@@ -8,6 +8,7 @@ from randovania.game_description.requirements import RequirementSet, Satisfiable
 from randovania.game_description.resources import ResourceInfo, \
     ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
     PickupDatabase
+from randovania.resolver.game_patches import GamePatches
 
 
 class Area(NamedTuple):
@@ -157,15 +158,18 @@ class GameDescription:
     def nodes_to_area(self, node: Node) -> Area:
         return self._nodes_to_area[node]
 
-    def resolve_dock_node(self, node: DockNode) -> Node:
+    def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         world = self.nodes_to_world(node)
-        connection = node.default_connection
+        original_area = self.nodes_to_area(node)
 
-        area = world.area_by_asset_id(connection.area_asset_id)
-        return area.node_with_dock_index(connection.dock_index)
+        connection = patches.dock_connection.get((original_area.area_asset_id, node.dock_index),
+                                                 node.default_connection)
 
-    def resolve_teleporter_node(self, node: TeleporterNode) -> Node:
-        connection = node.default_connection
+        target_area = world.area_by_asset_id(connection.area_asset_id)
+        return target_area.node_with_dock_index(connection.dock_index)
+
+    def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node:
+        connection = patches.elevator_connection.get(node.teleporter_instance_id, node.default_connection)
 
         world = self.world_by_asset_id(connection.world_asset_id)
         area = world.area_by_asset_id(connection.area_asset_id)
@@ -173,9 +177,10 @@ class GameDescription:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
         return area.nodes[area.default_node_index]
 
-    def connections_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+    def connections_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, RequirementSet]]:
         """
         Queries all nodes from other areas you can go from a given node. Aka, doors and teleporters
+        :param patches:
         :param node:
         :return: Generator of pairs Node + RequirementSet for going to that node
         """
@@ -183,15 +188,19 @@ class GameDescription:
             # TODO: respect is_blast_shield: if already opened once, no requirement needed.
             # Includes opening form behind with different criteria
             try:
-                target_node = self.resolve_dock_node(node)
-                yield target_node, node.default_dock_weakness.requirements
+                target_node = self.resolve_dock_node(node, patches)
+                original_area = self.nodes_to_area(node)
+                dock_weakness = patches.dock_weakness.get((original_area.area_asset_id, node.dock_index),
+                                                          node.default_dock_weakness)
+
+                yield target_node, dock_weakness.requirements
             except IndexError:
                 # TODO: fix data to not having docks pointing to nothing
                 yield None, RequirementSet.impossible()
 
         if isinstance(node, TeleporterNode):
             try:
-                yield self.resolve_teleporter_node(node), RequirementSet.trivial()
+                yield self.resolve_teleporter_node(node, patches), RequirementSet.trivial()
             except IndexError:
                 # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
                 print("Teleporter is broken!", node)
@@ -207,13 +216,14 @@ class GameDescription:
         for target_node, requirements in area.connections[node].items():
             yield target_node, requirements
 
-    def potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+    def potential_nodes_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, RequirementSet]]:
         """
         Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
         :param node:
+        :param patches:
         :return: Generator of pairs Node + RequirementSet for going to that node
         """
-        yield from self.connections_from(node)
+        yield from self.connections_from(node, patches)
         yield from self.area_connections_from(node)
 
     def simplify_connections(self, static_resources: CurrentResources) -> None:
@@ -229,12 +239,11 @@ class GameDescription:
                     for target, value in connections.items():
                         connections[target] = value.simplify(static_resources, self.resource_database)
 
-    @property
-    def relevant_resources(self) -> FrozenSet[ResourceInfo]:
+    def calculate_relevant_resources(self, patches: GamePatches) -> FrozenSet[ResourceInfo]:
         results = set()
 
         for node in self.all_nodes:
-            for _, requirements in self.potential_nodes_from(node):
+            for _, requirements in self.potential_nodes_from(node, patches):
                 for alternative in requirements.alternatives:
                     for individual in alternative.items:
                         results.add(individual.resource)

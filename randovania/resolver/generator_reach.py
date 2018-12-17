@@ -115,7 +115,7 @@ class GeneratorReach:
 
         extra_requirement = _extra_requirement_for_node(game, node)
 
-        for target_node, requirements in game.potential_nodes_from(node):
+        for target_node, requirements in game.potential_nodes_from(node, self.logic.patches):
             if target_node is None:
                 continue
 

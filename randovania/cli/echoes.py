@@ -71,7 +71,10 @@ def validate_command_logic(args):
         pickup_assignment = game.pickup_database.original_pickup_mapping
 
     patches = GamePatches(
-        pickup_assignment
+        pickup_assignment,
+        {},
+        {},
+        {}
     )
 
     final_state_by_resolve = resolver.resolve(
