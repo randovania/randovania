@@ -4,7 +4,7 @@ from randovania.game_description.dock import DockWeakness, DockType, DockWeaknes
 from randovania.game_description.echoes_elevator import Elevator
 from randovania.game_description.game_description import World, Area, GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    is_resource_node
+    is_resource_node, DockConnection, TeleporterConnection
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
     ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase, PickupDatabase, \
@@ -122,11 +122,10 @@ class WorldReader:
             return GenericNode(name, heal, self.generic_index)
 
         elif node_type == 1:
-            return DockNode(
-                name, heal, data["dock_index"],
-                data["connected_area_asset_id"], data["connected_dock_index"],
-                self.dock_weakness_database.get_by_type_and_index(
-                    DockType(data["dock_type"]), data["dock_weakness_index"]))
+            return DockNode(name, heal, data["dock_index"],
+                            DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
+                            self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
+                                                                              data["dock_weakness_index"]))
 
         elif node_type == 2:
             return PickupNode(name, heal, PickupIndex(data["pickup_index"]))
@@ -141,10 +140,8 @@ class WorldReader:
                 destination_world_asset_id = data["destination_world_asset_id"]
                 destination_area_asset_id = data["destination_area_asset_id"]
 
-            return TeleporterNode(name, heal,
-                                  destination_world_asset_id,
-                                  destination_area_asset_id,
-                                  instance_id)
+            return TeleporterNode(name, heal, instance_id,
+                                  TeleporterConnection(destination_world_asset_id, destination_area_asset_id))
 
         elif node_type == 4:
             return EventNode(name, heal,
