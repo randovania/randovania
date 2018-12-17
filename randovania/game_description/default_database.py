@@ -20,4 +20,4 @@ def default_prime2_pickup_database() -> PickupDatabase:
 
 def default_prime2_game_description(add_self_as_requirement_to_resources: bool = True,
                                     ) -> GameDescription:
-    return data_reader.decode_data(default_data.decode_default_prime2(), [], add_self_as_requirement_to_resources)
+    return data_reader.decode_data(default_data.decode_default_prime2(), add_self_as_requirement_to_resources)

@@ -5,9 +5,9 @@ from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import ResourceNode
+from randovania.game_description.node import ResourceNode, TeleporterConnection
 from randovania.game_description.resources import PickupEntry
-from randovania.games.prime import claris_randomizer
+from randovania.games.prime import claris_randomizer, claris_random
 from randovania.resolver import resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
@@ -54,7 +54,6 @@ def _state_to_solver_path(final_state: State,
 def generate_list(permalink: Permalink,
                   status_update: Optional[Callable[[str], None]],
                   ) -> LayoutDescription:
-    elevators = claris_randomizer.elevator_list_for_configuration(permalink.layout_configuration, permalink.seed_number)
     if status_update is None:
         status_update = id
 
@@ -62,14 +61,15 @@ def generate_list(permalink: Permalink,
 
     create_patches_params = {
         "permalink": permalink,
-        "game": data_reader.decode_data(data, elevators, False),
+        "game": data_reader.decode_data(data, False),
         "status_update": status_update
     }
-    resolver_game = data_reader.decode_data(data, elevators)
+    resolver_game = data_reader.decode_data(data)
 
     def create_failure(message: str):
         return GenerationFailure(message, permalink=permalink)
 
+    final_state_by_resolve = None
     with multiprocessing.dummy.Pool(1) as dummy_pool:
         patches_async = dummy_pool.apply_async(func=_create_patches,
                                                kwds=create_patches_params)
@@ -97,7 +97,6 @@ def generate_list(permalink: Permalink,
     else:
         solver_path = _state_to_solver_path(final_state_by_resolve, resolver_game)
 
-    # TODO: USE PERMALINK
     return LayoutDescription(
         permalink=permalink,
         version=VERSION,
@@ -118,6 +117,13 @@ def _create_patches(
     configuration = permalink.layout_configuration
 
     patches = GamePatches.empty()
+
+    if configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
+        for elevator in claris_randomizer.try_randomize_elevators(claris_random.Random(permalink.seed_number)):
+            patches.elevator_connection[elevator.instance_id] = TeleporterConnection(
+                elevator.connected_elevator.world_asset_id,
+                elevator.connected_elevator.area_asset_id
+            )
 
     categories = {"translator", "major", "energy_tank"}
 
@@ -149,4 +155,6 @@ def _create_patches(
 
     assert not remaining_items
 
-    return GamePatches(new_pickup_mapping, {}, {}, {})
+    return GamePatches(new_pickup_mapping,
+                       patches.elevator_connection,
+                       {}, {})

@@ -96,20 +96,16 @@ def read_dock_weakness_database(data: Dict,
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    elevators: Dict[int, Elevator]
     generic_index: int = 0
 
     def __init__(self,
                  resource_database: ResourceDatabase,
                  dock_weakness_database: DockWeaknessDatabase,
-                 elevators: List[Elevator],
-                 add_self_as_requirement_to_resources: bool):
+                 add_self_as_requirement_to_resources: bool,
+                 ):
+
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
-        self.elevators = {
-            elevator.instance_id: elevator
-            for elevator in elevators
-        }
         self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
     def read_node(self, data: Dict) -> Node:
@@ -132,13 +128,9 @@ class WorldReader:
 
         elif node_type == 3:
             instance_id = data["teleporter_instance_id"]
-            if instance_id in self.elevators:
-                elevator = self.elevators[instance_id]
-                destination_world_asset_id = elevator.connected_elevator.world_asset_id
-                destination_area_asset_id = elevator.connected_elevator.area_asset_id
-            else:
-                destination_world_asset_id = data["destination_world_asset_id"]
-                destination_area_asset_id = data["destination_area_asset_id"]
+
+            destination_world_asset_id = data["destination_world_asset_id"]
+            destination_area_asset_id = data["destination_area_asset_id"]
 
             return TeleporterNode(name, heal, instance_id,
                                   TeleporterConnection(destination_world_asset_id, destination_area_asset_id))
@@ -223,10 +215,7 @@ def _convert_to_resource_gain(data: Dict[str, int], resource_database: ResourceD
     ]
 
 
-def decode_data(data: Dict,
-                elevators: List[Elevator],
-                add_self_as_requirement_to_resources: bool = True,
-                ) -> GameDescription:
+def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -> GameDescription:
     game = data["game"]
     game_name = data["game_name"]
 
@@ -234,10 +223,7 @@ def decode_data(data: Dict,
     pickup_database = read_pickup_database(data, resource_database)
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
-    worlds = WorldReader(resource_database,
-                         dock_weakness_database,
-                         elevators,
-                         add_self_as_requirement_to_resources).read_world_list(data["worlds"])
+    worlds = WorldReader(resource_database, dock_weakness_database, add_self_as_requirement_to_resources).read_world_list(data["worlds"])
 
     starting_world_asset_id = data["starting_world_asset_id"]
     starting_area_asset_id = data["starting_area_asset_id"]
