@@ -1,14 +1,15 @@
 import collections
 import json
+from dataclasses import dataclass
 from distutils.version import StrictVersion
 from pathlib import Path
 from typing import NamedTuple, Tuple, Dict, List
 
-from randovania.game_description import echoes_elevator
-from randovania.game_description.default_database import default_prime2_game_description
+from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import PickupNode
+from randovania.game_description.node import PickupNode, Node, TeleporterNode, TeleporterConnection
 from randovania.game_description.resources import PickupAssignment
+from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.permalink import Permalink
 
 
@@ -38,16 +39,6 @@ def _pickup_assignment_to_item_locations(game: GameDescription,
     return items_locations
 
 
-def _elevator_to_location(game: GameDescription,
-                          elevator: echoes_elevator.Elevator,
-                          ) -> str:
-    world = game.world_by_asset_id(elevator.world_asset_id)
-    return "{}/{}".format(
-        world.name,
-        world.area_by_asset_id(elevator.area_asset_id).name
-    )
-
-
 def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPath, ...]:
     return tuple(
         SolverPath(
@@ -58,8 +49,9 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
     )
 
 
-def _item_locations_to_pickup_assignment(locations: Dict[str, Dict[str, str]]) -> PickupAssignment:
-    game = default_prime2_game_description()
+def _item_locations_to_pickup_assignment(game: GameDescription,
+                                         locations: Dict[str, Dict[str, str]],
+                                         ) -> PickupAssignment:
     pickup_assignment = {}
 
     for world_name, world_data in locations.items():
@@ -86,10 +78,36 @@ def _item_locations_to_pickup_assignment(locations: Dict[str, Dict[str, str]]) -
     return pickup_assignment
 
 
-class LayoutDescription(NamedTuple):
+def _node_mapping_to_elevator_connection(game: GameDescription,
+                                         elevators: Dict[str, str],
+                                         ) -> Dict[int, TeleporterConnection]:
+
+    result = {}
+    for source_name, target_node in elevators.items():
+        source_node: TeleporterNode = game.node_from_name(source_name)
+        target_node = game.node_from_name(target_node)
+
+        result[source_node.teleporter_instance_id] = TeleporterConnection(
+            game.nodes_to_world(target_node).world_asset_id,
+            game.nodes_to_area(target_node).area_asset_id
+        )
+
+    return result
+
+
+def _find_node_with_teleporter(game: GameDescription, teleporter_id: int) -> Node:
+    for node in game.all_nodes:
+        if isinstance(node, TeleporterNode):
+            if node.teleporter_instance_id == teleporter_id:
+                return node
+    raise ValueError("Unknown teleporter_id: {}".format(teleporter_id))
+
+
+@dataclass(frozen=True)
+class LayoutDescription:
     version: str
     permalink: Permalink
-    pickup_assignment: PickupAssignment
+    patches: GamePatches
     solver_path: Tuple[SolverPath, ...]
 
     @classmethod
@@ -106,10 +124,18 @@ class LayoutDescription(NamedTuple):
         if not permalink.spoiler:
             raise ValueError("Unable to read details of seed log with spoiler disabled")
 
+        game = data_reader.decode_data(permalink.layout_configuration.game_data)
+        patches = GamePatches(
+            _item_locations_to_pickup_assignment(game, json_dict["locations"]),
+            _node_mapping_to_elevator_connection(game, json_dict["elevators"]),
+            {},
+            {}
+        )
+
         return LayoutDescription(
             version=version,
             permalink=permalink,
-            pickup_assignment=_item_locations_to_pickup_assignment(json_dict["locations"]),
+            patches=patches,
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
 
@@ -128,17 +154,17 @@ class LayoutDescription(NamedTuple):
         }
 
         if self.permalink.spoiler:
-            from randovania.games.prime import claris_randomizer
-            game = default_prime2_game_description()
+            game = data_reader.decode_data(self.permalink.layout_configuration.game_data)
 
             result["locations"] = {
                 key: value
-                for key, value in sorted(_pickup_assignment_to_item_locations(game, self.pickup_assignment).items())
+                for key, value in sorted(_pickup_assignment_to_item_locations(game,
+                                                                              self.patches.pickup_assignment).items())
             }
             result["elevators"] = {
-                _elevator_to_location(game, elevator): _elevator_to_location(game, elevator.connected_elevator)
-                for elevator in claris_randomizer.elevator_list_for_configuration(self.permalink.layout_configuration,
-                                                                                  self.permalink.seed_number)
+                game.node_name(_find_node_with_teleporter(game, teleporter_id), with_world=True):
+                    game.node_name(game.resolve_teleporter_connection(connection), with_world=True)
+                for teleporter_id, connection in self.patches.elevator_connection.items()
             }
             result["playthrough"] = [
                 {
@@ -163,5 +189,5 @@ class LayoutDescription(NamedTuple):
         return LayoutDescription(
             permalink=self.permalink,
             version=self.version,
-            pickup_assignment=self.pickup_assignment,
+            patches=self.patches,
             solver_path=())
