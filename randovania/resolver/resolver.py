@@ -41,7 +41,8 @@ def _simplify_requirement_set_for_additional_requirements(requirements: Requirem
                           if alternative is not None)
 
 
-def _inner_advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Tuple[Optional[State], bool]:
+def _inner_advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Tuple[
+    Optional[State], bool]:
     if logic.game.victory_condition.satisfied(state.resources, state.resource_database):
         return state, True
 
@@ -82,7 +83,6 @@ def resolve(configuration: LayoutConfiguration,
             patches: GamePatches,
             status_update: Optional[Callable[[str], None]] = None
             ) -> Optional[State]:
-
     if status_update is None:
         status_update = lambda s: None
 

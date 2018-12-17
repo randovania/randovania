@@ -10,7 +10,6 @@ from randovania.resolver.permalink import Permalink
 def calculate_item_pool(permalink: Permalink,
                         game: GameDescription,
                         ) -> List[PickupEntry]:
-
     useless_item = game.pickup_database.pickup_by_name("Energy Transfer Module")
     item_pool: List[PickupEntry] = []
     pickup_quantities = permalink.layout_configuration.pickup_quantities

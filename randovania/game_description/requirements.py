@@ -86,7 +86,7 @@ class RequirementList:
     @classmethod
     def without_misc_resources(cls,
                                items: Iterable[IndividualRequirement],
-                               database: ResourceDatabase,) -> Optional["RequirementList"]:
+                               database: ResourceDatabase, ) -> Optional["RequirementList"]:
 
         difficulty = 0
 
@@ -340,7 +340,7 @@ class RequirementSet:
         """
         for alternative in self.alternatives:
             yield from alternative.dangerous_resources
-            
+
     @property
     def progression_resources(self) -> FrozenSet[SimpleResourceInfo]:
         return frozenset(

@@ -19,7 +19,7 @@ def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
 def iterate_with_weights(items: List[T],
                          item_weights: Dict[T, float],
                          rng: Random,
-                         )-> Iterator[T]:
+                         ) -> Iterator[T]:
     """
     Iterates over the given list randomly, with each item having the probability listed in item_weigths
     :param items:

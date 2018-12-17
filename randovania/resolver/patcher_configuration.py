@@ -44,4 +44,4 @@ class PatcherConfiguration:
         return cls(
             disable_hud_popup=bool(disable_hud_popup),
             menu_mod=bool(menu_mod),
-       )
+        )
