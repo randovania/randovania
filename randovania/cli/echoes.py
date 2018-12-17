@@ -7,7 +7,8 @@ from pathlib import Path
 
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
-from randovania.games.prime import claris_randomizer
+from randovania.game_description.node import TeleporterConnection
+from randovania.games.prime import claris_randomizer, claris_random
 from randovania.resolver import debug, generator, resolver
 from randovania.resolver.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
@@ -51,14 +52,19 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
 def validate_command_logic(args):
     debug._DEBUG_LEVEL = args.debug
     data = prime_database.decode_data_file(args)
+    game = data_reader.decode_data(data)
 
     if args.layout_file is not None:
         description = LayoutDescription.from_file(Path(args.layout_file))
         configuration = description.permalink.layout_configuration
         pickup_assignment = description.pickup_assignment
-        elevators = claris_randomizer.elevator_list_for_configuration(configuration, description.permalink.seed_number)
-        game = data_reader.decode_data(data, elevators)
 
+        elevator_connection = {}
+        for elevator in claris_randomizer.try_randomize_elevators(claris_random.Random(description.permalink.seed_number)):
+            elevator_connection[elevator.instance_id] = TeleporterConnection(
+                elevator.connected_elevator.world_asset_id,
+                elevator.connected_elevator.area_asset_id
+            )
     else:
         configuration = LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.NO_TRICKS,
@@ -67,12 +73,12 @@ def validate_command_logic(args):
             elevators=LayoutRandomizedFlag.VANILLA,
             pickup_quantities={}
         )
-        game = data_reader.decode_data(data, [])
         pickup_assignment = game.pickup_database.original_pickup_mapping
+        elevator_connection = {}
 
     patches = GamePatches(
         pickup_assignment,
-        {},
+        elevator_connection,
         {},
         {}
     )
