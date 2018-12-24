@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QTreeWidgetItem, QListWidgetItem
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QListWidgetItem
 
 from randovania.game_description import data_reader
 from randovania.games.prime import default_data

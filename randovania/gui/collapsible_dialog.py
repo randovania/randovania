@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import (QPushButton, QDialog, QTreeWidget,
+from PySide2.QtWidgets import (QPushButton, QDialog, QTreeWidget,
                              QTreeWidgetItem, QVBoxLayout,
                              QHBoxLayout, QFrame, QLabel)
 

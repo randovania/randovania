@@ -2,12 +2,12 @@ import threading
 import traceback
 from typing import Optional
 
-from PyQt5.QtCore import pyqtSignal
+from PySide2.QtCore import Signal
 
 
 class BackgroundTaskMixin:
-    progress_update_signal = pyqtSignal(str, int)
-    background_tasks_button_lock_signal = pyqtSignal(bool)
+    progress_update_signal = Signal(str, int)
+    background_tasks_button_lock_signal = Signal(bool)
     abort_background_task_requested: bool = False
     _background_thread: Optional[threading.Thread] = None
 

@@ -1,7 +1,7 @@
 from typing import Dict, Optional, List, Iterable
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroupBox, QVBoxLayout
+from PySide2.QtCore import Qt
+from PySide2.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroupBox, QVBoxLayout
 
 from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.game_description.game_description import World, Area

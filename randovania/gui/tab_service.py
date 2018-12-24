@@ -1,6 +1,6 @@
 from typing import Optional, TypeVar, List
 
-from PyQt5.QtWidgets import QTabWidget
+from PySide2.QtWidgets import QTabWidget
 
 T = TypeVar("T")
 
