@@ -2,7 +2,7 @@ from typing import Union
 from unittest.mock import MagicMock, patch
 
 import pytest
-from PyQt5 import QtCore
+from PySide2 import QtCore
 
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.iso_management_window import ISOManagementWindow
