@@ -22,11 +22,11 @@ matrix:
 
 deploy:
   provider: script
-  # TODO: this only works because we have only one job
   script: python -m twine upload dist/*
   skip_cleanup: true
   on:
     tags: true
+    condition: $INCLUDE_SDIST = true
 
 before_install:
 - |
