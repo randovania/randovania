@@ -35,6 +35,40 @@ in the folder you selected in 'Output Folder'
    ![Generation Failure](randovania-readme/gui-6.png)
    
    
+## FAQ
+
+**I can't use this spider track, even though I have Spider Ball!**
+
+The following rooms have surprising vanilla behaviour about their spider tracks:
+
+* Main Reactor (Agon Wastes)
+
+    The spider tracks only works after you beat Dark Samus 1 *and reloads the room*.
+    When playing with no tricks, this means you need Dark Beam to escape the room.
+
+* Dynamo Works (Sanctuary Fortress)
+
+    The spider tracks only works after you beat Spider Guardian. When playing with no tricks,
+    you can't leave this way until you do that.
+
+**I can't open this Translator Gate, even though I have the correct translator!**
+
+* GFMC Compound (Temple Grounds)
+    
+    This is actually a Violet gate.
+    
+* Meeting Grounds (Temple Grounds)
+
+    This is actually a Violet gate.
+    
+* Torvus Temple (Torvus Bog)
+
+    In order to open the elevator, you also need to pick the item in Torvus Energy Controller.
+    
+**Where is the Flying Ing Cache inside Dark Oasis?**
+
+The Flying Ing Cache in this room appears only after you beat the Power Bomb Guardian.
+       
 ## Community
 
 Join the Metroid Prime Randomizer Discord: https://discord.gg/gymstUz
