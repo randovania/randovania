@@ -6,23 +6,35 @@ You could find the Light Beam right off the start, or the Bombs deep inside Sanc
 
 ### Windows
 
-In the [releases page](https://github.com/henriquegemignani/randovania/releases) we have zip files with everything ready to use.
-Just extract and run!
+In the [releases page](https://github.com/henriquegemignani/randovania/releases) we have zip files
+with everything ready to use. Just extract and run!
 
 ## Usage
 
-![Randovania GUI](randovania-readme/gui-1.png)
+1. Press 'Load Game' and then select a Metroid Prime 2: Echoes ISO file.
+Use a Nintendo GameCube version, either USA or PAL.
+![Randovania Main GUI](randovania-readme/gui-1.png)
+   - Give it a few minutes to finish. This operation needs roughly 2 GiB of free
+   storage in your system. (more precisely, local AppData)
 
-Pressing "Randomize" will open a prompt where you can select your unmodified Metroid Prime 2 ISO file.
-You can also drag-n-drop the ISO on the program.
+2. Configure the settings you wish to use in the 'Logic Settings' tab.
+![Logic Settings Tab](randovania-readme/gui-2.png)
+  
+3. Input a seed number. You can press 'New Seed' for one to be generated for you.
+![New Seed](randovania-readme/gui-3.png)
 
-Randovania will then create a new ISO file in the same location of the provided ISO. Please note
-this make take a few minutes and requires about 3 GiB of space.
+    a. Alternatively, you can import a Permalink someone shared with you!
+    ![Permalink](randovania-readme/gui-4.png) 
 
-In this window you can also configure many options in how the items will be distributed.
-If you're not familiar with many sequence breaking techniques, the default options requires none
-of then, allowing any player to finish the game.
-
+4. When finished, press 'Randomize' to create an ISO ready to be played. The ISO will be created
+in the folder you selected in 'Output Folder'
+![Output Folder](randovania-readme/gui-5.png)
+   - The entire operation may take over 5 minutes to finish, depending on your computer.
+   - An operation may also fail with an error similar to this. In this case, choose another Seed
+   Number and try again.
+   ![Generation Failure](randovania-readme/gui-6.png)
+   
+   
 ## Community
 
 Join the Metroid Prime Randomizer Discord: https://discord.gg/gymstUz
@@ -33,7 +45,8 @@ Many thanks to [Claris](https://www.twitch.tv/claris) for
 making the Echoes Randomizer and both collecting and providing this
 incredible set of data which powers Randovania.
 
-Claris also made the included [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z), a tool for practicing Echoes.
-For more information, see the [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
+Claris also made the included [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z),
+a tool for practicing Echoes. For more information, see the
+[Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
 
 Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testing.
