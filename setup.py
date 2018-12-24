@@ -46,7 +46,7 @@ setup(
     ],
     python_requires=">=3.7",
     install_requires=[
-        'PyQt5>=5.8',
+        'PySide2>=5.12',
         'appdirs',
         'nod>=1.1',
         'requests',

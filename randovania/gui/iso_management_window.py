@@ -2,9 +2,9 @@ import random
 from pathlib import Path
 from typing import Optional, Iterator, Callable
 
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PySide2.QtCore import Signal
+from PySide2.QtGui import QIntValidator
+from PySide2.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 from randovania.games.prime.iso_packager import unpack_iso, pack_iso
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
@@ -32,8 +32,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
     _current_lock_state: bool = True
     _last_generated_layout: Optional[LayoutDescription] = None
 
-    loaded_game_updated = pyqtSignal()
-    failed_to_generate_signal = pyqtSignal(GenerationFailure)
+    loaded_game_updated = Signal()
+    failed_to_generate_signal = Signal(GenerationFailure)
 
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()

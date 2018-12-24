@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Iterator, Optional, Callable
 
-from PyQt5.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow
+from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow
 
 from randovania.interface_common.options import Options
 

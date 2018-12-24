@@ -1,8 +1,8 @@
 import functools
 from typing import Dict
 
-from PyQt5.QtCore import Qt, QEvent
-from PyQt5.QtWidgets import QMainWindow, QLabel, QSpinBox
+from PySide2.QtCore import Qt, QEvent
+from PySide2.QtWidgets import QMainWindow, QLabel, QSpinBox
 
 from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.game_description.resources import PickupEntry

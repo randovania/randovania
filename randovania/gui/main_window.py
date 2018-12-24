@@ -2,10 +2,10 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import pyqtSignal, QUrl
-from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtWidgets import QMainWindow, QAction
+from PySide2 import QtCore
+from PySide2.QtCore import QUrl, Signal
+from PySide2.QtGui import QDesktopServices
+from PySide2.QtWidgets import QMainWindow, QAction
 
 from randovania import VERSION
 from randovania.games.prime import default_data
@@ -25,8 +25,8 @@ from randovania.resolver import debug
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
-    newer_version_signal = pyqtSignal(str, str)
-    options_changed_signal = pyqtSignal()
+    newer_version_signal = Signal(str, str)
+    options_changed_signal = Signal()
     is_preview_mode: bool = False
 
     menu_new_version: Optional[QAction] = None

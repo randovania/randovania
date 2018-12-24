@@ -2,8 +2,8 @@ from functools import partial
 from pathlib import Path
 from typing import List
 
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
+from PySide2 import QtCore
+from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
 from randovania.game_description.default_database import default_prime2_pickup_database, default_prime2_game_description
 from randovania.game_description.node import PickupNode

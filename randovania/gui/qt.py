@@ -1,8 +1,8 @@
 import sys
 from argparse import ArgumentParser
 
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QMessageBox
+from PySide2 import QtCore
+from PySide2.QtWidgets import QApplication, QMessageBox
 
 from randovania.interface_common.options import Options
 
