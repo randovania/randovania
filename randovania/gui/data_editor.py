@@ -5,7 +5,7 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroup
 
 from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.game_description.game_description import World, Area
-from randovania.game_description.node import Node
+from randovania.game_description.node import Node, DockNode, TeleporterNode
 from randovania.game_description.requirements import RequirementList, IndividualRequirement, RequirementSet
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 
@@ -22,12 +22,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def __init__(self, data: dict):
         super().__init__()
         self.setupUi(self)
-        self.worldSelectorBox.currentIndexChanged.connect(self.on_select_world)
-        self.areaSelectorBox.currentIndexChanged.connect(self.on_select_area)
-        self.otherNodeConnectionBox.currentIndexChanged.connect(self.update_connections)
+        self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
+        self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
+        self.other_node_connection_combo.currentIndexChanged.connect(self.update_connections)
         self.verticalLayout.setAlignment(Qt.AlignTop)
-
-        self.nodeInfoBox.hide()
 
         resource_database = read_resource_database(data["resource_database"])
         dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
@@ -36,42 +34,62 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.worlds = world_reader.read_world_list(data["worlds"])
 
         for world in sorted(self.worlds, key=lambda x: x.name):
-            self.worldSelectorBox.addItem(world.name, userData=world)
+            self.world_selector_box.addItem(world.name, userData=world)
 
     def on_select_world(self):
-        self.areaSelectorBox.clear()
+        self.area_selector_box.clear()
         for area in sorted(self.current_world.areas, key=lambda x: x.name):
-            self.areaSelectorBox.addItem(area.name, userData=area)
-        self.areaSelectorBox.setEnabled(True)
+            self.area_selector_box.addItem(area.name, userData=area)
+        self.area_selector_box.setEnabled(True)
 
     def on_select_area(self):
         for node in self.radio_button_to_node.keys():
             node.deleteLater()
 
         self.radio_button_to_node.clear()
-        self.otherNodeConnectionBox.clear()
+        self.other_node_connection_combo.clear()
 
         current_area = self.current_area
         if not current_area:
-            self.otherNodeConnectionBox.setEnabled(False)
+            self.other_node_connection_combo.setEnabled(False)
             return
 
-        self.otherNodeConnectionBox.setEnabled(True)
+        self.other_node_connection_combo.setEnabled(True)
 
         is_first = True
         for node in sorted(current_area.nodes, key=lambda x: x.name):
-            button = QRadioButton(self.pointOfInterestBox)
+            button = QRadioButton(self.scroll_area_widget_contents)
             button.toggled.connect(self.on_select_node)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
             button.setChecked(is_first)
             is_first = False
             self.verticalLayout.addWidget(button)
-            self.otherNodeConnectionBox.addItem(node.name, userData=node)
+            self.other_node_connection_combo.addItem(node.name, userData=node)
 
     def on_select_node(self, active):
         if active:
             self.selected_node_button = self.sender()
+            node = self.current_node
+            assert node is not None
+
+            self.node_heals_check.setChecked(node.heal)
+
+            if isinstance(node, DockNode):
+                msg = "{} to {} #{}".format(
+                    node.default_dock_weakness.name,
+                    node.default_connection.area_asset_id,
+                    node.default_connection.dock_index)
+            elif node.is_resource_node:
+                msg = "Provides {}".format(node.resource())
+            elif isinstance(node, TeleporterNode):
+                msg = "Connects to {} at {}".format(
+                    node.default_connection.area_asset_id,
+                    node.default_connection.world_asset_id)
+            else:
+                msg = ""
+
+            self.node_details_label.setText(msg)
             self.update_connections()
 
     def _add_box_with_labels(self, index: int, labels: Iterable[str]):
@@ -121,11 +139,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     @property
     def current_world(self) -> World:
-        return self.worldSelectorBox.currentData()
+        return self.world_selector_box.currentData()
 
     @property
     def current_area(self) -> Area:
-        return self.areaSelectorBox.currentData()
+        return self.area_selector_box.currentData()
 
     @property
     def current_node(self) -> Optional[Node]:
@@ -133,4 +151,4 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     @property
     def current_connection_node(self) -> Node:
-        return self.otherNodeConnectionBox.currentData()
+        return self.other_node_connection_combo.currentData()
