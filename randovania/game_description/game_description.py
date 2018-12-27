@@ -1,7 +1,7 @@
 """Classes that describes the raw data of a game world."""
 import copy
 import re
-from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet, Iterable
+from typing import List, Dict, Tuple, Iterator, FrozenSet, Iterable
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
@@ -10,31 +10,8 @@ from randovania.game_description.requirements import RequirementSet, Satisfiable
 from randovania.game_description.resources import ResourceInfo, \
     ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
     PickupDatabase
+from randovania.game_description.world import World
 from randovania.resolver.game_patches import GamePatches
-
-
-class World(NamedTuple):
-    name: str
-    world_asset_id: int
-    areas: List[Area]
-
-    def __repr__(self):
-        return "World[{}]".format(self.name)
-
-    @property
-    def all_nodes(self) -> Iterator[Node]:
-        """
-        Iterates over all nodes in all areas of this world.
-        :return:
-        """
-        for area in self.areas:
-            yield from area.nodes
-
-    def area_by_asset_id(self, asset_id: int) -> Area:
-        for area in self.areas:
-            if area.area_asset_id == asset_id:
-                return area
-        raise KeyError("Unknown asset_id: {}".format(asset_id))
 
 
 class WorldList:
