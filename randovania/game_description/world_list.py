@@ -7,7 +7,7 @@ from randovania.game_description.node import Node, DockNode, TeleporterNode, Tel
 from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources import CurrentResources, ResourceDatabase, ResourceInfo
 from randovania.game_description.world import World
-from randovania.resolver.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches
 
 
 class WorldList:

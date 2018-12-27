@@ -5,7 +5,7 @@ from randovania.game_description.requirements import RequirementSet, Requirement
 from randovania.game_description.resources import PickupIndex
 from randovania.resolver import debug
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
