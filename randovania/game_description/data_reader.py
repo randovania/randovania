@@ -2,7 +2,8 @@ from typing import List, Callable, TypeVar, Tuple, Dict, Optional
 
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.game_description.echoes_elevator import Elevator
-from randovania.game_description.game_description import World, GameDescription
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.world import World
 from randovania.game_description.area import Area
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     is_resource_node, DockConnection, TeleporterConnection
