@@ -4,7 +4,7 @@ from typing import List, Dict, Iterator, Tuple, FrozenSet, Iterable
 
 from randovania.game_description.area import Area
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode, TeleporterConnection
+from randovania.game_description.node import Node, DockNode, TeleporterNode, TeleporterConnection, DockConnection
 from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources import CurrentResources, ResourceDatabase, ResourceInfo
 from randovania.game_description.world import World
@@ -71,15 +71,17 @@ class WorldList:
     def nodes_to_area(self, node: Node) -> Area:
         return self._nodes_to_area[node]
 
+    def resolve_dock_connection(self, world: World, connection: DockConnection) -> Node:
+        target_area = world.area_by_asset_id(connection.area_asset_id)
+        return target_area.node_with_dock_index(connection.dock_index)
+
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         world = self.nodes_to_world(node)
         original_area = self.nodes_to_area(node)
 
         connection = patches.dock_connection.get((original_area.area_asset_id, node.dock_index),
                                                  node.default_connection)
-
-        target_area = world.area_by_asset_id(connection.area_asset_id)
-        return target_area.node_with_dock_index(connection.dock_index)
+        return self.resolve_dock_connection(world, connection)
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node:
         connection = patches.elevator_connection.get(node.teleporter_instance_id, node.default_connection)

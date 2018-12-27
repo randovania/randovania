@@ -5,6 +5,7 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroup
 
 from randovania.game_description.area import Area
 from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode
 from randovania.game_description.requirements import RequirementList, IndividualRequirement, RequirementSet
 from randovania.game_description.world import World
@@ -32,9 +33,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
         world_reader = WorldReader(resource_database, dock_weakness_database, False)
-        self.worlds = world_reader.read_world_list(data["worlds"])
+        self.world_list = world_reader.read_world_list(data["worlds"])
 
-        for world in sorted(self.worlds, key=lambda x: x.name):
+        for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             self.world_selector_box.addItem(world.name, userData=world)
 
     def on_select_world(self):
@@ -77,16 +78,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.node_heals_check.setChecked(node.heal)
 
             if isinstance(node, DockNode):
-                msg = "{} to {} #{}".format(
-                    node.default_dock_weakness.name,
-                    node.default_connection.area_asset_id,
-                    node.default_connection.dock_index)
+                other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
+                msg = "{} to {}".format(node.default_dock_weakness.name, self.world_list.node_name(other))
+
             elif node.is_resource_node:
                 msg = "Provides {}".format(node.resource())
+
             elif isinstance(node, TeleporterNode):
-                msg = "Connects to {} at {}".format(
-                    node.default_connection.area_asset_id,
-                    node.default_connection.world_asset_id)
+                other = self.world_list.resolve_teleporter_connection(node.default_connection)
+                msg = "Connects to {}".format(self.world_list.node_name(other, with_world=True))
             else:
                 msg = ""
 
