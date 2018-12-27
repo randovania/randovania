@@ -7,7 +7,6 @@ from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.permalink import Permalink
 
 
 def delete_files_location(options: Options, ):

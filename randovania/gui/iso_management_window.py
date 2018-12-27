@@ -146,6 +146,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             self.load_game(iso)
 
     def delete_loaded_game(self):
+        simplified_patcher.delete_files_location(self._options)
         self.loaded_game_updated.emit()
 
     def export_game(self):

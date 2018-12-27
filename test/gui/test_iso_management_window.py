@@ -72,3 +72,16 @@ def test_create_log_file_pressed_spoiler_disabled(mock_create_log_file_pressed: 
 
     # Assert
     mock_create_log_file_pressed.assert_not_called()
+
+
+@patch("randovania.interface_common.simplified_patcher.delete_files_location", autospec=True)
+def test_clear_game_button_pressed(mock_delete_files_location: MagicMock,
+                                   qtbot,
+                                   default_iso_window: ISOManagementWindow):
+    # Setup
+
+    # Run
+    qtbot.mouseClick(default_iso_window.clear_game_button, QtCore.Qt.LeftButton)
+
+    # Assert
+    mock_delete_files_location.assert_called_once_with(default_iso_window._options)
