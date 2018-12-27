@@ -4,9 +4,9 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 import networkx
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, is_resource_node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
-from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 

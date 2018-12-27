@@ -1,10 +1,10 @@
 import copy
 from typing import Optional, Tuple, Iterator
 
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.resources import ResourceInfo, CurrentResources, ResourceDatabase, PickupIndex, \
     ResourceGain, PickupEntry
-from randovania.game_description.game_patches import GamePatches
 
 
 class State:

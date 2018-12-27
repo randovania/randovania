@@ -3,11 +3,11 @@ import re
 from typing import List, Dict, Iterator, Tuple, FrozenSet, Iterable
 
 from randovania.game_description.area import Area
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode, TeleporterConnection
 from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources import CurrentResources, ResourceDatabase, ResourceInfo
 from randovania.game_description.world import World
-from randovania.game_description.game_patches import GamePatches
 
 
 class WorldList:
