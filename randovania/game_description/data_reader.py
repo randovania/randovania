@@ -10,6 +10,7 @@ from randovania.game_description.resources import SimpleResourceInfo, DamageRedu
     ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase, PickupDatabase, \
     find_resource_info_with_id
 from randovania.game_description.world import World
+from randovania.game_description.world_list import WorldList
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -175,8 +176,8 @@ class WorldReader:
         return World(data["name"], data["asset_id"],
                      self.read_area_list(data["areas"]))
 
-    def read_world_list(self, data: List[Dict]) -> List[World]:
-        return read_array(data, self.read_world)
+    def read_world_list(self, data: List[Dict]) -> WorldList:
+        return WorldList(read_array(data, self.read_world))
 
 
 def read_resource_database(data: Dict) -> ResourceDatabase:
@@ -224,7 +225,8 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
     pickup_database = read_pickup_database(data, resource_database)
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
-    worlds = WorldReader(resource_database, dock_weakness_database, add_self_as_requirement_to_resources).read_world_list(data["worlds"])
+    world_reader = WorldReader(resource_database, dock_weakness_database, add_self_as_requirement_to_resources)
+    world_list = world_reader.read_world_list(data["worlds"])
 
     starting_world_asset_id = data["starting_world_asset_id"]
     starting_area_asset_id = data["starting_area_asset_id"]
@@ -238,7 +240,7 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
         resource_database=resource_database,
         pickup_database=pickup_database,
         dock_weakness_database=dock_weakness_database,
-        worlds=worlds,
+        world_list=world_list,
         victory_condition=victory_condition,
         starting_world_asset_id=starting_world_asset_id,
         starting_area_asset_id=starting_area_asset_id,

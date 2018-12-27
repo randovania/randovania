@@ -1,6 +1,6 @@
 """Classes that describes the raw data of a game world."""
 import copy
-from typing import List, Iterator, FrozenSet
+from typing import Iterator, FrozenSet
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
@@ -8,7 +8,6 @@ from randovania.game_description.requirements import RequirementSet, Satisfiable
 from randovania.game_description.resources import ResourceInfo, \
     ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
     PickupDatabase
-from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
 
@@ -47,7 +46,7 @@ class GameDescription:
             resource_database=self.resource_database,
             pickup_database=self.pickup_database,
             dock_weakness_database=self.dock_weakness_database,
-            worlds=copy.deepcopy(self.world_list.worlds, memodict),
+            world_list=copy.deepcopy(self.world_list, memodict),
             victory_condition=self.victory_condition,
             starting_world_asset_id=self.starting_world_asset_id,
             starting_area_asset_id=self.starting_area_asset_id,
@@ -67,7 +66,7 @@ class GameDescription:
                  starting_area_asset_id: int,
                  starting_items: ResourceGain,
                  item_loss_items: ResourceGain,
-                 worlds: List[World],
+                 world_list: WorldList,
                  ):
         self.game = game
         self.game_name = game_name
@@ -80,7 +79,7 @@ class GameDescription:
         self.starting_area_asset_id = starting_area_asset_id
         self.starting_items = starting_items
         self.item_loss_items = item_loss_items
-        self.world_list = WorldList(worlds)
+        self.world_list = world_list
 
         self.dangerous_resources = frozenset(
             _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
