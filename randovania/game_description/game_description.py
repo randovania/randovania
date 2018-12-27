@@ -3,31 +3,14 @@ import copy
 import re
 from typing import NamedTuple, List, Dict, Tuple, Iterator, FrozenSet, Iterable
 
+from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
-from randovania.game_description.node import DockNode, TeleporterNode, Node, DockConnection, TeleporterConnection
+from randovania.game_description.node import DockNode, TeleporterNode, Node, TeleporterConnection
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
 from randovania.game_description.resources import ResourceInfo, \
     ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
     PickupDatabase
 from randovania.resolver.game_patches import GamePatches
-
-
-class Area(NamedTuple):
-    name: str
-    area_asset_id: int
-    default_node_index: int
-    nodes: List[Node]
-    connections: Dict[Node, Dict[Node, RequirementSet]]
-
-    def __repr__(self):
-        return "Area[{}]".format(self.name)
-
-    def node_with_dock_index(self, dock_index: int) -> DockNode:
-        for node in self.nodes:
-            if isinstance(node, DockNode) and node.dock_index == dock_index:
-                return node
-        raise IndexError("No DockNode found with dock_index {} in {}".format(
-            dock_index, self.name))
 
 
 class World(NamedTuple):
