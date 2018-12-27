@@ -24,14 +24,18 @@ class CustomException(Exception):
         raise CustomException("test exception")
 
 
-@pytest.fixture(name="description")
-def _description() -> LayoutDescriptionMock:
+def _create_description_mock(permalink: Permalink):
     return MagicMock(spec=LayoutDescription(
         version=randovania.VERSION,
-        permalink=Permalink.default(),
+        permalink=permalink,
         patches=GamePatches.empty(),
         solver_path=()
     ))
+
+
+@pytest.fixture(name="description")
+def _description() -> LayoutDescription:
+    return _create_description_mock(Permalink.default())
 
 
 @patch("subprocess.Popen", autospec=True)
@@ -237,8 +241,12 @@ def test_calculate_indices_no_item(mock_read_databases: MagicMock,
                                    echoes_pickup_database: PickupDatabase,
                                    ):
     # Setup
-    description = MagicMock()
-    description.pickup_assignment = {}
+    description = LayoutDescription(
+        version=randovania.VERSION,
+        permalink=Permalink.default(),
+        patches=GamePatches.empty(),
+        solver_path=()
+    )
     mock_read_databases.return_value = (None, echoes_pickup_database)
 
     # Run
@@ -254,10 +262,17 @@ def test_calculate_indices_no_item(mock_read_databases: MagicMock,
 @patch("randovania.game_description.data_reader.read_databases", autospec=True)
 def test_calculate_indices_original(mock_read_databases: MagicMock,
                                     echoes_pickup_database: PickupDatabase,
-                                    description: LayoutDescriptionMock,
                                     ):
     # Setup
-    description.pickup_assignment = echoes_pickup_database.original_pickup_mapping
+    description = LayoutDescription(
+        version=randovania.VERSION,
+        permalink=Permalink.default(),
+        patches=GamePatches(
+            echoes_pickup_database.original_pickup_mapping,
+            {}, {}, {}
+        ),
+        solver_path=()
+    )
     mock_read_databases.return_value = (None, echoes_pickup_database)
 
     # Run
@@ -275,6 +290,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
 @pytest.mark.parametrize("elevators", [False, True])
 @pytest.mark.parametrize("item_loss", [False, True])
 @pytest.mark.parametrize("seed_number", [1000, 8500])
+@patch("randovania.resolver.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._calculate_indices", autospec=True)
@@ -289,28 +305,33 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                       mock_calculate_indices: MagicMock,
                       mock_add_menu_mod_to_files: MagicMock,
                       mock_create_progress_update_from_successive_messages: MagicMock,
+                      mock_save_to_file: MagicMock,
                       seed_number: int,
                       item_loss: bool,
                       elevators: bool,
                       include_menu_mod: bool,
-                      description: LayoutDescriptionMock,
                       ):
     # Setup
     hud_memo_popup_removal: bool = MagicMock()
-    description.permalink = Permalink(
-        seed_number=seed_number,
-        spoiler=False,
-        patcher_configuration=PatcherConfiguration(
-            disable_hud_popup=hud_memo_popup_removal,
-            menu_mod=include_menu_mod,
+    description = LayoutDescription(
+        version=randovania.VERSION,
+        permalink=Permalink(
+            seed_number=seed_number,
+            spoiler=False,
+            patcher_configuration=PatcherConfiguration(
+                disable_hud_popup=hud_memo_popup_removal,
+                menu_mod=include_menu_mod,
+            ),
+            layout_configuration=LayoutConfiguration.from_params(
+                trick_level=MagicMock(),
+                sky_temple_keys=MagicMock(),
+                item_loss=LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED,
+                elevators=LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA,
+                pickup_quantities={},
+            )
         ),
-        layout_configuration=LayoutConfiguration.from_params(
-            trick_level=MagicMock(),
-            sky_temple_keys=MagicMock(),
-            item_loss=LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED,
-            elevators=LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA,
-            pickup_quantities={},
-        )
+        patches=GamePatches.empty(),
+        solver_path=(),
     )
 
     game_root = MagicMock(spec=Path())
@@ -342,7 +363,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
     mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
     mock_calculate_indices.assert_called_once_with(description)
     game_root.joinpath.assert_called_once_with("files", "randovania.json")
-    description.save_to_file.assert_called_once_with(game_root.joinpath.return_value)
+    mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
     mock_run_with_args.assert_called_once_with(expected_args, "Randomized!", status_update)
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
