@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import game_description
-from randovania.game_description.game_description import Area
+from randovania.game_description.area import Area
 from randovania.game_description.node import Node
 from randovania.game_description.requirements import RequirementSet
 
