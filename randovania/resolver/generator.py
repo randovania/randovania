@@ -5,6 +5,7 @@ from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
 from randovania.game_description.resources import PickupEntry
 from randovania.games.prime import claris_randomizer
@@ -13,7 +14,6 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
-from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag
 from randovania.resolver.layout_description import LayoutDescription, SolverPath

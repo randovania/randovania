@@ -7,10 +7,10 @@ from pathlib import Path
 
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterConnection
 from randovania.games.prime import claris_randomizer, claris_random
 from randovania.resolver import debug, generator, resolver
-from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag
 from randovania.resolver.layout_description import LayoutDescription

@@ -1,16 +1,15 @@
 from typing import List, Callable, TypeVar, Tuple, Dict, Optional
 
-from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
-from randovania.game_description.echoes_elevator import Elevator
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world import World
 from randovania.game_description.area import Area
+from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     is_resource_node, DockConnection, TeleporterConnection
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
     ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceType, ResourceDatabase, PickupDatabase, \
     find_resource_info_with_id
+from randovania.game_description.world import World
 
 X = TypeVar('X')
 Y = TypeVar('Y')

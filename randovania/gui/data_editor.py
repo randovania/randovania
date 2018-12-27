@@ -3,11 +3,11 @@ from typing import Dict, Optional, List, Iterable
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QWidget, QLabel, QGroupBox, QVBoxLayout
 
-from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
-from randovania.game_description.world import World
 from randovania.game_description.area import Area
+from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.game_description.node import Node, DockNode, TeleporterNode
 from randovania.game_description.requirements import RequirementList, IndividualRequirement, RequirementSet
+from randovania.game_description.world import World
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 
 

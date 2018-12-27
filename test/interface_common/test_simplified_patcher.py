@@ -3,9 +3,9 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
+from randovania.game_description.game_patches import GamePatches
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
-from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration

@@ -5,11 +5,11 @@ from typing import Tuple, List
 import pytest
 
 from randovania.game_description import data_reader
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
 from randovania.games.prime import default_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.filler.random_assumed import _filter_pickups
-from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources, \
