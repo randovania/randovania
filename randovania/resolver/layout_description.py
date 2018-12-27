@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import NamedTuple, Tuple, Dict, List
 
 from randovania.game_description import data_reader
-from randovania.game_description.game_description import GameDescription, WorldList
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.world_list import WorldList
 from randovania.game_description.node import PickupNode, Node, TeleporterNode, TeleporterConnection
 from randovania.game_description.resources import PickupAssignment
 from randovania.resolver.game_patches import GamePatches
