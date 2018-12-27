@@ -1,5 +1,6 @@
-from enum import unique, Enum
 from typing import NamedTuple, Tuple, Union, List, Dict, Iterator
+
+from randovania.game_description.resource_type import ResourceType
 
 
 class SimpleResourceInfo(NamedTuple):
@@ -103,17 +104,6 @@ def find_resource_info_with_long_name(info_list: List[ResourceInfo], long_name: 
         "Resource with long_name '{}' not found in {}".format(long_name, info_list))
 
 
-@unique
-class ResourceType(Enum):
-    ITEM = 0
-    EVENT = 1
-    TRICK = 2
-    DAMAGE = 3
-    VERSION = 4
-    MISC = 5
-    DIFFICULTY = 6
-
-
 class ResourceDatabase(NamedTuple):
     item: List[SimpleResourceInfo]
     event: List[SimpleResourceInfo]
@@ -163,6 +153,13 @@ class ResourceDatabase(NamedTuple):
     @property
     def energy_tank(self):
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
+
+    def find_type_for(self, resource: ResourceInfo) -> ResourceType:
+        for resource_type in ResourceType:
+            db = self.get_by_type(resource_type)
+            if resource in db:
+                return resource_type
+        raise ValueError("Unknown resource: {}".format(resource))
 
 
 PickupAssignment = Dict[PickupIndex, PickupEntry]
