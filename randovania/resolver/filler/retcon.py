@@ -215,7 +215,7 @@ def retcon_playthrough_filler(logic: Logic,
         else:
             last_message = "Triggered an event {} options.".format(options_considered)
             status_update(last_message)
-            print("\n--> Collecting {}".format(logic.game.node_name(action, with_world=True)))
+            print("\n--> Collecting {}".format(logic.game.world_list.node_name(action, with_world=True)))
             next_state = reach.state.act_on_node(action, patches)
 
         reach.advance_to(next_state)
@@ -228,7 +228,7 @@ def retcon_playthrough_filler(logic: Logic,
     return pickup_assignment
 
 
-def print_retcon_loop_start(current_uncollected, logic, pickups_left, reach):
+def print_retcon_loop_start(current_uncollected: UncollectedState, logic: Logic, pickups_left, reach):
     if debug._DEBUG_LEVEL > 0:
         if debug._DEBUG_LEVEL > 1:
             extra = ", pickups_left: {}".format(list(pickups_left.keys()))
@@ -237,30 +237,32 @@ def print_retcon_loop_start(current_uncollected, logic, pickups_left, reach):
 
         print("\n\n===============================")
         print("\n>>> From {}, {} open pickup indices, {} open resources{}".format(
-            logic.game.node_name(reach.state.node, with_world=True),
+            logic.game.world_list.node_name(reach.state.node, with_world=True),
             len(current_uncollected.indices),
             len(current_uncollected.resources),
             extra
         ))
 
 
-def print_retcon_place_pickup(action, logic, pickup_index):
+def print_retcon_place_pickup(action: Node, logic: Logic, pickup_index: PickupIndex):
+    world_list = logic.game.world_list
     if debug._DEBUG_LEVEL > 0:
         print("\n--> Placing {} at {}".format(
             action.name,
-            logic.game.node_name(find_pickup_node_with_index(pickup_index, logic.game.all_nodes), with_world=True)))
+            world_list.node_name(find_pickup_node_with_index(pickup_index, world_list.all_nodes), with_world=True)))
 
 
 def print_new_pickup_indices(logic: Logic,
                              reach: GeneratorReach,
                              pickup_index_seen_count: Dict[PickupIndex, int],
                              ):
+    world_list = logic.game.world_list
     if debug._DEBUG_LEVEL > 0:
         for index, count in pickup_index_seen_count.items():
             if count == 1:
-                node = find_pickup_node_with_index(index, logic.game.all_nodes)
+                node = find_pickup_node_with_index(index, world_list.all_nodes)
                 print("-> New Pickup Node: {}".format(
-                    logic.game.node_name(node,
+                    world_list.node_name(node,
                                          with_world=True)))
                 if debug._DEBUG_LEVEL > 1:
                     paths = reach.shortest_path_from(node)

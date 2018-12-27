@@ -7,7 +7,7 @@ from typing import Dict, BinaryIO, Optional
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
-from randovania.game_description.game_description import consistency_check, GameDescription
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name
 from randovania.games.prime import binary_data, default_data
 from randovania.resolver import debug
@@ -136,23 +136,6 @@ def view_area_command(sub_parsers):
     parser.set_defaults(func=view_area_command_logic)
 
 
-def consistency_check_command_logic(args):
-    gd = load_game_description(args)
-
-    for node, warning in consistency_check(gd):
-        print("> {}:\n{}\n".format(debug.n(node), warning))
-
-
-def consistency_check_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "consistency-check",
-        help="Check if all docks and teleporters are valid.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )
-    add_data_file_argument(parser)
-    parser.set_defaults(func=consistency_check_command_logic)
-
-
 def export_areas_command_logic(args):
     gd = load_game_description(args)
 
@@ -262,7 +245,6 @@ def create_subparsers(sub_parsers):
     sub_parsers = parser.add_subparsers(dest="database_command")
     create_convert_database_command(sub_parsers)
     view_area_command(sub_parsers)
-    consistency_check_command(sub_parsers)
     export_areas_command(sub_parsers)
     list_paths_with_difficulty_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)

@@ -234,7 +234,7 @@ def test_create_patches(mock_random: MagicMock,
         expected_result[PickupIndex(i)] = pickup
         remaining_items.remove(pickup)
 
-    for pickup_node in filter_unassigned_pickup_nodes(game.all_nodes, expected_result):
+    for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, expected_result):
         expected_result[pickup_node.pickup_index] = remaining_items.pop()
 
     # Run

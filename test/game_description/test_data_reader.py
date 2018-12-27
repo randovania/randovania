@@ -5,7 +5,7 @@ from randovania.game_description.default_database import default_prime2_game_des
 
 def test_copy_worlds():
     game_description = default_prime2_game_description()
-    worlds_copy = copy.deepcopy(game_description.worlds)
+    game_copy = copy.deepcopy(game_description)
 
-    assert worlds_copy == game_description.worlds
-    assert worlds_copy is not game_description.worlds
+    assert game_description.world_list.worlds == game_copy.world_list.worlds
+    assert game_description.world_list.worlds is not game_copy.world_list.worlds

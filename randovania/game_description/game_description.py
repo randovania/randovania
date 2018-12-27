@@ -54,83 +54,19 @@ class World(NamedTuple):
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
 
-def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[SimpleResourceInfo]:
-    for list_by_type in db:
-        for dock_weakness in list_by_type:
-            yield from dock_weakness.requirements.dangerous_resources
-
-
-def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
-    for area in areas:
-        for node in area.nodes:
-            for connection in area.connections[node].values():
-                yield from connection.dangerous_resources
-
-
-class GameDescription:
-    game: int
-    game_name: str
-    dock_weakness_database: DockWeaknessDatabase
-
-    resource_database: ResourceDatabase
-    pickup_database: PickupDatabase
-    victory_condition: RequirementSet
-    starting_world_asset_id: int
-    starting_area_asset_id: int
-    starting_items: ResourceGain
-    item_loss_items: ResourceGain
+class WorldList:
     worlds: List[World]
-    dangerous_resources: FrozenSet[SimpleResourceInfo]
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
-
+    
     def __deepcopy__(self, memodict):
-        return GameDescription(
-            game=self.game,
-            game_name=self.game_name,
-            resource_database=self.resource_database,
-            pickup_database=self.pickup_database,
-            dock_weakness_database=self.dock_weakness_database,
+        return WorldList(
             worlds=copy.deepcopy(self.worlds, memodict),
-            victory_condition=self.victory_condition,
-            starting_world_asset_id=self.starting_world_asset_id,
-            starting_area_asset_id=self.starting_area_asset_id,
-            starting_items=self.starting_items,
-            item_loss_items=self.item_loss_items,
         )
-
-    def __init__(self,
-                 game: int,
-                 game_name: str,
-                 dock_weakness_database: DockWeaknessDatabase,
-
-                 resource_database: ResourceDatabase,
-                 pickup_database: PickupDatabase,
-                 victory_condition: RequirementSet,
-                 starting_world_asset_id: int,
-                 starting_area_asset_id: int,
-                 starting_items: ResourceGain,
-                 item_loss_items: ResourceGain,
-                 worlds: List[World],
-                 ):
-        self.game = game
-        self.game_name = game_name
-        self.dock_weakness_database = dock_weakness_database
-
-        self.resource_database = resource_database
-        self.pickup_database = pickup_database
-        self.victory_condition = victory_condition
-        self.starting_world_asset_id = starting_world_asset_id
-        self.starting_area_asset_id = starting_area_asset_id
-        self.starting_items = starting_items
-        self.item_loss_items = item_loss_items
+    
+    def __init__(self, worlds: List[World]):
         self.worlds = worlds
-
-        self.dangerous_resources = frozenset(
-            _calculate_dangerous_resources_in_areas(self.all_areas)) | frozenset(
-            _calculate_dangerous_resources_in_db(self.dock_weakness_database))
-
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
     def world_by_asset_id(self, asset_id: int) -> World:
@@ -249,7 +185,9 @@ class GameDescription:
         yield from self.connections_from(node, patches)
         yield from self.area_connections_from(node)
 
-    def simplify_connections(self, static_resources: CurrentResources) -> None:
+    def simplify_connections(self,
+                             static_resources: CurrentResources,
+                             resource_database: ResourceDatabase) -> None:
         """
         Simplifies all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
@@ -260,7 +198,7 @@ class GameDescription:
             for area in world.areas:
                 for connections in area.connections.values():
                     for target, value in connections.items():
-                        connections[target] = value.simplify(static_resources, self.resource_database)
+                        connections[target] = value.simplify(static_resources, resource_database)
 
     def calculate_relevant_resources(self, patches: GamePatches) -> FrozenSet[ResourceInfo]:
         results = set()
@@ -274,20 +212,82 @@ class GameDescription:
         return frozenset(results)
 
 
-def consistency_check(game: GameDescription) -> Iterator[Tuple[Node, str]]:
-    for world in game.worlds:
-        for area in world.areas:
-            for node in area.nodes:
-                if isinstance(node, DockNode):
-                    try:
-                        game.resolve_dock_node(node)
-                    except IndexError as e:
-                        yield node, "Invalid dock connection: {}".format(e)
-                elif isinstance(node, TeleporterNode):
-                    try:
-                        game.resolve_teleporter_node(node)
-                    except IndexError as e:
-                        yield node, "Invalid teleporter connection: {}".format(e)
+def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[SimpleResourceInfo]:
+    for list_by_type in db:
+        for dock_weakness in list_by_type:
+            yield from dock_weakness.requirements.dangerous_resources
+
+
+def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
+    for area in areas:
+        for node in area.nodes:
+            for connection in area.connections[node].values():
+                yield from connection.dangerous_resources
+
+
+class GameDescription:
+    game: int
+    game_name: str
+    dock_weakness_database: DockWeaknessDatabase
+
+    resource_database: ResourceDatabase
+    pickup_database: PickupDatabase
+    victory_condition: RequirementSet
+    starting_world_asset_id: int
+    starting_area_asset_id: int
+    starting_items: ResourceGain
+    item_loss_items: ResourceGain
+    dangerous_resources: FrozenSet[SimpleResourceInfo]
+    world_list: WorldList
+
+    def __deepcopy__(self, memodict):
+        return GameDescription(
+            game=self.game,
+            game_name=self.game_name,
+            resource_database=self.resource_database,
+            pickup_database=self.pickup_database,
+            dock_weakness_database=self.dock_weakness_database,
+            worlds=copy.deepcopy(self.world_list.worlds, memodict),
+            victory_condition=self.victory_condition,
+            starting_world_asset_id=self.starting_world_asset_id,
+            starting_area_asset_id=self.starting_area_asset_id,
+            starting_items=self.starting_items,
+            item_loss_items=self.item_loss_items,
+        )
+
+    def __init__(self,
+                 game: int,
+                 game_name: str,
+                 dock_weakness_database: DockWeaknessDatabase,
+
+                 resource_database: ResourceDatabase,
+                 pickup_database: PickupDatabase,
+                 victory_condition: RequirementSet,
+                 starting_world_asset_id: int,
+                 starting_area_asset_id: int,
+                 starting_items: ResourceGain,
+                 item_loss_items: ResourceGain,
+                 worlds: List[World],
+                 ):
+        self.game = game
+        self.game_name = game_name
+        self.dock_weakness_database = dock_weakness_database
+
+        self.resource_database = resource_database
+        self.pickup_database = pickup_database
+        self.victory_condition = victory_condition
+        self.starting_world_asset_id = starting_world_asset_id
+        self.starting_area_asset_id = starting_area_asset_id
+        self.starting_items = starting_items
+        self.item_loss_items = item_loss_items
+        self.world_list = WorldList(worlds)
+
+        self.dangerous_resources = frozenset(
+            _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
+            _calculate_dangerous_resources_in_db(self.dock_weakness_database))
+
+    def simplify_connections(self, resources):
+        self.world_list.simplify_connections(resources, self.resource_database)
 
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:

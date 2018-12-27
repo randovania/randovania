@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import NamedTuple, Tuple, Dict, List
 
 from randovania.game_description import data_reader
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_description import GameDescription, WorldList
 from randovania.game_description.node import PickupNode, Node, TeleporterNode, TeleporterConnection
 from randovania.game_description.resources import PickupAssignment
 from randovania.resolver.game_patches import GamePatches
@@ -18,12 +18,12 @@ class SolverPath(NamedTuple):
     previous_nodes: Tuple[str, ...]
 
 
-def _pickup_assignment_to_item_locations(game: GameDescription,
+def _pickup_assignment_to_item_locations(world_list: WorldList,
                                          pickup_assignment: PickupAssignment,
                                          ) -> Dict[str, Dict[str, str]]:
     items_locations = {}
 
-    for world in game.worlds:
+    for world in world_list.worlds:
         items_in_world = {}
         items_locations[world.name] = items_in_world
 
@@ -34,7 +34,7 @@ def _pickup_assignment_to_item_locations(game: GameDescription,
                         item_name = pickup_assignment[node.pickup_index].name
                     else:
                         item_name = "Nothing"
-                    items_in_world[game.node_name(node)] = item_name
+                    items_in_world[world_list.node_name(node)] = item_name
 
     return items_locations
 
@@ -55,7 +55,7 @@ def _item_locations_to_pickup_assignment(game: GameDescription,
     pickup_assignment = {}
 
     for world_name, world_data in locations.items():
-        world = [world for world in game.worlds if world.name == world_name][0]
+        world = [world for world in game.world_list.worlds if world.name == world_name][0]
         areas_by_name = collections.defaultdict(list)
         for area in world.areas:
             areas_by_name[area.name].append(area)
@@ -78,25 +78,25 @@ def _item_locations_to_pickup_assignment(game: GameDescription,
     return pickup_assignment
 
 
-def _node_mapping_to_elevator_connection(game: GameDescription,
+def _node_mapping_to_elevator_connection(world_list: WorldList,
                                          elevators: Dict[str, str],
                                          ) -> Dict[int, TeleporterConnection]:
 
     result = {}
     for source_name, target_node in elevators.items():
-        source_node: TeleporterNode = game.node_from_name(source_name)
-        target_node = game.node_from_name(target_node)
+        source_node: TeleporterNode = world_list.node_from_name(source_name)
+        target_node = world_list.node_from_name(target_node)
 
         result[source_node.teleporter_instance_id] = TeleporterConnection(
-            game.nodes_to_world(target_node).world_asset_id,
-            game.nodes_to_area(target_node).area_asset_id
+            world_list.nodes_to_world(target_node).world_asset_id,
+            world_list.nodes_to_area(target_node).area_asset_id
         )
 
     return result
 
 
-def _find_node_with_teleporter(game: GameDescription, teleporter_id: int) -> Node:
-    for node in game.all_nodes:
+def _find_node_with_teleporter(world_list: WorldList, teleporter_id: int) -> Node:
+    for node in world_list.all_nodes:
         if isinstance(node, TeleporterNode):
             if node.teleporter_instance_id == teleporter_id:
                 return node
@@ -127,7 +127,7 @@ class LayoutDescription:
         game = data_reader.decode_data(permalink.layout_configuration.game_data)
         patches = GamePatches(
             _item_locations_to_pickup_assignment(game, json_dict["locations"]),
-            _node_mapping_to_elevator_connection(game, json_dict["elevators"]),
+            _node_mapping_to_elevator_connection(game.world_list, json_dict["elevators"]),
             {},
             {}
         )
@@ -154,16 +154,16 @@ class LayoutDescription:
         }
 
         if self.permalink.spoiler:
-            game = data_reader.decode_data(self.permalink.layout_configuration.game_data)
+            world_list = data_reader.decode_data(self.permalink.layout_configuration.game_data).world_list
 
             result["locations"] = {
                 key: value
-                for key, value in sorted(_pickup_assignment_to_item_locations(game,
+                for key, value in sorted(_pickup_assignment_to_item_locations(world_list,
                                                                               self.patches.pickup_assignment).items())
             }
             result["elevators"] = {
-                game.node_name(_find_node_with_teleporter(game, teleporter_id), with_world=True):
-                    game.node_name(game.resolve_teleporter_connection(connection), with_world=True)
+                world_list.node_name(_find_node_with_teleporter(world_list, teleporter_id), with_world=True):
+                    world_list.node_name(world_list.resolve_teleporter_connection(connection), with_world=True)
                 for teleporter_id, connection in self.patches.elevator_connection.items()
             }
             result["playthrough"] = [

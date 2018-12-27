@@ -83,7 +83,7 @@ def test_calculate_reach_with_seeds():
     item_pool = calculate_item_pool(permalink, game)
     rng = Random(50000)
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
-        item_pool, categories, game.calculate_relevant_resources(logic.patches)))))
+        item_pool, categories, game.world_list.calculate_relevant_resources(logic.patches)))))
 
     remaining_pickups = available_pickups[1:]
 
@@ -99,7 +99,7 @@ def test_calculate_reach_with_seeds():
         print("Safe: {}; Dangerous: {}; Action: {}".format(
             first_reach.is_safe_node(action),
             action.resource() in game.dangerous_resources,
-            game.node_name(action)
+            game.world_list.node_name(action)
         ))
 
     escape_state = state_with_pickup(first_reach.state, available_pickups[-6])
@@ -112,7 +112,7 @@ def test_calculate_reach_with_seeds():
         print("Safe: {}; Dangerous: {}; Option: {}".format(
             first_reach.is_safe_node(option),
             option.resource() in game.dangerous_resources,
-            game.node_name(option)
+            game.world_list.node_name(option)
         ))
 
     assert (875, 0) == (len(list(first_reach.nodes)), len(first_actions))
@@ -131,7 +131,7 @@ def test_calculate_reach_with_all_pickups():
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
     found_pickups = set(filter_pickup_nodes(filter_reachable(second_reach.nodes, first_reach)))
-    all_pickups = set(filter_pickup_nodes(logic.game.all_nodes))
+    all_pickups = set(filter_pickup_nodes(logic.game.world_list.all_nodes))
 
     # assert (len(list(first_reach.nodes)), len(first_actions)) == (898, 9)
     # assert (len(list(second_reach.nodes)), len(second_actions)) == (898, 9)
