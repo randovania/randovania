@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Fixed: 'Clear loaded game' now properly does it's job.
+- Changed: Add an error message to capture potential Randomizer failures.
 
 ## [0.17.1] - 2018-12-24
 - Fixed: stray tooltips in GUI elements were removed.

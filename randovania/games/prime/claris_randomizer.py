@@ -49,6 +49,8 @@ def _run_with_args(args: List[Union[str, Path]],
         except Exception:
             process.kill()
             raise
+    if not finished_updates:
+        raise RuntimeError("External tool did not send '{}'. Did something happen?".format(finish_string))
 
 
 def _base_args(game_root: Path,
