@@ -128,7 +128,7 @@ def _calculate_indices(description: LayoutDescription) -> List[int]:
     useless_pickup = pickup_database.pickup_by_name(_USELESS_PICKUP_NAME)
 
     indices = [pickup_database.original_index(useless_pickup).index] * pickup_database.total_pickup_count
-    for index, pickup in description.pickup_assignment.items():
+    for index, pickup in description.patches.pickup_assignment.items():
         indices[index.index] = pickup_database.original_index(pickup).index
 
     return indices
