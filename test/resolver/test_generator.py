@@ -11,7 +11,7 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
 from randovania.resolver import generator, debug
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
-from randovania.resolver.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.item_pool import calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag

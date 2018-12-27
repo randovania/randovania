@@ -9,7 +9,7 @@ import randovania
 from randovania.game_description.node import TeleporterConnection
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
-from randovania.resolver.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration

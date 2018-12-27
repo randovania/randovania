@@ -10,7 +10,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world_list import WorldList
 from randovania.game_description.node import PickupNode, Node, TeleporterNode, TeleporterConnection
 from randovania.game_description.resources import PickupAssignment
-from randovania.resolver.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.permalink import Permalink
 
 

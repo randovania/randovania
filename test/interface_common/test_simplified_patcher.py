@@ -5,7 +5,7 @@ import pytest
 
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
-from randovania.resolver.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration

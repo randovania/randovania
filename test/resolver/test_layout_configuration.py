@@ -6,7 +6,7 @@ import pytest
 import randovania
 from randovania.game_description import data_reader
 from randovania.games.prime import claris_randomizer
-from randovania.resolver.game_patches import GamePatches
+from randovania.game_description.game_patches import GamePatches
 from randovania.resolver.layout_configuration import LayoutTrickLevel, LayoutConfiguration
 from randovania.resolver.layout_description import LayoutDescription, SolverPath, _item_locations_to_pickup_assignment
 from randovania.resolver.patcher_configuration import PatcherConfiguration
