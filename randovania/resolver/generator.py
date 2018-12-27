@@ -33,10 +33,12 @@ def _iterate_previous_states(state: State) -> Iterator[State]:
 def _state_to_solver_path(final_state: State,
                           game: GameDescription
                           ) -> Tuple[SolverPath, ...]:
+    world_list = game.world_list
+
     def build_previous_nodes(s: State):
         if s.path_from_previous_state:
             return tuple(
-                game.node_name(node) for node in s.path_from_previous_state
+                world_list.node_name(node) for node in s.path_from_previous_state
                 if node is not s.previous_state.node
             )
         else:
@@ -44,7 +46,7 @@ def _state_to_solver_path(final_state: State,
 
     return tuple(
         SolverPath(
-            node_name=game.node_name(state.node, with_world=True),
+            node_name=world_list.node_name(state.node, with_world=True),
             previous_nodes=build_previous_nodes(state)
         )
         for state in reversed(list(_iterate_previous_states(final_state)))
@@ -154,7 +156,7 @@ def _create_patches(
         remaining_items.remove(assigned_pickup)
     rng.shuffle(remaining_items)
 
-    for pickup_node in filter_unassigned_pickup_nodes(game.all_nodes, new_pickup_mapping):
+    for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, new_pickup_mapping):
         new_pickup_mapping[pickup_node.pickup_index] = remaining_items.pop()
 
     assert not remaining_items

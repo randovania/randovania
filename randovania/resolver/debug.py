@@ -15,7 +15,7 @@ _current_indent = 0
 
 
 def n(node: Node, with_world=False) -> str:
-    return _gd.node_name(node, with_world) if node is not None else "None"
+    return _gd.world_list.node_name(node, with_world) if node is not None else "None"
 
 
 def pretty_print_area(area: Area):
@@ -23,7 +23,7 @@ def pretty_print_area(area: Area):
     print("Asset id: {}".format(area.area_asset_id))
     for node in area.nodes:
         print(">", node.name, type(node))
-        for target_node, requirements in _gd.potential_nodes_from(node):
+        for target_node, requirements in _gd.world_list.potential_nodes_from(node):
             if target_node is None:
                 print("  > None?")
             else:

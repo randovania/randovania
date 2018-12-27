@@ -119,7 +119,7 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
 def calculate_starting_state(logic: Logic) -> "State":
     game = logic.game
 
-    starting_world = game.world_by_asset_id(game.starting_world_asset_id)
+    starting_world = game.world_list.world_by_asset_id(game.starting_world_asset_id)
     starting_area = starting_world.area_by_asset_id(game.starting_area_asset_id)
     starting_node = starting_area.nodes[starting_area.default_node_index]
 

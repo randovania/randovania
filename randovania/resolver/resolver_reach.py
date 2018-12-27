@@ -59,7 +59,7 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes.append(node)
 
-            for target_node, requirements in logic.game.potential_nodes_from(node, logic.patches):
+            for target_node, requirements in logic.game.world_list.potential_nodes_from(node, logic.patches):
                 if target_node in checked_nodes or target_node in nodes_to_check:
                     continue
 
