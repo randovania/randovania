@@ -1,6 +1,7 @@
 """Classes that describes the raw data of a game world."""
 import copy
-from typing import Iterator, FrozenSet
+import dataclasses
+from typing import Iterator, FrozenSet, Dict
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
@@ -24,6 +25,13 @@ def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[S
                 yield from connection.dangerous_resources
 
 
+@dataclasses.dataclass(frozen=True)
+class InitialGameState:
+    starting_world_asset_id: int
+    starting_area_asset_id: int
+    initial_resources: ResourceGainTuple
+
+
 class GameDescription:
     game: int
     game_name: str
@@ -32,10 +40,7 @@ class GameDescription:
     resource_database: ResourceDatabase
     pickup_database: PickupDatabase
     victory_condition: RequirementSet
-    starting_world_asset_id: int
-    starting_area_asset_id: int
-    starting_items: ResourceGainTuple
-    item_loss_items: ResourceGainTuple
+    initial_states: Dict[str, InitialGameState]
     dangerous_resources: FrozenSet[SimpleResourceInfo]
     world_list: WorldList
     add_self_as_requirement_to_resources: bool
@@ -49,10 +54,7 @@ class GameDescription:
             dock_weakness_database=self.dock_weakness_database,
             world_list=copy.deepcopy(self.world_list, memodict),
             victory_condition=self.victory_condition,
-            starting_world_asset_id=self.starting_world_asset_id,
-            starting_area_asset_id=self.starting_area_asset_id,
-            starting_items=self.starting_items,
-            item_loss_items=self.item_loss_items,
+            initial_states=copy.copy(self.initial_states),
             add_self_as_requirement_to_resources=self.add_self_as_requirement_to_resources,
         )
 
@@ -64,10 +66,7 @@ class GameDescription:
                  resource_database: ResourceDatabase,
                  pickup_database: PickupDatabase,
                  victory_condition: RequirementSet,
-                 starting_world_asset_id: int,
-                 starting_area_asset_id: int,
-                 starting_items: ResourceGainTuple,
-                 item_loss_items: ResourceGainTuple,
+                 initial_states: Dict[str, InitialGameState],
                  world_list: WorldList,
                  add_self_as_requirement_to_resources: bool
                  ):
@@ -78,10 +77,7 @@ class GameDescription:
         self.resource_database = resource_database
         self.pickup_database = pickup_database
         self.victory_condition = victory_condition
-        self.starting_world_asset_id = starting_world_asset_id
-        self.starting_area_asset_id = starting_area_asset_id
-        self.starting_items = starting_items
-        self.item_loss_items = item_loss_items
+        self.initial_states = initial_states
         self.world_list = world_list
         self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 

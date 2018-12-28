@@ -120,8 +120,14 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
 def calculate_starting_state(logic: Logic) -> "State":
     game = logic.game
 
-    starting_world = game.world_list.world_by_asset_id(game.starting_world_asset_id)
-    starting_area = starting_world.area_by_asset_id(game.starting_area_asset_id)
+    initial_state_name = "Default"
+    if logic.configuration.item_loss == LayoutEnabledFlag.DISABLED:
+        initial_state_name = "Item Loss Disabled"
+
+    initial_state = game.initial_states[initial_state_name]
+
+    starting_world = game.world_list.world_by_asset_id(initial_state.starting_world_asset_id)
+    starting_area = starting_world.area_by_asset_id(initial_state.starting_area_asset_id)
     starting_node = starting_area.nodes[starting_area.default_node_index]
 
     starting_state = State(
@@ -142,9 +148,7 @@ def calculate_starting_state(logic: Logic) -> "State":
         resource = game.resource_database.get_by_type_and_index(ResourceType.EVENT, event_id)
         starting_state.resources[resource] = 1
 
-    add_resource_gain_to_state(starting_state, game.starting_items)
-    if logic.configuration.item_loss != LayoutEnabledFlag.ENABLED:
-        add_resource_gain_to_state(starting_state, game.item_loss_items)
+    add_resource_gain_to_state(starting_state, initial_state.initial_resources)
 
     return starting_state
 
