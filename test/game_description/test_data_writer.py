@@ -8,4 +8,5 @@ def test_round_trip():
     game = data_reader.decode_data(original_data, False)
     encoded_data = data_writer.write_game_description(game)
 
-    assert encoded_data == original_data
+    assert original_data == encoded_data
+
