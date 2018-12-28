@@ -356,7 +356,8 @@ def encode(data: Dict, x: BinaryIO):
         for origin in item["nodes"]:
             for target in item["nodes"]:
                 if origin != target:
-                    write_requirement_set(_writer, origin["connections"][target["name"]])
+                    requirement_set = origin["connections"].get(target["name"], _IMPOSSIBLE_SET)
+                    write_requirement_set(_writer, requirement_set)
 
     def write_world(_writer: BinaryWriter, item: Dict):
         _writer.write_string(item["name"])
