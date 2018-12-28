@@ -1,7 +1,7 @@
+import copy
 import functools
 import json
 import operator
-from functools import partial
 from pathlib import Path
 from typing import List, Callable, TypeVar, BinaryIO, Dict, TextIO
 
@@ -249,116 +249,123 @@ def write_array(writer: BinaryWriter, array: List[X],
         item_writer(writer, item)
 
 
-def encode(data: Dict, x: BinaryIO):
+def write_resource_info(writer: BinaryWriter, item: Dict):
+    writer.write_byte(item["index"])
+    writer.write_string(item["long_name"])
+    writer.write_string(item["short_name"])
+
+
+def write_damage_reduction(writer: BinaryWriter, item: Dict):
+    writer.write_byte(item["index"])
+    writer.write_float(item["multiplier"])
+
+
+def write_damage_resource_info(writer: BinaryWriter, item: Dict):
+    write_resource_info(writer, item)
+    write_array(writer, item["reductions"], write_damage_reduction)
+
+
+def write_individual_requirement(writer: BinaryWriter, item: Dict):
+    writer.write_byte(item["requirement_type"])
+    writer.write_byte(item["requirement_index"])
+    writer.write_short(item["amount"])
+    writer.write_bool(item["negate"])
+
+
+def write_requirement_set(writer: BinaryWriter, item: List[List[Dict]]):
+    write_array(writer,
+                item,
+                lambda w, i: write_array(w, i, item_writer=write_individual_requirement))
+
+
+def write_dock_weakness(writer: BinaryWriter, item: Dict):
+    writer.write_byte(item["index"])
+    writer.write_string(item["name"])
+    writer.write_bool(item["is_blast_door"])
+    write_requirement_set(writer, item["requirement_set"])
+
+
+def write_node(writer: BinaryWriter, node: Dict):
+    writer.write_string(node["name"])
+    writer.write_bool(node["heal"])
+    writer.write_byte(node["node_type"])
+
+    node_type = node["node_type"]
+
+    if node_type == 0:
+        pass
+
+    elif node_type == 1:
+        writer.write_byte(node["dock_index"])
+        writer.write_uint(node["connected_area_asset_id"])
+        writer.write_byte(node["connected_dock_index"])
+        writer.write_byte(node["dock_type"])
+        writer.write_byte(node["dock_weakness_index"])
+        writer.write_byte(0)
+        writer.write_byte(0)
+        writer.write_byte(0)
+
+    elif node_type == 2:
+        writer.write_byte(node["pickup_index"])
+
+    elif node_type == 3:
+        writer.write_uint(node["destination_world_asset_id"])
+        writer.write_uint(node["destination_area_asset_id"])
+        writer.write_uint(node["teleporter_instance_id"])
+
+    elif node_type == 4:
+        writer.write_byte(node["event_index"])
+
+    else:
+        raise Exception("Unknown node type: {}".format(node_type))
+
+
+def write_area(writer: BinaryWriter, item: Dict):
+    writer.write_string(item["name"])
+    writer.write_uint(item["asset_id"])
+    writer.write_byte(len(item["nodes"]))
+    writer.write_byte(item["default_node_index"])
+    for node in item["nodes"]:
+        write_node(writer, node)
+
+    for origin in item["nodes"]:
+        for target in item["nodes"]:
+            if origin != target:
+                requirement_set = origin["connections"].get(target["name"], _IMPOSSIBLE_SET)
+                write_requirement_set(writer, requirement_set)
+
+
+def write_world(writer: BinaryWriter, item: Dict):
+    writer.write_string(item["name"])
+    writer.write_uint(item["asset_id"])
+    write_array(writer, item["areas"], write_area)
+
+
+def encode(original_data: Dict, x: BinaryIO) -> dict:
+    data = copy.copy(original_data)
+
     writer = BinaryWriter(x)
     x.write(b"Req.")
     writer.write_uint(current_format_version)
-    writer.write_byte(data["game"])
-    writer.write_string(data["game_name"])
-
-    def write_resource_info(_writer, item: Dict):
-        _writer.write_byte(item["index"])
-        _writer.write_string(item["long_name"])
-        _writer.write_string(item["short_name"])
-
-    def write_damage_reduction(_writer, item: Dict):
-        _writer.write_byte(item["index"])
-        _writer.write_float(item["multiplier"])
-
-    def write_damage_resource_info(_writer, item: Dict):
-        write_resource_info(_writer, item)
-        write_array(_writer, item["reductions"], write_damage_reduction)
-
-    def write_individual_requirement(_writer, item: Dict):
-        _writer.write_byte(item["requirement_type"])
-        _writer.write_byte(item["requirement_index"])
-        _writer.write_short(item["amount"])
-        _writer.write_bool(item["negate"])
-
-    def write_requirement_set(_writer, item: List[List[Dict]]):
-        write_array(_writer, item,
-                    partial(
-                        write_array, item_writer=write_individual_requirement))
+    writer.write_byte(data.pop("game"))
+    writer.write_string(data.pop("game_name"))
 
     # Resource Info database
-    write_array(writer, data["resource_database"]["items"],
-                write_resource_info)
-    write_array(writer, data["resource_database"]["events"],
-                write_resource_info)
-    write_array(writer, data["resource_database"]["tricks"],
-                write_resource_info)
-    write_array(writer, data["resource_database"]["damage"],
-                write_damage_resource_info)
-    write_array(writer, data["resource_database"]["versions"],
-                write_resource_info)
-    write_array(writer, data["resource_database"]["misc"], write_resource_info)
-    write_array(writer, data["resource_database"]["difficulty"],
-                write_resource_info)
+    resource_database = data.pop("resource_database")
+    write_array(writer, resource_database["items"], write_resource_info)
+    write_array(writer, resource_database["events"], write_resource_info)
+    write_array(writer, resource_database["tricks"], write_resource_info)
+    write_array(writer, resource_database["damage"], write_damage_resource_info)
+    write_array(writer, resource_database["versions"], write_resource_info)
+    write_array(writer, resource_database["misc"], write_resource_info)
+    write_array(writer, resource_database["difficulty"], write_resource_info)
 
     # Dock Weakness Database
-    def write_dock_weakness(_writer, item: Dict):
-        _writer.write_byte(item["index"])
-        _writer.write_string(item["name"])
-        _writer.write_bool(item["is_blast_door"])
-        write_requirement_set(_writer, item["requirement_set"])
-
-    write_array(writer, data["dock_weakness_database"]["door"],
-                write_dock_weakness)
-    write_array(writer, data["dock_weakness_database"]["portal"],
-                write_dock_weakness)
+    dock_weakness_database = data.pop("dock_weakness_database")
+    write_array(writer, dock_weakness_database["door"], write_dock_weakness)
+    write_array(writer, dock_weakness_database["portal"], write_dock_weakness)
 
     # Worlds List
-    def write_node(_writer: BinaryWriter, node: Dict):
-        _writer.write_string(node["name"])
-        _writer.write_bool(node["heal"])
-        _writer.write_byte(node["node_type"])
+    write_array(writer, data.pop("worlds"), write_world)
 
-        node_type = node["node_type"]
-
-        if node_type == 0:
-            pass
-
-        elif node_type == 1:
-            _writer.write_byte(node["dock_index"])
-            _writer.write_uint(node["connected_area_asset_id"])
-            _writer.write_byte(node["connected_dock_index"])
-            _writer.write_byte(node["dock_type"])
-            _writer.write_byte(node["dock_weakness_index"])
-            _writer.write_byte(0)
-            _writer.write_byte(0)
-            _writer.write_byte(0)
-
-        elif node_type == 2:
-            _writer.write_byte(node["pickup_index"])
-
-        elif node_type == 3:
-            _writer.write_uint(node["destination_world_asset_id"])
-            _writer.write_uint(node["destination_area_asset_id"])
-            _writer.write_uint(node["teleporter_instance_id"])
-
-        elif node_type == 4:
-            _writer.write_byte(node["event_index"])
-
-        else:
-            raise Exception("Unknown node type: {}".format(node_type))
-
-    def write_area(_writer: BinaryWriter, item: Dict):
-        _writer.write_string(item["name"])
-        _writer.write_uint(item["asset_id"])
-        _writer.write_byte(len(item["nodes"]))
-        _writer.write_byte(item["default_node_index"])
-        for node in item["nodes"]:
-            write_node(_writer, node)
-
-        for origin in item["nodes"]:
-            for target in item["nodes"]:
-                if origin != target:
-                    requirement_set = origin["connections"].get(target["name"], _IMPOSSIBLE_SET)
-                    write_requirement_set(_writer, requirement_set)
-
-    def write_world(_writer: BinaryWriter, item: Dict):
-        _writer.write_string(item["name"])
-        _writer.write_uint(item["asset_id"])
-        write_array(_writer, item["areas"], write_area)
-
-    write_array(writer, data["worlds"], write_world)
+    return data

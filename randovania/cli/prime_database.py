@@ -1,10 +1,9 @@
 import argparse
 import csv
 import json
-import os
 from argparse import ArgumentParser
 from pathlib import Path
-from typing import Dict, BinaryIO, Optional
+from typing import Dict, BinaryIO, Optional, TextIO
 
 from randovania import get_data_path
 from randovania.game_description import data_reader, data_writer
@@ -50,12 +49,15 @@ def convert_database_command_logic(args):
     if args.decode_to_game_description:
         data = data_writer.write_game_description(data_reader.decode_data(data, False))
 
-    if args.output_binary is not None:
-        with open(args.output_binary, "wb") as x:  # type: BinaryIO
+    output_binary: Optional[Path] = args.output_binary
+    output_json: Optional[Path] = args.output_json
+
+    if output_binary is not None:
+        with output_binary.open("wb") as x:  # type: BinaryIO
             binary_data.encode(data, x)
 
-    elif args.output_json is not None:
-        with open(args.output_json, "w") as x:  # type: BinaryIO
+    elif output_json is not None:
+        with output_json.open("w") as x:  # type: TextIO
             json.dump(data, x, indent=4)
     else:
         raise ValueError("Neither binary nor JSON set. Argparse is broken?")
@@ -78,12 +80,12 @@ def create_convert_database_command(sub_parsers):
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         "--output-binary",
-        type=str,
+        type=Path,
         help="Export as a binary file.",
     )
     group.add_argument(
         "--output-json",
-        type=str,
+        type=Path,
         help="Export as a JSON file.",
     )
 

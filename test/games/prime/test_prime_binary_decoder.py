@@ -63,15 +63,19 @@ def test_simple_round_trip():
 def test_complex_encode(test_files_dir):
     with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         data = json.load(data_file)
+
+    with test_files_dir.joinpath("prime_extra_data.json").open("r") as data_file:
+        extra_data = json.load(data_file)
+
     b = io.BytesIO()
     b_io = b  # type: BinaryIO
 
     # Run
-    binary_data.encode(data, b_io)
+    remaining_data = binary_data.encode(data, b_io)
 
     # Assert
-    assert test_files_dir.joinpath(
-        "prime_data_as_binary.bin").read_bytes() == b.getvalue()
+    assert test_files_dir.joinpath("prime_data_as_binary.bin").read_bytes() == b.getvalue()
+    assert extra_data == remaining_data
 
 
 def test_complex_decode(test_files_dir):
@@ -95,11 +99,15 @@ def test_full_file_round_trip():
     with get_data_path().joinpath("binary_data", "prime2_extra.json").open("r") as extra:
         decoded = binary_data.decode(input_io, extra)
 
+        extra.seek(0)
+        extra_data = json.load(extra)
+
     output_io = io.BytesIO()
     b_io = output_io  # type: BinaryIO
 
     # Run
-    binary_data.encode(decoded, b_io)
+    remaining_data = binary_data.encode(decoded, b_io)
 
     # Assert
     assert input_io.getvalue() == output_io.getvalue()
+    assert extra_data == remaining_data
