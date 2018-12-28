@@ -3,12 +3,20 @@ from typing import NamedTuple, List
 
 from randovania.game_description.requirements import RequirementSet
 
+@unique
+class DockType(Enum):
+    DOOR = 0
+    MORPH_BALL_DOOR = 1
+    OTHER = 2
+    PORTAL = 3
+
 
 class DockWeakness(NamedTuple):
     index: int
     name: str
     is_blast_shield: bool
     requirements: RequirementSet
+    dock_type: DockType
 
     def __repr__(self):
         return self.name
@@ -21,14 +29,6 @@ def _find_dock_weakness_with_id(info_list: List[DockWeakness],
             return info
     raise ValueError(
         "Dock weakness with index {} not found in {}".format(index, info_list))
-
-
-@unique
-class DockType(Enum):
-    DOOR = 0
-    MORPH_BALL_DOOR = 1
-    OTHER = 2
-    PORTAL = 3
 
 
 class DockWeaknessDatabase(NamedTuple):
