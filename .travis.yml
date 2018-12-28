@@ -20,6 +20,9 @@ matrix:
       env:
         - PYENV_VERSION=3.7.1
 
+  allow_failures:
+    - os: osx
+
 deploy:
   provider: script
   script: python -m twine upload dist/*
