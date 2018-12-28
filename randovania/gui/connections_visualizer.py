@@ -1,0 +1,207 @@
+from typing import Optional, Iterable, List
+
+from PySide2.QtGui import QIntValidator
+from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
+    QLineEdit
+
+from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
+from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import ResourceDatabase, ResourceInfo
+
+
+def _create_resource_name_combo(resource_database: ResourceDatabase,
+                                current_resource: ResourceInfo,
+                                parent: QWidget,
+                                ) -> QComboBox:
+    """
+
+    :param resource_database:
+    :param current_resource:
+    :param parent:
+    :return:
+    """
+
+    resource_name_combo = QComboBox(parent)
+
+    for resource in resource_database.get_by_type(current_resource.resource_type):
+        resource_name_combo.addItem(resource.long_name, resource)
+        if resource is current_resource:
+            resource_name_combo.setCurrentIndex(resource_name_combo.count() - 1)
+
+    return resource_name_combo
+
+
+def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWidget) -> QComboBox:
+    """
+
+    :param current_resource_type:
+    :param parent:
+    :return:
+    """
+    resource_type_combo = QComboBox(parent)
+
+    for resource_type in ResourceType:
+        resource_type_combo.addItem(resource_type.name, resource_type)
+        if resource_type is current_resource_type:
+            resource_type_combo.setCurrentIndex(resource_type_combo.count() - 1)
+
+    return resource_type_combo
+
+
+def _create_row(parent: QWidget, parent_layout: QVBoxLayout,
+                resource_database: ResourceDatabase, item: IndividualRequirement,
+                ):
+
+    layout = QHBoxLayout(parent)
+    parent_layout.addLayout(layout)
+
+    resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent)
+    resource_type_combo.setMinimumWidth(75)
+    resource_type_combo.setMaximumWidth(75)
+
+    resource_name_combo = _create_resource_name_combo(resource_database, item.resource, parent)
+
+    negate_combo = QComboBox(parent)
+    negate_combo.addItem(">=", False)
+    negate_combo.addItem("<", True)
+    negate_combo.setCurrentIndex(int(item.negate))
+    negate_combo.setMinimumWidth(40)
+    negate_combo.setMaximumWidth(40)
+
+    amount_edit = QLineEdit(parent)
+    amount_edit.setValidator(QIntValidator(1, 10000))
+    amount_edit.setText(str(item.amount))
+    amount_edit.setMinimumWidth(45)
+    amount_edit.setMaximumWidth(45)
+
+    remove_button = QPushButton(parent)
+    remove_button.setText("X")
+    remove_button.setMaximumWidth(20)
+
+    layout.addWidget(resource_type_combo)
+    layout.addWidget(resource_name_combo)
+    layout.addWidget(negate_combo)
+    layout.addWidget(amount_edit)
+    layout.addWidget(remove_button)
+
+    def _delete_row():
+        resource_type_combo.deleteLater()
+        resource_name_combo.deleteLater()
+        negate_combo.deleteLater()
+        amount_edit.deleteLater()
+        remove_button.deleteLater()
+        layout.deleteLater()
+
+    remove_button.clicked.connect(_delete_row)
+
+
+class ConnectionsVisualizer:
+    parent: QWidget
+    resource_database: ResourceDatabase
+    edit_mode: bool
+    grid_layout: QGridLayout
+    _elements: List[QWidget]
+
+    num_columns_for_alternatives = 2
+
+    def __init__(self,
+                 parent: QWidget,
+                 grid_layout: QGridLayout,
+                 resource_database: ResourceDatabase,
+                 requirement_set: Optional[RequirementSet],
+                 edit_mode: bool,
+                 ):
+        assert requirement_set != RequirementSet.impossible()
+
+        self.parent = parent
+        self.resource_database = resource_database
+        self.edit_mode = edit_mode
+        self.grid_layout = grid_layout
+        self._elements = []
+
+        i = 0
+        if requirement_set is not None:
+            for i, alternative in enumerate(requirement_set.alternatives):
+                self._add_box_with_requirements(i, alternative)
+
+            if i == 0 and not alternative.items and not self.edit_mode:
+                self._add_box_with_labels(i, [
+                    "Trivial."
+                ])
+
+        elif not self.edit_mode:
+            self._add_box_with_labels(i, [
+                "Impossible to Reach."
+            ])
+
+        if self.edit_mode:
+            group_box = self._add_box_with_labels(i + 1, [])
+            new_button = QPushButton(group_box)
+            new_button.setText("New Alternative")
+            group_box.vertical_layout.addWidget(new_button)
+
+    def _add_box_with_labels(self, index: int, labels: Iterable[str]):
+        group_box = QGroupBox(self.parent)
+        self._elements.append(group_box)
+
+        self.grid_layout.addWidget(group_box,
+                                   index // self.num_columns_for_alternatives,
+                                   index % self.num_columns_for_alternatives)
+
+        vertical_layout = QVBoxLayout(group_box)
+        vertical_layout.setContentsMargins(11, 11, 11, 11)
+        vertical_layout.setSpacing(6)
+        group_box.vertical_layout = vertical_layout
+
+        for text in labels:
+            label = QLabel(group_box)
+            label.setText(text)
+            vertical_layout.addWidget(label)
+
+        return group_box
+
+    def _add_box_with_requirements(self, index: int, alternative: RequirementList):
+        group_box = QGroupBox(self.parent)
+        self._elements.append(group_box)
+
+        self.grid_layout.addWidget(group_box,
+                                   index // self.num_columns_for_alternatives,
+                                   index % self.num_columns_for_alternatives)
+
+        vertical_layout = QVBoxLayout(group_box)
+        for item in alternative.items:
+            if self.edit_mode:
+                _create_row(group_box, vertical_layout, self.resource_database, item)
+            else:
+                label = QLabel(group_box)
+                label.setText(str(item))
+                vertical_layout.addWidget(label)
+
+        if self.edit_mode:
+            tools_layout = QHBoxLayout(group_box)
+            vertical_layout.addLayout(tools_layout)
+
+            add_new_button = QPushButton(group_box)
+            add_new_button.setText("New Requirement")
+            tools_layout.addWidget(add_new_button)
+
+            delete_button = QPushButton(group_box)
+            delete_button.setText("Delete")
+            tools_layout.addWidget(delete_button)
+
+            def _new_row():
+                empty_item = IndividualRequirement(
+                    self.resource_database.get_by_type(ResourceType.ITEM)[0],
+                    1, False
+                )
+                _create_row(group_box, vertical_layout, self.resource_database, empty_item)
+                vertical_layout.removeItem(tools_layout)
+                vertical_layout.addLayout(tools_layout)
+
+            add_new_button.clicked.connect(_new_row)
+
+        return group_box
+
+    def deleteLater(self):
+        for element in self._elements:
+            element.deleteLater()
