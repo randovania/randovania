@@ -4,6 +4,8 @@ import pytest
 
 from randovania import cli
 
+pytestmark = pytest.mark.skip
+
 
 @patch("randovania.cli.games", autospec=True)
 @patch("randovania.cli.qt.create_subparsers", autospec=True)
