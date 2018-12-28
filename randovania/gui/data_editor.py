@@ -1,29 +1,33 @@
 from typing import Dict, Optional
 
 from PySide2.QtCore import Qt, QTimer
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout
+from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog
 
 from randovania.game_description.area import Area
 from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.game_description.node import Node, DockNode, TeleporterNode
 from randovania.game_description.world import World
+from randovania.gui.connections_editor import ConnectionsEditor
 from randovania.gui.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
+    edit_mode: bool
     selected_node_button: QRadioButton = None
     radio_button_to_node: Dict[QRadioButton, Node] = {}
-    edit_mode: bool = False
     _area_with_displayed_connections: Optional[Area] = None
     _previous_selected_node: Optional[Node] = None
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
 
-    def __init__(self, data: dict):
+    def __init__(self, data: dict, edit_mode: bool):
         super().__init__()
         self.setupUi(self)
+        self.edit_mode = edit_mode
+
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
+        self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.verticalLayout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
@@ -94,18 +98,21 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self._previous_selected_node = node
 
     def update_other_node_connection(self):
+        """
+        Fills self.other_node_connection_combo for the current area, excluding the currently selected node.
+        :return:
+        """
+        current_node = self.current_node
+        assert current_node is not None
+
+        # Calculates which node should be selected
         selected_node = None
         if self._area_with_displayed_connections == self.current_area:
             selected_node = self.current_connection_node
-
-        current_node = self.current_node
         if selected_node is current_node:
             selected_node = self._previous_selected_node
 
-        if current_node is None:
-            self.other_node_connection_combo.setEnabled(False)
-            return
-
+        #
         self._area_with_displayed_connections = self.current_area
         self.other_node_connection_combo.setEnabled(True)
 
@@ -126,9 +133,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_node = self.current_node
         current_connection_node = self.current_connection_node
 
-        if current_node is None or current_connection_node is None:
-            return
-
+        assert current_node is not None
+        assert current_connection_node is not None
         assert current_node != current_connection_node
 
         if self._connections_visualizer is not None:
@@ -143,6 +149,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             requirement_set,
             False
         )
+
+    def _open_edit_connection(self):
+        assert self.current_node is not None
+        assert self.current_connection_node is not None
+
+        requirement_set = self.current_area.connections[self.current_node].get(self.current_connection_node)
+        self.dialog = ConnectionsEditor(self, self.resource_database, requirement_set)
+        self.dialog.exec_()
 
     def update_edit_mode(self):
         self.delete_node_button.setVisible(self.edit_mode)

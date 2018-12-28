@@ -123,7 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     # Menu Actions
     def _open_data_visualizer(self):
-        self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2())
+        self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2(), False)
         self._data_visualizer.show()
 
     def _open_existing_seed_details(self):
