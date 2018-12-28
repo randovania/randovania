@@ -2,6 +2,7 @@ import functools
 import json
 import operator
 from functools import partial
+from pathlib import Path
 from typing import List, Callable, TypeVar, BinaryIO, Dict, TextIO
 
 from randovania.binary_file import BinarySource, BinaryWriter
@@ -235,10 +236,9 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
     }
 
 
-def decode_file_path(binary_file_path: str, extra_file_path: str) -> Dict:
-    # TODO: use Path
-    with open(binary_file_path, "rb") as binary_io:  # type: BinaryIO
-        with open(extra_file_path, "r") as extra:
+def decode_file_path(binary_file_path: Path, extra_file_path: Path) -> Dict:
+    with binary_file_path.open("rb") as binary_io:  # type: BinaryIO
+        with extra_file_path.open("r") as extra:
             return decode(binary_io, extra)
 
 

@@ -3,6 +3,7 @@ import csv
 import json
 import os
 from argparse import ArgumentParser
+from pathlib import Path
 from typing import Dict, BinaryIO, Optional
 
 from randovania import get_data_path
@@ -14,17 +15,18 @@ from randovania.resolver import debug
 
 
 def decode_data_file(args) -> Dict:
-    if args.json_database is not None:
-        with open(args.json_database) as data_file:
+    json_database: Optional[Path] = args.json_database
+    if json_database is not None:
+        with json_database.open() as data_file:
             return json.load(data_file)
 
-    data_file_path = args.binary_database
+    data_file_path: Optional[Path] = args.binary_database
     if data_file_path is None:
         return default_data.decode_default_prime2()
     else:
         return binary_data.decode_file_path(
             data_file_path,
-            os.path.join(get_data_path(), "prime2_extra.json")
+            get_data_path().joinpath("prime2_extra.json")
         )
 
 
@@ -32,12 +34,12 @@ def add_data_file_argument(parser: ArgumentParser):
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "--binary-database",
-        type=str,
+        type=Path,
         help="Path to the binary encoded database.",
     )
     group.add_argument(
         "--json-database",
-        type=str,
+        type=Path,
         help="Path to the JSON encoded database.",
     )
 
