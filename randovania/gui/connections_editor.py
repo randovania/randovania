@@ -23,3 +23,9 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         )
         self.new_alternative_button.clicked.connect(self._connections_visualizer.new_alternative)
 
+    @property
+    def final_requirement_set(self) -> Optional[RequirementSet]:
+        result = self._connections_visualizer.build_requirement_set()
+        if result == RequirementSet.impossible():
+            return None
+        return result
