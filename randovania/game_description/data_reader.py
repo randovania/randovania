@@ -8,7 +8,7 @@ from randovania.game_description.node import GenericNode, DockNode, TeleporterNo
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
     ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceDatabase, PickupDatabase, \
-    find_resource_info_with_id
+    find_resource_info_with_id, ResourceGainTuple, ResourceInfo
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
@@ -73,6 +73,23 @@ def read_requirement_set(data: List[List[Dict]],
                          resource_database: ResourceDatabase) -> RequirementSet:
     alternatives = read_array(data, lambda x: read_requirement_list(x, resource_database=resource_database))
     return RequirementSet(alternative for alternative in alternatives if alternative is not None)
+
+
+# Resource Gain
+
+def read_single_resource_gain(item: Dict, database: "ResourceDatabase") -> Tuple[ResourceInfo, int]:
+    resource = database.get_by_type_and_index(ResourceType(item["resource_type"]),
+                                              item["resource_index"])
+    amount = item["amount"]
+
+    return resource, amount
+
+
+def read_resource_gain_tuple(data: List[Dict], database: "ResourceDatabase") -> ResourceGainTuple:
+    return tuple(
+        read_single_resource_gain(item, database)
+        for item in data
+    )
 
 
 # Dock Weakness
@@ -204,7 +221,9 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
 def read_pickup_database(data: Dict,
                          resource_database: ResourceDatabase) -> PickupDatabase:
     pickups = {
-        name: PickupEntry.from_data(name, item, resource_database)
+        name: PickupEntry(name,
+                          read_resource_gain_tuple(item["resources"], resource_database),
+                          item["item_category"])
         for name, item in data["pickups"].items()
     }
     original_pickup_mapping = {
@@ -216,13 +235,6 @@ def read_pickup_database(data: Dict,
         pickups=pickups,
         original_pickup_mapping=original_pickup_mapping
     )
-
-
-def _convert_to_resource_gain(data: Dict[str, int], resource_database: ResourceDatabase) -> ResourceGain:
-    return [
-        (find_resource_info_with_long_name(resource_database.item, resource_long_name), quantity)
-        for resource_long_name, quantity in data.items()
-    ]
 
 
 def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -> GameDescription:
@@ -239,8 +251,8 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
     starting_world_asset_id = data["starting_world_asset_id"]
     starting_area_asset_id = data["starting_area_asset_id"]
     victory_condition = read_requirement_set(data["victory_condition"], resource_database)
-    starting_items = _convert_to_resource_gain(data["starting_items"], resource_database)
-    item_loss_items = _convert_to_resource_gain(data["item_loss_items"], resource_database)
+    starting_items = read_resource_gain_tuple(data["starting_items"], resource_database)
+    item_loss_items = read_resource_gain_tuple(data["item_loss_items"], resource_database)
 
     return GameDescription(
         game=game,
