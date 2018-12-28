@@ -220,6 +220,9 @@ def write_world_list(world_list: WorldList) -> list:
 
 
 def write_game_description(game: GameDescription) -> dict:
+    if game.add_self_as_requirement_to_resources:
+        raise ValueError("Attempting to encode a GameDescription's created with add_self_as_requirement_to_resources "
+                         "is an invalid operation")
     return {
         "game": game.game,
         "game_name": game.game_name,

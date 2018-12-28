@@ -254,6 +254,7 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
         starting_area_asset_id=starting_area_asset_id,
         starting_items=starting_items,
         item_loss_items=item_loss_items,
+        add_self_as_requirement_to_resources=add_self_as_requirement_to_resources,
     )
 
 

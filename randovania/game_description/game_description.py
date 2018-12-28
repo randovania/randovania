@@ -38,6 +38,7 @@ class GameDescription:
     item_loss_items: ResourceGain
     dangerous_resources: FrozenSet[SimpleResourceInfo]
     world_list: WorldList
+    add_self_as_requirement_to_resources: bool
 
     def __deepcopy__(self, memodict):
         return GameDescription(
@@ -52,6 +53,7 @@ class GameDescription:
             starting_area_asset_id=self.starting_area_asset_id,
             starting_items=self.starting_items,
             item_loss_items=self.item_loss_items,
+            add_self_as_requirement_to_resources=self.add_self_as_requirement_to_resources,
         )
 
     def __init__(self,
@@ -67,6 +69,7 @@ class GameDescription:
                  starting_items: ResourceGain,
                  item_loss_items: ResourceGain,
                  world_list: WorldList,
+                 add_self_as_requirement_to_resources: bool
                  ):
         self.game = game
         self.game_name = game_name
@@ -80,6 +83,7 @@ class GameDescription:
         self.starting_items = starting_items
         self.item_loss_items = item_loss_items
         self.world_list = world_list
+        self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
         self.dangerous_resources = frozenset(
             _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
