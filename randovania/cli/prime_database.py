@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from typing import Dict, BinaryIO, Optional
 
 from randovania import get_data_path
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name
 from randovania.games.prime import binary_data, default_data
@@ -45,9 +45,13 @@ def add_data_file_argument(parser: ArgumentParser):
 def convert_database_command_logic(args):
     data = decode_data_file(args)
 
+    if args.decode_to_game_description:
+        data = data_writer.write_game_description(data_reader.decode_data(data, False))
+
     if args.output_binary is not None:
         with open(args.output_binary, "wb") as x:  # type: BinaryIO
             binary_data.encode(data, x)
+
     elif args.output_json is not None:
         with open(args.output_json, "w") as x:  # type: BinaryIO
             json.dump(data, x, indent=4)
@@ -62,6 +66,12 @@ def create_convert_database_command(sub_parsers):
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
     add_data_file_argument(parser)
+    parser.add_argument(
+        "--decode-to-game-description",
+        action="store_true",
+        default=False,
+        help="Decodes the input data to a GameDescription, then encodes it back."
+    )
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(

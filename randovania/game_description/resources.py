@@ -68,13 +68,14 @@ class PickupIndex:
 
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]
+ResourceGainTuple = Tuple[Tuple[ResourceInfo, int], ...]
 ResourceGain = Iterator[Tuple[ResourceInfo, int]]
 CurrentResources = Dict[ResourceInfo, int]
 
 
 class PickupEntry(NamedTuple):
     name: str
-    resources: Dict[SimpleResourceInfo, int]
+    resources: ResourceGainTuple
     item_category: str
 
     def __hash__(self):
@@ -86,19 +87,8 @@ class PickupEntry(NamedTuple):
     def __eq__(self, other):
         return isinstance(other, PickupEntry) and self.name == other.name
 
-    @classmethod
-    def from_data(cls, name: str, data: Dict, database: "ResourceDatabase") -> "PickupEntry":
-        return PickupEntry(
-            name=name,
-            item_category=data["item_category"],
-            resources={
-                find_resource_info_with_long_name(database.item, name): quantity
-                for name, quantity in data["resources"].items()
-            },
-        )
-
     def resource_gain(self) -> ResourceGain:
-        yield from self.resources.items()
+        yield from self.resources
 
     def __str__(self):
         return "Pickup {}".format(self.name)
@@ -146,7 +136,7 @@ class ResourceDatabase(NamedTuple):
             return self.difficulty
         else:
             raise ValueError(
-                "Invalid requirement_type: {}".format(resource_type))
+                "Invalid resource_type: {}".format(resource_type))
 
     def get_by_type_and_index(self, resource_type: ResourceType,
                               index: int) -> ResourceInfo:

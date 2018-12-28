@@ -37,11 +37,15 @@ def write_requirement_set(requirement_set: RequirementSet) -> list:
 
 # Resource
 
-def write_resource_gain_by_long_name(resource_gain: ResourceGain) -> dict:
-    return {
-        resource.long_name: gain
-        for resource, gain in resource_gain
-    }
+def write_resource_gain(resource_gain: ResourceGain) -> list:
+    return [
+        {
+            "resource_type": resource.resource_type.value,
+            "resource_index": resource.index,
+            "amount": gain,
+        }
+        for resource, gain in sorted(resource_gain)
+    ]
 
 
 def write_simple_resource(resource: SimpleResourceInfo) -> dict:
@@ -120,7 +124,7 @@ def write_pickup_database(database: PickupDatabase) -> dict:
         "pickups": {
             pickup.name: {
                 "item_category": pickup.item_category,
-                "resources": write_resource_gain_by_long_name(pickup.resource_gain())
+                "resources": write_resource_gain(pickup.resource_gain())
             }
             for pickup in database.pickups.values()
         },
@@ -230,8 +234,8 @@ def write_game_description(game: GameDescription) -> dict:
 
         "starting_world_asset_id": game.starting_world_asset_id,
         "starting_area_asset_id": game.starting_area_asset_id,
-        "starting_items": write_resource_gain_by_long_name(game.starting_items),
-        "item_loss_items": write_resource_gain_by_long_name(game.item_loss_items),
+        "starting_items": write_resource_gain(game.starting_items),
+        "item_loss_items": write_resource_gain(game.item_loss_items),
         "victory_condition": write_requirement_set(game.victory_condition),
 
         "pickup_database": write_pickup_database(game.pickup_database),

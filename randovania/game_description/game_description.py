@@ -7,7 +7,7 @@ from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
 from randovania.game_description.resources import ResourceInfo, \
     ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
-    PickupDatabase
+    PickupDatabase, ResourceGainTuple
 from randovania.game_description.world_list import WorldList
 
 
@@ -34,8 +34,8 @@ class GameDescription:
     victory_condition: RequirementSet
     starting_world_asset_id: int
     starting_area_asset_id: int
-    starting_items: ResourceGain
-    item_loss_items: ResourceGain
+    starting_items: ResourceGainTuple
+    item_loss_items: ResourceGainTuple
     dangerous_resources: FrozenSet[SimpleResourceInfo]
     world_list: WorldList
     add_self_as_requirement_to_resources: bool
@@ -66,8 +66,8 @@ class GameDescription:
                  victory_condition: RequirementSet,
                  starting_world_asset_id: int,
                  starting_area_asset_id: int,
-                 starting_items: ResourceGain,
-                 item_loss_items: ResourceGain,
+                 starting_items: ResourceGainTuple,
+                 item_loss_items: ResourceGainTuple,
                  world_list: WorldList,
                  add_self_as_requirement_to_resources: bool
                  ):
