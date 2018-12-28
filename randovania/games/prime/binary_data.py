@@ -1,4 +1,6 @@
+import functools
 import json
+import operator
 from functools import partial
 from typing import List, Callable, TypeVar, BinaryIO, Dict, TextIO
 
@@ -55,6 +57,18 @@ def read_damage_resource_info_array(source: BinarySource) -> List[Dict]:
 
 # Requirement
 
+sort_individual_requirement = operator.itemgetter("requirement_type", "requirement_index", "amount", "negate")
+
+
+def sort_requirement_list(item: list):
+    return functools.reduce(
+        operator.add,
+        [
+            sort_individual_requirement(individual)
+            for individual in item
+        ],
+        tuple())
+
 
 def read_individual_requirement(source: BinarySource) -> Dict:
     return {
@@ -70,7 +84,7 @@ def read_requirement_list(source: BinarySource) -> List[Dict]:
     if result == _TRIVIAL_LIST:
         return []
     else:
-        return result
+        return list(sorted(result, key=sort_individual_requirement))
 
 
 def read_requirement_set(source: BinarySource) -> List[List[Dict]]:
@@ -78,7 +92,7 @@ def read_requirement_set(source: BinarySource) -> List[List[Dict]]:
     if result == _IMPOSSIBLE_SET:
         return []
     else:
-        return result
+        return list(sorted(result, key=sort_requirement_list))
 
 
 # Dock Weakness
@@ -148,7 +162,7 @@ def read_area(source: BinarySource) -> Dict:
         for target in nodes:
             if origin != target:
                 requirement_set = read_requirement_set(source)
-                if requirement_set != _IMPOSSIBLE_SET:
+                if requirement_set:
                     origin["connections"][target["name"]] = requirement_set
 
     return {

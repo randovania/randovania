@@ -1,5 +1,6 @@
+import operator
 from functools import lru_cache
-from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator
+from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple
 
 from randovania.game_description.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceDatabase, SimpleResourceInfo
 from randovania.game_description.resource_type import ResourceType
@@ -63,8 +64,12 @@ class IndividualRequirement(NamedTuple):
         else:
             return str(self)
 
+    @property
+    def _as_comparison_tuple(self):
+        return self.resource.resource_type, self.resource.index, self.amount, self.negate
+
     def __lt__(self, other: "IndividualRequirement") -> bool:
-        return str(self) < str(other)
+        return self._as_comparison_tuple < other._as_comparison_tuple
 
 
 class RequirementList:
@@ -200,6 +205,10 @@ class RequirementList:
     def union(self, other: "RequirementList") -> "RequirementList":
         return RequirementList(max(self.difficulty_level, other.difficulty_level),
                                self.items | other.items)
+
+    @property
+    def sorted(self) -> Tuple[IndividualRequirement]:
+        return tuple(sorted(self.items))
 
 
 class RequirementSet:
