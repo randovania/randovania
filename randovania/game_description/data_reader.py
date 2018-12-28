@@ -21,12 +21,12 @@ def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
     return [item_reader(item) for item in data]
 
 
-def read_resource_info(data: Dict, resource_type: str = "") -> SimpleResourceInfo:
+def read_resource_info(data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
     return SimpleResourceInfo(data["index"], data["long_name"],
                               data["short_name"], resource_type)
 
 
-def read_resource_info_array(data: List[Dict], resource_type: str = "") -> List[SimpleResourceInfo]:
+def read_resource_info_array(data: List[Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
     return read_array(data, lambda info: read_resource_info(info, resource_type=resource_type))
 
 
@@ -182,15 +182,15 @@ class WorldReader:
 
 
 def read_resource_database(data: Dict) -> ResourceDatabase:
-    item = read_resource_info_array(data["items"], "I")
+    item = read_resource_info_array(data["items"], ResourceType.ITEM)
     return ResourceDatabase(
         item=item,
-        event=read_resource_info_array(data["events"], "E"),
-        trick=read_resource_info_array(data["tricks"], "T"),
+        event=read_resource_info_array(data["events"], ResourceType.EVENT),
+        trick=read_resource_info_array(data["tricks"], ResourceType.TRICK),
         damage=read_damage_resource_info_array(data["damage"], item),
-        version=read_resource_info_array(data["versions"]),
-        misc=read_resource_info_array(data["misc"]),
-        difficulty=read_resource_info_array(data["difficulty"]),
+        version=read_resource_info_array(data["versions"], ResourceType.VERSION),
+        misc=read_resource_info_array(data["misc"], ResourceType.MISC),
+        difficulty=read_resource_info_array(data["difficulty"], ResourceType.DIFFICULTY),
     )
 
 
