@@ -1,5 +1,5 @@
 import operator
-from typing import List, TypeVar, Callable, Dict
+from typing import List, TypeVar, Callable, Dict, Tuple
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
@@ -7,7 +7,7 @@ from randovania.game_description.game_description import GameDescription, Initia
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources import ResourceGain, PickupDatabase, ResourceDatabase, SimpleResourceInfo, \
-    DamageResourceInfo
+    DamageResourceInfo, ResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -38,13 +38,16 @@ def write_requirement_set(requirement_set: RequirementSet) -> list:
 # Resource
 
 def write_resource_gain(resource_gain: ResourceGain) -> list:
+    def sorter(item: Tuple[ResourceInfo, int]):
+        return item[0].resource_type, item[0].index, item[1]
+
     return [
         {
             "resource_type": resource.resource_type.value,
             "resource_index": resource.index,
             "amount": gain,
         }
-        for resource, gain in sorted(resource_gain)
+        for resource, gain in sorted(resource_gain, key=sorter)
     ]
 
 
