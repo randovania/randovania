@@ -21,4 +21,5 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
             True,
             num_columns_for_alternatives=1
         )
+        self.new_alternative_button.clicked.connect(self._connections_visualizer.new_alternative)
 
