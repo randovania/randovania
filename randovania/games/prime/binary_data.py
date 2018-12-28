@@ -218,8 +218,7 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
         "starting_items": extra["starting_items"],
         "item_loss_items": extra["item_loss_items"],
         "victory_condition": extra["victory_condition"],
-        "pickups": extra["pickups"],
-        "original_pickup_indices_values": extra["original_pickup_indices_values"],
+        "pickup_database": extra["pickup_database"],
         "dock_weakness_database": dock_weakness_database,
         "worlds": worlds,
     }
