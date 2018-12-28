@@ -21,8 +21,75 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="1" column="0" rowspan="2">
+     <widget class="QGroupBox" name="points_of_interest_group">
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Nodes</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="delete_node_button">
+         <property name="text">
+          <string>Delete Node</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="new_node_button">
+         <property name="text">
+          <string>New Node</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="save_database_button">
+      <property name="text">
+       <string>Save database as</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QGroupBox" name="world_selection_group">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>World/Area Selection</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QComboBox" name="world_selector_box"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="area_selector_box">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="1" column="1">
      <widget class="QGroupBox" name="node_info_group">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Node Info</string>
       </property>
@@ -51,7 +118,7 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="2" column="1" rowspan="2">
      <widget class="QGroupBox" name="connections_group">
       <property name="title">
        <string>Connections</string>
@@ -92,54 +159,6 @@
            </rect>
           </property>
          </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="2">
-     <widget class="QGroupBox" name="world_selection_group">
-      <property name="title">
-       <string>World/Area Selection</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QComboBox" name="world_selector_box"/>
-       </item>
-       <item>
-        <widget class="QComboBox" name="area_selector_box">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="0" rowspan="2">
-     <widget class="QGroupBox" name="points_of_interest_group">
-      <property name="maximumSize">
-       <size>
-        <width>250</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Nodes</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QPushButton" name="delete_node_button">
-         <property name="text">
-          <string>Delete Node</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="new_node_button">
-         <property name="text">
-          <string>New Node</string>
-         </property>
         </widget>
        </item>
       </layout>

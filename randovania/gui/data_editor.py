@@ -1,8 +1,11 @@
+import json
+from pathlib import Path
 from typing import Dict, Optional
 
 from PySide2.QtCore import Qt, QTimer
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog
+from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog
 
+from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
 from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.game_description.node import Node, DockNode, TeleporterNode
@@ -28,14 +31,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
+        self.save_database_button.clicked.connect(self._save_database)
         self.verticalLayout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
-        self.resource_database = read_resource_database(data["resource_database"])
-        dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], self.resource_database)
+        self.game_description = data_reader.decode_data(data, False)
 
-        world_reader = WorldReader(self.resource_database, dock_weakness_database, False)
-        self.world_list = world_reader.read_world_list(data["worlds"])
+        self.resource_database = self.game_description.resource_database
+        self.world_list = self.game_description.world_list
 
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             self.world_selector_box.addItem(world.name, userData=world)
@@ -181,13 +184,24 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 del self.current_area.connections[from_node][target_node]
             self.update_connections()
 
+    def _save_database(self):
+        open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
+        if not open_result or open_result == ("", ""):
+            return None
+
+        data = data_writer.write_game_description(self.game_description)
+        with Path(open_result[0]).open("w") as open_file:
+            json.dump(data, open_file, indent=4)
+
     def update_edit_mode(self):
         self.delete_node_button.setVisible(self.edit_mode)
         self.new_node_button.setVisible(self.edit_mode)
+        self.save_database_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode and False)
         self.delete_node_button.setEnabled(False)
         self.new_node_button.setEnabled(False)
+
 
     @property
     def current_world(self) -> World:

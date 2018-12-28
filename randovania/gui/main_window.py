@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 from typing import Optional
@@ -5,12 +6,12 @@ from typing import Optional
 from PySide2 import QtCore
 from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction
+from PySide2.QtWidgets import QMainWindow, QAction, QFileDialog
 
 from randovania import VERSION
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import prompt_user_for_seed_log
+from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.item_quantities_window import ItemQuantitiesWindow
@@ -59,6 +60,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
         self.menu_action_existing_seed_details.triggered.connect(self._open_existing_seed_details)
         self.menu_action_tracker.triggered.connect(self._open_tracker)
+        self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
+        self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
 
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
@@ -125,6 +128,19 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     def _open_data_visualizer(self):
         self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2(), False)
         self._data_visualizer.show()
+
+    def _open_data_editor_default(self):
+        self._data_editor = DataEditorWindow(default_data.decode_default_prime2(), True)
+        self._data_editor.show()
+
+    def _open_data_editor_prompt(self):
+        database_path = prompt_user_for_database_file(self)
+        if database_path is None:
+            return
+
+        with database_path.open("r") as database_file:
+            self._data_editor = DataEditorWindow(json.load(database_file), True)
+            self._data_editor.show()
 
     def _open_existing_seed_details(self):
         json_path = prompt_user_for_seed_log(self)
