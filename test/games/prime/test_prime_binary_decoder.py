@@ -1,7 +1,9 @@
 import io
 import json
+import os
 from typing import BinaryIO, TextIO
 
+from randovania import get_data_path
 from randovania.games.prime import binary_data
 
 
@@ -82,3 +84,20 @@ def test_complex_decode(test_files_dir):
         saved_data = json.load(data_file)
 
     assert decoded_data == saved_data
+
+
+def test_full_file_round_trip():
+    with open(os.path.join(get_data_path(), "prime2.bin"), "rb") as binary_file:
+        input_io = io.BytesIO(binary_file.read())
+
+    with open(os.path.join(get_data_path(), "prime2_extra.json"), "r") as extra:
+        decoded = binary_data.decode(input_io, extra)
+
+    output_io = io.BytesIO()
+    b_io = output_io  # type: BinaryIO
+
+    # Run
+    binary_data.encode(decoded, b_io)
+
+    # Assert
+    assert input_io.getvalue() == output_io.getvalue()
