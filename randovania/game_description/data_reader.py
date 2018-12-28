@@ -209,7 +209,7 @@ def read_pickup_database(data: Dict,
     }
     original_pickup_mapping = {
         PickupIndex(i): pickups[name]
-        for i, name in enumerate(data["original_pickup_indices_values"])
+        for i, name in enumerate(data["original_indices"])
     }
 
     return PickupDatabase(
@@ -230,7 +230,7 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
     game_name = data["game_name"]
 
     resource_database = read_resource_database(data["resource_database"])
-    pickup_database = read_pickup_database(data, resource_database)
+    pickup_database = read_pickup_database(data["pickup_database"], resource_database)
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
     world_reader = WorldReader(resource_database, dock_weakness_database, add_self_as_requirement_to_resources)
@@ -260,6 +260,6 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
 def read_databases(data: Dict,
                    ) -> Tuple[ResourceDatabase, PickupDatabase]:
     resource = read_resource_database(data["resource_database"])
-    pickup = read_pickup_database(data, resource)
+    pickup = read_pickup_database(data["pickup_database"], resource)
 
     return resource, pickup

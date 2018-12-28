@@ -14,7 +14,7 @@ def default_prime2_resource_database() -> ResourceDatabase:
 
 @functools.lru_cache()
 def default_prime2_pickup_database() -> PickupDatabase:
-    return read_pickup_database(default_data.decode_default_prime2(),
+    return read_pickup_database(default_data.decode_default_prime2()["pickup_database"],
                                 default_prime2_resource_database())
 
 
