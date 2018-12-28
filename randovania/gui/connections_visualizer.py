@@ -54,62 +54,81 @@ def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWi
     return resource_type_combo
 
 
-def _create_row(parent: QWidget, parent_layout: QVBoxLayout,
-                resource_database: ResourceDatabase, item: IndividualRequirement,
-                ):
+class ItemRow:
+    def __init__(self,
+                 parent: QWidget, parent_layout: QVBoxLayout,
+                 resource_database: ResourceDatabase, item: IndividualRequirement,
+                 rows: List["ItemRow"]
+                 ):
+        self.parent = parent
+        self.resource_database = resource_database
+        self._rows = rows
+        rows.append(self)
 
-    layout = QHBoxLayout(parent)
-    parent_layout.addLayout(layout)
+        self.layout = QHBoxLayout(parent)
+        parent_layout.addLayout(self.layout)
 
-    resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent)
-    resource_type_combo.setMinimumWidth(75)
-    resource_type_combo.setMaximumWidth(75)
+        self.resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent)
+        self.resource_type_combo.setMinimumWidth(75)
+        self.resource_type_combo.setMaximumWidth(75)
 
-    resource_name_combo = _create_resource_name_combo(resource_database, item.resource.resource_type,
-                                                      item.resource, parent)
+        self.resource_name_combo = _create_resource_name_combo(self.resource_database,
+                                                               item.resource.resource_type,
+                                                               item.resource,
+                                                               self.parent)
 
-    negate_combo = QComboBox(parent)
-    negate_combo.addItem(">=", False)
-    negate_combo.addItem("<", True)
-    negate_combo.setCurrentIndex(int(item.negate))
-    negate_combo.setMinimumWidth(40)
-    negate_combo.setMaximumWidth(40)
+        self.negate_combo = QComboBox(parent)
+        self.negate_combo.addItem(">=", False)
+        self.negate_combo.addItem("<", True)
+        self.negate_combo.setCurrentIndex(int(item.negate))
+        self.negate_combo.setMinimumWidth(40)
+        self.negate_combo.setMaximumWidth(40)
 
-    amount_edit = QLineEdit(parent)
-    amount_edit.setValidator(QIntValidator(1, 10000))
-    amount_edit.setText(str(item.amount))
-    amount_edit.setMinimumWidth(45)
-    amount_edit.setMaximumWidth(45)
+        self.amount_edit = QLineEdit(parent)
+        self.amount_edit.setValidator(QIntValidator(1, 10000))
+        self.amount_edit.setText(str(item.amount))
+        self.amount_edit.setMinimumWidth(45)
+        self.amount_edit.setMaximumWidth(45)
 
-    remove_button = QPushButton(parent)
-    remove_button.setText("X")
-    remove_button.setMaximumWidth(20)
+        self.remove_button = QPushButton(parent)
+        self.remove_button.setText("X")
+        self.remove_button.setMaximumWidth(20)
 
-    layout.addWidget(resource_type_combo)
-    layout.addWidget(resource_name_combo)
-    layout.addWidget(negate_combo)
-    layout.addWidget(amount_edit)
-    layout.addWidget(remove_button)
+        self.layout.addWidget(self.resource_type_combo)
+        self.layout.addWidget(self.resource_name_combo)
+        self.layout.addWidget(self.negate_combo)
+        self.layout.addWidget(self.amount_edit)
+        self.layout.addWidget(self.remove_button)
 
-    def _update_type():
-        nonlocal resource_name_combo
-        old_combo = resource_name_combo
-        resource_name_combo = _create_resource_name_combo(resource_database, resource_type_combo.currentData(),
-                                                          None, parent)
+        self.resource_type_combo.currentIndexChanged.connect(self._update_type)
+        self.remove_button.clicked.connect(self._delete_row)
 
-        layout.replaceWidget(old_combo, resource_name_combo)
+    def _update_type(self):
+        old_combo = self.resource_name_combo
+        self.resource_name_combo = _create_resource_name_combo(self.resource_database,
+                                                               self.resource_type_combo.currentData(),
+                                                               None,
+                                                               self.parent)
+
+        self.layout.replaceWidget(old_combo, self.resource_name_combo)
         old_combo.deleteLater()
 
-    def _delete_row():
-        resource_type_combo.deleteLater()
-        resource_name_combo.deleteLater()
-        negate_combo.deleteLater()
-        amount_edit.deleteLater()
-        remove_button.deleteLater()
-        layout.deleteLater()
+    def _delete_row(self):
+        self.resource_type_combo.deleteLater()
+        self.resource_name_combo.deleteLater()
+        self.negate_combo.deleteLater()
+        self.amount_edit.deleteLater()
+        self.remove_button.deleteLater()
+        self.layout.deleteLater()
+        self._rows.remove(self)
 
-    resource_type_combo.currentIndexChanged.connect(_update_type)
-    remove_button.clicked.connect(_delete_row)
+    @property
+    def current_individual(self) -> IndividualRequirement:
+        return IndividualRequirement(
+            self.resource_name_combo.currentData(),
+            int(self.amount_edit.text()),
+            self.negate_combo.currentData()
+        )
 
 
 class ConnectionsVisualizer:
@@ -142,7 +161,7 @@ class ConnectionsVisualizer:
         if requirement_set is not None:
             empty = True
             for alternative in requirement_set.alternatives:
-                if alternative.items:
+                if alternative.items or self.edit_mode:
                     empty = False
                     self._add_box_with_requirements(alternative)
 
@@ -184,13 +203,14 @@ class ConnectionsVisualizer:
 
     def _add_box_with_requirements(self, alternative: RequirementList):
         group_box = self._create_box_in_grid()
+        group_box.rows = []
 
         vertical_layout = QVBoxLayout(group_box)
         vertical_layout.setAlignment(Qt.AlignTop)
 
         for item in alternative.items:
             if self.edit_mode:
-                _create_row(group_box, vertical_layout, self.resource_database, item)
+                ItemRow(group_box, vertical_layout, self.resource_database, item, group_box.rows)
             else:
                 label = QLabel(group_box)
                 label.setText(str(item))
@@ -214,7 +234,7 @@ class ConnectionsVisualizer:
                     self.resource_database.get_by_type(ResourceType.ITEM)[0],
                     1, False
                 )
-                _create_row(group_box, vertical_layout, self.resource_database, empty_item)
+                ItemRow(group_box, vertical_layout, self.resource_database, empty_item, group_box.rows)
                 vertical_layout.removeItem(tools_layout)
                 vertical_layout.addLayout(tools_layout)
 
@@ -234,3 +254,17 @@ class ConnectionsVisualizer:
     def deleteLater(self):
         for element in self._elements:
             element.deleteLater()
+
+    def build_requirement_set(self) -> Optional[RequirementSet]:
+        return RequirementSet(
+            [
+                RequirementList.without_misc_resources(
+                    [
+                        row.current_individual
+                        for row in element.rows
+                    ],
+                    self.resource_database
+                )
+                for element in self._elements
+            ]
+        )

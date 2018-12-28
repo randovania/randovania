@@ -61,18 +61,24 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         is_first = True
         for node in sorted(current_area.nodes, key=lambda x: x.name):
             button = QRadioButton(self.points_of_interest_group)
-            button.toggled.connect(self.on_select_node)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
+            if is_first:
+                self.selected_node_button = button
+
             button.setChecked(is_first)
+            button.toggled.connect(self.on_select_node)
             is_first = False
             self.verticalLayout.addWidget(button)
 
-    def on_select_node(self, active):
-        if not active:
-            return
+        self.update_selected_node()
 
-        self.selected_node_button = self.sender()
+    def on_select_node(self, active):
+        if active:
+            self.selected_node_button = self.sender()
+            self.update_selected_node()
+
+    def update_selected_node(self):
         node = self.current_node
         assert node is not None
 
@@ -114,7 +120,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         #
         self._area_with_displayed_connections = self.current_area
-        self.other_node_connection_combo.setEnabled(True)
 
         if self.other_node_connection_combo.count() > 0:
             self.other_node_connection_combo.currentIndexChanged.disconnect(self.update_connections)
@@ -126,7 +131,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 if node is selected_node:
                     self.other_node_connection_combo.setCurrentIndex(self.other_node_connection_combo.count() - 1)
 
-        self.other_node_connection_combo.currentIndexChanged.connect(self.update_connections)
+        if self.other_node_connection_combo.count() > 0:
+            self.other_node_connection_combo.currentIndexChanged.connect(self.update_connections)
+            self.other_node_connection_combo.setEnabled(True)
+            self.other_node_connection_edit_button.setEnabled(True)
+        else:
+            self.other_node_connection_combo.setEnabled(False)
+            self.other_node_connection_edit_button.setEnabled(False)
+
         self.update_connections()
 
     def update_connections(self):
@@ -134,12 +146,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_connection_node = self.current_connection_node
 
         assert current_node is not None
-        assert current_connection_node is not None
         assert current_node != current_connection_node
 
         if self._connections_visualizer is not None:
             self._connections_visualizer.deleteLater()
             self._connections_visualizer = None
+
+        if current_connection_node is None:
+            assert len(self.current_area.nodes) == 1
+            return
 
         requirement_set = self.current_area.connections[self.current_node].get(self.current_connection_node)
         self._connections_visualizer = ConnectionsVisualizer(
@@ -151,18 +166,28 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         )
 
     def _open_edit_connection(self):
-        assert self.current_node is not None
-        assert self.current_connection_node is not None
+        from_node = self.current_node
+        target_node = self.current_connection_node
 
-        requirement_set = self.current_area.connections[self.current_node].get(self.current_connection_node)
-        self.dialog = ConnectionsEditor(self, self.resource_database, requirement_set)
-        self.dialog.exec_()
+        assert from_node is not None
+        assert target_node is not None
+
+        requirement_set = self.current_area.connections[from_node].get(target_node)
+        editor = ConnectionsEditor(self, self.resource_database, requirement_set)
+        result = editor.exec_()
+        if result == QDialog.Accepted:
+            self.current_area.connections[from_node][target_node] = editor.final_requirement_set
+            if self.current_area.connections[from_node][target_node] is None:
+                del self.current_area.connections[from_node][target_node]
+            self.update_connections()
 
     def update_edit_mode(self):
         self.delete_node_button.setVisible(self.edit_mode)
         self.new_node_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
-        self.node_heals_check.setEnabled(self.edit_mode)
+        self.node_heals_check.setEnabled(self.edit_mode and False)
+        self.delete_node_button.setEnabled(False)
+        self.new_node_button.setEnabled(False)
 
     @property
     def current_world(self) -> World:
