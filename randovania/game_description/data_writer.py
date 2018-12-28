@@ -1,9 +1,12 @@
+from typing import List, TypeVar, Callable
+
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
-from randovania.game_description.resources import ResourceGain
+from randovania.game_description.resources import ResourceGain, PickupDatabase, ResourceDatabase, SimpleResourceInfo, \
+    DamageResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -31,6 +34,60 @@ def write_requirement_set(requirement_set: RequirementSet) -> list:
     ]
 
 
+# Resource
+
+def write_resource_gain_by_long_name(resource_gain: ResourceGain) -> dict:
+    return {
+        resource.long_name: gain
+        for resource, gain in resource_gain
+    }
+
+
+def write_simple_resource(resource: SimpleResourceInfo) -> dict:
+    return {
+        "index": resource.index,
+        "long_name": resource.long_name,
+        "short_name": resource.short_name
+    }
+
+
+def write_damage_resource(resource: DamageResourceInfo) -> dict:
+    return {
+        "index": resource.index,
+        "long_name": resource.long_name,
+        "short_name": resource.short_name,
+        "reductions": [
+            {
+                "index": reduction.inventory_item.index,
+                "multiplier": reduction.damage_multiplier
+            }
+            for reduction in resource.reductions
+        ]
+    }
+
+
+X = TypeVar('X')
+
+
+def write_array(array: List[X], writer: Callable[[X], dict]) -> list:
+    return [
+        writer(item)
+        for item in array
+    ]
+
+
+def write_resource_database(resource_database: ResourceDatabase):
+    return {
+        "items": write_array(resource_database.item, write_simple_resource),
+        "events": write_array(resource_database.event, write_simple_resource),
+        "tricks": write_array(resource_database.trick, write_simple_resource),
+        "damage": write_array(resource_database.damage, write_damage_resource),
+        "versions": write_array(resource_database.version, write_simple_resource),
+        "misc": write_array(resource_database.misc, write_simple_resource),
+        "difficulty": write_array(resource_database.difficulty, write_simple_resource),
+    }
+
+
 # Dock Weakness Database
 
 def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
@@ -55,6 +112,24 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
     }
 
 
+# Pickup Database
+
+def write_pickup_database(database: PickupDatabase) -> dict:
+    return {
+        "pickups": {
+            pickup.name: {
+                "item_category": pickup.item_category,
+                "resources": write_resource_gain_by_long_name(pickup.resource_gain())
+            }
+            for pickup in database.pickups.values()
+        },
+        "original_indices": [
+            pickup.name
+            for pickup in database.original_pickup_mapping.values()
+        ]
+    }
+
+
 # World/Area/Nodes
 
 def write_node(node: Node) -> dict:
@@ -76,7 +151,7 @@ def write_node(node: Node) -> dict:
         data["dock_index"] = node.dock_index
         data["connected_area_asset_id"] = node.default_connection.area_asset_id
         data["connected_dock_index"] = node.default_connection.dock_index
-        data["dock_type"] = node.default_dock_weakness.dock_type
+        data["dock_type"] = node.default_dock_weakness.dock_type.value
         data["dock_weakness_index"] = node.default_dock_weakness.index
 
     elif isinstance(node, PickupNode):
@@ -140,11 +215,7 @@ def write_world_list(world_list: WorldList) -> list:
     ]
 
 
-def write_resource_gain_by_long_name(resource_gain: ResourceGain) -> dict:
-    return {
-        resource.long_name: gain
-        for resource, gain in resource_gain
-    }
+# Game Description
 
 
 def write_game_description(game: GameDescription) -> dict:
@@ -152,12 +223,14 @@ def write_game_description(game: GameDescription) -> dict:
         "game": game.game,
         "game_name": game.game_name,
         "resource_database": write_resource_database(game.resource_database),
+
         "starting_world_asset_id": game.starting_world_asset_id,
         "starting_area_asset_id": game.starting_area_asset_id,
         "starting_items": write_resource_gain_by_long_name(game.starting_items),
         "item_loss_items": write_resource_gain_by_long_name(game.item_loss_items),
         "victory_condition": write_requirement_set(game.victory_condition),
 
+        "pickup_database": write_pickup_database(game.pickup_database),
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "worlds": write_world_list(game.world_list),
     }
