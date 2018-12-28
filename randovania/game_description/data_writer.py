@@ -1,3 +1,4 @@
+import operator
 from typing import List, TypeVar, Callable
 
 from randovania.game_description.area import Area
@@ -23,14 +24,14 @@ def write_individual_requirement(individual: IndividualRequirement) -> dict:
 def write_requirement_list(requirement_list: RequirementList) -> list:
     return [
         write_individual_requirement(individual)
-        for individual in requirement_list.values()
+        for individual in sorted(requirement_list.values())
     ]
 
 
 def write_requirement_set(requirement_set: RequirementSet) -> list:
     return [
         write_requirement_list(l)
-        for l in requirement_set.alternatives
+        for l in sorted(requirement_set.alternatives, key=lambda x: x.sorted)
     ]
 
 
@@ -160,9 +161,9 @@ def write_node(node: Node) -> dict:
 
     elif isinstance(node, TeleporterNode):
         data["node_type"] = 3
-        data["teleporter_instance_id"] = node.teleporter_instance_id
         data["destination_world_asset_id"] = node.default_connection.world_asset_id
         data["destination_area_asset_id"] = node.default_connection.area_asset_id
+        data["teleporter_instance_id"] = node.teleporter_instance_id
 
     elif isinstance(node, EventNode):
         data["node_type"] = 4
@@ -191,7 +192,7 @@ def write_area(area: Area) -> dict:
 
     return {
         "name": area.name,
-        "assert_id": area.area_asset_id,
+        "asset_id": area.area_asset_id,
         "default_node_index": area.default_node_index,
         "nodes": nodes
     }
@@ -200,7 +201,7 @@ def write_area(area: Area) -> dict:
 def write_world(world: World) -> dict:
     return {
         "name": world.name,
-        "assert_id": world.world_asset_id,
+        "asset_id": world.world_asset_id,
         "areas": [
             write_area(area)
             for area in world.areas

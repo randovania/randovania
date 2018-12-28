@@ -23,3 +23,6 @@ class ResourceType(Enum):
             return "T"
         else:
             return None
+
+    def __lt__(self, other):
+        return self.value < other.value
