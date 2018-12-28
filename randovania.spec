@@ -6,7 +6,9 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              pathex=[],
              binaries=[],
              datas=[
-                 ("randovania/data", "data")
+                 ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
+                 ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
+                 ("randovania/data/binary_data", "data/binary_data"),
              ],
              hiddenimports=[],
              hookspath=[],
