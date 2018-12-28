@@ -29,13 +29,27 @@ def test_create_subparsers(mock_qt_create_subparsers: MagicMock,
     ["--version"],
 ])
 @patch("argparse.ArgumentParser.exit", autospec=True)
-def test_create_parser(mock_exit: MagicMock,
-                       args):
+def test_parse_args_valid(mock_exit: MagicMock,
+                          args):
     # Run
     cli._create_parser().parse_args(args)
 
     # Assert
     mock_exit.assert_not_called()
+
+
+@pytest.mark.parametrize("args", [
+    ["-h"],
+])
+@patch("argparse.ArgumentParser.exit", autospec=True)
+def test_parse_args_invvalid(mock_exit: MagicMock,
+                             args):
+    # Run
+    parser = cli._create_parser()
+    parser.parse_args(args)
+
+    # Assert
+    mock_exit.assert_called_once_with(parser)
 
 
 @patch("randovania.cli.qt.run", autospec=True)
