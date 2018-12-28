@@ -4,8 +4,6 @@ import pytest
 
 from randovania import cli
 
-pytestmark = pytest.mark.skip
-
 
 @patch("randovania.cli.games", autospec=True)
 @patch("randovania.cli.qt.create_subparsers", autospec=True)
@@ -30,9 +28,14 @@ def test_create_subparsers(mock_qt_create_subparsers: MagicMock,
     [],
     ["--version"],
 ])
-def test_create_parser(args):
+@patch("argparse.ArgumentParser.exit", autospec=True)
+def test_create_parser(mock_exit: MagicMock,
+                       args):
     # Run
     cli._create_parser().parse_args(args)
+
+    # Assert
+    mock_exit.assert_not_called()
 
 
 @patch("randovania.cli.qt.run", autospec=True)
