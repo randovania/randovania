@@ -1,5 +1,6 @@
 from typing import Optional, Iterable, List
 
+from PySide2.QtCore import Qt
 from PySide2.QtGui import QIntValidator
 from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
     QLineEdit
@@ -101,8 +102,7 @@ class ConnectionsVisualizer:
     edit_mode: bool
     grid_layout: QGridLayout
     _elements: List[QWidget]
-
-    num_columns_for_alternatives = 2
+    num_columns_for_alternatives: int
 
     def __init__(self,
                  parent: QWidget,
@@ -110,6 +110,7 @@ class ConnectionsVisualizer:
                  resource_database: ResourceDatabase,
                  requirement_set: Optional[RequirementSet],
                  edit_mode: bool,
+                 num_columns_for_alternatives: int = 2
                  ):
         assert requirement_set != RequirementSet.impossible()
 
@@ -118,6 +119,7 @@ class ConnectionsVisualizer:
         self.edit_mode = edit_mode
         self.grid_layout = grid_layout
         self._elements = []
+        self.num_columns_for_alternatives = num_columns_for_alternatives
 
         i = 0
         if requirement_set is not None:
@@ -149,6 +151,7 @@ class ConnectionsVisualizer:
                                    index % self.num_columns_for_alternatives)
 
         vertical_layout = QVBoxLayout(group_box)
+        vertical_layout.setAlignment(Qt.AlignTop)
         vertical_layout.setContentsMargins(11, 11, 11, 11)
         vertical_layout.setSpacing(6)
         group_box.vertical_layout = vertical_layout
@@ -169,6 +172,8 @@ class ConnectionsVisualizer:
                                    index % self.num_columns_for_alternatives)
 
         vertical_layout = QVBoxLayout(group_box)
+        vertical_layout.setAlignment(Qt.AlignTop)
+
         for item in alternative.items:
             if self.edit_mode:
                 _create_row(group_box, vertical_layout, self.resource_database, item)

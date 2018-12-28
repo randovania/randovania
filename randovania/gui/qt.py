@@ -31,7 +31,7 @@ def show_data_editor(app: QApplication, args):
     from randovania.games.prime import default_data
     from randovania.gui.data_editor import DataEditorWindow
 
-    app.data_visualizer = DataEditorWindow(default_data.decode_default_prime2())
+    app.data_visualizer = DataEditorWindow(default_data.decode_default_prime2(), True)
     app.data_visualizer.show()
 
 
