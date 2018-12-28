@@ -41,6 +41,14 @@ def add_data_file_argument(parser: ArgumentParser):
     )
 
 
+def export_as_binary(data: dict, output_binary: Path):
+    with output_binary.open("wb") as x:  # type: BinaryIO
+        extra_data = binary_data.encode(data, x)
+
+    with output_binary.parent.joinpath(output_binary.stem + "_extra.json").open("w") as x:  # type: TextIO
+        json.dump(extra_data, x, indent=4)
+
+
 def convert_database_command_logic(args):
     data = decode_data_file(args)
 
@@ -51,11 +59,7 @@ def convert_database_command_logic(args):
     output_json: Optional[Path] = args.output_json
 
     if output_binary is not None:
-        with output_binary.open("wb") as x:  # type: BinaryIO
-            extra_data = binary_data.encode(data, x)
-
-        with output_binary.parent.joinpath(output_binary.stem + "_extra.json").open("w") as x:  # type: TextIO
-            json.dump(extra_data, x, indent=4)
+        export_as_binary(data, output_binary)
 
     elif output_json is not None:
         with output_json.open("w") as x:  # type: TextIO

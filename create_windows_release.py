@@ -7,12 +7,17 @@ from pathlib import Path
 
 import markdown as markdown
 
-from randovania import VERSION
+from randovania import VERSION, get_data_path
+from randovania.cli import prime_database
+from randovania.games.prime import default_data
 
 zip_folder = "randovania-{}".format(VERSION)
 
 package_folder = Path("dist", "randovania")
 shutil.rmtree(package_folder, ignore_errors=True)
+
+prime_database.export_as_binary(default_data.decode_default_prime2(),
+                                get_data_path().joinpath("binary_data", "prime2.bin"))
 
 subprocess.run([sys.executable, "-m", "PyInstaller", "randovania.spec"])
 
