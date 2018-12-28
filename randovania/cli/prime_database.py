@@ -23,10 +23,8 @@ def decode_data_file(args) -> Dict:
     if data_file_path is None:
         return default_data.decode_default_prime2()
     else:
-        return binary_data.decode_file_path(
-            data_file_path,
-            get_data_path().joinpath("prime2_extra.json")
-        )
+        extra_path = data_file_path.parent.joinpath(data_file_path.stem + "_extra.json")
+        return binary_data.decode_file_path(data_file_path, extra_path)
 
 
 def add_data_file_argument(parser: ArgumentParser):
