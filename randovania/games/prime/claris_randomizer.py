@@ -20,7 +20,7 @@ _USELESS_PICKUP_NAME = "Energy Transfer Module"
 
 
 def _get_randomizer_folder() -> Path:
-    return Path(get_data_path(), "ClarisPrimeRandomizer")
+    return get_data_path().joinpath("ClarisPrimeRandomizer")
 
 
 def _get_randomizer_path() -> Path:
@@ -28,7 +28,7 @@ def _get_randomizer_path() -> Path:
 
 
 def _get_menu_mod_path() -> Path:
-    return Path(get_data_path(), "ClarisEchoesMenu", "EchoesMenu.exe")
+    return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
 
 
 def _run_with_args(args: List[Union[str, Path]],

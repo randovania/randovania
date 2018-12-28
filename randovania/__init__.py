@@ -1,14 +1,15 @@
 import os
 
 import sys
+from pathlib import Path
 
 
-def get_data_path():
+def get_data_path() -> Path:
     if getattr(sys, "frozen", False):
-        file_dir = getattr(sys, "_MEIPASS")
+        file_dir = Path(getattr(sys, "_MEIPASS"))
     else:
-        file_dir = os.path.dirname(__file__)
-    return os.path.join(file_dir, "data")
+        file_dir = Path(__file__).parent
+    return file_dir.joinpath("data")
 
 
 VERSION = "0.17.2"

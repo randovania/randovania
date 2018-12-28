@@ -1,6 +1,7 @@
 import io
 import json
 import os
+from pathlib import Path
 from typing import BinaryIO, TextIO
 
 from randovania import get_data_path
@@ -76,8 +77,8 @@ def test_complex_encode(test_files_dir):
 def test_complex_decode(test_files_dir):
     # Run
     decoded_data = binary_data.decode_file_path(
-        str(test_files_dir.joinpath("prime_data_as_binary.bin")),
-        str(test_files_dir.joinpath("prime_extra_data.json"))
+        Path(test_files_dir.joinpath("prime_data_as_binary.bin")),
+        Path(test_files_dir.joinpath("prime_extra_data.json"))
     )
 
     # Assert
@@ -88,10 +89,10 @@ def test_complex_decode(test_files_dir):
 
 
 def test_full_file_round_trip():
-    with open(os.path.join(get_data_path(), "prime2.bin"), "rb") as binary_file:
+    with get_data_path().joinpath("prime2.bin").open("rb") as binary_file:
         input_io = io.BytesIO(binary_file.read())
 
-    with open(os.path.join(get_data_path(), "prime2_extra.json"), "r") as extra:
+    with get_data_path().joinpath("prime2_extra.json").open("r") as extra:
         decoded = binary_data.decode(input_io, extra)
 
     output_io = io.BytesIO()
