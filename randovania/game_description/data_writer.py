@@ -1,9 +1,9 @@
 import operator
-from typing import List, TypeVar, Callable
+from typing import List, TypeVar, Callable, Dict
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_description import GameDescription, InitialGameState
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources import ResourceGain, PickupDatabase, ResourceDatabase, SimpleResourceInfo, \
@@ -223,6 +223,21 @@ def write_world_list(world_list: WorldList) -> list:
 # Game Description
 
 
+def write_initial_state(initial_state: InitialGameState) -> dict:
+    return {
+        "starting_world_asset_id": initial_state.starting_world_asset_id,
+        "starting_area_asset_id": initial_state.starting_area_asset_id,
+        "initial_resources": write_resource_gain(initial_state.initial_resources)
+    }
+
+
+def write_initial_states(initial_states: Dict[str, InitialGameState]) -> dict:
+    return {
+        name: write_initial_state(initial_state)
+        for name, initial_state in initial_states.items()
+    }
+
+
 def write_game_description(game: GameDescription) -> dict:
     if game.add_self_as_requirement_to_resources:
         raise ValueError("Attempting to encode a GameDescription's created with add_self_as_requirement_to_resources "
@@ -232,10 +247,7 @@ def write_game_description(game: GameDescription) -> dict:
         "game_name": game.game_name,
         "resource_database": write_resource_database(game.resource_database),
 
-        "starting_world_asset_id": game.starting_world_asset_id,
-        "starting_area_asset_id": game.starting_area_asset_id,
-        "starting_items": write_resource_gain(game.starting_items),
-        "item_loss_items": write_resource_gain(game.item_loss_items),
+        "initial_states": write_initial_states(game.initial_states),
         "victory_condition": write_requirement_set(game.victory_condition),
 
         "pickup_database": write_pickup_database(game.pickup_database),

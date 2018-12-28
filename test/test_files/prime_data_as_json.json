@@ -42,13 +42,50 @@
       }
     ]
   },
+  "initial_states": {
+    "Default": {
+      "starting_world_asset_id": 1234125,
+      "starting_area_asset_id": 235234,
+      "initial_resources": [
+        {
+          "resource_type": 0,
+          "resource_index": 24,
+          "amount": 1
+        }
+      ]
+    },
+    "Item Loss Disabled": {
+      "starting_world_asset_id": 1234125,
+      "starting_area_asset_id": 235234,
+      "initial_resources": [
+        {
+          "resource_type": 0,
+          "resource_index": 2,
+          "amount": 1
+        },
+        {
+          "resource_type": 0,
+          "resource_index": 24,
+          "amount": 1
+        }
+      ]
+    }
+  },
   "pickup_database": {
     "pickups": {
       "Missile Expansion": {
-        "resources": {
-          "Item Percentage": 15,
-          "Missile": 50
-        }
+        "resources": [
+          {
+            "resource_type": 0,
+            "resource_index": 44,
+            "amount": 50
+          },
+          {
+            "resource_type": 0,
+            "resource_index": 47,
+            "amount": 15
+          }
+        ]
       }
     },
     "original_indices": [
@@ -82,14 +119,6 @@
         ]
       }
     ]
-  },
-  "starting_world_asset_id": 1234125,
-  "starting_area_asset_id": 235234,
-  "starting_items": {
-    "Space Jump Boots": 1
-  },
-  "item_loss_items": {
-    "Light Beam": 3
   },
   "victory_condition": [
     [

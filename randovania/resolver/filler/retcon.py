@@ -8,7 +8,7 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, PickupNode, Node
 from randovania.game_description.requirements import RequirementList
-from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment
+from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceGain, ResourceInfo
 from randovania.resolver import debug
 from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
@@ -97,6 +97,10 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 Action = Union[ResourceNode, PickupEntry]
 
 
+def _resources_in_resource_gain(resource_gain: ResourceGain) -> FrozenSet[ResourceInfo]:
+    return frozenset(resource for resource, _ in resource_gain)
+
+
 def retcon_playthrough_filler(logic: Logic,
                               initial_state: State,
                               patches: GamePatches,
@@ -121,7 +125,7 @@ def retcon_playthrough_filler(logic: Logic,
         reach_for_action: Dict[Action, GeneratorReach] = {}
         actions_weights: Dict[Action, float] = {}
 
-        pickups_left = {
+        pickups_left: Dict[str, PickupEntry] = {
             pickup.name: pickup
             for pickup in available_pickups if pickup not in pickup_assignment.values()
         }
@@ -139,10 +143,11 @@ def retcon_playthrough_filler(logic: Logic,
             reach.state.resources,
             reach.state.resource_database
         )
+
         progression_pickups = [
             pickup
             for pickup in pickups_left.values()
-            if set(pickup.resources.keys()).intersection(interesting_resources)
+            if _resources_in_resource_gain(pickup.resource_gain()).intersection(interesting_resources)
         ]
 
         print_retcon_loop_start(current_uncollected, logic, pickups_left, reach)
