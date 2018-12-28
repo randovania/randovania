@@ -89,10 +89,10 @@ def test_complex_decode(test_files_dir):
 
 
 def test_full_file_round_trip():
-    with get_data_path().joinpath("prime2.bin").open("rb") as binary_file:
+    with get_data_path().joinpath("binary_data", "prime2.bin").open("rb") as binary_file:
         input_io = io.BytesIO(binary_file.read())
 
-    with get_data_path().joinpath("prime2_extra.json").open("r") as extra:
+    with get_data_path().joinpath("binary_data", "prime2_extra.json").open("r") as extra:
         decoded = binary_data.decode(input_io, extra)
 
     output_io = io.BytesIO()
