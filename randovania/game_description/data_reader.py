@@ -78,8 +78,11 @@ def read_requirement_set(data: List[List[Dict]],
 # Dock Weakness
 
 def read_dock_weakness(item: Dict, resource_database: ResourceDatabase, dock_type: DockType) -> DockWeakness:
-    return DockWeakness(item["index"], item["name"], item["is_blast_door"],
-                        read_requirement_set(item["requirement_set"], resource_database), dock_type)
+    return DockWeakness(item["index"],
+                        item["name"],
+                        item["is_blast_door"],
+                        read_requirement_set(item["requirement_set"], resource_database),
+                        dock_type)
 
 
 def read_dock_weakness_database(data: Dict,
