@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Added: Editor for Randovania's database. This allows for modifications and contributions to be made easily.
+    There's currently no way to use the modified database directly.
 
 ## [0.17.2] - 2018-12-27
 - Fixed: 'Clear loaded game' now properly does it's job.

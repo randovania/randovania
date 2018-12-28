@@ -148,7 +148,21 @@
     <addaction name="menu_action_existing_seed_details"/>
     <addaction name="menu_action_tracker"/>
    </widget>
+   <widget class="QMenu" name="menu_edit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <widget class="QMenu" name="menu_database">
+     <property name="title">
+      <string>Database</string>
+     </property>
+     <addaction name="menu_action_edit_new_database"/>
+     <addaction name="menu_action_edit_existing_database"/>
+    </widget>
+    <addaction name="menu_database"/>
+   </widget>
    <addaction name="menu_open"/>
+   <addaction name="menu_edit"/>
   </widget>
   <action name="menu_action_data_visualizer">
    <property name="text">
@@ -163,6 +177,16 @@
   <action name="menu_action_tracker">
    <property name="text">
     <string>Tracker</string>
+   </property>
+  </action>
+  <action name="menu_action_edit_new_database">
+   <property name="text">
+    <string>New Copy</string>
+   </property>
+  </action>
+  <action name="menu_action_edit_existing_database">
+   <property name="text">
+    <string>Existing Copy</string>
    </property>
   </action>
  </widget>

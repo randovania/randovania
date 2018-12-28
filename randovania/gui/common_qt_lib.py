@@ -13,16 +13,27 @@ def lock_application(value: bool):
     QApplication.instance().main_window.setEnabled(value)
 
 
+def _prompt_user_for_file(window: QMainWindow, caption: str, filter: str) -> Optional[Path]:
+    """
+    Helper function for all `prompt_user_for_*` functions.
+    :param window:
+    :param caption:
+    :param filter:
+    :return: A string if the user selected a file, None otherwise
+    """
+    open_result = QFileDialog.getOpenFileName(window, caption=caption, filter=filter)
+    if not open_result or open_result == ("", ""):
+        return None
+    return Path(open_result[0])
+
+
 def prompt_user_for_input_iso(window: QMainWindow) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a vanilla Game ISO
     :param window:
     :return: A string if the user selected a file, None otherwise
     """
-    open_result = QFileDialog.getOpenFileName(window, caption="Select the vanilla Game ISO.", filter="*.iso")
-    if not open_result or open_result == ("", ""):
-        return None
-    return Path(open_result[0])
+    return _prompt_user_for_file(window, caption="Select the vanilla Game ISO.", filter="*.iso")
 
 
 def prompt_user_for_seed_log(window: QMainWindow) -> Optional[Path]:
@@ -31,7 +42,13 @@ def prompt_user_for_seed_log(window: QMainWindow) -> Optional[Path]:
     :param window:
     :return: A string if the user selected a file, None otherwise
     """
-    open_result = QFileDialog.getOpenFileName(window, caption="Select a Randovania seed log.", filter="*.json")
-    if not open_result or open_result == ("", ""):
-        return None
-    return Path(open_result[0])
+    return _prompt_user_for_file(window, caption="Select a Randovania seed log.", filter="*.json")
+
+
+def prompt_user_for_database_file(window: QMainWindow) -> Optional[Path]:
+    """
+    Shows an QFileDialog asking the user for a Randovania database file
+    :param window:
+    :return: A string if the user selected a file, None otherwise
+    """
+    return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
