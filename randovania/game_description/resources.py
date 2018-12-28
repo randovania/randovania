@@ -7,10 +7,14 @@ class SimpleResourceInfo(NamedTuple):
     index: int
     long_name: str
     short_name: str
-    resource_type: str
+    resource_type: ResourceType
 
     def __str__(self):
-        return "{}: {}".format(self.resource_type, self.long_name) if self.resource_type else self.long_name
+        short_resource_name = self.resource_type.short_name
+        if short_resource_name is not None:
+            return "{}: {}".format(short_resource_name, self.long_name)
+        else:
+            return self.long_name
 
 
 class DamageReduction(NamedTuple):
@@ -24,12 +28,24 @@ class DamageResourceInfo(NamedTuple):
     short_name: str
     reductions: Tuple[DamageReduction, ...]
 
+    @property
+    def resource_type(self) -> ResourceType:
+        return ResourceType.DAMAGE
+
     def __str__(self):
         return "Damage {}".format(self.long_name)
 
 
 class PickupIndex:
     _index: int
+
+    @property
+    def resource_type(self) -> ResourceType:
+        return ResourceType.PICKUP_INDEX
+
+    @property
+    def long_name(self) -> str:
+        return "PickupIndex {}".format(self._index)
 
     def __init__(self, index: int):
         self._index = index
@@ -38,7 +54,7 @@ class PickupIndex:
         return self._index < other._index
 
     def __repr__(self):
-        return "PickupIndex {}".format(self._index)
+        return self.long_name
 
     def __hash__(self):
         return self._index
@@ -153,13 +169,6 @@ class ResourceDatabase(NamedTuple):
     @property
     def energy_tank(self):
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
-
-    def find_type_for(self, resource: ResourceInfo) -> ResourceType:
-        for resource_type in ResourceType:
-            db = self.get_by_type(resource_type)
-            if resource in db:
-                return resource_type
-        raise ValueError("Unknown resource: {}".format(resource))
 
 
 PickupAssignment = Dict[PickupIndex, PickupEntry]
