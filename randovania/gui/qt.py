@@ -41,7 +41,7 @@ def run(args):
 
     sys.excepthook = catch_exceptions
 
-    if args.window == "data-editor":
+    if getattr(args, "window", None) == "data-editor":
         show_data_editor(app, args)
     else:
         show_main_window(app, args)
