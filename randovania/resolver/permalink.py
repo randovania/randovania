@@ -1,5 +1,7 @@
 import base64
 import binascii
+import hashlib
+import json
 from dataclasses import dataclass
 from typing import Iterator
 
@@ -10,6 +12,11 @@ from randovania.resolver.patcher_configuration import PatcherConfiguration
 
 _PERMALINK_MAX_VERSION = 16
 _PERMALINK_MAX_SEED = 2 ** 31
+
+
+def _dictionary_byte_hash(data: dict) -> int:
+    b = json.dumps(data, separators=(',',':')).encode("UTF-8")
+    return hashlib.blake2b(b, digest_size=1).digest()[0]
 
 
 @dataclass(frozen=True)
@@ -35,6 +42,7 @@ class Permalink(BitPackValue):
         yield _PERMALINK_MAX_VERSION
         yield _PERMALINK_MAX_SEED
         yield 2
+        yield 256
         yield from self.patcher_configuration.bit_pack_format()
         yield from self.layout_configuration.bit_pack_format()
 
@@ -42,6 +50,8 @@ class Permalink(BitPackValue):
         yield self.current_version()
         yield self.seed_number
         yield int(self.spoiler)
+        yield _dictionary_byte_hash(self.layout_configuration.game_data)
+
         yield from self.patcher_configuration.bit_pack_arguments()
         yield from self.layout_configuration.bit_pack_arguments()
 
@@ -53,8 +63,16 @@ class Permalink(BitPackValue):
             raise ValueError("Given permalink has version {}, but this Randovania "
                              "support only permalink of version {}.".format(version, cls.current_version()))
 
+        included_data_hash = decoder.decode(256)[0]
+
         patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder)
         layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder)
+
+        expected_data_hash = _dictionary_byte_hash(layout_configuration.game_data)
+        if included_data_hash != expected_data_hash:
+            raise ValueError("Given permalink is for a Randovania database with hash '{}',"
+                             "but current database has hash '{}'.".format(included_data_hash, expected_data_hash))
+
         return Permalink(
             seed,
             bool(spoiler),
