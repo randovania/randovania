@@ -115,8 +115,8 @@ def test_calculate_reach_with_seeds():
             game.world_list.node_name(option)
         ))
 
-    assert (875, 0) == (len(list(first_reach.nodes)), len(first_actions))
-    assert (875, 0) == (len(list(second_reach.nodes)), len(second_actions))
+    assert (876, 0) == (len(list(first_reach.nodes)), len(first_actions))
+    assert (876, 0) == (len(list(second_reach.nodes)), len(second_actions))
 
 
 @pytest.mark.skip(reason="can't reach dark visor")

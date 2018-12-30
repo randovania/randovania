@@ -46,21 +46,7 @@ def _create_test_layout_description(
 # TODO: this permalink is impossible for solver: B6gWMhxALWmCI50gIQBs
 
 
-_test_descriptions = [
-    _create_test_layout_description(
-        seed_number=1027649986,
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-                                                      item_loss=LayoutEnabledFlag.ENABLED,
-                                                      elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={}),
-        pickup_mapping=[46, 2, 2, 8, 4, 38, 8, 116, 8, 2, 4, 2, 4, 13, 2, 4, 1, 11, 2, 4, 2, 23, 37, 4, 19, 2, 76, 100,
-                        52, 2, 2, 2, 86, 2, 2, 4, 27, 2, 50, 57, 112, 92, 2, 2, 109, 115, 2, 59, 2, 106, 0, 88, 2, 7, 8,
-                        2, 2, 43, 8, 68, 2, 39, 2, 2, 2, 79, 4, 74, 114, 8, 2, 2, 44, 24, 2, 17, 2, 4, 17, 2, 4, 2, 75,
-                        17, 2, 2, 21, 69, 2, 91, 102, 4, 2, 2, 2, 2, 2, 53, 2, 2, 82, 8, 2, 83, 15, 8, 117, 2, 4, 4, 45,
-                        2, 118, 2, 2, 4, 2, 17, 2]
-        ,
-    ),
+_unused_test_descriptions = [
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
@@ -90,6 +76,22 @@ _test_descriptions = [
                         11, 65, 21, 21, 24, 21, 21, 21, 33, 21, 21, 17, 94, 21, 7, 21, 83, 95, 39, 21, 40, 21, 72, 21,
                         50),
     ),
+]
+
+_test_descriptions = [
+    _create_test_layout_description(
+        seed_number=1027649986,
+        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
+                                                      sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                      item_loss=LayoutEnabledFlag.ENABLED,
+                                                      elevators=LayoutRandomizedFlag.VANILLA,
+                                                      pickup_quantities={}),
+        pickup_mapping=[2, 2, 52, 115, 46, 2, 13, 4, 43, 38, 2, 2, 4, 1, 106, 50, 37, 2, 2, 117, 69, 2, 0, 23, 86, 4, 2,
+                        44, 88, 2, 2, 8, 91, 8, 74, 82, 8, 4, 39, 2, 76, 2, 4, 2, 4, 8, 57, 24, 4, 2, 2, 2, 4, 53, 75,
+                        2, 2, 2, 2, 2, 17, 2, 2, 92, 2, 114, 2, 2, 2, 45, 4, 116, 102, 21, 8, 2, 2, 8, 4, 2, 2, 2, 109,
+                        112, 15, 8, 2, 2, 2, 68, 2, 17, 2, 2, 2, 118, 17, 2, 2, 2, 4, 2, 79, 100, 11, 8, 2, 27, 4, 83,
+                        59, 4, 4, 2, 7, 19, 17, 2, 2],
+    ),
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
@@ -100,17 +102,17 @@ _test_descriptions = [
                                                           "Light Suit": 2,
                                                           "Darkburst": 0
                                                       }),
-        pickup_mapping=[2, 88, 4, 7, 4, 38, 23, 76, 2, 2, 2, 46, 57, 82, 24, 2, 106, 83, 2, 39, 37, 8, 69, 2, 15, 2, 52,
-                        109, 1, 19, 2, 2, 91, 8, 2, 75, 8, 86, 2, 2, 79, 4, 43, 4, 2, 13, 0, 2, 2, 2, 4, 2, 4, 2, 4, 2,
-                        74, 2, 2, 116, 2, 2, 2, 2, 2, 2, 2, 2, 68, 50, 2, 4, 21, 2, 2, 2, 112, 4, 45, 4, 8, 4, 17, 4, 2,
-                        100, 2, 115, 8, 2, 24, 2, 4, 44, 17, 2, 2, 2, 102, 118, 11, 8, 2, 4, 2, 17, 92, 53, 2, 2, 59,
-                        114, 2, 2, 8, 17, 8, 2, 117]
+        pickup_mapping=[2, 52, 46, 116, 38, 4, 88, 2, 100, 2, 2, 2, 82, 23, 8, 2, 114, 86, 2, 4, 2, 13, 37, 4, 2, 4, 8,
+                        2, 2, 4, 2, 7, 8, 2, 2, 75, 2, 4, 8, 2, 83, 43, 2, 21, 2, 2, 57, 4, 2, 76, 24, 39, 8, 115, 2, 2,
+                        2, 109, 117, 8, 74, 2, 68, 59, 2, 15, 4, 4, 50, 2, 2, 4, 112, 2, 2, 11, 2, 45, 2, 2, 4, 2, 2, 2,
+                        102, 53, 2, 91, 79, 2, 19, 17, 2, 8, 4, 2, 2, 106, 2, 4, 2, 24, 92, 2, 2, 8, 69, 0, 4, 17, 2, 1,
+                        2, 2, 44, 17, 2, 17, 118]
         ,
     ),
 ]
 
 
-@pytest.fixture(params=[_test_descriptions[0], _test_descriptions[-1]], name="layout_description")
+@pytest.fixture(params=_test_descriptions, name="layout_description")
 def _layout_description(request):
     yield request.param
 
