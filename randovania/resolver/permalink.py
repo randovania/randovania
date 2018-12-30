@@ -50,7 +50,8 @@ class Permalink(BitPackValue):
         version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED, 2)
 
         if version != cls.current_version():
-            raise ValueError("Unsupported Permalink version.")
+            raise ValueError("Given permalink has version {}, but this Randovania "
+                             "support only permalink of version {}.".format(version, cls.current_version()))
 
         patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder)
         layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder)
