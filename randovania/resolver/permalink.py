@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Iterator
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, single_byte_hash
 from randovania.resolver.layout_configuration import LayoutConfiguration
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 
@@ -15,8 +15,7 @@ _PERMALINK_MAX_SEED = 2 ** 31
 
 
 def _dictionary_byte_hash(data: dict) -> int:
-    b = json.dumps(data, separators=(',',':')).encode("UTF-8")
-    return hashlib.blake2b(b, digest_size=1).digest()[0]
+    return single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
 
 
 @dataclass(frozen=True)
@@ -36,7 +35,7 @@ class Permalink(BitPackValue):
     def current_version(cls) -> int:
         # When this reaches _PERMALINK_MAX_VERSION, we need to change how we decode to avoid breaking version detection
         # for previous Randovania versions
-        return 0
+        return 1
 
     def bit_pack_format(self) -> Iterator[int]:
         yield _PERMALINK_MAX_VERSION
@@ -103,7 +102,7 @@ class Permalink(BitPackValue):
     def as_str(self) -> str:
         try:
             b = bitpacking.pack_value(self)
-            b += bytes([sum(b) % 256])
+            b += bytes([single_byte_hash(b)])
             return base64.b64encode(b).decode("utf-8")
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
@@ -114,7 +113,8 @@ class Permalink(BitPackValue):
             b = base64.b64decode(param.encode("utf-8"), validate=True)
             if len(b) < 2:
                 raise ValueError("Data too small")
-            checksum = sum(b[:-1]) % 256
+
+            checksum = single_byte_hash(b[:-1])
             if checksum != b[-1]:
                 raise ValueError("Incorrect checksum")
 

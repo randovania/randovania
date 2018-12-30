@@ -1,4 +1,5 @@
 import dataclasses
+import hashlib
 import math
 from enum import Enum
 from typing import Iterator, Tuple
@@ -8,6 +9,10 @@ import bitstruct
 
 def _bits_for_number(value: int) -> int:
     return int(math.ceil(math.log2(value)))
+
+
+def single_byte_hash(data: bytes) -> int:
+    return hashlib.blake2b(data, digest_size=1).digest()[0]
 
 
 class BitPackDecoder:
