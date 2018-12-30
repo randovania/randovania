@@ -8,7 +8,7 @@ import pytest
 import randovania.interface_common.options
 from randovania.interface_common.options import Options
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
-    LayoutEnabledFlag
+    LayoutEnabledFlag, LayoutSkyTempleKeyMode
 
 
 @pytest.fixture(name="option")
@@ -169,7 +169,7 @@ def test_serialize_fields(option: Options):
 _sample_layout_configurations = [
     {
         "trick_level": trick_level,
-        "sky_temple_keys": LayoutRandomizedFlag.RANDOMIZED,
+        "sky_temple_keys": LayoutSkyTempleKeyMode.FULLY_RANDOM,
         "item_loss": item_loss,
         "elevators": LayoutRandomizedFlag.RANDOMIZED,
         "pickup_quantities": {},

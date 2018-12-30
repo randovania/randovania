@@ -12,7 +12,7 @@ from randovania.game_description.node import TeleporterConnection
 from randovania.games.prime import claris_randomizer, claris_random
 from randovania.resolver import debug, generator, resolver
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
-    LayoutEnabledFlag
+    LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
@@ -28,10 +28,11 @@ def add_layout_configuration_arguments(parser):
         default=LayoutTrickLevel.NO_TRICKS.value,
         help="The level of tricks to use.")
     parser.add_argument(
-        "--vanilla-sky-temple-keys",
-        default=False,
-        action="store_true",
-        help="If set, Sky Temple Keys won't be randomized.")
+        "--sky-temple-keys",
+        type=str,
+        choices=[mode.value for mode in LayoutSkyTempleKeyMode],
+        default=LayoutSkyTempleKeyMode.FULLY_RANDOM.value,
+        help="The Sky Temple Keys randomization mode.")
     parser.add_argument(
         "--skip-item-loss",
         action="store_true",
@@ -42,7 +43,7 @@ def add_layout_configuration_arguments(parser):
 def get_layout_configuration_from_args(args) -> LayoutConfiguration:
     return LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel(args.trick_level),
-        sky_temple_keys=LayoutRandomizedFlag.VANILLA if args.vanilla_sky_temple_keys else LayoutRandomizedFlag.RANDOMIZED,
+        sky_temple_keys=LayoutSkyTempleKeyMode(args.sky_temple_keys),
         item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
         pickup_quantities={}
@@ -57,31 +58,15 @@ def validate_command_logic(args):
     if args.layout_file is not None:
         description = LayoutDescription.from_file(Path(args.layout_file))
         configuration = description.permalink.layout_configuration
-        pickup_assignment = description.pickup_assignment
-
-        elevator_connection = {}
-        for elevator in claris_randomizer.try_randomize_elevators(claris_random.Random(description.permalink.seed_number)):
-            elevator_connection[elevator.instance_id] = TeleporterConnection(
-                elevator.connected_elevator.world_asset_id,
-                elevator.connected_elevator.area_asset_id
-            )
+        patches = description.patches
     else:
-        configuration = LayoutConfiguration.from_params(
-            trick_level=LayoutTrickLevel.NO_TRICKS,
-            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
-            item_loss=LayoutEnabledFlag.ENABLED,
-            elevators=LayoutRandomizedFlag.VANILLA,
-            pickup_quantities={}
+        configuration = LayoutConfiguration.default()
+        patches = GamePatches(
+            game.pickup_database.original_pickup_mapping,
+            {},
+            {},
+            {}
         )
-        pickup_assignment = game.pickup_database.original_pickup_mapping
-        elevator_connection = {}
-
-    patches = GamePatches(
-        pickup_assignment,
-        elevator_connection,
-        {},
-        {}
-    )
 
     final_state_by_resolve = resolver.resolve(
         configuration=configuration,
@@ -188,7 +173,7 @@ def batch_distribute_command_logic(args):
     finished_count = 0
 
     print("Starting batch generation with configuration: {}".format(
-        get_layout_configuration_from_args(args).as_str
+        get_layout_configuration_from_args(args)
     ))
     os.makedirs(args.output_dir, exist_ok=True)
 

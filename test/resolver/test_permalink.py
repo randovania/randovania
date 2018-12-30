@@ -1,7 +1,7 @@
 import pytest
 
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
-    LayoutEnabledFlag
+    LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 
@@ -47,7 +47,7 @@ def test_decode_invalid(invalid: str):
     LayoutConfiguration.default(),
     LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel.HARD,
-        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+        sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
         item_loss=LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.RANDOMIZED,
         pickup_quantities={
@@ -98,7 +98,7 @@ def test_decode_v1():
         ),
         layout_configuration=LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.HARD,
-            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
             item_loss=LayoutEnabledFlag.ENABLED,
             elevators=LayoutRandomizedFlag.RANDOMIZED,
             pickup_quantities={

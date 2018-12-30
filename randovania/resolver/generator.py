@@ -15,7 +15,7 @@ from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
-from randovania.resolver.layout_configuration import LayoutRandomizedFlag
+from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
 from randovania.resolver.permalink import Permalink
 from randovania.resolver.random_lib import shuffle
@@ -133,7 +133,8 @@ def _create_patches(
     )
     categories = {"translator", "major", "energy_tank"}
 
-    if configuration.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
+    # FIXME: We gotta support the other Sky Temple Keys modes
+    if configuration.sky_temple_keys == LayoutSkyTempleKeyMode.VANILLA:
         for index, pickup in game.pickup_database.original_pickup_mapping.items():
             if pickup.item_category == "sky_temple_key":
                 patches.pickup_assignment[index] = pickup

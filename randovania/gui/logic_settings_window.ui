@@ -277,7 +277,7 @@
          <item>
           <widget class="QLabel" name="skytemple_description">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where the Sky Temple Keys will be located.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where the Sky Temple Keys will be located.&lt;/p&gt;&lt;p&gt;Vanilla Locations: All keys will be located in their original Flying Ing Caches.&lt;br/&gt;All Guardians and Sub-Guardians: One key will be placed in each of the guardians and sub-guardians.&lt;br/&gt;3 in Guardians, 6 fully random: One key will be placed as the reward of each of the guardians, and the rest placed randomly over the game.&lt;br/&gt;9 fully random: Each key will be placed randomly over the game.&lt;/p&gt;&lt;p&gt;The Guardians are: Amorbis, Chykka and Quadraxis.&lt;br/&gt;The Sub-Guardians are: Bomb Guardian, Jump Guardian, Boost Guardian, Grapple Guardian, Spider Guardian and Power Bomb Guardian.&lt;/p&gt;&lt;p&gt;The in-game hints for Sky Temple Key locations are &lt;span style=&quot; font-weight:600;&quot;&gt;not&lt;/span&gt; updated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
@@ -285,37 +285,27 @@
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="skytemple_vanilla_radio">
-           <property name="text">
-            <string>Vanilla Locations (Not Randomized)</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="skytemple_vanilla_label">
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;All Sky Temple Keys are inside the Ing Caches they were in originally.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="skytemple_randomized_radio">
-           <property name="text">
-            <string>Randomized</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="skytemple_randomized_label">
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sky Temple Keys are shuffled along with everything else.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
+          <widget class="QComboBox" name="skytemple_combo">
+           <item>
+            <property name="text">
+             <string>Vanilla Locations (Not Randomized)</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>All Guardians and Sub-Guardians</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>3 in Guardians, 6 fully random</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>9 fully random</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>

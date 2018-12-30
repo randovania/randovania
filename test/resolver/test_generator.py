@@ -14,7 +14,7 @@ from randovania.resolver import generator, debug
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.item_pool import calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
-    LayoutEnabledFlag
+    LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
@@ -50,7 +50,7 @@ _unused_test_descriptions = [
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={}),
@@ -63,7 +63,7 @@ _unused_test_descriptions = [
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={
@@ -82,7 +82,7 @@ _test_descriptions = [
     _create_test_layout_description(
         seed_number=1027649986,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={}),
@@ -95,7 +95,7 @@ _test_descriptions = [
     _create_test_layout_description(
         seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
-                                                      sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={
@@ -123,7 +123,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
 
     configuration = LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel.NO_TRICKS,
-        sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+        sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
         item_loss=LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
         pickup_quantities={"Light Suit": 5})
@@ -215,7 +215,7 @@ def test_create_patches(mock_random: MagicMock,
     game = default_prime2_game_description()
     status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
     configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                    sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                    sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                     item_loss=LayoutEnabledFlag.DISABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={})

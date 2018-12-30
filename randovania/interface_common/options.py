@@ -6,7 +6,7 @@ from typing import Optional, TypeVar, Callable, Any, Dict
 from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
-    LayoutTrickLevel
+    LayoutTrickLevel, LayoutSkyTempleKeyMode
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 
@@ -43,6 +43,8 @@ def _get_persisted_options_from_data(persisted_data: dict) -> dict:
     version = persisted_data.get("version", 0)
     if version < 1 or version > 2:
         return {}
+
+    # TODO: create v3 for LayoutSkyTempleKeyMode
 
     if version == 2:
         return persisted_data["options"]
@@ -277,11 +279,11 @@ class Options:
         self._layout_configuration = dataclasses.replace(self.layout_configuration, trick_level=value)
 
     @property
-    def layout_configuration_sky_temple_keys(self) -> LayoutRandomizedFlag:
+    def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:
         return self.layout_configuration.sky_temple_keys
 
     @layout_configuration_sky_temple_keys.setter
-    def layout_configuration_sky_temple_keys(self, value: LayoutRandomizedFlag):
+    def layout_configuration_sky_temple_keys(self, value: LayoutSkyTempleKeyMode):
         self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, sky_temple_keys=value)
 
