@@ -38,18 +38,10 @@ _SERIALIZER_FOR_FIELD = {
     "layout_configuration": Serializer(lambda p: p.as_json, LayoutConfiguration.from_json_dict),
 }
 
+_CURRENT_OPTIONS_FILE_VERSION = 3
 
-def _get_persisted_options_from_data(persisted_data: dict) -> dict:
-    version = persisted_data.get("version", 0)
-    if version < 1 or version > 2:
-        return {}
 
-    # TODO: create v3 for LayoutSkyTempleKeyMode
-
-    if version == 2:
-        return persisted_data["options"]
-
-    options = persisted_data["options"]
+def _convert_v1(options: dict) -> dict:
     results = {}
 
     try:
@@ -72,6 +64,46 @@ def _get_persisted_options_from_data(persisted_data: dict) -> dict:
         print("Unable to port layout_configuration to new version, got {}".format(e))
 
     return results
+
+
+def _convert_v2(options: dict) -> dict:
+    if "layout_configuration" in options:
+        layout_configuration = options["layout_configuration"]
+        if layout_configuration.get("sky_temple_keys") == "randomized":
+            layout_configuration["sky_temple_keys"] = "fully-random"
+
+    return options
+
+
+_CONVERTER_FOR_VERSION = {
+    1: _convert_v1,
+    2: _convert_v2,
+}
+
+
+def _get_persisted_options_from_data(persisted_data: dict) -> dict:
+    version = persisted_data.get("version", 0)
+    options = persisted_data.get("options")
+
+    if not isinstance(options, dict):
+        print("Data has no options.")
+        return {}
+
+    while version < _CURRENT_OPTIONS_FILE_VERSION:
+        converter = _CONVERTER_FOR_VERSION.get(version)
+        if converter is None:
+            print("Converter not found for version '{}'".format(version))
+            return {}
+
+        options = converter(options)
+        version += 1
+
+    if version > _CURRENT_OPTIONS_FILE_VERSION:
+        print("Options has an version from the future '{}'. Supported is only up to {}".format(
+            version, _CURRENT_OPTIONS_FILE_VERSION))
+        return {}
+
+    return options
 
 
 def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -> T:
@@ -136,7 +168,7 @@ class Options:
                 data_to_persist[field_name] = serializer.encode(value)
 
         return {
-            "version": 2,
+            "version": _CURRENT_OPTIONS_FILE_VERSION,
             "options": data_to_persist
         }
 
