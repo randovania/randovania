@@ -84,23 +84,25 @@ def test_generate_layout(mock_generate_layout: MagicMock,
 
 def test_output_name_for():
     # Setup
+    permalink_mock = MagicMock(spec=Permalink(
+        seed_number=15000,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration.default(),
+        layout_configuration=LayoutConfiguration.default(),
+    ))
     layout = LayoutDescription(
         version="0.15.0",
-        permalink=Permalink(
-            seed_number=15000,
-            spoiler=True,
-            patcher_configuration=PatcherConfiguration.default(),
-            layout_configuration=LayoutConfiguration.default(),
-        ),
+        permalink=permalink_mock,
         patches=GamePatches.empty(),
         solver_path=()
     )
+    permalink_mock.as_str = "PermalinkStr"
 
     # Run
     result = simplified_patcher._output_name_for(layout)
 
     # Assert
-    assert result == "Echoes Randomizer - AAAHUxxALWmCI50gIQDP"
+    assert result == "Echoes Randomizer - PermalinkStr"
 
 
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
