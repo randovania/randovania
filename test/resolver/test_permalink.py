@@ -19,7 +19,7 @@ def test_encode():
     encoded = link.as_str
 
     # Assert
-    assert encoded == "AAAAfRxALWmCI50gIQDy"
+    assert encoded == "EAAAfR6cQFU="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -74,10 +74,21 @@ def test_round_trip(spoiler: bool,
     assert link == after
 
 
-def test_decode_v0():
+@pytest.mark.parametrize(["permalink", "version"], [
+    ("AAAAfR5QLERzIpgS4ICCAHw=", 0),
+])
+def test_decode_old_version(permalink: str, version: int):
+    with pytest.raises(ValueError) as exp:
+        Permalink.from_str(permalink)
+    assert str(exp.value) == ("Given permalink has version {}, but this Randovania "
+                              "support only permalink of version {}.".format(version, Permalink.current_version()))
+
+
+def test_decode_v1():
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "AAAAfR5QLERzIpgS4ICCAHw="
+    encoded = "EAAAfR6eWBYiOZFMCXBAQQAh"
+
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
