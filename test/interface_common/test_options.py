@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock, call
 import pytest
 
 import randovania.interface_common.options
+import randovania.interface_common.persisted_options
 from randovania.interface_common.options import Options
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
@@ -26,7 +27,7 @@ def test_migrate_from_v1():
                             "layout_elevators": "vanilla", "layout_item_loss": "enabled", "quantity_for_pickup": {}}}
 
     # Run
-    new_data = randovania.interface_common.options._get_persisted_options_from_data(old_data)
+    new_data = randovania.interface_common.persisted_options.get_persisted_options_from_data(old_data)
 
     # Assert
     assert new_data == {
@@ -36,7 +37,7 @@ def test_migrate_from_v1():
         },
         "layout_configuration": {
             "trick_level": "normal",
-            "sky_temple_keys": "randomized",
+            "sky_temple_keys": "fully-random",
             "item_loss": "enabled",
             "elevators": "vanilla",
             "pickup_quantities": {},
@@ -102,7 +103,7 @@ def test_changing_field_without_context_manager_should_error(option: Options):
     assert str(exception.value) == "Attempting to edit an Options, but it wasn't made editable"
 
 
-@patch("randovania.interface_common.options._get_persisted_options_from_data", autospec=True)
+@patch("randovania.interface_common.options.get_persisted_options_from_data", autospec=True)
 @patch("randovania.interface_common.options.Options._read_persisted_options", return_value=None, autospec=True)
 def test_load_from_disk_no_data(mock_read_persisted_options: MagicMock,
                                 mock_get_persisted_options_from_data: MagicMock,
@@ -118,7 +119,7 @@ def test_load_from_disk_no_data(mock_read_persisted_options: MagicMock,
 @pytest.mark.parametrize("fields_to_test",
                          itertools.combinations(randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys(), 2))
 @patch("randovania.interface_common.options.Options._set_field", autospec=True)
-@patch("randovania.interface_common.options._get_persisted_options_from_data", autospec=True)
+@patch("randovania.interface_common.options.get_persisted_options_from_data", autospec=True)
 @patch("randovania.interface_common.options.Options._read_persisted_options", autospec=True)
 def test_load_from_disk_with_data(mock_read_persisted_options: MagicMock,
                                   mock_get_persisted_options_from_data: MagicMock,
@@ -161,7 +162,7 @@ def test_serialize_fields(option: Options):
 
     # Assert
     assert result == {
-        "version": 2,
+        "version": 3,
         "options": {}
     }
 
