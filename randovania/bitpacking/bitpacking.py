@@ -15,6 +15,10 @@ def single_byte_hash(data: bytes) -> int:
     return hashlib.blake2b(data, digest_size=1).digest()[0]
 
 
+def _compile_format(*args):
+    return bitstruct.CompiledFormat("".join("u{}".format(_bits_for_number(v)) for v in args))
+
+
 class BitPackDecoder:
     _data: bytes
     _offset: int
@@ -24,11 +28,16 @@ class BitPackDecoder:
         self._offset = 0
 
     def decode(self, *args) -> Tuple[int, ...]:
-        compiled = bitstruct.CompiledFormat("".join("u{}".format(_bits_for_number(v)) for v in args))
-        compiled.calcsize()
+        """Decodes values from the current buffer, advancing the current pointer"""
+        compiled = _compile_format(*args)
         offset = self._offset
         self._offset += compiled.calcsize()
         return compiled.unpack_from(self._data, offset)
+
+    def peek(self, *args) -> Tuple[int, ...]:
+        """Decodes values from the current buffer, *NOT* advancing the current pointer"""
+        compiled = _compile_format(*args)
+        return compiled.unpack_from(self._data, self._offset)
 
 
 class BitPackValue:
