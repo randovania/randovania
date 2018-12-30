@@ -23,6 +23,13 @@ class LayoutMode(BitPackEnum, Enum):
     MAJOR_ITEMS = "major-items"
 
 
+class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
+    VANILLA = "vanilla"
+    ALL_BOSSES = "all-bosses"
+    ALL_GUARDIANS = "all-guardians"
+    FULLY_RANDOM = "fully-random"
+
+
 class LayoutRandomizedFlag(BitPackEnum, Enum):
     VANILLA = "vanilla"
     RANDOMIZED = "randomized"
@@ -40,7 +47,7 @@ class LayoutDifficulty(BitPackEnum, Enum):
 @dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
     trick_level: LayoutTrickLevel
-    sky_temple_keys: LayoutRandomizedFlag
+    sky_temple_keys: LayoutSkyTempleKeyMode
     item_loss: LayoutEnabledFlag
     elevators: LayoutRandomizedFlag
     pickup_quantities: PickupQuantities
@@ -63,29 +70,11 @@ class LayoutConfiguration(BitPackDataClass):
             "pickup_quantities": self.pickup_quantities.as_json,
         }
 
-    @property
-    def as_str(self) -> str:
-        strings: List[str] = [self.trick_level.value]
-
-        if self.sky_temple_keys == LayoutRandomizedFlag.VANILLA:
-            strings.append("vanilla-sky-temple-keys")
-
-        if self.item_loss == LayoutEnabledFlag.DISABLED:
-            strings.append("disabled-item-loss")
-
-        if self.elevators == LayoutRandomizedFlag.RANDOMIZED:
-            strings.append("randomized-elevators")
-
-        if self.pickup_quantities.pickups_with_custom_quantities:
-            strings.append("customized-quantities")
-
-        return "_".join(strings)
-
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return cls.from_params(
             trick_level=LayoutTrickLevel(json_dict["trick_level"]),
-            sky_temple_keys=LayoutRandomizedFlag(json_dict["sky_temple_keys"]),
+            sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             item_loss=LayoutEnabledFlag(json_dict["item_loss"]),
             elevators=LayoutRandomizedFlag(json_dict["elevators"]),
             pickup_quantities=json_dict["pickup_quantities"],
@@ -94,7 +83,7 @@ class LayoutConfiguration(BitPackDataClass):
     @classmethod
     def from_params(cls,
                     trick_level: LayoutTrickLevel,
-                    sky_temple_keys: LayoutRandomizedFlag,
+                    sky_temple_keys: LayoutSkyTempleKeyMode,
                     item_loss: LayoutEnabledFlag,
                     elevators: LayoutRandomizedFlag,
                     pickup_quantities: Dict[str, int],
@@ -112,7 +101,7 @@ class LayoutConfiguration(BitPackDataClass):
     def default(cls) -> "LayoutConfiguration":
         return cls.from_params(
             trick_level=LayoutTrickLevel.NO_TRICKS,
-            sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+            sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
             item_loss=LayoutEnabledFlag.ENABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
             pickup_quantities={}
