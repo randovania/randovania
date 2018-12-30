@@ -25,6 +25,11 @@ class PickupQuantities(BitPackValue):
             return
         bit_pack_data = []
 
+        if not self.pickups_with_custom_quantities:
+            # Default configuration, don't pack anything
+            self._bit_pack_data = bit_pack_data
+            return
+
         zero_quantity_pickups = []
         one_quantity_pickups = []
         multiple_quantity_pickups = []
@@ -79,11 +84,13 @@ class PickupQuantities(BitPackValue):
 
     def bit_pack_format(self) -> Iterator[int]:
         self._calculate_bit_pack()
+        yield 2
         for item in self._bit_pack_data:
             yield item[0]
 
     def bit_pack_arguments(self) -> Iterator[int]:
         self._calculate_bit_pack()
+        yield 1 if self._bit_pack_data else 0
         for item in self._bit_pack_data:
             yield item[1]
 
@@ -93,6 +100,11 @@ class PickupQuantities(BitPackValue):
 
         pickup_list = list(pickup_database.pickups.values())
         total_pickup_count = pickup_database.total_pickup_count
+
+        has_custom_quantities = bool(decoder.decode(2)[0])
+        if not has_custom_quantities:
+            return PickupQuantities(pickup_database, {})._add_missing_pickups_to_quantities()
+
         pickup_quantities = {}
 
         zero_quantity_pickups = decoder.decode(len(pickup_list))[0]
