@@ -1,13 +1,13 @@
 import multiprocessing.dummy
 from random import Random
-from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union
+from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union, List
 
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
-from randovania.game_description.resources import PickupEntry
+from randovania.game_description.resources import PickupEntry, PickupIndex
 from randovania.games.prime import claris_randomizer
 from randovania.resolver import resolver
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -17,6 +17,7 @@ from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
+from randovania.resolver.logic import Logic
 from randovania.resolver.permalink import Permalink
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State
@@ -110,6 +111,59 @@ def generate_list(permalink: Permalink,
 
 
 Action = Union[ResourceNode, PickupEntry]
+_GUARDIAN_INDICES = [
+    PickupIndex(43),  # Dark Suit
+    PickupIndex(79),  # Dark Visor
+    PickupIndex(115),  # Annihilator Beam
+]
+_SUB_GUARDIAN_INDICES = [
+    PickupIndex(38),  # Morph Ball Bomb
+    PickupIndex(37),  # Space Jump Boots
+    PickupIndex(75),  # Boost Ball
+    PickupIndex(86),  # Grapple Beam
+    PickupIndex(102),  # Spider Ball
+    PickupIndex(88),  # Main Power Bombs
+]
+
+
+def _sky_temple_key_distribution_logic(permalink: Permalink,
+                                       game: GameDescription,
+                                       patches: GamePatches,
+                                       available_pickups: List[PickupEntry]):
+
+    mode = permalink.layout_configuration.sky_temple_keys
+
+    if mode == LayoutSkyTempleKeyMode.VANILLA:
+        locations_to_place = [
+            index
+            for index, pickup in game.pickup_database.original_pickup_mapping.items()
+            if pickup.item_category == "sky_temple_key"
+        ]
+
+    elif mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+        locations_to_place = _GUARDIAN_INDICES[:]
+        if mode == LayoutSkyTempleKeyMode.ALL_BOSSES:
+            locations_to_place += _SUB_GUARDIAN_INDICES
+
+    elif mode == LayoutSkyTempleKeyMode.FULLY_RANDOM:
+        locations_to_place = []
+
+    else:
+        raise GenerationFailure("Unknown Sky Temple Key mode: {}".format(mode), permalink)
+
+    for pickup in available_pickups[:]:
+        if not locations_to_place:
+            break
+
+        if pickup.item_category == "sky_temple_key":
+            available_pickups.remove(pickup)
+            patches.pickup_assignment[locations_to_place.pop(0)] = pickup
+
+    if locations_to_place:
+        raise GenerationFailure(
+            "Missing Sky Temple Keys in available_pickups to place in all requested boss places",
+            permalink
+        )
 
 
 def _create_patches(
@@ -131,24 +185,25 @@ def _create_patches(
         {},
         {}
     )
-    categories = {"translator", "major", "energy_tank"}
+
+    logic, state = logic_bootstrap(configuration, game, patches)
+    logic.game.simplify_connections(state.resources)
+
+    categories = {"translator", "major", "energy_tank", "sky_temple_key"}
 
     # FIXME: We gotta support the other Sky Temple Keys modes
     if configuration.sky_temple_keys == LayoutSkyTempleKeyMode.VANILLA:
         for index, pickup in game.pickup_database.original_pickup_mapping.items():
             if pickup.item_category == "sky_temple_key":
                 patches.pickup_assignment[index] = pickup
-    else:
-        categories.add("sky_temple_key")
-
-    logic, state = logic_bootstrap(configuration, game, patches)
-    logic.game.simplify_connections(state.resources)
 
     item_pool = list(sorted(calculate_item_pool(permalink, game)))
-    available_pickups = tuple(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
+    available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
+
+    _sky_temple_key_distribution_logic(permalink, game, patches, available_pickups)
 
     new_pickup_mapping = retcon_playthrough_filler(
-        logic, state, patches, available_pickups, rng,
+        logic, state, patches, tuple(available_pickups), rng,
         status_update
     )
 
