@@ -124,10 +124,10 @@ def calculate_starting_state(logic: Logic) -> "State":
     if logic.configuration.item_loss == LayoutEnabledFlag.DISABLED:
         initial_state_name = "Item Loss Disabled"
 
-    initial_state = game.initial_states[initial_state_name]
+    initial_game_state = game.initial_states[initial_state_name]
 
-    starting_world = game.world_list.world_by_asset_id(initial_state.starting_world_asset_id)
-    starting_area = starting_world.area_by_asset_id(initial_state.starting_area_asset_id)
+    starting_world = game.world_list.world_by_asset_id(initial_game_state.starting_world_asset_id)
+    starting_area = starting_world.area_by_asset_id(initial_game_state.starting_area_asset_id)
     starting_node = starting_area.nodes[starting_area.default_node_index]
 
     starting_state = State(
@@ -140,7 +140,7 @@ def calculate_starting_state(logic: Logic) -> "State":
         game.resource_database
     )
 
-    add_resource_gain_to_state(starting_state, initial_state.initial_resources)
+    add_resource_gain_to_state(starting_state, initial_game_state.initial_resources)
 
     return starting_state
 
