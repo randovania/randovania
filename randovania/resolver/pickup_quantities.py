@@ -14,6 +14,12 @@ class PickupQuantities(BitPackValue):
         self._database = database
         self._pickup_quantities = pickup_quantities
 
+    def __repr__(self):
+        return "PickupQuantities({})".format(repr({
+            item.name: quantity
+            for item, quantity in self.pickups_with_custom_quantities.items()
+        }))
+
     def _calculate_bit_pack(self):
         if self._bit_pack_data is not None:
             return
