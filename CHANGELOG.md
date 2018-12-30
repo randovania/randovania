@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Removed Space Jump method from Training Chamber.
 - Changed: Added Power Bomb as option for pickup in Hive Chamber B.
 - Changed: Shortened Permalinks when pickup quantities aren't customized.
+- Added: Permalinks now include the database version they were created for.
 
 ## [0.17.2] - 2018-12-27
 - Fixed: 'Clear loaded game' now properly does it's job.
