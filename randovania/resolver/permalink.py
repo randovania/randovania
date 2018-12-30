@@ -55,12 +55,20 @@ class Permalink(BitPackValue):
         yield from self.layout_configuration.bit_pack_arguments()
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "Permalink":
-        version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED, 2)
-
+    def _raise_if_different_version(cls, version: int):
         if version != cls.current_version():
             raise ValueError("Given permalink has version {}, but this Randovania "
                              "support only permalink of version {}.".format(version, cls.current_version()))
+
+    @classmethod
+    def validate_version(cls, decoder: BitPackDecoder):
+        version = decoder.peek(_PERMALINK_MAX_VERSION)[0]
+        cls._raise_if_different_version(version)
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "Permalink":
+        version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED, 2)
+        cls._raise_if_different_version(version)
 
         included_data_hash = decoder.decode(256)[0]
 
@@ -114,11 +122,13 @@ class Permalink(BitPackValue):
             if len(b) < 2:
                 raise ValueError("Data too small")
 
+            decoder = BitPackDecoder(b)
+            Permalink.validate_version(decoder)
+
             checksum = single_byte_hash(b[:-1])
             if checksum != b[-1]:
                 raise ValueError("Incorrect checksum")
 
-            decoder = BitPackDecoder(b)
             return Permalink.bit_pack_unpack(decoder)
 
         except binascii.Error as e:
