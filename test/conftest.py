@@ -1,5 +1,7 @@
+import dataclasses
 import json
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -21,3 +23,13 @@ def simple_data(test_files_dir: Path) -> dict:
 @pytest.fixture()
 def echoes_pickup_database() -> PickupDatabase:
     return default_prime2_pickup_database()
+
+
+class DataclassTestLib:
+    def mock_dataclass(self, obj) -> MagicMock:
+        return MagicMock(spec=[field.name for field in dataclasses.fields(obj)])
+
+
+@pytest.fixture()
+def dataclass_test_lib() -> DataclassTestLib:
+    return DataclassTestLib()

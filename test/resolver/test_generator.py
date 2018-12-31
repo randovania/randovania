@@ -11,6 +11,7 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
 from randovania.resolver import generator, debug
+from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.item_pool import calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
@@ -232,3 +233,38 @@ def test_create_patches(mock_random: MagicMock,
     mock_calculate_item_pool.assert_called_once_with(permalink, game)
     mock_retcon_playthrough_filler.assert_called_once()
     assert patches.pickup_assignment == expected_result
+
+
+def test_sky_temple_key_distribution_logic_vanilla_valid(dataclass_test_lib):
+    # Setup
+    permalink = dataclass_test_lib.mock_dataclass(Permalink)
+    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
+    patches = GamePatches.empty()
+    sky_temple_keys = [
+        pickup
+        for pickup in default_prime2_game_description().pickup_database.original_pickup_mapping.values()
+        if pickup.item_category == "sky_temple_key"
+    ]
+    available_pickups = sky_temple_keys[:]
+
+    # Run
+    generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+
+    # Assert
+    assert available_pickups == []
+    assert patches.pickup_assignment == dict(zip(generator._FLYING_ING_CACHES, sky_temple_keys))
+
+
+def test_sky_temple_key_distribution_logic_vanilla_missing_pickup(dataclass_test_lib):
+    # Setup
+    permalink = dataclass_test_lib.mock_dataclass(Permalink)
+    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
+    patches = GamePatches.empty()
+    available_pickups = []
+
+    # Run
+    with pytest.raises(GenerationFailure) as exp:
+        generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+
+    assert exp.value == GenerationFailure(
+        "Missing Sky Temple Keys in available_pickups to place in all requested boss places", permalink)

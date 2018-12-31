@@ -112,6 +112,17 @@ def generate_list(permalink: Permalink,
 
 
 Action = Union[ResourceNode, PickupEntry]
+_FLYING_ING_CACHES = [
+    PickupIndex(45),  # Sky Temple Key 1
+    PickupIndex(53),  # Sky Temple Key 2
+    PickupIndex(68),  # Sky Temple Key 3
+    PickupIndex(91),  # Sky Temple Key 4
+    PickupIndex(117),  # Sky Temple Key 5
+    PickupIndex(106),  # Sky Temple Key 6
+    PickupIndex(19),  # Sky Temple Key 7
+    PickupIndex(11),  # Sky Temple Key 8
+    PickupIndex(15),  # Sky Temple Key 9
+]
 _GUARDIAN_INDICES = [
     PickupIndex(43),  # Dark Suit
     PickupIndex(79),  # Dark Visor
@@ -128,18 +139,13 @@ _SUB_GUARDIAN_INDICES = [
 
 
 def _sky_temple_key_distribution_logic(permalink: Permalink,
-                                       game: GameDescription,
                                        patches: GamePatches,
                                        available_pickups: List[PickupEntry]):
 
     mode = permalink.layout_configuration.sky_temple_keys
 
     if mode == LayoutSkyTempleKeyMode.VANILLA:
-        locations_to_place = [
-            index
-            for index, pickup in game.pickup_database.original_pickup_mapping.items()
-            if pickup.item_category == "sky_temple_key"
-        ]
+        locations_to_place = _FLYING_ING_CACHES[:]
 
     elif mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
         locations_to_place = _GUARDIAN_INDICES[:]
@@ -194,7 +200,7 @@ def _create_patches(
     item_pool = list(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
-    _sky_temple_key_distribution_logic(permalink, game, patches, available_pickups)
+    _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
 
     new_pickup_mapping = retcon_playthrough_filler(
         logic, state, patches, tuple(available_pickups), rng,

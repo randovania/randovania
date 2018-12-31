@@ -16,3 +16,12 @@ class GenerationFailure(Exception):
 
     def __reduce__(self):
         return GenerationFailure, (super().__str__(), self.permalink)
+
+    def __eq__(self, other):
+        if not isinstance(other, GenerationFailure):
+            return False
+
+        if self.permalink != other.permalink:
+            return False
+
+        return super(Exception, other).__str__() == super().__str__()
