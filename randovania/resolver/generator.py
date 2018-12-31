@@ -56,6 +56,7 @@ def _state_to_solver_path(final_state: State,
 
 def generate_list(permalink: Permalink,
                   status_update: Optional[Callable[[str], None]],
+                  timeout: Optional[int] = 120
                   ) -> LayoutDescription:
     if status_update is None:
         status_update = id
@@ -79,7 +80,7 @@ def generate_list(permalink: Permalink,
         patches_async = dummy_pool.apply_async(func=_create_patches,
                                                kwds=create_patches_params)
         try:
-            new_patches = patches_async.get(120)
+            new_patches = patches_async.get(timeout)
         except multiprocessing.TimeoutError:
             raise create_failure("Timeout reached when generating patches.")
 

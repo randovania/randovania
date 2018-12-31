@@ -1,6 +1,6 @@
 import copy
 from typing import Iterable, List, Tuple, Callable, Union
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, PropertyMock
 
 import pytest
 
@@ -21,14 +21,13 @@ from randovania.resolver.permalink import Permalink
 
 
 def _create_test_layout_description(
-        seed_number: int,
         configuration: LayoutConfiguration,
         pickup_mapping: Iterable[int]):
     pickup_database = data_reader.read_databases(configuration.game_data)[1]
     return LayoutDescription(
         version=VERSION,
         permalink=Permalink(
-            seed_number=seed_number,
+            seed_number=0,
             spoiler=True,
             patcher_configuration=PatcherConfiguration.default(),
             layout_configuration=configuration,
@@ -48,7 +47,6 @@ def _create_test_layout_description(
 
 _unused_test_descriptions = [
     _create_test_layout_description(
-        seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
@@ -61,7 +59,6 @@ _unused_test_descriptions = [
                         114, 2, 2, 8, 17, 8, 2, 117],
     ),
     _create_test_layout_description(
-        seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
@@ -80,20 +77,19 @@ _unused_test_descriptions = [
 
 _test_descriptions = [
     _create_test_layout_description(
-        seed_number=1027649986,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={}),
-        pickup_mapping=[2, 2, 52, 115, 46, 2, 13, 4, 43, 38, 2, 2, 4, 1, 106, 50, 37, 2, 2, 117, 69, 2, 0, 23, 86, 4, 2,
-                        44, 88, 2, 2, 8, 91, 8, 74, 82, 8, 4, 39, 2, 76, 2, 4, 2, 4, 8, 57, 24, 4, 2, 2, 2, 4, 53, 75,
-                        2, 2, 2, 2, 2, 17, 2, 2, 92, 2, 114, 2, 2, 2, 45, 4, 116, 102, 21, 8, 2, 2, 8, 4, 2, 2, 2, 109,
-                        112, 15, 8, 2, 2, 2, 68, 2, 17, 2, 2, 2, 118, 17, 2, 2, 2, 4, 2, 79, 100, 11, 8, 2, 27, 4, 83,
-                        59, 4, 4, 2, 7, 19, 17, 2, 2],
+        pickup_mapping=[8, 17, 23, 2, 74, 2, 2, 4, 2, 38, 27, 4, 2, 88, 2, 2, 2, 53, 13, 46, 82, 1, 102, 8, 2, 50, 24,
+                        118, 17, 2, 4, 2, 8, 0, 2, 8, 2, 2, 57, 2, 2, 2, 2, 8, 112, 43, 7, 2, 2, 68, 2, 4, 2, 4, 2, 2,
+                        52, 4, 2, 114, 2, 19, 11, 2, 15, 44, 2, 83, 4, 4, 17, 2, 8, 2, 75, 2, 39, 2, 21, 2, 4, 8, 2, 2,
+                        4, 117, 69, 2, 2, 2, 115, 2, 4, 100, 8, 2, 79, 92, 37, 2, 109, 45, 106, 17, 4, 86, 2, 2, 4, 2,
+                        2, 4, 2, 116, 76, 91, 2, 2, 59]
+        ,
     ),
     _create_test_layout_description(
-        seed_number=50000,
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
@@ -102,19 +98,14 @@ _test_descriptions = [
                                                           "Light Suit": 2,
                                                           "Darkburst": 0
                                                       }),
-        pickup_mapping=[2, 52, 46, 116, 38, 4, 88, 2, 100, 2, 2, 2, 82, 23, 8, 2, 114, 86, 2, 4, 2, 13, 37, 4, 2, 4, 8,
-                        2, 2, 4, 2, 7, 8, 2, 2, 75, 2, 4, 8, 2, 83, 43, 2, 21, 2, 2, 57, 4, 2, 76, 24, 39, 8, 115, 2, 2,
-                        2, 109, 117, 8, 74, 2, 68, 59, 2, 15, 4, 4, 50, 2, 2, 4, 112, 2, 2, 11, 2, 45, 2, 2, 4, 2, 2, 2,
-                        102, 53, 2, 91, 79, 2, 19, 17, 2, 8, 4, 2, 2, 106, 2, 4, 2, 24, 92, 2, 2, 8, 69, 0, 4, 17, 2, 1,
-                        2, 2, 44, 17, 2, 17, 118]
+        pickup_mapping=[75, 8, 17, 2, 2, 2, 38, 4, 2, 4, 4, 2, 2, 1, 116, 115, 2, 53, 2, 13, 79, 8, 2, 23, 50, 17, 74,
+                        2, 4, 2, 57, 8, 0, 2, 8, 68, 2, 2, 2, 2, 102, 2, 2, 8, 43, 7, 2, 117, 88, 2, 2, 4, 2, 4, 2, 2,
+                        4, 2, 109, 2, 11, 82, 2, 19, 44, 15, 2, 112, 83, 4, 4, 17, 2, 86, 8, 2, 2, 52, 118, 39, 24, 2,
+                        100, 2, 4, 8, 2, 2, 4, 46, 69, 2, 2, 2, 2, 4, 114, 8, 2, 2, 24, 17, 4, 92, 2, 45, 106, 2, 37,
+                        21, 2, 2, 4, 2, 76, 2, 91, 2, 59]
         ,
     ),
 ]
-
-
-@pytest.fixture(params=_test_descriptions, name="layout_description")
-def _layout_description(request):
-    yield request.param
 
 
 def test_generate_seed_with_invalid_quantity_configuration():
@@ -140,23 +131,17 @@ def test_generate_seed_with_invalid_quantity_configuration():
         generator.generate_list(permalink, status_update=status_update)
 
 
-# @pytest.mark.skip(reason="generating is taking too long")
-def test_compare_generated_with_data(benchmark,
+@pytest.mark.parametrize("layout_description", _test_descriptions)
+@patch("randovania.resolver.permalink.Permalink.as_str", new_callable=PropertyMock)
+def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
                                      layout_description: LayoutDescription,
                                      echoes_pickup_database: PickupDatabase):
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
+    mock_permalink_as_str.return_value = "fixed-seed!"
 
-    generated_description: LayoutDescription = benchmark.pedantic(
-        generator.generate_list,
-        args=(
-            layout_description.permalink,
-        ),
-        kwargs={
-            'status_update': status_update
-        },
-        iterations=1,
-        rounds=1)
+    generated_description = generator.generate_list(
+        layout_description.permalink, status_update=status_update, timeout=None)
 
     indices: List[int] = [None] * echoes_pickup_database.total_pickup_count
     for index, pickup in generated_description.patches.pickup_assignment.items():
@@ -180,7 +165,7 @@ def test_generate_twice():
 def test_generate_simple(simple_data: dict):
     status_update = MagicMock()
     configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                    sky_temple_keys=LayoutRandomizedFlag.RANDOMIZED,
+                                                    sky_temple_keys=LayoutSkyTempleKeyMode.RANDOMIZED,
                                                     item_loss=LayoutEnabledFlag.DISABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={})
