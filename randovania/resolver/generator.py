@@ -17,7 +17,6 @@ from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.layout_description import LayoutDescription, SolverPath
-from randovania.resolver.logic import Logic
 from randovania.resolver.permalink import Permalink
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State
@@ -204,7 +203,7 @@ def _create_patches(
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    categories = {"translator", "major", "energy_tank", "sky_temple_key"}
+    categories = {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"}
     item_pool = list(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
