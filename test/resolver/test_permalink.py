@@ -19,7 +19,7 @@ def test_encode():
     encoded = link.as_str
 
     # Assert
-    assert encoded == "EAAAfR6cQFU="
+    assert encoded == "EAAAfR6cYAU="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -87,7 +87,7 @@ def test_decode_old_version(permalink: str, version: int):
 def test_decode_v1():
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "EAAAfR6eWBYiOZFMCXBAQQAh"
+    encoded = "EAAAfR6ebAsRHMimBLggIIBj"
 
     expected = Permalink(
         seed_number=1000,
@@ -107,6 +107,9 @@ def test_decode_v1():
             },
         ),
     )
+
+    # Uncomment this line to quickly get the new encoded permalink
+    # assert expected.as_str == ""
 
     # Run
     link = Permalink.from_str(encoded)
