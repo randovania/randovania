@@ -191,13 +191,6 @@ def _create_patches(
     logic.game.simplify_connections(state.resources)
 
     categories = {"translator", "major", "energy_tank", "sky_temple_key"}
-
-    # FIXME: We gotta support the other Sky Temple Keys modes
-    if configuration.sky_temple_keys == LayoutSkyTempleKeyMode.VANILLA:
-        for index, pickup in game.pickup_database.original_pickup_mapping.items():
-            if pickup.item_category == "sky_temple_key":
-                patches.pickup_assignment[index] = pickup
-
     item_pool = list(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
