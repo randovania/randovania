@@ -288,3 +288,49 @@ def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_
         "Attempted to place '{}' in PickupIndex 45, but there's already 'Pickup Other Item' there".format(
             sky_temple_keys[0]
         ), permalink)
+
+
+def test_sky_temple_key_distribution_logic_all_bosses_valid(dataclass_test_lib, sky_temple_keys):
+    # Setup
+    permalink = dataclass_test_lib.mock_dataclass(Permalink)
+    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.ALL_BOSSES
+    patches = GamePatches.empty()
+    available_pickups = sky_temple_keys[:]
+
+    # Run
+    generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+
+    # Assert
+    assert available_pickups == []
+    assert patches.pickup_assignment == dict(zip(
+        generator._GUARDIAN_INDICES + generator._SUB_GUARDIAN_INDICES, sky_temple_keys))
+
+
+def test_sky_temple_key_distribution_logic_all_guardians_valid(dataclass_test_lib, sky_temple_keys):
+    # Setup
+    permalink = dataclass_test_lib.mock_dataclass(Permalink)
+    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.ALL_GUARDIANS
+    patches = GamePatches.empty()
+    available_pickups = sky_temple_keys[:]
+
+    # Run
+    generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+
+    # Assert
+    assert available_pickups == sky_temple_keys[3:]
+    assert patches.pickup_assignment == dict(zip(generator._GUARDIAN_INDICES, sky_temple_keys))
+
+
+def test_sky_temple_key_distribution_logic_fully_random_valid(dataclass_test_lib, sky_temple_keys):
+    # Setup
+    permalink = dataclass_test_lib.mock_dataclass(Permalink)
+    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.FULLY_RANDOM
+    patches = GamePatches.empty()
+    available_pickups = sky_temple_keys[:]
+
+    # Run
+    generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+
+    # Assert
+    assert available_pickups == sky_temple_keys
+    assert patches.pickup_assignment == {}
