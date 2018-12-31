@@ -204,6 +204,7 @@ def retcon_playthrough_filler(logic: Logic,
 
         if isinstance(action, PickupEntry):
             next_state = state_with_pickup(reach.state, action)
+            # TODO: this item is potentially dangerous and we should remove the invalidated paths
 
             pickup_index_weight = {
                 pickup_index: 1 / (pickup_index_seen_count[pickup_index] ** 2)
@@ -217,13 +218,15 @@ def retcon_playthrough_filler(logic: Logic,
             status_update(last_message)
             print_retcon_place_pickup(action, logic, pickup_index)
 
+            reach.advance_to(next_state)
+
         else:
             last_message = "Triggered an event {} options.".format(options_considered)
             status_update(last_message)
             print("\n--> Collecting {}".format(logic.game.world_list.node_name(action, with_world=True)))
-            next_state = reach.state.act_on_node(action, patches)
+            # This action is potentially dangerous. Use `act_on` to remove invalid paths
+            reach.act_on(action)
 
-        reach.advance_to(next_state)
         reach = advance_reach_with_possible_unsafe_resources(reach, patches)
 
         if logic.game.victory_condition.satisfied(reach.state.resources, reach.state.resource_database):
