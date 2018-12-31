@@ -235,16 +235,19 @@ def test_create_patches(mock_random: MagicMock,
     assert patches.pickup_assignment == expected_result
 
 
-def test_sky_temple_key_distribution_logic_vanilla_valid(dataclass_test_lib):
+@pytest.fixture(name="sky_temple_keys")
+def sample_sky_temple_keys():
+    return [
+        PickupEntry("Test Sky Temple Key {}".format(i), tuple(), "sky_temple_key")
+        for i in range(1, 10)
+    ]
+
+
+def test_sky_temple_key_distribution_logic_vanilla_valid(dataclass_test_lib, sky_temple_keys):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
     patches = GamePatches.empty()
-    sky_temple_keys = [
-        pickup
-        for pickup in default_prime2_game_description().pickup_database.original_pickup_mapping.values()
-        if pickup.item_category == "sky_temple_key"
-    ]
     available_pickups = sky_temple_keys[:]
 
     # Run
@@ -268,3 +271,20 @@ def test_sky_temple_key_distribution_logic_vanilla_missing_pickup(dataclass_test
 
     assert exp.value == GenerationFailure(
         "Missing Sky Temple Keys in available_pickups to place in all requested boss places", permalink)
+
+
+def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_lib, sky_temple_keys):
+    # Setup
+    permalink = dataclass_test_lib.mock_dataclass(Permalink)
+    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
+    patches = GamePatches.empty()
+    patches.pickup_assignment[generator._FLYING_ING_CACHES[0]] = PickupEntry("Other Item", tuple(), "other")
+
+    # Run
+    with pytest.raises(GenerationFailure) as exp:
+        generator._sky_temple_key_distribution_logic(permalink, patches, [sky_temple_keys[0]])
+
+    assert exp.value == GenerationFailure(
+        "Attempted to place '{}' in PickupIndex 45, but there's already 'Pickup Other Item' there".format(
+            sky_temple_keys[0]
+        ), permalink)
