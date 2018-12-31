@@ -164,7 +164,15 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
 
         if pickup.item_category == "sky_temple_key":
             available_pickups.remove(pickup)
-            patches.pickup_assignment[locations_to_place.pop(0)] = pickup
+            index = locations_to_place.pop(0)
+            if index in patches.pickup_assignment:
+                raise GenerationFailure(
+                    "Attempted to place '{}' in {}, but there's already '{}' there".format(
+                        pickup, index, patches.pickup_assignment[index]
+                    ),
+                    permalink
+                )
+            patches.pickup_assignment[index] = pickup
 
     if locations_to_place:
         raise GenerationFailure(
