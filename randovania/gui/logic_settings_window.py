@@ -8,7 +8,8 @@ from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutEnabledFlag
+from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutEnabledFlag, \
+    LayoutSkyTempleKeyMode
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
@@ -30,9 +31,6 @@ def _on_item_loss_changed(options: Options, new_value: bool):
 class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     _options: Options
     _layout_logic_labels: Dict[LayoutTrickLevel, QLabel]
-    _elevators_radios: Dict[LayoutRandomizedFlag, QRadioButton]
-    _sky_temple_radios: Dict[LayoutRandomizedFlag, QRadioButton]
-    _item_loss_radios: Dict[LayoutEnabledFlag, QRadioButton]
 
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
@@ -79,18 +77,13 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.itemloss_check.stateChanged.connect(functools.partial(_on_item_loss_changed, self._options))
 
     def setup_sky_temple_elements(self, options: Options):
-        # Setup config values to radio maps
-        self._sky_temple_radios = {
-            LayoutRandomizedFlag.VANILLA: self.skytemple_vanilla_radio,
-            LayoutRandomizedFlag.RANDOMIZED: self.skytemple_randomized_radio,
-        }
+        for i, value in enumerate(LayoutSkyTempleKeyMode):
+            self.skytemple_combo.setItemData(i, value)
 
-        # Connect the options changed events, after setting the initial values
-        for value, radio in self._sky_temple_radios.items():
-            radio.toggled.connect(functools.partial(_update_options_when_true,
-                                                    self._options,
-                                                    "layout_configuration_sky_temple_keys",
-                                                    value))
+        self.skytemple_combo.options_field_name = "layout_configuration_sky_temple_keys"
+        self.skytemple_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
+                                                                           self._options,
+                                                                           self.skytemple_combo))
 
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()
@@ -113,4 +106,5 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.itemloss_check.setChecked(self._options.layout_configuration_item_loss == LayoutEnabledFlag.ENABLED)
 
         # Sky Temple Keys
-        self._sky_temple_radios[self._options.layout_configuration_sky_temple_keys].setChecked(True)
+        self.skytemple_combo.setCurrentIndex(
+            self.skytemple_combo.findData(self._options.layout_configuration_sky_temple_keys))

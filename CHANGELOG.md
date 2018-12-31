@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Added: Editor for Randovania's database. This allows for modifications and contributions to be made easily.
     There's currently no way to use the modified database directly.
+- Added: Options to place the Sky Temple Keys on Guardians + Sub-Guardians or just on Guardians.
 - Changed: Removed Space Jump method from Training Chamber.
 - Changed: Added Power Bomb as option for pickup in Hive Chamber B.
 - Changed: Shortened Permalinks when pickup quantities aren't customized.
