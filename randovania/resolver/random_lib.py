@@ -31,7 +31,7 @@ def iterate_with_weights(items: List[T],
     items = list(items)
     weights = [item_weights[action] for action in items]
 
-    while items:
+    while items and any(weight > 0 for weight in weights):
         pickup_node = rng.choices(items, weights)[0]
 
         # Remove the pickup_node from the potential list, along with it's weight
