@@ -61,7 +61,7 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            pickup_assignment: PickupAssignment,
                            current_uncollected: UncollectedState,
                            name: str
-                           ) -> Optional[Tuple[GeneratorReach, float]]:
+                           ) -> Tuple[GeneratorReach, float]:
     potential_uncollected = UncollectedState.from_reach(potential_reach, pickup_assignment) - current_uncollected
     weight = len(potential_uncollected.resources) + len(potential_uncollected.indices)
 
@@ -90,8 +90,7 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
     if debug._DEBUG_LEVEL > 1:
         print("{} - {}".format(name, weight))
 
-    if weight > 0:
-        return potential_reach, weight
+    return potential_reach, weight
 
 
 Action = Union[ResourceNode, PickupEntry]
@@ -198,6 +197,8 @@ def retcon_playthrough_filler(logic: Logic,
         except StopIteration:
             if progression_pickups and current_uncollected.indices:
                 action = rng.choice(progression_pickups)
+            elif actions_weights:
+                action = rng.choice(list(actions_weights.keys()))
             else:
                 raise RuntimeError("Unable to generate, no actions found after placing {} items.".format(
                     len(pickup_assignment)))
