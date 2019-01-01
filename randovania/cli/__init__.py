@@ -2,6 +2,9 @@ import argparse
 import os
 import sys
 
+import pytest
+import pytest_cov
+
 import randovania
 from randovania.cli import echoes
 from randovania.gui import qt
@@ -36,9 +39,7 @@ def _run_args(args):
 
 
 def run_pytest(argv):
-    import pytest
-    import sys
-    sys.exit(pytest.main(argv[2:], plugins=[]))
+    sys.exit(pytest.main(argv[2:], plugins=[pytest_cov]))
 
 
 def run_cli(argv):
