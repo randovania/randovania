@@ -45,8 +45,7 @@ def _test_data():
 
 
 def _create_reach_with_unsafe(logic: Logic, state: State) -> GeneratorReach:
-    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, state, state.patches),
-                                                        state.patches)
+    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, state))
 
 
 def _create_reaches_and_compare(logic: Logic, state: State) -> Tuple[GeneratorReach, GeneratorReach]:
@@ -104,7 +103,7 @@ def test_calculate_reach_with_seeds():
     escape_state = state_with_pickup(first_reach.state, available_pickups[-6])
     total_pickup_nodes = list(_filter_pickups(filter_reachable(first_reach.nodes, first_reach)))
     pickup_options = pickup_nodes_that_can_reach(total_pickup_nodes,
-                                                 reach_with_all_safe_resources(logic, escape_state, state.patches),
+                                                 reach_with_all_safe_resources(logic, escape_state),
                                                  set(first_reach.safe_nodes))
 
     for option in pickup_options:

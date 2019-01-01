@@ -211,12 +211,15 @@ def _create_patches(
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    new_pickup_mapping = retcon_playthrough_filler(logic, state, patches, tuple(available_pickups), rng, status_update)
-    new_pickup_mapping = _fill_pickup_assignment_with_remaining_pickups(rng, game, new_pickup_mapping, item_pool)
+    filler_patches = retcon_playthrough_filler(logic, state, tuple(available_pickups), rng, status_update)
+
+    new_pickup_mapping = _fill_pickup_assignment_with_remaining_pickups(rng, game,
+                                                                        filler_patches.pickup_assignment, item_pool)
 
     return GamePatches(new_pickup_mapping,
-                       patches.elevator_connection,
-                       {}, {})
+                       filler_patches.elevator_connection,
+                       filler_patches.dock_connection,
+                       filler_patches.dock_weakness)
 
 
 def _fill_pickup_assignment_with_remaining_pickups(rng: Random,
