@@ -56,7 +56,7 @@ def log_resolve_start():
     _current_indent = 0
 
 
-def log_new_advance(state: "State", reach: "ResolverReach", logic: Logic):
+def log_new_advance(state: "State", reach: "ResolverReach"):
     global _current_indent
     increment_attempts()
     _current_indent += 1
@@ -64,7 +64,7 @@ def log_new_advance(state: "State", reach: "ResolverReach", logic: Logic):
         if hasattr(state.node, "resource"):
             resource = state.node.resource()
             if isinstance(resource, PickupIndex):
-                resource = logic.patches.pickup_assignment[resource]
+                resource = state.patches.pickup_assignment[resource]
         else:
             resource = None
 

@@ -13,14 +13,12 @@ class Logic:
 
     game: GameDescription
     configuration: LayoutConfiguration
-    patches: GamePatches
     additional_requirements: Dict[Node, RequirementSet]
     node_sightings: Dict[Node, int]
 
-    def __init__(self, game: GameDescription, configuration: LayoutConfiguration, patches: GamePatches):
+    def __init__(self, game: GameDescription, configuration: LayoutConfiguration):
         self.game = game
         self.configuration = configuration
-        self.patches = patches
         self.additional_requirements = {}
         self.node_sightings = collections.defaultdict(int)
 

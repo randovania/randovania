@@ -115,7 +115,7 @@ class GeneratorReach:
 
         extra_requirement = _extra_requirement_for_node(game, node)
 
-        for target_node, requirements in game.world_list.potential_nodes_from(node, self.logic.patches):
+        for target_node, requirements in game.world_list.potential_nodes_from(node, self.state.patches):
             if target_node is None:
                 continue
 
@@ -274,10 +274,10 @@ class GeneratorReach:
     def act_on(self, node: ResourceNode) -> None:
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.logic.patches)
+            for resource, quantity in node.resource_gain_on_collect(self.state.patches)
             if resource in self.logic.game.dangerous_resources
         )
-        new_state = self.state.act_on_node(node, self.logic.patches)
+        new_state = self.state.act_on_node(node, self.state.patches)
 
         if new_dangerous_resources:
             edges_to_remove = []

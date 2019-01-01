@@ -53,7 +53,7 @@ def _calculate_reach_for_progression(reach: GeneratorReach,
                                      ) -> GeneratorReach:
     return advance_to_with_reach_copy(reach,
                                       state_with_pickup(reach.state, progression),
-                                      reach.logic.patches)
+                                      reach.state.patches)
 
 
 def _calculate_weights_for(potential_reach: GeneratorReach,
@@ -239,7 +239,7 @@ def _calculate_potential_actions(current_uncollected,
         actions_weights[resource] = _calculate_weights_for(
             advance_to_with_reach_copy(reach,
                                        reach.state.act_on_node(resource, patches),
-                                       reach.logic.patches),
+                                       reach.state.patches),
             pickup_assignment,
             current_uncollected,
             resource.name)
