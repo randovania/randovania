@@ -175,11 +175,9 @@ def retcon_playthrough_filler(logic: Logic,
                                                           current_uncollected,
                                                           progression.name)
                 update_for_option()
-                if potential_result is not None:
-                    reach_for_action[progression], actions_weights[progression] = potential_result
+                reach_for_action[progression], actions_weights[progression] = potential_result
 
         for resource in uncollected_resource_nodes:
-
             potential_result = _calculate_weights_for(
                 advance_to_with_reach_copy(reach,
                                            reach.state.act_on_node(resource, patches),
@@ -188,16 +186,12 @@ def retcon_playthrough_filler(logic: Logic,
                 current_uncollected,
                 resource.name)
             update_for_option()
-            if potential_result is not None:
-                reach_for_action[resource], actions_weights[resource] = potential_result
-                # actions_weights[resource] *= 10
+            reach_for_action[resource], actions_weights[resource] = potential_result
 
         try:
             action = next(iterate_with_weights(list(actions_weights.keys()), actions_weights, rng))
         except StopIteration:
-            if progression_pickups and current_uncollected.indices:
-                action = rng.choice(progression_pickups)
-            elif actions_weights:
+            if actions_weights:
                 action = rng.choice(list(actions_weights.keys()))
             else:
                 raise RuntimeError("Unable to generate, no actions found after placing {} items.".format(
@@ -211,6 +205,8 @@ def retcon_playthrough_filler(logic: Logic,
                 pickup_index: 1 / (pickup_index_seen_count[pickup_index] ** 2)
                 for pickup_index in current_uncollected.indices
             }
+            assert pickup_index_weight, "Pickups should only be added to the actions dict " \
+                                        "when there are unassigned pickups"
 
             pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
             pickup_assignment[pickup_index] = action
