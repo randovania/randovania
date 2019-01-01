@@ -142,3 +142,12 @@ def print_actions_of_reach(reach: GeneratorReach):
             reach.is_safe_node(action),
             action.resource() in logic.game.dangerous_resources
         ))
+
+
+def debug_level() -> int:
+    return _DEBUG_LEVEL
+
+
+def debug_print(message: str):
+    if _DEBUG_LEVEL > 0:
+        print(message)
