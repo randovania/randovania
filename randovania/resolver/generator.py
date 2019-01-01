@@ -138,8 +138,9 @@ _SUB_GUARDIAN_INDICES = [
 
 
 def _sky_temple_key_distribution_logic(permalink: Permalink,
-                                       patches: GamePatches,
-                                       available_pickups: List[PickupEntry]):
+                                       initial_pickup_assignment: PickupAssignment,
+                                       available_pickups: List[PickupEntry],
+                                       ) -> PickupAssignment:
 
     mode = permalink.layout_configuration.sky_temple_keys
 
@@ -164,20 +165,22 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
         if pickup.item_category == "sky_temple_key":
             available_pickups.remove(pickup)
             index = locations_to_place.pop(0)
-            if index in patches.pickup_assignment:
+            if index in initial_pickup_assignment:
                 raise GenerationFailure(
                     "Attempted to place '{}' in {}, but there's already '{}' there".format(
-                        pickup, index, patches.pickup_assignment[index]
+                        pickup, index, initial_pickup_assignment[index]
                     ),
                     permalink
                 )
-            patches.pickup_assignment[index] = pickup
+            initial_pickup_assignment[index] = pickup
 
     if locations_to_place:
         raise GenerationFailure(
             "Missing Sky Temple Keys in available_pickups to place in all requested boss places",
             permalink
         )
+
+    return initial_pickup_assignment
 
 
 def _create_patches(
@@ -193,21 +196,20 @@ def _create_patches(
     else:
         elevator_connection = {}
 
-    patches = GamePatches(
-        {},
-        elevator_connection,
-        {},
-        {}
-    )
-
-    logic, state = logic_bootstrap(configuration, game, patches)
-    logic.game.simplify_connections(state.resources)
-
     categories = {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"}
     item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
-    _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+    initial_pickup_assignment = _sky_temple_key_distribution_logic(permalink, {}, available_pickups)
+
+    patches = GamePatches(
+        initial_pickup_assignment,
+        elevator_connection,
+        {},
+        {}
+    )
+    logic, state = logic_bootstrap(configuration, game, patches)
+    logic.game.simplify_connections(state.resources)
 
     new_pickup_mapping = retcon_playthrough_filler(logic, state, patches, tuple(available_pickups), rng, status_update)
     new_pickup_mapping = _fill_pickup_assignment_with_remaining_pickups(rng, game, new_pickup_mapping, item_pool)
