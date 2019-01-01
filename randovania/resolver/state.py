@@ -53,9 +53,7 @@ class State:
                     resource))
 
         new_resources = copy.copy(self.resources)
-        for pickup_resource, quantity in node.resource_gain_on_collect(self.patches):
-            new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
-            new_resources[pickup_resource] += quantity
+        _add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches), new_resources)
 
         return State(new_resources, self.node, self.patches, self, self.resource_database)
 
@@ -65,6 +63,33 @@ class State:
         new_state.path_from_previous_state = path
         return new_state
 
+    def assign_pickup_to_index(self, index: PickupIndex, pickup: PickupEntry) -> "State":
+        new_patches = self.patches.assign_new_pickups([(index, pickup)])
+        new_resources = copy.copy(self.resources)
+
+        if index in self.resources:
+            _add_resource_gain_to_current_resources(pickup.resource_gain(), new_resources)
+
+        return State(
+            new_resources,
+            self.node,
+            new_patches,
+            self,
+            self.resource_database
+        )
+
+
+def _add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources):
+    """
+    Adds all resources from the given gain to the given CurrentResources
+    :param resource_gain:
+    :param resources:
+    :return:
+    """
+    for resource, quantity in resource_gain:
+        resources[resource] = resources.get(resource, 0)
+        resources[resource] += quantity
+
 
 def add_resource_gain_to_state(state: State, resource_gain: ResourceGain):
     """
@@ -73,9 +98,7 @@ def add_resource_gain_to_state(state: State, resource_gain: ResourceGain):
     :param resource_gain:
     :return:
     """
-    for resource, quantity in resource_gain:
-        state.resources[resource] = state.resources.get(resource, 0)
-        state.resources[resource] += quantity
+    _add_resource_gain_to_current_resources(resource_gain, state.resources)
 
 
 def state_with_pickup(state: State,
