@@ -10,6 +10,7 @@ from randovania.game_description.resources import ResourceInfo, CurrentResources
 class State:
     resources: CurrentResources
     node: Node
+    patches: GamePatches
     previous_state: Optional["State"]
     path_from_previous_state: Tuple[Node, ...]
     resource_database: ResourceDatabase
@@ -17,6 +18,7 @@ class State:
     def __init__(self,
                  resources: CurrentResources,
                  node: Node,
+                 patches: GamePatches,
                  previous: Optional["State"],
                  resource_database: ResourceDatabase):
         self.resources = resources
@@ -31,6 +33,7 @@ class State:
     def copy(self) -> "State":
         return State(copy.copy(self.resources),
                      self.node,
+                     self.patches,
                      self.previous_state,
                      self.resource_database)
 
@@ -55,7 +58,7 @@ class State:
             new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
-        return State(new_resources, self.node, self, self.resource_database)
+        return State(new_resources, self.node, patches, self, self.resource_database)
 
     def act_on_node(self,
                     node: ResourceNode,
