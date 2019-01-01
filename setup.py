@@ -52,6 +52,9 @@ setup(
         'requests',
         'networkx',
         'bitstruct',
+        'pytest',
+        'pytest-cov',
+        'pytest-qt',
     ],
     entry_points={
         'console_scripts': [
