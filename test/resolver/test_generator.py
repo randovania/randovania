@@ -12,13 +12,12 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
 from randovania.resolver import generator, debug
 from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
-from randovania.resolver.item_pool import calculate_available_pickups
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
+from randovania.resolver.state import State
 
 
 def _create_test_layout_description(
@@ -175,22 +174,8 @@ def test_generate_simple(simple_data: dict):
     generated_description = generator.generate_list(configuration, status_update)
 
 
-def _create_patches_filler(logic, initial_state,
-                           patches: GamePatches,
-                           available_pickups: Tuple[PickupEntry, ...], rng, status_update):
-    mapping = copy.copy(patches.pickup_assignment)
-
-    i = 0
-    for pickup in available_pickups:
-        while PickupIndex(i) in mapping:
-            i += 1
-        mapping[PickupIndex(i)] = pickup
-        i += 1
-
-    return mapping
-
-
-@patch("randovania.resolver.generator.retcon_playthrough_filler", side_effect=_create_patches_filler, autospec=True)
+@patch("randovania.resolver.generator._fill_pickup_assignment_with_remaining_pickups", autospec=True)
+@patch("randovania.resolver.generator.retcon_playthrough_filler", autospec=True)
 @patch("randovania.resolver.generator._sky_temple_key_distribution_logic", autospec=True)
 @patch("randovania.resolver.generator.calculate_item_pool", autospec=True)
 @patch("randovania.resolver.generator.Random", autospec=True)
@@ -198,6 +183,7 @@ def test_create_patches(mock_random: MagicMock,
                         mock_calculate_item_pool: MagicMock,
                         mock_sky_temple_key_distribution_logic: MagicMock,
                         mock_retcon_playthrough_filler: MagicMock,
+                        mock_fill_pickup_assignment_with_remaining_pickups: MagicMock,
                         ):
     # Setup
     seed_number: int = 91319
@@ -216,30 +202,28 @@ def test_create_patches(mock_random: MagicMock,
     )
     mock_calculate_item_pool.return_value = list(sorted(game.pickup_database.original_pickup_mapping.values()))
 
-    remaining_items = list(mock_calculate_item_pool.return_value)
-    progression = calculate_available_pickups(mock_calculate_item_pool.return_value,
-                                              {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"},
-                                              None)
-
-    expected_result = {}
-    for i, pickup in enumerate(progression):
-        expected_result[PickupIndex(i)] = pickup
-        remaining_items.remove(pickup)
-
-    for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, expected_result):
-        expected_result[pickup_node.pickup_index] = remaining_items.pop()
-
-    mock_sky_temple_key_distribution_logic.return_value = {}
+    filler_patches = mock_retcon_playthrough_filler.return_value
 
     # Run
-    patches = generator._create_patches(permalink, game, status_update)
+    result = generator._create_patches(permalink, game, status_update)
 
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
     mock_calculate_item_pool.assert_called_once_with(permalink, game)
+
     mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, {}, ANY)
-    mock_retcon_playthrough_filler.assert_called_once()
-    assert patches.pickup_assignment == expected_result
+
+    mock_retcon_playthrough_filler.assert_called_once_with(ANY, ANY, ANY,
+                                                           mock_random.return_value, status_update)
+
+    mock_fill_pickup_assignment_with_remaining_pickups.assert_called_once_with(mock_random.return_value, game,
+                                                                               filler_patches.pickup_assignment, ANY)
+
+    assert result == GamePatches(
+        mock_fill_pickup_assignment_with_remaining_pickups.return_value,
+        filler_patches.elevator_connection,
+        filler_patches.dock_connection,
+        filler_patches.dock_weakness)
 
 
 @pytest.fixture(name="sky_temple_keys")
