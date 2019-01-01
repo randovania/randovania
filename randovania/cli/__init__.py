@@ -46,4 +46,4 @@ def run_cli(argv):
     if len(argv) > 1 and argv[1] == "--pytest":
         run_pytest(argv)
     else:
-        _run_args(_create_parser().parse_args(argv))
+        _run_args(_create_parser().parse_args(argv[1:]))
