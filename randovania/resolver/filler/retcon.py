@@ -23,13 +23,10 @@ class UncollectedState(NamedTuple):
     resources: Set[ResourceNode]
 
     @classmethod
-    def from_reach(cls,
-                   reach: GeneratorReach,
-                   pickup_assignment: PickupAssignment,
-                   ) -> "UncollectedState":
+    def from_reach(cls, reach: GeneratorReach) -> "UncollectedState":
         return UncollectedState(
             set(_filter_unassigned_pickup_indices(reach.state.collected_pickup_indices,
-                                                  pickup_assignment)),
+                                                  reach.state.patches.pickup_assignment)),
             set(uncollected_resources(reach.connected_nodes, reach))
         )
 
@@ -68,7 +65,6 @@ def retcon_playthrough_filler(logic: Logic,
                               status_update: Callable[[str], None],
                               ) -> GamePatches:
 
-    pickup_assignment = copy.copy(initial_state.patches.pickup_assignment)
     debug.debug_print("Major items: {}".format([item.name for item in available_pickups]))
     last_message = "Starting."
 
@@ -77,11 +73,11 @@ def retcon_playthrough_filler(logic: Logic,
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
 
     while True:
-        current_uncollected = UncollectedState.from_reach(reach, pickup_assignment)
+        current_uncollected = UncollectedState.from_reach(reach)
 
         pickups_left: Dict[str, PickupEntry] = {
             pickup.name: pickup
-            for pickup in available_pickups if pickup not in pickup_assignment.values()
+            for pickup in available_pickups if pickup not in reach.state.patches.pickup_assignment.values()
         }
 
         if not pickups_left:
@@ -98,7 +94,7 @@ def retcon_playthrough_filler(logic: Logic,
         def action_report(message: str):
             status_update("{} {}".format(last_message, message))
 
-        actions_weights = _calculate_potential_actions(reach, pickup_assignment, progression_pickups,
+        actions_weights = _calculate_potential_actions(reach, progression_pickups,
                                                        current_uncollected, action_report)
 
         try:
@@ -108,7 +104,7 @@ def retcon_playthrough_filler(logic: Logic,
                 action = rng.choice(list(actions_weights.keys()))
             else:
                 raise RuntimeError("Unable to generate, no actions found after placing {} items.".format(
-                    len(pickup_assignment)))
+                    len(reach.state.patches.pickup_assignment)))
 
         if isinstance(action, PickupEntry):
             pickup_index_weight = {
@@ -120,11 +116,11 @@ def retcon_playthrough_filler(logic: Logic,
 
             pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
 
-            next_state = state_with_pickup(reach.state, action)
             # TODO: this item is potentially dangerous and we should remove the invalidated paths
-            pickup_assignment[pickup_index] = action
+            next_state = reach.state.assign_pickup_to_index(pickup_index, action)
 
-            last_message = "Placed {} items so far, {} left.".format(len(pickup_assignment), len(pickups_left) - 1)
+            last_message = "Placed {} items so far, {} left.".format(
+                len(next_state.patches.pickup_assignment), len(pickups_left) - 1)
             status_update(last_message)
             print_retcon_place_pickup(action, logic, pickup_index)
 
@@ -143,12 +139,7 @@ def retcon_playthrough_filler(logic: Logic,
             debug.debug_print("Finished because we can win")
             break
 
-    return GamePatches(
-        pickup_assignment,
-        initial_state.patches.elevator_connection,
-        initial_state.patches.dock_connection,
-        initial_state.patches.dock_weakness
-    )
+    return reach.state.patches
 
 
 def _calculate_progression_pickups(pickups_left: Dict[str, PickupEntry],
@@ -172,11 +163,10 @@ def _calculate_progression_pickups(pickups_left: Dict[str, PickupEntry],
 
 
 def _calculate_weights_for(potential_reach: GeneratorReach,
-                           pickup_assignment: PickupAssignment,
                            current_uncollected: UncollectedState,
                            name: str
                            ) -> float:
-    potential_uncollected = UncollectedState.from_reach(potential_reach, pickup_assignment) - current_uncollected
+    potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
     weight = len(potential_uncollected.resources) + len(potential_uncollected.indices)
 
     # def _path(node):
@@ -208,7 +198,6 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 
 
 def _calculate_potential_actions(reach: GeneratorReach,
-                                 pickup_assignment: PickupAssignment,
                                  progression_pickups: Tuple[PickupEntry, ...],
                                  current_uncollected: UncollectedState,
                                  status_update: Callable[[str], None]):
@@ -227,14 +216,12 @@ def _calculate_potential_actions(reach: GeneratorReach,
         for progression in progression_pickups:
             actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
                                                                                                    progression),
-                                                                  pickup_assignment,
                                                                   current_uncollected,
                                                                   progression.name)
             update_for_option()
     for resource in uncollected_resource_nodes:
         actions_weights[resource] = _calculate_weights_for(
             advance_to_with_reach_copy(reach, reach.state.act_on_node(resource)),
-            pickup_assignment,
             current_uncollected,
             resource.name)
         update_for_option()
