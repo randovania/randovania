@@ -117,7 +117,7 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
             resources[item] = _minimal_restrictions_custom_item_count.get(item.index, 1)
 
 
-def calculate_starting_state(logic: Logic) -> "State":
+def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
     game = logic.game
 
     initial_state_name = "Default"
@@ -136,6 +136,7 @@ def calculate_starting_state(logic: Logic) -> "State":
             game.resource_database.trivial_resource(): 1
         },
         starting_node,
+        patches,
         None,
         game.resource_database
     )
@@ -162,7 +163,7 @@ def logic_bootstrap(configuration: LayoutConfiguration,
 
     game = copy.deepcopy(game)
     logic = Logic(game, configuration, patches)
-    starting_state = calculate_starting_state(logic)
+    starting_state = calculate_starting_state(logic, patches)
 
     if configuration.trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
         _add_minimal_restrictions_initial_resources(starting_state.resources,
