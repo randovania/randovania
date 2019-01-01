@@ -106,6 +106,19 @@ _test_descriptions = [
                         74, 8, 15, 118, 4, 4, 112, 2, 4]
         ,
     ),
+    _create_test_layout_description(
+        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
+                                                      item_loss=LayoutEnabledFlag.ENABLED,
+                                                      elevators=LayoutRandomizedFlag.VANILLA,
+                                                      pickup_quantities={}),
+        pickup_mapping=[13, 7, 2, 2, 2, 8, 57, 76, 44, 114, 2, 2, 2, 4, 37, 8, 116, 2, 69, 88, 2, 2, 2, 4, 79, 2, 2, 4,
+                        2, 17, 2, 8, 39, 2, 2, 118, 2, 11, 117, 2, 2, 2, 4, 53, 2, 4, 2, 115, 17, 2, 23, 2, 59, 17, 2,
+                        4, 2, 8, 21, 43, 17, 8, 24, 2, 82, 1, 4, 2, 74, 2, 4, 2, 2, 2, 4, 15, 2, 52, 2, 45, 112, 2, 2,
+                        2, 50, 2, 19, 8, 91, 27, 4, 8, 4, 2, 46, 2, 86, 0, 83, 4, 92, 2, 68, 2, 75, 2, 2, 4, 4, 2, 100,
+                        102, 8, 2, 2, 106, 109, 2, 38]
+        ,
+    ),
 ]
 
 

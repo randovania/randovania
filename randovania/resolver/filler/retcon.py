@@ -219,6 +219,7 @@ def _calculate_potential_actions(reach: GeneratorReach,
                                                                   current_uncollected,
                                                                   progression.name)
             update_for_option()
+
     for resource in uncollected_resource_nodes:
         actions_weights[resource] = _calculate_weights_for(
             advance_to_with_reach_copy(reach, reach.state.act_on_node(resource)),
