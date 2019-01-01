@@ -208,7 +208,7 @@ class ConnectionsVisualizer:
         vertical_layout = QVBoxLayout(group_box)
         vertical_layout.setAlignment(Qt.AlignTop)
 
-        for item in alternative.items:
+        for item in sorted(alternative.items):
             if self.edit_mode:
                 ItemRow(group_box, vertical_layout, self.resource_database, item, group_box.rows)
             else:
