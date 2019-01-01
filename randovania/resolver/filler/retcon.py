@@ -111,9 +111,6 @@ def retcon_playthrough_filler(logic: Logic,
                     len(pickup_assignment)))
 
         if isinstance(action, PickupEntry):
-            next_state = state_with_pickup(reach.state, action)
-            # TODO: this item is potentially dangerous and we should remove the invalidated paths
-
             pickup_index_weight = {
                 pickup_index: 1 / (pickup_index_seen_count[pickup_index] ** 2)
                 for pickup_index in current_uncollected.indices
@@ -122,6 +119,9 @@ def retcon_playthrough_filler(logic: Logic,
                                         "when there are unassigned pickups"
 
             pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
+
+            next_state = state_with_pickup(reach.state, action)
+            # TODO: this item is potentially dangerous and we should remove the invalidated paths
             pickup_assignment[pickup_index] = action
 
             last_message = "Placed {} items so far, {} left.".format(len(pickup_assignment), len(pickups_left) - 1)
