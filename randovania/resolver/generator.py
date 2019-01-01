@@ -7,7 +7,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
-from randovania.game_description.resources import PickupEntry, PickupIndex
+from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment
 from randovania.games.prime import claris_randomizer
 from randovania.resolver import resolver
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -204,26 +204,37 @@ def _create_patches(
     logic.game.simplify_connections(state.resources)
 
     categories = {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"}
-    item_pool = list(sorted(calculate_item_pool(permalink, game)))
+    item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
     _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
 
-    new_pickup_mapping = retcon_playthrough_filler(
-        logic, state, patches, tuple(available_pickups), rng,
-        status_update
-    )
-
-    remaining_items = list(sorted(item_pool))
-    for assigned_pickup in new_pickup_mapping.values():
-        remaining_items.remove(assigned_pickup)
-    rng.shuffle(remaining_items)
-
-    for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, new_pickup_mapping):
-        new_pickup_mapping[pickup_node.pickup_index] = remaining_items.pop()
-
-    assert not remaining_items
+    new_pickup_mapping = retcon_playthrough_filler(logic, state, patches, tuple(available_pickups), rng, status_update)
+    new_pickup_mapping = _fill_pickup_assignment_with_remaining_pickups(rng, game, new_pickup_mapping, item_pool)
 
     return GamePatches(new_pickup_mapping,
                        patches.elevator_connection,
                        {}, {})
+
+
+def _fill_pickup_assignment_with_remaining_pickups(rng: Random,
+                                                   game: GameDescription,
+                                                   current_pickup_assignment: PickupAssignment,
+                                                   item_pool: Tuple[PickupEntry, ...],
+                                                   ) -> PickupAssignment:
+
+    remaining_items = list(item_pool)
+
+    # We can't convert current_pickup_assignment.values into a set because it has multiple copies of the same item
+    for assigned_pickup in current_pickup_assignment.values():
+        remaining_items.remove(assigned_pickup)
+
+    # Shuffle the items to add and then
+    rng.shuffle(remaining_items)
+    for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, current_pickup_assignment):
+        current_pickup_assignment[pickup_node.pickup_index] = remaining_items.pop()
+
+    # We should have placed all items
+    assert not remaining_items
+
+    return current_pickup_assignment
