@@ -44,14 +44,14 @@ def _test_data():
     return logic, state, permalink
 
 
-def _create_reach_with_unsafe(logic: Logic, state: State, patches: GamePatches) -> GeneratorReach:
-    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, state, patches), patches)
+def _create_reach_with_unsafe(logic: Logic, state: State) -> GeneratorReach:
+    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, state, state.patches),
+                                                        state.patches)
 
 
-def _create_reaches_and_compare(logic: Logic, state: State, patches: GamePatches,
-                                ) -> Tuple[GeneratorReach, GeneratorReach]:
-    first_reach = _create_reach_with_unsafe(logic, state, patches)
-    second_reach = _create_reach_with_unsafe(logic, first_reach.state, patches)
+def _create_reaches_and_compare(logic: Logic, state: State) -> Tuple[GeneratorReach, GeneratorReach]:
+    first_reach = _create_reach_with_unsafe(logic, state)
+    second_reach = _create_reach_with_unsafe(logic, first_reach.state)
 
     assert first_reach.is_safe_node(first_reach.state.node)
     assert second_reach.is_safe_node(first_reach.state.node)
@@ -77,13 +77,12 @@ def _compare_actions(first_reach: GeneratorReach,
 def test_calculate_reach_with_seeds():
     logic, state, permalink = _test_data()
     game = logic.game
-    patches = logic.patches
 
     categories = {"translator", "major"}
     item_pool = calculate_item_pool(permalink, game)
     rng = Random(50000)
     available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
-        item_pool, categories, game.world_list.calculate_relevant_resources(logic.patches)))))
+        item_pool, categories, game.world_list.calculate_relevant_resources(state.patches)))))
 
     remaining_pickups = available_pickups[1:]
 
@@ -92,7 +91,7 @@ def test_calculate_reach_with_seeds():
     for pickup in remaining_pickups[:]:
         add_resource_gain_to_state(state, pickup.resource_gain())
 
-    first_reach, second_reach = _create_reaches_and_compare(logic, state, patches)
+    first_reach, second_reach = _create_reaches_and_compare(logic, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
     for action in first_actions:
@@ -105,7 +104,7 @@ def test_calculate_reach_with_seeds():
     escape_state = state_with_pickup(first_reach.state, available_pickups[-6])
     total_pickup_nodes = list(_filter_pickups(filter_reachable(first_reach.nodes, first_reach)))
     pickup_options = pickup_nodes_that_can_reach(total_pickup_nodes,
-                                                 reach_with_all_safe_resources(logic, escape_state, patches),
+                                                 reach_with_all_safe_resources(logic, escape_state, state.patches),
                                                  set(first_reach.safe_nodes))
 
     for option in pickup_options:
@@ -122,12 +121,11 @@ def test_calculate_reach_with_seeds():
 @pytest.mark.skip(reason="can't reach dark visor")
 def test_calculate_reach_with_all_pickups():
     logic, state, _ = _test_data()
-    patches = logic.patches
 
     for pickup in logic.game.pickup_database.original_pickup_mapping.values():
         add_resource_gain_to_state(state, pickup.resource_gain())
 
-    first_reach, second_reach = _create_reaches_and_compare(logic, state, patches)
+    first_reach, second_reach = _create_reaches_and_compare(logic, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
     found_pickups = set(filter_pickup_nodes(filter_reachable(second_reach.nodes, first_reach)))

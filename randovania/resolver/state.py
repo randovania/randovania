@@ -23,6 +23,7 @@ class State:
                  resource_database: ResourceDatabase):
         self.resources = resources
         self.node = node
+        self.patches = patches
         self.path_from_previous_state = ()
         self.previous_state = previous
         self.resource_database = resource_database

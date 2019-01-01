@@ -162,7 +162,7 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     debug._gd = game
 
     game = copy.deepcopy(game)
-    logic = Logic(game, configuration, patches)
+    logic = Logic(game, configuration)
     starting_state = calculate_starting_state(logic, patches)
 
     if configuration.trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:

@@ -59,7 +59,7 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes.append(node)
 
-            for target_node, requirements in logic.game.world_list.potential_nodes_from(node, logic.patches):
+            for target_node, requirements in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
                 if target_node in checked_nodes or target_node in nodes_to_check:
                     continue
 
@@ -113,7 +113,7 @@ class ResolverReach:
 
             # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
             for action in self.possible_actions(state):
-                for resource, amount in action.resource_gain_on_collect(self._logic.patches):
+                for resource, amount in action.resource_gain_on_collect(state.patches):
                     if resource in interesting_resources:
                         yield action
                         break
