@@ -108,8 +108,10 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
                                                 ) -> None:
     # TODO: this function assumes we're talking about Echoes
     for event in resource_database.event:
-        # Ignoring Emperor Ing event, otherwise we're done automatically
-        if event.index != 8:
+        # Ingoring these events:
+        # Emperor Ing (8), otherwise we're done automatically
+        # Chykka (28), otherwise we can't collect Dark Visor
+        if event.index not in {8, 28}:
             resources[event] = 1
 
     for item in resource_database.item:
