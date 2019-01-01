@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Shortened Permalinks when pickup quantities aren't customized.
 - Added: Permalinks now include the database version they were created for.
 - Fixed: Logic mistake in item distribution that made some impossible seeds.
+- Changed: For now, don't consider Chykka a "can only do once" event, since Floaty is not used.   
 
 ## [0.17.2] - 2018-12-27
 - Fixed: 'Clear loaded game' now properly does it's job.
