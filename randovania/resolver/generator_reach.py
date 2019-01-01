@@ -276,7 +276,7 @@ class GeneratorReach:
             for resource, quantity in node.resource_gain_on_collect(self.state.patches)
             if resource in self.logic.game.dangerous_resources
         )
-        new_state = self.state.act_on_node(node, self.state.patches)
+        new_state = self.state.act_on_node(node)
 
         if new_dangerous_resources:
             edges_to_remove = []
@@ -354,7 +354,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
         for action in actions:
             if not reach.state.has_resource(action.resource()):
                 # assert reach.is_safe_node(action)
-                reach.advance_to(reach.state.act_on_node(action, reach.state.patches), is_safe=True)
+                reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
 
 def reach_with_all_safe_resources(logic: Logic, initial_state: State) -> GeneratorReach:

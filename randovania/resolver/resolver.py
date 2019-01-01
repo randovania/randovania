@@ -56,10 +56,7 @@ def _inner_advance_depth(state: State,
     has_action = False
     for action in reach.satisfiable_actions(state):
         new_result = _inner_advance_depth(
-            state=state.act_on_node(action,
-                                    state.patches,
-                                    path=reach.path_to_node[action]
-                                    ),
+            state=state.act_on_node(action, path=reach.path_to_node[action]),
             logic=logic,
             status_update=status_update)
 
