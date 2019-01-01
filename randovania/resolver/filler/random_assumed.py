@@ -24,9 +24,7 @@ def random_assumed_filler(logic: Logic,
     pickup_assignment = copy.copy(patches.pickup_assignment)
     print("Major items: {}".format([item.name for item in available_pickups]))
 
-    base_reach = advance_reach_with_possible_unsafe_resources(
-        reach_with_all_safe_resources(logic, initial_state, patches),
-        patches)
+    base_reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
 
     reaches_for_pickup = {}
 
@@ -37,8 +35,8 @@ def random_assumed_filler(logic: Logic,
         add_resource_gain_to_state(new_reach.state, pickup.resource_gain())
         new_reach.state.previous_state = new_reach.state
         new_reach.advance_to(new_reach.state)
-        collect_all_safe_resources_in_reach(new_reach, patches)
-        previous_reach = advance_reach_with_possible_unsafe_resources(new_reach, patches)
+        collect_all_safe_resources_in_reach(new_reach)
+        previous_reach = advance_reach_with_possible_unsafe_resources(new_reach)
         reaches_for_pickup[pickup] = previous_reach
 
     for i, pickup in enumerate(available_pickups):
@@ -57,7 +55,7 @@ def random_assumed_filler(logic: Logic,
 
         try:
             pickup_node = next(pickup_nodes_that_can_reach(iterate_with_weights(pickup_nodes, actions_weights, rng),
-                                                           reach_with_all_safe_resources(logic, escape_state, patches),
+                                                           reach_with_all_safe_resources(logic, escape_state),
                                                            set(reach.safe_nodes)))
             print("Placed {} at {}. Had {} available of {} nodes.".format(pickup.name,
                                                                           logic.game.node_name(pickup_node, True),

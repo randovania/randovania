@@ -4,7 +4,6 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 import networkx
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, is_resource_node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.resolver.logic import Logic
@@ -341,11 +340,10 @@ def get_uncollected_resource_nodes_of_reach(reach: GeneratorReach) -> List[Resou
     return list(uncollected_resources(filter_reachable(reach.nodes, reach), reach))
 
 
-def collect_all_safe_resources_in_reach(reach, patches):
+def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
     """
 
     :param reach:
-    :param patches:
     :return:
     """
     while True:
@@ -356,28 +354,30 @@ def collect_all_safe_resources_in_reach(reach, patches):
         for action in actions:
             if not reach.state.has_resource(action.resource()):
                 # assert reach.is_safe_node(action)
-                reach.advance_to(reach.state.act_on_node(action, patches), is_safe=True)
+                reach.advance_to(reach.state.act_on_node(action, reach.state.patches), is_safe=True)
 
 
-def reach_with_all_safe_resources(logic: Logic,
-                                  initial_state: State,
-                                  patches: GamePatches) -> GeneratorReach:
+def reach_with_all_safe_resources(logic: Logic, initial_state: State) -> GeneratorReach:
+    """
+    Creates a new GeneratorReach using the given state and then collect all safe resources
+    :param logic:
+    :param initial_state:
+    :return:
+    """
     reach = GeneratorReach.reach_from_state(logic, initial_state)
-    collect_all_safe_resources_in_reach(reach, patches)
+    collect_all_safe_resources_in_reach(reach)
     return reach
 
 
-def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach,
-                                                 patches: GamePatches) -> GeneratorReach:
+def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach) -> GeneratorReach:
     """
     Create a new GeneratorReach that collected actions not considered safe, but expanded the safe_nodes set
     :param previous_reach:
-    :param patches:
     :return:
     """
 
     logic = previous_reach.logic
-    collect_all_safe_resources_in_reach(previous_reach, patches)
+    collect_all_safe_resources_in_reach(previous_reach)
     initial_state = previous_reach.state
 
     previous_safe_nodes = set(previous_reach.safe_nodes)
@@ -386,20 +386,20 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach,
         # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
         next_reach = copy.deepcopy(previous_reach)
         next_reach.act_on(action)
-        collect_all_safe_resources_in_reach(next_reach, patches)
+        collect_all_safe_resources_in_reach(next_reach)
 
         if previous_safe_nodes <= set(next_reach.safe_nodes):
             # print("Non-safe {} was good".format(logic.game.node_name(action)))
-            return advance_reach_with_possible_unsafe_resources(next_reach, patches)
+            return advance_reach_with_possible_unsafe_resources(next_reach)
 
         if next_reach.is_reachable_node(initial_state.node):
             next_next_state = next_reach.state.copy()
             next_next_state.node = initial_state.node
 
-            next_reach = reach_with_all_safe_resources(logic, next_next_state, patches)
+            next_reach = reach_with_all_safe_resources(logic, next_next_state)
             if previous_safe_nodes <= set(next_reach.safe_nodes):
                 # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
-                return advance_reach_with_possible_unsafe_resources(next_reach, patches)
+                return advance_reach_with_possible_unsafe_resources(next_reach)
         else:
             pass
 
@@ -415,20 +415,15 @@ def pickup_nodes_that_can_reach(pickup_nodes: Iterator[PickupNode],
             yield pickup_node
 
 
-def advance_to_with_reach_copy(base_reach: GeneratorReach,
-                               state: State,
-                               patches: GamePatches,
-                               ) -> GeneratorReach:
+def advance_to_with_reach_copy(base_reach: GeneratorReach, state: State) -> GeneratorReach:
     """
     Copies the given Reach, advances to the given State and collect all possible resources.
     :param base_reach:
     :param state:
-    :param patches:
     :return:
     """
-
     potential_reach = copy.deepcopy(base_reach)
     potential_reach.advance_to(state)
-    collect_all_safe_resources_in_reach(potential_reach, patches)
+    collect_all_safe_resources_in_reach(potential_reach)
     return potential_reach
     # return advance_reach_with_possible_unsafe_resources(potential_reach, patches)
