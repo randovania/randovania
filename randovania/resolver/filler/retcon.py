@@ -233,7 +233,7 @@ def _calculate_potential_actions(reach: GeneratorReach,
             update_for_option()
     for resource in uncollected_resource_nodes:
         actions_weights[resource] = _calculate_weights_for(
-            advance_to_with_reach_copy(reach, reach.state.act_on_node(resource, reach.state.patches)),
+            advance_to_with_reach_copy(reach, reach.state.act_on_node(resource)),
             pickup_assignment,
             current_uncollected,
             resource.name)

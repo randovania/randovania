@@ -44,9 +44,7 @@ class State:
             if isinstance(resource, PickupIndex) and count > 0:
                 yield resource
 
-    def collect_resource_node(self, node: ResourceNode,
-                              patches: GamePatches,
-                              ) -> "State":
+    def collect_resource_node(self, node: ResourceNode) -> "State":
 
         resource = node.resource()
         if self.has_resource(resource):
@@ -55,18 +53,14 @@ class State:
                     resource))
 
         new_resources = copy.copy(self.resources)
-        for pickup_resource, quantity in node.resource_gain_on_collect(patches):
+        for pickup_resource, quantity in node.resource_gain_on_collect(self.patches):
             new_resources[pickup_resource] = new_resources.get(pickup_resource, 0)
             new_resources[pickup_resource] += quantity
 
-        return State(new_resources, self.node, patches, self, self.resource_database)
+        return State(new_resources, self.node, self.patches, self, self.resource_database)
 
-    def act_on_node(self,
-                    node: ResourceNode,
-                    patches: GamePatches,
-                    path: Tuple[Node, ...] = (),
-                    ) -> "State":
-        new_state = self.collect_resource_node(node, patches)
+    def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = ()) -> "State":
+        new_state = self.collect_resource_node(node)
         new_state.node = node
         new_state.path_from_previous_state = path
         return new_state
