@@ -1,6 +1,6 @@
 import copy
 from typing import Iterable, List, Tuple, Callable, Union
-from unittest.mock import MagicMock, patch, PropertyMock
+from unittest.mock import MagicMock, patch, PropertyMock, ANY
 
 import pytest
 
@@ -191,10 +191,12 @@ def _create_patches_filler(logic, initial_state,
 
 
 @patch("randovania.resolver.generator.retcon_playthrough_filler", side_effect=_create_patches_filler, autospec=True)
+@patch("randovania.resolver.generator._sky_temple_key_distribution_logic", autospec=True)
 @patch("randovania.resolver.generator.calculate_item_pool", autospec=True)
 @patch("randovania.resolver.generator.Random", autospec=True)
 def test_create_patches(mock_random: MagicMock,
                         mock_calculate_item_pool: MagicMock,
+                        mock_sky_temple_key_distribution_logic: MagicMock,
                         mock_retcon_playthrough_filler: MagicMock,
                         ):
     # Setup
@@ -216,7 +218,8 @@ def test_create_patches(mock_random: MagicMock,
 
     remaining_items = list(mock_calculate_item_pool.return_value)
     progression = calculate_available_pickups(mock_calculate_item_pool.return_value,
-                                              {"translator", "major", "energy_tank", "sky_temple_key"}, None)
+                                              {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"},
+                                              None)
 
     expected_result = {}
     for i, pickup in enumerate(progression):
@@ -232,6 +235,7 @@ def test_create_patches(mock_random: MagicMock,
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
     mock_calculate_item_pool.assert_called_once_with(permalink, game)
+    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, ANY, ANY)
     mock_retcon_playthrough_filler.assert_called_once()
     assert patches.pickup_assignment == expected_result
 
