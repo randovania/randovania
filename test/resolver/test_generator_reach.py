@@ -1,15 +1,14 @@
 import pprint
 from random import Random
-from typing import Tuple, List
+from typing import Tuple, List, Iterator
 
 import pytest
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import ResourceNode
+from randovania.game_description.node import ResourceNode, Node, PickupNode
 from randovania.games.prime import default_data
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.filler.random_assumed import _filter_pickups
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources, \
@@ -22,6 +21,10 @@ from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 from randovania.resolver.random_lib import shuffle
 from randovania.resolver.state import State, add_resource_gain_to_state, state_with_pickup
+
+
+def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
+    return filter(lambda node: isinstance(node, PickupNode), nodes)
 
 
 def _test_data():

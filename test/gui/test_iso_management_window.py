@@ -10,6 +10,8 @@ from randovania.gui.tab_service import TabService
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 
+pexpect = pytest.importorskip("pytestqt")
+
 
 def create_window(options: Union[Options, MagicMock]) -> ISOManagementWindow:
     tab_service: TabService = MagicMock()

@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 from typing import BinaryIO, TextIO
 
+import pytest
+
 from randovania import get_data_path
 from randovania.games.prime import binary_data
 
@@ -94,7 +96,11 @@ def test_complex_decode(test_files_dir):
 
 def test_full_file_round_trip():
     # Setup
-    with get_data_path().joinpath("json_data", "prime2.json").open("r") as json_file:
+    json_database_path = get_data_path().joinpath("json_data", "prime2.json")
+    if not json_database_path.exists():
+        pytest.skip("Missing database")
+
+    with json_database_path.open("r") as json_file:
         original_data = json.load(json_file)
 
     # Run 1

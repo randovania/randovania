@@ -1,5 +1,5 @@
-import copy
-from typing import Iterable, List, Tuple, Callable, Union
+from typing import Iterable, List, Callable, Union
+from typing import Iterable, List, Callable, Union
 from unittest.mock import MagicMock, patch, PropertyMock, ANY
 
 import pytest
@@ -17,7 +17,11 @@ from randovania.resolver.layout_configuration import LayoutConfiguration, Layout
 from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
-from randovania.resolver.state import State
+
+
+skip_generation_tests = pytest.mark.skipif(
+      pytest.config.option.skip_generation_tests,
+      reason="skipped due to --skip-generation-tests")
 
 
 def _create_test_layout_description(
@@ -146,6 +150,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
         generator.generate_list(permalink, status_update=status_update)
 
 
+@skip_generation_tests
 @pytest.mark.parametrize("layout_description", _test_descriptions)
 @patch("randovania.resolver.permalink.Permalink.as_str", new_callable=PropertyMock)
 def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,

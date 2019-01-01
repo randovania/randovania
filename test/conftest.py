@@ -33,3 +33,8 @@ class DataclassTestLib:
 @pytest.fixture()
 def dataclass_test_lib() -> DataclassTestLib:
     return DataclassTestLib()
+
+
+def pytest_addoption(parser):
+    parser.addoption('--skip-generation-tests', action='store_true', dest="skip_generation_tests",
+                     default=False, help="Skips running layout generation tests")

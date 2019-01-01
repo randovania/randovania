@@ -7,6 +7,8 @@ import pytest
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
 
+pexpect = pytest.importorskip("pytestqt")
+
 
 def create_window(options: Union[Options, MagicMock]) -> MainWindow:
     return MainWindow(options, False)
