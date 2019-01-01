@@ -111,6 +111,23 @@ def generate_list(permalink: Permalink,
 
 
 Action = Union[ResourceNode, PickupEntry]
+
+
+def _add_elevator_connections_to_patches(permalink: Permalink,
+                                         patches: GamePatches) -> GamePatches:
+
+    assert patches.elevator_connection == {}
+    if permalink.layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
+        return GamePatches(
+            patches.pickup_assignment,
+            claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number),
+            patches.dock_connection,
+            patches.dock_weakness
+        )
+    else:
+        return patches
+
+
 _FLYING_ING_CACHES = [
     PickupIndex(45),  # Sky Temple Key 1
     PickupIndex(53),  # Sky Temple Key 2
@@ -138,11 +155,12 @@ _SUB_GUARDIAN_INDICES = [
 
 
 def _sky_temple_key_distribution_logic(permalink: Permalink,
-                                       initial_pickup_assignment: PickupAssignment,
+                                       previous_patches: GamePatches,
                                        available_pickups: List[PickupEntry],
-                                       ) -> PickupAssignment:
+                                       ) -> GamePatches:
 
     mode = permalink.layout_configuration.sky_temple_keys
+    new_assignments = {}
 
     if mode == LayoutSkyTempleKeyMode.VANILLA:
         locations_to_place = _FLYING_ING_CACHES[:]
@@ -165,14 +183,14 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
         if pickup.item_category == "sky_temple_key":
             available_pickups.remove(pickup)
             index = locations_to_place.pop(0)
-            if index in initial_pickup_assignment:
+            if index in previous_patches.pickup_assignment:
                 raise GenerationFailure(
                     "Attempted to place '{}' in {}, but there's already '{}' there".format(
-                        pickup, index, initial_pickup_assignment[index]
+                        pickup, index, previous_patches.pickup_assignment[index]
                     ),
                     permalink
                 )
-            initial_pickup_assignment[index] = pickup
+            new_assignments[index] = pickup
 
     if locations_to_place:
         raise GenerationFailure(
@@ -180,7 +198,7 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
             permalink
         )
 
-    return initial_pickup_assignment
+    return previous_patches.assign_new_pickups(new_assignments.items())
 
 
 def _create_patches(
@@ -191,23 +209,14 @@ def _create_patches(
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
-    if configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
-        elevator_connection = claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number)
-    else:
-        elevator_connection = {}
-
     categories = {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"}
     item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
-    initial_pickup_assignment = _sky_temple_key_distribution_logic(permalink, {}, available_pickups)
+    patches = GamePatches.empty()
+    patches = _add_elevator_connections_to_patches(permalink, patches)
+    patches = _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
 
-    patches = GamePatches(
-        initial_pickup_assignment,
-        elevator_connection,
-        {},
-        {}
-    )
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
