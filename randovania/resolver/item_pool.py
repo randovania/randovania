@@ -10,7 +10,7 @@ from randovania.resolver.permalink import Permalink
 def calculate_item_pool(permalink: Permalink,
                         game: GameDescription,
                         ) -> List[PickupEntry]:
-    useless_item = game.pickup_database.pickup_by_name("Energy Transfer Module")
+
     item_pool: List[PickupEntry] = []
     pickup_quantities = permalink.layout_configuration.pickup_quantities
 
@@ -23,7 +23,8 @@ def calculate_item_pool(permalink: Permalink,
         )
 
     quantities_pickups = set(pickup_quantities.pickups())
-    database_pickups = set(game.pickup_database.pickups.values())
+    database_pickups = set(game.pickup_database.all_useful_pickups)
+
     if quantities_pickups != database_pickups:
         raise GenerationFailure(
             "Diverging pickups in configuration.\nPickups in quantities: {}\nPickups in database: {}".format(
@@ -46,7 +47,7 @@ def calculate_item_pool(permalink: Permalink,
         )
 
     elif quantity_delta < 0:
-        item_pool.extend([useless_item] * -quantity_delta)
+        item_pool.extend([game.pickup_database.useless_pickup] * -quantity_delta)
 
     return item_pool
 
