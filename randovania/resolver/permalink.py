@@ -77,7 +77,7 @@ class Permalink(BitPackValue):
 
         expected_data_hash = _dictionary_byte_hash(layout_configuration.game_data)
         if included_data_hash != expected_data_hash:
-            raise ValueError("Given permalink is for a Randovania database with hash '{}',"
+            raise ValueError("Given permalink is for a Randovania database with hash '{}', "
                              "but current database has hash '{}'.".format(included_data_hash, expected_data_hash))
 
         return Permalink(
