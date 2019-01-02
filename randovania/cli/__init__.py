@@ -3,7 +3,6 @@ import os
 import sys
 
 import pytest
-import pytest_cov
 
 import randovania
 from randovania.cli import echoes
@@ -39,7 +38,7 @@ def _run_args(args):
 
 
 def run_pytest(argv):
-    sys.exit(pytest.main(argv[2:], plugins=[pytest_cov]))
+    sys.exit(pytest.main(argv[2:], plugins=[]))
 
 
 def run_cli(argv):

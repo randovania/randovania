@@ -11,7 +11,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/binary_data", "data/binary_data"),
              ],
              hiddenimports=[
-                "unittest.mock"
+                "unittest.mock",
              ],
              hookspath=[],
              runtime_hooks=[],
