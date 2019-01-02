@@ -230,10 +230,15 @@ def read_pickup_database(data: Dict,
         PickupIndex(i): pickups[name]
         for i, name in enumerate(data["original_indices"])
     }
+    useless_pickups = [
+        pickups[name]
+        for name in data["useless_pickups"]
+    ]
 
     return PickupDatabase(
         pickups=pickups,
-        original_pickup_mapping=original_pickup_mapping
+        original_pickup_mapping=original_pickup_mapping,
+        useless_pickups=useless_pickups
     )
 
 
