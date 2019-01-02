@@ -83,11 +83,11 @@ def test_run_cli(mock_create_parser: MagicMock,
                  mock_run_args: MagicMock,
                  ):
     # Setup
-    argv = MagicMock()
+    argv = [MagicMock(), MagicMock(), MagicMock()]
 
     # Run
     cli.run_cli(argv)
 
     # Assert
-    mock_create_parser.return_value.parse_args.assert_called_once_with(argv)
+    mock_create_parser.return_value.parse_args.assert_called_once_with(argv[1:])
     mock_run_args.assert_called_once_with(mock_create_parser.return_value.parse_args.return_value)
