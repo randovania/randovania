@@ -184,7 +184,7 @@ class PickupQuantities(BitPackValue):
         return self
 
     def validate_total_quantities(self):
-        total = sum(self._pickup_quantities.values())
+        total = sum(self._pickup_quantities.values())  # - self._pickup_quantities[self._database.useless_pickup]
         if total > self._database.total_pickup_count:
             raise ValueError(
                 "Invalid pickup_quantities. \n{} implies into more than {} pickups".format(

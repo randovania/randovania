@@ -167,7 +167,7 @@ PickupAssignment = Dict[PickupIndex, PickupEntry]
 class PickupDatabase(NamedTuple):
     pickups: Dict[str, PickupEntry]
     original_pickup_mapping: PickupAssignment
-    useless_pickups: List[PickupEntry]
+    useless_pickup: PickupEntry
 
     @property
     def total_pickup_count(self) -> int:

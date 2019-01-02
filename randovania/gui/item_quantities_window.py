@@ -57,9 +57,7 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
 
         self._maximum_item_count = pickup_database.total_pickup_count
         pickups = set(pickup_database.pickups.values())
-
-        for useless_pickup in pickup_database.useless_pickups:
-            pickups.remove(useless_pickup)
+        pickups.remove(pickup_database.useless_pickup)
 
         num_rows = len(pickups) / 2
         for i, pickup in enumerate(sorted(pickups, key=lambda pickup: pickup.name)):

@@ -135,10 +135,7 @@ def write_pickup_database(database: PickupDatabase) -> dict:
             pickup.name
             for pickup in database.original_pickup_mapping.values()
         ],
-        "useless_pickups": [
-            pickup.name
-            for pickup in database.useless_pickups
-        ]
+        "useless_pickup": database.useless_pickup.name
     }
 
 
