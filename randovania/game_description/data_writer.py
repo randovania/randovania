@@ -134,6 +134,10 @@ def write_pickup_database(database: PickupDatabase) -> dict:
         "original_indices": [
             pickup.name
             for pickup in database.original_pickup_mapping.values()
+        ],
+        "useless_pickups": [
+            pickup.name
+            for pickup in database.useless_pickups
         ]
     }
 

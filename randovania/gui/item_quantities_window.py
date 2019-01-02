@@ -58,8 +58,8 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
         self._maximum_item_count = pickup_database.total_pickup_count
         pickups = set(pickup_database.pickups.values())
 
-        # TODO: Very specific logic that should be provided by data
-        pickups.remove(pickup_database.pickup_by_name("Energy Transfer Module"))
+        for useless_pickup in pickup_database.useless_pickups:
+            pickups.remove(useless_pickup)
 
         num_rows = len(pickups) / 2
         for i, pickup in enumerate(sorted(pickups, key=lambda pickup: pickup.name)):
