@@ -177,6 +177,12 @@ class PickupDatabase(NamedTuple):
     def all_pickup_names(self) -> Iterator[str]:
         yield from self.pickups.keys()
 
+    @property
+    def all_useful_pickups(self) -> Iterator[PickupEntry]:
+        for pickup in self.pickups.values():
+            if pickup is not self.useless_pickup:
+                yield pickup
+
     def original_quantity_for(self, pickup: PickupEntry) -> int:
         return sum(1 for original in self.original_pickup_mapping.values() if original == pickup)
 

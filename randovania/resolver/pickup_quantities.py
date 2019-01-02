@@ -11,6 +11,7 @@ class PickupQuantities(BitPackValue):
     _bit_pack_data: Optional[List[Tuple[int, int]]] = None
 
     def __init__(self, database: PickupDatabase, pickup_quantities: Dict[PickupEntry, int]):
+        assert database.useless_pickup not in pickup_quantities
         self._database = database
         self._pickup_quantities = pickup_quantities
 
@@ -35,8 +36,6 @@ class PickupQuantities(BitPackValue):
         multiple_quantity_pickups = []
 
         for pickup, quantity in sorted(self._pickup_quantities.items(), key=lambda x: x[1], reverse=True):
-            if pickup is self._database.useless_pickup:
-                continue
             if quantity == 0:
                 array = zero_quantity_pickups
             elif quantity == 1:
@@ -45,8 +44,7 @@ class PickupQuantities(BitPackValue):
                 array = multiple_quantity_pickups
             array.append(pickup)
 
-        pickup_list = list(self._database.pickups.values())
-        pickup_list.remove(self._database.useless_pickup)
+        pickup_list = list(self._database.all_useful_pickups)
         total_pickup_count = self._database.total_pickup_count
 
         bit_pack_data.append((len(pickup_list), len(zero_quantity_pickups)))
@@ -101,9 +99,7 @@ class PickupQuantities(BitPackValue):
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "PickupQuantities":
         pickup_database = default_prime2_pickup_database()
 
-        pickup_list = list(pickup_database.pickups.values())
-        pickup_list.remove(pickup_database.useless_pickup)
-
+        pickup_list = list(pickup_database.all_useful_pickups)
         total_pickup_count = pickup_database.total_pickup_count
 
         has_custom_quantities = bool(decoder.decode(2)[0])
@@ -136,7 +132,6 @@ class PickupQuantities(BitPackValue):
         for one_pickup in pickup_list:
             pickup_quantities[one_pickup] = 1
 
-        assert pickup_database.useless_pickup not in pickup_quantities
         return PickupQuantities(pickup_database, pickup_quantities)
 
     def __eq__(self, other):
@@ -183,14 +178,14 @@ class PickupQuantities(BitPackValue):
         return PickupQuantities(self._database, pickup_quantities)._add_missing_pickups_to_quantities()
 
     def _add_missing_pickups_to_quantities(self) -> "PickupQuantities":
-        for pickup in self._database.pickups.values():
-            if pickup not in self._pickup_quantities and pickup is not self._database.useless_pickup:
+        for pickup in self._database.all_useful_pickups:
+            if pickup not in self._pickup_quantities:
                 self._pickup_quantities[pickup] = self._database.original_quantity_for(pickup)
 
         return self
 
     def validate_total_quantities(self):
-        total = sum(self._pickup_quantities.values()) - self._pickup_quantities[self._database.useless_pickup]
+        total = sum(self._pickup_quantities.values())
         if total > self._database.total_pickup_count:
             raise ValueError(
                 "Invalid pickup_quantities. \n{} implies into more than {} pickups".format(
