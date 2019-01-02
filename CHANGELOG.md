@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.18.0] - 2019-01-02
 - Added: Editor for Randovania's database. This allows for modifications and contributions to be made easily.
     There's currently no way to use the modified database directly.
 - Added: Options to place the Sky Temple Keys on Guardians + Sub-Guardians or just on Guardians.
