@@ -1,3 +1,5 @@
+from unittest.mock import patch, MagicMock
+
 import pytest
 
 from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
@@ -6,8 +8,10 @@ from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 
 
-def test_encode():
+@patch("randovania.resolver.permalink._dictionary_byte_hash", autospec=True)
+def test_encode(mock_dictionary_byte_hash: MagicMock):
     # Setup
+    mock_dictionary_byte_hash.return_value = 120
     link = Permalink(
         seed_number=1000,
         spoiler=True,
@@ -19,7 +23,8 @@ def test_encode():
     encoded = link.as_str
 
     # Assert
-    assert encoded == "EAAAfRE8YEc="
+    mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
+    assert encoded == "EAAAfReMYK4="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -84,10 +89,14 @@ def test_decode_old_version(permalink: str, version: int):
                               "support only permalink of version {}.".format(version, Permalink.current_version()))
 
 
-def test_decode_v1():
+@patch("randovania.resolver.permalink._dictionary_byte_hash", autospec=True)
+def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
+    mock_dictionary_byte_hash.return_value = 120
+    # We're mocking the database hash to avoid breaking tests every single time we change the database
+
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "EAAAfRE+bArRHMClxLYgIIBf"
+    encoded = "EAAAfReObArRHMClxLYgIIA+"
 
     expected = Permalink(
         seed_number=1000,

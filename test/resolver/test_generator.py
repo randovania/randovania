@@ -18,10 +18,9 @@ from randovania.resolver.layout_description import LayoutDescription
 from randovania.resolver.patcher_configuration import PatcherConfiguration
 from randovania.resolver.permalink import Permalink
 
-
 skip_generation_tests = pytest.mark.skipif(
-      pytest.config.option.skip_generation_tests,
-      reason="skipped due to --skip-generation-tests")
+    pytest.config.option.skip_generation_tests,
+    reason="skipped due to --skip-generation-tests")
 
 
 def _create_test_layout_description(
@@ -103,11 +102,12 @@ _test_descriptions = [
                                                           "Light Suit": 2,
                                                           "Darkburst": 0
                                                       }),
-        pickup_mapping=[2, 2, 23, 24, 2, 7, 38, 79, 2, 82, 0, 2, 17, 88, 8, 4, 2, 8, 2, 91, 2, 52, 8, 2, 106, 69, 13,
-                        59, 2, 2, 8, 57, 4, 2, 4, 8, 2, 4, 17, 2, 114, 2, 2, 68, 75, 2, 2, 2, 43, 2, 2, 86, 102, 2, 2,
-                        2, 37, 2, 24, 4, 4, 8, 2, 115, 2, 2, 2, 2, 19, 2, 2, 76, 8, 109, 2, 116, 50, 39, 2, 2, 83, 2, 2,
-                        4, 21, 1, 2, 2, 46, 117, 2, 92, 4, 2, 2, 4, 17, 100, 53, 4, 17, 2, 2, 44, 11, 45, 2, 2, 2, 4,
-                        74, 8, 15, 118, 4, 4, 112, 2, 4]
+        pickup_mapping=[2, 17, 23, 114, 59, 4, 38, 118, 2, 82, 8, 116, 2, 88, 0, 24, 2, 8, 2, 2, 2, 52, 8, 4, 2, 53, 13,
+                        4, 2, 2, 17, 57, 2, 2, 2, 2, 2, 2, 39, 2, 76, 91, 2, 11, 75, 2, 2, 45, 2, 37, 2, 46, 102, 2, 2,
+                        19, 2, 86, 68, 4, 117, 2, 2, 2, 4, 106, 8, 2, 44, 8, 2, 2, 8, 83, 2, 2, 2, 2, 4, 2, 2, 2, 112,
+                        4, 100, 2, 4, 115, 2, 4, 8, 50, 2, 4, 17, 92, 17, 109, 21, 8, 2, 24, 15, 2, 2, 4, 4, 7, 74, 1,
+                        2, 2, 2, 2, 43, 79, 4, 69, 4]
+
         ,
     ),
     _create_test_layout_description(
