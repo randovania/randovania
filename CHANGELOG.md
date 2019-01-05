@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Fixed: Hydrodynamo Station's Door to Training Access now correctly needs Seekers
 - Added: New alternatives with tricks to get the pickup in Mining Plaza A.
+- Added: Trick to cross the Mining Plaza A backwards while it's closed.
 
 ## [0.18.0] - 2019-01-02
 - Added: Editor for Randovania's database. This allows for modifications and contributions to be made easily.
