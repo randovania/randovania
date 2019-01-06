@@ -85,11 +85,11 @@ _test_descriptions = [
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={}),
-        pickup_mapping=[2, 8, 2, 17, 39, 8, 4, 79, 75, 38, 2, 8, 2, 1, 0, 2, 13, 2, 2, 2, 83, 8, 4, 23, 2, 106, 4, 2,
-                        52, 2, 17, 88, 2, 57, 2, 2, 2, 2, 2, 2, 100, 43, 2, 68, 2, 2, 37, 102, 2, 2, 8, 2, 2, 4, 4, 2,
-                        86, 2, 91, 2, 74, 2, 118, 53, 2, 2, 2, 112, 2, 114, 59, 76, 115, 2, 92, 44, 2, 109, 2, 2, 69, 7,
-                        2, 11, 116, 27, 4, 50, 82, 2, 4, 8, 4, 8, 117, 2, 45, 4, 17, 17, 4, 2, 15, 2, 21, 2, 46, 2, 4,
-                        4, 2, 8, 2, 19, 2, 2, 4, 4, 24]
+        pickup_mapping=[2, 83, 8, 50, 79, 2, 8, 2, 75, 38, 2, 2, 8, 1, 46, 4, 2, 4, 2, 2, 27, 2, 17, 23, 76, 106, 2, 2,
+                        52, 2, 2, 2, 13, 39, 2, 0, 2, 2, 2, 21, 4, 2, 8, 2, 88, 8, 37, 2, 8, 24, 2, 4, 57, 8, 2, 2, 17,
+                        2, 115, 114, 2, 2, 86, 4, 4, 17, 74, 4, 44, 2, 8, 4, 19, 4, 2, 15, 112, 2, 92, 68, 4, 43, 17,
+                        102, 2, 2, 82, 2, 116, 4, 59, 2, 4, 2, 2, 2, 2, 2, 7, 4, 100, 2, 118, 117, 2, 4, 45, 69, 2, 53,
+                        2, 2, 11, 2, 91, 109, 2, 2, 2]
 
         ,
     ),
@@ -102,11 +102,11 @@ _test_descriptions = [
                                                           "Light Suit": 2,
                                                           "Darkburst": 0
                                                       }),
-        pickup_mapping=[2, 17, 23, 114, 59, 4, 38, 118, 2, 82, 8, 116, 2, 88, 0, 24, 2, 8, 2, 2, 2, 52, 8, 4, 2, 53, 13,
-                        4, 2, 2, 17, 57, 2, 2, 2, 2, 2, 2, 39, 2, 76, 91, 2, 11, 75, 2, 2, 45, 2, 37, 2, 46, 102, 2, 2,
-                        19, 2, 86, 68, 4, 117, 2, 2, 2, 4, 106, 8, 2, 44, 8, 2, 2, 8, 83, 2, 2, 2, 2, 4, 2, 2, 2, 112,
-                        4, 100, 2, 4, 115, 2, 4, 8, 50, 2, 4, 17, 92, 17, 109, 21, 8, 2, 24, 15, 2, 2, 4, 4, 7, 74, 1,
-                        2, 2, 2, 2, 43, 79, 4, 69, 4]
+        pickup_mapping=[2, 2, 23, 109, 39, 2, 38, 45, 117, 8, 17, 4, 2, 88, 21, 2, 2, 83, 4, 2, 43, 37, 2, 4, 2, 53, 13,
+                        102, 82, 2, 8, 2, 2, 2, 2, 24, 4, 2, 76, 59, 57, 118, 1, 2, 7, 115, 2, 52, 2, 2, 116, 8, 4, 19,
+                        2, 2, 0, 17, 2, 24, 2, 8, 4, 2, 69, 17, 4, 75, 8, 2, 8, 79, 2, 2, 2, 4, 17, 46, 2, 2, 15, 4, 2,
+                        74, 2, 4, 50, 106, 2, 8, 11, 4, 4, 2, 91, 2, 2, 100, 86, 4, 2, 2, 92, 2, 112, 2, 114, 2, 2, 2,
+                        2, 2, 8, 2, 44, 4, 2, 2, 68]
 
         ,
     ),
@@ -248,7 +248,7 @@ def test_create_patches(mock_random: MagicMock,
 @pytest.fixture(name="sky_temple_keys")
 def sample_sky_temple_keys():
     return [
-        PickupEntry("Test Sky Temple Key {}".format(i), tuple(), "sky_temple_key")
+        PickupEntry("Test Sky Temple Key {}".format(i), tuple(), "sky_temple_key", 0)
         for i in range(1, 10)
     ]
 
@@ -287,7 +287,7 @@ def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
     initial_pickup_assignment = {
-        generator._FLYING_ING_CACHES[0]: PickupEntry("Other Item", tuple(), "other")
+        generator._FLYING_ING_CACHES[0]: PickupEntry("Other Item", tuple(), "other", 0)
     }
     patches = GamePatches.empty().assign_new_pickups(initial_pickup_assignment.items())
 

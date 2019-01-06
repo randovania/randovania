@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Hydrodynamo Station's Door to Training Access now correctly needs Seekers
 - Added: New alternatives with tricks to get the pickup in Mining Plaza A.
 - Added: Trick to cross the Mining Plaza A backwards while it's closed.
+- Changed: Added a chance for Temple Keys not being always placed last.
+- Changed: Light Suit now has a decreased chance of being placed early.
 
 ## [0.18.0] - 2019-01-02
 - Added: Editor for Randovania's database. This allows for modifications and contributions to be made easily.

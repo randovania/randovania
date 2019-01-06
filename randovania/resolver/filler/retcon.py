@@ -1,8 +1,7 @@
 import collections
-import copy
 import itertools
 from random import Random
-from typing import Tuple, Iterator, NamedTuple, Set, Optional, Union, Dict, FrozenSet, Callable
+from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.game_patches import GamePatches
@@ -191,9 +190,6 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
     # else:
     #     messages = ""
 
-    if debug.debug_level() > 1:
-        print("{} - {}".format(name, weight))
-
     return weight
 
 
@@ -217,7 +213,7 @@ def _calculate_potential_actions(reach: GeneratorReach,
             actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
                                                                                                    progression),
                                                                   current_uncollected,
-                                                                  progression.name)
+                                                                  progression.name) + progression.probability_offset
             update_for_option()
 
     for resource in uncollected_resource_nodes:
@@ -226,6 +222,10 @@ def _calculate_potential_actions(reach: GeneratorReach,
             current_uncollected,
             resource.name)
         update_for_option()
+
+    if debug.debug_level() > 1:
+        for action, weight in actions_weights.items():
+            print("{} - {}".format(action.name, weight))
 
     return actions_weights
 
