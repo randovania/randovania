@@ -6,12 +6,13 @@ from typing import Optional
 from PySide2 import QtCore
 from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction, QFileDialog
+from PySide2.QtWidgets import QMainWindow, QAction
 
 from randovania import VERSION
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file
+from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file, \
+    set_default_window_icon
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.item_quantities_window import ItemQuantitiesWindow
@@ -44,6 +45,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.setWindowTitle("Randovania {}".format(VERSION))
         self.is_preview_mode = preview
         self.setAcceptDrops(True)
+        set_default_window_icon(self)
 
         if preview:
             debug._DEBUG_LEVEL = 2
