@@ -127,7 +127,8 @@ def write_pickup_database(database: PickupDatabase) -> dict:
         "pickups": {
             pickup.name: {
                 "item_category": pickup.item_category,
-                "resources": write_resource_gain(pickup.resource_gain())
+                "resources": write_resource_gain(pickup.resource_gain()),
+                "probability_offset": pickup.probability_offset,
             }
             for pickup in database.pickups.values()
         },
