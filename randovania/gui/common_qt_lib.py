@@ -1,7 +1,10 @@
 from pathlib import Path
 from typing import Iterator, Optional
 
-from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow
+from PySide2.QtGui import QIcon
+from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow, QWidget
+
+from randovania import get_data_path
 
 
 def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
@@ -52,3 +55,12 @@ def prompt_user_for_database_file(window: QMainWindow) -> Optional[Path]:
     :return: A string if the user selected a file, None otherwise
     """
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
+
+
+def set_default_window_icon(window: QWidget):
+    """
+    Sets the window icon for the given widget to the default icon
+    :param window:
+    :return:
+    """
+    window.setWindowIcon(QIcon(str(get_data_path().joinpath("icons", "sky_temple_key_NqN_icon.ico"))))

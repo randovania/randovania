@@ -2,14 +2,14 @@ import json
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2.QtCore import Qt, QTimer
+from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
-from randovania.game_description.data_reader import WorldReader, read_resource_database, read_dock_weakness_database
 from randovania.game_description.node import Node, DockNode, TeleporterNode
 from randovania.game_description.world import World
+from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.connections_editor import ConnectionsEditor
 from randovania.gui.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.data_editor_ui import Ui_DataEditorWindow
@@ -26,6 +26,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def __init__(self, data: dict, edit_mode: bool):
         super().__init__()
         self.setupUi(self)
+        set_default_window_icon(self)
         self.edit_mode = edit_mode
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
