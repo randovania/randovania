@@ -223,7 +223,9 @@ def read_pickup_database(data: Dict,
     pickups = {
         name: PickupEntry(name,
                           read_resource_gain_tuple(item["resources"], resource_database),
-                          item["item_category"])
+                          item["item_category"],
+                          item["probability_offset"],
+                          )
         for name, item in data["pickups"].items()
     }
     original_pickup_mapping = {

@@ -77,6 +77,7 @@ class PickupEntry(NamedTuple):
     name: str
     resources: ResourceGainTuple
     item_category: str
+    probability_offset: int
 
     def __hash__(self):
         return hash(self.name)
