@@ -29,7 +29,7 @@ def iterate_with_weights(items: List[T],
     """
 
     items = list(items)
-    weights = [item_weights[action] for action in items]
+    weights = [max(item_weights[action], 0) for action in items]
 
     while items and any(weight > 0 for weight in weights):
         pickup_node = rng.choices(items, weights)[0]
