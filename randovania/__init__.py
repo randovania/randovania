@@ -12,4 +12,4 @@ def get_data_path() -> Path:
     return file_dir.joinpath("data")
 
 
-VERSION = "0.19.0"
+VERSION = "0.19.1"
