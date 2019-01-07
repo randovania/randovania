@@ -80,44 +80,19 @@ def test_calculate_reach_with_seeds():
     logic, state, permalink = _test_data()
     game = logic.game
 
-    categories = {"translator", "major"}
+    categories = {"translator", "major", "expansion"}
     item_pool = calculate_item_pool(permalink, game)
-    rng = Random(50000)
-    available_pickups = tuple(shuffle(rng, sorted(calculate_available_pickups(
-        item_pool, categories, game.world_list.calculate_relevant_resources(state.patches)))))
+    available_pickups = sorted(calculate_available_pickups(item_pool, categories,
+                                                           game.world_list.calculate_relevant_resources(state.patches)))
 
-    remaining_pickups = available_pickups[1:]
-
-    print("Major items: {}".format([item.name for item in remaining_pickups]))
-
-    for pickup in remaining_pickups[:]:
+    for pickup in available_pickups[1:]:
         add_resource_gain_to_state(state, pickup.resource_gain())
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
-    for action in first_actions:
-        print("Safe: {}; Dangerous: {}; Action: {}".format(
-            first_reach.is_safe_node(action),
-            action.resource() in game.dangerous_resources,
-            game.world_list.node_name(action)
-        ))
-
-    escape_state = state_with_pickup(first_reach.state, available_pickups[-6])
-    total_pickup_nodes = list(_filter_pickups(filter_reachable(first_reach.nodes, first_reach)))
-    pickup_options = pickup_nodes_that_can_reach(total_pickup_nodes,
-                                                 reach_with_all_safe_resources(logic, escape_state),
-                                                 set(first_reach.safe_nodes))
-
-    for option in pickup_options:
-        print("Safe: {}; Dangerous: {}; Option: {}".format(
-            first_reach.is_safe_node(option),
-            option.resource() in game.dangerous_resources,
-            game.world_list.node_name(option)
-        ))
-
-    assert (879, 0) == (len(list(first_reach.nodes)), len(first_actions))
-    assert (879, 0) == (len(list(second_reach.nodes)), len(second_actions))
+    assert (871, 0) == (len(list(first_reach.nodes)), len(first_actions))
+    assert (871, 0) == (len(list(second_reach.nodes)), len(second_actions))
 
 
 @pytest.mark.skip(reason="can't reach dark visor")
