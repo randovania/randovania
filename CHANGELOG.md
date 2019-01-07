@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Added: an icon! Thanks to Dyceron for the icon.
 - Changed: Don't consider that Seeker Launcher give missiles for logic, so it's never
     considered a missile source.
 
