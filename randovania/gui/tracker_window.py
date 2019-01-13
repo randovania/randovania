@@ -1,8 +1,8 @@
 import functools
-from typing import Optional, Dict, Set
+from typing import Optional, Dict, Set, List, Tuple
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QListWidgetItem
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
@@ -24,6 +24,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _selected_node: Node
     _collected_pickups: Dict[PickupEntry, int] = {}
     _collected_nodes: Set[Node]
+    _actions: List[Node] = []
 
     # Tracker configuration
     logic: Logic
@@ -47,6 +48,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                           self.game_description, GamePatches.empty())
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
+        self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
         self.configuration_label.setText("Trick Level: {}; Elevators: Vanilla; Item Loss: {}".format(
             layout_configuration.trick_level.value,
@@ -56,7 +58,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.setup_pickups_box()
         self.setup_possible_locations_tree()
 
-        self._collected_nodes = {
+        self._starting_nodes = {
             node
             for node in self.game_description.world_list.all_nodes
             if node.is_resource_node and node.resource() in self._initial_state.resources
@@ -71,19 +73,40 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     def _hide_collected_resources(self) -> bool:
         return self.hide_collected_resources_check.isChecked()
 
+    @property
+    def _collected_nodes(self) -> Set[Node]:
+        return self._starting_nodes | set(action for action in self._actions if action.is_resource_node)
+
+    def _pretty_node_name(self, node: Node) -> str:
+        world_list = self.game_description.world_list
+        return "{} / {}".format(world_list.nodes_to_area(node).name, node.name)
+
+    def _refresh_for_new_selected_node(self):
+        node = self._selected_node
+
+        self.undo_last_action_button.setEnabled(len(self._actions) > 1)
+        self.location_box.setTitle("Current location: {}".format(self._pretty_node_name(node)))
+        self.update_locations_tree_for_reachable_nodes()
+
     def _update_selected_node(self, node: Node):
         self._selected_node = node
 
-        world_list = self.game_description.world_list
-        self.location_box.setTitle("Current location: {} / {}".format(world_list.nodes_to_area(node).name, node.name))
-        self.update_locations_tree_for_reachable_nodes()
+        self.actions_list.addItem(self._pretty_node_name(node))
+        self._actions.append(node)
+
+        self._refresh_for_new_selected_node()
+
+    def _undo_last_action(self):
+        self._actions.pop()
+        self.actions_list.takeItem(len(self._actions))
+
+        self._selected_node = self._actions[-1]
+        self._refresh_for_new_selected_node()
 
     def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
 
         if node is not None:
-            if node.is_resource_node:
-                self._collected_nodes.add(node)
             self._update_selected_node(node)
 
     def update_locations_tree_for_reachable_nodes(self):
@@ -100,8 +123,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for area in world.areas:
                 area_is_visible = False
                 for node in area.nodes:
+                    is_collected = node in self._collected_nodes
                     is_visible = node in nodes_in_reach and not (self._hide_collected_resources
-                                                                 and node in self._collected_nodes)
+                                                                 and is_collected)
 
                     if self._show_only_resource_nodes:
                         is_visible = is_visible and node.is_resource_node
@@ -109,7 +133,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item = self._node_to_item[node]
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
-                        node_item.setCheckState(0, Qt.Checked if node in self._collected_nodes else Qt.Unchecked)
+                        node_item.setCheckState(0, Qt.Checked if is_collected else Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
                 self._asset_id_to_item[area.area_asset_id].setHidden(not area_is_visible)
