@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Added: an icon! Thanks to Dyceron for the icon.
+- Added: a simple Tracker to allow knowing where you can go with a given item state
 - Changed: Don't consider that Seeker Launcher give missiles for logic, so it's never
     considered a missile source.
 
