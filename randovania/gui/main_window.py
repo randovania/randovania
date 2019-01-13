@@ -153,7 +153,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self._seed_details.show()
 
     def _open_tracker(self):
-        self._tracker = TrackerWindow(default_data.decode_default_prime2())
+        self._tracker = TrackerWindow(self._options.layout_configuration)
         self._tracker.show()
 
     # Background Process

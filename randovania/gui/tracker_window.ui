@@ -21,69 +21,72 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="1">
-     <widget class="QGroupBox" name="groupBox">
+    <item row="1" column="3">
+     <widget class="QGroupBox" name="location_box">
       <property name="title">
-       <string>GroupBox</string>
+       <string>Current location: </string>
       </property>
-      <widget class="QTreeWidget" name="items_tree_widget">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTreeWidget" name="possible_locations_tree">
+         <column>
+          <property name="text">
+           <string>Accessible Locations</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QScrollArea" name="pickups_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="pickups_scroll_contents">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>70</y>
-         <width>671</width>
-         <height>91</height>
+         <x>0</x>
+         <y>0</y>
+         <width>387</width>
+         <height>447</height>
         </rect>
        </property>
-       <column>
-        <property name="text">
-         <string>Item</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Quantity</string>
-        </property>
-       </column>
-      </widget>
-      <widget class="QListWidget" name="events_list_widget">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>240</y>
-         <width>611</width>
-         <height>91</height>
-        </rect>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QLabel" name="_events_list_header">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>200</y>
-         <width>47</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Events</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="current_location_label">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>40</y>
-         <width>331</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Current location:</string>
-       </property>
+       <layout class="QVBoxLayout" name="pickup_box_layout">
+        <item>
+         <widget class="QGroupBox" name="upgrades_box">
+          <property name="title">
+           <string>Upgrades</string>
+          </property>
+          <layout class="QVBoxLayout" name="upgrades_layout"/>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="expansions_box">
+          <property name="title">
+           <string>Expansions</string>
+          </property>
+          <layout class="QVBoxLayout" name="expansions_layout"/>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="keys_box">
+          <property name="title">
+           <string>Keys</string>
+          </property>
+          <layout class="QVBoxLayout" name="keys_layout"/>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="events_box">
+          <property name="title">
+           <string>Events</string>
+          </property>
+          <layout class="QVBoxLayout" name="events_layout"/>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

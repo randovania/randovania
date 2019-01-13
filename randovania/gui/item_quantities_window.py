@@ -1,38 +1,15 @@
 import functools
 from typing import Dict
 
-from PySide2.QtCore import Qt, QEvent
 from PySide2.QtWidgets import QMainWindow, QLabel, QSpinBox
 
 from randovania.game_description.default_database import default_prime2_pickup_database
 from randovania.game_description.resources import PickupEntry
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.item_quantities_window_ui import Ui_ItemQuantitiesWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-
-
-class CustomSpinBox(QSpinBox):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.installEventFilter(self)
-        self.setFocusPolicy(Qt.StrongFocus)
-
-    def focusInEvent(self, event: QEvent):
-        self.setFocusPolicy(Qt.WheelFocus)
-
-    def focusOutEvent(self, event: QEvent):
-        self.setFocusPolicy(Qt.StrongFocus)
-
-    def eventFilter(self, obj: QSpinBox, event: QEvent) -> bool:
-        if event.type() == QEvent.Wheel and isinstance(obj, QSpinBox):
-            if obj.focusPolicy() == Qt.WheelFocus:
-                event.accept()
-                return False
-            else:
-                event.ignore()
-                return True
-        return super().eventFilter(obj, event)
 
 
 class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
