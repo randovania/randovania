@@ -3,7 +3,7 @@ from typing import Optional, Dict, Set
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QHBoxLayout, \
-    QLabel
+    QLabel, QGridLayout
 
 from randovania.game_description import data_reader
 from randovania.game_description.area import Area
@@ -131,38 +131,65 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         parent_widgets = {
             "expansion": (self.expansions_box, self.expansions_layout),
             "energy_tank": (self.expansions_box, self.expansions_layout),
-            "translator": (self.upgrades_box, self.upgrades_layout),
+            "translator": (self.translators_box, self.translators_layout),
             "major": (self.upgrades_box, self.upgrades_layout),
             "temple_key": (self.keys_box, self.keys_layout),
             "sky_temple_key": (self.keys_box, self.keys_layout),
         }
+
+        row_for_parent = {
+            self.expansions_box: 0,
+            self.translators_box: 0,
+            self.upgrades_box: 0,
+            self.keys_box: 0,
+        }
+        column_for_parent = {
+            self.translators_box: 0,
+            self.upgrades_box: 0,
+            self.keys_box: 0,
+        }
+        k_column_count = 2
 
         for pickup in pickup_database.pickups.values():
             quantity = pickup_database.original_quantity_for(pickup)
 
             self._collected_pickups[pickup] = 0
 
+            parent_layout: QGridLayout
             parent_widget, parent_layout = parent_widgets[pickup.item_category]
 
-            if quantity > 1:
-                line_layout = QHBoxLayout()
+            row = row_for_parent[parent_widget]
+
+            if parent_widget is self.expansions_box:
+                if quantity < 2:
+                    continue
 
                 label = QLabel(parent_widget)
                 label.setText(pickup.name)
-                line_layout.addWidget(label)
+                parent_layout.addWidget(label, row, 0)
 
                 spin_bix = CustomSpinBox(parent_widget)
                 spin_bix.setMaximumWidth(50)
                 spin_bix.setMaximum(quantity)
                 spin_bix.valueChanged.connect(functools.partial(self._change_item_quantity, pickup, False))
-                line_layout.addWidget(spin_bix)
+                parent_layout.addWidget(spin_bix, row, 1)
 
-                parent_layout.addLayout(line_layout)
+                row_for_parent[parent_widget] += 1
             else:
                 check_box = QCheckBox(parent_widget)
                 check_box.setText(pickup.name)
                 check_box.stateChanged.connect(functools.partial(self._change_item_quantity, pickup, True))
-                parent_layout.addWidget(check_box)
+
+                column = column_for_parent[parent_widget]
+                parent_layout.addWidget(check_box, row, column)
+                column += 1
+
+                if column >= k_column_count:
+                    column = 0
+                    row += 1
+
+                row_for_parent[parent_widget] = row
+                column_for_parent[parent_widget] = column
 
     def state_for_current_configuration(self) -> Optional[State]:
         state = self._initial_state.copy()
