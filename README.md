@@ -34,6 +34,19 @@ in the folder you selected in 'Output Folder'
    Number and try again.
    ![Generation Failure](randovania-readme/gui-6.png)
    
+## Tracker
+
+Randovania includes a simple "map" tracker for Echoes, accessible via the `Open` menu.
+![Tracker Button](randovania-readme/gui-tracker-open.png)
+
+This tracker uses the logic and item loss configuration from the current permalink.
+
+With it, you must act on each thing that trigger an event or has a pickup, as where you can go depends on where you are
+in the game, as well as which items you've picked and event yo've triggered.
+
+![Tracker](randovania-readme/gui-tracker.png)
+
+Currently, elevator randomizer is not supported for the tracker. 
    
 ## FAQ
 
