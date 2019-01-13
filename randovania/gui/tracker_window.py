@@ -21,9 +21,7 @@ from randovania.resolver.state import State, add_resource_gain_to_state
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker state
-    _selected_node: Node
     _collected_pickups: Dict[PickupEntry, int] = {}
-    _collected_nodes: Set[Node]
     _actions: List[Node] = []
 
     # Tracker configuration
@@ -63,7 +61,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for node in self.game_description.world_list.all_nodes
             if node.is_resource_node and node.resource() in self._initial_state.resources
         }
-        self._update_selected_node(self._initial_state.node)
+        self._add_new_action(self._initial_state.node)
 
     @property
     def _show_only_resource_nodes(self) -> bool:
@@ -81,33 +79,26 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         world_list = self.game_description.world_list
         return "{} / {}".format(world_list.nodes_to_area(node).name, node.name)
 
-    def _refresh_for_new_selected_node(self):
-        node = self._selected_node
-
+    def _refresh_for_new_action(self):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
-        self.location_box.setTitle("Current location: {}".format(self._pretty_node_name(node)))
+        self.location_box.setTitle("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
         self.update_locations_tree_for_reachable_nodes()
 
-    def _update_selected_node(self, node: Node):
-        self._selected_node = node
-
+    def _add_new_action(self, node: Node):
         self.actions_list.addItem(self._pretty_node_name(node))
         self._actions.append(node)
-
-        self._refresh_for_new_selected_node()
+        self._refresh_for_new_action()
 
     def _undo_last_action(self):
         self._actions.pop()
         self.actions_list.takeItem(len(self._actions))
-
-        self._selected_node = self._actions[-1]
-        self._refresh_for_new_selected_node()
+        self._refresh_for_new_action()
 
     def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
 
-        if node is not None:
-            self._update_selected_node(node)
+        if node is not None and node != self._actions[-1]:
+            self._add_new_action(node)
 
     def update_locations_tree_for_reachable_nodes(self):
         # Calculate which nodes are in reach right now
@@ -243,7 +234,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def state_for_current_configuration(self) -> Optional[State]:
         state = self._initial_state.copy()
-        state.node = self._selected_node
+        state.node = self._actions[-1]
 
         for pickup, quantity in self._collected_pickups.items():
             for _ in range(quantity):
