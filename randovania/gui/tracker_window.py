@@ -2,15 +2,13 @@ import functools
 from typing import Optional, Dict, Set
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QHBoxLayout, \
-    QLabel, QGridLayout
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout
 
 from randovania.game_description import data_reader
-from randovania.game_description.area import Area
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node
 from randovania.game_description.resources import PickupEntry
-from randovania.game_description.world import World
+from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -21,7 +19,6 @@ from randovania.resolver.state import State, add_resource_gain_to_state
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _collected_pickups: Dict[PickupEntry, int] = {}
-    _show_only_resource_nodes: bool = False
 
     _asset_id_to_item: Dict[int, QTreeWidgetItem] = {}
     _node_to_item: Dict[Node, QTreeWidgetItem] = {}
@@ -30,6 +27,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     def __init__(self, layout_configuration: LayoutConfiguration):
         super().__init__()
         self.setupUi(self)
+        set_default_window_icon(self)
 
         self.layout_configuration = layout_configuration
         self.game_description = data_reader.decode_data(layout_configuration.game_data, True)
@@ -42,11 +40,20 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for node in self.game_description.world_list.all_nodes
             if node.is_resource_node and node.resource() in self._initial_state.resources
         }
-        self.resource_filter_check.stateChanged.connect(self._toggle_resource_filter)
+        self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
+        self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
 
         self.setup_pickups_box()
         self.setup_possible_locations_tree()
         self.update_locations_tree_for_reachable_nodes()
+
+    @property
+    def _show_only_resource_nodes(self) -> bool:
+        return self.resource_filter_check.isChecked()
+
+    @property
+    def _hide_collected_resources(self) -> bool:
+        return self.hide_collected_resources_check.isChecked()
 
     def _update_selected_node(self, node: Node):
         self._selected_node = node
@@ -75,39 +82,41 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             self._update_selected_node(node)
             self.update_locations_tree_for_reachable_nodes()
 
-    def _toggle_resource_filter(self, value: bool):
-        self._show_only_resource_nodes = value
-        self.update_locations_tree_for_reachable_nodes()
-
     def update_locations_tree_for_reachable_nodes(self):
         # Calculate which nodes are in reach right now
         state = self.state_for_current_configuration()
         if state is None:
-            self._nodes_in_reach = set()
+            nodes_in_reach = set()
         else:
             reach = ResolverReach.calculate_reach(self.logic, state)
-            self._nodes_in_reach = set(reach.nodes)
-            self._nodes_in_reach.add(state.node)
+            nodes_in_reach = set(reach.nodes)
+            nodes_in_reach.add(state.node)
 
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
                 area_is_visible = False
                 for node in area.nodes:
-                    is_visible = node in self._nodes_in_reach
+                    is_visible = node in nodes_in_reach
                     if self._show_only_resource_nodes:
                         is_visible = is_visible and node.is_resource_node
+                        if self._hide_collected_resources and node in self._collected_nodes:
+                            is_visible = False
 
                     self._node_to_item[node].setHidden(not is_visible)
                     area_is_visible = area_is_visible or is_visible
                 self._asset_id_to_item[area.area_asset_id].setHidden(not area_is_visible)
 
     def setup_possible_locations_tree(self):
+        """
+        Creates the possible_locations_tree with all worlds, areas and nodes.
+        """
         self.possible_locations_tree.itemClicked.connect(self._on_tree_node_clicked)
         self.possible_locations_tree.itemDoubleClicked.connect(self._on_tree_node_double_clicked)
 
         for world in self.game_description.world_list.worlds:
             world_item = QTreeWidgetItem(self.possible_locations_tree)
             world_item.setText(0, world.name)
+            world_item.setExpanded(True)
             self._asset_id_to_item[world.world_asset_id] = world_item
 
             for area in world.areas:
