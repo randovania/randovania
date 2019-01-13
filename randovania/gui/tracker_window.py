@@ -5,6 +5,7 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout
 
 from randovania.game_description import data_reader
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node
 from randovania.game_description.resources import PickupEntry
@@ -13,16 +14,26 @@ from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_resource_gain_to_state
 
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
+    # Tracker state
+    _selected_node: Node
     _collected_pickups: Dict[PickupEntry, int] = {}
+    _collected_nodes: Set[Node]
 
+    # Tracker configuration
+    logic: Logic
+    game_description: GameDescription
+    layout_configuration: LayoutConfiguration
+    _initial_state: State
+
+    # UI tools
     _asset_id_to_item: Dict[int, QTreeWidgetItem] = {}
     _node_to_item: Dict[Node, QTreeWidgetItem] = {}
-    _collected_nodes: Set[Node]
 
     def __init__(self, layout_configuration: LayoutConfiguration):
         super().__init__()
@@ -43,6 +54,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
 
+        self.configuration_label.setText("Trick Level: {}; Elevators: Vanilla; Item Loss: {}".format(
+            layout_configuration.trick_level.value,
+            layout_configuration.item_loss.value,
+        ))
+
         self.setup_pickups_box()
         self.setup_possible_locations_tree()
         self.update_locations_tree_for_reachable_nodes()
@@ -60,17 +76,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         world_list = self.game_description.world_list
         self.location_box.setTitle("Current location: {} / {}".format(world_list.nodes_to_area(node).name, node.name))
-
-    def _on_tree_node_clicked(self, item: QTreeWidgetItem, _):
-        node: Optional[Node] = getattr(item, "node", None)
-
-        if node is not None and node.is_resource_node:
-            if item.checkState(0) == Qt.Checked:
-                self._collected_nodes.add(node)
-            elif node in self._collected_nodes:
-                self._collected_nodes.remove(node)
-
-            self.update_locations_tree_for_reachable_nodes()
 
     def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
@@ -110,7 +115,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         """
         Creates the possible_locations_tree with all worlds, areas and nodes.
         """
-        self.possible_locations_tree.itemClicked.connect(self._on_tree_node_clicked)
         self.possible_locations_tree.itemDoubleClicked.connect(self._on_tree_node_double_clicked)
 
         for world in self.game_description.world_list.worlds:
