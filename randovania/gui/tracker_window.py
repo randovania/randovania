@@ -45,12 +45,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         self.logic, self._initial_state = logic_bootstrap(layout_configuration,
                                                           self.game_description, GamePatches.empty())
-        self._update_selected_node(self._initial_state.node)
-        self._collected_nodes = {
-            node
-            for node in self.game_description.world_list.all_nodes
-            if node.is_resource_node and node.resource() in self._initial_state.resources
-        }
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
 
@@ -61,7 +55,13 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         self.setup_pickups_box()
         self.setup_possible_locations_tree()
-        self.update_locations_tree_for_reachable_nodes()
+
+        self._collected_nodes = {
+            node
+            for node in self.game_description.world_list.all_nodes
+            if node.is_resource_node and node.resource() in self._initial_state.resources
+        }
+        self._update_selected_node(self._initial_state.node)
 
     @property
     def _show_only_resource_nodes(self) -> bool:
@@ -76,6 +76,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         world_list = self.game_description.world_list
         self.location_box.setTitle("Current location: {} / {}".format(world_list.nodes_to_area(node).name, node.name))
+        self.update_locations_tree_for_reachable_nodes()
 
     def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
@@ -83,9 +84,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         if node is not None:
             if node.is_resource_node:
                 self._collected_nodes.add(node)
-                item.setCheckState(0, Qt.Checked)
             self._update_selected_node(node)
-            self.update_locations_tree_for_reachable_nodes()
 
     def update_locations_tree_for_reachable_nodes(self):
         # Calculate which nodes are in reach right now
@@ -101,13 +100,17 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for area in world.areas:
                 area_is_visible = False
                 for node in area.nodes:
-                    is_visible = node in nodes_in_reach
+                    is_visible = node in nodes_in_reach and not (self._hide_collected_resources
+                                                                 and node in self._collected_nodes)
+
                     if self._show_only_resource_nodes:
                         is_visible = is_visible and node.is_resource_node
-                        if self._hide_collected_resources and node in self._collected_nodes:
-                            is_visible = False
 
-                    self._node_to_item[node].setHidden(not is_visible)
+                    node_item = self._node_to_item[node]
+                    node_item.setHidden(not is_visible)
+                    if node.is_resource_node:
+                        node_item.setCheckState(0, Qt.Checked if node in self._collected_nodes else Qt.Unchecked)
+
                     area_is_visible = area_is_visible or is_visible
                 self._asset_id_to_item[area.area_asset_id].setHidden(not area_is_visible)
 
@@ -136,8 +139,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item.node = node
                     if node.is_resource_node:
                         node_item.setFlags(node_item.flags() & ~Qt.ItemIsUserCheckable)
-                        node_item.setCheckState(0, Qt.Checked if node in self._collected_nodes else Qt.Unchecked)
-
                     self._node_to_item[node] = node_item
 
     def _change_item_quantity(self, pickup: PickupEntry, use_quantity_as_bool: bool, quantity: int):
