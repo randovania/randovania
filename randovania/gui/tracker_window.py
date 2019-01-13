@@ -2,7 +2,7 @@ import functools
 from typing import Optional, Dict, Set, List, Tuple
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QListWidgetItem
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QListWidgetItem, QWidget
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
@@ -169,7 +169,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     def setup_pickups_box(self):
         pickup_database = self.game_description.pickup_database
 
-        parent_widgets = {
+        parent_widgets: Dict[str, Tuple[QWidget, QGridLayout]] = {
             "expansion": (self.expansions_box, self.expansions_layout),
             "energy_tank": (self.expansions_box, self.expansions_layout),
             "translator": (self.translators_box, self.translators_layout),
@@ -195,10 +195,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             quantity = pickup_database.original_quantity_for(pickup)
 
             self._collected_pickups[pickup] = 0
-
-            parent_layout: QGridLayout
             parent_widget, parent_layout = parent_widgets[pickup.item_category]
-
             row = row_for_parent[parent_widget]
 
             if parent_widget is self.expansions_box:
