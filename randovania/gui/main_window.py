@@ -58,7 +58,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.options_changed_signal.connect(self.on_options_changed)
 
         # Menu Bar
-        self.menu_action_tracker.setVisible(preview)
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
         self.menu_action_existing_seed_details.triggered.connect(self._open_existing_seed_details)
         self.menu_action_tracker.triggered.connect(self._open_tracker)
