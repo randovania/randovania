@@ -65,7 +65,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self._create_pickup_spoiler_combobox()
 
         game_description = default_prime2_game_description()
-        for world in game_description.worlds:
+        for world in game_description.world_list.worlds:
             group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
             group_box.setTitle(world.name)
             vertical_layout = QVBoxLayout(group_box)
@@ -83,7 +83,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
                 horizontal_layout.setSpacing(2)
 
                 label = QLabel(group_box)
-                label.setText(game_description.node_name(node))
+                label.setText(game_description.world_list.node_name(node))
                 horizontal_layout.addWidget(label)
                 horizontal_layout.label = label
 
@@ -124,7 +124,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_elevators_value_label.setText(configuration.elevators.value)
 
         for pickup_button in self.pickup_spoiler_buttons:
-            pickup = description.pickup_assignment.get(pickup_button.pickup_index)
+            pickup = description.patches.pickup_assignment.get(pickup_button.pickup_index)
             if pickup is not None:
                 pickup_button.item_name = pickup.name
             else:
