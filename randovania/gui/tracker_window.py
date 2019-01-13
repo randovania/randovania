@@ -21,6 +21,7 @@ from randovania.resolver.state import State, add_resource_gain_to_state
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _collected_pickups: Dict[PickupEntry, int] = {}
+    _show_only_resource_nodes: bool = False
 
     _asset_id_to_item: Dict[int, QTreeWidgetItem] = {}
     _node_to_item: Dict[Node, QTreeWidgetItem] = {}
@@ -41,6 +42,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for node in self.game_description.world_list.all_nodes
             if node.is_resource_node and node.resource() in self._initial_state.resources
         }
+        self.resource_filter_check.stateChanged.connect(self._toggle_resource_filter)
 
         self.setup_pickups_box()
         self.setup_possible_locations_tree()
@@ -73,6 +75,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             self._update_selected_node(node)
             self.update_locations_tree_for_reachable_nodes()
 
+    def _toggle_resource_filter(self, value: bool):
+        self._show_only_resource_nodes = value
+        self.update_locations_tree_for_reachable_nodes()
+
     def update_locations_tree_for_reachable_nodes(self):
         # Calculate which nodes are in reach right now
         state = self.state_for_current_configuration()
@@ -85,9 +91,15 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
-                self._asset_id_to_item[area.area_asset_id].setHidden(not set(area.nodes).intersection(self._nodes_in_reach))
+                area_is_visible = False
                 for node in area.nodes:
-                    self._node_to_item[node].setHidden(node not in self._nodes_in_reach)
+                    is_visible = node in self._nodes_in_reach
+                    if self._show_only_resource_nodes:
+                        is_visible = is_visible and node.is_resource_node
+
+                    self._node_to_item[node].setHidden(not is_visible)
+                    area_is_visible = area_is_visible or is_visible
+                self._asset_id_to_item[area.area_asset_id].setHidden(not area_is_visible)
 
     def setup_possible_locations_tree(self):
         self.possible_locations_tree.itemClicked.connect(self._on_tree_node_clicked)
