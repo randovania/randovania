@@ -81,6 +81,15 @@ The following rooms have surprising vanilla behaviour about their spider tracks:
 **Where is the Flying Ing Cache inside Dark Oasis?**
 
 The Flying Ing Cache in this room appears only after you beat the Power Bomb Guardian.
+
+**When causes the Dark Missile Trooper to spawn?**
+
+Defeating the Bomb Guardian. Be careful: defeating the Bomb Guardian also locks the blue door
+in that room until you to visit Agon Energy Controller, which needs bombs.
+
+**What causes the Missile Expansion on top of the GFMC Compound to spawn?**
+
+Defeating the Jump Guardian.
        
 ## Community
 
