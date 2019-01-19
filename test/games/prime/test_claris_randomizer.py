@@ -267,10 +267,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
     description = LayoutDescription(
         version=randovania.VERSION,
         permalink=Permalink.default(),
-        patches=GamePatches(
-            echoes_pickup_database.original_pickup_mapping,
-            {}, {}, {}
-        ),
+        patches=GamePatches.empty().assign_new_pickups(echoes_pickup_database.original_pickup_mapping.items()),
         solver_path=()
     )
     mock_read_databases.return_value = (None, echoes_pickup_database)

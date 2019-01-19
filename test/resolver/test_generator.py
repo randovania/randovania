@@ -25,8 +25,16 @@ skip_generation_tests = pytest.mark.skipif(
 
 def _create_test_layout_description(
         configuration: LayoutConfiguration,
-        pickup_mapping: Iterable[int]):
+        pickup_mapping: Iterable[int],
+) -> LayoutDescription:
+    """
+    Creates a LayoutDescription for the given configuration, with the patches being for the given pickup_mapping
+    :param configuration:
+    :param pickup_mapping:
+    :return:
+    """
     pickup_database = data_reader.read_databases(configuration.game_data)[1]
+
     return LayoutDescription(
         version=VERSION,
         permalink=Permalink(
@@ -35,13 +43,10 @@ def _create_test_layout_description(
             patcher_configuration=PatcherConfiguration.default(),
             layout_configuration=configuration,
         ),
-        patches=GamePatches(
-            {
-                PickupIndex(i): pickup_database.original_pickup_mapping[PickupIndex(new_index)]
-                for i, new_index in enumerate(pickup_mapping)
-            },
-            {}, {}, {}
-        ),
+        patches=GamePatches.empty().assign_new_pickups([
+            (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])
+            for i, new_index in enumerate(pickup_mapping)
+        ]),
         solver_path=())
 
 
@@ -242,7 +247,10 @@ def test_create_patches(mock_random: MagicMock,
         mock_fill_pickup_assignment_with_remaining_pickups.return_value,
         filler_patches.elevator_connection,
         filler_patches.dock_connection,
-        filler_patches.dock_weakness)
+        filler_patches.dock_weakness,
+        filler_patches.custom_initial_items,
+        filler_patches.custom_starting_area,
+    )
 
 
 @pytest.fixture(name="sky_temple_keys")
