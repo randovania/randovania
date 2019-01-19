@@ -198,7 +198,7 @@ def test_generate_simple(simple_data: dict):
     generated_description = generator.generate_list(configuration, status_update)
 
 
-@patch("randovania.resolver.generator._fill_pickup_assignment_with_remaining_pickups", autospec=True)
+@patch("randovania.resolver.generator._indices_for_unassigned_pickups", autospec=True)
 @patch("randovania.resolver.generator.retcon_playthrough_filler", autospec=True)
 @patch("randovania.resolver.generator._sky_temple_key_distribution_logic", autospec=True)
 @patch("randovania.resolver.generator.calculate_item_pool", autospec=True)
@@ -207,7 +207,7 @@ def test_create_patches(mock_random: MagicMock,
                         mock_calculate_item_pool: MagicMock,
                         mock_sky_temple_key_distribution_logic: MagicMock,
                         mock_retcon_playthrough_filler: MagicMock,
-                        mock_fill_pickup_assignment_with_remaining_pickups: MagicMock,
+                        mock_indices_for_unassigned_pickups: MagicMock,
                         ):
     # Setup
     seed_number: int = 91319
@@ -240,17 +240,11 @@ def test_create_patches(mock_random: MagicMock,
     mock_retcon_playthrough_filler.assert_called_once_with(ANY, ANY, ANY,
                                                            mock_random.return_value, status_update)
 
-    mock_fill_pickup_assignment_with_remaining_pickups.assert_called_once_with(mock_random.return_value, game,
-                                                                               filler_patches.pickup_assignment, ANY)
+    mock_indices_for_unassigned_pickups.assert_called_once_with(mock_random.return_value, game,
+                                                                filler_patches.pickup_assignment, ANY)
+    filler_patches.assign_new_pickups.assert_called_once_with(mock_indices_for_unassigned_pickups.return_value)
 
-    assert result == GamePatches(
-        mock_fill_pickup_assignment_with_remaining_pickups.return_value,
-        filler_patches.elevator_connection,
-        filler_patches.dock_connection,
-        filler_patches.dock_weakness,
-        filler_patches.custom_initial_items,
-        filler_patches.custom_starting_area,
-    )
+    assert result == filler_patches.assign_new_pickups.return_value
 
 
 @pytest.fixture(name="sky_temple_keys")

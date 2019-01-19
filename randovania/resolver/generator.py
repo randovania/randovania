@@ -224,22 +224,17 @@ def _create_patches(
 
     filler_patches = retcon_playthrough_filler(logic, state, tuple(available_pickups), rng, status_update)
 
-    new_pickup_mapping = _fill_pickup_assignment_with_remaining_pickups(rng, game,
-                                                                        filler_patches.pickup_assignment, item_pool)
-
-    return GamePatches(new_pickup_mapping,
-                       filler_patches.elevator_connection,
-                       filler_patches.dock_connection,
-                       filler_patches.dock_weakness,
-                       filler_patches.custom_initial_items,
-                       filler_patches.custom_starting_area)
+    return filler_patches.assign_new_pickups(_indices_for_unassigned_pickups(rng,
+                                                                             game,
+                                                                             filler_patches.pickup_assignment,
+                                                                             item_pool))
 
 
-def _fill_pickup_assignment_with_remaining_pickups(rng: Random,
-                                                   game: GameDescription,
-                                                   current_pickup_assignment: PickupAssignment,
-                                                   item_pool: Tuple[PickupEntry, ...],
-                                                   ) -> PickupAssignment:
+def _indices_for_unassigned_pickups(rng: Random,
+                                    game: GameDescription,
+                                    current_pickup_assignment: PickupAssignment,
+                                    item_pool: Tuple[PickupEntry, ...],
+                                    ) -> Iterator[Tuple[PickupIndex, PickupEntry]]:
 
     remaining_items = list(item_pool)
 
@@ -250,9 +245,7 @@ def _fill_pickup_assignment_with_remaining_pickups(rng: Random,
     # Shuffle the items to add and then
     rng.shuffle(remaining_items)
     for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, current_pickup_assignment):
-        current_pickup_assignment[pickup_node.pickup_index] = remaining_items.pop()
+        yield pickup_node.pickup_index, remaining_items.pop()
 
     # We should have placed all items
     assert not remaining_items
-
-    return current_pickup_assignment
