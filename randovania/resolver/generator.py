@@ -122,7 +122,9 @@ def _add_elevator_connections_to_patches(permalink: Permalink,
             patches.pickup_assignment,
             claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number),
             patches.dock_connection,
-            patches.dock_weakness
+            patches.dock_weakness,
+            patches.custom_initial_items,
+            patches.custom_starting_area,
         )
     else:
         return patches
@@ -228,7 +230,9 @@ def _create_patches(
     return GamePatches(new_pickup_mapping,
                        filler_patches.elevator_connection,
                        filler_patches.dock_connection,
-                       filler_patches.dock_weakness)
+                       filler_patches.dock_weakness,
+                       filler_patches.custom_initial_items,
+                       filler_patches.custom_starting_area)
 
 
 def _fill_pickup_assignment_with_remaining_pickups(rng: Random,

@@ -130,7 +130,9 @@ class LayoutDescription:
             _item_locations_to_pickup_assignment(game, json_dict["locations"]),
             _node_mapping_to_elevator_connection(game.world_list, json_dict["elevators"]),
             {},
-            {}
+            {},
+            None,
+            None
         )
 
         return LayoutDescription(
