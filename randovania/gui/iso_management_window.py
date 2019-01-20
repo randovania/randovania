@@ -42,7 +42,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.background_processor = background_processor
 
         self._options = options
-        output_directory = self._options.output_directory
 
         # Progress
         background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -54,7 +53,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.export_game_button.hide()
         self.export_game_button.clicked.connect(self.export_game)
         self.clear_game_button.clicked.connect(self.delete_loaded_game)
-        self.output_folder_edit.setText(str(output_directory) if output_directory is not None else "")
         self.output_folder_edit.textChanged.connect(self._on_new_output_directory)
         self.output_folder_button.clicked.connect(self._change_output_folder)
 
@@ -100,6 +98,9 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         else:
             self.seed_number_edit.setText("")
 
+        output_directory = self._options.output_directory
+        self.output_folder_edit.setText(str(output_directory) if output_directory is not None else "")
+
         self.create_spoiler_check.setChecked(self._options.create_spoiler)
         self.remove_hud_popup_check.setChecked(self._options.hud_memo_popup_removal)
         self.include_menu_mod_check.setChecked(self._options.include_menu_mod)
@@ -119,8 +120,19 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             raise ValueError("No game available. Please load one using 'Load Game'")
 
     def _check_has_output_directory(self):
-        if self._options.output_directory is None:
+        output_directory = self._options.output_directory
+
+        if output_directory is None:
             raise ValueError("No output directory. Please select one using 'Select Folder'")
+
+        if output_directory.exists() and not output_directory.is_dir():
+            raise ValueError("'{}' exists but isn't a directory. Please select a directory using 'Select Folder'".format(
+                output_directory))
+
+        try:
+            output_directory.mkdir(parents=True, exist_ok=True)
+        except (FileNotFoundError, OSError) as error:
+            raise ValueError("Unable to use '{}' as directory: {}".format(output_directory, error))
 
     def _check_seed_number_exists(self):
         if self._options.seed_number is None:
@@ -171,10 +183,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         output_folder = Path(output_folder)
 
         with self._options as options:
-            if output_folder.is_dir():
-                options.output_directory = output_folder
-            else:
-                options.output_directory = None
+            options.output_directory = output_folder
 
     def _change_output_folder(self):
         folder = QFileDialog.getExistingDirectory(self)
