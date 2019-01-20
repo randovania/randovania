@@ -31,6 +31,12 @@ class WorldList:
                 return world
         raise KeyError("Unknown asset_id: {}".format(asset_id))
 
+    def area_by_asset_id(self, asset_id: int) -> Area:
+        for area in self.all_areas:
+            if area.area_asset_id == asset_id:
+                return area
+        raise KeyError("Unknown asset_id: {}".format(asset_id))
+
     @property
     def all_areas(self) -> Iterator[Area]:
         for world in self.worlds:

@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Dict
+from typing import Dict, Iterator
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
+from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass, BitPackValue, BitPackDecoder
 from randovania.game_description.resources import PickupEntry
 from randovania.games.prime import default_data
 from randovania.resolver.pickup_quantities import PickupQuantities
@@ -45,12 +45,29 @@ class LayoutDifficulty(BitPackEnum, Enum):
 
 
 @dataclass(frozen=True)
+class LayoutStartingLocation(BitPackValue):
+    def __init__(self):
+        pass
+
+    def bit_pack_format(self) -> Iterator[int]:
+        yield from []
+
+    def bit_pack_arguments(self) -> Iterator[int]:
+        yield from []
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+        return LayoutStartingLocation()
+
+
+@dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
     trick_level: LayoutTrickLevel
     sky_temple_keys: LayoutSkyTempleKeyMode
     item_loss: LayoutEnabledFlag
     elevators: LayoutRandomizedFlag
     pickup_quantities: PickupQuantities
+    starting_location: LayoutStartingLocation
 
     def quantity_for_pickup(self, pickup: PickupEntry) -> int:
         return self.pickup_quantities.get(pickup)
@@ -94,7 +111,8 @@ class LayoutConfiguration(BitPackDataClass):
             sky_temple_keys=sky_temple_keys,
             item_loss=item_loss,
             elevators=elevators,
-            pickup_quantities=PickupQuantities.from_params(pickup_quantities)
+            pickup_quantities=PickupQuantities.from_params(pickup_quantities),
+            starting_location=LayoutStartingLocation(),
         )
 
     @classmethod

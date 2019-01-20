@@ -2,7 +2,7 @@ import shutil
 from pathlib import Path
 from typing import List
 
-from randovania.games.prime import iso_packager, claris_randomizer
+from randovania.games.prime import iso_packager, claris_randomizer, dol_patcher
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
@@ -71,6 +71,12 @@ def apply_layout(layout: LayoutDescription,
     """
     game_files_path = options.game_files_path
     backup_files_path = options.backup_files_path
+
+    if layout.patches.custom_starting_location is not None:
+        dol_patcher.change_starting_spawn(game_files_path, layout.patches.custom_starting_location)
+    else:
+        # TODO: patch the dol with the default starting spawn
+        pass
 
     claris_randomizer.apply_layout(description=layout,
                                    game_root=game_files_path,

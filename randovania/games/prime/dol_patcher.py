@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Tuple, Dict, BinaryIO, Iterator
 
-from randovania.game_description.area import Area
-from randovania.game_description.world import World
+from randovania.game_description.starting_location import StartingLocation
 
 GameVersion = str
 
@@ -75,7 +74,7 @@ def _check_instruction_at(dol: BinaryIO, offset: int, instruction: str, game_ver
             ))
 
 
-def change_starting_spawn(game_root: Path, new_starting_world: World, new_starting_area: Area):
+def change_starting_spawn(game_root: Path, new_starting_location: StartingLocation):
     dol_path = game_root.joinpath("sys", "main.dol")
 
     version = "v1.028"
@@ -86,5 +85,5 @@ def change_starting_spawn(game_root: Path, new_starting_world: World, new_starti
             offset.check_has_instructions(dol, version)
 
         for offset in location_instructions.world_load:
-            offset.write_value(dol, new_starting_world.world_asset_id)
-        location_instructions.area_load.write_value(dol, new_starting_area.area_asset_id)
+            offset.write_value(dol, new_starting_location.world_asset_id)
+        location_instructions.area_load.write_value(dol, new_starting_location.area_asset_id)

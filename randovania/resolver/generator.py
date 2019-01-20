@@ -124,7 +124,7 @@ def _add_elevator_connections_to_patches(permalink: Permalink,
             patches.dock_connection,
             patches.dock_weakness,
             patches.custom_initial_items,
-            patches.custom_starting_area,
+            patches.custom_starting_location,
         )
     else:
         return patches
