@@ -162,9 +162,10 @@ def apply_layout(description: LayoutDescription,
         "-s", str(description.permalink.seed_number),
         "-p", ",".join(str(index) for index in indices),
     ]
-    if description.permalink.layout_configuration.item_loss == LayoutEnabledFlag.DISABLED:
+    layout_configuration = description.permalink.layout_configuration
+    if layout_configuration.item_loss == LayoutEnabledFlag.DISABLED:
         args.append("-i")
-    if description.permalink.layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
+    if layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
 
     description.save_to_file(game_root.joinpath("files", "randovania.json"))

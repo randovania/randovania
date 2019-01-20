@@ -128,11 +128,11 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
 
     initial_game_state = game.initial_states[initial_state_name]
 
-    if patches.custom_starting_area is None:
+    if patches.custom_starting_location is None:
         starting_world = game.world_list.world_by_asset_id(initial_game_state.starting_world_asset_id)
         starting_area = starting_world.area_by_asset_id(initial_game_state.starting_area_asset_id)
     else:
-        starting_area = patches.custom_starting_area
+        starting_area = game.world_list.area_by_asset_id(patches.custom_starting_location.area_asset_id)
 
     starting_node = starting_area.nodes[starting_area.default_node_index]
 
