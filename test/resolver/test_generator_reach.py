@@ -92,7 +92,6 @@ def test_calculate_reach_with_seeds():
     assert (871, 0) == (len(list(second_reach.nodes)), len(second_actions))
 
 
-@pytest.mark.skip(reason="can't reach dark visor")
 def test_calculate_reach_with_all_pickups():
     logic, state, _ = _test_data()
 
