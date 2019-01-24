@@ -61,23 +61,6 @@ class LayoutStartingLocation(BitPackValue):
 
 
 @dataclass(frozen=True)
-class LayoutStartingGear(BitPackValue):
-    has_scan_visor: bool
-    has_charge_beam: bool
-    has_morph_ball: bool
-
-    def bit_pack_format(self) -> Iterator[int]:
-        yield from []
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield from []
-
-    @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
-        return cls()
-
-
-@dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
     trick_level: LayoutTrickLevel
     sky_temple_keys: LayoutSkyTempleKeyMode
