@@ -9,7 +9,7 @@ from randovania.game_description.default_database import default_prime2_pickup_d
 from randovania.game_description.node import PickupNode
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.seed_details_window_ui import Ui_SeedDetailsWindow
-from randovania.resolver.layout_description import LayoutDescription
+from randovania.layout.layout_description import LayoutDescription
 
 
 def _unique(iterable):

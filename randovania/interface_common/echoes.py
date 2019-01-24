@@ -3,8 +3,8 @@ import traceback
 from typing import Callable, Union
 
 from randovania.resolver import generator, debug
-from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.permalink import Permalink
+from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.permalink import Permalink
 
 
 def _generate_layout_worker(output_pipe,

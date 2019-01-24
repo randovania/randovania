@@ -8,14 +8,12 @@ from pathlib import Path
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import TeleporterConnection
-from randovania.games.prime import claris_randomizer, claris_random
 from randovania.resolver import debug, generator, resolver
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
-from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
+from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 
 __all__ = ["create_subparsers"]
 

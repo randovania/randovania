@@ -2,10 +2,9 @@ import collections
 from typing import Dict
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node
 from randovania.game_description.requirements import RequirementSet
-from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
 
 
 class Logic:

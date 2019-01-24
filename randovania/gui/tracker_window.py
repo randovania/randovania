@@ -2,7 +2,7 @@ import functools
 from typing import Optional, Dict, Set, List, Tuple
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QListWidgetItem, QWidget
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
@@ -13,7 +13,7 @@ from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.layout_configuration import LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_resource_gain_to_state

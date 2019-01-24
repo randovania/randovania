@@ -5,7 +5,7 @@ from typing import Dict, Iterator
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass, BitPackValue, BitPackDecoder
 from randovania.game_description.resources import PickupEntry
 from randovania.games.prime import default_data
-from randovania.resolver.pickup_quantities import PickupQuantities
+from randovania.layout.pickup_quantities import PickupQuantities
 
 
 class LayoutTrickLevel(BitPackEnum, Enum):
@@ -105,7 +105,6 @@ class LayoutConfiguration(BitPackDataClass):
                     elevators: LayoutRandomizedFlag,
                     pickup_quantities: Dict[str, int],
                     ) -> "LayoutConfiguration":
-
         return LayoutConfiguration(
             trick_level=trick_level,
             sky_temple_keys=sky_temple_keys,
