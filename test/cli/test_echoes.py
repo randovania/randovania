@@ -2,10 +2,10 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock, ANY
 
 from randovania.cli import echoes
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 
 
 @patch("randovania.resolver.generator.generate_list", autospec=True)

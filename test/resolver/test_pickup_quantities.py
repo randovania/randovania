@@ -3,7 +3,7 @@ from typing import Dict
 import pytest
 
 from randovania.bitpacking.bitpacking import pack_value, BitPackDecoder
-from randovania.resolver.pickup_quantities import PickupQuantities
+from randovania.layout.pickup_quantities import PickupQuantities
 
 
 @pytest.fixture(params=[{"Missile Expansion": 0, "Light Suit": 0, "Super Missile": 0},

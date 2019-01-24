@@ -2,13 +2,13 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 
 
-@patch("randovania.resolver.permalink._dictionary_byte_hash", autospec=True)
+@patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
 def test_encode(mock_dictionary_byte_hash: MagicMock):
     # Setup
     mock_dictionary_byte_hash.return_value = 120
@@ -89,7 +89,7 @@ def test_decode_old_version(permalink: str, version: int):
                               "support only permalink of version {}.".format(version, Permalink.current_version()))
 
 
-@patch("randovania.resolver.permalink._dictionary_byte_hash", autospec=True)
+@patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
 def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
     mock_dictionary_byte_hash.return_value = 120
     # We're mocking the database hash to avoid breaking tests every single time we change the database

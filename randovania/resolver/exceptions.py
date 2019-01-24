@@ -1,4 +1,4 @@
-from randovania.resolver.permalink import Permalink
+from randovania.layout.permalink import Permalink
 
 
 class GenerationFailure(Exception):

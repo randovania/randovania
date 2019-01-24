@@ -8,7 +8,7 @@ import pytest
 import randovania.interface_common.options
 import randovania.interface_common.persisted_options
 from randovania.interface_common.options import Options
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 
 

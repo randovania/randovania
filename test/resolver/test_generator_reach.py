@@ -1,5 +1,4 @@
 import pprint
-from random import Random
 from typing import Tuple, List, Iterator
 
 import pytest
@@ -11,16 +10,14 @@ from randovania.games.prime import default_data
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
-    advance_reach_with_possible_unsafe_resources, \
-    pickup_nodes_that_can_reach
+    advance_reach_with_possible_unsafe_resources
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.resolver.logic import Logic
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
-from randovania.resolver.random_lib import shuffle
-from randovania.resolver.state import State, add_resource_gain_to_state, state_with_pickup
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
+from randovania.resolver.state import State, add_resource_gain_to_state
 
 
 def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:

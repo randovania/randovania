@@ -4,7 +4,7 @@ from typing import List, Iterator, Set, Tuple, FrozenSet, Optional
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import PickupEntry, ResourceInfo
 from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.permalink import Permalink
+from randovania.layout.permalink import Permalink
 
 
 def calculate_item_pool(permalink: Permalink,

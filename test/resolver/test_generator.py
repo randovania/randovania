@@ -1,5 +1,4 @@
 from typing import Iterable, List, Callable, Union
-from typing import Iterable, List, Callable, Union
 from unittest.mock import MagicMock, patch, PropertyMock, ANY
 
 import pytest
@@ -12,11 +11,11 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
 from randovania.resolver import generator, debug
 from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
-from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
+from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 
 skip_generation_tests = pytest.mark.skipif(
     pytest.config.option.skip_generation_tests,
@@ -157,7 +156,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
 
 @skip_generation_tests
 @pytest.mark.parametrize("layout_description", _test_descriptions)
-@patch("randovania.resolver.permalink.Permalink.as_str", new_callable=PropertyMock)
+@patch("randovania.layout.permalink.Permalink.as_str", new_callable=PropertyMock)
 def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
                                      layout_description: LayoutDescription,
                                      echoes_pickup_database: PickupDatabase):

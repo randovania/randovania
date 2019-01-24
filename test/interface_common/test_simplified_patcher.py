@@ -6,10 +6,10 @@ import pytest
 from randovania.game_description.game_patches import GamePatches
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
-from randovania.resolver.layout_configuration import LayoutConfiguration
-from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 
 
 @pytest.mark.parametrize("games_path_exist", [False, True])

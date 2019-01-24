@@ -11,7 +11,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, Node, TeleporterNode, TeleporterConnection
 from randovania.game_description.resources import PickupAssignment
 from randovania.game_description.world_list import WorldList
-from randovania.resolver.permalink import Permalink
+from randovania.layout.permalink import Permalink
 
 
 class SolverPath(NamedTuple):
@@ -82,7 +82,6 @@ def _item_locations_to_pickup_assignment(game: GameDescription,
 def _node_mapping_to_elevator_connection(world_list: WorldList,
                                          elevators: Dict[str, str],
                                          ) -> Dict[int, TeleporterConnection]:
-
     result = {}
     for source_name, target_node in elevators.items():
         source_node: TeleporterNode = world_list.node_from_name(source_name)

@@ -6,7 +6,7 @@ from randovania.games.prime import iso_packager, claris_randomizer, dol_patcher
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
-from randovania.resolver.layout_description import LayoutDescription
+from randovania.layout.layout_description import LayoutDescription
 
 
 def delete_files_location(options: Options, ):

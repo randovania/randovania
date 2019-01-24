@@ -2,13 +2,13 @@ import functools
 from typing import Dict
 
 from PySide2 import QtCore
-from PySide2.QtWidgets import QMainWindow, QLabel, QRadioButton, QComboBox
+from PySide2.QtWidgets import QMainWindow, QLabel, QComboBox
 
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-from randovania.resolver.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutEnabledFlag, \
+from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutEnabledFlag, \
     LayoutSkyTempleKeyMode
 
 

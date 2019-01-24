@@ -15,8 +15,8 @@ from randovania.interface_common import simplified_patcher, game_workdir
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.permalink import Permalink
+from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.permalink import Permalink
 
 
 def show_failed_generation_exception(exception: GenerationFailure):

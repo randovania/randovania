@@ -10,10 +10,10 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterConnection
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
-from randovania.resolver.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
-from randovania.resolver.layout_description import LayoutDescription
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
+from randovania.layout.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
+from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -287,7 +287,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
 @pytest.mark.parametrize("elevators", [False, True])
 @pytest.mark.parametrize("item_loss", [False, True])
 @pytest.mark.parametrize("seed_number", [1000, 8500])
-@patch("randovania.resolver.layout_description.LayoutDescription.save_to_file", autospec=True)
+@patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._calculate_indices", autospec=True)

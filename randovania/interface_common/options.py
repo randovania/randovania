@@ -6,10 +6,10 @@ from typing import Optional, TypeVar, Callable, Any, Dict
 from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
-from randovania.resolver.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
     LayoutTrickLevel, LayoutSkyTempleKeyMode
-from randovania.resolver.patcher_configuration import PatcherConfiguration
-from randovania.resolver.permalink import Permalink
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 
 T = TypeVar("T")
 

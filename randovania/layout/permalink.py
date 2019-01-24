@@ -1,14 +1,13 @@
 import base64
 import binascii
-import hashlib
 import json
 from dataclasses import dataclass
 from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, single_byte_hash
-from randovania.resolver.layout_configuration import LayoutConfiguration
-from randovania.resolver.patcher_configuration import PatcherConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.patcher_configuration import PatcherConfiguration
 
 _PERMALINK_MAX_VERSION = 16
 _PERMALINK_MAX_SEED = 2 ** 31
