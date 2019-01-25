@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List
 
 from randovania.games.prime import iso_packager, claris_randomizer, dol_patcher
+from randovania.games.prime.banner_patcher import patch_game_name_and_id
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
@@ -72,6 +73,8 @@ def apply_layout(layout: LayoutDescription,
     game_files_path = options.game_files_path
     backup_files_path = options.backup_files_path
 
+    patch_game_name_and_id(game_files_path, "Metroid Prime 2: Randomizer - {}".format(layout.shareable_hash))
+
     if layout.patches.custom_starting_location is not None:
         dol_patcher.change_starting_spawn(game_files_path, layout.patches.custom_starting_location)
     else:
@@ -106,7 +109,7 @@ def pack_iso(output_iso: Path,
 
 
 def _output_name_for(layout: LayoutDescription) -> str:
-    return "Echoes Randomizer - {}".format(layout.permalink.as_str)
+    return "Echoes Randomizer - {}".format(layout.shareable_hash)
 
 
 def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
