@@ -1,4 +1,6 @@
+import base64
 import collections
+import hashlib
 import json
 from dataclasses import dataclass
 from distutils.version import StrictVersion
@@ -177,6 +179,12 @@ class LayoutDescription:
             ]
 
         return result
+
+    @property
+    def shareable_hash(self) -> str:
+        bytes_representation = json.dumps(self.as_json).encode()
+        hashed_bytes = hashlib.blake2b(bytes_representation, digest_size=5).digest()
+        return base64.b32encode(hashed_bytes).decode()
 
     def save_to_file(self, json_path: Path):
         with json_path.open("w") as open_file:
