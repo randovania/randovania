@@ -36,6 +36,13 @@ _minimal_restrictions_custom_item_count = {
     46: 100
 }
 
+_events_for_vanilla_item_loss_from_ship = {
+    2,
+    4,
+    71,
+    78,
+}
+
 
 def expand_layout_logic(logic: LayoutTrickLevel) -> Tuple[int, Set[int]]:
     """
