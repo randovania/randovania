@@ -63,7 +63,6 @@ def retcon_playthrough_filler(logic: Logic,
                               rng: Random,
                               status_update: Callable[[str], None],
                               ) -> GamePatches:
-
     debug.debug_print("Major items: {}".format([item.name for item in available_pickups]))
     last_message = "Starting."
 
@@ -107,11 +106,19 @@ def retcon_playthrough_filler(logic: Logic,
 
         if isinstance(action, PickupEntry):
             pickup_index_weight = {
-                pickup_index: 1 / (pickup_index_seen_count[pickup_index] ** 2)
+                pickup_index: 1 / (min(pickup_index_seen_count[pickup_index], 10) ** 2)
                 for pickup_index in current_uncollected.indices
             }
             assert pickup_index_weight, "Pickups should only be added to the actions dict " \
                                         "when there are unassigned pickups"
+
+            # print(">>>>>>>>>>>>>")
+            # world_list = logic.game.world_list
+            # for pickup_index in sorted(current_uncollected.indices, key=lambda x: pickup_index_weight[x]):
+            #     print("{1:.6f} {2:5}: {0}".format(
+            #         world_list.node_name(find_pickup_node_with_index(pickup_index, world_list.all_nodes)),
+            #         pickup_index_weight[pickup_index],
+            #         pickup_index_seen_count[pickup_index]))
 
             pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
 
