@@ -70,7 +70,7 @@ class StartingResources(BitPackValue):
         yield from []
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "StartingResources":
         configuration = StartingResourcesConfiguration.bit_pack_unpack(decoder)
 
         if configuration != StartingResourcesConfiguration.CUSTOM:
@@ -84,7 +84,7 @@ class StartingResources(BitPackValue):
         raise NotImplementedError()
 
     @classmethod
-    def from_non_custom_configuration(cls, configuration: StartingResourcesConfiguration):
+    def from_non_custom_configuration(cls, configuration: StartingResourcesConfiguration) -> "StartingResources":
         if configuration == StartingResourcesConfiguration.CUSTOM:
             raise ValueError("from_non_custom_configuration shouldn't receive CUSTOM configuration")
 
@@ -97,3 +97,16 @@ class StartingResources(BitPackValue):
                 database.get_by_type_and_index(ResourceType.ITEM, index): quantity
                 for index, quantity in items.items()
             })
+
+    @classmethod
+    def default(cls) -> "StartingResources":
+        return cls.from_non_custom_configuration(StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
+
+    @property
+    def as_json(self):
+        return ""
+
+    @classmethod
+    def from_json(cls, value) -> "StartingResources":
+        # TODO: add an actual implementation
+        return cls.default()

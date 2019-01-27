@@ -8,6 +8,7 @@ from pathlib import Path
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
+from randovania.layout.starting_resources import StartingResources
 from randovania.resolver import debug, generator, resolver
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
@@ -44,7 +45,8 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
         sky_temple_keys=LayoutSkyTempleKeyMode(args.sky_temple_keys),
         item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
-        pickup_quantities={}
+        pickup_quantities={},
+        starting_resources=StartingResources.default(),
     )
 
 
