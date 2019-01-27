@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: the ISO name now uses the seed hash instead of the permalink. This avoids issues with the permalink containing /
 - Fixed: Selecting an non-existent directory for Output Directory had inconsistent results
 
+## [0.20.2] - 2019-01-26
+- Fixed: changed release zip to not use BZIP2. This fixes the native windows zip client being unable to extract. 
+
+0.20.1 was skipped due to technical issues.
+
 ## [0.20.0] - 2019-01-13
 - Added: an icon! Thanks to Dyceron for the icon.
 - Added: a simple Tracker to allow knowing where you can go with a given item state
