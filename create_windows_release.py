@@ -21,7 +21,7 @@ prime_database.export_as_binary(default_data.decode_default_prime2(),
 
 subprocess.run([sys.executable, "-m", "PyInstaller", "randovania.spec"])
 
-with zipfile.ZipFile("dist/{}.zip".format(zip_folder), "w", compression=zipfile.ZIP_BZIP2) as release_zip:
+with zipfile.ZipFile("dist/{}.zip".format(zip_folder), "w", compression=zipfile.ZIP_DEFLATED) as release_zip:
     for f in package_folder.glob("**/*"):
         print("Adding", f)
         release_zip.write(f, "{}/{}".format(zip_folder, f.relative_to(package_folder)))
