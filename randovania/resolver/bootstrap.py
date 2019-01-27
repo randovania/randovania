@@ -146,6 +146,7 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
         # "No Requirements"
         game.resource_database.trivial_resource(): 1
     }
+    initial_resources = merge_resources(initial_resources, logic.configuration.starting_resources.resources)
 
     if patches.custom_initial_items is not None:
         initial_resources = merge_resources(initial_resources, patches.custom_initial_items)
