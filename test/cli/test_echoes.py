@@ -6,6 +6,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_resources import StartingResources
 
 
 @patch("randovania.resolver.generator.generate_list", autospec=True)
@@ -34,7 +35,8 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
                 sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
                 item_loss=LayoutEnabledFlag.DISABLED,
                 elevators=LayoutRandomizedFlag.VANILLA,
-                pickup_quantities={}
+                pickup_quantities={},
+                starting_resources=StartingResources.default(),
             ),
         ),
         status_update=ANY

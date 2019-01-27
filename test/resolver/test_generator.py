@@ -9,13 +9,14 @@ from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
-from randovania.resolver import generator, debug
-from randovania.resolver.exceptions import GenerationFailure
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_resources import StartingResources
+from randovania.resolver import generator, debug
+from randovania.resolver.exceptions import GenerationFailure
 
 skip_generation_tests = pytest.mark.skipif(
     pytest.config.option.skip_generation_tests,
@@ -58,7 +59,9 @@ _unused_test_descriptions = [
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={}),
+                                                      pickup_quantities={},
+                                                      starting_resources=StartingResources.default(),
+                                                      ),
         pickup_mapping=[2, 88, 4, 7, 4, 38, 23, 76, 2, 2, 2, 46, 57, 82, 24, 2, 106, 83, 2, 39, 37, 8, 69, 2, 15, 2, 52,
                         109, 1, 19, 2, 2, 91, 8, 2, 75, 8, 86, 2, 2, 79, 4, 43, 4, 2, 13, 0, 2, 2, 2, 4, 2, 4, 2, 4, 2,
                         74, 2, 2, 116, 2, 2, 2, 2, 2, 2, 2, 2, 68, 50, 2, 4, 21, 2, 2, 2, 112, 4, 45, 4, 8, 4, 17, 4, 2,
@@ -72,7 +75,9 @@ _unused_test_descriptions = [
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={
                                                           "Missile Expansion": 0
-                                                      }),
+                                                      },
+                                                      starting_resources=StartingResources.default(),
+                                                      ),
         pickup_mapping=(21, 59, 76, 21, 108, 21, 115, 114, 1, 69, 4, 53, 96, 88, 56, 92, 90, 43, 15, 21, 23, 82, 21, 46,
                         21, 21, 9, 21, 21, 21, 19, 80, 21, 112, 21, 21, 21, 74, 57, 70, 21, 44, 116, 13, 91, 21, 37, 55,
                         38, 86, 64, 45, 52, 27, 102, 21, 21, 21, 8, 75, 117, 105, 118, 78, 26, 21, 21, 21, 109, 21, 21,
@@ -88,12 +93,14 @@ _test_descriptions = [
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={}),
-        pickup_mapping=[2, 19, 8, 46, 4, 2, 4, 74, 75, 38, 24, 2, 2, 13, 118, 27, 2, 17, 2, 4, 102, 2, 2, 23, 2, 2, 2,
-                        2, 52, 2, 2, 4, 4, 39, 1, 0, 2, 2, 2, 7, 59, 53, 2, 8, 88, 43, 37, 2, 2, 8, 17, 2, 57, 2, 2, 4,
-                        2, 17, 4, 2, 116, 2, 2, 2, 2, 2, 82, 68, 86, 2, 17, 112, 2, 109, 8, 4, 8, 2, 4, 15, 92, 100, 2,
-                        8, 4, 4, 83, 91, 114, 11, 2, 106, 2, 21, 115, 2, 79, 8, 4, 8, 2, 44, 45, 2, 4, 2, 76, 2, 2, 50,
-                        2, 2, 117, 2, 2, 2, 2, 4, 69]
+                                                      pickup_quantities={},
+                                                      starting_resources=StartingResources.default(),
+                                                      ),
+        pickup_mapping=[19, 2, 8, 46, 4, 118, 2, 74, 75, 38, 24, 4, 2, 13, 2, 27, 2, 17, 2, 4, 102, 2, 2, 23, 2, 2, 2,
+                        2, 52, 2, 2, 4, 4, 39, 1, 0, 2, 2, 2, 7, 59, 53, 2, 8, 88, 43, 37, 2, 2, 68, 8, 17, 57, 2, 2, 2,
+                        4, 2, 109, 17, 116, 11, 4, 2, 2, 2, 82, 92, 86, 2, 2, 112, 2, 2, 17, 2, 8, 4, 8, 15, 114, 100,
+                        2, 4, 2, 8, 83, 91, 4, 4, 2, 106, 2, 21, 115, 79, 2, 8, 4, 8, 44, 2, 45, 2, 4, 2, 2, 2, 2, 50,
+                        76, 2, 2, 117, 2, 2, 2, 4, 69]
 
         ,
     ),
@@ -105,11 +112,13 @@ _test_descriptions = [
                                                       pickup_quantities={
                                                           "Light Suit": 2,
                                                           "Darkburst": 0
-                                                      }),
-        pickup_mapping=[2, 2, 23, 109, 39, 2, 38, 45, 117, 8, 17, 4, 2, 88, 21, 2, 2, 83, 4, 2, 43, 37, 2, 4, 2, 53, 13,
-                        102, 82, 2, 8, 2, 2, 2, 2, 24, 4, 2, 76, 59, 57, 118, 1, 2, 7, 115, 2, 52, 2, 2, 116, 8, 4, 19,
-                        2, 2, 0, 17, 2, 24, 2, 8, 4, 2, 69, 17, 4, 75, 8, 2, 8, 79, 2, 2, 2, 4, 17, 46, 2, 2, 15, 4, 2,
-                        74, 2, 4, 50, 106, 2, 8, 11, 4, 4, 2, 91, 2, 2, 100, 86, 4, 2, 2, 92, 2, 112, 2, 114, 2, 2, 2,
+                                                      },
+                                                      starting_resources=StartingResources.default(),
+                                                      ),
+        pickup_mapping=[117, 2, 23, 109, 39, 45, 38, 2, 2, 8, 17, 4, 2, 88, 21, 2, 2, 83, 4, 2, 43, 37, 2, 4, 2, 2, 13,
+                        102, 82, 76, 8, 53, 118, 2, 2, 2, 2, 24, 4, 2, 57, 116, 1, 59, 2, 7, 24, 52, 2, 2, 19, 2, 4, 8,
+                        69, 2, 2, 0, 17, 2, 2, 115, 8, 4, 2, 17, 4, 75, 46, 8, 2, 79, 8, 2, 15, 2, 2, 4, 17, 2, 2, 4, 2,
+                        74, 2, 50, 106, 4, 2, 8, 4, 11, 4, 91, 2, 2, 2, 100, 86, 4, 2, 2, 92, 2, 112, 2, 114, 2, 2, 2,
                         2, 2, 8, 2, 44, 4, 2, 2, 68]
 
         ,
@@ -119,7 +128,9 @@ _test_descriptions = [
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={}),
+                                                      pickup_quantities={},
+                                                      starting_resources=StartingResources.default(),
+                                                      ),
         pickup_mapping=[8, 2, 4, 2, 21, 2, 38, 115, 2, 2, 86, 2, 2, 2, 8, 109, 76, 44, 100, 2, 8, 2, 4, 8, 2, 116, 2,
                         69, 2, 57, 2, 4, 2, 4, 8, 17, 2, 11, 117, 8, 39, 2, 2, 53, 27, 2, 2, 59, 2, 2, 79, 4, 24, 2, 2,
                         4, 46, 17, 4, 2, 1, 17, 74, 8, 2, 4, 43, 17, 13, 2, 118, 88, 4, 2, 2, 15, 2, 2, 8, 45, 112, 2,
@@ -140,7 +151,9 @@ def test_generate_seed_with_invalid_quantity_configuration():
         sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
         item_loss=LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
-        pickup_quantities={"Light Suit": 5})
+        pickup_quantities={"Light Suit": 5},
+        starting_resources=StartingResources.default(),
+    )
 
     permalink = Permalink(
         seed_number=50,
@@ -216,7 +229,9 @@ def test_create_patches(mock_random: MagicMock,
                                                     sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                     item_loss=LayoutEnabledFlag.DISABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
-                                                    pickup_quantities={})
+                                                    pickup_quantities={},
+                                                    starting_resources=StartingResources.default(),
+                                                    )
     permalink = Permalink(
         seed_number=seed_number,
         spoiler=True,

@@ -10,6 +10,7 @@ import randovania.interface_common.persisted_options
 from randovania.interface_common.options import Options
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
+from randovania.layout.starting_resources import StartingResources
 
 
 @pytest.fixture(name="option")
@@ -174,6 +175,7 @@ _sample_layout_configurations = [
         "item_loss": item_loss,
         "elevators": LayoutRandomizedFlag.RANDOMIZED,
         "pickup_quantities": {},
+        "starting_resources": StartingResources.default(),
     }
     for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.HARD, LayoutTrickLevel.MINIMAL_RESTRICTIONS]
     for item_loss in LayoutEnabledFlag

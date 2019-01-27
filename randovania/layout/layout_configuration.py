@@ -6,6 +6,7 @@ from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass, BitP
 from randovania.game_description.resources import PickupEntry
 from randovania.games.prime import default_data
 from randovania.layout.pickup_quantities import PickupQuantities
+from randovania.layout.starting_resources import StartingResources
 
 
 class LayoutTrickLevel(BitPackEnum, Enum):
@@ -68,6 +69,7 @@ class LayoutConfiguration(BitPackDataClass):
     elevators: LayoutRandomizedFlag
     pickup_quantities: PickupQuantities
     starting_location: LayoutStartingLocation
+    starting_resources: StartingResources
 
     def quantity_for_pickup(self, pickup: PickupEntry) -> int:
         return self.pickup_quantities.get(pickup)
@@ -85,6 +87,7 @@ class LayoutConfiguration(BitPackDataClass):
             "item_loss": self.item_loss.value,
             "elevators": self.elevators.value,
             "pickup_quantities": self.pickup_quantities.as_json,
+            "starting_resources": self.starting_resources.as_json,
         }
 
     @classmethod
@@ -95,6 +98,7 @@ class LayoutConfiguration(BitPackDataClass):
             item_loss=LayoutEnabledFlag(json_dict["item_loss"]),
             elevators=LayoutRandomizedFlag(json_dict["elevators"]),
             pickup_quantities=json_dict["pickup_quantities"],
+            starting_resources=StartingResources.from_json(json_dict["starting_resources"]),
         )
 
     @classmethod
@@ -104,6 +108,7 @@ class LayoutConfiguration(BitPackDataClass):
                     item_loss: LayoutEnabledFlag,
                     elevators: LayoutRandomizedFlag,
                     pickup_quantities: Dict[str, int],
+                    starting_resources: StartingResources,
                     ) -> "LayoutConfiguration":
         return LayoutConfiguration(
             trick_level=trick_level,
@@ -112,6 +117,7 @@ class LayoutConfiguration(BitPackDataClass):
             elevators=elevators,
             pickup_quantities=PickupQuantities.from_params(pickup_quantities),
             starting_location=LayoutStartingLocation(),
+            starting_resources=starting_resources,
         )
 
     @classmethod
@@ -121,5 +127,6 @@ class LayoutConfiguration(BitPackDataClass):
             sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
             item_loss=LayoutEnabledFlag.ENABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
-            pickup_quantities={}
+            pickup_quantities={},
+            starting_resources=StartingResources.default(),
         )

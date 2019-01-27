@@ -7,6 +7,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node, PickupNode
 from randovania.games.prime import default_data
+from randovania.layout.starting_resources import StartingResources
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
@@ -31,7 +32,9 @@ def _test_data():
                                                     sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
                                                     item_loss=LayoutEnabledFlag.ENABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
-                                                    pickup_quantities={})
+                                                    pickup_quantities={},
+                                                    starting_resources=StartingResources.default(),
+                                                    )
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,

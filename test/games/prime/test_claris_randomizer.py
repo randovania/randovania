@@ -14,6 +14,7 @@ from randovania.layout.layout_configuration import LayoutEnabledFlag, LayoutRand
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_resources import StartingResources
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -325,6 +326,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                 item_loss=LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED,
                 elevators=LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA,
                 pickup_quantities={},
+                starting_resources=StartingResources.default(),
             )
         ),
         patches=GamePatches.empty(),

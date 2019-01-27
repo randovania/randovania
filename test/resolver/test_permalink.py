@@ -6,6 +6,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_resources import StartingResources
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
@@ -59,6 +60,7 @@ def test_decode_invalid(invalid: str):
             "Missile Expansion": 10,
             "Light Suit": 9,
         },
+        starting_resources=StartingResources.default(),
     ),
 ])
 def test_round_trip(spoiler: bool,
@@ -114,6 +116,7 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
                 "Missile Expansion": 10,
                 "Light Suit": 9,
             },
+            starting_resources=StartingResources.default(),
         ),
     )
 
