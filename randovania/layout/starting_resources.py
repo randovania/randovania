@@ -104,9 +104,13 @@ class StartingResources(BitPackValue):
 
     @property
     def as_json(self):
-        return ""
+        return self.configuration.value
 
     @classmethod
     def from_json(cls, value) -> "StartingResources":
         # TODO: add an actual implementation
-        return cls.default()
+        return cls.from_non_custom_configuration(StartingResourcesConfiguration(value))
+
+    @property
+    def resources(self) -> Dict[SimpleResourceInfo, int]:
+        return self._resources
