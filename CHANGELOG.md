@@ -6,8 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.20.1] - 2019-01-26
+## [0.20.2] - 2019-01-26
 - Fixed: changed release zip to not use BZIP2. This fixes the native windows zip client being unable to extract. 
+
+0.20.1 was skipped due to technical issues.
 
 ## [0.20.0] - 2019-01-13
 - Added: an icon! Thanks to Dyceron for the icon.
