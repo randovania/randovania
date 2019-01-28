@@ -70,3 +70,13 @@ def test_missing_item_for_constructor_should_raise():
         StartingResources(StartingResourcesConfiguration.CUSTOM, {})
 
     assert str(err.value).startswith("resources {} has missing items: ")
+
+
+def test_raise_for_pickup_above_maximum():
+    database = default_database.default_prime2_resource_database()
+
+    with pytest.raises(ValueError) as err:
+        StartingResources(StartingResourcesConfiguration.CUSTOM,
+                          {item: 10 for item in database.item})
+
+    assert str(err.value) == "Item I: Power Beam has a maximum of 1, got 10"
