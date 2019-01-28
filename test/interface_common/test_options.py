@@ -10,6 +10,7 @@ import randovania.interface_common.persisted_options
 from randovania.interface_common.options import Options
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
+from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 
 
@@ -175,6 +176,7 @@ _sample_layout_configurations = [
         "item_loss": item_loss,
         "elevators": LayoutRandomizedFlag.RANDOMIZED,
         "pickup_quantities": {},
+        "starting_location": StartingLocation.default(),
         "starting_resources": StartingResources.default(),
     }
     for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.HARD, LayoutTrickLevel.MINIMAL_RESTRICTIONS]

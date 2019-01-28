@@ -14,6 +14,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 from randovania.resolver import generator, debug
 from randovania.resolver.exceptions import GenerationFailure
@@ -60,6 +61,7 @@ _unused_test_descriptions = [
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={},
+                                                      starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
         pickup_mapping=[2, 88, 4, 7, 4, 38, 23, 76, 2, 2, 2, 46, 57, 82, 24, 2, 106, 83, 2, 39, 37, 8, 69, 2, 15, 2, 52,
@@ -76,6 +78,7 @@ _unused_test_descriptions = [
                                                       pickup_quantities={
                                                           "Missile Expansion": 0
                                                       },
+                                                      starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
         pickup_mapping=(21, 59, 76, 21, 108, 21, 115, 114, 1, 69, 4, 53, 96, 88, 56, 92, 90, 43, 15, 21, 23, 82, 21, 46,
@@ -94,6 +97,7 @@ _test_descriptions = [
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={},
+                                                      starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
         pickup_mapping=[19, 2, 8, 46, 4, 118, 2, 74, 75, 38, 24, 4, 2, 13, 2, 27, 2, 17, 2, 4, 102, 2, 2, 23, 2, 2, 2,
@@ -113,6 +117,7 @@ _test_descriptions = [
                                                           "Light Suit": 2,
                                                           "Darkburst": 0
                                                       },
+                                                      starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
         pickup_mapping=[117, 2, 23, 109, 39, 45, 38, 2, 2, 8, 17, 4, 2, 88, 21, 2, 2, 83, 4, 2, 43, 37, 2, 4, 2, 2, 13,
@@ -129,6 +134,7 @@ _test_descriptions = [
                                                       item_loss=LayoutEnabledFlag.ENABLED,
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={},
+                                                      starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
         pickup_mapping=[8, 2, 4, 2, 21, 2, 38, 115, 2, 2, 86, 2, 2, 2, 8, 109, 76, 44, 100, 2, 8, 2, 4, 8, 2, 116, 2,
@@ -152,6 +158,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
         item_loss=LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
         pickup_quantities={"Light Suit": 5},
+        starting_location=StartingLocation.default(),
         starting_resources=StartingResources.default(),
     )
 
@@ -230,6 +237,7 @@ def test_create_patches(mock_random: MagicMock,
                                                     item_loss=LayoutEnabledFlag.DISABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={},
+                                                    starting_location=StartingLocation.default(),
                                                     starting_resources=StartingResources.default(),
                                                     )
     permalink = Permalink(

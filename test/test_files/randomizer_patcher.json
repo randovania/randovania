@@ -1,0 +1,138 @@
+{
+  "spawn_point": {
+    "location": {
+      "world_asset_id": 1006255871,
+      "area_asset_id": 494654382
+    },
+    "amount": [
+      {
+        "index": 0,
+        "amount": 1
+      },
+      {
+        "index": 8,
+        "amount": 1
+      },
+      {
+        "index": 9,
+        "amount": 1
+      }
+    ],
+    "capacity": [
+      {
+        "index": 0,
+        "amount": 1
+      },
+      {
+        "index": 8,
+        "amount": 1
+      },
+      {
+        "index": 9,
+        "amount": 1
+      }
+    ]
+  },
+
+  "docks": [
+    {
+      "location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+
+      "dock_index": 0,
+      "__comment_dock_index": "To identify which dock in the area. Would use the same number than in the logic data",
+
+      "connected_area_asset_id": 1655756413,
+
+      "connected_dock_index": 0,
+      "__comment_connected_dock_index": "The type of the connected dock should match this",
+
+      "dock_weakness_type": 1,
+      "__comment_weakness_type": "Would be an index of the 'Door Weakness' in logic data"
+    }
+  ],
+
+  "pickups": [
+    {
+      "location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "pickup_index": 0,
+      "__comment_pickup_index": "For when an area has more than one pickup. Alternatively, remove the `location` field and this uses the same index number there currently is.",
+
+      "model": 1234,
+      "__comment_model": "The asset this pickup uses in the world",
+
+      "scan": "This is a description.",
+      "__comment_scan": "What is provided when the pickup is scanned. Does this need a separate model?",
+
+      "__comment_resources": "The items this pickup gives.",
+      "resources": [
+        {
+          "index": 0,
+          "amount": 1
+        },
+        {
+          "index": 8,
+          "amount": 1
+        }
+      ]
+    }
+  ],
+  "__comment_pickups": "An error is raised if there's a pickup missing from the list.",
+
+  "elevators": [
+    {
+      "origin_location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "target_location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "__comment_target_location": "This location does not necessarily contains an elevator.",
+      "room_name": "Transport to Somewhere Else"
+    }
+  ],
+  "__comment_elevators": "An error is raised if there's an elevator missing from the list.",
+
+  "translator_gates": [
+    {
+      "location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "gate_index": 0,
+      "__comment_gate_index": "For when an area has more than one gate",
+
+      "translator_index": 12,
+      "__comment_translator_index": "The item index of the translator needed. The gate's color is updated accordingly."
+    }
+  ],
+
+  "area_patches": [
+    {
+      "location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "starting_layer": 123,
+      "__comment_starting_layer": "The idea would be a generic API that allows for things like 'Disable IL cutscene in Hive Chamber B'. If this isn't that usable, see `specific_patches`"
+    }
+  ],
+
+  "specific_patches": {
+    "hive_chamber_b_post_state": true,
+    "__comment_hive_chamber_b_post_state": "Current IL removal code.",
+
+    "intro_in_post_state": true,
+    "__comment_intro_in_post_state": "The rooms between Ship and Hive Chamber B are in the state they would be after the player goes through then",
+
+    "warp_to_starting_spawn": true,
+    "__comment_warp_to_starting_spawn": "Adds a user-activated tool that warps the player to Ship (or where the player started this game). Could be from Save Stations or anywhere similar to Menu Mod."
+  }
+}

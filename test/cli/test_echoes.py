@@ -6,6 +6,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 
 
@@ -36,6 +37,7 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
                 item_loss=LayoutEnabledFlag.DISABLED,
                 elevators=LayoutRandomizedFlag.VANILLA,
                 pickup_quantities={},
+                starting_location=StartingLocation.default(),
                 starting_resources=StartingResources.default(),
             ),
         ),

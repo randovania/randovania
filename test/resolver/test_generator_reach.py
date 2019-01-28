@@ -7,6 +7,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node, PickupNode
 from randovania.games.prime import default_data
+from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
@@ -33,6 +34,7 @@ def _test_data():
                                                     item_loss=LayoutEnabledFlag.ENABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={},
+                                                    starting_location=StartingLocation.default(),
                                                     starting_resources=StartingResources.default(),
                                                     )
     permalink = Permalink(
