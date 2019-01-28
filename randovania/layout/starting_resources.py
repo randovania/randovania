@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Dict
+from typing import Iterator, Dict, Union, List
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
 from randovania.game_description import default_database
-from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo
 
 _vanilla_item_loss_enabled_items = {
@@ -30,6 +29,14 @@ _vanilla_item_loss_disabled_items: Dict[int, int] = {
     44: 5,  # Missile
 }
 
+_items_with_custom_maximum = {
+    42: 12,  # Energy Tank
+    43: 10,  # Power Bomb
+    44: 255,  # Missile
+    45: 250,  # Dark Ammo
+    46: 250,  # Light Ammo
+}
+
 
 class StartingResourcesConfiguration(BitPackEnum, Enum):
     VANILLA_ITEM_LOSS_ENABLED = "vanilla-item-loss-enabled"
@@ -51,23 +58,29 @@ class StartingResources(BitPackValue):
     configuration: StartingResourcesConfiguration
     _resources: Dict[SimpleResourceInfo, int]
 
+    def __post_init__(self):
+        database = default_database.default_prime2_resource_database()
+        missing_items = [item.long_name for item in database.item if item not in self._resources]
+        if missing_items:
+            raise ValueError("resources {} has missing items: {}".format(
+                self._resources, missing_items
+            ))
+
     def bit_pack_format(self) -> Iterator[int]:
         yield from self.configuration.bit_pack_format()
 
-        if self.configuration != StartingResourcesConfiguration.CUSTOM:
-            return
-
-        # TODO: pack custom format
-        yield from []
+        if self.configuration == StartingResourcesConfiguration.CUSTOM:
+            database = default_database.default_prime2_resource_database()
+            for item in database.item:
+                yield _items_with_custom_maximum.get(item.index, 1)
 
     def bit_pack_arguments(self) -> Iterator[int]:
         yield from self.configuration.bit_pack_arguments()
 
-        if self.configuration != StartingResourcesConfiguration.CUSTOM:
-            return
-
-        # TODO: pack custom format
-        yield from []
+        if self.configuration == StartingResourcesConfiguration.CUSTOM:
+            database = default_database.default_prime2_resource_database()
+            for item in database.item:
+                yield self.resources[item]
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "StartingResources":
@@ -76,40 +89,47 @@ class StartingResources(BitPackValue):
         if configuration != StartingResourcesConfiguration.CUSTOM:
             return cls.from_non_custom_configuration(configuration)
 
-        # TODO: unpack custom format
-        if not decoder:
-            items = {}
-            return cls(configuration, items)
+        database = default_database.default_prime2_resource_database()
 
-        raise NotImplementedError()
+        items = {}
+        for item in database.item:
+            maximum = _items_with_custom_maximum.get(item.index, 1)
+            items[item] = decoder.decode(maximum)[0]
+
+        return cls(configuration, items)
 
     @classmethod
     def from_non_custom_configuration(cls, configuration: StartingResourcesConfiguration) -> "StartingResources":
         if configuration == StartingResourcesConfiguration.CUSTOM:
             raise ValueError("from_non_custom_configuration shouldn't receive CUSTOM configuration")
 
-        items = _reference_starting_equipment[configuration]
+        reference_items = _reference_starting_equipment[configuration]
         database = default_database.default_prime2_resource_database()
 
-        return cls(
-            configuration,
-            {
-                database.get_by_type_and_index(ResourceType.ITEM, index): quantity
-                for index, quantity in items.items()
-            })
+        items = {}
+        for item in database.item:
+            items[item] = reference_items.get(item.index, 0)
+
+        return cls(configuration, items)
 
     @classmethod
     def default(cls) -> "StartingResources":
         return cls.from_non_custom_configuration(StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
 
     @property
-    def as_json(self):
-        return self.configuration.value
+    def as_json(self) -> Union[str, List[int]]:
+        if self.configuration != StartingResourcesConfiguration.CUSTOM:
+            return self.configuration.value
+        else:
+            return list(self._resources.values())
 
     @classmethod
-    def from_json(cls, value) -> "StartingResources":
-        # TODO: add an actual implementation
-        return cls.from_non_custom_configuration(StartingResourcesConfiguration(value))
+    def from_json(cls, value: Union[str, List[int]]) -> "StartingResources":
+        if isinstance(value, str):
+            return cls.from_non_custom_configuration(StartingResourcesConfiguration(value))
+        else:
+            database = default_database.default_prime2_resource_database()
+            return cls(StartingResourcesConfiguration.CUSTOM, dict(zip(database.item, value)))
 
     @property
     def resources(self) -> Dict[SimpleResourceInfo, int]:
