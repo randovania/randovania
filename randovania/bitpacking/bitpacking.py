@@ -96,3 +96,14 @@ def pack_value(value: BitPackValue) -> bytes:
         for v in value.bit_pack_format()
     )
     return bitstruct.compile(f).pack(*value.bit_pack_arguments())
+
+
+def round_trip(value: BitPackValue):
+    """
+    Encodes the given value and then recreates it using the encoded value
+    :param value:
+    :return:
+    """
+    b = pack_value(value)
+    decoder = BitPackDecoder(b)
+    return value.__class__.bit_pack_unpack(decoder)
