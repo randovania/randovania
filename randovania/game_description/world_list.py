@@ -3,6 +3,7 @@ import re
 from typing import List, Dict, Iterator, Tuple, FrozenSet, Iterable
 
 from randovania.game_description.area import Area
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode, TeleporterConnection, DockConnection
 from randovania.game_description.requirements import RequirementSet
@@ -36,6 +37,12 @@ class WorldList:
             if area.area_asset_id == asset_id:
                 return area
         raise KeyError("Unknown asset_id: {}".format(asset_id))
+
+    def world_with_area(self, area: Area) -> World:
+        for world in self.worlds:
+            if area in world.areas:
+                return world
+        raise KeyError("Unknown area: {}".format(area))
 
     @property
     def all_areas(self) -> Iterator[Area]:
@@ -174,6 +181,9 @@ class WorldList:
                         results.add(individual.resource)
 
         return frozenset(results)
+
+    def area_by_area_location(self, location: AreaLocation) -> Area:
+        return self.world_by_asset_id(location.world_asset_id).area_by_asset_id(location.area_asset_id)
 
 
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):

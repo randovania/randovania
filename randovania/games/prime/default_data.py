@@ -1,6 +1,5 @@
 import functools
 import json
-import os
 
 from randovania import get_data_path
 from randovania.games.prime.binary_data import decode_file_path

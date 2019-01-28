@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Iterator, Optional, Union
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
+from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 
 
@@ -29,17 +30,37 @@ class StartingLocation(BitPackValue):
 
     def bit_pack_format(self) -> Iterator[int]:
         yield from self.configuration.bit_pack_format()
-        # TODO: pack the custom location
+
+        if self._custom_location is not None:
+            world_list = default_database.default_prime2_game_description(False).world_list
+            yield len(list(world_list.all_areas))
 
     def bit_pack_arguments(self) -> Iterator[int]:
         yield from self.configuration.bit_pack_arguments()
-        # TODO: pack the custom location
+
+        if self._custom_location is not None:
+            world_list = default_database.default_prime2_game_description(False).world_list
+            area = world_list.area_by_area_location(self._custom_location)
+            areas = list(world_list.all_areas)
+
+            yield areas.index(area)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "StartingLocation":
         configuration = StartingLocationConfiguration.bit_pack_unpack(decoder)
-        # TODO: unpack the custom location
-        return cls(configuration, None)
+        location = None
+
+        if configuration != StartingLocationConfiguration.CUSTOM:
+            world_list = default_database.default_prime2_game_description(False).world_list
+            areas = list(world_list.all_areas)
+
+            area_index = decoder.decode(len(areas))[0]
+            area = areas[area_index]
+
+            location = AreaLocation(world_list.world_with_area(area).world_asset_id,
+                                    area.area_asset_id)
+
+        return cls(configuration, location)
 
     @classmethod
     def default(cls) -> "StartingLocation":
@@ -58,4 +79,3 @@ class StartingLocation(BitPackValue):
             return cls(StartingLocationConfiguration(value), None)
         else:
             return cls(StartingLocationConfiguration.CUSTOM, AreaLocation.from_json(value))
-
