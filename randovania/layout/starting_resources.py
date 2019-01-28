@@ -66,6 +66,11 @@ class StartingResources(BitPackValue):
                 self._resources, missing_items
             ))
 
+        for item, quantity in self._resources.items():
+            maximum = _items_with_custom_maximum.get(item.index, 1)
+            if quantity > maximum:
+                raise ValueError("Item {} has a maximum of {}, got {}".format(item, maximum, quantity))
+
     def bit_pack_format(self) -> Iterator[int]:
         yield from self.configuration.bit_pack_format()
 
