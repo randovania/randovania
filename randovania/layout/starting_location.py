@@ -13,6 +13,11 @@ class StartingLocationConfiguration(BitPackEnum, Enum):
     CUSTOM = "custom"
 
 
+def _areas_list():
+    world_list = default_database.default_prime2_game_description(False).world_list
+    return world_list, list(world_list.all_areas)
+
+
 @dataclass(frozen=True)
 class StartingLocation(BitPackValue):
     configuration: StartingLocationConfiguration
@@ -32,16 +37,14 @@ class StartingLocation(BitPackValue):
         yield from self.configuration.bit_pack_format()
 
         if self._custom_location is not None:
-            world_list = default_database.default_prime2_game_description(False).world_list
-            yield len(list(world_list.all_areas))
+            yield len(_areas_list()[1])
 
     def bit_pack_arguments(self) -> Iterator[int]:
         yield from self.configuration.bit_pack_arguments()
 
         if self._custom_location is not None:
-            world_list = default_database.default_prime2_game_description(False).world_list
+            world_list, areas = _areas_list()
             area = world_list.area_by_area_location(self._custom_location)
-            areas = list(world_list.all_areas)
 
             yield areas.index(area)
 
@@ -50,9 +53,8 @@ class StartingLocation(BitPackValue):
         configuration = StartingLocationConfiguration.bit_pack_unpack(decoder)
         location = None
 
-        if configuration != StartingLocationConfiguration.CUSTOM:
-            world_list = default_database.default_prime2_game_description(False).world_list
-            areas = list(world_list.all_areas)
+        if configuration == StartingLocationConfiguration.CUSTOM:
+            world_list, areas = _areas_list()
 
             area_index = decoder.decode(len(areas))[0]
             area = areas[area_index]
