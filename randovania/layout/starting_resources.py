@@ -72,7 +72,7 @@ class StartingResources(BitPackValue):
         if self.configuration == StartingResourcesConfiguration.CUSTOM:
             database = default_database.default_prime2_resource_database()
             for item in database.item:
-                yield _items_with_custom_maximum.get(item.index, 1)
+                yield _items_with_custom_maximum.get(item.index, 1) + 1
 
     def bit_pack_arguments(self) -> Iterator[int]:
         yield from self.configuration.bit_pack_arguments()
@@ -94,7 +94,7 @@ class StartingResources(BitPackValue):
         items = {}
         for item in database.item:
             maximum = _items_with_custom_maximum.get(item.index, 1)
-            items[item] = decoder.decode(maximum)[0]
+            items[item] = decoder.decode(maximum + 1)[0]
 
         return cls(configuration, items)
 
