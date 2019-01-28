@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, Iterator
+from typing import Dict
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass, BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.game_description.resources import PickupEntry
 from randovania.games.prime import default_data
 from randovania.layout.pickup_quantities import PickupQuantities
+from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 
 
@@ -46,29 +47,13 @@ class LayoutDifficulty(BitPackEnum, Enum):
 
 
 @dataclass(frozen=True)
-class LayoutStartingLocation(BitPackValue):
-    def __init__(self):
-        pass
-
-    def bit_pack_format(self) -> Iterator[int]:
-        yield from []
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield from []
-
-    @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
-        return cls()
-
-
-@dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
     trick_level: LayoutTrickLevel
     sky_temple_keys: LayoutSkyTempleKeyMode
     item_loss: LayoutEnabledFlag
     elevators: LayoutRandomizedFlag
     pickup_quantities: PickupQuantities
-    starting_location: LayoutStartingLocation
+    starting_location: StartingLocation
     starting_resources: StartingResources
 
     def quantity_for_pickup(self, pickup: PickupEntry) -> int:
@@ -87,6 +72,7 @@ class LayoutConfiguration(BitPackDataClass):
             "item_loss": self.item_loss.value,
             "elevators": self.elevators.value,
             "pickup_quantities": self.pickup_quantities.as_json,
+            "starting_location": self.starting_location.as_json,
             "starting_resources": self.starting_resources.as_json,
         }
 
@@ -98,6 +84,7 @@ class LayoutConfiguration(BitPackDataClass):
             item_loss=LayoutEnabledFlag(json_dict["item_loss"]),
             elevators=LayoutRandomizedFlag(json_dict["elevators"]),
             pickup_quantities=json_dict["pickup_quantities"],
+            starting_location=StartingLocation.from_json(json_dict["starting_location"]),
             starting_resources=StartingResources.from_json(json_dict["starting_resources"]),
         )
 
@@ -108,6 +95,7 @@ class LayoutConfiguration(BitPackDataClass):
                     item_loss: LayoutEnabledFlag,
                     elevators: LayoutRandomizedFlag,
                     pickup_quantities: Dict[str, int],
+                    starting_location: StartingLocation,
                     starting_resources: StartingResources,
                     ) -> "LayoutConfiguration":
         return LayoutConfiguration(
@@ -116,7 +104,7 @@ class LayoutConfiguration(BitPackDataClass):
             item_loss=item_loss,
             elevators=elevators,
             pickup_quantities=PickupQuantities.from_params(pickup_quantities),
-            starting_location=LayoutStartingLocation(),
+            starting_location=starting_location,
             starting_resources=starting_resources,
         )
 
@@ -128,5 +116,6 @@ class LayoutConfiguration(BitPackDataClass):
             item_loss=LayoutEnabledFlag.ENABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
             pickup_quantities={},
+            starting_location=StartingLocation.default(),
             starting_resources=StartingResources.default(),
         )
