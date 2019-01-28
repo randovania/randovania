@@ -107,7 +107,6 @@ def test_base_args(mock_get_data_path: MagicMock,
     expected_results = [
         Path("data", "ClarisPrimeRandomizer", "Randomizer.exe"),
         Path("root", "files"),
-        "-r"
     ]
     if hud_memo_popup_removal:
         expected_results.append("-h")
