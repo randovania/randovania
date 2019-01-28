@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Game name is now changed to 'Metroid Prime 2: Randomizer - SEEDHASH'. Seed hash is a 8 letter/number
     combination that identifies the seed being played.
 - Changed: the ISO name now uses the seed hash instead of the permalink. This avoids issues with the permalink containing /
+- Changed: now using Claris' Randomizer version 4.0 beta
 - Fixed: Selecting an non-existent directory for Output Directory had inconsistent results
 
 ## [0.20.2] - 2019-01-26

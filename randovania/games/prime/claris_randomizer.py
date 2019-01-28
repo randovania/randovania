@@ -63,7 +63,6 @@ def _base_args(game_root: Path,
     args = [
         _get_randomizer_path(),
         game_files,
-        "-r",  # disable read key when finished, since it would crash
     ]
     if hud_memo_popup_removal:
         args.append("-h")
