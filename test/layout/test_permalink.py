@@ -26,7 +26,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "EAAAfReMYK4="
+    assert encoded == "EAAAfReMYAB2"
 
 
 @pytest.mark.parametrize("invalid", [
