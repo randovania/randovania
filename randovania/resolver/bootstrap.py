@@ -161,6 +161,11 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
 
     add_resource_gain_to_state(starting_state, initial_game_state.initial_resources)
 
+    # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
+    keys_to_remove = [resource for resource, quantity in initial_resources.items() if quantity == 0]
+    for resource in keys_to_remove:
+        del initial_resources[resource]
+
     return starting_state
 
 
