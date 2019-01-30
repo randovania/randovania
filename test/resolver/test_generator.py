@@ -248,6 +248,7 @@ def test_create_patches(mock_random: MagicMock,
     )
     mock_calculate_item_pool.return_value = list(sorted(game.pickup_database.original_pickup_mapping.values()))
     mock_sky_temple_key_distribution_logic.return_value.custom_starting_location = None
+    mock_sky_temple_key_distribution_logic.return_value.custom_initial_items = None
 
     filler_patches = mock_retcon_playthrough_filler.return_value
 
