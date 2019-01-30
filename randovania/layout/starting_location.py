@@ -30,7 +30,7 @@ class StartingLocation(BitPackValue):
         else:
             if self.configuration != StartingLocationConfiguration.CUSTOM:
                 raise ValueError("custom_location set to {}, but configuration is {} instead of CUSTOM".format(
-                    self._custom_location, self.configuration
+                    self._custom_location, str(self.configuration)
                 ))
 
     def bit_pack_format(self) -> Iterator[int]:
