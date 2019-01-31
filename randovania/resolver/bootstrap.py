@@ -7,7 +7,7 @@ from randovania.game_description.resources import merge_resources, ResourceDatab
 from randovania.resolver import debug
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutEnabledFlag
 from randovania.resolver.logic import Logic
-from randovania.resolver.state import State, add_resource_gain_to_state
+from randovania.resolver.state import State, add_resource_gain_to_state, add_resource_gain_to_current_resources
 
 _items_to_not_add_in_minimal_restrictions = {
     # Dark Visor
@@ -141,10 +141,9 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
         # "No Requirements"
         game.resource_database.trivial_resource(): 1
     }
-    initial_resources = merge_resources(initial_resources, logic.configuration.starting_resources.resources)
-
-    if patches.custom_initial_items is not None:
-        initial_resources = merge_resources(initial_resources, patches.custom_initial_items)
+    add_resource_gain_to_current_resources(logic.configuration.starting_resources.resource_gain, initial_resources)
+    add_resource_gain_to_current_resources(patches.extra_initial_items, initial_resources)
+    add_resource_gain_to_current_resources(initial_game_state, initial_resources)
 
     starting_state = State(
         initial_resources,
@@ -153,8 +152,6 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
         None,
         game.resource_database
     )
-
-    add_resource_gain_to_state(starting_state, initial_game_state)
 
     # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
     keys_to_remove = [resource for resource, quantity in initial_resources.items() if quantity == 0]

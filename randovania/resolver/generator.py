@@ -123,7 +123,7 @@ def _add_elevator_connections_to_patches(permalink: Permalink,
             claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number),
             patches.dock_connection,
             patches.dock_weakness,
-            patches.custom_initial_items,
+            patches.extra_initial_items,
             patches.starting_location,
         )
     else:
