@@ -1,15 +1,16 @@
-from typing import List, Callable, TypeVar, Tuple, Dict, Optional, Any
+from typing import List, Callable, TypeVar, Tuple, Dict, Optional
 
 from randovania.game_description.area import Area
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
-from randovania.game_description.game_description import GameDescription, InitialGameState
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     is_resource_node, DockConnection, TeleporterConnection
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
-from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
-    ResourceGain, PickupEntry, find_resource_info_with_long_name, ResourceDatabase, PickupDatabase, \
-    find_resource_info_with_id, ResourceGainTuple, ResourceInfo
 from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
+    PickupEntry, ResourceDatabase, PickupDatabase, \
+    find_resource_info_with_id, ResourceGainTuple, ResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -240,18 +241,9 @@ def read_pickup_database(data: Dict,
         useless_pickup=useless_pickup
     )
 
-
-def read_initial_state(data: Dict, resource_database: ResourceDatabase) -> InitialGameState:
-    return InitialGameState(
-        starting_world_asset_id=data["starting_world_asset_id"],
-        starting_area_asset_id=data["starting_area_asset_id"],
-        initial_resources=read_resource_gain_tuple(data["initial_resources"], resource_database)
-    )
-
-
-def read_initial_states(data: Dict[str, Any], resource_database: ResourceDatabase) -> Dict[str, InitialGameState]:
+def read_initial_states(data: Dict[str, List], resource_database: ResourceDatabase) -> Dict[str, ResourceGainTuple]:
     return {
-        name: read_initial_state(item, resource_database)
+        name: read_resource_gain_tuple(item, resource_database)
         for name, item in data.items()
     }
 
@@ -268,6 +260,7 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
     world_list = world_reader.read_world_list(data["worlds"])
 
     victory_condition = read_requirement_set(data["victory_condition"], resource_database)
+    starting_location = AreaLocation.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
 
     return GameDescription(
@@ -278,6 +271,7 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
         dock_weakness_database=dock_weakness_database,
         world_list=world_list,
         victory_condition=victory_condition,
+        starting_location=starting_location,
         initial_states=initial_states,
         add_self_as_requirement_to_resources=add_self_as_requirement_to_resources,
     )

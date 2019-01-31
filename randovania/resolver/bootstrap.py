@@ -133,12 +133,7 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
         initial_state_name = "Item Loss Disabled"
 
     initial_game_state = game.initial_states[initial_state_name]
-
-    if patches.custom_starting_location is None:
-        starting_world = game.world_list.world_by_asset_id(initial_game_state.starting_world_asset_id)
-        starting_area = starting_world.area_by_asset_id(initial_game_state.starting_area_asset_id)
-    else:
-        starting_area = game.world_list.area_by_asset_id(patches.custom_starting_location.area_asset_id)
+    starting_area = game.world_list.area_by_asset_id(patches.starting_location.area_asset_id)
 
     starting_node = starting_area.nodes[starting_area.default_node_index]
 
@@ -159,7 +154,7 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
         game.resource_database
     )
 
-    add_resource_gain_to_state(starting_state, initial_game_state.initial_resources)
+    add_resource_gain_to_state(starting_state, initial_game_state)
 
     # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
     keys_to_remove = [resource for resource, quantity in initial_resources.items() if quantity == 0]

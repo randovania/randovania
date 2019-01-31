@@ -228,6 +228,7 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
             "misc": misc,
             "difficulty": difficulty,
         },
+        "starting_location": extra["starting_location"],
         "initial_states": extra["initial_states"],
         "victory_condition": extra["victory_condition"],
         "pickup_database": extra["pickup_database"],

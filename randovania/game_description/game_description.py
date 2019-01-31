@@ -1,13 +1,13 @@
 """Classes that describes the raw data of a game world."""
 import copy
-import dataclasses
 from typing import Iterator, FrozenSet, Dict
 
 from randovania.game_description.area import Area
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
 from randovania.game_description.resources import ResourceInfo, \
-    ResourceGain, CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
+    CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
     PickupDatabase, ResourceGainTuple
 from randovania.game_description.world_list import WorldList
 
@@ -25,13 +25,6 @@ def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[S
                 yield from connection.dangerous_resources
 
 
-@dataclasses.dataclass(frozen=True)
-class InitialGameState:
-    starting_world_asset_id: int
-    starting_area_asset_id: int
-    initial_resources: ResourceGainTuple
-
-
 class GameDescription:
     game: int
     game_name: str
@@ -40,7 +33,8 @@ class GameDescription:
     resource_database: ResourceDatabase
     pickup_database: PickupDatabase
     victory_condition: RequirementSet
-    initial_states: Dict[str, InitialGameState]
+    starting_location: AreaLocation
+    initial_states: Dict[str, ResourceGainTuple]
     dangerous_resources: FrozenSet[SimpleResourceInfo]
     world_list: WorldList
     add_self_as_requirement_to_resources: bool
@@ -54,6 +48,7 @@ class GameDescription:
             dock_weakness_database=self.dock_weakness_database,
             world_list=copy.deepcopy(self.world_list, memodict),
             victory_condition=self.victory_condition,
+            starting_location=self.starting_location,
             initial_states=copy.copy(self.initial_states),
             add_self_as_requirement_to_resources=self.add_self_as_requirement_to_resources,
         )
@@ -66,7 +61,8 @@ class GameDescription:
                  resource_database: ResourceDatabase,
                  pickup_database: PickupDatabase,
                  victory_condition: RequirementSet,
-                 initial_states: Dict[str, InitialGameState],
+                 starting_location: AreaLocation,
+                 initial_states: Dict[str, ResourceGainTuple],
                  world_list: WorldList,
                  add_self_as_requirement_to_resources: bool
                  ):
@@ -77,6 +73,7 @@ class GameDescription:
         self.resource_database = resource_database
         self.pickup_database = pickup_database
         self.victory_condition = victory_condition
+        self.starting_location = starting_location
         self.initial_states = initial_states
         self.world_list = world_list
         self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources

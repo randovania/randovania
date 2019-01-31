@@ -1,13 +1,12 @@
-import operator
 from typing import List, TypeVar, Callable, Dict, Tuple
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
-from randovania.game_description.game_description import GameDescription, InitialGameState
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources import ResourceGain, PickupDatabase, ResourceDatabase, SimpleResourceInfo, \
-    DamageResourceInfo, ResourceInfo
+    DamageResourceInfo, ResourceInfo, ResourceGainTuple
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -227,18 +226,9 @@ def write_world_list(world_list: WorldList) -> list:
 
 # Game Description
 
-
-def write_initial_state(initial_state: InitialGameState) -> dict:
+def write_initial_states(initial_states: Dict[str, ResourceGainTuple]) -> dict:
     return {
-        "starting_world_asset_id": initial_state.starting_world_asset_id,
-        "starting_area_asset_id": initial_state.starting_area_asset_id,
-        "initial_resources": write_resource_gain(initial_state.initial_resources)
-    }
-
-
-def write_initial_states(initial_states: Dict[str, InitialGameState]) -> dict:
-    return {
-        name: write_initial_state(initial_state)
+        name: write_resource_gain(initial_state)
         for name, initial_state in initial_states.items()
     }
 
@@ -252,6 +242,7 @@ def write_game_description(game: GameDescription) -> dict:
         "game_name": game.game_name,
         "resource_database": write_resource_database(game.resource_database),
 
+        "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
         "victory_condition": write_requirement_set(game.victory_condition),
 

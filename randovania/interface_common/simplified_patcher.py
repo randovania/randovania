@@ -8,6 +8,7 @@ from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.starting_location import StartingLocationConfiguration
 
 
 def delete_files_location(options: Options, ):
@@ -75,11 +76,11 @@ def apply_layout(layout: LayoutDescription,
 
     patch_game_name_and_id(game_files_path, "Metroid Prime 2: Randomizer - {}".format(layout.shareable_hash))
 
-    if layout.patches.custom_starting_location is not None:
-        dol_patcher.change_starting_spawn(game_files_path, layout.patches.custom_starting_location)
-    else:
-        # TODO: patch the dol with the default starting spawn
-        pass
+    try:
+        dol_patcher.change_starting_spawn(game_files_path, layout.patches.starting_location)
+    except dol_patcher.UnsupportedVersion:
+        if layout.permalink.layout_configuration.starting_location.configuration != StartingLocationConfiguration.SHIP:
+            raise
 
     claris_randomizer.apply_layout(description=layout,
                                    game_root=game_files_path,

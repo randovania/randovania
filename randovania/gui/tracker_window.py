@@ -43,7 +43,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.game_description = data_reader.decode_data(layout_configuration.game_data, True)
 
         self.logic, self._initial_state = logic_bootstrap(layout_configuration,
-                                                          self.game_description, GamePatches.empty())
+                                                          self.game_description,
+                                                          GamePatches.with_game(self.game_description))
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
