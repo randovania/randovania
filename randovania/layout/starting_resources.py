@@ -4,7 +4,7 @@ from typing import Iterator, Dict, Union, List
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
 from randovania.game_description import default_database
-from randovania.game_description.resources import SimpleResourceInfo
+from randovania.game_description.resources import SimpleResourceInfo, ResourceGain
 
 _vanilla_item_loss_enabled_items = {
     0: 1,  # Power Beam
@@ -85,7 +85,7 @@ class StartingResources(BitPackValue):
         if self.configuration == StartingResourcesConfiguration.CUSTOM:
             database = default_database.default_prime2_resource_database()
             for item in database.item:
-                yield self.resources[item]
+                yield self._resources[item]
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "StartingResources":
@@ -137,5 +137,5 @@ class StartingResources(BitPackValue):
             return cls(StartingResourcesConfiguration.CUSTOM, dict(zip(database.item, value)))
 
     @property
-    def resources(self) -> Dict[SimpleResourceInfo, int]:
-        return self._resources
+    def resource_gain(self) -> ResourceGain:
+        yield from self._resources.items()
