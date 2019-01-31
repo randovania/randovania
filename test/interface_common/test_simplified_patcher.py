@@ -84,7 +84,8 @@ def test_generate_layout(mock_generate_layout: MagicMock,
 
 @patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
        new_callable=PropertyMock)
-def test_output_name_for(mock_shareable_hash: PropertyMock):
+def test_output_name_for(mock_shareable_hash: PropertyMock,
+                         empty_patches):
     # Setup
     permalink_mock = MagicMock(spec=Permalink(
         seed_number=15000,
@@ -95,7 +96,7 @@ def test_output_name_for(mock_shareable_hash: PropertyMock):
     layout = LayoutDescription(
         version="0.15.0",
         permalink=permalink_mock,
-        patches=GamePatches.empty(),
+        patches=empty_patches,
         solver_path=()
     )
     mock_shareable_hash.return_value = "PermalinkStr"
@@ -111,10 +112,11 @@ def test_output_name_for(mock_shareable_hash: PropertyMock):
 @patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
 def test_internal_patch_iso(mock_apply_layout: MagicMock,
                             mock_pack_iso: MagicMock,
+                            empty_patches
                             ):
     # Setup
     layout = MagicMock(spec=LayoutDescription(version="0.15.0", permalink=MagicMock(),
-                                              patches=GamePatches.empty(), solver_path=()))
+                                              patches=empty_patches, solver_path=()))
     layout.shareable_hash = "layout"
     options = MagicMock()
     options.output_directory = Path("fun")
@@ -172,10 +174,11 @@ def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
 def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
                       mock_change_starting_spawn: MagicMock,
                       mock_claris_apply_layout: MagicMock,
+                      empty_patches
                       ):
     # Setup
     layout = MagicMock(spec=LayoutDescription(version="0.15.0", permalink=MagicMock(),
-                                              patches=GamePatches.empty(), solver_path=()))
+                                              patches=empty_patches, solver_path=()))
     progress_update = MagicMock()
     options: Options = MagicMock()
 
@@ -187,7 +190,7 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
         options.game_files_path, "Metroid Prime 2: Randomizer - {}".format(layout.shareable_hash)
     )
     mock_change_starting_spawn.assert_called_once_with(
-        options.game_files_path, layout.patches.custom_starting_location
+        options.game_files_path, layout.patches.starting_location
     )
     mock_claris_apply_layout.assert_called_once_with(
         description=layout,

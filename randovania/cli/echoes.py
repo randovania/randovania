@@ -63,7 +63,7 @@ def validate_command_logic(args):
         patches = description.patches
     else:
         configuration = LayoutConfiguration.default()
-        patches = GamePatches.empty().assign_new_pickups(game.pickup_database.original_pickup_mapping.items())
+        patches = GamePatches.with_game(game).assign_pickup_assignment(game.pickup_database.original_pickup_mapping)
 
     final_state_by_resolve = resolver.resolve(
         configuration=configuration,

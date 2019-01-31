@@ -1,3 +1,5 @@
+import mmap
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Tuple, Dict, BinaryIO, Iterator
@@ -11,6 +13,10 @@ _instructions = {
     "lis": 0x3c80,
     "addi": 0x3884,
 }
+
+
+class UnsupportedVersion(Exception):
+    pass
 
 
 @dataclass
@@ -53,8 +59,8 @@ class EchoesInitialLocationInstructions:
 
 _initial_location_instructions_per_version: Dict[GameVersion, EchoesInitialLocationInstructions] = {
     "v1.028": EchoesInitialLocationInstructions(
-        (FullLoadInstruction(0x00140378, 0x00140380), FullLoadInstruction(0x00140388, 0x00140390)),
-        FullLoadInstruction(0x00140398, 0x0014039c),
+        world_load=(FullLoadInstruction(0x00140378, 0x00140380), FullLoadInstruction(0x00140388, 0x00140390)),
+        area_load=FullLoadInstruction(0x00140398, 0x0014039c),
     )
 }
 
@@ -74,11 +80,24 @@ def _check_instruction_at(dol: BinaryIO, offset: int, instruction: str, game_ver
             ))
 
 
+def get_version_for_binary(dol_path: Path) -> str:
+    with dol_path.open("rb") as dol:
+        with mmap.mmap(dol.fileno(), 0, access=mmap.ACCESS_READ) as mm:
+            match = re.search(b"!#\$MetroidBuildInfo!#\$Build (v\d\.\d{3})", mm)
+            if match:
+                return match.group(1).decode("ASCII")
+            else:
+                raise RuntimeError("Invalid dol. File at '{}' is not a Metroid Prime 2 dol".format(dol_path))
+
+
 def change_starting_spawn(game_root: Path, new_starting_location: AreaLocation):
     dol_path = game_root.joinpath("sys", "main.dol")
 
-    version = "v1.028"
-    location_instructions = _initial_location_instructions_per_version[version]
+    version = get_version_for_binary(dol_path)
+    try:
+        location_instructions = _initial_location_instructions_per_version[version]
+    except KeyError:
+        raise UnsupportedVersion("Game version '{}' is currently unsupported by Randovania".format(version))
 
     with dol_path.open("r+b") as dol:
         for offset in location_instructions.all_instructions:

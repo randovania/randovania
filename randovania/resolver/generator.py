@@ -124,7 +124,7 @@ def _add_elevator_connections_to_patches(permalink: Permalink,
             patches.dock_connection,
             patches.dock_weakness,
             patches.custom_initial_items,
-            patches.custom_starting_location,
+            patches.starting_location,
         )
     else:
         return patches
@@ -215,7 +215,7 @@ def _create_patches(
     item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
-    patches = GamePatches.empty()
+    patches = GamePatches.with_game(game)
     patches = _add_elevator_connections_to_patches(permalink, patches)
     patches = _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
 

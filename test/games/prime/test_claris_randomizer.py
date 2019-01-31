@@ -26,18 +26,18 @@ class CustomException(Exception):
         raise CustomException("test exception")
 
 
-def _create_description_mock(permalink: Permalink):
+def _create_description_mock(permalink: Permalink, empty_patches: GamePatches):
     return MagicMock(spec=LayoutDescription(
         version=randovania.VERSION,
         permalink=permalink,
-        patches=GamePatches.empty(),
+        patches=empty_patches,
         solver_path=()
     ))
 
 
 @pytest.fixture(name="description")
-def _description() -> LayoutDescription:
-    return _create_description_mock(Permalink.default())
+def _description(empty_patches) -> LayoutDescription:
+    return _create_description_mock(Permalink.default(), empty_patches)
 
 
 @patch("subprocess.Popen", autospec=True)
@@ -240,12 +240,13 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
 @patch("randovania.game_description.data_reader.read_databases", autospec=True)
 def test_calculate_indices_no_item(mock_read_databases: MagicMock,
                                    echoes_pickup_database: PickupDatabase,
+                                   empty_patches
                                    ):
     # Setup
     description = LayoutDescription(
         version=randovania.VERSION,
         permalink=Permalink.default(),
-        patches=GamePatches.empty(),
+        patches=empty_patches,
         solver_path=()
     )
     mock_read_databases.return_value = (None, echoes_pickup_database)
@@ -263,12 +264,13 @@ def test_calculate_indices_no_item(mock_read_databases: MagicMock,
 @patch("randovania.game_description.data_reader.read_databases", autospec=True)
 def test_calculate_indices_original(mock_read_databases: MagicMock,
                                     echoes_pickup_database: PickupDatabase,
+                                    empty_patches
                                     ):
     # Setup
     description = LayoutDescription(
         version=randovania.VERSION,
         permalink=Permalink.default(),
-        patches=GamePatches.empty().assign_new_pickups(echoes_pickup_database.original_pickup_mapping.items()),
+        patches=empty_patches.assign_new_pickups(echoes_pickup_database.original_pickup_mapping.items()),
         solver_path=()
     )
     mock_read_databases.return_value = (None, echoes_pickup_database)
@@ -330,7 +332,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                 starting_resources=StartingResources.default(),
             )
         ),
-        patches=GamePatches.empty(),
+        patches=None,
         solver_path=(),
     )
 

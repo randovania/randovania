@@ -26,6 +26,7 @@ def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
     return filter(lambda node: isinstance(node, PickupNode), nodes)
 
 
+@pytest.fixture(name="test_data")
 def _test_data():
     data = default_data.decode_default_prime2()
     game = data_reader.decode_data(data, False)
@@ -43,9 +44,8 @@ def _test_data():
         patcher_configuration=PatcherConfiguration.default(),
         layout_configuration=configuration,
     )
+    logic, state = logic_bootstrap(configuration, game, GamePatches.with_game(game))
 
-    patches = GamePatches.empty()
-    logic, state = logic_bootstrap(configuration, game, patches)
     return logic, state, permalink
 
 
@@ -78,8 +78,8 @@ def _compare_actions(first_reach: GeneratorReach,
     return first_actions, second_actions
 
 
-def test_calculate_reach_with_seeds():
-    logic, state, permalink = _test_data()
+def test_calculate_reach_with_seeds(test_data):
+    logic, state, permalink = test_data
     game = logic.game
 
     categories = {"translator", "major", "expansion"}
@@ -97,8 +97,8 @@ def test_calculate_reach_with_seeds():
     assert (871, 0) == (len(list(second_reach.nodes)), len(second_actions))
 
 
-def test_calculate_reach_with_all_pickups():
-    logic, state, _ = _test_data()
+def test_calculate_reach_with_all_pickups(test_data):
+    logic, state, _ = test_data
 
     for pickup in logic.game.pickup_database.original_pickup_mapping.values():
         add_resource_gain_to_state(state, pickup.resource_gain())

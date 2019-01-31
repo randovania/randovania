@@ -34,7 +34,8 @@ def _create_test_layout_description(
     :param pickup_mapping:
     :return:
     """
-    pickup_database = data_reader.read_databases(configuration.game_data)[1]
+    game = data_reader.decode_data(configuration.game_data)
+    pickup_database = game.pickup_database
 
     return LayoutDescription(
         version=VERSION,
@@ -44,7 +45,7 @@ def _create_test_layout_description(
             patcher_configuration=PatcherConfiguration.default(),
             layout_configuration=configuration,
         ),
-        patches=GamePatches.empty().assign_new_pickups([
+        patches=GamePatches.with_game(game).assign_new_pickups([
             (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])
             for i, new_index in enumerate(pickup_mapping)
         ]),
@@ -227,6 +228,7 @@ def test_create_patches(mock_random: MagicMock,
                         mock_sky_temple_key_distribution_logic: MagicMock,
                         mock_retcon_playthrough_filler: MagicMock,
                         mock_indices_for_unassigned_pickups: MagicMock,
+                        empty_patches
                         ):
     # Setup
     seed_number: int = 91319
@@ -247,7 +249,7 @@ def test_create_patches(mock_random: MagicMock,
         layout_configuration=configuration,
     )
     mock_calculate_item_pool.return_value = list(sorted(game.pickup_database.original_pickup_mapping.values()))
-    mock_sky_temple_key_distribution_logic.return_value.custom_starting_location = None
+    mock_sky_temple_key_distribution_logic.return_value.starting_location = game.starting_location
     mock_sky_temple_key_distribution_logic.return_value.custom_initial_items = None
 
     filler_patches = mock_retcon_playthrough_filler.return_value
@@ -259,7 +261,7 @@ def test_create_patches(mock_random: MagicMock,
     mock_random.assert_called_once_with(permalink.as_str)
     mock_calculate_item_pool.assert_called_once_with(permalink, game)
 
-    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, GamePatches.empty(), ANY)
+    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, GamePatches.with_game(game), ANY)
 
     mock_retcon_playthrough_filler.assert_called_once_with(ANY, ANY, ANY,
                                                            mock_random.return_value, status_update)
@@ -279,22 +281,23 @@ def sample_sky_temple_keys():
     ]
 
 
-def test_sky_temple_key_distribution_logic_vanilla_valid(dataclass_test_lib, sky_temple_keys):
+def test_sky_temple_key_distribution_logic_vanilla_valid(dataclass_test_lib,
+                                                         sky_temple_keys,
+                                                         empty_patches):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
-    patches = GamePatches.empty()
     available_pickups = sky_temple_keys[:]
 
     # Run
-    result = generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+    result = generator._sky_temple_key_distribution_logic(permalink, empty_patches, available_pickups)
 
     # Assert
     assert available_pickups == []
     assert result.pickup_assignment == dict(zip(generator._FLYING_ING_CACHES, sky_temple_keys))
 
 
-def test_sky_temple_key_distribution_logic_vanilla_missing_pickup(dataclass_test_lib):
+def test_sky_temple_key_distribution_logic_vanilla_missing_pickup(dataclass_test_lib, empty_patches):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
@@ -302,20 +305,22 @@ def test_sky_temple_key_distribution_logic_vanilla_missing_pickup(dataclass_test
 
     # Run
     with pytest.raises(GenerationFailure) as exp:
-        generator._sky_temple_key_distribution_logic(permalink, GamePatches.empty(), available_pickups)
+        generator._sky_temple_key_distribution_logic(permalink, empty_patches, available_pickups)
 
     assert exp.value == GenerationFailure(
         "Missing Sky Temple Keys in available_pickups to place in all requested boss places", permalink)
 
 
-def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_lib, sky_temple_keys):
+def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_lib,
+                                                                 sky_temple_keys,
+                                                                 empty_patches):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
     initial_pickup_assignment = {
         generator._FLYING_ING_CACHES[0]: PickupEntry("Other Item", tuple(), "other", 0)
     }
-    patches = GamePatches.empty().assign_new_pickups(initial_pickup_assignment.items())
+    patches = empty_patches.assign_new_pickups(initial_pickup_assignment.items())
 
     # Run
     with pytest.raises(GenerationFailure) as exp:
@@ -327,11 +332,11 @@ def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_
         ), permalink)
 
 
-def test_sky_temple_key_distribution_logic_all_bosses_valid(dataclass_test_lib, sky_temple_keys):
+def test_sky_temple_key_distribution_logic_all_bosses_valid(dataclass_test_lib, sky_temple_keys, empty_patches):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.ALL_BOSSES
-    patches = GamePatches.empty()
+    patches = empty_patches
     available_pickups = sky_temple_keys[:]
 
     # Run
@@ -343,11 +348,11 @@ def test_sky_temple_key_distribution_logic_all_bosses_valid(dataclass_test_lib, 
                                                 sky_temple_keys))
 
 
-def test_sky_temple_key_distribution_logic_all_guardians_valid(dataclass_test_lib, sky_temple_keys):
+def test_sky_temple_key_distribution_logic_all_guardians_valid(dataclass_test_lib, sky_temple_keys, empty_patches):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.ALL_GUARDIANS
-    patches = GamePatches.empty()
+    patches = empty_patches
     available_pickups = sky_temple_keys[:]
 
     # Run
@@ -358,11 +363,11 @@ def test_sky_temple_key_distribution_logic_all_guardians_valid(dataclass_test_li
     assert result.pickup_assignment == dict(zip(generator._GUARDIAN_INDICES, sky_temple_keys))
 
 
-def test_sky_temple_key_distribution_logic_fully_random_valid(dataclass_test_lib, sky_temple_keys):
+def test_sky_temple_key_distribution_logic_fully_random_valid(dataclass_test_lib, sky_temple_keys, empty_patches):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.FULLY_RANDOM
-    patches = GamePatches.empty()
+    patches = empty_patches
     available_pickups = sky_temple_keys[:]
 
     # Run

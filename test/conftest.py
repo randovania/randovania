@@ -6,6 +6,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.default_database import default_prime2_pickup_database
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import PickupDatabase
 
 
@@ -33,6 +34,11 @@ class DataclassTestLib:
 @pytest.fixture()
 def dataclass_test_lib() -> DataclassTestLib:
     return DataclassTestLib()
+
+
+@pytest.fixture()
+def empty_patches() -> GamePatches:
+    return GamePatches({}, {}, {}, {}, None, None)
 
 
 def pytest_addoption(parser):

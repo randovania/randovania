@@ -1,6 +1,5 @@
 import io
 import json
-import os
 from pathlib import Path
 from typing import BinaryIO, TextIO
 
@@ -23,13 +22,13 @@ def test_simple_round_trip():
             "misc": [],
             "difficulty": [],
         },
+        "starting_location": {
+            "world_asset_id": 1006255871,
+            "area_asset_id": 1655756413
+        },
         "initial_states": {
-            "Default": {
-                "starting_world_asset_id": 1006255871,
-                "starting_area_asset_id": 1655756413,
-                "initial_resources": [
-                ]
-            }
+            "Default": [
+            ]
         },
         "victory_condition": [],
         "dock_weakness_database": {
@@ -47,6 +46,7 @@ def test_simple_round_trip():
     s_io: TextIO = s
     json.dump({
         "pickup_database": sample_data["pickup_database"],
+        "starting_location": sample_data["starting_location"],
         "initial_states": sample_data["initial_states"],
         "victory_condition": sample_data["victory_condition"],
     }, s)

@@ -20,11 +20,11 @@ class GamePatches:
     dock_connection: Dict[Tuple[int, int], DockConnection]
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
     custom_initial_items: Optional[Dict[SimpleResourceInfo, int]]
-    custom_starting_location: Optional[AreaLocation]
+    starting_location: AreaLocation
 
     @classmethod
-    def empty(cls) -> "GamePatches":
-        return GamePatches({}, {}, {}, {}, None, None)
+    def with_game(cls, game: "GameDescription") -> "GamePatches":
+        return GamePatches({}, {}, {}, {}, None, game.starting_location)
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupEntry]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -39,5 +39,9 @@ class GamePatches:
             self.dock_connection,
             self.dock_weakness,
             self.custom_initial_items,
-            self.custom_starting_location,
+            self.starting_location,
         )
+
+    def assign_pickup_assignment(self, assignment: PickupAssignment) -> "GamePatches":
+        items: Iterator[Tuple[PickupIndex, PickupEntry]] = assignment.items()
+        return self.assign_new_pickups(items)
