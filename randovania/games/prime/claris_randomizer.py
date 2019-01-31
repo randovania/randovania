@@ -13,7 +13,7 @@ from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.layout.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.starting_resources import StartingResourcesConfiguration

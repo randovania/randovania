@@ -8,8 +8,7 @@ from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutEnabledFlag, \
-    LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutSkyTempleKeyMode
 from randovania.layout.starting_resources import StartingResourcesConfiguration
 
 

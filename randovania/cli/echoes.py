@@ -9,12 +9,12 @@ from randovania.cli import prime_database
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
-    LayoutEnabledFlag, LayoutSkyTempleKeyMode
+    LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
+from randovania.layout.starting_resources import StartingResources
 from randovania.resolver import debug, generator, resolver
 
 __all__ = ["create_subparsers"]

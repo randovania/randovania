@@ -20,11 +20,6 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     MINIMAL_RESTRICTIONS = "minimal-restrictions"
 
 
-class LayoutMode(BitPackEnum, Enum):
-    STANDARD = "standard"
-    MAJOR_ITEMS = "major-items"
-
-
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     VANILLA = "vanilla"
     ALL_BOSSES = "all-bosses"
@@ -35,15 +30,6 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
 class LayoutRandomizedFlag(BitPackEnum, Enum):
     VANILLA = "vanilla"
     RANDOMIZED = "randomized"
-
-
-class LayoutEnabledFlag(BitPackEnum, Enum):
-    ENABLED = "enabled"
-    DISABLED = "disabled"
-
-
-class LayoutDifficulty(BitPackEnum, Enum):
-    NORMAL = "normal"
 
 
 @dataclass(frozen=True)

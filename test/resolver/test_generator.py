@@ -10,7 +10,7 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
-    LayoutEnabledFlag, LayoutSkyTempleKeyMode
+    LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -198,18 +198,6 @@ def test_generate_twice():
 
     generated_description = generator.generate_list(layout_description.permalink, status_update)
     assert generated_description == generator.generate_list(layout_description.permalink, status_update)
-
-
-@pytest.mark.skip(reason="simple data is broken")
-def test_generate_simple(simple_data: dict):
-    status_update = MagicMock()
-    configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                    sky_temple_keys=LayoutSkyTempleKeyMode.RANDOMIZED,
-                                                    item_loss=LayoutEnabledFlag.DISABLED,
-                                                    elevators=LayoutRandomizedFlag.VANILLA,
-                                                    pickup_quantities={})
-
-    generated_description = generator.generate_list(configuration, status_update)
 
 
 @patch("randovania.resolver.generator._indices_for_unassigned_pickups", autospec=True)
