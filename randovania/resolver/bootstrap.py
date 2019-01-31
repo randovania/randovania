@@ -130,8 +130,8 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
     game = logic.game
 
     if logic.configuration.starting_resources.configuration == \
-            StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED:
-        initial_game_state = game.initial_states["Item Loss Disabled"]
+            StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED:
+        initial_game_state = game.initial_states["Default"]
     else:
         initial_game_state = None
 
