@@ -44,7 +44,7 @@ def test_round_trip_default(permalink: Permalink,
         patches=GamePatches(
             _item_locations_to_pickup_assignment(game, item_locations),
             claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number),
-            {}, {}, None, None
+            {}, {}, (), game.starting_location
         ),
         solver_path=solver_path,
     )
