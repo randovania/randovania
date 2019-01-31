@@ -4,10 +4,11 @@ from typing import Tuple, Set
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel
+from randovania.layout.starting_resources import StartingResourcesConfiguration
 from randovania.resolver import debug
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutEnabledFlag
 from randovania.resolver.logic import Logic
-from randovania.resolver.state import State, add_resource_gain_to_state, add_resource_gain_to_current_resources
+from randovania.resolver.state import State, add_resource_gain_to_current_resources
 
 _items_to_not_add_in_minimal_restrictions = {
     # Dark Visor
@@ -128,11 +129,12 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
 def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
     game = logic.game
 
-    initial_state_name = "Default"
-    if logic.configuration.item_loss == LayoutEnabledFlag.DISABLED:
-        initial_state_name = "Item Loss Disabled"
+    if logic.configuration.starting_resources.configuration == \
+            StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED:
+        initial_game_state = game.initial_states["Item Loss Disabled"]
+    else:
+        initial_game_state = None
 
-    initial_game_state = game.initial_states[initial_state_name]
     starting_area = game.world_list.area_by_asset_id(patches.starting_location.area_asset_id)
 
     starting_node = starting_area.nodes[starting_area.default_node_index]
@@ -143,7 +145,8 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
     }
     add_resource_gain_to_current_resources(logic.configuration.starting_resources.resource_gain, initial_resources)
     add_resource_gain_to_current_resources(patches.extra_initial_items, initial_resources)
-    add_resource_gain_to_current_resources(initial_game_state, initial_resources)
+    if initial_game_state is not None:
+        add_resource_gain_to_current_resources(initial_game_state, initial_resources)
 
     starting_state = State(
         initial_resources,

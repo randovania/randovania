@@ -40,7 +40,8 @@ def test_migrate_from_v1():
         "layout_configuration": {
             "trick_level": "normal",
             "sky_temple_keys": "fully-random",
-            "item_loss": "enabled",
+            "starting_resources": "vanilla-item-loss-enabled",
+            "starting_location": "ship",
             "elevators": "vanilla",
             "pickup_quantities": {},
         }
@@ -164,7 +165,7 @@ def test_serialize_fields(option: Options):
 
     # Assert
     assert result == {
-        "version": 3,
+        "version": 4,
         "options": {}
     }
 
@@ -173,11 +174,10 @@ _sample_layout_configurations = [
     {
         "trick_level": trick_level,
         "sky_temple_keys": LayoutSkyTempleKeyMode.FULLY_RANDOM,
-        "item_loss": item_loss,
         "elevators": LayoutRandomizedFlag.RANDOMIZED,
         "pickup_quantities": {},
         "starting_location": StartingLocation.default(),
-        "starting_resources": StartingResources.default(),
+        "starting_resources": StartingResources.from_item_loss(item_loss),
     }
     for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.HARD, LayoutTrickLevel.MINIMAL_RESTRICTIONS]
     for item_loss in LayoutEnabledFlag

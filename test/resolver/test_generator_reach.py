@@ -32,7 +32,6 @@ def _test_data():
     game = data_reader.decode_data(data, False)
     configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
                                                     sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
-                                                    item_loss=LayoutEnabledFlag.ENABLED,
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={},
                                                     starting_location=StartingLocation.default(),

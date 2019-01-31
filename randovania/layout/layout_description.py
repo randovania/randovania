@@ -117,7 +117,7 @@ class LayoutDescription:
         version = json_dict["info"]["version"]
         version_as_obj = StrictVersion(version)
 
-        if version_as_obj < StrictVersion("0.17.0"):
+        if version_as_obj < StrictVersion("0.21.0"):
             raise RuntimeError("Unsupported log file version '{}'.".format(version))
 
         # TODO: add try/catch to throw convert potential errors in "seed from future version broke"
@@ -132,8 +132,8 @@ class LayoutDescription:
             _node_mapping_to_elevator_connection(game.world_list, json_dict["elevators"]),
             {},
             {},
-            None,
-            None
+            (),
+            game.starting_location
         )
 
         return LayoutDescription(

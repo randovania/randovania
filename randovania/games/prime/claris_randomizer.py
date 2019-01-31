@@ -13,8 +13,10 @@ from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.layout.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag
+from randovania.layout.layout_configuration import LayoutEnabledFlag, LayoutRandomizedFlag, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.starting_location import StartingLocationConfiguration
+from randovania.layout.starting_resources import StartingResourcesConfiguration
 
 _USELESS_PICKUP_NAME = "Energy Transfer Module"
 
@@ -133,6 +135,13 @@ def _calculate_indices(description: LayoutDescription) -> List[int]:
     return indices
 
 
+def _is_vanilla_starting_location(configuration: LayoutConfiguration) -> bool:
+    loc_config = configuration.starting_location.configuration
+    resource_config = configuration.starting_resources.configuration
+    return (loc_config == StartingLocationConfiguration.SHIP and
+            resource_config == StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
+
+
 def apply_layout(description: LayoutDescription,
                  game_root: Path,
                  backup_files_path: Path,
@@ -162,7 +171,7 @@ def apply_layout(description: LayoutDescription,
         "-p", ",".join(str(index) for index in indices),
     ]
     layout_configuration = description.permalink.layout_configuration
-    if layout_configuration.item_loss == LayoutEnabledFlag.DISABLED:
+    if not _is_vanilla_starting_location(layout_configuration):
         args.append("-i")
     if layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")

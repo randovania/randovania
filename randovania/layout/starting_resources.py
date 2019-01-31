@@ -118,6 +118,14 @@ class StartingResources(BitPackValue):
         return cls(configuration, items)
 
     @classmethod
+    def from_item_loss(cls, item_loss_enabled: bool) -> "StartingResources":
+        if item_loss_enabled:
+            resource_config = StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED
+        else:
+            resource_config = StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED
+        return cls.from_non_custom_configuration(resource_config)
+
+    @classmethod
     def default(cls) -> "StartingResources":
         return cls.from_non_custom_configuration(StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
 

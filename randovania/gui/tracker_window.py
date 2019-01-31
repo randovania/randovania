@@ -51,7 +51,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         self.configuration_label.setText("Trick Level: {}; Elevators: Vanilla; Item Loss: {}".format(
             layout_configuration.trick_level.value,
-            layout_configuration.item_loss.value,
+            layout_configuration.starting_resources.configuration.value,
         ))
 
         self.setup_pickups_box()

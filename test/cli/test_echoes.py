@@ -3,11 +3,11 @@ from unittest.mock import patch, MagicMock, ANY
 
 from randovania.cli import echoes
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
-    LayoutEnabledFlag, LayoutSkyTempleKeyMode
+    LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
+from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
 
 
 @patch("randovania.resolver.generator.generate_list", autospec=True)
@@ -34,11 +34,11 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
             layout_configuration=LayoutConfiguration.from_params(
                 trick_level=LayoutTrickLevel.HARD,
                 sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
-                item_loss=LayoutEnabledFlag.DISABLED,
                 elevators=LayoutRandomizedFlag.VANILLA,
                 pickup_quantities={},
                 starting_location=StartingLocation.default(),
-                starting_resources=StartingResources.default(),
+                starting_resources=StartingResources.from_non_custom_configuration(
+                    StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED),
             ),
         ),
         status_update=ANY

@@ -50,7 +50,6 @@ class LayoutDifficulty(BitPackEnum, Enum):
 class LayoutConfiguration(BitPackDataClass):
     trick_level: LayoutTrickLevel
     sky_temple_keys: LayoutSkyTempleKeyMode
-    item_loss: LayoutEnabledFlag
     elevators: LayoutRandomizedFlag
     pickup_quantities: PickupQuantities
     starting_location: StartingLocation
@@ -69,7 +68,6 @@ class LayoutConfiguration(BitPackDataClass):
             "game": "mp2-echoes",
             "trick_level": self.trick_level.value,
             "sky_temple_keys": self.sky_temple_keys.value,
-            "item_loss": self.item_loss.value,
             "elevators": self.elevators.value,
             "pickup_quantities": self.pickup_quantities.as_json,
             "starting_location": self.starting_location.as_json,
@@ -81,7 +79,6 @@ class LayoutConfiguration(BitPackDataClass):
         return cls.from_params(
             trick_level=LayoutTrickLevel(json_dict["trick_level"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
-            item_loss=LayoutEnabledFlag(json_dict["item_loss"]),
             elevators=LayoutRandomizedFlag(json_dict["elevators"]),
             pickup_quantities=json_dict["pickup_quantities"],
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),
@@ -92,7 +89,6 @@ class LayoutConfiguration(BitPackDataClass):
     def from_params(cls,
                     trick_level: LayoutTrickLevel,
                     sky_temple_keys: LayoutSkyTempleKeyMode,
-                    item_loss: LayoutEnabledFlag,
                     elevators: LayoutRandomizedFlag,
                     pickup_quantities: Dict[str, int],
                     starting_location: StartingLocation,
@@ -101,7 +97,6 @@ class LayoutConfiguration(BitPackDataClass):
         return LayoutConfiguration(
             trick_level=trick_level,
             sky_temple_keys=sky_temple_keys,
-            item_loss=item_loss,
             elevators=elevators,
             pickup_quantities=PickupQuantities.from_params(pickup_quantities),
             starting_location=starting_location,
@@ -113,7 +108,6 @@ class LayoutConfiguration(BitPackDataClass):
         return cls.from_params(
             trick_level=LayoutTrickLevel.NO_TRICKS,
             sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
-            item_loss=LayoutEnabledFlag.ENABLED,
             elevators=LayoutRandomizedFlag.VANILLA,
             pickup_quantities={},
             starting_location=StartingLocation.default(),

@@ -325,11 +325,10 @@ def test_apply_layout(mock_run_with_args: MagicMock,
             layout_configuration=LayoutConfiguration.from_params(
                 trick_level=MagicMock(),
                 sky_temple_keys=MagicMock(),
-                item_loss=LayoutEnabledFlag.ENABLED if item_loss else LayoutEnabledFlag.DISABLED,
                 elevators=LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA,
                 pickup_quantities={},
                 starting_location=StartingLocation.default(),
-                starting_resources=StartingResources.default(),
+                starting_resources=StartingResources.from_item_loss(item_loss),
             )
         ),
         patches=None,

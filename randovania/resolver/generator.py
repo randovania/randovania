@@ -9,6 +9,8 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
 from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment
 from randovania.games.prime import claris_randomizer
+from randovania.layout.starting_location import StartingLocationConfiguration
+from randovania.layout.starting_resources import StartingResourcesConfiguration
 from randovania.resolver import resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure
@@ -200,7 +202,7 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
             permalink
         )
 
-    return previous_patches.assign_new_pickups(new_assignments.items())
+    return previous_patches.assign_pickup_assignment(new_assignments)
 
 
 def _create_patches(
@@ -214,6 +216,12 @@ def _create_patches(
     categories = {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"}
     item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
+
+    if configuration.starting_location.configuration != StartingLocationConfiguration.SHIP:
+        raise GenerationFailure("The only supported StartingLocation is SHIP", permalink)
+
+    if configuration.starting_resources.configuration == StartingResourcesConfiguration.CUSTOM:
+        raise GenerationFailure("Custom StartingResources is unsupported", permalink)
 
     patches = GamePatches.with_game(game)
     patches = _add_elevator_connections_to_patches(permalink, patches)
