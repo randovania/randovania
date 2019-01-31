@@ -34,7 +34,7 @@ class Permalink(BitPackValue):
     def current_version(cls) -> int:
         # When this reaches _PERMALINK_MAX_VERSION, we need to change how we decode to avoid breaking version detection
         # for previous Randovania versions
-        return 1
+        return 2
 
     def bit_pack_format(self) -> Iterator[int]:
         yield _PERMALINK_MAX_VERSION
