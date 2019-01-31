@@ -8,14 +8,14 @@ from pathlib import Path
 from randovania.cli import prime_database
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
-from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
-from randovania.resolver import debug, generator, resolver
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutEnabledFlag, LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_location import StartingLocation
+from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
+from randovania.resolver import debug, generator, resolver
 
 __all__ = ["create_subparsers"]
 
@@ -44,11 +44,10 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
     return LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel(args.trick_level),
         sky_temple_keys=LayoutSkyTempleKeyMode(args.sky_temple_keys),
-        item_loss=LayoutEnabledFlag.DISABLED if args.skip_item_loss else LayoutEnabledFlag.ENABLED,
         elevators=LayoutRandomizedFlag.VANILLA,
         pickup_quantities={},
         starting_location=StartingLocation.default(),
-        starting_resources=StartingResources.default(),
+        starting_resources=StartingResources.from_item_loss(not args.skip_item_loss),
     )
 
 

@@ -6,10 +6,11 @@ from typing import Optional, TypeVar, Callable, Any, Dict
 from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutEnabledFlag, \
-    LayoutTrickLevel, LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutTrickLevel, \
+    LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.starting_resources import StartingResourcesConfiguration, StartingResources
 
 T = TypeVar("T")
 
@@ -253,13 +254,15 @@ class Options:
         self._layout_configuration = dataclasses.replace(self.layout_configuration, elevators=value)
 
     @property
-    def layout_configuration_item_loss(self) -> LayoutEnabledFlag:
-        return self.layout_configuration.item_loss
+    def layout_configuration_starting_resources(self) -> StartingResourcesConfiguration:
+        return self.layout_configuration.starting_resources.configuration
 
-    @layout_configuration_item_loss.setter
-    def layout_configuration_item_loss(self, value: LayoutEnabledFlag):
+    @layout_configuration_starting_resources.setter
+    def layout_configuration_starting_resources(self, value: StartingResourcesConfiguration):
         self._check_editable_and_mark_dirty()
-        self._layout_configuration = dataclasses.replace(self.layout_configuration, item_loss=value)
+        self._layout_configuration = dataclasses.replace(
+            self.layout_configuration,
+            starting_resources=StartingResources.from_non_custom_configuration(value))
 
     def quantity_for_pickup(self, pickup: PickupEntry) -> int:
         return self.layout_configuration.quantity_for_pickup(pickup)

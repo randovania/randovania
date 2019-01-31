@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 3
+_CURRENT_OPTIONS_FILE_VERSION = 4
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -41,9 +41,24 @@ def _convert_v2(options: dict) -> dict:
     return options
 
 
+def _convert_v3(options: dict) -> dict:
+    if "layout_configuration" in options:
+        layout_configuration = options["layout_configuration"]
+
+        if layout_configuration.pop("item_loss", None) == "disabled":
+            layout_configuration["starting_resources"] = "vanilla-item-loss-disabled"
+        else:
+            layout_configuration["starting_resources"] = "vanilla-item-loss-enabled"
+
+        layout_configuration["starting_location"] = "ship"
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     1: _convert_v1,
     2: _convert_v2,
+    3: _convert_v3,
 }
 
 

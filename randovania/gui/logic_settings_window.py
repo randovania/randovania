@@ -10,6 +10,7 @@ from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutEnabledFlag, \
     LayoutSkyTempleKeyMode
+from randovania.layout.starting_resources import StartingResourcesConfiguration
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
@@ -25,7 +26,10 @@ def _update_options_by_value(options: Options, combo: QComboBox, new_index: int)
 
 def _on_item_loss_changed(options: Options, new_value: bool):
     with options:
-        options.layout_configuration_item_loss = LayoutEnabledFlag.ENABLED if new_value else LayoutEnabledFlag.DISABLED
+        if new_value:
+            options.layout_configuration_starting_resources = StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED
+        else:
+            options.layout_configuration_starting_resources = StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED
 
 
 class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
@@ -103,7 +107,8 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self.elevators_combo.findData(self._options.layout_configuration_elevators))
 
         # Item Loss
-        self.itemloss_check.setChecked(self._options.layout_configuration_item_loss == LayoutEnabledFlag.ENABLED)
+        self.itemloss_check.setChecked(self._options.layout_configuration_starting_resources == \
+                                       StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
 
         # Sky Temple Keys
         self.skytemple_combo.setCurrentIndex(

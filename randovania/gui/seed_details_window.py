@@ -120,7 +120,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_seed_value_label.setText(str(description.permalink.seed_number))
         self.layout_trick_value_label.setText(configuration.trick_level.value)
         self.layout_keys_value_label.setText(configuration.sky_temple_keys.value)
-        self.layout_item_loss_value_label.setText(configuration.item_loss.value)
+        self.layout_item_loss_value_label.setText(configuration.starting_resources.configuration.value)
         self.layout_elevators_value_label.setText(configuration.elevators.value)
 
         for pickup_button in self.pickup_spoiler_buttons:
