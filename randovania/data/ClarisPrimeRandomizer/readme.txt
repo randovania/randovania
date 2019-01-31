@@ -63,6 +63,23 @@ Options: -hivw
 
 4. VERSION HISTORY
 
+v4.0
+- Fixed various issues with multiple copies of the same pickup.
+- Starting the Dark Samus 1 fight disables adjacent rooms from loading automatically (fixes a potential crash).
+- Beating Dark Samus 1 will now turn off the first pass pirates layer in Biostorage Station (fixes a potential crash).
+- Agon Temple's first door no longer stays locked after Bomb Guardian until you get the Agon Energy Controller item.
+- Leaving during the Grapple Guardian fight no longer causes Grapple Guardian to not drop an item if you come back and fight it again.
+- Undertemple Access's default spawn point has been moved in-bounds.
+- The Luminoth barriers that appear on certain doors after collecting or returning a world's energy have been removed.
+- Cutscenes are now always skippable, even on a brand new save file.
+- Translator pickup scans are added to the save, fixing potential issues with scanning them. THIS WILL BREAK EXISTING SAVES AND TREAT THEM AS CORRUPT.
+- Percent is calculated by how many items there are that count for percent, so 100% will be "all percent increasing items" no matter the quantity of them.
+- Credits are now optionally sped up to be 60 seconds long (over 4x faster).
+- Removed some instances in Main Research, to decrease the chance of a crash coming from Central Area Transport West.
+- The scans in Sky Temple Gateway now tell you the location of each Sky Temple Key.
+- Power Bombs no longer instantly kill either Alpha Splinter's first phase or Spider Guardian (doing so would not actually end the fight, leaving you stuck).
+
+
 V3.2 - May 15th, 2016
 General:
 - Elevator Randomization Mode option added. (-v)
