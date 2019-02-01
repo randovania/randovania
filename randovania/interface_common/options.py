@@ -224,6 +224,15 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._patcher_configuration = dataclasses.replace(self.patcher_configuration, menu_mod=value)
 
+    @property
+    def speed_up_credits(self) -> bool:
+        return self.patcher_configuration.speed_up_credits
+
+    @speed_up_credits.setter
+    def speed_up_credits(self, value: bool):
+        self._check_editable_and_mark_dirty()
+        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, speed_up_credits=value)
+
     # Access to fields inside LayoutConfiguration
 
     @property

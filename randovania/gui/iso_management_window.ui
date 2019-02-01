@@ -645,39 +645,10 @@
        <string>Game Patching</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="5" column="0">
-        <widget class="QCheckBox" name="include_menu_mod_check">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Include Menu Mod</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QCheckBox" name="remove_hud_popup_check">
          <property name="text">
           <string>Skip Item Acquisition Popups</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="remove_hud_popup_label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replaces the &amp;quot;Item Acquired&amp;quot; popup after collecting an item with an alert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -694,13 +665,6 @@
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="create_spoiler_check">
-         <property name="text">
-          <string>Create Spoiler</string>
          </property>
         </widget>
        </item>
@@ -724,7 +688,50 @@
         </widget>
        </item>
        <item row="7" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QCheckBox" name="faster_credits_check">
+         <property name="text">
+          <string>Faster Credits</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QCheckBox" name="include_menu_mod_check">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Include Menu Mod</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="create_spoiler_check">
+         <property name="text">
+          <string>Create Spoiler</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="remove_hud_popup_label">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replaces the &amp;quot;Item Acquired&amp;quot; popup after collecting an item with an alert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="seed_settings_warning_label">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -739,6 +746,19 @@
          </property>
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#aa0000;&quot;&gt;All options in this box, as well as in the Logic Settings and Item Quantities tabs, change the seed.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="faster_credits_label">
+         <property name="text">
+          <string>Speeds up the credits to be 60 seconds long (over 4x faster).</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
          </property>
          <property name="wordWrap">
           <bool>true</bool>

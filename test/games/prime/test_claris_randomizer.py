@@ -286,6 +286,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
     ]
 
 
+@pytest.mark.parametrize("speed_up_credits", [False, True])
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("elevators", [False, True])
 @pytest.mark.parametrize("item_loss", [False, True])
@@ -310,6 +311,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                       item_loss: bool,
                       elevators: bool,
                       include_menu_mod: bool,
+                      speed_up_credits: bool,
                       ):
     # Setup
     hud_memo_popup_removal: bool = MagicMock()
@@ -321,6 +323,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
             patcher_configuration=PatcherConfiguration(
                 disable_hud_popup=hud_memo_popup_removal,
                 menu_mod=include_menu_mod,
+                speed_up_credits=speed_up_credits,
             ),
             layout_configuration=LayoutConfiguration.from_params(
                 trick_level=MagicMock(),
@@ -350,6 +353,8 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         expected_args.append("-i")
     if elevators:
         expected_args.append("-v")
+    if speed_up_credits:
+        expected_args.append("-c")
 
     # Run
     claris_randomizer.apply_layout(description, game_root, backup_files_path, progress_update)

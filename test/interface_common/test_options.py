@@ -35,7 +35,8 @@ def test_migrate_from_v1():
     assert new_data == {
         "patcher_configuration": {
             "disable_hud_popup": True,
-            "menu_mod": False
+            "menu_mod": False,
+            "speed_up_credits": True
         },
         "layout_configuration": {
             "trick_level": "normal",
