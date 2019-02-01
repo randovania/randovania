@@ -72,12 +72,13 @@ v4.0
 - Undertemple Access's default spawn point has been moved in-bounds.
 - The Luminoth barriers that appear on certain doors after collecting or returning a world's energy have been removed.
 - Cutscenes are now always skippable, even on a brand new save file.
-- Translator pickup scans are added to the save, fixing potential issues with scanning them. THIS WILL BREAK EXISTING SAVES AND TREAT THEM AS CORRUPT.
+- Translator pickup scans are added to the save, fixing potential issues with scanning them.
 - Percent is calculated by how many items there are that count for percent, so 100% will be "all percent increasing items" no matter the quantity of them.
 - Credits are now optionally sped up to be 60 seconds long (over 4x faster).
-- Removed some instances in Main Research, to decrease the chance of a crash coming from Central Area Transport West.
+- Removed some instances in Main Research, to decrease the chance of a crash coming from Central Area Transport West. Also fixed leaving the room midway through destroying the echo locks making it impossible to complete.
 - The scans in Sky Temple Gateway now tell you the location of each Sky Temple Key.
 - Power Bombs no longer instantly kill either Alpha Splinter's first phase or Spider Guardian (doing so would not actually end the fight, leaving you stuck).
+- Hard Mode is now immediately unlocked on a new save file.
 
 
 V3.2 - May 15th, 2016

@@ -175,6 +175,8 @@ def apply_layout(description: LayoutDescription,
         args.append("-i")
     if layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
+    if patcher_configuration.speed_up_credits:
+        args.append("-c")
 
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
     _run_with_args(args, "Randomized!", status_update)

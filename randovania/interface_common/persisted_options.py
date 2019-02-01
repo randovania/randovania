@@ -52,6 +52,9 @@ def _convert_v3(options: dict) -> dict:
 
         layout_configuration["starting_location"] = "ship"
 
+    if "patcher_configuration" in options:
+        options["patcher_configuration"]["speed_up_credits"] = True
+
     return options
 
 
