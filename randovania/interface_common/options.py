@@ -5,6 +5,7 @@ from typing import Optional, TypeVar, Callable, Any, Dict
 
 from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutTrickLevel, \
     LayoutSkyTempleKeyMode
@@ -31,6 +32,7 @@ _SERIALIZER_FOR_FIELD = {
     "output_directory": Serializer(str, Path),
     "patcher_configuration": Serializer(lambda p: p.as_json, PatcherConfiguration.from_json_dict),
     "layout_configuration": Serializer(lambda p: p.as_json, LayoutConfiguration.from_json_dict),
+    "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
 }
 
 
@@ -59,6 +61,7 @@ class Options:
     _output_directory: Optional[Path] = None
     _patcher_configuration: Optional[PatcherConfiguration] = None
     _layout_configuration: Optional[LayoutConfiguration] = None
+    _cosmetic_patches: Optional[CosmeticPatches] = None
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
@@ -136,6 +139,7 @@ class Options:
         self._create_spoiler = None
         self._patcher_configuration = None
         self._layout_configuration = None
+        self._cosmetic_patches = None
 
     # Files paths
 
@@ -183,6 +187,10 @@ class Options:
     def layout_configuration(self) -> LayoutConfiguration:
         return _return_with_default(self._layout_configuration, LayoutConfiguration.default)
 
+    @property
+    def cosmetic_patches(self) -> CosmeticPatches:
+        return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
+
     # Permalink
     @property
     def permalink(self) -> Optional[Permalink]:
@@ -207,15 +215,6 @@ class Options:
     # Access to fields inside PatcherConfiguration
 
     @property
-    def hud_memo_popup_removal(self) -> bool:
-        return self.patcher_configuration.disable_hud_popup
-
-    @hud_memo_popup_removal.setter
-    def hud_memo_popup_removal(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, disable_hud_popup=value)
-
-    @property
     def include_menu_mod(self) -> bool:
         return self.patcher_configuration.menu_mod
 
@@ -224,14 +223,24 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._patcher_configuration = dataclasses.replace(self.patcher_configuration, menu_mod=value)
 
+    # Access to fields inside CosmeticPatches
+    @property
+    def hud_memo_popup_removal(self) -> bool:
+        return self.cosmetic_patches.disable_hud_popup
+
+    @hud_memo_popup_removal.setter
+    def hud_memo_popup_removal(self, value: bool):
+        self._check_editable_and_mark_dirty()
+        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, disable_hud_popup=value)
+
     @property
     def speed_up_credits(self) -> bool:
-        return self.patcher_configuration.speed_up_credits
+        return self.cosmetic_patches.speed_up_credits
 
     @speed_up_credits.setter
     def speed_up_credits(self, value: bool):
         self._check_editable_and_mark_dirty()
-        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, speed_up_credits=value)
+        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, speed_up_credits=value)
 
     # Access to fields inside LayoutConfiguration
 

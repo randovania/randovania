@@ -194,6 +194,7 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
     )
     mock_claris_apply_layout.assert_called_once_with(
         description=layout,
+        cosmetic_patches=options.cosmetic_patches,
         game_root=options.game_files_path,
         backup_files_path=options.backup_files_path,
         progress_update=progress_update

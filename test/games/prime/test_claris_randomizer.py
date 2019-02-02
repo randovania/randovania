@@ -10,6 +10,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterConnection
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -315,15 +316,16 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                       ):
     # Setup
     hud_memo_popup_removal: bool = MagicMock()
+    cosmetic_patches = CosmeticPatches(disable_hud_popup=hud_memo_popup_removal,
+                                       speed_up_credits=speed_up_credits,
+                                       )
     description = LayoutDescription(
         version=randovania.VERSION,
         permalink=Permalink(
             seed_number=seed_number,
             spoiler=False,
             patcher_configuration=PatcherConfiguration(
-                disable_hud_popup=hud_memo_popup_removal,
                 menu_mod=include_menu_mod,
-                speed_up_credits=speed_up_credits,
             ),
             layout_configuration=LayoutConfiguration.from_params(
                 trick_level=MagicMock(),
@@ -357,7 +359,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         expected_args.append("-c")
 
     # Run
-    claris_randomizer.apply_layout(description, game_root, backup_files_path, progress_update)
+    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root)
 
     # Assert
     mock_base_args.assert_called_once_with(game_root, hud_memo_popup_removal=hud_memo_popup_removal)
