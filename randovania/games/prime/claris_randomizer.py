@@ -11,6 +11,7 @@ from randovania.game_description.echoes_elevator import Elevator, echoes_elevato
 from randovania.game_description.node import TeleporterConnection
 from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutConfiguration
@@ -143,11 +144,12 @@ def _is_vanilla_starting_location(configuration: LayoutConfiguration) -> bool:
 
 
 def apply_layout(description: LayoutDescription,
-                 game_root: Path,
+                 cosmetic_patches: CosmeticPatches,
                  backup_files_path: Path,
-                 progress_update: ProgressUpdateCallable):
+                 progress_update: ProgressUpdateCallable, game_root: Path):
     """
     Applies the modifications listed in the given LayoutDescription to the game in game_root.
+    :param cosmetic_patches:
     :param description:
     :param game_root:
     :param backup_files_path: Path to use as pak backup, to remove/add menu mod.
@@ -156,7 +158,7 @@ def apply_layout(description: LayoutDescription,
     """
 
     patcher_configuration = description.permalink.patcher_configuration
-    args = _base_args(game_root, hud_memo_popup_removal=patcher_configuration.disable_hud_popup)
+    args = _base_args(game_root, hud_memo_popup_removal=cosmetic_patches.disable_hud_popup)
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if patcher_configuration.menu_mod else 100)
@@ -175,7 +177,7 @@ def apply_layout(description: LayoutDescription,
         args.append("-i")
     if layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
-    if patcher_configuration.speed_up_credits:
+    if cosmetic_patches.speed_up_credits:
         args.append("-c")
 
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
