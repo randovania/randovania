@@ -117,11 +117,11 @@ _test_descriptions = [
                                                       starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
-        pickup_mapping=[114, 117, 4, 115, 13, 2, 23, 7, 37, 2, 0, 102, 2, 38, 8, 2, 2, 2, 17, 92, 4, 2, 4, 2, 2, 100,
-                        82, 2, 43, 112, 2, 2, 2, 2, 2, 2, 88, 46, 2, 50, 57, 2, 52, 106, 8, 2, 2, 2, 2, 2, 2, 2, 19, 86,
-                        4, 2, 8, 2, 8, 24, 2, 2, 91, 2, 8, 2, 79, 2, 17, 2, 116, 2, 4, 44, 8, 4, 68, 2, 74, 2, 76, 2, 4,
-                        109, 2, 75, 1, 118, 15, 4, 2, 4, 8, 2, 4, 17, 17, 4, 2, 2, 2, 21, 2, 8, 83, 4, 39, 2, 2, 24, 69,
-                        2, 11, 4, 59, 4, 53, 2, 45]
+        pickup_mapping=[46, 45, 2, 24, 4, 2, 23, 2, 2, 2, 8, 68, 2, 38, 117, 2, 2, 7, 2, 115, 37, 4, 2, 2, 2, 8, 2, 8,
+                        2, 112, 2, 8, 4, 86, 13, 69, 88, 82, 102, 50, 57, 8, 52, 2, 118, 4, 17, 2, 21, 2, 2, 2, 1, 2, 2,
+                        53, 74, 17, 2, 2, 2, 2, 4, 2, 92, 8, 4, 2, 19, 2, 43, 2, 2, 2, 8, 2, 2, 116, 2, 8, 2, 2, 59, 44,
+                        2, 2, 76, 114, 11, 4, 2, 100, 2, 2, 106, 4, 2, 24, 75, 79, 4, 17, 4, 4, 17, 15, 2, 2, 109, 2, 2,
+                        91, 4, 0, 4, 39, 83, 2, 4]
 
         ,
     ),
@@ -210,7 +210,6 @@ def test_create_patches(mock_random: MagicMock,
                         mock_sky_temple_key_distribution_logic: MagicMock,
                         mock_retcon_playthrough_filler: MagicMock,
                         mock_indices_for_unassigned_pickups: MagicMock,
-                        empty_patches
                         ):
     # Setup
     seed_number: int = 91319

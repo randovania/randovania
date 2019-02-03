@@ -7,16 +7,16 @@ from typing import Callable, List, Dict, Union
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
-from randovania.game_description.node import TeleporterConnection
 from randovania.games.prime import claris_random
+from randovania.games.prime.patcher_file import is_vanilla_starting_location
 from randovania.interface_common import status_update_lib
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutRandomizedFlag
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.starting_location import StartingLocationConfiguration
-from randovania.layout.starting_resources import StartingResourcesConfiguration
 
 _USELESS_PICKUP_NAME = "Energy Transfer Module"
 
@@ -135,19 +135,13 @@ def _calculate_indices(description: LayoutDescription) -> List[int]:
     return indices
 
 
-def _is_vanilla_starting_location(configuration: LayoutConfiguration) -> bool:
-    loc_config = configuration.starting_location.configuration
-    resource_config = configuration.starting_resources.configuration
-    return (loc_config == StartingLocationConfiguration.SHIP and
-            resource_config == StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
-
-
 def apply_layout(description: LayoutDescription,
-                 game_root: Path,
+                 cosmetic_patches: CosmeticPatches,
                  backup_files_path: Path,
-                 progress_update: ProgressUpdateCallable):
+                 progress_update: ProgressUpdateCallable, game_root: Path):
     """
     Applies the modifications listed in the given LayoutDescription to the game in game_root.
+    :param cosmetic_patches:
     :param description:
     :param game_root:
     :param backup_files_path: Path to use as pak backup, to remove/add menu mod.
@@ -156,7 +150,7 @@ def apply_layout(description: LayoutDescription,
     """
 
     patcher_configuration = description.permalink.patcher_configuration
-    args = _base_args(game_root, hud_memo_popup_removal=patcher_configuration.disable_hud_popup)
+    args = _base_args(game_root, hud_memo_popup_removal=cosmetic_patches.disable_hud_popup)
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if patcher_configuration.menu_mod else 100)
@@ -171,10 +165,12 @@ def apply_layout(description: LayoutDescription,
         "-p", ",".join(str(index) for index in indices),
     ]
     layout_configuration = description.permalink.layout_configuration
-    if not _is_vanilla_starting_location(layout_configuration):
+    if not is_vanilla_starting_location(layout_configuration):
         args.append("-i")
     if layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
+    if cosmetic_patches.speed_up_credits:
+        args.append("-c")
 
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
     _run_with_args(args, "Randomized!", status_update)
@@ -251,10 +247,10 @@ def try_randomize_elevators(randomizer: claris_random.Random,
 
 
 def elevator_connections_for_seed_number(seed_number: int,
-                                         ) -> Dict[int, TeleporterConnection]:
+                                         ) -> Dict[int, AreaLocation]:
     elevator_connection = {}
     for elevator in try_randomize_elevators(claris_random.Random(seed_number)):
-        elevator_connection[elevator.instance_id] = TeleporterConnection(
+        elevator_connection[elevator.instance_id] = AreaLocation(
             elevator.connected_elevator.world_asset_id,
             elevator.connected_elevator.area_asset_id
         )

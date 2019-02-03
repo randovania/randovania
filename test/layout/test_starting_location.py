@@ -68,5 +68,5 @@ def test_invalid_constructor_location_should_be_missing():
     with pytest.raises(ValueError) as err:
         StartingLocation(StartingLocationConfiguration.SHIP, AreaLocation(0, 0))
 
-    assert str(err.value) == "custom_location set to AreaLocation(world_asset_id=0, area_asset_id=0), " \
+    assert str(err.value) == "custom_location set to world 0/area 0, " \
                              "but configuration is StartingLocationConfiguration.SHIP instead of CUSTOM"

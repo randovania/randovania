@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, order=True)
 class AreaLocation:
     world_asset_id: int
     area_asset_id: int
@@ -16,3 +16,6 @@ class AreaLocation:
     @classmethod
     def from_json(cls, value: dict) -> "AreaLocation":
         return cls(value["world_asset_id"], value["area_asset_id"])
+
+    def __repr__(self):
+        return "world {}/area {}".format(self.world_asset_id, self.area_asset_id)

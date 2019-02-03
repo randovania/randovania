@@ -8,9 +8,10 @@ from pathlib import Path
 from typing import NamedTuple, Tuple, Dict, List
 
 from randovania.game_description import data_reader
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PickupNode, Node, TeleporterNode, TeleporterConnection
+from randovania.game_description.node import PickupNode, Node, TeleporterNode
 from randovania.game_description.resources import PickupAssignment
 from randovania.game_description.world_list import WorldList
 from randovania.layout.permalink import Permalink
@@ -83,13 +84,13 @@ def _item_locations_to_pickup_assignment(game: GameDescription,
 
 def _node_mapping_to_elevator_connection(world_list: WorldList,
                                          elevators: Dict[str, str],
-                                         ) -> Dict[int, TeleporterConnection]:
+                                         ) -> Dict[int, AreaLocation]:
     result = {}
     for source_name, target_node in elevators.items():
         source_node: TeleporterNode = world_list.node_from_name(source_name)
         target_node = world_list.node_from_name(target_node)
 
-        result[source_node.teleporter_instance_id] = TeleporterConnection(
+        result[source_node.teleporter_instance_id] = AreaLocation(
             world_list.nodes_to_world(target_node).world_asset_id,
             world_list.nodes_to_area(target_node).area_asset_id
         )

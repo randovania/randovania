@@ -6,10 +6,11 @@ from unittest.mock import patch, MagicMock, call, ANY
 import pytest
 
 import randovania
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import TeleporterConnection
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -286,6 +287,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
     ]
 
 
+@pytest.mark.parametrize("speed_up_credits", [False, True])
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("elevators", [False, True])
 @pytest.mark.parametrize("item_loss", [False, True])
@@ -310,16 +312,19 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                       item_loss: bool,
                       elevators: bool,
                       include_menu_mod: bool,
+                      speed_up_credits: bool,
                       ):
     # Setup
     hud_memo_popup_removal: bool = MagicMock()
+    cosmetic_patches = CosmeticPatches(disable_hud_popup=hud_memo_popup_removal,
+                                       speed_up_credits=speed_up_credits,
+                                       )
     description = LayoutDescription(
         version=randovania.VERSION,
         permalink=Permalink(
             seed_number=seed_number,
             spoiler=False,
             patcher_configuration=PatcherConfiguration(
-                disable_hud_popup=hud_memo_popup_removal,
                 menu_mod=include_menu_mod,
             ),
             layout_configuration=LayoutConfiguration.from_params(
@@ -350,9 +355,11 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         expected_args.append("-i")
     if elevators:
         expected_args.append("-v")
+    if speed_up_credits:
+        expected_args.append("-c")
 
     # Run
-    claris_randomizer.apply_layout(description, game_root, backup_files_path, progress_update)
+    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root)
 
     # Assert
     mock_base_args.assert_called_once_with(game_root, hud_memo_popup_removal=hud_memo_popup_removal)
@@ -472,6 +479,6 @@ def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: Magi
     mock_random.assert_called_once_with(seed_number)
     mock_try_randomize_elevators.assert_called_once_with(mock_random.return_value)
     assert result == {
-        elevator.instance_id: TeleporterConnection(elevator.connected_elevator.world_asset_id,
-                                                   elevator.connected_elevator.area_asset_id)
+        elevator.instance_id: AreaLocation(elevator.connected_elevator.world_asset_id,
+                                           elevator.connected_elevator.area_asset_id)
     }

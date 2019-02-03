@@ -34,8 +34,7 @@ def test_migrate_from_v1():
     # Assert
     assert new_data == {
         "patcher_configuration": {
-            "disable_hud_popup": True,
-            "menu_mod": False
+            "menu_mod": False,
         },
         "layout_configuration": {
             "trick_level": "normal",
@@ -44,6 +43,10 @@ def test_migrate_from_v1():
             "starting_location": "ship",
             "elevators": "vanilla",
             "pickup_quantities": {},
+        },
+        "cosmetic_patches": {
+            "disable_hud_popup": True,
+            "speed_up_credits": True
         }
     }
 
@@ -165,7 +168,7 @@ def test_serialize_fields(option: Options):
 
     # Assert
     assert result == {
-        "version": 4,
+        "version": 5,
         "options": {}
     }
 

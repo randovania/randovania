@@ -5,9 +5,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.default_database import default_prime2_pickup_database
+from randovania.game_description.default_database import default_prime2_pickup_database, \
+    default_prime2_resource_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import PickupDatabase
+from randovania.game_description.resources import PickupDatabase, ResourceDatabase
 
 
 @pytest.fixture
@@ -19,6 +20,11 @@ def test_files_dir() -> Path:
 def simple_data(test_files_dir: Path) -> dict:
     with test_files_dir.joinpath("small_game_data.json").open("r") as small_game_data:
         return json.load(small_game_data)
+
+
+@pytest.fixture()
+def echoes_resource_database() -> ResourceDatabase:
+    return default_prime2_resource_database()
 
 
 @pytest.fixture()
@@ -38,7 +44,7 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 @pytest.fixture()
 def empty_patches() -> GamePatches:
-    return GamePatches({}, {}, {}, {}, None, None)
+    return GamePatches({}, {}, {}, {}, (), None)
 
 
 def pytest_addoption(parser):

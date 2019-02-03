@@ -1,10 +1,11 @@
 import copy
+import dataclasses
 from dataclasses import dataclass
 from typing import Dict, Tuple, Iterator
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness
-from randovania.game_description.node import TeleporterConnection, DockConnection
+from randovania.game_description.node import DockConnection
 from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, ResourceGainTuple
 
 
@@ -16,7 +17,7 @@ class GamePatches:
     """
 
     pickup_assignment: PickupAssignment
-    elevator_connection: Dict[int, TeleporterConnection]
+    elevator_connection: Dict[int, AreaLocation]
     dock_connection: Dict[Tuple[int, int], DockConnection]
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
     extra_initial_items: ResourceGainTuple
@@ -33,15 +34,11 @@ class GamePatches:
             assert index not in new_pickup_assignment
             new_pickup_assignment[index] = pickup
 
-        return GamePatches(
-            new_pickup_assignment,
-            self.elevator_connection,
-            self.dock_connection,
-            self.dock_weakness,
-            self.extra_initial_items,
-            self.starting_location,
-        )
+        return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
 
     def assign_pickup_assignment(self, assignment: PickupAssignment) -> "GamePatches":
         items: Iterator[Tuple[PickupIndex, PickupEntry]] = assignment.items()
         return self.assign_new_pickups(items)
+
+    def assign_starting_location(self, location: AreaLocation) -> "GamePatches":
+        return dataclasses.replace(self, starting_location=location)

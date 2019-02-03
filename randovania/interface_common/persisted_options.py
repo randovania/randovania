@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 4
+_CURRENT_OPTIONS_FILE_VERSION = 5
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -52,6 +52,20 @@ def _convert_v3(options: dict) -> dict:
 
         layout_configuration["starting_location"] = "ship"
 
+    if "patcher_configuration" in options:
+        options["patcher_configuration"]["speed_up_credits"] = True
+
+    return options
+
+
+def _convert_v4(options: dict) -> dict:
+    if "patcher_configuration" in options:
+        patcher_config = options["patcher_configuration"]
+        options["cosmetic_patches"] = {
+            "disable_hud_popup": patcher_config.pop("disable_hud_popup"),
+            "speed_up_credits": patcher_config.pop("speed_up_credits"),
+        }
+
     return options
 
 
@@ -59,6 +73,7 @@ _CONVERTER_FOR_VERSION = {
     1: _convert_v1,
     2: _convert_v2,
     3: _convert_v3,
+    4: _convert_v4,
 }
 
 
