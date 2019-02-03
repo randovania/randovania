@@ -5,7 +5,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    is_resource_node, DockConnection, TeleporterConnection
+    is_resource_node, DockConnection
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
@@ -161,7 +161,7 @@ class WorldReader:
             destination_area_asset_id = data["destination_area_asset_id"]
 
             return TeleporterNode(name, heal, instance_id,
-                                  TeleporterConnection(destination_world_asset_id, destination_area_asset_id))
+                                  AreaLocation(destination_world_asset_id, destination_area_asset_id))
 
         elif node_type == 4:
             return EventNode(name, heal,

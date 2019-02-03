@@ -5,7 +5,7 @@ from typing import Dict, Tuple, Iterator
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness
-from randovania.game_description.node import TeleporterConnection, DockConnection
+from randovania.game_description.node import DockConnection
 from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, ResourceGainTuple
 
 
@@ -17,7 +17,7 @@ class GamePatches:
     """
 
     pickup_assignment: PickupAssignment
-    elevator_connection: Dict[int, TeleporterConnection]
+    elevator_connection: Dict[int, AreaLocation]
     dock_connection: Dict[Tuple[int, int], DockConnection]
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
     extra_initial_items: ResourceGainTuple

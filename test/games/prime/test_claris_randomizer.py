@@ -6,8 +6,8 @@ from unittest.mock import patch, MagicMock, call, ANY
 import pytest
 
 import randovania
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import TeleporterConnection
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
@@ -479,6 +479,6 @@ def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: Magi
     mock_random.assert_called_once_with(seed_number)
     mock_try_randomize_elevators.assert_called_once_with(mock_random.return_value)
     assert result == {
-        elevator.instance_id: TeleporterConnection(elevator.connected_elevator.world_asset_id,
-                                                   elevator.connected_elevator.area_asset_id)
+        elevator.instance_id: AreaLocation(elevator.connected_elevator.world_asset_id,
+                                           elevator.connected_elevator.area_asset_id)
     }
