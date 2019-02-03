@@ -2,8 +2,10 @@ from typing import Dict
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase
+from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.starting_resources import StartingResources
 
@@ -46,6 +48,25 @@ def _create_spawn_point_field(resource_database: ResourceDatabase,
     }
 
 
+def _create_elevators_field(world_list: WorldList, patches: GamePatches) -> list:
+    nodes_by_teleporter_id = {
+        node.teleporter_instance_id: node
+        for node in world_list.all_nodes
+        if isinstance(node, TeleporterNode)
+    }
+
+    elevators = [
+        {
+            "origin_location": world_list.node_to_area_location(nodes_by_teleporter_id[instance_id]).as_json,
+            "target_location": connection.as_json,
+            "room_name": "Transport to {}".format(world_list.world_by_area_location(connection).name)
+        }
+        for instance_id, connection in patches.elevator_connection.items()
+    ]
+
+    return elevators
+
+
 def create_patcher_file(description: LayoutDescription) -> dict:
     result = {}
 
@@ -56,5 +77,8 @@ def create_patcher_file(description: LayoutDescription) -> dict:
     result["spawn_point"] = _create_spawn_point_field(game.resource_database,
                                                       layout.starting_resources,
                                                       patches)
+
+    result["elevators"] = _create_elevators_field(game.world_list,
+                                                  patches)
 
     return result
