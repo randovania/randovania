@@ -210,7 +210,6 @@ def test_create_patches(mock_random: MagicMock,
                         mock_sky_temple_key_distribution_logic: MagicMock,
                         mock_retcon_playthrough_filler: MagicMock,
                         mock_indices_for_unassigned_pickups: MagicMock,
-                        empty_patches
                         ):
     # Setup
     seed_number: int = 91319
