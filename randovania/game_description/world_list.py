@@ -5,7 +5,7 @@ from typing import List, Dict, Iterator, Tuple, FrozenSet, Iterable
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode, TeleporterConnection, DockConnection
+from randovania.game_description.node import Node, DockNode, TeleporterNode, DockConnection
 from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources import CurrentResources, ResourceDatabase, ResourceInfo
 from randovania.game_description.world import World
@@ -100,9 +100,8 @@ class WorldList:
         connection = patches.elevator_connection.get(node.teleporter_instance_id, node.default_connection)
         return self.resolve_teleporter_connection(connection)
 
-    def resolve_teleporter_connection(self, connection: TeleporterConnection) -> Node:
-        world = self.world_by_asset_id(connection.world_asset_id)
-        area = world.area_by_asset_id(connection.area_asset_id)
+    def resolve_teleporter_connection(self, connection: AreaLocation) -> Node:
+        area = self.area_by_area_location(connection)
         if area.default_node_index == 255:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
         return area.nodes[area.default_node_index]
@@ -184,6 +183,15 @@ class WorldList:
 
     def area_by_area_location(self, location: AreaLocation) -> Area:
         return self.world_by_asset_id(location.world_asset_id).area_by_asset_id(location.area_asset_id)
+
+    def world_by_area_location(self, location: AreaLocation) -> World:
+        return self.world_by_asset_id(location.world_asset_id)
+
+    def node_to_area_location(self, node: Node) -> AreaLocation:
+        return AreaLocation(
+            world_asset_id=self.nodes_to_world(node).world_asset_id,
+            area_asset_id=self.nodes_to_area(node).area_asset_id,
+        )
 
 
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):

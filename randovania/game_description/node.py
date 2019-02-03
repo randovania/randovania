@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import NamedTuple, Union
 
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness
 from randovania.game_description.resources import PickupIndex, ResourceInfo, ResourceGain
 
@@ -39,20 +40,11 @@ class DockNode(NamedTuple):
         return False
 
 
-@dataclass(frozen=True, order=True)
-class TeleporterConnection:
-    world_asset_id: int
-    area_asset_id: int
-
-    def __repr__(self):
-        return "{}/{}".format(self.world_asset_id, self.area_asset_id)
-
-
 class TeleporterNode(NamedTuple):
     name: str
     heal: bool
     teleporter_instance_id: int
-    default_connection: TeleporterConnection
+    default_connection: AreaLocation
 
     def __repr__(self):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)

@@ -7,8 +7,8 @@ from typing import Callable, List, Dict, Union
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
-from randovania.game_description.node import TeleporterConnection
 from randovania.games.prime import claris_random
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
@@ -255,10 +255,10 @@ def try_randomize_elevators(randomizer: claris_random.Random,
 
 
 def elevator_connections_for_seed_number(seed_number: int,
-                                         ) -> Dict[int, TeleporterConnection]:
+                                         ) -> Dict[int, AreaLocation]:
     elevator_connection = {}
     for elevator in try_randomize_elevators(claris_random.Random(seed_number)):
-        elevator_connection[elevator.instance_id] = TeleporterConnection(
+        elevator_connection[elevator.instance_id] = AreaLocation(
             elevator.connected_elevator.world_asset_id,
             elevator.connected_elevator.area_asset_id
         )
