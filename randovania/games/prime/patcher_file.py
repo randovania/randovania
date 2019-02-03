@@ -6,8 +6,10 @@ from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase
 from randovania.game_description.world_list import WorldList
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.starting_resources import StartingResources
+from randovania.layout.starting_location import StartingLocationConfiguration
+from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
 
 
 def _add_items_in_resource_gain_to_dict(gain: ResourceGain,
@@ -81,4 +83,15 @@ def create_patcher_file(description: LayoutDescription) -> dict:
     result["elevators"] = _create_elevators_field(game.world_list,
                                                   patches)
 
+    result["specific_patches"] = {
+        "hive_chamber_b_post_state": not is_vanilla_starting_location(layout)
+    }
+
     return result
+
+
+def is_vanilla_starting_location(configuration: LayoutConfiguration) -> bool:
+    loc_config = configuration.starting_location.configuration
+    resource_config = configuration.starting_resources.configuration
+    return (loc_config == StartingLocationConfiguration.SHIP and
+            resource_config == StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
