@@ -4,6 +4,7 @@ from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union, List
 
 from randovania import VERSION
 from randovania.game_description import data_reader
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
@@ -17,7 +18,7 @@ from randovania.resolver.exceptions import GenerationFailure
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
-from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutSkyTempleKeyMode, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
 from randovania.resolver.random_lib import shuffle
@@ -205,6 +206,28 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
     return previous_patches.assign_pickup_assignment(new_assignments)
 
 
+def _starting_location_for_configuration(configuration: LayoutConfiguration,
+                                         game: GameDescription,
+                                         rng: Random,
+                                         ) -> AreaLocation:
+
+    starting_location = configuration.starting_location
+
+    if starting_location.configuration == StartingLocationConfiguration.SHIP:
+        return game.starting_location
+
+    elif starting_location.configuration == StartingLocationConfiguration.CUSTOM:
+        return starting_location.custom_location
+
+    elif starting_location.configuration == StartingLocationConfiguration.RANDOM_SAVE_STATION:
+        save_stations = [node for node in game.world_list.all_nodes if node.name == "Save Station"]
+        save_station = rng.choice(save_stations)
+        return game.world_list.node_to_area_location(save_station)
+
+    else:
+        raise ValueError("Invalid configuration for StartLocation {}".format(starting_location))
+
+
 def _create_patches(
         permalink: Permalink,
         game: GameDescription,
@@ -217,15 +240,10 @@ def _create_patches(
     item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
-    if configuration.starting_location.configuration != StartingLocationConfiguration.SHIP:
-        raise GenerationFailure("The only supported StartingLocation is SHIP", permalink)
-
     if configuration.starting_resources.configuration == StartingResourcesConfiguration.CUSTOM:
         raise GenerationFailure("Custom StartingResources is unsupported", permalink)
 
-    patches = GamePatches.with_game(game)
-    patches = _add_elevator_connections_to_patches(permalink, patches)
-    patches = _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+    patches = _create_base_patches(rng, game, permalink, available_pickups)
 
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
@@ -236,6 +254,21 @@ def _create_patches(
                                                                              game,
                                                                              filler_patches.pickup_assignment,
                                                                              item_pool))
+
+
+def _create_base_patches(rng: Random,
+                         game: GameDescription,
+                         permalink: Permalink,
+                         available_pickups: List[PickupEntry],
+                         ) -> GamePatches:
+
+    patches = GamePatches.with_game(game)
+    patches = _add_elevator_connections_to_patches(permalink, patches)
+    patches = patches.assign_starting_location(_starting_location_for_configuration(permalink.layout_configuration,
+                                                                                    game, rng))
+    patches = _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
+
+    return patches
 
 
 def _indices_for_unassigned_pickups(rng: Random,

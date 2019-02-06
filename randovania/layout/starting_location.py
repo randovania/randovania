@@ -81,3 +81,9 @@ class StartingLocation(BitPackValue):
             return cls(StartingLocationConfiguration(value), None)
         else:
             return cls(StartingLocationConfiguration.CUSTOM, AreaLocation.from_json(value))
+
+    @property
+    def custom_location(self) -> AreaLocation:
+        if self.configuration != StartingLocationConfiguration.CUSTOM:
+            raise ValueError("Attempting to use custom_location of a non-CUSTOM location")
+        return self._custom_location
