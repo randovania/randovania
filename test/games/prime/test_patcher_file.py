@@ -2,7 +2,9 @@ import dataclasses
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.games.prime import patcher_file, default_data, claris_randomizer
+from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import PickupDatabase, PickupIndex, PickupEntry, SimpleResourceInfo
+from randovania.games.prime import patcher_file, default_data
 from randovania.layout import starting_resources
 from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
 
@@ -46,7 +48,6 @@ def test_create_elevators_field_no_elevator(empty_patches):
 
 def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, empty_patches):
     # Setup
-    seed_number = 50000
     game = data_reader.decode_data(default_data.decode_default_prime2(), False)
     patches = dataclasses.replace(
         empty_patches,
@@ -66,4 +67,64 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
         {"origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1660916974},
          "target_location": {"world_asset_id": 1039999561, "area_asset_id": 3479543630},
          "room_name": "Transport to Torvus Bog", },
+    ]
+
+
+def test_create_pickup_list(empty_patches):
+    # Setup
+    useless_resource = SimpleResourceInfo(0, "Useless", "Useless", ResourceType.ITEM)
+    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
+    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+
+    useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), "", 0)
+    pickup_database = PickupDatabase(
+        pickups={},
+        original_pickup_mapping={
+            PickupIndex(0): useless_pickup,
+            PickupIndex(1): useless_pickup,
+            PickupIndex(2): useless_pickup,
+        },
+        useless_pickup=useless_pickup
+    )
+    patches = empty_patches.assign_pickup_assignment({
+        PickupIndex(0): PickupEntry("A", ((resource_a, 1),), "", 0),
+        PickupIndex(2): PickupEntry("B", ((resource_b, 1), (resource_a, 1)), "", 0),
+    })
+
+    # Run
+    result = patcher_file._create_pickup_list(patches, pickup_database)
+
+    # Assert
+    assert result == [
+        {
+            "pickup_index": 0,
+            "resources": [
+                {
+                    "index": 1,
+                    "amount": 1
+                }
+            ]
+        },
+        {
+            "pickup_index": 1,
+            "resources": [
+                {
+                    "index": 0,
+                    "amount": 1
+                }
+            ]
+        },
+        {
+            "pickup_index": 2,
+            "resources": [
+                {
+                    "index": 2,
+                    "amount": 1
+                },
+                {
+                    "index": 1,
+                    "amount": 1
+                }
+            ]
+        },
     ]

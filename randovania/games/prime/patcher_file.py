@@ -4,7 +4,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase
+from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupDatabase
 from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -50,6 +50,32 @@ def _create_spawn_point_field(resource_database: ResourceDatabase,
     }
 
 
+def _create_pickup_list(patches: GamePatches,
+                        pickup_database: PickupDatabase
+                        ) -> list:
+    useless_pickup = pickup_database.useless_pickup
+    pickup_assignment = patches.pickup_assignment
+
+    pickups = [
+        {
+            "pickup_index": original_index.index,
+            # "model": 1234,
+            # "scan": "This is a description.",
+            "resources": [
+                {
+                    "index": resource.index,
+                    "amount": quantity
+                }
+                for resource, quantity in pickup_assignment.get(original_index, useless_pickup).resource_gain()
+                if quantity > 0 and resource.resource_type == ResourceType.ITEM
+            ]
+        }
+        for original_index in pickup_database.original_pickup_mapping.keys()
+    ]
+
+    return pickups
+
+
 def _create_elevators_field(world_list: WorldList, patches: GamePatches) -> list:
     nodes_by_teleporter_id = {
         node.teleporter_instance_id: node
@@ -79,6 +105,8 @@ def create_patcher_file(description: LayoutDescription) -> dict:
     result["spawn_point"] = _create_spawn_point_field(game.resource_database,
                                                       layout.starting_resources,
                                                       patches)
+
+    result["pickups"] = _create_pickup_list(patches, game.pickup_database)
 
     result["elevators"] = _create_elevators_field(game.world_list,
                                                   patches)
