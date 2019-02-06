@@ -50,3 +50,5 @@ def empty_patches() -> GamePatches:
 def pytest_addoption(parser):
     parser.addoption('--skip-generation-tests', action='store_true', dest="skip_generation_tests",
                      default=False, help="Skips running layout generation tests")
+    parser.addoption('--skip-gui-tests', action='store_true', dest="skip_gui_tests",
+                     default=False, help="Skips running GUI tests")

@@ -7,7 +7,10 @@ import pytest
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
 
-pexpect = pytest.importorskip("pytestqt")
+
+pytestmark = pytest.mark.skipif(
+    pytest.config.option.skip_gui_tests,
+    reason="skipped due to --skip-gui-tests")
 
 
 def create_window(options: Union[Options, MagicMock]) -> MainWindow:
