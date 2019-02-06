@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Changed: "Faster credits" and "Skip item acquisitions popups" are no longer included in permalinks.  
+- Changed: Updated Claris' Randomizer, for the following fixes:
+    - Fixed an issue with two of the Sky Temple Key hints being accidentally switched.
+    - FrontEnd editing now works properly for PAL and Japanese versions.
+    - Attract video removal is now integrated directly into the Randomizer.
+    - Getting the Torvus Energy Controller item will no longer block you from getting the Torvus Temple item.
 
 ## [0.21.0] - 2019-01-31
 - **Major**: now using Claris' Randomizer version 4.0. See [Changelog](https://pastebin.com/HdK9jdps).
