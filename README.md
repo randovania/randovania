@@ -13,26 +13,26 @@ with everything ready to use. Just extract and run!
 
 1. Press 'Load Game' and then select a Metroid Prime 2: Echoes ISO file.
 Use a Nintendo GameCube version, either USA or PAL.
-![Randovania Main GUI](randovania-readme/gui-1.png)
+ ![Randovania Main GUI](randovania-readme/gui-1.png)
    - Give it a few minutes to finish. This operation needs roughly 2 GiB of free
    storage in your system. (more precisely, local AppData)
 
 2. Configure the settings you wish to use in the 'Logic Settings' tab.
-![Logic Settings Tab](randovania-readme/gui-2.png)
+ ![Logic Settings Tab](randovania-readme/gui-2.png)
   
 3. Input a seed number. You can press 'New Seed' for one to be generated for you.
-![New Seed](randovania-readme/gui-3.png)
+ ![New Seed](randovania-readme/gui-3.png)
 
     a. Alternatively, you can import a Permalink someone shared with you!
-    ![Permalink](randovania-readme/gui-4.png) 
+     ![Permalink](randovania-readme/gui-4.png) 
 
 4. When finished, press 'Randomize' to create an ISO ready to be played. The ISO will be created
 in the folder you selected in 'Output Folder'
-![Output Folder](randovania-readme/gui-5.png)
+ ![Output Folder](randovania-readme/gui-5.png)
    - The entire operation may take over 5 minutes to finish, depending on your computer.
    - An operation may also fail with an error similar to this. In this case, choose another Seed
    Number and try again.
-   ![Generation Failure](randovania-readme/gui-6.png)
+    ![Generation Failure](randovania-readme/gui-6.png)
    
 ## Tracker
 
