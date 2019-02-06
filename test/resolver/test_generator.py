@@ -14,7 +14,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocation
+from randovania.layout.starting_location import StartingLocation, StartingLocationConfiguration
 from randovania.layout.starting_resources import StartingResources
 from randovania.resolver import generator, debug
 from randovania.resolver.exceptions import GenerationFailure
@@ -198,6 +198,55 @@ def test_generate_twice():
 
     generated_description = generator.generate_list(layout_description.permalink, status_update)
     assert generated_description == generator.generate_list(layout_description.permalink, status_update)
+
+
+def test_starting_location_for_configuration_ship():
+    # Setup
+    configuration = MagicMock()
+    configuration.starting_location.configuration = StartingLocationConfiguration.SHIP
+    game = MagicMock()
+    rng = MagicMock()
+
+    # Run
+    result = generator._starting_location_for_configuration(configuration, game, rng)
+
+    # Assert
+    assert result is game.starting_location
+
+
+def test_starting_location_for_configuration_custom():
+    # Setup
+    configuration = MagicMock()
+    configuration.starting_location.configuration = StartingLocationConfiguration.CUSTOM
+    game = MagicMock()
+    rng = MagicMock()
+
+    # Run
+    result = generator._starting_location_for_configuration(configuration, game, rng)
+
+    # Assert
+    assert result is configuration.starting_location.custom_location
+
+
+def test_starting_location_for_configuration_random_save_station():
+    # Setup
+    configuration = MagicMock()
+    configuration.starting_location.configuration = StartingLocationConfiguration.RANDOM_SAVE_STATION
+    game = MagicMock()
+    save_1 = MagicMock()
+    save_1.name = "Save Station"
+    save_2 = MagicMock()
+    save_2.name = "Save Station"
+    game.world_list.all_nodes = [save_1, save_2, MagicMock()]
+    rng = MagicMock()
+
+    # Run
+    result = generator._starting_location_for_configuration(configuration, game, rng)
+
+    # Assert
+    rng.choice.assert_called_once_with([save_1, save_2])
+    game.world_list.node_to_area_location.assert_called_once_with(rng.choice.return_value)
+    assert result is game.world_list.node_to_area_location.return_value
 
 
 @patch("randovania.resolver.generator._sky_temple_key_distribution_logic", autospec=True)
