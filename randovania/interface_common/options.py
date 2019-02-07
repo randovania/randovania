@@ -223,6 +223,15 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._patcher_configuration = dataclasses.replace(self.patcher_configuration, menu_mod=value)
 
+    @property
+    def warp_to_start(self) -> bool:
+        return self.patcher_configuration.warp_to_start
+
+    @warp_to_start.setter
+    def warp_to_start(self, value: bool):
+        self._check_editable_and_mark_dirty()
+        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, warp_to_start=value)
+
     # Access to fields inside CosmeticPatches
     @property
     def hud_memo_popup_removal(self) -> bool:

@@ -26,7 +26,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "IAAAfReIwKU="
+    assert encoded == "IAAAfReMYACM"
 
 
 @pytest.mark.parametrize("invalid", [
@@ -47,6 +47,7 @@ def test_decode_invalid(invalid: str):
     PatcherConfiguration.default(),
     PatcherConfiguration(
         menu_mod=True,
+        warp_to_start=False,
     ),
 ])
 @pytest.mark.parametrize("layout", [

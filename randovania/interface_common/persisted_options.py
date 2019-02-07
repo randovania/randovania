@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 5
+_CURRENT_OPTIONS_FILE_VERSION = 6
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -69,11 +69,19 @@ def _convert_v4(options: dict) -> dict:
     return options
 
 
+def _convert_v5(options: dict) -> dict:
+    if "patcher_configuration" in options:
+        options["patcher_configuration"]["warp_to_start"] = True
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     1: _convert_v1,
     2: _convert_v2,
     3: _convert_v3,
     4: _convert_v4,
+    5: _convert_v5,
 }
 
 

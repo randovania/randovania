@@ -35,6 +35,7 @@ def test_migrate_from_v1():
     assert new_data == {
         "patcher_configuration": {
             "menu_mod": False,
+            "warp_to_start": True,
         },
         "layout_configuration": {
             "trick_level": "normal",
@@ -168,7 +169,7 @@ def test_serialize_fields(option: Options):
 
     # Assert
     assert result == {
-        "version": 5,
+        "version": 6,
         "options": {}
     }
 

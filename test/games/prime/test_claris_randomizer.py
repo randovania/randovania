@@ -291,6 +291,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("elevators", [False, True])
 @pytest.mark.parametrize("item_loss", [False, True])
+@pytest.mark.parametrize("warp_to_start", [False, True])
 @pytest.mark.parametrize("seed_number", [1000, 8500])
 @patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
@@ -311,6 +312,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
                       seed_number: int,
                       item_loss: bool,
                       elevators: bool,
+                      warp_to_start: bool,
                       include_menu_mod: bool,
                       speed_up_credits: bool,
                       ):
@@ -326,6 +328,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
             spoiler=False,
             patcher_configuration=PatcherConfiguration(
                 menu_mod=include_menu_mod,
+                warp_to_start=warp_to_start,
             ),
             layout_configuration=LayoutConfiguration.from_params(
                 trick_level=MagicMock(),
@@ -357,6 +360,8 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         expected_args.append("-v")
     if speed_up_credits:
         expected_args.append("-c")
+    if warp_to_start:
+        expected_args.append("-t")
 
     # Run
     claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root)
