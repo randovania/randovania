@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>852</width>
-    <height>607</height>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,61 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="4" column="0">
+     <widget class="QGroupBox" name="seed_configuration_box">
+      <property name="title">
+       <string>Seed Number</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLineEdit" name="seed_number_edit">
+         <property name="placeholderText">
+          <string>Random Seed</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="seed_number_button">
+         <property name="text">
+          <string>New Seed</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QGroupBox" name="permalink_box">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="title">
+       <string>Permalink</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="permalink_import_button">
+         <property name="text">
+          <string>Import</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLineEdit" name="permalink_edit"/>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QPushButton" name="reset_settings_button">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resets all seed-affecting settings to their default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Reset Settings</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="6" column="0" colspan="4">
      <widget class="QGroupBox" name="rom_output_box">
       <property name="title">
@@ -505,65 +560,10 @@
       </layout>
      </widget>
     </item>
-    <item row="4" column="2">
-     <widget class="QGroupBox" name="permalink_box">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="title">
-       <string>Permalink</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="1">
-        <widget class="QPushButton" name="permalink_import_button">
-         <property name="text">
-          <string>Import</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLineEdit" name="permalink_edit"/>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QPushButton" name="reset_settings_button">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resets all seed-affecting settings to their default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Reset Settings</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QGroupBox" name="seed_configuration_box">
-      <property name="title">
-       <string>Seed Number</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QLineEdit" name="seed_number_edit">
-         <property name="placeholderText">
-          <string>Random Seed</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="seed_number_button">
-         <property name="text">
-          <string>New Seed</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="2" rowspan="4" colspan="2">
+    <item row="0" column="2" rowspan="2" colspan="2">
      <widget class="QGroupBox" name="game_patching_box">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -574,6 +574,12 @@
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="1" column="0">
         <widget class="QLabel" name="create_spoiler_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -610,10 +616,16 @@
        </item>
        <item row="7" column="0">
         <widget class="QLabel" name="seed_settings_warning_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>50</height>
+           <height>30</height>
           </size>
          </property>
          <property name="font">
@@ -639,6 +651,18 @@
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="include_menu_mod_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Menu Mod is a pratice tool for Echoes, allowing in-game changes to which items you have and warping to all rooms.&lt;/p&gt;&lt;p&gt;See the &lt;a href=&quot;https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Menu Mod README&lt;/span&gt;&lt;/a&gt; for more details.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -655,6 +679,18 @@
        </item>
        <item row="6" column="0">
         <widget class="QLabel" name="warp_to_start_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>70</height>
+          </size>
+         </property>
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Refusing to save at any Save Station will prompt if you want to warp to the starting location (usually Samus' Ship).&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#005500;&quot;&gt;Usage of the this option is encouraged for all, as it prevents many softlocks that occurs normally in Echoes.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -669,10 +705,10 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="2" colspan="2">
+    <item row="0" column="0" colspan="2">
      <widget class="QGroupBox" name="current_game_box">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -754,8 +790,14 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="0" rowspan="2">
+    <item row="1" column="0">
      <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Cosmetic Patching</string>
       </property>
@@ -769,11 +811,11 @@
        </item>
        <item>
         <widget class="QLabel" name="remove_hud_popup_label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Replaces the &amp;quot;Item Acquired&amp;quot; popup after collecting an item with an alert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -795,6 +837,12 @@
        </item>
        <item>
         <widget class="QLabel" name="faster_credits_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Speeds up the credits to be 60 seconds long (over 4x faster).</string>
          </property>
