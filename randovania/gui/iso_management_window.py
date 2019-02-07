@@ -74,6 +74,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         # Game Patching
         self.create_spoiler_check.stateChanged.connect(self._persist_option_then_notify("create_spoiler"))
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
+        self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
         self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
 
@@ -104,6 +105,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         self.create_spoiler_check.setChecked(self._options.create_spoiler)
         self.remove_hud_popup_check.setChecked(self._options.hud_memo_popup_removal)
+        self.warp_to_start_check.setChecked(self._options.warp_to_start)
         self.include_menu_mod_check.setChecked(self._options.include_menu_mod)
         self.faster_credits_check.setChecked(self._options.speed_up_credits)
 

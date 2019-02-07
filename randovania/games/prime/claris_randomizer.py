@@ -171,6 +171,8 @@ def apply_layout(description: LayoutDescription,
         args.append("-v")
     if cosmetic_patches.speed_up_credits:
         args.append("-c")
+    if description.permalink.patcher_configuration.warp_to_start:
+        args.append("-t")
 
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
     _run_with_args(args, "Randomized!", status_update)
