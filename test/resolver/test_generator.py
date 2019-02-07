@@ -48,7 +48,7 @@ def _create_test_layout_description(
         patches=GamePatches.with_game(game).assign_new_pickups([
             (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])
             for i, new_index in enumerate(pickup_mapping)
-        ]),
+        ]).change_warp_to_start(True),
         solver_path=())
 
 
@@ -98,11 +98,11 @@ _test_descriptions = [
                                                       starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
-        pickup_mapping=[83, 2, 2, 2, 24, 8, 46, 4, 75, 38, 114, 2, 39, 13, 4, 86, 2, 2, 116, 118, 43, 76, 2, 23, 17,
-                        45, 2, 4, 52, 74, 2, 2, 8, 2, 1, 2, 2, 106, 2, 21, 4, 2, 115, 59, 88, 2, 37, 7, 2, 2, 57, 2, 8,
-                        2, 2, 0, 17, 2, 2, 8, 4, 4, 69, 112, 2, 17, 92, 4, 19, 8, 2, 82, 8, 2, 102, 2, 2, 4, 17, 91, 2,
-                        2, 27, 2, 2, 100, 4, 53, 2, 8, 4, 44, 11, 4, 2, 2, 79, 2, 117, 4, 4, 2, 2, 2, 2, 2, 2, 15, 2, 2,
-                        2, 50, 8, 68, 2, 4, 2, 109, 2]
+        pickup_mapping=[83, 2, 2, 2, 24, 8, 46, 4, 75, 38, 114, 2, 39, 13, 4, 86, 2, 2, 116, 118, 43, 76, 2, 23, 17, 45,
+                        2, 4, 52, 74, 2, 2, 8, 2, 1, 2, 2, 106, 2, 21, 4, 2, 115, 59, 88, 2, 37, 7, 2, 2, 57, 2, 8, 2,
+                        2, 0, 17, 2, 2, 8, 4, 4, 69, 112, 2, 17, 92, 4, 19, 8, 2, 82, 8, 2, 102, 2, 2, 4, 17, 91, 2, 2,
+                        27, 2, 2, 100, 4, 53, 2, 8, 4, 44, 11, 4, 2, 2, 79, 2, 117, 4, 4, 2, 2, 2, 2, 2, 2, 15, 2, 2, 2,
+                        50, 8, 68, 2, 4, 2, 109, 2]
 
         ,
     ),
