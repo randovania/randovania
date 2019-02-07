@@ -44,7 +44,7 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 @pytest.fixture()
 def empty_patches() -> GamePatches:
-    return GamePatches({}, {}, {}, {}, (), None)
+    return GamePatches({}, {}, {}, {}, (), None, False)
 
 
 def pytest_addoption(parser):

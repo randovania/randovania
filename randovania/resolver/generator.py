@@ -263,6 +263,7 @@ def _create_base_patches(rng: Random,
                          ) -> GamePatches:
 
     patches = GamePatches.with_game(game)
+    patches = patches.change_warp_to_start(permalink.patcher_configuration.warp_to_start)
     patches = _add_elevator_connections_to_patches(permalink, patches)
     patches = patches.assign_starting_location(_starting_location_for_configuration(permalink.layout_configuration,
                                                                                     game, rng))

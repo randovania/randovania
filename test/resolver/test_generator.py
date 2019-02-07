@@ -265,19 +265,21 @@ def test_create_base_patches(mock_with_game: MagicMock,
     available_pickups = MagicMock()
 
     first_patches = mock_with_game.return_value
-    second_patches = mock_add_elevator_connections_to_patches.return_value
-    third_patches = second_patches.assign_starting_location.return_value
+    second_patches = first_patches.change_warp_to_start.return_value
+    third_patches = mock_add_elevator_connections_to_patches.return_value
+    fourth_patches = third_patches.assign_starting_location.return_value
 
     # Run
     result = generator._create_base_patches(rng, game, permalink, available_pickups)
 
     # Assert
     mock_with_game.assert_called_once_with(game)
-    mock_add_elevator_connections_to_patches.assert_called_once_with(permalink, first_patches)
+    first_patches.change_warp_to_start.assert_called_once_with(permalink.patcher_configuration.warp_to_start)
+    mock_add_elevator_connections_to_patches.assert_called_once_with(permalink, second_patches)
     mock_starting_location_for_configuration.assert_called_once_with(permalink.layout_configuration, game, rng)
-    second_patches.assign_starting_location.assert_called_once_with(
+    third_patches.assign_starting_location.assert_called_once_with(
         mock_starting_location_for_configuration.return_value)
-    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, third_patches, available_pickups)
+    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, fourth_patches, available_pickups)
     assert result is mock_sky_temple_key_distribution_logic.return_value
 
 

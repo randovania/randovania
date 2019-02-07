@@ -134,7 +134,8 @@ class LayoutDescription:
             {},
             {},
             (),
-            game.starting_location
+            game.starting_location,
+            permalink.patcher_configuration.warp_to_start,
         )
 
         return LayoutDescription(
