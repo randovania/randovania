@@ -64,11 +64,11 @@ on_success:
 #  See Appveyor's documentation for more details. Or you can simply
 #  access your wheels from the Appveyor "artifacts" tab for your build.
   - codecov
-  - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/5d41a01f262a24738ab0aee36da941c0b1fb703c/send.ps1 -o send.ps1
+  - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/23a1c4358e9fd64273720c2ca79a004730f9a0bc/send.ps1 -o send.ps1
   - ps: ./send.ps1 success $env:WEBHOOK_URL
 
 on_failure:
-  - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/5d41a01f262a24738ab0aee36da941c0b1fb703c/send.ps1 -o send.ps1
+  - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/23a1c4358e9fd64273720c2ca79a004730f9a0bc/send.ps1 -o send.ps1
   - ps: ./send.ps1 failure $env:WEBHOOK_URL
 
 deploy:
