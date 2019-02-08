@@ -59,11 +59,11 @@ script:
 
 after_success:
   - codecov
-  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/6d919918f55cff047d6f71689931ed15f9716b53/send.sh
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/fc36c25fc2b3e6d93a01e34a0502b894077b04f0/send.sh
   - chmod +x send.sh
   - ./send.sh success $WEBHOOK_URL
 
 after_failure:
-  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/6d919918f55cff047d6f71689931ed15f9716b53/send.sh
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/fc36c25fc2b3e6d93a01e34a0502b894077b04f0/send.sh
   - chmod +x send.sh
   - ./send.sh failure $WEBHOOK_URL
