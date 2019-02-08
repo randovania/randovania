@@ -135,9 +135,6 @@ class WorldList:
                 print("Teleporter is broken!", node)
                 yield None, RequirementSet.impossible()
 
-        if node.name == "Save Station" and patches.can_warp_to_start:
-            yield self.resolve_teleporter_connection(patches.starting_location), RequirementSet.trivial()
-
     def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
         """
         Queries all nodes from the same area you can go from a given node.
