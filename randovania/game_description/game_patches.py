@@ -22,11 +22,10 @@ class GamePatches:
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
     extra_initial_items: ResourceGainTuple
     starting_location: AreaLocation
-    can_warp_to_start: bool
 
     @classmethod
     def with_game(cls, game: "GameDescription") -> "GamePatches":
-        return GamePatches({}, {}, {}, {}, (), game.starting_location, False)
+        return GamePatches({}, {}, {}, {}, (), game.starting_location)
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupEntry]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -43,6 +42,3 @@ class GamePatches:
 
     def assign_starting_location(self, location: AreaLocation) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)
-
-    def change_warp_to_start(self, value: bool) -> "GamePatches":
-        return dataclasses.replace(self, can_warp_to_start=value)

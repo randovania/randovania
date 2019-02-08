@@ -48,7 +48,7 @@ def _create_test_layout_description(
         patches=GamePatches.with_game(game).assign_new_pickups([
             (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])
             for i, new_index in enumerate(pickup_mapping)
-        ]).change_warp_to_start(True),
+        ]),
         solver_path=())
 
 
@@ -98,11 +98,11 @@ _test_descriptions = [
                                                       starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
-        pickup_mapping=[83, 2, 2, 2, 24, 8, 46, 4, 75, 38, 114, 2, 39, 13, 4, 86, 2, 2, 116, 118, 43, 76, 2, 23, 17, 45,
-                        2, 4, 52, 74, 2, 2, 8, 2, 1, 2, 2, 106, 2, 21, 4, 2, 115, 59, 88, 2, 37, 7, 2, 2, 57, 2, 8, 2,
-                        2, 0, 17, 2, 2, 8, 4, 4, 69, 112, 2, 17, 92, 4, 19, 8, 2, 82, 8, 2, 102, 2, 2, 4, 17, 91, 2, 2,
-                        27, 2, 2, 100, 4, 53, 2, 8, 4, 44, 11, 4, 2, 2, 79, 2, 117, 4, 4, 2, 2, 2, 2, 2, 2, 15, 2, 2, 2,
-                        50, 8, 68, 2, 4, 2, 109, 2]
+        pickup_mapping=[37, 2, 2, 68, 100, 38, 102, 109, 8, 17, 4, 69, 88, 13, 44, 2, 4, 2, 74, 2, 27, 23, 2, 46, 43,
+                        15, 2, 2, 50, 4, 24, 2, 2, 2, 2, 57, 2, 2, 2, 4, 4, 115, 2, 53, 7, 2, 2, 59, 75, 8, 2, 52, 8, 2,
+                        19, 112, 2, 8, 17, 92, 2, 2, 79, 106, 2, 4, 2, 17, 4, 2, 2, 2, 2, 117, 2, 2, 2, 17, 2, 8, 82, 8,
+                        2, 4, 114, 118, 2, 91, 8, 4, 4, 11, 2, 2, 4, 1, 2, 0, 4, 8, 2, 116, 2, 4, 2, 2, 86, 2, 2, 39, 2,
+                        21, 2, 2, 45, 2, 4, 76, 83]
 
         ,
     ),
@@ -117,11 +117,11 @@ _test_descriptions = [
                                                       starting_location=StartingLocation.default(),
                                                       starting_resources=StartingResources.default(),
                                                       ),
-        pickup_mapping=[118, 44, 23, 2, 57, 8, 38, 2, 8, 2, 2, 2, 8, 88, 17, 4, 15, 2, 76, 4, 37, 2, 2, 82, 2, 116, 13,
-                        2, 2, 52, 2, 2, 74, 2, 0, 53, 2, 69, 102, 2, 2, 45, 2, 24, 2, 86, 4, 2, 8, 2, 115, 8, 2, 8, 112,
-                        2, 8, 79, 2, 2, 17, 43, 2, 2, 2, 4, 4, 17, 46, 4, 2, 8, 4, 4, 2, 2, 109, 4, 83, 68, 92, 19, 17,
-                        2, 2, 114, 4, 2, 100, 4, 11, 59, 39, 2, 4, 2, 2, 2, 75, 2, 2, 7, 4, 4, 1, 117, 2, 106, 2, 21, 2,
-                        91, 2, 2, 24, 50, 2, 2, 2]
+        pickup_mapping=[46, 45, 2, 24, 4, 2, 23, 2, 2, 2, 8, 68, 2, 38, 117, 2, 2, 7, 2, 115, 37, 4, 2, 2, 2, 8, 2, 8,
+                        2, 112, 2, 8, 4, 86, 13, 69, 88, 82, 102, 50, 57, 8, 52, 2, 118, 4, 17, 2, 21, 2, 2, 2, 1, 2, 2,
+                        53, 74, 17, 2, 2, 2, 2, 4, 2, 92, 8, 4, 2, 19, 2, 43, 2, 2, 2, 8, 2, 2, 116, 2, 8, 2, 2, 59, 44,
+                        2, 2, 76, 114, 11, 4, 2, 100, 2, 2, 106, 4, 2, 24, 75, 79, 4, 17, 4, 4, 17, 15, 2, 2, 109, 2, 2,
+                        91, 4, 0, 4, 39, 83, 2, 4]
 
         ,
     ),
@@ -265,21 +265,19 @@ def test_create_base_patches(mock_with_game: MagicMock,
     available_pickups = MagicMock()
 
     first_patches = mock_with_game.return_value
-    second_patches = first_patches.change_warp_to_start.return_value
-    third_patches = mock_add_elevator_connections_to_patches.return_value
-    fourth_patches = third_patches.assign_starting_location.return_value
+    second_patches = mock_add_elevator_connections_to_patches.return_value
+    third_patches = second_patches.assign_starting_location.return_value
 
     # Run
     result = generator._create_base_patches(rng, game, permalink, available_pickups)
 
     # Assert
     mock_with_game.assert_called_once_with(game)
-    first_patches.change_warp_to_start.assert_called_once_with(permalink.patcher_configuration.warp_to_start)
-    mock_add_elevator_connections_to_patches.assert_called_once_with(permalink, second_patches)
+    mock_add_elevator_connections_to_patches.assert_called_once_with(permalink, first_patches)
     mock_starting_location_for_configuration.assert_called_once_with(permalink.layout_configuration, game, rng)
-    third_patches.assign_starting_location.assert_called_once_with(
+    second_patches.assign_starting_location.assert_called_once_with(
         mock_starting_location_for_configuration.return_value)
-    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, fourth_patches, available_pickups)
+    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, third_patches, available_pickups)
     assert result is mock_sky_temple_key_distribution_logic.return_value
 
 
