@@ -4,7 +4,8 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupDatabase
+from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupDatabase, \
+    PickupIndex, PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -50,6 +51,22 @@ def _create_spawn_point_field(resource_database: ResourceDatabase,
     }
 
 
+def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
+    return {
+        "pickup_index": original_index.index,
+        # "model": 1234,
+        "scan": pickup.name,
+        "resources": [
+            {
+                "index": resource.index,
+                "amount": quantity
+            }
+            for resource, quantity in pickup.resource_gain()
+            if quantity > 0 and resource.resource_type == ResourceType.ITEM
+        ]
+    }
+
+
 def _create_pickup_list(patches: GamePatches,
                         pickup_database: PickupDatabase
                         ) -> list:
@@ -57,19 +74,7 @@ def _create_pickup_list(patches: GamePatches,
     pickup_assignment = patches.pickup_assignment
 
     pickups = [
-        {
-            "pickup_index": original_index.index,
-            # "model": 1234,
-            # "scan": "This is a description.",
-            "resources": [
-                {
-                    "index": resource.index,
-                    "amount": quantity
-                }
-                for resource, quantity in pickup_assignment.get(original_index, useless_pickup).resource_gain()
-                if quantity > 0 and resource.resource_type == ResourceType.ITEM
-            ]
-        }
+        _create_pickup(original_index, pickup_assignment.get(original_index, useless_pickup))
         for original_index in pickup_database.original_pickup_mapping.keys()
     ]
 

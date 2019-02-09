@@ -75,20 +75,21 @@ def test_create_pickup_list(empty_patches):
     useless_resource = SimpleResourceInfo(0, "Useless", "Useless", ResourceType.ITEM)
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+    pickup_a = PickupEntry("A", ((resource_a, 1),), "", 0)
 
     useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), "", 0)
     pickup_database = PickupDatabase(
         pickups={},
         original_pickup_mapping={
-            PickupIndex(0): useless_pickup,
-            PickupIndex(1): useless_pickup,
-            PickupIndex(2): useless_pickup,
+            PickupIndex(i): useless_pickup
+            for i in range(4)
         },
         useless_pickup=useless_pickup
     )
     patches = empty_patches.assign_pickup_assignment({
-        PickupIndex(0): PickupEntry("A", ((resource_a, 1),), "", 0),
+        PickupIndex(0): pickup_a,
         PickupIndex(2): PickupEntry("B", ((resource_b, 1), (resource_a, 1)), "", 0),
+        PickupIndex(3): pickup_a,
     })
 
     # Run
@@ -98,6 +99,7 @@ def test_create_pickup_list(empty_patches):
     assert result == [
         {
             "pickup_index": 0,
+            "scan": "A",
             "resources": [
                 {
                     "index": 1,
@@ -107,6 +109,7 @@ def test_create_pickup_list(empty_patches):
         },
         {
             "pickup_index": 1,
+            "scan": "Useless",
             "resources": [
                 {
                     "index": 0,
@@ -116,11 +119,22 @@ def test_create_pickup_list(empty_patches):
         },
         {
             "pickup_index": 2,
+            "scan": "B",
             "resources": [
                 {
                     "index": 2,
                     "amount": 1
                 },
+                {
+                    "index": 1,
+                    "amount": 1
+                }
+            ]
+        },
+        {
+            "pickup_index": 3,
+            "scan": "A",
+            "resources": [
                 {
                     "index": 1,
                     "amount": 1
