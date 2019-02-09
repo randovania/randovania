@@ -1,14 +1,16 @@
+import json
 import shutil
 from pathlib import Path
 from typing import List
 
-from randovania.games.prime import iso_packager, claris_randomizer, dol_patcher
+from randovania.games.prime import iso_packager, claris_randomizer, dol_patcher, patcher_file
 from randovania.games.prime.banner_patcher import patch_game_name_and_id
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.starting_location import StartingLocationConfiguration
+from randovania.resolver import debug
 
 
 def delete_files_location(options: Options, ):
@@ -146,6 +148,12 @@ def export_layout(layout: LayoutDescription,
     """
 
     output_json = options.output_directory.joinpath("{}.json".format(_output_name_for(layout)))
+
+    if debug.debug_level() > 0:
+        patcher = options.output_directory.joinpath("{}-patcher.json".format(_output_name_for(layout)))
+        with patcher.open("w") as out_file:
+            json.dump(patcher_file.create_patcher_file(layout, options.cosmetic_patches),
+                      out_file, indent=4, separators=(',', ': '))
 
     # Save the layout to a file
     layout.save_to_file(output_json)
