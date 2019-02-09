@@ -108,13 +108,16 @@ def test_output_name_for(mock_shareable_hash: PropertyMock,
     assert result == "Echoes Randomizer - PermalinkStr"
 
 
+@patch("randovania.interface_common.simplified_patcher.debug.debug_level", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
 def test_internal_patch_iso(mock_apply_layout: MagicMock,
                             mock_pack_iso: MagicMock,
+                            mock_debug_level: MagicMock,
                             empty_patches
                             ):
     # Setup
+    mock_debug_level.return_value = 0
     layout = MagicMock(spec=LayoutDescription(version="0.15.0", permalink=MagicMock(),
                                               patches=empty_patches, solver_path=()))
     layout.shareable_hash = "layout"
