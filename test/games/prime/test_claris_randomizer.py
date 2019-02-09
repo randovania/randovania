@@ -41,53 +41,68 @@ def _description(empty_patches) -> LayoutDescription:
     return _create_description_mock(Permalink.default(), empty_patches)
 
 
-@patch("subprocess.Popen", autospec=True)
-def test_run_with_args_success(mock_popen: MagicMock,
+@patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
+def test_run_with_args_success(mock_process_command: MagicMock,
                                ):
     # Setup
     args = [MagicMock(), MagicMock()]
     finish_string = "We are done!"
     status_update = MagicMock()
-    process = mock_popen.return_value.__enter__.return_value
-    process.stdout = [
-        " line 1",
-        "line 2 ",
-        "   ",
+    lines = [
+        "line 1",
+        "line 2",
         finish_string,
-        " post line "
+        "post line"
     ]
+
+    def side_effect(_, __, read_callback):
+        for line in lines:
+            read_callback(line)
+
+    mock_process_command.side_effect = side_effect
 
     # Run
     claris_randomizer._run_with_args(args, finish_string, status_update)
 
     # Assert
-    mock_popen.assert_called_once_with(
-        [str(x) for x in args],
-        stdout=subprocess.PIPE, bufsize=0, universal_newlines=True
-    )
+    mock_process_command.assert_called_once_with([str(x) for x in args], "", ANY)
     status_update.assert_has_calls([
         call("line 1"),
         call("line 2"),
         call(finish_string),
     ])
-    process.kill.assert_not_called()
 
 
-@patch("subprocess.Popen", autospec=True)
-def test_run_with_args_failure(mock_popen: MagicMock,
+@patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
+def test_run_with_args_failure(mock_process_command: MagicMock,
                                ):
     # Setup
     finish_string = "We are done!"
-    process = mock_popen.return_value.__enter__.return_value
-    process.stdout = [" line 1"]
+    status_update = MagicMock()
+    lines = [
+        "line 1",
+        "line 2",
+        "post line"
+    ]
+
+    def side_effect(_, __, read_callback):
+        for line in lines:
+            read_callback(line)
+
+    mock_process_command.side_effect = side_effect
 
     # Run
-    with pytest.raises(CustomException):
-        claris_randomizer._run_with_args([], finish_string, CustomException.do_raise)
+    with pytest.raises(RuntimeError) as error:
+        claris_randomizer._run_with_args([], finish_string, status_update)
 
     # Assert
-    mock_popen.assert_called_once_with([], stdout=subprocess.PIPE, bufsize=0, universal_newlines=True)
-    process.kill.assert_called_once_with()
+    mock_process_command.assert_called_once_with([], "", ANY)
+    status_update.assert_has_calls([
+        call("line 1"),
+        call("line 2"),
+        call("post line"),
+    ])
+    assert str(error.value) == "External tool did not send '{}'. Did something happen?".format(finish_string)
 
 
 @pytest.mark.parametrize("hud_memo_popup_removal", [False, True])

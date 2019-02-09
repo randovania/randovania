@@ -1,6 +1,9 @@
+import asyncio
 import copy
+import re
 import shutil
 import subprocess
+from asyncio import StreamWriter, StreamReader
 from collections import defaultdict
 from pathlib import Path
 from typing import Callable, List, Dict, Union
@@ -33,6 +36,49 @@ def _get_menu_mod_path() -> Path:
     return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
 
 
+async def _write_data(stream: StreamWriter, data: str):
+    stream.write(data.encode("UTF-8"))
+
+
+async def _read_data(stream: StreamReader, read_callback: Callable[[str], None]):
+    while True:
+        try:
+            line = await stream.readuntil(b"\r")
+        except asyncio.streams.IncompleteReadError as incomplete:
+            line = incomplete.partial
+        if line:
+            try:
+                decoded = line.decode()
+            except UnicodeDecodeError:
+                decoded = line.decode("latin1")
+            for x in re.split(r"[\r\n]", decoded.strip()):
+                if x:
+                    read_callback(x)
+        else:
+            break
+
+
+async def _process_command_async(args: List[str], input_data: str, read_callback: Callable[[str], None]):
+    process = await asyncio.create_subprocess_exec(*args,
+                                                   stdin=asyncio.subprocess.PIPE,
+                                                   stdout=asyncio.subprocess.PIPE,
+                                                   stderr=asyncio.subprocess.STDOUT)
+
+    await asyncio.wait([
+        _write_data(process.stdin, input_data),
+        _read_data(process.stdout, read_callback),
+    ])
+    await process.wait()
+
+
+def _process_command(args: List[str], input_data: str, read_callback: Callable[[str], None]):
+    loop = asyncio.ProactorEventLoop()
+    try:
+        loop.run_until_complete(_process_command_async(args, input_data, read_callback))
+    finally:
+        loop.close()
+
+
 def _run_with_args(args: List[Union[str, Path]],
                    finish_string: str,
                    status_update: Callable[[str], None]):
@@ -40,18 +86,16 @@ def _run_with_args(args: List[Union[str, Path]],
 
     new_args = [str(arg) for arg in args]
     print("Invoking external tool with: ", new_args)
-    with subprocess.Popen(new_args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
-        try:
-            for line in process.stdout:
-                x = line.strip()
-                if x:
-                    print(x)
-                    if not finished_updates:
-                        status_update(x)
-                        finished_updates = x == finish_string
-        except Exception:
-            process.kill()
-            raise
+
+    def read_callback(line: str):
+        nonlocal finished_updates
+        print(line)
+        if not finished_updates:
+            status_update(line)
+            finished_updates = line == finish_string
+
+    _process_command(new_args, "", read_callback)
+
     if not finished_updates:
         raise RuntimeError("External tool did not send '{}'. Did something happen?".format(finish_string))
 
