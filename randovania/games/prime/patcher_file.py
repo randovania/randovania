@@ -7,6 +7,7 @@ from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupDatabase, \
     PickupIndex, PickupEntry
 from randovania.game_description.world_list import WorldList
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.starting_location import StartingLocationConfiguration
@@ -100,9 +101,11 @@ def _create_elevators_field(world_list: WorldList, patches: GamePatches) -> list
     return elevators
 
 
-def create_patcher_file(description: LayoutDescription) -> dict:
+def create_patcher_file(description: LayoutDescription,
+                        cosmetic_patches: CosmeticPatches) -> dict:
     result = {}
 
+    patcher_config = description.permalink.patcher_configuration
     layout = description.permalink.layout_configuration
     patches = description.patches
     game = data_reader.decode_data(layout.game_data, add_self_as_requirement_to_resources=False)
@@ -117,7 +120,10 @@ def create_patcher_file(description: LayoutDescription) -> dict:
                                                   patches)
 
     result["specific_patches"] = {
-        "hive_chamber_b_post_state": not is_vanilla_starting_location(layout)
+        "hive_chamber_b_post_state": not is_vanilla_starting_location(layout),
+        "warp_to_start": patcher_config.warp_to_start,
+        "speed_up_credits": cosmetic_patches.speed_up_credits,
+        "disable_hud_popup": cosmetic_patches.disable_hud_popup,
     }
 
     return result
