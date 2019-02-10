@@ -8,7 +8,7 @@ class VersionDescription(NamedTuple):
     tag_name: str
     change_log: str
     html_url: str
-    
+
     @property
     def as_strict_version(self) -> StrictVersion:
         return StrictVersion(self.tag_name[1:])

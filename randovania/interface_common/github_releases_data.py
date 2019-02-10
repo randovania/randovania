@@ -3,7 +3,7 @@ import datetime
 import json
 import logging
 from pathlib import Path
-from typing import Optional, NamedTuple, List
+from typing import Optional, List
 
 import aiofiles
 import requests

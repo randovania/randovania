@@ -148,7 +148,6 @@ def add_distribute_command(sub_parsers):
 
 
 def batch_distribute_helper(args, seed_number) -> float:
-    data = prime_database.decode_data_file(args)
     configuration = get_layout_configuration_from_args(args)
     permalink = Permalink(
         seed_number=seed_number,

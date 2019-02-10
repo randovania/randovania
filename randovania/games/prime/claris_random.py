@@ -49,7 +49,7 @@ class Random:
                 mk += MBIG
             mj = self.SeedArray[ii]
 
-        for k in range(1, 5):
+        for _ in range(1, 5):
             for i in range(1, 56):
                 idx = 1 + (i + 30) % 55
                 self.SeedArray[i] -= self.SeedArray[idx]
