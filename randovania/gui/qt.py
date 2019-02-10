@@ -1,3 +1,4 @@
+import asyncio
 import sys
 from argparse import ArgumentParser
 
@@ -49,6 +50,10 @@ def run(args):
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     app = QApplication(sys.argv)
 
+    import asyncqt
+    loop = asyncqt.QEventLoop(app)
+    asyncio.set_event_loop(loop)
+
     sys.excepthook = catch_exceptions
 
     target_window = getattr(args, "window", None)
@@ -59,7 +64,8 @@ def run(args):
     else:
         show_main_window(app, args)
 
-    sys.exit(app.exec_())
+    with loop:
+        sys.exit(loop.run_forever())
 
 
 def create_subparsers(sub_parsers):

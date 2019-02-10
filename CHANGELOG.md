@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.23.0] - 2019-02-10
 - Added: New option to enable the "Warp to Start" feature.
+- Added: A "What's new" popup is displayed when launching a new version for the first time.
 - Fixed: changed text in Logic Settings to mention there *are* hints for Sky Temple Keys.
 - Changed: Updated Claris' Randomizer, for the following fixes:
     - Added the ability to warp to the starting room from save stations (-t).

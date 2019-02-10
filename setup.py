@@ -47,7 +47,9 @@ setup(
     python_requires=">=3.7",
     install_requires=[
         'PySide2>=5.12',
+        'aiofiles',
         'appdirs',
+        'asyncqt',
         'nod>=1.1',
         'requests',
         'networkx',

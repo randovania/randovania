@@ -33,6 +33,7 @@ def test_migrate_from_v1():
 
     # Assert
     assert new_data == {
+        "last_changelog_displayed": "0.22.0",
         "patcher_configuration": {
             "menu_mod": False,
             "warp_to_start": True,
@@ -170,7 +171,9 @@ def test_serialize_fields(option: Options):
     # Assert
     assert result == {
         "version": 6,
-        "options": {}
+        "options": {
+            "last_changelog_displayed": randovania.VERSION,
+        }
     }
 
 

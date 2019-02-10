@@ -5,7 +5,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-import markdown as markdown
+import markdown
 
 from randovania import VERSION, get_data_path
 from randovania.cli import prime_database

@@ -1,12 +1,14 @@
+import asyncio
 import json
 import os
 from pathlib import Path
 from typing import Optional
 
+import markdown
 from PySide2 import QtCore
 from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction
+from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
 
 from randovania import VERSION
 from randovania.games.prime import default_data
@@ -21,8 +23,8 @@ from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow
+from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
-from randovania.interface_common.update_checker import get_latest_version
 from randovania.resolver import debug
 
 
@@ -84,7 +86,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.on_options_changed()
 
         self.tabWidget.setCurrentIndex(0)
-        get_latest_version(self.newer_version_signal.emit)
+
+        # With online data
+        asyncio.get_event_loop().create_task(github_releases_data.get_releases()).add_done_callback(
+            self._on_releases_data)
 
     def closeEvent(self, event):
         self.stop_background_process()
@@ -105,14 +110,32 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
                 self.get_tab(ISOManagementWindow).load_game(Path(iso_path))
                 return
 
-    def display_new_version(self, new_version: str, new_version_url: str):
+    # Releases info
+
+    def _on_releases_data(self, task: asyncio.Task):
+        releases = task.result()
+        current_version = update_checker.strict_current_version()
+        last_changelog = self._options.last_changelog_displayed
+
+        change_logs, version_to_display = update_checker.versions_to_display_for_releases(
+            current_version, last_changelog, releases)
+
+        if version_to_display is not None:
+            self.display_new_version(version_to_display)
+
+        if change_logs:
+            QMessageBox.information(self, "What's new", markdown.markdown("\n".join(change_logs)))
+            with self._options as options:
+                options.last_changelog_displayed = current_version
+
+    def display_new_version(self, version: update_checker.VersionDescription):
         if self.menu_new_version is None:
             self.menu_new_version = QAction("", self)
             self.menu_new_version.triggered.connect(self.open_version_link)
             self.menu_bar.addAction(self.menu_new_version)
 
-        self.menu_new_version.setText("New version available: {}".format(new_version))
-        self._current_version_url = new_version_url
+        self.menu_new_version.setText("New version available: {}".format(version.tag_name))
+        self._current_version_url = version.html_url
 
     def open_version_link(self):
         if self._current_version_url is None:
