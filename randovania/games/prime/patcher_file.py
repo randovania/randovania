@@ -110,6 +110,9 @@ def create_patcher_file(description: LayoutDescription,
     patches = description.patches
     game = data_reader.decode_data(layout.game_data, add_self_as_requirement_to_resources=False)
 
+    result["permalink"] = description.permalink.as_str,
+    result["seed_hash"] = description.shareable_hash,
+
     result["spawn_point"] = _create_spawn_point_field(game.resource_database,
                                                       layout.starting_resources,
                                                       patches)

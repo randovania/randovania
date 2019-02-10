@@ -5,7 +5,6 @@ from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO
 
-from randovania import get_data_path
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name

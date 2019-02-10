@@ -1,9 +1,9 @@
-import operator
 from functools import lru_cache
 from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple
 
-from randovania.game_description.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceDatabase, SimpleResourceInfo
 from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import ResourceInfo, CurrentResources, DamageResourceInfo, ResourceDatabase, \
+    SimpleResourceInfo
 
 
 def _calculate_reduction(resource: DamageResourceInfo, current_resources: CurrentResources) -> float:
