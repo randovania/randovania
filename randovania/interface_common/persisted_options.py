@@ -70,6 +70,8 @@ def _convert_v4(options: dict) -> dict:
 
 
 def _convert_v5(options: dict) -> dict:
+    options["last_changelog_displayed"] = "0.22.0"
+
     if "patcher_configuration" in options:
         options["patcher_configuration"]["warp_to_start"] = True
 

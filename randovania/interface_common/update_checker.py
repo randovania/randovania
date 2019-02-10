@@ -1,86 +1,45 @@
-import datetime
-import json
-import logging
-import threading
-from pathlib import Path
-from typing import Callable, Optional, NamedTuple
-
-import requests
+from distutils.version import StrictVersion
+from typing import NamedTuple, List, Tuple, Optional
 
 from randovania import VERSION
-from randovania.interface_common import persistence
-
-_LATEST_RELEASE_URL = "https://api.github.com/repos/henriquegemignani/randovania/releases/latest"
 
 
 class VersionDescription(NamedTuple):
     tag_name: str
+    change_log: str
     html_url: str
+    
+    @property
+    def as_strict_version(self) -> StrictVersion:
+        return StrictVersion(self.tag_name[1:])
 
 
-def _last_check_file() -> Path:
-    return persistence.user_data_dir() / "last_version_check.json"
+def strict_current_version() -> StrictVersion:
+    return StrictVersion(VERSION)
 
 
-def _is_recent(last_check) -> bool:
-    last_check_date = datetime.datetime.fromisoformat(last_check["last_check"])
-    return (datetime.datetime.now() - last_check_date) <= datetime.timedelta(days=1)
+def get_version_for_release(release: dict) -> VersionDescription:
+    return VersionDescription(release["tag_name"], release["body"], release["html_url"])
 
 
-def _read_from_persisted() -> Optional[VersionDescription]:
-    try:
-        with _last_check_file().open() as open_file:
-            last_check = json.load(open_file)
+def versions_to_display_for_releases(current_version: StrictVersion,
+                                     last_changelog_version: StrictVersion,
+                                     releases: List[dict],
+                                     ) -> Tuple[List[str], Optional[VersionDescription]]:
+    change_logs = []
+    displayed_new_version = False
+    version_to_display = None
 
-        if _is_recent(last_check):
-            return VersionDescription(last_check["tag_name"], last_check["html_url"])
-        else:
-            return None
+    for release in releases:
+        version = get_version_for_release(release)
+        strict_version = version.as_strict_version
 
-    except json.JSONDecodeError as e:
-        logging.warning("Unable to decode persisted last update check: %s", str(e))
-        return None
+        if strict_version > current_version:
+            if not displayed_new_version:
+                version_to_display = version
+                displayed_new_version = True
 
-    except FileNotFoundError:
-        return None
+        elif strict_version > last_changelog_version:
+            change_logs.append("## {}\n\n{}".format(version.tag_name, version.change_log))
 
-
-def _download_from_github() -> Optional[VersionDescription]:
-    latest_release = requests.get(_LATEST_RELEASE_URL)
-    if latest_release.ok:
-        data = latest_release.json()
-        return VersionDescription(data["tag_name"], data["html_url"])
-    else:
-        return None
-
-
-def _persist_version(version: VersionDescription):
-    _last_check_file().parent.mkdir(parents=True, exist_ok=True)
-    with _last_check_file().open("w") as open_file:
-        json.dump({
-            "source": "github",
-            "last_check": datetime.datetime.now().isoformat(),
-            "tag_name": version.tag_name,
-            "html_url": version.html_url,
-        }, open_file, default=str)
-
-
-def _get_latest_version_work(on_result: Callable[[str, str], None]):
-    version = _read_from_persisted()
-
-    if version is None:
-        version = _download_from_github()
-        if version is not None:
-            _persist_version(version)
-
-    if version is not None:
-        if version.tag_name != "v{}".format(VERSION):
-            on_result(version.tag_name, version.html_url)
-
-
-def get_latest_version(on_result: Callable[[str, str], None]):
-    def work():
-        _get_latest_version_work(on_result)
-
-    background_thread = threading.Thread(target=work)
-    background_thread.start()
+    return change_logs, version_to_display

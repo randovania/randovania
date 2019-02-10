@@ -1,8 +1,10 @@
 import dataclasses
 import json
+from distutils.version import StrictVersion
 from pathlib import Path
 from typing import Optional, TypeVar, Callable, Any, Dict
 
+import randovania
 from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
@@ -27,6 +29,7 @@ class Serializer:
 
 
 _SERIALIZER_FOR_FIELD = {
+    "last_changelog_displayed": Serializer(identity, str),
     "show_advanced_options": Serializer(identity, bool),
     "create_spoiler": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
@@ -55,6 +58,7 @@ class Options:
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
 
+    _last_changelog_displayed: str
     _show_advanced_options: Optional[bool] = None
     _seed_number: Optional[int] = None
     _create_spoiler: Optional[bool] = None
@@ -65,6 +69,7 @@ class Options:
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
+        self._last_changelog_displayed = randovania.VERSION
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
@@ -152,6 +157,15 @@ class Options:
         return self._data_dir.joinpath("extracted_game")
 
     # Access to Direct fields
+    @property
+    def last_changelog_displayed(self) -> StrictVersion:
+        return StrictVersion(self._last_changelog_displayed)
+
+    @last_changelog_displayed.setter
+    def last_changelog_displayed(self, value: StrictVersion):
+        self._check_editable_and_mark_dirty()
+        self._last_changelog_displayed = str(value)
+
     @property
     def seed_number(self) -> Optional[int]:
         return self._seed_number
