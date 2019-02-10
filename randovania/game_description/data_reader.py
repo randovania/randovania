@@ -10,7 +10,7 @@ from randovania.game_description.requirements import IndividualRequirement, Requ
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
     PickupEntry, ResourceDatabase, PickupDatabase, \
-    find_resource_info_with_id, ResourceGainTuple, ResourceInfo
+    find_resource_info_with_id, ResourceGainTuple, ResourceInfo, ConditionalResources
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -106,7 +106,6 @@ def read_dock_weakness(item: Dict, resource_database: ResourceDatabase, dock_typ
 def read_dock_weakness_database(data: Dict,
                                 resource_database: ResourceDatabase,
                                 ) -> DockWeaknessDatabase:
-
     door_types = read_array(data["door"], lambda item: read_dock_weakness(item, resource_database, DockType.DOOR))
     portal_types = read_array(data["portal"], lambda item: read_dock_weakness(item, resource_database, DockType.PORTAL))
 
@@ -219,16 +218,44 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
     )
 
 
+def read_pickup(name: str,
+                item: Dict,
+                resource_database: ResourceDatabase,
+                ) -> PickupEntry:
+    """
+    De-serialize an PickupEntry
+    :param name:
+    :param item:
+    :param resource_database:
+    :return:
+    """
+
+    conditional_resources = None
+    if "conditional_resources" in item:
+        conditional_resources = ConditionalResources(
+            resource_database.get_by_type_and_index(
+                ResourceType.ITEM,
+                item["conditional_resources"]["item"]
+            ),
+            read_resource_gain_tuple(item["conditional_resources"]["resources"], resource_database)
+        )
+
+    return PickupEntry(name,
+                       read_resource_gain_tuple(item["resources"], resource_database),
+                       item["model_index"],
+                       conditional_resources,
+                       item["item_category"],
+                       item["probability_offset"],
+                       )
+
+
 def read_pickup_database(data: Dict,
                          resource_database: ResourceDatabase) -> PickupDatabase:
     pickups = {
-        name: PickupEntry(name,
-                          read_resource_gain_tuple(item["resources"], resource_database),
-                          item["item_category"],
-                          item["probability_offset"],
-                          )
+        name: read_pickup(name, item, resource_database)
         for name, item in data["pickups"].items()
     }
+
     original_pickup_mapping = {
         PickupIndex(i): pickups[name]
         for i, name in enumerate(data["original_indices"])
@@ -240,6 +267,7 @@ def read_pickup_database(data: Dict,
         original_pickup_mapping=original_pickup_mapping,
         useless_pickup=useless_pickup
     )
+
 
 def read_initial_states(data: Dict[str, List], resource_database: ResourceDatabase) -> Dict[str, ResourceGainTuple]:
     return {

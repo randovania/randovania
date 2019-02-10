@@ -337,7 +337,7 @@ def test_create_patches(mock_random: MagicMock,
 @pytest.fixture(name="sky_temple_keys")
 def sample_sky_temple_keys():
     return [
-        PickupEntry("Test Sky Temple Key {}".format(i), tuple(), "sky_temple_key", 0)
+        PickupEntry("Test Sky Temple Key {}".format(i), tuple(), 0, None, "sky_temple_key", 0)
         for i in range(1, 10)
     ]
 
@@ -379,9 +379,9 @@ def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
     permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.VANILLA
     initial_pickup_assignment = {
-        generator._FLYING_ING_CACHES[0]: PickupEntry("Other Item", tuple(), "other", 0)
+        generator._FLYING_ING_CACHES[0]: PickupEntry("Other Item", tuple(), 0, None, "other", 0)
     }
-    patches = empty_patches.assign_new_pickups(initial_pickup_assignment.items())
+    patches = empty_patches.assign_pickup_assignment(initial_pickup_assignment)
 
     # Run
     with pytest.raises(GenerationFailure) as exp:

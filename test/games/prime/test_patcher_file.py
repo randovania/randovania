@@ -75,9 +75,9 @@ def test_create_pickup_list(empty_patches):
     useless_resource = SimpleResourceInfo(0, "Useless", "Useless", ResourceType.ITEM)
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    pickup_a = PickupEntry("A", ((resource_a, 1),), "", 0)
+    pickup_a = PickupEntry("A", ((resource_a, 1),), 1, None, "", 0)
 
-    useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), "", 0)
+    useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), 0, None, "", 0)
     pickup_database = PickupDatabase(
         pickups={},
         original_pickup_mapping={
@@ -88,9 +88,11 @@ def test_create_pickup_list(empty_patches):
     )
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): pickup_a,
-        PickupIndex(2): PickupEntry("B", ((resource_b, 1), (resource_a, 1)), "", 0),
+        PickupIndex(2): PickupEntry("B", ((resource_b, 1), (resource_a, 1)), 2, None, "", 0),
         PickupIndex(3): pickup_a,
     })
+
+    # TODO: use model
 
     # Run
     result = patcher_file._create_pickup_list(patches, pickup_database)
