@@ -6,7 +6,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources import ResourceGain, PickupDatabase, ResourceDatabase, SimpleResourceInfo, \
-    DamageResourceInfo, ResourceInfo, ResourceGainTuple
+    DamageResourceInfo, ResourceInfo, ResourceGainTuple, PickupEntry
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -121,14 +121,26 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
 
 # Pickup Database
 
+def write_pickup(pickup: PickupEntry) -> dict:
+    result = {
+        "item_category": pickup.item_category,
+        "model_index": pickup.model_index,
+        "resources": write_resource_gain(pickup.resource_gain()),
+        "probability_offset": pickup.probability_offset,
+    }
+    if pickup.conditional_resources is not None:
+        result["conditional_resources"] = {
+            "item": pickup.conditional_resources.item.index,
+            "resources": write_resource_gain(pickup.conditional_resources.resources)
+        }
+
+    return result
+
+
 def write_pickup_database(database: PickupDatabase) -> dict:
     return {
         "pickups": {
-            pickup.name: {
-                "item_category": pickup.item_category,
-                "resources": write_resource_gain(pickup.resource_gain()),
-                "probability_offset": pickup.probability_offset,
-            }
+            pickup.name: write_pickup(pickup)
             for pickup in database.pickups.values()
         },
         "original_indices": [

@@ -1,4 +1,5 @@
-from typing import NamedTuple, Tuple, Union, List, Dict, Iterator
+from dataclasses import dataclass
+from typing import NamedTuple, Tuple, Union, List, Dict, Iterator, Optional
 
 from randovania.game_description.resource_type import ResourceType
 
@@ -73,9 +74,17 @@ ResourceGain = Iterator[Tuple[ResourceInfo, int]]
 CurrentResources = Dict[ResourceInfo, int]
 
 
+@dataclass(frozen=True)
+class ConditionalResources:
+    item: SimpleResourceInfo
+    resources: ResourceGainTuple
+
+
 class PickupEntry(NamedTuple):
     name: str
     resources: ResourceGainTuple
+    model_index: int
+    conditional_resources: Optional[ConditionalResources]
     item_category: str
     probability_offset: int
 
