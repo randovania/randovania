@@ -53,9 +53,9 @@ def _create_spawn_point_field(resource_database: ResourceDatabase,
 
 
 def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
-    return {
+    result = {
         "pickup_index": original_index.index,
-        # "model": 1234,
+        "model_index": pickup.model_index,
         "scan": pickup.name,
         "resources": [
             {
@@ -66,6 +66,21 @@ def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
             if quantity > 0 and resource.resource_type == ResourceType.ITEM
         ]
     }
+
+    if pickup.conditional_resources is not None:
+        result["conditional_resources"] = {
+            "item": pickup.conditional_resources.item.index,
+            "resources": [
+                {
+                    "index": resource.index,
+                    "amount": quantity
+                }
+                for resource, quantity in pickup.conditional_resources.resources
+                if quantity > 0 and resource.resource_type == ResourceType.ITEM
+            ]
+        }
+
+    return result
 
 
 def _create_pickup_list(patches: GamePatches,
