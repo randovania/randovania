@@ -12,11 +12,12 @@ from randovania.game_description.resources import PickupEntry
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
-from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State, add_resource_gain_to_state
+from randovania.resolver.state import State, add_resource_gain_to_current_resources, \
+    add_pickup_to_state
 
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
@@ -236,9 +237,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         for pickup, quantity in self._collected_pickups.items():
             for _ in range(quantity):
-                add_resource_gain_to_state(state, pickup.resource_gain())
+                add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_state(state, node.resource_gain_on_collect(state.patches))
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches), state.resources)
 
         return state

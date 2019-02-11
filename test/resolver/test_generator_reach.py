@@ -19,7 +19,7 @@ from randovania.resolver.generator_reach import GeneratorReach, filter_reachable
     advance_reach_with_possible_unsafe_resources
 from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.resolver.logic import Logic
-from randovania.resolver.state import State, add_resource_gain_to_state
+from randovania.resolver.state import State, add_pickup_to_state
 
 
 def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
@@ -87,7 +87,7 @@ def test_calculate_reach_with_seeds(test_data):
                                                            game.world_list.calculate_relevant_resources(state.patches)))
 
     for pickup in available_pickups[1:]:
-        add_resource_gain_to_state(state, pickup.resource_gain())
+        add_pickup_to_state(state, pickup)
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
@@ -100,7 +100,7 @@ def test_calculate_reach_with_all_pickups(test_data):
     logic, state, _ = test_data
 
     for pickup in logic.game.pickup_database.original_pickup_mapping.values():
-        add_resource_gain_to_state(state, pickup.resource_gain())
+        add_pickup_to_state(state, pickup)
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
