@@ -139,15 +139,17 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            ):
 
     encoded = "MAAAfRggGg=="
+    patcher_configuration = mock_packer_unpack.return_value
+    layout_configuration = mock_layout_unpack.return_value
 
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
-        patcher_configuration=mock_packer_unpack.return_value,
-        layout_configuration=mock_layout_unpack.return_value,
+        patcher_configuration=patcher_configuration,
+        layout_configuration=layout_configuration,
     )
-    expected.patcher_configuration.bit_pack_format.return_value = []
-    expected.layout_configuration.bit_pack_format.return_value = []
+    patcher_configuration.bit_pack_format.return_value = []
+    layout_configuration.bit_pack_format.return_value = []
     mock_layout_unpack.return_value.game_data = {"test": True}
 
     # Uncomment this line to quickly get the new encoded permalink
@@ -155,8 +157,12 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
 
     # Run
     link = Permalink.from_str(encoded)
+    round_trip = expected.as_str
 
     # Assert
     assert link == expected
+    assert encoded == round_trip
     mock_packer_unpack.assert_called_once()
     mock_layout_unpack.assert_called_once()
+    patcher_configuration.bit_pack_format.assert_called_once_with()
+    layout_configuration.bit_pack_format.assert_called_once_with()
