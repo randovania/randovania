@@ -1,5 +1,6 @@
 from typing import Dict
 
+import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
@@ -152,6 +153,7 @@ def create_patcher_file(description: LayoutDescription,
 
     result["permalink"] = description.permalink.as_str,
     result["seed_hash"] = description.shareable_hash,
+    result["randovania_version"] = randovania.VERSION,
 
     result["spawn_point"] = _create_spawn_point_field(game.resource_database,
                                                       layout.starting_resources,
