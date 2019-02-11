@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Iterator
 
-from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 
 
 @dataclass(frozen=True)
-class PatcherConfiguration:
+class PatcherConfiguration(BitPackValue):
     menu_mod: bool
     warp_to_start: bool
 
