@@ -130,3 +130,33 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     assert link == expected
+
+
+@patch("randovania.layout.layout_configuration.LayoutConfiguration.bit_pack_unpack")
+@patch("randovania.layout.patcher_configuration.PatcherConfiguration.bit_pack_unpack")
+def test_decode_mock_other(mock_packer_unpack: MagicMock,
+                           mock_layout_unpack: MagicMock,
+                           ):
+
+    encoded = "MAAAfRggGg=="
+
+    expected = Permalink(
+        seed_number=1000,
+        spoiler=True,
+        patcher_configuration=mock_packer_unpack.return_value,
+        layout_configuration=mock_layout_unpack.return_value,
+    )
+    expected.patcher_configuration.bit_pack_format.return_value = []
+    expected.layout_configuration.bit_pack_format.return_value = []
+    mock_layout_unpack.return_value.game_data = {"test": True}
+
+    # Uncomment this line to quickly get the new encoded permalink
+    # assert expected.as_str == ""
+
+    # Run
+    link = Permalink.from_str(encoded)
+
+    # Assert
+    assert link == expected
+    mock_packer_unpack.assert_called_once()
+    mock_layout_unpack.assert_called_once()
