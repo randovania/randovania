@@ -87,6 +87,8 @@ def test_raise_for_pickup_above_maximum():
     params=[
         {"encoded": b'\x00', "json": "vanilla-item-loss-enabled"},
         {"encoded": b'@', "json": "vanilla-item-loss-disabled"},
+        {"encoded": b'\xbf\xff\xff\xff\xff\x88\x80\x80\x80\xff\xf0', "json": [1] * 55},
+        {"encoded": b'\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', "json": [0] * 55},
     ],
     name="resources_with_data")
 def _resources_with_data(request):
