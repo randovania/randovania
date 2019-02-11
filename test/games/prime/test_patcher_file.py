@@ -3,7 +3,8 @@ import dataclasses
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupDatabase, PickupIndex, PickupEntry, SimpleResourceInfo
+from randovania.game_description.resources import PickupDatabase, PickupIndex, PickupEntry, SimpleResourceInfo, \
+    ConditionalResources
 from randovania.games.prime import patcher_file, default_data
 from randovania.layout import starting_resources
 from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
@@ -76,6 +77,10 @@ def test_create_pickup_list(empty_patches):
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
     pickup_a = PickupEntry("A", ((resource_a, 1),), 1, None, "", 0)
+    pickup_b = PickupEntry("B", ((resource_b, 1), (resource_a, 1)), 2,
+                           ConditionalResources(resource_b,
+                                                ((resource_a, 5),)),
+                           "", 0)
 
     useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), 0, None, "", 0)
     pickup_database = PickupDatabase(
@@ -88,7 +93,7 @@ def test_create_pickup_list(empty_patches):
     )
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): pickup_a,
-        PickupIndex(2): PickupEntry("B", ((resource_b, 1), (resource_a, 1)), 2, None, "", 0),
+        PickupIndex(2): pickup_b,
         PickupIndex(3): pickup_a,
     })
 
@@ -102,6 +107,7 @@ def test_create_pickup_list(empty_patches):
         {
             "pickup_index": 0,
             "scan": "A",
+            "model_index": 1,
             "resources": [
                 {
                     "index": 1,
@@ -112,6 +118,7 @@ def test_create_pickup_list(empty_patches):
         {
             "pickup_index": 1,
             "scan": "Useless",
+            "model_index": 0,
             "resources": [
                 {
                     "index": 0,
@@ -122,6 +129,7 @@ def test_create_pickup_list(empty_patches):
         {
             "pickup_index": 2,
             "scan": "B",
+            "model_index": 2,
             "resources": [
                 {
                     "index": 2,
@@ -131,11 +139,21 @@ def test_create_pickup_list(empty_patches):
                     "index": 1,
                     "amount": 1
                 }
-            ]
+            ],
+            "conditional_resources": {
+                "item": 2,
+                "resources": [
+                    {
+                        "index": 1,
+                        "amount": 5
+                    }
+                ]
+            }
         },
         {
             "pickup_index": 3,
             "scan": "A",
+            "model_index": 1,
             "resources": [
                 {
                     "index": 1,

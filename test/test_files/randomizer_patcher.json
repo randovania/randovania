@@ -62,8 +62,50 @@
       "pickup_index": 0,
       "__comment_pickup_index": "For when an area has more than one pickup. Alternatively, remove the `location` field and this uses the same index number there currently is.",
 
-      "model": 1234,
-      "__comment_model": "The asset this pickup uses in the world",
+      "model_index": 1234,
+      "__comment_model_index": "An index of the following array.",
+
+      "__models": [
+        "Power Beam",
+        "Charge Beam",
+        "Dark Beam",
+        "Light Beam",
+        "Annihilator Beam",
+        "Super Missile",
+        "Darkburst",
+        "Sunburst",
+        "Sonic Boom",
+        "Combat Visor",
+        "Scan Visor",
+        "Dark Visor",
+        "Echo Visor",
+        "Varia Suit",
+        "Dark Suit",
+        "Light Suit",
+        "Morph Ball",
+        "Morph Ball Bomb",
+        "Boost Ball",
+        "Spider Ball",
+        "Power Bomb",
+        "Power Bomb Expansion",
+        "Missile Expansion",
+        "Missile Expansion (Prime 1)",
+        "Missile Launcher",
+        "Seeker Launcher",
+        "Grapple Beam",
+        "Space Jump Boots",
+        "Gravity Boost",
+        "Screw Attack",
+        "Energy Transfer Module",
+        "Beam Ammo Expansion",
+        "Amber Translator",
+        "Cobalt Translator",
+        "Emerald Translator",
+        "Violet Translator",
+        "Energy Tank",
+        "Dark Temple Key",
+        "Sky Temple Key"
+      ],
 
       "scan": "This is a description.",
       "__comment_scan": "What is provided when the pickup is scanned. Does this need a separate model?",
@@ -78,7 +120,24 @@
           "index": 8,
           "amount": 1
         }
-      ]
+      ],
+
+      "__comment_conditional_resources": "Field may not be present. If present, the pickup should always check the condition below when collected.",
+      "conditional_resources": {
+        "item": 15,
+        "__comment_index": "The index of the item to check for quantity > 0. If true, give these resources instead.",
+
+        "resources": [
+          {
+            "index": 0,
+            "amount": 1
+          },
+          {
+            "index": 8,
+            "amount": 1
+          }
+        ]
+      }
     }
   ],
   "__comment_pickups": "An error is raised if there's a pickup missing from the list.",

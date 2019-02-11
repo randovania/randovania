@@ -10,19 +10,19 @@ from randovania.layout.pickup_quantities import PickupQuantities
         {"encoded": b'\x00',
          "json": {}},
 
-        {"encoded": b'\x87S,X\x88\xe6\xc4\x04\x10',
+        {"encoded": b'\x93Smd \xad6\xdb\xa8\x8el@A\x00',
          "json": {"Missile Expansion": 0, "Light Suit": 0, "Super Missile": 0}},
 
-        {"encoded": b'\x85[,"9\xb1\x01\x04',
+        {"encoded": b'\x91[m\x08+M\xb6\xea#\x9b\x10\x10@',
          "json": {"Missile Expansion": 0, "Light Suit": 0, "Super Missile": 1}},
 
-        {"encoded": b'\x85S\x16\xa29qM\x88\x08 ',
+        {"encoded": b'\x91SY\x88+n8\xf2#\x97\x14\xd8\x80\x82\x00',
          "json": {"Missile Expansion": 10, "Light Suit": 0, "Super Missile": 0}},
 
-        {"encoded": b'\x81Z#\x98\x14\xe0\x80\x82,\x08',
+        {"encoded": b'\x8dX\x82\xb8\xeb\xaf\xa29\x81N\x08\x08"\xc0\x80',
          "json": {"Missile Expansion": 10, "Light Suit": 2, "Super Missile": 1}},
 
-        {"encoded": b'\x81b#\x98\x14\xe0\x80\x82\x00',
+        {"encoded": b'\x8d`\x82\xb8\xeb\xaf\xa29\x81N\x08\x08 ',
          "json": {"Missile Expansion": 10, "Super Missile": 1}},
     ],
     name="resources_with_data")
@@ -48,6 +48,7 @@ def test_encode(resources_with_data):
 
     # Run
     result = bitpacking.pack_value(value)
+    print(result)
 
     # Assert
     assert result == expected

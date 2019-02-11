@@ -26,7 +26,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "MAAAfReMYADv"
+    assert encoded == "QAAAfReMYAD0"
 
 
 @pytest.mark.parametrize("invalid", [
@@ -85,6 +85,7 @@ def test_round_trip(spoiler: bool,
 @pytest.mark.parametrize(["permalink", "version"], [
     ("AAAAfR5QLERzIpgS4ICCAHw=", 0),
     ("EAAAfReObArRHMClxLYgIIA+", 1),
+    ("MAAAfReKeBWiOYFLiWxAQQDk", 3),
 ])
 def test_decode_old_version(permalink: str, version: int):
     with pytest.raises(ValueError) as exp:
@@ -100,7 +101,7 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "MAAAfReKeBWiOYFLiWxAQQDk"
+    encoded = "QAAAfReKeNWIK466+iOYFLiWxAQQAMA="
 
     expected = Permalink(
         seed_number=1000,
@@ -124,6 +125,7 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
 
     # Uncomment this line to quickly get the new encoded permalink
     # assert expected.as_str == ""
+    # print(expected.as_str)
 
     # Run
     link = Permalink.from_str(encoded)
@@ -138,7 +140,7 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            mock_layout_unpack: MagicMock,
                            ):
 
-    encoded = "MAAAfRggGg=="
+    encoded = "QAAAfRggww=="
     patcher_configuration = mock_packer_unpack.return_value
     layout_configuration = mock_layout_unpack.return_value
 
@@ -154,6 +156,7 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
 
     # Uncomment this line to quickly get the new encoded permalink
     # assert expected.as_str == ""
+    # print(expected.as_str)
 
     # Run
     link = Permalink.from_str(encoded)
