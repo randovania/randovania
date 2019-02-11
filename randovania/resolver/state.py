@@ -91,14 +91,14 @@ def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resource
         resources[resource] += quantity
 
 
-def add_resource_gain_to_state(state: State, resource_gain: ResourceGain):
+def add_pickup_to_state(state: State, pickup: PickupEntry):
     """
-    Modifies inplace the given state, adding the given ResourceGain
+    Modifies inplace the given state, adding the resources of the given pickup
     :param state:
-    :param resource_gain:
+    :param pickup:
     :return:
     """
-    add_resource_gain_to_current_resources(resource_gain, state.resources)
+    add_resource_gain_to_current_resources(pickup.resource_gain(), state.resources)
 
 
 def state_with_pickup(state: State,
@@ -112,5 +112,5 @@ def state_with_pickup(state: State,
     """
     new_state = state.copy()
     new_state.previous_state = state
-    add_resource_gain_to_state(new_state, pickup.resource_gain())
+    add_pickup_to_state(new_state, pickup)
     return new_state

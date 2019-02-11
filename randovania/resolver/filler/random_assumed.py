@@ -11,7 +11,7 @@ from randovania.resolver.generator_reach import advance_reach_with_possible_unsa
     reach_with_all_safe_resources, collect_all_safe_resources_in_reach, filter_reachable, pickup_nodes_that_can_reach
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import iterate_with_weights
-from randovania.resolver.state import State, add_resource_gain_to_state, state_with_pickup
+from randovania.resolver.state import State, state_with_pickup, add_pickup_to_state
 
 
 def random_assumed_filler(logic: Logic,
@@ -32,7 +32,7 @@ def random_assumed_filler(logic: Logic,
     for pickup in reversed(available_pickups):
         print("** Preparing reach for {}".format(pickup.name))
         new_reach = copy.deepcopy(previous_reach)
-        add_resource_gain_to_state(new_reach.state, pickup.resource_gain())
+        add_pickup_to_state(new_reach.state, pickup)
         new_reach.state.previous_state = new_reach.state
         new_reach.advance_to(new_reach.state)
         collect_all_safe_resources_in_reach(new_reach)
