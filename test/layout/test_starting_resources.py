@@ -1,6 +1,7 @@
 import pytest
 
 from randovania.bitpacking import bitpacking
+from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import default_database
 from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
 
@@ -80,3 +81,36 @@ def test_raise_for_pickup_above_maximum():
                           {item: 10 for item in database.item})
 
     assert str(err.value) == "Item I: Power Beam has a maximum of 1, got 10"
+
+
+@pytest.fixture(
+    params=[
+        {"encoded": b'\x00', "json": "vanilla-item-loss-enabled"},
+        {"encoded": b'@', "json": "vanilla-item-loss-disabled"},
+    ],
+    name="resources_with_data")
+def _resources_with_data(request):
+    return request.param["encoded"], StartingResources.from_json(request.param["json"])
+
+
+def test_decode(resources_with_data):
+    # Setup
+    data, expected = resources_with_data
+
+    # Run
+    decoder = BitPackDecoder(data)
+    result = StartingResources.bit_pack_unpack(decoder)
+
+    # Assert
+    assert result == expected
+
+
+def test_encode(resources_with_data):
+    # Setup
+    expected, value = resources_with_data
+
+    # Run
+    result = bitpacking.pack_value(value)
+
+    # Assert
+    assert result == expected
