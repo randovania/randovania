@@ -55,6 +55,7 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
         elevator_connection={
             589851: AreaLocation(464164546, 900285955),
             1572998: AreaLocation(1039999561, 3479543630),
+            1966093: AreaLocation(2252328306, 2068511343),
         })
 
     # Run
@@ -64,10 +65,13 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
     assert result == [
         {"origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2918020398},
          "target_location": {"world_asset_id": 464164546, "area_asset_id": 900285955},
-         "room_name": "Transport to Sanctuary Fortress", },
+         "room_name": "Transport to Sanctuary Fortress - Agon Wastes Elevator", },
         {"origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1660916974},
          "target_location": {"world_asset_id": 1039999561, "area_asset_id": 3479543630},
-         "room_name": "Transport to Torvus Bog", },
+         "room_name": "Transport to Torvus Bog - Agon Wastes Elevator", },
+        {"origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2889020216},
+         "target_location": {"world_asset_id": 2252328306, "area_asset_id": 2068511343},
+         "room_name": "Transport to Great Temple / Sky Temple Energy Controller", },
     ]
 
 

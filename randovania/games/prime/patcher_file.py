@@ -1,6 +1,7 @@
 from typing import Dict
 
 from randovania.game_description import data_reader
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
@@ -12,6 +13,21 @@ from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
+
+_CUSTOM_NAMES_FOR_ELEVATORS = {
+    1660916974: "Temple Grounds - Agon Wastes Elevator",
+    2889020216: "Temple Grounds - Torvus Bog Elevator",
+    3455543403: "Temple Grounds - Sanctuary Fortress Elevator",
+    1473133138: "Agon Wastes - Temple Grounds Elevator",
+    2806956034: "Agon Wastes - Torvus Bog Elevator",
+    3331021649: "Agon Wastes - Sanctuary Fortress Elevator",
+    1868895730: "Torvus Bog - Temple Grounds Elevator",
+    3479543630: "Torvus Bog - Agon Wastes Elevator",
+    3205424168: "Torvus Bog - Sanctuary Fortress Elevator",
+    3528156989: "Sanctuary Fortress - Temple Grounds Elevator",
+    900285955: "Sanctuary Fortress - Agon Wastes Elevator",
+    3145160350: "Sanctuary Fortress - Torvus Bog Elevator",
+}
 
 
 def _add_items_in_resource_gain_to_dict(gain: ResourceGain,
@@ -97,6 +113,15 @@ def _create_pickup_list(patches: GamePatches,
     return pickups
 
 
+def _pretty_name_for_elevator(world_list: WorldList, connection: AreaLocation) -> str:
+    if connection.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
+        return _CUSTOM_NAMES_FOR_ELEVATORS[connection.area_asset_id]
+
+    world = world_list.world_by_area_location(connection)
+    area = world.area_by_asset_id(connection.area_asset_id)
+    return "{.name} / {.name}".format(world, area)
+
+
 def _create_elevators_field(world_list: WorldList, patches: GamePatches) -> list:
     nodes_by_teleporter_id = {
         node.teleporter_instance_id: node
@@ -108,7 +133,7 @@ def _create_elevators_field(world_list: WorldList, patches: GamePatches) -> list
         {
             "origin_location": world_list.node_to_area_location(nodes_by_teleporter_id[instance_id]).as_json,
             "target_location": connection.as_json,
-            "room_name": "Transport to {}".format(world_list.world_by_area_location(connection).name)
+            "room_name": "Transport to {}".format(_pretty_name_for_elevator(world_list, connection))
         }
         for instance_id, connection in patches.elevator_connection.items()
     ]
