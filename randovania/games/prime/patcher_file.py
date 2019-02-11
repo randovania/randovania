@@ -119,7 +119,7 @@ def _pretty_name_for_elevator(world_list: WorldList, connection: AreaLocation) -
 
     world = world_list.world_by_area_location(connection)
     area = world.area_by_asset_id(connection.area_asset_id)
-    return "{.name} / {.name}".format(world, area)
+    return "{0.name} / {1.name}".format(world, area)
 
 
 def _create_elevators_field(world_list: WorldList, patches: GamePatches) -> list:
