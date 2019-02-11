@@ -98,7 +98,10 @@ def add_pickup_to_state(state: State, pickup: PickupEntry):
     :param pickup:
     :return:
     """
-    add_resource_gain_to_current_resources(pickup.resource_gain(), state.resources)
+    if pickup.conditional_resources is not None and state.resources.get(pickup.conditional_resources.item, 0) > 0:
+        add_resource_gain_to_current_resources(pickup.conditional_resources.resources, state.resources)
+    else:
+        add_resource_gain_to_current_resources(pickup.resource_gain(), state.resources)
 
 
 def state_with_pickup(state: State,
