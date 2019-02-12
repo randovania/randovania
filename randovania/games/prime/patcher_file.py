@@ -44,10 +44,11 @@ def _add_items_in_resource_gain_to_dict(gain: ResourceGain,
             target[resource] = target.get(resource, 0) + quantity
 
 
-def _create_spawn_point_field(resource_database: ResourceDatabase,
+def _create_spawn_point_field(patches: GamePatches,
+                              resource_database: ResourceDatabase,
                               starting_resources: StartingResources,
-                              patches: GamePatches,
                               ) -> dict:
+
     item_quantities: Dict[SimpleResourceInfo, int] = {}
     _add_items_in_resource_gain_to_dict(starting_resources.resource_gain,
                                         item_quantities)
@@ -101,14 +102,14 @@ def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
 
 
 def _create_pickup_list(patches: GamePatches,
-                        pickup_database: PickupDatabase
+                        useless_pickup: PickupEntry,
+                        pickup_count: int,
                         ) -> list:
-    useless_pickup = pickup_database.useless_pickup
     pickup_assignment = patches.pickup_assignment
 
     pickups = [
-        _create_pickup(original_index, pickup_assignment.get(original_index, useless_pickup))
-        for original_index in pickup_database.original_pickup_mapping.keys()
+        _create_pickup(PickupIndex(i), pickup_assignment.get(PickupIndex(i), useless_pickup))
+        for i in range(pickup_count)
     ]
 
     return pickups
@@ -123,7 +124,14 @@ def _pretty_name_for_elevator(world_list: WorldList, connection: AreaLocation) -
     return "{0.name} / {1.name}".format(world, area)
 
 
-def _create_elevators_field(world_list: WorldList, patches: GamePatches) -> list:
+def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list:
+    """
+    Creates the elevator entries in the patcher file
+    :param patches:
+    :param world_list:
+    :return:
+    """
+
     nodes_by_teleporter_id = {
         node.teleporter_instance_id: node
         for node in world_list.all_nodes
@@ -155,14 +163,12 @@ def create_patcher_file(description: LayoutDescription,
     result["seed_hash"] = description.shareable_hash,
     result["randovania_version"] = randovania.VERSION,
 
-    result["spawn_point"] = _create_spawn_point_field(game.resource_database,
-                                                      layout.starting_resources,
-                                                      patches)
+    result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database, layout.starting_resources)
 
-    result["pickups"] = _create_pickup_list(patches, game.pickup_database)
+    result["pickups"] = _create_pickup_list(patches, game.pickup_database.useless_pickup,
+                                            game.pickup_database.total_pickup_count)
 
-    result["elevators"] = _create_elevators_field(game.world_list,
-                                                  patches)
+    result["elevators"] = _create_elevators_field(patches, game.world_list)
 
     result["specific_patches"] = {
         "hive_chamber_b_post_state": not is_vanilla_starting_location(layout),
