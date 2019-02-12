@@ -19,11 +19,9 @@ def test_create_spawn_point_field(echoes_resource_database, empty_patches):
     ]
 
     # Run
-    result = patcher_file._create_spawn_point_field(
-        echoes_resource_database,
-        StartingResources.from_non_custom_configuration(StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED),
-        patches
-    )
+    result = patcher_file._create_spawn_point_field(patches, echoes_resource_database,
+                                                    StartingResources.from_non_custom_configuration(
+                                                        StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED))
 
     # Assert
     assert result == {
@@ -41,7 +39,7 @@ def test_create_elevators_field_no_elevator(empty_patches):
     game = data_reader.decode_data(default_data.decode_default_prime2(), False)
 
     # Run
-    result = patcher_file._create_elevators_field(game.world_list, empty_patches)
+    result = patcher_file._create_elevators_field(empty_patches, game.world_list)
 
     # Assert
     assert result == []
@@ -59,7 +57,7 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
         })
 
     # Run
-    result = patcher_file._create_elevators_field(game.world_list, patches)
+    result = patcher_file._create_elevators_field(patches, game.world_list)
 
     # Assert
     assert result == [
@@ -87,24 +85,14 @@ def test_create_pickup_list(empty_patches):
                            "", 0)
 
     useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), 0, None, "", 0)
-    pickup_database = PickupDatabase(
-        pickups={},
-        original_pickup_mapping={
-            PickupIndex(i): useless_pickup
-            for i in range(4)
-        },
-        useless_pickup=useless_pickup
-    )
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): pickup_a,
         PickupIndex(2): pickup_b,
         PickupIndex(3): pickup_a,
     })
 
-    # TODO: use model
-
     # Run
-    result = patcher_file._create_pickup_list(patches, pickup_database)
+    result = patcher_file._create_pickup_list(patches, useless_pickup, 4)
 
     # Assert
     assert result == [
