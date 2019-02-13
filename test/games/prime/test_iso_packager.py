@@ -224,75 +224,13 @@ def test_unpack_iso_failure(mock_shared_process_code: MagicMock,
     assert str(exception.value) == "Unable to create files dir {}:\n{}".format(game_files_path, exception_message)
 
 
-@patch("randovania.games.prime.claris_randomizer.disable_echoes_attract_videos", autospec=True)
-def test_disable_attract_videos_helper(mock_disable_echoes_attract_videos: MagicMock,
-                                       ):
-    # Setup
-    output_pipe = MagicMock()
-    game_files_path = MagicMock()
-
-    def side_effect(_, progress_update):
-        progress_update("Have an update!")
-        pass
-
-    mock_disable_echoes_attract_videos.side_effect = side_effect
-
-    # Run
-    iso_packager._disable_attract_videos_helper(output_pipe, None, game_files_path)
-
-    # Assert
-    mock_disable_echoes_attract_videos.assert_called_once_with(game_files_path, ANY)
-    game_files_path.joinpath.assert_called_once_with("files", "attract_videos_disabled.txt")
-    game_files_path.joinpath.return_value.write_bytes.assert_called_once_with(b"")
-    output_pipe.send.assert_has_calls([
-        call((False, "Have an update!", -1)),
-        call((True, None, -1)),
-    ])
-
-
-@pytest.mark.parametrize("already_disabled", [False, True])
-@patch("randovania.games.prime.iso_packager._shared_process_code", autospec=True)
-def test_disable_attract_videos(mock_shared_process_code: MagicMock,
-                                tmpdir,
-                                already_disabled: bool,
-                                ):
-    # Setup
-    game_files_path = Path(tmpdir)
-    progress_update = MagicMock()
-
-    if already_disabled:
-        game_files_path.joinpath("files").mkdir(parents=True)
-        game_files_path.joinpath("files", "attract_videos_disabled.txt").write_bytes(b"")
-
-    # Run
-    iso_packager._disable_attract_videos(game_files_path, progress_update)
-
-    # Assert
-    if already_disabled:
-        mock_shared_process_code.assert_not_called()
-    else:
-        mock_shared_process_code.assert_called_once_with(
-            target=iso_packager._disable_attract_videos_helper,
-            iso=ANY,
-            game_files_path=game_files_path,
-            on_finish_message="Finished disabling attract videos.",
-            progress_update=progress_update
-        )
-
-
-@pytest.mark.parametrize("disable_attract_if_necessary", [False, True])
-@pytest.mark.parametrize("disable_attract_is_necessary", [False, True])
 @pytest.mark.parametrize("iso_too_big", [False, True])
 @patch("randovania.games.prime.iso_packager.nod")
 @patch("randovania.games.prime.iso_packager._shared_process_code", autospec=True)
-@patch("randovania.games.prime.iso_packager._disable_attract_videos", autospec=True)
 @patch("randovania.games.prime.iso_packager.validate_game_files_path", autospec=True)
 def test_pack_iso(mock_validate_game_files_path: MagicMock,
-                  mock_disable_attract_videos: MagicMock,
                   mock_shared_process_code: MagicMock,
                   mock_nod: MagicMock,
-                  disable_attract_if_necessary: bool,
-                  disable_attract_is_necessary: bool,
                   iso_too_big: bool):
     # Setup
     iso = MagicMock()
@@ -300,15 +238,13 @@ def test_pack_iso(mock_validate_game_files_path: MagicMock,
     progress_update = MagicMock()
 
     sizes = [None if iso_too_big else 1]
-    if disable_attract_if_necessary:
-        sizes.insert(0, None if disable_attract_is_necessary else 1)
 
     mock_calculate_total_size_required = mock_nod.DiscBuilderGCN.calculate_total_size_required
     mock_calculate_total_size_required.side_effect = sizes
     mock_nod.VERSION = "1.1.0"
 
     def run():
-        iso_packager.pack_iso(iso, game_files_path, disable_attract_if_necessary, progress_update)
+        iso_packager.pack_iso(iso, game_files_path, progress_update)
 
     # Run
     if iso_too_big:
@@ -320,11 +256,6 @@ def test_pack_iso(mock_validate_game_files_path: MagicMock,
 
     # Assert
     mock_validate_game_files_path.assert_called_once_with(game_files_path.joinpath.return_value)
-
-    if disable_attract_if_necessary and disable_attract_is_necessary:
-        mock_disable_attract_videos.assert_called_once_with(game_files_path, progress_update)
-    else:
-        mock_disable_attract_videos.assert_not_called()
 
     mock_calculate_total_size_required.assert_has_calls([
         call(str(game_files_path))
@@ -354,7 +285,7 @@ def test_pack_iso_invalid_version(mock_validate_game_files_path: MagicMock,
 
     # Run
     with pytest.raises(RuntimeError) as exception:
-        iso_packager.pack_iso(None, game_files_path, None, None)
+        iso_packager.pack_iso(None, game_files_path, None)
 
     # Assert
     mock_validate_game_files_path.assert_called_once_with(game_files_path.joinpath.return_value)

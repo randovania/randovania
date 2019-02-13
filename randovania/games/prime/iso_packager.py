@@ -104,37 +104,8 @@ def unpack_iso(iso: Path,
     )
 
 
-def _disable_attract_videos_helper(output_pipe,
-                                   iso: Path,
-                                   game_files_path: Path,
-                                   ):
-    def progress_update(message: str):
-        output_pipe.send((False, message, -1))
-
-    claris_randomizer.disable_echoes_attract_videos(game_files_path, progress_update)
-
-    game_files_path.joinpath("files", "attract_videos_disabled.txt").write_bytes(b"")
-    output_pipe.send((True, None, -1))
-
-
-def _disable_attract_videos(game_files_path: Path,
-                            update: ProgressUpdateCallable,
-                            ) -> None:
-    if game_files_path.joinpath("files", "attract_videos_disabled.txt").exists():
-        return
-
-    _shared_process_code(
-        target=_disable_attract_videos_helper,
-        iso=Path(""),
-        game_files_path=game_files_path,
-        on_finish_message="Finished disabling attract videos.",
-        progress_update=update
-    )
-
-
 def pack_iso(iso: Path,
              game_files_path: Path,
-             disable_attract_if_necessary: bool,
              progress_update: ProgressUpdateCallable
              ):
     validate_game_files_path(game_files_path.joinpath("files"))
@@ -142,9 +113,6 @@ def pack_iso(iso: Path,
     nod_version = StrictVersion(getattr(nod, "VERSION", "0.0.0"))
     if nod_version < StrictVersion("1.1.0"):
         raise RuntimeError("Installed nod version ({}) is older than required 1.1.0".format(nod_version))
-
-    if disable_attract_if_necessary and nod.DiscBuilderGCN.calculate_total_size_required(str(game_files_path)) is None:
-        _disable_attract_videos(game_files_path, progress_update)
 
     if nod.DiscBuilderGCN.calculate_total_size_required(str(game_files_path)) is None:
         raise RuntimeError("Image built with given directory would pass the maximum size.")

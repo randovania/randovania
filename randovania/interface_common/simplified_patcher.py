@@ -107,7 +107,6 @@ def pack_iso(output_iso: Path,
     iso_packager.pack_iso(
         iso=output_iso,
         game_files_path=game_files_path,
-        disable_attract_if_necessary=True,
         progress_update=progress_update,
     )
 

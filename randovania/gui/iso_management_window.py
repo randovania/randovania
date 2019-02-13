@@ -177,7 +177,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             pack_iso(
                 iso=iso,
                 game_files_path=game_files_path,
-                disable_attract_if_necessary=True,
                 progress_update=progress_update,
             )
 

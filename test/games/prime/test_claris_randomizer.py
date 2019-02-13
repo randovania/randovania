@@ -399,67 +399,6 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         mock_add_menu_mod_to_files.assert_not_called()
 
 
-@patch("randovania.games.prime.claris_randomizer._get_randomizer_folder", autospec=True)
-@patch("subprocess.Popen", autospec=True)
-def test_disable_echoes_attract_videos_success(mock_popen: MagicMock,
-                                               mock_get_randomizer_folder: MagicMock,
-                                               ):
-    # Setup
-    mock_get_randomizer_folder.return_value = Path("randomizer_folder")
-    game_root = Path("game_folder")
-    status_update = MagicMock()
-
-    process = mock_popen.return_value.__enter__.return_value
-    process.stdout = [
-        " line 1",
-        "line 2 ",
-        "   ",
-        " line 3 "
-    ]
-
-    # Run
-    claris_randomizer.disable_echoes_attract_videos(game_root, status_update)
-
-    # Assert
-    mock_get_randomizer_folder.assert_called_once_with()
-    mock_popen.assert_called_once_with(
-        [str(Path("randomizer_folder", "DisableEchoesAttractVideos.exe")),
-         str(Path("game_folder", "files"))],
-        stdout=subprocess.PIPE, bufsize=0, universal_newlines=True
-    )
-    status_update.assert_has_calls([
-        call("line 1"),
-        call("line 2"),
-        call(""),
-        call("line 3"),
-    ])
-    process.kill.assert_not_called()
-
-
-@patch("randovania.games.prime.claris_randomizer._get_randomizer_folder", autospec=True)
-@patch("subprocess.Popen", autospec=True)
-def test_disable_echoes_attract_videos_failure(mock_popen: MagicMock,
-                                               mock_get_randomizer_folder: MagicMock,
-                                               ):
-    # Setup
-    game_root = MagicMock()
-    status_update = MagicMock(side_effect=CustomException.do_raise)
-    process = mock_popen.return_value.__enter__.return_value
-    process.stdout = [
-        " line 1",
-    ]
-
-    # Run
-    with pytest.raises(CustomException):
-        claris_randomizer.disable_echoes_attract_videos(game_root, status_update)
-
-    # Assert
-    mock_get_randomizer_folder.assert_called_once_with()
-    mock_popen.assert_called_once_with(ANY, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True)
-    status_update.assert_called_once_with("line 1")
-    process.kill.assert_called_once_with()
-
-
 @pytest.mark.parametrize(["seed_number", "expected_ids"], [
     (5000, [38, 1245332, 129, 2162826, 393260, 122, 1245307, 3342446, 4522032,
             3538975, 152, 1638535, 1966093, 2097251, 524321, 589851, 1572998, 2949235]),
