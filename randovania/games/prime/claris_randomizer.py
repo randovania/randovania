@@ -225,24 +225,6 @@ def apply_layout(description: LayoutDescription,
         _add_menu_mod_to_files(game_root, status_update)
 
 
-def disable_echoes_attract_videos(game_root: Path,
-                                  status_update: Callable[[str], None],
-                                  ):
-    game_files = game_root.joinpath("files")
-    args = [
-        str(_get_randomizer_folder().joinpath("DisableEchoesAttractVideos.exe")),
-        str(game_files)
-    ]
-    with subprocess.Popen(args, stdout=subprocess.PIPE, bufsize=0, universal_newlines=True) as process:
-        try:
-            for line in process.stdout:
-                x = line.strip()
-                status_update(x)
-        except Exception:
-            process.kill()
-            raise
-
-
 def try_randomize_elevators(randomizer: claris_random.Random,
                             ) -> List[Elevator]:
     elevator_database: List[Elevator] = copy.deepcopy(echoes_elevators)
