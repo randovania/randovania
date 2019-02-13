@@ -3,7 +3,6 @@ from unittest.mock import patch, MagicMock, PropertyMock
 
 import pytest
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -200,5 +199,6 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
         cosmetic_patches=options.cosmetic_patches,
         game_root=options.game_files_path,
         backup_files_path=options.backup_files_path,
-        progress_update=progress_update
+        progress_update=progress_update,
+        use_modern_api=False,
     )
