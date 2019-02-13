@@ -20,6 +20,15 @@ from randovania.resolver import debug, generator, resolver
 __all__ = ["create_subparsers"]
 
 
+def add_debug_argument(parser):
+    parser.add_argument(
+        "--debug",
+        choices=range(4),
+        type=int,
+        default=0,
+        help="The level of debug logging to print.")
+
+
 def add_layout_configuration_arguments(parser):
     parser.add_argument(
         "--trick-level",
@@ -93,32 +102,51 @@ def add_validate_command(sub_parsers):
     parser.set_defaults(func=validate_command_logic)
 
 
+def create_permalink_logic(args):
+    seed_number = args.seed
+    if seed_number is None:
+        seed_number = random.randint(0, 2 ** 31)
+
+    permalink = Permalink(
+        seed_number=seed_number,
+        spoiler=True,
+        patcher_configuration=PatcherConfiguration(
+            menu_mod=args.menu_mod,
+            warp_to_start=args.warp_to_start,
+        ),
+        layout_configuration=get_layout_configuration_from_args(args),
+    )
+    print(permalink.as_str)
+
+
+def add_create_permalink_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "create-permalink",
+        help="Creates a permalink for the given options."
+    )
+
+    add_layout_configuration_arguments(parser)
+    parser.add_argument("--seed", type=int, default=None, help="The seed number to use")
+    parser.add_argument("--no-menu-mod", action="store_false", help="Don't use menu mod",
+                        default=True, dest="menu_mod")
+    parser.add_argument("--no-warp-to-start", action="store_false", help="Don't add warp to start",
+                        default=True, dest="warp_to_start")
+    parser.set_defaults(func=create_permalink_logic)
+
+
 def distribute_command_logic(args):
     debug._DEBUG_LEVEL = args.debug
 
     def status_update(s):
         pass
 
-    seed_number = args.seed
-    if seed_number is None:
-        seed_number = random.randint(0, 2 ** 31)
-
-    print("Using seed: {}".format(seed_number))
-    permalink = Permalink(
-        seed_number=seed_number,
-        spoiler=True,
-        patcher_configuration=PatcherConfiguration.default(),
-        layout_configuration=get_layout_configuration_from_args(args),
-    )
+    permalink = Permalink.from_str(args.permalink)
 
     before = time.perf_counter()
     layout_description = generator.generate_list(permalink=permalink, status_update=status_update)
     after = time.perf_counter()
-    print("Took {} seconds. Hash: {}".format(
-        after - before,
-        hash(tuple(layout_description.pickup_assignment.items()))
-    ))
-    layout_description.save_to_file(Path(args.output_file))
+    print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
+    layout_description.save_to_file(args.output_file)
 
 
 def add_distribute_command(sub_parsers):
@@ -127,50 +155,38 @@ def add_distribute_command(sub_parsers):
         help="Distribute pickups."
     )
 
-    add_layout_configuration_arguments(parser)
-    prime_database.add_data_file_argument(parser)
+    add_debug_argument(parser)
+    parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument(
         "output_file",
-        type=str,
+        type=Path,
         help="Where to place the seed log.")
-    parser.add_argument(
-        "--debug",
-        choices=range(4),
-        type=int,
-        default=0,
-        help="The level of debug logging to print.")
-    parser.add_argument(
-        "--seed",
-        type=int,
-        default=None,
-        help="The seed number to generate with.")
     parser.set_defaults(func=distribute_command_logic)
 
 
-def batch_distribute_helper(args, seed_number) -> float:
-    configuration = get_layout_configuration_from_args(args)
+def batch_distribute_helper(base_permalink: Permalink, seed_number: int, output_dir: Path) -> float:
     permalink = Permalink(
         seed_number=seed_number,
         spoiler=True,
-        patcher_configuration=PatcherConfiguration.default(),
-        layout_configuration=configuration,
+        patcher_configuration=base_permalink.patcher_configuration,
+        layout_configuration=base_permalink.layout_configuration,
     )
 
     start_time = time.perf_counter()
     description = generator.generate_list(permalink, None)
     delta_time = time.perf_counter() - start_time
 
-    description.save_to_file(Path(args.output_dir, "{}.json".format(seed_number)))
+    description.save_to_file(output_dir.joinpath("{}.json".format(seed_number)))
     return delta_time
 
 
 def batch_distribute_command_logic(args):
     finished_count = 0
 
-    print("Starting batch generation with configuration: {}".format(
-        get_layout_configuration_from_args(args)
-    ))
-    os.makedirs(args.output_dir, exist_ok=True)
+    output_dir: Path = args.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    base_permalink = Permalink.from_str(args.permalink)
 
     def callback(result):
         nonlocal finished_count
@@ -183,10 +199,10 @@ def batch_distribute_command_logic(args):
         print("Failed to generate seed: {}".format(e))
 
     with multiprocessing.Pool() as pool:
-        for seed_number in range(args.starting_seed, args.starting_seed + args.seed_count):
+        for seed_number in range(base_permalink.seed_number, base_permalink.seed_number + args.seed_count):
             pool.apply_async(
                 func=batch_distribute_helper,
-                args=(args, seed_number),
+                args=(base_permalink, seed_number, output_dir),
                 callback=callback,
                 error_callback=error_callback,
             )
@@ -201,18 +217,14 @@ def add_batch_distribute_command(sub_parsers):
     )
 
     add_layout_configuration_arguments(parser)
-    prime_database.add_data_file_argument(parser)
-    parser.add_argument(
-        "starting_seed",
-        type=int,
-        help="The starting seed to generate.")
+    parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument(
         "seed_count",
         type=int,
         help="How many seeds to generate.")
     parser.add_argument(
         "output_dir",
-        type=str,
+        type=Path,
         help="Where to place the seed logs.")
     parser.set_defaults(func=batch_distribute_command_logic)
 
@@ -224,7 +236,9 @@ def create_subparsers(sub_parsers):
     )
     sub_parsers = parser.add_subparsers(dest="command")
     add_validate_command(sub_parsers)
+    add_create_permalink_command(sub_parsers)
     add_distribute_command(sub_parsers)
+    # add_randomize_command(sub_parsers)
     add_batch_distribute_command(sub_parsers)
     prime_database.create_subparsers(sub_parsers)
 
