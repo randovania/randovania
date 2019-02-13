@@ -201,7 +201,7 @@ def apply_layout(description: LayoutDescription,
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
 
     if use_modern_api:
-        _modern_api(game_root, status_update, patcher_file.create_patcher_file(description, cosmetic_patches))
+        _modern_api(game_root, status_update, description, cosmetic_patches)
     else:
         _legacy_api(game_root, status_update, description, cosmetic_patches)
 
@@ -211,20 +211,21 @@ def apply_layout(description: LayoutDescription,
 
 def _modern_api(game_root: Path,
                 status_update: Callable[[str], None],
-                patcher_data: dict,
+                description: LayoutDescription,
+                cosmetic_patches: CosmeticPatches,
                 ):
     """
-    
-    :param game_root: 
-    :param status_update: 
-    :param patcher_data: 
-    :return: 
-    """
 
+    :param game_root:
+    :param status_update:
+    :param description:
+    :param cosmetic_patches:
+    :return:
+    """
     args = _base_args(game_root)
     args.append("-d")
     _run_with_args(args,
-                   json.dumps(patcher_data),
+                   json.dumps(patcher_file.create_patcher_file(description, cosmetic_patches)),
                    "Randomized!",
                    status_update)
 

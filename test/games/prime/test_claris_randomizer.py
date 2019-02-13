@@ -241,8 +241,8 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
 
     # Assert
     mock_run_with_args.assert_called_once_with(
-        [Path("data", "ClarisEchoesMenu", "EchoesMenu.exe"),
-         game_root.joinpath("files")],
+        [Path("data", "ClarisEchoesMenu", "EchoesMenu.exe"), game_root.joinpath("files")],
+        "",
         "Done!",
         status_update
     )
@@ -302,7 +302,6 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
-@patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._modern_api", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._legacy_api", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
@@ -314,7 +313,6 @@ def test_apply_layout(
         mock_add_menu_mod_to_files: MagicMock,
         mock_legacy_api: MagicMock,
         mock_modern_api: MagicMock,
-        mock_create_patcher_file: MagicMock,
         mock_create_progress_update_from_successive_messages: MagicMock,
         mock_save_to_file: MagicMock,
         modern: bool,
@@ -357,11 +355,9 @@ def test_apply_layout(
 
     if modern:
         mock_legacy_api.assert_not_called()
-        mock_create_patcher_file.assert_called_once_with(description, cosmetic_patches)
-        mock_modern_api.assert_called_once_with(game_root, status_update, mock_create_patcher_file.return_value)
+        mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
     else:
         mock_legacy_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
-        mock_create_patcher_file.assert_not_called()
         mock_modern_api.assert_not_called()
 
     if include_menu_mod:
@@ -442,6 +438,32 @@ def test_legacy_api(mock_run_with_args: MagicMock,
     mock_base_args.assert_called_once_with(game_root)
     mock_calculate_indices.assert_called_once_with(description)
     mock_run_with_args.assert_called_once_with(expected_args, "", "Randomized!", status_update)
+
+
+@patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._base_args", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
+def test_modern_api(mock_run_with_args: MagicMock,
+                    mock_base_args: MagicMock,
+                    mock_create_patcher_file: MagicMock,
+                    ):
+    # Setup
+    game_root = MagicMock(spec=Path())
+    status_update = MagicMock()
+    description = MagicMock()
+    cosmetic_patches = MagicMock()
+
+    mock_base_args.return_value = []
+    expected_args = ["-d"]
+    mock_create_patcher_file.return_value = {"some_data": 123}
+
+    # Run
+    claris_randomizer._modern_api(game_root, status_update, description, cosmetic_patches)
+
+    # Assert
+    mock_base_args.assert_called_once_with(game_root)
+    mock_create_patcher_file.assert_called_once_with(description, cosmetic_patches)
+    mock_run_with_args.assert_called_once_with(expected_args, '{"some_data": 123}', "Randomized!", status_update)
 
 
 @pytest.mark.parametrize(["seed_number", "expected_ids"], [
