@@ -1,8 +1,8 @@
 import asyncio
 import copy
+import json
 import re
 import shutil
-import subprocess
 from asyncio import StreamWriter, StreamReader
 from collections import defaultdict
 from pathlib import Path
@@ -12,8 +12,7 @@ from randovania import get_data_path
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
-from randovania.games.prime import claris_random
-from randovania.games.prime.patcher_file import is_vanilla_starting_location
+from randovania.games.prime import claris_random, patcher_file
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.game_workdir import validate_game_files_path
@@ -80,6 +79,7 @@ def _process_command(args: List[str], input_data: str, read_callback: Callable[[
 
 
 def _run_with_args(args: List[Union[str, Path]],
+                   input_data: str,
                    finish_string: str,
                    status_update: Callable[[str], None]):
     finished_updates = False
@@ -94,25 +94,21 @@ def _run_with_args(args: List[Union[str, Path]],
             status_update(line)
             finished_updates = line == finish_string
 
-    _process_command(new_args, "", read_callback)
+    _process_command(new_args, input_data, read_callback)
 
     if not finished_updates:
         raise RuntimeError("External tool did not send '{}'. Did something happen?".format(finish_string))
 
 
 def _base_args(game_root: Path,
-               hud_memo_popup_removal: bool,
                ) -> List[str]:
     game_files = game_root / "files"
     validate_game_files_path(game_files)
 
-    args = [
+    return [
         _get_randomizer_path(),
         game_files,
     ]
-    if hud_memo_popup_removal:
-        args.append("-h")
-    return args
 
 
 def _ensure_no_menu_mod(
@@ -158,10 +154,8 @@ def _add_menu_mod_to_files(
 ):
     files_folder = game_root.joinpath("files")
     _run_with_args(
-        [
-            _get_menu_mod_path(),
-            files_folder
-        ],
+        [_get_menu_mod_path(), files_folder],
+        "",
         "Done!",
         status_update
     )
@@ -182,9 +176,13 @@ def _calculate_indices(description: LayoutDescription) -> List[int]:
 def apply_layout(description: LayoutDescription,
                  cosmetic_patches: CosmeticPatches,
                  backup_files_path: Path,
-                 progress_update: ProgressUpdateCallable, game_root: Path):
+                 progress_update: ProgressUpdateCallable,
+                 game_root: Path,
+                 use_modern_api: bool,
+                 ):
     """
     Applies the modifications listed in the given LayoutDescription to the game in game_root.
+    :param use_modern_api:
     :param cosmetic_patches:
     :param description:
     :param game_root:
@@ -194,22 +192,58 @@ def apply_layout(description: LayoutDescription,
     """
 
     patcher_configuration = description.permalink.patcher_configuration
-    args = _base_args(game_root, hud_memo_popup_removal=cosmetic_patches.disable_hud_popup)
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if patcher_configuration.menu_mod else 100)
 
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     _create_pak_backups(game_root, backup_files_path, status_update)
+    description.save_to_file(game_root.joinpath("files", "randovania.json"))
 
+    if use_modern_api:
+        _modern_api(game_root, status_update, patcher_file.create_patcher_file(description, cosmetic_patches))
+    else:
+        _legacy_api(game_root, status_update, description, cosmetic_patches)
+
+    if patcher_configuration.menu_mod:
+        _add_menu_mod_to_files(game_root, status_update)
+
+
+def _modern_api(game_root: Path,
+                status_update: Callable[[str], None],
+                patcher_data: dict,
+                ):
+    """
+    
+    :param game_root: 
+    :param status_update: 
+    :param patcher_data: 
+    :return: 
+    """
+
+    args = _base_args(game_root)
+    args.append("-d")
+    _run_with_args(args,
+                   json.dumps(patcher_data),
+                   "Randomized!",
+                   status_update)
+
+
+def _legacy_api(game_root: Path,
+                status_update: Callable[[str], None],
+                description: LayoutDescription,
+                cosmetic_patches: CosmeticPatches,
+                ):
+    args = _base_args(game_root)
     indices = _calculate_indices(description)
-
+    layout_configuration = description.permalink.layout_configuration
     args += [
         "-s", str(description.permalink.seed_number),
         "-p", ",".join(str(index) for index in indices),
     ]
-    layout_configuration = description.permalink.layout_configuration
-    if not is_vanilla_starting_location(layout_configuration):
+    if cosmetic_patches.disable_hud_popup:
+        args.append("-h")
+    if not patcher_file.is_vanilla_starting_location(layout_configuration):
         args.append("-i")
     if layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         args.append("-v")
@@ -218,11 +252,7 @@ def apply_layout(description: LayoutDescription,
     if description.permalink.patcher_configuration.warp_to_start:
         args.append("-t")
 
-    description.save_to_file(game_root.joinpath("files", "randovania.json"))
-    _run_with_args(args, "Randomized!", status_update)
-
-    if patcher_configuration.menu_mod:
-        _add_menu_mod_to_files(game_root, status_update)
+    _run_with_args(args, "", "Randomized!", status_update)
 
 
 def try_randomize_elevators(randomizer: claris_random.Random,
