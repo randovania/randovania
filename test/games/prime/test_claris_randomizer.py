@@ -1,4 +1,3 @@
-import subprocess
 from pathlib import Path
 from typing import List, Union
 from unittest.mock import patch, MagicMock, call, ANY
@@ -62,7 +61,7 @@ def test_run_with_args_success(mock_process_command: MagicMock,
     mock_process_command.side_effect = side_effect
 
     # Run
-    claris_randomizer._run_with_args(args, finish_string, status_update)
+    claris_randomizer._run_with_args(args, "", finish_string, status_update)
 
     # Assert
     mock_process_command.assert_called_once_with([str(x) for x in args], "", ANY)
@@ -77,6 +76,7 @@ def test_run_with_args_success(mock_process_command: MagicMock,
 def test_run_with_args_failure(mock_process_command: MagicMock,
                                ):
     # Setup
+    input_data = "asdf"
     finish_string = "We are done!"
     status_update = MagicMock()
     lines = [
@@ -93,10 +93,10 @@ def test_run_with_args_failure(mock_process_command: MagicMock,
 
     # Run
     with pytest.raises(RuntimeError) as error:
-        claris_randomizer._run_with_args([], finish_string, status_update)
+        claris_randomizer._run_with_args([], input_data, finish_string, status_update)
 
     # Assert
-    mock_process_command.assert_called_once_with([], "", ANY)
+    mock_process_command.assert_called_once_with([], input_data, ANY)
     status_update.assert_has_calls([
         call("line 1"),
         call("line 2"),
@@ -105,27 +105,23 @@ def test_run_with_args_failure(mock_process_command: MagicMock,
     assert str(error.value) == "External tool did not send '{}'. Did something happen?".format(finish_string)
 
 
-@pytest.mark.parametrize("hud_memo_popup_removal", [False, True])
 @patch("randovania.games.prime.claris_randomizer.validate_game_files_path", autospec=True)
 @patch("randovania.games.prime.claris_randomizer.get_data_path", autospec=True)
 def test_base_args(mock_get_data_path: MagicMock,
                    mock_validate_game_files_path: MagicMock,
-                   hud_memo_popup_removal: bool
                    ):
     # Setup
     mock_get_data_path.return_value = Path("data")
     game_root = Path("root")
 
     # Run
-    results = claris_randomizer._base_args(game_root, hud_memo_popup_removal)
+    results = claris_randomizer._base_args(game_root)
 
     # Assert
     expected_results = [
         Path("data", "ClarisPrimeRandomizer", "Randomizer.exe"),
         Path("root", "files"),
     ]
-    if hud_memo_popup_removal:
-        expected_results.append("-h")
 
     assert results == expected_results
     mock_validate_game_files_path.assert_called_once_with(Path("root", "files"))
@@ -302,6 +298,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
     ]
 
 
+@pytest.mark.parametrize("hud_memo_popup_removal", [False, True])
 @pytest.mark.parametrize("speed_up_credits", [False, True])
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("elevators", [False, True])
@@ -316,23 +313,23 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
 @patch("randovania.games.prime.claris_randomizer._ensure_no_menu_mod", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._base_args", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
-def test_apply_layout(mock_run_with_args: MagicMock,
-                      mock_base_args: MagicMock,
-                      mock_ensure_no_menu_mod: MagicMock,
-                      mock_create_pak_backups: MagicMock,
-                      mock_calculate_indices: MagicMock,
-                      mock_add_menu_mod_to_files: MagicMock,
-                      mock_create_progress_update_from_successive_messages: MagicMock,
-                      mock_save_to_file: MagicMock,
-                      seed_number: int,
-                      item_loss: bool,
-                      elevators: bool,
-                      warp_to_start: bool,
-                      include_menu_mod: bool,
-                      speed_up_credits: bool,
-                      ):
+def test_apply_layout_legacy(mock_run_with_args: MagicMock,
+                             mock_base_args: MagicMock,
+                             mock_ensure_no_menu_mod: MagicMock,
+                             mock_create_pak_backups: MagicMock,
+                             mock_calculate_indices: MagicMock,
+                             mock_add_menu_mod_to_files: MagicMock,
+                             mock_create_progress_update_from_successive_messages: MagicMock,
+                             mock_save_to_file: MagicMock,
+                             seed_number: int,
+                             item_loss: bool,
+                             elevators: bool,
+                             warp_to_start: bool,
+                             include_menu_mod: bool,
+                             speed_up_credits: bool,
+                             hud_memo_popup_removal: bool,
+                             ):
     # Setup
-    hud_memo_popup_removal: bool = MagicMock()
     cosmetic_patches = CosmeticPatches(disable_hud_popup=hud_memo_popup_removal,
                                        speed_up_credits=speed_up_credits,
                                        )
@@ -369,6 +366,8 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         "-s", str(seed_number),
         "-p", "10,25,1,2,5,1"
     ]
+    if hud_memo_popup_removal:
+        expected_args.append("-h")
     if not item_loss:
         expected_args.append("-i")
     if elevators:
@@ -379,10 +378,10 @@ def test_apply_layout(mock_run_with_args: MagicMock,
         expected_args.append("-t")
 
     # Run
-    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root)
+    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root, False)
 
     # Assert
-    mock_base_args.assert_called_once_with(game_root, hud_memo_popup_removal=hud_memo_popup_removal)
+    mock_base_args.assert_called_once_with(game_root)
     mock_create_progress_update_from_successive_messages.assert_called_once_with(
         progress_update,
         400 if include_menu_mod else 100
@@ -392,7 +391,7 @@ def test_apply_layout(mock_run_with_args: MagicMock,
     mock_calculate_indices.assert_called_once_with(description)
     game_root.joinpath.assert_called_once_with("files", "randovania.json")
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
-    mock_run_with_args.assert_called_once_with(expected_args, "Randomized!", status_update)
+    mock_run_with_args.assert_called_once_with(expected_args, "", "Randomized!", status_update)
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
     else:
