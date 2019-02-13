@@ -89,7 +89,7 @@ def apply_layout(layout: LayoutDescription,
                                    backup_files_path=backup_files_path,
                                    progress_update=progress_update,
                                    game_root=game_files_path,
-                                   use_modern_api=debug.debug_level() > 0,
+                                   use_modern_api=False,
                                    )
 
 

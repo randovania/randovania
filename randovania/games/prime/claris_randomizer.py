@@ -6,7 +6,7 @@ import shutil
 from asyncio import StreamWriter, StreamReader
 from collections import defaultdict
 from pathlib import Path
-from typing import Callable, List, Dict, Union
+from typing import Callable, List, Dict, Union, Optional
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
@@ -101,7 +101,7 @@ def _run_with_args(args: List[Union[str, Path]],
 
 
 def _base_args(game_root: Path,
-               ) -> List[str]:
+               ) -> List[Union[str, Path]]:
     game_files = game_root / "files"
     validate_game_files_path(game_files)
 
@@ -113,20 +113,31 @@ def _base_args(game_root: Path,
 
 def _ensure_no_menu_mod(
         game_root: Path,
-        backup_files_path: Path,
+        backup_files_path: Optional[Path],
         status_update: Callable[[str], None],
 ):
-    pak_folder = backup_files_path.joinpath("mp2_paks")
+    """
+    Ensures the given game_root has no menu mod, copying paks from the backup path if needed.
+    :param game_root:
+    :param backup_files_path:
+    :param status_update:
+    :return:
+    """
     files_folder = game_root.joinpath("files")
     menu_mod_txt = files_folder.joinpath("menu_mod.txt")
 
-    if menu_mod_txt.is_file() and pak_folder.is_dir():
-        for pak in pak_folder.glob("**/*.pak"):
-            relative = pak.relative_to(pak_folder)
-            status_update("Restoring {} from backup".format(relative))
-            shutil.copy(pak, files_folder.joinpath(relative))
+    if menu_mod_txt.is_file():
+        if backup_files_path is None:
+            raise RuntimeError("Game at '{}' has Menu Mod, but no backup path given to restore".format(game_root))
 
-        menu_mod_txt.unlink()
+        pak_folder = backup_files_path.joinpath("mp2_paks")
+        if pak_folder.is_dir():
+            for pak in pak_folder.glob("**/*.pak"):
+                relative = pak.relative_to(pak_folder)
+                status_update("Restoring {} from backup".format(relative))
+                shutil.copy(pak, files_folder.joinpath(relative))
+
+            menu_mod_txt.unlink()
 
 
 _ECHOES_PAKS = tuple(["MiscData.pak"] + ["Metroid{}.pak".format(i) for i in range(1, 6)])
@@ -175,7 +186,7 @@ def _calculate_indices(description: LayoutDescription) -> List[int]:
 
 def apply_layout(description: LayoutDescription,
                  cosmetic_patches: CosmeticPatches,
-                 backup_files_path: Path,
+                 backup_files_path: Optional[Path],
                  progress_update: ProgressUpdateCallable,
                  game_root: Path,
                  use_modern_api: bool,
@@ -197,7 +208,8 @@ def apply_layout(description: LayoutDescription,
         progress_update, 400 if patcher_configuration.menu_mod else 100)
 
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
-    _create_pak_backups(game_root, backup_files_path, status_update)
+    if backup_files_path is not None:
+        _create_pak_backups(game_root, backup_files_path, status_update)
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
 
     if use_modern_api:

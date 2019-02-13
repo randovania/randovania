@@ -128,7 +128,7 @@ def test_base_args(mock_get_data_path: MagicMock,
 
 
 @pytest.mark.parametrize("has_menu_mod", [False, True])
-@pytest.mark.parametrize("has_backup", [False, True])
+@pytest.mark.parametrize("has_backup", [False, True, None])
 @patch("shutil.copy", autospec=True)
 def test_ensure_no_menu_mod(mock_copy: MagicMock,
                             tmpdir,
@@ -153,8 +153,16 @@ def test_ensure_no_menu_mod(mock_copy: MagicMock,
         for pak in paks:
             pak_folder.joinpath(pak).write_bytes(b"")
 
+    elif has_backup is None:
+        backup_files_path = None
+
     # Run
-    claris_randomizer._ensure_no_menu_mod(game_root, backup_files_path, status_update)
+    if has_menu_mod and has_backup is None:
+        with pytest.raises(RuntimeError) as exc:
+            claris_randomizer._ensure_no_menu_mod(game_root, backup_files_path, status_update)
+        assert str(exc.value) == "Game at '{}' has Menu Mod, but no backup path given to restore".format(game_root)
+    else:
+        claris_randomizer._ensure_no_menu_mod(game_root, backup_files_path, status_update)
 
     # Assert
     if has_menu_mod:
@@ -300,6 +308,7 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
 
 @pytest.mark.parametrize("modern", [False, True])
 @pytest.mark.parametrize("include_menu_mod", [False, True])
+@pytest.mark.parametrize("has_backup_path", [False, True])
 @patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._modern_api", autospec=True)
@@ -317,6 +326,7 @@ def test_apply_layout(
         mock_save_to_file: MagicMock,
         modern: bool,
         include_menu_mod: bool,
+        has_backup_path: bool,
 ):
     # Setup
     cosmetic_patches = MagicMock()
@@ -336,7 +346,7 @@ def test_apply_layout(
     )
 
     game_root = MagicMock(spec=Path())
-    backup_files_path = MagicMock()
+    backup_files_path = MagicMock() if has_backup_path else None
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
 
@@ -349,7 +359,10 @@ def test_apply_layout(
         400 if include_menu_mod else 100
     )
     mock_ensure_no_menu_mod.assert_called_once_with(game_root, backup_files_path, status_update)
-    mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
+    if has_backup_path:
+        mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
+    else:
+        mock_create_pak_backups.assert_not_called()
     game_root.joinpath.assert_called_once_with("files", "randovania.json")
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
 
