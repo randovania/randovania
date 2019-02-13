@@ -298,37 +298,97 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
     ]
 
 
+@pytest.mark.parametrize("modern", [False, True])
+@pytest.mark.parametrize("include_menu_mod", [False, True])
+@patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
+@patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
+@patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._modern_api", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._legacy_api", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._create_pak_backups", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._ensure_no_menu_mod", autospec=True)
+def test_apply_layout(
+        mock_ensure_no_menu_mod: MagicMock,
+        mock_create_pak_backups: MagicMock,
+        mock_add_menu_mod_to_files: MagicMock,
+        mock_legacy_api: MagicMock,
+        mock_modern_api: MagicMock,
+        mock_create_patcher_file: MagicMock,
+        mock_create_progress_update_from_successive_messages: MagicMock,
+        mock_save_to_file: MagicMock,
+        modern: bool,
+        include_menu_mod: bool,
+):
+    # Setup
+    cosmetic_patches = MagicMock()
+    description = LayoutDescription(
+        version=randovania.VERSION,
+        permalink=Permalink(
+            seed_number=1,
+            spoiler=False,
+            patcher_configuration=PatcherConfiguration(
+                menu_mod=include_menu_mod,
+                warp_to_start=MagicMock(),
+            ),
+            layout_configuration=MagicMock()
+        ),
+        patches=MagicMock(),
+        solver_path=(),
+    )
+
+    game_root = MagicMock(spec=Path())
+    backup_files_path = MagicMock()
+    progress_update = MagicMock()
+    status_update = mock_create_progress_update_from_successive_messages.return_value
+
+    # Run
+    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root, modern)
+
+    # Assert
+    mock_create_progress_update_from_successive_messages.assert_called_once_with(
+        progress_update,
+        400 if include_menu_mod else 100
+    )
+    mock_ensure_no_menu_mod.assert_called_once_with(game_root, backup_files_path, status_update)
+    mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
+    game_root.joinpath.assert_called_once_with("files", "randovania.json")
+    mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
+
+    if modern:
+        mock_legacy_api.assert_not_called()
+        mock_create_patcher_file.assert_called_once_with(description, cosmetic_patches)
+        mock_modern_api.assert_called_once_with(game_root, status_update, mock_create_patcher_file.return_value)
+    else:
+        mock_legacy_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
+        mock_create_patcher_file.assert_not_called()
+        mock_modern_api.assert_not_called()
+
+    if include_menu_mod:
+        mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
+    else:
+        mock_add_menu_mod_to_files.assert_not_called()
+
+
 @pytest.mark.parametrize("hud_memo_popup_removal", [False, True])
 @pytest.mark.parametrize("speed_up_credits", [False, True])
-@pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("elevators", [False, True])
 @pytest.mark.parametrize("item_loss", [False, True])
 @pytest.mark.parametrize("warp_to_start", [False, True])
 @pytest.mark.parametrize("seed_number", [1000, 8500])
-@patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
-@patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._calculate_indices", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._create_pak_backups", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._ensure_no_menu_mod", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._base_args", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
-def test_apply_layout_legacy(mock_run_with_args: MagicMock,
-                             mock_base_args: MagicMock,
-                             mock_ensure_no_menu_mod: MagicMock,
-                             mock_create_pak_backups: MagicMock,
-                             mock_calculate_indices: MagicMock,
-                             mock_add_menu_mod_to_files: MagicMock,
-                             mock_create_progress_update_from_successive_messages: MagicMock,
-                             mock_save_to_file: MagicMock,
-                             seed_number: int,
-                             item_loss: bool,
-                             elevators: bool,
-                             warp_to_start: bool,
-                             include_menu_mod: bool,
-                             speed_up_credits: bool,
-                             hud_memo_popup_removal: bool,
-                             ):
+def test_legacy_api(mock_run_with_args: MagicMock,
+                    mock_base_args: MagicMock,
+                    mock_calculate_indices: MagicMock,
+                    seed_number: int,
+                    item_loss: bool,
+                    elevators: bool,
+                    warp_to_start: bool,
+                    speed_up_credits: bool,
+                    hud_memo_popup_removal: bool,
+                    ):
     # Setup
     cosmetic_patches = CosmeticPatches(disable_hud_popup=hud_memo_popup_removal,
                                        speed_up_credits=speed_up_credits,
@@ -339,7 +399,7 @@ def test_apply_layout_legacy(mock_run_with_args: MagicMock,
             seed_number=seed_number,
             spoiler=False,
             patcher_configuration=PatcherConfiguration(
-                menu_mod=include_menu_mod,
+                menu_mod=MagicMock(),
                 warp_to_start=warp_to_start,
             ),
             layout_configuration=LayoutConfiguration.from_params(
@@ -356,9 +416,7 @@ def test_apply_layout_legacy(mock_run_with_args: MagicMock,
     )
 
     game_root = MagicMock(spec=Path())
-    backup_files_path = MagicMock()
-    progress_update = MagicMock()
-    status_update = mock_create_progress_update_from_successive_messages.return_value
+    status_update = MagicMock()
 
     mock_calculate_indices.return_value = [10, 25, 1, 2, 5, 1]
     mock_base_args.return_value = []
@@ -378,24 +436,12 @@ def test_apply_layout_legacy(mock_run_with_args: MagicMock,
         expected_args.append("-t")
 
     # Run
-    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root, False)
+    claris_randomizer._legacy_api(game_root, status_update, description, cosmetic_patches)
 
     # Assert
     mock_base_args.assert_called_once_with(game_root)
-    mock_create_progress_update_from_successive_messages.assert_called_once_with(
-        progress_update,
-        400 if include_menu_mod else 100
-    )
-    mock_ensure_no_menu_mod.assert_called_once_with(game_root, backup_files_path, status_update)
-    mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
     mock_calculate_indices.assert_called_once_with(description)
-    game_root.joinpath.assert_called_once_with("files", "randovania.json")
-    mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
     mock_run_with_args.assert_called_once_with(expected_args, "", "Randomized!", status_update)
-    if include_menu_mod:
-        mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
-    else:
-        mock_add_menu_mod_to_files.assert_not_called()
 
 
 @pytest.mark.parametrize(["seed_number", "expected_ids"], [
