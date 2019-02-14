@@ -160,12 +160,16 @@ def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
         reach.state.resources,
         reach.state.resource_database
     )
-    progression_pickups = tuple(
-        pickup
-        for pickup in set(pickups_left)
-        if _resources_in_pickup(pickup, reach.state.resources).intersection(interesting_resources)
-    )
-    return progression_pickups
+
+    progression_pickups = []
+
+    for pickup in pickups_left:
+        if pickup in progression_pickups:
+            continue
+        if _resources_in_pickup(pickup, reach.state.resources).intersection(interesting_resources):
+            progression_pickups.append(pickup)
+
+    return tuple(progression_pickups)
 
 
 def _calculate_weights_for(potential_reach: GeneratorReach,
