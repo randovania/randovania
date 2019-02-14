@@ -80,7 +80,7 @@ def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
                 "index": resource.index,
                 "amount": quantity
             }
-            for resource, quantity in pickup.resource_gain()
+            for resource, quantity in pickup.resources
             if quantity > 0 and resource.resource_type == ResourceType.ITEM
         ]
     }

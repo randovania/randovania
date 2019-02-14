@@ -72,12 +72,12 @@ class PickupNode(NamedTuple):
     def resource(self) -> ResourceInfo:
         return self.pickup_index
 
-    def resource_gain_on_collect(self, patches) -> ResourceGain:
+    def resource_gain_on_collect(self, patches, current_resources) -> ResourceGain:
         yield self.resource(), 1
 
         pickup = patches.pickup_assignment.get(self.pickup_index)
         if pickup is not None:
-            yield from pickup.resource_gain()
+            yield from pickup.resource_gain(current_resources)
 
 
 class EventNode(NamedTuple):
@@ -95,7 +95,7 @@ class EventNode(NamedTuple):
     def resource(self) -> ResourceInfo:
         return self.event
 
-    def resource_gain_on_collect(self, patches) -> ResourceGain:
+    def resource_gain_on_collect(self, patches, current_resources) -> ResourceGain:
         yield self.resource(), 1
 
 

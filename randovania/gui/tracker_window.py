@@ -240,6 +240,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches), state.resources)
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches, state.resources),
+                                                   state.resources)
 
         return state

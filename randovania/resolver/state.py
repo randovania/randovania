@@ -53,7 +53,8 @@ class State:
                     resource))
 
         new_resources = copy.copy(self.resources)
-        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches), new_resources)
+        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches, self.resources),
+                                               new_resources)
 
         return State(new_resources, self.node, self.patches, self, self.resource_database)
 
@@ -68,7 +69,7 @@ class State:
         new_resources = copy.copy(self.resources)
 
         if index in self.resources:
-            add_resource_gain_to_current_resources(pickup.resource_gain(), new_resources)
+            add_resource_gain_to_current_resources(pickup.resource_gain(self.resources), new_resources)
 
         return State(
             new_resources,
@@ -98,10 +99,7 @@ def add_pickup_to_state(state: State, pickup: PickupEntry):
     :param pickup:
     :return:
     """
-    if pickup.conditional_resources is not None and state.resources.get(pickup.conditional_resources.item, 0) > 0:
-        add_resource_gain_to_current_resources(pickup.conditional_resources.resources, state.resources)
-    else:
-        add_resource_gain_to_current_resources(pickup.resource_gain(), state.resources)
+    add_resource_gain_to_current_resources(pickup.resource_gain(state.resources), state.resources)
 
 
 def state_with_pickup(state: State,

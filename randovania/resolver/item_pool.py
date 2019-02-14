@@ -58,7 +58,7 @@ def calculate_available_pickups(remaining_items: Iterator[PickupEntry],
     for pickup in remaining_items:
         if pickup.item_category in categories:
             if relevant_resources is None or any(resource in relevant_resources
-                                                 for resource, _ in pickup.resource_gain()):
+                                                 for resource, _ in pickup.all_resources):
                 yield pickup
 
 

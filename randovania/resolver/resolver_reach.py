@@ -113,7 +113,7 @@ class ResolverReach:
 
             # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
             for action in self.possible_actions(state):
-                for resource, amount in action.resource_gain_on_collect(state.patches):
+                for resource, amount in action.resource_gain_on_collect(state.patches, state.resources):
                     if resource in interesting_resources:
                         yield action
                         break
