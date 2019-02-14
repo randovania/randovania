@@ -125,7 +125,7 @@ def write_pickup(pickup: PickupEntry) -> dict:
     result = {
         "item_category": pickup.item_category,
         "model_index": pickup.model_index,
-        "resources": write_resource_gain(pickup.resource_gain()),
+        "resources": write_resource_gain(pickup.resources),
         "probability_offset": pickup.probability_offset,
     }
     if pickup.conditional_resources is not None:

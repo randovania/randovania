@@ -97,11 +97,20 @@ class PickupEntry(NamedTuple):
     def __eq__(self, other):
         return isinstance(other, PickupEntry) and self.name == other.name
 
-    def resource_gain(self) -> ResourceGain:
-        yield from self.resources
+    def resource_gain(self, current_resources) -> ResourceGain:
+        if self.conditional_resources is not None and current_resources.get(self.conditional_resources.item, 0) > 0:
+            yield from self.conditional_resources.resources
+        else:
+            yield from self.resources
 
     def __str__(self):
         return "Pickup {}".format(self.name)
+
+    @property
+    def all_resources(self):
+        yield from self.resources
+        if self.conditional_resources is not None:
+            yield from self.conditional_resources.resources
 
 
 def find_resource_info_with_id(info_list: List[ResourceInfo], index: int):

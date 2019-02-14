@@ -273,7 +273,7 @@ class GeneratorReach:
     def act_on(self, node: ResourceNode) -> None:
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.patches)
+            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources)
             if resource in self.logic.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)
@@ -301,6 +301,8 @@ class GeneratorReach:
     def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
         results = {}
         for (_, node), requirements in self._unreachable_paths.items():
+            if self.is_reachable_node(node):
+                continue
             requirements = requirements.simplify(self.state.resources, self.logic.game.resource_database)
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)

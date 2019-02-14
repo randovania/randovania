@@ -7,7 +7,8 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, PickupNode, Node
 from randovania.game_description.requirements import RequirementList
-from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceGain, ResourceInfo
+from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceGain, \
+    ResourceInfo, CurrentResources
 from randovania.resolver import debug
 from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
@@ -53,7 +54,8 @@ def _calculate_reach_for_progression(reach: GeneratorReach,
 Action = Union[ResourceNode, PickupEntry]
 
 
-def _resources_in_resource_gain(resource_gain: ResourceGain) -> FrozenSet[ResourceInfo]:
+def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResources) -> FrozenSet[ResourceInfo]:
+    resource_gain = pickup.resource_gain(current_resources)
     return frozenset(resource for resource, _ in resource_gain)
 
 
@@ -69,18 +71,10 @@ def retcon_playthrough_filler(logic: Logic,
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
 
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
+    pickups_left = list(available_pickups)
 
-    while True:
+    while pickups_left:
         current_uncollected = UncollectedState.from_reach(reach)
-
-        pickups_left: Dict[str, PickupEntry] = {
-            pickup.name: pickup
-            for pickup in available_pickups if pickup not in reach.state.patches.pickup_assignment.values()
-        }
-
-        if not pickups_left:
-            debug.debug_print("Finished because we have nothing else to distribute")
-            break
 
         progression_pickups = _calculate_progression_pickups(pickups_left, reach)
         print_retcon_loop_start(current_uncollected, logic, pickups_left, reach)
@@ -105,6 +99,8 @@ def retcon_playthrough_filler(logic: Logic,
                     len(reach.state.patches.pickup_assignment)))
 
         if isinstance(action, PickupEntry):
+            assert action in pickups_left
+
             pickup_index_weight = {
                 pickup_index: 1 / (min(pickup_index_seen_count[pickup_index], 10) ** 2)
                 for pickup_index in current_uncollected.indices
@@ -124,6 +120,7 @@ def retcon_playthrough_filler(logic: Logic,
 
             # TODO: this item is potentially dangerous and we should remove the invalidated paths
             next_state = reach.state.assign_pickup_to_index(pickup_index, action)
+            pickups_left.remove(action)
 
             last_message = "Placed {} items so far, {} left.".format(
                 len(next_state.patches.pickup_assignment), len(pickups_left) - 1)
@@ -145,10 +142,13 @@ def retcon_playthrough_filler(logic: Logic,
             debug.debug_print("Finished because we can win")
             break
 
+    if not pickups_left:
+        debug.debug_print("Finished because we have nothing else to distribute")
+
     return reach.state.patches
 
 
-def _calculate_progression_pickups(pickups_left: Dict[str, PickupEntry],
+def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
                                    reach: GeneratorReach,
                                    ) -> Tuple[PickupEntry, ...]:
     satisfiable_requirements: FrozenSet[RequirementList] = frozenset(itertools.chain.from_iterable(
@@ -162,8 +162,8 @@ def _calculate_progression_pickups(pickups_left: Dict[str, PickupEntry],
     )
     progression_pickups = tuple(
         pickup
-        for pickup in pickups_left.values()
-        if _resources_in_resource_gain(pickup.resource_gain()).intersection(interesting_resources)
+        for pickup in set(pickups_left)
+        if _resources_in_pickup(pickup, reach.state.resources).intersection(interesting_resources)
     )
     return progression_pickups
 
@@ -242,10 +242,14 @@ def debug_print_collect_event(action, logic):
         print("\n--> Collecting {}".format(logic.game.world_list.node_name(action, with_world=True)))
 
 
-def print_retcon_loop_start(current_uncollected: UncollectedState, logic: Logic, pickups_left, reach):
+def print_retcon_loop_start(current_uncollected: UncollectedState,
+                            logic: Logic,
+                            pickups_left: Iterator[PickupEntry],
+                            reach: GeneratorReach,
+                            ):
     if debug.debug_level() > 0:
         if debug.debug_level() > 1:
-            extra = ", pickups_left: {}".format(list(pickups_left.keys()))
+            extra = ", pickups_left: {}".format([pickup.name for pickup in pickups_left])
         else:
             extra = ""
 
