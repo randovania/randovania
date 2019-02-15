@@ -37,6 +37,7 @@ def _get_menu_mod_path() -> Path:
 
 async def _write_data(stream: StreamWriter, data: str):
     stream.write(data.encode("UTF-8"))
+    stream.close()
 
 
 async def _read_data(stream: StreamReader, read_callback: Callable[[str], None]):
