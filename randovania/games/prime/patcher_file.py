@@ -140,6 +140,7 @@ def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list
 
     elevators = [
         {
+            "instance_id": instance_id,
             "origin_location": world_list.node_to_area_location(nodes_by_teleporter_id[instance_id]).as_json,
             "target_location": connection.as_json,
             "room_name": "Transport to {}".format(_pretty_name_for_elevator(world_list, connection))
