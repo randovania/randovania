@@ -3,7 +3,7 @@ import dataclasses
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupDatabase, PickupIndex, PickupEntry, SimpleResourceInfo, \
+from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo, \
     ConditionalResources
 from randovania.games.prime import patcher_file, default_data
 from randovania.layout import starting_resources
@@ -81,7 +81,7 @@ def test_create_pickup_list(empty_patches):
     useless_resource = SimpleResourceInfo(0, "Useless", "Useless", ResourceType.ITEM)
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    pickup_a = PickupEntry("A", ((resource_a, 1),), 1, None, "", 0)
+    pickup_a = PickupEntry("A", ((resource_a, 1),), 1, None, "temple_key", 0)
     pickup_b = PickupEntry("B", ((resource_b, 1), (resource_a, 1)), 2,
                            ConditionalResources(resource_b,
                                                 ((resource_a, 5),)),
@@ -101,8 +101,11 @@ def test_create_pickup_list(empty_patches):
     assert result == [
         {
             "pickup_index": 0,
-            "scan": "A",
             "model_index": 1,
+            "scan": "A",
+            "hud_text": "A Acquired!",
+            "sound_index": 1,
+            "jingle_index": 2,
             "resources": [
                 {
                     "index": 1,
@@ -114,6 +117,9 @@ def test_create_pickup_list(empty_patches):
             "pickup_index": 1,
             "scan": "Useless",
             "model_index": 0,
+            "hud_text": "Useless Acquired!",
+            "sound_index": 0,
+            "jingle_index": 0,
             "resources": [
                 {
                     "index": 0,
@@ -125,6 +131,9 @@ def test_create_pickup_list(empty_patches):
             "pickup_index": 2,
             "scan": "B",
             "model_index": 2,
+            "hud_text": "B Acquired!",
+            "sound_index": 0,
+            "jingle_index": 0,
             "resources": [
                 {
                     "index": 2,
@@ -149,6 +158,9 @@ def test_create_pickup_list(empty_patches):
             "pickup_index": 3,
             "scan": "A",
             "model_index": 1,
+            "hud_text": "A Acquired!",
+            "sound_index": 1,
+            "jingle_index": 2,
             "resources": [
                 {
                     "index": 1,

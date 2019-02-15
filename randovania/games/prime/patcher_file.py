@@ -6,8 +6,8 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupDatabase, \
-    PickupIndex, PickupEntry
+from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupIndex, \
+    PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -48,7 +48,6 @@ def _create_spawn_point_field(patches: GamePatches,
                               resource_database: ResourceDatabase,
                               starting_resources: StartingResources,
                               ) -> dict:
-
     item_quantities: Dict[SimpleResourceInfo, int] = {}
     _add_items_in_resource_gain_to_dict(starting_resources.resource_gain,
                                         item_quantities)
@@ -70,11 +69,22 @@ def _create_spawn_point_field(patches: GamePatches,
     }
 
 
+_item_category_to_jingle_index = {
+    "major": 1,
+    "translator": 1,
+    "temple_key": 2,
+    "sky_temple_key": 2
+}
+
+
 def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
     result = {
         "pickup_index": original_index.index,
         "model_index": pickup.model_index,
         "scan": pickup.name,
+        "hud_text": "{} Acquired!".format(pickup.name),
+        "sound_index": 1 if pickup.item_category in {"temple_key", "sky_temple_key"} else 0,
+        "jingle_index": _item_category_to_jingle_index.get(pickup.item_category, 0),
         "resources": [
             {
                 "index": resource.index,
