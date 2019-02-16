@@ -6,7 +6,9 @@ from typing import Dict, Tuple, Iterator
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness
 from randovania.game_description.node import DockConnection
-from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, ResourceGainTuple
+from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, ResourceGainTuple, \
+    ResourceGain
 
 
 @dataclass(frozen=True)
@@ -42,3 +44,21 @@ class GamePatches:
 
     def assign_starting_location(self, location: AreaLocation) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)
+
+    def assign_extra_initial_items(self, items: ResourceGain) -> "GamePatches":
+        current = {
+            resource: quantity
+            for resource, quantity in self.extra_initial_items
+        }
+        for resource, quantity in items:
+            if resource.resource_type != ResourceType.ITEM:
+                raise ValueError("Only ITEM is supported as extra initial items, got {}".format(resource.resource_type))
+
+            if resource in current:
+                current[resource] += quantity
+            else:
+                current[resource] = quantity
+
+        return dataclasses.replace(
+            self,
+            extra_initial_items=tuple((resource, quantity) for resource, quantity in current.items()))
