@@ -10,6 +10,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
 from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment
 from randovania.games.prime import claris_randomizer
+from randovania.layout.shuffled_items import ShuffledItems
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.starting_resources import StartingResourcesConfiguration
 from randovania.resolver import resolver
@@ -165,37 +166,51 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
                                        ) -> GamePatches:
 
     mode = permalink.layout_configuration.sky_temple_keys
+    items_to_shuffle = ShuffledItems.default()  # TODO: this should come from layout_configuration
     new_assignments = {}
+    new_items = []
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
         locations_to_place = _GUARDIAN_INDICES[:]
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES:
             locations_to_place += _SUB_GUARDIAN_INDICES
 
+        keys_to_inventory = 9 - len(locations_to_place)
+
     else:
         key_count = mode.value
         if not isinstance(key_count, int):
             raise GenerationFailure("Unknown Sky Temple Key mode: {}".format(mode), permalink)
 
-        # CHECK IF SHOULD BE SHUFFLED
-        locations_to_place = _FLYING_ING_CACHES[:]
+        keys_to_inventory = 9 - key_count
+
         locations_to_place = []
+        if not items_to_shuffle.sky_temple_keys:
+            # TODO: we're always using the same ing caches
+            locations_to_place = _FLYING_ING_CACHES[0:key_count]
 
     for pickup in available_pickups[:]:
-        if not locations_to_place:
+        if keys_to_inventory == 0 and not locations_to_place:
             break
 
         if pickup.item_category == "sky_temple_key":
             available_pickups.remove(pickup)
-            index = locations_to_place.pop(0)
-            if index in previous_patches.pickup_assignment:
-                raise GenerationFailure(
-                    "Attempted to place '{}' in {}, but there's already '{}' there".format(
-                        pickup, index, previous_patches.pickup_assignment[index]
-                    ),
-                    permalink
-                )
-            new_assignments[index] = pickup
+
+            if keys_to_inventory > 0:
+                if pickup.conditional_resources is not None:
+                    raise ValueError("NYI: less than maximum keys with keys in conditional resources")
+                new_items.extend(pickup.resources)
+                keys_to_inventory -= 1
+            else:
+                index = locations_to_place.pop(0)
+                if index in previous_patches.pickup_assignment:
+                    raise GenerationFailure(
+                        "Attempted to place '{}' in {}, but there's already '{}' there".format(
+                            pickup, index, previous_patches.pickup_assignment[index]
+                        ),
+                        permalink
+                    )
+                new_assignments[index] = pickup
 
     if locations_to_place:
         raise GenerationFailure(
@@ -203,7 +218,7 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
             permalink
         )
 
-    return previous_patches.assign_pickup_assignment(new_assignments)
+    return previous_patches.assign_pickup_assignment(new_assignments).assign_extra_initial_items(new_items)
 
 
 def _starting_location_for_configuration(configuration: LayoutConfiguration,
