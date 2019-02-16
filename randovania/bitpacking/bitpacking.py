@@ -52,6 +52,23 @@ class BitPackValue:
         raise NotImplementedError()
 
 
+class BitPackBool(BitPackValue):
+    value: bool
+
+    def __init__(self, value: bool):
+        self.value = value
+
+    def bit_pack_format(self) -> Iterator[int]:
+        yield 2
+
+    def bit_pack_arguments(self) -> Iterator[int]:
+        yield int(self.value)
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> bool:
+        return bool(decoder.decode(2)[0])
+
+
 class BitPackEnum(BitPackValue):
     def __reduce__(self):
         return None
@@ -71,19 +88,42 @@ class BitPackEnum(BitPackValue):
         return items[index]
 
 
+_default_bit_pack_classes = {
+    bool: BitPackBool,
+}
+
+
+def _get_bit_pack_value_for_type(value_type):
+    if issubclass(value_type, BitPackValue):
+        return value_type
+
+    if value_type in _default_bit_pack_classes:
+        return _default_bit_pack_classes[value_type]
+
+    else:
+        raise NotImplementedError("Unsupported bit packing for type {}".format(value_type))
+
+
+def _get_bit_pack_value_for(value):
+    if isinstance(value, BitPackValue):
+        return value
+
+    return _get_bit_pack_value_for_type(type(value))(value)
+
+
 class BitPackDataClass(BitPackValue):
     def bit_pack_format(self) -> Iterator[int]:
         for field in dataclasses.fields(self):
-            yield from getattr(self, field.name).bit_pack_format()
+            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_format()
 
     def bit_pack_arguments(self) -> Iterator[int]:
         for field in dataclasses.fields(self):
-            yield from getattr(self, field.name).bit_pack_arguments()
+            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_arguments()
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder):
         args = {
-            field.name: field.type.bit_pack_unpack(decoder)
+            field.name: _get_bit_pack_value_for_type(field.type).bit_pack_unpack(decoder)
             for field in dataclasses.fields(cls)
             if field.init
         }

@@ -1,9 +1,10 @@
+from dataclasses import dataclass
 from unittest.mock import patch, MagicMock
 
 import pytest
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
     LayoutRandomizedFlag
 from randovania.layout.pickup_quantities import PickupQuantities
@@ -11,11 +12,17 @@ from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 
 
-def mock_bit_pack_value():
-    mock = MagicMock()
-    mock.bit_pack_format.return_value = []
-    mock.bit_pack_arguments.return_value = []
-    return mock
+@dataclass(frozen=True)
+class DummyValue(BitPackValue):
+    def bit_pack_format(self):
+        yield from []
+
+    def bit_pack_arguments(self):
+        yield from []
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+        raise cls()
 
 
 @pytest.fixture(
@@ -43,9 +50,9 @@ def mock_bit_pack_value():
     ],
     name="layout_config_with_data")
 def _layout_config_with_data(request):
-    pickup_quantities = mock_bit_pack_value()
-    starting_location = mock_bit_pack_value()
-    starting_resources = mock_bit_pack_value()
+    starting_location = DummyValue()
+    starting_resources = DummyValue()
+    pickup_quantities = MagicMock(return_value=DummyValue())
 
     with patch.multiple(PickupQuantities, from_params=pickup_quantities, bit_pack_unpack=pickup_quantities), \
          patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
