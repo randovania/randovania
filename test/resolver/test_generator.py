@@ -8,7 +8,8 @@ from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase
+from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase, SimpleResourceInfo
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
     LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
@@ -337,11 +338,15 @@ def test_create_patches(mock_random: MagicMock,
 @pytest.fixture(name="sky_temple_keys")
 def sample_sky_temple_keys():
     return [
-        PickupEntry("Test Sky Temple Key {}".format(i), tuple(), 0, None, "sky_temple_key", 0)
+        PickupEntry(
+            "Test Sky Temple Key {}".format(i),
+            ((SimpleResourceInfo(i, "Key", "Key", ResourceType.ITEM), 1),),
+            0, None, "sky_temple_key", 0)
         for i in range(1, 10)
     ]
 
 
+@pytest.mark.skip(reason="no-shuffle is not in layout right now")
 def test_sky_temple_key_distribution_logic_vanilla_valid(dataclass_test_lib,
                                                          sky_temple_keys,
                                                          empty_patches):
@@ -358,6 +363,7 @@ def test_sky_temple_key_distribution_logic_vanilla_valid(dataclass_test_lib,
     assert result.pickup_assignment == dict(zip(generator._FLYING_ING_CACHES, sky_temple_keys))
 
 
+@pytest.mark.skip(reason="no-shuffle is not in layout right now")
 def test_sky_temple_key_distribution_logic_vanilla_missing_pickup(dataclass_test_lib, empty_patches):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
@@ -372,6 +378,7 @@ def test_sky_temple_key_distribution_logic_vanilla_missing_pickup(dataclass_test
         "Missing Sky Temple Keys in available_pickups to place in all requested boss places", permalink)
 
 
+@pytest.mark.skip(reason="no-shuffle is not in layout right now")
 def test_sky_temple_key_distribution_logic_vanilla_used_location(dataclass_test_lib,
                                                                  sky_temple_keys,
                                                                  empty_patches):
@@ -420,14 +427,20 @@ def test_sky_temple_key_distribution_logic_all_guardians_valid(dataclass_test_li
     result = generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
 
     # Assert
-    assert available_pickups == sky_temple_keys[3:]
-    assert result.pickup_assignment == dict(zip(generator._GUARDIAN_INDICES, sky_temple_keys))
+    assert available_pickups == []
+    assert result.pickup_assignment == dict(zip(generator._GUARDIAN_INDICES, sky_temple_keys[-3:]))
+    assert result.extra_initial_items == tuple(
+        (SimpleResourceInfo(i, "Key", "Key", ResourceType.ITEM), 1)
+        for i in range(1, 7)
+    )
 
 
-def test_sky_temple_key_distribution_logic_fully_random_valid(dataclass_test_lib, sky_temple_keys, empty_patches):
+@pytest.mark.parametrize("quantity", list(range(10)))
+def test_sky_temple_key_distribution_logic_with_quantity(dataclass_test_lib, sky_temple_keys, empty_patches,
+                                                         quantity: int):
     # Setup
     permalink = dataclass_test_lib.mock_dataclass(Permalink)
-    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode.FULLY_RANDOM
+    permalink.layout_configuration.sky_temple_keys = LayoutSkyTempleKeyMode(quantity)
     patches = empty_patches
     available_pickups = sky_temple_keys[:]
 
@@ -435,5 +448,9 @@ def test_sky_temple_key_distribution_logic_fully_random_valid(dataclass_test_lib
     result = generator._sky_temple_key_distribution_logic(permalink, patches, available_pickups)
 
     # Assert
-    assert available_pickups == sky_temple_keys
+    assert available_pickups == (sky_temple_keys[-quantity:] if quantity > 0 else [])
     assert result.pickup_assignment == {}
+    assert result.extra_initial_items == tuple(
+        (SimpleResourceInfo(i, "Key", "Key", ResourceType.ITEM), 1)
+        for i in range(1, 10 - quantity)
+    )
