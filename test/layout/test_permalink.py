@@ -54,7 +54,7 @@ def test_decode_invalid(invalid: str):
     LayoutConfiguration.default(),
     LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel.HARD,
-        sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+        sky_temple_keys=LayoutSkyTempleKeyMode.ALL_GUARDIANS,
         elevators=LayoutRandomizedFlag.RANDOMIZED,
         pickup_quantities={
             "Missile Expansion": 10,
@@ -112,7 +112,7 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
         ),
         layout_configuration=LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.HARD,
-            sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+            sky_temple_keys=LayoutSkyTempleKeyMode.default(),
             elevators=LayoutRandomizedFlag.RANDOMIZED,
             pickup_quantities={
                 "Missile Expansion": 10,

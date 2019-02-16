@@ -180,7 +180,7 @@ def test_serialize_fields(option: Options):
 _sample_layout_configurations = [
     {
         "trick_level": trick_level,
-        "sky_temple_keys": LayoutSkyTempleKeyMode.FULLY_RANDOM,
+        "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
         "elevators": LayoutRandomizedFlag.RANDOMIZED,
         "pickup_quantities": {},
         "starting_location": StartingLocation.default(),

@@ -58,7 +58,7 @@ def _create_test_layout_description(
 _unused_test_descriptions = [
     _create_test_layout_description(
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={},
                                                       starting_location=StartingLocation.default(),
@@ -72,7 +72,7 @@ _unused_test_descriptions = [
     ),
     _create_test_layout_description(
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={
                                                           "Missile Expansion": 0
@@ -92,7 +92,7 @@ _unused_test_descriptions = [
 _test_descriptions = [
     _create_test_layout_description(
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={},
                                                       starting_location=StartingLocation.default(),
@@ -108,7 +108,7 @@ _test_descriptions = [
     ),
     _create_test_layout_description(
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
                                                       elevators=LayoutRandomizedFlag.VANILLA,
                                                       pickup_quantities={
                                                           "Light Suit": 2,
@@ -150,7 +150,7 @@ def test_generate_seed_with_invalid_quantity_configuration():
 
     configuration = LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel.NO_TRICKS,
-        sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+        sky_temple_keys=LayoutSkyTempleKeyMode.default(),
         elevators=LayoutRandomizedFlag.VANILLA,
         pickup_quantities={"Light Suit": 5},
         starting_location=StartingLocation.default(),
@@ -297,7 +297,7 @@ def test_create_patches(mock_random: MagicMock,
     game = default_prime2_game_description()
     status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
     configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                    sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+                                                    sky_temple_keys=LayoutSkyTempleKeyMode.default(),
                                                     elevators=LayoutRandomizedFlag.VANILLA,
                                                     pickup_quantities={},
                                                     starting_location=StartingLocation.default(),
