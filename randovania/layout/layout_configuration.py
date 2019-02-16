@@ -21,10 +21,22 @@ class LayoutTrickLevel(BitPackEnum, Enum):
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
-    VANILLA = "vanilla"
     ALL_BOSSES = "all-bosses"
     ALL_GUARDIANS = "all-guardians"
-    FULLY_RANDOM = "fully-random"
+    ZERO = 0
+    ONE = 1
+    TWO = 2
+    THREE = 3
+    FOUR = 4
+    FIVE = 5
+    SIX = 6
+    SEVEN = 7
+    EIGHT = 8
+    NINE = 9
+
+    @classmethod
+    def default(cls) -> "LayoutSkyTempleKeyMode":
+        return cls.NINE
 
 
 class LayoutRandomizedFlag(BitPackEnum, Enum):
@@ -93,7 +105,7 @@ class LayoutConfiguration(BitPackDataClass):
     def default(cls) -> "LayoutConfiguration":
         return cls.from_params(
             trick_level=LayoutTrickLevel.NO_TRICKS,
-            sky_temple_keys=LayoutSkyTempleKeyMode.FULLY_RANDOM,
+            sky_temple_keys=LayoutSkyTempleKeyMode.default(),
             elevators=LayoutRandomizedFlag.VANILLA,
             pickup_quantities={},
             starting_location=StartingLocation.default(),

@@ -24,7 +24,7 @@ def add_layout_configuration_arguments(parser):
         "--sky-temple-keys",
         type=str,
         choices=[mode.value for mode in LayoutSkyTempleKeyMode],
-        default=LayoutSkyTempleKeyMode.FULLY_RANDOM.value,
+        default=LayoutSkyTempleKeyMode.default().value,
         help="The Sky Temple Keys randomization mode.")
     parser.add_argument(
         "--skip-item-loss",

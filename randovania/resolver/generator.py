@@ -167,19 +167,19 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
     mode = permalink.layout_configuration.sky_temple_keys
     new_assignments = {}
 
-    if mode == LayoutSkyTempleKeyMode.VANILLA:
-        locations_to_place = _FLYING_ING_CACHES[:]
-
-    elif mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+    if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
         locations_to_place = _GUARDIAN_INDICES[:]
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES:
             locations_to_place += _SUB_GUARDIAN_INDICES
 
-    elif mode == LayoutSkyTempleKeyMode.FULLY_RANDOM:
-        locations_to_place = []
-
     else:
-        raise GenerationFailure("Unknown Sky Temple Key mode: {}".format(mode), permalink)
+        key_count = mode.value
+        if not isinstance(key_count, int):
+            raise GenerationFailure("Unknown Sky Temple Key mode: {}".format(mode), permalink)
+
+        # CHECK IF SHOULD BE SHUFFLED
+        locations_to_place = _FLYING_ING_CACHES[:]
+        locations_to_place = []
 
     for pickup in available_pickups[:]:
         if not locations_to_place:
