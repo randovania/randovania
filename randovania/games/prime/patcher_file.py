@@ -77,12 +77,25 @@ _item_category_to_jingle_index = {
 }
 
 
+def _pickup_scan(pickup: PickupEntry) -> str:
+    if pickup.item_category != "expansion":
+        return pickup.name
+
+    return "{0} that provides {1}".format(
+        pickup.name,
+        ", ".join(
+            "{} {}".format(quantity, resource.long_name)
+            for resource, quantity in pickup.resources
+        )
+    )
+
+
 def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
     result = {
         "pickup_index": original_index.index,
         "model_index": pickup.model_index,
-        "scan": pickup.name,
-        "hud_text": "{} Acquired!".format(pickup.name),
+        "scan": _pickup_scan(pickup),
+        "hud_text": "{} acquired!".format(pickup.name),
         "sound_index": 1 if pickup.item_category in {"temple_key", "sky_temple_key"} else 0,
         "jingle_index": _item_category_to_jingle_index.get(pickup.item_category, 0),
         "resources": [
@@ -181,8 +194,11 @@ def create_patcher_file(description: LayoutDescription,
 
     result["elevators"] = _create_elevators_field(patches, game.world_list)
 
+    # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
+    # we should disable hive_chamber_b_post_state
     result["specific_patches"] = {
-        "hive_chamber_b_post_state": not is_vanilla_starting_location(layout),
+        "hive_chamber_b_post_state": True,
+        "intro_in_post_state": True,
         "warp_to_start": patcher_config.warp_to_start,
         "speed_up_credits": cosmetic_patches.speed_up_credits,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
