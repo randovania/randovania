@@ -86,16 +86,19 @@ def test_create_pickup_list(empty_patches):
                            ConditionalResources(resource_b,
                                                 ((resource_a, 5),)),
                            "", 0)
+    pickup_c = PickupEntry("C", ((resource_b, 2), (resource_a, 1)), 2,
+                           None, "expansion", 0)
 
     useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), 0, None, "", 0)
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): pickup_a,
         PickupIndex(2): pickup_b,
         PickupIndex(3): pickup_a,
+        PickupIndex(4): pickup_c,
     })
 
     # Run
-    result = patcher_file._create_pickup_list(patches, useless_pickup, 4)
+    result = patcher_file._create_pickup_list(patches, useless_pickup, 5)
 
     # Assert
     assert result == [
@@ -103,7 +106,7 @@ def test_create_pickup_list(empty_patches):
             "pickup_index": 0,
             "model_index": 1,
             "scan": "A",
-            "hud_text": "A Acquired!",
+            "hud_text": "A acquired!",
             "sound_index": 1,
             "jingle_index": 2,
             "resources": [
@@ -117,7 +120,7 @@ def test_create_pickup_list(empty_patches):
             "pickup_index": 1,
             "scan": "Useless",
             "model_index": 0,
-            "hud_text": "Useless Acquired!",
+            "hud_text": "Useless acquired!",
             "sound_index": 0,
             "jingle_index": 0,
             "resources": [
@@ -131,7 +134,7 @@ def test_create_pickup_list(empty_patches):
             "pickup_index": 2,
             "scan": "B",
             "model_index": 2,
-            "hud_text": "B Acquired!",
+            "hud_text": "B acquired!",
             "sound_index": 0,
             "jingle_index": 0,
             "resources": [
@@ -158,10 +161,28 @@ def test_create_pickup_list(empty_patches):
             "pickup_index": 3,
             "scan": "A",
             "model_index": 1,
-            "hud_text": "A Acquired!",
+            "hud_text": "A acquired!",
             "sound_index": 1,
             "jingle_index": 2,
             "resources": [
+                {
+                    "index": 1,
+                    "amount": 1
+                }
+            ]
+        },
+        {
+            "pickup_index": 4,
+            "scan": "C that provides 2 B, 1 A",
+            "model_index": 2,
+            "hud_text": "C acquired!",
+            "sound_index": 0,
+            "jingle_index": 0,
+            "resources": [
+                {
+                    "index": 2,
+                    "amount": 2
+                },
                 {
                     "index": 1,
                     "amount": 1
