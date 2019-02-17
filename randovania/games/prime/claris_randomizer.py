@@ -108,7 +108,7 @@ def _base_args(game_root: Path,
 
     return [
         _get_randomizer_path(),
-        game_files,
+        game_root,
     ]
 
 
@@ -216,7 +216,7 @@ def apply_layout(description: LayoutDescription,
     if use_modern_api:
         _modern_api(game_root, status_update, description, cosmetic_patches)
     else:
-        _legacy_api(game_root, status_update, description, cosmetic_patches)
+        raise Exception("Unsupported API")
 
     if patcher_configuration.menu_mod:
         _add_menu_mod_to_files(game_root, status_update)
@@ -235,38 +235,10 @@ def _modern_api(game_root: Path,
     :param cosmetic_patches:
     :return:
     """
-    args = _base_args(game_root)
-    args.append("-d")
-    _run_with_args(args,
+    _run_with_args(_base_args(game_root),
                    json.dumps(patcher_file.create_patcher_file(description, cosmetic_patches)),
                    "Randomized!",
                    status_update)
-
-
-def _legacy_api(game_root: Path,
-                status_update: Callable[[str], None],
-                description: LayoutDescription,
-                cosmetic_patches: CosmeticPatches,
-                ):
-    args = _base_args(game_root)
-    indices = _calculate_indices(description)
-    layout_configuration = description.permalink.layout_configuration
-    args += [
-        "-s", str(description.permalink.seed_number),
-        "-p", ",".join(str(index) for index in indices),
-    ]
-    if cosmetic_patches.disable_hud_popup:
-        args.append("-h")
-    if not patcher_file.is_vanilla_starting_location(layout_configuration):
-        args.append("-i")
-    if layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
-        args.append("-v")
-    if cosmetic_patches.speed_up_credits:
-        args.append("-c")
-    if description.permalink.patcher_configuration.warp_to_start:
-        args.append("-t")
-
-    _run_with_args(args, "", "Randomized!", status_update)
 
 
 def try_randomize_elevators(randomizer: claris_random.Random,

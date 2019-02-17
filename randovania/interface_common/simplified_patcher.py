@@ -78,18 +78,12 @@ def apply_layout(layout: LayoutDescription,
 
     patch_game_name_and_id(game_files_path, "Metroid Prime 2: Randomizer - {}".format(layout.shareable_hash))
 
-    try:
-        dol_patcher.change_starting_spawn(game_files_path, layout.patches.starting_location)
-    except dol_patcher.UnsupportedVersion:
-        if layout.permalink.layout_configuration.starting_location.configuration != StartingLocationConfiguration.SHIP:
-            raise
-
     claris_randomizer.apply_layout(description=layout,
                                    cosmetic_patches=options.cosmetic_patches,
                                    backup_files_path=backup_files_path,
                                    progress_update=progress_update,
                                    game_root=game_files_path,
-                                   use_modern_api=False,
+                                   use_modern_api=True,
                                    )
 
 
