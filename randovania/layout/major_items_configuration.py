@@ -1,9 +1,11 @@
+from dataclasses import dataclass
 from typing import Dict
 
-from randovania.layout.major_item import MajorItem
+from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.major_item_state import MajorItemState
 
 
+@dataclass(frozen=True)
 class MajorItemsConfiguration:
     items_state: Dict[MajorItem, MajorItemState]
     ammo_count_for_item: Dict[MajorItem, int]
@@ -22,3 +24,11 @@ class MajorItemsConfiguration:
             },
             "progressive_suit": self.progressive_suit,
         }
+
+    @classmethod
+    def default(cls) -> "MajorItemsConfiguration":
+        return cls(
+            items_state={},
+            ammo_count_for_item={},
+            progressive_suit=True
+        )

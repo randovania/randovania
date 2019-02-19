@@ -251,14 +251,15 @@ def _create_patches(
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
+    patches = _create_base_patches(rng, game, permalink)
+    patches, item_pool = calculate_item_pool(permalink, game, patches)
+
     categories = {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"}
     item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
     available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
 
     if configuration.starting_resources.configuration == StartingResourcesConfiguration.CUSTOM:
         raise GenerationFailure("Custom StartingResources is unsupported", permalink)
-
-    patches = _create_base_patches(rng, game, permalink, available_pickups)
 
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
@@ -274,15 +275,19 @@ def _create_patches(
 def _create_base_patches(rng: Random,
                          game: GameDescription,
                          permalink: Permalink,
-                         available_pickups: List[PickupEntry],
                          ) -> GamePatches:
+    """
+
+    :param rng:
+    :param game:
+    :param permalink:
+    :return:
+    """
 
     patches = GamePatches.with_game(game)
     patches = _add_elevator_connections_to_patches(permalink, patches)
-    patches = patches.assign_starting_location(_starting_location_for_configuration(permalink.layout_configuration,
-                                                                                    game, rng))
-    patches = _sky_temple_key_distribution_logic(permalink, patches, available_pickups)
-
+    patches = patches.assign_starting_location(
+        _starting_location_for_configuration(permalink.layout_configuration, game, rng))
     return patches
 
 

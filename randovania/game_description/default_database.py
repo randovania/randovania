@@ -1,8 +1,11 @@
 import functools
+import json
 
+from randovania import get_data_path
 from randovania.game_description import data_reader
 from randovania.game_description.data_reader import read_resource_database, read_pickup_database
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.item import item_database
 from randovania.game_description.resources import ResourceDatabase, PickupDatabase
 from randovania.games.prime import default_data
 
@@ -21,3 +24,14 @@ def default_prime2_pickup_database() -> PickupDatabase:
 def default_prime2_game_description(add_self_as_requirement_to_resources: bool = True,
                                     ) -> GameDescription:
     return data_reader.decode_data(default_data.decode_default_prime2(), add_self_as_requirement_to_resources)
+
+
+@functools.lru_cache()
+def default_prime2_item_database() -> item_database.ItemDatabase:
+    with get_data_path().joinpath("json_data", "major-items.json").open() as major_items_file:
+        major_items_data = json.load(major_items_file)
+
+    with get_data_path().joinpath("json_data", "ammo.json").open() as ammo_file:
+        ammo_data = json.load(ammo_file)
+
+    return item_database.read_database(major_items_data, ammo_data)
