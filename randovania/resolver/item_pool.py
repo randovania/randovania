@@ -1,55 +1,89 @@
 import itertools
-from typing import List, Iterator, Set, Tuple, FrozenSet, Optional
+from typing import List, Iterator, Set, Tuple, FrozenSet, Optional, Dict
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources import PickupEntry, ResourceInfo
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import PickupEntry, ResourceInfo, PickupIndex, ResourceDatabase
+from randovania.layout.major_item_state import MajorItemState
 from randovania.resolver.exceptions import GenerationFailure
 from randovania.layout.permalink import Permalink
 
 
+def _create_pickup_for(item: MajorItem, ammo_count: Optional[int],
+                       resource_database: ResourceDatabase,
+                       ) -> PickupEntry:
+    """
+
+    :param item:
+    :param ammo_count:
+    :param resource_database:
+    :return:
+    """
+
+    resources = [(resource_database.get_by_type_and_index(ResourceType.ITEM, item.item), 1)]
+    for ammo in item.ammo:
+        resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, ammo), ammo_count))
+
+    resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, 47), 1))
+
+    return PickupEntry(
+        name=item.name,
+        resources=tuple(resources),
+        model_index=item.model_index,
+        conditional_resources=None,
+        item_category=item.item_category.value,
+        probability_offset=item.probability_offset,
+    )
+
+
 def calculate_item_pool(permalink: Permalink,
                         game: GameDescription,
-                        ) -> List[PickupEntry]:
+                        patches: GamePatches,
+                        ) -> Tuple[GamePatches, List[PickupEntry]]:
+
+    major_items_configuration = permalink.layout_configuration.major_items_configuration
 
     item_pool: List[PickupEntry] = []
-    pickup_quantities = permalink.layout_configuration.pickup_quantities
+    new_assignment: Dict[PickupIndex, PickupEntry] = {}
+    initial_resources: List[Tuple[ResourceInfo, int]] = []
 
-    try:
-        pickup_quantities.validate_total_quantities()
-    except ValueError as e:
-        raise GenerationFailure(
-            "Invalid configuration: {}".format(e),
-            permalink=permalink,
-        )
+    # Adding major items to the pool
+    for item, state in major_items_configuration.items_state.items():
+        ammo_count = major_items_configuration.ammo_count_for_item.get(item)
+        pickup = _create_pickup_for(item, ammo_count, game.resource_database)
 
-    quantities_pickups = set(pickup_quantities.pickups())
-    database_pickups = set(game.pickup_database.all_useful_pickups)
+        if state == MajorItemState.SHUFFLED:
+            item_pool.append(pickup)
 
-    if quantities_pickups != database_pickups:
-        raise GenerationFailure(
-            "Diverging pickups in configuration.\nPickups in quantities: {}\nPickups in database: {}".format(
-                [pickup.name for pickup in quantities_pickups],
-                [pickup.name for pickup in database_pickups],
-            ),
-            permalink=permalink,
-        )
+        elif state == MajorItemState.STARTING_ITEM:
+            initial_resources.extend(pickup.resources)
 
-    for pickup, quantity in pickup_quantities.items():
-        item_pool.extend([pickup] * quantity)
+        elif state == MajorItemState.ORIGINAL_LOCATION:
+            if item.original_index is None:
+                raise GenerationFailure(
+                    "Item {0.name} does not exist in the original game, cannot use state {1}".format(item, state),
+                    permalink=permalink,
+                )
+            new_assignment[PickupIndex(item.original_index)] = pickup
 
-    quantity_delta = len(item_pool) - game.pickup_database.total_pickup_count
-    if quantity_delta > 0:
-        raise GenerationFailure(
-            "Invalid configuration: requested {} more items than available slots ({}).".format(
-                quantity_delta, game.pickup_database.total_pickup_count
-            ),
-            permalink=permalink,
-        )
+        elif state == MajorItemState.REMOVED:
+            # Do nothing
+            pass
 
-    elif quantity_delta < 0:
-        item_pool.extend([game.pickup_database.useless_pickup] * -quantity_delta)
+        else:
+            raise GenerationFailure(
+                "Invalid state {1} for {0.name}".format(item, state),
+                permalink=permalink,
+            )
 
-    return item_pool
+    # TODO: add Ammo to pool
+    # TODO: add Dark Temple Keys to pool
+    # TODO: add Sky Temple Keys to pool
+
+    new_patches = patches.assign_pickup_assignment(new_assignment).assign_extra_initial_items(initial_resources)
+    return new_patches, item_pool
 
 
 def calculate_available_pickups(remaining_items: Iterator[PickupEntry],

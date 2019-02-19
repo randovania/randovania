@@ -1,6 +1,6 @@
 from typing import Dict
 
-from randovania.layout.ammo import Ammo
+from randovania.game_description.item.ammo import Ammo
 from randovania.layout.ammo_state import AmmoState
 
 
