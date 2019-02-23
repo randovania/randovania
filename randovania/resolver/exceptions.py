@@ -25,3 +25,7 @@ class GenerationFailure(Exception):
             return False
 
         return super(Exception, other).__str__() == super().__str__()
+
+
+class InvalidConfiguration(Exception):
+    pass

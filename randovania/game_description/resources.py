@@ -69,8 +69,9 @@ class PickupIndex:
 
 
 ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]
-ResourceGainTuple = Tuple[Tuple[ResourceInfo, int], ...]
-ResourceGain = Iterator[Tuple[ResourceInfo, int]]
+ResourceQuantity = Tuple[ResourceInfo, int]
+ResourceGainTuple = Tuple[ResourceQuantity, ...]
+ResourceGain = Iterator[ResourceQuantity]
 CurrentResources = Dict[ResourceInfo, int]
 
 
