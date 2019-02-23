@@ -6,10 +6,13 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupEntry, ResourceInfo, PickupIndex, ResourceDatabase
+from randovania.game_description.resources import PickupEntry, ResourceInfo, PickupIndex, ResourceDatabase, \
+    ResourceQuantity, PickupAssignment
+from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.resolver.exceptions import GenerationFailure
+from randovania.resolver.exceptions import InvalidConfiguration
 
 
 def _create_pickup_for(item: MajorItem,
@@ -17,7 +20,7 @@ def _create_pickup_for(item: MajorItem,
                        resource_database: ResourceDatabase,
                        ) -> PickupEntry:
     """
-
+    Creates a Pickup for the given MajorItem
     :param item:
     :param ammo_count:
     :param resource_database:
@@ -46,7 +49,7 @@ def _create_expansion_for(ammo: Ammo,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:
     """
-
+    Creates a Pickup for an expansion of the given ammo.
     :param ammo:
     :param ammo_count:
     :param resource_database:
@@ -75,12 +78,74 @@ def calculate_item_pool(permalink: Permalink,
     ammo_configuration = permalink.layout_configuration.ammo_configuration
 
     item_pool: List[PickupEntry] = []
-    new_assignment: Dict[PickupIndex, PickupEntry] = {}
-    initial_resources: List[Tuple[ResourceInfo, int]] = []
-
-    included_ammo_for_item = {}
+    new_assignment: PickupAssignment = {}
+    initial_resources: List[ResourceQuantity] = []
 
     # Adding major items to the pool
+    included_ammo_for_item = _add_major_items(game, major_items_configuration, item_pool, new_assignment,
+                                              initial_resources)
+
+    # Adding ammo to the pool
+    item_pool.extend(_add_ammo(game, ammo_configuration, included_ammo_for_item))
+
+    # TODO: add Dark Temple Keys to pool
+    # TODO: add Sky Temple Keys to pool
+
+    new_patches = patches.assign_pickup_assignment(new_assignment).assign_extra_initial_items(initial_resources)
+    return new_patches, item_pool
+
+
+def _add_ammo(game: GameDescription,
+              ammo_configuration: AmmoConfiguration,
+              included_ammo_for_item: Dict[int, int],
+              ) -> Iterator[PickupEntry]:
+    """
+    Creates the necessary pickups for the given ammo_configuration.
+    :param game:
+    :param ammo_configuration:
+    :param included_ammo_for_item: How much of each item was provided based on the major items.
+    :return:
+    """
+
+    for item, state in ammo_configuration.items_state.items():
+        if state.pickup_count == 0:
+            continue
+
+        if item.item not in included_ammo_for_item:
+            raise InvalidConfiguration(
+                "Invalid configuration: ammo {0.name} was configured for {1.pickup_count}"
+                "expansions, but main pickup was removed".format(item, state)
+            )
+
+        if state.variance != 0:
+            raise InvalidConfiguration("Variance was configured for {0.name}, but it is currently NYI".format(item))
+
+        if state.total_count < included_ammo_for_item[item.item]:
+            raise InvalidConfiguration(
+                "Ammo {0.name} was configured for a total of {1.total_count}, but major items gave {2}".format(
+                    item, state, included_ammo_for_item[item.item]))
+
+        adjusted_count = state.total_count - included_ammo_for_item[item.item]
+        count_per_expansion = adjusted_count // state.pickup_count
+        expansions_with_extra_count = adjusted_count - count_per_expansion * state.pickup_count
+
+        for i in range(state.pickup_count):
+            yield _create_expansion_for(
+                item,
+                count_per_expansion,
+                i < expansions_with_extra_count,
+                game.resource_database
+            )
+
+
+def _add_major_items(game: GameDescription,
+                     major_items_configuration: MajorItemsConfiguration,
+                     item_pool: List[PickupEntry],
+                     new_assignment: PickupAssignment,
+                     initial_resources: List[ResourceQuantity],
+                     ) -> Dict[int, int]:
+
+    included_ammo_for_item = {}
     for item, state in major_items_configuration.items_state.items():
         ammo_count = major_items_configuration.ammo_count_for_item.get(item)
         pickup = _create_pickup_for(item, ammo_count, game.resource_database)
@@ -93,9 +158,8 @@ def calculate_item_pool(permalink: Permalink,
 
         elif state == MajorItemState.ORIGINAL_LOCATION:
             if item.original_index is None:
-                raise GenerationFailure(
+                raise InvalidConfiguration(
                     "Item {0.name} does not exist in the original game, cannot use state {1}".format(item, state),
-                    permalink=permalink,
                 )
             new_assignment[PickupIndex(item.original_index)] = pickup
 
@@ -104,56 +168,12 @@ def calculate_item_pool(permalink: Permalink,
             continue
 
         else:
-            raise GenerationFailure(
-                "Invalid state {1} for {0.name}".format(item, state),
-                permalink=permalink,
-            )
+            raise InvalidConfiguration("Invalid state {1} for {0.name}".format(item, state))
 
         for ammo in item.ammo:
             included_ammo_for_item[ammo] = included_ammo_for_item.get(ammo, 0) + ammo_count
 
-    # Adding ammo to the pool
-    for item, state in ammo_configuration.items_state.items():
-        if state.pickup_count == 0:
-            continue
-
-        if item.item not in included_ammo_for_item:
-            raise GenerationFailure(
-                "Invalid configuration: ammo {0.name} was configured for {1.pickup_count}"
-                "expansions, but main pickup was removed".format(item, state),
-                permalink=permalink,
-            )
-
-        if state.variance != 0:
-            raise GenerationFailure(
-                "Variance was configured for {0.name}, but it is currently NYI".format(item, state),
-                permalink=permalink,
-            )
-
-        if state.total_count < included_ammo_for_item[item.item]:
-            raise GenerationFailure(
-                "Ammo {0.name} was configured for a total of {1.total_count}, but major items gave {2}".format(
-                    item, state, included_ammo_for_item[item.item]),
-                permalink=permalink,
-            )
-
-        adjusted_count = state.total_count - included_ammo_for_item[item.item]
-        count_per_expansion = adjusted_count // state.pickup_count
-        expansions_with_extra_count = adjusted_count - count_per_expansion * state.pickup_count
-
-        for i in range(state.pickup_count):
-            item_pool.append(_create_expansion_for(
-                item,
-                count_per_expansion,
-                i < expansions_with_extra_count,
-                game.resource_database
-            ))
-
-    # TODO: add Dark Temple Keys to pool
-    # TODO: add Sky Temple Keys to pool
-
-    new_patches = patches.assign_pickup_assignment(new_assignment).assign_extra_initial_items(initial_resources)
-    return new_patches, item_pool
+    return included_ammo_for_item
 
 
 def calculate_available_pickups(remaining_items: Iterator[PickupEntry],
