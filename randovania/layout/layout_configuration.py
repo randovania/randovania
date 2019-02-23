@@ -5,6 +5,7 @@ from typing import Dict
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.game_description.resources import PickupEntry
 from randovania.games.prime import default_data
+from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.pickup_quantities import PickupQuantities
 from randovania.layout.starting_location import StartingLocation
@@ -116,3 +117,7 @@ class LayoutConfiguration(BitPackDataClass):
     @property
     def major_items_configuration(self) -> MajorItemsConfiguration:
         return MajorItemsConfiguration.default()
+
+    @property
+    def ammo_configuration(self) -> AmmoConfiguration:
+        return AmmoConfiguration.default()
