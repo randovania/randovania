@@ -30,10 +30,3 @@ class AmmoConfiguration:
             },
             is_beam_ammo_split=value["is_beam_ammo_split"],
         )
-
-    @classmethod
-    def default(cls) -> "AmmoConfiguration":
-        return cls(
-            items_state={},
-            is_beam_ammo_split=True,
-        )

@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 
 @dataclass(frozen=True)
 class Ammo:
     name: str
     models: Tuple[int, ...]
-    item: int
+    items: Tuple[int, ...]
     maximum: int
 
     @classmethod
@@ -14,14 +14,15 @@ class Ammo:
         return cls(
             name=name,
             models=tuple(value["models"]),
-            item=value["item"],
+            items=tuple(value["items"]),
             maximum=value["maximum"],
         )
 
     @property
     def as_json(self) -> dict:
-        return {
+        result = {
             "models": list(self.models),
-            "item": self.item,
+            "items": list(self.items),
             "maximum": self.maximum,
         }
+        return result
