@@ -14,3 +14,11 @@ class AmmoState:
             "variance": self.variance,
             "pickup_count": self.pickup_count,
         }
+
+    @classmethod
+    def from_json(cls, value: dict) -> "AmmoState":
+        return cls(
+            total_count=value["total_count"],
+            variance=value["variance"],
+            pickup_count=value["pickup_count"],
+        )

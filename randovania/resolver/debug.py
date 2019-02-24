@@ -64,7 +64,7 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
         if hasattr(state.node, "resource"):
             resource = state.node.resource()
             if isinstance(resource, PickupIndex):
-                resource = state.patches.pickup_assignment[resource]
+                resource = state.patches.pickup_assignment.get(resource)
         else:
             resource = None
 

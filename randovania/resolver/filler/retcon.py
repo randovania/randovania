@@ -1,7 +1,7 @@
 import collections
 import itertools
 from random import Random
-from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable
+from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.game_patches import GamePatches
@@ -61,17 +61,16 @@ def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResource
 
 def retcon_playthrough_filler(logic: Logic,
                               initial_state: State,
-                              available_pickups: Tuple[PickupEntry, ...],
+                              pickups_left: List[PickupEntry],
                               rng: Random,
                               status_update: Callable[[str], None],
                               ) -> GamePatches:
-    debug.debug_print("Major items: {}".format([item.name for item in available_pickups]))
+    debug.debug_print("Major items: {}".format([item.name for item in pickups_left]))
     last_message = "Starting."
 
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
 
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
-    pickups_left = list(available_pickups)
 
     while pickups_left:
         current_uncollected = UncollectedState.from_reach(reach)
