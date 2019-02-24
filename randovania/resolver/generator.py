@@ -312,9 +312,6 @@ def _assign_remaining_items(rng: Random,
     :return:
     """
 
-    # Shuffle the items to add and then
-    rng.shuffle(remaining_items)
-
     unassigned_pickups = [
         pickup_node
         for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, patches.pickup_assignment)
@@ -324,6 +321,10 @@ def _assign_remaining_items(rng: Random,
         raise InvalidConfiguration(
             "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
                                                                                          len(unassigned_pickups)))
+
+    # Shuffle the items to add and the spots to choose from
+    rng.shuffle(remaining_items)
+    rng.shuffle(unassigned_pickups)
 
     new_assignments = [
         (pickup_node.pickup_index, item)
