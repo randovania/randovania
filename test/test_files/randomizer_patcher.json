@@ -1,6 +1,9 @@
 {
   "permalink": "OsuU2FuscACy",
+  "__comment_permalink": "The permalink used for this seed. Variable size.",
+
   "seed_hash": "LLADBP4K",
+  "__comment_seed_hash": "The seed hash that can be used to compare if all changes are the same. Always 8 characters long.",
 
   "spawn_point": {
     "location": {
@@ -66,52 +69,15 @@
       "__comment_pickup_index": "For when an area has more than one pickup. Alternatively, remove the `location` field and this uses the same index number there currently is.",
 
       "model_index": 1234,
-      "__comment_model_index": "An index of the following array.",
-
-      "__models": [
-        "Power Beam",
-        "Charge Beam",
-        "Dark Beam",
-        "Light Beam",
-        "Annihilator Beam",
-        "Super Missile",
-        "Darkburst",
-        "Sunburst",
-        "Sonic Boom",
-        "Combat Visor",
-        "Scan Visor",
-        "Dark Visor",
-        "Echo Visor",
-        "Varia Suit",
-        "Dark Suit",
-        "Light Suit",
-        "Morph Ball",
-        "Morph Ball Bomb",
-        "Boost Ball",
-        "Spider Ball",
-        "Power Bomb",
-        "Power Bomb Expansion",
-        "Missile Expansion",
-        "Missile Expansion (Prime 1)",
-        "Missile Launcher",
-        "Seeker Launcher",
-        "Grapple Beam",
-        "Space Jump Boots",
-        "Gravity Boost",
-        "Screw Attack",
-        "Energy Transfer Module",
-        "Beam Ammo Expansion",
-        "Amber Translator",
-        "Cobalt Translator",
-        "Emerald Translator",
-        "Violet Translator",
-        "Energy Tank",
-        "Dark Temple Key",
-        "Sky Temple Key"
-      ],
+      "__comment_model_index": "An index of the ModelData array in RandomizerData.json.",
 
       "scan": "This is a description.",
-      "__comment_scan": "What is provided when the pickup is scanned. Does this need a separate model?",
+      "__comment_scan": "Text that is displayed when the pickup is scanned.",
+
+      "hud_text": [
+        "Text that is displayed when the item is collected.",
+        "Other text that is displayed when the second conditional resource is collected."
+      ],
 
       "__comment_resources": "The items this pickup gives.",
       "resources": [
@@ -125,22 +91,24 @@
         }
       ],
 
-      "__comment_conditional_resources": "Field may not be present. If present, the pickup should always check the condition below when collected.",
-      "conditional_resources": {
-        "item": 15,
-        "__comment_index": "The index of the item to check for quantity > 0. If true, give these resources instead.",
+      "__comment_conditional_resources": "Conditional resource provider. The resources given are the last item that matches. If none matches, give the unconditional resources instead.",
+      "conditional_resources": [
+        {
+          "item": 15,
+          "__comment_index": "The index of the item to check for quantity > 0.",
 
-        "resources": [
-          {
-            "index": 0,
-            "amount": 1
-          },
-          {
-            "index": 8,
-            "amount": 1
-          }
-        ]
-      },
+          "resources": [
+            {
+              "index": 0,
+              "amount": 1
+            },
+            {
+              "index": 8,
+              "amount": 1
+            }
+          ]
+        }
+      ],
 
       "__comment_convert": "Converts all items from one value into another",
       "convert": [

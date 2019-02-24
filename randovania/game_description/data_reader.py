@@ -243,7 +243,7 @@ def read_pickup(name: str,
     return PickupEntry(name,
                        read_resource_gain_tuple(item["resources"], resource_database),
                        item["model_index"],
-                       conditional_resources,
+                       tuple(),
                        item["item_category"],
                        item["probability_offset"],
                        )
