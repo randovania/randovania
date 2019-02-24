@@ -294,34 +294,6 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, elevators=value)
 
-    @property
-    def layout_configuration_starting_resources(self) -> StartingResourcesConfiguration:
-        return self.layout_configuration.starting_resources.configuration
-
-    @layout_configuration_starting_resources.setter
-    def layout_configuration_starting_resources(self, value: StartingResourcesConfiguration):
-        self._check_editable_and_mark_dirty()
-        self._layout_configuration = dataclasses.replace(
-            self.layout_configuration,
-            starting_resources=StartingResources.from_non_custom_configuration(value))
-
-    def quantity_for_pickup(self, pickup: PickupEntry) -> int:
-        return self.layout_configuration.quantity_for_pickup(pickup)
-
-    def set_quantity_for_pickup(self, pickup: PickupEntry, new_quantity: int) -> None:
-        """Changes the quantities for one specific pickup."""
-        quantities = self.layout_configuration.pickup_quantities.pickups_with_custom_quantities
-        quantities[pickup] = new_quantity
-        self.set_pickup_quantities(quantities)
-
-    def set_pickup_quantities(self, quantities: Dict[PickupEntry, int]):
-        """Changes the quantities for all pickups"""
-        self._check_editable_and_mark_dirty()
-
-        self._layout_configuration = dataclasses.replace(
-            self.layout_configuration,
-            pickup_quantities=self.layout_configuration.pickup_quantities.with_new_quantities(quantities))
-
     def _check_editable_and_mark_dirty(self):
         """Checks if _nested_autosave_level is not 0 and marks at least one value was changed."""
         assert self._nested_autosave_level != 0, "Attempting to edit an Options, but it wasn't made editable"

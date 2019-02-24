@@ -141,8 +141,8 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self.elevators_combo.findData(self._options.layout_configuration_elevators))
 
         # Item Loss
-        self.itemloss_check.setChecked(self._options.layout_configuration_starting_resources == \
-                                       StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
+        # self.itemloss_check.setChecked(self._options.layout_configuration_starting_resources == \
+        #                                StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
 
         # Sky Temple Keys
         keys = self._options.layout_configuration_sky_temple_keys
