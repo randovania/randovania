@@ -163,7 +163,7 @@ class LayoutDescription:
 
             result["starting_items"] = {
                 resource_info.long_name: quantity
-                for resource_info, quantity in sorted(self.patches.extra_initial_items, key=lambda x: x[0].name)
+                for resource_info, quantity in sorted(self.patches.extra_initial_items, key=lambda x: x[0].long_name)
             }
 
             result["locations"] = {

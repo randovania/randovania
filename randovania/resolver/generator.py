@@ -19,7 +19,7 @@ from randovania.resolver import resolver
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
-from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
+from randovania.resolver.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
 from randovania.resolver.item_pool import calculate_item_pool
 from randovania.resolver.state import State
 
@@ -261,6 +261,12 @@ def _create_patches(
 
     patches = _create_base_patches(rng, game, permalink)
     patches, item_pool = calculate_item_pool(permalink, game, patches)
+
+    num_pickup_nodes = len(list(filter_pickup_nodes(game.world_list.all_nodes)))
+    if len(item_pool) > num_pickup_nodes:
+        raise InvalidConfiguration(
+            "Item pool has {0} items, but there's only {1} pickups spots in the game".format(len(item_pool),
+                                                                                             num_pickup_nodes))
 
     major_items, expansions = _split_expansions(item_pool)
     rng.shuffle(major_items)
