@@ -6,8 +6,6 @@ from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources
 from randovania.layout.major_item_state import MajorItemState
 
-_ENERGY_TANK_ITEM = 42
-_ENERGY_TANK_MODEL = 36
 _ITEM_PERCENTAGE = 47
 _DARK_TEMPLE_KEY_MODEL = 37
 _DARK_TEMPLE_KEY_NAMES = [
@@ -104,30 +102,6 @@ def create_ammo_expansion(ammo: Ammo,
         model_index=ammo.models[0],  # TODO: use a random model
         conditional_resources=tuple(),
         item_category="expansion",
-        probability_offset=0,
-    )
-
-
-def create_energy_tank(include_percentage: bool,
-                       resource_database: ResourceDatabase,
-                       ) -> PickupEntry:
-    """
-
-    :param resource_database:
-    :param include_percentage:
-    :return:
-    """
-
-    resources = [(resource_database.get_by_type_and_index(ResourceType.ITEM, _ENERGY_TANK_ITEM), 1)]
-    if include_percentage:
-        resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1))
-
-    return PickupEntry(
-        name="Energy Tank",
-        resources=tuple(resources),
-        model_index=_ENERGY_TANK_MODEL,
-        conditional_resources=tuple(),
-        item_category="energy_tank",
         probability_offset=0,
     )
 
