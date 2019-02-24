@@ -46,7 +46,7 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
             self.gridLayout_3.addWidget(pickup_label, row, column, 1, 1)
 
             original_quantity = pickup_database.original_quantity_for(pickup)
-            value = self._options.quantity_for_pickup(pickup)
+            value = None  # self._options.quantity_for_pickup(pickup)
             if value is None:
                 value = original_quantity
             self._total_item_count += value
@@ -84,6 +84,8 @@ class ItemQuantitiesWindow(QMainWindow, Ui_ItemQuantitiesWindow):
 
     # Options
     def on_options_changed(self):
+        # TODO
+        return
         for pickup, quantity in self._options.layout_configuration.pickup_quantities.items():
             if pickup in self._spinbox_for_item:
                 self._spinbox_for_item[pickup].setValue(quantity)

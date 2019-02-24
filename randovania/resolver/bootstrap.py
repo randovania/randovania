@@ -129,11 +129,8 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
 def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
     game = logic.game
 
-    if logic.configuration.starting_resources.configuration == \
-            StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED:
-        initial_game_state = game.initial_states["Default"]
-    else:
-        initial_game_state = None
+    # TODO: is this fast start?
+    initial_game_state = game.initial_states["Default"]
 
     starting_area = game.world_list.area_by_asset_id(patches.starting_location.area_asset_id)
 
@@ -143,7 +140,6 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
         # "No Requirements"
         game.resource_database.trivial_resource(): 1
     }
-    add_resource_gain_to_current_resources(logic.configuration.starting_resources.resource_gain, initial_resources)
     add_resource_gain_to_current_resources(patches.extra_initial_items, initial_resources)
     if initial_game_state is not None:
         add_resource_gain_to_current_resources(initial_game_state, initial_resources)
