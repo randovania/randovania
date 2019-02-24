@@ -33,6 +33,17 @@ _SUB_GUARDIAN_INDICES = [
     PickupIndex(102),  # Spider Ball
     PickupIndex(88),  # Main Power Bombs
 ]
+_DARK_TEMPLE_KEY_MODEL = 37
+_DARK_TEMPLE_KEY_NAMES = [
+    "Dark Agon Key {0}",
+    "Dark Torvus Key {0}",
+    "Ing Hive Key {0}"
+]
+_DARK_TEMPLE_KEY_ITEMS = [
+    [32, 33, 34, ],
+    [35, 36, 37, ],
+    [38, 39, 40, ],
+]
 _SKY_TEMPLE_KEY_MODEL = 38
 _SKY_TEMPLE_KEY_ITEMS = [
     29,
@@ -138,6 +149,23 @@ def _create_energy_tank_pickup(include_percentage: bool,
     )
 
 
+def _create_dark_temple_key_pickup(key_number: int,
+                                   temple_index: int,
+                                   resource_database: ResourceDatabase,
+                                   ) -> PickupEntry:
+    return PickupEntry(
+        name=_DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
+        resources=tuple([
+            (resource_database.get_by_type_and_index(ResourceType.ITEM,
+                                                     _DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
+        ]),
+        model_index=_DARK_TEMPLE_KEY_MODEL,
+        conditional_resources=None,
+        item_category="temple_key",
+        probability_offset=0,
+    )
+
+
 def _create_sky_temple_key_pickup(key_number: int,
                                   resource_database: ResourceDatabase,
                                   ) -> PickupEntry:
@@ -154,12 +182,12 @@ def _create_sky_temple_key_pickup(key_number: int,
 
 
 def _add_energy_tanks(game: GameDescription) -> PoolResults:
-    energy_tank_pickup_count = 12
-    starting_energy_tanks = 2
+    total_energy_tanks = 14
+    starting_energy_tanks = 0
 
     item_pool = [
         _create_energy_tank_pickup(True, game.resource_database)
-        for _ in range(energy_tank_pickup_count)
+        for _ in range(total_energy_tanks - starting_energy_tanks)
     ]
 
     initial_resources = []
@@ -186,7 +214,8 @@ def calculate_item_pool(permalink: Permalink,
     # Adding E-Tanks
     _extend_pool_results(base_results, _add_energy_tanks(game))
 
-    # TODO: add Dark Temple Keys to pool
+    # Adding Dark Temple Keys to pool
+    _extend_pool_results(base_results, _add_dark_temple_keys(game))
 
     # Adding Sky Temple Keys to pool
     _extend_pool_results(base_results, _add_sky_temple_key_distribution_logic(game,
@@ -275,6 +304,21 @@ def _add_major_items(game: GameDescription,
             included_ammo_for_item[ammo] = included_ammo_for_item.get(ammo, 0) + ammo_count
 
     return (item_pool, new_assignment, initial_resources), included_ammo_for_item
+
+
+def _add_dark_temple_keys(game: GameDescription,
+                          ) -> PoolResults:
+    """
+    :param game:
+    :return:
+    """
+    item_pool: List[PickupEntry] = []
+
+    for temple_index in range(3):
+        for i in range(3):
+            item_pool.append(_create_dark_temple_key_pickup(i, temple_index, game.resource_database))
+
+    return item_pool, {}, []
 
 
 def _add_sky_temple_key_distribution_logic(game: GameDescription,
