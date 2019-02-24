@@ -140,7 +140,24 @@
             "amount": 1
           }
         ]
-      }
+      },
+
+      "__comment_convert": "Converts all items from one value into another",
+      "convert": [
+        {
+          "from_item": 14,
+          "__comment_from_item": "The item index we're getting how much to transfer",
+
+          "to_item": 15,
+          "__comment_to_item": "The item index that will receive the quantities",
+
+          "clear_source": false,
+          "__comment_clear_source": "The origin item should be left at 0 after this if true, left intact otherwise",
+
+          "overwrite_target": false,
+          "__comment_overwrite_target": "The original quantity of the target item should be ignored if true"
+        }
+      ]
     }
   ],
   "__comment_pickups": "An error is raised if there's a pickup missing from the list.",
