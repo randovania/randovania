@@ -66,7 +66,7 @@ def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
 
 
 def _create_pickup_for(item: MajorItem,
-                       ammo_count: Optional[int],
+                       state: MajorItemState,
                        include_percentage: bool,
                        resource_database: ResourceDatabase,
 
@@ -80,8 +80,10 @@ def _create_pickup_for(item: MajorItem,
     """
 
     resources = [(resource_database.get_by_type_and_index(ResourceType.ITEM, item.item), 1)]
-    for ammo in item.ammo:
-        resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, ammo), ammo_count))
+
+    for ammo_index, ammo_count in zip(item.ammo, state.included_ammo):
+        resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_index), ammo_count))
+
     if include_percentage:
         resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1))
 
@@ -301,31 +303,31 @@ def _add_major_items(game: GameDescription,
     included_ammo_for_item = {}
 
     for item, state in major_items_configuration.items_state.items():
-        ammo_count = major_items_configuration.ammo_count_for_item.get(item)
+        if len(item.ammo) != len(state.included_ammo):
+            raise InvalidConfiguration(
+                "Item {0.name} uses {0.ammo} as ammo, but there's only {1} values in included_ammo".format(
+                    item, len(state.included_ammo)))
 
-        if state == MajorItemState.SHUFFLED:
-            item_pool.append(_create_pickup_for(item, ammo_count, True, game.resource_database))
+        total_pickups = 0
 
-        elif state == MajorItemState.STARTING_ITEM:
-            initial_resources.extend(_create_pickup_for(item, ammo_count, False, game.resource_database).resources)
-
-        elif state == MajorItemState.ORIGINAL_LOCATION:
+        if state.include_copy_in_original_location:
             if item.original_index is None:
                 raise InvalidConfiguration(
                     "Item {0.name} does not exist in the original game, cannot use state {1}".format(item, state),
                 )
-            new_assignment[PickupIndex(item.original_index)] = _create_pickup_for(item, ammo_count, True,
-                                                                                  game.resource_database)
+            new_assignment[item.original_index] = _create_pickup_for(item, state, True, game.resource_database)
+            total_pickups += 1
 
-        elif state == MajorItemState.REMOVED:
-            # Do nothing
-            continue
+        for _ in range(state.num_shuffled_pickups):
+            item_pool.append(_create_pickup_for(item, state, True, game.resource_database))
+            total_pickups += 1
 
-        else:
-            raise InvalidConfiguration("Invalid state {1} for {0.name}".format(item, state))
+        for _ in range(state.num_included_in_starting_items):
+            initial_resources.extend(_create_pickup_for(item, state, False, game.resource_database).resources)
+            total_pickups += 1
 
-        for ammo in item.ammo:
-            included_ammo_for_item[ammo] = included_ammo_for_item.get(ammo, 0) + ammo_count
+        for ammo_index, ammo_count in zip(item.ammo, state.included_ammo):
+            included_ammo_for_item[ammo_index] = included_ammo_for_item.get(ammo_index, 0) + ammo_count * total_pickups
 
     return (item_pool, new_assignment, initial_resources), included_ammo_for_item
 
