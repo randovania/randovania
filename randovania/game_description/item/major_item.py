@@ -14,6 +14,7 @@ class MajorItemCategory(Enum):
     MISSILE = "missile"
     BEAM_COMBO = "beam_combo"
     TRANSLATOR = "translator"
+    ENERGY_TANK = "energy_tank"
 
 
 @dataclass(frozen=True)

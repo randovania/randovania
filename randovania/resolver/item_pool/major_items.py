@@ -4,8 +4,8 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.resolver.exceptions import InvalidConfiguration
-from randovania.resolver.item_pool.pickup_creator import create_major_item, create_energy_tank
 from randovania.resolver.item_pool import PoolResults
+from randovania.resolver.item_pool.pickup_creator import create_major_item
 
 
 def add_major_items(game: GameDescription,
@@ -21,7 +21,7 @@ def add_major_items(game: GameDescription,
     item_pool: List[PickupEntry] = []
     new_assignment: PickupAssignment = {}
     initial_resources: List[ResourceQuantity] = []
-    included_ammo_for_item = {}
+    included_ammo_for_item: Dict[int, int] = {}
 
     for item, state in major_items_configuration.items_state.items():
         if len(item.ammo_index) != len(state.included_ammo):
@@ -51,19 +51,3 @@ def add_major_items(game: GameDescription,
             included_ammo_for_item[ammo_index] = included_ammo_for_item.get(ammo_index, 0) + ammo_count * total_pickups
 
     return (item_pool, new_assignment, initial_resources), included_ammo_for_item
-
-
-def _add_energy_tanks(game: GameDescription) -> PoolResults:
-    total_energy_tanks = 14
-    starting_energy_tanks = 0
-
-    item_pool = [
-        create_energy_tank(True, game.resource_database)
-        for _ in range(total_energy_tanks - starting_energy_tanks)
-    ]
-
-    initial_resources = []
-    for _ in range(starting_energy_tanks):
-        initial_resources.extend(create_energy_tank(False, game.resource_database).resources)
-
-    return item_pool, {}, initial_resources
