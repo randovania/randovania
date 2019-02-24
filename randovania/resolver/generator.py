@@ -8,21 +8,19 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode
-from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment
+from randovania.game_description.resources import PickupEntry, PickupIndex
 from randovania.games.prime import claris_randomizer
-from randovania.layout.shuffled_items import ShuffledItems
-from randovania.layout.starting_location import StartingLocationConfiguration
-from randovania.layout.starting_resources import StartingResourcesConfiguration
-from randovania.resolver import resolver
-from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.exceptions import GenerationFailure
-from randovania.resolver.filler.retcon import retcon_playthrough_filler
-from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
-from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
 from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutSkyTempleKeyMode, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
-from randovania.resolver.random_lib import shuffle
+from randovania.layout.shuffled_items import ShuffledItems
+from randovania.layout.starting_location import StartingLocationConfiguration
+from randovania.resolver import resolver
+from randovania.resolver.bootstrap import logic_bootstrap
+from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
+from randovania.resolver.filler.retcon import retcon_playthrough_filler
+from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
+from randovania.resolver.item_pool import calculate_item_pool
 from randovania.resolver.state import State
 
 T = TypeVar("T")
@@ -119,7 +117,6 @@ Action = Union[ResourceNode, PickupEntry]
 
 def _add_elevator_connections_to_patches(permalink: Permalink,
                                          patches: GamePatches) -> GamePatches:
-
     assert patches.elevator_connection == {}
     if permalink.layout_configuration.elevators == LayoutRandomizedFlag.RANDOMIZED:
         return GamePatches(
@@ -164,7 +161,6 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
                                        previous_patches: GamePatches,
                                        available_pickups: List[PickupEntry],
                                        ) -> GamePatches:
-
     mode = permalink.layout_configuration.sky_temple_keys
     items_to_shuffle = ShuffledItems.default()  # TODO: this should come from layout_configuration
     new_assignments = {}
@@ -225,7 +221,6 @@ def _starting_location_for_configuration(configuration: LayoutConfiguration,
                                          game: GameDescription,
                                          rng: Random,
                                          ) -> AreaLocation:
-
     starting_location = configuration.starting_location
 
     if starting_location.configuration == StartingLocationConfiguration.SHIP:
@@ -243,6 +238,19 @@ def _starting_location_for_configuration(configuration: LayoutConfiguration,
         raise ValueError("Invalid configuration for StartLocation {}".format(starting_location))
 
 
+def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], List[PickupEntry]]:
+    major_items = []
+    expansions = []
+
+    for pickup in item_pool:
+        if pickup.item_category == "expansion":
+            expansions.append(pickup)
+        else:
+            major_items.append(pickup)
+
+    return major_items, expansions
+
+
 def _create_patches(
         permalink: Permalink,
         game: GameDescription,
@@ -254,22 +262,15 @@ def _create_patches(
     patches = _create_base_patches(rng, game, permalink)
     patches, item_pool = calculate_item_pool(permalink, game, patches)
 
-    categories = {"translator", "major", "energy_tank", "sky_temple_key", "temple_key"}
-    item_pool = tuple(sorted(calculate_item_pool(permalink, game)))
-    available_pickups = list(shuffle(rng, calculate_available_pickups(item_pool, categories, None)))
-
-    if configuration.starting_resources.configuration == StartingResourcesConfiguration.CUSTOM:
-        raise GenerationFailure("Custom StartingResources is unsupported", permalink)
+    major_items, expansions = _split_expansions(item_pool)
+    rng.shuffle(major_items)
+    rng.shuffle(expansions)
 
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    filler_patches = retcon_playthrough_filler(logic, state, tuple(available_pickups), rng, status_update)
-
-    return filler_patches.assign_new_pickups(_indices_for_unassigned_pickups(rng,
-                                                                             game,
-                                                                             filler_patches.pickup_assignment,
-                                                                             item_pool))
+    filler_patches = retcon_playthrough_filler(logic, state, major_items, rng, status_update)
+    return _assign_remaining_items(rng, game, filler_patches, major_items + expansions)
 
 
 def _create_base_patches(rng: Random,
@@ -291,22 +292,35 @@ def _create_base_patches(rng: Random,
     return patches
 
 
-def _indices_for_unassigned_pickups(rng: Random,
-                                    game: GameDescription,
-                                    current_pickup_assignment: PickupAssignment,
-                                    item_pool: Tuple[PickupEntry, ...],
-                                    ) -> Iterator[Tuple[PickupIndex, PickupEntry]]:
+def _assign_remaining_items(rng: Random,
+                            game: GameDescription,
+                            patches: GamePatches,
+                            remaining_items: List[PickupEntry],
+                            ) -> GamePatches:
+    """
 
-    remaining_items = list(item_pool)
-
-    # We can't convert current_pickup_assignment.values into a set because it has multiple copies of the same item
-    for assigned_pickup in current_pickup_assignment.values():
-        remaining_items.remove(assigned_pickup)
+    :param rng:
+    :param game:
+    :param patches:
+    :param remaining_items:
+    :return:
+    """
 
     # Shuffle the items to add and then
     rng.shuffle(remaining_items)
-    for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, current_pickup_assignment):
-        yield pickup_node.pickup_index, remaining_items.pop()
 
-    # We should have placed all items
-    assert not remaining_items
+    unassigned_pickups = [
+        pickup_node
+        for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, patches.pickup_assignment)
+    ]
+
+    if len(remaining_items) > len(unassigned_pickups):
+        raise InvalidConfiguration(
+            "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
+                                                                                         len(unassigned_pickups)))
+
+    new_assignments = [
+        (pickup_node.pickup_index, item)
+        for pickup_node, item in zip(unassigned_pickups, remaining_items)
+    ]
+    return patches.assign_new_pickups(new_assignments)

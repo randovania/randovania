@@ -161,6 +161,11 @@ class LayoutDescription:
         if self.permalink.spoiler:
             world_list = data_reader.decode_data(self.permalink.layout_configuration.game_data).world_list
 
+            result["starting_items"] = {
+                resource_info.long_name: quantity
+                for resource_info, quantity in sorted(self.patches.extra_initial_items, key=lambda x: x[0].name)
+            }
+
             result["locations"] = {
                 key: value
                 for key, value in sorted(_pickup_assignment_to_item_locations(world_list,
