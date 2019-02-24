@@ -82,10 +82,14 @@ def test_create_pickup_list(empty_patches):
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
     pickup_a = PickupEntry("A", ((resource_a, 1),), 1, tuple(), "temple_key", 0)
-    pickup_b = PickupEntry("B", ((resource_b, 1), (resource_a, 1)), 2,
-                           tuple([ConditionalResources(resource_b,
-                                                ((resource_a, 5),))]),
+    pickup_b = PickupEntry("B",
+                           ((resource_b, 1), (resource_a, 1)),
+                           2,
+                           tuple([
+                               ConditionalResources(resource_b, ((resource_a, 5),))
+                           ]),
                            "", 0)
+
     pickup_c = PickupEntry("C", ((resource_b, 2), (resource_a, 1)), 2,
                            tuple(), "expansion", 0)
 
@@ -101,92 +105,95 @@ def test_create_pickup_list(empty_patches):
     result = patcher_file._create_pickup_list(patches, useless_pickup, 5)
 
     # Assert
-    assert result == [
-        {
-            "pickup_index": 0,
-            "model_index": 1,
-            "scan": "A",
-            "hud_text": "A acquired!",
-            "sound_index": 1,
-            "jingle_index": 2,
-            "resources": [
-                {
-                    "index": 1,
-                    "amount": 1
-                }
-            ]
-        },
-        {
-            "pickup_index": 1,
-            "scan": "Useless",
-            "model_index": 0,
-            "hud_text": "Useless acquired!",
-            "sound_index": 0,
-            "jingle_index": 0,
-            "resources": [
-                {
-                    "index": 0,
-                    "amount": 1
-                }
-            ]
-        },
-        {
-            "pickup_index": 2,
-            "scan": "B",
-            "model_index": 2,
-            "hud_text": "B acquired!",
-            "sound_index": 0,
-            "jingle_index": 0,
-            "resources": [
-                {
-                    "index": 2,
-                    "amount": 1
-                },
-                {
-                    "index": 1,
-                    "amount": 1
-                }
-            ],
-            "conditional_resources": {
-                "item": 2,
-                "resources": [
-                    {
-                        "index": 1,
-                        "amount": 5
-                    }
-                ]
+    assert len(result) == 5
+    assert result[0] == {
+        "pickup_index": 0,
+        "model_index": 1,
+        "scan": "A",
+        "hud_text": ["A acquired!"],
+        "sound_index": 1,
+        "jingle_index": 2,
+        "resources": [
+            {
+                "index": 1,
+                "amount": 1
             }
-        },
-        {
-            "pickup_index": 3,
-            "scan": "A",
-            "model_index": 1,
-            "hud_text": "A acquired!",
-            "sound_index": 1,
-            "jingle_index": 2,
+        ],
+        "conditional_resources": []
+    }
+    assert result[1] == {
+        "pickup_index": 1,
+        "scan": "Useless",
+        "model_index": 0,
+        "hud_text": ["Useless acquired!"],
+        "sound_index": 0,
+        "jingle_index": 0,
+        "resources": [
+            {
+                "index": 0,
+                "amount": 1
+            }
+        ],
+        "conditional_resources": []
+    }
+    assert result[2] == {
+        "pickup_index": 2,
+        "scan": "B",
+        "model_index": 2,
+        "hud_text": ["B acquired!", "B acquired!"],
+        "sound_index": 0,
+        "jingle_index": 0,
+        "resources": [
+            {
+                "index": 2,
+                "amount": 1
+            },
+            {
+                "index": 1,
+                "amount": 1
+            }
+        ],
+        "conditional_resources": [{
+            "item": 2,
             "resources": [
                 {
                     "index": 1,
-                    "amount": 1
+                    "amount": 5
                 }
             ]
-        },
-        {
-            "pickup_index": 4,
-            "scan": "C that provides 2 B, 1 A",
-            "model_index": 2,
-            "hud_text": "C acquired!",
-            "sound_index": 0,
-            "jingle_index": 0,
-            "resources": [
-                {
-                    "index": 2,
-                    "amount": 2
-                },
-                {
-                    "index": 1,
-                    "amount": 1
-                }
-            ]
-        },
-    ]
+        }]
+    }
+    assert result[3] == {
+        "pickup_index": 3,
+        "scan": "A",
+        "model_index": 1,
+        "hud_text": ["A acquired!"],
+        "sound_index": 1,
+        "jingle_index": 2,
+        "resources": [
+            {
+                "index": 1,
+                "amount": 1
+            }
+        ],
+        "conditional_resources": []
+    }
+    assert result[4] == {
+        "pickup_index": 4,
+        "scan": "C that provides 2 B, 1 A",
+        "model_index": 2,
+        "hud_text": ["C acquired!"],
+        "sound_index": 0,
+        "jingle_index": 0,
+        "resources": [
+            {
+                "index": 2,
+                "amount": 2
+            },
+            {
+                "index": 1,
+                "amount": 1
+            }
+        ],
+        "conditional_resources": []
+    }

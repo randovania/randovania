@@ -91,13 +91,18 @@ def _pickup_scan(pickup: PickupEntry) -> str:
 
 
 def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
+    # TODO: we can use the resource name here to avoid saying "Progressive Suit" acquired
+    # But using resource name also breaks things like vanilla beam ammo expansion
+    # And 'Missile Expansion' shows up as 'Missile'.
     hud_text = [
-        "{} acquired!".format(pickup.resources[0][0].long_name),
+        "{} acquired!".format(pickup.name),
+        # "{} acquired!".format(pickup.resources[0][0].long_name),
     ]
     conditional_resources = []
 
     for conditional in pickup.conditional_resources:
-        hud_text.append("{} acquired!".format(conditional.resources[0][0].long_name))
+        hud_text.append("{} acquired!".format(pickup.name))
+        # hud_text.append("{} acquired!".format(conditional.resources[0][0].long_name))
         conditional_resources.append({
             "item": conditional.item.index,
             "resources": [
