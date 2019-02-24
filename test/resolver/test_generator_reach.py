@@ -17,7 +17,8 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
-from randovania.resolver.item_pool import calculate_item_pool, calculate_available_pickups
+from randovania.resolver.item_pool import calculate_available_pickups
+from randovania.resolver.item_pool.pool_creator import calculate_item_pool
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State, add_pickup_to_state
 

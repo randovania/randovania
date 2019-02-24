@@ -1,0 +1,77 @@
+import pytest
+
+import randovania.resolver.item_pool.ammo
+import randovania.resolver.item_pool.pickup_creator
+from randovania.game_description.item.major_item import MajorItem, MajorItemCategory
+from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources import PickupEntry, ConditionalResources
+from randovania.layout.major_item_state import MajorItemState
+
+
+@pytest.mark.parametrize(["percentage"], [
+    (False,),
+    (True,),
+])
+def test_create_pickup_for(percentage: bool, echoes_resource_database):
+    # Setup
+    item_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 10)
+    item_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15)
+    item_c = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 18)
+    ammo_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 40)
+    ammo_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 42)
+    percentage_item = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 47)
+
+    major_item = MajorItem(
+        name="The Item",
+        item_category=MajorItemCategory.MORPH_BALL,
+        model_index=1337,
+        progression=(10, 15, 18),
+        ammo_index=(40, 42),
+        required=False,
+        original_index=None,
+        probability_offset=5,
+    )
+    state = MajorItemState(
+        include_copy_in_original_location=False,
+        num_shuffled_pickups=0,
+        num_included_in_starting_items=0,
+        included_ammo=(10, 20),
+    )
+
+    def _create_resources(item):
+        if percentage:
+            return (
+                (item, 1),
+                (ammo_a, 10),
+                (ammo_b, 20),
+                (percentage_item, 1),
+            )
+        else:
+            return (
+                (item, 1),
+                (ammo_a, 10),
+                (ammo_b, 20),
+            )
+
+    # Run
+    result = randovania.resolver.item_pool.pickup_creator.create_major_item(major_item, state, percentage,
+                                                                            echoes_resource_database)
+
+    # Assert
+    assert result == PickupEntry(
+        name="The Item",
+        resources=_create_resources(item_a),
+        model_index=1337,
+        conditional_resources=(
+            ConditionalResources(
+                item=item_a,
+                resources=_create_resources(item_b),
+            ),
+            ConditionalResources(
+                item=item_b,
+                resources=_create_resources(item_c),
+            ),
+        ),
+        item_category="morph_ball",
+        probability_offset=5,
+    )

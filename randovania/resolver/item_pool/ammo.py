@@ -1,0 +1,88 @@
+from typing import Dict, Iterator, List
+
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.resources import PickupEntry
+from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.ammo_state import AmmoState
+from randovania.resolver.exceptions import InvalidConfiguration
+from randovania.resolver.item_pool.pickup_creator import create_ammo_expansion
+
+
+def add_ammo(game: GameDescription,
+             ammo_configuration: AmmoConfiguration,
+             included_ammo_for_item: Dict[int, int],
+             ) -> Iterator[PickupEntry]:
+    """
+    Creates the necessary pickups for the given ammo_configuration.
+    :param game:
+    :param ammo_configuration:
+    :param included_ammo_for_item: How much of each item was provided based on the major items.
+    :return:
+    """
+
+    previous_pickup_for_item = {}
+
+    for ammo, state in ammo_configuration.items_state.items():
+        if state.pickup_count == 0:
+            continue
+
+        if state.variance != 0:
+            raise InvalidConfiguration("Variance was configured for {0.name}, but it is currently NYI".format(ammo))
+
+        ammo_per_pickup = _items_for_ammo(ammo, state, included_ammo_for_item, previous_pickup_for_item)
+
+        # TODO: we can just iterate over ammo_per_pickup
+        for i in range(state.pickup_count):
+            yield create_ammo_expansion(
+                ammo,
+                ammo_per_pickup[i],
+                game.resource_database
+            )
+
+
+def _items_for_ammo(ammo: Ammo,
+                    state: AmmoState,
+                    included_ammo_for_item: Dict[int, int],
+                    previous_pickup_for_item: Dict[int, Ammo],
+                    ) -> List[List[int]]:
+    """
+    Helper function for add_ammo.
+
+    :param ammo:
+    :param state:
+    :param included_ammo_for_item:
+    :param previous_pickup_for_item:
+    :return: An array that lists how many of each ammo each instance of the expansions should give
+    """
+    ammo_per_pickup: List[List[int]] = [[] for _ in range(state.pickup_count)]
+
+    for item in ammo.items:
+        if item in previous_pickup_for_item:
+            raise InvalidConfiguration(
+                "Both {0.name} and {1.name} have non-zero pickup count for item {2}. This is unsupported.".format(
+                    ammo, previous_pickup_for_item[item], item)
+            )
+        previous_pickup_for_item[item] = ammo
+
+        if item not in included_ammo_for_item:
+            raise InvalidConfiguration(
+                "Invalid configuration: ammo {0.name} was configured for {1.pickup_count}"
+                "expansions, but main pickup was removed".format(ammo, state)
+            )
+
+        if state.total_count < included_ammo_for_item[item]:
+            raise InvalidConfiguration(
+                "Ammo {0.name} was configured for a total of {1.total_count}, but major items gave {2}".format(
+                    ammo, state, included_ammo_for_item[item]))
+
+        adjusted_count = state.total_count - included_ammo_for_item[item]
+        count_per_expansion = adjusted_count // state.pickup_count
+        expansions_with_extra_count = adjusted_count - count_per_expansion * state.pickup_count
+
+        for i, pickup_ammo in enumerate(ammo_per_pickup):
+            pickup_ammo.append(count_per_expansion)
+            if i < expansions_with_extra_count:
+                pickup_ammo[-1] += 1
+
+    return ammo_per_pickup
