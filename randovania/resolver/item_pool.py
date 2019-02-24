@@ -175,7 +175,7 @@ def _create_dark_temple_key_pickup(key_number: int,
         model_index=_DARK_TEMPLE_KEY_MODEL,
         conditional_resources=tuple(),
         item_category="temple_key",
-        probability_offset=0,
+        probability_offset=3,
     )
 
 
@@ -190,7 +190,7 @@ def _create_sky_temple_key_pickup(key_number: int,
         model_index=_SKY_TEMPLE_KEY_MODEL,
         conditional_resources=tuple(),
         item_category="sky_temple_key",
-        probability_offset=0,
+        probability_offset=3,
     )
 
 
