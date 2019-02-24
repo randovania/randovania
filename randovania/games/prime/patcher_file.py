@@ -91,11 +91,30 @@ def _pickup_scan(pickup: PickupEntry) -> str:
 
 
 def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
+    hud_text = [
+        "{} acquired!".format(pickup.resources[0][0].long_name),
+    ]
+    conditional_resources = []
+
+    for conditional in pickup.conditional_resources:
+        hud_text.append("{} acquired!".format(conditional.resources[0][0].long_name))
+        conditional_resources.append({
+            "item": conditional.item.index,
+            "resources": [
+                {
+                    "index": resource.index,
+                    "amount": quantity
+                }
+                for resource, quantity in conditional.resources
+                if quantity > 0 and resource.resource_type == ResourceType.ITEM
+            ]
+        })
+
     result = {
         "pickup_index": original_index.index,
         "model_index": pickup.model_index,
         "scan": _pickup_scan(pickup),
-        "hud_text": "{} acquired!".format(pickup.name),
+        "hud_text": hud_text,
         "sound_index": 1 if pickup.item_category in {"temple_key", "sky_temple_key"} else 0,
         "jingle_index": _item_category_to_jingle_index.get(pickup.item_category, 0),
         "resources": [
@@ -105,22 +124,9 @@ def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
             }
             for resource, quantity in pickup.resources
             if quantity > 0 and resource.resource_type == ResourceType.ITEM
-        ]
+        ],
+        "conditional_resources": conditional_resources,
     }
-
-    if pickup.conditional_resources is not None:
-        result["conditional_resources"] = {
-            "item": pickup.conditional_resources.item.index,
-            "resources": [
-                {
-                    "index": resource.index,
-                    "amount": quantity
-                }
-                for resource, quantity in pickup.conditional_resources.resources
-                if quantity > 0 and resource.resource_type == ResourceType.ITEM
-            ]
-        }
-
     return result
 
 

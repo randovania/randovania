@@ -81,13 +81,18 @@ class ConditionalResources:
     resources: ResourceGainTuple
 
 
-class PickupEntry(NamedTuple):
+@dataclass(frozen=True)
+class PickupEntry:
     name: str
     resources: ResourceGainTuple
     model_index: int
-    conditional_resources: Optional[ConditionalResources]
+    conditional_resources: Tuple[ConditionalResources, ...]
     item_category: str
     probability_offset: int
+
+    def __post_init__(self):
+        if not isinstance(self.conditional_resources, tuple):
+            raise ValueError("conditional_resources should be a tuple, got {}".format(self.conditional_resources))
 
     def __hash__(self):
         return hash(self.name)
@@ -99,10 +104,14 @@ class PickupEntry(NamedTuple):
         return isinstance(other, PickupEntry) and self.name == other.name
 
     def resource_gain(self, current_resources) -> ResourceGain:
-        if self.conditional_resources is not None and current_resources.get(self.conditional_resources.item, 0) > 0:
-            yield from self.conditional_resources.resources
-        else:
-            yield from self.resources
+        last_resource_gain = self.resources
+        for conditional in self.conditional_resources:
+            if current_resources.get(conditional.item, 0) > 0:
+                last_resource_gain = conditional.resources
+            else:
+                break
+
+        yield from last_resource_gain
 
     def __str__(self):
         return "Pickup {}".format(self.name)
@@ -110,8 +119,8 @@ class PickupEntry(NamedTuple):
     @property
     def all_resources(self):
         yield from self.resources
-        if self.conditional_resources is not None:
-            yield from self.conditional_resources.resources
+        for conditional in self.conditional_resources:
+            yield from conditional.resources
 
 
 def find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
