@@ -95,8 +95,7 @@ def _create_pickup_for(item: MajorItem,
 
 
 def _create_expansion_for(ammo: Ammo,
-                          ammo_count: int,
-                          extra_count: bool,
+                          ammo_count: Iterator[int],
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:
     """
@@ -107,18 +106,16 @@ def _create_expansion_for(ammo: Ammo,
     :return:
     """
 
-    if extra_count:
-        ammo_count += 1
-
     resources = [
-        (resource_database.get_by_type_and_index(ResourceType.ITEM, ammo.item), ammo_count),
-        (resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1),
+        (resource_database.get_by_type_and_index(ResourceType.ITEM, item), count)
+        for item, count in zip(ammo.items, ammo_count)
     ]
+    resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1))
 
     return PickupEntry(
         name=ammo.name,
         resources=tuple(resources),
-        model_index=ammo.models[0],
+        model_index=ammo.models[0],  # TODO: use a random model
         conditional_resources=None,
         item_category="expansion",
         probability_offset=0,
@@ -237,33 +234,49 @@ def _add_ammo(game: GameDescription,
     :return:
     """
 
-    for item, state in ammo_configuration.items_state.items():
+    previous_pickup_for_item = {}
+
+    for ammo, state in ammo_configuration.items_state.items():
         if state.pickup_count == 0:
             continue
 
-        if item.item not in included_ammo_for_item:
-            raise InvalidConfiguration(
-                "Invalid configuration: ammo {0.name} was configured for {1.pickup_count}"
-                "expansions, but main pickup was removed".format(item, state)
-            )
-
         if state.variance != 0:
-            raise InvalidConfiguration("Variance was configured for {0.name}, but it is currently NYI".format(item))
+            raise InvalidConfiguration("Variance was configured for {0.name}, but it is currently NYI".format(ammo))
 
-        if state.total_count < included_ammo_for_item[item.item]:
-            raise InvalidConfiguration(
-                "Ammo {0.name} was configured for a total of {1.total_count}, but major items gave {2}".format(
-                    item, state, included_ammo_for_item[item.item]))
+        ammo_per_pickup: List[List[int]] = [[] for _ in range(state.pickup_count)]
 
-        adjusted_count = state.total_count - included_ammo_for_item[item.item]
-        count_per_expansion = adjusted_count // state.pickup_count
-        expansions_with_extra_count = adjusted_count - count_per_expansion * state.pickup_count
+        for item in ammo.items:
+            if item in previous_pickup_for_item:
+                raise InvalidConfiguration(
+                    "Both {0.name} and {1.name} have non-zero pickup count for item {2}. This is unsupported.".format(
+                        ammo, previous_pickup_for_item[item], item)
+                )
+            previous_pickup_for_item[item] = ammo
+
+            if item not in included_ammo_for_item:
+                raise InvalidConfiguration(
+                    "Invalid configuration: ammo {0.name} was configured for {1.pickup_count}"
+                    "expansions, but main pickup was removed".format(ammo, state)
+                )
+
+            if state.total_count < included_ammo_for_item[item]:
+                raise InvalidConfiguration(
+                    "Ammo {0.name} was configured for a total of {1.total_count}, but major items gave {2}".format(
+                        ammo, state, included_ammo_for_item[item]))
+
+            adjusted_count = state.total_count - included_ammo_for_item[item]
+            count_per_expansion = adjusted_count // state.pickup_count
+            expansions_with_extra_count = adjusted_count - count_per_expansion * state.pickup_count
+
+            for i, pickup_ammo in enumerate(ammo_per_pickup):
+                pickup_ammo.append(count_per_expansion)
+                if i < expansions_with_extra_count:
+                    pickup_ammo[-1] += 1
 
         for i in range(state.pickup_count):
             yield _create_expansion_for(
-                item,
-                count_per_expansion,
-                i < expansions_with_extra_count,
+                ammo,
+                ammo_per_pickup[i],
                 game.resource_database
             )
 
