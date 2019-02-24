@@ -20,7 +20,7 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
-from randovania.resolver.item_pool import calculate_item_pool
+from randovania.resolver.item_pool.pool_creator import calculate_item_pool
 from randovania.resolver.state import State
 
 T = TypeVar("T")
