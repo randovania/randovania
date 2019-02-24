@@ -7,7 +7,7 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupEntry, ResourceInfo, PickupIndex, ResourceDatabase, \
-    ResourceQuantity, PickupAssignment
+    ResourceQuantity, PickupAssignment, ConditionalResources
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
@@ -79,19 +79,32 @@ def _create_pickup_for(item: MajorItem,
     :return:
     """
 
-    resources = [(resource_database.get_by_type_and_index(ResourceType.ITEM, item.item), 1)]
+    def _create_resources(index):
+        resources = [(resource_database.get_by_type_and_index(ResourceType.ITEM, index), 1)]
 
-    for ammo_index, ammo_count in zip(item.ammo, state.included_ammo):
-        resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_index), ammo_count))
+        for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
+            resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_index), ammo_count))
 
-    if include_percentage:
-        resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1))
+        if include_percentage:
+            resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1))
+
+        return tuple(resources)
+
+    previous_resource = item.progression[0]
+    conditional_resources = []
+
+    for progression in item.progression[1:]:
+        conditional_resources.append(ConditionalResources(
+            item=resource_database.get_by_type_and_index(ResourceType.ITEM, previous_resource),
+            resources=_create_resources(progression)
+        ))
+        previous_resource = progression
 
     return PickupEntry(
         name=item.name,
-        resources=tuple(resources),
+        resources=_create_resources(item.progression[0]),
         model_index=item.model_index,
-        conditional_resources=tuple(),
+        conditional_resources=tuple(conditional_resources),
         item_category=item.item_category.value,
         probability_offset=item.probability_offset,
     )
@@ -303,7 +316,7 @@ def _add_major_items(game: GameDescription,
     included_ammo_for_item = {}
 
     for item, state in major_items_configuration.items_state.items():
-        if len(item.ammo) != len(state.included_ammo):
+        if len(item.ammo_index) != len(state.included_ammo):
             raise InvalidConfiguration(
                 "Item {0.name} uses {0.ammo} as ammo, but there's only {1} values in included_ammo".format(
                     item, len(state.included_ammo)))
@@ -326,7 +339,7 @@ def _add_major_items(game: GameDescription,
             initial_resources.extend(_create_pickup_for(item, state, False, game.resource_database).resources)
             total_pickups += 1
 
-        for ammo_index, ammo_count in zip(item.ammo, state.included_ammo):
+        for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
             included_ammo_for_item[ammo_index] = included_ammo_for_item.get(ammo_index, 0) + ammo_count * total_pickups
 
     return (item_pool, new_assignment, initial_resources), included_ammo_for_item

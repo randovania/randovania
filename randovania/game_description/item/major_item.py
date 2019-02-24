@@ -21,8 +21,8 @@ class MajorItem:
     name: str
     item_category: MajorItemCategory
     model_index: int
-    item: int
-    ammo: Tuple[int, ...]
+    progression: Tuple[int, ...]
+    ammo_index: Tuple[int, ...]
     required: bool
     original_index: Optional[PickupIndex]
     probability_offset: int
@@ -33,8 +33,8 @@ class MajorItem:
             name=name,
             item_category=MajorItemCategory(value["item_category"]),
             model_index=value["model_index"],
-            item=value["item"],
-            ammo=tuple(value.get("ammo", [])),
+            progression=tuple(value["progression"]),
+            ammo_index=tuple(value.get("ammo", [])),
             required=value.get("required", False),
             original_index=PickupIndex(value["original_index"]) if "original_index" in value else None,
             probability_offset=value["probability_offset"],
@@ -45,8 +45,8 @@ class MajorItem:
         result = {
             "item_category": self.item_category.value,
             "model_index": self.model_index,
-            "item": self.item,
-            "ammo": list(self.ammo),
+            "progression": list(self.progression),
+            "ammo": list(self.ammo_index),
             "required": self.required,
             "probability_offset": self.probability_offset,
         }

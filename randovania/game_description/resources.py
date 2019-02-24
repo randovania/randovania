@@ -100,9 +100,6 @@ class PickupEntry:
     def __lt__(self, other):
         return self.name < other.name
 
-    def __eq__(self, other):
-        return isinstance(other, PickupEntry) and self.name == other.name
-
     def resource_gain(self, current_resources) -> ResourceGain:
         last_resource_gain = self.resources
         for conditional in self.conditional_resources:
