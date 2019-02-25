@@ -171,10 +171,8 @@ def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
 
 
 @patch("randovania.games.prime.claris_randomizer.apply_layout", autospec=True)
-@patch("randovania.games.prime.dol_patcher.change_starting_spawn", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.patch_game_name_and_id", autospec=True)
 def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
-                      mock_change_starting_spawn: MagicMock,
                       mock_claris_apply_layout: MagicMock,
                       empty_patches
                       ):
@@ -197,5 +195,5 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
         game_root=options.game_files_path,
         backup_files_path=options.backup_files_path,
         progress_update=progress_update,
-        use_modern_api=False,
+        use_modern_api=True,
     )

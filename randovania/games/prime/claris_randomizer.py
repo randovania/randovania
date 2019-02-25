@@ -174,17 +174,6 @@ def _add_menu_mod_to_files(
     files_folder.joinpath("menu_mod.txt").write_bytes(b"")
 
 
-def _calculate_indices(description: LayoutDescription) -> List[int]:
-    pickup_database = data_reader.read_databases(description.permalink.layout_configuration.game_data)[1]
-    useless_pickup = pickup_database.pickup_by_name(_USELESS_PICKUP_NAME)
-
-    indices = [pickup_database.original_index(useless_pickup).index] * pickup_database.total_pickup_count
-    for index, pickup in description.patches.pickup_assignment.items():
-        indices[index.index] = pickup_database.original_index(pickup).index
-
-    return indices
-
-
 def apply_layout(description: LayoutDescription,
                  cosmetic_patches: CosmeticPatches,
                  backup_files_path: Optional[Path],

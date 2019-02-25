@@ -30,6 +30,8 @@ _SKY_TEMPLE_KEY_ITEMS = [
     105,
     106,
 ]
+_USELESS_PICKUP_MODEL = 30
+_USELESS_PICKUP_ITEM = 107
 
 
 def create_major_item(item: MajorItem,
@@ -150,4 +152,22 @@ def create_sky_temple_key(key_number: int,
         conditional_resources=tuple(),
         item_category="sky_temple_key",
         probability_offset=3,
+    )
+
+
+def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+    """
+    Creates an Energy Transfer Module pickup.
+    :param resource_database:
+    :return:
+    """
+    return PickupEntry(
+        name="Energy Transfer Module",
+        resources=(
+            (resource_database.get_by_type_and_index(ResourceType.ITEM, _USELESS_PICKUP_ITEM), 1),
+        ),
+        model_index=_USELESS_PICKUP_MODEL,
+        conditional_resources=tuple(),
+        item_category="etm",
+        probability_offset=0,
     )

@@ -1,15 +1,14 @@
-from typing import Iterable, List, Callable, Union
+from typing import Iterable, Callable, Union
 from unittest.mock import MagicMock, patch, PropertyMock, ANY
 
 import pytest
 
-import randovania.resolver.exceptions
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase, SimpleResourceInfo
+from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
     LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
@@ -36,7 +35,8 @@ def _create_test_layout_description(
     :return:
     """
     game = data_reader.decode_data(configuration.game_data)
-    pickup_database = game.pickup_database
+    # pickup_database = game.pickup_database
+    # FIXME
 
     return LayoutDescription(
         version=VERSION,
@@ -47,8 +47,8 @@ def _create_test_layout_description(
             layout_configuration=configuration,
         ),
         patches=GamePatches.with_game(game).assign_new_pickups([
-            (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])
-            for i, new_index in enumerate(pickup_mapping)
+            # (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])
+            # for i, new_index in enumerate(pickup_mapping)
         ]),
         solver_path=())
 
@@ -117,8 +117,7 @@ _test_descriptions = [
 @pytest.mark.parametrize("layout_description", _test_descriptions)
 @patch("randovania.layout.permalink.Permalink.as_str", new_callable=PropertyMock)
 def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
-                                     layout_description: LayoutDescription,
-                                     echoes_pickup_database: PickupDatabase):
+                                     layout_description: LayoutDescription):
     debug._DEBUG_LEVEL = 0
     status_update = MagicMock()
     mock_permalink_as_str.return_value = "fixed-seed!"
@@ -126,10 +125,10 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
     generated_description = generator.generate_list(
         layout_description.permalink, status_update=status_update, timeout=None)
 
-    indices: List[int] = [None] * echoes_pickup_database.total_pickup_count
-    for index, pickup in generated_description.patches.pickup_assignment.items():
-        indices[index.index] = echoes_pickup_database.original_index(pickup).index
-    print(indices)
+    # indices: List[int] = [None] * echoes_pickup_database.total_pickup_count
+    # for index, pickup in generated_description.patches.pickup_assignment.items():
+    #     indices[index.index] = echoes_pickup_database.original_index(pickup).index
+    # print(indices)
 
     assert generated_description.without_solver_path == layout_description
 

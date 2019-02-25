@@ -1,14 +1,13 @@
 from typing import Tuple, Dict, List
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity
+from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity, ResourceDatabase
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.resolver.exceptions import InvalidConfiguration
 from randovania.resolver.item_pool import PoolResults
 from randovania.resolver.item_pool.pickup_creator import create_major_item
 
 
-def add_major_items(game: GameDescription,
+def add_major_items(resource_database: ResourceDatabase,
                     major_items_configuration: MajorItemsConfiguration,
                     ) -> Tuple[PoolResults, Dict[int, int]]:
     """
@@ -36,15 +35,15 @@ def add_major_items(game: GameDescription,
                 raise InvalidConfiguration(
                     "Item {0.name} does not exist in the original game, cannot use state {1}".format(item, state),
                 )
-            new_assignment[item.original_index] = create_major_item(item, state, True, game.resource_database)
+            new_assignment[item.original_index] = create_major_item(item, state, True, resource_database)
             total_pickups += 1
 
         for _ in range(state.num_shuffled_pickups):
-            item_pool.append(create_major_item(item, state, True, game.resource_database))
+            item_pool.append(create_major_item(item, state, True, resource_database))
             total_pickups += 1
 
         for _ in range(state.num_included_in_starting_items):
-            initial_resources.extend(create_major_item(item, state, False, game.resource_database).resources)
+            initial_resources.extend(create_major_item(item, state, False, resource_database).resources)
             total_pickups += 1
 
         for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):

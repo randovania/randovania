@@ -81,7 +81,7 @@ def test_calculate_reach_with_seeds(test_data):
     logic, state, permalink = test_data
     game = logic.game
 
-    item_pool = calculate_item_pool(permalink, game, state.patches)
+    item_pool = calculate_item_pool(permalink, game.resource_database, state.patches)
 
     for pickup in item_pool[1:]:
         add_pickup_to_state(state, pickup)

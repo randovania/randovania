@@ -210,21 +210,6 @@ def test_edit_layout_trick_level(option: Options,
     assert option.layout_configuration == LayoutConfiguration.from_params(**initial_layout_configuration_params)
 
 
-def test_edit_layout_quantity(option: Options,
-                              initial_layout_configuration_params: dict):
-    # Setup
-    option._layout_configuration = LayoutConfiguration.from_params(**initial_layout_configuration_params)
-    option._nested_autosave_level = 1
-    pickup = next(option._layout_configuration.pickup_quantities.pickups())
-
-    # Run
-    initial_layout_configuration_params["pickup_quantities"] = {pickup.name: 12}
-    option.set_quantity_for_pickup(pickup, 12)
-
-    # Assert
-    assert option.layout_configuration == LayoutConfiguration.from_params(**initial_layout_configuration_params)
-
-
 def test_edit_during_options_changed(tmpdir):
     # Setup
     option = Options(Path(tmpdir))

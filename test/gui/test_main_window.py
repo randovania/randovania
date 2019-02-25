@@ -7,7 +7,6 @@ import pytest
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
 
-
 pytestmark = pytest.mark.skipif(
     pytest.config.option.skip_gui_tests,
     reason="skipped due to --skip-gui-tests")

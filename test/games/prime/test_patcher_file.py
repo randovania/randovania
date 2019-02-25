@@ -6,7 +6,6 @@ from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo, \
     ConditionalResources
 from randovania.games.prime import patcher_file, default_data
-from randovania.layout import starting_resources
 
 
 def test_create_spawn_point_field(echoes_resource_database, empty_patches):
@@ -14,8 +13,9 @@ def test_create_spawn_point_field(echoes_resource_database, empty_patches):
     patches = empty_patches.assign_starting_location(AreaLocation(100, 5000)).assign_extra_initial_items([
         (echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15), 3)
     ])
+
     capacities = [
-        {'amount': 3, 'index': 15}
+        {'amount': 3 if item.index == 15 else 0, 'index': item.index}
         for item in echoes_resource_database.item
     ]
 

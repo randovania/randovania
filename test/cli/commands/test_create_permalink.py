@@ -38,8 +38,6 @@ def test_create_permalink_logic(mock_print: MagicMock,
             sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
             elevators=LayoutElevators.VANILLA,
             starting_location=StartingLocation.default(),
-            starting_resources=StartingResources.from_non_custom_configuration(
-                StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED),
         ),
     )
 

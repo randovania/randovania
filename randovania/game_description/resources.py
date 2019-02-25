@@ -190,38 +190,6 @@ class ResourceDatabase(NamedTuple):
 PickupAssignment = Dict[PickupIndex, PickupEntry]
 
 
-class PickupDatabase(NamedTuple):
-    pickups: Dict[str, PickupEntry]
-    original_pickup_mapping: PickupAssignment
-    useless_pickup: PickupEntry
-
-    @property
-    def total_pickup_count(self) -> int:
-        return len(self.original_pickup_mapping)
-
-    @property
-    def all_pickup_names(self) -> Iterator[str]:
-        yield from self.pickups.keys()
-
-    @property
-    def all_useful_pickups(self) -> Iterator[PickupEntry]:
-        for pickup in self.pickups.values():
-            if pickup is not self.useless_pickup:
-                yield pickup
-
-    def original_quantity_for(self, pickup: PickupEntry) -> int:
-        return sum(1 for original in self.original_pickup_mapping.values() if original == pickup)
-
-    def original_index(self, pickup: PickupEntry) -> PickupIndex:
-        for index, p in self.original_pickup_mapping.items():
-            if p == pickup:
-                return index
-        raise ValueError("Unknown pickup: {}".format(pickup))
-
-    def pickup_by_name(self, pickup_name: str) -> PickupEntry:
-        return self.pickups[pickup_name]
-
-
 def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResources:
     return {
         resource: a.get(resource, 0) + b.get(resource, 0)

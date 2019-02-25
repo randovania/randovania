@@ -7,15 +7,10 @@ import pytest
 import randovania
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -255,55 +250,6 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
         status_update
     )
     assert game_root.joinpath("files", "menu_mod.txt").is_file()
-
-
-@patch("randovania.game_description.data_reader.read_databases", autospec=True)
-def test_calculate_indices_no_item(mock_read_databases: MagicMock,
-                                   echoes_pickup_database: PickupDatabase,
-                                   empty_patches
-                                   ):
-    # Setup
-    description = LayoutDescription(
-        version=randovania.VERSION,
-        permalink=Permalink.default(),
-        patches=empty_patches,
-        solver_path=()
-    )
-    mock_read_databases.return_value = (None, echoes_pickup_database)
-
-    # Run
-    result = claris_randomizer._calculate_indices(description)
-
-    # Assert
-    mock_read_databases.assert_called_once_with(description.permalink.layout_configuration.game_data)
-    useless_pickup = echoes_pickup_database.pickup_by_name(claris_randomizer._USELESS_PICKUP_NAME)
-    useless_index = echoes_pickup_database.original_index(useless_pickup)
-    assert result == [useless_index.index] * echoes_pickup_database.total_pickup_count
-
-
-@patch("randovania.game_description.data_reader.read_databases", autospec=True)
-def test_calculate_indices_original(mock_read_databases: MagicMock,
-                                    echoes_pickup_database: PickupDatabase,
-                                    empty_patches
-                                    ):
-    # Setup
-    description = LayoutDescription(
-        version=randovania.VERSION,
-        permalink=Permalink.default(),
-        patches=empty_patches.assign_new_pickups(echoes_pickup_database.original_pickup_mapping.items()),
-        solver_path=()
-    )
-    mock_read_databases.return_value = (None, echoes_pickup_database)
-
-    # Run
-    result = claris_randomizer._calculate_indices(description)
-
-    # Assert
-    mock_read_databases.assert_called_once_with(description.permalink.layout_configuration.game_data)
-    assert result == [
-        echoes_pickup_database.original_index(pickup).index
-        for pickup in echoes_pickup_database.original_pickup_mapping.values()
-    ]
 
 
 @pytest.mark.parametrize("modern", [True])

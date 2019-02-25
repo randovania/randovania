@@ -8,7 +8,7 @@ from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
 from randovania.game_description.resources import ResourceInfo, \
     CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
-    PickupDatabase, ResourceGainTuple
+    ResourceGainTuple
 from randovania.game_description.world_list import WorldList
 
 
@@ -31,7 +31,6 @@ class GameDescription:
     dock_weakness_database: DockWeaknessDatabase
 
     resource_database: ResourceDatabase
-    pickup_database: PickupDatabase
     victory_condition: RequirementSet
     starting_location: AreaLocation
     initial_states: Dict[str, ResourceGainTuple]
@@ -44,7 +43,6 @@ class GameDescription:
             game=self.game,
             game_name=self.game_name,
             resource_database=self.resource_database,
-            pickup_database=self.pickup_database,
             dock_weakness_database=self.dock_weakness_database,
             world_list=copy.deepcopy(self.world_list, memodict),
             victory_condition=self.victory_condition,
@@ -59,7 +57,6 @@ class GameDescription:
                  dock_weakness_database: DockWeaknessDatabase,
 
                  resource_database: ResourceDatabase,
-                 pickup_database: PickupDatabase,
                  victory_condition: RequirementSet,
                  starting_location: AreaLocation,
                  initial_states: Dict[str, ResourceGainTuple],
@@ -71,7 +68,6 @@ class GameDescription:
         self.dock_weakness_database = dock_weakness_database
 
         self.resource_database = resource_database
-        self.pickup_database = pickup_database
         self.victory_condition = victory_condition
         self.starting_location = starting_location
         self.initial_states = initial_states
