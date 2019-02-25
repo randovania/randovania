@@ -86,8 +86,8 @@ class LayoutConfiguration(BitPackDataClass):
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),
-            major_items=MajorItemsConfigEnum(json_dict["major_items_configuration_name"]),
-            ammo=AmmoConfigEnum(json_dict["ammo_configuration_name"]),
+            major_items=MajorItemsConfigEnum(json_dict["major_items"]),
+            ammo=AmmoConfigEnum(json_dict["ammo"]),
         )
 
     @classmethod

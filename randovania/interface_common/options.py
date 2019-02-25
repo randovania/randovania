@@ -2,10 +2,9 @@ import dataclasses
 import json
 from distutils.version import StrictVersion
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any, Dict
+from typing import Optional, TypeVar, Callable, Any
 
 import randovania
-from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
@@ -13,7 +12,6 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutEl
     LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_resources import StartingResourcesConfiguration, StartingResources
 
 T = TypeVar("T")
 
