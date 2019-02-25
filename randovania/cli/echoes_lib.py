@@ -1,5 +1,6 @@
+from randovania.layout.configuration_factory import MajorItemsConfigEnum
 from randovania.layout.layout_configuration import LayoutTrickLevel, LayoutSkyTempleKeyMode, LayoutConfiguration, \
-    LayoutRandomizedFlag
+    LayoutElevators
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 
@@ -34,11 +35,11 @@ def add_layout_configuration_arguments(parser):
 
 
 def get_layout_configuration_from_args(args) -> LayoutConfiguration:
+    # TODO: support for item loss
     return LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel(args.trick_level),
         sky_temple_keys=LayoutSkyTempleKeyMode(args.sky_temple_keys),
-        elevators=LayoutRandomizedFlag.VANILLA,
-        pickup_quantities={},
+        elevators=LayoutElevators.VANILLA,
         starting_location=StartingLocation.default(),
-        starting_resources=StartingResources.from_item_loss(not args.skip_item_loss),
+        major_items=MajorItemsConfigEnum.DEFAULT if args.skip_item_loss else MajorItemsConfigEnum.DEFAULT,
     )

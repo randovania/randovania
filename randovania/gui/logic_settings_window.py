@@ -7,7 +7,7 @@ from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutTrickLevel, LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode
 from randovania.layout.starting_resources import StartingResourcesConfiguration
 
 
@@ -89,8 +89,8 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.logic_combo_box.currentIndexChanged.connect(self._on_trick_level_changed)
 
     def setup_elevator_elements(self, options: Options):
-        self.elevators_combo.setItemData(0, LayoutRandomizedFlag.VANILLA)
-        self.elevators_combo.setItemData(1, LayoutRandomizedFlag.RANDOMIZED)
+        self.elevators_combo.setItemData(0, LayoutElevators.VANILLA)
+        self.elevators_combo.setItemData(1, LayoutElevators.RANDOMIZED)
 
         self.elevators_combo.options_field_name = "layout_configuration_elevators"
         self.elevators_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,

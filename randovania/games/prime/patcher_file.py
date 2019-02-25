@@ -46,11 +46,11 @@ def _add_items_in_resource_gain_to_dict(gain: ResourceGain,
 
 def _create_spawn_point_field(patches: GamePatches,
                               resource_database: ResourceDatabase,
-                              starting_resources: StartingResources,
                               ) -> dict:
+
+    # TODO: we don't need the aux function and this conversion to dict
+    # A GamePatches already ensures there's no copies to the extra_initial_items
     item_quantities: Dict[SimpleResourceInfo, int] = {}
-    _add_items_in_resource_gain_to_dict(starting_resources.resource_gain,
-                                        item_quantities)
     _add_items_in_resource_gain_to_dict(patches.extra_initial_items,
                                         item_quantities)
 
@@ -198,7 +198,7 @@ def create_patcher_file(description: LayoutDescription,
     result["seed_hash"] = description.shareable_hash,
     result["randovania_version"] = randovania.VERSION,
 
-    result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database, layout.starting_resources)
+    result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
     result["pickups"] = _create_pickup_list(patches, game.pickup_database.useless_pickup,
                                             game.pickup_database.total_pickup_count)
