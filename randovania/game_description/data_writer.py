@@ -5,8 +5,8 @@ from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
-from randovania.game_description.resources import ResourceGain, PickupDatabase, ResourceDatabase, SimpleResourceInfo, \
-    DamageResourceInfo, ResourceInfo, ResourceGainTuple, PickupEntry
+from randovania.game_description.resources import ResourceGain, ResourceDatabase, SimpleResourceInfo, \
+    DamageResourceInfo, ResourceInfo, ResourceGainTuple
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -119,38 +119,6 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
     }
 
 
-# Pickup Database
-
-def write_pickup(pickup: PickupEntry) -> dict:
-    result = {
-        "item_category": pickup.item_category,
-        "model_index": pickup.model_index,
-        "resources": write_resource_gain(pickup.resources),
-        "probability_offset": pickup.probability_offset,
-    }
-    if pickup.conditional_resources is not None:
-        result["conditional_resources"] = {
-            "item": pickup.conditional_resources.item.index,
-            "resources": write_resource_gain(pickup.conditional_resources.resources)
-        }
-
-    return result
-
-
-def write_pickup_database(database: PickupDatabase) -> dict:
-    return {
-        "pickups": {
-            pickup.name: write_pickup(pickup)
-            for pickup in database.pickups.values()
-        },
-        "original_indices": [
-            pickup.name
-            for pickup in database.original_pickup_mapping.values()
-        ],
-        "useless_pickup": database.useless_pickup.name
-    }
-
-
 # World/Area/Nodes
 
 def write_node(node: Node) -> dict:
@@ -258,7 +226,6 @@ def write_game_description(game: GameDescription) -> dict:
         "initial_states": write_initial_states(game.initial_states),
         "victory_condition": write_requirement_set(game.victory_condition),
 
-        "pickup_database": write_pickup_database(game.pickup_database),
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "worlds": write_world_list(game.world_list),
     }

@@ -20,6 +20,13 @@ def accumulate_results(layout: dict, items: dict, locations: dict):
             locations[area_name][item_name] += 1
 
 
+def calculate_pickup_count(items: Dict[str, Dict[str, int]]) -> Dict[str, int]:
+    return {
+        name: sum(data.values())
+        for name, data in items.items()
+    }
+
+
 def sort_by_contents(data: dict) -> dict:
     return {
         item: {
@@ -46,15 +53,15 @@ def create_report(seeds_dir: str, output_file: str):
     locations = collections.defaultdict(item_creator)
 
     seed_count = 0
+    pickup_count = None
     for seed in Path(seeds_dir).glob("**/*.json"):
         accumulate_results(read_json(seed), items, locations)
+        if seed_count == 0:
+            pickup_count = calculate_pickup_count(items)
         seed_count += 1
 
-    pickup_database = default_prime2_pickup_database()
-    pickup_count = {
-        pickup.name: pickup_database.original_quantity_for(pickup)
-        for pickup in pickup_database.pickups.values()
-    }
+    if pickup_count is None:
+        raise Exception("No seeds found")
 
     stddev_by_location = {
         location: calculate_stddev(pickup_count, locations[location])

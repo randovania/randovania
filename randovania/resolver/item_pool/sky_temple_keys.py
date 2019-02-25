@@ -1,19 +1,19 @@
 from typing import List
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity, PickupIndex
+from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity, PickupIndex, \
+    ResourceDatabase
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.resolver.exceptions import InvalidConfiguration
 from randovania.resolver.item_pool import PoolResults
 from randovania.resolver.item_pool.pickup_creator import create_sky_temple_key
 
 
-def add_sky_temple_key_distribution_logic(game: GameDescription,
+def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
                                           mode: LayoutSkyTempleKeyMode,
                                           ) -> PoolResults:
     """
     Adds the given Sky Temple Keys to the item pool
-    :param game:
+    :param resource_database:
     :param mode:
     :return:
     """
@@ -28,7 +28,7 @@ def add_sky_temple_key_distribution_logic(game: GameDescription,
             locations_to_place += _SUB_GUARDIAN_INDICES
 
         for key_number, location in enumerate(locations_to_place):
-            new_assignment[location] = create_sky_temple_key(key_number, game.resource_database)
+            new_assignment[location] = create_sky_temple_key(key_number, resource_database)
         first_automatic_key = len(locations_to_place)
 
     else:
@@ -37,11 +37,11 @@ def add_sky_temple_key_distribution_logic(game: GameDescription,
             raise InvalidConfiguration("Unknown Sky Temple Key mode: {}".format(mode))
 
         for key_number in range(keys_to_place):
-            item_pool.append(create_sky_temple_key(key_number, game.resource_database))
+            item_pool.append(create_sky_temple_key(key_number, resource_database))
         first_automatic_key = keys_to_place + 1
 
     for automatic_key_number in range(first_automatic_key, 9):
-        initial_resources.extend(create_sky_temple_key(automatic_key_number, game.resource_database).resources)
+        initial_resources.extend(create_sky_temple_key(automatic_key_number, resource_database).resources)
 
     return item_pool, new_assignment, initial_resources
 

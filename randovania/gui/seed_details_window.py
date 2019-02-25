@@ -5,7 +5,7 @@ from typing import List
 from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
-from randovania.game_description.default_database import default_prime2_pickup_database, default_prime2_game_description
+from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.seed_details_window_ui import Ui_SeedDetailsWindow
@@ -54,7 +54,8 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     def _create_pickup_spoiler_combobox(self):
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
 
-        pickup_names = set(default_prime2_pickup_database().all_pickup_names)
+        # TODO: get pickup names
+        pickup_names = []
         for pickup_name in sorted(pickup_names):
             self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
 

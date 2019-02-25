@@ -53,35 +53,6 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
     )
 
 
-def _item_locations_to_pickup_assignment(game: GameDescription,
-                                         locations: Dict[str, Dict[str, str]],
-                                         ) -> PickupAssignment:
-    pickup_assignment = {}
-
-    for world_name, world_data in locations.items():
-        world = [world for world in game.world_list.worlds if world.name == world_name][0]
-        areas_by_name = collections.defaultdict(list)
-        for area in world.areas:
-            areas_by_name[area.name].append(area)
-
-        for location_name, name in world_data.items():
-            if name == "Nothing":
-                continue
-
-            area_name, node_name = location_name.split("/", maxsplit=1)
-            node: PickupNode = None
-
-            for area in areas_by_name[area_name]:
-                nodes = [node for node in area.nodes if node.name == node_name]
-                if len(nodes) == 1:
-                    node = nodes[0]
-                    break
-
-            pickup_assignment[node.pickup_index] = game.pickup_database.pickup_by_name(name)
-
-    return pickup_assignment
-
-
 def _node_mapping_to_elevator_connection(world_list: WorldList,
                                          elevators: Dict[str, str],
                                          ) -> Dict[int, AreaLocation]:
@@ -128,14 +99,6 @@ class LayoutDescription:
             raise ValueError("Unable to read details of seed log with spoiler disabled")
 
         game = data_reader.decode_data(permalink.layout_configuration.game_data)
-        patches = GamePatches(
-            _item_locations_to_pickup_assignment(game, json_dict["locations"]),
-            _node_mapping_to_elevator_connection(game.world_list, json_dict["elevators"]),
-            {},
-            {},
-            (),
-            game.starting_location
-        )
 
         return LayoutDescription(
             version=version,

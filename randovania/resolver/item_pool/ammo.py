@@ -1,15 +1,14 @@
 from typing import Dict, Iterator, List
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.ammo import Ammo
-from randovania.game_description.resources import PickupEntry
+from randovania.game_description.resources import PickupEntry, ResourceDatabase
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.ammo_state import AmmoState
 from randovania.resolver.exceptions import InvalidConfiguration
 from randovania.resolver.item_pool.pickup_creator import create_ammo_expansion
 
 
-def add_ammo(game: GameDescription,
+def add_ammo(resource_database: ResourceDatabase,
              ammo_configuration: AmmoConfiguration,
              included_ammo_for_item: Dict[int, int],
              ) -> Iterator[PickupEntry]:
@@ -37,7 +36,7 @@ def add_ammo(game: GameDescription,
             yield create_ammo_expansion(
                 ammo,
                 ammo_per_pickup[i],
-                game.resource_database
+                resource_database
             )
 
 

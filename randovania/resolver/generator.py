@@ -260,7 +260,7 @@ def _create_patches(
     configuration = permalink.layout_configuration
 
     patches = _create_base_patches(rng, game, permalink)
-    patches, item_pool = calculate_item_pool(permalink, game, patches)
+    patches, item_pool = calculate_item_pool(configuration, game.resource_database, patches)
 
     num_pickup_nodes = len(list(filter_pickup_nodes(game.world_list.all_nodes)))
     if len(item_pool) > num_pickup_nodes:

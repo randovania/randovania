@@ -13,8 +13,10 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.starting_location import StartingLocationConfiguration
-from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
+from randovania.layout.starting_resources import StartingResourcesConfiguration
+from randovania.resolver.item_pool.pickup_creator import create_useless_pickup
 
+_TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
     1660916974: "Temple Grounds - Agon",
     2889020216: "Temple Grounds - Torvus",
@@ -47,7 +49,6 @@ def _add_items_in_resource_gain_to_dict(gain: ResourceGain,
 def _create_spawn_point_field(patches: GamePatches,
                               resource_database: ResourceDatabase,
                               ) -> dict:
-
     # TODO: we don't need the aux function and this conversion to dict
     # A GamePatches already ensures there's no copies to the extra_initial_items
     item_quantities: Dict[SimpleResourceInfo, int] = {}
@@ -194,14 +195,15 @@ def create_patcher_file(description: LayoutDescription,
     patches = description.patches
     game = data_reader.decode_data(layout.game_data, add_self_as_requirement_to_resources=False)
 
+    useless_pickup = create_useless_pickup(game.resource_database)
+
     result["permalink"] = description.permalink.as_str,
     result["seed_hash"] = description.shareable_hash,
     result["randovania_version"] = randovania.VERSION,
 
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
-    result["pickups"] = _create_pickup_list(patches, game.pickup_database.useless_pickup,
-                                            game.pickup_database.total_pickup_count)
+    result["pickups"] = _create_pickup_list(patches, useless_pickup, _TOTAL_PICKUP_COUNT)
 
     result["elevators"] = _create_elevators_field(patches, game.world_list)
 
