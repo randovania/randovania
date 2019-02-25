@@ -9,7 +9,7 @@ from randovania.game_description.resources import PickupEntry
 from randovania.interface_common import persistence
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutRandomizedFlag, LayoutTrickLevel, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, LayoutTrickLevel, \
     LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -286,11 +286,11 @@ class Options:
         self._layout_configuration = dataclasses.replace(self.layout_configuration, sky_temple_keys=value)
 
     @property
-    def layout_configuration_elevators(self) -> LayoutRandomizedFlag:
+    def layout_configuration_elevators(self) -> LayoutElevators:
         return self.layout_configuration.elevators
 
     @layout_configuration_elevators.setter
-    def layout_configuration_elevators(self, value: LayoutRandomizedFlag):
+    def layout_configuration_elevators(self, value: LayoutElevators):
         self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, elevators=value)
 

@@ -2,7 +2,7 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
     LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -55,13 +55,7 @@ def test_decode_invalid(invalid: str):
     LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel.HARD,
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_GUARDIANS,
-        elevators=LayoutRandomizedFlag.RANDOMIZED,
-        pickup_quantities={
-            "Missile Expansion": 10,
-            "Light Suit": 9,
-        },
-        starting_location=StartingLocation.default(),
-        starting_resources=StartingResources.default(),
+        elevators=LayoutElevators.RANDOMIZED,
     ),
 ])
 def test_round_trip(spoiler: bool,
@@ -113,13 +107,8 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
         layout_configuration=LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.HARD,
             sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-            elevators=LayoutRandomizedFlag.RANDOMIZED,
-            pickup_quantities={
-                "Missile Expansion": 10,
-                "Light Suit": 9,
-            },
+            elevators=LayoutElevators.RANDOMIZED,
             starting_location=StartingLocation.default(),
-            starting_resources=StartingResources.default(),
         ),
     )
 

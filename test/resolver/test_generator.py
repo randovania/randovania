@@ -10,7 +10,7 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupIndex, PickupEntry, PickupDatabase, SimpleResourceInfo
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
     LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -58,13 +58,7 @@ def _create_test_layout_description(
 
 _unused_test_descriptions = [
     _create_test_layout_description(
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                      elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={},
-                                                      starting_location=StartingLocation.default(),
-                                                      starting_resources=StartingResources.default(),
-                                                      ),
+        configuration=LayoutConfiguration.default(),
         pickup_mapping=[2, 88, 4, 7, 4, 38, 23, 76, 2, 2, 2, 46, 57, 82, 24, 2, 106, 83, 2, 39, 37, 8, 69, 2, 15, 2, 52,
                         109, 1, 19, 2, 2, 91, 8, 2, 75, 8, 86, 2, 2, 79, 4, 43, 4, 2, 13, 0, 2, 2, 2, 4, 2, 4, 2, 4, 2,
                         74, 2, 2, 116, 2, 2, 2, 2, 2, 2, 2, 2, 68, 50, 2, 4, 21, 2, 2, 2, 112, 4, 45, 4, 8, 4, 17, 4, 2,
@@ -72,15 +66,7 @@ _unused_test_descriptions = [
                         114, 2, 2, 8, 17, 8, 2, 117],
     ),
     _create_test_layout_description(
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                      elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={
-                                                          "Missile Expansion": 0
-                                                      },
-                                                      starting_location=StartingLocation.default(),
-                                                      starting_resources=StartingResources.default(),
-                                                      ),
+        configuration=LayoutConfiguration.default(),
         pickup_mapping=(21, 59, 76, 21, 108, 21, 115, 114, 1, 69, 4, 53, 96, 88, 56, 92, 90, 43, 15, 21, 23, 82, 21, 46,
                         21, 21, 9, 21, 21, 21, 19, 80, 21, 112, 21, 21, 21, 74, 57, 70, 21, 44, 116, 13, 91, 21, 37, 55,
                         38, 86, 64, 45, 52, 27, 102, 21, 21, 21, 8, 75, 117, 105, 118, 78, 26, 21, 21, 21, 109, 21, 21,
@@ -92,13 +78,7 @@ _unused_test_descriptions = [
 
 _test_descriptions = [
     _create_test_layout_description(
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                      elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={},
-                                                      starting_location=StartingLocation.default(),
-                                                      starting_resources=StartingResources.default(),
-                                                      ),
+        configuration=LayoutConfiguration.default(),
         pickup_mapping=[37, 2, 2, 68, 100, 38, 102, 109, 8, 17, 4, 69, 88, 13, 44, 2, 4, 2, 74, 2, 27, 23, 2, 46, 43,
                         15, 2, 2, 50, 4, 24, 2, 2, 2, 2, 57, 2, 2, 2, 4, 4, 115, 2, 53, 7, 2, 2, 59, 75, 8, 2, 52, 8, 2,
                         19, 112, 2, 8, 17, 92, 2, 2, 79, 106, 2, 4, 2, 17, 4, 2, 2, 2, 2, 117, 2, 2, 2, 17, 2, 8, 82, 8,
@@ -109,14 +89,6 @@ _test_descriptions = [
     ),
     _create_test_layout_description(
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                      elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={
-                                                          "Light Suit": 2,
-                                                          "Darkburst": 0
-                                                      },
-                                                      starting_location=StartingLocation.default(),
-                                                      starting_resources=StartingResources.default(),
                                                       ),
         pickup_mapping=[91, 45, 17, 24, 4, 2, 23, 59, 2, 0, 2, 68, 8, 38, 2, 2, 2, 7, 4, 115, 37, 2, 86, 2, 76, 2, 4, 2,
                         117, 112, 17, 2, 2, 2, 13, 39, 88, 82, 102, 50, 57, 2, 52, 116, 2, 4, 2, 8, 118, 2, 2, 2, 1, 2,
@@ -129,10 +101,6 @@ _test_descriptions = [
     _create_test_layout_description(
         configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
-                                                      elevators=LayoutRandomizedFlag.VANILLA,
-                                                      pickup_quantities={},
-                                                      starting_location=StartingLocation.default(),
-                                                      starting_resources=StartingResources.default(),
                                                       ),
         pickup_mapping=[8, 2, 4, 2, 21, 2, 38, 115, 2, 2, 86, 2, 2, 2, 8, 109, 76, 44, 100, 2, 8, 2, 4, 8, 2, 116, 2,
                         69, 2, 57, 2, 4, 2, 4, 8, 17, 2, 11, 117, 8, 39, 2, 2, 53, 27, 2, 2, 59, 2, 2, 79, 4, 24, 2, 2,
@@ -143,31 +111,6 @@ _test_descriptions = [
         ,
     ),
 ]
-
-
-def test_generate_seed_with_invalid_quantity_configuration():
-    # Setup
-    status_update = MagicMock()
-
-    configuration = LayoutConfiguration.from_params(
-        trick_level=LayoutTrickLevel.NO_TRICKS,
-        sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-        elevators=LayoutRandomizedFlag.VANILLA,
-        pickup_quantities={"Light Suit": 5},
-        starting_location=StartingLocation.default(),
-        starting_resources=StartingResources.default(),
-    )
-
-    permalink = Permalink(
-        seed_number=50,
-        spoiler=True,
-        patcher_configuration=PatcherConfiguration.default(),
-        layout_configuration=configuration,
-    )
-
-    # Run
-    with pytest.raises(randovania.resolver.exceptions.GenerationFailure):
-        generator.generate_list(permalink, status_update=status_update)
 
 
 @skip_generation_tests
@@ -189,16 +132,6 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
     print(indices)
 
     assert generated_description.without_solver_path == layout_description
-
-
-@pytest.mark.skip(reason="generating is taking too long")
-def test_generate_twice():
-    debug._DEBUG_LEVEL = 0
-    status_update = MagicMock()
-    layout_description = _test_descriptions[0]
-
-    generated_description = generator.generate_list(layout_description.permalink, status_update)
-    assert generated_description == generator.generate_list(layout_description.permalink, status_update)
 
 
 def test_starting_location_for_configuration_ship():
@@ -299,7 +232,7 @@ def test_create_patches(mock_random: MagicMock,
     status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
     configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
                                                     sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                    elevators=LayoutRandomizedFlag.VANILLA,
+                                                    elevators=LayoutElevators.VANILLA,
                                                     pickup_quantities={},
                                                     starting_location=StartingLocation.default(),
                                                     starting_resources=StartingResources.from_item_loss(False),

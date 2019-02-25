@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 import randovania.cli.commands.create_permalink
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
     LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -36,8 +36,7 @@ def test_create_permalink_logic(mock_print: MagicMock,
         layout_configuration=LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.HARD,
             sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
-            elevators=LayoutRandomizedFlag.VANILLA,
-            pickup_quantities={},
+            elevators=LayoutElevators.VANILLA,
             starting_location=StartingLocation.default(),
             starting_resources=StartingResources.from_non_custom_configuration(
                 StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED),

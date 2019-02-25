@@ -191,9 +191,6 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
     mock_patch_game_name_and_id.assert_called_once_with(
         options.game_files_path, "Metroid Prime 2: Randomizer - {}".format(layout.shareable_hash)
     )
-    mock_change_starting_spawn.assert_called_once_with(
-        options.game_files_path, layout.patches.starting_location
-    )
     mock_claris_apply_layout.assert_called_once_with(
         description=layout,
         cosmetic_patches=options.cosmetic_patches,

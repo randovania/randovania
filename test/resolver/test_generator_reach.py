@@ -7,7 +7,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node, PickupNode
 from randovania.games.prime import default_data
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutRandomizedFlag, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
     LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -17,7 +17,6 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
-from randovania.resolver.item_pool import calculate_available_pickups
 from randovania.resolver.item_pool.pool_creator import calculate_item_pool
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State, add_pickup_to_state
@@ -33,7 +32,7 @@ def _test_data():
     game = data_reader.decode_data(data, False)
     configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
                                                     sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                    elevators=LayoutRandomizedFlag.VANILLA,
+                                                    elevators=LayoutElevators.VANILLA,
                                                     pickup_quantities={},
                                                     starting_location=StartingLocation.default(),
                                                     starting_resources=StartingResources.default(),
@@ -82,12 +81,9 @@ def test_calculate_reach_with_seeds(test_data):
     logic, state, permalink = test_data
     game = logic.game
 
-    categories = {"translator", "major", "expansion"}
-    item_pool = calculate_item_pool(permalink, game)
-    available_pickups = sorted(calculate_available_pickups(item_pool, categories,
-                                                           game.world_list.calculate_relevant_resources(state.patches)))
+    item_pool = calculate_item_pool(permalink, game, state.patches)
 
-    for pickup in available_pickups[1:]:
+    for pickup in item_pool[1:]:
         add_pickup_to_state(state, pickup)
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state)

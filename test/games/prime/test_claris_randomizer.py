@@ -10,7 +10,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import PickupDatabase
 from randovania.games.prime import claris_randomizer, claris_random
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.layout.layout_configuration import LayoutRandomizedFlag, LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -120,7 +120,7 @@ def test_base_args(mock_get_data_path: MagicMock,
     # Assert
     expected_results = [
         Path("data", "ClarisPrimeRandomizer", "Randomizer.exe"),
-        Path("root", "files"),
+        Path("root"),
     ]
 
     assert results == expected_results
@@ -306,13 +306,12 @@ def test_calculate_indices_original(mock_read_databases: MagicMock,
     ]
 
 
-@pytest.mark.parametrize("modern", [False, True])
+@pytest.mark.parametrize("modern", [True])
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("has_backup_path", [False, True])
 @patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._modern_api", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._legacy_api", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._create_pak_backups", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._ensure_no_menu_mod", autospec=True)
@@ -320,7 +319,6 @@ def test_apply_layout(
         mock_ensure_no_menu_mod: MagicMock,
         mock_create_pak_backups: MagicMock,
         mock_add_menu_mod_to_files: MagicMock,
-        mock_legacy_api: MagicMock,
         mock_modern_api: MagicMock,
         mock_create_progress_update_from_successive_messages: MagicMock,
         mock_save_to_file: MagicMock,
@@ -367,90 +365,14 @@ def test_apply_layout(
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
 
     if modern:
-        mock_legacy_api.assert_not_called()
         mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
     else:
-        mock_legacy_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
         mock_modern_api.assert_not_called()
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
     else:
         mock_add_menu_mod_to_files.assert_not_called()
-
-
-@pytest.mark.parametrize("hud_memo_popup_removal", [False, True])
-@pytest.mark.parametrize("speed_up_credits", [False, True])
-@pytest.mark.parametrize("elevators", [False, True])
-@pytest.mark.parametrize("item_loss", [False, True])
-@pytest.mark.parametrize("warp_to_start", [False, True])
-@pytest.mark.parametrize("seed_number", [1000, 8500])
-@patch("randovania.games.prime.claris_randomizer._calculate_indices", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._base_args", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
-def test_legacy_api(mock_run_with_args: MagicMock,
-                    mock_base_args: MagicMock,
-                    mock_calculate_indices: MagicMock,
-                    seed_number: int,
-                    item_loss: bool,
-                    elevators: bool,
-                    warp_to_start: bool,
-                    speed_up_credits: bool,
-                    hud_memo_popup_removal: bool,
-                    ):
-    # Setup
-    cosmetic_patches = CosmeticPatches(disable_hud_popup=hud_memo_popup_removal,
-                                       speed_up_credits=speed_up_credits,
-                                       )
-    description = LayoutDescription(
-        version=randovania.VERSION,
-        permalink=Permalink(
-            seed_number=seed_number,
-            spoiler=False,
-            patcher_configuration=PatcherConfiguration(
-                menu_mod=MagicMock(),
-                warp_to_start=warp_to_start,
-            ),
-            layout_configuration=LayoutConfiguration.from_params(
-                trick_level=MagicMock(),
-                sky_temple_keys=MagicMock(),
-                elevators=LayoutRandomizedFlag.RANDOMIZED if elevators else LayoutRandomizedFlag.VANILLA,
-                pickup_quantities={},
-                starting_location=StartingLocation.default(),
-                starting_resources=StartingResources.from_item_loss(item_loss),
-            )
-        ),
-        patches=None,
-        solver_path=(),
-    )
-
-    game_root = MagicMock(spec=Path())
-    status_update = MagicMock()
-
-    mock_calculate_indices.return_value = [10, 25, 1, 2, 5, 1]
-    mock_base_args.return_value = []
-    expected_args = [
-        "-s", str(seed_number),
-        "-p", "10,25,1,2,5,1"
-    ]
-    if hud_memo_popup_removal:
-        expected_args.append("-h")
-    if not item_loss:
-        expected_args.append("-i")
-    if elevators:
-        expected_args.append("-v")
-    if speed_up_credits:
-        expected_args.append("-c")
-    if warp_to_start:
-        expected_args.append("-t")
-
-    # Run
-    claris_randomizer._legacy_api(game_root, status_update, description, cosmetic_patches)
-
-    # Assert
-    mock_base_args.assert_called_once_with(game_root)
-    mock_calculate_indices.assert_called_once_with(description)
-    mock_run_with_args.assert_called_once_with(expected_args, "", "Randomized!", status_update)
 
 
 @patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
@@ -467,7 +389,6 @@ def test_modern_api(mock_run_with_args: MagicMock,
     cosmetic_patches = MagicMock()
 
     mock_base_args.return_value = []
-    expected_args = ["-d"]
     mock_create_patcher_file.return_value = {"some_data": 123}
 
     # Run
@@ -476,7 +397,7 @@ def test_modern_api(mock_run_with_args: MagicMock,
     # Assert
     mock_base_args.assert_called_once_with(game_root)
     mock_create_patcher_file.assert_called_once_with(description, cosmetic_patches)
-    mock_run_with_args.assert_called_once_with(expected_args, '{"some_data": 123}', "Randomized!", status_update)
+    mock_run_with_args.assert_called_once_with([], '{"some_data": 123}', "Randomized!", status_update)
 
 
 @pytest.mark.parametrize(["seed_number", "expected_ids"], [

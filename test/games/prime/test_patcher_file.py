@@ -7,21 +7,20 @@ from randovania.game_description.resources import PickupIndex, PickupEntry, Simp
     ConditionalResources
 from randovania.games.prime import patcher_file, default_data
 from randovania.layout import starting_resources
-from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
 
 
 def test_create_spawn_point_field(echoes_resource_database, empty_patches):
     # Setup
-    patches = empty_patches.assign_starting_location(AreaLocation(100, 5000))
+    patches = empty_patches.assign_starting_location(AreaLocation(100, 5000)).assign_extra_initial_items([
+        (echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15), 3)
+    ])
     capacities = [
-        {'amount': starting_resources._vanilla_item_loss_enabled_items.get(item.index, 0), 'index': item.index}
+        {'amount': 3, 'index': 15}
         for item in echoes_resource_database.item
     ]
 
     # Run
-    result = patcher_file._create_spawn_point_field(patches, echoes_resource_database,
-                                                    StartingResources.from_non_custom_configuration(
-                                                        StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED))
+    result = patcher_file._create_spawn_point_field(patches, echoes_resource_database)
 
     # Assert
     assert result == {

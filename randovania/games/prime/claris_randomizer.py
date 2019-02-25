@@ -17,7 +17,7 @@ from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.layout.layout_configuration import LayoutRandomizedFlag
+from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 
 _USELESS_PICKUP_NAME = "Energy Transfer Module"

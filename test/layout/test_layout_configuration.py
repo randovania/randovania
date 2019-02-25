@@ -6,7 +6,7 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
-    LayoutRandomizedFlag
+    LayoutElevators
 from randovania.layout.pickup_quantities import PickupQuantities
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
@@ -30,22 +30,22 @@ class DummyValue(BitPackValue):
         {"encoded": b'\x16',
          "trick": LayoutTrickLevel.NO_TRICKS,
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
-         "elevators": LayoutRandomizedFlag.VANILLA,
+         "elevators": LayoutElevators.VANILLA,
          },
         {"encoded": b'\xa0',
          "trick": LayoutTrickLevel.HYPERMODE,
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
-         "elevators": LayoutRandomizedFlag.VANILLA,
+         "elevators": LayoutElevators.VANILLA,
          },
         {"encoded": b'\x89',
          "trick": LayoutTrickLevel.HARD,
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
-         "elevators": LayoutRandomizedFlag.RANDOMIZED,
+         "elevators": LayoutElevators.RANDOMIZED,
          },
         {"encoded": b'\xc3',
          "trick": LayoutTrickLevel.MINIMAL_RESTRICTIONS,
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
-         "elevators": LayoutRandomizedFlag.RANDOMIZED,
+         "elevators": LayoutElevators.RANDOMIZED,
          },
     ],
     name="layout_config_with_data")
@@ -61,9 +61,7 @@ def _layout_config_with_data(request):
             trick_level=request.param["trick"],
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
-            pickup_quantities={},
             starting_location=starting_location,
-            starting_resources=starting_resources,
         )
 
 
