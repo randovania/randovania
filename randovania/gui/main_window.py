@@ -17,7 +17,6 @@ from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_f
     set_default_window_icon
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
-from randovania.gui.item_quantities_window import ItemQuantitiesWindow
 from randovania.gui.logic_settings_window import LogicSettingsWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.seed_details_window import SeedDetailsWindow
@@ -72,7 +71,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.tab_windows = [
             (ISOManagementWindow, "ROM Settings"),
             (LogicSettingsWindow, "Logic Settings"),
-            (ItemQuantitiesWindow, "Item Quantities"),
         ]
 
         for i, tab in enumerate(self.tab_windows):

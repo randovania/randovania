@@ -7,7 +7,6 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
     LayoutElevators
-from randovania.layout.pickup_quantities import PickupQuantities
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.starting_resources import StartingResources
 
@@ -52,10 +51,8 @@ class DummyValue(BitPackValue):
 def _layout_config_with_data(request):
     starting_location = DummyValue()
     starting_resources = DummyValue()
-    pickup_quantities = MagicMock(return_value=DummyValue())
 
-    with patch.multiple(PickupQuantities, from_params=pickup_quantities, bit_pack_unpack=pickup_quantities), \
-         patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
+    with patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
          patch.multiple(StartingResources, bit_pack_unpack=MagicMock(return_value=starting_resources)):
         yield request.param["encoded"], LayoutConfiguration.from_params(
             trick_level=request.param["trick"],
