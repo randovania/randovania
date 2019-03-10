@@ -8,6 +8,7 @@ import randovania
 from randovania.interface_common import persistence
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
+from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, LayoutTrickLevel, \
     LayoutSkyTempleKeyMode
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
@@ -299,6 +300,15 @@ class Options:
     def major_items_configuration(self, value: MajorItemsConfiguration):
         self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, major_items_configuration=value)
+
+    @property
+    def ammo_configuration(self) -> AmmoConfiguration:
+        return self.layout_configuration.ammo_configuration
+
+    @ammo_configuration.setter
+    def ammo_configuration(self, value: AmmoConfiguration):
+        self._check_editable_and_mark_dirty()
+        self._layout_configuration = dataclasses.replace(self.layout_configuration, ammo_configuration=value)
 
     ######
 

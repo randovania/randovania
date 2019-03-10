@@ -14,7 +14,7 @@ def add_ammo(resource_database: ResourceDatabase,
              ) -> Iterator[PickupEntry]:
     """
     Creates the necessary pickups for the given ammo_configuration.
-    :param game:
+    :param resource_database:
     :param ammo_configuration:
     :param included_ammo_for_item: How much of each item was provided based on the major items.
     :return:
