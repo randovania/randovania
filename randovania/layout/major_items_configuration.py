@@ -27,3 +27,11 @@ class MajorItemsConfiguration:
                 for name, state_data in value["items_state"].items()
             }
         )
+
+    def replace_state_for_item(self, item: MajorItem, state: MajorItemState) -> "MajorItemsConfiguration":
+        return MajorItemsConfiguration(
+            items_state={
+                key: state if key == item else value
+                for key, value in self.items_state.items()
+            }
+        )

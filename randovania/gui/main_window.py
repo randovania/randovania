@@ -18,6 +18,7 @@ from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_f
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.logic_settings_window import LogicSettingsWindow
+from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
@@ -70,6 +71,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.tab_windows = [
             (ISOManagementWindow, "ROM Settings"),
+            (MainRulesWindow, "Main Rules"),
             (LogicSettingsWindow, "Logic Settings"),
         ]
 

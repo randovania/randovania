@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>326</width>
-    <height>182</height>
+    <height>228</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="maximumSize">
    <size>
@@ -21,14 +27,20 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="item_name_label">
+    <widget class="QLabel" name="warning_label">
      <property name="text">
-      <string>Item: &lt;add_name_here&gt;</string>
+      <string>Hidden warning!</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="included_box">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Included</string>
      </property>
@@ -36,17 +48,13 @@
       <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QRadioButton" name="vanilla_radio">
-        <property name="text">
-         <string>Vanilla</string>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="shuffled_spinbox">
+        <property name="minimum">
+         <number>1</number>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QRadioButton" name="starting_radio">
-        <property name="text">
-         <string>Starting Item</string>
+        <property name="maximum">
+         <number>9</number>
         </property>
        </widget>
       </item>
@@ -57,15 +65,32 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="shuffled_spinbox">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>9</number>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="starting_radio">
+        <property name="text">
+         <string>Starting Item</string>
         </property>
        </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="vanilla_radio">
+        <property name="text">
+         <string>Vanilla</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="provided_ammo_label">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this item is collected, it also gives this amount of the given ammos.&lt;/p&gt;&lt;p&gt;This is included in the calculation of how much each pickup of this ammo gives.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provided Ammo&lt;/p&gt;&lt;p&gt;(XXXX and YYYY)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="provided_ammo_spinbox"/>
       </item>
      </layout>
     </widget>
