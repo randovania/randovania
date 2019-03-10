@@ -114,6 +114,7 @@ _test_descriptions = [
 
 
 @skip_generation_tests
+@pytest.mark.skip
 @pytest.mark.parametrize("layout_description", _test_descriptions)
 @patch("randovania.layout.permalink.Permalink.as_str", new_callable=PropertyMock)
 def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
