@@ -55,3 +55,9 @@ class MajorItemsConfiguration(BitPackValue):
                 for key, value in self.items_state.items()
             }
         )
+
+    @classmethod
+    def default(cls):
+        from randovania.layout import configuration_factory
+        return configuration_factory.get_major_items_configurations_for(
+            configuration_factory.MajorItemsConfigEnum.default())

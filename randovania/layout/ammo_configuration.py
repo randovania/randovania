@@ -88,3 +88,8 @@ class AmmoConfiguration(BitPackValue):
                 for key, value in self.items_state.items()
             }
         )
+
+    @classmethod
+    def default(cls):
+        from randovania.layout import configuration_factory
+        return configuration_factory.get_ammo_configurations_for(configuration_factory.AmmoConfigEnum.default())

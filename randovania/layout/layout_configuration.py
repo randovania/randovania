@@ -1,14 +1,10 @@
 import dataclasses
-from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.configuration_factory import get_major_items_configurations_for, get_ammo_configurations_for, \
-    AmmoConfigEnum, MajorItemsConfigEnum
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 
@@ -111,6 +107,6 @@ class LayoutConfiguration(BitPackDataClass):
             sky_temple_keys=LayoutSkyTempleKeyMode.default(),
             elevators=LayoutElevators.default(),
             starting_location=StartingLocation.default(),
-            major_items_configuration=get_major_items_configurations_for(MajorItemsConfigEnum.default()),
-            ammo_configuration=get_ammo_configurations_for(AmmoConfigEnum.default()),
+            major_items_configuration=MajorItemsConfiguration.default(),
+            ammo_configuration=AmmoConfiguration.default(),
         )
