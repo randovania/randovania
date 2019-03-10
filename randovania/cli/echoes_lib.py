@@ -41,5 +41,4 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
         sky_temple_keys=LayoutSkyTempleKeyMode(args.sky_temple_keys),
         elevators=LayoutElevators.VANILLA,
         starting_location=StartingLocation.default(),
-        major_items=MajorItemsConfigEnum.DEFAULT if args.skip_item_loss else MajorItemsConfigEnum.DEFAULT,
     )
