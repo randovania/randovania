@@ -21,11 +21,12 @@ def test_items_for_ammo_one_item(per_pickup: int, total_pickup: int, included: i
 
     maximum = per_pickup * total_pickup + included
     ammo = Ammo("My Ammo", tuple(), (item_a,), maximum)
-    state = AmmoState(maximum, 0, total_pickup)
+    state = AmmoState(0, total_pickup)
+    maximum_ammo = {item_a: maximum}
 
     # Run
     ammo_per_pickup = randovania.resolver.item_pool.ammo._items_for_ammo(ammo, state, included_ammo_for_item,
-                                                                         previous_pickup_for_item)
+                                                                         previous_pickup_for_item, maximum_ammo)
 
     # Assert
     assert previous_pickup_for_item == {
@@ -45,11 +46,12 @@ def test_items_for_ammo_one_item_non_divisible():
     previous_pickup_for_item = {}
 
     ammo = Ammo("My Ammo", tuple(), (item_a,), maximum)
-    state = AmmoState(maximum, 0, total_pickup)
+    state = AmmoState(0, total_pickup)
+    maximum_ammo = {item_a: maximum}
 
     # Run
     ammo_per_pickup = randovania.resolver.item_pool.ammo._items_for_ammo(ammo, state, included_ammo_for_item,
-                                                                         previous_pickup_for_item)
+                                                                         previous_pickup_for_item, maximum_ammo)
 
     # Assert
     assert previous_pickup_for_item == {
@@ -74,11 +76,12 @@ def test_items_for_ammo_two_item(per_pickup: int, total_pickup: int, included: i
 
     maximum = per_pickup * total_pickup + included
     ammo = Ammo("My Ammo", tuple(), (item_a, item_b), maximum)
-    state = AmmoState(maximum, 0, total_pickup)
+    state = AmmoState(0, total_pickup)
+    maximum_ammo = {item_a: maximum, item_b: maximum}
 
     # Run
     ammo_per_pickup = randovania.resolver.item_pool.ammo._items_for_ammo(ammo, state, included_ammo_for_item,
-                                                                         previous_pickup_for_item)
+                                                                         previous_pickup_for_item, maximum_ammo)
 
     # Assert
     assert previous_pickup_for_item == {
@@ -100,11 +103,12 @@ def test_items_for_ammo_two_item_diverging_values():
     previous_pickup_for_item = {}
 
     ammo = Ammo("My Ammo", tuple(), (item_a, item_b), maximum)
-    state = AmmoState(maximum, 0, total_pickup)
+    state = AmmoState(0, total_pickup)
+    maximum_ammo = {item_a: maximum, item_b: maximum}
 
     # Run
     ammo_per_pickup = randovania.resolver.item_pool.ammo._items_for_ammo(ammo, state, included_ammo_for_item,
-                                                                         previous_pickup_for_item)
+                                                                         previous_pickup_for_item, maximum_ammo)
 
     # Assert
     assert previous_pickup_for_item == {

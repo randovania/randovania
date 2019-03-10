@@ -5,10 +5,11 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
+from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
     LayoutElevators
+from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
 
 
 @dataclass(frozen=True)
@@ -50,15 +51,19 @@ class DummyValue(BitPackValue):
     name="layout_config_with_data")
 def _layout_config_with_data(request):
     starting_location = DummyValue()
-    starting_resources = DummyValue()
+    major_items = DummyValue()
+    ammo_config = DummyValue()
 
     with patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
-         patch.multiple(StartingResources, bit_pack_unpack=MagicMock(return_value=starting_resources)):
+         patch.multiple(MajorItemsConfiguration, bit_pack_unpack=MagicMock(return_value=major_items)), \
+         patch.multiple(AmmoConfiguration, bit_pack_unpack=MagicMock(return_value=ammo_config)):
         yield request.param["encoded"], LayoutConfiguration.from_params(
             trick_level=request.param["trick"],
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
             starting_location=starting_location,
+            major_items_configuration=major_items,
+            ammo_configuration=ammo_config,
         )
 
 

@@ -35,17 +35,12 @@ def test_simple_round_trip():
             "door": [],
             "portal": []
         },
-        "pickup_database": {
-            "pickups": {},
-            "original_indices": [],
-        },
         "worlds": [],
     }
 
     s = io.StringIO()
     s_io: TextIO = s
     json.dump({
-        "pickup_database": sample_data["pickup_database"],
         "starting_location": sample_data["starting_location"],
         "initial_states": sample_data["initial_states"],
         "victory_condition": sample_data["victory_condition"],

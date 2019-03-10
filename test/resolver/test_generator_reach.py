@@ -30,13 +30,7 @@ def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 def _test_data():
     data = default_data.decode_default_prime2()
     game = data_reader.decode_data(data, False)
-    configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                    sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                    elevators=LayoutElevators.VANILLA,
-                                                    pickup_quantities={},
-                                                    starting_location=StartingLocation.default(),
-                                                    starting_resources=StartingResources.default(),
-                                                    )
+    configuration = LayoutConfiguration.from_params()
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
@@ -77,26 +71,11 @@ def _compare_actions(first_reach: GeneratorReach,
     return first_actions, second_actions
 
 
-def test_calculate_reach_with_seeds(test_data):
-    logic, state, permalink = test_data
-    game = logic.game
-
-    item_pool = calculate_item_pool(permalink, game.resource_database, state.patches)
-
-    for pickup in item_pool[1:]:
-        add_pickup_to_state(state, pickup)
-
-    first_reach, second_reach = _create_reaches_and_compare(logic, state)
-    first_actions, second_actions = _compare_actions(first_reach, second_reach)
-
-    assert (871, 0) == (len(list(first_reach.nodes)), len(first_actions))
-    assert (871, 0) == (len(list(second_reach.nodes)), len(second_actions))
-
-
 def test_calculate_reach_with_all_pickups(test_data):
     logic, state, _ = test_data
 
-    for pickup in logic.game.pickup_database.original_pickup_mapping.values():
+    item_pool = calculate_item_pool(LayoutConfiguration.from_params(), logic.game.resource_database, state.patches)
+    for pickup in item_pool[1]:
         add_pickup_to_state(state, pickup)
 
     first_reach, second_reach = _create_reaches_and_compare(logic, state)
