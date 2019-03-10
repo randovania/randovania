@@ -1,4 +1,5 @@
 import asyncio
+import os
 import sys
 from argparse import ArgumentParser
 
@@ -50,6 +51,7 @@ def run(args):
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     app = QApplication(sys.argv)
 
+    os.environ['QT_API'] = "PySide2"
     import asyncqt
     loop = asyncqt.QEventLoop(app)
     asyncio.set_event_loop(loop)

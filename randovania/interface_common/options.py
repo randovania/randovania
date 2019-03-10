@@ -10,6 +10,7 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, LayoutTrickLevel, \
     LayoutSkyTempleKeyMode
+from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 
@@ -145,7 +146,6 @@ class Options:
         self._cosmetic_patches = None
 
     # Files paths
-
     @property
     def backup_files_path(self) -> Path:
         return self._data_dir.joinpath("backup")
@@ -225,7 +225,6 @@ class Options:
         self._layout_configuration = value.layout_configuration
 
     # Access to fields inside PatcherConfiguration
-
     @property
     def include_menu_mod(self) -> bool:
         return self.patcher_configuration.menu_mod
@@ -291,6 +290,17 @@ class Options:
     def layout_configuration_elevators(self, value: LayoutElevators):
         self._check_editable_and_mark_dirty()
         self._layout_configuration = dataclasses.replace(self.layout_configuration, elevators=value)
+
+    @property
+    def major_items_configuration(self) -> MajorItemsConfiguration:
+        return self.layout_configuration.major_items_configuration
+
+    @major_items_configuration.setter
+    def major_items_configuration(self, value: MajorItemsConfiguration):
+        self._check_editable_and_mark_dirty()
+        self._layout_configuration = dataclasses.replace(self.layout_configuration, major_items_configuration=value)
+
+    ######
 
     def _check_editable_and_mark_dirty(self):
         """Checks if _nested_autosave_level is not 0 and marks at least one value was changed."""

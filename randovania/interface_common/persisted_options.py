@@ -1,4 +1,7 @@
-_CURRENT_OPTIONS_FILE_VERSION = 6
+from randovania.layout.configuration_factory import get_major_items_configurations_for, MajorItemsConfigEnum, \
+    get_ammo_configurations_for, AmmoConfigEnum
+
+_CURRENT_OPTIONS_FILE_VERSION = 7
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -78,12 +81,26 @@ def _convert_v5(options: dict) -> dict:
     return options
 
 
+def _convert_v6(options: dict) -> dict:
+    if "layout_configuration" in options:
+        layout_configuration = options["layout_configuration"]
+        if layout_configuration.get("sky_temple_keys") == "fully-random":
+            layout_configuration["sky_temple_keys"] = 9
+
+        layout_configuration["major_items_configuration"] = get_major_items_configurations_for(
+            MajorItemsConfigEnum.default()).as_json
+        layout_configuration["ammo_configuration"] = get_ammo_configurations_for(AmmoConfigEnum.default()).as_json
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     1: _convert_v1,
     2: _convert_v2,
     3: _convert_v3,
     4: _convert_v4,
     5: _convert_v5,
+    6: _convert_v6,
 }
 
 
