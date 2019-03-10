@@ -29,7 +29,10 @@ def add_ammo(resource_database: ResourceDatabase,
         if state.variance != 0:
             raise InvalidConfiguration("Variance was configured for {0.name}, but it is currently NYI".format(ammo))
 
-        ammo_per_pickup = _items_for_ammo(ammo, state, included_ammo_for_item, previous_pickup_for_item)
+        ammo_per_pickup = _items_for_ammo(ammo, state,
+                                          included_ammo_for_item,
+                                          previous_pickup_for_item,
+                                          ammo_configuration.maximum_ammo)
 
         # TODO: we can just iterate over ammo_per_pickup
         for i in range(state.pickup_count):
@@ -44,6 +47,7 @@ def _items_for_ammo(ammo: Ammo,
                     state: AmmoState,
                     included_ammo_for_item: Dict[int, int],
                     previous_pickup_for_item: Dict[int, Ammo],
+                    maximum_ammo: Dict[int, int],
                     ) -> List[List[int]]:
     """
     Helper function for add_ammo.
@@ -70,12 +74,12 @@ def _items_for_ammo(ammo: Ammo,
                 "expansions, but main pickup was removed".format(ammo, state)
             )
 
-        if state.total_count < included_ammo_for_item[item]:
+        if maximum_ammo[item] < included_ammo_for_item[item]:
             raise InvalidConfiguration(
-                "Ammo {0.name} was configured for a total of {1.total_count}, but major items gave {2}".format(
-                    ammo, state, included_ammo_for_item[item]))
+                "Ammo {0.name} was configured for a total of {1}, but major items gave {2}".format(
+                    ammo, maximum_ammo[item], included_ammo_for_item[item]))
 
-        adjusted_count = state.total_count - included_ammo_for_item[item]
+        adjusted_count = maximum_ammo[item] - included_ammo_for_item[item]
         count_per_expansion = adjusted_count // state.pickup_count
         expansions_with_extra_count = adjusted_count - count_per_expansion * state.pickup_count
 
