@@ -7,7 +7,6 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
@@ -26,7 +25,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "QAAAfReMYAD0"
+    assert encoded == "UAAAfReMWAAA2Q=="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -95,7 +94,7 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "QAAAfReKeNWIK466+iOYFLiWxAQQAMA="
+    encoded = "UAAAfReKXAAAvw=="
 
     expected = Permalink(
         seed_number=1000,
@@ -106,9 +105,7 @@ def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
         ),
         layout_configuration=LayoutConfiguration.from_params(
             trick_level=LayoutTrickLevel.HARD,
-            sky_temple_keys=LayoutSkyTempleKeyMode.default(),
             elevators=LayoutElevators.RANDOMIZED,
-            starting_location=StartingLocation.default(),
         ),
     )
 
@@ -129,7 +126,7 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            mock_layout_unpack: MagicMock,
                            ):
 
-    encoded = "QAAAfRggww=="
+    encoded = "UAAAfRggbQ=="
     patcher_configuration = mock_packer_unpack.return_value
     layout_configuration = mock_layout_unpack.return_value
 

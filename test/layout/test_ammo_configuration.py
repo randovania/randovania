@@ -11,15 +11,22 @@ from randovania.layout.ammo_configuration import AmmoConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xaa\n\xfa\xfaB P\xa0\x00', "replace": {}},
+        {"encoded": b'\x00', "items_state": {}},
+        {"encoded": b'!@', "maximum_ammo": {"45": 20}},
+        {"encoded": b'\x02\x0c', "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
+        {"encoded": b'!B\x0c', "maximum_ammo": {"45": 20},
+         "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
     ],
     name="config_with_data")
 def _config_with_data(request):
     with get_data_path().joinpath("json_data", "configurations", "ammo", "split-ammo.json").open() as open_file:
         data = json.load(open_file)
 
-    for key, value in request.param["replace"].items():
+    for key, value in request.param.get("items_state", {}).items():
         data["items_state"][key] = value
+
+    for key, value in request.param.get("maximum_ammo", {}).items():
+        data["maximum_ammo"][key] = value
 
     return request.param["encoded"], AmmoConfiguration.from_json(data, default_prime2_item_database())
 

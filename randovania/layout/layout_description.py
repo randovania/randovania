@@ -98,6 +98,7 @@ class LayoutDescription:
         if not permalink.spoiler:
             raise ValueError("Unable to read details of seed log with spoiler disabled")
 
+        # FIXME: loading a log file!
         game = data_reader.decode_data(permalink.layout_configuration.game_data)
 
         return LayoutDescription(
