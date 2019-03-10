@@ -231,7 +231,6 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
         "starting_location": extra["starting_location"],
         "initial_states": extra["initial_states"],
         "victory_condition": extra["victory_condition"],
-        "pickup_database": extra["pickup_database"],
         "dock_weakness_database": dock_weakness_database,
         "worlds": worlds,
     }
