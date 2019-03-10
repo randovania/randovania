@@ -44,10 +44,7 @@ class BitPackDecoder:
 
 
 class BitPackValue:
-    def bit_pack_format(self) -> Iterator[int]:
-        raise NotImplementedError()
-
-    def bit_pack_arguments(self) -> Iterator[int]:
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         raise NotImplementedError()
 
     @classmethod
@@ -61,11 +58,8 @@ class BitPackBool(BitPackValue):
     def __init__(self, value: bool):
         self.value = value
 
-    def bit_pack_format(self) -> Iterator[int]:
-        yield 2
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield int(self.value)
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        yield int(self.value), 2
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> bool:
@@ -76,13 +70,10 @@ class BitPackEnum(BitPackValue):
     def __reduce__(self):
         return None
 
-    def bit_pack_format(self) -> Iterator[int]:
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         cls: Enum = self.__class__
-        yield len(cls.__members__)
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        cls: Enum = self.__class__
-        yield list(cls.__members__.values()).index(self)
+        values = list(cls.__members__.values())
+        yield values.index(self), len(values)
 
     @classmethod
     def bit_pack_unpack(cls: "Enum", decoder: BitPackDecoder):
@@ -115,13 +106,9 @@ def _get_bit_pack_value_for(value):
 
 
 class BitPackDataClass(BitPackValue):
-    def bit_pack_format(self) -> Iterator[int]:
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         for field in dataclasses.fields(self):
-            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_format()
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        for field in dataclasses.fields(self):
-            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_arguments()
+            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_encode()
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder):
@@ -134,11 +121,16 @@ class BitPackDataClass(BitPackValue):
 
 
 def pack_value(value: BitPackValue) -> bytes:
+    values = [
+        (value_argument, value_format)
+        for value_argument, value_format in value.bit_pack_encode()
+    ]
+
     f = "".join(
         "u{}".format(_bits_for_number(v))
-        for v in value.bit_pack_format()
+        for _, v in values
     )
-    return bitstruct.compile(f).pack(*value.bit_pack_arguments())
+    return bitstruct.compile(f).pack(*[argument for argument, _ in values])
 
 
 def round_trip(value: BitPackValue):

@@ -1,6 +1,6 @@
 import copy
 from dataclasses import dataclass
-from typing import Dict, Iterator
+from typing import Dict, Iterator, Tuple
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description.item.ammo import Ammo
@@ -13,17 +13,12 @@ class AmmoConfiguration(BitPackValue):
     maximum_ammo: Dict[int, int]
     items_state: Dict[Ammo, AmmoState]
 
-    def bit_pack_format(self) -> Iterator[int]:
-        for _ in self.maximum_ammo.values():
-            yield 256
-        for value in self.items_state.values():
-            yield from value.bit_pack_format()
-
-    def bit_pack_arguments(self) -> Iterator[int]:
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         for value in self.maximum_ammo.values():
-            yield value
+            yield value, 256
+
         for value in self.items_state.values():
-            yield from value.bit_pack_arguments()
+            yield from value.bit_pack_encode()
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder):

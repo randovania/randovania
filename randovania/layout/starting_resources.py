@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Dict, Union, List
+from typing import Iterator, Dict, Union, List, Tuple
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
 from randovania.game_description import default_database
@@ -71,21 +71,13 @@ class StartingResources(BitPackValue):
             if quantity > maximum:
                 raise ValueError("Item {} has a maximum of {}, got {}".format(item, maximum, quantity))
 
-    def bit_pack_format(self) -> Iterator[int]:
-        yield from self.configuration.bit_pack_format()
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        yield from self.configuration.bit_pack_encode()
 
         if self.configuration == StartingResourcesConfiguration.CUSTOM:
             database = default_database.default_prime2_resource_database()
             for item in database.item:
-                yield _items_with_custom_maximum.get(item.index, 1) + 1
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield from self.configuration.bit_pack_arguments()
-
-        if self.configuration == StartingResourcesConfiguration.CUSTOM:
-            database = default_database.default_prime2_resource_database()
-            for item in database.item:
-                yield self._resources[item]
+                yield self._resources[item], _items_with_custom_maximum.get(item.index, 1) + 1
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "StartingResources":
