@@ -14,7 +14,6 @@ from randovania.gui.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.main_rules_ui import Ui_MainRules
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.ammo_state import AmmoState
 
 
@@ -159,6 +158,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             pickup_name_label.setText(ammo.name)
 
             pickup_spinbox = QSpinBox(self.pickup_count_box)
+            pickup_spinbox.setMaximum(AmmoState.maximum_pickup_count())
             pickup_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_spinbox, ammo))
 
             self.pickup_count_layout.addWidget(pickup_name_label, i, 0)
