@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, Iterator
+from typing import Dict, Iterator, Tuple
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description.item.item_database import ItemDatabase
@@ -29,22 +29,48 @@ class MajorItemsConfiguration(BitPackValue):
             }
         )
 
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        default = MajorItemsConfiguration.default()
+
+        result = []
+        for i, (item, state) in enumerate(self.items_state.items()):
+            if state != default.items_state[item]:
+                result.append((i, item, state))
+
+        yield len(result), len(self.items_state)
+        for index, _, _ in result:
+            yield index, len(self.items_state)
+
+        for index, item, state in result:
+            yield from zip(state.bit_pack_arguments(item), state.bit_pack_format(item))
+
     def bit_pack_format(self) -> Iterator[int]:
-        for item, state in self.items_state.items():
-            yield from state.bit_pack_format(item)
+        for _, pack_format in self.bit_pack_encode():
+            yield pack_format
 
     def bit_pack_arguments(self) -> Iterator[int]:
-        for item, state in self.items_state.items():
-            yield from state.bit_pack_arguments(item)
+        for pack_value, _ in self.bit_pack_encode():
+            yield pack_value
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "MajorItemsConfiguration":
         from randovania.game_description import default_database
         item_database = default_database.default_prime2_item_database()
 
+        default = MajorItemsConfiguration.default()
+        num_items = decoder.decode_single(len(default.items_state))
+        indices_with_custom = {
+            decoder.decode_single(len(default.items_state))
+            for _ in range(num_items)
+        }
+
         items_state = {}
-        for item in item_database.major_items.values():
-            items_state[item] = MajorItemState.bit_pack_unpack(decoder, item)
+
+        for index, item in enumerate(item_database.major_items.values()):
+            if index in indices_with_custom:
+                items_state[item] = MajorItemState.bit_pack_unpack(decoder, item)
+            else:
+                items_state[item] = default.items_state[item]
 
         return cls(items_state)
 

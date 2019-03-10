@@ -34,6 +34,9 @@ class BitPackDecoder:
         self._offset += compiled.calcsize()
         return compiled.unpack_from(self._data, offset)
 
+    def decode_single(self, value: int) -> int:
+        return self.decode(value)[0]
+
     def peek(self, *args) -> Tuple[int, ...]:
         """Decodes values from the current buffer, *NOT* advancing the current pointer"""
         compiled = _compile_format(*args)
