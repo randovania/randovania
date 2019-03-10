@@ -182,86 +182,75 @@ def test_starting_location_for_configuration_random_save_station():
     assert result is game.world_list.node_to_area_location.return_value
 
 
-@patch("randovania.resolver.generator._sky_temple_key_distribution_logic", autospec=True)
 @patch("randovania.resolver.generator._starting_location_for_configuration", autospec=True)
 @patch("randovania.resolver.generator._add_elevator_connections_to_patches", autospec=True)
 @patch("randovania.resolver.generator.GamePatches.with_game")
 def test_create_base_patches(mock_with_game: MagicMock,
                              mock_add_elevator_connections_to_patches: MagicMock,
-                             mock_starting_location_for_configuration: MagicMock,
-                             mock_sky_temple_key_distribution_logic: MagicMock,
+                             mock_starting_location_for_config: MagicMock,
                              ):
     # Setup
     rng = MagicMock()
     game = MagicMock()
     permalink = MagicMock()
-    available_pickups = MagicMock()
 
     first_patches = mock_with_game.return_value
     second_patches = mock_add_elevator_connections_to_patches.return_value
-    third_patches = second_patches.assign_starting_location.return_value
 
     # Run
-    result = generator._create_base_patches(rng, game, permalink, available_pickups)
+    result = generator._create_base_patches(rng, game, permalink)
 
     # Assert
     mock_with_game.assert_called_once_with(game)
     mock_add_elevator_connections_to_patches.assert_called_once_with(permalink, first_patches)
-    mock_starting_location_for_configuration.assert_called_once_with(permalink.layout_configuration, game, rng)
-    second_patches.assign_starting_location.assert_called_once_with(
-        mock_starting_location_for_configuration.return_value)
-    mock_sky_temple_key_distribution_logic.assert_called_once_with(permalink, third_patches, available_pickups)
-    assert result is mock_sky_temple_key_distribution_logic.return_value
+    mock_starting_location_for_config.assert_called_once_with(permalink.layout_configuration, game, rng)
+    second_patches.assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
+    assert result is second_patches.assign_starting_location.return_value
 
 
-@patch("randovania.resolver.generator._indices_for_unassigned_pickups", autospec=True)
-@patch("randovania.resolver.generator.retcon_playthrough_filler", autospec=True)
+@patch("randovania.resolver.generator._assign_remaining_items", autospec=True)
+@patch("randovania.resolver.generator._run_filler", autospec=True)
+@patch("randovania.resolver.generator._validate_item_pool_size", autospec=True)
 @patch("randovania.resolver.generator._create_base_patches", autospec=True)
-@patch("randovania.resolver.generator.calculate_item_pool", autospec=True)
+@patch("randovania.resolver.item_pool.pool_creator.calculate_item_pool", autospec=True)
 @patch("randovania.resolver.generator.Random", autospec=True)
 def test_create_patches(mock_random: MagicMock,
                         mock_calculate_item_pool: MagicMock,
                         mock_create_base_patches: MagicMock,
-                        mock_retcon_playthrough_filler: MagicMock,
-                        mock_indices_for_unassigned_pickups: MagicMock,
+                        mock_validate_item_pool_size: MagicMock,
+                        mock_run_filler: MagicMock,
+                        mock_assign_remaining_items: MagicMock,
                         ):
     # Setup
-    seed_number: int = 91319
     game = default_prime2_game_description()
     status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
-    configuration = LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.NO_TRICKS,
-                                                    sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-                                                    elevators=LayoutElevators.VANILLA,
-                                                    pickup_quantities={},
-                                                    starting_location=StartingLocation.default(),
-                                                    starting_resources=StartingResources.from_item_loss(False),
-                                                    )
-    permalink = Permalink(
-        seed_number=seed_number,
-        spoiler=True,
-        patcher_configuration=PatcherConfiguration.default(),
-        layout_configuration=configuration,
-    )
-    mock_calculate_item_pool.return_value = list(sorted(game.pickup_database.original_pickup_mapping.values()))
-    mock_create_base_patches.return_value.starting_location = game.starting_location
-    mock_create_base_patches.return_value.custom_initial_items = None
 
-    filler_patches = mock_retcon_playthrough_filler.return_value
+    permalink = MagicMock()
+    pool_patches = MagicMock()
+    item_pool = MagicMock()
+    filler_patches = MagicMock()
+    remaining_items = MagicMock()
+
+    mock_calculate_item_pool.return_value = pool_patches, item_pool
+    mock_run_filler.return_value = filler_patches, remaining_items
 
     # Run
     result = generator._create_patches(permalink, game, status_update)
 
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
-    mock_calculate_item_pool.assert_called_once_with(permalink, game)
+    mock_create_base_patches.assert_called_once_with(mock_random.return_value, game, permalink)
 
-    mock_create_base_patches.assert_called_once_with(mock_random.return_value, game, permalink, ANY)
+    # pool
+    mock_calculate_item_pool.assert_called_once_with(permalink.layout_configuration,
+                                                     game.resource_database,
+                                                     mock_create_base_patches.return_value)
 
-    mock_retcon_playthrough_filler.assert_called_once_with(ANY, ANY, ANY,
-                                                           mock_random.return_value, status_update)
-
-    mock_indices_for_unassigned_pickups.assert_called_once_with(mock_random.return_value, game,
-                                                                filler_patches.pickup_assignment, ANY)
-    filler_patches.assign_new_pickups.assert_called_once_with(mock_indices_for_unassigned_pickups.return_value)
-
-    assert result == filler_patches.assign_new_pickups.return_value
+    mock_validate_item_pool_size.assert_called_once_with(item_pool, game)
+    mock_run_filler.assert_called_once_with(
+        permalink.layout_configuration, game, item_pool, pool_patches, mock_random.return_value, status_update
+    )
+    mock_assign_remaining_items.assert_called_once_with(
+        mock_random.return_value, game, filler_patches, remaining_items
+    )
+    assert result == mock_assign_remaining_items.return_value

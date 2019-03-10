@@ -20,7 +20,7 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
-from randovania.resolver.item_pool.pool_creator import calculate_item_pool
+from randovania.resolver.item_pool import pool_creator
 from randovania.resolver.state import State
 
 T = TypeVar("T")
@@ -251,23 +251,45 @@ def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], 
     return major_items, expansions
 
 
-def _create_patches(
-        permalink: Permalink,
-        game: GameDescription,
-        status_update: Callable[[str], None],
-) -> GamePatches:
-    rng = Random(permalink.as_str)
-    configuration = permalink.layout_configuration
-
-    patches = _create_base_patches(rng, game, permalink)
-    patches, item_pool = calculate_item_pool(configuration, game.resource_database, patches)
-
+def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription) -> None:
     num_pickup_nodes = len(list(filter_pickup_nodes(game.world_list.all_nodes)))
     if len(item_pool) > num_pickup_nodes:
         raise InvalidConfiguration(
             "Item pool has {0} items, but there's only {1} pickups spots in the game".format(len(item_pool),
                                                                                              num_pickup_nodes))
 
+
+def _create_patches(
+        permalink: Permalink,
+        game: GameDescription,
+        status_update: Callable[[str], None],
+) -> GamePatches:
+    """
+
+    :param permalink:
+    :param game:
+    :param status_update:
+    :return:
+    """
+    rng = Random(permalink.as_str)
+    configuration = permalink.layout_configuration
+
+    base_patches = _create_base_patches(rng, game, permalink)
+    pool_patches, item_pool = pool_creator.calculate_item_pool(configuration, game.resource_database, base_patches)
+
+    _validate_item_pool_size(item_pool, game)
+
+    filler_patches, remaining_items = _run_filler(configuration, game, item_pool, pool_patches, rng, status_update)
+    return _assign_remaining_items(rng, game, filler_patches, remaining_items)
+
+
+def _run_filler(configuration: LayoutConfiguration,
+                game: GameDescription,
+                item_pool: List[PickupEntry],
+                patches: GamePatches,
+                rng: Random,
+                status_update: Callable[[str], None],
+                ):
     major_items, expansions = _split_expansions(item_pool)
     rng.shuffle(major_items)
     rng.shuffle(expansions)
@@ -276,7 +298,8 @@ def _create_patches(
     logic.game.simplify_connections(state.resources)
 
     filler_patches = retcon_playthrough_filler(logic, state, major_items, rng, status_update)
-    return _assign_remaining_items(rng, game, filler_patches, major_items + expansions)
+
+    return filler_patches, major_items + expansions
 
 
 def _create_base_patches(rng: Random,
