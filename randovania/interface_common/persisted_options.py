@@ -1,5 +1,5 @@
-from randovania.layout.configuration_factory import get_major_items_configurations_for, MajorItemsConfigEnum, \
-    get_ammo_configurations_for, AmmoConfigEnum
+from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
 _CURRENT_OPTIONS_FILE_VERSION = 7
 
@@ -87,9 +87,9 @@ def _convert_v6(options: dict) -> dict:
         if layout_configuration.get("sky_temple_keys") == "fully-random":
             layout_configuration["sky_temple_keys"] = 9
 
-        layout_configuration["major_items_configuration"] = get_major_items_configurations_for(
-            MajorItemsConfigEnum.default()).as_json
-        layout_configuration["ammo_configuration"] = get_ammo_configurations_for(AmmoConfigEnum.default()).as_json
+        layout_configuration["major_items_configuration"] = MajorItemsConfiguration.default().as_json
+        layout_configuration["ammo_configuration"] = AmmoConfiguration.default().as_json
+        layout_configuration.pop("pickup_quantities", None)
 
     return options
 

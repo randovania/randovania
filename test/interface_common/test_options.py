@@ -8,10 +8,11 @@ import pytest
 import randovania.interface_common.options
 import randovania.interface_common.persisted_options
 from randovania.interface_common.options import Options
+from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
     LayoutSkyTempleKeyMode
+from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
 
 
 @pytest.fixture(name="option")
@@ -32,7 +33,7 @@ def test_migrate_from_v1():
     new_data = randovania.interface_common.persisted_options.get_persisted_options_from_data(old_data)
 
     # Assert
-    assert new_data == {
+    expected_data = {
         "last_changelog_displayed": "0.22.0",
         "patcher_configuration": {
             "menu_mod": False,
@@ -40,17 +41,19 @@ def test_migrate_from_v1():
         },
         "layout_configuration": {
             "trick_level": "normal",
-            "sky_temple_keys": "fully-random",
+            "sky_temple_keys": 9,
             "starting_resources": "vanilla-item-loss-enabled",
             "starting_location": "ship",
             "elevators": "vanilla",
-            "pickup_quantities": {},
+            "major_items_configuration": MajorItemsConfiguration.default().as_json,
+            "ammo_configuration": AmmoConfiguration.default().as_json,
         },
         "cosmetic_patches": {
             "disable_hud_popup": True,
             "speed_up_credits": True
         }
     }
+    assert new_data == expected_data
 
 
 @patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
@@ -170,7 +173,7 @@ def test_serialize_fields(option: Options):
 
     # Assert
     assert result == {
-        "version": 6,
+        "version": 7,
         "options": {
             "last_changelog_displayed": randovania.VERSION,
         }
