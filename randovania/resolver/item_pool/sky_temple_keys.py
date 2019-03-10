@@ -38,7 +38,7 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
 
         for key_number in range(keys_to_place):
             item_pool.append(create_sky_temple_key(key_number, resource_database))
-        first_automatic_key = keys_to_place + 1
+        first_automatic_key = keys_to_place
 
     for automatic_key_number in range(first_automatic_key, 9):
         initial_resources.extend(create_sky_temple_key(automatic_key_number, resource_database).resources)
