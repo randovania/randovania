@@ -2,7 +2,7 @@ import base64
 import binascii
 import json
 from dataclasses import dataclass
-from typing import Iterator
+from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, single_byte_hash
@@ -36,22 +36,14 @@ class Permalink(BitPackValue):
         # for previous Randovania versions
         return 4
 
-    def bit_pack_format(self) -> Iterator[int]:
-        yield _PERMALINK_MAX_VERSION
-        yield _PERMALINK_MAX_SEED
-        yield 2
-        yield 256
-        yield from self.patcher_configuration.bit_pack_format()
-        yield from self.layout_configuration.bit_pack_format()
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        yield self.current_version(), _PERMALINK_MAX_VERSION
+        yield self.seed_number, _PERMALINK_MAX_SEED
+        yield int(self.spoiler), 2
+        yield _dictionary_byte_hash(self.layout_configuration.game_data), 256
 
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield self.current_version()
-        yield self.seed_number
-        yield int(self.spoiler)
-        yield _dictionary_byte_hash(self.layout_configuration.game_data)
-
-        yield from self.patcher_configuration.bit_pack_arguments()
-        yield from self.layout_configuration.bit_pack_arguments()
+        yield from self.patcher_configuration.bit_pack_encode()
+        yield from self.layout_configuration.bit_pack_encode()
 
     @classmethod
     def _raise_if_different_version(cls, version: int):

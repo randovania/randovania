@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Optional, Union
+from typing import Iterator, Optional, Union, Tuple
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
 from randovania.game_description import default_database
@@ -33,20 +33,14 @@ class StartingLocation(BitPackValue):
                     self._custom_location, str(self.configuration)
                 ))
 
-    def bit_pack_format(self) -> Iterator[int]:
-        yield from self.configuration.bit_pack_format()
-
-        if self._custom_location is not None:
-            yield len(_areas_list()[1])
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield from self.configuration.bit_pack_arguments()
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        yield from self.configuration.bit_pack_encode()
 
         if self._custom_location is not None:
             world_list, areas = _areas_list()
             area = world_list.area_by_area_location(self._custom_location)
 
-            yield areas.index(area)
+            yield areas.index(area), len(areas)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "StartingLocation":

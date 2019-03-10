@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterator
+from typing import Iterator, Tuple
 
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 
@@ -30,13 +30,9 @@ class PatcherConfiguration(BitPackValue):
             warp_to_start=True,
         )
 
-    def bit_pack_format(self) -> Iterator[int]:
-        yield 2
-        yield 2
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield int(self.menu_mod)
-        yield int(self.warp_to_start)
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        yield int(self.menu_mod), 2
+        yield int(self.warp_to_start), 2
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder):

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterator
+from typing import Iterator, Tuple
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 
@@ -9,11 +9,8 @@ class AmmoState(BitPackValue):
     variance: int
     pickup_count: int
 
-    def bit_pack_format(self) -> Iterator[int]:
-        yield 80
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        yield self.pickup_count
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        yield self.pickup_count, 80
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "AmmoState":

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, Iterator, Tuple
+from typing import Dict, Iterator, Tuple, List
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 from randovania.game_description.item.item_database import ItemDatabase
@@ -32,7 +32,7 @@ class MajorItemsConfiguration(BitPackValue):
     def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         default = MajorItemsConfiguration.default()
 
-        result = []
+        result: List[Tuple[int, MajorItem, MajorItemState]] = []
         for i, (item, state) in enumerate(self.items_state.items()):
             if state != default.items_state[item]:
                 result.append((i, item, state))
@@ -42,15 +42,7 @@ class MajorItemsConfiguration(BitPackValue):
             yield index, len(self.items_state)
 
         for index, item, state in result:
-            yield from zip(state.bit_pack_arguments(item), state.bit_pack_format(item))
-
-    def bit_pack_format(self) -> Iterator[int]:
-        for _, pack_format in self.bit_pack_encode():
-            yield pack_format
-
-    def bit_pack_arguments(self) -> Iterator[int]:
-        for pack_value, _ in self.bit_pack_encode():
-            yield pack_value
+            yield from state.bit_pack_encode(item)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "MajorItemsConfiguration":

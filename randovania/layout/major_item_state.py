@@ -30,39 +30,31 @@ class MajorItemState:
             included_ammo=tuple(value["included_ammo"]),
         )
 
-    def bit_pack_format(self, item: MajorItem) -> Iterator[int]:
+    def bit_pack_encode(self, item: MajorItem) -> Iterator[Tuple[int, int]]:
         # original location
-        yield 2
+        yield int(self.include_copy_in_original_location), 2
 
         if item.item_category == MajorItemCategory.ENERGY_TANK:
             # num shuffled
-            yield 16
+            yield self.num_shuffled_pickups, 16
+
             # starting item
-            yield 16
+            yield self.num_included_in_starting_items, 16
+
         else:
             # num shuffled
-            yield 4
             if self.num_shuffled_pickups > 2:
-                yield 8
+                yield 3, 4
+                yield self.num_included_in_starting_items - 3, 8
+            else:
+                yield self.num_shuffled_pickups, 4
 
             # starting item
-            yield 2
+            yield self.num_included_in_starting_items, 2
 
-        # included_ammo
-        for _ in item.ammo_index:
-            yield 256
-
-    def bit_pack_arguments(self, item: MajorItem) -> Iterator[int]:
-        yield int(self.include_copy_in_original_location)
-
-        yield self.num_shuffled_pickups
-
-        if self.num_included_in_starting_items < 3:
-            yield self.num_included_in_starting_items
-        else:
-            yield 3
-            yield self.num_included_in_starting_items - 3
-        yield from self.included_ammo
+        # ammo index
+        for ammo_index in item.ammo_index:
+            yield ammo_index, 256
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, item: MajorItem) -> "MajorItemState":

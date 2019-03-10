@@ -14,10 +14,7 @@ from randovania.layout.starting_location import StartingLocation
 
 @dataclass(frozen=True)
 class DummyValue(BitPackValue):
-    def bit_pack_format(self):
-        yield from []
-
-    def bit_pack_arguments(self):
+    def bit_pack_encode(self):
         yield from []
 
     @classmethod

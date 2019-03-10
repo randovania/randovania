@@ -6,30 +6,22 @@ from randovania import get_data_path
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.default_database import default_prime2_item_database
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.ammo_configuration import AmmoConfiguration
 
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x00', "replace": {}},
-        {"encoded": b'\x05\n', "replace": {
-            "Spider Ball": {
-                "include_copy_in_original_location": True,
-                "num_shuffled_pickups": 1,
-                "num_included_in_starting_items": 0,
-                "included_ammo": []
-            }
-        }},
+        {"encoded": b'\xaa\n\xfa\xfaB P\xa0\x00', "replace": {}},
     ],
     name="config_with_data")
 def _config_with_data(request):
-    with get_data_path().joinpath("json_data", "configurations", "major_items", "default.json").open() as open_file:
+    with get_data_path().joinpath("json_data", "configurations", "ammo", "split-ammo.json").open() as open_file:
         data = json.load(open_file)
 
     for key, value in request.param["replace"].items():
         data["items_state"][key] = value
 
-    return request.param["encoded"], MajorItemsConfiguration.from_json(data, default_prime2_item_database())
+    return request.param["encoded"], AmmoConfiguration.from_json(data, default_prime2_item_database())
 
 
 def test_decode(config_with_data):
@@ -38,7 +30,7 @@ def test_decode(config_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = MajorItemsConfiguration.bit_pack_unpack(decoder)
+    result = AmmoConfiguration.bit_pack_unpack(decoder)
 
     # Assert
     assert result == expected
