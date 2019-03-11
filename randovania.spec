@@ -1,7 +1,6 @@
 # -*- mode: python -*-
 
 block_cipher = None
-import os
 icon_path = "randovania/data/icons/sky_temple_key_NqN_icon.ico"
 
 a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
@@ -12,6 +11,8 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
                  ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
                  ("randovania/data/binary_data", "data/binary_data"),
+                 ("randovania/data/json_data", "data/json_data"),
+                 # FIXME: including the prime2.json
              ],
              hiddenimports=[
                 "unittest.mock",
