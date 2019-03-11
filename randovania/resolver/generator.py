@@ -57,7 +57,7 @@ def _state_to_solver_path(final_state: State,
 
 def generate_list(permalink: Permalink,
                   status_update: Optional[Callable[[str], None]],
-                  timeout: Optional[int] = 120
+                  timeout: Optional[int] = 600
                   ) -> LayoutDescription:
     if status_update is None:
         status_update = id
@@ -94,7 +94,7 @@ def generate_list(permalink: Permalink,
         final_state_async = dummy_pool.apply_async(func=resolver.resolve,
                                                    kwds=resolve_params)
         try:
-            final_state_by_resolve = final_state_async.get(60)
+            final_state_by_resolve = final_state_async.get(timeout)
         except multiprocessing.TimeoutError:
             raise create_failure("Timeout reached when validating possibility")
 
