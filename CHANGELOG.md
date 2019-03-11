@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-    Added: all changes Claris made recently, including translators being added to item menu and fixing translator gates colors.
+-    Added: Progressive suits
+-    Added: Split beam ammo: by default, there's 10 dark ammo and 10 light ammo expansions, with less missiles expansions. This is changeable in the new "Main Rules" tab.
+-    Added: Option to control with what items you start the game
+-    Added: Configurable count of how many Sky Temple Keys you need to finish the game
+-    Changed: Choosing "All Guardians" only 3 keys now (disregard the outdated text in GUI)
+
 ## [0.23.0] - 2019-02-10
 
 -   Added: New option to enable the "Warp to Start" feature.
