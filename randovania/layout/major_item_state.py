@@ -4,6 +4,9 @@ from typing import Tuple, Iterator
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.item.major_item import MajorItem, MajorItemCategory
 
+ENERGY_TANK_MAXIMUM_COUNT = 16
+DEFAULT_MAXIMUM_SHUFFLED = 11
+
 
 @dataclass(frozen=True)
 class MajorItemState:
@@ -36,16 +39,16 @@ class MajorItemState:
 
         if item.item_category == MajorItemCategory.ENERGY_TANK:
             # num shuffled
-            yield self.num_shuffled_pickups, 16
+            yield self.num_shuffled_pickups, ENERGY_TANK_MAXIMUM_COUNT
 
             # starting item
-            yield self.num_included_in_starting_items, 16
+            yield self.num_included_in_starting_items, ENERGY_TANK_MAXIMUM_COUNT
 
         else:
             # num shuffled
             if self.num_shuffled_pickups > 2:
                 yield 3, 4
-                yield self.num_included_in_starting_items - 3, 8
+                yield self.num_included_in_starting_items - 3, DEFAULT_MAXIMUM_SHUFFLED - 3
             else:
                 yield self.num_shuffled_pickups, 4
 

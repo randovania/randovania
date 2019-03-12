@@ -15,6 +15,7 @@ from randovania.gui.main_rules_ui import Ui_MainRules
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.ammo_state import AmmoState
+from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT
 
 
 def _toggle_category_visibility(category_button: QToolButton, category_box: QGroupBox):
@@ -34,12 +35,21 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         # Create Stuff
         item_database = default_prime2_item_database()
+        self._energy_tank_item = item_database.major_items["Energy Tank"]
+
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
+        self._create_energy_tank_box()
         self._create_ammo_maximum_boxes(item_database)
         self._create_ammo_pickup_boxes(item_database)
 
     def on_options_changed(self):
+        major_configuration = self._options.major_items_configuration
+        energy_tank_state = major_configuration.items_state[self._energy_tank_item]
+
+        self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_items)
+        self.energy_tank_shuffled_spinbox.setValue(energy_tank_state.num_shuffled_pickups)
+
         ammo_configuration = self._options.ammo_configuration
 
         for ammo_item, maximum in ammo_configuration.maximum_ammo.items():
@@ -77,6 +87,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
     def _create_major_item_boxes(self, item_database: ItemDatabase):
         for major_item in item_database.major_items.values():
+            if major_item.item_category == MajorItemCategory.ENERGY_TANK:
+                continue
             category_box, category_layout, elements = self._boxes_for_category[major_item.item_category]
 
             item_button = QToolButton(category_box)
@@ -109,6 +121,45 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 self._options.major_items_configuration = major_items_configuration.replace_state_for_item(
                     item, popup.state
                 )
+
+    def _create_energy_tank_box(self):
+        category_box, category_layout, _ = self._boxes_for_category[MajorItemCategory.ENERGY_TANK]
+
+        starting_label = QLabel(category_box)
+        starting_label.setText("Starting Quantity")
+
+        shuffled_label = QLabel(category_box)
+        shuffled_label.setText("Shuffled Quantity")
+
+        self.energy_tank_starting_spinbox = QSpinBox(category_box)
+        self.energy_tank_starting_spinbox.setMaximum(ENERGY_TANK_MAXIMUM_COUNT)
+        self.energy_tank_starting_spinbox.valueChanged.connect(self._on_update_starting_energy_tank)
+        self.energy_tank_shuffled_spinbox = QSpinBox(category_box)
+        self.energy_tank_shuffled_spinbox.setMaximum(ENERGY_TANK_MAXIMUM_COUNT)
+        self.energy_tank_shuffled_spinbox.valueChanged.connect(self._on_update_shuffled_energy_tank)
+
+        category_layout.addWidget(starting_label, 0, 0)
+        category_layout.addWidget(self.energy_tank_starting_spinbox, 0, 1)
+        category_layout.addWidget(shuffled_label, 1, 0)
+        category_layout.addWidget(self.energy_tank_shuffled_spinbox, 1, 1)
+
+    def _on_update_starting_energy_tank(self, value: int):
+        with self._options as options:
+            major_configuration = options.major_items_configuration
+            options.major_items_configuration = major_configuration.replace_state_for_item(
+                self._energy_tank_item,
+                dataclasses.replace(major_configuration.items_state[self._energy_tank_item],
+                                    num_included_in_starting_items=value)
+            )
+
+    def _on_update_shuffled_energy_tank(self, value: int):
+        with self._options as options:
+            major_configuration = options.major_items_configuration
+            options.major_items_configuration = major_configuration.replace_state_for_item(
+                self._energy_tank_item,
+                dataclasses.replace(major_configuration.items_state[self._energy_tank_item],
+                                    num_shuffled_pickups=value)
+            )
 
     def _create_ammo_maximum_boxes(self, item_database: ItemDatabase):
         """
