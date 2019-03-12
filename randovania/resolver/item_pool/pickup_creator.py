@@ -1,9 +1,10 @@
-from typing import Iterator
+from typing import Iterator, Optional, Tuple
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources
+from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources, \
+    SimpleResourceInfo, ResourceQuantity
 from randovania.layout.major_item_state import MajorItemState
 
 _ITEM_PERCENTAGE = 47
@@ -49,8 +50,11 @@ def create_major_item(item: MajorItem,
     :return:
     """
 
-    def _create_resources(index):
-        resources = [(resource_database.get_by_type_and_index(ResourceType.ITEM, index), 1)]
+    def _create_resources(base_resource: Optional[int]) -> Tuple[ResourceQuantity, ...]:
+        resources = []
+
+        if base_resource is not None:
+            resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, base_resource), 1))
 
         for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
             resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_index), ammo_count))
@@ -60,21 +64,19 @@ def create_major_item(item: MajorItem,
 
         return tuple(resources)
 
-    previous_resource = item.progression[0]
-    conditional_resources = []
-
-    for progression in item.progression[1:]:
-        conditional_resources.append(ConditionalResources(
-            item=resource_database.get_by_type_and_index(ResourceType.ITEM, previous_resource),
+    conditional_resources = tuple(
+        ConditionalResources(
+            item=resource_database.get_by_type_and_index(ResourceType.ITEM, item.progression[i]),
             resources=_create_resources(progression)
-        ))
-        previous_resource = progression
+        )
+        for i, progression in enumerate(item.progression[1:])
+    )
 
     return PickupEntry(
         name=item.name,
-        resources=_create_resources(item.progression[0]),
+        resources=_create_resources(item.progression[0] if item.progression else None),
         model_index=item.model_index,
-        conditional_resources=tuple(conditional_resources),
+        conditional_resources=conditional_resources,
         item_category=item.item_category.value,
         probability_offset=item.probability_offset,
     )

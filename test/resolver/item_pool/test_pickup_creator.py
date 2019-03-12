@@ -75,3 +75,42 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
         item_category="morph_ball",
         probability_offset=5,
     )
+
+
+@pytest.mark.parametrize(["ammo_quantity"], [
+    (0,),
+    (10,),
+    (15,),
+])
+def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoes_resource_database):
+    # Setup
+    missile = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 44)
+    percentage_item = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 47)
+
+    state = MajorItemState(
+        include_copy_in_original_location=False,
+        num_shuffled_pickups=0,
+        num_included_in_starting_items=0,
+        included_ammo=(ammo_quantity,),
+    )
+
+    # Run
+    result = randovania.resolver.item_pool.pickup_creator.create_major_item(
+        echoes_item_database.major_items["Missile Launcher"],
+        state,
+        True,
+        echoes_resource_database
+    )
+
+    # Assert
+    assert result == PickupEntry(
+        name="Missile Launcher",
+        resources=(
+            (missile, ammo_quantity),
+            (percentage_item, 1),
+        ),
+        model_index=24,
+        conditional_resources=(),
+        item_category="missile",
+        probability_offset=0,
+    )

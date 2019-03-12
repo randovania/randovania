@@ -5,8 +5,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.default_database import default_prime2_resource_database
+from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources import ResourceDatabase
 
 
@@ -23,7 +24,12 @@ def simple_data(test_files_dir: Path) -> dict:
 
 @pytest.fixture()
 def echoes_resource_database() -> ResourceDatabase:
-    return default_prime2_resource_database()
+    return default_database.default_prime2_resource_database()
+
+
+@pytest.fixture()
+def echoes_item_database() -> ItemDatabase:
+    return default_database.default_prime2_item_database()
 
 
 class DataclassTestLib:
