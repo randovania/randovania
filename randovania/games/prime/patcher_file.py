@@ -18,18 +18,18 @@ from randovania.resolver.item_pool.pickup_creator import create_useless_pickup
 
 _TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
-    1660916974: "Temple Grounds - Agon",
-    2889020216: "Temple Grounds - Torvus",
-    3455543403: "Temple Grounds - Sanctuary",
-    1473133138: "Agon Wastes Entrance",
-    2806956034: "Agon Wastes - Torvus",
-    3331021649: "Agon Wastes - Sanctuary",
-    1868895730: "Torvus Bog Entrance",
-    3479543630: "Torvus Bog - Agon",
-    3205424168: "Torvus Bog - Sanctuary",
-    3528156989: "Sanctuary Fortress Entrance",
-    900285955: "Sanctuary Fortress - Agon",
-    3145160350: "Sanctuary Fortress - Torvus",
+    1660916974: "Grounds from Agon",
+    2889020216: "Grounds from Torvus",
+    3455543403: "Grounds from Sanctuary",
+    1473133138: "Agon Entrance",
+    2806956034: "Agon from Torvus",
+    3331021649: "Agon from Sanctuary",
+    1868895730: "Torvus Entrance",
+    3479543630: "Torvus from Agon",
+    3205424168: "Torvus Sanctuary",
+    3528156989: "Sanctuary Entrance",
+    900285955: "Sanctuary from Agon",
+    3145160350: "Sanctuary from Torvus",
 }
 
 
