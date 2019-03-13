@@ -54,32 +54,7 @@
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="1" rowspan="2">
-         <widget class="QGroupBox" name="ammo_box">
-          <property name="title">
-           <string>Ammo</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QGroupBox" name="maximum_count_box">
-             <property name="title">
-              <string>Maximum Count</string>
-             </property>
-             <layout class="QGridLayout" name="maximum_count_layout"/>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="pickup_count_box">
-             <property name="title">
-              <string>Pickup Count</string>
-             </property>
-             <layout class="QGridLayout" name="pickup_count_layout"/>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QGroupBox" name="major_items_box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -107,6 +82,76 @@
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1" rowspan="2">
+         <widget class="QGroupBox" name="ammo_box">
+          <property name="title">
+           <string>Ammo</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QGroupBox" name="maximum_count_box">
+             <property name="title">
+              <string>Maximum Count</string>
+             </property>
+             <layout class="QGridLayout" name="maximum_count_layout"/>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="pickup_count_box">
+             <property name="title">
+              <string>Pickup Count</string>
+             </property>
+             <layout class="QGridLayout" name="pickup_count_layout"/>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QGroupBox" name="item_alternative_box">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>Item alternatives</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="progressive_suit_check">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Instead of there being a Dark Suit and a Light Suit pickups, there will instead be two Progressive Suit pickups.&lt;/p&gt;&lt;p&gt;Picking the first one gives you Dark Suit, while the second one gives Light Suit. This ensures you always get Dark Suit before.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="text">
+              <string>Use progressive suits</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="progressive_grapple_check">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This groups Grapple Beam and Screw Attack into a progressive item pair: the first one always gives Grapple Beam, with the second one always being Screw Attack.&lt;/p&gt;&lt;p&gt;Warning: the model for this item pair will always be Grapple Beam.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="text">
+              <string>Use progressive Grapple Beam -&gt; Screw Attack</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="split_ammo_check">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Splits the Beam Ammo Expansion pickups into two different pickups: Light Ammo Expansion and Dark Ammo Expansion.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="text">
+              <string>Split Beam Ammo expansions</string>
              </property>
             </widget>
            </item>

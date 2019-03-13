@@ -10,10 +10,10 @@ DEFAULT_MAXIMUM_SHUFFLED = 11
 
 @dataclass(frozen=True)
 class MajorItemState:
-    include_copy_in_original_location: bool
-    num_shuffled_pickups: int
-    num_included_in_starting_items: int
-    included_ammo: Tuple[int, ...]
+    include_copy_in_original_location: bool = False
+    num_shuffled_pickups: int = 0
+    num_included_in_starting_items: int = 0
+    included_ammo: Tuple[int, ...] = tuple()
 
     @property
     def as_json(self) -> dict:

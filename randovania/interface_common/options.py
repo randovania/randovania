@@ -271,8 +271,7 @@ class Options:
 
     @layout_configuration_trick_level.setter
     def layout_configuration_trick_level(self, value: LayoutTrickLevel):
-        self._check_editable_and_mark_dirty()
-        self._layout_configuration = dataclasses.replace(self.layout_configuration, trick_level=value)
+        self.set_layout_configuration_field("trick_level", value)
 
     @property
     def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:
@@ -280,8 +279,7 @@ class Options:
 
     @layout_configuration_sky_temple_keys.setter
     def layout_configuration_sky_temple_keys(self, value: LayoutSkyTempleKeyMode):
-        self._check_editable_and_mark_dirty()
-        self._layout_configuration = dataclasses.replace(self.layout_configuration, sky_temple_keys=value)
+        self.set_layout_configuration_field("sky_temple_keys", value)
 
     @property
     def layout_configuration_elevators(self) -> LayoutElevators:
@@ -289,8 +287,7 @@ class Options:
 
     @layout_configuration_elevators.setter
     def layout_configuration_elevators(self, value: LayoutElevators):
-        self._check_editable_and_mark_dirty()
-        self._layout_configuration = dataclasses.replace(self.layout_configuration, elevators=value)
+        self.set_layout_configuration_field("elevators", value)
 
     @property
     def major_items_configuration(self) -> MajorItemsConfiguration:
@@ -298,8 +295,7 @@ class Options:
 
     @major_items_configuration.setter
     def major_items_configuration(self, value: MajorItemsConfiguration):
-        self._check_editable_and_mark_dirty()
-        self._layout_configuration = dataclasses.replace(self.layout_configuration, major_items_configuration=value)
+        self.set_layout_configuration_field("major_items_configuration", value)
 
     @property
     def ammo_configuration(self) -> AmmoConfiguration:
@@ -307,8 +303,14 @@ class Options:
 
     @ammo_configuration.setter
     def ammo_configuration(self, value: AmmoConfiguration):
-        self._check_editable_and_mark_dirty()
-        self._layout_configuration = dataclasses.replace(self.layout_configuration, ammo_configuration=value)
+        self.set_layout_configuration_field("ammo_configuration", value)
+
+    def set_layout_configuration_field(self, field_name: str, value):
+        current_layout = self.layout_configuration
+        new_layout = dataclasses.replace(self.layout_configuration, **{field_name: value})
+        if current_layout != new_layout:
+            self._check_editable_and_mark_dirty()
+            self._layout_configuration = new_layout
 
     ######
 

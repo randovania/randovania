@@ -1,3 +1,4 @@
+import copy
 from dataclasses import dataclass
 from typing import Dict, Iterator, Tuple, List
 
@@ -67,12 +68,23 @@ class MajorItemsConfiguration(BitPackValue):
         return cls(items_state)
 
     def replace_state_for_item(self, item: MajorItem, state: MajorItemState) -> "MajorItemsConfiguration":
-        return MajorItemsConfiguration(
-            items_state={
-                key: state if key == item else value
-                for key, value in self.items_state.items()
-            }
-        )
+        return self.replace_states({
+            item: state
+        })
+
+    def replace_states(self, new_states: Dict[MajorItem, MajorItemState]) -> "MajorItemsConfiguration":
+        """
+        Creates a copy of this MajorItemsConfiguration where the state of all given items are replaced by the given
+        states.
+        :param new_states:
+        :return:
+        """
+        items_state = copy.copy(self.items_state)
+
+        for item, state in new_states.items():
+            items_state[item] = state
+
+        return MajorItemsConfiguration(items_state)
 
     @classmethod
     def default(cls):

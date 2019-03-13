@@ -84,11 +84,17 @@ def _convert_v5(options: dict) -> dict:
 def _convert_v6(options: dict) -> dict:
     if "layout_configuration" in options:
         layout_configuration = options["layout_configuration"]
-        if layout_configuration.get("sky_temple_keys") == "fully-random":
+
+        if layout_configuration.get("sky_temple_keys") in ("fully-random", "vanilla"):
             layout_configuration["sky_temple_keys"] = 9
 
         layout_configuration["major_items_configuration"] = MajorItemsConfiguration.default().as_json
         layout_configuration["ammo_configuration"] = AmmoConfiguration.default().as_json
+        layout_configuration["progressive_suit"] = True
+        layout_configuration["progressive_grapple"] = True
+        layout_configuration["split_beam_ammo"] = True
+        layout_configuration["missile_launcher_required"] = True
+        layout_configuration["main_power_bombs_required"] = True
         layout_configuration.pop("pickup_quantities", None)
 
     return options

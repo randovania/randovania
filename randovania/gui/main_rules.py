@@ -1,5 +1,6 @@
 import dataclasses
 from functools import partial
+from typing import Dict, Tuple
 
 from PySide2.QtCore import QRect, Qt
 from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox
@@ -15,7 +16,7 @@ from randovania.gui.main_rules_ui import Ui_MainRules
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.ammo_state import AmmoState
-from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT
+from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState
 
 
 def _toggle_category_visibility(category_button: QToolButton, category_box: QGroupBox):
@@ -24,6 +25,8 @@ def _toggle_category_visibility(category_button: QToolButton, category_box: QGro
 
 
 class MainRulesWindow(QMainWindow, Ui_MainRules):
+    _boxes_for_category: Dict[
+        MajorItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
 
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
@@ -33,10 +36,16 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.gridLayout.setAlignment(Qt.AlignTop)
 
-        # Create Stuff
+        # Relevant Items
         item_database = default_prime2_item_database()
+
+        self._dark_suit = item_database.major_items["Dark Suit"]
+        self._light_suit = item_database.major_items["Light Suit"]
+        self._progressive_suit = item_database.major_items["Progressive Suit"]
+
         self._energy_tank_item = item_database.major_items["Energy Tank"]
 
+        self._register_alternatives_events()
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
         self._create_energy_tank_box()
@@ -44,12 +53,27 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._create_ammo_pickup_boxes(item_database)
 
     def on_options_changed(self):
+        # Item alternatives
+        layout = self._options.layout_configuration
+        self.progressive_suit_check.setChecked(layout.progressive_suit)
+        self.progressive_grapple_check.setChecked(layout.progressive_grapple)
+        self.split_ammo_check.setChecked(layout.split_beam_ammo)
+
+        suit_elements = self._boxes_for_category[MajorItemCategory.SUIT][2]
+        for element in suit_elements[self._dark_suit] + suit_elements[self._light_suit]:
+            element.setVisible(not layout.progressive_suit)
+
+        for element in suit_elements[self._progressive_suit]:
+            element.setVisible(layout.progressive_suit)
+
+        # Energy Tank
         major_configuration = self._options.major_items_configuration
         energy_tank_state = major_configuration.items_state[self._energy_tank_item]
 
         self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_items)
         self.energy_tank_shuffled_spinbox.setValue(energy_tank_state.num_shuffled_pickups)
 
+        # Ammo
         ammo_configuration = self._options.ammo_configuration
 
         for ammo_item, maximum in ammo_configuration.maximum_ammo.items():
@@ -57,6 +81,42 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         for ammo, state in ammo_configuration.items_state.items():
             self._ammo_pickup_spinboxes[ammo].setValue(state.pickup_count)
+
+    # Item Alternatives
+
+    def _register_alternatives_events(self):
+        self.progressive_suit_check.stateChanged.connect(self._persist_bool_layout_field("progressive_suit"))
+        self.progressive_suit_check.clicked.connect(self._change_progressive_suit)
+
+    def _persist_bool_layout_field(self, field_name: str):
+        def bound(value: int):
+            with self._options as options:
+                options.set_layout_configuration_field(field_name, bool(value))
+
+        return bound
+
+    def _change_progressive_suit(self, has_progressive: bool):
+        with self._options as options:
+            major_configuration = options.major_items_configuration
+
+            if has_progressive:
+                dark_suit_state = MajorItemState()
+                light_suit_state = MajorItemState()
+                progressive_suit_state = MajorItemState(num_shuffled_pickups=2)
+            else:
+                dark_suit_state = MajorItemState(num_shuffled_pickups=1)
+                light_suit_state = MajorItemState(num_shuffled_pickups=1)
+                progressive_suit_state = MajorItemState()
+
+            major_configuration = major_configuration.replace_states({
+                self._dark_suit: dark_suit_state,
+                self._light_suit: light_suit_state,
+                self._progressive_suit: progressive_suit_state,
+            })
+
+            options.major_items_configuration = major_configuration
+
+    # Major Items
 
     def _create_categories_boxes(self, size_policy):
         self._boxes_for_category = {}
@@ -80,7 +140,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             self.major_items_layout.addWidget(category_button, 2 * i + 1, 0, 1, 1)
             self.major_items_layout.addWidget(category_label, 2 * i + 1, 1, 1, 1)
             self.major_items_layout.addWidget(category_box, 2 * i + 2, 0, 1, 2)
-            self._boxes_for_category[major_item_category] = category_box, category_layout, []
+            self._boxes_for_category[major_item_category] = category_box, category_layout, {}
 
             category_button.clicked.connect(partial(_toggle_category_visibility, category_button, category_box))
             category_box.setVisible(False)
@@ -101,7 +161,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             i = len(elements)
             category_layout.addWidget(item_button, i, 0)
             category_layout.addWidget(item_label, i, 1)
-            elements.append((major_item, item_button, item_label))
+            elements[major_item] = item_button, item_label
 
             item_button.clicked.connect(partial(self.show_item_popup, major_item))
 
@@ -121,6 +181,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 self._options.major_items_configuration = major_items_configuration.replace_state_for_item(
                     item, popup.state
                 )
+
+    # Energy Tank
 
     def _create_energy_tank_box(self):
         category_box, category_layout, _ = self._boxes_for_category[MajorItemCategory.ENERGY_TANK]
@@ -160,6 +222,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 dataclasses.replace(major_configuration.items_state[self._energy_tank_item],
                                     num_shuffled_pickups=value)
             )
+
+    # Ammo
 
     def _create_ammo_maximum_boxes(self, item_database: ItemDatabase):
         """
