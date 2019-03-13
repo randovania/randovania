@@ -224,8 +224,14 @@ def _modern_api(game_root: Path,
     :param cosmetic_patches:
     :return:
     """
+    patcher_data = patcher_file.create_patcher_file(description, cosmetic_patches)
+
+    if description.permalink.spoiler:
+        with game_root.joinpath("files", "patcher_data.json").open("w") as patcher_data_file:
+            json.dump(patcher_data, patcher_data_file)
+
     _run_with_args(_base_args(game_root),
-                   json.dumps(patcher_file.create_patcher_file(description, cosmetic_patches)),
+                   json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
 
