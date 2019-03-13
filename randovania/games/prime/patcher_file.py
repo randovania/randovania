@@ -188,23 +188,22 @@ def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list
 
 def create_patcher_file(description: LayoutDescription,
                         cosmetic_patches: CosmeticPatches) -> dict:
-    result = {}
-
     patcher_config = description.permalink.patcher_configuration
     layout = description.permalink.layout_configuration
     patches = description.patches
     game = data_reader.decode_data(layout.game_data, add_self_as_requirement_to_resources=False)
-
     useless_pickup = create_useless_pickup(game.resource_database)
 
-    result["permalink"] = description.permalink.as_str,
-    result["seed_hash"] = description.shareable_hash,
-    result["randovania_version"] = randovania.VERSION,
+    result = {}
+    _add_header_data_to_result(description, result)
 
+    # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
+    # Add the pickups
     result["pickups"] = _create_pickup_list(patches, useless_pickup, _TOTAL_PICKUP_COUNT)
 
+    # Add the elevators
     result["elevators"] = _create_elevators_field(patches, game.world_list)
 
     # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
@@ -218,6 +217,13 @@ def create_patcher_file(description: LayoutDescription,
     }
 
     return result
+
+
+def _add_header_data_to_result(description: LayoutDescription, result: dict) -> None:
+    # FIXME: these shouldn't be tuples
+    result["permalink"] = description.permalink.as_str,
+    result["seed_hash"] = description.shareable_hash,
+    result["randovania_version"] = randovania.VERSION,
 
 
 def is_vanilla_starting_location(configuration: LayoutConfiguration) -> bool:

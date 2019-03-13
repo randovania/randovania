@@ -1,11 +1,34 @@
 import dataclasses
+import json
+from unittest.mock import MagicMock
 
+import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo, \
     ConditionalResources
 from randovania.games.prime import patcher_file, default_data
+
+
+def test_add_header_data_to_result():
+    # Setup
+    description = MagicMock()
+    description.permalink.as_str = "<permalink>"
+    description.shareable_hash = "<shareable_hash>"
+    expected = {
+        "permalink": ["<permalink>"],
+        "seed_hash": ["<shareable_hash>"],
+        "randovania_version": [randovania.VERSION],
+    }
+    result = {}
+
+    # Run
+    patcher_file._add_header_data_to_result(description, result)
+
+    # Assert
+    assert json.loads(json.dumps(result)) == expected
+
 
 
 def test_create_spawn_point_field(echoes_resource_database, empty_patches):
