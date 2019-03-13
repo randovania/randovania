@@ -224,10 +224,3 @@ def _add_header_data_to_result(description: LayoutDescription, result: dict) -> 
     result["permalink"] = description.permalink.as_str,
     result["seed_hash"] = description.shareable_hash,
     result["randovania_version"] = randovania.VERSION,
-
-
-def is_vanilla_starting_location(configuration: LayoutConfiguration) -> bool:
-    loc_config = configuration.starting_location.configuration
-    resource_config = configuration.starting_resources.configuration
-    return (loc_config == StartingLocationConfiguration.SHIP and
-            resource_config == StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
