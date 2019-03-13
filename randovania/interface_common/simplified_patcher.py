@@ -144,11 +144,10 @@ def export_layout(layout: LayoutDescription,
 
     output_json = options.output_directory.joinpath("{}.json".format(_output_name_for(layout)))
 
-    if debug.debug_level() > 0:
-        patcher = options.output_directory.joinpath("{}-patcher.json".format(_output_name_for(layout)))
-        with patcher.open("w") as out_file:
-            json.dump(patcher_file.create_patcher_file(layout, options.cosmetic_patches),
-                      out_file, indent=4, separators=(',', ': '))
+    patcher = options.output_directory.joinpath("{}-patcher.json".format(_output_name_for(layout)))
+    with patcher.open("w") as out_file:
+        json.dump(patcher_file.create_patcher_file(layout, options.cosmetic_patches),
+                  out_file, indent=4, separators=(',', ': '))
 
     # Save the layout to a file
     layout.save_to_file(output_json)
