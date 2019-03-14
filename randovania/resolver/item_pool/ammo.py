@@ -29,10 +29,10 @@ def add_ammo(resource_database: ResourceDatabase,
         if state.variance != 0:
             raise InvalidConfiguration("Variance was configured for {0.name}, but it is currently NYI".format(ammo))
 
-        ammo_per_pickup = _items_for_ammo(ammo, state,
-                                          included_ammo_for_item,
-                                          previous_pickup_for_item,
-                                          ammo_configuration.maximum_ammo)
+        ammo_per_pickup = items_for_ammo(ammo, state,
+                                         included_ammo_for_item,
+                                         previous_pickup_for_item,
+                                         ammo_configuration.maximum_ammo)
 
         # TODO: we can just iterate over ammo_per_pickup
         for i in range(state.pickup_count):
@@ -43,15 +43,16 @@ def add_ammo(resource_database: ResourceDatabase,
             )
 
 
-def _items_for_ammo(ammo: Ammo,
-                    state: AmmoState,
-                    included_ammo_for_item: Dict[int, int],
-                    previous_pickup_for_item: Dict[int, Ammo],
-                    maximum_ammo: Dict[int, int],
-                    ) -> List[List[int]]:
+def items_for_ammo(ammo: Ammo,
+                   state: AmmoState,
+                   included_ammo_for_item: Dict[int, int],
+                   previous_pickup_for_item: Dict[int, Ammo],
+                   maximum_ammo: Dict[int, int],
+                   ) -> List[List[int]]:
     """
     Helper function for add_ammo.
 
+    :param maximum_ammo:
     :param ammo:
     :param state:
     :param included_ammo_for_item:
@@ -59,6 +60,10 @@ def _items_for_ammo(ammo: Ammo,
     :return: An array that lists how many of each ammo each instance of the expansions should give
     """
     ammo_per_pickup: List[List[int]] = [[] for _ in range(state.pickup_count)]
+
+    # TODO: add test for case of 0 pickups
+    if state.pickup_count == 0:
+        return ammo_per_pickup
 
     for item in ammo.items:
         if item in previous_pickup_for_item:
