@@ -17,9 +17,9 @@ def test_add_header_data_to_result():
     description.permalink.as_str = "<permalink>"
     description.shareable_hash = "<shareable_hash>"
     expected = {
-        "permalink": ["<permalink>"],
-        "seed_hash": ["<shareable_hash>"],
-        "randovania_version": [randovania.VERSION],
+        "permalink": "<permalink>",
+        "seed_hash": "<shareable_hash>",
+        "randovania_version": randovania.VERSION,
     }
     result = {}
 
@@ -28,7 +28,6 @@ def test_add_header_data_to_result():
 
     # Assert
     assert json.loads(json.dumps(result)) == expected
-
 
 
 def test_create_spawn_point_field(echoes_resource_database, empty_patches):
