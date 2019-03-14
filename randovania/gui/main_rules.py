@@ -5,7 +5,8 @@ from functools import partial
 from typing import Dict, Tuple, List
 
 from PySide2.QtCore import QRect, Qt
-from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox
+from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
+    QHBoxLayout
 
 from randovania.game_description.default_database import default_prime2_item_database, default_prime2_resource_database
 from randovania.game_description.item.ammo import Ammo
@@ -26,9 +27,9 @@ _EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_
                                  "\n{from_items} will be provided from major items.")
 
 
-def _toggle_category_visibility(category_button: QToolButton, category_box: QGroupBox):
-    category_box.setVisible(not category_box.isVisible())
-    category_button.setText("-" if category_box.isVisible() else "+")
+def _toggle_box_visibility(toggle_button: QToolButton, box: QGroupBox):
+    box.setVisible(not box.isVisible())
+    toggle_button.setText("-" if box.isVisible() else "+")
 
 
 class MainRulesWindow(QMainWindow, Ui_MainRules):
@@ -59,7 +60,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
         self._create_energy_tank_box()
-        self._create_ammo_pickup_boxes(item_database)
+        self._create_ammo_pickup_boxes(size_policy, item_database)
 
     def on_options_changed(self):
         # Item alternatives
@@ -98,7 +99,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             for ammo_index in ammo_provided.keys()
         }
 
-        print("=============================")
         for ammo, state in ammo_configuration.items_state.items():
             self._ammo_pickup_widgets[ammo][0].setValue(state.pickup_count)
 
@@ -204,7 +204,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             self.major_items_layout.addWidget(category_box, 2 * i + 2, 0, 1, 2)
             self._boxes_for_category[major_item_category] = category_box, category_layout, {}
 
-            category_button.clicked.connect(partial(_toggle_category_visibility, category_button, category_box))
+            category_button.clicked.connect(partial(_toggle_box_visibility, category_button, category_box))
             category_box.setVisible(False)
 
     def _create_major_item_boxes(self, item_database: ItemDatabase):
@@ -314,7 +314,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
             self._ammo_maximum_spinboxes[ammo_item] = maximum_spinbox
 
-    def _create_ammo_pickup_boxes(self, item_database: ItemDatabase):
+    def _create_ammo_pickup_boxes(self, size_policy, item_database: ItemDatabase):
         """
         Creates the GroupBox with SpinBoxes for selecting the pickup count of all the ammo
         :param item_database:
@@ -327,10 +327,23 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         resource_database = default_prime2_resource_database()
 
         for ammo in item_database.ammo.values():
-            pickup_box = QGroupBox(self.ammo_box)
-            pickup_box.setTitle(ammo.name)
+            title_layout = QHBoxLayout()
+            title_layout.setObjectName(f"{ammo.name} Title Horizontal Layout")
 
+            expand_ammo_button = QToolButton(self.ammo_box)
+            expand_ammo_button.setGeometry(QRect(20, 30, 24, 21))
+            expand_ammo_button.setText("+")
+            title_layout.addWidget(expand_ammo_button)
+
+            category_label = QLabel(self.ammo_box)
+            category_label.setSizePolicy(size_policy)
+            category_label.setText(ammo.name)
+            title_layout.addWidget(category_label)
+
+            pickup_box = QGroupBox(self.ammo_box)
+            pickup_box.setSizePolicy(size_policy)
             layout = QGridLayout(pickup_box)
+            layout.setObjectName(f"{ammo.name} Box Layout")
             current_row = 0
 
             for ammo_item in ammo.items:
@@ -370,6 +383,10 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
             self._ammo_pickup_widgets[ammo] = pickup_spinbox, expected_count
 
+            expand_ammo_button.clicked.connect(partial(_toggle_box_visibility, expand_ammo_button, pickup_box))
+            pickup_box.setVisible(False)
+
+            self.ammo_layout.addLayout(title_layout)
             self.ammo_layout.addWidget(pickup_box)
 
     def _on_update_ammo_maximum_spinbox(self, ammo_int: int, value: int):
