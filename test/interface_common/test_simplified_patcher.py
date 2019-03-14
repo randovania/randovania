@@ -107,16 +107,15 @@ def test_output_name_for(mock_shareable_hash: PropertyMock,
     assert result == "Echoes Randomizer - PermalinkStr"
 
 
-@patch("randovania.interface_common.simplified_patcher.debug.debug_level", autospec=True)
+@patch("randovania.interface_common.simplified_patcher._write_patcher_file_to_disk", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
 def test_internal_patch_iso(mock_apply_layout: MagicMock,
                             mock_pack_iso: MagicMock,
-                            mock_debug_level: MagicMock,
+                            mock_write_patcher_file_to_disk: MagicMock,
                             empty_patches
                             ):
     # Setup
-    mock_debug_level.return_value = 0
     layout = MagicMock(spec=LayoutDescription(version="0.15.0", permalink=MagicMock(),
                                               patches=empty_patches, solver_path=()))
     layout.shareable_hash = "layout"
@@ -126,6 +125,7 @@ def test_internal_patch_iso(mock_apply_layout: MagicMock,
     name = "Echoes Randomizer - layout"
     output_iso = Path("fun", name + ".iso")
     output_json = Path("fun", name + ".json")
+    patcher_json = Path("fun", name + "-patcher.json")
     updaters = [MagicMock(), MagicMock()]
 
     # Run
@@ -135,6 +135,7 @@ def test_internal_patch_iso(mock_apply_layout: MagicMock,
     mock_apply_layout.assert_called_once_with(layout=layout, options=options, progress_update=updaters[0])
     mock_pack_iso.assert_called_once_with(output_iso=output_iso, options=options, progress_update=updaters[1])
     layout.save_to_file.assert_called_once_with(output_json)
+    mock_write_patcher_file_to_disk.assert_called_once_with(patcher_json, layout, options.cosmetic_patches)
 
 
 def test_export_layout():

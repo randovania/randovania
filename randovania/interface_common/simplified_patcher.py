@@ -6,6 +6,7 @@ from typing import List
 from randovania.games.prime import iso_packager, claris_randomizer, dol_patcher, patcher_file
 from randovania.games.prime.banner_patcher import patch_game_name_and_id
 from randovania.interface_common import status_update_lib, echoes
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.layout.layout_description import LayoutDescription
@@ -132,6 +133,12 @@ def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
         export_layout(layout, options)
 
 
+def _write_patcher_file_to_disk(path: Path, layout: LayoutDescription, cosmetic: CosmeticPatches):
+    with path.open("w") as out_file:
+        json.dump(patcher_file.create_patcher_file(layout, cosmetic),
+                  out_file, indent=4, separators=(',', ': '))
+
+
 def export_layout(layout: LayoutDescription,
                   options: Options,
                   ):
@@ -143,11 +150,9 @@ def export_layout(layout: LayoutDescription,
     """
 
     output_json = options.output_directory.joinpath("{}.json".format(_output_name_for(layout)))
-
-    patcher = options.output_directory.joinpath("{}-patcher.json".format(_output_name_for(layout)))
-    with patcher.open("w") as out_file:
-        json.dump(patcher_file.create_patcher_file(layout, options.cosmetic_patches),
-                  out_file, indent=4, separators=(',', ': '))
+    _write_patcher_file_to_disk(options.output_directory.joinpath("{}-patcher.json".format(_output_name_for(layout))),
+                                layout,
+                                options.cosmetic_patches)
 
     # Save the layout to a file
     layout.save_to_file(output_json)
