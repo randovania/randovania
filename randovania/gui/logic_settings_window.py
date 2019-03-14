@@ -72,23 +72,22 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self._options = options
 
         # Update with Options
-        self.setup_trick_level_elements(self._options)
-        self.setup_elevator_elements(self._options)
-        self.setup_item_loss_elements(self._options)
-        self.setup_sky_temple_elements(self._options)
+        self.setup_trick_level_elements()
+        self.setup_elevator_elements()
+        self.setup_sky_temple_elements()
 
         # Alignment
         self.vertical_layout_left.setAlignment(QtCore.Qt.AlignTop)
         self.vertical_layout_right.setAlignment(QtCore.Qt.AlignTop)
 
-    def setup_trick_level_elements(self, options: Options):
+    def setup_trick_level_elements(self):
         # logic_combo_box
         for i, trick_level in enumerate(LayoutTrickLevel):
             self.logic_combo_box.setItemData(i, trick_level)
 
         self.logic_combo_box.currentIndexChanged.connect(self._on_trick_level_changed)
 
-    def setup_elevator_elements(self, options: Options):
+    def setup_elevator_elements(self):
         self.elevators_combo.setItemData(0, LayoutElevators.VANILLA)
         self.elevators_combo.setItemData(1, LayoutElevators.RANDOMIZED)
 
@@ -97,10 +96,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
                                                                            self._options,
                                                                            self.elevators_combo))
 
-    def setup_item_loss_elements(self, options: Options):
-        self.itemloss_check.stateChanged.connect(functools.partial(_on_item_loss_changed, self._options))
-
-    def setup_sky_temple_elements(self, options: Options):
+    def setup_sky_temple_elements(self):
         self.skytemple_combo.setItemData(0, LayoutSkyTempleKeyMode.ALL_BOSSES)
         self.skytemple_combo.setItemData(1, LayoutSkyTempleKeyMode.ALL_GUARDIANS)
         self.skytemple_combo.setItemData(2, int)
@@ -139,10 +135,6 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         # Elevator
         self.elevators_combo.setCurrentIndex(
             self.elevators_combo.findData(self._options.layout_configuration_elevators))
-
-        # Item Loss
-        # self.itemloss_check.setChecked(self._options.layout_configuration_starting_resources == \
-        #                                StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED)
 
         # Sky Temple Keys
         keys = self._options.layout_configuration_sky_temple_keys
