@@ -220,7 +220,6 @@ def create_patcher_file(description: LayoutDescription,
 
 
 def _add_header_data_to_result(description: LayoutDescription, result: dict) -> None:
-    # FIXME: these shouldn't be tuples
-    result["permalink"] = description.permalink.as_str,
-    result["seed_hash"] = description.shareable_hash,
-    result["randovania_version"] = randovania.VERSION,
+    result["permalink"] = description.permalink.as_str
+    result["seed_hash"] = description.shareable_hash
+    result["randovania_version"] = randovania.VERSION
