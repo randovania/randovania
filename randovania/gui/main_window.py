@@ -15,6 +15,7 @@ from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file, \
     set_default_window_icon
+from randovania.gui.cosmetic_window import CosmeticWindow
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.logic_settings_window import LogicSettingsWindow
@@ -73,6 +74,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             (ISOManagementWindow, "ROM Settings"),
             (MainRulesWindow, "Main Rules"),
             (LogicSettingsWindow, "Logic Settings"),
+            (CosmeticWindow, "Cosmetic"),
         ]
 
         for i, tab in enumerate(self.tab_windows):
