@@ -26,10 +26,19 @@ from randovania.resolver.item_pool.ammo import items_for_ammo
 _EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion} for a total of {total}."
                                  "\n{from_items} will be provided from major items.")
 
+AmmoPickupWidgets = Tuple[QSpinBox, QLabel, QToolButton, QLabel, QGroupBox]
+
 
 def _toggle_box_visibility(toggle_button: QToolButton, box: QGroupBox):
     box.setVisible(not box.isVisible())
     toggle_button.setText("-" if box.isVisible() else "+")
+
+
+def _update_ammo_visibility(elements: AmmoPickupWidgets, is_visible: bool):
+    elements[2].setVisible(is_visible)
+    elements[3].setVisible(is_visible)
+    if elements[2].text() == "-":
+        elements[4].setVisible(is_visible)
 
 
 class MainRulesWindow(QMainWindow, Ui_MainRules):
@@ -37,7 +46,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         MajorItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
 
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
-    _ammo_pickup_widgets: Dict[Ammo, Tuple[QSpinBox, QLabel]]
+    _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
 
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
@@ -53,8 +62,10 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._dark_suit = item_database.major_items["Dark Suit"]
         self._light_suit = item_database.major_items["Light Suit"]
         self._progressive_suit = item_database.major_items["Progressive Suit"]
-
         self._energy_tank_item = item_database.major_items["Energy Tank"]
+        self._dark_ammo_item = item_database.ammo["Dark Ammo Expansion"]
+        self._light_ammo_item = item_database.ammo["Light Ammo Expansion"]
+        self._beam_ammo_item = item_database.ammo["Beam Ammo Expansion"]
 
         self._register_alternatives_events()
         self._create_categories_boxes(size_policy)
@@ -75,6 +86,10 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         for element in suit_elements[self._progressive_suit]:
             element.setVisible(layout.progressive_suit)
+
+        _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
+        for item in [self._dark_ammo_item, self._light_ammo_item]:
+            _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
 
         # Energy Tank
         major_configuration = self._options.major_items_configuration
@@ -150,6 +165,12 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.progressive_suit_check.stateChanged.connect(self._persist_bool_layout_field("progressive_suit"))
         self.progressive_suit_check.clicked.connect(self._change_progressive_suit)
 
+        self.progressive_grapple_check.stateChanged.connect(self._persist_bool_layout_field("progressive_grapple"))
+        self.progressive_grapple_check.clicked.connect(self._change_progressive_grapple)
+
+        self.split_ammo_check.stateChanged.connect(self._persist_bool_layout_field("split_beam_ammo"))
+        self.split_ammo_check.clicked.connect(self._change_split_ammo)
+
     def _persist_bool_layout_field(self, field_name: str):
         def bound(value: int):
             with self._options as options:
@@ -177,6 +198,34 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             })
 
             options.major_items_configuration = major_configuration
+
+    def _change_progressive_grapple(self, has_progressive: bool):
+        pass
+
+    def _change_split_ammo(self, has_split: bool):
+        with self._options as options:
+            ammo_configuration = options.ammo_configuration
+
+            current_total = sum(
+                ammo_configuration.items_state[ammo].pickup_count
+                for ammo in (self._dark_ammo_item, self._light_ammo_item, self._beam_ammo_item)
+            )
+            if has_split:
+                dark_ammo_state = AmmoState(pickup_count=current_total // 2)
+                light_ammo_state = AmmoState(pickup_count=current_total // 2)
+                beam_ammo_state = AmmoState()
+            else:
+                dark_ammo_state = AmmoState()
+                light_ammo_state = AmmoState()
+                beam_ammo_state = AmmoState(pickup_count=current_total)
+
+            ammo_configuration = ammo_configuration.replace_states({
+                self._dark_ammo_item: dark_ammo_state,
+                self._light_ammo_item: light_ammo_state,
+                self._beam_ammo_item: beam_ammo_state,
+            })
+
+            options.ammo_configuration = ammo_configuration
 
     # Major Items
 
@@ -287,33 +336,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
     # Ammo
 
-    def _create_ammo_maximum_boxes(self, item_database: ItemDatabase):
-        """
-        Creates the GroupBox with SpinBoxes for selecting the maximum value of all the ammo items
-        :param item_database:
-        :return:
-        """
-        resource_database = default_prime2_resource_database()
-        ammo_items = {}
-
-        for ammo in item_database.ammo.values():
-            for ammo_item in ammo.items:
-                ammo_items[ammo_item] = max(ammo_items.get(ammo_item, 0), ammo.maximum)
-
-        for i, (ammo_item, maximum) in enumerate(ammo_items.items()):
-            maximum_name_label = QLabel(self.maximum_count_box)
-            maximum_spinbox = QSpinBox(self.maximum_count_box)
-
-            item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
-            maximum_name_label.setText(item.long_name)
-            maximum_spinbox.setMaximum(maximum)
-            maximum_spinbox.valueChanged.connect(partial(self._on_update_ammo_maximum_spinbox, ammo_item))
-
-            self.maximum_count_layout.addWidget(maximum_name_label, i, 0)
-            self.maximum_count_layout.addWidget(maximum_spinbox, i, 1)
-
-            self._ammo_maximum_spinboxes[ammo_item] = maximum_spinbox
-
     def _create_ammo_pickup_boxes(self, size_policy, item_database: ItemDatabase):
         """
         Creates the GroupBox with SpinBoxes for selecting the pickup count of all the ammo
@@ -381,7 +403,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             layout.addWidget(expected_count, current_row, 0, 1, 2)
             current_row += 1
 
-            self._ammo_pickup_widgets[ammo] = pickup_spinbox, expected_count
+            self._ammo_pickup_widgets[ammo] = (pickup_spinbox, expected_count, expand_ammo_button,
+                                               category_label, pickup_box)
 
             expand_ammo_button.clicked.connect(partial(_toggle_box_visibility, expand_ammo_button, pickup_box))
             pickup_box.setVisible(False)

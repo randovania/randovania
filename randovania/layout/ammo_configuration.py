@@ -102,13 +102,21 @@ class AmmoConfiguration(BitPackValue):
         )
 
     def replace_state_for_ammo(self, ammo: Ammo, state: AmmoState) -> "AmmoConfiguration":
-        return AmmoConfiguration(
-            maximum_ammo=copy.copy(self.maximum_ammo),
-            items_state={
-                key: state if key == ammo else value
-                for key, value in self.items_state.items()
-            }
-        )
+        return self.replace_states({ammo: state})
+
+    def replace_states(self, new_states: Dict[Ammo, AmmoState]) -> "AmmoConfiguration":
+        """
+        Creates a copy of this AmmoConfiguration where the state of all given items are replaced by the given
+        states.
+        :param new_states:
+        :return:
+        """
+        items_state = copy.copy(self.items_state)
+
+        for item, state in new_states.items():
+            items_state[item] = state
+
+        return AmmoConfiguration(copy.copy(self.maximum_ammo), items_state)
 
     @classmethod
     def default(cls):
