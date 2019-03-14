@@ -59,6 +59,7 @@ class LayoutConfiguration(BitPackDataClass):
     starting_location: StartingLocation
     major_items_configuration: MajorItemsConfiguration
     ammo_configuration: AmmoConfiguration
+    # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     progressive_suit: bool = True
     progressive_grapple: bool = True
     split_beam_ammo: bool = True
