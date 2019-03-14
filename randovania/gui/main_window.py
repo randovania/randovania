@@ -17,6 +17,7 @@ from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_f
     set_default_window_icon
 from randovania.gui.cosmetic_window import CosmeticWindow
 from randovania.gui.data_editor import DataEditorWindow
+from randovania.gui.game_patches_window import GamePatchesWindow
 from randovania.gui.iso_management_window import ISOManagementWindow
 from randovania.gui.logic_settings_window import LogicSettingsWindow
 from randovania.gui.main_rules import MainRulesWindow
@@ -72,6 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.tab_windows = [
             (ISOManagementWindow, "ROM Settings"),
+            (GamePatchesWindow, "Game Patches"),
             (MainRulesWindow, "Main Rules"),
             (LogicSettingsWindow, "Logic Settings"),
             (CosmeticWindow, "Cosmetic"),
