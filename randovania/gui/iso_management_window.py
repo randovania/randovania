@@ -63,6 +63,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         self.permalink_edit.textChanged.connect(self._on_permalink_changed)
         self.permalink_import_button.clicked.connect(self._import_permalink_from_field)
+        self.create_spoiler_check.stateChanged.connect(self._persist_option_then_notify("create_spoiler"))
 
         self.reset_settings_button.clicked.connect(self._reset_settings)
 
@@ -70,11 +71,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.randomize_and_export_button.clicked.connect(self._randomize_and_export)
         self.randomize_log_only_button.clicked.connect(self._create_log_file_pressed)
         self.create_from_log_button.clicked.connect(self._randomize_from_file)
-
-        # Game Patching
-        self.create_spoiler_check.stateChanged.connect(self._persist_option_then_notify("create_spoiler"))
-        self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
-        self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
 
         # Post setup update
         self.loaded_game_updated.emit()
@@ -102,8 +98,6 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
         self.output_folder_edit.setText(str(output_directory) if output_directory is not None else "")
 
         self.create_spoiler_check.setChecked(self._options.create_spoiler)
-        self.warp_to_start_check.setChecked(self._options.warp_to_start)
-        self.include_menu_mod_check.setChecked(self._options.include_menu_mod)
 
         permalink = self._options.permalink
         if permalink is not None:
