@@ -1,6 +1,8 @@
+import collections
 import dataclasses
+import functools
 from functools import partial
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 
 from PySide2.QtCore import QRect, Qt
 from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox
@@ -17,6 +19,11 @@ from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState
+from randovania.resolver.exceptions import InvalidConfiguration
+from randovania.resolver.item_pool.ammo import items_for_ammo
+
+_EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion} for a total of {total}."
+                                 "\n{from_items} will be provided from major items.")
 
 
 def _toggle_category_visibility(category_button: QToolButton, category_box: QGroupBox):
@@ -27,6 +34,9 @@ def _toggle_category_visibility(category_button: QToolButton, category_box: QGro
 class MainRulesWindow(QMainWindow, Ui_MainRules):
     _boxes_for_category: Dict[
         MajorItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
+
+    _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
+    _ammo_pickup_widgets: Dict[Ammo, Tuple[QSpinBox, QLabel]]
 
     def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
@@ -49,7 +59,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
         self._create_energy_tank_box()
-        self._create_ammo_maximum_boxes(item_database)
         self._create_ammo_pickup_boxes(item_database)
 
     def on_options_changed(self):
@@ -74,13 +83,66 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.energy_tank_shuffled_spinbox.setValue(energy_tank_state.num_shuffled_pickups)
 
         # Ammo
+        ammo_provided = major_configuration.calculate_provided_ammo()
         ammo_configuration = self._options.ammo_configuration
 
         for ammo_item, maximum in ammo_configuration.maximum_ammo.items():
-            self._ammo_maximum_spinboxes[ammo_item].setValue(maximum)
+            for spinbox in self._ammo_maximum_spinboxes[ammo_item]:
+                spinbox.setValue(maximum)
 
+        previous_pickup_for_item = {}
+        resource_database = default_prime2_resource_database()
+
+        item_for_index = {
+            ammo_index: resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_index)
+            for ammo_index in ammo_provided.keys()
+        }
+
+        print("=============================")
         for ammo, state in ammo_configuration.items_state.items():
-            self._ammo_pickup_spinboxes[ammo].setValue(state.pickup_count)
+            self._ammo_pickup_widgets[ammo][0].setValue(state.pickup_count)
+
+            try:
+                ammo_per_pickup = items_for_ammo(ammo, state, ammo_provided,
+                                                 previous_pickup_for_item,
+                                                 ammo_configuration.maximum_ammo)
+
+                totals = functools.reduce(lambda a, b: [x + y for x, y in zip(a, b)],
+                                          ammo_per_pickup,
+                                          [0 for _ in ammo.items])
+
+                if state.pickup_count == 0:
+                    self._ammo_pickup_widgets[ammo][1].setText("No expansions will be created.")
+                    continue
+
+                self._ammo_pickup_widgets[ammo][1].setText(
+                    _EXPECTED_COUNT_TEXT_TEMPLATE.format(
+                        per_expansion=" and ".join(
+                            "{} {}".format(
+                                total // state.pickup_count,
+                                item_for_index[ammo_index].long_name
+                            )
+                            for ammo_index, total in zip(ammo.items, totals)
+                        ),
+                        total=" and ".join(
+                            "{} {}".format(
+                                total,
+                                item_for_index[ammo_index].long_name
+                            )
+                            for ammo_index, total in zip(ammo.items, totals)
+                        ),
+                        from_items=" and ".join(
+                            "{} {}".format(
+                                ammo_provided[ammo_index],
+                                item_for_index[ammo_index].long_name
+                            )
+                            for ammo_index in ammo.items
+                        ),
+                    )
+                )
+
+            except InvalidConfiguration as invalid_config:
+                self._ammo_pickup_widgets[ammo][1].setText(str(invalid_config))
 
     # Item Alternatives
 
@@ -234,8 +296,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         resource_database = default_prime2_resource_database()
         ammo_items = {}
 
-        self._ammo_maximum_spinboxes = {}
-
         for ammo in item_database.ammo.values():
             for ammo_item in ammo.items:
                 ammo_items[ammo_item] = max(ammo_items.get(ammo_item, 0), ammo.maximum)
@@ -254,32 +314,69 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
             self._ammo_maximum_spinboxes[ammo_item] = maximum_spinbox
 
-    def _on_update_ammo_maximum_spinbox(self, ammo_int: int, value: int):
-        with self._options as options:
-            options.ammo_configuration = options.ammo_configuration.replace_maximum_for_item(
-                ammo_int, value
-            )
-
     def _create_ammo_pickup_boxes(self, item_database: ItemDatabase):
         """
         Creates the GroupBox with SpinBoxes for selecting the pickup count of all the ammo
         :param item_database:
         :return:
         """
-        self._ammo_pickup_spinboxes = {}
 
-        for i, ammo in enumerate(item_database.ammo.values()):
-            pickup_name_label = QLabel(self.pickup_count_box)
-            pickup_name_label.setText(ammo.name)
+        self._ammo_maximum_spinboxes = collections.defaultdict(list)
+        self._ammo_pickup_widgets = {}
 
-            pickup_spinbox = QSpinBox(self.pickup_count_box)
+        resource_database = default_prime2_resource_database()
+
+        for ammo in item_database.ammo.values():
+            pickup_box = QGroupBox(self.ammo_box)
+            pickup_box.setTitle(ammo.name)
+
+            layout = QGridLayout(pickup_box)
+            current_row = 0
+
+            for ammo_item in ammo.items:
+                item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
+
+                target_count_label = QLabel(pickup_box)
+                target_count_label.setText(f"{item.long_name} Target" if len(ammo.items) > 1 else "Target count")
+
+                maximum_spinbox = QSpinBox(pickup_box)
+                maximum_spinbox.setMaximum(ammo.maximum)
+                maximum_spinbox.valueChanged.connect(partial(self._on_update_ammo_maximum_spinbox, ammo_item))
+                self._ammo_maximum_spinboxes[ammo_item].append(maximum_spinbox)
+
+                layout.addWidget(target_count_label, current_row, 0)
+                layout.addWidget(maximum_spinbox, current_row, 1)
+                current_row += 1
+
+            count_label = QLabel(pickup_box)
+            count_label.setText("Pickup Count")
+            count_label.setToolTip("How many instances of this expansion should be placed.")
+
+            pickup_spinbox = QSpinBox(pickup_box)
             pickup_spinbox.setMaximum(AmmoState.maximum_pickup_count())
             pickup_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_spinbox, ammo))
 
-            self.pickup_count_layout.addWidget(pickup_name_label, i, 0)
-            self.pickup_count_layout.addWidget(pickup_spinbox, i, 1)
+            layout.addWidget(count_label, current_row, 0)
+            layout.addWidget(pickup_spinbox, current_row, 1)
+            current_row += 1
 
-            self._ammo_pickup_spinboxes[ammo] = pickup_spinbox
+            expected_count = QLabel(pickup_box)
+            expected_count.setWordWrap(True)
+            expected_count.setText(_EXPECTED_COUNT_TEXT_TEMPLATE)
+            expected_count.setToolTip("Some expansions may provide 1 extra, even with no variance, if the total count "
+                                      "is not divisible by the pickup count.")
+            layout.addWidget(expected_count, current_row, 0, 1, 2)
+            current_row += 1
+
+            self._ammo_pickup_widgets[ammo] = pickup_spinbox, expected_count
+
+            self.ammo_layout.addWidget(pickup_box)
+
+    def _on_update_ammo_maximum_spinbox(self, ammo_int: int, value: int):
+        with self._options as options:
+            options.ammo_configuration = options.ammo_configuration.replace_maximum_for_item(
+                ammo_int, value
+            )
 
     def _on_update_ammo_pickup_spinbox(self, ammo: Ammo, value: int):
         with self._options as options:

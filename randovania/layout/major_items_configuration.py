@@ -91,3 +91,16 @@ class MajorItemsConfiguration(BitPackValue):
         from randovania.layout import configuration_factory
         return configuration_factory.get_major_items_configurations_for(
             configuration_factory.MajorItemsConfigEnum.default())
+
+    def calculate_provided_ammo(self) -> Dict[int, int]:
+        result: Dict[int, int] = {}
+
+        for item, state in self.items_state.items():
+            total_pickups = state.num_shuffled_pickups + state.num_included_in_starting_items
+            if state.include_copy_in_original_location:
+                total_pickups += 1
+
+            for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
+                result[ammo_index] = result.get(ammo_index, 0) + ammo_count * total_pickups
+
+        return result

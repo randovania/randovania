@@ -29,6 +29,7 @@ def calculate_pool_results(layout_configuration: LayoutConfiguration,
     base_results = ([], {}, [])
 
     # Adding major items to the pool
+    # FIXME: now we have layout_configuration.major_items_configuration.calculate_ammo_provided()
     new_results, included_ammo_for_item = add_major_items(resource_database,
                                                           layout_configuration.major_items_configuration)
     _extend_pool_results(base_results, new_results)
