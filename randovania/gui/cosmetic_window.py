@@ -17,6 +17,8 @@ class CosmeticWindow(QMainWindow, Ui_CosmeticWindow):
         # Signals
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
         self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
+        self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
+        self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
@@ -28,3 +30,5 @@ class CosmeticWindow(QMainWindow, Ui_CosmeticWindow):
     def on_options_changed(self):
         self.remove_hud_popup_check.setChecked(self._options.hud_memo_popup_removal)
         self.faster_credits_check.setChecked(self._options.speed_up_credits)
+        self.open_map_check.setChecked(self._options.open_map)
+        self.pickup_markers_check.setChecked(self._options.pickup_markers)
