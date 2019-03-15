@@ -89,9 +89,9 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._create_energy_tank_box()
         self._create_ammo_pickup_boxes(size_policy, item_database)
 
-    def on_options_changed(self):
+    def on_options_changed(self, options: Options):
         # Item alternatives
-        layout = self._options.layout_configuration
+        layout = options.layout_configuration
         self.progressive_suit_check.setChecked(layout.progressive_suit)
         self.progressive_grapple_check.setChecked(layout.progressive_grapple)
         self.split_ammo_check.setChecked(layout.split_beam_ammo)
@@ -115,7 +115,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
 
         # Energy Tank
-        major_configuration = self._options.major_items_configuration
+        major_configuration = options.major_items_configuration
         energy_tank_state = major_configuration.items_state[self._energy_tank_item]
 
         self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_items)
@@ -123,7 +123,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         # Ammo
         ammo_provided = major_configuration.calculate_provided_ammo()
-        ammo_configuration = self._options.ammo_configuration
+        ammo_configuration = options.ammo_configuration
 
         for ammo_item, maximum in ammo_configuration.maximum_ammo.items():
             for spinbox in self._ammo_maximum_spinboxes[ammo_item]:

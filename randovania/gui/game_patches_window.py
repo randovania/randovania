@@ -25,6 +25,6 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
 
         return persist
 
-    def on_options_changed(self):
-        self.warp_to_start_check.setChecked(self._options.warp_to_start)
-        self.include_menu_mod_check.setChecked(self._options.include_menu_mod)
+    def on_options_changed(self, options: Options):
+        self.warp_to_start_check.setChecked(options.warp_to_start)
+        self.include_menu_mod_check.setChecked(options.include_menu_mod)
