@@ -55,7 +55,9 @@ def test_migrate_from_v1():
         },
         "cosmetic_patches": {
             "disable_hud_popup": True,
-            "speed_up_credits": True
+            "speed_up_credits": True,
+            "open_map": True,
+            "pickup_markers": True,
         }
     }
     assert new_data == expected_data
