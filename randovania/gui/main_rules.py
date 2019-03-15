@@ -2,11 +2,11 @@ import collections
 import dataclasses
 import functools
 from functools import partial
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Iterable
 
 from PySide2.QtCore import QRect, Qt
 from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
-    QHBoxLayout
+    QHBoxLayout, QWidget
 
 from randovania.game_description.default_database import default_prime2_item_database, default_prime2_resource_database
 from randovania.game_description.item.ammo import Ammo
@@ -41,6 +41,19 @@ def _update_ammo_visibility(elements: AmmoPickupWidgets, is_visible: bool):
         elements[4].setVisible(is_visible)
 
 
+def _update_elements_for_progressive_item(elements: Dict[MajorItem, Iterable[QWidget]],
+                                          non_progressive_items: Iterable[MajorItem],
+                                          progressive_item: MajorItem,
+                                          is_progressive: bool,
+                                          ):
+    for item in non_progressive_items:
+        for element in elements[item]:
+            element.setVisible(not is_progressive)
+
+    for element in elements[progressive_item]:
+        element.setVisible(is_progressive)
+
+
 class MainRulesWindow(QMainWindow, Ui_MainRules):
     _boxes_for_category: Dict[
         MajorItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
@@ -62,6 +75,9 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._dark_suit = item_database.major_items["Dark Suit"]
         self._light_suit = item_database.major_items["Light Suit"]
         self._progressive_suit = item_database.major_items["Progressive Suit"]
+        self._grapple_beam = item_database.major_items["Grapple Beam"]
+        self._screw_attack = item_database.major_items["Screw Attack"]
+        self._progressive_grapple = item_database.major_items["Progressive Grapple"]
         self._energy_tank_item = item_database.major_items["Energy Tank"]
         self._dark_ammo_item = item_database.ammo["Dark Ammo Expansion"]
         self._light_ammo_item = item_database.ammo["Light Ammo Expansion"]
@@ -80,12 +96,19 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.progressive_grapple_check.setChecked(layout.progressive_grapple)
         self.split_ammo_check.setChecked(layout.split_beam_ammo)
 
-        suit_elements = self._boxes_for_category[MajorItemCategory.SUIT][2]
-        for element in suit_elements[self._dark_suit] + suit_elements[self._light_suit]:
-            element.setVisible(not layout.progressive_suit)
+        _update_elements_for_progressive_item(
+            self._boxes_for_category[MajorItemCategory.SUIT][2],
+            [self._dark_suit, self._light_suit],
+            self._progressive_suit,
+            layout.progressive_suit
+        )
 
-        for element in suit_elements[self._progressive_suit]:
-            element.setVisible(layout.progressive_suit)
+        _update_elements_for_progressive_item(
+            self._boxes_for_category[MajorItemCategory.MOVEMENT][2],
+            [self._grapple_beam, self._screw_attack],
+            self._progressive_grapple,
+            layout.progressive_grapple
+        )
 
         _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
         for item in [self._dark_ammo_item, self._light_ammo_item]:
@@ -200,7 +223,25 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             options.major_items_configuration = major_configuration
 
     def _change_progressive_grapple(self, has_progressive: bool):
-        pass
+        with self._options as options:
+            major_configuration = options.major_items_configuration
+
+            if has_progressive:
+                grapple_state = MajorItemState()
+                screw_state = MajorItemState()
+                progressive_state = MajorItemState(num_shuffled_pickups=2)
+            else:
+                grapple_state = MajorItemState(num_shuffled_pickups=1)
+                screw_state = MajorItemState(num_shuffled_pickups=1)
+                progressive_state = MajorItemState()
+
+            major_configuration = major_configuration.replace_states({
+                self._grapple_beam: grapple_state,
+                self._screw_attack: screw_state,
+                self._progressive_grapple: progressive_state,
+            })
+
+            options.major_items_configuration = major_configuration
 
     def _change_split_ammo(self, has_split: bool):
         with self._options as options:
