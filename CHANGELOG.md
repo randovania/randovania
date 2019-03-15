@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -    Added: Split beam ammo: by default, there's 10 dark ammo and 10 light ammo expansions, with less missiles expansions. This is changeable in the new "Main Rules" tab.
 -    Added: Option to control with what items you start the game
 -    Added: Configurable count of how many Sky Temple Keys you need to finish the game
+-    Added: Option to start with the map open
+-    Added: Option to add markers for where the items are
 -    Changed: Choosing "All Guardians" only 3 keys now (disregard the outdated text in GUI)
 -    Changed: Timeout for generating a seed is now 5 minutes, up from 2.
 

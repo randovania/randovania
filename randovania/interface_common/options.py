@@ -263,6 +263,24 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, speed_up_credits=value)
 
+    @property
+    def open_map(self) -> bool:
+        return self.cosmetic_patches.open_map
+
+    @open_map.setter
+    def open_map(self, value: bool):
+        self._check_editable_and_mark_dirty()
+        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, open_map=value)
+
+    @property
+    def pickup_markers(self) -> bool:
+        return self.cosmetic_patches.pickup_markers
+
+    @pickup_markers.setter
+    def pickup_markers(self, value: bool):
+        self._check_editable_and_mark_dirty()
+        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, pickup_markers=value)
+
     # Access to fields inside LayoutConfiguration
 
     @property

@@ -214,6 +214,8 @@ def create_patcher_file(description: LayoutDescription,
         "warp_to_start": patcher_config.warp_to_start,
         "speed_up_credits": cosmetic_patches.speed_up_credits,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
+        "pickup_map_icons": cosmetic_patches.pickup_markers,
+        "full_map_at_start": cosmetic_patches.open_map,
     }
 
     return result
