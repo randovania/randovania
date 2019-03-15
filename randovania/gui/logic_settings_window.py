@@ -125,19 +125,19 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self._on_sky_temple_key_combo_changed()
 
     # Options
-    def on_options_changed(self):
+    def on_options_changed(self, options: Options):
         # Trick Level
-        trick_level = self._options.layout_configuration_trick_level
+        trick_level = options.layout_configuration_trick_level
 
         self.logic_combo_box.setCurrentIndex(self.logic_combo_box.findData(trick_level))
         self.logic_level_label.setText(_get_trick_level_description(trick_level))
 
         # Elevator
         self.elevators_combo.setCurrentIndex(
-            self.elevators_combo.findData(self._options.layout_configuration_elevators))
+            self.elevators_combo.findData(options.layout_configuration_elevators))
 
         # Sky Temple Keys
-        keys = self._options.layout_configuration_sky_temple_keys
+        keys = options.layout_configuration_sky_temple_keys
         if isinstance(keys.value, int):
             self.skytemple_slider.setValue(keys.value)
             data = int

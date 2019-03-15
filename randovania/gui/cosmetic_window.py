@@ -27,8 +27,8 @@ class CosmeticWindow(QMainWindow, Ui_CosmeticWindow):
 
         return persist
 
-    def on_options_changed(self):
-        self.remove_hud_popup_check.setChecked(self._options.hud_memo_popup_removal)
-        self.faster_credits_check.setChecked(self._options.speed_up_credits)
-        self.open_map_check.setChecked(self._options.open_map)
-        self.pickup_markers_check.setChecked(self._options.pickup_markers)
+    def on_options_changed(self, options: Options):
+        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
+        self.faster_credits_check.setChecked(options.speed_up_credits)
+        self.open_map_check.setChecked(options.open_map)
+        self.pickup_markers_check.setChecked(options.pickup_markers)

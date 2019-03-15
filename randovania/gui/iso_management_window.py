@@ -87,19 +87,19 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
 
         return persist
 
-    def on_options_changed(self):
-        seed_number = self._options.seed_number
+    def on_options_changed(self, options: Options):
+        seed_number = options.seed_number
         if seed_number is not None:
             self.seed_number_edit.setText(str(seed_number))
         else:
             self.seed_number_edit.setText("")
 
-        output_directory = self._options.output_directory
+        output_directory = options.output_directory
         self.output_folder_edit.setText(str(output_directory) if output_directory is not None else "")
 
-        self.create_spoiler_check.setChecked(self._options.create_spoiler)
+        self.create_spoiler_check.setChecked(options.create_spoiler)
 
-        permalink = self._options.permalink
+        permalink = options.permalink
         if permalink is not None:
             self.permalink_edit.setText(permalink.as_str)
         else:

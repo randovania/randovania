@@ -150,7 +150,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     # Options
     def on_options_changed(self):
         for window in self.windows:
-            window.on_options_changed()
+            window.on_options_changed(self._options)
 
     # Menu Actions
     def _open_data_visualizer(self):
