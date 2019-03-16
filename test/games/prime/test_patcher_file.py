@@ -102,19 +102,24 @@ def test_create_pickup_list(empty_patches):
     useless_resource = SimpleResourceInfo(0, "Useless", "Useless", ResourceType.ITEM)
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    pickup_a = PickupEntry("A", ((resource_a, 1),), 1, tuple(), "temple_key", 0)
-    pickup_b = PickupEntry("B",
-                           ((resource_b, 1), (resource_a, 1)),
-                           2,
-                           tuple([
-                               ConditionalResources(resource_b, ((resource_a, 5),))
-                           ]),
-                           "", 0)
+    pickup_a = PickupEntry("A", 1, "temple_key",
+                           (
+                               ConditionalResources(None, None, ((resource_a, 1),)),
+                           ))
+    pickup_b = PickupEntry("B", 2, "",
+                           (
+                               ConditionalResources(None, None, ((resource_b, 1), (resource_a, 1))),
+                               ConditionalResources(None, resource_b, ((resource_a, 5),))
+                           ))
+    pickup_c = PickupEntry("C", 2, "expansion",
+                           (
+                               ConditionalResources(None, None, ((resource_b, 2), (resource_a, 1))),
+                           ))
 
-    pickup_c = PickupEntry("C", ((resource_b, 2), (resource_a, 1)), 2,
-                           tuple(), "expansion", 0)
-
-    useless_pickup = PickupEntry("Useless", ((useless_resource, 1),), 0, tuple(), "", 0)
+    useless_pickup = PickupEntry("Useless", 0, "",
+                                 (
+                                     ConditionalResources(None, None, ((useless_resource, 1),)),
+                                 ))
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): pickup_a,
         PickupIndex(2): pickup_b,

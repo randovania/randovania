@@ -60,14 +60,20 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
     # Assert
     assert result == PickupEntry(
         name="The Item",
-        resources=_create_resources(item_a),
         model_index=1337,
-        conditional_resources=(
+        resources=(
             ConditionalResources(
+                name=None,
+                item=None,
+                resources=_create_resources(item_a),
+            ),
+            ConditionalResources(
+                name=None,
                 item=item_a,
                 resources=_create_resources(item_b),
             ),
             ConditionalResources(
+                name=None,
                 item=item_b,
                 resources=_create_resources(item_c),
             ),
@@ -106,11 +112,14 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
     assert result == PickupEntry(
         name="Missile Launcher",
         resources=(
-            (missile, ammo_quantity),
-            (percentage_item, 1),
+            ConditionalResources(
+                None, None,
+                resources=(
+                    (missile, ammo_quantity),
+                    (percentage_item, 1),
+                )
+            ),
         ),
         model_index=24,
-        conditional_resources=(),
         item_category="missile",
-        probability_offset=0,
     )

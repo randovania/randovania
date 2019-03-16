@@ -199,7 +199,7 @@ def _sky_temple_key_distribution_logic(permalink: Permalink,
             if keys_to_inventory > 0:
                 if pickup.conditional_resources is not None:
                     raise ValueError("NYI: less than maximum keys with keys in conditional resources")
-                new_items.extend(pickup.resources)
+                new_items.extend(pickup.all_resources)
                 keys_to_inventory -= 1
             else:
                 index = locations_to_place.pop(0)

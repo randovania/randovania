@@ -82,11 +82,13 @@ def _pickup_scan(pickup: PickupEntry) -> str:
     if pickup.item_category != "expansion":
         return pickup.name
 
+    # FIXME: proper scan text for progression pickups
+
     return "{0} that provides {1}".format(
         pickup.name,
         ", ".join(
             "{} {}".format(quantity, resource.long_name)
-            for resource, quantity in pickup.resources
+            for resource, quantity in pickup.resources[0].resources
         )
     )
 
@@ -96,13 +98,13 @@ def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
     # But using resource name also breaks things like vanilla beam ammo expansion
     # And 'Missile Expansion' shows up as 'Missile'.
     hud_text = [
-        "{} acquired!".format(pickup.name),
-        # "{} acquired!".format(pickup.resources[0][0].long_name),
+        # "{} acquired!".format(pickup.resources[0][0].long_name)
+        "{} acquired!".format(pickup.name)
+        for _ in pickup.resources
     ]
     conditional_resources = []
 
-    for conditional in pickup.conditional_resources:
-        hud_text.append("{} acquired!".format(pickup.name))
+    for conditional in pickup.resources[1:]:
         # hud_text.append("{} acquired!".format(conditional.resources[0][0].long_name))
         conditional_resources.append({
             "item": conditional.item.index,
@@ -128,7 +130,7 @@ def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
                 "index": resource.index,
                 "amount": quantity
             }
-            for resource, quantity in pickup.resources
+            for resource, quantity in pickup.resources[0].resources
             if quantity > 0 and resource.resource_type == ResourceType.ITEM
         ],
         "conditional_resources": conditional_resources,

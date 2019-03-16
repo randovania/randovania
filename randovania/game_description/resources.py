@@ -77,22 +77,36 @@ CurrentResources = Dict[ResourceInfo, int]
 
 @dataclass(frozen=True)
 class ConditionalResources:
-    item: SimpleResourceInfo
+    name: Optional[str]
+    item: Optional[SimpleResourceInfo]
     resources: ResourceGainTuple
 
 
 @dataclass(frozen=True)
 class PickupEntry:
     name: str
-    resources: ResourceGainTuple
     model_index: int
-    conditional_resources: Tuple[ConditionalResources, ...]
     item_category: str
-    probability_offset: int
+    resources: Tuple[ConditionalResources, ...]
+    probability_offset: int = 0
 
     def __post_init__(self):
-        if not isinstance(self.conditional_resources, tuple):
-            raise ValueError("conditional_resources should be a tuple, got {}".format(self.conditional_resources))
+        if not isinstance(self.resources, tuple):
+            raise ValueError("resources should be a tuple, got {}".format(self.resources))
+
+        if len(self.resources) < 1:
+            raise ValueError("resources should have at least 1 value")
+
+        for i, conditional in enumerate(self.resources):
+            if not isinstance(conditional, ConditionalResources):
+                raise ValueError(f"Resource at {i} should be a ConditionalResources")
+
+            if i == 0:
+                if conditional.item is not None:
+                    raise ValueError("Resource at 0 should not have a condition")
+            else:
+                if conditional.item is None:
+                    raise ValueError(f"Resource at {i} should have a condition")
 
     def __hash__(self):
         return hash(self.name)
@@ -101,22 +115,23 @@ class PickupEntry:
         return self.name < other.name
 
     def resource_gain(self, current_resources) -> ResourceGain:
-        last_resource_gain = self.resources
-        for conditional in self.conditional_resources:
-            if current_resources.get(conditional.item, 0) > 0:
+        last_resource_gain = None
+
+        for conditional in self.resources:
+            if conditional.item is None or current_resources.get(conditional.item, 0) > 0:
                 last_resource_gain = conditional.resources
             else:
                 break
 
+        assert last_resource_gain is not None
         yield from last_resource_gain
 
     def __str__(self):
         return "Pickup {}".format(self.name)
 
     @property
-    def all_resources(self):
-        yield from self.resources
-        for conditional in self.conditional_resources:
+    def all_resources(self) -> Iterator[ResourceQuantity]:
+        for conditional in self.resources:
             yield from conditional.resources
 
 

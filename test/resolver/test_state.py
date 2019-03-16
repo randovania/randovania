@@ -9,10 +9,11 @@ def test_add_pickup_to_state():
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    p = PickupEntry("B", ((resource_a, 1),), 2,
-                    (ConditionalResources(resource_a,
-                                          ((resource_b, 1),)),),
-                    "", 0)
+    p = PickupEntry("B", 2, "",
+                    (
+                        ConditionalResources(None, None, ((resource_a, 1),)),
+                        ConditionalResources(None, resource_a, ((resource_b, 1),)),
+                    ))
 
     # Run
     state.add_pickup_to_state(s, p)
