@@ -15,7 +15,8 @@ def randomize_command_logic(args):
 
     if args.permalink is not None:
         layout_description = generator.generate_list(permalink=Permalink.from_str(args.permalink),
-                                                     status_update=status_update)
+                                                     status_update=status_update,
+                                                     validate_after_generation=True)
     else:
         layout_description = LayoutDescription.from_file(args.log_file)
 

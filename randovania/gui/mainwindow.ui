@@ -161,8 +161,17 @@
     </widget>
     <addaction name="menu_database"/>
    </widget>
+   <widget class="QMenu" name="menu_advanced">
+    <property name="title">
+     <string>Advanced</string>
+    </property>
+    <addaction name="menu_action_export_iso"/>
+    <addaction name="menu_action_validate_seed_after"/>
+    <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
+   </widget>
    <addaction name="menu_open"/>
    <addaction name="menu_edit"/>
+   <addaction name="menu_advanced"/>
   </widget>
   <action name="menu_action_data_visualizer">
    <property name="text">
@@ -187,6 +196,33 @@
   <action name="menu_action_edit_existing_database">
    <property name="text">
     <string>Existing Copy</string>
+   </property>
+  </action>
+  <action name="menu_action_export_iso">
+   <property name="text">
+    <string>Export ISO</string>
+   </property>
+  </action>
+  <action name="menu_action_validate_seed_after">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Validate if seed is possible after generation</string>
+   </property>
+  </action>
+  <action name="menu_action_timeout_generation_after_a_time_limit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Timeout generation after a time limit</string>
    </property>
   </action>
  </widget>

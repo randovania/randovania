@@ -3,15 +3,13 @@ import shutil
 from pathlib import Path
 from typing import List
 
-from randovania.games.prime import iso_packager, claris_randomizer, dol_patcher, patcher_file
+from randovania.games.prime import iso_packager, claris_randomizer, patcher_file
 from randovania.games.prime.banner_patcher import patch_game_name_and_id
 from randovania.interface_common import status_update_lib, echoes
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.starting_location import StartingLocationConfiguration
-from randovania.resolver import debug
 
 
 def delete_files_location(options: Options, ):
@@ -61,7 +59,10 @@ def generate_layout(options: Options,
     """
     return echoes.generate_layout(
         permalink=options.permalink,
-        status_update=ConstantPercentageCallback(progress_update, -1))
+        status_update=ConstantPercentageCallback(progress_update, -1),
+        validate_after_generation=options.advanced_validate_seed_after,
+        timeout_during_generation=options.advanced_timeout_during_generation,
+    )
 
 
 def apply_layout(layout: LayoutDescription,
