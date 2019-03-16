@@ -71,6 +71,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
 
+        self.menu_action_export_iso.setEnabled(False)
+
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
 

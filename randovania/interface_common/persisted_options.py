@@ -97,6 +97,11 @@ def _convert_v6(options: dict) -> dict:
         layout_configuration["main_power_bombs_required"] = True
         layout_configuration.pop("pickup_quantities", None)
 
+    if "patcher_configuration" in options:
+        patcher_configuration = options["patcher_configuration"]
+        patcher_configuration["pickup_model_style"] = "all-visible"
+        patcher_configuration["pickup_model_data_source"] = "etm"
+
     if "cosmetic_patches" in options:
         cosmetic_patches = options["cosmetic_patches"]
         cosmetic_patches["open_map"] = True

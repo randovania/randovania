@@ -11,7 +11,7 @@ def discover_game(game_files_path: Path) -> Optional[Tuple[str, str]]:
         header_bytes = boot_bin.read_bytes()
 
         game_id = header_bytes[0:6].decode("UTF-8")
-        game_title = header_bytes[32:64].split(b"\x00")[0].decode("UTF-8")
+        game_title = header_bytes[0x20:(0x20 + 40)].split(b"\x00")[0].decode("UTF-8")
         return game_id, game_title
 
     except FileNotFoundError:

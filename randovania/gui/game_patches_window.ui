@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>475</width>
-    <height>317</height>
+    <height>344</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,6 +89,71 @@
       <property name="wordWrap">
        <bool>true</bool>
       </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="pickup_style_box">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Pickup style</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QComboBox" name="pickup_model_combo">
+         <item>
+          <property name="text">
+           <string>Use correct item model, scan and name</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Use correct scan and name, hide the model</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Use correct name, hide the model and scan</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Hide the model, scan and name</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="pickup_data_source_label">
+         <property name="text">
+          <string>When hiding some part of the pickup, it's replaced with:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="pickup_data_source_combo">
+         <item>
+          <property name="text">
+           <string>Energy Transfer Module's data</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>A random item data</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>The data of the pickup in that place</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>

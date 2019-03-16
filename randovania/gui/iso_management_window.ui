@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>535</width>
-    <height>563</height>
+    <width>407</width>
+    <height>522</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -111,18 +111,27 @@
       <property name="enabled">
        <bool>true</bool>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Permalink</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="1">
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="permalink_edit"/>
+       </item>
+       <item row="1" column="1">
         <widget class="QPushButton" name="permalink_import_button">
          <property name="text">
           <string>Import</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QPushButton" name="reset_settings_button">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Resets all seed-affecting settings to their default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -132,56 +141,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLineEdit" name="permalink_edit"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="create_spoiler_check">
-         <property name="text">
-          <string>Create Spoiler</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QLabel" name="create_spoiler_label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Creates a detailed spoiler file with where each modification to the game documented (item locations, elevator connections, etc) as well as a path you can take to finish the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="seed_configuration_box">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="title">
-       <string>Seed Number</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <widget class="QLineEdit" name="seed_number_edit">
          <property name="placeholderText">
@@ -201,11 +160,17 @@
     </item>
     <item>
      <widget class="QGroupBox" name="rom_output_box">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>ROM Output</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QPushButton" name="randomize_and_export_button">
          <property name="palette">
           <palette>
@@ -660,7 +625,17 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="3" column="1">
+        <widget class="QPushButton" name="create_from_log_button">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Imports a log file and creates an ISO with the same seed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Create from log file</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
         <widget class="QPushButton" name="randomize_log_only_button">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Creates a new seed based on the current settings and then exports only it's log to the output folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -670,13 +645,35 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="create_from_log_button">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Imports a log file and creates an ISO with the same seed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="create_spoiler_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
          </property>
          <property name="text">
-          <string>Create from log file</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Creates a detailed spoiler file with where each modification to the game documented (item locations, elevator connections, etc) as well as a path you can take to finish the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QCheckBox" name="create_spoiler_check">
+         <property name="text">
+          <string>Create Spoiler</string>
          </property>
         </widget>
        </item>
@@ -690,7 +687,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>535</width>
+     <width>407</width>
      <height>21</height>
     </rect>
    </property>
