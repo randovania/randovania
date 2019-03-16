@@ -22,6 +22,9 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
         for i, value in enumerate(PickupModelDataSource):
             self.pickup_data_source_combo.setItemData(i, value)
 
+        # TODO: implement the LOCATION data source
+        self.pickup_data_source_combo.removeItem(self.pickup_data_source_combo.findData(PickupModelDataSource.LOCATION))
+
         # Signals
         self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
