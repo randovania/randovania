@@ -6,7 +6,6 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources, StartingResourcesConfiguration
 
 
 @patch("randovania.cli.commands.create_permalink._print_permalink", autospec=True)

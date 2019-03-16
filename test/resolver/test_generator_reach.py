@@ -7,12 +7,9 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node, PickupNode
 from randovania.games.prime import default_data
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
-    LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \

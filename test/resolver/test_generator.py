@@ -1,5 +1,5 @@
 from typing import Iterable, Callable, Union
-from unittest.mock import MagicMock, patch, PropertyMock, ANY
+from unittest.mock import MagicMock, patch, PropertyMock
 
 import pytest
 
@@ -7,17 +7,12 @@ from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
-    LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocation, StartingLocationConfiguration
-from randovania.layout.starting_resources import StartingResources
+from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.resolver import generator, debug
-from randovania.resolver.exceptions import GenerationFailure
 
 skip_generation_tests = pytest.mark.skipif(
     pytest.config.option.skip_generation_tests,
