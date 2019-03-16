@@ -1,3 +1,5 @@
+import copy
+
 import pytest
 
 from randovania.bitpacking import bitpacking
@@ -7,14 +9,20 @@ from randovania.layout.patcher_configuration import PatcherConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xc0', "json": {"menu_mod": True, "warp_to_start": True}},
-        {"encoded": b'\x80', "json": {"menu_mod": True, "warp_to_start": False}},
-        {"encoded": b'@', "json": {"menu_mod": False, "warp_to_start": True}},
+        {"encoded": b'\xc0', "json": {}},
+        {"encoded": b'\x80', "json": {"warp_to_start": False}},
+        {"encoded": b'@', "json": {"menu_mod": False}},
         {"encoded": b'\x00', "json": {"menu_mod": False, "warp_to_start": False}},
+        {"encoded": b'H', "json": {"menu_mod": False, "pickup_model_data_source": "location"}},
+        {"encoded": b'\xa0', "json": {"warp_to_start": False, "pickup_model_style": "hide-scan"}},
     ],
     name="patcher_with_data")
 def _patcher_with_data(request):
-    return request.param["encoded"], PatcherConfiguration.from_json_dict(request.param["json"])
+    params = copy.copy(request.param["json"])
+    for key, value in PatcherConfiguration.default().as_json.items():
+        if key not in params:
+            params[key] = value
+    return request.param["encoded"], PatcherConfiguration.from_json_dict(params)
 
 
 def test_decode(patcher_with_data):

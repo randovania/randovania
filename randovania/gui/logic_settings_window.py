@@ -77,8 +77,9 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.setup_sky_temple_elements()
 
         # Alignment
-        self.vertical_layout_left.setAlignment(QtCore.Qt.AlignTop)
-        self.vertical_layout_right.setAlignment(QtCore.Qt.AlignTop)
+        self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
 
     def setup_trick_level_elements(self):
         # logic_combo_box

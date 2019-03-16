@@ -255,8 +255,7 @@ class Options:
 
     @include_menu_mod.setter
     def include_menu_mod(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, menu_mod=value)
+        self.set_patcher_configuration_field("menu_mod", value)
 
     @property
     def warp_to_start(self) -> bool:
@@ -264,8 +263,30 @@ class Options:
 
     @warp_to_start.setter
     def warp_to_start(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._patcher_configuration = dataclasses.replace(self.patcher_configuration, warp_to_start=value)
+        self.set_patcher_configuration_field("warp_to_start", value)
+
+    @property
+    def pickup_model_style(self):
+        return self.patcher_configuration.pickup_model_style
+
+    @pickup_model_style.setter
+    def pickup_model_style(self, value):
+        self.set_patcher_configuration_field("pickup_model_style", value)
+
+    @property
+    def pickup_model_data_source(self):
+        return self.patcher_configuration.pickup_model_data_source
+
+    @pickup_model_data_source.setter
+    def pickup_model_data_source(self, value):
+        self.set_patcher_configuration_field("pickup_model_data_source", value)
+
+    def set_patcher_configuration_field(self, field_name: str, value):
+        current_configuration = self.patcher_configuration
+        new_configuration = dataclasses.replace(current_configuration, **{field_name: value})
+        if current_configuration != new_configuration:
+            self._check_editable_and_mark_dirty()
+            self._patcher_configuration = new_configuration
 
     # Access to fields inside CosmeticPatches
     @property

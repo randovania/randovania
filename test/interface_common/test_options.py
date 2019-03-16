@@ -38,6 +38,8 @@ def test_migrate_from_v1():
         "patcher_configuration": {
             "menu_mod": False,
             "warp_to_start": True,
+            "pickup_model_style": "all-visible",
+            "pickup_model_data_source": "etm",
         },
         "layout_configuration": {
             "trick_level": "normal",
