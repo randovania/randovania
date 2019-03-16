@@ -4,7 +4,7 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources, \
-    SimpleResourceInfo, ResourceQuantity
+    ResourceQuantity
 from randovania.layout.major_item_state import MajorItemState
 
 _ITEM_PERCENTAGE = 47
@@ -64,19 +64,24 @@ def create_major_item(item: MajorItem,
 
         return tuple(resources)
 
-    conditional_resources = tuple(
-        ConditionalResources(
-            item=resource_database.get_by_type_and_index(ResourceType.ITEM, item.progression[i]),
-            resources=_create_resources(progression)
+    if item.progression:
+        conditional_resources = tuple(
+            ConditionalResources(
+                name=None,
+                item=resource_database.get_by_type_and_index(ResourceType.ITEM, item.progression[i - 1]) if i > 0 else None,
+                resources=_create_resources(progression)
+            )
+            for i, progression in enumerate(item.progression)
         )
-        for i, progression in enumerate(item.progression[1:])
-    )
+    else:
+        conditional_resources = (
+            ConditionalResources(name=None, item=None, resources=_create_resources(None)),
+        )
 
     return PickupEntry(
         name=item.name,
-        resources=_create_resources(item.progression[0] if item.progression else None),
+        resources=conditional_resources,
         model_index=item.model_index,
-        conditional_resources=conditional_resources,
         item_category=item.item_category.value,
         probability_offset=item.probability_offset,
     )
@@ -102,11 +107,11 @@ def create_ammo_expansion(ammo: Ammo,
 
     return PickupEntry(
         name=ammo.name,
-        resources=tuple(resources),
+        resources=(
+            ConditionalResources(None, None, tuple(resources)),
+        ),
         model_index=ammo.models[0],  # TODO: use a random model
-        conditional_resources=tuple(),
         item_category="expansion",
-        probability_offset=0,
     )
 
 
@@ -124,12 +129,13 @@ def create_dark_temple_key(key_number: int,
 
     return PickupEntry(
         name=_DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
-        resources=tuple([
-            (resource_database.get_by_type_and_index(ResourceType.ITEM,
-                                                     _DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
-        ]),
+        resources=(
+            ConditionalResources(None, None, tuple([
+                (resource_database.get_by_type_and_index(ResourceType.ITEM,
+                                                         _DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
+            ])),
+        ),
         model_index=_DARK_TEMPLE_KEY_MODEL,
-        conditional_resources=tuple(),
         item_category="temple_key",
         probability_offset=3,
     )
@@ -147,11 +153,12 @@ def create_sky_temple_key(key_number: int,
 
     return PickupEntry(
         name="Sky Temple Key {}".format(key_number + 1),
-        resources=tuple([
-            (resource_database.get_by_type_and_index(ResourceType.ITEM, _SKY_TEMPLE_KEY_ITEMS[key_number]), 1)
-        ]),
+        resources=(
+            ConditionalResources(None, None, tuple([
+                (resource_database.get_by_type_and_index(ResourceType.ITEM, _SKY_TEMPLE_KEY_ITEMS[key_number]), 1)
+            ])),
+        ),
         model_index=_SKY_TEMPLE_KEY_MODEL,
-        conditional_resources=tuple(),
         item_category="sky_temple_key",
         probability_offset=3,
     )
@@ -166,10 +173,10 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
     return PickupEntry(
         name="Energy Transfer Module",
         resources=(
-            (resource_database.get_by_type_and_index(ResourceType.ITEM, _USELESS_PICKUP_ITEM), 1),
+            ConditionalResources(None, None, tuple([
+                (resource_database.get_by_type_and_index(ResourceType.ITEM, _USELESS_PICKUP_ITEM), 1)
+            ])),
         ),
         model_index=_USELESS_PICKUP_MODEL,
-        conditional_resources=tuple(),
         item_category="etm",
-        probability_offset=0,
     )

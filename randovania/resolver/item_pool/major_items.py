@@ -43,7 +43,7 @@ def add_major_items(resource_database: ResourceDatabase,
             total_pickups += 1
 
         for _ in range(state.num_included_in_starting_items):
-            initial_resources.extend(create_major_item(item, state, False, resource_database).resources)
+            initial_resources.extend(create_major_item(item, state, False, resource_database).all_resources)
             total_pickups += 1
 
         for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
