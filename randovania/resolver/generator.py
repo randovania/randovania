@@ -57,7 +57,8 @@ def _state_to_solver_path(final_state: State,
 
 def generate_list(permalink: Permalink,
                   status_update: Optional[Callable[[str], None]],
-                  timeout: Optional[int] = 600
+                  validate_after_generation: bool,
+                  timeout: Optional[int] = 600,
                   ) -> LayoutDescription:
     if status_update is None:
         status_update = id
@@ -75,7 +76,6 @@ def generate_list(permalink: Permalink,
         return GenerationFailure(message, permalink=permalink)
 
     new_patches = None
-    final_state_by_resolve = None
 
     with multiprocessing.dummy.Pool(1) as dummy_pool:
         patches_async = dummy_pool.apply_async(func=_create_patches,
@@ -85,24 +85,28 @@ def generate_list(permalink: Permalink,
         except multiprocessing.TimeoutError:
             raise create_failure("Timeout reached when generating patches.")
 
-        resolve_params = {
-            "configuration": permalink.layout_configuration,
-            "game": resolver_game,
-            "patches": new_patches,
-            "status_update": status_update,
-        }
-        final_state_async = dummy_pool.apply_async(func=resolver.resolve,
-                                                   kwds=resolve_params)
-        try:
-            final_state_by_resolve = final_state_async.get(timeout)
-        except multiprocessing.TimeoutError:
-            raise create_failure("Timeout reached when validating possibility")
+        if validate_after_generation:
+            resolve_params = {
+                "configuration": permalink.layout_configuration,
+                "game": resolver_game,
+                "patches": new_patches,
+                "status_update": status_update,
+            }
+            final_state_async = dummy_pool.apply_async(func=resolver.resolve,
+                                                       kwds=resolve_params)
 
-    if final_state_by_resolve is None:
-        # Why is final_state_by_distribution not OK?
-        raise create_failure("Generated seed was considered impossible by the solver")
-    else:
-        solver_path = _state_to_solver_path(final_state_by_resolve, resolver_game)
+            try:
+                final_state_by_resolve = final_state_async.get(timeout)
+            except multiprocessing.TimeoutError:
+                raise create_failure("Timeout reached when validating possibility")
+
+            if final_state_by_resolve is None:
+                # Why is final_state_by_distribution not OK?
+                raise create_failure("Generated seed was considered impossible by the solver")
+            else:
+                solver_path = _state_to_solver_path(final_state_by_resolve, resolver_game)
+        else:
+            solver_path = tuple()
 
     return LayoutDescription(
         permalink=permalink,

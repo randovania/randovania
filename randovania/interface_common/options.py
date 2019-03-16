@@ -30,7 +30,8 @@ class Serializer:
 
 _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
-    "show_advanced_options": Serializer(identity, bool),
+    "advanced_validate_seed_after": Serializer(identity, bool),
+    "advanced_timeout_during_generation": Serializer(identity, bool),
     "create_spoiler": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
     "patcher_configuration": Serializer(lambda p: p.as_json, PatcherConfiguration.from_json_dict),
@@ -59,7 +60,8 @@ class Options:
     _is_dirty: bool = False
 
     _last_changelog_displayed: str
-    _show_advanced_options: Optional[bool] = None
+    _advanced_validate_seed_after: Optional[bool] = None
+    _advanced_timeout_during_generation: Optional[bool] = None
     _seed_number: Optional[int] = None
     _create_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
@@ -140,7 +142,8 @@ class Options:
 
     def reset_to_defaults(self):
         self._check_editable_and_mark_dirty()
-        self._show_advanced_options = None
+        self._advanced_validate_seed_after = None
+        self._advanced_timeout_during_generation = None
         self._create_spoiler = None
         self._patcher_configuration = None
         self._layout_configuration = None
@@ -203,6 +206,26 @@ class Options:
     @property
     def cosmetic_patches(self) -> CosmeticPatches:
         return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
+
+    # Advanced
+
+    @property
+    def advanced_validate_seed_after(self) -> bool:
+        return _return_with_default(self._advanced_validate_seed_after, lambda: True)
+
+    @advanced_validate_seed_after.setter
+    def advanced_validate_seed_after(self, value: bool):
+        self._check_editable_and_mark_dirty()
+        self._advanced_validate_seed_after = value
+
+    @property
+    def advanced_timeout_during_generation(self) -> bool:
+        return _return_with_default(self._advanced_timeout_during_generation, lambda: True)
+
+    @advanced_timeout_during_generation.setter
+    def advanced_timeout_during_generation(self, value: bool):
+        self._check_editable_and_mark_dirty()
+        self._advanced_timeout_during_generation = value
 
     # Permalink
     @property

@@ -77,7 +77,9 @@ def test_generate_layout(mock_generate_layout: MagicMock,
     mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
     mock_generate_layout.assert_called_once_with(
         permalink=options.permalink,
-        status_update=mock_constant_percentage_callback.return_value
+        status_update=mock_constant_percentage_callback.return_value,
+        validate_after_generation=options.advanced_validate_seed_after,
+        timeout_during_generation=options.advanced_timeout_during_generation,
     )
 
 

@@ -67,6 +67,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.menu_action_tracker.triggered.connect(self._open_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
+        self.menu_action_export_iso.triggered.connect(self._export_iso)
+        self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
+        self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
 
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
@@ -152,6 +155,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         for window in self.windows:
             window.on_options_changed(self._options)
 
+        self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
+        self.menu_action_timeout_generation_after_a_time_limit.setChecked(
+            self._options.advanced_timeout_during_generation)
+
     # Menu Actions
     def _open_data_visualizer(self):
         self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2(), False)
@@ -181,6 +188,18 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     def _open_tracker(self):
         self._tracker = TrackerWindow(self._options.layout_configuration)
         self._tracker.show()
+
+    def _export_iso(self):
+        pass
+
+    def _on_validate_seed_change(self):
+        with self._options as options:
+            options.advanced_validate_seed_after = self.menu_action_validate_seed_after.isChecked()
+
+    def _on_generate_time_limit_change(self):
+        is_checked = self.menu_action_timeout_generation_after_a_time_limit.isChecked()
+        with self._options as options:
+            options.advanced_timeout_during_generation = is_checked
 
     # Background Process
 

@@ -124,7 +124,7 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
     mock_permalink_as_str.return_value = "fixed-seed!"
 
     generated_description = generator.generate_list(
-        layout_description.permalink, status_update=status_update, timeout=None)
+        layout_description.permalink, status_update=status_update, validate_after_generation=True, timeout=None)
 
     # indices: List[int] = [None] * echoes_pickup_database.total_pickup_count
     # for index, pickup in generated_description.patches.pickup_assignment.items():

@@ -20,7 +20,7 @@ def create_window(options: Union[Options, MagicMock]) -> ISOManagementWindow:
     tab_service: TabService = MagicMock()
     background_processor: BackgroundTaskMixin = MagicMock()
     result = ISOManagementWindow(tab_service, background_processor, options)
-    result.on_options_changed()
+    result.on_options_changed(options)
     return result
 
 
