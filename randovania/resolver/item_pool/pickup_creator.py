@@ -68,7 +68,8 @@ def create_major_item(item: MajorItem,
         conditional_resources = tuple(
             ConditionalResources(
                 name=None,
-                item=resource_database.get_by_type_and_index(ResourceType.ITEM, item.progression[i - 1]) if i > 0 else None,
+                item=resource_database.get_by_type_and_index(ResourceType.ITEM,
+                                                             item.progression[i - 1]) if i > 0 else None,
                 resources=_create_resources(progression)
             )
             for i, progression in enumerate(item.progression)
@@ -176,6 +177,21 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
             ConditionalResources(None, None, tuple([
                 (resource_database.get_by_type_and_index(ResourceType.ITEM, _USELESS_PICKUP_ITEM), 1)
             ])),
+        ),
+        model_index=_USELESS_PICKUP_MODEL,
+        item_category="etm",
+    )
+
+
+def create_visual_etm() -> PickupEntry:
+    """
+    Creates an ETM that should only be used as a visual pickup.
+    :return:
+    """
+    return PickupEntry(
+        name="Unknown item",
+        resources=(
+            ConditionalResources(None, None, tuple()),
         ),
         model_index=_USELESS_PICKUP_MODEL,
         item_category="etm",

@@ -1,4 +1,5 @@
-from typing import Dict
+from random import Random
+from typing import Dict, List
 
 import randovania
 from randovania.game_description import data_reader
@@ -10,11 +11,9 @@ from randovania.game_description.resources import SimpleResourceInfo, ResourceGa
     PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.starting_location import StartingLocationConfiguration
-from randovania.layout.starting_resources import StartingResourcesConfiguration
-from randovania.resolver.item_pool.pickup_creator import create_useless_pickup
+from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.resolver.item_pool import pickup_creator
 
 _TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
@@ -93,59 +92,82 @@ def _pickup_scan(pickup: PickupEntry) -> str:
     )
 
 
-def _create_pickup(original_index: PickupIndex, pickup: PickupEntry) -> dict:
-    # TODO: we can use the resource name here to avoid saying "Progressive Suit" acquired
-    # But using resource name also breaks things like vanilla beam ammo expansion
-    # And 'Missile Expansion' shows up as 'Missile'.
-    hud_text = [
-        # "{} acquired!".format(pickup.resources[0][0].long_name)
-        "{} acquired!".format(pickup.name)
-        for _ in pickup.resources
+def _create_pickup_resources_for(resources: ResourceGain):
+    return [
+        {
+            "index": resource.index,
+            "amount": quantity
+        }
+        for resource, quantity in resources
+        if quantity > 0 and resource.resource_type == ResourceType.ITEM
     ]
-    conditional_resources = []
 
-    for conditional in pickup.resources[1:]:
-        # hud_text.append("{} acquired!".format(conditional.resources[0][0].long_name))
-        conditional_resources.append({
-            "item": conditional.item.index,
-            "resources": [
-                {
-                    "index": resource.index,
-                    "amount": quantity
-                }
-                for resource, quantity in conditional.resources
-                if quantity > 0 and resource.resource_type == ResourceType.ITEM
-            ]
-        })
+
+def _create_pickup(original_index: PickupIndex,
+                   pickup: PickupEntry,
+                   visual_pickup: PickupEntry,
+                   model_style: PickupModelStyle,
+                   ) -> dict:
+    hud_text = [
+        "{} acquired!".format(visual_pickup.name if model_style == PickupModelStyle.HIDE_ALL
+                              else conditional.name or pickup.name)
+        for conditional in pickup.resources
+    ]
+
+    model_pickup = pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
 
     result = {
         "pickup_index": original_index.index,
-        "model_index": pickup.model_index,
-        "scan": _pickup_scan(pickup),
+        "model_index": model_pickup.model_index,
+        "scan": _pickup_scan(pickup) if model_style in {PickupModelStyle.ALL_VISIBLE,
+                                                        PickupModelStyle.HIDE_MODEL} else visual_pickup.name,
         "hud_text": hud_text,
-        "sound_index": 1 if pickup.item_category in {"temple_key", "sky_temple_key"} else 0,
-        "jingle_index": _item_category_to_jingle_index.get(pickup.item_category, 0),
-        "resources": [
+        "sound_index": 1 if model_pickup.item_category in {"temple_key", "sky_temple_key"} else 0,
+        "jingle_index": _item_category_to_jingle_index.get(model_pickup.item_category, 0),
+        "resources": _create_pickup_resources_for(pickup.resources[0].resources),
+        "conditional_resources": [
             {
-                "index": resource.index,
-                "amount": quantity
+                "item": conditional.item.index,
+                "resources": _create_pickup_resources_for(conditional.resources),
             }
-            for resource, quantity in pickup.resources[0].resources
-            if quantity > 0 and resource.resource_type == ResourceType.ITEM
+            for conditional in pickup.resources[1:]
         ],
-        "conditional_resources": conditional_resources,
     }
     return result
+
+
+def _get_visual_model(original_index: int,
+                      pickup_list: List[PickupEntry],
+                      data_source: PickupModelDataSource,
+                      ) -> PickupEntry:
+    if data_source == PickupModelDataSource.ETM:
+        return pickup_creator.create_visual_etm()
+    elif data_source == PickupModelDataSource.RANDOM:
+        return pickup_list[original_index % len(pickup_list)]
+    elif data_source == PickupModelDataSource.LOCATION:
+        raise NotImplementedError()
+    else:
+        raise ValueError(f"Unknown data_source: {data_source}")
 
 
 def _create_pickup_list(patches: GamePatches,
                         useless_pickup: PickupEntry,
                         pickup_count: int,
+                        rng: Random,
+                        model_style: PickupModelStyle,
+                        data_source: PickupModelDataSource,
                         ) -> list:
     pickup_assignment = patches.pickup_assignment
 
+    pickup_list = list(pickup_assignment.values())
+    rng.shuffle(pickup_list)
+
     pickups = [
-        _create_pickup(PickupIndex(i), pickup_assignment.get(PickupIndex(i), useless_pickup))
+        _create_pickup(PickupIndex(i),
+                       pickup_assignment.get(PickupIndex(i), useless_pickup),
+                       _get_visual_model(i, pickup_list, data_source),
+                       model_style,
+                       )
         for i in range(pickup_count)
     ]
 
@@ -189,12 +211,21 @@ def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list
 
 
 def create_patcher_file(description: LayoutDescription,
-                        cosmetic_patches: CosmeticPatches) -> dict:
+                        cosmetic_patches: CosmeticPatches,
+                        ) -> dict:
+    """
+
+    :param description:
+    :param cosmetic_patches:
+    :return:
+    """
     patcher_config = description.permalink.patcher_configuration
     layout = description.permalink.layout_configuration
     patches = description.patches
+    rng = Random(description.permalink.as_str)
+
     game = data_reader.decode_data(layout.game_data, add_self_as_requirement_to_resources=False)
-    useless_pickup = create_useless_pickup(game.resource_database)
+    useless_pickup = pickup_creator.create_useless_pickup(game.resource_database)
 
     result = {}
     _add_header_data_to_result(description, result)
@@ -203,7 +234,11 @@ def create_patcher_file(description: LayoutDescription,
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
     # Add the pickups
-    result["pickups"] = _create_pickup_list(patches, useless_pickup, _TOTAL_PICKUP_COUNT)
+    result["pickups"] = _create_pickup_list(patches, useless_pickup, _TOTAL_PICKUP_COUNT,
+                                            rng,
+                                            patcher_config.pickup_model_style,
+                                            patcher_config.pickup_model_data_source,
+                                            )
 
     # Add the elevators
     result["elevators"] = _create_elevators_field(patches, game.world_list)
