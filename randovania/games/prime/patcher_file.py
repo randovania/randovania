@@ -79,9 +79,13 @@ _item_category_to_jingle_index = {
 
 def _pickup_scan(pickup: PickupEntry) -> str:
     if pickup.item_category != "expansion":
-        return pickup.name
+        if len(pickup.resources) > 1 and all(conditional.name is not None for conditional in pickup.resources):
+            return "{}:\nProvides the following in order: {}".format(
+                pickup.name, ", ".join(conditional.name for conditional in pickup.resources))
+        else:
+            return pickup.name
 
-    # FIXME: proper scan text for progression pickups
+    # FIXME: proper scan text for expansions with conditional
 
     return "{0} that provides {1}".format(
         pickup.name,

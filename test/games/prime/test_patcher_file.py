@@ -12,7 +12,9 @@ from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo, \
     ConditionalResources
 from randovania.games.prime import patcher_file, default_data
+from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.resolver.item_pool import pickup_creator
 
 
 def test_add_header_data_to_result():
@@ -317,3 +319,15 @@ def test_create_pickup_list_random_data_source(empty_patches):
         "resources": [],
         "conditional_resources": []
     }
+
+
+def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_database):
+    # Setup
+    progressive_suit = echoes_item_database.major_items["Progressive Suit"]
+    pickup = pickup_creator.create_major_item(progressive_suit, MajorItemState(), False, echoes_resource_database)
+
+    # Run
+    result = patcher_file._pickup_scan(pickup)
+
+    # Assert
+    assert result == "Progressive Suit:\nProvides the following in order: Dark Suit, Light Suit"
