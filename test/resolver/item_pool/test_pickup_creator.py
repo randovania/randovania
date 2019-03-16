@@ -63,17 +63,17 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
         model_index=1337,
         resources=(
             ConditionalResources(
-                name=None,
+                name="Dark Visor",
                 item=None,
                 resources=_create_resources(item_a),
             ),
             ConditionalResources(
-                name=None,
+                name="Morph Ball",
                 item=item_a,
                 resources=_create_resources(item_b),
             ),
             ConditionalResources(
-                name=None,
+                name="Morph Ball Bomb",
                 item=item_b,
                 resources=_create_resources(item_c),
             ),
