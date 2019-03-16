@@ -4,7 +4,7 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources, \
-    ResourceQuantity
+    ResourceQuantity, SimpleResourceInfo
 from randovania.layout.major_item_state import MajorItemState
 
 _ITEM_PERCENTAGE = 47
@@ -35,6 +35,11 @@ _USELESS_PICKUP_MODEL = 30
 _USELESS_PICKUP_ITEM = 107
 
 
+def _get_item(resource_database: ResourceDatabase, index: int,
+              ) -> SimpleResourceInfo:
+    return resource_database.get_by_type_and_index(ResourceType.ITEM, index)
+
+
 def create_major_item(item: MajorItem,
                       state: MajorItemState,
                       include_percentage: bool,
@@ -54,22 +59,21 @@ def create_major_item(item: MajorItem,
         resources = []
 
         if base_resource is not None:
-            resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, base_resource), 1))
+            resources.append((_get_item(resource_database, base_resource), 1))
 
         for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
-            resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_index), ammo_count))
+            resources.append((_get_item(resource_database, ammo_index), ammo_count))
 
         if include_percentage:
-            resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1))
+            resources.append((_get_item(resource_database, _ITEM_PERCENTAGE), 1))
 
         return tuple(resources)
 
     if item.progression:
         conditional_resources = tuple(
             ConditionalResources(
-                name=None,
-                item=resource_database.get_by_type_and_index(ResourceType.ITEM,
-                                                             item.progression[i - 1]) if i > 0 else None,
+                name=_get_item(resource_database, item.progression[i]).long_name,
+                item=_get_item(resource_database, item.progression[i - 1]) if i > 0 else None,
                 resources=_create_resources(progression)
             )
             for i, progression in enumerate(item.progression)
@@ -101,10 +105,10 @@ def create_ammo_expansion(ammo: Ammo,
     """
 
     resources = [
-        (resource_database.get_by_type_and_index(ResourceType.ITEM, item), count)
+        (_get_item(resource_database, item), count)
         for item, count in zip(ammo.items, ammo_count)
     ]
-    resources.append((resource_database.get_by_type_and_index(ResourceType.ITEM, _ITEM_PERCENTAGE), 1))
+    resources.append((_get_item(resource_database, _ITEM_PERCENTAGE), 1))
 
     return PickupEntry(
         name=ammo.name,
@@ -132,8 +136,7 @@ def create_dark_temple_key(key_number: int,
         name=_DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
         resources=(
             ConditionalResources(None, None, tuple([
-                (resource_database.get_by_type_and_index(ResourceType.ITEM,
-                                                         _DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
+                (_get_item(resource_database, _DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
             ])),
         ),
         model_index=_DARK_TEMPLE_KEY_MODEL,
@@ -156,7 +159,7 @@ def create_sky_temple_key(key_number: int,
         name="Sky Temple Key {}".format(key_number + 1),
         resources=(
             ConditionalResources(None, None, tuple([
-                (resource_database.get_by_type_and_index(ResourceType.ITEM, _SKY_TEMPLE_KEY_ITEMS[key_number]), 1)
+                (_get_item(resource_database, _SKY_TEMPLE_KEY_ITEMS[key_number]), 1)
             ])),
         ),
         model_index=_SKY_TEMPLE_KEY_MODEL,
@@ -175,7 +178,7 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
         name="Energy Transfer Module",
         resources=(
             ConditionalResources(None, None, tuple([
-                (resource_database.get_by_type_and_index(ResourceType.ITEM, _USELESS_PICKUP_ITEM), 1)
+                (_get_item(resource_database, _USELESS_PICKUP_ITEM), 1)
             ])),
         ),
         model_index=_USELESS_PICKUP_MODEL,
