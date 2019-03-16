@@ -8,7 +8,6 @@ from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode
-from randovania.layout.starting_resources import StartingResourcesConfiguration
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
@@ -20,14 +19,6 @@ def _update_options_when_true(options: Options, field_name: str, new_value, chec
 def _update_options_by_value(options: Options, combo: QComboBox, new_index: int):
     with options:
         setattr(options, combo.options_field_name, combo.currentData())
-
-
-def _on_item_loss_changed(options: Options, new_value: bool):
-    with options:
-        if new_value:
-            options.layout_configuration_starting_resources = StartingResourcesConfiguration.VANILLA_ITEM_LOSS_ENABLED
-        else:
-            options.layout_configuration_starting_resources = StartingResourcesConfiguration.VANILLA_ITEM_LOSS_DISABLED
 
 
 _TRICK_LEVEL_DESCRIPTION = {

@@ -1,8 +1,6 @@
-from randovania.layout.configuration_factory import MajorItemsConfigEnum
 from randovania.layout.layout_configuration import LayoutTrickLevel, LayoutSkyTempleKeyMode, LayoutConfiguration, \
     LayoutElevators
 from randovania.layout.starting_location import StartingLocation
-from randovania.layout.starting_resources import StartingResources
 
 
 def add_debug_argument(parser):
