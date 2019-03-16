@@ -28,28 +28,24 @@ def test_create_subparsers(mock_qt_create_subparsers: MagicMock,
     [],
     ["--version"],
 ])
-@patch("sys.exit", autospec=True)
-def test_parse_args_valid(mock_exit: MagicMock,
-                          args):
+def test_parse_args_valid(args):
     # Run
-    cli._create_parser().parse_args(args)
+    try:
+        cli._create_parser().parse_args(args)
 
-    # Assert
-    mock_exit.assert_not_called()
+    except SystemExit as value:
+        assert value is None
 
 
 @pytest.mark.parametrize("args", [
     ["-h"],
 ])
-@patch("sys.exit", autospec=True)
-def test_parse_args_invalid(mock_exit: MagicMock,
-                            args):
+def test_parse_args_invalid(args):
     # Run
     parser = cli._create_parser()
-    parser.parse_args(args)
 
-    # Assert
-    mock_exit.assert_called_once_with(0)
+    with pytest.raises(SystemExit, match="^0$"):
+        parser.parse_args(args)
 
 
 @patch("randovania.cli.qt.run", autospec=True)
