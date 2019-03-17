@@ -53,6 +53,10 @@ def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -
         return value
 
 
+class DecodeFailedException(ValueError):
+    pass
+
+
 class Options:
     _data_dir: Path
     _on_options_changed: Optional[Callable[[], None]] = None
@@ -87,7 +91,7 @@ class Options:
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)
 
-    def load_from_disk(self):
+    def load_from_disk(self, ignore_decode_errors: bool = False):
         persisted_data = self._read_persisted_options()
         if persisted_data is None:
             return
@@ -96,7 +100,18 @@ class Options:
         for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
             value = persisted_options.get(field_name, None)
             if value is not None:
-                self._set_field(field_name, serializer.decode(value))
+                try:
+                    decoded = serializer.decode(value)
+                except Exception as err:
+                    if ignore_decode_errors:
+                        decoded = None
+                    else:
+                        raise DecodeFailedException(
+                            f"Unable to decode field {field_name}: {err}"
+                        )
+
+                if decoded is not None:
+                    self._set_field(field_name, decoded)
 
     def _serialize_fields(self) -> dict:
         data_to_persist = {}
