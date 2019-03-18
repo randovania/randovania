@@ -79,8 +79,8 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
             for resource_info, quantity in sorted(patches.extra_initial_items, key=lambda x: x[0].long_name)
         },
         "elevators": {
-            world_list.node_name(_find_node_with_teleporter(world_list, teleporter_id), with_world=True):
-                world_list.node_name(world_list.resolve_teleporter_connection(connection), with_world=True)
+            world_list.area_name(world_list.nodes_to_area(_find_node_with_teleporter(world_list, teleporter_id))):
+                world_list.area_name(world_list.nodes_to_area(world_list.resolve_teleporter_connection(connection)))
             for teleporter_id, connection in patches.elevator_connection.items()
         },
         "locations": {
@@ -91,6 +91,13 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
     }
 
     return result
+
+
+def _area_name_to_area_location(world_list: WorldList, area_name: str) -> AreaLocation:
+    world_name, area_name = re.match("([^/]+)/([^/]+)", area_name).group(1, 2)
+    starting_world = world_list.world_with_name(world_name)
+    starting_area = starting_world.area_by_name(area_name)
+    return AreaLocation(starting_world.world_asset_id, starting_area.area_asset_id)
 
 
 def decode(game_modifications: dict, configuration: LayoutConfiguration) -> GamePatches:
@@ -104,10 +111,7 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
     world_list = game.world_list
 
     # Starting Location
-    world_name, area_name = re.match("([^/]+)/([^/]+)", game_modifications["starting_location"]).group(1, 2)
-    starting_world = world_list.world_with_name(world_name)
-    starting_area = starting_world.area_by_name(area_name)
-    starting_location = AreaLocation(starting_world.world_asset_id, starting_area.area_asset_id)
+    starting_location = _area_name_to_area_location(world_list, game_modifications["starting_location"])
 
     # Initial items
     extra_initial_items = tuple([
@@ -116,11 +120,12 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
     ])
 
     # Elevators
-    elevator_connection = {
-        world_list.node_from_name(node_source).teleporter_instance_id:
-            world_list.node_to_area_location(world_list.node_from_name(node_target))
-        for node_source, node_target in game_modifications["elevators"].items()
-    }
+    elevator_connection = {}
+    for source_name, target_name in game_modifications["elevators"].items():
+        source_area = _area_name_to_area_location(world_list, source_name)
+        target_area = _area_name_to_area_location(world_list, target_name)
+
+        elevator_connection[world_list.resolve_teleporter_connection(source_area).teleporter_instance_id] = target_area
 
     # Pickups
     pickup_assignment = {}
