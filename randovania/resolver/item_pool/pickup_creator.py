@@ -1,6 +1,7 @@
 from typing import Iterator, Optional, Tuple
 
 from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources, \
@@ -87,7 +88,7 @@ def create_major_item(item: MajorItem,
         name=item.name,
         resources=conditional_resources,
         model_index=item.model_index,
-        item_category=item.item_category.value,
+        item_category=item.item_category,
         probability_offset=item.probability_offset,
     )
 
@@ -116,7 +117,7 @@ def create_ammo_expansion(ammo: Ammo,
             ConditionalResources(None, None, tuple(resources)),
         ),
         model_index=ammo.models[0],  # TODO: use a random model
-        item_category="expansion",
+        item_category=ItemCategory.EXPANSION,
     )
 
 
@@ -140,7 +141,7 @@ def create_dark_temple_key(key_number: int,
             ])),
         ),
         model_index=_DARK_TEMPLE_KEY_MODEL,
-        item_category="temple_key",
+        item_category=ItemCategory.TEMPLE_KEY,
         probability_offset=3,
     )
 
@@ -163,7 +164,7 @@ def create_sky_temple_key(key_number: int,
             ])),
         ),
         model_index=_SKY_TEMPLE_KEY_MODEL,
-        item_category="sky_temple_key",
+        item_category=ItemCategory.SKY_TEMPLE_KEY,
         probability_offset=3,
     )
 
@@ -182,7 +183,7 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
             ])),
         ),
         model_index=_USELESS_PICKUP_MODEL,
-        item_category="etm",
+        item_category=ItemCategory.ETM,
     )
 
 
@@ -197,5 +198,5 @@ def create_visual_etm() -> PickupEntry:
             ConditionalResources(None, None, tuple()),
         ),
         model_index=_USELESS_PICKUP_MODEL,
-        item_category="etm",
+        item_category=ItemCategory.ETM,
     )

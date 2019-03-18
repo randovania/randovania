@@ -8,6 +8,7 @@ import pytest
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo, \
     ConditionalResources
@@ -112,21 +113,21 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     useless_resource = SimpleResourceInfo(0, "Useless", "Useless", ResourceType.ITEM)
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    pickup_a = PickupEntry("A", 1, "temple_key",
+    pickup_a = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY,
                            (
                                ConditionalResources(None, None, ((resource_a, 1),)),
                            ))
-    pickup_b = PickupEntry("B", 2, "",
+    pickup_b = PickupEntry("B", 2, ItemCategory.SUIT,
                            (
                                ConditionalResources(None, None, ((resource_b, 1), (resource_a, 1))),
                                ConditionalResources(None, resource_b, ((resource_a, 5),))
                            ))
-    pickup_c = PickupEntry("C", 2, "expansion",
+    pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION,
                            (
                                ConditionalResources(None, None, ((resource_b, 2), (resource_a, 1))),
                            ))
 
-    useless_pickup = PickupEntry("Useless", 0, "",
+    useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM,
                                  (
                                      ConditionalResources(None, None, ((useless_resource, 1),)),
                                  ))
@@ -183,7 +184,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         "hud_text": ["B acquired!", "B acquired!"] if model_style != PickupModelStyle.HIDE_ALL else [
             'Unknown item acquired!', 'Unknown item acquired!'],
         "sound_index": 0,
-        "jingle_index": 0,
+        "jingle_index": 1 if model_style == PickupModelStyle.ALL_VISIBLE else 0,
         "resources": [
             {
                 "index": 2,
@@ -246,11 +247,11 @@ def test_create_pickup_list_random_data_source(empty_patches):
     resources = (ConditionalResources(None, None, tuple()),)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
 
-    pickup_a = PickupEntry("A", 1, "temple_key", resources)
-    pickup_b = PickupEntry("B", 2, "", (ConditionalResources(None, None, tuple()),
-                                        ConditionalResources(None, resource_b, tuple()),))
-    pickup_c = PickupEntry("C", 2, "expansion", resources)
-    useless_pickup = PickupEntry("Useless", 0, "", resources)
+    pickup_a = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, resources)
+    pickup_b = PickupEntry("B", 2, ItemCategory.SUIT, (ConditionalResources(None, None, tuple()),
+                                                       ConditionalResources(None, resource_b, tuple()),))
+    pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION, resources)
+    useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM, resources)
 
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): pickup_a,
@@ -305,7 +306,7 @@ def test_create_pickup_list_random_data_source(empty_patches):
         "model_index": 2,
         "hud_text": ["B acquired!"],
         "sound_index": 0,
-        "jingle_index": 0,
+        "jingle_index": 1,
         "resources": [],
         "conditional_resources": []
     }

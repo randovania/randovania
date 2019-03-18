@@ -79,7 +79,7 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
                 resources=_create_resources(item_c),
             ),
         ),
-        item_category="morph_ball",
+        item_category=ItemCategory.MORPH_BALL,
         probability_offset=5,
     )
 
@@ -122,5 +122,5 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
             ),
         ),
         model_index=24,
-        item_category="missile",
+        item_category=ItemCategory.MISSILE,
     )
