@@ -11,13 +11,15 @@ from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x00', "replace": {}},
-        {"encoded": b'\x05\n', "replace": {
-            "Spider Ball": {
-                "include_copy_in_original_location": True,
-                "num_shuffled_pickups": 1,
-                "num_included_in_starting_items": 0,
-                "included_ammo": []
+        {"encoded": b'\xc0', "replace": {}},
+        {"encoded": b'\xc1B\x80', "replace": {
+            "items_state": {
+                "Spider Ball": {
+                    "include_copy_in_original_location": True,
+                    "num_shuffled_pickups": 1,
+                    "num_included_in_starting_items": 0,
+                    "included_ammo": []
+                }
             }
         }},
     ],
@@ -26,8 +28,12 @@ def _config_with_data(request):
     with get_data_path().joinpath("json_data", "configurations", "major_items", "default.json").open() as open_file:
         data = json.load(open_file)
 
-    for key, value in request.param["replace"].items():
-        data["items_state"][key] = value
+    data["progressive_suit"] = True
+    data["progressive_grapple"] = True
+
+    for field, value in request.param["replace"].items():
+        for key, inner_value in value.items():
+            data[field][key] = inner_value
 
     return request.param["encoded"], MajorItemsConfiguration.from_json(data, default_prime2_item_database())
 

@@ -60,8 +60,6 @@ class LayoutConfiguration(BitPackDataClass):
     major_items_configuration: MajorItemsConfiguration
     ammo_configuration: AmmoConfiguration
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
-    progressive_suit: bool = True
-    progressive_grapple: bool = True
     split_beam_ammo: bool = True
     missile_launcher_required: bool = True
     main_power_bombs_required: bool = True
@@ -80,8 +78,6 @@ class LayoutConfiguration(BitPackDataClass):
             "starting_location": self.starting_location.as_json,
             "major_items_configuration": self.major_items_configuration.as_json,
             "ammo_configuration": self.ammo_configuration.as_json,
-            "progressive_suit": self.progressive_suit,
-            "progressive_grapple": self.progressive_grapple,
             "split_beam_ammo": self.split_beam_ammo,
             "missile_launcher_required": self.missile_launcher_required,
             "main_power_bombs_required": self.main_power_bombs_required,
@@ -102,8 +98,6 @@ class LayoutConfiguration(BitPackDataClass):
                 json_dict["ammo_configuration"],
                 default_prime2_item_database(),
             ),
-            progressive_suit=json_dict["progressive_suit"],
-            progressive_grapple=json_dict["progressive_grapple"],
             split_beam_ammo=json_dict["split_beam_ammo"],
             missile_launcher_required=json_dict["missile_launcher_required"],
             main_power_bombs_required=json_dict["main_power_bombs_required"],
@@ -126,9 +120,4 @@ class LayoutConfiguration(BitPackDataClass):
             starting_location=StartingLocation.default(),
             major_items_configuration=MajorItemsConfiguration.default(),
             ammo_configuration=AmmoConfiguration.default(),
-            progressive_suit=True,
-            progressive_grapple=True,
-            split_beam_ammo=True,
-            missile_launcher_required=True,
-            main_power_bombs_required=True,
         )

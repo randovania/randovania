@@ -1,5 +1,5 @@
 import copy
-from dataclasses import dataclass
+import dataclasses
 from typing import Dict, Iterator, Tuple, List
 
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -8,29 +8,42 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.major_item_state import MajorItemState
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class MajorItemsConfiguration(BitPackValue):
     items_state: Dict[MajorItem, MajorItemState]
+    progressive_suit: bool = True
+    progressive_grapple: bool = True
 
     @property
     def as_json(self) -> dict:
+        default = MajorItemsConfiguration.default()
         return {
             "items_state": {
                 major_item.name: state.as_json
                 for major_item, state in self.items_state.items()
-            }
+                if state != default.items_state[major_item]
+            },
+            "progressive_suit": self.progressive_suit,
+            "progressive_grapple": self.progressive_grapple,
         }
 
     @classmethod
     def from_json(cls, value: dict, item_database: ItemDatabase) -> "MajorItemsConfiguration":
+        default = cls.default()
+
+        items_state = copy.copy(default.items_state)
+        for name, state_data in value["items_state"].items():
+            items_state[item_database.major_items[name]] = MajorItemState.from_json(state_data)
+
         return cls(
-            items_state={
-                item_database.major_items[name]: MajorItemState.from_json(state_data)
-                for name, state_data in value["items_state"].items()
-            }
+            items_state=items_state,
+            progressive_suit=value["progressive_suit"],
+            progressive_grapple=value["progressive_grapple"],
         )
 
     def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        yield int(self.progressive_suit), 2
+        yield int(self.progressive_grapple), 2
         default = MajorItemsConfiguration.default()
 
         result: List[Tuple[int, MajorItem, MajorItemState]] = []
@@ -50,6 +63,8 @@ class MajorItemsConfiguration(BitPackValue):
         from randovania.game_description import default_database
         item_database = default_database.default_prime2_item_database()
 
+        progressive_suit, progressive_grapple = decoder.decode(2, 2)
+
         default = MajorItemsConfiguration.default()
         num_items = decoder.decode_single(len(default.items_state))
         indices_with_custom = {
@@ -65,7 +80,9 @@ class MajorItemsConfiguration(BitPackValue):
             else:
                 items_state[item] = default.items_state[item]
 
-        return cls(items_state)
+        return cls(items_state,
+                   progressive_suit=bool(progressive_suit),
+                   progressive_grapple=bool(progressive_grapple))
 
     def replace_state_for_item(self, item: MajorItem, state: MajorItemState) -> "MajorItemsConfiguration":
         return self.replace_states({
@@ -84,7 +101,7 @@ class MajorItemsConfiguration(BitPackValue):
         for item, state in new_states.items():
             items_state[item] = state
 
-        return MajorItemsConfiguration(items_state)
+        return dataclasses.replace(self, items_state=items_state)
 
     @classmethod
     def default(cls):

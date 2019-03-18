@@ -5,6 +5,7 @@ from randovania import get_data_path
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
 
@@ -33,7 +34,12 @@ def get_major_items_configurations_for(mode: MajorItemsConfigEnum) -> MajorItems
                                   "{}.json".format(mode.value)).open() as open_file:
         data = json.load(open_file)
 
-    return MajorItemsConfiguration.from_json(data, item_database)
+    return MajorItemsConfiguration(
+        items_state={
+            item_database.major_items[name]: MajorItemState.from_json(state_data)
+            for name, state_data in data["items_state"].items()
+        }
+    )
 
 
 def get_ammo_configurations_for(mode: AmmoConfigEnum) -> AmmoConfiguration:

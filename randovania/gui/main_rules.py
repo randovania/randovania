@@ -92,22 +92,24 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     def on_options_changed(self, options: Options):
         # Item alternatives
         layout = options.layout_configuration
-        self.progressive_suit_check.setChecked(layout.progressive_suit)
-        self.progressive_grapple_check.setChecked(layout.progressive_grapple)
+        major_configuration = options.major_items_configuration
+
+        self.progressive_suit_check.setChecked(major_configuration.progressive_suit)
+        self.progressive_grapple_check.setChecked(major_configuration.progressive_grapple)
         self.split_ammo_check.setChecked(layout.split_beam_ammo)
 
         _update_elements_for_progressive_item(
             self._boxes_for_category[MajorItemCategory.SUIT][2],
             [self._dark_suit, self._light_suit],
             self._progressive_suit,
-            layout.progressive_suit
+            major_configuration.progressive_suit
         )
 
         _update_elements_for_progressive_item(
             self._boxes_for_category[MajorItemCategory.MOVEMENT][2],
             [self._grapple_beam, self._screw_attack],
             self._progressive_grapple,
-            layout.progressive_grapple
+            major_configuration.progressive_grapple
         )
 
         _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
@@ -115,7 +117,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
 
         # Energy Tank
-        major_configuration = options.major_items_configuration
         energy_tank_state = major_configuration.items_state[self._energy_tank_item]
 
         self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_items)
@@ -185,10 +186,12 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     # Item Alternatives
 
     def _register_alternatives_events(self):
-        self.progressive_suit_check.stateChanged.connect(self._persist_bool_layout_field("progressive_suit"))
+        self.progressive_suit_check.stateChanged.connect(
+            self._persist_bool_major_configuration_field("progressive_suit"))
         self.progressive_suit_check.clicked.connect(self._change_progressive_suit)
 
-        self.progressive_grapple_check.stateChanged.connect(self._persist_bool_layout_field("progressive_grapple"))
+        self.progressive_grapple_check.stateChanged.connect(
+            self._persist_bool_major_configuration_field("progressive_grapple"))
         self.progressive_grapple_check.clicked.connect(self._change_progressive_grapple)
 
         self.split_ammo_check.stateChanged.connect(self._persist_bool_layout_field("split_beam_ammo"))
@@ -198,6 +201,14 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         def bound(value: int):
             with self._options as options:
                 options.set_layout_configuration_field(field_name, bool(value))
+
+        return bound
+
+    def _persist_bool_major_configuration_field(self, field_name: str):
+        def bound(value: int):
+            with self._options as options:
+                kwargs = {field_name: bool(value)}
+                options.major_items_configuration = dataclasses.replace(options.major_items_configuration, **kwargs)
 
         return bound
 
