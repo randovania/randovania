@@ -26,3 +26,9 @@ class World(NamedTuple):
             if area.area_asset_id == asset_id:
                 return area
         raise KeyError("Unknown asset_id: {}".format(asset_id))
+
+    def area_by_name(self, area_name: str) -> Area:
+        for area in self.areas:
+            if area.name == area_name:
+                return area
+        raise KeyError("Unknown name: {}".format(area_name))

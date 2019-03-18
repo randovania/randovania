@@ -1,8 +1,10 @@
+import re
 from typing import Dict
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode, TeleporterNode, Node
 from randovania.game_description.resources import PickupAssignment, find_resource_info_with_long_name
 from randovania.game_description.world_list import WorldList
@@ -71,7 +73,7 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
     world_list = data_reader.decode_data(game_data).world_list
 
     result = {
-        "starting_location": world_list.area_by_area_location(patches.starting_location).name,
+        "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location)),
         "starting_items": {
             resource_info.long_name: quantity
             for resource_info, quantity in sorted(patches.extra_initial_items, key=lambda x: x[0].long_name)
@@ -102,9 +104,10 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
     world_list = game.world_list
 
     # Starting Location
-    starting_area = [area for area in world_list.all_areas
-                     if area.name == game_modifications["starting_location"]][0]
-    starting_location = world_list.node_to_area_location(starting_area.nodes[0])
+    world_name, area_name = re.match("([^/]+)/([^/]+)", game_modifications["starting_location"]).group(1, 2)
+    starting_world = world_list.world_with_name(world_name)
+    starting_area = starting_world.area_by_name(area_name)
+    starting_location = AreaLocation(starting_world.world_asset_id, starting_area.area_asset_id)
 
     # Initial items
     extra_initial_items = tuple([
@@ -118,6 +121,9 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
             world_list.node_to_area_location(world_list.node_from_name(node_target))
         for node_source, node_target in game_modifications["elevators"].items()
     }
+
+    # Pickups
+    pickup_assignment = {}
 
     return GamePatches(
         pickup_assignment=pickup_assignment,  # PickupAssignment
