@@ -1,26 +1,14 @@
 from dataclasses import dataclass
-from enum import Enum
-from typing import Optional, List, Tuple
+from typing import Optional, Tuple
 
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources import PickupIndex
-
-
-class MajorItemCategory(Enum):
-    VISOR = "visor"
-    SUIT = "suit"
-    BEAM = "beam"
-    MORPH_BALL = "morph_ball"
-    MOVEMENT = "movement"
-    MISSILE = "missile"
-    BEAM_COMBO = "beam_combo"
-    TRANSLATOR = "translator"
-    ENERGY_TANK = "energy_tank"
 
 
 @dataclass(frozen=True)
 class MajorItem:
     name: str
-    item_category: MajorItemCategory
+    item_category: ItemCategory
     model_index: int
     progression: Tuple[int, ...]
     ammo_index: Tuple[int, ...]
@@ -32,7 +20,7 @@ class MajorItem:
     def from_json(cls, name: str, value: dict) -> "MajorItem":
         return cls(
             name=name,
-            item_category=MajorItemCategory(value["item_category"]),
+            item_category=ItemCategory(value["item_category"]),
             model_index=value["model_index"],
             progression=tuple(value["progression"]),
             ammo_index=tuple(value.get("ammo", [])),

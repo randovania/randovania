@@ -2,7 +2,8 @@ from dataclasses import dataclass
 from typing import Tuple, Iterator
 
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.item.major_item import MajorItem, MajorItemCategory
+from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.item_category import ItemCategory
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
 DEFAULT_MAXIMUM_SHUFFLED = 11
@@ -37,7 +38,7 @@ class MajorItemState:
         # original location
         yield int(self.include_copy_in_original_location), 2
 
-        if item.item_category == MajorItemCategory.ENERGY_TANK:
+        if item.item_category == ItemCategory.ENERGY_TANK:
             # num shuffled
             yield self.num_shuffled_pickups, ENERGY_TANK_MAXIMUM_COUNT
 
@@ -63,7 +64,7 @@ class MajorItemState:
     def bit_pack_unpack(cls, decoder: BitPackDecoder, item: MajorItem) -> "MajorItemState":
         original = decoder.decode(2)[0]
 
-        if item.item_category == MajorItemCategory.ENERGY_TANK:
+        if item.item_category == ItemCategory.ENERGY_TANK:
             # num shuffled
             # starting item
             shuffled, starting = decoder.decode(16, 16)

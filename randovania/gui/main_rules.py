@@ -11,7 +11,8 @@ from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QTool
 from randovania.game_description.default_database import default_prime2_item_database, default_prime2_resource_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_database import ItemDatabase
-from randovania.game_description.item.major_item import MajorItemCategory, MajorItem
+from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.item_configuration_popup import ItemConfigurationPopup
@@ -56,7 +57,7 @@ def _update_elements_for_progressive_item(elements: Dict[MajorItem, Iterable[QWi
 
 class MainRulesWindow(QMainWindow, Ui_MainRules):
     _boxes_for_category: Dict[
-        MajorItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
+        ItemCategory, Tuple[QGroupBox, QGridLayout, Dict[MajorItem, Tuple[QToolButton, QLabel]]]]
 
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
@@ -99,14 +100,14 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.split_ammo_check.setChecked(layout.split_beam_ammo)
 
         _update_elements_for_progressive_item(
-            self._boxes_for_category[MajorItemCategory.SUIT][2],
+            self._boxes_for_category[ItemCategory.SUIT][2],
             [self._dark_suit, self._light_suit],
             self._progressive_suit,
             major_configuration.progressive_suit
         )
 
         _update_elements_for_progressive_item(
-            self._boxes_for_category[MajorItemCategory.MOVEMENT][2],
+            self._boxes_for_category[ItemCategory.MOVEMENT][2],
             [self._grapple_beam, self._screw_attack],
             self._progressive_grapple,
             major_configuration.progressive_grapple
@@ -284,7 +285,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     def _create_categories_boxes(self, size_policy):
         self._boxes_for_category = {}
 
-        for i, major_item_category in enumerate(MajorItemCategory):
+        for i, major_item_category in enumerate(ItemCategory):
             category_button = QToolButton(self.major_items_box)
             category_button.setGeometry(QRect(20, 30, 24, 21))
             category_button.setText("+")
@@ -310,7 +311,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
     def _create_major_item_boxes(self, item_database: ItemDatabase):
         for major_item in item_database.major_items.values():
-            if major_item.required or major_item.item_category == MajorItemCategory.ENERGY_TANK:
+            if major_item.required or major_item.item_category == ItemCategory.ENERGY_TANK:
                 continue
             category_box, category_layout, elements = self._boxes_for_category[major_item.item_category]
 
@@ -348,7 +349,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     # Energy Tank
 
     def _create_energy_tank_box(self):
-        category_box, category_layout, _ = self._boxes_for_category[MajorItemCategory.ENERGY_TANK]
+        category_box, category_layout, _ = self._boxes_for_category[ItemCategory.ENERGY_TANK]
 
         starting_label = QLabel(category_box)
         starting_label.setText("Starting Quantity")

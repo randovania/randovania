@@ -4,41 +4,16 @@ import json
 from dataclasses import dataclass
 from distutils.version import StrictVersion
 from pathlib import Path
-from typing import NamedTuple, Tuple, Dict, List
+from typing import NamedTuple, Tuple, List
 
-from randovania.game_description import data_reader
-from randovania.game_description.area_location import AreaLocation
+from randovania.layout import game_patches_serializer
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PickupNode, Node, TeleporterNode
-from randovania.game_description.resources import PickupAssignment
-from randovania.game_description.world_list import WorldList
 from randovania.layout.permalink import Permalink
 
 
 class SolverPath(NamedTuple):
     node_name: str
     previous_nodes: Tuple[str, ...]
-
-
-def _pickup_assignment_to_item_locations(world_list: WorldList,
-                                         pickup_assignment: PickupAssignment,
-                                         ) -> Dict[str, Dict[str, str]]:
-    items_locations = {}
-
-    for world in world_list.worlds:
-        items_in_world = {}
-        items_locations[world.name] = items_in_world
-
-        for area in world.areas:
-            for node in area.nodes:
-                if isinstance(node, PickupNode):
-                    if node.pickup_index in pickup_assignment:
-                        item_name = pickup_assignment[node.pickup_index].name
-                    else:
-                        item_name = "Nothing"
-                    items_in_world[world_list.node_name(node)] = item_name
-
-    return items_locations
 
 
 def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPath, ...]:
@@ -49,30 +24,6 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
         )
         for step in playthrough
     )
-
-
-def _node_mapping_to_elevator_connection(world_list: WorldList,
-                                         elevators: Dict[str, str],
-                                         ) -> Dict[int, AreaLocation]:
-    result = {}
-    for source_name, target_node in elevators.items():
-        source_node: TeleporterNode = world_list.node_from_name(source_name)
-        target_node = world_list.node_from_name(target_node)
-
-        result[source_node.teleporter_instance_id] = AreaLocation(
-            world_list.nodes_to_world(target_node).world_asset_id,
-            world_list.nodes_to_area(target_node).area_asset_id
-        )
-
-    return result
-
-
-def _find_node_with_teleporter(world_list: WorldList, teleporter_id: int) -> Node:
-    for node in world_list.all_nodes:
-        if isinstance(node, TeleporterNode):
-            if node.teleporter_instance_id == teleporter_id:
-                return node
-    raise ValueError("Unknown teleporter_id: {}".format(teleporter_id))
 
 
 @dataclass(frozen=True)
@@ -96,13 +47,10 @@ class LayoutDescription:
         if not permalink.spoiler:
             raise ValueError("Unable to read details of seed log with spoiler disabled")
 
-        # FIXME: loading a log file!
-        game = data_reader.decode_data(permalink.layout_configuration.game_data)
-
         return LayoutDescription(
             version=version,
             permalink=permalink,
-            patches=patches,
+            patches=game_patches_serializer.decode(json_dict["game_modifications"], permalink.layout_configuration),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
 
@@ -121,23 +69,9 @@ class LayoutDescription:
         }
 
         if self.permalink.spoiler:
-            world_list = data_reader.decode_data(self.permalink.layout_configuration.game_data).world_list
+            result["game_modifications"] = game_patches_serializer.serialize(
+                self.patches, self.permalink.layout_configuration.game_data)
 
-            result["starting_items"] = {
-                resource_info.long_name: quantity
-                for resource_info, quantity in sorted(self.patches.extra_initial_items, key=lambda x: x[0].long_name)
-            }
-
-            result["locations"] = {
-                key: value
-                for key, value in sorted(_pickup_assignment_to_item_locations(world_list,
-                                                                              self.patches.pickup_assignment).items())
-            }
-            result["elevators"] = {
-                world_list.node_name(_find_node_with_teleporter(world_list, teleporter_id), with_world=True):
-                    world_list.node_name(world_list.resolve_teleporter_connection(connection), with_world=True)
-                for teleporter_id, connection in self.patches.elevator_connection.items()
-            }
             result["playthrough"] = [
                 {
                     "path_from_previous": path.previous_nodes,

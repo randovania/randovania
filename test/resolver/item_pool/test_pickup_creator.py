@@ -2,7 +2,8 @@ import pytest
 
 import randovania.resolver.item_pool.ammo
 import randovania.resolver.item_pool.pickup_creator
-from randovania.game_description.item.major_item import MajorItem, MajorItemCategory
+from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupEntry, ConditionalResources
 from randovania.layout.major_item_state import MajorItemState
@@ -23,7 +24,7 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
 
     major_item = MajorItem(
         name="The Item",
-        item_category=MajorItemCategory.MORPH_BALL,
+        item_category=ItemCategory.MORPH_BALL,
         model_index=1337,
         progression=(10, 15, 18),
         ammo_index=(40, 42),
