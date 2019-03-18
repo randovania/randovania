@@ -5,6 +5,7 @@ import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupIndex, \
@@ -69,16 +70,17 @@ def _create_spawn_point_field(patches: GamePatches,
     }
 
 
-_item_category_to_jingle_index = {
-    "major": 1,
-    "translator": 1,
-    "temple_key": 2,
-    "sky_temple_key": 2
-}
+def _get_jingle_index_for(category: ItemCategory) -> int:
+    if category.is_key:
+        return 2
+    elif category.is_major_category and category != ItemCategory.ENERGY_TANK:
+        return 1
+    else:
+        return 0
 
 
 def _pickup_scan(pickup: PickupEntry) -> str:
-    if pickup.item_category != "expansion":
+    if pickup.item_category != ItemCategory.EXPANSION:
         if len(pickup.resources) > 1 and all(conditional.name is not None for conditional in pickup.resources):
             return "{}:\nProvides the following in order: {}".format(
                 pickup.name, ", ".join(conditional.name for conditional in pickup.resources))
@@ -126,8 +128,8 @@ def _create_pickup(original_index: PickupIndex,
         "scan": _pickup_scan(pickup) if model_style in {PickupModelStyle.ALL_VISIBLE,
                                                         PickupModelStyle.HIDE_MODEL} else visual_pickup.name,
         "hud_text": hud_text,
-        "sound_index": 1 if model_pickup.item_category in {"temple_key", "sky_temple_key"} else 0,
-        "jingle_index": _item_category_to_jingle_index.get(model_pickup.item_category, 0),
+        "sound_index": 1 if model_pickup.item_category.is_key else 0,
+        "jingle_index": _get_jingle_index_for(model_pickup.item_category),
         "resources": _create_pickup_resources_for(pickup.resources[0].resources),
         "conditional_resources": [
             {

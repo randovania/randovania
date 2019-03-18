@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import NamedTuple, Tuple, Union, List, Dict, Iterator, Optional
 
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
 
 
@@ -86,7 +87,7 @@ class ConditionalResources:
 class PickupEntry:
     name: str
     model_index: int
-    item_category: str
+    item_category: ItemCategory
     resources: Tuple[ConditionalResources, ...]
     probability_offset: int = 0
 

@@ -285,7 +285,11 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     def _create_categories_boxes(self, size_policy):
         self._boxes_for_category = {}
 
-        for i, major_item_category in enumerate(ItemCategory):
+        current_row = 0
+        for major_item_category in ItemCategory:
+            if not major_item_category.is_major_category:
+                continue
+
             category_button = QToolButton(self.major_items_box)
             category_button.setGeometry(QRect(20, 30, 24, 21))
             category_button.setText("+")
@@ -301,13 +305,14 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             category_layout = QGridLayout(category_box)
             category_layout.setObjectName(f"category_layout {major_item_category}")
 
-            self.major_items_layout.addWidget(category_button, 2 * i + 1, 0, 1, 1)
-            self.major_items_layout.addWidget(category_label, 2 * i + 1, 1, 1, 1)
-            self.major_items_layout.addWidget(category_box, 2 * i + 2, 0, 1, 2)
+            self.major_items_layout.addWidget(category_button, 2 * current_row + 1, 0, 1, 1)
+            self.major_items_layout.addWidget(category_label, 2 * current_row + 1, 1, 1, 1)
+            self.major_items_layout.addWidget(category_box, 2 * current_row + 2, 0, 1, 2)
             self._boxes_for_category[major_item_category] = category_box, category_layout, {}
 
             category_button.clicked.connect(partial(_toggle_box_visibility, category_button, category_box))
             category_box.setVisible(False)
+            current_row += 1
 
     def _create_major_item_boxes(self, item_database: ItemDatabase):
         for major_item in item_database.major_items.values():

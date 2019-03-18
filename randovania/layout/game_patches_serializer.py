@@ -24,7 +24,7 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
 
             if node.pickup_index in pickup_assignment:
                 pickup = pickup_assignment[node.pickup_index]
-                if pickup.item_category == "expansion":
+                if pickup.item_category == ItemCategory.EXPANSION:
                     first_quantity = pickup.resources[0].resources[0][1]
                     item_name = f"{pickup.name} {first_quantity}"
                 else:

@@ -7,6 +7,7 @@ from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, Q
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupEntry
@@ -198,14 +199,14 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def setup_pickups_box(self, item_pool: List[PickupEntry]):
 
-        parent_widgets: Dict[str, Tuple[QWidget, QGridLayout]] = {
-            "expansion": (self.expansions_box, self.expansions_layout),
-            "energy_tank": (self.expansions_box, self.expansions_layout),
-            "translator": (self.translators_box, self.translators_layout),
-            "major": (self.upgrades_box, self.upgrades_layout),
-            "temple_key": (self.keys_box, self.keys_layout),
-            "sky_temple_key": (self.keys_box, self.keys_layout),
+        parent_widgets: Dict[ItemCategory, Tuple[QWidget, QGridLayout]] = {
+            ItemCategory.EXPANSION: (self.expansions_box, self.expansions_layout),
+            ItemCategory.ENERGY_TANK: (self.expansions_box, self.expansions_layout),
+            ItemCategory.TRANSLATOR: (self.translators_box, self.translators_layout),
+            ItemCategory.TEMPLE_KEY: (self.keys_box, self.keys_layout),
+            ItemCategory.SKY_TEMPLE_KEY: (self.keys_box, self.keys_layout),
         }
+        major_pickup_parent_widgets = (self.upgrades_box, self.upgrades_layout)
 
         row_for_parent = {
             self.expansions_box: 0,
@@ -234,7 +235,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         for pickup, quantity in pickup_with_quantity.items():
             self._collected_pickups[pickup] = 0
-            parent_widget, parent_layout = parent_widgets.get(pickup.item_category, parent_widgets["major"])
+            parent_widget, parent_layout = parent_widgets.get(pickup.item_category, major_pickup_parent_widgets)
 
             row = row_for_parent[parent_widget]
 
