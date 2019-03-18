@@ -9,6 +9,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources import ResourceDatabase
+from randovania.games.prime import default_data
 
 
 @pytest.fixture
@@ -30,6 +31,11 @@ def echoes_resource_database() -> ResourceDatabase:
 @pytest.fixture()
 def echoes_item_database() -> ItemDatabase:
     return default_database.default_prime2_item_database()
+
+
+@pytest.fixture()
+def echoes_game_data() -> dict:
+    return default_data.decode_default_prime2()
 
 
 class DataclassTestLib:

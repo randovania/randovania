@@ -26,6 +26,12 @@ class WorldList:
         self.worlds = worlds
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
 
+    def world_with_name(self, world_name: str) -> World:
+        for world in self.worlds:
+            if world.name == world_name:
+                return world
+        raise KeyError("Unknown name: {}".format(world_name))
+
     def world_by_asset_id(self, asset_id: int) -> World:
         for world in self.worlds:
             if world.world_asset_id == asset_id:
@@ -53,6 +59,9 @@ class WorldList:
     def all_nodes(self) -> Iterator[Node]:
         for world in self.worlds:
             yield from world.all_nodes
+
+    def area_name(self, area: Area) -> str:
+        return "{}/{}".format(self.world_with_area(area).name, area.name)
 
     def node_name(self, node: Node, with_world=False) -> str:
         prefix = "{}/".format(self.nodes_to_world(node).name) if with_world else ""
