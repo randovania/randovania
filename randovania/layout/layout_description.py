@@ -1,5 +1,4 @@
 import base64
-import collections
 import hashlib
 import json
 from dataclasses import dataclass
@@ -9,7 +8,6 @@ from typing import NamedTuple, Tuple, Dict, List
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, Node, TeleporterNode
 from randovania.game_description.resources import PickupAssignment
