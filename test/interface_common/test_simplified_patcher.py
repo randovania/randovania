@@ -109,7 +109,7 @@ def test_output_name_for(mock_shareable_hash: PropertyMock,
     assert result == "Echoes Randomizer - PermalinkStr"
 
 
-@patch("randovania.interface_common.simplified_patcher._write_patcher_file_to_disk", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.write_patcher_file_to_disk", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
 def test_internal_patch_iso(mock_apply_layout: MagicMock,
