@@ -2,9 +2,11 @@ import dataclasses
 import hashlib
 import math
 from enum import Enum
-from typing import Iterator, Tuple
+from typing import Iterator, Tuple, TypeVar, Any, List
 
 import bitstruct
+
+T = TypeVar("T")
 
 
 def _bits_for_number(value: int) -> int:
@@ -36,6 +38,9 @@ class BitPackDecoder:
 
     def decode_single(self, value: int) -> int:
         return self.decode(value)[0]
+
+    def decode_element(self, array: List[T]) -> T:
+        return array[self.decode_single(len(array))]
 
     def peek(self, *args) -> Tuple[int, ...]:
         """Decodes values from the current buffer, *NOT* advancing the current pointer"""
@@ -118,6 +123,10 @@ class BitPackDataClass(BitPackValue):
             if field.init
         }
         return cls(**args)
+
+
+def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
+    yield array.index(element), len(array)
 
 
 def pack_value(value: BitPackValue) -> bytes:

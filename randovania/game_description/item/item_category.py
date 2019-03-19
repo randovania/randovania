@@ -1,7 +1,9 @@
 from enum import Enum
 
+from randovania.bitpacking.bitpacking import BitPackEnum
 
-class ItemCategory(Enum):
+
+class ItemCategory(BitPackEnum, Enum):
     VISOR = "visor"
     SUIT = "suit"
     BEAM = "beam"

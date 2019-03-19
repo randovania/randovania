@@ -1,36 +1,114 @@
+import base64
 import re
-from typing import Dict
+from typing import Dict, List, Iterator, Tuple
 
+from randovania.bitpacking import bitpacking
+from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode, TeleporterNode, Node
-from randovania.game_description.resources import PickupAssignment, find_resource_info_with_long_name
+from randovania.game_description.resources import PickupAssignment, find_resource_info_with_long_name, PickupEntry, \
+    ResourceDatabase, ConditionalResources
 from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_configuration import LayoutConfiguration
 
 
+class BitPackPickupEntry:
+    value: PickupEntry
+    database: ResourceDatabase
+
+    def __init__(self, value: PickupEntry, database: ResourceDatabase):
+        self.value = value
+        self.database = database
+
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        items = self.database.item
+
+        yield self.value.model_index, 255
+        yield from self.value.item_category.bit_pack_encode()
+        yield int(any(cond.name is not None for cond in self.value.resources)), 2
+        yield len(self.value.resources) - 1, 8
+
+        for i, conditional in enumerate(self.value.resources):
+            if i > 0:
+                yield from bitpacking.pack_array_element(conditional.item, items)
+
+            yield len(conditional.resources), 8
+            for resource, quantity in conditional.resources:
+                yield from bitpacking.pack_array_element(resource, items)
+                yield quantity, 255
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, name: str, database: ResourceDatabase) -> PickupEntry:
+        model_index = decoder.decode_single(255)
+        item_category = ItemCategory.bit_pack_unpack(decoder)
+        has_name = bool(decoder.decode_single(2))
+        num_conditional = decoder.decode_single(8) + 1
+
+        conditional_resources = []
+        for i in range(num_conditional):
+            item_name = None  # TODO: get the first resource name
+            if i > 0:
+                item_dependency = decoder.decode_element(database.item)
+            else:
+                item_dependency = None
+
+            resources = []
+            for _ in range(decoder.decode_single(8)):
+                resource = decoder.decode_element(database.item)
+                quantity = decoder.decode_single(255)
+                resources.append((resource, quantity))
+
+            if has_name:
+                item_name = resources[0][0].long_name
+
+            conditional_resources.append(ConditionalResources(
+                name=item_name,
+                item=item_dependency,
+                resources=tuple(resources),
+            ))
+
+        return PickupEntry(
+            name=name,
+            model_index=model_index,
+            item_category=item_category,
+            resources=tuple(conditional_resources)
+        )
+
+
+class BitPackPickupEntryList:
+    value: List[PickupEntry]
+    database: ResourceDatabase
+
+    def __init__(self, value: List[PickupEntry], database: ResourceDatabase):
+        self.value = value
+        self.database = database
+
+    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+        for entry in self.value:
+            yield from BitPackPickupEntry(entry, self.database).bit_pack_encode()
+
+
 def _pickup_assignment_to_item_locations(world_list: WorldList,
                                          pickup_assignment: PickupAssignment,
+                                         ordered_pickups: List[PickupEntry],
                                          ) -> Dict[str, Dict[str, str]]:
     items_locations = {}
 
-    for world in world_list.worlds:
+    for world in sorted(world_list.worlds, key=lambda w: w.name):
         items_in_world = {}
         items_locations[world.name] = items_in_world
 
-        for node in world.all_nodes:
+        for node in sorted(world.all_nodes, key=lambda w: w.name):
             if not node.is_resource_node or not isinstance(node, PickupNode):
                 continue
 
             if node.pickup_index in pickup_assignment:
                 pickup = pickup_assignment[node.pickup_index]
-                if pickup.item_category == ItemCategory.EXPANSION:
-                    first_quantity = pickup.resources[0].resources[0][1]
-                    item_name = f"{pickup.name} {first_quantity}"
-                else:
-                    item_name = pickup.name
+                ordered_pickups.append(pickup)
+                item_name = pickup.name
             else:
                 item_name = "Nothing"
 
@@ -70,7 +148,9 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
     :param game_data:
     :return:
     """
-    world_list = data_reader.decode_data(game_data).world_list
+    game = data_reader.decode_data(game_data)
+    world_list = game.world_list
+    ordered_pickups = []
 
     result = {
         "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location)),
@@ -85,10 +165,14 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
         },
         "locations": {
             key: value
-            for key, value in sorted(_pickup_assignment_to_item_locations(world_list,
-                                                                          patches.pickup_assignment).items())
+            for key, value in _pickup_assignment_to_item_locations(world_list,
+                                                                   patches.pickup_assignment,
+                                                                   ordered_pickups).items()
         },
     }
+
+    b = bitpacking.pack_value(BitPackPickupEntryList(ordered_pickups, game.resource_database))
+    result["_locations_internal"] = base64.b64encode(b).decode("utf-8")
 
     return result
 
@@ -129,6 +213,16 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
 
     # Pickups
     pickup_assignment = {}
+    decoder = BitPackDecoder(base64.b64decode(game_modifications["_locations_internal"].encode("utf-8"), validate=True))
+
+    for world_name, world_data in game_modifications["locations"].items():
+        for area_node_name, pickup_name in world_data.items():
+            if pickup_name == "Nothing":
+                continue
+
+            node: PickupNode = world_list.node_from_name(f"{world_name}/{area_node_name}")
+            pickup = BitPackPickupEntry.bit_pack_unpack(decoder, pickup_name, game.resource_database)
+            pickup_assignment[node.pickup_index] = pickup
 
     return GamePatches(
         pickup_assignment=pickup_assignment,  # PickupAssignment

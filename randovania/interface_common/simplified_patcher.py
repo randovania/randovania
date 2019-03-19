@@ -134,7 +134,7 @@ def _internal_patch_iso(updaters: List[ProgressUpdateCallable],
         export_layout(layout, options)
 
 
-def _write_patcher_file_to_disk(path: Path, layout: LayoutDescription, cosmetic: CosmeticPatches):
+def write_patcher_file_to_disk(path: Path, layout: LayoutDescription, cosmetic: CosmeticPatches):
     with path.open("w") as out_file:
         json.dump(patcher_file.create_patcher_file(layout, cosmetic),
                   out_file, indent=4, separators=(',', ': '))
@@ -151,9 +151,9 @@ def export_layout(layout: LayoutDescription,
     """
 
     output_json = options.output_directory.joinpath("{}.json".format(_output_name_for(layout)))
-    _write_patcher_file_to_disk(options.output_directory.joinpath("{}-patcher.json".format(_output_name_for(layout))),
-                                layout,
-                                options.cosmetic_patches)
+    write_patcher_file_to_disk(options.output_directory.joinpath("{}-patcher.json".format(_output_name_for(layout))),
+                               layout,
+                               options.cosmetic_patches)
 
     # Save the layout to a file
     layout.save_to_file(output_json)
