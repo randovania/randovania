@@ -29,15 +29,13 @@ def calculate_pool_results(layout_configuration: LayoutConfiguration,
     base_results = ([], {}, [])
 
     # Adding major items to the pool
-    # FIXME: now we have layout_configuration.major_items_configuration.calculate_ammo_provided()
-    new_results, included_ammo_for_item = add_major_items(resource_database,
-                                                          layout_configuration.major_items_configuration)
-    _extend_pool_results(base_results, new_results)
+    _extend_pool_results(base_results, add_major_items(resource_database,
+                                                       layout_configuration.major_items_configuration))
 
     # Adding ammo to the pool
     base_results[0].extend(add_ammo(resource_database,
                                     layout_configuration.ammo_configuration,
-                                    included_ammo_for_item))
+                                    layout_configuration.major_items_configuration.calculate_provided_ammo()))
 
     # Adding Dark Temple Keys to pool
     _extend_pool_results(base_results, add_dark_temple_keys(resource_database))
