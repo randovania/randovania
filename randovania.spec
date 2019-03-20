@@ -16,9 +16,12 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              hiddenimports=[
                 "unittest.mock",
              ],
-             hookspath=[],
+             hookspath=[
+                 # https://github.com/pyinstaller/pyinstaller/issues/4040
+                 "tools/additional-pyinstaller-hooks",
+             ],
              runtime_hooks=[],
-             excludes=[],
+             excludes=["PyQt5"],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,

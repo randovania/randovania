@@ -14,12 +14,15 @@ from randovania.games.prime import default_data
 zip_folder = "randovania-{}".format(VERSION)
 
 package_folder = Path("dist", "randovania")
-shutil.rmtree(package_folder, ignore_errors=True)
+if package_folder.exists():
+    shutil.rmtree(package_folder, ignore_errors=False)
 
 prime_database.export_as_binary(default_data.decode_default_prime2(),
                                 get_data_path().joinpath("binary_data", "prime2.bin"))
 
-subprocess.run([sys.executable, "-m", "PyInstaller", "randovania.spec"])
+subprocess.run([sys.executable, "-m", "PyInstaller",
+                "randovania.spec"],
+               check=True)
 
 with zipfile.ZipFile("dist/{}.zip".format(zip_folder), "w", compression=zipfile.ZIP_DEFLATED) as release_zip:
     for f in package_folder.glob("**/*"):
