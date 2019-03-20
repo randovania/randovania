@@ -24,7 +24,7 @@
     <item>
      <widget class="QTabWidget" name="tab_widget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="trick_level_tab">
        <attribute name="title">
@@ -200,6 +200,60 @@
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="starting_area_tab">
+       <attribute name="title">
+        <string>Starting Area</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="starting_area_layout">
+        <item>
+         <widget class="QLabel" name="startingarea_description">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose the area where the game will start at.&lt;/p&gt;&lt;p&gt;Ship: Samus' Ship at Temple Grounds - Landing Site. The vanilla location.&lt;br/&gt;Random Save Station: a random Save Station of the game will be chosen.&lt;br/&gt;Specific Area: A user provided choice. The specific location on the area depends on each one.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;WARNING&lt;/span&gt;: depending on the starting items that are configured, it may be impossible to start at the chosen place. In that case, the generation will fail.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="startingarea_combo">
+          <item>
+           <property name="text">
+            <string>Ship</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Random Save Station</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Specific Area (Choose Below)</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="specific_starting_layout">
+          <item>
+           <widget class="QComboBox" name="specific_starting_world_combo">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="specific_starting_area_combo">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>

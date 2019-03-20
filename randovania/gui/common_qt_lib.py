@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Iterator, Optional
 
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow, QWidget
+from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow, QWidget, QComboBox
 
 from randovania import get_data_path
 
@@ -64,3 +64,13 @@ def set_default_window_icon(window: QWidget):
     :return:
     """
     window.setWindowIcon(QIcon(str(get_data_path().joinpath("icons", "sky_temple_key_NqN_icon.ico"))))
+
+
+def set_combo_with_value(combo: QComboBox, value):
+    """
+    Searches all items of the given combo for the given value and changes the current index to that one.
+    :param combo:
+    :param value:
+    :return:
+    """
+    combo.setCurrentIndex(combo.findData(value))
