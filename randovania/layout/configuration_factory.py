@@ -1,37 +1,16 @@
 import json
-from enum import Enum
 
 from randovania import get_data_path
-from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
 
-class MajorItemsConfigEnum(BitPackEnum, Enum):
-    DEFAULT = "default"
-    VANILLA = "vanilla"
-
-    @classmethod
-    def default(cls) -> "MajorItemsConfigEnum":
-        return cls.DEFAULT
-
-
-class AmmoConfigEnum(BitPackEnum, Enum):
-    SPLIT_AMMO = "split-ammo"
-    VANILLA = "vanilla"
-
-    @classmethod
-    def default(cls) -> "AmmoConfigEnum":
-        return cls.SPLIT_AMMO
-
-
-def get_major_items_configurations_for(mode: MajorItemsConfigEnum) -> MajorItemsConfiguration:
+def get_default_major_items_configurations() -> MajorItemsConfiguration:
     item_database = default_prime2_item_database()
 
-    with get_data_path().joinpath("json_data", "configurations", "major_items",
-                                  "{}.json".format(mode.value)).open() as open_file:
+    with get_data_path().joinpath("item_database", "default_state", "major-items.json").open() as open_file:
         data = json.load(open_file)
 
     return MajorItemsConfiguration(
@@ -42,11 +21,10 @@ def get_major_items_configurations_for(mode: MajorItemsConfigEnum) -> MajorItems
     )
 
 
-def get_ammo_configurations_for(mode: AmmoConfigEnum) -> AmmoConfiguration:
+def get_default_ammo_configurations() -> AmmoConfiguration:
     item_database = default_prime2_item_database()
 
-    with get_data_path().joinpath("json_data", "configurations", "ammo",
-                                  "{}.json".format(mode.value)).open() as open_file:
+    with get_data_path().joinpath("item_database", "default_state", "ammo.json").open() as open_file:
         data = json.load(open_file)
 
     return AmmoConfiguration.from_json(data, item_database)

@@ -25,7 +25,7 @@ from randovania.layout.major_items_configuration import MajorItemsConfiguration
     ],
     name="config_with_data")
 def _config_with_data(request):
-    with get_data_path().joinpath("json_data", "configurations", "major_items", "default.json").open() as open_file:
+    with get_data_path().joinpath("item_database", "default_state", "major-items.json").open() as open_file:
         data = json.load(open_file)
 
     data["progressive_suit"] = True

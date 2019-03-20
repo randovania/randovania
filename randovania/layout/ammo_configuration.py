@@ -121,4 +121,4 @@ class AmmoConfiguration(BitPackValue):
     @classmethod
     def default(cls):
         from randovania.layout import configuration_factory
-        return configuration_factory.get_ammo_configurations_for(configuration_factory.AmmoConfigEnum.default())
+        return configuration_factory.get_default_ammo_configurations()

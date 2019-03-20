@@ -106,8 +106,7 @@ class MajorItemsConfiguration(BitPackValue):
     @classmethod
     def default(cls):
         from randovania.layout import configuration_factory
-        return configuration_factory.get_major_items_configurations_for(
-            configuration_factory.MajorItemsConfigEnum.default())
+        return configuration_factory.get_default_major_items_configurations()
 
     def calculate_provided_ammo(self) -> Dict[int, int]:
         result: Dict[int, int] = {}
