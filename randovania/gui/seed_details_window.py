@@ -54,11 +54,6 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     def _create_pickup_spoiler_combobox(self):
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
 
-        # TODO: get pickup names
-        pickup_names = []
-        for pickup_name in sorted(pickup_names):
-            self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
-
     def _create_pickup_spoilers(self):
         self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
         self.pickup_spoiler_show_all_button.currently_show_all = True
@@ -120,9 +115,30 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         configuration = description.permalink.layout_configuration
         self.layout_seed_value_label.setText(str(description.permalink.seed_number))
         self.layout_trick_value_label.setText(configuration.trick_level.value)
-        self.layout_keys_value_label.setText(configuration.sky_temple_keys.value)
-        self.layout_item_loss_value_label.setText(configuration.starting_resources.configuration.value)
+        self.layout_keys_value_label.setText(str(configuration.sky_temple_keys.value))
         self.layout_elevators_value_label.setText(configuration.elevators.value)
+
+        starting_items = [
+            major_item.name if state.num_included_in_starting_items == 1 else "{} {}".format(
+                state.num_included_in_starting_items, major_item.name
+            )
+
+            for major_item, state in configuration.major_items_configuration.items_state.items()
+            if state.num_included_in_starting_items > 0
+        ]
+        self.layout_starting_items_value_label.setText(
+            ", ".join(starting_items)
+        )
+
+        # Pickup spoiler combo
+        pickup_names = {
+            pickup.name
+            for pickup in description.patches.pickup_assignment.values()
+        }
+        self.pickup_spoiler_pickup_combobox.clear()
+        self.pickup_spoiler_pickup_combobox.addItem("None")
+        for pickup_name in sorted(pickup_names):
+            self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
 
         for pickup_button in self.pickup_spoiler_buttons:
             pickup = description.patches.pickup_assignment.get(pickup_button.pickup_index)
