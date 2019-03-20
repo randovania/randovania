@@ -114,7 +114,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
         name="Missile Launcher",
         resources=(
             ConditionalResources(
-                None, None,
+                "Missile Launcher", None,
                 resources=(
                     (missile, ammo_quantity),
                     (percentage_item, 1),

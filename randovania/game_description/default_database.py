@@ -31,3 +31,13 @@ def default_prime2_item_database() -> item_database.ItemDatabase:
         ammo_data = json.load(ammo_file)
 
     return item_database.read_database(major_items_data, ammo_data)
+
+
+@functools.lru_cache()
+def default_prime2_memo_data() -> dict:
+    with get_data_path().joinpath("item_database", "memo_data.json").open("r") as memo_data_file:
+        memo_data = json.load(memo_data_file)
+
+    item_database.add_memo_data_keys(memo_data)
+
+    return memo_data

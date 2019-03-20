@@ -1,6 +1,7 @@
 import dataclasses
 import json
 from random import Random
+from typing import Tuple
 from unittest.mock import MagicMock
 
 import pytest
@@ -104,6 +105,53 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
     ]
 
 
+@pytest.mark.parametrize("order", [
+    ("X", "Y"),
+    ("Y", "X"),
+    ("Y", "Z"),
+])
+def test_calculate_hud_text(order: Tuple[str, str]):
+    # Setup
+    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
+    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+
+    pickup_x = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY,
+                           (
+                               ConditionalResources("A", None, ((resource_a, 1),)),
+                           ))
+    pickup_y = PickupEntry("Y", 2, ItemCategory.SUIT,
+                           (
+                               ConditionalResources("B", None, ((resource_b, 1),)),
+                               ConditionalResources("A", resource_b, ((resource_a, 5),))
+                           ))
+    pickup_z = PickupEntry("Z", 2, ItemCategory.SUIT,
+                           (
+                               ConditionalResources("A", None, ((resource_a, 1),)),
+                               ConditionalResources("B", resource_a, ((resource_b, 5),))
+                           ))
+
+    memo_data = {
+        "A": "You got {A} of A",
+        "B": "You found {B} of B",
+    }
+    pickups = {
+        "X": pickup_x,
+        "Y": pickup_y,
+        "Z": pickup_z,
+    }
+
+    # Run
+    result = patcher_file._calculate_hud_text(pickups[order[0]], pickups[order[1]], PickupModelStyle.HIDE_ALL, memo_data)
+
+    # Assert
+    if order[1] == "Y":
+        assert result == ["You found 1 of B"]
+    elif order[1] == "X":
+        assert result == ["You got 1 of A", "You got 1 of A"]
+    else:
+        assert result == ["You got 1 of A", "You found 5 of B"]
+
+
 @pytest.mark.parametrize("model_style", PickupModelStyle)
 def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     # Setup
@@ -143,6 +191,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                                               rng,
                                               model_style,
                                               PickupModelDataSource.ETM,
+                                              None,
                                               )
 
     # Assert
@@ -241,7 +290,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     }
 
 
-def test_create_pickup_list_random_data_source(empty_patches):
+@pytest.mark.parametrize("has_memo_data", [False, True])
+def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches):
     # Setup
     rng = Random(5000)
     resources = (ConditionalResources(None, None, tuple()),)
@@ -260,11 +310,25 @@ def test_create_pickup_list_random_data_source(empty_patches):
         PickupIndex(4): pickup_c,
     })
 
+    if has_memo_data:
+        memo_data = {
+            "A": "This is an awesome item A",
+            "B": "This is B. It is good.",
+            "C": "What a nice day to have a C",
+            "Useless": "Try again next time",
+        }
+    else:
+        memo_data = {
+            name: "{} acquired!".format(name)
+            for name in ("A", "B", "C", "Useless")
+        }
+
     # Run
     result = patcher_file._create_pickup_list(patches, useless_pickup, 5,
                                               rng,
                                               PickupModelStyle.HIDE_ALL,
                                               PickupModelDataSource.RANDOM,
+                                              memo_data if has_memo_data else None,
                                               )
 
     # Assert
@@ -274,7 +338,7 @@ def test_create_pickup_list_random_data_source(empty_patches):
         "pickup_index": 0,
         "model_index": 1,
         "scan": "A",
-        "hud_text": ["A acquired!"],
+        "hud_text": [memo_data["A"]],
         "sound_index": 1,
         "jingle_index": 2,
         "resources": [],
@@ -284,7 +348,7 @@ def test_create_pickup_list_random_data_source(empty_patches):
         "pickup_index": 1,
         "scan": "A",
         "model_index": 1,
-        "hud_text": ["A acquired!"],
+        "hud_text": [memo_data["A"]],
         "sound_index": 1,
         "jingle_index": 2,
         "resources": [],
@@ -294,7 +358,7 @@ def test_create_pickup_list_random_data_source(empty_patches):
         "pickup_index": 2,
         "scan": "C",
         "model_index": 2,
-        "hud_text": ["C acquired!", "C acquired!"],
+        "hud_text": [memo_data["C"], memo_data["C"]],
         "sound_index": 0,
         "jingle_index": 0,
         "resources": [],
@@ -304,7 +368,7 @@ def test_create_pickup_list_random_data_source(empty_patches):
         "pickup_index": 3,
         "scan": "B",
         "model_index": 2,
-        "hud_text": ["B acquired!"],
+        "hud_text": [memo_data["B"]],
         "sound_index": 0,
         "jingle_index": 1,
         "resources": [],
@@ -314,7 +378,7 @@ def test_create_pickup_list_random_data_source(empty_patches):
         "pickup_index": 4,
         "scan": "A",
         "model_index": 1,
-        "hud_text": ["A acquired!"],
+        "hud_text": [memo_data["A"]],
         "sound_index": 1,
         "jingle_index": 2,
         "resources": [],

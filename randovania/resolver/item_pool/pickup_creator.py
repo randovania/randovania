@@ -81,7 +81,7 @@ def create_major_item(item: MajorItem,
         )
     else:
         conditional_resources = (
-            ConditionalResources(name=None, item=None, resources=_create_resources(None)),
+            ConditionalResources(name=item.name, item=None, resources=_create_resources(None)),
         )
 
     return PickupEntry(
