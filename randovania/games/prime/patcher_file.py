@@ -1,15 +1,16 @@
 from random import Random
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupIndex, \
-    PickupEntry
+    PickupEntry, ResourceGainTuple
 from randovania.game_description.world_list import WorldList
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
@@ -109,27 +110,63 @@ def _create_pickup_resources_for(resources: ResourceGain):
     ]
 
 
+def _get_single_hud_text(pickup_name: str,
+                         memo_data: Optional[Dict[str, str]],
+                         resources: ResourceGainTuple,
+                         ) -> str:
+    if memo_data is None:
+        return "{} acquired!".format(pickup_name)
+    else:
+        return memo_data[pickup_name].format(**{
+            resource.long_name: quantity
+            for resource, quantity in resources
+        })
+
+
+def _get_all_hud_text(pickup: PickupEntry,
+                      memo_data: Optional[Dict[str, str]],
+                      ) -> List[str]:
+    return [
+        _get_single_hud_text(conditional.name or pickup.name, memo_data, conditional.resources)
+        for conditional in pickup.resources
+    ]
+
+
+def _calculate_hud_text(pickup: PickupEntry,
+                        visual_pickup: PickupEntry,
+                        model_style: PickupModelStyle,
+                        memo_data: Optional[Dict[str, str]],
+                        ) -> List[str]:
+    """
+    Calculates what the hud_text for a pickup should be
+    :param pickup:
+    :param visual_pickup:
+    :param model_style:
+    :param memo_data:
+    :return:
+    """
+
+    if model_style == PickupModelStyle.HIDE_ALL:
+        hud_text = _get_all_hud_text(visual_pickup, memo_data)
+        if len(hud_text) == len(pickup.resources):
+            return hud_text
+        else:
+            return [hud_text[0]] * len(pickup.resources)
+
+    else:
+        return _get_all_hud_text(pickup, memo_data)
+
+
 def _create_pickup(original_index: PickupIndex,
                    pickup: PickupEntry,
                    visual_pickup: PickupEntry,
                    model_style: PickupModelStyle,
+                   memo_data: Optional[Dict[str, str]],
                    ) -> dict:
-    hud_text = [
-        "{} acquired!".format(visual_pickup.name if model_style == PickupModelStyle.HIDE_ALL
-                              else conditional.name or pickup.name)
-        for conditional in pickup.resources
-    ]
-
     model_pickup = pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
 
     result = {
         "pickup_index": original_index.index,
-        "model_index": model_pickup.model_index,
-        "scan": _pickup_scan(pickup) if model_style in {PickupModelStyle.ALL_VISIBLE,
-                                                        PickupModelStyle.HIDE_MODEL} else visual_pickup.name,
-        "hud_text": hud_text,
-        "sound_index": 1 if model_pickup.item_category.is_key else 0,
-        "jingle_index": _get_jingle_index_for(model_pickup.item_category),
         "resources": _create_pickup_resources_for(pickup.resources[0].resources),
         "conditional_resources": [
             {
@@ -138,6 +175,14 @@ def _create_pickup(original_index: PickupIndex,
             }
             for conditional in pickup.resources[1:]
         ],
+
+        "hud_text": _calculate_hud_text(pickup, visual_pickup, model_style, memo_data),
+
+        "scan": _pickup_scan(pickup) if model_style in {PickupModelStyle.ALL_VISIBLE,
+                                                        PickupModelStyle.HIDE_MODEL} else visual_pickup.name,
+        "model_index": model_pickup.model_index,
+        "sound_index": 1 if model_pickup.item_category.is_key else 0,
+        "jingle_index": _get_jingle_index_for(model_pickup.item_category),
     }
     return result
 
@@ -162,7 +207,18 @@ def _create_pickup_list(patches: GamePatches,
                         rng: Random,
                         model_style: PickupModelStyle,
                         data_source: PickupModelDataSource,
+                        memo_data: Optional[Dict[str, str]],
                         ) -> list:
+    """
+    Creates the patcher data for all pickups in the game
+    :param patches:
+    :param useless_pickup:
+    :param pickup_count:
+    :param rng:
+    :param model_style:
+    :param data_source:
+    :return:
+    """
     pickup_assignment = patches.pickup_assignment
 
     pickup_list = list(pickup_assignment.values())
@@ -173,6 +229,7 @@ def _create_pickup_list(patches: GamePatches,
                        pickup_assignment.get(PickupIndex(i), useless_pickup),
                        _get_visual_model(i, pickup_list, data_source),
                        model_style,
+                       memo_data,
                        )
         for i in range(pickup_count)
     ]
@@ -240,10 +297,16 @@ def create_patcher_file(description: LayoutDescription,
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
     # Add the pickups
+    if cosmetic_patches.disable_hud_popup:
+        memo_data = None
+    else:
+        memo_data = default_prime2_memo_data()
+
     result["pickups"] = _create_pickup_list(patches, useless_pickup, _TOTAL_PICKUP_COUNT,
                                             rng,
                                             patcher_config.pickup_model_style,
                                             patcher_config.pickup_model_data_source,
+                                            memo_data,
                                             )
 
     # Add the elevators

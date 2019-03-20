@@ -51,3 +51,19 @@ def write_database(database: ItemDatabase,
     }
 
     return major_items_data, ammo_data
+
+
+_TEMPLE_KEYS = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
+
+
+def add_memo_data_keys(data: dict):
+    for i in range(1, 4):
+        for temple_key in _TEMPLE_KEYS:
+            data["{} {}".format(temple_key, i)] = data[temple_key]
+
+    for temple_key in _TEMPLE_KEYS:
+        data.pop(temple_key)
+
+    for i in range(1, 10):
+        data["Sky Temple Key {}".format(i)] = data["Sky Temple Key"]
+    data.pop("Sky Temple Key")
