@@ -22,10 +22,12 @@ def default_prime2_game_description(add_self_as_requirement_to_resources: bool =
 
 @functools.lru_cache()
 def default_prime2_item_database() -> item_database.ItemDatabase:
-    with get_data_path().joinpath("json_data", "major-items.json").open() as major_items_file:
+    configuration_path = get_data_path().joinpath("item_database", "configuration")
+
+    with configuration_path.joinpath("major-items.json").open() as major_items_file:
         major_items_data = json.load(major_items_file)
 
-    with get_data_path().joinpath("json_data", "ammo.json").open() as ammo_file:
+    with configuration_path.joinpath("ammo.json").open() as ammo_file:
         ammo_data = json.load(ammo_file)
 
     return item_database.read_database(major_items_data, ammo_data)

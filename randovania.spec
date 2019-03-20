@@ -11,8 +11,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
                  ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
                  ("randovania/data/binary_data", "data/binary_data"),
-                 ("randovania/data/json_data", "data/json_data"),
-                 # FIXME: including the prime2.json
+                 ("randovania/data/item_database", "data/item_database"),
              ],
              hiddenimports=[
                 "unittest.mock",
