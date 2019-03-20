@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -    Added: Configurable count of how many Sky Temple Keys you need to finish the game
 -    Added: Option to start with the map open
 -    Added: Option to add markers for where the items are
+-    Added: Option to choose where you start the game
 -    Changed: Choosing "All Guardians" only 3 keys now (disregard the outdated text in GUI)
 -    Changed: Timeout for generating a seed is now 5 minutes, up from 2.
 
