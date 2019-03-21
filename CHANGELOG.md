@@ -7,14 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--    Added: all changes Claris made recently, including translators being added to item menu and fixing translator gates colors.
--    Added: Progressive suits
--    Added: Split beam ammo: by default, there's 10 dark ammo and 10 light ammo expansions, with less missiles expansions. This is changeable in the new "Main Rules" tab.
--    Added: Option to control with what items you start the game
--    Added: Configurable count of how many Sky Temple Keys you need to finish the game
--    Added: Option to start with the map open
--    Added: Option to add markers for where the items are
+-    **MAJOR**: New configuration GUI for Major Items:
+     - For each item, you can now choose between:
+        - You start with it
+        - It's in the vanilla location
+        - It's shuffled and how many copies there are
+        - It's missing
+     - Configure how much beam ammo Light Beam, Dark Beam and Annihilator Beam gives when picked.
+        - The same for Seeker Launcher and missiles.
+        
+-    **MAJOR**: New configuration GUI for Ammo:
+     - For each ammo type, you choose a target total count and how many pickups there will be.
+     
+        Randovania will ensure if you collect every single pickup and every major item that gives
+        that ammo, you'll have the target total count.
+    
+-    **MAJOR**: Added progressive items. These items gives different items when you collect then,
+        based on how many you've already collected. There are two:
+     - Progressive Suit: Gives Dark Suit and then Light Suit.
+     - Progressive Grapple: Gives Grapple Beam and then Screw Attack.
+      
+-    **MAJOR**: Add option to split the Beam Ammo Expansion into a Dark Ammo Expansion and
+        Light Ammo Expansion.
+        
+        By default there's 10 of each, with less missiles instead.
+      
+      
+-    **MAJOR**: Improvements for accessibility:
+     - All translator gates are now colored with the correct translator gate color they need.
+     - Translators you have now show up under "Visors" in the inventory menu.
+     - An option to start the game with all maps open, as if you used all map stations.
+     - An option to add pickup markers on the map, that identifies where items are and if
+        you've collected them already.
+      
 -    Added: Option to choose where you start the game
+-    Added: Configure how many count of how many Sky Temple Keys you need to finish the game
 -    Changed: Choosing "All Guardians" only 3 keys now (disregard the outdated text in GUI)
 -    Changed: Timeout for generating a seed is now 5 minutes, up from 2.
 
