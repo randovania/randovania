@@ -50,10 +50,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
      - An option to start the game with all maps open, as if you used all map stations.
      - An option to add pickup markers on the map, that identifies where items are and if
         you've collected them already.
+     - When elevators are randomized, the room name in the map now says where that elevator goes.
       
 -    Added: Option to choose where you start the game
+
+-    Added: Option to hide what items are, going from just changing the model, to including the
+    scan and even the pickup text.
+
+     You can choose to replace the model with ETM or with a random other item, for even more troll.
+
 -    Added: Configure how many count of how many Sky Temple Keys you need to finish the game
--    Changed: Choosing "All Guardians" only 3 keys now (disregard the outdated text in GUI)
+
+-    Changed: Choosing "All Guardians" only 3 keys now
+
 -    Changed: Timeout for generating a seed is now 5 minutes, up from 2.
 
 0.24.0 was a beta only version.
