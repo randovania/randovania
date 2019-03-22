@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.24.1] - 2019-03-22
+
 -    **MAJOR**: New configuration GUI for Major Items:
      - For each item, you can now choose between:
         - You start with it
@@ -44,6 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -    Added: Configure how many count of how many Sky Temple Keys you need to finish the game
 -    Changed: Choosing "All Guardians" only 3 keys now (disregard the outdated text in GUI)
 -    Changed: Timeout for generating a seed is now 5 minutes, up from 2.
+
+0.24.0 was a beta only version.
 
 ## [0.23.0] - 2019-02-10
 
