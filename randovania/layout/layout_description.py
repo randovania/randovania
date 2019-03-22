@@ -84,7 +84,9 @@ class LayoutDescription:
 
     @property
     def shareable_hash(self) -> str:
-        bytes_representation = json.dumps(self.as_json).encode()
+        dict_to_serialize = game_patches_serializer.serialize(self.patches,
+                                                              self.permalink.layout_configuration.game_data)
+        bytes_representation = json.dumps(dict_to_serialize).encode()
         hashed_bytes = hashlib.blake2b(bytes_representation, digest_size=5).digest()
         return base64.b32encode(hashed_bytes).decode()
 
