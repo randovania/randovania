@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Reworked requirements for getting the Missile in Crossroads from the doors. You can:
+    - On Normal and above, with Boost, Bombs, Space Jump and Screw Attack
+    - On Hard and above, with Bombs, Space Jump and Screw Attack
+    - On Hypermode, with Bombs and Space Jump
+
 -   Added: You can now create Generic Nodes in the Data Editor
 
 ## [0.24.1] - 2019-03-22
