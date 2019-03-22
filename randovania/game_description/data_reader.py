@@ -224,7 +224,9 @@ def read_initial_states(data: Dict[str, List], resource_database: ResourceDataba
     }
 
 
-def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -> GameDescription:
+def decode_data_with_world_reader(data: Dict,
+                                  add_self_as_requirement_to_resources: bool,
+                                  ) -> Tuple[WorldReader, GameDescription]:
     game = data["game"]
     game_name = data["game_name"]
 
@@ -238,7 +240,7 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
     starting_location = AreaLocation.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
 
-    return GameDescription(
+    return world_reader, GameDescription(
         game=game,
         game_name=game_name,
         resource_database=resource_database,
@@ -249,3 +251,7 @@ def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -
         initial_states=initial_states,
         add_self_as_requirement_to_resources=add_self_as_requirement_to_resources,
     )
+
+
+def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -> GameDescription:
+    return decode_data_with_world_reader(data, add_self_as_requirement_to_resources)[1]

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: You can now create Generic Nodes in the Data Editor
+
 ## [0.24.1] - 2019-03-22
 
 -    **MAJOR**: New configuration GUI for Major Items:
