@@ -3,11 +3,11 @@ from pathlib import Path
 from typing import Dict, Optional
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog
+from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
-from randovania.game_description.node import Node, DockNode, TeleporterNode
+from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
 from randovania.game_description.world import World
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.connections_editor import ConnectionsEditor
@@ -33,10 +33,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.save_database_button.clicked.connect(self._save_database)
+        self.new_node_button.clicked.connect(self._create_new_node)
+        self.delete_node_button.clicked.connect(self._remove_node)
         self.verticalLayout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
-        self.game_description = data_reader.decode_data(data, False)
+        world_reader, self.game_description = data_reader.decode_data_with_world_reader(data, False)
+        self.generic_index = world_reader.generic_index
 
         self.resource_database = self.game_description.resource_database
         self.world_list = self.game_description.world_list
@@ -60,6 +63,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         current_area = self.current_area
         if not current_area:
+            self.new_node_button.setEnabled(False)
+            self.delete_node_button.setEnabled(False)
             return
 
         is_first = True
@@ -74,6 +79,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             button.toggled.connect(self.on_select_node)
             is_first = False
             self.verticalLayout.addWidget(button)
+
+        self.new_node_button.setEnabled(True)
+        self.delete_node_button.setEnabled(len(current_area.nodes) > 1)
 
         self.update_selected_node()
 
@@ -188,11 +196,53 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _save_database(self):
         open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
         if not open_result or open_result == ("", ""):
-            return None
+            return
 
         data = data_writer.write_game_description(self.game_description)
         with Path(open_result[0]).open("w") as open_file:
             json.dump(data, open_file, indent=4)
+
+    def _create_new_node(self):
+        node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
+        if not did_confirm:
+            return
+
+        if self.current_area.node_with_name(node_name) is not None:
+            QMessageBox.warning(self,
+                                "New Node",
+                                "A node named '{}' already exists.".format(node_name))
+            return
+
+        self.generic_index += 1
+        new_node = GenericNode(node_name, True, self.generic_index)
+        self.current_area.nodes.append(new_node)
+        self.current_area.connections[new_node] = {}
+
+        self.on_select_area()
+
+    def _remove_node(self):
+        current_node = self.current_node
+
+        if not isinstance(current_node, GenericNode):
+            QMessageBox.warning(self, "Delete Node", "Can only remove Generic Nodes")
+            return
+
+        user_response = QMessageBox.warning(
+            self,
+            "Delete Node",
+            "Are you sure you want to delete the node '{}'?".format(current_node.name),
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+
+        if user_response != QMessageBox.Yes:
+            return
+
+        for other_nodes in self.current_area.connections.values():
+            other_nodes.pop(current_node, None)
+
+        self.current_area.nodes.remove(current_node)
+        self.on_select_area()
 
     def update_edit_mode(self):
         self.delete_node_button.setVisible(self.edit_mode)
@@ -200,9 +250,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.save_database_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode and False)
-        self.delete_node_button.setEnabled(False)
-        self.new_node_button.setEnabled(False)
-
 
     @property
     def current_world(self) -> World:
