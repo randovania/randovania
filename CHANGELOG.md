@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - On Normal and above, with Boost, Bombs, Space Jump and Screw Attack
     - On Hard and above, with Bombs, Space Jump and Screw Attack
     - On Hypermode, with Bombs and Space Jump
+    
+-   Added: Added method to get the Power Bomb in Sanctuary Entrance with just Space Jump
+    and Screw Attack. (See [#29](https://github.com/randovania/randovania/issues/29))
 
 -   Added: You can now create Generic Nodes in the Data Editor
 
