@@ -5,8 +5,10 @@ from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
+from randovania import get_data_path
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name
 from randovania.games.prime import binary_data, default_data
 from randovania.resolver import debug
@@ -181,6 +183,43 @@ def export_areas_command(sub_parsers):
     add_data_file_argument(parser)
     parser.add_argument("output_file", type=Path)
     parser.set_defaults(func=export_areas_command_logic)
+
+
+def _modify_resources(game: GameDescription,
+                      resource: ResourceInfo,
+                      ):
+    """
+    This change all occurrences of the given resource to have difficulty 4
+    :param game:
+    :param resource:
+    :return:
+    """
+    new_difficulty = 4
+    database = game.resource_database
+
+    def _replace(alternative: RequirementList) -> RequirementList:
+        if alternative.get(resource) is not None:
+            return RequirementList.without_misc_resources(
+                database=database,
+                items=[
+                    (individual if individual.resource != database.difficulty_resource
+                     else IndividualRequirement(database.difficulty_resource, new_difficulty, False))
+                    for individual in alternative.values()
+                ]
+            )
+        else:
+            return alternative
+
+    for world in game.world_list.worlds:
+        for area in world.areas:
+            for source, connection in area.connections.items():
+                connection.update({
+                    target: RequirementSet(
+                        _replace(alternative)
+                        for alternative in requirements.alternatives
+                    )
+                    for target, requirements in connection.items()
+                })
 
 
 def _list_paths_with_resource(game: GameDescription,
