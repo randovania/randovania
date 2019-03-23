@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Python wheel wasn't including required files due to mising \_\_init__.py
 
+-   Fixed: error when shuffling more than 2 copies of any Major Item
+
 ## [0.24.1] - 2019-03-22
 
 -    **MAJOR**: New configuration GUI for Major Items:

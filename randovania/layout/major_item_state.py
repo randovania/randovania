@@ -49,7 +49,7 @@ class MajorItemState:
             # num shuffled
             if self.num_shuffled_pickups > 2:
                 yield 3, 4
-                yield self.num_included_in_starting_items - 3, DEFAULT_MAXIMUM_SHUFFLED - 3
+                yield self.num_shuffled_pickups - 3, DEFAULT_MAXIMUM_SHUFFLED - 3
             else:
                 yield self.num_shuffled_pickups, 4
 
