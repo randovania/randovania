@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Shareable hash is now based only on the game modifications part of the seed log.
 
+-   Fixed: Python wheel wasn't including required files due to mising \_\_init__.py
+
 ## [0.24.1] - 2019-03-22
 
 -    **MAJOR**: New configuration GUI for Major Items:
