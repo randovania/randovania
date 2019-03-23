@@ -59,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
      - An option to add pickup markers on the map, that identifies where items are and if
         you've collected them already.
      - When elevators are randomized, the room name in the map now says where that elevator goes.
+     - Changed the model for the Translator pickups: now the translator color is very prominent and easy to identify.
       
 -    Added: Option to choose where you start the game
 
