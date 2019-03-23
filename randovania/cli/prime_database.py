@@ -160,7 +160,7 @@ def view_area_command(sub_parsers):
 def export_areas_command_logic(args):
     gd = load_game_description(args)
 
-    with open(args.output_file, "w", newline='') as output:
+    with args.output_file.open("w", newline='') as output:
         writer = csv.writer(output)
         writer.writerow(("World", "Area", "Node", "Can go back in bounds",
                          "Interact while OOB and go back in bounds",
@@ -179,7 +179,7 @@ def export_areas_command(sub_parsers):
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
     add_data_file_argument(parser)
-    parser.add_argument("output_file")
+    parser.add_argument("output_file", type=Path)
     parser.set_defaults(func=export_areas_command_logic)
 
 
@@ -234,10 +234,19 @@ def list_paths_with_difficulty_command(sub_parsers):
 def list_paths_with_resource_logic(args):
     gd = load_game_description(args)
 
-    try:
-        resource = find_resource_info_with_long_name(gd.resource_database.item, args.resource)
-    except ValueError:
-        resource = find_resource_info_with_long_name(gd.resource_database.event, args.resource)
+    resource_types = [gd.resource_database.item, gd.resource_database.event, gd.resource_database.trick]
+
+    resource = None
+    for resource_type in resource_types:
+        try:
+            resource = find_resource_info_with_long_name(resource_type, args.resource)
+            break
+        except ValueError:
+            continue
+
+    if resource is None:
+        print(f"A resource named {args.resource} was not found.")
+        raise SystemExit(1)
 
     _list_paths_with_resource(
         gd,

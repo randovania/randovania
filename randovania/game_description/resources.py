@@ -149,7 +149,7 @@ def find_resource_info_with_long_name(info_list: List[ResourceInfo], long_name: 
         if info.long_name == long_name:
             return info
     raise ValueError(
-        "Resource with long_name '{}' not found in {}".format(long_name, info_list))
+        "Resource with long_name '{}' not found in {} resources".format(long_name, len(info_list)))
 
 
 class ResourceDatabase(NamedTuple):
