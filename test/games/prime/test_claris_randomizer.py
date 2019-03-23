@@ -35,8 +35,17 @@ def _description(empty_patches) -> LayoutDescription:
     return _create_description_mock(Permalink.default(), empty_patches)
 
 
+@pytest.fixture(
+    params=[False, True],
+    name="mock_is_windows")
+def _mock_is_windows(request):
+    with patch("randovania.games.prime.claris_randomizer._is_windows", return_value=request.param):
+        yield request.param
+
+
 @patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
 def test_run_with_args_success(mock_process_command: MagicMock,
+                               mock_is_windows: bool,
                                ):
     # Setup
     args = [MagicMock(), MagicMock()]
@@ -59,7 +68,8 @@ def test_run_with_args_success(mock_process_command: MagicMock,
     claris_randomizer._run_with_args(args, "", finish_string, status_update)
 
     # Assert
-    mock_process_command.assert_called_once_with([str(x) for x in args], "", ANY)
+    mock_process_command.assert_called_once_with(
+        ([] if mock_is_windows else ["mono"]) + [str(x) for x in args], "", ANY)
     status_update.assert_has_calls([
         call("line 1"),
         call("line 2"),
@@ -69,6 +79,7 @@ def test_run_with_args_success(mock_process_command: MagicMock,
 
 @patch("randovania.games.prime.claris_randomizer._process_command", autospec=True)
 def test_run_with_args_failure(mock_process_command: MagicMock,
+                               mock_is_windows: bool,
                                ):
     # Setup
     input_data = "asdf"
@@ -91,7 +102,7 @@ def test_run_with_args_failure(mock_process_command: MagicMock,
         claris_randomizer._run_with_args([], input_data, finish_string, status_update)
 
     # Assert
-    mock_process_command.assert_called_once_with([], input_data, ANY)
+    mock_process_command.assert_called_once_with([] if mock_is_windows else ["mono"], input_data, ANY)
     status_update.assert_has_calls([
         call("line 1"),
         call("line 2"),

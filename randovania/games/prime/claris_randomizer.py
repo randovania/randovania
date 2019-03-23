@@ -1,6 +1,7 @@
 import asyncio
 import copy
 import json
+import platform
 import re
 import shutil
 from asyncio import StreamWriter, StreamReader
@@ -9,7 +10,6 @@ from pathlib import Path
 from typing import Callable, List, Dict, Union, Optional
 
 from randovania import get_data_path
-from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.echoes_elevator import Elevator, echoes_elevators
 from randovania.games.prime import claris_random, patcher_file
@@ -17,7 +17,6 @@ from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 
 _USELESS_PICKUP_NAME = "Energy Transfer Module"
@@ -33,6 +32,10 @@ def _get_randomizer_path() -> Path:
 
 def _get_menu_mod_path() -> Path:
     return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
+
+
+def _is_windows() -> bool:
+    return platform.system() == "Windows"
 
 
 async def _write_data(stream: StreamWriter, data: str):
@@ -86,6 +89,8 @@ def _run_with_args(args: List[Union[str, Path]],
     finished_updates = False
 
     new_args = [str(arg) for arg in args]
+    if not _is_windows():
+        new_args.insert(0, "mono")
     print("Invoking external tool with: ", new_args)
 
     def read_callback(line: str):
