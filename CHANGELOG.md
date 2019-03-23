@@ -16,7 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - On all trick levels, Dark Visor
     - On Easy and above, Echo Visor
     - On Normal and above, no items
-    
+   
+-   Changed: All occurrences of Wall Boost are now locked behind Hard or above.
+   
 -   Added: Added method to get the Power Bomb in Sanctuary Entrance with just Space Jump
     and Screw Attack. (See [#29](https://github.com/randovania/randovania/issues/29))
     
