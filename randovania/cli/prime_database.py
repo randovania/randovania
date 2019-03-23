@@ -3,13 +3,18 @@ import csv
 import json
 from argparse import ArgumentParser
 from pathlib import Path
-from typing import Dict, BinaryIO, Optional, TextIO
+from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources import ResourceInfo, find_resource_info_with_long_name
 from randovania.games.prime import binary_data, default_data
 from randovania.resolver import debug
+
+
+def _get_sorted_list_of_names(input_list: List[Any], prefix: str = "") -> List[str]:
+    for item in sorted(input_list, key=lambda x: x.name):
+        yield prefix + item.name
 
 
 def decode_data_file(args) -> Dict:
@@ -97,27 +102,25 @@ def create_convert_database_command(sub_parsers):
 
 
 def view_area_command_logic(args):
-    gd = load_game_description(args)
+    world_list = load_game_description(args).world_list
 
-    for world in gd.worlds:
-        if world.name == args.world:
-            for area in world.areas:
-                if area.name == args.area:
-                    debug.pretty_print_area(area)
-                    raise SystemExit
+    try:
+        world = world_list.world_with_name(args.world)
 
-            print("Unknown area named '{}' in world {}. Options:\n{}".format(
-                args.area,
-                world,
-                "\n".join(" " + area.name for area in sorted(world.areas, key=lambda x: x.name))
-            ))
-            raise SystemExit(1)
+    except KeyError:
+        options = "\n".join(_get_sorted_list_of_names(world_list.worlds, " "))
+        print(f"Unknown world named '{args.world}'. Options:\n{options}")
+        raise SystemExit(1)
 
-    print("Unknown world named '{}'. Options:\n{}".format(
-        args.world,
-        "\n".join(" " + world.name for world in sorted(gd.worlds, key=lambda x: x.name))
-    ))
-    raise SystemExit(1)
+    try:
+        area = world.area_by_name(args.area)
+
+    except KeyError:
+        options = "\n".join(_get_sorted_list_of_names(world.areas, " "))
+        print(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
+        raise SystemExit(1)
+
+    debug.pretty_print_area(area)
 
 
 def load_game_description(args) -> GameDescription:
@@ -163,7 +166,7 @@ def export_areas_command_logic(args):
                          "Interact while OOB and go back in bounds",
                          "Interact while OOB and stay out of bounds",
                          "Requirements for going OOB"))
-        for world in gd.worlds:
+        for world in gd.world_list.worlds:
             for area in world.areas:
                 for node in area.nodes:
                     writer.writerow((world.name, area.name, node.name, False, False, False))
@@ -185,7 +188,7 @@ def _list_paths_with_resource(game: GameDescription,
                               needed_quantity: Optional[int]):
     count = 0
 
-    for world in game.worlds:
+    for world in game.world_list.worlds:
         for area in world.areas:
             for source, connection in area.connections.items():
                 for target, requirements in connection.items():
