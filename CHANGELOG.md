@@ -18,7 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Added method to cross Dark Arena Tunnel in the other direction without Boost.
     (See [#47](https://github.com/randovania/randovania/issues/47))
 
--   Added: You can now create Generic Nodes in the Data Editor
+-   Added: You can now create Generic Nodes in the Data Editor.
+
+-   Changed: Drop down selection of resources are now sorted in the Data Editor.
 
 -   Changed: Shareable hash is now based only on the game modifications part of the seed log.
 

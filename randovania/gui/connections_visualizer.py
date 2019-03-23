@@ -26,7 +26,7 @@ def _create_resource_name_combo(resource_database: ResourceDatabase,
 
     resource_name_combo = QComboBox(parent)
 
-    for resource in resource_database.get_by_type(resource_type):
+    for resource in sorted(resource_database.get_by_type(resource_type), key=lambda x: x.long_name):
         resource_name_combo.addItem(resource.long_name, resource)
         if resource is current_resource:
             resource_name_combo.setCurrentIndex(resource_name_combo.count() - 1)
