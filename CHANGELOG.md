@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Added: Added method to get the Power Bomb in Sanctuary Entrance with just Space Jump
     and Screw Attack. (See [#29](https://github.com/randovania/randovania/issues/29))
+    
+-   Added: Added method to cross Dark Arena Tunnel in the other direction without Boost.
+    (See [#47](https://github.com/randovania/randovania/issues/47))
 
 -   Added: You can now create Generic Nodes in the Data Editor
 
