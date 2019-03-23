@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Added method to cross Dark Arena Tunnel in the other direction without Boost.
     (See [#47](https://github.com/randovania/randovania/issues/47))
 
+-   Added: Basic support for running Randovania on non-Windows platforms.
+
 -   Added: You can now create Generic Nodes in the Data Editor.
 
 -   Changed: Drop down selection of resources are now sorted in the Data Editor.
