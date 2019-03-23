@@ -29,7 +29,6 @@ def randomize_command_logic(args):
                                    backup_files_path=args.backup_files,
                                    progress_update=lambda x, _: status_update(x),
                                    game_root=args.game_files,
-                                   use_modern_api=args.modern_api,
                                    )
 
 
@@ -47,8 +46,6 @@ def add_randomize_command(sub_parsers):
     parser.add_argument("--speed-up-credits", action="store_true", help="Speeds ups the credits sequence",
                         default=False)
     parser.add_argument("--verbose", action="store_true", help="Prints progress",
-                        default=False)
-    parser.add_argument("--modern-api", action="store_true", help="Uses the modern API with the JSON file",
                         default=False)
 
     parser.add_argument(

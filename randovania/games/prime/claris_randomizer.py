@@ -184,7 +184,6 @@ def apply_layout(description: LayoutDescription,
                  backup_files_path: Optional[Path],
                  progress_update: ProgressUpdateCallable,
                  game_root: Path,
-                 use_modern_api: bool,
                  ):
     """
     Applies the modifications listed in the given LayoutDescription to the game in game_root.
@@ -207,10 +206,7 @@ def apply_layout(description: LayoutDescription,
         _create_pak_backups(game_root, backup_files_path, status_update)
     description.save_to_file(game_root.joinpath("files", "randovania.json"))
 
-    if use_modern_api:
-        _modern_api(game_root, status_update, description, cosmetic_patches)
-    else:
-        raise Exception("Unsupported API")
+    _modern_api(game_root, status_update, description, cosmetic_patches)
 
     if patcher_configuration.menu_mod:
         _add_menu_mod_to_files(game_root, status_update)

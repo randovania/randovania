@@ -263,7 +263,6 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
     assert game_root.joinpath("files", "menu_mod.txt").is_file()
 
 
-@pytest.mark.parametrize("modern", [True])
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("has_backup_path", [False, True])
 @patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
@@ -279,7 +278,6 @@ def test_apply_layout(
         mock_modern_api: MagicMock,
         mock_create_progress_update_from_successive_messages: MagicMock,
         mock_save_to_file: MagicMock,
-        modern: bool,
         include_menu_mod: bool,
         has_backup_path: bool,
 ):
@@ -306,7 +304,7 @@ def test_apply_layout(
     status_update = mock_create_progress_update_from_successive_messages.return_value
 
     # Run
-    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root, modern)
+    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root)
 
     # Assert
     mock_create_progress_update_from_successive_messages.assert_called_once_with(
@@ -321,10 +319,7 @@ def test_apply_layout(
     game_root.joinpath.assert_called_once_with("files", "randovania.json")
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
 
-    if modern:
-        mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
-    else:
-        mock_modern_api.assert_not_called()
+    mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)

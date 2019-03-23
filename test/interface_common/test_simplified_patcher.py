@@ -198,5 +198,4 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
         game_root=options.game_files_path,
         backup_files_path=options.backup_files_path,
         progress_update=progress_update,
-        use_modern_api=True,
     )
