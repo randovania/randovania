@@ -57,8 +57,9 @@ class MajorItemState:
             yield self.num_included_in_starting_items, 2
 
         # ammo index
-        for ammo_index in item.ammo_index:
-            yield ammo_index, 256
+        assert len(self.included_ammo) == len(item.ammo_index)
+        for ammo in self.included_ammo:
+            yield ammo, 256
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, item: MajorItem) -> "MajorItemState":
