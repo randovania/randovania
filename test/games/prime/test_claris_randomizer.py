@@ -1,6 +1,4 @@
-import asyncio
 import sys
-import threading
 from pathlib import Path
 from typing import Union
 from unittest.mock import patch, MagicMock, call, ANY
