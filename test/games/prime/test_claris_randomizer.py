@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 from typing import List, Union
 from unittest.mock import patch, MagicMock, call, ANY
@@ -394,3 +395,25 @@ def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: Magi
         elevator.instance_id: AreaLocation(elevator.connected_elevator.world_asset_id,
                                            elevator.connected_elevator.area_asset_id)
     }
+
+
+def test_process_command(test_files_dir):
+    echo_tool = test_files_dir.joinpath("echo_tool.py")
+    read_callback = MagicMock()
+
+    # Run
+    claris_randomizer._process_command(
+        [
+            sys.executable,
+            str(echo_tool)
+        ],
+        "hello\r\nthis is a nice world\r\n\r\nWe some crazy stuff.",
+        read_callback
+    )
+
+    # Assert
+    read_callback.assert_has_calls([
+        call("hello"),
+        call("this is a nice world"),
+        call("We some crazy stuff."),
+    ])
