@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.25.0] - 2019-03-24
+
 -   Changed: Reworked requirements for getting the Missile in Crossroads from the doors. You can:
     - On Normal and above, with Boost, Bombs, Space Jump and Screw Attack
     - On Hard and above, with Bombs, Space Jump and Screw Attack
