@@ -96,10 +96,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.tabWidget.setCurrentIndex(0)
 
-        # With online data
-        asyncio.get_event_loop().create_task(github_releases_data.get_releases()).add_done_callback(
-            self._on_releases_data)
-
     def closeEvent(self, event):
         self.stop_background_process()
         for window in self.windows:
@@ -120,6 +116,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
                 return
 
     # Releases info
+    def request_new_data(self):
+        asyncio.get_event_loop().create_task(github_releases_data.get_releases()).add_done_callback(
+            self._on_releases_data)
 
     def _on_releases_data(self, task: asyncio.Task):
         releases = task.result()

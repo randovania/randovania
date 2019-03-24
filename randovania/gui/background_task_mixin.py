@@ -1,8 +1,11 @@
+import asyncio
 import threading
 import traceback
 from typing import Optional
 
 from PySide2.QtCore import Signal
+
+from randovania.games.prime import claris_randomizer
 
 
 class BackgroundTaskMixin:
@@ -36,10 +39,13 @@ class BackgroundTaskMixin:
 
         if self._background_thread:
             raise RuntimeError("Trying to start a new background thread while one exists already.")
+
         self.abort_background_task_requested = False
         progress_update(starting_message, 0)
 
         self.background_tasks_button_lock_signal.emit(False)
+
+        claris_randomizer.IO_LOOP = asyncio.get_event_loop()
         self._background_thread = threading.Thread(target=thread, kwargs=kwargs)
         self._background_thread.start()
 

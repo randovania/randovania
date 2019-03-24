@@ -9,13 +9,12 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import ResourceNode
-from randovania.game_description.resources import PickupEntry, PickupIndex
-from randovania.games.prime import claris_randomizer
+from randovania.game_description.resources import PickupEntry
 from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocationConfiguration
-from randovania.resolver import resolver
+from randovania.resolver import resolver, elevator_distributor
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
@@ -125,7 +124,7 @@ def _add_elevator_connections_to_patches(permalink: Permalink,
     if permalink.layout_configuration.elevators == LayoutElevators.RANDOMIZED:
         return GamePatches(
             patches.pickup_assignment,
-            claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number),
+            elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number),
             patches.dock_connection,
             patches.dock_weakness,
             patches.extra_initial_items,
