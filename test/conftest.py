@@ -17,6 +17,11 @@ def test_files_dir() -> Path:
     return Path(__file__).parent.joinpath("test_files")
 
 
+@pytest.fixture
+def echo_tool(test_files_dir) -> Path:
+    return test_files_dir.joinpath("echo_tool.py")
+
+
 @pytest.fixture()
 def simple_data(test_files_dir: Path) -> dict:
     with test_files_dir.joinpath("small_game_data.json").open("r") as small_game_data:
@@ -58,3 +63,5 @@ def pytest_addoption(parser):
                      default=False, help="Skips running layout generation tests")
     parser.addoption('--skip-gui-tests', action='store_true', dest="skip_gui_tests",
                      default=False, help="Skips running GUI tests")
+    parser.addoption('--skip-echo-tool', action='store_true', dest="skip_echo_tool",
+                     default=False, help="Skips running tests that uses the echo tool")
