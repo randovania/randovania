@@ -6,11 +6,11 @@ import pytest
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
-from randovania.games.prime import claris_randomizer
 from randovania.layout.layout_configuration import LayoutTrickLevel, LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.resolver import elevator_distributor
 
 
 @pytest.mark.parametrize("value", LayoutTrickLevel)
@@ -44,7 +44,7 @@ def test_round_trip_default(permalink: Permalink,
         permalink=permalink,
         patches=GamePatches(
             {},
-            claris_randomizer.elevator_connections_for_seed_number(permalink.seed_number),
+            elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number),
             {}, {}, (), game.starting_location
         ),
         solver_path=solver_path,

@@ -1,14 +1,15 @@
+import asyncio
 import sys
 from pathlib import Path
-from typing import List, Union
+from typing import Union
 from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
 
 import randovania
-from randovania.game_description.area_location import AreaLocation
+import randovania.resolver.elevator_distributor
 from randovania.game_description.game_patches import GamePatches
-from randovania.games.prime import claris_randomizer, claris_random
+from randovania.games.prime import claris_randomizer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -351,50 +352,6 @@ def test_modern_api(mock_run_with_args: MagicMock,
     mock_base_args.assert_called_once_with(game_root)
     mock_create_patcher_file.assert_called_once_with(description, cosmetic_patches)
     mock_run_with_args.assert_called_once_with([], '{"some_data": 123}', "Randomized!", status_update)
-
-
-@pytest.mark.parametrize(["seed_number", "expected_ids"], [
-    (5000, [38, 1245332, 129, 2162826, 393260, 122, 1245307, 3342446, 4522032,
-            3538975, 152, 1638535, 1966093, 2097251, 524321, 589851, 1572998, 2949235]),
-    (9000, [129, 2949235, 2162826, 1245307, 122, 1245332, 4522032, 38, 1638535,
-            3342446, 2097251, 1572998, 589851, 1966093, 152, 393260, 3538975, 524321]),
-    # This seed takes multiple tries
-    (1157772449, [2162826, 38, 2949235, 1245307, 393260, 4522032, 129, 3342446, 1245332,
-                  1638535, 2097251, 1966093, 152, 589851, 3538975, 1572998, 524321, 122])
-])
-def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
-    # Setup
-    rng = claris_random.Random(seed_number)
-
-    # Run
-    result = claris_randomizer.try_randomize_elevators(rng)
-    connected_ids = [elevator.connected_elevator.instance_id for elevator in result]
-
-    # Assert
-    assert connected_ids == expected_ids
-
-
-@patch("randovania.games.prime.claris_random.Random", autospec=True)
-@patch("randovania.games.prime.claris_randomizer.try_randomize_elevators", autospec=True)
-def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: MagicMock,
-                                              mock_random: MagicMock):
-    # Setup
-    seed_number: int = MagicMock()
-    elevator = MagicMock()
-    mock_try_randomize_elevators.return_value = [
-        elevator
-    ]
-
-    # Run
-    result = claris_randomizer.elevator_connections_for_seed_number(seed_number)
-
-    # Assert
-    mock_random.assert_called_once_with(seed_number)
-    mock_try_randomize_elevators.assert_called_once_with(mock_random.return_value)
-    assert result == {
-        elevator.instance_id: AreaLocation(elevator.connected_elevator.world_asset_id,
-                                           elevator.connected_elevator.area_asset_id)
-    }
 
 
 def test_process_command(test_files_dir):
