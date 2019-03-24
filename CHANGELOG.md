@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - On all trick levels, Dark Visor
     - On Easy and above, Echo Visor
     - On Normal and above, no items
+    
+-   Changed: The Slope Jump in Temple Assembly Site is now Hard and above, from Normal and above.
    
 -   Changed: All occurrences of Wall Boost are now locked behind Hard or above.
    
@@ -36,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fixed: Python wheel wasn't including required files due to mising \_\_init__.py
 
 -   Fixed: error when shuffling more than 2 copies of any Major Item
+
+-   Fixed: permalinks were using the the ammo id instead of the configured 
 
 ## [0.24.1] - 2019-03-22
 
