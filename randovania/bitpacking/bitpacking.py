@@ -129,17 +129,19 @@ def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
     yield array.index(element), len(array)
 
 
-def pack_value(value: BitPackValue) -> bytes:
-    values = [
-        (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode()
-    ]
-
+def _pack_encode_results(values: List[Tuple[int, int]]):
     f = "".join(
         "u{}".format(_bits_for_number(v))
         for _, v in values
     )
     return bitstruct.compile(f).pack(*[argument for argument, _ in values])
+
+
+def pack_value(value: BitPackValue) -> bytes:
+    return _pack_encode_results([
+        (value_argument, value_format)
+        for value_argument, value_format in value.bit_pack_encode()
+    ])
 
 
 def round_trip(value: BitPackValue):
