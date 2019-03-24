@@ -41,7 +41,7 @@ test_script:
   - "%PYTHON%\\python.exe -m pytest --cov randovania --skip-generation-tests"
   - "%PYTHON%\\python.exe create_windows_release.py"
   - dist\randovania\randovania.exe --version
-  - dist\randovania\randovania.exe --pytest --skip-gui-tests
+  - dist\randovania\randovania.exe --pytest --skip-gui-tests --skip-echo-tool
 
 # after_test:
   # This step builds your wheels.
