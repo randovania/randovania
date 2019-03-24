@@ -65,7 +65,8 @@ class ItemRow:
         self._rows = rows
         rows.append(self)
 
-        self.layout = QHBoxLayout(parent)
+        self.layout = QHBoxLayout()
+        self.layout.setObjectName(f"Box layout for {item.resource.long_name}")
         parent_layout.addLayout(self.layout)
 
         self.resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent)
@@ -180,6 +181,7 @@ class ConnectionsVisualizer:
 
     def _create_box_in_grid(self) -> QGroupBox:
         group_box = QGroupBox(self.parent)
+        group_box.setObjectName(f"Box with index {self._current_last_index}")
         self._elements.append(group_box)
         self._add_element_to_grid(group_box)
         self._current_last_index += 1
@@ -189,6 +191,7 @@ class ConnectionsVisualizer:
         group_box = self._create_box_in_grid()
 
         vertical_layout = QVBoxLayout(group_box)
+        vertical_layout.setObjectName(f"Layout with index {self._current_last_index - 1}")
         vertical_layout.setAlignment(Qt.AlignTop)
         vertical_layout.setContentsMargins(11, 11, 11, 11)
         vertical_layout.setSpacing(6)
@@ -206,6 +209,7 @@ class ConnectionsVisualizer:
         group_box.rows = []
 
         vertical_layout = QVBoxLayout(group_box)
+        vertical_layout.setObjectName(f"Layout with index {self._current_last_index - 1}")
         vertical_layout.setAlignment(Qt.AlignTop)
 
         for item in sorted(alternative.items):
@@ -218,6 +222,7 @@ class ConnectionsVisualizer:
 
         if self.edit_mode:
             tools_layout = QHBoxLayout(group_box)
+            tools_layout.setObjectName(f"Tools layout with index {self._current_last_index - 1}")
             vertical_layout.addLayout(tools_layout)
 
             add_new_button = QPushButton(group_box)
