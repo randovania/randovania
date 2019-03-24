@@ -75,11 +75,15 @@ async def _process_command_async(args: List[str], input_data: str, read_callback
 
 
 def _process_command(args: List[str], input_data: str, read_callback: Callable[[str], None]):
-    loop = asyncio.ProactorEventLoop()
+    if _is_windows():
+        loop = asyncio.ProactorEventLoop()
+    else:
+        loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(_process_command_async(args, input_data, read_callback))
     finally:
-        loop.close()
+        if _is_windows():
+            loop.close()
 
 
 def _run_with_args(args: List[Union[str, Path]],
