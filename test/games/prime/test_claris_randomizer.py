@@ -1,5 +1,6 @@
 import asyncio
 import sys
+import threading
 from pathlib import Path
 from typing import Union
 from unittest.mock import patch, MagicMock, call, ANY
@@ -354,9 +355,11 @@ def test_modern_api(mock_run_with_args: MagicMock,
     mock_run_with_args.assert_called_once_with([], '{"some_data": 123}', "Randomized!", status_update)
 
 
-def test_process_command(test_files_dir):
+def test_process_command_no_thread(test_files_dir):
     echo_tool = test_files_dir.joinpath("echo_tool.py")
     read_callback = MagicMock()
+
+    claris_randomizer.IO_LOOP = None
 
     # Run
     claris_randomizer._process_command(

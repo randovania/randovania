@@ -15,7 +15,7 @@ from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
-_USELESS_PICKUP_NAME = "Energy Transfer Module"
+IO_LOOP: Optional[asyncio.AbstractEventLoop] = None
 
 
 def _get_randomizer_folder() -> Path:
@@ -71,15 +71,14 @@ async def _process_command_async(args: List[str], input_data: str, read_callback
 
 
 def _process_command(args: List[str], input_data: str, read_callback: Callable[[str], None]):
-    if _is_windows():
-        loop = asyncio.ProactorEventLoop()
-    else:
-        loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(_process_command_async(args, input_data, read_callback))
-    finally:
+    work = _process_command_async(args, input_data, read_callback)
+
+    if IO_LOOP is None:
         if _is_windows():
-            loop.close()
+            asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+        asyncio.run(work)
+    else:
+        asyncio.run_coroutine_threadsafe(work, IO_LOOP).result()
 
 
 def _run_with_args(args: List[Union[str, Path]],
