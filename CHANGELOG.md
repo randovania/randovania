@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: The no-Boost return method in Dark Arena Tunnel is now Normal and above only.
+
 ## [0.25.0] - 2019-03-24
 
 -   Changed: Reworked requirements for getting the Missile in Crossroads from the doors. You can:
