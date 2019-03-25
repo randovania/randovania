@@ -2,6 +2,7 @@ import copy
 import functools
 import json
 import operator
+import pprint
 from pathlib import Path
 from typing import List, Callable, TypeVar, BinaryIO, Dict, TextIO
 
@@ -246,131 +247,37 @@ def decode_file_path(binary_file_path: Path, extra_file_path: Path) -> Dict:
             return decode(binary_io, extra)
 
 
-def write_array(writer: BinaryWriter, array: List[X],
-                item_writer: Callable[[BinaryWriter, X], None]):
-    writer.write_byte(len(array))
-    for item in array:
-        item_writer(writer, item)
-
-
-def write_resource_info(writer: BinaryWriter, item: Dict):
-    writer.write_byte(item["index"])
-    writer.write_string(item["long_name"])
-    writer.write_string(item["short_name"])
-
-
-def write_damage_reduction(writer: BinaryWriter, item: Dict):
-    writer.write_byte(item["index"])
-    writer.write_float(item["multiplier"])
-
-
-def write_damage_resource_info(writer: BinaryWriter, item: Dict):
-    write_resource_info(writer, item)
-    write_array(writer, item["reductions"], write_damage_reduction)
-
-
-def write_individual_requirement(writer: BinaryWriter, item: Dict):
-    writer.write_byte(item["requirement_type"])
-    writer.write_byte(item["requirement_index"])
-    writer.write_short(item["amount"])
-    writer.write_bool(item["negate"])
-
-
-def write_requirement_set(writer: BinaryWriter, item: List[List[Dict]]):
-    write_array(writer,
-                item,
-                lambda w, i: write_array(w, i, item_writer=write_individual_requirement))
-
-
-def write_dock_weakness(writer: BinaryWriter, item: Dict):
-    writer.write_byte(item["index"])
-    writer.write_string(item["name"])
-    writer.write_bool(item["is_blast_door"])
-    write_requirement_set(writer, item["requirement_set"])
-
-
-def write_node(writer: BinaryWriter, node: Dict):
-    writer.write_string(node["name"])
-    writer.write_bool(node["heal"])
-    writer.write_byte(node["node_type"])
-
-    node_type = node["node_type"]
-
-    if node_type == 0:
-        pass
-
-    elif node_type == 1:
-        writer.write_byte(node["dock_index"])
-        writer.write_uint(node["connected_area_asset_id"])
-        writer.write_byte(node["connected_dock_index"])
-        writer.write_byte(node["dock_type"])
-        writer.write_byte(node["dock_weakness_index"])
-        writer.write_byte(0)
-        writer.write_byte(0)
-        writer.write_byte(0)
-
-    elif node_type == 2:
-        writer.write_byte(node["pickup_index"])
-
-    elif node_type == 3:
-        writer.write_uint(node["destination_world_asset_id"])
-        writer.write_uint(node["destination_area_asset_id"])
-        writer.write_uint(node["teleporter_instance_id"])
-
-    elif node_type == 4:
-        writer.write_byte(node["event_index"])
-
-    else:
-        raise Exception("Unknown node type: {}".format(node_type))
-
-
-def write_area(writer: BinaryWriter, item: Dict):
-    writer.write_string(item["name"])
-    writer.write_uint(item["asset_id"])
-    writer.write_byte(len(item["nodes"]))
-    writer.write_byte(item["default_node_index"])
-    for node in item["nodes"]:
-        write_node(writer, node)
-
-    for origin in item["nodes"]:
-        for target in item["nodes"]:
-            if origin != target:
-                requirement_set = origin["connections"].get(target["name"], _IMPOSSIBLE_SET)
-                write_requirement_set(writer, requirement_set)
-
-
-def write_world(writer: BinaryWriter, item: Dict):
-    writer.write_string(item["name"])
-    writer.write_uint(item["asset_id"])
-    write_array(writer, item["areas"], write_area)
-
-
 def encode(original_data: Dict, x: BinaryIO) -> dict:
-    data = copy.copy(original_data)
+    data = copy.deepcopy(original_data)
 
-    writer = BinaryWriter(x)
-    x.write(b"Req.")
-    writer.write_uint(current_format_version)
-    writer.write_byte(data.pop("game"))
-    writer.write_string(data.pop("game_name"))
+    for world in data["worlds"]:
+        for area in world["areas"]:
+            area["connections"] = [
+                [
+                    origin["connections"].get(target["name"], _IMPOSSIBLE_SET)
+                    for target in area["nodes"]
+                    if origin != target
+                ]
+                for origin in area["nodes"]
+            ]
+
+            for i, node in enumerate(area["nodes"]):
+                node.pop("connections")
+                area["nodes"][i] = {
+                    "name": node.pop("name"),
+                    "heal": node.pop("heal"),
+                    "node_type": node.pop("node_type"),
+                    "data": node,
+                }
+
+    ConstructGame.build_stream(data, x)
 
     # Resource Info database
-    resource_database = data.pop("resource_database")
-    write_array(writer, resource_database["items"], write_resource_info)
-    write_array(writer, resource_database["events"], write_resource_info)
-    write_array(writer, resource_database["tricks"], write_resource_info)
-    write_array(writer, resource_database["damage"], write_damage_resource_info)
-    write_array(writer, resource_database["versions"], write_resource_info)
-    write_array(writer, resource_database["misc"], write_resource_info)
-    write_array(writer, resource_database["difficulty"], write_resource_info)
-
-    # Dock Weakness Database
-    dock_weakness_database = data.pop("dock_weakness_database")
-    write_array(writer, dock_weakness_database["door"], write_dock_weakness)
-    write_array(writer, dock_weakness_database["portal"], write_dock_weakness)
-
-    # Worlds List
-    write_array(writer, data.pop("worlds"), write_world)
+    data.pop("game")
+    data.pop("game_name")
+    data.pop("resource_database")
+    data.pop("dock_weakness_database")
+    data.pop("worlds")
 
     return data
 
@@ -464,7 +371,7 @@ ConstructWorld = Struct(
 
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
-    format_version=Int32ub,
+    format_version=Const(current_format_version, Int32ub),
     game=Byte,
     game_name=CString("utf8"),
     resource_database=ConstructResourceDatabase,
