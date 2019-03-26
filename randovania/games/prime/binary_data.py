@@ -2,63 +2,17 @@ import copy
 import functools
 import json
 import operator
-import pprint
 from pathlib import Path
-from typing import List, Callable, TypeVar, BinaryIO, Dict, TextIO
+from typing import TypeVar, BinaryIO, Dict, TextIO
 
+import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, LazyStruct
-
-from randovania.binary_file import BinarySource, BinaryWriter
+    Short, PrefixedArray, Array, Switch
 
 X = TypeVar('X')
 current_format_version = 6
 
 _IMPOSSIBLE_SET = [[{'requirement_type': 5, 'requirement_index': 1, 'amount': 1, 'negate': False}]]
-_TRIVIAL_LIST = [{'requirement_type': 5, 'requirement_index': 0, 'amount': 1, 'negate': False}]
-
-
-def read_array(source: BinarySource,
-               item_reader: Callable[[BinarySource], X]) -> List[X]:
-    count = source.read_byte()
-    return [item_reader(source) for _ in range(count)]
-
-
-def read_damage_reduction(source: BinarySource) -> Dict:
-    return {
-        "index": source.read_byte(),
-        "multiplier": source.read_float(),
-    }
-
-
-def read_damage_reductions(source: BinarySource) -> List[Dict]:
-    return read_array(source, read_damage_reduction)
-
-
-def read_resource_info(source: BinarySource) -> Dict:
-    return {
-        "index": source.read_byte(),
-        "long_name": source.read_string(),
-        "short_name": source.read_string(),
-    }
-
-
-def read_resource_info_array(source: BinarySource) -> List[Dict]:
-    return read_array(source, read_resource_info)
-
-
-def read_damage_resource_info(source: BinarySource) -> Dict:
-    return {
-        "index": source.read_byte(),
-        "long_name": source.read_string(),
-        "short_name": source.read_string(),
-        "reductions": read_damage_reductions(source),
-    }
-
-
-def read_damage_resource_info_array(source: BinarySource) -> List[Dict]:
-    return read_array(source, read_damage_resource_info)
-
 
 # Requirement
 
@@ -75,169 +29,59 @@ def sort_requirement_list(item: list):
         tuple())
 
 
-def read_individual_requirement(source: BinarySource) -> Dict:
-    return {
-        "requirement_type": source.read_byte(),
-        "requirement_index": source.read_byte(),
-        "amount": source.read_short(),
-        "negate": source.read_bool(),
-    }
+def _convert_to_raw_python(value):
+    if isinstance(value, construct.ListContainer):
+        return [
+            _convert_to_raw_python(item)
+            for item in value
+        ]
 
-
-def read_requirement_list(source: BinarySource) -> List[Dict]:
-    result = read_array(source, read_individual_requirement)
-    if result == _TRIVIAL_LIST:
-        return []
-    else:
-        return list(sorted(result, key=sort_individual_requirement))
-
-
-def read_requirement_set(source: BinarySource) -> List[List[Dict]]:
-    result = read_array(source, read_requirement_list)
-    if result == _IMPOSSIBLE_SET:
-        return []
-    else:
-        return list(sorted(result, key=sort_requirement_list))
-
-
-# Dock Weakness
-
-
-def read_dock_weakness_database(source: BinarySource) -> Dict:
-    def read_dock_weakness(_source: BinarySource) -> Dict:
+    if isinstance(value, construct.Container):
         return {
-            "index": _source.read_byte(),
-            "name": _source.read_string(),
-            "is_blast_door": _source.read_bool(),
-            "requirement_set": read_requirement_set(_source),
+            key: _convert_to_raw_python(item)
+            for key, item in value.items()
+            if not key.startswith("_")
         }
 
-    return {
-        "door": read_array(source, read_dock_weakness),
-        "portal": read_array(source, read_dock_weakness),
-    }
-
-
-def read_node(source: BinarySource) -> Dict:
-    node = {
-        "name": source.read_string(),
-        "heal": source.read_bool(),
-        "node_type": source.read_byte(),
-    }
-    node_type = node["node_type"]
-
-    if node_type == 0:
-        pass
-
-    elif node_type == 1:
-        node["dock_index"] = source.read_byte()
-        node["connected_area_asset_id"] = source.read_uint()
-        node["connected_dock_index"] = source.read_byte()
-        node["dock_type"] = source.read_byte()
-        node["dock_weakness_index"] = source.read_byte()
-
-        source.skip(3)
-
-    elif node_type == 2:
-        node["pickup_index"] = source.read_byte()
-
-    elif node_type == 3:
-        node["destination_world_asset_id"] = source.read_uint()
-        node["destination_area_asset_id"] = source.read_uint()
-        node["teleporter_instance_id"] = source.read_uint()
-
-    elif node_type == 4:
-        node["event_index"] = source.read_byte()
-
-    else:
-        raise Exception("Unknown node type: {}".format(node_type))
-
-    return node
-
-
-def read_area(source: BinarySource) -> Dict:
-    name = source.read_string()
-    asset_id = source.read_uint()
-    node_count = source.read_byte()
-    default_node_index = source.read_byte()
-
-    nodes = [read_node(source) for _ in range(node_count)]
-
-    for origin in nodes:
-        origin["connections"] = {}
-        for target in nodes:
-            if origin != target:
-                requirement_set = read_requirement_set(source)
-                if requirement_set:
-                    origin["connections"][target["name"]] = requirement_set
-
-    return {
-        "name": name,
-        "asset_id": asset_id,
-        "default_node_index": default_node_index,
-        "nodes": nodes
-    }
-
-
-def read_area_list(source: BinarySource) -> List[Dict]:
-    return read_array(source, read_area)
-
-
-def read_world(source: BinarySource) -> Dict:
-    return {
-        "name": source.read_string(),
-        "asset_id": source.read_uint(),
-        "areas": read_area_list(source),
-    }
-
-
-def read_world_list(source: BinarySource) -> List[Dict]:
-    return read_array(source, read_world)
+    return value
 
 
 def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
-    if binary_io.read(4) != b"Req.":
-        raise Exception("Invalid file format.")
-
-    source = BinarySource(binary_io)
+    decoded = _convert_to_raw_python(ConstructGame.parse_stream(binary_io))
     extra = json.load(extra_io)
 
-    format_version = source.read_uint()
-    if format_version != current_format_version:
-        raise Exception("Unsupported format version: {}, expected {}".format(
-            format_version, current_format_version))
+    for world in decoded["worlds"]:
+        for area in world["areas"]:
 
-    game = source.read_byte()
-    game_name = source.read_string()
+            for node in area["nodes"]:
+                data = node.pop("data")
+                if data is not None:
+                    for key, value in data.items():
+                        node[key] = value
+                node["connections"] = {}
 
-    items = read_resource_info_array(source)
-    events = read_resource_info_array(source)
-    tricks = read_resource_info_array(source)
-    damage = read_damage_resource_info_array(source)
-    versions = read_resource_info_array(source)
-    misc = read_resource_info_array(source)
-    difficulty = read_resource_info_array(source)
+            for i, connections in enumerate(area.pop("connections")):
+                node = area["nodes"][i]
 
-    dock_weakness_database = read_dock_weakness_database(source)
-    worlds = read_world_list(source)
+                j = 0
+                for connection in connections:
+                    if j == i:
+                        j += 1
+
+                    if connection != _IMPOSSIBLE_SET:
+                        node["connections"][area["nodes"][j]["name"]] = list(sorted(connection,
+                                                                                    key=sort_requirement_list))
+                    j += 1
 
     return {
-        "game": game,
-        "game_name": game_name,
-        "resource_database": {
-            "items": items,
-            "events": events,
-            "tricks": tricks,
-            "damage": damage,
-            "versions": versions,
-            "misc": misc,
-            "difficulty": difficulty,
-        },
+        "game": decoded["game"],
+        "game_name": decoded["game_name"],
+        "resource_database": decoded["resource_database"],
         "starting_location": extra["starting_location"],
         "initial_states": extra["initial_states"],
         "victory_condition": extra["victory_condition"],
-        "dock_weakness_database": dock_weakness_database,
-        "worlds": worlds,
+        "dock_weakness_database": decoded["dock_weakness_database"],
+        "worlds": decoded["worlds"],
     }
 
 
@@ -350,16 +194,15 @@ ConstructNode = Struct(
     )
 )
 
-
 ConstructArea = Struct(
     name=CString("utf8"),
     asset_id=Int32ub,
-    node_count=Rebuild(Byte, lambda this: len(this.nodes)),
+    _node_count=Rebuild(Byte, lambda this: len(this.nodes)),
     default_node_index=Byte,
-    nodes=Array(lambda this: this.node_count, ConstructNode),
+    nodes=Array(lambda this: this._node_count, ConstructNode),
     connections=Array(
-        lambda this: this.node_count,
-        Array(lambda this: this.node_count - 1, ConstructRequirementSet)
+        lambda this: this._node_count,
+        Array(lambda this: this._node_count - 1, ConstructRequirementSet)
     )
 )
 
