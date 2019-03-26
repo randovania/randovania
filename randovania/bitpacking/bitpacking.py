@@ -129,6 +129,37 @@ def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
     yield array.index(element), len(array)
 
 
+def encode_int_with_limits(value: int, limits: Tuple[int, ...]) -> Iterator[Tuple[int, int]]:
+    previous_limit_sum = 0
+
+    for i, limit in enumerate(limits):
+        limit -= previous_limit_sum
+        previous_limit_sum += limit
+
+        if i == len(limits) - 1 or value < limit:
+            yield value, limit + 1
+            break
+
+        yield limit, limit + 1
+        value -= limit
+
+
+def decode_int_with_limits(decoder: BitPackDecoder, limits: Tuple[int, ...]) -> int:
+    value = 0
+    previous_limit_sum = 0
+
+    for limit in limits:
+        limit -= previous_limit_sum
+        previous_limit_sum += limit
+
+        new_value = decoder.decode_single(limit + 1)
+        value += new_value
+        if new_value < limit:
+            break
+
+    return value
+
+
 def _pack_encode_results(values: List[Tuple[int, int]]):
     f = "".join(
         "u{}".format(_bits_for_number(v))
