@@ -30,6 +30,8 @@ def test_retcon_filler_integration():
     logic, state = logic_bootstrap(layout_configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    filler_patches = retcon.retcon_playthrough_filler(logic, state, tuple(available_pickups), rng, status_update)
+    filler_patches = retcon.retcon_playthrough_filler(logic, state, tuple(available_pickups), rng,
+                                                      0, 0,
+                                                      status_update)
     assert filler_patches == patches
 
