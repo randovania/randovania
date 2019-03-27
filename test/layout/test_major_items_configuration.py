@@ -18,7 +18,8 @@ from randovania.layout.major_items_configuration import MajorItemsConfiguration
                     "include_copy_in_original_location": True,
                     "num_shuffled_pickups": 1,
                     "num_included_in_starting_items": 0,
-                    "included_ammo": []
+                    "included_ammo": [],
+                    "allowed_as_random_starting_item": False
                 }
             }
         }},
