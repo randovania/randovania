@@ -1,7 +1,7 @@
 from typing import List
 
 from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity, PickupIndex, \
-    ResourceDatabase
+    ResourceDatabase, CurrentResources, add_resource_gain_to_current_resources
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.resolver.exceptions import InvalidConfiguration
 from randovania.resolver.item_pool import PoolResults
@@ -20,7 +20,7 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
 
     item_pool: List[PickupEntry] = []
     new_assignment: PickupAssignment = {}
-    initial_resources: List[ResourceQuantity] = []
+    initial_resources: CurrentResources = {}
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
         locations_to_place = _GUARDIAN_INDICES[:]
@@ -41,7 +41,10 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
         first_automatic_key = keys_to_place
 
     for automatic_key_number in range(first_automatic_key, 9):
-        initial_resources.extend(create_sky_temple_key(automatic_key_number, resource_database).all_resources)
+        add_resource_gain_to_current_resources(
+            create_sky_temple_key(automatic_key_number, resource_database).all_resources,
+            initial_resources
+        )
 
     return item_pool, new_assignment, initial_resources
 

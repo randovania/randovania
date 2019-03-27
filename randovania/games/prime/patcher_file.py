@@ -1,3 +1,4 @@
+import copy
 from random import Random
 from typing import Dict, List, Optional
 
@@ -34,32 +35,14 @@ _CUSTOM_NAMES_FOR_ELEVATORS = {
 }
 
 
-def _add_items_in_resource_gain_to_dict(gain: ResourceGain,
-                                        target: Dict[SimpleResourceInfo, int],
-                                        ):
-    """
-    :param gain:
-    :param target:
-    :return:
-    """
-    for resource, quantity in gain:
-        if resource.resource_type == ResourceType.ITEM:
-            target[resource] = target.get(resource, 0) + quantity
-
-
 def _create_spawn_point_field(patches: GamePatches,
                               resource_database: ResourceDatabase,
                               ) -> dict:
-    # TODO: we don't need the aux function and this conversion to dict
-    # A GamePatches already ensures there's no copies to the extra_initial_items
-    item_quantities: Dict[SimpleResourceInfo, int] = {}
-    _add_items_in_resource_gain_to_dict(patches.extra_initial_items,
-                                        item_quantities)
 
     capacities = [
         {
             "index": item.index,
-            "amount": item_quantities.get(item, 0),
+            "amount": patches.starting_items.get(item, 0),
         }
         for item in resource_database.item
     ]

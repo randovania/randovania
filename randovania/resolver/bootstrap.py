@@ -3,11 +3,12 @@ from typing import Tuple, Set
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources
+from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources, \
+    add_resource_gain_to_current_resources
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
-from randovania.resolver.state import State, add_resource_gain_to_current_resources
+from randovania.resolver.state import State
 
 _items_to_not_add_in_minimal_restrictions = {
     # Dark Visor
@@ -135,11 +136,9 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
 
     starting_node = starting_area.nodes[starting_area.default_node_index]
 
-    initial_resources = {
-        # "No Requirements"
-        game.resource_database.trivial_resource(): 1
-    }
-    add_resource_gain_to_current_resources(patches.extra_initial_items, initial_resources)
+    initial_resources = copy.copy(patches.starting_items)
+    initial_resources[game.resource_database.trivial_resource()] = 1
+
     if initial_game_state is not None:
         add_resource_gain_to_current_resources(initial_game_state, initial_resources)
 

@@ -40,9 +40,9 @@ def test_add_header_data_to_result():
 
 def test_create_spawn_point_field(echoes_resource_database, empty_patches):
     # Setup
-    patches = empty_patches.assign_starting_location(AreaLocation(100, 5000)).assign_extra_initial_items([
-        (echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15), 3)
-    ])
+    patches = empty_patches.assign_starting_location(AreaLocation(100, 5000)).assign_extra_initial_items({
+        echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15): 3,
+    })
 
     capacities = [
         {'amount': 3 if item.index == 15 else 0, 'index': item.index}
