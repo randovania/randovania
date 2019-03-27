@@ -1,6 +1,7 @@
-from typing import Tuple, Dict, List
+from typing import List
 
-from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity, ResourceDatabase
+from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceDatabase, \
+    CurrentResources, add_resource_gain_to_current_resources
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.resolver.exceptions import InvalidConfiguration
 from randovania.resolver.item_pool import PoolResults
@@ -19,7 +20,7 @@ def add_major_items(resource_database: ResourceDatabase,
 
     item_pool: List[PickupEntry] = []
     new_assignment: PickupAssignment = {}
-    initial_resources: List[ResourceQuantity] = []
+    initial_resources: CurrentResources = {}
 
     for item, state in major_items_configuration.items_state.items():
         if len(item.ammo_index) != len(state.included_ammo):
@@ -38,6 +39,9 @@ def add_major_items(resource_database: ResourceDatabase,
             item_pool.append(create_major_item(item, state, True, resource_database))
 
         for _ in range(state.num_included_in_starting_items):
-            initial_resources.extend(create_major_item(item, state, False, resource_database).all_resources)
+            add_resource_gain_to_current_resources(
+                create_major_item(item, state, False, resource_database).all_resources,
+                initial_resources
+            )
 
     return item_pool, new_assignment, initial_resources

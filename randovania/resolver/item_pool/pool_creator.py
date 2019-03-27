@@ -1,7 +1,7 @@
 from typing import Tuple, List
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import PickupEntry, ResourceDatabase
+from randovania.game_description.resources import PickupEntry, ResourceDatabase, add_resources_into_another
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.item_pool import PoolResults
 from randovania.resolver.item_pool.ammo import add_ammo
@@ -13,7 +13,7 @@ from randovania.resolver.item_pool.sky_temple_keys import add_sky_temple_key_dis
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
     base_results[0].extend(extension[0])
     base_results[1].update(extension[1])
-    base_results[2].extend(extension[2])
+    add_resources_into_another(base_results[2], extension[2])
 
 
 def calculate_pool_results(layout_configuration: LayoutConfiguration,
@@ -26,7 +26,7 @@ def calculate_pool_results(layout_configuration: LayoutConfiguration,
     :param resource_database:
     :return:
     """
-    base_results = ([], {}, [])
+    base_results = ([], {}, {})
 
     # Adding major items to the pool
     _extend_pool_results(base_results, add_major_items(resource_database,

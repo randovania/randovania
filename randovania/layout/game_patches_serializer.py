@@ -156,7 +156,7 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
         "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location)),
         "starting_items": {
             resource_info.long_name: quantity
-            for resource_info, quantity in sorted(patches.extra_initial_items, key=lambda x: x[0].long_name)
+            for resource_info, quantity in patches.starting_items.items()
         },
         "elevators": {
             world_list.area_name(world_list.nodes_to_area(_find_node_with_teleporter(world_list, teleporter_id))):
@@ -198,10 +198,10 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
     starting_location = _area_name_to_area_location(world_list, game_modifications["starting_location"])
 
     # Initial items
-    extra_initial_items = tuple([
-        (find_resource_info_with_long_name(game.resource_database.item, resource_name), quantity)
+    starting_items = {
+        find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
         for resource_name, quantity in game_modifications["starting_items"].items()
-    ])
+    }
 
     # Elevators
     elevator_connection = {}
@@ -229,6 +229,6 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         elevator_connection=elevator_connection,  # Dict[int, AreaLocation]
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
         dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
-        extra_initial_items=extra_initial_items,  # ResourceGainTuple
+        starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
     )

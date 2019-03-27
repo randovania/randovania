@@ -1,3 +1,4 @@
+import dataclasses
 import multiprocessing.dummy
 from random import Random
 from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union, List
@@ -122,14 +123,9 @@ def _add_elevator_connections_to_patches(permalink: Permalink,
                                          patches: GamePatches) -> GamePatches:
     assert patches.elevator_connection == {}
     if permalink.layout_configuration.elevators == LayoutElevators.RANDOMIZED:
-        return GamePatches(
-            patches.pickup_assignment,
-            elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number),
-            patches.dock_connection,
-            patches.dock_weakness,
-            patches.extra_initial_items,
-            patches.starting_location,
-        )
+        return dataclasses.replace(
+            patches,
+            elevator_connection=elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number))
     else:
         return patches
 

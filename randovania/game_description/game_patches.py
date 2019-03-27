@@ -8,7 +8,7 @@ from randovania.game_description.dock import DockWeakness
 from randovania.game_description.node import DockConnection
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, ResourceGainTuple, \
-    ResourceGain
+    ResourceGain, CurrentResources
 
 
 @dataclass(frozen=True)
@@ -22,12 +22,12 @@ class GamePatches:
     elevator_connection: Dict[int, AreaLocation]
     dock_connection: Dict[Tuple[int, int], DockConnection]
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
-    extra_initial_items: ResourceGainTuple
+    starting_items: CurrentResources
     starting_location: AreaLocation
 
     @classmethod
     def with_game(cls, game: "GameDescription") -> "GamePatches":
-        return GamePatches({}, {}, {}, {}, (), game.starting_location)
+        return GamePatches({}, {}, {}, {}, {}, game.starting_location)
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupEntry]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -45,20 +45,12 @@ class GamePatches:
     def assign_starting_location(self, location: AreaLocation) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)
 
-    def assign_extra_initial_items(self, items: ResourceGain) -> "GamePatches":
-        current = {
-            resource: quantity
-            for resource, quantity in self.extra_initial_items
-        }
-        for resource, quantity in items:
+    def assign_extra_initial_items(self, new_resources: CurrentResources) -> "GamePatches":
+        current = copy.copy(self.starting_items)
+
+        for resource, quantity in new_resources.items():
             if resource.resource_type != ResourceType.ITEM:
                 raise ValueError("Only ITEM is supported as extra initial items, got {}".format(resource.resource_type))
+            current[resource] = current.get(resource, 0) + quantity
 
-            if resource in current:
-                current[resource] += quantity
-            else:
-                current[resource] = quantity
-
-        return dataclasses.replace(
-            self,
-            extra_initial_items=tuple((resource, quantity) for resource, quantity in current.items()))
+        return dataclasses.replace(self, starting_items=current)
