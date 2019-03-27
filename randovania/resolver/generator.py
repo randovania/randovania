@@ -207,10 +207,16 @@ def _run_filler(configuration: LayoutConfiguration,
     rng.shuffle(major_items)
     rng.shuffle(expansions)
 
+    major_configuration = configuration.major_items_configuration
+
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    filler_patches = retcon_playthrough_filler(logic, state, major_items, rng, status_update)
+    filler_patches = retcon_playthrough_filler(
+        logic, state, major_items, rng,
+        minimum_random_starting_items=major_configuration.minimum_random_starting_items,
+        maximum_random_starting_items=major_configuration.maximum_random_starting_items,
+        status_update=status_update)
 
     return filler_patches, major_items + expansions
 

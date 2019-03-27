@@ -79,6 +79,25 @@ class State:
             self.resource_database
         )
 
+    def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> "State":
+        resource_gain = list(pickup.resource_gain(self.resources))
+
+        new_patches = self.patches.assign_extra_initial_items({
+            resource: quantity
+            for resource, quantity in resource_gain
+        })
+
+        new_resources = copy.copy(self.resources)
+        add_resource_gain_to_current_resources(resource_gain, new_resources)
+
+        return State(
+            new_resources,
+            self.node,
+            new_patches,
+            self,
+            self.resource_database
+        )
+
 
 def add_pickup_to_state(state: State, pickup: PickupEntry):
     """
