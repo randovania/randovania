@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 from typing import Tuple, Iterator
 
+from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.item.item_category import ItemCategory
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
-DEFAULT_MAXIMUM_SHUFFLED = 11
+DEFAULT_MAXIMUM_SHUFFLED = (4, 10, 99)
 
 
 @dataclass(frozen=True)
@@ -38,23 +39,12 @@ class MajorItemState:
         # original location
         yield int(self.include_copy_in_original_location), 2
 
-        if item.item_category == ItemCategory.ENERGY_TANK:
-            # num shuffled
-            yield self.num_shuffled_pickups, ENERGY_TANK_MAXIMUM_COUNT
+        # num shuffled
+        yield from bitpacking.encode_int_with_limits(self.num_shuffled_pickups, DEFAULT_MAXIMUM_SHUFFLED)
 
-            # starting item
-            yield self.num_included_in_starting_items, ENERGY_TANK_MAXIMUM_COUNT
-
-        else:
-            # num shuffled
-            if self.num_shuffled_pickups > 2:
-                yield 3, 4
-                yield self.num_shuffled_pickups - 3, DEFAULT_MAXIMUM_SHUFFLED - 3
-            else:
-                yield self.num_shuffled_pickups, 4
-
-            # starting item
-            yield self.num_included_in_starting_items, 2
+        # starting item
+        yield self.num_included_in_starting_items, (
+            ENERGY_TANK_MAXIMUM_COUNT if item.item_category == ItemCategory.ENERGY_TANK else 2)
 
         # ammo index
         assert len(self.included_ammo) == len(item.ammo_index)
@@ -63,20 +53,14 @@ class MajorItemState:
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, item: MajorItem) -> "MajorItemState":
-        original = decoder.decode(2)[0]
+        original = decoder.decode_single(2)
 
-        if item.item_category == ItemCategory.ENERGY_TANK:
-            # num shuffled
-            # starting item
-            shuffled, starting = decoder.decode(16, 16)
-        else:
-            # num shuffled
-            shuffled = decoder.decode(4)[0]
-            if shuffled == 3:
-                shuffled = decoder.decode(8)[0] + 3
+        # num shuffled
+        shuffled = bitpacking.decode_int_with_limits(decoder, DEFAULT_MAXIMUM_SHUFFLED)
 
-            # starting item
-            starting = decoder.decode(2)[0]
+        # starting item
+        starting = decoder.decode_single(ENERGY_TANK_MAXIMUM_COUNT if item.item_category == ItemCategory.ENERGY_TANK
+                                         else 2)
 
         if item.ammo_index:
             included_ammo = decoder.decode(*[256 for _ in item.ammo_index])
