@@ -72,3 +72,36 @@ def test_decode_int_with_limits(limits_fixture):
     assert result == value
 
 
+@pytest.fixture(
+    params=[
+        (False, (0, 2)),
+        (True, (1, 2)),
+    ],
+    name="bool_fixture")
+def _bool_fixture(request):
+    return request.param[0], request.param[1]
+
+
+def test_encode_bool(bool_fixture):
+    # Setup
+    value, encoded = bool_fixture
+
+    # Run
+    result = list(bitpacking.encode_bool(value))
+
+    # Assert
+    assert result == [encoded]
+
+
+def test_decode_bool(bool_fixture):
+    # Setup
+    value, encoded = bool_fixture
+    decoder = MagicMock()
+    decoder.decode_single.return_value = encoded[0]
+
+    # Run
+    result = bitpacking.decode_bool(decoder)
+
+    # Assert
+    decoder.decode_single.assert_called_once_with(encoded[1])
+    assert result == value

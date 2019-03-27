@@ -160,6 +160,14 @@ def decode_int_with_limits(decoder: BitPackDecoder, limits: Tuple[int, ...]) -> 
     return value
 
 
+def encode_bool(value: bool) -> Iterator[Tuple[int, int]]:
+    yield int(value), 2
+
+
+def decode_bool(decoder: BitPackDecoder) -> bool:
+    return bool(decoder.decode_single(2))
+
+
 def _pack_encode_results(values: List[Tuple[int, int]]):
     f = "".join(
         "u{}".format(_bits_for_number(v))
