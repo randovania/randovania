@@ -54,6 +54,7 @@ setup(
         'requests',
         'networkx',
         'bitstruct',
+        'construct',
         'pytest',
         'pytest-cov',
         'pytest-qt',
