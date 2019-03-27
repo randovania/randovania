@@ -20,7 +20,7 @@ from randovania.gui.main_rules_ui import Ui_MainRules
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.ammo_state import AmmoState
-from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState
+from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.resolver.exceptions import InvalidConfiguration
 from randovania.resolver.item_pool.ammo import items_for_ammo
 
@@ -366,7 +366,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.energy_tank_starting_spinbox.setMaximum(ENERGY_TANK_MAXIMUM_COUNT)
         self.energy_tank_starting_spinbox.valueChanged.connect(self._on_update_starting_energy_tank)
         self.energy_tank_shuffled_spinbox = QSpinBox(category_box)
-        self.energy_tank_shuffled_spinbox.setMaximum(ENERGY_TANK_MAXIMUM_COUNT)
+        self.energy_tank_shuffled_spinbox.setMaximum(DEFAULT_MAXIMUM_SHUFFLED[-1])
         self.energy_tank_shuffled_spinbox.valueChanged.connect(self._on_update_shuffled_energy_tank)
 
         category_layout.addWidget(starting_label, 0, 0)
