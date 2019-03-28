@@ -10,9 +10,9 @@ from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QTool
 
 from randovania.game_description.default_database import default_prime2_item_database, default_prime2_resource_database
 from randovania.game_description.item.ammo import Ammo
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.item_configuration_popup import ItemConfigurationPopup

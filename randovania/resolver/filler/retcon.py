@@ -7,8 +7,8 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, PickupNode, Node
 from randovania.game_description.requirements import RequirementList
-from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceGain, \
-    ResourceInfo, CurrentResources
+from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceInfo, \
+    CurrentResources
 from randovania.resolver import debug
 from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \

@@ -7,8 +7,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness
 from randovania.game_description.node import DockConnection
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, ResourceGainTuple, \
-    ResourceGain, CurrentResources
+from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, CurrentResources
 
 
 @dataclass(frozen=True)
