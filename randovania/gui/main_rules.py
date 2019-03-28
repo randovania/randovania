@@ -85,6 +85,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._beam_ammo_item = item_database.ammo["Beam Ammo Expansion"]
 
         self._register_alternatives_events()
+        self._register_random_starting_events()
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
         self._create_energy_tank_box()
@@ -116,6 +117,10 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
         for item in [self._dark_ammo_item, self._light_ammo_item]:
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
+
+        # Random Starting Items
+        self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
+        self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_items)
 
         # Energy Tank
         energy_tank_state = major_configuration.items_state[self._energy_tank_item]
@@ -279,6 +284,22 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             })
 
             options.ammo_configuration = ammo_configuration
+
+    # Random Starting
+
+    def _register_random_starting_events(self):
+        self.minimum_starting_spinbox.valueChanged.connect(self._on_update_minimum_starting)
+        self.maximum_starting_spinbox.valueChanged.connect(self._on_update_maximum_starting)
+
+    def _on_update_minimum_starting(self, value: int):
+        with self._options as options:
+            options.major_items_configuration = dataclasses.replace(options.major_items_configuration,
+                                                                    minimum_random_starting_items=value)
+
+    def _on_update_maximum_starting(self, value: int):
+        with self._options as options:
+            options.major_items_configuration = dataclasses.replace(options.major_items_configuration,
+                                                                    maximum_random_starting_items=value)
 
     # Major Items
 

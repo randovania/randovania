@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Option to specify how many items Randovania will randomly place on your
+    starting inventory.
+
 -   Changed: The no-Boost return method in Dark Arena Tunnel is now Normal and above only.
 
 -   Changed: There can now be a total of 99 of any single Major Item, up from 9.
