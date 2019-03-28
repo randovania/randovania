@@ -7,12 +7,16 @@ from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.major_item_state import MajorItemState
 
+RANDOM_STARTING_ITEMS_LIMIT = 31
+
 
 @dataclasses.dataclass(frozen=True)
 class MajorItemsConfiguration(BitPackValue):
     items_state: Dict[MajorItem, MajorItemState]
     progressive_suit: bool = True
     progressive_grapple: bool = True
+    minimum_random_starting_items: int = 0
+    maximum_random_starting_items: int = 0
 
     @property
     def as_json(self) -> dict:
@@ -25,6 +29,8 @@ class MajorItemsConfiguration(BitPackValue):
             },
             "progressive_suit": self.progressive_suit,
             "progressive_grapple": self.progressive_grapple,
+            "minimum_random_starting_items": self.minimum_random_starting_items,
+            "maximum_random_starting_items": self.maximum_random_starting_items,
         }
 
     @classmethod
@@ -39,6 +45,8 @@ class MajorItemsConfiguration(BitPackValue):
             items_state=items_state,
             progressive_suit=value["progressive_suit"],
             progressive_grapple=value["progressive_grapple"],
+            minimum_random_starting_items=value["minimum_random_starting_items"],
+            maximum_random_starting_items=value["maximum_random_starting_items"],
         )
 
     def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
@@ -57,6 +65,9 @@ class MajorItemsConfiguration(BitPackValue):
 
         for index, item, state in result:
             yield from state.bit_pack_encode(item)
+
+        yield self.minimum_random_starting_items, RANDOM_STARTING_ITEMS_LIMIT
+        yield self.maximum_random_starting_items, RANDOM_STARTING_ITEMS_LIMIT
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "MajorItemsConfiguration":
@@ -80,9 +91,13 @@ class MajorItemsConfiguration(BitPackValue):
             else:
                 items_state[item] = default.items_state[item]
 
+        minimum, maximum = decoder.decode(RANDOM_STARTING_ITEMS_LIMIT, RANDOM_STARTING_ITEMS_LIMIT)
+
         return cls(items_state,
                    progressive_suit=bool(progressive_suit),
-                   progressive_grapple=bool(progressive_grapple))
+                   progressive_grapple=bool(progressive_grapple),
+                   minimum_random_starting_items=minimum,
+                   maximum_random_starting_items=maximum)
 
     def replace_state_for_item(self, item: MajorItem, state: MajorItemState) -> "MajorItemsConfiguration":
         return self.replace_states({

@@ -3,6 +3,7 @@ from typing import NamedTuple, List
 
 from randovania.game_description.requirements import RequirementSet
 
+
 @unique
 class DockType(Enum):
     DOOR = 0

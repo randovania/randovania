@@ -2,7 +2,7 @@ import dataclasses
 import hashlib
 import math
 from enum import Enum
-from typing import Iterator, Tuple, TypeVar, Any, List
+from typing import Iterator, Tuple, TypeVar, List
 
 import bitstruct
 
@@ -158,6 +158,14 @@ def decode_int_with_limits(decoder: BitPackDecoder, limits: Tuple[int, ...]) -> 
             break
 
     return value
+
+
+def encode_bool(value: bool) -> Iterator[Tuple[int, int]]:
+    yield int(value), 2
+
+
+def decode_bool(decoder: BitPackDecoder) -> bool:
+    return bool(decoder.decode_single(2))
 
 
 def _pack_encode_results(values: List[Tuple[int, int]]):

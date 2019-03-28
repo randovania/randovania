@@ -7,8 +7,8 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, PickupNode, Node
 from randovania.game_description.requirements import RequirementList
-from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceGain, \
-    ResourceInfo, CurrentResources
+from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceInfo, \
+    CurrentResources
 from randovania.resolver import debug
 from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
@@ -63,6 +63,8 @@ def retcon_playthrough_filler(logic: Logic,
                               initial_state: State,
                               pickups_left: List[PickupEntry],
                               rng: Random,
+                              minimum_random_starting_items: int,
+                              maximum_random_starting_items: int,
                               status_update: Callable[[str], None],
                               ) -> GamePatches:
     debug.debug_print("Major items: {}".format([item.name for item in pickups_left]))
@@ -71,6 +73,7 @@ def retcon_playthrough_filler(logic: Logic,
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
 
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
+    num_random_starting_items_placed = 0
 
     while pickups_left:
         current_uncollected = UncollectedState.from_reach(reach)
@@ -100,31 +103,36 @@ def retcon_playthrough_filler(logic: Logic,
         if isinstance(action, PickupEntry):
             assert action in pickups_left
 
-            pickup_index_weight = {
-                pickup_index: 1 / (min(pickup_index_seen_count[pickup_index], 10) ** 2)
-                for pickup_index in current_uncollected.indices
-            }
-            assert pickup_index_weight, "Pickups should only be added to the actions dict " \
-                                        "when there are unassigned pickups"
+            if num_random_starting_items_placed >= minimum_random_starting_items and current_uncollected.indices:
+                pickup_index_weight = {
+                    pickup_index: 1 / (min(pickup_index_seen_count[pickup_index], 10) ** 2)
+                    for pickup_index in current_uncollected.indices
+                }
+                assert pickup_index_weight, "Pickups should only be added to the actions dict " \
+                                            "when there are unassigned pickups"
 
-            # print(">>>>>>>>>>>>>")
-            # world_list = logic.game.world_list
-            # for pickup_index in sorted(current_uncollected.indices, key=lambda x: pickup_index_weight[x]):
-            #     print("{1:.6f} {2:5}: {0}".format(
-            #         world_list.node_name(find_pickup_node_with_index(pickup_index, world_list.all_nodes)),
-            #         pickup_index_weight[pickup_index],
-            #         pickup_index_seen_count[pickup_index]))
+                pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
 
-            pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
+                next_state = reach.state.assign_pickup_to_index(pickup_index, action)
+
+                print_retcon_place_pickup(action, logic, pickup_index)
+
+            else:
+                if num_random_starting_items_placed > maximum_random_starting_items:
+                    raise RuntimeError("Attempting to place more extra starting items than the allowed.")
+
+                if debug.debug_level() > 1:
+                    print(f"Adding {action.name} as a starting item")
+
+                num_random_starting_items_placed += 1
+                next_state = reach.state.assign_pickup_to_starting_items(action)
 
             # TODO: this item is potentially dangerous and we should remove the invalidated paths
-            next_state = reach.state.assign_pickup_to_index(pickup_index, action)
             pickups_left.remove(action)
 
             last_message = "Placed {} items so far, {} left.".format(
                 len(next_state.patches.pickup_assignment), len(pickups_left) - 1)
             status_update(last_message)
-            print_retcon_place_pickup(action, logic, pickup_index)
 
             reach.advance_to(next_state)
 
@@ -217,14 +225,13 @@ def _calculate_potential_actions(reach: GeneratorReach,
         options_considered += 1
         status_update("Checked {} of {} options.".format(options_considered, total_options))
 
-    if current_uncollected.indices:
-        total_options += len(progression_pickups)
-        for progression in progression_pickups:
-            actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
-                                                                                                   progression),
-                                                                  current_uncollected,
-                                                                  progression.name) + progression.probability_offset
-            update_for_option()
+    total_options += len(progression_pickups)
+    for progression in progression_pickups:
+        actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
+                                                                                               progression),
+                                                              current_uncollected,
+                                                              progression.name) + progression.probability_offset
+        update_for_option()
 
     for resource in uncollected_resource_nodes:
         actions_weights[resource] = _calculate_weights_for(

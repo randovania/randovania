@@ -9,8 +9,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupEntry
+from randovania.game_description.resources import PickupEntry, add_resource_gain_to_current_resources
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
@@ -19,8 +18,7 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.item_pool import pool_creator
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State, add_resource_gain_to_current_resources, \
-    add_pickup_to_state
+from randovania.resolver.state import State, add_pickup_to_state
 
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
@@ -63,7 +61,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             layout_configuration.trick_level.value,
             ", ".join(
                 resource.short_name
-                for resource, _ in pool_patches.extra_initial_items
+                for resource in pool_patches.starting_items.keys()
             )
         ))
 

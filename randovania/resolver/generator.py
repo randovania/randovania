@@ -1,3 +1,4 @@
+import dataclasses
 import multiprocessing.dummy
 from random import Random
 from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union, List
@@ -122,14 +123,9 @@ def _add_elevator_connections_to_patches(permalink: Permalink,
                                          patches: GamePatches) -> GamePatches:
     assert patches.elevator_connection == {}
     if permalink.layout_configuration.elevators == LayoutElevators.RANDOMIZED:
-        return GamePatches(
-            patches.pickup_assignment,
-            elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number),
-            patches.dock_connection,
-            patches.dock_weakness,
-            patches.extra_initial_items,
-            patches.starting_location,
-        )
+        return dataclasses.replace(
+            patches,
+            elevator_connection=elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number))
     else:
         return patches
 
@@ -211,10 +207,16 @@ def _run_filler(configuration: LayoutConfiguration,
     rng.shuffle(major_items)
     rng.shuffle(expansions)
 
+    major_configuration = configuration.major_items_configuration
+
     logic, state = logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
-    filler_patches = retcon_playthrough_filler(logic, state, major_items, rng, status_update)
+    filler_patches = retcon_playthrough_filler(
+        logic, state, major_items, rng,
+        minimum_random_starting_items=major_configuration.minimum_random_starting_items,
+        maximum_random_starting_items=major_configuration.maximum_random_starting_items,
+        status_update=status_update)
 
     return filler_patches, major_items + expansions
 
