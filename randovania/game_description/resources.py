@@ -211,3 +211,19 @@ def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResource
         resource: a.get(resource, 0) + b.get(resource, 0)
         for resource in a.keys() | b.keys()
     }
+
+
+def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources):
+    """
+    Adds all resources from the given gain to the given CurrentResources
+    :param resource_gain:
+    :param resources:
+    :return:
+    """
+    for resource, quantity in resource_gain:
+        resources[resource] = resources.get(resource, 0) + quantity
+
+
+def add_resources_into_another(target: CurrentResources, source: CurrentResources) -> None:
+    resource_gain: ResourceGain = source.items()
+    add_resource_gain_to_current_resources(resource_gain, target)

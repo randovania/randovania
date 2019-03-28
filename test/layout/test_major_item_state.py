@@ -9,16 +9,16 @@ from randovania.layout.major_item_state import MajorItemState
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x00', "json": {}},
-        {"encoded": b'\x10', "json": {"num_shuffled_pickups": 1}},
-        {"encoded": b' ', "json": {"num_shuffled_pickups": 2}},
-        {"encoded": b'0', "json": {"num_shuffled_pickups": 3}},
-        {"encoded": b'Md', "json": {"num_shuffled_pickups": 99}},
+        {"encoded": b'\x04', "json": {}},
+        {"encoded": b'\x14', "json": {"num_shuffled_pickups": 1}},
+        {"encoded": b'$', "json": {"num_shuffled_pickups": 2}},
+        {"encoded": b'4', "json": {"num_shuffled_pickups": 3}},
+        {"encoded": b'Me', "json": {"num_shuffled_pickups": 99}},
 
-        {"encoded": b'E@', "category": "energy_tank", "json": {"num_shuffled_pickups": 6,
+        {"encoded": b'EP', "category": "energy_tank", "json": {"num_shuffled_pickups": 6,
                                                                "num_included_in_starting_items": 10}},
 
-        {"encoded": b'\x076@', "ammo_index": (10, 20), "json": {"included_ammo": [230, 200]}},
+        {"encoded": b'\x076D', "ammo_index": (10, 20), "json": {"included_ammo": [230, 200]}},
     ],
     name="state_with_data")
 def _state_with_data(request):

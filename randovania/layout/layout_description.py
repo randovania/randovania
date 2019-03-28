@@ -6,8 +6,8 @@ from distutils.version import StrictVersion
 from pathlib import Path
 from typing import NamedTuple, Tuple, List
 
-from randovania.layout import game_patches_serializer
 from randovania.game_description.game_patches import GamePatches
+from randovania.layout import game_patches_serializer
 from randovania.layout.permalink import Permalink
 
 

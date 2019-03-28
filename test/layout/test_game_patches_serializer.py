@@ -46,9 +46,9 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
 
     if request.param.get("starting_item"):
         item_name = request.param.get("starting_item")
-        patches = patches.assign_extra_initial_items([
-            (find_resource_info_with_long_name(game.resource_database.item, item_name), 1),
-        ])
+        patches = patches.assign_extra_initial_items({
+            find_resource_info_with_long_name(game.resource_database.item, item_name): 1,
+        })
         data["starting_items"][item_name] = 1
 
     if request.param.get("elevator"):

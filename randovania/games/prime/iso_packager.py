@@ -7,7 +7,6 @@ try:
 except ImportError:
     nod = None
 
-from randovania.games.prime import claris_randomizer
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 

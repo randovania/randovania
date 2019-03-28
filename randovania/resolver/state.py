@@ -4,7 +4,7 @@ from typing import Optional, Tuple, Iterator
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.resources import ResourceInfo, CurrentResources, ResourceDatabase, PickupIndex, \
-    ResourceGain, PickupEntry
+    PickupEntry, add_resource_gain_to_current_resources
 
 
 class State:
@@ -79,17 +79,24 @@ class State:
             self.resource_database
         )
 
+    def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> "State":
+        resource_gain = list(pickup.resource_gain(self.resources))
 
-def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources):
-    """
-    Adds all resources from the given gain to the given CurrentResources
-    :param resource_gain:
-    :param resources:
-    :return:
-    """
-    for resource, quantity in resource_gain:
-        resources[resource] = resources.get(resource, 0)
-        resources[resource] += quantity
+        new_patches = self.patches.assign_extra_initial_items({
+            resource: quantity
+            for resource, quantity in resource_gain
+        })
+
+        new_resources = copy.copy(self.resources)
+        add_resource_gain_to_current_resources(resource_gain, new_resources)
+
+        return State(
+            new_resources,
+            self.node,
+            new_patches,
+            self,
+            self.resource_database
+        )
 
 
 def add_pickup_to_state(state: State, pickup: PickupEntry):
