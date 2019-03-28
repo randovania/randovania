@@ -3,8 +3,8 @@ from typing import Tuple, Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.item.major_item import MajorItem
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
 DEFAULT_MAXIMUM_SHUFFLED = (4, 10, 99)

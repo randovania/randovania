@@ -1,6 +1,6 @@
 from typing import List
 
-from randovania.game_description.resources import PickupEntry, PickupAssignment, ResourceQuantity, PickupIndex, \
+from randovania.game_description.resources import PickupEntry, PickupAssignment, PickupIndex, \
     ResourceDatabase, CurrentResources, add_resource_gain_to_current_resources
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.resolver.exceptions import InvalidConfiguration

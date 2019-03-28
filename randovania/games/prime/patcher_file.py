@@ -1,4 +1,3 @@
-import copy
 from random import Random
 from typing import Dict, List, Optional
 
@@ -10,7 +9,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import SimpleResourceInfo, ResourceGain, ResourceDatabase, PickupIndex, \
+from randovania.game_description.resources import ResourceGain, ResourceDatabase, PickupIndex, \
     PickupEntry, ResourceGainTuple
 from randovania.game_description.world_list import WorldList
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
