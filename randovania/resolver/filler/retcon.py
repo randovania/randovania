@@ -121,6 +121,9 @@ def retcon_playthrough_filler(logic: Logic,
                 if num_random_starting_items_placed > maximum_random_starting_items:
                     raise RuntimeError("Attempting to place more extra starting items than the allowed.")
 
+                if debug.debug_level() > 1:
+                    print(f"Adding {action.name} as a starting item")
+
                 num_random_starting_items_placed += 1
                 next_state = reach.state.assign_pickup_to_starting_items(action)
 
@@ -222,14 +225,13 @@ def _calculate_potential_actions(reach: GeneratorReach,
         options_considered += 1
         status_update("Checked {} of {} options.".format(options_considered, total_options))
 
-    if current_uncollected.indices:
-        total_options += len(progression_pickups)
-        for progression in progression_pickups:
-            actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
-                                                                                                   progression),
-                                                                  current_uncollected,
-                                                                  progression.name) + progression.probability_offset
-            update_for_option()
+    total_options += len(progression_pickups)
+    for progression in progression_pickups:
+        actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
+                                                                                               progression),
+                                                              current_uncollected,
+                                                              progression.name) + progression.probability_offset
+        update_for_option()
 
     for resource in uncollected_resource_nodes:
         actions_weights[resource] = _calculate_weights_for(
