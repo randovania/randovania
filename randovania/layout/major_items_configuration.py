@@ -8,7 +8,7 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.major_item_state import MajorItemState
 
 
-RANDOM_STARTING_ITEMS_LIMIT = 32
+RANDOM_STARTING_ITEMS_LIMIT = 31
 
 
 @dataclasses.dataclass(frozen=True)
