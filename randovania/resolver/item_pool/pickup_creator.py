@@ -1,4 +1,4 @@
-from typing import Iterator, Optional, Tuple
+from typing import Optional, Tuple, List
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
@@ -107,28 +107,41 @@ def create_major_item(item: MajorItem,
 
 
 def create_ammo_expansion(ammo: Ammo,
-                          ammo_count: Iterator[int],
+                          ammo_count: List[int],
+                          requires_major_item: bool,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:
     """
     Creates a Pickup for an expansion of the given ammo.
     :param ammo:
     :param ammo_count:
+    :param requires_major_item:
     :param resource_database:
     :return:
     """
+    percentage = _get_item(resource_database, _ITEM_PERCENTAGE)
 
-    resources = [
-        (_get_item(resource_database, item), count)
-        for item, count in zip(ammo.items, ammo_count)
-    ]
-    resources.append((_get_item(resource_database, _ITEM_PERCENTAGE), 1))
+    resources = [(_get_item(resource_database, item), count)
+                 for item, count in zip(ammo.items, ammo_count)]
+    resources.append((percentage, 1))
+
+    if requires_major_item:
+        temporary_resources = [(_get_item(resource_database, item), count)
+                               for item, count in zip(ammo.temporaries, ammo_count)]
+        temporary_resources.append((percentage, 1))
+
+        conditional_resources = (
+            ConditionalResources(None, None, tuple(temporary_resources)),
+            ConditionalResources(None, _get_item(resource_database, ammo.items[0]), tuple(resources)),
+        )
+    else:
+        conditional_resources = (
+            ConditionalResources(None, None, tuple(resources)),
+        )
 
     return PickupEntry(
         name=ammo.name,
-        resources=(
-            ConditionalResources(None, None, tuple(resources)),
-        ),
+        resources=conditional_resources,
         model_index=ammo.models[0],  # TODO: use a random model
         item_category=ItemCategory.EXPANSION,
     )

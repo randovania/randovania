@@ -35,7 +35,7 @@ def add_ammo(resource_database: ResourceDatabase,
                                          ammo_configuration.maximum_ammo)
 
         for ammo_quantity in ammo_per_pickup:
-            yield create_ammo_expansion(ammo, ammo_quantity, resource_database)
+            yield create_ammo_expansion(ammo, ammo_quantity, state.requires_major_item, resource_database)
 
 
 def items_for_ammo(ammo: Ammo,
