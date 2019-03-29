@@ -84,11 +84,20 @@ class ConditionalResources:
 
 
 @dataclass(frozen=True)
+class ResourceConversion:
+    source: SimpleResourceInfo
+    target: SimpleResourceInfo
+    clear_source: bool = True
+    overwrite_target: bool = False
+
+
+@dataclass(frozen=True)
 class PickupEntry:
     name: str
     model_index: int
     item_category: ItemCategory
     resources: Tuple[ConditionalResources, ...]
+    convert_resources: Tuple[ResourceConversion, ...] = tuple()
     probability_offset: int = 0
 
     def __post_init__(self):
@@ -109,6 +118,11 @@ class PickupEntry:
                 if conditional.item is None:
                     raise ValueError(f"Resource at {i} should have a condition")
 
+        for i, conversion in enumerate(self.convert_resources):
+            if not conversion.clear_source or conversion.overwrite_target:
+                raise ValueError(f"clear_source and overwrite_target should be True and False, "
+                                 f"got {conversion.clear_source} and {conversion.overwrite_target} for index {i}")
+
     def __hash__(self):
         return hash(self.name)
 
@@ -126,6 +140,11 @@ class PickupEntry:
 
         assert last_resource_gain is not None
         yield from last_resource_gain
+
+        for conversion in self.convert_resources:
+            quantity = current_resources.get(conversion.source, 0)
+            yield conversion.source, -quantity
+            yield conversion.target, quantity
 
     def __str__(self):
         return "Pickup {}".format(self.name)
