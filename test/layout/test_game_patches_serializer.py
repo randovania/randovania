@@ -22,7 +22,7 @@ from randovania.resolver.item_pool import pickup_creator
         {},
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
-        {"pickup": ['HUhMANYC', "Screw Attack"]},
+        {"pickup": ['HUhMANYCAA==', "Screw Attack"]},
     ],
     name="patches_with_data")
 def _patches_with_data(request, echoes_game_data, echoes_item_database):
