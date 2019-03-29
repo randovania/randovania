@@ -11,10 +11,11 @@ class MajorItem:
     item_category: ItemCategory
     model_index: int
     progression: Tuple[int, ...]
-    ammo_index: Tuple[int, ...]
-    required: bool
-    original_index: Optional[PickupIndex]
-    probability_offset: int
+    ammo_index: Tuple[int, ...] = tuple()
+    converts_indices: Tuple[int, ...] = tuple()
+    required: bool = False
+    original_index: Optional[PickupIndex] = None
+    probability_offset: int = 0
 
     @classmethod
     def from_json(cls, name: str, value: dict) -> "MajorItem":
@@ -24,6 +25,7 @@ class MajorItem:
             model_index=value["model_index"],
             progression=tuple(value["progression"]),
             ammo_index=tuple(value.get("ammo", [])),
+            converts_indices=tuple(value.get("converts_indices", [])),
             required=value.get("required", False),
             original_index=PickupIndex(value["original_index"]) if "original_index" in value else None,
             probability_offset=value["probability_offset"],
@@ -36,6 +38,7 @@ class MajorItem:
             "model_index": self.model_index,
             "progression": list(self.progression),
             "ammo": list(self.ammo_index),
+            "converts_indices": list(self.converts_indices),
             "required": self.required,
             "probability_offset": self.probability_offset,
         }
