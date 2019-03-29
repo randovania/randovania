@@ -5,7 +5,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources, \
-    ResourceQuantity, SimpleResourceInfo
+    ResourceQuantity, SimpleResourceInfo, ResourceConversion
 from randovania.layout.major_item_state import MajorItemState
 
 _ITEM_PERCENTAGE = 47
@@ -84,12 +84,25 @@ def create_major_item(item: MajorItem,
             ConditionalResources(name=item.name, item=None, resources=_create_resources(None)),
         )
 
+    if item.converts_indices:
+        assert len(item.converts_indices) == len(item.ammo_index)
+        convert_resources = tuple(
+            ResourceConversion(
+                source=_get_item(resource_database, source),
+                target=_get_item(resource_database, target),
+            )
+            for source, target in zip(item.converts_indices, item.ammo_index)
+        )
+    else:
+        convert_resources = tuple()
+
     return PickupEntry(
         name=item.name,
         resources=conditional_resources,
         model_index=item.model_index,
         item_category=item.item_category,
         probability_offset=item.probability_offset,
+        convert_resources=convert_resources,
     )
 
 
