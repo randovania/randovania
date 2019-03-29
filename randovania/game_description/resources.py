@@ -91,6 +91,11 @@ class ResourceConversion:
     overwrite_target: bool = False
 
 
+MAXIMUM_PICKUP_CONDITIONAL_RESOURCES = 3
+MAXIMUM_PICKUP_RESOURCES = 8
+MAXIMUM_PICKUP_CONVERSION = 1
+
+
 @dataclass(frozen=True)
 class PickupEntry:
     name: str
@@ -107,16 +112,27 @@ class PickupEntry:
         if len(self.resources) < 1:
             raise ValueError("resources should have at least 1 value")
 
+        if len(self.resources) > MAXIMUM_PICKUP_CONDITIONAL_RESOURCES:
+            raise ValueError(f"resources should have at most {MAXIMUM_PICKUP_CONDITIONAL_RESOURCES} "
+                             f"values, got {len(self.resources)}")
+
         for i, conditional in enumerate(self.resources):
             if not isinstance(conditional, ConditionalResources):
-                raise ValueError(f"Resource at {i} should be a ConditionalResources")
+                raise ValueError(f"Conditional at {i} should be a ConditionalResources")
+
+            if len(conditional.resources) > MAXIMUM_PICKUP_RESOURCES:
+                raise ValueError(f"Conditional at {i} should have at most {MAXIMUM_PICKUP_RESOURCES} "
+                                 f"resources, got {len(conditional.resources)}")
 
             if i == 0:
                 if conditional.item is not None:
-                    raise ValueError("Resource at 0 should not have a condition")
+                    raise ValueError("Conditional at 0 should not have a condition")
             else:
                 if conditional.item is None:
-                    raise ValueError(f"Resource at {i} should have a condition")
+                    raise ValueError(f"Conditional at {i} should have a condition")
+
+        if len(self.convert_resources) > MAXIMUM_PICKUP_CONVERSION:
+            raise ValueError(f"convert_resources should have at most {MAXIMUM_PICKUP_CONVERSION} value")
 
         for i, conversion in enumerate(self.convert_resources):
             if not conversion.clear_source or conversion.overwrite_target:

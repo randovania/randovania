@@ -10,7 +10,8 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode, TeleporterNode, Node
 from randovania.game_description.resources import PickupAssignment, find_resource_info_with_long_name, PickupEntry, \
-    ResourceDatabase, ConditionalResources
+    ResourceDatabase, ConditionalResources, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES, MAXIMUM_PICKUP_RESOURCES, \
+    MAXIMUM_PICKUP_CONVERSION, ResourceConversion
 from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_configuration import LayoutConfiguration
 
@@ -29,23 +30,28 @@ class BitPackPickupEntry:
         yield self.value.model_index, 255
         yield from self.value.item_category.bit_pack_encode()
         yield int(any(cond.name is not None for cond in self.value.resources)), 2
-        yield len(self.value.resources) - 1, 8
+        yield len(self.value.resources) - 1, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES
 
         for i, conditional in enumerate(self.value.resources):
             if i > 0:
                 yield from bitpacking.pack_array_element(conditional.item, items)
 
-            yield len(conditional.resources), 8
+            yield len(conditional.resources), MAXIMUM_PICKUP_RESOURCES + 1
             for resource, quantity in conditional.resources:
                 yield from bitpacking.pack_array_element(resource, items)
                 yield quantity, 255
+
+        yield len(self.value.convert_resources), MAXIMUM_PICKUP_CONVERSION + 1
+        for conversion in self.value.convert_resources:
+            yield from bitpacking.pack_array_element(conversion.source, items)
+            yield from bitpacking.pack_array_element(conversion.target, items)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, name: str, database: ResourceDatabase) -> PickupEntry:
         model_index = decoder.decode_single(255)
         item_category = ItemCategory.bit_pack_unpack(decoder)
         has_name = bool(decoder.decode_single(2))
-        num_conditional = decoder.decode_single(8) + 1
+        num_conditional = decoder.decode_single(MAXIMUM_PICKUP_CONDITIONAL_RESOURCES) + 1
 
         conditional_resources = []
         for i in range(num_conditional):
@@ -56,7 +62,7 @@ class BitPackPickupEntry:
                 item_dependency = None
 
             resources = []
-            for _ in range(decoder.decode_single(8)):
+            for _ in range(decoder.decode_single(MAXIMUM_PICKUP_RESOURCES + 1)):
                 resource = decoder.decode_element(database.item)
                 quantity = decoder.decode_single(255)
                 resources.append((resource, quantity))
@@ -70,11 +76,19 @@ class BitPackPickupEntry:
                 resources=tuple(resources),
             ))
 
+        num_convert = decoder.decode_single(MAXIMUM_PICKUP_CONVERSION + 1)
+        convert_resources = []
+        for i in range(num_convert):
+            source = decoder.decode_element(database.item)
+            target = decoder.decode_element(database.item)
+            convert_resources.append(ResourceConversion(source, target))
+
         return PickupEntry(
             name=name,
             model_index=model_index,
             item_category=item_category,
-            resources=tuple(conditional_resources)
+            resources=tuple(conditional_resources),
+            convert_resources=tuple(convert_resources),
         )
 
 
