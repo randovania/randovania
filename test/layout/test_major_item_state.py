@@ -22,11 +22,6 @@ from randovania.layout.major_item_state import MajorItemState
     ],
     name="state_with_data")
 def _state_with_data(request):
-    encoded = request.param["json"]
-    for key, value in MajorItemState().as_json.items():
-        if key not in encoded:
-            encoded[key] = value
-
     item = MajorItem(
         name="Item Name",
         item_category=ItemCategory(request.param.get("category", "visor")),
@@ -64,3 +59,11 @@ def test_encode(state_with_data):
 
     # Assert
     assert result == expected
+
+
+def test_blank_as_json():
+    assert MajorItemState().as_json == {}
+
+
+def test_blank_from_json():
+    assert MajorItemState.from_json({}) == MajorItemState()

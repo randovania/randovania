@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+import dataclasses
 from typing import Tuple, Iterator
 
 from randovania.bitpacking import bitpacking
@@ -10,7 +10,7 @@ ENERGY_TANK_MAXIMUM_COUNT = 16
 DEFAULT_MAXIMUM_SHUFFLED = (4, 10, 99)
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class MajorItemState:
     include_copy_in_original_location: bool = False
     num_shuffled_pickups: int = 0
@@ -20,23 +20,30 @@ class MajorItemState:
 
     @property
     def as_json(self) -> dict:
-        return {
-            "include_copy_in_original_location": self.include_copy_in_original_location,
-            "num_shuffled_pickups": self.num_shuffled_pickups,
-            "num_included_in_starting_items": self.num_included_in_starting_items,
-            "included_ammo": list(self.included_ammo),
-            "allowed_as_random_starting_item": self.allowed_as_random_starting_item,
-        }
+        result = {}
+        
+        for field in dataclasses.fields(self):
+            value = getattr(self, field.name)
+            if value != field.default:
+                result[field.name] = value
+
+        if "included_ammo" in result:
+            result["included_ammo"] = list(result["included_ammo"])
+
+        return result
 
     @classmethod
     def from_json(cls, value: dict) -> "MajorItemState":
-        return cls(
-            include_copy_in_original_location=value["include_copy_in_original_location"],
-            num_shuffled_pickups=value["num_shuffled_pickups"],
-            num_included_in_starting_items=value["num_included_in_starting_items"],
-            included_ammo=tuple(value["included_ammo"]),
-            allowed_as_random_starting_item=value["allowed_as_random_starting_item"],
-        )
+        kwargs = {}
+
+        for field in dataclasses.fields(cls):
+            if field.name in value:
+                kwargs[field.name] = value[field.name]
+
+        if "included_ammo" in kwargs:
+            kwargs["included_ammo"] = tuple(kwargs["included_ammo"])
+
+        return cls(**kwargs)
 
     def bit_pack_encode(self, item: MajorItem) -> Iterator[Tuple[int, int]]:
         # original location
