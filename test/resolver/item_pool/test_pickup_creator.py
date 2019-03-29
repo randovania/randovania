@@ -5,21 +5,21 @@ import randovania.resolver.item_pool.pickup_creator
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupEntry, ConditionalResources
+from randovania.game_description.resources import PickupEntry, ConditionalResources, ResourceConversion
 from randovania.layout.major_item_state import MajorItemState
 
 
-@pytest.mark.parametrize(["percentage"], [
-    (False,),
-    (True,),
-])
-def test_create_pickup_for(percentage: bool, echoes_resource_database):
+@pytest.mark.parametrize("percentage", [False, True])
+@pytest.mark.parametrize("has_convert", [False, True])
+def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_database):
     # Setup
     item_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 10)
     item_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15)
     item_c = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 18)
     ammo_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 40)
     ammo_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 42)
+    temporary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
+    temporary_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 72)
     percentage_item = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 47)
 
     major_item = MajorItem(
@@ -28,6 +28,7 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
         model_index=1337,
         progression=(10, 15, 18),
         ammo_index=(40, 42),
+        converts_indices=(71, 72) if has_convert else (),
         required=False,
         original_index=None,
         probability_offset=5,
@@ -79,6 +80,10 @@ def test_create_pickup_for(percentage: bool, echoes_resource_database):
                 resources=_create_resources(item_c),
             ),
         ),
+        convert_resources=(
+            ResourceConversion(source=temporary_a, target=ammo_a),
+            ResourceConversion(source=temporary_b, target=ammo_b),
+        ) if has_convert else (),
         item_category=ItemCategory.MORPH_BALL,
         probability_offset=5,
     )
