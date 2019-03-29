@@ -97,6 +97,7 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
 def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoes_resource_database):
     # Setup
     missile = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 44)
+    temporary = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
     percentage_item = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 47)
 
     state = MajorItemState(
@@ -125,6 +126,9 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
                     (percentage_item, 1),
                 )
             ),
+        ),
+        convert_resources=(
+            ResourceConversion(source=temporary, target=missile),
         ),
         model_index=24,
         item_category=ItemCategory.MISSILE,
