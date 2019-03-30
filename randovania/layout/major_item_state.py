@@ -21,7 +21,7 @@ class MajorItemState:
     @property
     def as_json(self) -> dict:
         result = {}
-        
+
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
             if value != field.default:
