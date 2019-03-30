@@ -1,13 +1,15 @@
-from dataclasses import dataclass
+import dataclasses
 from typing import Iterator, Tuple
 
+from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class AmmoState(BitPackValue):
     variance: int = 0
     pickup_count: int = 0
+    requires_major_item: bool = False
 
     @classmethod
     def maximum_pickup_count(cls) -> int:
@@ -15,25 +17,36 @@ class AmmoState(BitPackValue):
 
     def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         yield self.pickup_count, AmmoState.maximum_pickup_count()
+        yield from bitpacking.encode_bool(self.requires_major_item)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "AmmoState":
         pickup_count = decoder.decode_single(cls.maximum_pickup_count())
+        requires_major_item = bitpacking.decode_bool(decoder)
+
         return cls(
             variance=0,
             pickup_count=pickup_count,
+            requires_major_item=requires_major_item,
         )
 
     @property
     def as_json(self) -> dict:
-        return {
-            "variance": self.variance,
-            "pickup_count": self.pickup_count,
-        }
+        result = {}
+
+        for field in dataclasses.fields(self):
+            value = getattr(self, field.name)
+            if value != field.default:
+                result[field.name] = value
+
+        return result
 
     @classmethod
     def from_json(cls, value: dict) -> "AmmoState":
-        return cls(
-            variance=value["variance"],
-            pickup_count=value["pickup_count"],
-        )
+        kwargs = {}
+
+        for field in dataclasses.fields(cls):
+            if field.name in value:
+                kwargs[field.name] = value[field.name]
+
+        return cls(**kwargs)

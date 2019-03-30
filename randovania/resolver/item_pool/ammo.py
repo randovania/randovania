@@ -34,13 +34,8 @@ def add_ammo(resource_database: ResourceDatabase,
                                          previous_pickup_for_item,
                                          ammo_configuration.maximum_ammo)
 
-        # TODO: we can just iterate over ammo_per_pickup
-        for i in range(state.pickup_count):
-            yield create_ammo_expansion(
-                ammo,
-                ammo_per_pickup[i],
-                resource_database
-            )
+        for ammo_quantity in ammo_per_pickup:
+            yield create_ammo_expansion(ammo, ammo_quantity, state.requires_major_item, resource_database)
 
 
 def items_for_ammo(ammo: Ammo,
