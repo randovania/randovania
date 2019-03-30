@@ -69,7 +69,38 @@ class PickupIndex:
         return self._index
 
 
-ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex]
+class TranslatorGate:
+    _index: int
+
+    @property
+    def resource_type(self) -> ResourceType:
+        return ResourceType.GATE_INDEX
+
+    @property
+    def long_name(self) -> str:
+        return "PickupIndex {}".format(self._index)
+
+    def __init__(self, index: int):
+        self._index = index
+
+    def __lt__(self, other: "TranslatorGate") -> bool:
+        return self._index < other._index
+
+    def __repr__(self):
+        return self.long_name
+
+    def __hash__(self):
+        return self._index
+
+    def __eq__(self, other):
+        return isinstance(other, TranslatorGate) and other._index == self._index
+
+    @property
+    def index(self) -> int:
+        return self._index
+
+
+ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex, TranslatorGate]
 ResourceQuantity = Tuple[ResourceInfo, int]
 ResourceGainTuple = Tuple[ResourceQuantity, ...]
 ResourceGain = Iterator[ResourceQuantity]
@@ -240,6 +271,7 @@ class ResourceDatabase(NamedTuple):
 
 
 PickupAssignment = Dict[PickupIndex, PickupEntry]
+GateAssignment = Dict[TranslatorGate, SimpleResourceInfo]
 
 
 def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources):

@@ -12,6 +12,7 @@ class ResourceType(Enum):
     MISC = 5
     DIFFICULTY = 6
     PICKUP_INDEX = 7
+    GATE_INDEX = 8
 
     @property
     def short_name(self) -> Optional[str]:

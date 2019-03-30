@@ -243,6 +243,7 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         elevator_connection=elevator_connection,  # Dict[int, AreaLocation]
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
         dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
+        translator_gates={},
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
     )
