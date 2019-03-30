@@ -1,11 +1,11 @@
-from typing import Iterator, Optional, Tuple
+from typing import Optional, Tuple, List
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources, \
-    ResourceQuantity, SimpleResourceInfo
+    ResourceQuantity, SimpleResourceInfo, ResourceConversion
 from randovania.layout.major_item_state import MajorItemState
 
 _ITEM_PERCENTAGE = 47
@@ -84,38 +84,64 @@ def create_major_item(item: MajorItem,
             ConditionalResources(name=item.name, item=None, resources=_create_resources(None)),
         )
 
+    if item.converts_indices:
+        assert len(item.converts_indices) == len(item.ammo_index)
+        convert_resources = tuple(
+            ResourceConversion(
+                source=_get_item(resource_database, source),
+                target=_get_item(resource_database, target),
+            )
+            for source, target in zip(item.converts_indices, item.ammo_index)
+        )
+    else:
+        convert_resources = tuple()
+
     return PickupEntry(
         name=item.name,
         resources=conditional_resources,
         model_index=item.model_index,
         item_category=item.item_category,
         probability_offset=item.probability_offset,
+        convert_resources=convert_resources,
     )
 
 
 def create_ammo_expansion(ammo: Ammo,
-                          ammo_count: Iterator[int],
+                          ammo_count: List[int],
+                          requires_major_item: bool,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:
     """
     Creates a Pickup for an expansion of the given ammo.
     :param ammo:
     :param ammo_count:
+    :param requires_major_item:
     :param resource_database:
     :return:
     """
+    percentage = _get_item(resource_database, _ITEM_PERCENTAGE)
 
-    resources = [
-        (_get_item(resource_database, item), count)
-        for item, count in zip(ammo.items, ammo_count)
-    ]
-    resources.append((_get_item(resource_database, _ITEM_PERCENTAGE), 1))
+    resources = [(_get_item(resource_database, item), count)
+                 for item, count in zip(ammo.items, ammo_count)]
+    resources.append((percentage, 1))
+
+    if requires_major_item:
+        temporary_resources = [(_get_item(resource_database, item), count)
+                               for item, count in zip(ammo.temporaries, ammo_count)]
+        temporary_resources.append((percentage, 1))
+
+        conditional_resources = (
+            ConditionalResources(None, None, tuple(temporary_resources)),
+            ConditionalResources(None, _get_item(resource_database, ammo.items[0]), tuple(resources)),
+        )
+    else:
+        conditional_resources = (
+            ConditionalResources(None, None, tuple(resources)),
+        )
 
     return PickupEntry(
         name=ammo.name,
-        resources=(
-            ConditionalResources(None, None, tuple(resources)),
-        ),
+        resources=conditional_resources,
         model_index=ammo.models[0],  # TODO: use a random model
         item_category=ItemCategory.EXPANSION,
     )

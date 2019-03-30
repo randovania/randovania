@@ -9,7 +9,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources import find_resource_info_with_long_name, PickupIndex, PickupEntry, \
-    ConditionalResources
+    ConditionalResources, ResourceConversion
 from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -22,7 +22,7 @@ from randovania.resolver.item_pool import pickup_creator
         {},
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
-        {"pickup": ['HUhMANYC', "Screw Attack"]},
+        {"pickup": ['HUhMANYCAA==', "Screw Attack"]},
     ],
     name="patches_with_data")
 def _patches_with_data(request, echoes_game_data, echoes_item_database):
@@ -91,9 +91,20 @@ def test_decode(patches_with_data):
     assert decoded == expected
 
 
-def test_bit_pack_pickup_entry(echoes_resource_database):
+@pytest.mark.parametrize("has_convert", [False, True])
+def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     # Setup
     name = "Some Random Name"
+    if has_convert:
+        convert_resources = (
+            ResourceConversion(
+                find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"),
+                find_resource_info_with_long_name(echoes_resource_database.item, "Item Percentage")
+            ),
+        )
+    else:
+        convert_resources = ()
+
     pickup = PickupEntry(
         name=name,
         model_index=26,
@@ -112,7 +123,8 @@ def test_bit_pack_pickup_entry(echoes_resource_database):
                     (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 3),
                 ),
             )
-        )
+        ),
+        convert_resources=convert_resources
     )
 
     # Run

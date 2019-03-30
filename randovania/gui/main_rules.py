@@ -2,11 +2,11 @@ import collections
 import dataclasses
 import functools
 from functools import partial
-from typing import Dict, Tuple, List, Iterable
+from typing import Dict, Tuple, List, Iterable, Optional
 
 from PySide2.QtCore import QRect, Qt
 from PySide2.QtWidgets import QMainWindow, QLabel, QGroupBox, QGridLayout, QToolButton, QSizePolicy, QDialog, QSpinBox, \
-    QHBoxLayout, QWidget
+    QHBoxLayout, QWidget, QCheckBox
 
 from randovania.game_description.default_database import default_prime2_item_database, default_prime2_resource_database
 from randovania.game_description.item.ammo import Ammo
@@ -27,7 +27,7 @@ from randovania.resolver.item_pool.ammo import items_for_ammo
 _EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion} for a total of {total}."
                                  "\n{from_items} will be provided from major items.")
 
-AmmoPickupWidgets = Tuple[QSpinBox, QLabel, QToolButton, QLabel, QGroupBox]
+AmmoPickupWidgets = Tuple[QSpinBox, QLabel, QToolButton, QLabel, QGroupBox, Optional[QCheckBox]]
 
 
 def _toggle_box_visibility(toggle_button: QToolButton, box: QGroupBox):
@@ -146,6 +146,9 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         for ammo, state in ammo_configuration.items_state.items():
             self._ammo_pickup_widgets[ammo][0].setValue(state.pickup_count)
+
+            if self._ammo_pickup_widgets[ammo][5] is not None:
+                self._ammo_pickup_widgets[ammo][5].setChecked(state.requires_major_item)
 
             try:
                 ammo_per_pickup = items_for_ammo(ammo, state, ammo_provided,
@@ -474,6 +477,15 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             layout.addWidget(pickup_spinbox, current_row, 1)
             current_row += 1
 
+            if ammo.temporaries:
+                require_major_item_check = QCheckBox(pickup_box)
+                require_major_item_check.setText("Requires the major item to work?")
+                require_major_item_check.stateChanged.connect(partial(self._on_update_ammo_require_major_item, ammo))
+                layout.addWidget(require_major_item_check, current_row, 0, 1, 2)
+                current_row += 1
+            else:
+                require_major_item_check = None
+
             expected_count = QLabel(pickup_box)
             expected_count.setWordWrap(True)
             expected_count.setText(_EXPECTED_COUNT_TEXT_TEMPLATE)
@@ -483,7 +495,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             current_row += 1
 
             self._ammo_pickup_widgets[ammo] = (pickup_spinbox, expected_count, expand_ammo_button,
-                                               category_label, pickup_box)
+                                               category_label, pickup_box, require_major_item_check)
 
             expand_ammo_button.clicked.connect(partial(_toggle_box_visibility, expand_ammo_button, pickup_box))
             pickup_box.setVisible(False)
@@ -503,4 +515,12 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             options.ammo_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo,
                 dataclasses.replace(ammo_configuration.items_state[ammo], pickup_count=value)
+            )
+
+    def _on_update_ammo_require_major_item(self, ammo: Ammo, value: int):
+        with self._options as options:
+            ammo_configuration = options.ammo_configuration
+            options.ammo_configuration = ammo_configuration.replace_state_for_ammo(
+                ammo,
+                dataclasses.replace(ammo_configuration.items_state[ammo], requires_major_item=bool(value))
             )
