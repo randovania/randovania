@@ -96,7 +96,7 @@ class ResolverReach:
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
 
-        for node in self.uncollected_resource_nodes(state):
+        for node in self.collectable_resource_nodes(state):
             if self._logic.get_additional_requirements(node).satisfied(state.resources, state.resource_database):
                 yield node
             else:
@@ -118,11 +118,11 @@ class ResolverReach:
                         yield action
                         break
 
-    def uncollected_resource_nodes(self,
+    def collectable_resource_nodes(self,
                                    state: State) -> Iterator[ResourceNode]:
         for node in self.nodes:
             if not node.is_resource_node:
                 continue
 
-            if not state.has_resource(node.resource()):
+            if node.can_collect(state.patches, state.resources):
                 yield node

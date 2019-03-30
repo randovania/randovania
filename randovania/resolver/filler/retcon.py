@@ -10,9 +10,9 @@ from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources import PickupEntry, PickupIndex, PickupAssignment, ResourceInfo, \
     CurrentResources
 from randovania.resolver import debug
-from randovania.resolver.generator_reach import GeneratorReach, uncollected_resources, \
+from randovania.resolver.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
-    get_uncollected_resource_nodes_of_reach, advance_to_with_reach_copy
+    get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup
@@ -27,7 +27,7 @@ class UncollectedState(NamedTuple):
         return UncollectedState(
             set(_filter_unassigned_pickup_indices(reach.state.collected_pickup_indices,
                                                   reach.state.patches.pickup_assignment)),
-            set(uncollected_resources(reach.connected_nodes, reach))
+            set(collectable_resource_nodes(reach.connected_nodes, reach))
         )
 
     def __sub__(self, other: "UncollectedState") -> "UncollectedState":
@@ -216,7 +216,7 @@ def _calculate_potential_actions(reach: GeneratorReach,
                                  current_uncollected: UncollectedState,
                                  status_update: Callable[[str], None]):
     actions_weights: Dict[Action, float] = {}
-    uncollected_resource_nodes = get_uncollected_resource_nodes_of_reach(reach)
+    uncollected_resource_nodes = get_collectable_resource_nodes_of_reach(reach)
     total_options = len(uncollected_resource_nodes)
     options_considered = 0
 

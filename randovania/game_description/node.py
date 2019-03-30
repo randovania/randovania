@@ -3,7 +3,7 @@ from typing import NamedTuple, Union
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness
-from randovania.game_description.resources import PickupIndex, ResourceInfo, ResourceGain
+from randovania.game_description.resources import PickupIndex, ResourceInfo, ResourceGain, CurrentResources
 
 
 class GenericNode(NamedTuple):
@@ -72,8 +72,11 @@ class PickupNode(NamedTuple):
     def resource(self) -> ResourceInfo:
         return self.pickup_index
 
-    def resource_gain_on_collect(self, patches, current_resources) -> ResourceGain:
-        yield self.resource(), 1
+    def can_collect(self, patches, current_resources: CurrentResources) -> bool:
+        return current_resources.get(self.pickup_index, 0) == 0
+
+    def resource_gain_on_collect(self, patches, current_resources: CurrentResources) -> ResourceGain:
+        yield self.pickup_index, 1
 
         pickup = patches.pickup_assignment.get(self.pickup_index)
         if pickup is not None:
@@ -94,6 +97,9 @@ class EventNode(NamedTuple):
 
     def resource(self) -> ResourceInfo:
         return self.event
+
+    def can_collect(self, patches, current_resources) -> bool:
+        return current_resources.get(self.event, 0) == 0
 
     def resource_gain_on_collect(self, patches, current_resources) -> ResourceGain:
         yield self.resource(), 1
