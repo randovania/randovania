@@ -81,6 +81,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.elevator_layout.setAlignment(QtCore.Qt.AlignTop)
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
 
     # Options
     def on_options_changed(self, options: Options):
