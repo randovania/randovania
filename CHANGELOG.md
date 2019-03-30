@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Option to specify how many items Randovania will randomly place on your
     starting inventory.
+    
+-   Added: Option to require Missile Launcher and main Power Bombs for the respective
+    expansions to work.
 
 -   Changed: Escaping Main Hydrochamber after the Alpha Blogg with a Roll Jump is
     now Hard and above, from Easy and above.
