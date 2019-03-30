@@ -7,7 +7,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources import PickupEntry, PickupIndex
-from randovania.resolver.generator_reach import GeneratorReach, get_uncollected_resource_nodes_of_reach
+from randovania.resolver.generator_reach import GeneratorReach, get_collectable_resource_nodes_of_reach
 from randovania.resolver.logic import Logic
 
 _DEBUG_LEVEL = 0
@@ -143,7 +143,7 @@ def print_actions_of_reach(reach: GeneratorReach):
         return
 
     logic = reach.logic
-    actions = get_uncollected_resource_nodes_of_reach(reach)
+    actions = get_collectable_resource_nodes_of_reach(reach)
 
     for action in actions:
         print("++ Safe? {1} -- {0} -- Dangerous? {2}".format(
