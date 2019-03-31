@@ -1,5 +1,4 @@
 import dataclasses
-from typing import Union
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockConnection
@@ -11,7 +10,7 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 
 
 @dataclasses.dataclass(frozen=True)
-class BaseNode:
+class Node:
     name: str
     heal: bool
 
@@ -30,7 +29,7 @@ class BaseNode:
 
 
 @dataclasses.dataclass(frozen=True)
-class BaseResourceNode(BaseNode):
+class ResourceNode(Node):
     @property
     def is_resource_node(self) -> bool:
         return True
@@ -49,7 +48,7 @@ class BaseResourceNode(BaseNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class GenericNode(BaseNode):
+class GenericNode(Node):
     index: int
 
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
@@ -57,7 +56,7 @@ class GenericNode(BaseNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class DockNode(BaseNode):
+class DockNode(Node):
     dock_index: int
     default_connection: DockConnection
     default_dock_weakness: DockWeakness
@@ -70,7 +69,7 @@ class DockNode(BaseNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class TeleporterNode(BaseNode):
+class TeleporterNode(Node):
     teleporter_instance_id: int
     default_connection: AreaLocation
 
@@ -82,7 +81,7 @@ class TeleporterNode(BaseNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class PickupNode(BaseResourceNode):
+class PickupNode(ResourceNode):
     pickup_index: PickupIndex
 
     def __deepcopy__(self, memodict):
@@ -109,7 +108,7 @@ class PickupNode(BaseResourceNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class EventNode(BaseResourceNode):
+class EventNode(ResourceNode):
     event: ResourceInfo
 
     def __repr__(self):
@@ -129,7 +128,7 @@ class EventNode(BaseResourceNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class TranslatorGateNode(BaseResourceNode):
+class TranslatorGateNode(ResourceNode):
     gate: TranslatorGate
 
     def __repr__(self):
@@ -157,6 +156,3 @@ class TranslatorGateNode(BaseResourceNode):
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.gate, 1
 
-
-ResourceNode = Union[PickupNode, EventNode, TranslatorGateNode]
-Node = Union[GenericNode, DockNode, TeleporterNode, ResourceNode]
