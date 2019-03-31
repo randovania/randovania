@@ -10,7 +10,7 @@ class TranslatorGate:
 
     @property
     def long_name(self) -> str:
-        return "PickupIndex {}".format(self._index)
+        return "TranslatorGate {}".format(self._index)
 
     def __init__(self, index: int):
         self._index = index
