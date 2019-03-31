@@ -61,6 +61,8 @@ def empty_patches() -> GamePatches:
 def pytest_addoption(parser):
     parser.addoption('--skip-generation-tests', action='store_true', dest="skip_generation_tests",
                      default=False, help="Skips running layout generation tests")
+    parser.addoption('--skip-resolver-tests', action='store_true', dest="skip_resolver_tests",
+                     default=False, help="Skips running validation tests")
     parser.addoption('--skip-gui-tests', action='store_true', dest="skip_gui_tests",
                      default=False, help="Skips running GUI tests")
     parser.addoption('--skip-echo-tool', action='store_true', dest="skip_echo_tool",
