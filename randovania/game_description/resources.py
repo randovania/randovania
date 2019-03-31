@@ -255,3 +255,14 @@ def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resource
 def add_resources_into_another(target: CurrentResources, source: CurrentResources) -> None:
     resource_gain: ResourceGain = source.items()
     add_resource_gain_to_current_resources(resource_gain, target)
+
+
+def convert_resource_gain_to_current_resources(resource_gain: ResourceGain) -> CurrentResources:
+    """
+    Creates a CurrentResources with all resources of the given ResourceGain
+    :param resource_gain:
+    :return:
+    """
+    result = {}
+    add_resource_gain_to_current_resources(resource_gain, result)
+    return result
