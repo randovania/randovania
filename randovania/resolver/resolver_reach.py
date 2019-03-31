@@ -63,6 +63,10 @@ class ResolverReach:
                 if target_node in checked_nodes or target_node in nodes_to_check:
                     continue
 
+                requirement_to_leave = node.requirements_to_leave(initial_state.patches, initial_state.resources)
+                if requirement_to_leave != RequirementSet.trivial():
+                    requirements = requirements.union(requirement_to_leave)
+
                 # Check if the normal requirements to reach that node is satisfied
                 satisfied = requirements.satisfied(initial_state.resources,
                                                    initial_state.resource_database)
