@@ -9,7 +9,8 @@ from randovania.game_description.node import GenericNode, DockNode, TeleporterNo
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase
+from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase, \
+    find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -170,7 +171,12 @@ class WorldReader:
                              self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
 
         elif node_type == 5:
-            return TranslatorGateNode(name, heal, TranslatorGate(data["gate_index"]))
+            return TranslatorGateNode(name, heal,
+                                      TranslatorGate(data["gate_index"]),
+                                      find_resource_info_with_long_name(
+                                          self.resource_database.item,
+                                          "Scan Visor"
+                                      ))
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))
