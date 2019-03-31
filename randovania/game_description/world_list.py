@@ -168,11 +168,13 @@ class WorldList:
 
     def simplify_connections(self,
                              static_resources: CurrentResources,
-                             resource_database: ResourceDatabase) -> None:
+                             resource_database: ResourceDatabase,
+                             ) -> None:
         """
         Simplifies all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
         :param static_resources:
+        :param resource_database:
         :return:
         """
         for world in self.worlds:

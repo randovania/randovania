@@ -75,6 +75,7 @@ class GameDescription:
         self.world_list = world_list
         self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
+        # TODO: refresh dangerous_resources during simplify_connections
         self.dangerous_resources = frozenset(
             _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
             _calculate_dangerous_resources_in_db(self.dock_weakness_database))
