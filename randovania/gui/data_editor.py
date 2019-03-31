@@ -52,6 +52,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def on_select_world(self):
         self.area_selector_box.clear()
         for area in sorted(self.current_world.areas, key=lambda x: x.name):
+            if area.name.startswith("!!"):
+                continue
             self.area_selector_box.addItem(area.name, userData=area)
         self.area_selector_box.setEnabled(True)
 
