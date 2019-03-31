@@ -3,11 +3,16 @@ import time
 from argparse import ArgumentParser
 from pathlib import Path
 
+from randovania.cli import echoes_lib
 from randovania.layout.permalink import Permalink
 from randovania.resolver import generator
 
 
-def batch_distribute_helper(base_permalink: Permalink, seed_number: int, output_dir: Path) -> float:
+def batch_distribute_helper(base_permalink: Permalink,
+                            seed_number: int,
+                            validate: bool,
+                            output_dir: Path,
+                            ) -> float:
     permalink = Permalink(
         seed_number=seed_number,
         spoiler=True,
@@ -16,7 +21,7 @@ def batch_distribute_helper(base_permalink: Permalink, seed_number: int, output_
     )
 
     start_time = time.perf_counter()
-    description = generator.generate_list(permalink, None, True)
+    description = generator.generate_list(permalink, None, validate)
     delta_time = time.perf_counter() - start_time
 
     description.save_to_file(output_dir.joinpath("{}.json".format(seed_number)))
@@ -25,6 +30,8 @@ def batch_distribute_helper(base_permalink: Permalink, seed_number: int, output_
 
 def batch_distribute_command_logic(args):
     finished_count = 0
+
+    validate: bool = args.validate
 
     output_dir: Path = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -45,7 +52,7 @@ def batch_distribute_command_logic(args):
         for seed_number in range(base_permalink.seed_number, base_permalink.seed_number + args.seed_count):
             pool.apply_async(
                 func=batch_distribute_helper,
-                args=(base_permalink, seed_number, output_dir),
+                args=(base_permalink, seed_number, output_dir, validate),
                 callback=callback,
                 error_callback=error_callback,
             )
@@ -60,6 +67,7 @@ def add_batch_distribute_command(sub_parsers):
     )
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
+    echoes_lib.add_validate_argument(parser)
     parser.add_argument(
         "seed_count",
         type=int,

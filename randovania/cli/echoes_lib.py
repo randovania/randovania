@@ -1,9 +1,11 @@
+from argparse import ArgumentParser
+
 from randovania.layout.layout_configuration import LayoutTrickLevel, LayoutSkyTempleKeyMode, LayoutConfiguration, \
     LayoutElevators
 from randovania.layout.starting_location import StartingLocation
 
 
-def add_debug_argument(parser):
+def add_debug_argument(parser: ArgumentParser):
     parser.add_argument(
         "--debug",
         choices=range(4),
@@ -12,7 +14,7 @@ def add_debug_argument(parser):
         help="The level of debug logging to print.")
 
 
-def add_layout_configuration_arguments(parser):
+def add_layout_configuration_arguments(parser: ArgumentParser):
     parser.add_argument(
         "--trick-level",
         type=str,
@@ -40,3 +42,11 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
         elevators=LayoutElevators.VANILLA,
         starting_location=StartingLocation.default(),
     )
+
+
+def add_validate_argument(parser: ArgumentParser):
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--validate", action="store_true", dest="validate", default=True,
+                       help="After generating a layout, validate if it's possible. Default behaviour.")
+    group.add_argument("--no-validate", action="store_false", dest="validate", default=True,
+                       help="After generating a layout, don't validate if it's possible.")

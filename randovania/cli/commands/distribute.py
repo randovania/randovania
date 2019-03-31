@@ -2,6 +2,7 @@ import time
 from argparse import ArgumentParser
 from pathlib import Path
 
+from randovania.cli import echoes_lib
 from randovania.cli.echoes_lib import add_debug_argument
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
@@ -38,7 +39,7 @@ def add_distribute_command(sub_parsers):
     )
 
     add_debug_argument(parser)
-    parser.add_argument("--no-validate", action="store_false", dest="validate", default=True)
+    echoes_lib.add_validate_argument(parser)
     parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument(
         "output_file",
