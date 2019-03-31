@@ -4,7 +4,7 @@ from typing import Tuple, Set
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import merge_resources, ResourceDatabase, CurrentResources, \
-    add_resource_gain_to_current_resources
+    add_resource_gain_to_current_resources, add_resources_into_another
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
@@ -184,7 +184,7 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level,
                                                                            game.resource_database)
 
-    starting_state.resources = merge_resources(static_resources, starting_state.resources)
+    add_resources_into_another(starting_state.resources, static_resources)
     starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level
 
     game.simplify_connections(starting_state.resources)
