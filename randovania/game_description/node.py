@@ -25,7 +25,7 @@ class Node:
         return False
 
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        raise NotImplementedError
+        return RequirementSet.trivial()
 
 
 @dataclasses.dataclass(frozen=True)
@@ -33,9 +33,6 @@ class ResourceNode(Node):
     @property
     def is_resource_node(self) -> bool:
         return True
-
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        raise NotImplementedError
 
     def resource(self) -> ResourceInfo:
         raise NotImplementedError
@@ -51,9 +48,6 @@ class ResourceNode(Node):
 class GenericNode(Node):
     index: int
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        yield RequirementSet.trivial()
-
 
 @dataclasses.dataclass(frozen=True)
 class DockNode(Node):
@@ -64,9 +58,6 @@ class DockNode(Node):
     def __repr__(self):
         return "DockNode({!r}/{} -> {})".format(self.name, self.dock_index, self.default_connection)
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        yield RequirementSet.trivial()
-
 
 @dataclasses.dataclass(frozen=True)
 class TeleporterNode(Node):
@@ -76,22 +67,13 @@ class TeleporterNode(Node):
     def __repr__(self):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        yield RequirementSet.trivial()
-
 
 @dataclasses.dataclass(frozen=True)
 class PickupNode(ResourceNode):
     pickup_index: PickupIndex
 
-    def __deepcopy__(self, memodict):
-        return PickupNode(self.name, self.heal, self.pickup_index)
-
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
-
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        yield RequirementSet.trivial()
 
     def resource(self) -> ResourceInfo:
         return self.pickup_index
@@ -114,9 +96,6 @@ class EventNode(ResourceNode):
     def __repr__(self):
         return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        yield RequirementSet.trivial()
-
     def resource(self) -> ResourceInfo:
         return self.event
 
@@ -135,7 +114,7 @@ class TranslatorGateNode(ResourceNode):
         return "TranslatorGateNode({!r} -> {})".format(self.name, self.gate.index)
 
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        yield RequirementSet([
+        return RequirementSet([
             RequirementList(0, [
                 IndividualRequirement(patches.translator_gates[self.gate], 1, False)
             ])
