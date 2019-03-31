@@ -24,7 +24,7 @@ def add_layout_configuration_arguments(parser: ArgumentParser):
     parser.add_argument(
         "--sky-temple-keys",
         type=str,
-        choices=[mode.value for mode in LayoutSkyTempleKeyMode],
+        choices=[str(mode.value) for mode in LayoutSkyTempleKeyMode],
         default=LayoutSkyTempleKeyMode.default().value,
         help="The Sky Temple Keys randomization mode.")
     parser.add_argument(
@@ -35,10 +35,15 @@ def add_layout_configuration_arguments(parser: ArgumentParser):
 
 
 def get_layout_configuration_from_args(args) -> LayoutConfiguration:
+    try:
+        sky_temple_keys = int(args.sky_temple_keys)
+    except ValueError:
+        sky_temple_keys = args.sky_temple_keys
+
     # TODO: support for item loss
     return LayoutConfiguration.from_params(
         trick_level=LayoutTrickLevel(args.trick_level),
-        sky_temple_keys=LayoutSkyTempleKeyMode(args.sky_temple_keys),
+        sky_temple_keys=LayoutSkyTempleKeyMode(sky_temple_keys),
         elevators=LayoutElevators.VANILLA,
         starting_location=StartingLocation.default(),
     )
