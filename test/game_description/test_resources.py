@@ -3,7 +3,8 @@ import pytest
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import PickupIndex, PickupEntry, ConditionalResources, \
-    ResourceConversion, SimpleResourceInfo, add_resource_gain_to_current_resources, add_resources_into_another
+    ResourceConversion, SimpleResourceInfo, add_resource_gain_to_current_resources, add_resources_into_another, \
+    convert_resource_gain_to_current_resources
 
 
 @pytest.mark.parametrize(["a", "b", "result"], [
@@ -46,3 +47,18 @@ def test_add_resource_gain_to_current_resources_convert():
         resource_a: 0,
         resource_b: 5
     }
+
+
+@pytest.mark.parametrize(["resource_gain", "expected"], [
+    ([], {}),
+    ([("a", 5), ("b", 6)], {"a": 5, "b": 6}),
+    ([("a", 5), ("a", 6)], {"a": 11}),
+    ([("a", 5), ("a", -5)], {"a": 0}),
+])
+def test_convert_resource_gain_to_current_resources(resource_gain, expected):
+    # Setup
+    # Run
+    result = convert_resource_gain_to_current_resources(resource_gain)
+
+    # Assert
+    assert result == expected
