@@ -19,7 +19,7 @@ def distribute_command_logic(args):
 
     before = time.perf_counter()
     layout_description = generator.generate_list(permalink=permalink, status_update=status_update,
-                                                 validate_after_generation=True, timeout=None)
+                                                 validate_after_generation=args.validate, timeout=None)
     after = time.perf_counter()
     print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
 
@@ -38,6 +38,7 @@ def add_distribute_command(sub_parsers):
     )
 
     add_debug_argument(parser)
+    parser.add_argument("--no-validate", action="store_false", dest="validate", default=True)
     parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument(
         "output_file",
