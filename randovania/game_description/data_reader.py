@@ -5,7 +5,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    is_resource_node, DockConnection
+    DockConnection
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resource_type import ResourceType
 from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
@@ -179,7 +179,7 @@ class WorldReader:
             connections[origin] = {}
 
             extra_requirement = None
-            if is_resource_node(origin) and self.add_self_as_requirement_to_resources:
+            if origin.is_resource_node and self.add_self_as_requirement_to_resources:
                 extra_requirement = RequirementList.with_single_resource(origin.resource())
 
             for target_name, target_requirements in origin_data["connections"].items():
