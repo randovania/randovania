@@ -1,8 +1,8 @@
-from dataclasses import dataclass
 from typing import NamedTuple, Union
 
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.dock import DockWeakness
+from randovania.game_description.dock import DockWeakness, DockConnection
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
 
@@ -15,15 +15,6 @@ class GenericNode(NamedTuple):
     @property
     def is_resource_node(self) -> bool:
         return False
-
-
-@dataclass(frozen=True, order=True)
-class DockConnection:
-    area_asset_id: int
-    dock_index: int
-
-    def __repr__(self):
-        return "{}/{}".format(self.area_asset_id, self.dock_index)
 
 
 class DockNode(NamedTuple):
@@ -73,10 +64,10 @@ class PickupNode(NamedTuple):
     def resource(self) -> ResourceInfo:
         return self.pickup_index
 
-    def can_collect(self, patches, current_resources: CurrentResources) -> bool:
+    def can_collect(self, patches: GamePatches, current_resources: CurrentResources) -> bool:
         return current_resources.get(self.pickup_index, 0) == 0
 
-    def resource_gain_on_collect(self, patches, current_resources: CurrentResources) -> ResourceGain:
+    def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.pickup_index, 1
 
         pickup = patches.pickup_assignment.get(self.pickup_index)
@@ -99,11 +90,11 @@ class EventNode(NamedTuple):
     def resource(self) -> ResourceInfo:
         return self.event
 
-    def can_collect(self, patches, current_resources) -> bool:
+    def can_collect(self, patches: GamePatches, current_resources) -> bool:
         return current_resources.get(self.event, 0) == 0
 
-    def resource_gain_on_collect(self, patches, current_resources) -> ResourceGain:
-        yield self.resource(), 1
+    def resource_gain_on_collect(self, patches: GamePatches, current_resources) -> ResourceGain:
+        yield self.event, 1
 
 
 ResourceNode = Union[PickupNode, EventNode]

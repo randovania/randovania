@@ -2,10 +2,9 @@ from typing import List, Callable, TypeVar, Tuple, Dict, Optional
 
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase
+from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    DockConnection
+from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
