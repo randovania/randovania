@@ -26,7 +26,7 @@ def test_distribute_command_logic(mock_generate_list: MagicMock,
     mock_generate_list.assert_called_once_with(
         permalink=mock_from_str.return_value,
         status_update=ANY,
-        validate_after_generation=True,
+        validate_after_generation=args.validate,
         timeout=None,
     )
 
