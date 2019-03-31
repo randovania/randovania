@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 import pytest
 
 from randovania.game_description.item.item_category import ItemCategory
@@ -74,13 +76,19 @@ def test_assign_pickup_to_index(collected: bool, empty_patches):
 
 def test_assign_pickup_to_starting_items(empty_patches):
     # Setup
-    starting = state.State({}, None, empty_patches, None, None)
+    resource_database = MagicMock()
+    resource_database.item_percentage = SimpleResourceInfo(99, "%", "%", ResourceType.ITEM)
+
+    starting = state.State({}, None, empty_patches, None, resource_database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
     p = PickupEntry("A", 2, ItemCategory.SUIT,
                     resources=(
-                        ConditionalResources(None, None, ((resource_a, 5),)),
+                        ConditionalResources(None, None, (
+                            (resource_a, 5),
+                            (resource_database.item_percentage, 1),
+                        )),
                     ),
                     convert_resources=(
                         ResourceConversion(resource_b, resource_a),
