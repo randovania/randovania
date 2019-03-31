@@ -128,8 +128,3 @@ class TranslatorGateNode(NamedTuple):
 
 ResourceNode = Union[PickupNode, EventNode, TranslatorGateNode]
 Node = Union[GenericNode, DockNode, TeleporterNode, ResourceNode]
-
-
-def is_resource_node(node: Node):
-    # return isinstance(node, (PickupNode, EventNode))
-    return node.is_resource_node
