@@ -188,9 +188,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         editor = ConnectionsEditor(self, self.resource_database, requirement_set)
         result = editor.exec_()
         if result == QDialog.Accepted:
+            current_connections = self.current_area.connections[from_node]
             self.current_area.connections[from_node][target_node] = editor.final_requirement_set
             if self.current_area.connections[from_node][target_node] is None:
                 del self.current_area.connections[from_node][target_node]
+
+            self.current_area.connections[from_node] = {
+                node: current_connections[node]
+                for node in self.current_area.nodes
+                if node in current_connections
+            }
             self.update_connections()
 
     def _save_database(self):
