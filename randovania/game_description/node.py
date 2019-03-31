@@ -1,26 +1,63 @@
-from typing import NamedTuple, Union
+import dataclasses
+from typing import Union
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockConnection
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
 from randovania.game_description.resources.translator_gate import TranslatorGate
 
 
-class GenericNode(NamedTuple):
+@dataclasses.dataclass(frozen=True)
+class BaseNode:
     name: str
     heal: bool
-    index: int
 
+    def __lt__(self, other):
+        return self.name < other.name
+
+    def __hash__(self):
+        return super().__hash__()
+    
     @property
     def is_resource_node(self) -> bool:
         return False
 
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        raise NotImplementedError
 
-class DockNode(NamedTuple):
-    name: str
-    heal: bool
+
+@dataclasses.dataclass(frozen=True)
+class BaseResourceNode(BaseNode):
+    @property
+    def is_resource_node(self) -> bool:
+        return True
+
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        raise NotImplementedError
+
+    def resource(self) -> ResourceInfo:
+        raise NotImplementedError
+
+    def can_collect(self, patches: GamePatches, current_resources: CurrentResources) -> bool:
+        raise NotImplementedError
+
+    def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
+        raise NotImplementedError
+
+
+@dataclasses.dataclass(frozen=True)
+class GenericNode(BaseNode):
+    index: int
+
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        yield RequirementSet.trivial()
+
+
+@dataclasses.dataclass(frozen=True)
+class DockNode(BaseNode):
     dock_index: int
     default_connection: DockConnection
     default_dock_weakness: DockWeakness
@@ -28,28 +65,24 @@ class DockNode(NamedTuple):
     def __repr__(self):
         return "DockNode({!r}/{} -> {})".format(self.name, self.dock_index, self.default_connection)
 
-    @property
-    def is_resource_node(self) -> bool:
-        return False
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        yield RequirementSet.trivial()
 
 
-class TeleporterNode(NamedTuple):
-    name: str
-    heal: bool
+@dataclasses.dataclass(frozen=True)
+class TeleporterNode(BaseNode):
     teleporter_instance_id: int
     default_connection: AreaLocation
 
     def __repr__(self):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)
 
-    @property
-    def is_resource_node(self) -> bool:
-        return False
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        yield RequirementSet.trivial()
 
 
-class PickupNode(NamedTuple):
-    name: str
-    heal: bool
+@dataclasses.dataclass(frozen=True)
+class PickupNode(BaseResourceNode):
     pickup_index: PickupIndex
 
     def __deepcopy__(self, memodict):
@@ -58,9 +91,8 @@ class PickupNode(NamedTuple):
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
-    @property
-    def is_resource_node(self) -> bool:
-        return True
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        yield RequirementSet.trivial()
 
     def resource(self) -> ResourceInfo:
         return self.pickup_index
@@ -76,17 +108,15 @@ class PickupNode(NamedTuple):
             yield from pickup.resource_gain(current_resources)
 
 
-class EventNode(NamedTuple):
-    name: str
-    heal: bool
+@dataclasses.dataclass(frozen=True)
+class EventNode(BaseResourceNode):
     event: ResourceInfo
 
     def __repr__(self):
         return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
 
-    @property
-    def is_resource_node(self) -> bool:
-        return True
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        yield RequirementSet.trivial()
 
     def resource(self) -> ResourceInfo:
         return self.event
@@ -98,17 +128,19 @@ class EventNode(NamedTuple):
         yield self.event, 1
 
 
-class TranslatorGateNode(NamedTuple):
-    name: str
-    heal: bool
+@dataclasses.dataclass(frozen=True)
+class TranslatorGateNode(BaseResourceNode):
     gate: TranslatorGate
 
     def __repr__(self):
         return "TranslatorGateNode({!r} -> {})".format(self.name, self.gate.index)
 
-    @property
-    def is_resource_node(self) -> bool:
-        return True
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        yield RequirementSet([
+            RequirementList(0, [
+                IndividualRequirement(patches.translator_gates[self.gate], 1, False)
+            ])
+        ])
 
     def resource(self) -> ResourceInfo:
         return self.gate
