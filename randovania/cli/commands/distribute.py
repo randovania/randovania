@@ -3,7 +3,6 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import echoes_lib
-from randovania.cli.echoes_lib import add_debug_argument
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.permalink import Permalink
@@ -38,7 +37,7 @@ def add_distribute_command(sub_parsers):
         help="Distribute pickups."
     )
 
-    add_debug_argument(parser)
+    echoes_lib.add_debug_argument(parser)
     echoes_lib.add_validate_argument(parser)
     parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument(
