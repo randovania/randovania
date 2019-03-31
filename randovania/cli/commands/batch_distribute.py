@@ -3,7 +3,6 @@ import time
 from argparse import ArgumentParser
 from pathlib import Path
 
-from randovania.cli.echoes_lib import add_layout_configuration_arguments
 from randovania.layout.permalink import Permalink
 from randovania.resolver import generator
 
@@ -60,7 +59,6 @@ def add_batch_distribute_command(sub_parsers):
         help="Generate multiple seeds in parallel"
     )
 
-    add_layout_configuration_arguments(parser)
     parser.add_argument("permalink", type=str, help="The permalink to use")
     parser.add_argument(
         "seed_count",
