@@ -3,7 +3,8 @@ from typing import NamedTuple, Union
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness
-from randovania.game_description.resources import PickupIndex, ResourceInfo, ResourceGain, CurrentResources
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
 
 
 class GenericNode(NamedTuple):

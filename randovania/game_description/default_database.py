@@ -6,7 +6,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.data_reader import read_resource_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item import item_database
-from randovania.game_description.resources import ResourceDatabase
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime import default_data
 
 

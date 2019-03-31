@@ -6,12 +6,13 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode, TeleporterNode, Node
-from randovania.game_description.resources import PickupAssignment, find_resource_info_with_long_name, PickupEntry, \
-    ResourceDatabase, ConditionalResources, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES, MAXIMUM_PICKUP_RESOURCES, \
-    MAXIMUM_PICKUP_CONVERSION, ResourceConversion
+from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, \
+    MAXIMUM_PICKUP_CONDITIONAL_RESOURCES, MAXIMUM_PICKUP_RESOURCES, MAXIMUM_PICKUP_CONVERSION, PickupEntry
+from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, ResourceDatabase
 from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_configuration import LayoutConfiguration
 

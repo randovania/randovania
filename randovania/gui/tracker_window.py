@@ -9,7 +9,8 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node
-from randovania.game_description.resources import PickupEntry, add_resource_gain_to_current_resources
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow

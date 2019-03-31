@@ -8,7 +8,7 @@ import pytest
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
-from randovania.game_description.resources import ResourceDatabase
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime import default_data
 
 

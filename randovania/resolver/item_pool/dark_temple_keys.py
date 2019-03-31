@@ -1,6 +1,7 @@
 from typing import List
 
-from randovania.game_description.resources import PickupEntry, ResourceDatabase
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.resolver.item_pool import PoolResults
 from randovania.resolver.item_pool.pickup_creator import create_dark_temple_key
 
