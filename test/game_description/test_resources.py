@@ -2,16 +2,17 @@ import pytest
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import merge_resources, PickupIndex, PickupEntry, ConditionalResources, \
-    ResourceConversion, SimpleResourceInfo, add_resource_gain_to_current_resources
+from randovania.game_description.resources import PickupIndex, PickupEntry, ConditionalResources, \
+    ResourceConversion, SimpleResourceInfo, add_resource_gain_to_current_resources, add_resources_into_another
 
 
 @pytest.mark.parametrize(["a", "b", "result"], [
     ({"a": 5}, {"b": 6}, {"a": 5, "b": 6}),
     ({"a": 5}, {"a": 6}, {"a": 11}),
 ])
-def test_merge_resources(a, b, result):
-    assert merge_resources(a, b) == result
+def test_add_resources_into_another(a, b, result):
+    add_resources_into_another(a, b)
+    assert a == result
 
 
 def test_pickup_index_equality():
