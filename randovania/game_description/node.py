@@ -5,6 +5,7 @@ from randovania.game_description.dock import DockWeakness, DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
+from randovania.game_description.resources.translator_gate import TranslatorGate
 
 
 class GenericNode(NamedTuple):
@@ -97,7 +98,35 @@ class EventNode(NamedTuple):
         yield self.event, 1
 
 
-ResourceNode = Union[PickupNode, EventNode]
+class TranslatorGateNode(NamedTuple):
+    name: str
+    heal: bool
+    gate: TranslatorGate
+
+    def __repr__(self):
+        return "TranslatorGateNode({!r} -> {})".format(self.name, self.gate.index)
+
+    @property
+    def is_resource_node(self) -> bool:
+        return True
+
+    def resource(self) -> ResourceInfo:
+        return self.gate
+
+    def can_collect(self, patches: GamePatches, current_resources: CurrentResources) -> bool:
+        """
+        Checks if this TranslatorGate can be opened with the given resources and translator gate mapping
+        :param patches:
+        :param current_resources:
+        :return:
+        """
+        return current_resources.get(patches.translator_gates[self.gate], 0) > 0
+
+    def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
+        yield self.gate, 1
+
+
+ResourceNode = Union[PickupNode, EventNode, TranslatorGateNode]
 Node = Union[GenericNode, DockNode, TeleporterNode, ResourceNode]
 
 
