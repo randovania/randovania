@@ -3,7 +3,8 @@ from typing import List, TypeVar, Callable, Dict, Tuple
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode
+from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
+    TranslatorGateNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -158,6 +159,10 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, EventNode):
         data["node_type"] = 4
         data["event_index"] = node.resource().index
+
+    elif isinstance(node, TranslatorGateNode):
+        data["node_type"] = 5
+        data["gate_index"] = node.gate.index
 
     else:
         raise Exception("Unknown node class: {}".format(node))
