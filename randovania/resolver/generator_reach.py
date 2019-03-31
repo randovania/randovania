@@ -4,7 +4,7 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 import networkx
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, is_resource_node, ResourceNode, PickupNode
+from randovania.game_description.node import Node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -29,7 +29,7 @@ class GraphPath(NamedTuple):
 
 def filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
     for node in nodes:
-        if is_resource_node(node):
+        if node.is_resource_node:
             yield node
 
 
@@ -152,7 +152,7 @@ class GeneratorReach:
         :return:
         """
         # We can't advance past a resource node if we haven't collected it
-        if is_resource_node(node):
+        if node.is_resource_node:
             return self._state.has_resource(node.resource())
         else:
             return True
@@ -314,7 +314,7 @@ class GeneratorReach:
 def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[RequirementSet]:
     extra_requirement = None
 
-    if is_resource_node(node):
+    if node.is_resource_node:
         node_resource = node.resource()
         if node_resource in game.dangerous_resources:
             extra_requirement = RequirementSet([RequirementList.with_single_resource(node_resource)])
