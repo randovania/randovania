@@ -226,6 +226,7 @@ class ResourceDatabase(NamedTuple):
     def impossible_resource(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.MISC, 1)
 
+    @property
     def item_percentage(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
 
