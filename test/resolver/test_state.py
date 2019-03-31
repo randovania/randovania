@@ -90,8 +90,8 @@ def test_assign_pickup_to_starting_items(empty_patches):
     final = starting.assign_pickup_to_starting_items(p)
 
     # Assert
-    assert final.patches.starting_items == {resource_a: 5}
-    assert final.resources == {resource_a: 5}
+    assert final.patches.starting_items == {resource_a: 5, resource_b: 0}
+    assert final.resources == {resource_a: 5, resource_b: 0}
 
 
 def test_state_with_pickup():
