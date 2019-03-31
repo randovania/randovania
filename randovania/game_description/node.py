@@ -6,6 +6,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 
 
@@ -109,6 +110,7 @@ class EventNode(ResourceNode):
 @dataclasses.dataclass(frozen=True)
 class TranslatorGateNode(ResourceNode):
     gate: TranslatorGate
+    scan_visor: SimpleResourceInfo
 
     def __repr__(self):
         return "TranslatorGateNode({!r} -> {})".format(self.name, self.gate.index)
@@ -116,7 +118,8 @@ class TranslatorGateNode(ResourceNode):
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
         return RequirementSet([
             RequirementList(0, [
-                IndividualRequirement(patches.translator_gates[self.gate], 1, False)
+                IndividualRequirement(patches.translator_gates[self.gate], 1, False),
+                IndividualRequirement(self.scan_visor, 1, False),
             ])
         ])
 
@@ -130,7 +133,8 @@ class TranslatorGateNode(ResourceNode):
         :param current_resources:
         :return:
         """
-        return current_resources.get(patches.translator_gates[self.gate], 0) > 0
+        translator = patches.translator_gates[self.gate]
+        return current_resources.get(self.scan_visor) > 0 and current_resources.get(translator, 0) > 0
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.gate, 1
