@@ -4,7 +4,8 @@ from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node
+from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
+    TranslatorGateNode
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -12,6 +13,7 @@ from randovania.game_description.resources.resource_database import find_resourc
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -166,6 +168,9 @@ class WorldReader:
         elif node_type == 4:
             return EventNode(name, heal,
                              self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
+
+        elif node_type == 5:
+            return TranslatorGateNode(name, heal, TranslatorGate(data["gate_index"]))
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))
