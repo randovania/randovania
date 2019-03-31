@@ -5,7 +5,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources import PickupIndex
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.resolver import debug
+from randovania.resolver import debug, event_pickup
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -78,14 +78,22 @@ def advance_depth(state: State, logic: Logic, status_update: Callable[[str], Non
     return _inner_advance_depth(state, logic, status_update)[0]
 
 
+def _quiet_print(s):
+    pass
+
+
 def resolve(configuration: LayoutConfiguration,
             game: GameDescription,
             patches: GamePatches,
             status_update: Optional[Callable[[str], None]] = None
             ) -> Optional[State]:
+
     if status_update is None:
-        status_update = lambda s: None
+        status_update = _quiet_print
+
+    event_pickup.replace_with_event_pickups(game)
 
     logic, starting_state = logic_bootstrap(configuration, game, patches)
     debug.log_resolve_start()
+
     return advance_depth(starting_state, logic, status_update)
