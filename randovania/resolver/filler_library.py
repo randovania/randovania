@@ -1,7 +1,7 @@
 from typing import Iterator
 
+from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.node import Node, PickupNode
-from randovania.game_description.resources import PickupAssignment
 
 
 def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:

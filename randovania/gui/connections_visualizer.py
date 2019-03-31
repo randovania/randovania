@@ -7,8 +7,9 @@ from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLab
     QLineEdit
 
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import ResourceDatabase, ResourceInfo
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,

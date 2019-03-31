@@ -3,7 +3,7 @@ from typing import NamedTuple, Tuple, List
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import EventNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
-from randovania.game_description.resources import CurrentResources, ResourceGain
+from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources
 
 
 class EventPickupNode(NamedTuple):

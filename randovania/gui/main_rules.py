@@ -13,7 +13,7 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
-from randovania.game_description.resource_type import ResourceType
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.main_rules_ui import Ui_MainRules

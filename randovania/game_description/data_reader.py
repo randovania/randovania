@@ -7,9 +7,12 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     DockConnection
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import SimpleResourceInfo, DamageReduction, DamageResourceInfo, PickupIndex, \
-    ResourceDatabase, find_resource_info_with_id, ResourceGainTuple, ResourceInfo
+from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 

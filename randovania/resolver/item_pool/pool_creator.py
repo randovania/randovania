@@ -1,7 +1,9 @@
 from typing import Tuple, List
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import PickupEntry, ResourceDatabase, add_resources_into_another
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.item_pool import PoolResults
 from randovania.resolver.item_pool.ammo import add_ammo

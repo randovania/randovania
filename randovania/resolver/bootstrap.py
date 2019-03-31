@@ -3,7 +3,8 @@ from typing import Tuple, Set
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import ResourceDatabase, CurrentResources, \
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel
 from randovania.resolver import debug
