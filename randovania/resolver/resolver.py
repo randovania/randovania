@@ -28,8 +28,8 @@ def _simplify_requirement_list(self: RequirementList, state: State) -> Optional[
     return RequirementList(self.difficulty_level, items)
 
 
-def _simplify_requirement_set_for_additional_requirements(requirements: RequirementSet,
-                                                          state: State) -> RequirementSet:
+def _simplify_additional_requirement_set(requirements: RequirementSet,
+                                         state: State) -> RequirementSet:
     new_alternatives = [
         _simplify_requirement_list(alternative, state)
         for alternative in requirements.alternatives
@@ -67,10 +67,16 @@ def _inner_advance_depth(state: State,
             has_action = True
 
     debug.log_rollback(state, has_action)
-    if not has_action:
-        logic.additional_requirements[state.node] = _simplify_requirement_set_for_additional_requirements(
-            reach.satisfiable_as_requirement_set, state)
+    additional_requirements = reach.satisfiable_as_requirement_set
 
+    if has_action:
+        additional = set()
+        for resource_node in reach.collectable_resource_nodes(state):
+            additional |= logic.get_additional_requirements(resource_node).alternatives
+
+        additional_requirements = additional_requirements.union(RequirementSet(additional))
+
+    logic.additional_requirements[state.node] = _simplify_additional_requirement_set(additional_requirements, state)
     return None, has_action
 
 
