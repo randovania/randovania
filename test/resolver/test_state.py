@@ -2,7 +2,8 @@ import pytest
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import SimpleResourceInfo, PickupEntry, ConditionalResources, PickupIndex
+from randovania.game_description.resources import SimpleResourceInfo, PickupEntry, ConditionalResources, PickupIndex, \
+    ResourceConversion
 from randovania.resolver import state
 
 
@@ -76,17 +77,21 @@ def test_assign_pickup_to_starting_items(empty_patches):
     starting = state.State({}, None, empty_patches, None, None)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
+    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
     p = PickupEntry("A", 2, ItemCategory.SUIT,
-                    (
-                        ConditionalResources(None, None, ((resource_a, 1),)),
+                    resources=(
+                        ConditionalResources(None, None, ((resource_a, 5),)),
+                    ),
+                    convert_resources=(
+                        ResourceConversion(resource_b, resource_a),
                     ))
 
     # Run
     final = starting.assign_pickup_to_starting_items(p)
 
     # Assert
-    assert final.patches.starting_items == {resource_a: 1}
-    assert final.resources == {resource_a: 1}
+    assert final.patches.starting_items == {resource_a: 5, resource_b: 0}
+    assert final.resources == {resource_a: 5, resource_b: 0}
 
 
 def test_state_with_pickup():

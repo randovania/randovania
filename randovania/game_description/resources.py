@@ -241,13 +241,6 @@ class ResourceDatabase(NamedTuple):
 PickupAssignment = Dict[PickupIndex, PickupEntry]
 
 
-def merge_resources(a: CurrentResources, b: CurrentResources) -> CurrentResources:
-    return {
-        resource: a.get(resource, 0) + b.get(resource, 0)
-        for resource in a.keys() | b.keys()
-    }
-
-
 def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources):
     """
     Adds all resources from the given gain to the given CurrentResources
@@ -262,3 +255,14 @@ def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resource
 def add_resources_into_another(target: CurrentResources, source: CurrentResources) -> None:
     resource_gain: ResourceGain = source.items()
     add_resource_gain_to_current_resources(resource_gain, target)
+
+
+def convert_resource_gain_to_current_resources(resource_gain: ResourceGain) -> CurrentResources:
+    """
+    Creates a CurrentResources with all resources of the given ResourceGain
+    :param resource_gain:
+    :return:
+    """
+    result = {}
+    add_resource_gain_to_current_resources(resource_gain, result)
+    return result
