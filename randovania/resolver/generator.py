@@ -70,7 +70,6 @@ def generate_list(permalink: Permalink,
         "game": data_reader.decode_data(data, False),
         "status_update": status_update
     }
-    resolver_game = data_reader.decode_data(data)
 
     def create_failure(message: str):
         return GenerationFailure(message, permalink=permalink)
@@ -86,6 +85,7 @@ def generate_list(permalink: Permalink,
             raise create_failure("Timeout reached when generating patches.")
 
         if validate_after_generation:
+            resolver_game = data_reader.decode_data(data)
             resolve_params = {
                 "configuration": permalink.layout_configuration,
                 "game": resolver_game,

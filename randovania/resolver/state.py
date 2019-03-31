@@ -45,12 +45,15 @@ class State:
                 yield resource
 
     def collect_resource_node(self, node: ResourceNode) -> "State":
+        """
+        Creates a new State that has the given ResourceNode collected.
+        :param node:
+        :return:
+        """
 
-        resource = node.resource()
-        if self.has_resource(resource):
+        if not node.can_collect(self.patches, self.resources):
             raise ValueError(
-                "Trying to collect an already collected resource '{}'".format(
-                    resource))
+                "Trying to collect an uncollectable node'{}'".format(node))
 
         new_resources = copy.copy(self.resources)
         add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches, self.resources),

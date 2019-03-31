@@ -202,6 +202,10 @@ class WorldList:
             area_asset_id=self.nodes_to_area(node).area_asset_id,
         )
 
+    def add_new_node(self, area: Area, node: Node):
+        self._nodes_to_area[node] = area
+        self._nodes_to_world[node] = self.world_with_area(area)
+
 
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):
     nodes_to_area = {}

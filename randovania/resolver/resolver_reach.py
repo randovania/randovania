@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Dict, Set, List, Iterator, Tuple, Iterable, FrozenSet
 
 from randovania.game_description.game_description import calculate_interesting_resources
-from randovania.game_description.node import ResourceNode, Node, is_resource_node
+from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
@@ -96,7 +96,7 @@ class ResolverReach:
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
 
-        for node in self.uncollected_resource_nodes(state):
+        for node in self.collectable_resource_nodes(state):
             if self._logic.get_additional_requirements(node).satisfied(state.resources, state.resource_database):
                 yield node
             else:
@@ -118,11 +118,11 @@ class ResolverReach:
                         yield action
                         break
 
-    def uncollected_resource_nodes(self,
+    def collectable_resource_nodes(self,
                                    state: State) -> Iterator[ResourceNode]:
         for node in self.nodes:
-            if not is_resource_node(node):
+            if not node.is_resource_node:
                 continue
 
-            if not state.has_resource(node.resource()):
+            if node.can_collect(state.patches, state.resources):
                 yield node

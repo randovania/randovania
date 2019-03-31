@@ -7,13 +7,14 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources import PickupEntry, PickupIndex
-from randovania.resolver.generator_reach import GeneratorReach, get_uncollected_resource_nodes_of_reach
+from randovania.resolver.generator_reach import GeneratorReach, get_collectable_resource_nodes_of_reach
 from randovania.resolver.logic import Logic
 
 _DEBUG_LEVEL = 0
 count = 0
 _gd: GameDescription = None
 _current_indent = 0
+_last_printed_additional = {}
 
 
 def n(node: Node, with_world=False) -> str:
@@ -86,8 +87,13 @@ def log_rollback(state, has_action):
 
 def log_skip_action_missing_requirement(node: Node, game: GameDescription, requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
-        print("{}* Skip {}, missing additional:".format(_indent(), n(node)))
-        requirement_set.pretty_print(_indent(-1))
+        last_printed = _last_printed_additional.get(node)
+        if last_printed == requirement_set:
+            print("{}* Skip {}, same additional".format(_indent(), n(node)))
+        else:
+            print("{}* Skip {}, missing additional:".format(_indent(), n(node)))
+            requirement_set.pretty_print(_indent(-1))
+            _last_printed_additional[node] = requirement_set
 
 
 def print_distribute_one_item_detail(potential_pickup_nodes, start_time):
@@ -137,7 +143,7 @@ def print_actions_of_reach(reach: GeneratorReach):
         return
 
     logic = reach.logic
-    actions = get_uncollected_resource_nodes_of_reach(reach)
+    actions = get_collectable_resource_nodes_of_reach(reach)
 
     for action in actions:
         print("++ Safe? {1} -- {0} -- Dangerous? {2}".format(
