@@ -12,7 +12,7 @@ from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
-    reach_with_all_safe_resources, get_uncollected_resource_nodes_of_reach, \
+    reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
 from randovania.resolver.item_pool.pool_creator import calculate_item_pool
 from randovania.resolver.logic import Logic
@@ -61,8 +61,8 @@ def _create_reaches_and_compare(logic: Logic, state: State) -> Tuple[GeneratorRe
 def _compare_actions(first_reach: GeneratorReach,
                      second_reach: GeneratorReach,
                      ) -> Tuple[List[ResourceNode], List[ResourceNode]]:
-    first_actions = get_uncollected_resource_nodes_of_reach(first_reach)
-    second_actions = get_uncollected_resource_nodes_of_reach(second_reach)
+    first_actions = get_collectable_resource_nodes_of_reach(first_reach)
+    second_actions = get_collectable_resource_nodes_of_reach(second_reach)
     assert set(first_actions) == set(second_actions)
 
     return first_actions, second_actions

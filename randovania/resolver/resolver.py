@@ -5,7 +5,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources import PickupIndex
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.resolver import debug
+from randovania.resolver import debug, event_pickup
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -28,8 +28,8 @@ def _simplify_requirement_list(self: RequirementList, state: State) -> Optional[
     return RequirementList(self.difficulty_level, items)
 
 
-def _simplify_requirement_set_for_additional_requirements(requirements: RequirementSet,
-                                                          state: State) -> RequirementSet:
+def _simplify_additional_requirement_set(requirements: RequirementSet,
+                                         state: State) -> RequirementSet:
     new_alternatives = [
         _simplify_requirement_list(alternative, state)
         for alternative in requirements.alternatives
@@ -67,10 +67,16 @@ def _inner_advance_depth(state: State,
             has_action = True
 
     debug.log_rollback(state, has_action)
-    if not has_action:
-        logic.additional_requirements[state.node] = _simplify_requirement_set_for_additional_requirements(
-            reach.satisfiable_as_requirement_set, state)
+    additional_requirements = reach.satisfiable_as_requirement_set
 
+    if has_action:
+        additional = set()
+        for resource_node in reach.collectable_resource_nodes(state):
+            additional |= logic.get_additional_requirements(resource_node).alternatives
+
+        additional_requirements = additional_requirements.union(RequirementSet(additional))
+
+    logic.additional_requirements[state.node] = _simplify_additional_requirement_set(additional_requirements, state)
     return None, has_action
 
 
@@ -78,14 +84,22 @@ def advance_depth(state: State, logic: Logic, status_update: Callable[[str], Non
     return _inner_advance_depth(state, logic, status_update)[0]
 
 
+def _quiet_print(s):
+    pass
+
+
 def resolve(configuration: LayoutConfiguration,
             game: GameDescription,
             patches: GamePatches,
             status_update: Optional[Callable[[str], None]] = None
             ) -> Optional[State]:
+
     if status_update is None:
-        status_update = lambda s: None
+        status_update = _quiet_print
+
+    event_pickup.replace_with_event_pickups(game)
 
     logic, starting_state = logic_bootstrap(configuration, game, patches)
     debug.log_resolve_start()
+
     return advance_depth(starting_state, logic, status_update)

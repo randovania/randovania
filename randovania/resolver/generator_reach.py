@@ -4,7 +4,7 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 import networkx
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import Node, is_resource_node, ResourceNode, PickupNode
+from randovania.game_description.node import Node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -29,7 +29,7 @@ class GraphPath(NamedTuple):
 
 def filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
     for node in nodes:
-        if is_resource_node(node):
+        if node.is_resource_node:
             yield node
 
 
@@ -39,9 +39,9 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
             yield node
 
 
-def filter_uncollected(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
+def filter_collectable(resource_nodes: Iterator[ResourceNode], reach: "GeneratorReach") -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if not reach.state.has_resource(resource_node.resource()):
+        if resource_node.can_collect(reach.state.patches, reach.state.resources):
             yield resource_node
 
 
@@ -152,7 +152,7 @@ class GeneratorReach:
         :return:
         """
         # We can't advance past a resource node if we haven't collected it
-        if is_resource_node(node):
+        if node.is_resource_node:
             return self._state.has_resource(node.resource())
         else:
             return True
@@ -314,7 +314,7 @@ class GeneratorReach:
 def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[RequirementSet]:
     extra_requirement = None
 
-    if is_resource_node(node):
+    if node.is_resource_node:
         node_resource = node.resource()
         if node_resource in game.dangerous_resources:
             extra_requirement = RequirementSet([RequirementList.with_single_resource(node_resource)])
@@ -325,7 +325,7 @@ def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[R
 def get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
     generator = filter_reachable(
         filter_out_dangerous_actions(
-            uncollected_resources(reach.nodes, reach),
+            collectable_resource_nodes(reach.nodes, reach),
             reach.logic.game),
         reach
     )
@@ -334,12 +334,12 @@ def get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
             yield node
 
 
-def uncollected_resources(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
-    return filter_uncollected(filter_resource_nodes(nodes), reach)
+def collectable_resource_nodes(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[ResourceNode]:
+    return filter_collectable(filter_resource_nodes(nodes), reach)
 
 
-def get_uncollected_resource_nodes_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
-    return list(uncollected_resources(filter_reachable(reach.nodes, reach), reach))
+def get_collectable_resource_nodes_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
+    return list(collectable_resource_nodes(filter_reachable(reach.nodes, reach), reach))
 
 
 def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
@@ -354,7 +354,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
             break
 
         for action in actions:
-            if not reach.state.has_resource(action.resource()):
+            if action.can_collect(reach.state.patches, reach.state.resources):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
@@ -384,7 +384,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
 
     previous_safe_nodes = set(previous_reach.safe_nodes)
 
-    for action in get_uncollected_resource_nodes_of_reach(previous_reach):
+    for action in get_collectable_resource_nodes_of_reach(previous_reach):
         # print("Trying to collect {} and it's not dangerous. Copying...".format(action.name))
         next_reach = copy.deepcopy(previous_reach)
         next_reach.act_on(action)

@@ -109,3 +109,43 @@ def test_full_file_round_trip():
 
     # Assert
     assert final_data == original_data
+
+
+def _comparable_dict(value):
+    if isinstance(value, dict):
+        return [
+            (key, _comparable_dict(item))
+            for key, item in value.items()
+        ]
+
+    if isinstance(value, list):
+        return [_comparable_dict(item) for item in value]
+
+    return value
+
+
+@pytest.mark.skipif(
+    not get_data_path().joinpath("json_data", "prime2.json").is_file(),
+    reason="Missing prime2.json"
+)
+def test_full_data_encode_is_equal():
+    # Setup
+    json_database_file = get_data_path().joinpath("json_data", "prime2.json")
+
+    with json_database_file.open("r") as open_file:
+        json_database = json.load(open_file)
+
+    b = io.BytesIO()
+    extra = io.StringIO()
+    json.dump(binary_data.encode(json_database, b), extra)
+
+    b.seek(0)
+    extra.seek(0)
+    decoded_database = binary_data.decode(b, extra)
+
+    # Run
+    assert json_database == decoded_database
+
+    comparable_json = _comparable_dict(json_database)
+    comparable_binary = _comparable_dict(decoded_database)
+    assert comparable_json == comparable_binary

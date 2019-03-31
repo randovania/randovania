@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, PropertyMock
 
 from randovania.game_description.node import EventNode
 from randovania.resolver.resolver_reach import ResolverReach
@@ -15,18 +15,31 @@ def test_possible_actions_empty():
 
 def test_possible_actions_no_resources():
     state = MagicMock()
+    node_a = MagicMock()
+    node_b = MagicMock()
+    node_b.can_collect.return_value = False
 
-    reach = ResolverReach([MagicMock(), MagicMock()], {}, frozenset(), MagicMock())
+    type(node_a).is_resource_node = prop_a = PropertyMock(return_value=False)
+    type(node_b).is_resource_node = prop_b = PropertyMock(return_value=True)
+
+    # Run
+    reach = ResolverReach([node_a, node_b], {}, frozenset(), MagicMock())
     options = list(reach.possible_actions(state))
 
+    # Assert
     assert options == []
+    prop_a.assert_called_once_with()
+    prop_b.assert_called_once_with()
+    node_b.can_collect.assert_called_once_with(state.patches, state.resources)
 
 
 def test_possible_actions_with_event():
     logic = MagicMock()
     state = MagicMock()
+
     event = MagicMock(spec=EventNode)
-    state.has_resource.return_value = False
+    type(event).is_resource_node = prop = PropertyMock(return_value=True)
+    event.can_collect.return_value = True
 
     # Run
     reach = ResolverReach([event], {}, frozenset(), logic)
@@ -34,8 +47,8 @@ def test_possible_actions_with_event():
 
     # Assert
     assert options == [event]
-    event.resource.assert_called_once_with()
-    state.has_resource.assert_called_once_with(event.resource.return_value)
+    prop.assert_called_once_with()
+    event.can_collect.assert_called_once_with(state.patches, state.resources)
     logic.get_additional_requirements.assert_called_once_with(event)
     logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources,
                                                                                      state.resource_database)
