@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: There can now be a total of 99 of any single Major Item, up from 9.
 
+-   Added: `randovania echoes database list-resource-usage` now supports all types of
+    resources.
+
+-   Added: `list-resource-usage` and `list-difficulty-usage` now has the `--print-only-area`
+    argument.
+
 -   Changed: Areas with names starting with !! are now hidden in the Data Visualizer.
 
 ## [0.25.0] - 2019-03-24
