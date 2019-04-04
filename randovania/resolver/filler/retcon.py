@@ -118,13 +118,13 @@ def retcon_playthrough_filler(logic: Logic,
                 print_retcon_place_pickup(action, logic, pickup_index)
 
             else:
+                num_random_starting_items_placed += 1
                 if num_random_starting_items_placed > maximum_random_starting_items:
                     raise RuntimeError("Attempting to place more extra starting items than the allowed.")
 
                 if debug.debug_level() > 1:
                     print(f"Adding {action.name} as a starting item")
 
-                num_random_starting_items_placed += 1
                 next_state = reach.state.assign_pickup_to_starting_items(action)
 
             # TODO: this item is potentially dangerous and we should remove the invalidated paths
