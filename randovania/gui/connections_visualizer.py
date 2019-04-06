@@ -161,7 +161,7 @@ class ConnectionsVisualizer:
 
         if requirement_set is not None:
             empty = True
-            for alternative in requirement_set.alternatives:
+            for alternative in sorted(requirement_set.alternatives):
                 if alternative.items or self.edit_mode:
                     empty = False
                     self._add_box_with_requirements(alternative)
