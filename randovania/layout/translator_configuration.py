@@ -15,6 +15,20 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
     COBALT = "cobalt"
     RANDOM = "random"
 
+    @property
+    def item_index(self) -> int:
+        if self == LayoutTranslatorRequirement.RANDOM:
+            raise ValueError("The random Requirement shouldn't be used for item_index")
+        return ITEM_INDICES[self]
+
+
+ITEM_INDICES = {
+    LayoutTranslatorRequirement.VIOLET: 97,
+    LayoutTranslatorRequirement.AMBER: 98,
+    LayoutTranslatorRequirement.EMERALD: 99,
+    LayoutTranslatorRequirement.COBALT: 100,
+}
+
 
 @dataclasses.dataclass(frozen=True)
 class TranslatorConfiguration(BitPackValue):
