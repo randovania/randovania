@@ -327,7 +327,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
             category_label = QLabel(self.major_items_box)
             category_label.setSizePolicy(size_policy)
-            category_label.setText(major_item_category.value)
+            category_label.setText(major_item_category.long_name)
 
             category_box = QGroupBox(self.major_items_box)
             category_box.setSizePolicy(size_policy)
@@ -448,7 +448,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
             category_label = QLabel(self.ammo_box)
             category_label.setSizePolicy(size_policy)
-            category_label.setText(ammo.name)
+            category_label.setText(ammo.name + "s")
             title_layout.addWidget(category_label)
 
             pickup_box = QGroupBox(self.ammo_box)
