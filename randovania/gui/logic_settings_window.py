@@ -2,10 +2,11 @@ import functools
 from typing import Optional
 
 from PySide2 import QtCore
-from PySide2.QtWidgets import QMainWindow, QComboBox
+from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
@@ -70,11 +71,16 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.setupUi(self)
         self._options = options
 
+        game_description = data_reader.decode_data(default_data.decode_default_prime2(), False)
+        self.world_list = game_description.world_list
+        self.resource_database = game_description.resource_database
+
         # Update with Options
         self.setup_trick_level_elements()
         self.setup_elevator_elements()
         self.setup_sky_temple_elements()
         self.setup_starting_area_elements()
+        self.setup_translators_elements()
 
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
@@ -167,9 +173,6 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.startingarea_combo.setItemData(1, StartingLocationConfiguration.RANDOM_SAVE_STATION)
         self.startingarea_combo.setItemData(2, StartingLocationConfiguration.CUSTOM)
 
-        game_description = data_reader.decode_data(default_data.decode_default_prime2(), False)
-        self.world_list = game_description.world_list
-
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             self.specific_starting_world_combo.addItem(world.name, userData=world)
 
@@ -216,3 +219,21 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             return self.specific_starting_area_combo.currentData() is not None
         else:
             return True
+
+    # Translator Gates
+    def setup_translators_elements(self):
+        randomizer_data = default_data.decode_randomizer_data()
+
+        translator_items = [
+            self.resource_database.get_by_type_and_index(ResourceType.ITEM, data["ItemIndex"])
+            for data in randomizer_data["TranslatorData"]
+        ]
+
+        for i, gate in enumerate(randomizer_data["TranslatorLocationData"]):
+            label = QLabel(self.translators_scroll_contents)
+            label.setText(gate["Name"])
+            self.translators_layout.addWidget(label, 3 + i, 0, 1, 1)
+
+            combo = QComboBox(self.translators_scroll_contents)
+            combo.addItems([item.long_name for item in translator_items])
+            self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
