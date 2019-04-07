@@ -136,7 +136,7 @@ class TranslatorGateNode(ResourceNode):
         if current_resources.get(self.gate, 0) != 0:
             return False
         translator = patches.translator_gates[self.gate]
-        return current_resources.get(self.scan_visor) > 0 and current_resources.get(translator, 0) > 0
+        return current_resources.get(self.scan_visor, 0) > 0 and current_resources.get(translator, 0) > 0
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.gate, 1
