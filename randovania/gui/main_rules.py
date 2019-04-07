@@ -24,8 +24,10 @@ from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorI
 from randovania.resolver.exceptions import InvalidConfiguration
 from randovania.resolver.item_pool.ammo import items_for_ammo
 
-_EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion} for a total of {total}."
+_EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion}, for a total of {total}."
                                  "\n{from_items} will be provided from major items.")
+_EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("Each expansion will provide exactly {per_expansion}, for a total of {total}."
+                                       "\n{from_items} will be provided from major items.")
 
 AmmoPickupWidgets = Tuple[QSpinBox, QLabel, QToolButton, QLabel, QGroupBox, Optional[QCheckBox]]
 
@@ -163,8 +165,13 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                     self._ammo_pickup_widgets[ammo][1].setText("No expansions will be created.")
                     continue
 
+                if {total % state.pickup_count for total in totals} == {0}:
+                    count_text_template = _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT
+                else:
+                    count_text_template = _EXPECTED_COUNT_TEXT_TEMPLATE
+
                 self._ammo_pickup_widgets[ammo][1].setText(
-                    _EXPECTED_COUNT_TEXT_TEMPLATE.format(
+                    count_text_template.format(
                         per_expansion=" and ".join(
                             "{} {}".format(
                                 total // state.pickup_count,
@@ -320,7 +327,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
             category_label = QLabel(self.major_items_box)
             category_label.setSizePolicy(size_policy)
-            category_label.setText(major_item_category.value)
+            category_label.setText(major_item_category.long_name)
 
             category_box = QGroupBox(self.major_items_box)
             category_box.setSizePolicy(size_policy)
@@ -441,7 +448,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
             category_label = QLabel(self.ammo_box)
             category_label.setSizePolicy(size_policy)
-            category_label.setText(ammo.name)
+            category_label.setText(ammo.name + "s")
             title_layout.addWidget(category_label)
 
             pickup_box = QGroupBox(self.ammo_box)
