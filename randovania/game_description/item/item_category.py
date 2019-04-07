@@ -26,6 +26,10 @@ class ItemCategory(BitPackEnum, Enum):
     def is_key(self) -> bool:
         return self in TEMPLE_KEY_CATEGORIES
 
+    @property
+    def long_name(self):
+        return LONG_NAMES[self]
+
 
 MAJOR_ITEM_CATEGORIES = {
     ItemCategory.VISOR,
@@ -41,4 +45,20 @@ MAJOR_ITEM_CATEGORIES = {
 
 TEMPLE_KEY_CATEGORIES = {
     ItemCategory.TEMPLE_KEY, ItemCategory.SKY_TEMPLE_KEY
+}
+
+LONG_NAMES = {
+    ItemCategory.VISOR: "Visors",
+    ItemCategory.SUIT: "Suits",
+    ItemCategory.BEAM: "Beams",
+    ItemCategory.MORPH_BALL: "Morph Ball",
+    ItemCategory.MOVEMENT: "Movement",
+    ItemCategory.MISSILE: "Missile",
+    ItemCategory.BEAM_COMBO: "Beam Combos",
+    ItemCategory.TRANSLATOR: "Translators",
+    ItemCategory.ENERGY_TANK: "Energy Tanks",
+    ItemCategory.TEMPLE_KEY: "Temple Keys",
+    ItemCategory.SKY_TEMPLE_KEY: "Sky Temple Keys",
+    ItemCategory.ETM: "Energy Transfer Module",
+    ItemCategory.EXPANSION: "Expansions",
 }
