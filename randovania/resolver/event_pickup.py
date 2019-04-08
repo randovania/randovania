@@ -1,19 +1,16 @@
-from typing import NamedTuple, Tuple, List
+import dataclasses
+from typing import Tuple, List
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import EventNode, PickupNode
+from randovania.game_description.node import EventNode, PickupNode, ResourceNode
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
-from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources
+from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources, ResourceInfo
 
 
-class EventPickupNode(NamedTuple):
-    name: str
-    heal: bool
+@dataclasses.dataclass(frozen=True)
+class EventPickupNode(ResourceNode):
     event_node: EventNode
     pickup_node: PickupNode
-
-    def __deepcopy__(self, memodict):
-        return EventPickupNode(self.name, self.heal, self.event_node, self.pickup_node)
 
     def __repr__(self):
         return "EventPickupNode({!r} -> {}+{})".format(
@@ -25,6 +22,9 @@ class EventPickupNode(NamedTuple):
     @property
     def is_resource_node(self) -> bool:
         return True
+
+    def resource(self) -> ResourceInfo:
+        pass
 
     def can_collect(self, patches, current_resources: CurrentResources) -> bool:
         event_collect = self.event_node.can_collect(patches, current_resources)
