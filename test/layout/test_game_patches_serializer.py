@@ -11,6 +11,7 @@ from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -23,6 +24,7 @@ from randovania.resolver.item_pool import pickup_creator
         {},
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
+        {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": ['HUhMANYCAA==', "Screw Attack"]},
     ],
     name="patches_with_data")
@@ -33,6 +35,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         "starting_location": "Temple Grounds/Landing Site",
         "starting_items": {},
         "elevators": {},
+        "translators": {},
         "locations": {
             world.name: {
                 game.world_list.node_name(node): "Nothing"
@@ -58,6 +61,14 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
             elevator_id: game.starting_location,
         })
         data["elevators"][elevator_source] = "Temple Grounds/Landing Site"
+
+    if request.param.get("translator"):
+        gates = {}
+        for index, gate_name, translator in request.param.get("translator"):
+            gates[TranslatorGate(index)] = find_resource_info_with_long_name(game.resource_database.item, translator)
+            data["translators"][gate_name] = translator
+
+        patches = patches.assign_gate_assignment(gates)
 
     if request.param.get("pickup"):
         data["_locations_internal"], pickup_name = request.param.get("pickup")

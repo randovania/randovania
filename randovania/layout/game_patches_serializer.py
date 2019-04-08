@@ -13,7 +13,9 @@ from randovania.game_description.node import PickupNode, TeleporterNode, Node
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, \
     MAXIMUM_PICKUP_CONDITIONAL_RESOURCES, MAXIMUM_PICKUP_RESOURCES, MAXIMUM_PICKUP_CONVERSION, PickupEntry
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, ResourceDatabase
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime import default_data
 from randovania.layout.layout_configuration import LayoutConfiguration
 
 
@@ -162,6 +164,20 @@ def _find_node_with_teleporter(world_list: WorldList, teleporter_id: int) -> Nod
     raise ValueError("Unknown teleporter_id: {}".format(teleporter_id))
 
 
+def _name_for_gate(gate: TranslatorGate) -> str:
+    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+        if items["Index"] == gate.index:
+            return items["Name"]
+    raise ValueError("Unknown gate: {}".format(gate))
+
+
+def _find_gate_with_name(gate_name: str) -> TranslatorGate:
+    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+        if items["Name"] == gate_name:
+            return TranslatorGate(items["Index"])
+    raise ValueError("Unknown gate name: {}".format(gate_name))
+
+
 def serialize(patches: GamePatches, game_data: dict) -> dict:
     """
     Encodes a given GamePatches into a JSON-serializable dict.
@@ -190,6 +206,10 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
                                                                    patches.pickup_assignment,
                                                                    ordered_pickups).items()
         },
+        "translators": {
+            _name_for_gate(gate): requirement.long_name
+            for gate, requirement in patches.translator_gates.items()
+        }
     }
 
     b = bitpacking.pack_value(BitPackPickupEntryList(ordered_pickups, game.resource_database))
@@ -234,6 +254,12 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         assert isinstance(source_node, TeleporterNode)
         elevator_connection[source_node.teleporter_instance_id] = target_area
 
+    # Translator Gates
+    translator_gates = {
+        _find_gate_with_name(gate_name): find_resource_info_with_long_name(game.resource_database.item, resource_name)
+        for gate_name, resource_name in game_modifications["translators"].items()
+    }
+
     # Pickups
     pickup_assignment = {}
     decoder = BitPackDecoder(base64.b64decode(game_modifications["_locations_internal"].encode("utf-8"), validate=True))
@@ -254,7 +280,7 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         elevator_connection=elevator_connection,  # Dict[int, AreaLocation]
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
         dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
-        translator_gates={},
+        translator_gates=translator_gates,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
     )
