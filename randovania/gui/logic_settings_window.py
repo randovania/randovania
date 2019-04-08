@@ -1,12 +1,12 @@
 import functools
-from typing import Optional
+from typing import Optional, Dict
 
 from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
@@ -16,6 +16,7 @@ from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode
 from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
+from randovania.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
@@ -63,6 +64,7 @@ def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
 
 
 class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
+    _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _options: Options
     world_list: WorldList
 
@@ -119,6 +121,11 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
             set_combo_with_value(self.specific_starting_world_combo, world)
             set_combo_with_value(self.specific_starting_area_combo, world.area_by_asset_id(area_location.area_asset_id))
+
+        # Translator Gates
+        translator_requirement = options.layout_configuration.translator_configuration.translator_requirement
+        for gate, combo in self._combo_for_gate.items():
+            set_combo_with_value(combo, translator_requirement[gate])
 
     # Trick Level
     def setup_trick_level_elements(self):
@@ -224,10 +231,11 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     def setup_translators_elements(self):
         randomizer_data = default_data.decode_randomizer_data()
 
-        translator_items = [
-            self.resource_database.get_by_type_and_index(ResourceType.ITEM, data["ItemIndex"])
-            for data in randomizer_data["TranslatorData"]
-        ]
+        self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
+        self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
+        self.translator_vanilla_colors_button.clicked.connect(self._on_vanilla_colors_gates_pressed)
+
+        self._combo_for_gate = {}
 
         for i, gate in enumerate(randomizer_data["TranslatorLocationData"]):
             label = QLabel(self.translators_scroll_contents)
@@ -235,5 +243,29 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self.translators_layout.addWidget(label, 3 + i, 0, 1, 1)
 
             combo = QComboBox(self.translators_scroll_contents)
-            combo.addItems([item.long_name for item in translator_items])
+            combo.gate = TranslatorGate(gate["Index"])
+            for item in LayoutTranslatorRequirement:
+                combo.addItem(item.long_name, item)
+            combo.currentIndexChanged.connect(functools.partial(self._on_gate_combo_box_changed, combo))
+
             self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
+            self._combo_for_gate[combo.gate] = combo
+
+    def _on_randomize_all_gates_pressed(self):
+        with self._options as options:
+            options.set_layout_configuration_field("translator_configuration", TranslatorConfiguration.full_random())
+
+    def _on_vanilla_actual_gates_pressed(self):
+        with self._options as options:
+            options.set_layout_configuration_field("translator_configuration", TranslatorConfiguration.default())
+
+    def _on_vanilla_colors_gates_pressed(self):
+        with self._options as options:
+            options.set_layout_configuration_field("translator_configuration", TranslatorConfiguration.vanilla_colors())
+
+    def _on_gate_combo_box_changed(self, combo: QComboBox, new_index: int):
+        with self._options as options:
+            options.set_layout_configuration_field(
+                "translator_configuration",
+                options.layout_configuration.translator_configuration.replace_requirement_for_gate(
+                    combo.gate, combo.currentData()))

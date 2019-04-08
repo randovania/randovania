@@ -21,12 +21,24 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
             raise ValueError("The random Requirement shouldn't be used for item_index")
         return ITEM_INDICES[self]
 
+    @property
+    def long_name(self) -> str:
+        return LONG_NAMES[self]
+
 
 ITEM_INDICES = {
     LayoutTranslatorRequirement.VIOLET: 97,
     LayoutTranslatorRequirement.AMBER: 98,
     LayoutTranslatorRequirement.EMERALD: 99,
     LayoutTranslatorRequirement.COBALT: 100,
+}
+
+LONG_NAMES = {
+    LayoutTranslatorRequirement.VIOLET: "Violet Translator",
+    LayoutTranslatorRequirement.AMBER: "Amber Translator",
+    LayoutTranslatorRequirement.EMERALD: "Emerald Translator",
+    LayoutTranslatorRequirement.COBALT: "Cobalt Translator",
+    LayoutTranslatorRequirement.RANDOM: "Random",
 }
 
 
@@ -107,3 +119,17 @@ class TranslatorConfiguration(BitPackValue):
             key: LayoutTranslatorRequirement.RANDOM
             for key in default.translator_requirement.keys()
         })
+
+    def replace_requirement_for_gate(self, gate: TranslatorGate,
+                                     requirement: LayoutTranslatorRequirement,
+                                     ) -> "TranslatorConfiguration":
+        """
+        Replaces the requirement for the given gate. The gate must already have a requirement.
+        :param gate:
+        :param requirement:
+        :return:
+        """
+        assert gate in self.translator_requirement
+        new_requirement = copy.copy(self.translator_requirement)
+        new_requirement[gate] = requirement
+        return TranslatorConfiguration(new_requirement)
