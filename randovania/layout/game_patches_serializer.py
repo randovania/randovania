@@ -3,7 +3,7 @@ import re
 from typing import Dict, List, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment
@@ -93,7 +93,7 @@ class BitPackPickupEntry:
         )
 
 
-class BitPackPickupEntryList:
+class BitPackPickupEntryList(BitPackValue):
     value: List[PickupEntry]
     database: ResourceDatabase
 
@@ -104,6 +104,10 @@ class BitPackPickupEntryList:
     def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         for entry in self.value:
             yield from BitPackPickupEntry(entry, self.database).bit_pack_encode()
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+        raise RuntimeError("Unsupported operation")
 
 
 def _pickup_assignment_to_item_locations(world_list: WorldList,
@@ -137,7 +141,9 @@ def _node_mapping_to_elevator_connection(world_list: WorldList,
                                          ) -> Dict[int, AreaLocation]:
     result = {}
     for source_name, target_node in elevators.items():
-        source_node: TeleporterNode = world_list.node_from_name(source_name)
+        source_node = world_list.node_from_name(source_name)
+        assert isinstance(source_node, TeleporterNode)
+
         target_node = world_list.node_from_name(target_node)
 
         result[source_node.teleporter_instance_id] = AreaLocation(
@@ -224,7 +230,9 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         source_area = _area_name_to_area_location(world_list, source_name)
         target_area = _area_name_to_area_location(world_list, target_name)
 
-        elevator_connection[world_list.resolve_teleporter_connection(source_area).teleporter_instance_id] = target_area
+        source_node = world_list.resolve_teleporter_connection(source_area)
+        assert isinstance(source_node, TeleporterNode)
+        elevator_connection[source_node.teleporter_instance_id] = target_area
 
     # Pickups
     pickup_assignment = {}
@@ -235,7 +243,9 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
             if pickup_name == "Nothing":
                 continue
 
-            node: PickupNode = world_list.node_from_name(f"{world_name}/{area_node_name}")
+            node = world_list.node_from_name(f"{world_name}/{area_node_name}")
+            assert isinstance(node, PickupNode)
+
             pickup = BitPackPickupEntry.bit_pack_unpack(decoder, pickup_name, game.resource_database)
             pickup_assignment[node.pickup_index] = pickup
 
