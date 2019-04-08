@@ -133,6 +133,8 @@ class TranslatorGateNode(ResourceNode):
         :param current_resources:
         :return:
         """
+        if current_resources.get(self.gate, 0) != 0:
+            return False
         translator = patches.translator_gates[self.gate]
         return current_resources.get(self.scan_visor) > 0 and current_resources.get(translator, 0) > 0
 
