@@ -200,16 +200,16 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
                 world_list.area_name(world_list.nodes_to_area(world_list.resolve_teleporter_connection(connection)))
             for teleporter_id, connection in patches.elevator_connection.items()
         },
+        "translators": {
+            _name_for_gate(gate): requirement.long_name
+            for gate, requirement in patches.translator_gates.items()
+        },
         "locations": {
             key: value
             for key, value in _pickup_assignment_to_item_locations(world_list,
                                                                    patches.pickup_assignment,
                                                                    ordered_pickups).items()
         },
-        "translators": {
-            _name_for_gate(gate): requirement.long_name
-            for gate, requirement in patches.translator_gates.items()
-        }
     }
 
     b = bitpacking.pack_value(BitPackPickupEntryList(ordered_pickups, game.resource_database))
