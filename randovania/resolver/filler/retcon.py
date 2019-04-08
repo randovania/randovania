@@ -89,7 +89,9 @@ def retcon_playthrough_filler(logic: Logic,
             status_update("{} {}".format(last_message, message))
 
         actions_weights = _calculate_potential_actions(reach, progression_pickups,
-                                                       current_uncollected, action_report)
+                                                       current_uncollected,
+                                                       maximum_random_starting_items - num_random_starting_items_placed,
+                                                       action_report)
 
         try:
             action = next(iterate_with_weights(list(actions_weights.keys()), actions_weights, rng))
@@ -214,6 +216,7 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 def _calculate_potential_actions(reach: GeneratorReach,
                                  progression_pickups: Tuple[PickupEntry, ...],
                                  current_uncollected: UncollectedState,
+                                 free_starting_items_spots: int,
                                  status_update: Callable[[str], None]):
     actions_weights: Dict[Action, float] = {}
     uncollected_resource_nodes = get_collectable_resource_nodes_of_reach(reach)
@@ -227,11 +230,14 @@ def _calculate_potential_actions(reach: GeneratorReach,
 
     total_options += len(progression_pickups)
     for progression in progression_pickups:
-        actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
-                                                                                               progression),
-                                                              current_uncollected,
-                                                              progression.name) + progression.probability_offset
-        update_for_option()
+        items_for_progression = 1
+        if items_for_progression <= len(
+                current_uncollected.indices) or items_for_progression <= free_starting_items_spots:
+            actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
+                                                                                                   progression),
+                                                                  current_uncollected,
+                                                                  progression.name) + progression.probability_offset
+            update_for_option()
 
     for resource in uncollected_resource_nodes:
         actions_weights[resource] = _calculate_weights_for(
