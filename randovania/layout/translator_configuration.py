@@ -159,6 +159,9 @@ class TranslatorConfiguration(BitPackValue):
         :return:
         """
         assert gate in self.translator_requirement
+        result = copy.copy(self)
+
         new_requirement = copy.copy(self.translator_requirement)
         new_requirement[gate] = requirement
-        return TranslatorConfiguration(new_requirement)
+
+        return dataclasses.replace(result, translator_requirement=new_requirement)
