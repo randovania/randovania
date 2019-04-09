@@ -6,9 +6,10 @@ from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
-from randovania.game_description.resources import ResourceInfo, \
-    CurrentResources, ResourceDatabase, DamageResourceInfo, SimpleResourceInfo, \
-    ResourceGainTuple
+from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world_list import WorldList
 
 
@@ -74,6 +75,7 @@ class GameDescription:
         self.world_list = world_list
         self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
+        # TODO: refresh dangerous_resources during simplify_connections
         self.dangerous_resources = frozenset(
             _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
             _calculate_dangerous_resources_in_db(self.dock_weakness_database))

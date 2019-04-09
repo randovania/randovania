@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional, Tuple
 
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources import PickupIndex
+from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 @dataclass(frozen=True)

@@ -5,9 +5,11 @@ from typing import List, Dict, Iterator, Tuple, FrozenSet, Iterable
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode, DockConnection
+from randovania.game_description.node import Node, DockNode, TeleporterNode
+from randovania.game_description.dock import DockConnection
 from randovania.game_description.requirements import RequirementSet
-from randovania.game_description.resources import CurrentResources, ResourceDatabase, ResourceInfo
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world import World
 
 
@@ -166,11 +168,13 @@ class WorldList:
 
     def simplify_connections(self,
                              static_resources: CurrentResources,
-                             resource_database: ResourceDatabase) -> None:
+                             resource_database: ResourceDatabase,
+                             ) -> None:
         """
         Simplifies all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
         :param static_resources:
+        :param resource_database:
         :return:
         """
         for world in self.worlds:

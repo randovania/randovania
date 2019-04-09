@@ -4,10 +4,12 @@ from dataclasses import dataclass
 from typing import Dict, Tuple, Iterator
 
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.dock import DockWeakness
-from randovania.game_description.node import DockConnection
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupAssignment, PickupIndex, PickupEntry, CurrentResources
+from randovania.game_description.assignment import PickupAssignment, GateAssignment
+from randovania.game_description.dock import DockWeakness, DockConnection
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.resource_type import ResourceType
 
 
 @dataclass(frozen=True)
@@ -21,12 +23,13 @@ class GamePatches:
     elevator_connection: Dict[int, AreaLocation]
     dock_connection: Dict[Tuple[int, int], DockConnection]
     dock_weakness: Dict[Tuple[int, int], DockWeakness]
+    translator_gates: GateAssignment
     starting_items: CurrentResources
     starting_location: AreaLocation
 
     @classmethod
     def with_game(cls, game: "GameDescription") -> "GamePatches":
-        return GamePatches({}, {}, {}, {}, {}, game.starting_location)
+        return GamePatches({}, {}, {}, {}, {}, {}, game.starting_location)
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupEntry]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -40,6 +43,16 @@ class GamePatches:
     def assign_pickup_assignment(self, assignment: PickupAssignment) -> "GamePatches":
         items: Iterator[Tuple[PickupIndex, PickupEntry]] = assignment.items()
         return self.assign_new_pickups(items)
+
+    def assign_gate_assignment(self, assignment: GateAssignment) -> "GamePatches":
+        new_translator_gates = copy.copy(self.translator_gates)
+
+        for gate, translator in assignment.items():
+            assert gate not in new_translator_gates
+            assert gate.resource_type == ResourceType.GATE_INDEX
+            new_translator_gates[gate] = translator
+
+        return dataclasses.replace(self, translator_gates=new_translator_gates)
 
     def assign_starting_location(self, location: AreaLocation) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)

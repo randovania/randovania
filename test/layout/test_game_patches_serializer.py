@@ -8,8 +8,9 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
-from randovania.game_description.resources import find_resource_info_with_long_name, PickupIndex, PickupEntry, \
-    ConditionalResources, ResourceConversion
+from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
+from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_configuration import LayoutConfiguration

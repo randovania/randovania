@@ -118,6 +118,10 @@ class GeneratorReach:
             if target_node is None:
                 continue
 
+            requirement_to_leave = node.requirements_to_leave(self._state.patches, self._state.resources)
+            if requirement_to_leave != RequirementSet.trivial():
+                requirements = requirements.union(requirement_to_leave)
+
             if extra_requirement is not None:
                 requirements = requirements.union(extra_requirement)
 
@@ -315,7 +319,9 @@ def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[R
     extra_requirement = None
 
     if node.is_resource_node:
-        node_resource = node.resource()
+        resource_node: ResourceNode = node
+
+        node_resource = resource_node.resource()
         if node_resource in game.dangerous_resources:
             extra_requirement = RequirementSet([RequirementList.with_single_resource(node_resource)])
 

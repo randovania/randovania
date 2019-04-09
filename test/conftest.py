@@ -8,7 +8,7 @@ import pytest
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
-from randovania.game_description.resources import ResourceDatabase
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime import default_data
 
 
@@ -55,7 +55,7 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 @pytest.fixture()
 def empty_patches() -> GamePatches:
-    return GamePatches({}, {}, {}, {}, {}, None)
+    return GamePatches({}, {}, {}, {}, {}, {}, None)
 
 
 def pytest_addoption(parser):

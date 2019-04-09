@@ -6,7 +6,8 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
-from randovania.game_description.resources import PickupEntry, PickupIndex
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.resolver.generator_reach import GeneratorReach, get_collectable_resource_nodes_of_reach
 from randovania.resolver.logic import Logic
 

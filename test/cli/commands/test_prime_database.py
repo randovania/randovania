@@ -3,8 +3,8 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from randovania.cli import prime_database
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import SimpleResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
 @pytest.mark.parametrize("expected_resource", [0, 1, 2])

@@ -3,9 +3,11 @@ from typing import Optional, Tuple, List
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import ResourceDatabase, PickupEntry, ConditionalResources, \
-    ResourceQuantity, SimpleResourceInfo, ResourceConversion
+from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceQuantity
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.layout.major_item_state import MajorItemState
 
 _ITEM_PERCENTAGE = 47

@@ -4,8 +4,17 @@ from typing import Tuple, List, Iterator
 import pytest
 
 from randovania.game_description import data_reader
+from randovania.game_description.area import Area
+from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import ResourceNode, Node, PickupNode
+from randovania.game_description.node import ResourceNode, Node, PickupNode, GenericNode, TranslatorGateNode
+from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.resources.resource_info import add_resources_into_another
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world import World
+from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -72,6 +81,7 @@ def test_calculate_reach_with_all_pickups(test_data):
     logic, state, _ = test_data
 
     item_pool = calculate_item_pool(LayoutConfiguration.from_params(), logic.game.resource_database, state.patches)
+    add_resources_into_another(state.resources, item_pool[0].starting_items)
     for pickup in item_pool[1]:
         add_pickup_to_state(state, pickup)
 
@@ -85,3 +95,57 @@ def test_calculate_reach_with_all_pickups(test_data):
     # assert (len(list(second_reach.nodes)), len(second_actions)) == (898, 9)
     pprint.pprint(first_actions)
     assert all_pickups == found_pickups
+
+
+@pytest.mark.parametrize("has_translator", [False, True])
+def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database):
+    # Setup
+    scan_visor = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 10)
+
+    node_a = GenericNode("Node A", True, 1)
+    node_b = GenericNode("Node B", True, 2)
+    node_c = GenericNode("Node C", True, 3)
+    translator_node = TranslatorGateNode("Translator Gate", True, TranslatorGate(1), scan_visor)
+
+    world_list = WorldList([
+        World("Test World", 1, [
+            Area("Test Area A", 10, 0, [node_a, node_b, node_c, translator_node],
+                 {
+                     node_a: {
+                         node_b: RequirementSet.trivial(),
+                         translator_node: RequirementSet.trivial(),
+                     },
+                     node_b: {
+                         node_a: RequirementSet.trivial(),
+                     },
+                     node_c: {
+                         translator_node: RequirementSet.trivial(),
+                     },
+                     translator_node: {
+                         node_a: RequirementSet.trivial(),
+                         node_c: RequirementSet.trivial(),
+                     },
+                 }
+            )
+        ])
+    ])
+    game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
+                           echoes_resource_database, RequirementSet.impossible(),
+                           None, {}, world_list, False)
+    logic = Logic(game, LayoutConfiguration.from_params())
+
+    patches = GamePatches.with_game(game)
+    patches = patches.assign_gate_assignment({
+        TranslatorGate(1): scan_visor
+    })
+    initial_state = State({scan_visor: 1 if has_translator else 0},
+                          node_a, patches, None, echoes_resource_database)
+
+    # Run
+    reach = reach_with_all_safe_resources(logic, initial_state)
+
+    # Assert
+    if has_translator:
+        assert set(reach.safe_nodes) == {node_a, node_b, translator_node, node_c}
+    else:
+        assert set(reach.safe_nodes) == {node_a, node_b}

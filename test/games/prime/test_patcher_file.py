@@ -10,9 +10,10 @@ import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import PickupIndex, PickupEntry, SimpleResourceInfo, \
-    ConditionalResources
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime import patcher_file, default_data
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
