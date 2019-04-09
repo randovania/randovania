@@ -222,12 +222,15 @@ def _modify_resources(game: GameDescription,
 
 
 def _list_paths_with_resource(game: GameDescription,
+                              print_only_area: bool,
                               resource: ResourceInfo,
                               needed_quantity: Optional[int]):
     count = 0
 
     for world in game.world_list.worlds:
         for area in world.areas:
+            area_had_resource = False
+
             for source, connection in area.connections.items():
                 for target, requirements in connection.items():
                     for alternative in requirements.alternatives:
@@ -236,15 +239,20 @@ def _list_paths_with_resource(game: GameDescription,
                             continue
 
                         if needed_quantity is None or needed_quantity == individual.amount:
-                            print("At {0.name}/{1.name}, from {2} to {3}:\n{4}\n".format(
-                                world,
-                                area,
-                                source.name,
-                                target.name,
-                                sorted(individual for individual in alternative.values()
-                                       if individual.resource != resource)
-                            ))
+                            area_had_resource = True
+                            if not print_only_area:
+                                print("At {0.name}/{1.name}, from {2} to {3}:\n{4}\n".format(
+                                    world,
+                                    area,
+                                    source.name,
+                                    target.name,
+                                    sorted(individual for individual in alternative.values()
+                                           if individual.resource != resource)
+                                ))
                             count += 1
+
+            if area_had_resource and print_only_area:
+                print("{0.name}/{1.name}".format(world, area))
 
     print("Total routes: {}".format(count))
 
@@ -253,6 +261,7 @@ def list_paths_with_difficulty_logic(args):
     gd = load_game_description(args)
     _list_paths_with_resource(
         gd,
+        args.print_only_area,
         gd.resource_database.difficulty_resource,
         args.difficulty
     )
@@ -265,6 +274,8 @@ def list_paths_with_difficulty_command(sub_parsers):
         formatter_class=argparse.MetavarTypeHelpFormatter
     )  # type: ArgumentParser
     add_data_file_argument(parser)
+    parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
+                        action="store_true")
     parser.add_argument("difficulty", type=int)
     parser.set_defaults(func=list_paths_with_difficulty_logic)
 
@@ -272,10 +283,8 @@ def list_paths_with_difficulty_command(sub_parsers):
 def list_paths_with_resource_logic(args):
     gd = load_game_description(args)
 
-    resource_types = [gd.resource_database.item, gd.resource_database.event, gd.resource_database.trick]
-
     resource = None
-    for resource_type in resource_types:
+    for resource_type in gd.resource_database:
         try:
             resource = find_resource_info_with_long_name(resource_type, args.resource)
             break
@@ -288,6 +297,7 @@ def list_paths_with_resource_logic(args):
 
     _list_paths_with_resource(
         gd,
+        args.print_only_area,
         resource,
         None
     )
@@ -300,6 +310,8 @@ def list_paths_with_resource_command(sub_parsers):
         formatter_class=argparse.MetavarTypeHelpFormatter
     )  # type: ArgumentParser
     add_data_file_argument(parser)
+    parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
+                        action="store_true")
     parser.add_argument("resource", type=str)
     parser.set_defaults(func=list_paths_with_resource_logic)
 

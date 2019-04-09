@@ -8,6 +8,7 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, Q
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
+from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.world import World
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.connections_editor import ConnectionsEditor
@@ -32,7 +33,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
-        self.save_database_button.clicked.connect(self._save_database)
+        self.save_database_button.clicked.connect(self._prompt_save_database)
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.verticalLayout.setAlignment(Qt.AlignTop)
@@ -52,6 +53,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def on_select_world(self):
         self.area_selector_box.clear()
         for area in sorted(self.current_world.areas, key=lambda x: x.name):
+            if area.name.startswith("!!"):
+                continue
             self.area_selector_box.addItem(area.name, userData=area)
         self.area_selector_box.setEnabled(True)
 
@@ -187,26 +190,34 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         requirement_set = self.current_area.connections[from_node].get(target_node)
         editor = ConnectionsEditor(self, self.resource_database, requirement_set)
         result = editor.exec_()
+
         if result == QDialog.Accepted:
-            current_connections = self.current_area.connections[from_node]
-            self.current_area.connections[from_node][target_node] = editor.final_requirement_set
-            if self.current_area.connections[from_node][target_node] is None:
-                del self.current_area.connections[from_node][target_node]
+            self._apply_edit_connections(from_node, target_node, editor.final_requirement_set)
 
-            self.current_area.connections[from_node] = {
-                node: current_connections[node]
-                for node in self.current_area.nodes
-                if node in current_connections
-            }
-            self.update_connections()
+    def _apply_edit_connections(self, from_node: Node, target_node: Node,
+                                requirement_set: Optional[RequirementSet]):
 
-    def _save_database(self):
+        current_connections = self.current_area.connections[from_node]
+        self.current_area.connections[from_node][target_node] = requirement_set
+        if self.current_area.connections[from_node][target_node] is None:
+            del self.current_area.connections[from_node][target_node]
+
+        self.current_area.connections[from_node] = {
+            node: current_connections[node]
+            for node in self.current_area.nodes
+            if node in current_connections
+        }
+        self.update_connections()
+
+    def _prompt_save_database(self):
         open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
         if not open_result or open_result == ("", ""):
             return
+        self._save_database(Path(open_result[0]))
 
+    def _save_database(self, path: Path):
         data = data_writer.write_game_description(self.game_description)
-        with Path(open_result[0]).open("w") as open_file:
+        with path.open("w") as open_file:
             json.dump(data, open_file, indent=4)
 
     def _create_new_node(self):
