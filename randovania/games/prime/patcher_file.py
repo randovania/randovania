@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
@@ -257,6 +258,21 @@ def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list
     return elevators
 
 
+def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
+    """
+    Creates the translator gate entries in the patcher file
+    :param gate_assignment:
+    :return:
+    """
+    return [
+        {
+            "gate_index": gate.index,
+            "translator_index": translator.index,
+        }
+        for gate, translator in gate_assignment.items()
+    ]
+
+
 def create_patcher_file(description: LayoutDescription,
                         cosmetic_patches: CosmeticPatches,
                         ) -> dict:
@@ -295,6 +311,9 @@ def create_patcher_file(description: LayoutDescription,
 
     # Add the elevators
     result["elevators"] = _create_elevators_field(patches, game.world_list)
+
+    # Add translators
+    result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
 
     # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
