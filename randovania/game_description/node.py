@@ -20,7 +20,7 @@ class Node:
 
     def __hash__(self):
         return super().__hash__()
-    
+
     @property
     def is_resource_node(self) -> bool:
         return False
@@ -140,4 +140,3 @@ class TranslatorGateNode(ResourceNode):
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.gate, 1
-
