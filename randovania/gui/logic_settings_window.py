@@ -1,3 +1,4 @@
+import dataclasses
 import functools
 from typing import Optional, Dict
 
@@ -16,7 +17,7 @@ from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode
 from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
-from randovania.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
+from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
@@ -123,9 +124,12 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             set_combo_with_value(self.specific_starting_area_combo, world.area_by_asset_id(area_location.area_asset_id))
 
         # Translator Gates
-        translator_requirement = options.layout_configuration.translator_configuration.translator_requirement
+        translator_configuration = options.layout_configuration.translator_configuration
+        self.always_up_gfmc_compound_check.setChecked(translator_configuration.fixed_gfmc_compound)
+        self.always_up_torvus_temple_check.setChecked(translator_configuration.fixed_torvus_temple)
+        self.always_up_great_temple_check.setChecked(translator_configuration.fixed_great_temple)
         for gate, combo in self._combo_for_gate.items():
-            set_combo_with_value(combo, translator_requirement[gate])
+            set_combo_with_value(combo, translator_configuration.translator_requirement[gate])
 
     # Trick Level
     def setup_trick_level_elements(self):
@@ -231,6 +235,13 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     def setup_translators_elements(self):
         randomizer_data = default_data.decode_randomizer_data()
 
+        self.always_up_gfmc_compound_check.stateChanged.connect(
+            functools.partial(self._on_always_up_check_changed, "fixed_gfmc_compound"))
+        self.always_up_torvus_temple_check.stateChanged.connect(
+            functools.partial(self._on_always_up_check_changed, "fixed_torvus_temple"))
+        self.always_up_great_temple_check.stateChanged.connect(
+            functools.partial(self._on_always_up_check_changed, "fixed_great_temple"))
+
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
         self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
         self.translator_vanilla_colors_button.clicked.connect(self._on_vanilla_colors_gates_pressed)
@@ -251,17 +262,30 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
             self._combo_for_gate[combo.gate] = combo
 
+    def _on_always_up_check_changed(self, field_name: str, new_value: int):
+        with self._options as options:
+            options.set_layout_configuration_field(
+                "translator_configuration",
+                dataclasses.replace(options.layout_configuration.translator_configuration,
+                                    **{field_name: bool(new_value)}))
+
     def _on_randomize_all_gates_pressed(self):
         with self._options as options:
-            options.set_layout_configuration_field("translator_configuration", TranslatorConfiguration.full_random())
+            options.set_layout_configuration_field(
+                "translator_configuration",
+                options.layout_configuration.translator_configuration.with_full_random())
 
     def _on_vanilla_actual_gates_pressed(self):
         with self._options as options:
-            options.set_layout_configuration_field("translator_configuration", TranslatorConfiguration.default())
+            options.set_layout_configuration_field(
+                "translator_configuration",
+                options.layout_configuration.translator_configuration.with_vanilla_actual())
 
     def _on_vanilla_colors_gates_pressed(self):
         with self._options as options:
-            options.set_layout_configuration_field("translator_configuration", TranslatorConfiguration.vanilla_colors())
+            options.set_layout_configuration_field(
+                "translator_configuration",
+                options.layout_configuration.translator_configuration.with_vanilla_colors())
 
     def _on_gate_combo_box_changed(self, combo: QComboBox, new_index: int):
         with self._options as options:
