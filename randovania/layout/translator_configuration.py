@@ -45,18 +45,24 @@ LONG_NAMES = {
 @dataclasses.dataclass(frozen=True)
 class TranslatorConfiguration(BitPackValue):
     translator_requirement: Dict[TranslatorGate, LayoutTranslatorRequirement]
+    fixed_gfmc_compound: bool = True
+    fixed_torvus_temple: bool = True
+    fixed_great_temple: bool = True
 
     def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         from randovania.layout import configuration_factory
         templates = [
             configuration_factory.get_vanilla_actual_translator_configurations(),
             configuration_factory.get_vanilla_colors_translator_configurations(),
-            TranslatorConfiguration.full_random(),
-            self,
+            self.with_full_random().translator_requirement,
+            self.translator_requirement,
         ]
+        yield from bitpacking.encode_bool(self.fixed_gfmc_compound)
+        yield from bitpacking.encode_bool(self.fixed_torvus_temple)
+        yield from bitpacking.encode_bool(self.fixed_great_temple)
 
-        yield from bitpacking.pack_array_element(self, templates)
-        if templates.index(self) == 3:
+        yield from bitpacking.pack_array_element(self.translator_requirement, templates)
+        if templates.index(self.translator_requirement) == 3:
             for translator in self.translator_requirement.values():
                 yield from translator.bit_pack_encode()
 
@@ -66,19 +72,26 @@ class TranslatorConfiguration(BitPackValue):
         templates = [
             configuration_factory.get_vanilla_actual_translator_configurations(),
             configuration_factory.get_vanilla_colors_translator_configurations(),
-            TranslatorConfiguration.full_random(),
+            cls.default().with_full_random().translator_requirement,
             None,
         ]
 
-        template = decoder.decode_element(templates)
-        if template is not None:
-            return template
+        fixed_gfmc_compound = bitpacking.decode_bool(decoder)
+        fixed_torvus_temple = bitpacking.decode_bool(decoder)
+        fixed_great_temple = bitpacking.decode_bool(decoder)
 
-        translator_requirement = {}
-        for gate in templates[0].translator_requirement.keys():
-            translator_requirement[gate] = LayoutTranslatorRequirement.bit_pack_unpack(decoder)
+        translator_requirement = decoder.decode_element(templates)
+        if translator_requirement is None:
+            translator_requirement = {}
+            for gate in templates[0].keys():
+                translator_requirement[gate] = LayoutTranslatorRequirement.bit_pack_unpack(decoder)
 
-        return cls(translator_requirement)
+        return cls(
+            translator_requirement,
+            fixed_gfmc_compound=fixed_gfmc_compound,
+            fixed_torvus_temple=fixed_torvus_temple,
+            fixed_great_temple=fixed_great_temple,
+        )
 
     @property
     def as_json(self) -> dict:
@@ -89,36 +102,52 @@ class TranslatorConfiguration(BitPackValue):
                 str(key.index): item.value
                 for key, item in self.translator_requirement.items()
                 if item != default.translator_requirement[key]
-            }
+            },
+            "fixed_gfmc_compound": self.fixed_gfmc_compound,
+            "fixed_torvus_temple": self.fixed_torvus_temple,
+            "fixed_great_temple": self.fixed_great_temple,
         }
 
     @classmethod
     def from_json(cls, value: dict) -> "TranslatorConfiguration":
         default = cls.default()
 
+        params = copy.copy(value)
+
         translator_requirement = copy.copy(default.translator_requirement)
-        for key, item in value["translator_requirement"].items():
+        for key, item in params.pop("translator_requirement").items():
             translator_requirement[TranslatorGate(int(key))] = LayoutTranslatorRequirement(item)
 
-        return cls(translator_requirement)
+        return cls(translator_requirement, **params)
 
     @classmethod
     def default(cls) -> "TranslatorConfiguration":
         from randovania.layout import configuration_factory
-        return configuration_factory.get_vanilla_actual_translator_configurations()
+        return cls(configuration_factory.get_vanilla_actual_translator_configurations())
 
-    @classmethod
-    def vanilla_colors(cls) -> "TranslatorConfiguration":
+    def with_vanilla_actual(self):
         from randovania.layout import configuration_factory
-        return configuration_factory.get_vanilla_colors_translator_configurations()
 
-    @classmethod
-    def full_random(cls) -> "TranslatorConfiguration":
-        default = cls.default()
-        return cls({
-            key: LayoutTranslatorRequirement.RANDOM
-            for key in default.translator_requirement.keys()
-        })
+        result = copy.copy(self)
+        return dataclasses.replace(
+            result,
+            translator_requirement=configuration_factory.get_vanilla_actual_translator_configurations())
+
+    def with_vanilla_colors(self) -> "TranslatorConfiguration":
+        from randovania.layout import configuration_factory
+
+        result = copy.copy(self)
+        return dataclasses.replace(
+            result,
+            translator_requirement=configuration_factory.get_vanilla_colors_translator_configurations())
+
+    def with_full_random(self) -> "TranslatorConfiguration":
+        result = copy.copy(self)
+        return dataclasses.replace(result,
+                                   translator_requirement={
+                                       key: LayoutTranslatorRequirement.RANDOM
+                                       for key in self.translator_requirement.keys()
+                                   })
 
     def replace_requirement_for_gate(self, gate: TranslatorGate,
                                      requirement: LayoutTranslatorRequirement,
