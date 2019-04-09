@@ -8,9 +8,11 @@ from randovania.game_description.default_database import default_prime2_memo_dat
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import TeleporterNode
-from randovania.game_description.resource_type import ResourceType
-from randovania.game_description.resources import ResourceGain, ResourceDatabase, PickupIndex, \
-    PickupEntry, ResourceGainTuple
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_description import LayoutDescription

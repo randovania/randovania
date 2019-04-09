@@ -190,6 +190,9 @@ ConstructNode = Struct(
             4: Struct(
                 event_index=Byte,
             ),
+            5: Struct(
+                gate_index=Byte,
+            ),
         }
     )
 )
