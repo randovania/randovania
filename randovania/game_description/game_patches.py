@@ -49,7 +49,7 @@ class GamePatches:
 
         for gate, translator in assignment.items():
             assert gate not in new_translator_gates
-            assert translator.resource_type == ResourceType.GATE_INDEX
+            assert gate.resource_type == ResourceType.GATE_INDEX
             new_translator_gates[gate] = translator
 
         return dataclasses.replace(self, translator_gates=new_translator_gates)
