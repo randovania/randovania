@@ -31,5 +31,5 @@ def test_create_vanilla_translator_resources(echoes_resource_database,
     assert result == {
         gfmc_resource: 0 if fixed_gfmc_compound else 1,
         torvus_resource: 0 if fixed_torvus_temple else 1,
-        great_resource: 0 if fixed_great_temple else 1,
+        great_resource: 1,
     }

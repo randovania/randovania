@@ -172,7 +172,8 @@ def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
     events = [
         ("Vanilla GFMC Compound Translator Gate", not translator_configuration.fixed_gfmc_compound),
         ("Vanilla Torvus Temple Translator Gate", not translator_configuration.fixed_torvus_temple),
-        ("Vanilla Great Temple Emerald Translator Gate", not translator_configuration.fixed_great_temple),
+        # FIXME: when great temple translator gate is patched, add this resource again
+        ("Vanilla Great Temple Emerald Translator Gate", True),
     ]
 
     return {
