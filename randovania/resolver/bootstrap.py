@@ -170,9 +170,9 @@ def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
     :return:
     """
     events = [
-        ("Vanilla GFMC Compound Translator Gate", translator_configuration.fixed_gfmc_compound),
-        ("Vanilla Torvus Temple Translator Gate", translator_configuration.fixed_torvus_temple),
-        ("Vanilla Great Temple Emerald Translator Gate", translator_configuration.fixed_great_temple),
+        ("Vanilla GFMC Compound Translator Gate", not translator_configuration.fixed_gfmc_compound),
+        ("Vanilla Torvus Temple Translator Gate", not translator_configuration.fixed_torvus_temple),
+        ("Vanilla Great Temple Emerald Translator Gate", not translator_configuration.fixed_great_temple),
     ]
 
     return {
