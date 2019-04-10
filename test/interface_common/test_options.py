@@ -20,7 +20,7 @@ def _option() -> Options:
     return Options(MagicMock())
 
 
-def test_migrate_from_v1():
+def test_migrate_from_v1(option):
     old_data = {"version": 1,
                 "options": {"hud_memo_popup_removal": True,
                             "game_files_path": None,
@@ -31,6 +31,7 @@ def test_migrate_from_v1():
 
     # Run
     new_data = randovania.interface_common.persisted_options.get_persisted_options_from_data(old_data)
+    option.load_from_persisted_options(new_data, False)
 
     # Assert
     expected_data = {
@@ -49,8 +50,12 @@ def test_migrate_from_v1():
             "elevators": "vanilla",
             "major_items_configuration": MajorItemsConfiguration.default().as_json,
             "ammo_configuration": AmmoConfiguration.default().as_json,
-            "progressive_suit": True,
-            "progressive_grapple": True,
+            "translator_configuration": {
+                "translator_requirement": {},
+                "fixed_gfmc_compound": True,
+                "fixed_torvus_temple": True,
+                "fixed_great_temple": True,
+            },
             "split_beam_ammo": True,
             "missile_launcher_required": True,
             "main_power_bombs_required": True,
