@@ -3,10 +3,11 @@ from typing import Tuple, Set
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_database import ResourceDatabase, find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel
+from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -159,6 +160,27 @@ def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
     return starting_state
 
 
+def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
+                                         translator_configuration: TranslatorConfiguration,
+                                         ) -> CurrentResources:
+    """
+
+    :param resource_database:
+    :param translator_configuration:
+    :return:
+    """
+    events = [
+        ("Vanilla GFMC Compound Translator Gate", translator_configuration.fixed_gfmc_compound),
+        ("Vanilla Torvus Temple Translator Gate", translator_configuration.fixed_torvus_temple),
+        ("Vanilla Great Temple Emerald Translator Gate", translator_configuration.fixed_great_temple),
+    ]
+
+    return {
+        find_resource_info_with_long_name(resource_database.event, name): 1 if active else 0
+        for name, active in events
+    }
+
+
 def logic_bootstrap(configuration: LayoutConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
@@ -184,8 +206,10 @@ def logic_bootstrap(configuration: LayoutConfiguration,
 
     difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level,
                                                                            game.resource_database)
-
     add_resources_into_another(starting_state.resources, static_resources)
+    add_resources_into_another(starting_state.resources,
+                               _create_vanilla_translator_resources(game.resource_database,
+                                                                    configuration.translator_configuration))
     starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level
 
     game.simplify_connections(starting_state.resources)
