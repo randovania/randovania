@@ -281,7 +281,7 @@ def _apply_translator_gate_patches(specific_patches: dict, translator_gates: Tra
     :param translator_gates:
     :return:
     """
-    specific_patches["always_up_gfmc_compound"] = translator_gates.fixed_great_temple
+    specific_patches["always_up_gfmc_compound"] = translator_gates.fixed_gfmc_compound
     specific_patches["always_up_torvus_temple"] = translator_gates.fixed_torvus_temple
     specific_patches["always_up_great_temple"] = translator_gates.fixed_great_temple
 
