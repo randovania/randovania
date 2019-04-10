@@ -187,7 +187,7 @@ def test_serialize_fields(option: Options):
 
     # Assert
     assert result == {
-        "version": 7,
+        "version": randovania.interface_common.persisted_options._CURRENT_OPTIONS_FILE_VERSION,
         "options": {
             "last_changelog_displayed": randovania.VERSION,
         }
