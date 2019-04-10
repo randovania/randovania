@@ -97,6 +97,18 @@ class Options:
             return
 
         persisted_options = get_persisted_options_from_data(persisted_data)
+        self.load_from_persisted_options(persisted_options, ignore_decode_errors)
+
+    def load_from_persisted_options(self,
+                                    persisted_options: dict,
+                                    ignore_decode_errors: bool,
+                                    ):
+        """
+        Loads fields from the given persisted options.
+        :param persisted_options:
+        :param ignore_decode_errors:
+        :return:
+        """
         for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
             value = persisted_options.get(field_name, None)
             if value is not None:
@@ -396,4 +408,4 @@ class Options:
         current_value = getattr(self, field_name)
         if current_value != new_value:
             self._check_editable_and_mark_dirty()
-            setattr(self, "_" + field_name, new_value)
+            self._set_field(field_name, new_value)
