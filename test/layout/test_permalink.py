@@ -25,7 +25,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "YAAAfReMBYwAAAHA7g=="
+    assert encoded == "YAAAfReMBYwAAAc4ww=="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -88,13 +88,13 @@ def test_decode_old_version(permalink: str, version: int):
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
-def test_decode_v1(mock_dictionary_byte_hash: MagicMock):
+def test_decode(mock_dictionary_byte_hash: MagicMock):
     mock_dictionary_byte_hash.return_value = 120
     # We're mocking the database hash to avoid breaking tests every single time we change the database
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "YAAAfReIJcwAAAHAmA=="
+    encoded = "YAAAfReIJcwAAAc4KA=="
 
     expected = Permalink(
         seed_number=1000,
