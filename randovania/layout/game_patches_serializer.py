@@ -3,7 +3,7 @@ import re
 from typing import Dict, List, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment
@@ -13,7 +13,9 @@ from randovania.game_description.node import PickupNode, TeleporterNode, Node
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, \
     MAXIMUM_PICKUP_CONDITIONAL_RESOURCES, MAXIMUM_PICKUP_RESOURCES, MAXIMUM_PICKUP_CONVERSION, PickupEntry
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, ResourceDatabase
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime import default_data
 from randovania.layout.layout_configuration import LayoutConfiguration
 
 
@@ -93,7 +95,7 @@ class BitPackPickupEntry:
         )
 
 
-class BitPackPickupEntryList:
+class BitPackPickupEntryList(BitPackValue):
     value: List[PickupEntry]
     database: ResourceDatabase
 
@@ -104,6 +106,10 @@ class BitPackPickupEntryList:
     def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
         for entry in self.value:
             yield from BitPackPickupEntry(entry, self.database).bit_pack_encode()
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+        raise RuntimeError("Unsupported operation")
 
 
 def _pickup_assignment_to_item_locations(world_list: WorldList,
@@ -137,7 +143,9 @@ def _node_mapping_to_elevator_connection(world_list: WorldList,
                                          ) -> Dict[int, AreaLocation]:
     result = {}
     for source_name, target_node in elevators.items():
-        source_node: TeleporterNode = world_list.node_from_name(source_name)
+        source_node = world_list.node_from_name(source_name)
+        assert isinstance(source_node, TeleporterNode)
+
         target_node = world_list.node_from_name(target_node)
 
         result[source_node.teleporter_instance_id] = AreaLocation(
@@ -154,6 +162,20 @@ def _find_node_with_teleporter(world_list: WorldList, teleporter_id: int) -> Nod
             if node.teleporter_instance_id == teleporter_id:
                 return node
     raise ValueError("Unknown teleporter_id: {}".format(teleporter_id))
+
+
+def _name_for_gate(gate: TranslatorGate) -> str:
+    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+        if items["Index"] == gate.index:
+            return items["Name"]
+    raise ValueError("Unknown gate: {}".format(gate))
+
+
+def _find_gate_with_name(gate_name: str) -> TranslatorGate:
+    for items in default_data.decode_randomizer_data()["TranslatorLocationData"]:
+        if items["Name"] == gate_name:
+            return TranslatorGate(items["Index"])
+    raise ValueError("Unknown gate name: {}".format(gate_name))
 
 
 def serialize(patches: GamePatches, game_data: dict) -> dict:
@@ -177,6 +199,10 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
             world_list.area_name(world_list.nodes_to_area(_find_node_with_teleporter(world_list, teleporter_id))):
                 world_list.area_name(world_list.nodes_to_area(world_list.resolve_teleporter_connection(connection)))
             for teleporter_id, connection in patches.elevator_connection.items()
+        },
+        "translators": {
+            _name_for_gate(gate): requirement.long_name
+            for gate, requirement in patches.translator_gates.items()
         },
         "locations": {
             key: value
@@ -224,7 +250,15 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         source_area = _area_name_to_area_location(world_list, source_name)
         target_area = _area_name_to_area_location(world_list, target_name)
 
-        elevator_connection[world_list.resolve_teleporter_connection(source_area).teleporter_instance_id] = target_area
+        source_node = world_list.resolve_teleporter_connection(source_area)
+        assert isinstance(source_node, TeleporterNode)
+        elevator_connection[source_node.teleporter_instance_id] = target_area
+
+    # Translator Gates
+    translator_gates = {
+        _find_gate_with_name(gate_name): find_resource_info_with_long_name(game.resource_database.item, resource_name)
+        for gate_name, resource_name in game_modifications["translators"].items()
+    }
 
     # Pickups
     pickup_assignment = {}
@@ -235,7 +269,9 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
             if pickup_name == "Nothing":
                 continue
 
-            node: PickupNode = world_list.node_from_name(f"{world_name}/{area_node_name}")
+            node = world_list.node_from_name(f"{world_name}/{area_node_name}")
+            assert isinstance(node, PickupNode)
+
             pickup = BitPackPickupEntry.bit_pack_unpack(decoder, pickup_name, game.resource_database)
             pickup_assignment[node.pickup_index] = pickup
 
@@ -244,7 +280,7 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         elevator_connection=elevator_connection,  # Dict[int, AreaLocation]
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
         dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
-        translator_gates={},
+        translator_gates=translator_gates,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
     )

@@ -17,3 +17,11 @@ def decode_default_prime2() -> dict:
         get_data_path().joinpath("binary_data", "prime2.bin"),
         get_data_path().joinpath("binary_data", "prime2_extra.json")
     )
+
+
+@functools.lru_cache()
+def decode_randomizer_data() -> dict:
+    randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
+
+    with randomizer_data_path.open() as randomizer_data_file:
+        return json.load(randomizer_data_file)

@@ -11,7 +11,6 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.resolver import generator, debug
 
 skip_generation_tests = pytest.mark.skipif(
@@ -129,85 +128,10 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
     assert generated_description.without_solver_path == layout_description
 
 
-def test_starting_location_for_configuration_ship():
-    # Setup
-    configuration = MagicMock()
-    configuration.starting_location.configuration = StartingLocationConfiguration.SHIP
-    game = MagicMock()
-    rng = MagicMock()
-
-    # Run
-    result = generator._starting_location_for_configuration(configuration, game, rng)
-
-    # Assert
-    assert result is game.starting_location
-
-
-def test_starting_location_for_configuration_custom():
-    # Setup
-    configuration = MagicMock()
-    configuration.starting_location.configuration = StartingLocationConfiguration.CUSTOM
-    game = MagicMock()
-    rng = MagicMock()
-
-    # Run
-    result = generator._starting_location_for_configuration(configuration, game, rng)
-
-    # Assert
-    assert result is configuration.starting_location.custom_location
-
-
-def test_starting_location_for_configuration_random_save_station():
-    # Setup
-    configuration = MagicMock()
-    configuration.starting_location.configuration = StartingLocationConfiguration.RANDOM_SAVE_STATION
-    game = MagicMock()
-    save_1 = MagicMock()
-    save_1.name = "Save Station"
-    save_2 = MagicMock()
-    save_2.name = "Save Station"
-    game.world_list.all_nodes = [save_1, save_2, MagicMock()]
-    rng = MagicMock()
-
-    # Run
-    result = generator._starting_location_for_configuration(configuration, game, rng)
-
-    # Assert
-    rng.choice.assert_called_once_with([save_1, save_2])
-    game.world_list.node_to_area_location.assert_called_once_with(rng.choice.return_value)
-    assert result is game.world_list.node_to_area_location.return_value
-
-
-@patch("randovania.resolver.generator._starting_location_for_configuration", autospec=True)
-@patch("randovania.resolver.generator._add_elevator_connections_to_patches", autospec=True)
-@patch("randovania.resolver.generator.GamePatches.with_game")
-def test_create_base_patches(mock_with_game: MagicMock,
-                             mock_add_elevator_connections_to_patches: MagicMock,
-                             mock_starting_location_for_config: MagicMock,
-                             ):
-    # Setup
-    rng = MagicMock()
-    game = MagicMock()
-    permalink = MagicMock()
-
-    first_patches = mock_with_game.return_value
-    second_patches = mock_add_elevator_connections_to_patches.return_value
-
-    # Run
-    result = generator._create_base_patches(rng, game, permalink)
-
-    # Assert
-    mock_with_game.assert_called_once_with(game)
-    mock_add_elevator_connections_to_patches.assert_called_once_with(permalink, first_patches)
-    mock_starting_location_for_config.assert_called_once_with(permalink.layout_configuration, game, rng)
-    second_patches.assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
-    assert result is second_patches.assign_starting_location.return_value
-
-
 @patch("randovania.resolver.generator._assign_remaining_items", autospec=True)
 @patch("randovania.resolver.generator._run_filler", autospec=True)
 @patch("randovania.resolver.generator._validate_item_pool_size", autospec=True)
-@patch("randovania.resolver.generator._create_base_patches", autospec=True)
+@patch("randovania.resolver.base_patches_factory.create_base_patches", autospec=True)
 @patch("randovania.resolver.item_pool.pool_creator.calculate_item_pool", autospec=True)
 @patch("randovania.resolver.generator.Random", autospec=True)
 def test_create_patches(mock_random: MagicMock,

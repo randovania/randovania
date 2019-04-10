@@ -43,6 +43,11 @@ def echoes_game_data() -> dict:
     return default_data.decode_default_prime2()
 
 
+@pytest.fixture()
+def randomizer_data() -> dict:
+    return default_data.decode_randomizer_data()
+
+
 class DataclassTestLib:
     def mock_dataclass(self, obj) -> MagicMock:
         return MagicMock(spec=[field.name for field in dataclasses.fields(obj)])

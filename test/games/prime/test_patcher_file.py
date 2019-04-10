@@ -14,9 +14,11 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.prime import patcher_file, default_data
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.resolver.item_pool import pickup_creator
 
 
@@ -104,6 +106,46 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
          "target_location": {"world_asset_id": 2252328306, "area_asset_id": 2068511343},
          "room_name": "Transport to Great Temple - Sky Temple Energy Controller", },
     ]
+
+
+def test_create_translator_gates_field():
+    # Setup
+    gate_assignment = {
+        TranslatorGate(1): SimpleResourceInfo(10, "LongA", "A", ResourceType.ITEM),
+        TranslatorGate(3): SimpleResourceInfo(50, "LongB", "B", ResourceType.ITEM),
+        TranslatorGate(4): SimpleResourceInfo(10, "LongA", "A", ResourceType.ITEM),
+    }
+
+    # Run
+    result = patcher_file._create_translator_gates_field(gate_assignment)
+
+    # Assert
+    assert result == [
+        {"gate_index": 1, "translator_index": 10},
+        {"gate_index": 3, "translator_index": 50},
+        {"gate_index": 4, "translator_index": 10},
+    ]
+
+
+def test_apply_translator_gate_patches():
+    # Setup
+    target = {}
+    translator_gates = TranslatorConfiguration(
+        {},
+        fixed_gfmc_compound=MagicMock(),
+        fixed_torvus_temple=MagicMock(),
+        fixed_great_temple=MagicMock(),
+    )
+
+    # Run
+    patcher_file._apply_translator_gate_patches(target, translator_gates)
+
+    # Assert
+    assert target == {
+        "always_up_gfmc_compound": translator_gates.fixed_gfmc_compound,
+        "always_up_torvus_temple": translator_gates.fixed_torvus_temple,
+        "always_up_great_temple": translator_gates.fixed_great_temple,
+    }
 
 
 @pytest.mark.parametrize("order", [

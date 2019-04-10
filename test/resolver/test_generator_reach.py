@@ -1,4 +1,5 @@
 import pprint
+from random import Random
 from typing import Tuple, List, Iterator
 
 import pytest
@@ -19,6 +20,7 @@ from randovania.games.prime import default_data
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.resolver import base_patches_factory
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
@@ -43,7 +45,11 @@ def _test_data():
         patcher_configuration=PatcherConfiguration.default(),
         layout_configuration=configuration,
     )
-    logic, state = logic_bootstrap(configuration, game, GamePatches.with_game(game))
+    patches = GamePatches.with_game(game)
+    patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(
+        configuration, game.resource_database, Random(15000)
+    ))
+    logic, state = logic_bootstrap(configuration, game, patches)
 
     return logic, state, permalink
 

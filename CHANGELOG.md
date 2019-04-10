@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Added: Option to require Missile Launcher and main Power Bombs for the respective
     expansions to work.
+    
+-   Added: Option to change which translator each translator gate in the game needs.
+
+-   Changed: Logic considers the Translator Gates in GFMC Compound and Torvus Temple
+    to be up from the start, preventing potential softlocks. 
 
 -   Changed: Escaping Main Hydrochamber after the Alpha Blogg with a Roll Jump is
     now Hard and above, from Easy and above.

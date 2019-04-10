@@ -97,6 +97,18 @@ class Options:
             return
 
         persisted_options = get_persisted_options_from_data(persisted_data)
+        self.load_from_persisted_options(persisted_options, ignore_decode_errors)
+
+    def load_from_persisted_options(self,
+                                    persisted_options: dict,
+                                    ignore_decode_errors: bool,
+                                    ):
+        """
+        Loads fields from the given persisted options.
+        :param persisted_options:
+        :param ignore_decode_errors:
+        :return:
+        """
         for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
             value = persisted_options.get(field_name, None)
             if value is not None:
@@ -180,8 +192,9 @@ class Options:
 
     @last_changelog_displayed.setter
     def last_changelog_displayed(self, value: StrictVersion):
-        self._check_editable_and_mark_dirty()
-        self._last_changelog_displayed = str(value)
+        if value != self.last_changelog_displayed:
+            self._check_editable_and_mark_dirty()
+            self._last_changelog_displayed = str(value)
 
     @property
     def seed_number(self) -> Optional[int]:
@@ -189,8 +202,9 @@ class Options:
 
     @seed_number.setter
     def seed_number(self, value: Optional[int]):
-        self._check_editable_and_mark_dirty()
-        self._seed_number = value
+        if value != self.seed_number:
+            self._check_editable_and_mark_dirty()
+            self._seed_number = value
 
     @property
     def create_spoiler(self) -> bool:
@@ -198,8 +212,7 @@ class Options:
 
     @create_spoiler.setter
     def create_spoiler(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._create_spoiler = value
+        self._edit_field("create_spoiler", value)
 
     @property
     def output_directory(self) -> Optional[Path]:
@@ -207,8 +220,7 @@ class Options:
 
     @output_directory.setter
     def output_directory(self, value: Optional[Path]):
-        self._check_editable_and_mark_dirty()
-        self._output_directory = value
+        self._edit_field("output_directory", value)
 
     @property
     def patcher_configuration(self) -> PatcherConfiguration:
@@ -297,11 +309,8 @@ class Options:
         self.set_patcher_configuration_field("pickup_model_data_source", value)
 
     def set_patcher_configuration_field(self, field_name: str, value):
-        current_configuration = self.patcher_configuration
-        new_configuration = dataclasses.replace(current_configuration, **{field_name: value})
-        if current_configuration != new_configuration:
-            self._check_editable_and_mark_dirty()
-            self._patcher_configuration = new_configuration
+        self._edit_field("patcher_configuration",
+                         dataclasses.replace(self.patcher_configuration, **{field_name: value}))
 
     # Access to fields inside CosmeticPatches
     @property
@@ -310,8 +319,8 @@ class Options:
 
     @hud_memo_popup_removal.setter
     def hud_memo_popup_removal(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, disable_hud_popup=value)
+        self._edit_field("cosmetic_patches",
+                         dataclasses.replace(self.cosmetic_patches, disable_hud_popup=value))
 
     @property
     def speed_up_credits(self) -> bool:
@@ -319,8 +328,8 @@ class Options:
 
     @speed_up_credits.setter
     def speed_up_credits(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, speed_up_credits=value)
+        self._edit_field("cosmetic_patches",
+                         dataclasses.replace(self.cosmetic_patches, speed_up_credits=value))
 
     @property
     def open_map(self) -> bool:
@@ -328,8 +337,8 @@ class Options:
 
     @open_map.setter
     def open_map(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, open_map=value)
+        self._edit_field("cosmetic_patches",
+                         dataclasses.replace(self.cosmetic_patches, open_map=value))
 
     @property
     def pickup_markers(self) -> bool:
@@ -337,8 +346,8 @@ class Options:
 
     @pickup_markers.setter
     def pickup_markers(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._cosmetic_patches = dataclasses.replace(self.cosmetic_patches, pickup_markers=value)
+        self._edit_field("cosmetic_patches",
+                         dataclasses.replace(self.cosmetic_patches, pickup_markers=value))
 
     # Access to fields inside LayoutConfiguration
 
@@ -383,11 +392,10 @@ class Options:
         self.set_layout_configuration_field("ammo_configuration", value)
 
     def set_layout_configuration_field(self, field_name: str, value):
-        current_layout = self.layout_configuration
-        new_layout = dataclasses.replace(self.layout_configuration, **{field_name: value})
-        if current_layout != new_layout:
-            self._check_editable_and_mark_dirty()
-            self._layout_configuration = new_layout
+        self._edit_field(
+            "layout_configuration",
+            dataclasses.replace(self.layout_configuration, **{field_name: value})
+        )
 
     ######
 
@@ -395,3 +403,9 @@ class Options:
         """Checks if _nested_autosave_level is not 0 and marks at least one value was changed."""
         assert self._nested_autosave_level != 0, "Attempting to edit an Options, but it wasn't made editable"
         self._is_dirty = True
+
+    def _edit_field(self, field_name: str, new_value):
+        current_value = getattr(self, field_name)
+        if current_value != new_value:
+            self._check_editable_and_mark_dirty()
+            self._set_field(field_name, new_value)
