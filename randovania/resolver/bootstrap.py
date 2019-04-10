@@ -176,7 +176,7 @@ def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
     ]
 
     return {
-        find_resource_info_with_long_name(resource_database.event, name): 1 if active else 0
+        find_resource_info_with_long_name(resource_database.trick, name): 1 if active else 0
         for name, active in events
     }
 
