@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The no-Boost return method in Dark Arena Tunnel is now Normal and above only.
 
+-   Changed: The Slope Jump method in Great Bridge for Abandoned Worksite is now Hard
+    and above, from Normal.
+
 -   Changed: There can now be a total of 99 of any single Major Item, up from 9.
 
 -   Added: `randovania echoes database list-resource-usage` now supports all types of
