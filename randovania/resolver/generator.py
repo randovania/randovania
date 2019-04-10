@@ -1,22 +1,18 @@
-import dataclasses
 import multiprocessing.dummy
 from random import Random
 from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union, List
 
 from randovania import VERSION
 from randovania.game_description import data_reader
-from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import ResourceNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocationConfiguration
-from randovania.resolver import resolver, elevator_distributor
-from randovania.resolver.bootstrap import logic_bootstrap
+from randovania.resolver import resolver, base_patches_factory, bootstrap
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
 from randovania.resolver.filler.retcon import retcon_playthrough_filler
 from randovania.resolver.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
@@ -119,38 +115,6 @@ def generate_list(permalink: Permalink,
 Action = Union[ResourceNode, PickupEntry]
 
 
-def _add_elevator_connections_to_patches(permalink: Permalink,
-                                         patches: GamePatches) -> GamePatches:
-    assert patches.elevator_connection == {}
-    if permalink.layout_configuration.elevators == LayoutElevators.RANDOMIZED:
-        return dataclasses.replace(
-            patches,
-            elevator_connection=elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number))
-    else:
-        return patches
-
-
-def _starting_location_for_configuration(configuration: LayoutConfiguration,
-                                         game: GameDescription,
-                                         rng: Random,
-                                         ) -> AreaLocation:
-    starting_location = configuration.starting_location
-
-    if starting_location.configuration == StartingLocationConfiguration.SHIP:
-        return game.starting_location
-
-    elif starting_location.configuration == StartingLocationConfiguration.CUSTOM:
-        return starting_location.custom_location
-
-    elif starting_location.configuration == StartingLocationConfiguration.RANDOM_SAVE_STATION:
-        save_stations = [node for node in game.world_list.all_nodes if node.name == "Save Station"]
-        save_station = rng.choice(save_stations)
-        return game.world_list.node_to_area_location(save_station)
-
-    else:
-        raise ValueError("Invalid configuration for StartLocation {}".format(starting_location))
-
-
 def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], List[PickupEntry]]:
     major_items = []
     expansions = []
@@ -187,7 +151,7 @@ def _create_patches(
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
-    base_patches = _create_base_patches(rng, game, permalink)
+    base_patches = base_patches_factory.create_base_patches(rng, game, permalink)
     pool_patches, item_pool = pool_creator.calculate_item_pool(configuration, game.resource_database, base_patches)
 
     _validate_item_pool_size(item_pool, game)
@@ -209,7 +173,7 @@ def _run_filler(configuration: LayoutConfiguration,
 
     major_configuration = configuration.major_items_configuration
 
-    logic, state = logic_bootstrap(configuration, game, patches)
+    logic, state = bootstrap.logic_bootstrap(configuration, game, patches)
     logic.game.simplify_connections(state.resources)
 
     filler_patches = retcon_playthrough_filler(
@@ -219,25 +183,6 @@ def _run_filler(configuration: LayoutConfiguration,
         status_update=status_update)
 
     return filler_patches, major_items + expansions
-
-
-def _create_base_patches(rng: Random,
-                         game: GameDescription,
-                         permalink: Permalink,
-                         ) -> GamePatches:
-    """
-
-    :param rng:
-    :param game:
-    :param permalink:
-    :return:
-    """
-
-    patches = GamePatches.with_game(game)
-    patches = _add_elevator_connections_to_patches(permalink, patches)
-    patches = patches.assign_starting_location(
-        _starting_location_for_configuration(permalink.layout_configuration, game, rng))
-    return patches
 
 
 def _assign_remaining_items(rng: Random,

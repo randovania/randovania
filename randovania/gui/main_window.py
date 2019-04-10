@@ -92,7 +92,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
         self._options = options
-        self.on_options_changed()
+        with options:
+            self.on_options_changed()
 
         self.tabWidget.setCurrentIndex(0)
 

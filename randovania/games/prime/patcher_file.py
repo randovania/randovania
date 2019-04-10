@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
@@ -17,6 +18,7 @@ from randovania.game_description.world_list import WorldList
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.resolver.item_pool import pickup_creator
 
 _TOTAL_PICKUP_COUNT = 119
@@ -257,6 +259,33 @@ def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list
     return elevators
 
 
+def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
+    """
+    Creates the translator gate entries in the patcher file
+    :param gate_assignment:
+    :return:
+    """
+    return [
+        {
+            "gate_index": gate.index,
+            "translator_index": translator.index,
+        }
+        for gate, translator in gate_assignment.items()
+    ]
+
+
+def _apply_translator_gate_patches(specific_patches: dict, translator_gates: TranslatorConfiguration) -> None:
+    """
+
+    :param specific_patches:
+    :param translator_gates:
+    :return:
+    """
+    specific_patches["always_up_gfmc_compound"] = translator_gates.fixed_gfmc_compound
+    specific_patches["always_up_torvus_temple"] = translator_gates.fixed_torvus_temple
+    specific_patches["always_up_great_temple"] = translator_gates.fixed_great_temple
+
+
 def create_patcher_file(description: LayoutDescription,
                         cosmetic_patches: CosmeticPatches,
                         ) -> dict:
@@ -296,6 +325,9 @@ def create_patcher_file(description: LayoutDescription,
     # Add the elevators
     result["elevators"] = _create_elevators_field(patches, game.world_list)
 
+    # Add translators
+    result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
+
     # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
     result["specific_patches"] = {
@@ -307,6 +339,8 @@ def create_patcher_file(description: LayoutDescription,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
     }
+
+    _apply_translator_gate_patches(result["specific_patches"], patches.translator_gates)
 
     return result
 

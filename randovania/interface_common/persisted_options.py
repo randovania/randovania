@@ -1,7 +1,7 @@
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
-_CURRENT_OPTIONS_FILE_VERSION = 7
+_CURRENT_OPTIONS_FILE_VERSION = 8
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -90,8 +90,6 @@ def _convert_v6(options: dict) -> dict:
 
         layout_configuration["major_items_configuration"] = MajorItemsConfiguration.default().as_json
         layout_configuration["ammo_configuration"] = AmmoConfiguration.default().as_json
-        layout_configuration["progressive_suit"] = True
-        layout_configuration["progressive_grapple"] = True
         layout_configuration["split_beam_ammo"] = True
         layout_configuration["missile_launcher_required"] = True
         layout_configuration["main_power_bombs_required"] = True
@@ -110,6 +108,19 @@ def _convert_v6(options: dict) -> dict:
     return options
 
 
+def _convert_v7(options: dict) -> dict:
+    if "layout_configuration" in options:
+        layout_configuration = options["layout_configuration"]
+        layout_configuration["translator_configuration"] = {
+            "translator_requirement": {},
+            "fixed_gfmc_compound": True,
+            "fixed_torvus_temple": True,
+            "fixed_great_temple": True,
+        }
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     1: _convert_v1,
     2: _convert_v2,
@@ -117,6 +128,7 @@ _CONVERTER_FOR_VERSION = {
     4: _convert_v4,
     5: _convert_v5,
     6: _convert_v6,
+    7: _convert_v7,
 }
 
 
