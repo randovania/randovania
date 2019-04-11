@@ -16,6 +16,8 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.prime import patcher_file, default_data
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -439,3 +441,27 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
 
     # Assert
     assert result == "Progressive Suit:\nProvides the following in order: Dark Suit, Light Suit"
+
+
+def test_create_patcher_file(test_files_dir):
+    # Setup
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.json"))
+    cosmetic_patches = CosmeticPatches()
+    translator_gates = description.permalink.layout_configuration.translator_configuration
+
+    # Run
+    result = patcher_file.create_patcher_file(description, cosmetic_patches)
+
+    # Assert
+    assert result["specific_patches"] == {
+        "hive_chamber_b_post_state": True,
+        "intro_in_post_state": True,
+        "warp_to_start": description.permalink.patcher_configuration.warp_to_start,
+        "speed_up_credits": cosmetic_patches.speed_up_credits,
+        "disable_hud_popup": cosmetic_patches.disable_hud_popup,
+        "pickup_map_icons": cosmetic_patches.pickup_markers,
+        "full_map_at_start": cosmetic_patches.open_map,
+        "always_up_gfmc_compound": translator_gates.fixed_gfmc_compound,
+        "always_up_torvus_temple": translator_gates.fixed_torvus_temple,
+        "always_up_great_temple": translator_gates.fixed_great_temple,
+    }
