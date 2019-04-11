@@ -87,7 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         for i, tab in enumerate(self.tab_windows):
             self.windows.append(tab[0](self, self, options))
             self.tabs.append(self.windows[i].centralWidget)
-            self.tabWidget.insertTab(i, self.tabs[i], _translate("MainWindow", tab[1]))
+            self.tabWidget.insertTab(i + 1, self.tabs[i], _translate("MainWindow", tab[1]))
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit

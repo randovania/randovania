@@ -7,16 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: Welcome tab, with instructions on how to use Randovania.
+
 -   Added: Option to specify how many items Randovania will randomly place on your
     starting inventory.
-    
+
 -   Added: Option to require Missile Launcher and main Power Bombs for the respective
     expansions to work.
-    
+
 -   Added: Option to change which translator each translator gate in the game needs.
 
 -   Changed: Logic considers the Translator Gates in GFMC Compound and Torvus Temple
-    to be up from the start, preventing potential softlocks. 
+    to be up from the start, preventing potential softlocks.
 
 -   Changed: Escaping Main Hydrochamber after the Alpha Blogg with a Roll Jump is
     now Hard and above, from Easy and above.
@@ -42,19 +44,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - On Normal and above, with Boost, Bombs, Space Jump and Screw Attack
     - On Hard and above, with Bombs, Space Jump and Screw Attack
     - On Hypermode, with Bombs and Space Jump
-    
+
 -   Changed: Logic requirements for Dark Samus 2 fight are now the following:
     - On all trick levels, Dark Visor
     - On Easy and above, Echo Visor
     - On Normal and above, no items
-    
+
 -   Changed: The Slope Jump in Temple Assembly Site is now Hard and above, from Normal and above.
-   
+
 -   Changed: All occurrences of Wall Boost are now locked behind Hard or above.
-   
+
 -   Added: Added method to get the Power Bomb in Sanctuary Entrance with just Space Jump
     and Screw Attack. (See [#29](https://github.com/randovania/randovania/issues/29))
-    
+
 -   Added: Added method to cross Dark Arena Tunnel in the other direction without Boost.
     (See [#47](https://github.com/randovania/randovania/issues/47))
 
@@ -70,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: error when shuffling more than 2 copies of any Major Item
 
--   Fixed: permalinks were using the the ammo id instead of the configured 
+-   Fixed: permalinks were using the the ammo id instead of the configured
 
 ## [0.24.1] - 2019-03-22
 
@@ -82,24 +84,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - It's missing
      - Configure how much beam ammo Light Beam, Dark Beam and Annihilator Beam gives when picked.
         - The same for Seeker Launcher and missiles.
-        
+
 -    **MAJOR**: New configuration GUI for Ammo:
      - For each ammo type, you choose a target total count and how many pickups there will be.
-     
+
         Randovania will ensure if you collect every single pickup and every major item that gives
         that ammo, you'll have the target total count.
-    
+
 -    **MAJOR**: Added progressive items. These items gives different items when you collect then,
         based on how many you've already collected. There are two:
      - Progressive Suit: Gives Dark Suit and then Light Suit.
      - Progressive Grapple: Gives Grapple Beam and then Screw Attack.
-      
+
 -    **MAJOR**: Add option to split the Beam Ammo Expansion into a Dark Ammo Expansion and
         Light Ammo Expansion.
-        
+
         By default there's 10 of each, with less missiles instead.
-      
-      
+
+
 -    **MAJOR**: Improvements for accessibility:
      - All translator gates are now colored with the correct translator gate color they need.
      - Translators you have now show up under "Visors" in the inventory menu.
@@ -108,7 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         you've collected them already.
      - When elevators are randomized, the room name in the map now says where that elevator goes.
      - Changed the model for the Translator pickups: now the translator color is very prominent and easy to identify.
-      
+
 -    Added: Option to choose where you start the game
 
 -    Added: Option to hide what items are, going from just changing the model, to including the
