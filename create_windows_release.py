@@ -32,8 +32,3 @@ with zipfile.ZipFile("dist/{}.zip".format(zip_folder), "w", compression=zipfile.
     with open("README.md") as readme_file:
         readme_html = markdown.markdown(readme_file.read())
         release_zip.writestr(zip_folder + "/README.html", readme_html)
-
-    for subdir, _, files in os.walk("randovania-readme"):
-        for file in files:
-            path = os.path.join(subdir, file)
-            release_zip.write(path, "{}/{}".format(zip_folder, path))
