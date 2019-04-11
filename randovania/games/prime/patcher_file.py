@@ -340,7 +340,7 @@ def create_patcher_file(description: LayoutDescription,
         "full_map_at_start": cosmetic_patches.open_map,
     }
 
-    _apply_translator_gate_patches(result["specific_patches"], patches.translator_gates)
+    _apply_translator_gate_patches(result["specific_patches"], layout.translator_configuration)
 
     return result
 
