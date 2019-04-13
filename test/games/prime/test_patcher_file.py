@@ -1,3 +1,4 @@
+import copy
 import dataclasses
 import json
 from random import Random
@@ -9,6 +10,7 @@ import pytest
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry, ResourceConversion
@@ -73,10 +75,11 @@ def test_create_elevators_field_no_elevator(empty_patches):
     game = data_reader.decode_data(default_data.decode_default_prime2(), False)
 
     # Run
-    result = patcher_file._create_elevators_field(empty_patches, game.world_list)
+    with pytest.raises(ValueError) as exp:
+        patcher_file._create_elevators_field(empty_patches, game)
 
     # Assert
-    assert result == []
+    assert str(exp.value) == "Invalid elevator count. Expected 20, got 0."
 
 
 @pytest.mark.parametrize("vanilla_gateway", [False, True])
@@ -84,33 +87,125 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_resource_database, empty_patches):
     # Setup
     game = data_reader.decode_data(default_data.decode_default_prime2(), False)
-    patches = dataclasses.replace(
-        empty_patches,
-        elevator_connection={
-            589851: AreaLocation(464164546, 900285955),
-            1572998: AreaLocation(1039999561, 3479543630),
-            136970379: AreaLocation(2252328306, 2068511343 if vanilla_gateway else 3619928121),
-        })
+    patches = GamePatches.with_game(game)
+
+    elevator_connection = copy.copy(patches.elevator_connection)
+    elevator_connection[589851] = AreaLocation(464164546, 900285955)
+    elevator_connection[1572998] = AreaLocation(1039999561, 3479543630)
+
+    if not vanilla_gateway:
+        elevator_connection[136970379] = AreaLocation(2252328306, 3619928121)
+
+    patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
 
     # Run
-    result = patcher_file._create_elevators_field(patches, game.world_list)
+    result = patcher_file._create_elevators_field(patches, game)
 
     # Assert
-    assert result == [
+    expected = [
         {"instance_id": 589851,
          "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2918020398},
          "target_location": {"world_asset_id": 464164546, "area_asset_id": 900285955},
-         "room_name": "Transport to Sanctuary Spider side", },
+         "room_name": "Transport to Sanctuary Spider side"},
+
         {"instance_id": 1572998,
          "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1660916974},
          "target_location": {"world_asset_id": 1039999561, "area_asset_id": 3479543630},
-         "room_name": "Transport to Torvus Temple Access", },
+         "room_name": "Transport to Torvus Temple Access"},
+
+        {"instance_id": 1966093,
+         "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2889020216},
+         "target_location": {"world_asset_id": 1039999561, "area_asset_id": 1868895730},
+         "room_name": "Transport to Torvus Entrance"},
+
+        {"instance_id": 2097251,
+         "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1287880522},
+         "target_location": {"world_asset_id": 2252328306, "area_asset_id": 2399252740},
+         "room_name": "Transport to Temple Transport Violet"},
+
         {"instance_id": 136970379,
          "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2278776548},
          "target_location": {"world_asset_id": 2252328306,
                              "area_asset_id": 2068511343 if vanilla_gateway else 3619928121},
-         "room_name": "Sky Temple Gateway" if vanilla_gateway else "Transport to Sanctum", },
+         "room_name": "Sky Temple Gateway" if vanilla_gateway else "Transport to Sanctum"},
+
+        {"instance_id": 3342446,
+         "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 3455543403},
+         "target_location": {"world_asset_id": 464164546, "area_asset_id": 3528156989},
+         "room_name": "Transport to Sanctuary Entrance"},
+
+        {"instance_id": 3538975,
+         "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1345979968},
+         "target_location": {"world_asset_id": 2252328306, "area_asset_id": 408633584},
+         "room_name": "Transport to Temple Transport Amber"},
+
+        {"instance_id": 152,
+         "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 408633584},
+         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 1345979968},
+         "room_name": "Transport to Sanctuary Quadrant"},
+
+        {"instance_id": 393260,
+         "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 2556480432},
+         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 2918020398},
+         "room_name": "Transport to Torvus Quadrant"},
+
+        {"instance_id": 524321,
+         "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 2399252740},
+         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 1287880522},
+         "room_name": "Transport to Agon Quadrant"},
+
+        {"instance_id": 589949,
+         "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 2068511343},
+         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 2278776548},
+         "room_name": "Sky Temple Energy Controller"},
+
+        {"instance_id": 122,
+         "origin_location": {"world_asset_id": 1119434212, "area_asset_id": 1473133138},
+         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 1660916974},
+         "room_name": "Transport to Agon Gate"},
+
+        {"instance_id": 1245307,
+         "origin_location": {"world_asset_id": 1119434212, "area_asset_id": 2806956034},
+         "target_location": {"world_asset_id": 1039999561, "area_asset_id": 3479543630},
+         "room_name": "Transport to Torvus Temple Access"},
+
+        {"instance_id": 2949235,
+         "origin_location": {"world_asset_id": 1119434212, "area_asset_id": 3331021649},
+         "target_location": {"world_asset_id": 464164546, "area_asset_id": 900285955},
+         "room_name": "Transport to Sanctuary Spider side"},
+
+        {"instance_id": 129,
+         "origin_location": {"world_asset_id": 1039999561, "area_asset_id": 1868895730},
+         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 2889020216},
+         "room_name": "Transport to Torvus Gate"},
+
+        {"instance_id": 2162826,
+         "origin_location": {"world_asset_id": 1039999561, "area_asset_id": 3479543630},
+         "target_location": {"world_asset_id": 1119434212, "area_asset_id": 2806956034},
+         "room_name": "Transport to Agon Portal Access"},
+
+        {"instance_id": 4522032,
+         "origin_location": {"world_asset_id": 1039999561, "area_asset_id": 3205424168},
+         "target_location": {"world_asset_id": 464164546, "area_asset_id": 3145160350},
+         "room_name": "Transport to Sanctuary Vault side"},
+
+        {"instance_id": 38,
+         "origin_location": {"world_asset_id": 464164546, "area_asset_id": 3528156989},
+         "target_location": {"world_asset_id": 1006255871, "area_asset_id": 3455543403},
+         "room_name": "Transport to Sanctuary Gate"},
+
+        {"instance_id": 1245332,
+         "origin_location": {"world_asset_id": 464164546, "area_asset_id": 900285955},
+         "target_location": {"world_asset_id": 1119434212, "area_asset_id": 3331021649},
+         "room_name": "Transport to Agon Temple Access"},
+
+        {"instance_id": 1638535,
+         "origin_location": {"world_asset_id": 464164546, "area_asset_id": 3145160350},
+         "target_location": {"world_asset_id": 1039999561, "area_asset_id": 3205424168},
+         "room_name": "Transport to Lower Torvus Access"}
     ]
+    print(json.dumps(result))
+    assert result == expected
 
 
 def test_create_translator_gates_field():

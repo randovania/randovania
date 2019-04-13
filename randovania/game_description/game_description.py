@@ -5,6 +5,7 @@ from typing import Iterator, FrozenSet, Dict
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description.node import TeleporterNode
 from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -82,6 +83,21 @@ class GameDescription:
 
     def simplify_connections(self, resources):
         self.world_list.simplify_connections(resources, self.resource_database)
+
+    def all_editable_teleporter_nodes(self) -> Iterator[TeleporterNode]:
+        energy_controllers = {
+            44045108,  # Main Energy Controller
+            50083607,  # Agon Energy Controller
+            322696632,  # Torvus Energy Controller
+            218311274,  # Sanctuary Energy Controller
+            1564082177,  # Aerie
+            3136899603,  # Aerie Transport Station
+        }
+
+        for area in self.world_list.all_areas:
+            for node in area.nodes:
+                if isinstance(node, TeleporterNode) and area.area_asset_id not in energy_controllers:
+                    yield node
 
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
