@@ -11,7 +11,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
@@ -216,8 +216,11 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                                ConditionalResources(None, resource_b, ((resource_a, 5),))
                            ))
     pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION,
-                           (
+                           resources=(
                                ConditionalResources(None, None, ((resource_b, 2), (resource_a, 1))),
+                           ),
+                           convert_resources=(
+                               ResourceConversion(useless_resource, resource_a),
                            ))
 
     useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM,
@@ -254,7 +257,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                 "amount": 1
             }
         ],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [],
     }
     assert result[1] == {
         "pickup_index": 1,
@@ -269,7 +273,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                 "amount": 1
             }
         ],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [],
     }
     assert result[2] == {
         "pickup_index": 2,
@@ -297,7 +302,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                     "amount": 5
                 }
             ]
-        }]
+        }],
+        "convert": [],
     }
     assert result[3] == {
         "pickup_index": 3,
@@ -312,7 +318,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                 "amount": 1
             }
         ],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [],
     }
     assert result[4] == {
         "pickup_index": 4,
@@ -331,7 +338,15 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                 "amount": 1
             }
         ],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [
+            {
+                "from_item": 0,
+                "to_item": 1,
+                "clear_source": True,
+                "overwrite_target": False,
+            }
+        ],
     }
 
 
@@ -387,7 +402,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         "sound_index": 1,
         "jingle_index": 2,
         "resources": [],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [],
     }
     assert result[1] == {
         "pickup_index": 1,
@@ -397,7 +413,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         "sound_index": 1,
         "jingle_index": 2,
         "resources": [],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [],
     }
     assert result[2] == {
         "pickup_index": 2,
@@ -407,7 +424,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         "sound_index": 0,
         "jingle_index": 0,
         "resources": [],
-        "conditional_resources": [{'item': 2, 'resources': []}]
+        "conditional_resources": [{'item': 2, 'resources': []}],
+        "convert": [],
     }
     assert result[3] == {
         "pickup_index": 3,
@@ -417,7 +435,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         "sound_index": 0,
         "jingle_index": 1,
         "resources": [],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [],
     }
     assert result[4] == {
         "pickup_index": 4,
@@ -427,7 +446,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         "sound_index": 1,
         "jingle_index": 2,
         "resources": [],
-        "conditional_resources": []
+        "conditional_resources": [],
+        "convert": [],
     }
 
 
