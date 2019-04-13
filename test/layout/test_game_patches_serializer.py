@@ -1,4 +1,6 @@
+import copy
 import dataclasses
+import json
 
 import pytest
 
@@ -8,9 +10,9 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
@@ -34,7 +36,28 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
     data = {
         "starting_location": "Temple Grounds/Landing Site",
         "starting_items": {},
-        "elevators": {},
+        "elevators": {
+            "Temple Grounds/Temple Transport C": "Great Temple/Temple Transport C",
+            "Temple Grounds/Transport to Agon Wastes": "Agon Wastes/Transport to Temple Grounds",
+            "Temple Grounds/Transport to Torvus Bog": "Torvus Bog/Transport to Temple Grounds",
+            "Temple Grounds/Temple Transport B": "Great Temple/Temple Transport B",
+            "Temple Grounds/Sky Temple Gateway": "Great Temple/Sky Temple Energy Controller",
+            "Temple Grounds/Transport to Sanctuary Fortress": "Sanctuary Fortress/Transport to Temple Grounds",
+            "Temple Grounds/Temple Transport A": "Great Temple/Temple Transport A",
+            "Great Temple/Temple Transport A": "Temple Grounds/Temple Transport A",
+            "Great Temple/Temple Transport C": "Temple Grounds/Temple Transport C",
+            "Great Temple/Temple Transport B": "Temple Grounds/Temple Transport B",
+            "Great Temple/Sky Temple Energy Controller": "Temple Grounds/Sky Temple Gateway",
+            "Agon Wastes/Transport to Temple Grounds": "Temple Grounds/Transport to Agon Wastes",
+            "Agon Wastes/Transport to Torvus Bog": "Torvus Bog/Transport to Agon Wastes",
+            "Agon Wastes/Transport to Sanctuary Fortress": "Sanctuary Fortress/Transport to Agon Wastes",
+            "Torvus Bog/Transport to Temple Grounds": "Temple Grounds/Transport to Torvus Bog",
+            "Torvus Bog/Transport to Agon Wastes": "Agon Wastes/Transport to Torvus Bog",
+            "Torvus Bog/Transport to Sanctuary Fortress": "Sanctuary Fortress/Transport to Torvus Bog",
+            "Sanctuary Fortress/Transport to Temple Grounds": "Temple Grounds/Transport to Sanctuary Fortress",
+            "Sanctuary Fortress/Transport to Agon Wastes": "Agon Wastes/Transport to Sanctuary Fortress",
+            "Sanctuary Fortress/Transport to Torvus Bog": "Torvus Bog/Transport to Sanctuary Fortress"
+        },
         "translators": {},
         "locations": {
             world.name: {
@@ -57,9 +80,10 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
 
     if request.param.get("elevator"):
         elevator_id, elevator_source = request.param.get("elevator")
-        patches = dataclasses.replace(patches, elevator_connection={
-            elevator_id: game.starting_location,
-        })
+        elevator_connection = copy.copy(patches.elevator_connection)
+        elevator_connection[elevator_id] = game.starting_location
+
+        patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
         data["elevators"][elevator_source] = "Temple Grounds/Landing Site"
 
     if request.param.get("translator"):
