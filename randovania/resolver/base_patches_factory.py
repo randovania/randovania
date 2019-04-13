@@ -1,3 +1,4 @@
+import copy
 import dataclasses
 from random import Random
 
@@ -16,11 +17,16 @@ from randovania.resolver import elevator_distributor
 
 def add_elevator_connections_to_patches(permalink: Permalink,
                                         patches: GamePatches) -> GamePatches:
-    assert patches.elevator_connection == {}
+    """
+
+    :param permalink:
+    :param patches:
+    :return:
+    """
     if permalink.layout_configuration.elevators == LayoutElevators.RANDOMIZED:
-        return dataclasses.replace(
-            patches,
-            elevator_connection=elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number))
+        elevator_connection = copy.copy(patches.elevator_connection)
+        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number))
+        return dataclasses.replace(patches, elevator_connection=elevator_connection)
     else:
         return patches
 
