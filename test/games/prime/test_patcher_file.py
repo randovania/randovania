@@ -79,7 +79,9 @@ def test_create_elevators_field_no_elevator(empty_patches):
     assert result == []
 
 
-def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, empty_patches):
+@pytest.mark.parametrize("vanilla_gateway", [False, True])
+def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
+                                                     echoes_resource_database, empty_patches):
     # Setup
     game = data_reader.decode_data(default_data.decode_default_prime2(), False)
     patches = dataclasses.replace(
@@ -87,7 +89,7 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
         elevator_connection={
             589851: AreaLocation(464164546, 900285955),
             1572998: AreaLocation(1039999561, 3479543630),
-            1966093: AreaLocation(2252328306, 2068511343),
+            136970379: AreaLocation(2252328306, 2068511343 if vanilla_gateway else 3619928121),
         })
 
     # Run
@@ -98,15 +100,16 @@ def test_create_elevators_field_elevators_for_a_seed(echoes_resource_database, e
         {"instance_id": 589851,
          "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2918020398},
          "target_location": {"world_asset_id": 464164546, "area_asset_id": 900285955},
-         "room_name": "Transport to Sanctuary from Agon", },
+         "room_name": "Transport to Sanctuary Spider side", },
         {"instance_id": 1572998,
          "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1660916974},
          "target_location": {"world_asset_id": 1039999561, "area_asset_id": 3479543630},
-         "room_name": "Transport to Torvus from Agon", },
-        {"instance_id": 1966093,
-         "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2889020216},
-         "target_location": {"world_asset_id": 2252328306, "area_asset_id": 2068511343},
-         "room_name": "Transport to Great Temple - Sky Temple Energy Controller", },
+         "room_name": "Transport to Torvus Temple Access", },
+        {"instance_id": 136970379,
+         "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 2278776548},
+         "target_location": {"world_asset_id": 2252328306,
+                             "area_asset_id": 2068511343 if vanilla_gateway else 3619928121},
+         "room_name": "Sky Temple Gateway" if vanilla_gateway else "Transport to Sanctum", },
     ]
 
 
