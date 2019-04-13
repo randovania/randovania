@@ -161,6 +161,15 @@ def _create_pickup(original_index: PickupIndex,
             }
             for conditional in pickup.resources[1:]
         ],
+        "convert": [
+            {
+                "from_item": conversion.source.index,
+                "to_item": conversion.target.index,
+                "clear_source": conversion.clear_source,
+                "overwrite_target": conversion.overwrite_target,
+            }
+            for conversion in pickup.convert_resources
+        ],
 
         "hud_text": _calculate_hud_text(pickup, visual_pickup, model_style, memo_data),
 
