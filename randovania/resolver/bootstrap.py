@@ -69,6 +69,7 @@ def expand_layout_logic(logic: LayoutTrickLevel) -> Tuple[int, Set[int]]:
         12,  # Jump off Enemy
         # 14,  # Controller Reset
         15,  # Instant Morph
+        18,  # Exclude from Room Rando
     }
 
     # Skipping Controller Reset and Exclude from Room Randomizer
