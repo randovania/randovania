@@ -14,7 +14,7 @@ def try_randomize_elevators(randomizer: claris_random.Random,
     elevator_list = copy.copy(elevator_database)
     elevators_by_world: Dict[int, List[Elevator]] = defaultdict(list)
     for elevator in elevator_list:
-        elevators_by_world[elevator.world_number].append(elevator)
+        elevators_by_world[elevator.world_asset_id].append(elevator)
 
     while elevator_list:
         source_elevators: List[Elevator] = max(elevators_by_world.values(), key=len)
@@ -28,8 +28,8 @@ def try_randomize_elevators(randomizer: claris_random.Random,
 
         source_elevator.connect_to(target_elevator)
 
-        elevators_by_world[source_elevator.world_number].remove(source_elevator)
-        elevators_by_world[target_elevator.world_number].remove(target_elevator)
+        elevators_by_world[source_elevator.world_asset_id].remove(source_elevator)
+        elevators_by_world[target_elevator.world_asset_id].remove(target_elevator)
         elevator_list.remove(source_elevator)
         elevator_list.remove(target_elevator)
 
@@ -42,7 +42,7 @@ def try_randomize_elevators(randomizer: claris_random.Random,
             index = 0
             while index < len(list3):
                 celevator2 = list3[index]
-                if celevator2.world_number == celevator1.world_number or celevator2.area_asset_id == celevator1.destination_area:
+                if celevator2.world_asset_id == celevator1.world_asset_id or celevator2.area_asset_id == celevator1.destination_area:
                     celevator_list1.append(celevator2)
                     list3.remove(celevator2)
                 else:
