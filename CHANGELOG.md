@@ -30,6 +30,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: There can now be a total of 99 of any single Major Item, up from 9.
 
+-   Changed: Improved elevator room names. There's now a short and clear name for all
+    elevators.
+    
+-   Changed: The changed room names now apply for when elevators are vanilla as well.
+
+-   Fixed: Going from randomized elevators to vanilla elevators no longer requires a
+    clean unpack.
+
 -   Added: `randovania echoes database list-resource-usage` now supports all types of
     resources.
 
