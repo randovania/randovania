@@ -4,8 +4,15 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from randovania.game_description.area_location import AreaLocation
-from randovania.games.prime import claris_random
 from randovania.resolver import elevator_distributor
+
+
+def test_random_a():
+    r = elevator_distributor.ElevatorRandom(1965278358)
+    for i in range(20):
+        arg = 119 - i
+        num = r.next_with_max(arg)
+        assert num <= arg
 
 
 @pytest.mark.parametrize(["seed_number", "expected_ids"], [
@@ -19,7 +26,7 @@ from randovania.resolver import elevator_distributor
 ])
 def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
     # Setup
-    rng = claris_random.Random(seed_number)
+    rng = elevator_distributor.ElevatorRandom(seed_number)
 
     # Run
     result = elevator_distributor.try_randomize_elevators(rng)
@@ -29,7 +36,7 @@ def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
     assert connected_ids == expected_ids
 
 
-@patch("randovania.games.prime.claris_random.Random", autospec=True)
+@patch("randovania.resolver.elevator_distributor.ElevatorRandom", autospec=True)
 @patch("randovania.resolver.elevator_distributor.try_randomize_elevators", autospec=True)
 def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: MagicMock,
                                               mock_random: MagicMock):
