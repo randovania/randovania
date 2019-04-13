@@ -23,25 +23,46 @@ from randovania.resolver.item_pool import pickup_creator
 
 _TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
-    1660916974: "Grounds from Agon",
-    2889020216: "Grounds from Torvus",
-    3455543403: "Grounds from Sanctuary",
+    # Great Temple
+    408633584: "Temple Transport Amber",
+    2399252740: "Temple Transport Violet",
+    2556480432: "Temple Transport Emerald",
+
+    # Temple Grounds to Great Temple
+    1345979968: "Sanctuary Quadrant",
+    1287880522: "Agon Quadrant",
+    2918020398: "Torvus Quadrant",
+
+    # Temple Grounds to Areas
+    1660916974: "Agon Gate",
+    2889020216: "Torvus Gate",
+    3455543403: "Sanctuary Gate",
+
+    # Agon
     1473133138: "Agon Entrance",
-    2806956034: "Agon from Torvus",
-    3331021649: "Agon from Sanctuary",
+    2806956034: "Agon Portal Access",
+    3331021649: "Agon Temple Access",
+
+    # Torvus
     1868895730: "Torvus Entrance",
-    3479543630: "Torvus from Agon",
-    3205424168: "Torvus Sanctuary",
+    3479543630: "Torvus Temple Access",
+    3205424168: "Lower Torvus Access",
+
+    # Sanctuary
     3528156989: "Sanctuary Entrance",
-    900285955: "Sanctuary from Agon",
-    3145160350: "Sanctuary from Torvus",
+    900285955: "Sanctuary Spider side",
+    3145160350: "Sanctuary Vault side",
+}
+
+_TELEPORTERS_THAT_KEEP_NAME_WHEN_VANILLA = {
+    136970379,  # Sky Temple Gateway
+    589949,  # Sky Temple Energy Controller
 }
 
 
 def _create_spawn_point_field(patches: GamePatches,
                               resource_database: ResourceDatabase,
                               ) -> dict:
-
     capacities = [
         {
             "index": item.index,
@@ -232,13 +253,30 @@ def _create_pickup_list(patches: GamePatches,
     return pickups
 
 
-def _pretty_name_for_elevator(world_list: WorldList, connection: AreaLocation) -> str:
-    if connection.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
-        return _CUSTOM_NAMES_FOR_ELEVATORS[connection.area_asset_id]
+def _pretty_name_for_elevator(world_list: WorldList,
+                              original_teleporter_node: TeleporterNode,
+                              connection: AreaLocation,
+                              ) -> str:
+    """
+    Calculates the name the room that contains this elevator should have
+    :param world_list:
+    :param original_teleporter_node:
+    :param connection:
+    :return:
+    """
+    if original_teleporter_node.teleporter_instance_id in _TELEPORTERS_THAT_KEEP_NAME_WHEN_VANILLA:
+        if original_teleporter_node.default_connection == connection:
+            return world_list.nodes_to_area(original_teleporter_node).name
 
-    world = world_list.world_by_area_location(connection)
-    area = world.area_by_asset_id(connection.area_asset_id)
-    return "{0.name} - {1.name}".format(world, area)
+    if connection.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
+        target_area_name = _CUSTOM_NAMES_FOR_ELEVATORS[connection.area_asset_id]
+
+    else:
+        world = world_list.world_by_area_location(connection)
+        area = world.area_by_asset_id(connection.area_asset_id)
+        target_area_name = area.name
+
+    return "Transport to {}".format(target_area_name)
 
 
 def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list:
@@ -260,7 +298,7 @@ def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list
             "instance_id": instance_id,
             "origin_location": world_list.node_to_area_location(nodes_by_teleporter_id[instance_id]).as_json,
             "target_location": connection.as_json,
-            "room_name": "Transport to {}".format(_pretty_name_for_elevator(world_list, connection))
+            "room_name": _pretty_name_for_elevator(world_list, nodes_by_teleporter_id[instance_id], connection)
         }
         for instance_id, connection in patches.elevator_connection.items()
     ]
