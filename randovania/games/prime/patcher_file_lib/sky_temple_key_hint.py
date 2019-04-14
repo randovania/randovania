@@ -50,6 +50,9 @@ def create_hints(patches: GamePatches,
         resources = resource_info.convert_resource_gain_to_current_resources(pickup.resource_gain({}))
 
         for resource, quantity in resources.items():
+            if quantity < 1:
+                continue
+
             try:
                 key_number = echoes_items.SKY_TEMPLE_KEY_ITEMS.index(resource.index) + 1
             except ValueError:
@@ -71,6 +74,8 @@ def create_hints(patches: GamePatches,
             )
 
     for starting_resource, quantity in patches.starting_items.items():
+        if quantity < 1:
+            continue
         try:
             key_number = echoes_items.SKY_TEMPLE_KEY_ITEMS.index(starting_resource.index) + 1
         except ValueError:
