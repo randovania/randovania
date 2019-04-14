@@ -8,33 +8,9 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_MODEL, DARK_TEMPLE_KEY_NAMES, DARK_TEMPLE_KEY_ITEMS, \
+    SKY_TEMPLE_KEY_MODEL, SKY_TEMPLE_KEY_ITEMS, USELESS_PICKUP_MODEL, USELESS_PICKUP_ITEM
 from randovania.layout.major_item_state import MajorItemState
-
-_DARK_TEMPLE_KEY_MODEL = 37
-_DARK_TEMPLE_KEY_NAMES = [
-    "Dark Agon Key {0}",
-    "Dark Torvus Key {0}",
-    "Ing Hive Key {0}"
-]
-_DARK_TEMPLE_KEY_ITEMS = [
-    [32, 33, 34, ],
-    [35, 36, 37, ],
-    [38, 39, 40, ],
-]
-_SKY_TEMPLE_KEY_MODEL = 38
-_SKY_TEMPLE_KEY_ITEMS = [
-    29,
-    30,
-    31,
-    101,
-    102,
-    103,
-    104,
-    105,
-    106,
-]
-_USELESS_PICKUP_MODEL = 30
-_USELESS_PICKUP_ITEM = 107
 
 
 def _get_item(resource_database: ResourceDatabase, index: int,
@@ -159,13 +135,13 @@ def create_dark_temple_key(key_number: int,
     """
 
     return PickupEntry(
-        name=_DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
+        name=DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
         resources=(
             ConditionalResources(None, None, tuple([
-                (_get_item(resource_database, _DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
+                (_get_item(resource_database, DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
             ])),
         ),
-        model_index=_DARK_TEMPLE_KEY_MODEL,
+        model_index=DARK_TEMPLE_KEY_MODEL,
         item_category=ItemCategory.TEMPLE_KEY,
         probability_offset=3,
     )
@@ -185,10 +161,10 @@ def create_sky_temple_key(key_number: int,
         name="Sky Temple Key {}".format(key_number + 1),
         resources=(
             ConditionalResources(None, None, tuple([
-                (_get_item(resource_database, _SKY_TEMPLE_KEY_ITEMS[key_number]), 1)
+                (_get_item(resource_database, SKY_TEMPLE_KEY_ITEMS[key_number]), 1)
             ])),
         ),
-        model_index=_SKY_TEMPLE_KEY_MODEL,
+        model_index=SKY_TEMPLE_KEY_MODEL,
         item_category=ItemCategory.SKY_TEMPLE_KEY,
         probability_offset=3,
     )
@@ -204,10 +180,10 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
         name="Energy Transfer Module",
         resources=(
             ConditionalResources(None, None, tuple([
-                (_get_item(resource_database, _USELESS_PICKUP_ITEM), 1)
+                (_get_item(resource_database, USELESS_PICKUP_ITEM), 1)
             ])),
         ),
-        model_index=_USELESS_PICKUP_MODEL,
+        model_index=USELESS_PICKUP_MODEL,
         item_category=ItemCategory.ETM,
     )
 
@@ -222,6 +198,6 @@ def create_visual_etm() -> PickupEntry:
         resources=(
             ConditionalResources(None, None, tuple()),
         ),
-        model_index=_USELESS_PICKUP_MODEL,
+        model_index=USELESS_PICKUP_MODEL,
         item_category=ItemCategory.ETM,
     )
