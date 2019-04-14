@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
+    <width>519</width>
     <height>402</height>
    </rect>
   </property>
@@ -291,7 +291,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>380</width>
+             <width>479</width>
              <height>318</height>
             </rect>
            </property>
@@ -354,6 +354,42 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="hint_tab">
+       <attribute name="title">
+        <string>Hints</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="hint_layout">
+        <item>
+         <widget class="QLabel" name="hint_sky_temple_key_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls how precise the hints for Sky Temple Keys in Sky Temple Gateway are.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No hints&lt;/span&gt;: The scans provide no useful information.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show only the area name&lt;/span&gt;: The scans will say the key is in &amp;quot;Temple Grounds&amp;quot;, &amp;quot;Agon Wastes&amp;quot;, etc.&lt;br/&gt;There is no difference between Aether and Dark Aether. So Agon Wastes means both light and dark world.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show area and room name&lt;/span&gt;: The scans will say the key is in &amp;quot;Great Temple - Transport A Access&amp;quot;, etc. For rooms with more than one item, there's no way to distinguish which one it is.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="hint_sky_temple_key_combo">
+          <item>
+           <property name="text">
+            <string>No hints</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Show only the area name</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Show area and room name</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -363,7 +399,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>415</width>
+     <width>519</width>
      <height>21</height>
     </rect>
    </property>
