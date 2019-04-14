@@ -10,7 +10,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.layout.major_item_state import MajorItemState
 
-_ITEM_PERCENTAGE = 47
 _DARK_TEMPLE_KEY_MODEL = 37
 _DARK_TEMPLE_KEY_NAMES = [
     "Dark Agon Key {0}",
@@ -68,7 +67,7 @@ def create_major_item(item: MajorItem,
             resources.append((_get_item(resource_database, ammo_index), ammo_count))
 
         if include_percentage:
-            resources.append((_get_item(resource_database, _ITEM_PERCENTAGE), 1))
+            resources.append((resource_database.item_percentage, 1))
 
         return tuple(resources)
 
@@ -121,16 +120,14 @@ def create_ammo_expansion(ammo: Ammo,
     :param resource_database:
     :return:
     """
-    percentage = _get_item(resource_database, _ITEM_PERCENTAGE)
-
     resources = [(_get_item(resource_database, item), count)
                  for item, count in zip(ammo.items, ammo_count)]
-    resources.append((percentage, 1))
+    resources.append((resource_database.item_percentage, 1))
 
     if requires_major_item:
         temporary_resources = [(_get_item(resource_database, item), count)
                                for item, count in zip(ammo.temporaries, ammo_count)]
-        temporary_resources.append((percentage, 1))
+        temporary_resources.append((resource_database.item_percentage, 1))
 
         conditional_resources = (
             ConditionalResources(None, None, tuple(temporary_resources)),
