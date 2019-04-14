@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: The Slope Jump method in Great Bridge for Abandoned Worksite is now Hard
     and above, from Normal.
     
+-   Added: Option to disable the Sky Temple Key hints or to hide the Area name.    
+    
 -   Changed: The location in the Sky Temple Key hint is now colored.
 
 -   Changed: There can now be a total of 99 of any single Major Item, up from 9.
