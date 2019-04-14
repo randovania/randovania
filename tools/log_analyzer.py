@@ -5,8 +5,6 @@ from pathlib import Path
 from statistics import stdev
 from typing import Dict
 
-from randovania.game_description.default_database import default_prime2_pickup_database
-
 
 def read_json(path: Path) -> dict:
     with path.open() as x:
@@ -14,7 +12,7 @@ def read_json(path: Path) -> dict:
 
 
 def accumulate_results(layout: dict, items: dict, locations: dict):
-    for worlds, world_data in layout["locations"].items():
+    for worlds, world_data in layout["game_modifications"]["locations"].items():
         for area_name, item_name in world_data.items():
             items[item_name][area_name] += 1
             locations[area_name][item_name] += 1
