@@ -21,7 +21,6 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
     ammo_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 42)
     temporary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
     temporary_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 72)
-    percentage_item = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 47)
 
     major_item = MajorItem(
         name="The Item",
@@ -47,7 +46,7 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
                 (item, 1),
                 (ammo_a, 10),
                 (ammo_b, 20),
-                (percentage_item, 1),
+                (echoes_resource_database.item_percentage, 1),
             )
         else:
             return (
@@ -99,7 +98,6 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
     # Setup
     missile = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 44)
     temporary = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
-    percentage_item = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 47)
 
     state = MajorItemState(
         include_copy_in_original_location=False,
@@ -124,7 +122,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
                 "Missile Launcher", None,
                 resources=(
                     (missile, ammo_quantity),
-                    (percentage_item, 1),
+                    (echoes_resource_database.item_percentage, 1),
                 )
             ),
         ),
@@ -143,7 +141,6 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
     ammo_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 42)
     temporary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
     temporary_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 72)
-    percentage_item = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 47)
 
     ammo = Ammo(
         name="The Item",
@@ -157,12 +154,12 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
     item_resources = (
         (ammo_a, ammo_count[0]),
         (ammo_b, ammo_count[1]),
-        (percentage_item, 1),
+        (echoes_resource_database.item_percentage, 1),
     )
     temporary_resources = (
         (temporary_a, ammo_count[0]),
         (temporary_b, ammo_count[1]),
-        (percentage_item, 1),
+        (echoes_resource_database.item_percentage, 1),
     )
 
     # Run
