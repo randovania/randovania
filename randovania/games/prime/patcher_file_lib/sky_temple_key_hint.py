@@ -97,3 +97,23 @@ def create_hints(patches: GamePatches,
         }
         for key_number, key_index in enumerate(echoes_items.SKY_TEMPLE_KEY_ITEMS)
     ]
+
+
+def hide_hints() -> list:
+    """
+    Creates the string patches entries that changes the Sky Temple Gateway hint scans with hints for
+    completely useless text.
+    :return:
+    """
+
+    return [
+        {
+            "asset_id": _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
+            "strings": [
+                "The {} Sky Temple Key is lost somewhere in Aether.".format(
+                    _sky_temple_key_name(key_number + 1),
+                )
+            ]
+        }
+        for key_number in range(9)
+    ]

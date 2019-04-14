@@ -85,3 +85,33 @@ def test_create_hints_all_starting(hide_area: bool,
 
     # Assert
     assert result == expected
+
+
+def test_hide_hints():
+    # Setup
+    expected = [
+        {"asset_id": 0xD97685FE,
+         "strings": ["The 1st Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0x32413EFD,
+         "strings": ["The 2nd Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0xDD8355C3,
+         "strings": ["The 3rd Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0x3F5F4EBA,
+         "strings": ["The 4th Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0xD09D2584,
+         "strings": ["The 5th Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0x3BAA9E87,
+         "strings": ["The 6th Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0xD468F5B9,
+         "strings": ["The 7th Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0x2563AE34,
+         "strings": ["The 8th Sky Temple Key is lost somewhere in Aether."]},
+        {"asset_id": 0xCAA1C50A,
+         "strings": ["The 9th Sky Temple Key is lost somewhere in Aether."]},
+    ]
+
+    # Run
+    result = sky_temple_key_hint.hide_hints()
+
+    # Assert
+    assert result == expected
