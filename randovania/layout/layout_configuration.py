@@ -5,6 +5,7 @@ from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -61,6 +62,7 @@ class LayoutConfiguration(BitPackDataClass):
     major_items_configuration: MajorItemsConfiguration
     ammo_configuration: AmmoConfiguration
     translator_configuration: TranslatorConfiguration
+    hints: HintConfiguration
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     split_beam_ammo: bool = True
     missile_launcher_required: bool = True
@@ -81,6 +83,7 @@ class LayoutConfiguration(BitPackDataClass):
             "major_items_configuration": self.major_items_configuration.as_json,
             "ammo_configuration": self.ammo_configuration.as_json,
             "translator_configuration": self.translator_configuration.as_json,
+            "hints": self.hints.as_json,
             "split_beam_ammo": self.split_beam_ammo,
             "missile_launcher_required": self.missile_launcher_required,
             "main_power_bombs_required": self.main_power_bombs_required,
@@ -102,6 +105,7 @@ class LayoutConfiguration(BitPackDataClass):
                 default_prime2_item_database(),
             ),
             translator_configuration=TranslatorConfiguration.from_json(json_dict["translator_configuration"]),
+            hints=HintConfiguration.from_json(json_dict["hints"]),
             split_beam_ammo=json_dict["split_beam_ammo"],
             missile_launcher_required=json_dict["missile_launcher_required"],
             main_power_bombs_required=json_dict["main_power_bombs_required"],

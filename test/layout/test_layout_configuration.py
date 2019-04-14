@@ -6,6 +6,7 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
     LayoutElevators
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
@@ -52,11 +53,13 @@ def _layout_config_with_data(request):
     major_items = DummyValue()
     ammo_config = DummyValue()
     translator_config = DummyValue()
+    hints = DummyValue()
 
     with patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
          patch.multiple(MajorItemsConfiguration, bit_pack_unpack=MagicMock(return_value=major_items)), \
          patch.multiple(AmmoConfiguration, bit_pack_unpack=MagicMock(return_value=ammo_config)), \
-         patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)):
+         patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)), \
+         patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)):
         yield request.param["encoded"], LayoutConfiguration.from_params(
             trick_level=request.param["trick"],
             sky_temple_keys=request.param["sky_temple"],
@@ -65,6 +68,7 @@ def _layout_config_with_data(request):
             major_items_configuration=major_items,
             ammo_configuration=ammo_config,
             translator_configuration=translator_config,
+            hints=hints,
         )
 
 

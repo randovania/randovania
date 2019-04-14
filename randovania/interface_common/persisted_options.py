@@ -117,6 +117,7 @@ def _convert_v7(options: dict) -> dict:
             "fixed_torvus_temple": True,
             "fixed_great_temple": True,
         }
+        layout_configuration["hints"] = {}
 
     return options
 
