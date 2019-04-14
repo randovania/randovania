@@ -1,5 +1,6 @@
 import pytest
 
+import randovania.games.prime.echoes_items
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
@@ -27,7 +28,7 @@ def test_sky_temple_key_distribution_logic_all_guardians_valid(echoes_resource_d
     # Assert
     assert item_pool == []
     assert initial_items == {
-        SimpleResourceInfo(pickup_creator._SKY_TEMPLE_KEY_ITEMS[i - 1],
+        SimpleResourceInfo(randovania.games.prime.echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
                            f'Sky Temple Key {i}', f'TempleKey{i}',
                            ResourceType.ITEM): 1
         for i in range(4, 10)
@@ -49,7 +50,7 @@ def test_sky_temple_key_distribution_logic_with_quantity(echoes_resource_databas
     ]
     assert pickup_assignment == {}
     assert initial_items == {
-        SimpleResourceInfo(pickup_creator._SKY_TEMPLE_KEY_ITEMS[i - 1],
+        SimpleResourceInfo(randovania.games.prime.echoes_items.SKY_TEMPLE_KEY_ITEMS[i - 1],
                            f'Sky Temple Key {i}', f'TempleKey{i}',
                            ResourceType.ITEM): 1
         for i in range(quantity + 1, 10)
