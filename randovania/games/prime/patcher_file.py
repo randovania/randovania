@@ -384,7 +384,7 @@ def create_patcher_file(description: LayoutDescription,
 
     # Scan hints
     string_patches = []
-    string_patches.extend(sky_temple_key_hint.create_hints(patches, game.world_list))
+    string_patches.extend(sky_temple_key_hint.create_hints(patches, game.world_list, False))
     result["string_patches"] = string_patches
 
     # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
