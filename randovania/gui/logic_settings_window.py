@@ -15,6 +15,7 @@ from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
+from randovania.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode
 from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
@@ -85,6 +86,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.setup_sky_temple_elements()
         self.setup_starting_area_elements()
         self.setup_translators_elements(is_preview_mode)
+        self.setup_hint_elements()
 
         # Alignment
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
@@ -92,6 +94,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 
     # Options
     def on_options_changed(self, options: Options):
@@ -131,6 +134,9 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.always_up_great_temple_check.setChecked(translator_configuration.fixed_great_temple)
         for gate, combo in self._combo_for_gate.items():
             set_combo_with_value(combo, translator_configuration.translator_requirement[gate])
+
+        # Hints
+        set_combo_with_value(self.hint_sky_temple_key_combo, options.layout_configuration.hints.sky_temple_keys)
 
     # Trick Level
     def setup_trick_level_elements(self):
@@ -300,3 +306,17 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
                 "translator_configuration",
                 options.layout_configuration.translator_configuration.replace_requirement_for_gate(
                     combo.gate, combo.currentData()))
+
+    # Hints
+    def setup_hint_elements(self):
+        for i, stk_hint_mode in enumerate(SkyTempleKeyHintMode):
+            self.hint_sky_temple_key_combo.setItemData(i, stk_hint_mode)
+
+        self.hint_sky_temple_key_combo.currentIndexChanged.connect(self._on_stk_combo_changed)
+
+    def _on_stk_combo_changed(self, new_index: int):
+        with self._options as options:
+            options.set_layout_configuration_field(
+                "hints",
+                dataclasses.replace(options.layout_configuration.hints,
+                                    sky_temple_keys=self.hint_sky_temple_key_combo.currentData()))
