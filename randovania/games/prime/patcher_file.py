@@ -16,6 +16,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
@@ -380,6 +381,11 @@ def create_patcher_file(description: LayoutDescription,
 
     # Add translators
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
+
+    # Scan hints
+    string_patches = []
+    string_patches.extend(sky_temple_key_hint.create_hints(patches, game.world_list))
+    result["string_patches"] = string_patches
 
     # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state

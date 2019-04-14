@@ -571,6 +571,20 @@ def test_create_patcher_file(test_files_dir):
     result = patcher_file.create_patcher_file(description, cosmetic_patches)
 
     # Assert
+    assert isinstance(result["spawn_point"], dict)
+
+    assert isinstance(result["pickups"], list)
+    assert len(result["pickups"]) == 119
+
+    assert isinstance(result["elevators"], list)
+    assert len(result["elevators"]) == 20
+
+    assert isinstance(result["translator_gates"], list)
+    assert len(result["translator_gates"]) == 17
+
+    assert isinstance(result["string_patches"], list)
+    assert len(result["string_patches"]) == 9
+
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
         "intro_in_post_state": True,

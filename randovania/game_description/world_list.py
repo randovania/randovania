@@ -62,8 +62,11 @@ class WorldList:
         for world in self.worlds:
             yield from world.all_nodes
 
-    def area_name(self, area: Area) -> str:
-        return "{}/{}".format(self.world_with_area(area).name, area.name)
+    def area_name(self, area: Area, separator: str = "/") -> str:
+        return "{}{}{}".format(
+            self.world_with_area(area).name,
+            separator,
+            area.name)
 
     def node_name(self, node: Node, with_world=False) -> str:
         prefix = "{}/".format(self.nodes_to_world(node).name) if with_world else ""
