@@ -56,6 +56,7 @@ def test_migrate_from_v1(option):
                 "fixed_torvus_temple": True,
                 "fixed_great_temple": True,
             },
+            "hints": {},
             "split_beam_ammo": True,
             "missile_launcher_required": True,
             "main_power_bombs_required": True,

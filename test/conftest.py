@@ -6,6 +6,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -41,6 +42,12 @@ def echoes_item_database() -> ItemDatabase:
 @pytest.fixture()
 def echoes_game_data() -> dict:
     return default_data.decode_default_prime2()
+
+
+@pytest.fixture()
+def echoes_game_description(echoes_game_data) -> GameDescription:
+    from randovania.game_description import data_reader
+    return data_reader.decode_data(echoes_game_data)
 
 
 @pytest.fixture()

@@ -16,7 +16,9 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -339,6 +341,30 @@ def _apply_translator_gate_patches(specific_patches: dict, translator_gates: Tra
     specific_patches["always_up_great_temple"] = translator_gates.fixed_great_temple
 
 
+def _create_string_patches(hint_config: HintConfiguration,
+                           game: GameDescription,
+                           patches: GamePatches,
+                           ) -> list:
+    """
+
+    :param hint_config:
+    :param game:
+    :param patches:
+    :return:
+    """
+    string_patches = []
+
+    # Sky Temple Keys
+    stk_mode = hint_config.sky_temple_keys
+    if stk_mode == SkyTempleKeyHintMode.DISABLED:
+        string_patches.extend(sky_temple_key_hint.hide_hints())
+    else:
+        string_patches.extend(sky_temple_key_hint.create_hints(patches, game.world_list,
+                                                               stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
+
+    return string_patches
+
+
 def create_patcher_file(description: LayoutDescription,
                         cosmetic_patches: CosmeticPatches,
                         ) -> dict:
@@ -380,6 +406,9 @@ def create_patcher_file(description: LayoutDescription,
 
     # Add translators
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
+
+    # Scan hints
+    result["string_patches"] = _create_string_patches(layout.hints, game, patches)
 
     # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state

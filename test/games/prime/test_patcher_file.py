@@ -3,7 +3,7 @@ import dataclasses
 import json
 from random import Random
 from typing import Tuple
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -12,13 +12,14 @@ from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.prime import patcher_file, default_data
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
@@ -284,7 +285,8 @@ def test_calculate_hud_text(order: Tuple[str, str]):
     }
 
     # Run
-    result = patcher_file._calculate_hud_text(pickups[order[0]], pickups[order[1]], PickupModelStyle.HIDE_ALL, memo_data)
+    result = patcher_file._calculate_hud_text(pickups[order[0]], pickups[order[1]], PickupModelStyle.HIDE_ALL,
+                                              memo_data)
 
     # Assert
     if order[1] == "Y":
@@ -561,6 +563,37 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
     assert result == "Progressive Suit:\nProvides the following in order: Dark Suit, Light Suit"
 
 
+@pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
+@patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
+@patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
+def test_create_string_patches(mock_create_hints: MagicMock,
+                               mock_hide_hints: MagicMock,
+                               stk_mode: SkyTempleKeyHintMode,
+                               ):
+    # Setup
+    game = MagicMock()
+    patches = MagicMock()
+    mock_create_hints.return_value = ["show", "hints"]
+    mock_hide_hints.return_value = ["hide", "hints"]
+
+    # Run
+    result = patcher_file._create_string_patches(HintConfiguration(sky_temple_keys=stk_mode),
+                                                 game,
+                                                 patches)
+
+    # Assert
+    if stk_mode == SkyTempleKeyHintMode.DISABLED:
+        mock_hide_hints.assert_called_once_with()
+        mock_create_hints.assert_not_called()
+        assert result == ["hide", "hints"]
+
+    else:
+        mock_create_hints.assert_called_once_with(patches, game.world_list,
+                                                  stk_mode == SkyTempleKeyHintMode.HIDE_AREA)
+        mock_hide_hints.assert_not_called()
+        assert result == ["show", "hints"]
+
+
 def test_create_patcher_file(test_files_dir):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.json"))
@@ -571,6 +604,20 @@ def test_create_patcher_file(test_files_dir):
     result = patcher_file.create_patcher_file(description, cosmetic_patches)
 
     # Assert
+    assert isinstance(result["spawn_point"], dict)
+
+    assert isinstance(result["pickups"], list)
+    assert len(result["pickups"]) == 119
+
+    assert isinstance(result["elevators"], list)
+    assert len(result["elevators"]) == 20
+
+    assert isinstance(result["translator_gates"], list)
+    assert len(result["translator_gates"]) == 17
+
+    assert isinstance(result["string_patches"], list)
+    assert len(result["string_patches"]) == 9
+
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
         "intro_in_post_state": True,
