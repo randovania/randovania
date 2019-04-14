@@ -250,8 +250,13 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         source_area = _area_name_to_area_location(world_list, source_name)
         target_area = _area_name_to_area_location(world_list, target_name)
 
-        source_node = world_list.resolve_teleporter_connection(source_area)
-        assert isinstance(source_node, TeleporterNode)
+        potential_source_nodes = [
+            node
+            for node in world_list.area_by_area_location(source_area).nodes
+            if isinstance(node, TeleporterNode)
+        ]
+        assert len(potential_source_nodes) == 1
+        source_node = potential_source_nodes[0]
         elevator_connection[source_node.teleporter_instance_id] = target_area
 
     # Translator Gates

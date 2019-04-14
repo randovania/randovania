@@ -1,10 +1,66 @@
+import dataclasses
 from unittest.mock import MagicMock, patch
 
+from randovania.game_description import data_reader
+from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
+from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver import base_patches_factory
+
+
+def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
+    # Setup
+    game = data_reader.decode_data(echoes_game_data)
+    permalink = Permalink.default()
+
+    # Run
+    result = base_patches_factory.add_elevator_connections_to_patches(permalink, GamePatches.with_game(game))
+
+    # Assert
+    assert result == GamePatches.with_game(game)
+
+
+def test_add_elevator_connections_to_patches_random(echoes_game_data):
+    # Setup
+    game = data_reader.decode_data(echoes_game_data)
+    permalink = dataclasses.replace(
+        Permalink.default(),
+        layout_configuration=dataclasses.replace(LayoutConfiguration.default(),
+                                                 elevators=LayoutElevators.RANDOMIZED))
+    expected = dataclasses.replace(GamePatches.with_game(game),
+                                   elevator_connection={
+                                       589851: AreaLocation(1039999561, 3479543630),
+                                       1572998: AreaLocation(464164546, 3528156989),
+                                       1966093: AreaLocation(1039999561, 1868895730),
+                                       2097251: AreaLocation(1119434212, 2806956034),
+                                       136970379: AreaLocation(2252328306, 2068511343),
+                                       3342446: AreaLocation(2252328306, 2399252740),
+                                       3538975: AreaLocation(2252328306, 408633584),
+                                       152: AreaLocation(1006255871, 1345979968),
+                                       393260: AreaLocation(1119434212, 3331021649),
+                                       524321: AreaLocation(1006255871, 3455543403),
+                                       589949: AreaLocation(1006255871, 2278776548),
+                                       122: AreaLocation(464164546, 900285955),
+                                       1245307: AreaLocation(1006255871, 1287880522),
+                                       2949235: AreaLocation(2252328306, 2556480432),
+                                       129: AreaLocation(1006255871, 2889020216),
+                                       2162826: AreaLocation(1006255871, 2918020398),
+                                       4522032: AreaLocation(464164546, 3145160350),
+                                       38: AreaLocation(1006255871, 1660916974),
+                                       1245332: AreaLocation(1119434212, 1473133138),
+                                       1638535: AreaLocation(1039999561, 3205424168),
+                                   })
+
+    # Run
+    result = base_patches_factory.add_elevator_connections_to_patches(permalink, GamePatches.with_game(game))
+
+    # Assert
+    assert result == expected
 
 
 def test_gate_assignment_for_configuration_all_emerald(echoes_resource_database):

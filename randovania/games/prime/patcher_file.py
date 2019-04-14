@@ -6,6 +6,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import TeleporterNode
@@ -279,19 +280,24 @@ def _pretty_name_for_elevator(world_list: WorldList,
     return "Transport to {}".format(target_area_name)
 
 
-def _create_elevators_field(patches: GamePatches, world_list: WorldList) -> list:
+def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
     """
     Creates the elevator entries in the patcher file
     :param patches:
-    :param world_list:
+    :param game:
     :return:
     """
 
+    world_list = game.world_list
     nodes_by_teleporter_id = {
         node.teleporter_instance_id: node
-        for node in world_list.all_nodes
-        if isinstance(node, TeleporterNode)
+        for node in game.all_editable_teleporter_nodes()
     }
+
+    if len(patches.elevator_connection) != len(nodes_by_teleporter_id):
+        raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
+            len(nodes_by_teleporter_id), len(patches.elevator_connection)
+        ))
 
     elevators = [
         {
@@ -370,7 +376,7 @@ def create_patcher_file(description: LayoutDescription,
                                             )
 
     # Add the elevators
-    result["elevators"] = _create_elevators_field(patches, game.world_list)
+    result["elevators"] = _create_elevators_field(patches, game)
 
     # Add translators
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)

@@ -29,7 +29,12 @@ class GamePatches:
 
     @classmethod
     def with_game(cls, game: "GameDescription") -> "GamePatches":
-        return GamePatches({}, {}, {}, {}, {}, {}, game.starting_location)
+        elevator_connection = {
+            node.teleporter_instance_id: node.default_connection
+            for node in game.all_editable_teleporter_nodes()
+        }
+
+        return GamePatches({}, elevator_connection, {}, {}, {}, {}, game.starting_location)
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupEntry]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
