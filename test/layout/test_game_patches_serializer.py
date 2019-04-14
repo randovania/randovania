@@ -1,6 +1,5 @@
 import copy
 import dataclasses
-import json
 
 import pytest
 
