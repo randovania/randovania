@@ -55,6 +55,9 @@ class ResourceDatabase(NamedTuple):
         return find_resource_info_with_id(
             self.get_by_type(resource_type), index)
 
+    def get_item(self, index: int) -> SimpleResourceInfo:
+        return self.get_by_type_and_index(ResourceType.ITEM, index)
+
     def trivial_resource(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.MISC, 0)
 

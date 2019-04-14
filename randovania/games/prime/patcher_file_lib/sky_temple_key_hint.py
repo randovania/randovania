@@ -4,6 +4,8 @@ from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
 
+import num2words
+
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -19,8 +21,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 
 
 def _sky_temple_key_name(key_number: int) -> str:
-    # TODO: use ordinal
-    return str(key_number)
+    return num2words.num2words(key_number, lang='en', to='ordinal_num')
 
 
 def create_hints(patches: GamePatches, world_list: WorldList) -> list:
@@ -56,7 +57,7 @@ def create_hints(patches: GamePatches, world_list: WorldList) -> list:
             continue
 
         assert starting_resource.index not in sky_temple_key_hints
-        sky_temple_key_hints[starting_resource.index] = "The {} Sky Temple Key does not need to be collected.".format(
+        sky_temple_key_hints[starting_resource.index] = "The {} Sky Temple Key has no need to be located.".format(
             _sky_temple_key_name(key_number),
         )
 
