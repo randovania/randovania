@@ -27,7 +27,18 @@ def _color_text_as_red(text: str) -> str:
     return "&push;&main-color=#784784;{}&pop;".format(text)
 
 
-def create_hints(patches: GamePatches, world_list: WorldList) -> list:
+def create_hints(patches: GamePatches,
+                 world_list: WorldList,
+                 hide_area: bool,
+                 ) -> list:
+    """
+    Creates the string patches entries that changes the Sky Temple Gateway hint scans with hints for where
+    the STK actually are.
+    :param patches:
+    :param world_list:
+    :param hide_area: Should the hint include only the world?
+    :return:
+    """
     index_to_node = {
         node.pickup_index: node
         for node in world_list.all_nodes
@@ -45,13 +56,18 @@ def create_hints(patches: GamePatches, world_list: WorldList) -> list:
                 continue
 
             assert resource.index not in sky_temple_key_hints
+            pickup_node = index_to_node[pickup_index]
+
             sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}".format(
                 _sky_temple_key_name(key_number),
                 _color_text_as_red(
+                    world_list.nodes_to_world(pickup_node).name
+                    if hide_area else
                     world_list.area_name(
-                        world_list.nodes_to_area(index_to_node[pickup_index]),
+                        world_list.nodes_to_area(pickup_node),
                         " - "
-                    ))
+                    )
+                )
             )
 
     for starting_resource, quantity in patches.starting_items.items():
