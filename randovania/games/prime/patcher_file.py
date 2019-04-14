@@ -16,7 +16,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
-from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
+from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_description import LayoutDescription
@@ -344,6 +344,7 @@ def _apply_translator_gate_patches(specific_patches: dict, translator_gates: Tra
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
                            patches: GamePatches,
+                           rng: Random,
                            ) -> list:
     """
 
@@ -353,6 +354,11 @@ def _create_string_patches(hint_config: HintConfiguration,
     :return:
     """
     string_patches = []
+
+    # Location Hints
+    string_patches.extend(
+        item_hints.create_hints(patches, game.world_list, False, rng)
+    )
 
     # Sky Temple Keys
     stk_mode = hint_config.sky_temple_keys
@@ -408,7 +414,7 @@ def create_patcher_file(description: LayoutDescription,
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
 
     # Scan hints
-    result["string_patches"] = _create_string_patches(layout.hints, game, patches)
+    result["string_patches"] = _create_string_patches(layout.hints, game, patches, rng)
 
     # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
