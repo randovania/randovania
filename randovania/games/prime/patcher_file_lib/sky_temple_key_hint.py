@@ -1,11 +1,10 @@
+import num2words
+
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
-
-import num2words
-
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -22,6 +21,10 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 
 def _sky_temple_key_name(key_number: int) -> str:
     return num2words.num2words(key_number, lang='en', to='ordinal_num')
+
+
+def _color_text_as_red(text: str) -> str:
+    return "&push;&main-color=#784784;{}&pop;".format(text)
 
 
 def create_hints(patches: GamePatches, world_list: WorldList) -> list:
@@ -44,10 +47,11 @@ def create_hints(patches: GamePatches, world_list: WorldList) -> list:
             assert resource.index not in sky_temple_key_hints
             sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}".format(
                 _sky_temple_key_name(key_number),
-                world_list.area_name(
-                    world_list.nodes_to_area(index_to_node[pickup_index]),
-                    " - "
-                )
+                _color_text_as_red(
+                    world_list.area_name(
+                        world_list.nodes_to_area(index_to_node[pickup_index]),
+                        " - "
+                    ))
             )
 
     for starting_resource, quantity in patches.starting_items.items():
