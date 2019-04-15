@@ -4,7 +4,7 @@ from typing import Tuple, List
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
-from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator
+from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator, create_simple_logbook_hint
 
 _LORE_SCANS = {
     0x987884FB: "Luminoth Lore translated. (Age of Anxiety)",
@@ -88,10 +88,7 @@ def create_hints(patches: GamePatches,
         hints.append((asset_id, message))
 
     return [
-        {
-            "asset_id": asset_id,
-            "strings": [message, "", message],
-        }
+        create_simple_logbook_hint(asset_id, message)
         for asset_id, message in hints
     ]
 
@@ -104,13 +101,6 @@ def hide_hints() -> list:
     """
 
     return [
-        {
-            "asset_id": asset_id,
-            "strings": [
-                "Some item was placed somewhere.",
-                "",
-                "Some item was placed somewhere."
-            ]
-        }
+        create_simple_logbook_hint(asset_id, "Some item was placed somewhere.")
         for asset_id in _LORE_SCANS.keys()
     ]
