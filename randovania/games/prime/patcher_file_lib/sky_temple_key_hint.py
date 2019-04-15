@@ -1,11 +1,10 @@
 import num2words
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PickupNode
 from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
-from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator
+from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator, create_simple_logbook_hint
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -79,12 +78,7 @@ def create_hints(patches: GamePatches,
             ))
 
     return [
-        {
-            "asset_id": _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
-            "strings": [
-                sky_temple_key_hints[key_index]
-            ]
-        }
+        create_simple_logbook_hint(_SKY_TEMPLE_KEY_SCAN_ASSETS[key_number], sky_temple_key_hints[key_index])
         for key_number, key_index in enumerate(echoes_items.SKY_TEMPLE_KEY_ITEMS)
     ]
 
@@ -97,13 +91,9 @@ def hide_hints() -> list:
     """
 
     return [
-        {
-            "asset_id": _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
-            "strings": [
-                "The {} Sky Temple Key is lost somewhere in Aether.".format(
-                    _sky_temple_key_name(key_number + 1),
-                )
-            ]
-        }
+        create_simple_logbook_hint(
+            _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
+            "The {} Sky Temple Key is lost somewhere in Aether.".format(_sky_temple_key_name(key_number + 1)),
+        )
         for key_number in range(9)
     ]

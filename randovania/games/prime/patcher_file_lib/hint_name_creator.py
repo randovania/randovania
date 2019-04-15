@@ -39,3 +39,10 @@ class HintNameCreator:
 
     def item_name(self, pickup: PickupEntry) -> str:
         return _color_text_as_red(pickup.name)
+
+
+def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
+    return {
+        "asset_id": asset_id,
+        "strings": [hint, "", hint],
+    }
