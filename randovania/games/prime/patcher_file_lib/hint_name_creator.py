@@ -7,7 +7,7 @@ from randovania.game_description.world_list import WorldList
 
 
 def _color_text_as_red(text: str) -> str:
-    return "&push;&main-color=#784784;{}&pop;".format(text)
+    return "&push;&main-color=#a84343;{}&pop;".format(text)
 
 
 class HintNameCreator:

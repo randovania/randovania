@@ -74,12 +74,12 @@ def create_hints(patches: GamePatches,
         if index is not None:
             pickup = patches.pickup_assignment.get(index)
             if pickup is not None:
-                message = "The '{pickup}' can be found at '{node}'.".format(
+                message = "A {pickup} can be found at {node}.".format(
                     pickup=hint_name_creator.item_name(pickup),
                     node=hint_name_creator.index_node_name(index),
                 )
             else:
-                message = "'{node}' has nothing.".format(
+                message = "{node} has nothing.".format(
                     node=hint_name_creator.index_node_name(index),
                 )
         else:
