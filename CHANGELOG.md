@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: The Slope Jump method in Great Bridge for Abandoned Worksite is now Hard
     and above, from Normal.
     
+-   Added: Luminoth Lore scans now includes hints for where major items are located,
+    as well as what the Temple Guardians bosses drop and vanilla Light Suit.
+    
 -   Added: Option to disable the Sky Temple Key hints or to hide the Area name.    
     
 -   Changed: The location in the Sky Temple Key hint is now colored.
