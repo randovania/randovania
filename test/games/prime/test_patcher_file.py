@@ -564,34 +564,45 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
+@patch("randovania.games.prime.patcher_file_lib.item_hints.create_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
-def test_create_string_patches(mock_create_hints: MagicMock,
-                               mock_hide_hints: MagicMock,
+def test_create_string_patches(mock_stk_create_hints: MagicMock,
+                               mock_stk_hide_hints: MagicMock,
+                               mock_item_create_hints: MagicMock,
                                stk_mode: SkyTempleKeyHintMode,
                                ):
     # Setup
     game = MagicMock()
     patches = MagicMock()
-    mock_create_hints.return_value = ["show", "hints"]
-    mock_hide_hints.return_value = ["hide", "hints"]
+    rng = MagicMock()
+    mock_item_create_hints.return_value = ["item", "hints"]
+    mock_stk_create_hints.return_value = ["show", "hints"]
+    mock_stk_hide_hints.return_value = ["hide", "hints"]
 
     # Run
     result = patcher_file._create_string_patches(HintConfiguration(sky_temple_keys=stk_mode),
                                                  game,
-                                                 patches)
+                                                 patches,
+                                                 rng)
 
     # Assert
+    expected_result = ["item", "hints"]
+    mock_item_create_hints.assert_called_once_with(patches, game.world_list,
+                                                   False, rng)
+
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
-        mock_hide_hints.assert_called_once_with()
-        mock_create_hints.assert_not_called()
-        assert result == ["hide", "hints"]
+        mock_stk_hide_hints.assert_called_once_with()
+        mock_stk_create_hints.assert_not_called()
+        expected_result.extend(["hide", "hints"])
 
     else:
-        mock_create_hints.assert_called_once_with(patches, game.world_list,
-                                                  stk_mode == SkyTempleKeyHintMode.HIDE_AREA)
-        mock_hide_hints.assert_not_called()
-        assert result == ["show", "hints"]
+        mock_stk_create_hints.assert_called_once_with(patches, game.world_list,
+                                                      stk_mode == SkyTempleKeyHintMode.HIDE_AREA)
+        mock_stk_hide_hints.assert_not_called()
+        expected_result.extend(["show", "hints"])
+
+    assert result == expected_result
 
 
 def test_create_patcher_file(test_files_dir):
@@ -616,7 +627,7 @@ def test_create_patcher_file(test_files_dir):
     assert len(result["translator_gates"]) == 17
 
     assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 9
+    assert len(result["string_patches"]) == 31
 
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
