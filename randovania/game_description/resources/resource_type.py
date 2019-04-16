@@ -15,6 +15,10 @@ class ResourceType(Enum):
     GATE_INDEX = 8
 
     @property
+    def is_usable_for_requirement(self) -> bool:
+        return self not in _TYPES_NO_FOR_REQUIREMENT
+
+    @property
     def short_name(self) -> Optional[str]:
         if self == ResourceType.ITEM:
             return "I"
@@ -27,3 +31,9 @@ class ResourceType(Enum):
 
     def __lt__(self, other):
         return self.value < other.value
+
+
+_TYPES_NO_FOR_REQUIREMENT = {
+    ResourceType.PICKUP_INDEX,
+    ResourceType.GATE_INDEX,
+}

@@ -45,7 +45,7 @@ def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWi
     resource_type_combo = QComboBox(parent)
 
     for resource_type in ResourceType:
-        if resource_type == ResourceType.PICKUP_INDEX:
+        if not resource_type.is_usable_for_requirement:
             continue
 
         resource_type_combo.addItem(resource_type.name, resource_type)
