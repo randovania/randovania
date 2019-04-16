@@ -1,10 +1,10 @@
 import num2words
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PickupNode
 from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
+from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator, create_simple_logbook_hint
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -23,10 +23,6 @@ def _sky_temple_key_name(key_number: int) -> str:
     return num2words.num2words(key_number, lang='en', to='ordinal_num')
 
 
-def _color_text_as_red(text: str) -> str:
-    return "&push;&main-color=#784784;{}&pop;".format(text)
-
-
 def create_hints(patches: GamePatches,
                  world_list: WorldList,
                  hide_area: bool,
@@ -39,11 +35,7 @@ def create_hints(patches: GamePatches,
     :param hide_area: Should the hint include only the world?
     :return:
     """
-    index_to_node = {
-        node.pickup_index: node
-        for node in world_list.all_nodes
-        if isinstance(node, PickupNode)
-    }
+    hint_name_creator = HintNameCreator(world_list, hide_area)
     sky_temple_key_hints = {}
 
     for pickup_index, pickup in patches.pickup_assignment.items():
@@ -59,18 +51,10 @@ def create_hints(patches: GamePatches,
                 continue
 
             assert resource.index not in sky_temple_key_hints
-            pickup_node = index_to_node[pickup_index]
 
             sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}".format(
                 _sky_temple_key_name(key_number),
-                _color_text_as_red(
-                    world_list.nodes_to_world(pickup_node).name
-                    if hide_area else
-                    world_list.area_name(
-                        world_list.nodes_to_area(pickup_node),
-                        " - "
-                    )
-                )
+                hint_name_creator.index_node_name(pickup_index),
             )
 
     for starting_resource, quantity in patches.starting_items.items():
@@ -94,12 +78,7 @@ def create_hints(patches: GamePatches,
             ))
 
     return [
-        {
-            "asset_id": _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
-            "strings": [
-                sky_temple_key_hints[key_index]
-            ]
-        }
+        create_simple_logbook_hint(_SKY_TEMPLE_KEY_SCAN_ASSETS[key_number], sky_temple_key_hints[key_index])
         for key_number, key_index in enumerate(echoes_items.SKY_TEMPLE_KEY_ITEMS)
     ]
 
@@ -112,13 +91,9 @@ def hide_hints() -> list:
     """
 
     return [
-        {
-            "asset_id": _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
-            "strings": [
-                "The {} Sky Temple Key is lost somewhere in Aether.".format(
-                    _sky_temple_key_name(key_number + 1),
-                )
-            ]
-        }
+        create_simple_logbook_hint(
+            _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
+            "The {} Sky Temple Key is lost somewhere in Aether.".format(_sky_temple_key_name(key_number + 1)),
+        )
         for key_number in range(9)
     ]
