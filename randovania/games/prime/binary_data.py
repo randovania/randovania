@@ -193,6 +193,11 @@ ConstructNode = Struct(
             5: Struct(
                 gate_index=Byte,
             ),
+            6: Struct(
+                string_asset_id=Int32ub,
+                lore_type=Byte,
+                extra=Byte,
+            )
         }
     )
 )

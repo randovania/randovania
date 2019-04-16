@@ -5,7 +5,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    TranslatorGateNode
+    TranslatorGateNode, LogbookNode, LoreType
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -177,6 +177,28 @@ class WorldReader:
                                           self.resource_database.item,
                                           "Scan Visor"
                                       ))
+
+        elif node_type == 6:
+            lore_type = list(LoreType)[data["lore_type"]]
+
+            if lore_type == LoreType.LUMINOTH_LORE:
+                required_translator = self.resource_database.get_item(data["extra"])
+            else:
+                required_translator = None
+
+            if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
+                hint_index = data["extra"]
+            else:
+                hint_index = None
+
+            return LogbookNode(name, heal, data["string_asset_id"],
+                               find_resource_info_with_long_name(
+                                   self.resource_database.item,
+                                   "Scan Visor"
+                               ),
+                               lore_type,
+                               required_translator,
+                               hint_index)
 
         else:
             raise Exception("Unknown node type: {}".format(node_type))

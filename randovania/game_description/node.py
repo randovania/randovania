@@ -158,6 +158,7 @@ class LogbookNode(ResourceNode):
     scan_visor: SimpleResourceInfo
     lore_type: LoreType
     required_translator: Optional[SimpleResourceInfo]
+    hint_index: Optional[int]
 
     def __repr__(self):
         return "TranslatorGateNode({!r} -> {})".format(self.name, self.string_asset_id)
