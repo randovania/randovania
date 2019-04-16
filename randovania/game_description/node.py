@@ -1,4 +1,6 @@
 import dataclasses
+from enum import Enum
+from typing import Optional
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockConnection
@@ -6,6 +8,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 
@@ -140,3 +143,52 @@ class TranslatorGateNode(ResourceNode):
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.gate, 1
+
+
+class LoreType(Enum):
+    LUMINOTH_LORE = "luminoth-lore"
+    LUMINOTH_WARRIOR = "luminoth-warrior"
+    PIRATE_LORE = "pirate-lore"
+    SKY_TEMPLE_KEY_HINT = "sky-temple-key-hint"
+
+
+@dataclasses.dataclass(frozen=True)
+class LogbookNode(ResourceNode):
+    string_asset_id: int
+    scan_visor: SimpleResourceInfo
+    lore_type: LoreType
+    required_translator: Optional[SimpleResourceInfo]
+
+    def __repr__(self):
+        return "TranslatorGateNode({!r} -> {})".format(self.name, self.string_asset_id)
+
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        items = [IndividualRequirement(self.scan_visor, 1, False)]
+        if self.required_translator is not None:
+            items.append(IndividualRequirement(self.required_translator, 1, False))
+
+        return RequirementSet([RequirementList(0, items)])
+
+    def resource(self) -> ResourceInfo:
+        return SimpleResourceInfo(self.string_asset_id,
+                                  "Lore for string {}".format(self.string_asset_id),
+                                  "Lore{}".format(self.string_asset_id),
+                                  ResourceType.LORE_INDEX)
+
+    def can_collect(self, patches: GamePatches, current_resources: CurrentResources) -> bool:
+        """
+        Checks if this TranslatorGate can be opened with the given resources and translator gate mapping
+        :param patches:
+        :param current_resources:
+        :return:
+        """
+        if current_resources.get(self.resource(), 0) != 0:
+            return False
+
+        if self.required_translator is not None:
+            return current_resources.get(self.required_translator, 0) > 0
+        else:
+            return True
+
+    def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
+        yield self.resource(), 1
