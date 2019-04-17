@@ -165,6 +165,7 @@ def write_node(node: Node) -> dict:
         data["gate_index"] = node.gate.index
 
     elif isinstance(node, LogbookNode):
+        data["node_type"] = 6
         data["string_asset_id"] = node.string_asset_id
         data["lore_type"] = list(LoreType).index(node.lore_type)
 
