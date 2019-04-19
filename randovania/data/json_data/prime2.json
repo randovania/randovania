@@ -21164,6 +21164,9 @@
                                 ],
                                 "Event - Agon Energy Controller Pickup": [
                                     []
+                                ],
+                                "Lore Scan": [
+                                    []
                                 ]
                             }
                         },
@@ -21175,46 +21178,6 @@
                             "connections": {
                                 "Door to Controller Access": [
                                     []
-                                ],
-                                "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Teleport to Torvus Bog - Torvus Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Teleport to Great Temple - Main Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Event - Agon Energy Returned": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 19,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
                                 ]
                             }
                         },
@@ -21226,37 +21189,7 @@
                             "destination_area_asset_id": 218311274,
                             "teleporter_instance_id": 405209185,
                             "connections": {
-                                "Teleport to Torvus Bog - Torvus Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Teleport to Great Temple - Main Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Event - Agon Energy Returned": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 19,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Event - Agon Energy Controller Pickup": [
+                                "Door to Controller Access": [
                                     []
                                 ]
                             }
@@ -21269,37 +21202,7 @@
                             "destination_area_asset_id": 322696632,
                             "teleporter_instance_id": 405209407,
                             "connections": {
-                                "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Teleport to Great Temple - Main Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Event - Agon Energy Returned": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 19,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Event - Agon Energy Controller Pickup": [
+                                "Door to Controller Access": [
                                     []
                                 ]
                             }
@@ -21312,37 +21215,7 @@
                             "destination_area_asset_id": 44045108,
                             "teleporter_instance_id": 405209411,
                             "connections": {
-                                "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Teleport to Torvus Bog - Torvus Energy Controller": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 77,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Event - Agon Energy Returned": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 19,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Event - Agon Energy Controller Pickup": [
+                                "Door to Controller Access": [
                                     []
                                 ]
                             }
@@ -21353,7 +21226,7 @@
                             "node_type": 4,
                             "event_index": 79,
                             "connections": {
-                                "Event - Agon Energy Controller Pickup": [
+                                "Door to Controller Access": [
                                     []
                                 ]
                             }
@@ -21365,6 +21238,19 @@
                             "event_index": 88,
                             "connections": {
                                 "Pickup (Amber Translator)": [
+                                    []
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Lore Scan",
+                            "heal": true,
+                            "node_type": 6,
+                            "string_asset_id": 4021961856,
+                            "lore_type": 0,
+                            "extra": 98,
+                            "connections": {
+                                "Door to Controller Access": [
                                     []
                                 ]
                             }
@@ -59042,6 +58928,38 @@
                                         },
                                         {
                                             "requirement_type": 0,
+                                            "requirement_index": 16,
+                                            "amount": 1,
+                                            "negate": false
+                                        },
+                                        {
+                                            "requirement_type": 0,
+                                            "requirement_index": 17,
+                                            "amount": 1,
+                                            "negate": false
+                                        },
+                                        {
+                                            "requirement_type": 2,
+                                            "requirement_index": 11,
+                                            "amount": 1,
+                                            "negate": false
+                                        },
+                                        {
+                                            "requirement_type": 6,
+                                            "requirement_index": 0,
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            "requirement_type": 0,
+                                            "requirement_index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        },
+                                        {
+                                            "requirement_type": 0,
                                             "requirement_index": 17,
                                             "amount": 1,
                                             "negate": false
@@ -59098,38 +59016,6 @@
                                             "requirement_type": 6,
                                             "requirement_index": 0,
                                             "amount": 2,
-                                            "negate": false
-                                        }
-                                    ],
-                                    [
-                                        {
-                                            "requirement_type": 0,
-                                            "requirement_index": 15,
-                                            "amount": 1,
-                                            "negate": false
-                                        },
-                                        {
-                                            "requirement_type": 0,
-                                            "requirement_index": 16,
-                                            "amount": 1,
-                                            "negate": false
-                                        },
-                                        {
-                                            "requirement_type": 0,
-                                            "requirement_index": 17,
-                                            "amount": 1,
-                                            "negate": false
-                                        },
-                                        {
-                                            "requirement_type": 2,
-                                            "requirement_index": 11,
-                                            "amount": 1,
-                                            "negate": false
-                                        },
-                                        {
-                                            "requirement_type": 6,
-                                            "requirement_index": 0,
-                                            "amount": 4,
                                             "negate": false
                                         }
                                     ]
