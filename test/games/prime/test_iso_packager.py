@@ -7,9 +7,11 @@ import pytest
 
 from randovania.games.prime import iso_packager
 
+work_around_pytest_qt_bug = False  # TODO: pytest-qt bug
 
-@patch("nod.ExtractionContext", autospec=True)
-@patch("nod.open_disc_from_image", autospec=True)
+
+@patch("nod.ExtractionContext", autospec=work_around_pytest_qt_bug)
+@patch("nod.open_disc_from_image", autospec=work_around_pytest_qt_bug)
 def test_disc_unpack_process_valid(mock_open_disc_from_image: MagicMock,
                                    mock_extraction_context: MagicMock,
                                    ):
@@ -46,8 +48,8 @@ def test_disc_unpack_process_valid(mock_open_disc_from_image: MagicMock,
     ])
 
 
-@patch("nod.ExtractionContext", autospec=True)
-@patch("nod.open_disc_from_image", autospec=True)
+@patch("nod.ExtractionContext", autospec=work_around_pytest_qt_bug)
+@patch("nod.open_disc_from_image", autospec=work_around_pytest_qt_bug)
 def test_disc_unpack_process_invalid(mock_open_disc_from_image: MagicMock,
                                      mock_extraction_context: MagicMock,
                                      ):
@@ -73,7 +75,7 @@ def test_disc_unpack_process_invalid(mock_open_disc_from_image: MagicMock,
     )
 
 
-@patch("nod.DiscBuilderGCN", autospec=True)
+@patch("nod.DiscBuilderGCN", autospec=work_around_pytest_qt_bug)
 def test_disc_pack_process_success(mock_disc_builder: MagicMock,
                                    ):
     # Setup
@@ -100,7 +102,7 @@ def test_disc_pack_process_success(mock_disc_builder: MagicMock,
     ])
 
 
-@patch("nod.DiscBuilderGCN", autospec=True)
+@patch("nod.DiscBuilderGCN", autospec=work_around_pytest_qt_bug)
 def test_disc_pack_process_failure(mock_disc_builder: MagicMock,
                                    ):
     # Setup
@@ -136,7 +138,8 @@ def test_shared_process_code_success():
         return process
 
     # Run
-    with patch("multiprocessing.Process", side_effect=process_effect, autospec=True) as mock_process:
+    with patch("multiprocessing.Process", side_effect=process_effect,
+               autospec=work_around_pytest_qt_bug) as mock_process:
         iso_packager._shared_process_code(mock_target, iso, game_files_path, on_finish_message, progress_update)
 
     mock_process.assert_called_once_with(target=mock_target, args=(ANY, iso, game_files_path))
@@ -167,7 +170,8 @@ def test_shared_process_code_failure():
         return process
 
     # Run
-    with patch("multiprocessing.Process", side_effect=process_effect, autospec=True) as mock_process:
+    with patch("multiprocessing.Process", side_effect=process_effect,
+               autospec=work_around_pytest_qt_bug) as mock_process:
         with pytest.raises(RuntimeError) as exception:
             iso_packager._shared_process_code(mock_target, iso, game_files_path, on_finish_message, progress_update)
 

@@ -5,22 +5,19 @@ import pytest
 from randovania import cli
 
 
-@patch("randovania.cli.games", autospec=True)
+@patch("randovania.cli.echoes.create_subparsers", autospec=True)
 @patch("randovania.cli.qt.create_subparsers", autospec=True)
 def test_create_subparsers(mock_qt_create_subparsers: MagicMock,
-                           mock_games: MagicMock,
+                           mock_echoes_create_subparsers: MagicMock,
                            ):
     # Setup
     root_parser = MagicMock()
-    games = [MagicMock(), MagicMock()]
-    mock_games.__iter__.return_value = games
 
     # Run
     cli.create_subparsers(root_parser)
 
     # Assert
-    for game in games:
-        game.create_subparsers.assert_called_once_with(root_parser)
+    mock_echoes_create_subparsers.assert_called_once_with(root_parser)
     mock_qt_create_subparsers.assert_called_once_with(root_parser)
 
 

@@ -36,7 +36,7 @@ def test_try_randomize_elevators(seed_number: int, expected_ids: List[int]):
     assert connected_ids == expected_ids
 
 
-@patch("randovania.resolver.elevator_distributor.ElevatorRandom", autospec=True)
+@patch("randovania.resolver.elevator_distributor.ElevatorRandom", autospec=False)  # TODO: pytest-qt bug
 @patch("randovania.resolver.elevator_distributor.try_randomize_elevators", autospec=True)
 def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: MagicMock,
                                               mock_random: MagicMock):

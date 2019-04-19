@@ -133,7 +133,7 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
 @patch("randovania.resolver.generator._validate_item_pool_size", autospec=True)
 @patch("randovania.resolver.base_patches_factory.create_base_patches", autospec=True)
 @patch("randovania.resolver.item_pool.pool_creator.calculate_item_pool", autospec=True)
-@patch("randovania.resolver.generator.Random", autospec=True)
+@patch("randovania.resolver.generator.Random", autospec=False)  # TODO: pytest-qt bug
 def test_create_patches(mock_random: MagicMock,
                         mock_calculate_item_pool: MagicMock,
                         mock_create_base_patches: MagicMock,
