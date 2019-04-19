@@ -10,6 +10,7 @@ _LORE_SCANS = {
     0x987884FB: "Luminoth Lore translated. (Age of Anxiety)",  # Meeting Grounds
     0x3E0F8F4F: "Luminoth Lore translated. (Agon Falls)",  # Sanctuary Energy Controller
     0x5324575E: "Luminoth Lore translated. (Cataclysm)",  # E3BEF27F
+
     0xD25C0D22: "Luminoth Lore translated. (Dark Aether)",  # 133BF5B8
     0x692E362E: "Luminoth Lore translated. (Light of Aether)",  # 2BCD44A7
     0x49CD4F34: "Luminoth Lore translated. (New Weapons)",  # 3501473A
