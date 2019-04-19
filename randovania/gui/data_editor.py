@@ -104,7 +104,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             msg = "{} to {}".format(node.default_dock_weakness.name, self.world_list.node_name(other))
 
         elif node.is_resource_node:
-            msg = "Provides {}".format(node.resource())
+            msg = str(node)
 
         elif isinstance(node, TeleporterNode):
             other = self.world_list.resolve_teleporter_connection(node.default_connection)
