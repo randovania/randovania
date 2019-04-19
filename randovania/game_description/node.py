@@ -161,7 +161,17 @@ class LogbookNode(ResourceNode):
     hint_index: Optional[int]
 
     def __repr__(self):
-        return "TranslatorGateNode({!r} -> {})".format(self.name, self.string_asset_id)
+        extra = None
+        if self.required_translator is not None:
+            extra = self.required_translator.short_name
+        elif self.hint_index is not None:
+            extra = self.hint_index
+        return "LogbookNode({!r} -> {}/{}{})".format(
+            self.name,
+            self.string_asset_id,
+            self.lore_type.value,
+            f"/{extra}" if extra is not None else ""
+        )
 
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
         items = [IndividualRequirement(self.scan_visor, 1, False)]
