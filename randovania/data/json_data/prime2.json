@@ -15094,25 +15094,8 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Transport Center": [
-                                    [
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 13,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
-                                ],
-                                "Portal to Portal Site": [
-                                    [
-                                        {
-                                            "requirement_type": 0,
-                                            "requirement_index": 18,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ]
+                                "Room Center": [
+                                    []
                                 ]
                             }
                         },
@@ -15126,8 +15109,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Portal Access A": [
+                                "Room Center": [
                                     [
+                                        {
+                                            "requirement_type": 0,
+                                            "requirement_index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        },
                                         {
                                             "requirement_type": 0,
                                             "requirement_index": 18,
@@ -15163,36 +15152,6 @@
                                             "negate": false
                                         }
                                     ]
-                                ],
-                                "Portal to Portal Site": [
-                                    [
-                                        {
-                                            "requirement_type": 0,
-                                            "requirement_index": 18,
-                                            "amount": 1,
-                                            "negate": false
-                                        },
-                                        {
-                                            "requirement_type": 1,
-                                            "requirement_index": 13,
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    ],
-                                    [
-                                        {
-                                            "requirement_type": 0,
-                                            "requirement_index": 18,
-                                            "amount": 1,
-                                            "negate": false
-                                        },
-                                        {
-                                            "requirement_type": 6,
-                                            "requirement_index": 0,
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    ]
                                 ]
                             }
                         },
@@ -15206,6 +15165,16 @@
                             "dock_type": 3,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Room Center": [
+                                    []
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Room Center",
+                            "heal": true,
+                            "node_type": 0,
+                            "connections": {
                                 "Door to Portal Access A": [
                                     []
                                 ],
@@ -15218,6 +15187,38 @@
                                             "negate": false
                                         }
                                     ]
+                                ],
+                                "Portal to Portal Site": [
+                                    [
+                                        {
+                                            "requirement_type": 0,
+                                            "requirement_index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        },
+                                        {
+                                            "requirement_type": 0,
+                                            "requirement_index": 18,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    ]
+                                ],
+                                "Lore Scan": [
+                                    []
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Lore Scan",
+                            "heal": true,
+                            "node_type": 6,
+                            "string_asset_id": 1764636206,
+                            "lore_type": 0,
+                            "extra": 98,
+                            "connections": {
+                                "Room Center": [
+                                    []
                                 ]
                             }
                         }
