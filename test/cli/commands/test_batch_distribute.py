@@ -5,7 +5,7 @@ from randovania.layout.permalink import Permalink
 
 
 @patch("randovania.resolver.generator.generate_list", autospec=True)
-@patch("time.perf_counter", autospec=True)
+@patch("time.perf_counter", autospec=False)  # TODO: pytest-qt bug
 def test_batch_distribute_helper(mock_perf_counter: MagicMock,
                                  mock_generate_list: MagicMock,
                                  ):

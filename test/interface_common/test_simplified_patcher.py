@@ -61,7 +61,8 @@ def test_unpack_iso(mock_delete_files_location: MagicMock,
     )
 
 
-@patch("randovania.interface_common.simplified_patcher.ConstantPercentageCallback", autospec=True)
+@patch("randovania.interface_common.simplified_patcher.ConstantPercentageCallback",
+       autospec=False)  # TODO: pytest-qt bug
 @patch("randovania.interface_common.echoes.generate_layout", autospec=True)
 def test_generate_layout(mock_generate_layout: MagicMock,
                          mock_constant_percentage_callback: MagicMock,

@@ -13,6 +13,11 @@ class ResourceType(Enum):
     DIFFICULTY = 6
     PICKUP_INDEX = 7
     GATE_INDEX = 8
+    LORE_INDEX = 9
+
+    @property
+    def is_usable_for_requirement(self) -> bool:
+        return self not in _TYPES_NO_FOR_REQUIREMENT
 
     @property
     def short_name(self) -> Optional[str]:
@@ -27,3 +32,10 @@ class ResourceType(Enum):
 
     def __lt__(self, other):
         return self.value < other.value
+
+
+_TYPES_NO_FOR_REQUIREMENT = {
+    ResourceType.PICKUP_INDEX,
+    ResourceType.GATE_INDEX,
+    ResourceType.LORE_INDEX,
+}

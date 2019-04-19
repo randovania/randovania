@@ -4,7 +4,7 @@ from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode
+    TranslatorGateNode, LogbookNode, LoreType
 from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -163,6 +163,19 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, TranslatorGateNode):
         data["node_type"] = 5
         data["gate_index"] = node.gate.index
+
+    elif isinstance(node, LogbookNode):
+        data["node_type"] = 6
+        data["string_asset_id"] = node.string_asset_id
+        data["lore_type"] = list(LoreType).index(node.lore_type)
+
+        if node.lore_type == LoreType.LUMINOTH_LORE:
+            data["extra"] = node.required_translator.index
+
+        elif node.lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
+            data["extra"] = node.hint_index
+        else:
+            data["extra"] = 0
 
     else:
         raise Exception("Unknown node class: {}".format(node))
