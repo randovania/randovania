@@ -14475,11 +14475,14 @@
                                         }
                                     ]
                                 ],
-                                "Event - Mining Station A Gate": [
+                                "Translator Gate": [
+                                    []
+                                ],
+                                "Front of Lore Scan": [
                                     [
                                         {
                                             "requirement_type": 0,
-                                            "requirement_index": 9,
+                                            "requirement_index": 15,
                                             "amount": 1,
                                             "negate": false
                                         },
@@ -14499,20 +14502,11 @@
                                     [
                                         {
                                             "requirement_type": 0,
-                                            "requirement_index": 9,
-                                            "amount": 1,
-                                            "negate": false
-                                        },
-                                        {
-                                            "requirement_type": 0,
                                             "requirement_index": 24,
                                             "amount": 1,
                                             "negate": false
                                         }
                                     ]
-                                ],
-                                "Translator Gate": [
-                                    []
                                 ]
                             }
                         },
@@ -14532,6 +14526,30 @@
                             "heal": true,
                             "node_type": 4,
                             "event_index": 10,
+                            "connections": {
+                                "Front of Lore Scan": [
+                                    []
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Translator Gate",
+                            "heal": true,
+                            "node_type": 5,
+                            "gate_index": 11,
+                            "connections": {
+                                "Door to Sand Cache": [
+                                    []
+                                ],
+                                "Room Center": [
+                                    []
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Front of Lore Scan",
+                            "heal": true,
+                            "node_type": 0,
                             "connections": {
                                 "Door to Central Station Access": [
                                     [
@@ -14559,19 +14577,31 @@
                                 ],
                                 "Room Center": [
                                     []
+                                ],
+                                "Event - Mining Station A Gate": [
+                                    [
+                                        {
+                                            "requirement_type": 0,
+                                            "requirement_index": 9,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    ]
+                                ],
+                                "Lore Scan": [
+                                    []
                                 ]
                             }
                         },
                         {
-                            "name": "Translator Gate",
+                            "name": "Lore Scan",
                             "heal": true,
-                            "node_type": 5,
-                            "gate_index": 11,
+                            "node_type": 6,
+                            "string_asset_id": 1394890590,
+                            "lore_type": 0,
+                            "extra": 98,
                             "connections": {
-                                "Door to Sand Cache": [
-                                    []
-                                ],
-                                "Room Center": [
+                                "Front of Lore Scan": [
                                     []
                                 ]
                             }
