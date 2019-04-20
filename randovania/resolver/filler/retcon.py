@@ -11,6 +11,7 @@ from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.game_description.resources.scan_asset import ScanAsset
 from randovania.resolver import debug
 from randovania.resolver.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
@@ -39,11 +40,11 @@ class UncollectedState(NamedTuple):
         )
 
 
-def find_pickup_node_with_index(index: PickupIndex,
-                                haystack: Iterator[Node],
-                                ) -> PickupNode:
+def find_node_with_resource(resource: ResourceInfo,
+                            haystack: Iterator[Node],
+                            ) -> ResourceNode:
     for node in haystack:
-        if isinstance(node, PickupNode) and node.pickup_index == index:
+        if isinstance(node, ResourceNode) and node.resource() == resource:
             return node
 
 
@@ -75,6 +76,7 @@ def retcon_playthrough_filler(logic: Logic,
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
 
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
+    scan_asset_seen_count: Dict[ScanAsset, int] = collections.defaultdict(int)
     num_random_starting_items_placed = 0
 
     while pickups_left:
@@ -85,7 +87,11 @@ def retcon_playthrough_filler(logic: Logic,
 
         for pickup_index in reach.state.collected_pickup_indices:
             pickup_index_seen_count[pickup_index] += 1
-        print_new_pickup_indices(logic, reach, pickup_index_seen_count)
+        print_new_resources(logic, reach, pickup_index_seen_count, "Pickup Index")
+
+        for scan_asset in reach.state.collected_scan_assets:
+            scan_asset_seen_count[scan_asset] += 1
+        print_new_resources(logic, reach, scan_asset_seen_count, "Scan Asset")
 
         def action_report(message: str):
             status_update("{} {}".format(last_message, message))
@@ -285,22 +291,22 @@ def print_retcon_place_pickup(action: PickupEntry, logic: Logic, pickup_index: P
     if debug.debug_level() > 0:
         print("\n--> Placing {} at {}".format(
             action.name,
-            world_list.node_name(find_pickup_node_with_index(pickup_index, world_list.all_nodes), with_world=True)))
+            world_list.node_name(find_node_with_resource(pickup_index, world_list.all_nodes), with_world=True)))
 
 
-def print_new_pickup_indices(logic: Logic,
-                             reach: GeneratorReach,
-                             pickup_index_seen_count: Dict[PickupIndex, int],
-                             ):
+def print_new_resources(logic: Logic,
+                        reach: GeneratorReach,
+                        seen_count: Dict[ResourceInfo, int],
+                        label: str,
+                        ):
     world_list = logic.game.world_list
     if debug.debug_level() > 0:
-        for index, count in pickup_index_seen_count.items():
+        for index, count in seen_count.items():
             if count == 1:
-                node = find_pickup_node_with_index(index, world_list.all_nodes)
-                print("-> New Pickup Node: {}".format(
-                    world_list.node_name(node,
-                                         with_world=True)))
-                if debug.debug_level() > 1:
+                node = find_node_with_resource(index, world_list.all_nodes)
+                print("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))
+
+                if debug.debug_level() > 2:
                     paths = reach.shortest_path_from(node)
                     path = paths.get(reach.state.node, [])
                     print([node.name for node in path])
