@@ -1,8 +1,8 @@
 from random import Random
-from typing import Tuple, List
+from typing import Dict
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.hint import HintType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator, create_simple_logbook_hint
 
@@ -48,49 +48,29 @@ def create_hints(patches: GamePatches,
     """
 
     hint_name_creator = HintNameCreator(world_list, hide_area)
-    indicies_to_give_a_hint = [
-        PickupIndex(24),  # Light Suit
-        PickupIndex(43),  # Dark Suit
-        PickupIndex(79),  # Dark Visor
-        PickupIndex(115),  # Annihilator Beam
-    ]
 
-    additional_hints_needed = len(_LORE_SCANS) - len(indicies_to_give_a_hint)
-    potential_hints = [
-        index
-        for index, pickup in patches.pickup_assignment.items()
-        if pickup.item_category.is_major_category
-    ]
-    indicies_to_give_a_hint.extend(potential_hints[:additional_hints_needed])
-
-    additional_hints_needed = len(_LORE_SCANS) - len(indicies_to_give_a_hint)
-    if additional_hints_needed > 0:
-        indicies_to_give_a_hint.extend([None] * additional_hints_needed)
-
-    rng.shuffle(indicies_to_give_a_hint)
-
-    hints: List[Tuple[int, str]] = []
-
-    for asset_id, index in zip(_LORE_SCANS.keys(), indicies_to_give_a_hint):
-        if index is not None:
-            pickup = patches.pickup_assignment.get(index)
+    hints_for_asset: Dict[int, str] = {}
+    
+    for asset, hint in patches.hints.items():
+        if hint.hint_type == HintType.LOCATION:
+            pickup = patches.pickup_assignment.get(hint.target)
             if pickup is not None:
                 message = "A {pickup} can be found at {node}.".format(
                     pickup=hint_name_creator.item_name(pickup),
-                    node=hint_name_creator.index_node_name(index),
+                    node=hint_name_creator.index_node_name(hint.target),
                 )
             else:
                 message = "{node} has nothing.".format(
-                    node=hint_name_creator.index_node_name(index),
+                    node=hint_name_creator.index_node_name(hint.target),
                 )
-        else:
-            message = "Aether lacks equipment."
 
-        hints.append((asset_id, message))
+            hints_for_asset[asset.asset_id] = message
 
     return [
-        create_simple_logbook_hint(asset_id, message)
-        for asset_id, message in hints
+        create_simple_logbook_hint(
+            asset_id,
+            hints_for_asset.get(asset_id, "Someone forgot to leave a message."))
+        for asset_id in _LORE_SCANS
     ]
 
 

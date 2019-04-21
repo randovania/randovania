@@ -6,8 +6,12 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.node import LogbookNode
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocationConfiguration
@@ -76,6 +80,43 @@ def starting_location_for_configuration(configuration: LayoutConfiguration,
         raise ValueError("Invalid configuration for StartLocation {}".format(starting_location))
 
 
+def add_default_hints_to_patches(rng: Random,
+                                 patches: GamePatches,
+                                 world_list: WorldList,
+                                 ) -> GamePatches:
+    """
+    Adds hints for the locations
+    :param rng:
+    :param patches:
+    :param world_list:
+    :return:
+    """
+    # TODO: this should be a flag in PickupNode
+    indices_with_hint = [
+        PickupIndex(24),  # Light Suit
+        PickupIndex(43),  # Dark Suit
+        PickupIndex(79),  # Dark Visor
+        PickupIndex(115),  # Annihilator Beam
+    ]
+    all_logbook_assets = [node.resource()
+                          for node in world_list.all_nodes
+                          if isinstance(node, LogbookNode) and node.resource() not in patches.hints]
+
+    rng.shuffle(indices_with_hint)
+    rng.shuffle(all_logbook_assets)
+
+    for index in indices_with_hint:
+        if not all_logbook_assets:
+            break
+
+        logbook_asset = all_logbook_assets.pop()
+        patches = patches.assign_hint(logbook_asset,
+                                      Hint(HintType.LOCATION, HintLocationPrecision.DETAILED,
+                                           HintItemPrecision.DETAILED, index))
+
+    return patches
+
+
 def create_base_patches(rng: Random,
                         game: GameDescription,
                         permalink: Permalink,
@@ -98,5 +139,8 @@ def create_base_patches(rng: Random,
     # Starting Location
     patches = patches.assign_starting_location(
         starting_location_for_configuration(permalink.layout_configuration, game, rng))
+
+    # Hints
+    patches = add_default_hints_to_patches(rng, patches, game.world_list)
 
     return patches

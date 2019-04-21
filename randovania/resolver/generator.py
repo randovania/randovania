@@ -70,13 +70,11 @@ def generate_list(permalink: Permalink,
     def create_failure(message: str):
         return GenerationFailure(message, permalink=permalink)
 
-    new_patches = None
-
     with multiprocessing.dummy.Pool(1) as dummy_pool:
         patches_async = dummy_pool.apply_async(func=_create_patches,
                                                kwds=create_patches_params)
         try:
-            new_patches = patches_async.get(timeout)
+            new_patches: GamePatches = patches_async.get(timeout)
         except multiprocessing.TimeoutError:
             raise create_failure("Timeout reached when generating patches.")
 

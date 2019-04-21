@@ -1,9 +1,12 @@
 import dataclasses
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, call, ANY
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.resources.logbook_asset import LogbookAsset
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
@@ -164,6 +167,29 @@ def test_starting_location_for_configuration_random_save_station():
     assert result is game.world_list.node_to_area_location.return_value
 
 
+def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
+    # Setup
+    rng = MagicMock()
+
+    def _create_hint(number: int):
+        return Hint(HintType.LOCATION, HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, PickupIndex(number))
+
+    expected = {
+        LogbookAsset(1041207119): _create_hint(24),
+        LogbookAsset(4115881194): _create_hint(43),
+        LogbookAsset(1948976790): _create_hint(79),
+        LogbookAsset(3212301619): _create_hint(115),
+    }
+
+    # Run
+    result = base_patches_factory.add_default_hints_to_patches(rng, empty_patches, echoes_game_description.world_list)
+
+    # Assert
+    rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
+    assert result.hints == expected
+
+
+@patch("randovania.resolver.base_patches_factory.add_default_hints_to_patches", autospec=True)
 @patch("randovania.resolver.base_patches_factory.starting_location_for_configuration", autospec=True)
 @patch("randovania.resolver.base_patches_factory.gate_assignment_for_configuration", autospec=True)
 @patch("randovania.resolver.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
@@ -172,6 +198,7 @@ def test_create_base_patches(mock_with_game: MagicMock,
                              mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
+                             mock_add_default_hints_to_patches: MagicMock,
                              ):
     # Setup
     rng = MagicMock()
@@ -181,6 +208,7 @@ def test_create_base_patches(mock_with_game: MagicMock,
     first_patches = mock_with_game.return_value
     second_patches = mock_add_elevator_connections_to_patches.return_value
     third_patches = second_patches.assign_gate_assignment.return_value
+    fourth_patches = third_patches.assign_starting_location.return_value
 
     # Run
     result = base_patches_factory.create_base_patches(rng, game, permalink)
@@ -198,4 +226,7 @@ def test_create_base_patches(mock_with_game: MagicMock,
     mock_starting_location_for_config.assert_called_once_with(permalink.layout_configuration, game, rng)
     third_patches.assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
-    assert result is third_patches.assign_starting_location.return_value
+    # Hints
+    mock_add_default_hints_to_patches.assert_called_once_with(rng, fourth_patches, game.world_list)
+
+    assert result is mock_add_default_hints_to_patches.return_value
