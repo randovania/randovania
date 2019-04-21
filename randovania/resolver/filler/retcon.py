@@ -133,7 +133,7 @@ def retcon_playthrough_filler(logic: Logic,
                     raise RuntimeError("Attempting to place more extra starting items than the allowed.")
 
                 if debug.debug_level() > 1:
-                    print(f"Adding {action.name} as a starting item")
+                    print(f"\n--> Adding {action.name} as a starting item")
 
                 next_state = reach.state.assign_pickup_to_starting_items(action)
 
