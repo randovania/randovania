@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: The Slope Jump method in Great Bridge for Abandoned Worksite is now Hard
     and above, from Normal.
     
+-   Changed: Crossing the statue in Training Chamber before it's moved with Boost and
+    Spider is now Hard and above, from Hypermode.
+    
 -   Added: Luminoth Lore scans now includes hints for where major items are located,
     as well as what the Temple Guardians bosses drop and vanilla Light Suit.
     

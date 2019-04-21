@@ -9,6 +9,7 @@ from randovania.game_description.requirements import RequirementSet, Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.scan_asset import ScanAsset
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 
@@ -161,7 +162,17 @@ class LogbookNode(ResourceNode):
     hint_index: Optional[int]
 
     def __repr__(self):
-        return "TranslatorGateNode({!r} -> {})".format(self.name, self.string_asset_id)
+        extra = None
+        if self.required_translator is not None:
+            extra = self.required_translator.short_name
+        elif self.hint_index is not None:
+            extra = self.hint_index
+        return "LogbookNode({!r} -> {}/{}{})".format(
+            self.name,
+            self.string_asset_id,
+            self.lore_type.value,
+            f"/{extra}" if extra is not None else ""
+        )
 
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
         items = [IndividualRequirement(self.scan_visor, 1, False)]
@@ -171,10 +182,7 @@ class LogbookNode(ResourceNode):
         return RequirementSet([RequirementList(0, items)])
 
     def resource(self) -> ResourceInfo:
-        return SimpleResourceInfo(self.string_asset_id,
-                                  "Lore for string {}".format(self.string_asset_id),
-                                  "Lore{}".format(self.string_asset_id),
-                                  ResourceType.LORE_INDEX)
+        return ScanAsset(self.string_asset_id)
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources) -> bool:
         """
