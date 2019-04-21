@@ -65,7 +65,7 @@ def test_assign_pickup_to_index(collected: bool, empty_patches):
                     ))
 
     # Run
-    final = starting.assign_pickup_to_index(index, p)
+    final = starting.assign_pickup_to_index(p, index)
 
     # Assert
     assert final.patches.pickup_assignment == {index: p}

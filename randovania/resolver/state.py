@@ -8,7 +8,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another, convert_resource_gain_to_current_resources
-from randovania.game_description.resources.scan_asset import ScanAsset
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 
 
 class State:
@@ -49,9 +49,9 @@ class State:
                 yield resource
 
     @property
-    def collected_scan_assets(self) -> Iterator[ScanAsset]:
+    def collected_scan_assets(self) -> Iterator[LogbookAsset]:
         for resource, count in self.resources.items():
-            if isinstance(resource, ScanAsset) and count > 0:
+            if isinstance(resource, LogbookAsset) and count > 0:
                 yield resource
 
     def collect_resource_node(self, node: ResourceNode) -> "State":
@@ -77,7 +77,7 @@ class State:
         new_state.path_from_previous_state = path
         return new_state
 
-    def assign_pickup_to_index(self, index: PickupIndex, pickup: PickupEntry) -> "State":
+    def assign_pickup_to_index(self, pickup: PickupEntry, index: PickupIndex) -> "State":
         new_patches = self.patches.assign_new_pickups([(index, pickup)])
         new_resources = copy.copy(self.resources)
 
