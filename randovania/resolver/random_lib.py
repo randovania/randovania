@@ -16,7 +16,7 @@ def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
     return result
 
 
-def iterate_with_weights(items: List[T],
+def iterate_with_weights(items: Iterator[T],
                          item_weights: Dict[T, float],
                          rng: Random,
                          ) -> Iterator[T]:

@@ -288,4 +288,5 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         translator_gates=translator_gates,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
+        hints={},
     )

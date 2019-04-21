@@ -9,7 +9,7 @@ from randovania.game_description.requirements import RequirementSet, Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.scan_asset import ScanAsset
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 
@@ -182,7 +182,7 @@ class LogbookNode(ResourceNode):
         return RequirementSet([RequirementList(0, items)])
 
     def resource(self) -> ResourceInfo:
-        return ScanAsset(self.string_asset_id)
+        return LogbookAsset(self.string_asset_id)
 
     def can_collect(self, patches: GamePatches, current_resources: CurrentResources) -> bool:
         """
