@@ -8,6 +8,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another, convert_resource_gain_to_current_resources
+from randovania.game_description.resources.scan_asset import ScanAsset
 
 
 class State:
@@ -45,6 +46,12 @@ class State:
     def collected_pickup_indices(self) -> Iterator[PickupIndex]:
         for resource, count in self.resources.items():
             if isinstance(resource, PickupIndex) and count > 0:
+                yield resource
+
+    @property
+    def collected_scan_assets(self) -> Iterator[ScanAsset]:
+        for resource, count in self.resources.items():
+            if isinstance(resource, ScanAsset) and count > 0:
                 yield resource
 
     def collect_resource_node(self, node: ResourceNode) -> "State":
