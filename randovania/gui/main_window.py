@@ -51,6 +51,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.setAcceptDrops(True)
         set_default_window_icon(self)
 
+        self.intro_label.setText(self.intro_label.text().format(version=VERSION))
+
         if preview:
             debug._DEBUG_LEVEL = 2
 
