@@ -11,6 +11,8 @@ from PySide2.QtGui import QDesktopServices
 from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
 
 from randovania import VERSION
+from randovania.game_description import default_database
+from randovania.game_description.node import LogbookNode
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file, \
@@ -98,6 +100,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             self.on_options_changed()
 
         self.tabWidget.setCurrentIndex(0)
+
+        # Update hints text
+        self._update_hints_text()
 
     def closeEvent(self, event):
         self.stop_background_process()
@@ -204,6 +209,40 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         is_checked = self.menu_action_timeout_generation_after_a_time_limit.isChecked()
         with self._options as options:
             options.advanced_timeout_during_generation = is_checked
+
+    def _update_hints_text(self):
+        game_description = default_database.default_prime2_game_description(False)
+
+        entries = []
+        for world in game_description.world_list.worlds:
+            areas_text = []
+            for area in world.areas:
+                hint_types = []
+                for node in area.nodes:
+                    if isinstance(node, LogbookNode):
+                        hint_types.append(node.lore_type.value)
+                        if node.required_translator is not None:
+                            hint_types[-1] += " / {}".format(node.required_translator.short_name)
+
+                if hint_types:
+                    areas_text.append("{}: {}".format(area.name, ", ".join(hint_types)))
+
+            if areas_text:
+                entries.append("{}<ul>{}</ul><br />".format(
+                    world.name,
+                    "".join(
+                        f"<li>{area_hints}</li>"
+                        for area_hints in areas_text
+                    )
+                ))
+
+        hint_list = "<ul>{}</ul>".format(
+            "".join(
+                f"<li>{entry}</li>"
+                for entry in entries
+            )
+        )
+        self.hint_label.setText(self.hint_label.text().format(hint_list=hint_list))
 
     # Background Process
 

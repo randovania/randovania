@@ -40,7 +40,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="welcome_tab_widget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="tab_intro">
            <attribute name="title">
@@ -145,11 +145,53 @@ p, li { white-space: pre-wrap; }
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="hint_tab">
+           <attribute name="title">
+            <string>Hints Locations</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <widget class="QScrollArea" name="hint_scroll_area">
+              <property name="widgetResizable">
+               <bool>true</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+              <widget class="QWidget" name="hint_scroll_contents">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>519</width>
+                 <height>307</height>
+                </rect>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_8">
+                <item>
+                 <widget class="QLabel" name="hint_label">
+                  <property name="text">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hints are placed in the game by replacing Logbook scans. The following are the scans that may have a hint added to them:&lt;/p&gt;{hint_list}&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="tab_tracker">
            <attribute name="title">
             <string>Tracker</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
+           <layout class="QVBoxLayout" name="hint_layout">
             <item>
              <widget class="QScrollArea" name="tracker_scroll_area">
               <property name="widgetResizable">
@@ -164,7 +206,7 @@ p, li { white-space: pre-wrap; }
                  <height>307</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_3">
+               <layout class="QVBoxLayout" name="hint_scroll_layout">
                 <item>
                  <widget class="QLabel" name="tracker_label">
                   <property name="text">
