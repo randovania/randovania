@@ -9,7 +9,6 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 
 class HintType(Enum):
     LOCATION = "location"
-    ITEM = "item"
 
 
 class HintItemPrecision(Enum):
@@ -50,4 +49,21 @@ class Hint:
     hint_type: HintType
     location_precision: HintLocationPrecision
     item_precision: HintItemPrecision
-    target: Union[PickupIndex, SimpleResourceInfo]
+    target: PickupIndex
+
+    @property
+    def as_json(self):
+        return {
+            "location_precision": self.location_precision.value,
+            "item_precision": self.item_precision.value,
+            "target": self.target.index,
+        }
+
+    @classmethod
+    def from_json(cls, value) -> "Hint":
+        return Hint(
+            hint_type=HintType.LOCATION,
+            location_precision=HintLocationPrecision(value["location_precision"]),
+            item_precision=HintItemPrecision(value["item_precision"]),
+            target=PickupIndex(value["target"]),
+        )
