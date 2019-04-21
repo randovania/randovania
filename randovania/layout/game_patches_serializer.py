@@ -8,8 +8,10 @@ from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode, TeleporterNode, Node
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, \
     MAXIMUM_PICKUP_CONDITIONAL_RESOURCES, MAXIMUM_PICKUP_RESOURCES, MAXIMUM_PICKUP_CONVERSION, PickupEntry
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, ResourceDatabase
@@ -210,6 +212,10 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
                                                                    patches.pickup_assignment,
                                                                    ordered_pickups).items()
         },
+        "hints": {
+            str(asset.asset_id): hint.as_json
+            for asset, hint in patches.hints.items()
+        }
     }
 
     b = bitpacking.pack_value(BitPackPickupEntryList(ordered_pickups, game.resource_database))
@@ -280,6 +286,11 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
             pickup = BitPackPickupEntry.bit_pack_unpack(decoder, pickup_name, game.resource_database)
             pickup_assignment[node.pickup_index] = pickup
 
+    # Hints
+    hints = {}
+    for asset_id, hint in game_modifications["hints"].items():
+        hints[LogbookAsset(int(asset_id))] = Hint.from_json(hint)
+
     return GamePatches(
         pickup_assignment=pickup_assignment,  # PickupAssignment
         elevator_connection=elevator_connection,  # Dict[int, AreaLocation]
@@ -288,5 +299,5 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         translator_gates=translator_gates,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
-        hints={},
+        hints=hints,
     )

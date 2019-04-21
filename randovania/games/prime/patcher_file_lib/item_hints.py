@@ -50,7 +50,7 @@ def create_hints(patches: GamePatches,
     hint_name_creator = HintNameCreator(world_list, hide_area)
 
     hints_for_asset: Dict[int, str] = {}
-    
+
     for asset, hint in patches.hints.items():
         if hint.hint_type == HintType.LOCATION:
             pickup = patches.pickup_assignment.get(hint.target)
