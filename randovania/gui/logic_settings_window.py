@@ -5,7 +5,7 @@ from typing import Optional, Dict
 from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
 
-from randovania.game_description import data_reader, default_database
+from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
