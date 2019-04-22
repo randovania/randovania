@@ -36,14 +36,14 @@ class Permalink(BitPackValue):
         # for previous Randovania versions
         return 6
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         yield self.current_version(), _PERMALINK_MAX_VERSION
         yield self.seed_number, _PERMALINK_MAX_SEED
         yield int(self.spoiler), 2
         yield _dictionary_byte_hash(self.layout_configuration.game_data), 256
 
-        yield from self.patcher_configuration.bit_pack_encode()
-        yield from self.layout_configuration.bit_pack_encode()
+        yield from self.patcher_configuration.bit_pack_encode({})
+        yield from self.layout_configuration.bit_pack_encode({})
 
     @classmethod
     def _raise_if_different_version(cls, version: int):
@@ -57,14 +57,14 @@ class Permalink(BitPackValue):
         cls._raise_if_different_version(version)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "Permalink":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Permalink":
         version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED, 2)
         cls._raise_if_different_version(version)
 
         included_data_hash = decoder.decode(256)[0]
 
-        patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder)
-        layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder)
+        patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder, {})
+        layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder, {})
 
         expected_data_hash = _dictionary_byte_hash(layout_configuration.game_data)
         if included_data_hash != expected_data_hash:
@@ -120,7 +120,7 @@ class Permalink(BitPackValue):
             if checksum != b[-1]:
                 raise ValueError("Incorrect checksum")
 
-            return Permalink.bit_pack_unpack(decoder)
+            return Permalink.bit_pack_unpack(decoder, {})
 
         except binascii.Error as e:
             raise ValueError("Unable to base64 decode '{permalink}': {error}".format(
