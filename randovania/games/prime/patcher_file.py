@@ -27,9 +27,9 @@ from randovania.layout.translator_configuration import TranslatorConfiguration
 _TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
     # Great Temple
-    408633584: "Temple Transport Amber",
+    408633584: "Temple Transport Emerald",
     2399252740: "Temple Transport Violet",
-    2556480432: "Temple Transport Emerald",
+    2556480432: "Temple Transport Amber",
 
     # Temple Grounds to Great Temple
     1345979968: "Sanctuary Quadrant",
