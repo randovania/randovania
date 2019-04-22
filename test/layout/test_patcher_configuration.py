@@ -31,7 +31,7 @@ def test_decode(patcher_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = PatcherConfiguration.bit_pack_unpack(decoder)
+    result = PatcherConfiguration.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected

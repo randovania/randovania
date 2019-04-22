@@ -153,5 +153,5 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
     assert encoded == round_trip
     mock_packer_unpack.assert_called_once()
     mock_layout_unpack.assert_called_once()
-    patcher_configuration.bit_pack_encode.assert_called_once_with()
-    layout_configuration.bit_pack_encode.assert_called_once_with()
+    patcher_configuration.bit_pack_encode.assert_called_once_with({})
+    layout_configuration.bit_pack_encode.assert_called_once_with({})

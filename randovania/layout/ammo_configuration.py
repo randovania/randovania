@@ -13,7 +13,7 @@ class AmmoConfiguration(BitPackValue):
     maximum_ammo: Dict[int, int]
     items_state: Dict[Ammo, AmmoState]
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         default = AmmoConfiguration.default()
 
         for key, value in self.maximum_ammo.items():
@@ -33,10 +33,10 @@ class AmmoConfiguration(BitPackValue):
             yield index, len(self.items_state)
 
         for index, _, state in result:
-            yield from state.bit_pack_encode()
+            yield from state.bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
         from randovania.game_description import default_database
         item_database = default_database.default_prime2_item_database()
 
@@ -60,7 +60,7 @@ class AmmoConfiguration(BitPackValue):
         items_state = {}
         for index, item in enumerate(item_database.ammo.values()):
             if index in indices_with_custom:
-                items_state[item] = AmmoState.bit_pack_unpack(decoder)
+                items_state[item] = AmmoState.bit_pack_unpack(decoder, {})
             else:
                 items_state[item] = default.items_state[item]
 

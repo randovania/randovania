@@ -25,7 +25,7 @@ def test_decode(configuration_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = TranslatorConfiguration.bit_pack_unpack(decoder)
+    result = TranslatorConfiguration.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected
@@ -38,7 +38,7 @@ def test_encode(configuration_with_data):
     # Run
     result = bitpacking._pack_encode_results([
         (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode()
+        for value_argument, value_format in value.bit_pack_encode({})
     ])
 
     # Assert

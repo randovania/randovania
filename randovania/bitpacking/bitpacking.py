@@ -49,11 +49,11 @@ class BitPackDecoder:
 
 
 class BitPackValue:
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         raise NotImplementedError()
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
         raise NotImplementedError()
 
 
@@ -63,25 +63,42 @@ class BitPackBool(BitPackValue):
     def __init__(self, value: bool):
         self.value = value
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         yield int(self.value), 2
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> bool:
-        return bool(decoder.decode(2)[0])
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> bool:
+        return bool(decoder.decode_single(2))
+
+
+class BitPackFloat(BitPackValue):
+    value: float
+
+    def __init__(self, value: float):
+        self.value = value
+
+    def bit_pack_encode(self, metadata: dict) -> Iterator[Tuple[int, int]]:
+        value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"])
+        yield int((self.value - metadata["min"]) * (10 ** metadata["precision"])), value_range
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> float:
+        value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"])
+        decoded = decoder.decode_single(value_range)
+        return float((decoded / (10 ** metadata["precision"])) + metadata["min"])
 
 
 class BitPackEnum(BitPackValue):
     def __reduce__(self):
         return None
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         cls: Enum = self.__class__
         values = list(cls.__members__.values())
         yield values.index(self), len(values)
 
     @classmethod
-    def bit_pack_unpack(cls: "Enum", decoder: BitPackDecoder):
+    def bit_pack_unpack(cls: "Enum", decoder: BitPackDecoder, metadata):
         items = list(cls.__members__.values())
         index = decoder.decode(len(items))[0]
         return items[index]
@@ -89,6 +106,7 @@ class BitPackEnum(BitPackValue):
 
 _default_bit_pack_classes = {
     bool: BitPackBool,
+    float: BitPackFloat,
 }
 
 
@@ -111,14 +129,14 @@ def _get_bit_pack_value_for(value):
 
 
 class BitPackDataClass(BitPackValue):
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         for field in dataclasses.fields(self):
-            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_encode()
+            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_encode(field.metadata)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
         args = {
-            field.name: _get_bit_pack_value_for_type(field.type).bit_pack_unpack(decoder)
+            field.name: _get_bit_pack_value_for_type(field.type).bit_pack_unpack(decoder, field.metadata)
             for field in dataclasses.fields(cls)
             if field.init
         }
@@ -179,7 +197,7 @@ def _pack_encode_results(values: List[Tuple[int, int]]):
 def pack_value(value: BitPackValue) -> bytes:
     return _pack_encode_results([
         (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode()
+        for value_argument, value_format in value.bit_pack_encode({})
     ])
 
 
@@ -191,4 +209,4 @@ def round_trip(value: BitPackValue):
     """
     b = pack_value(value)
     decoder = BitPackDecoder(b)
-    return value.__class__.bit_pack_unpack(decoder)
+    return value.__class__.bit_pack_unpack(decoder, {})
