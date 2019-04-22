@@ -3,18 +3,17 @@ import itertools
 from random import Random
 from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List, TypeVar, Any
 
-from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
-from randovania.game_description.node import ResourceNode, PickupNode, Node
+from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.resolver import debug
-from randovania.resolver.generator_reach import GeneratorReach, collectable_resource_nodes, \
+from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
 from randovania.resolver.logic import Logic

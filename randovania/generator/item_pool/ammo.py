@@ -6,7 +6,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.ammo_state import AmmoState
 from randovania.resolver.exceptions import InvalidConfiguration
-from randovania.resolver.item_pool.pickup_creator import create_ammo_expansion
+from randovania.generator.item_pool.pickup_creator import create_ammo_expansion
 
 
 def add_ammo(resource_database: ResourceDatabase,
