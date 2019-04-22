@@ -49,7 +49,7 @@ class MajorItemsConfiguration(BitPackValue):
             maximum_random_starting_items=value["maximum_random_starting_items"],
         )
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         yield int(self.progressive_suit), 2
         yield int(self.progressive_grapple), 2
         default = MajorItemsConfiguration.default()
@@ -70,7 +70,7 @@ class MajorItemsConfiguration(BitPackValue):
         yield self.maximum_random_starting_items, RANDOM_STARTING_ITEMS_LIMIT
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "MajorItemsConfiguration":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "MajorItemsConfiguration":
         from randovania.game_description import default_database
         item_database = default_database.default_prime2_item_database()
 

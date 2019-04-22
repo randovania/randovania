@@ -1,3 +1,5 @@
+import copy
+import dataclasses
 from dataclasses import dataclass
 from enum import Enum
 
@@ -25,10 +27,21 @@ class PickupModelDataSource(BitPackEnum, Enum):
         return cls.ETM
 
 
-@dataclass(frozen=True)
+_DAMAGE_METADATA = {"min": 0.0, "max": 60.0, "precision": 2.0}
+
+
+def _with_default(default: float) -> dict:
+    metadata = copy.copy(_DAMAGE_METADATA)
+    metadata["if_different"] = default
+    return metadata
+
+
+@dataclasses.dataclass(frozen=True)
 class PatcherConfiguration(BitPackDataClass):
     menu_mod: bool = True
     warp_to_start: bool = True
+    varia_suit_damage: float = dataclasses.field(default=6.0, metadata=_with_default(6.0))
+    dark_suit_damage: float = dataclasses.field(default=1.2, metadata=_with_default(1.2))
     pickup_model_style: PickupModelStyle = PickupModelStyle.default()
     pickup_model_data_source: PickupModelDataSource = PickupModelDataSource.default()
 
@@ -37,18 +50,22 @@ class PatcherConfiguration(BitPackDataClass):
         return {
             "menu_mod": self.menu_mod,
             "warp_to_start": self.warp_to_start,
+            "varia_suit_damage": self.varia_suit_damage,
+            "dark_suit_damage": self.dark_suit_damage,
             "pickup_model_style": self.pickup_model_style.value,
             "pickup_model_data_source": self.pickup_model_data_source.value,
         }
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "PatcherConfiguration":
-        return PatcherConfiguration(
-            menu_mod=json_dict["menu_mod"],
-            warp_to_start=json_dict["warp_to_start"],
-            pickup_model_style=PickupModelStyle(json_dict["pickup_model_style"]),
-            pickup_model_data_source=PickupModelDataSource(json_dict["pickup_model_data_source"]),
-        )
+        kwargs = {}
+
+        for field in dataclasses.fields(cls):
+            field: dataclasses.Field = field
+            if field.name in json_dict:
+                kwargs[field.name] = field.type(json_dict[field.name])
+
+        return PatcherConfiguration(**kwargs)
 
     @classmethod
     def default(cls) -> "PatcherConfiguration":
