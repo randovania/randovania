@@ -13,7 +13,7 @@ class ResourceType(Enum):
     DIFFICULTY = 6
     PICKUP_INDEX = 7
     GATE_INDEX = 8
-    LORE_INDEX = 9
+    LOGBOOK_INDEX = 9
 
     @property
     def is_usable_for_requirement(self) -> bool:
@@ -37,5 +37,5 @@ class ResourceType(Enum):
 _TYPES_NO_FOR_REQUIREMENT = {
     ResourceType.PICKUP_INDEX,
     ResourceType.GATE_INDEX,
-    ResourceType.LORE_INDEX,
+    ResourceType.LOGBOOK_INDEX,
 }

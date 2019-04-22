@@ -7,8 +7,10 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
@@ -17,7 +19,7 @@ from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.major_item_state import MajorItemState
-from randovania.resolver.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator
 
 
 @pytest.fixture(
@@ -27,6 +29,7 @@ from randovania.resolver.item_pool import pickup_creator
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": ['HUhMANYCAA==', "Screw Attack"]},
+        {"hint": [1000, {"location_precision": "detailed", "item_precision": "detailed", "target": 50}]},
     ],
     name="patches_with_data")
 def _patches_with_data(request, echoes_game_data, echoes_item_database):
@@ -66,6 +69,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
             }
             for world in sorted(game.world_list.worlds, key=lambda w: w.name)
         },
+        "hints": {},
         "_locations_internal": "",
     }
     patches = GamePatches.with_game(game)
@@ -100,6 +104,11 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
 
         patches = patches.assign_new_pickups([(PickupIndex(5), pickup)])
         data["locations"]["Temple Grounds"]['Transport to Agon Wastes/Pickup (Missile)'] = pickup_name
+
+    if request.param.get("hint"):
+        asset, hint = request.param.get("hint")
+        patches = patches.assign_hint(LogbookAsset(asset), Hint.from_json(hint))
+        data["hints"][str(asset)] = hint
 
     return data, patches
 

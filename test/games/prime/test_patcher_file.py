@@ -24,7 +24,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
-from randovania.resolver.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator
 
 
 def test_add_header_data_to_result():

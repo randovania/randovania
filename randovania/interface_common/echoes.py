@@ -2,9 +2,10 @@ import multiprocessing
 import traceback
 from typing import Callable, Union
 
+from randovania.generator import generator
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.resolver import generator, debug
+from randovania.resolver import debug
 
 
 def _generate_layout_worker(output_pipe,

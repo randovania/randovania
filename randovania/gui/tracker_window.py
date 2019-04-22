@@ -11,12 +11,12 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
+from randovania.generator.item_pool import pool_creator
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.item_pool import pool_creator
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_pickup_to_state
