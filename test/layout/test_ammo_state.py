@@ -21,7 +21,7 @@ def test_decode(state_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = AmmoState.bit_pack_unpack(decoder)
+    result = AmmoState.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected

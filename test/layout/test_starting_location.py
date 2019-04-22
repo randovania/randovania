@@ -91,7 +91,7 @@ def test_decode(location_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = StartingLocation.bit_pack_unpack(decoder)
+    result = StartingLocation.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected

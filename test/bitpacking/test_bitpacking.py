@@ -105,3 +105,15 @@ def test_decode_bool(bool_fixture):
     # Assert
     decoder.decode_single.assert_called_once_with(encoded[1])
     assert result == value
+
+
+@pytest.mark.parametrize(["value", "metadata"], [
+    (0.0, {"min": 0.0, "max": 1.0, "precision": 1}),
+    (0.0, {"min": -1.0, "max": 1.0, "precision": 1}),
+    (-0.5, {"min": -1.0, "max": 1.0, "precision": 1}),
+    (1.0, {"min": 0.0, "max": 1.0, "precision": 1}),
+    (1.0, {"min": 0.0, "max": 1.0, "precision": 2}),
+])
+def test_round_trip_float(value: float, metadata: dict):
+    result = bitpacking.round_trip(bitpacking.BitPackFloat(value), metadata)
+    assert result == value

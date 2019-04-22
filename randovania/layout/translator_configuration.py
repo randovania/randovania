@@ -49,7 +49,7 @@ class TranslatorConfiguration(BitPackValue):
     fixed_torvus_temple: bool = True
     fixed_great_temple: bool = True
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         from randovania.layout import configuration_factory
         templates = [
             configuration_factory.get_vanilla_actual_translator_configurations(),
@@ -64,10 +64,10 @@ class TranslatorConfiguration(BitPackValue):
         yield from bitpacking.pack_array_element(self.translator_requirement, templates)
         if templates.index(self.translator_requirement) == 3:
             for translator in self.translator_requirement.values():
-                yield from translator.bit_pack_encode()
+                yield from translator.bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "TranslatorConfiguration":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "TranslatorConfiguration":
         from randovania.layout import configuration_factory
         templates = [
             configuration_factory.get_vanilla_actual_translator_configurations(),
@@ -84,7 +84,7 @@ class TranslatorConfiguration(BitPackValue):
         if translator_requirement is None:
             translator_requirement = {}
             for gate in templates[0].keys():
-                translator_requirement[gate] = LayoutTranslatorRequirement.bit_pack_unpack(decoder)
+                translator_requirement[gate] = LayoutTranslatorRequirement.bit_pack_unpack(decoder, {})
 
         return cls(
             translator_requirement,

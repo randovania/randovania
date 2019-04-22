@@ -33,8 +33,8 @@ class StartingLocation(BitPackValue):
                     self._custom_location, str(self.configuration)
                 ))
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
-        yield from self.configuration.bit_pack_encode()
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+        yield from self.configuration.bit_pack_encode({})
 
         if self._custom_location is not None:
             world_list, areas = _areas_list()
@@ -43,8 +43,8 @@ class StartingLocation(BitPackValue):
             yield areas.index(area), len(areas)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder) -> "StartingLocation":
-        configuration = StartingLocationConfiguration.bit_pack_unpack(decoder)
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "StartingLocation":
+        configuration = StartingLocationConfiguration.bit_pack_unpack(decoder, {})
         location = None
 
         if configuration == StartingLocationConfiguration.CUSTOM:

@@ -29,11 +29,11 @@ class BitPackPickupEntry:
         self.value = value
         self.database = database
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         items = self.database.item
 
         yield self.value.model_index, 255
-        yield from self.value.item_category.bit_pack_encode()
+        yield from self.value.item_category.bit_pack_encode({})
         yield int(any(cond.name is not None for cond in self.value.resources)), 2
         yield len(self.value.resources) - 1, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES
 
@@ -54,8 +54,8 @@ class BitPackPickupEntry:
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, name: str, database: ResourceDatabase) -> PickupEntry:
         model_index = decoder.decode_single(255)
-        item_category = ItemCategory.bit_pack_unpack(decoder)
-        has_name = bool(decoder.decode_single(2))
+        item_category = ItemCategory.bit_pack_unpack(decoder, {})
+        has_name = bitpacking.decode_bool(decoder)
         num_conditional = decoder.decode_single(MAXIMUM_PICKUP_CONDITIONAL_RESOURCES) + 1
 
         conditional_resources = []
@@ -105,12 +105,12 @@ class BitPackPickupEntryList(BitPackValue):
         self.value = value
         self.database = database
 
-    def bit_pack_encode(self) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         for entry in self.value:
-            yield from BitPackPickupEntry(entry, self.database).bit_pack_encode()
+            yield from BitPackPickupEntry(entry, self.database).bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
         raise RuntimeError("Unsupported operation")
 
 

@@ -16,11 +16,11 @@ from randovania.layout.translator_configuration import TranslatorConfiguration
 
 @dataclass(frozen=True)
 class DummyValue(BitPackValue):
-    def bit_pack_encode(self):
+    def bit_pack_encode(self, metadata):
         yield from []
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder):
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
         raise cls()
 
 
@@ -78,7 +78,7 @@ def test_decode(layout_config_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = LayoutConfiguration.bit_pack_unpack(decoder)
+    result = LayoutConfiguration.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected

@@ -47,7 +47,7 @@ def test_decode(config_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = MajorItemsConfiguration.bit_pack_unpack(decoder)
+    result = MajorItemsConfiguration.bit_pack_unpack(decoder, {})
 
     # Assert
     assert result == expected
