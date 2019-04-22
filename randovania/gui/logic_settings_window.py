@@ -5,7 +5,7 @@ from typing import Optional, Dict
 from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
 
-from randovania.game_description import data_reader
+from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
@@ -76,7 +76,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self._options = options
         is_preview_mode = tab_service.is_preview_mode
 
-        game_description = data_reader.decode_data(default_data.decode_default_prime2(), False)
+        game_description = default_database.default_prime2_game_description(False)
         self.world_list = game_description.world_list
         self.resource_database = game_description.resource_database
 
