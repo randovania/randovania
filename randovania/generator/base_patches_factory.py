@@ -12,11 +12,11 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
+from randovania.generator import elevator_distributor
 from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator import elevator_distributor
 
 
 def add_elevator_connections_to_patches(permalink: Permalink,

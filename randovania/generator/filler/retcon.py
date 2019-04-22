@@ -8,18 +8,17 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
-from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.resolver import debug
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
+from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup
-
 
 X = TypeVar("X")
 

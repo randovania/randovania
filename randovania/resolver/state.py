@@ -3,12 +3,12 @@ from typing import Optional, Tuple, Iterator
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another, convert_resource_gain_to_current_resources
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 
 
 class State:

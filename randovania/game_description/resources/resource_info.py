@@ -1,8 +1,8 @@
 from typing import Union, Tuple, Iterator, Dict
 
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.logbook_asset import LogbookAsset
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 
