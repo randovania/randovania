@@ -9,20 +9,17 @@ from randovania.layout.patcher_configuration import PatcherConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xc0', "json": {}},
-        {"encoded": b'\x80', "json": {"warp_to_start": False}},
-        {"encoded": b'@', "json": {"menu_mod": False}},
-        {"encoded": b'\x00', "json": {"menu_mod": False, "warp_to_start": False}},
-        {"encoded": b'H', "json": {"menu_mod": False, "pickup_model_data_source": "location"}},
-        {"encoded": b'\xa0', "json": {"warp_to_start": False, "pickup_model_style": "hide-scan"}},
+        {"encoded": b'\xf0', "json": {}},
+        {"encoded": b'\xb0', "json": {"warp_to_start": False}},
+        {"encoded": b'p', "json": {"menu_mod": False}},
+        {"encoded": b'0', "json": {"menu_mod": False, "warp_to_start": False}},
+        {"encoded": b'r', "json": {"menu_mod": False, "pickup_model_data_source": "location"}},
+        {"encoded": b'\xb8', "json": {"warp_to_start": False, "pickup_model_style": "hide-scan"}},
+        {"encoded": b'\xc1\xf4\x1f@\x00', "json": {"varia_suit_damage": 5.0, "dark_suit_damage": 20.0}},
     ],
     name="patcher_with_data")
 def _patcher_with_data(request):
-    params = copy.copy(request.param["json"])
-    for key, value in PatcherConfiguration.default().as_json.items():
-        if key not in params:
-            params[key] = value
-    return request.param["encoded"], PatcherConfiguration.from_json_dict(params)
+    return request.param["encoded"], PatcherConfiguration.from_json_dict(request.param["json"])
 
 
 def test_decode(patcher_with_data):
