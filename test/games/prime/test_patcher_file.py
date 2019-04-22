@@ -636,6 +636,8 @@ def test_create_patcher_file(test_files_dir):
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
+        "dark_world_varia_suit_damage": description.permalink.patcher_configuration.varia_suit_damage,
+        "dark_world_dark_suit_damage": description.permalink.patcher_configuration.dark_suit_damage,
         "always_up_gfmc_compound": translator_gates.fixed_gfmc_compound,
         "always_up_torvus_temple": translator_gates.fixed_torvus_temple,
         "always_up_great_temple": translator_gates.fixed_great_temple,
