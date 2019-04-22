@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Option to change which translator each translator gate in the game needs.
 
+-   Added: Option to change how much damage you take from Dark Aether when using
+    Varia Suit and Dark Suit.
+
 -   Changed: Logic considers the Translator Gates in GFMC Compound and Torvus Temple
     to be up from the start, preventing potential softlocks.
 

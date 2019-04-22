@@ -426,6 +426,8 @@ def create_patcher_file(description: LayoutDescription,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
+        "dark_world_varia_suit_damage": patcher_config.varia_suit_damage,
+        "dark_world_dark_suit_damage": patcher_config.dark_suit_damage,
     }
 
     _apply_translator_gate_patches(result["specific_patches"], layout.translator_configuration)
