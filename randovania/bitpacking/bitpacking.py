@@ -1,7 +1,7 @@
 import dataclasses
 import hashlib
 from enum import Enum
-from typing import Iterator, Tuple, TypeVar, List
+from typing import Iterator, Tuple, TypeVar, List, Optional
 
 import bitstruct
 import math
@@ -194,19 +194,27 @@ def _pack_encode_results(values: List[Tuple[int, int]]):
     return bitstruct.compile(f).pack(*[argument for argument, _ in values])
 
 
-def pack_value(value: BitPackValue) -> bytes:
+def pack_value(value: BitPackValue, metadata: Optional[dict] = None) -> bytes:
+    if metadata is None:
+        metadata = {}
+
     return _pack_encode_results([
         (value_argument, value_format)
-        for value_argument, value_format in value.bit_pack_encode({})
+        for value_argument, value_format in value.bit_pack_encode(metadata)
     ])
 
 
-def round_trip(value: BitPackValue):
+def round_trip(value: T,
+               metadata: Optional[dict] = None) -> T:
     """
     Encodes the given value and then recreates it using the encoded value
     :param value:
+    :param metadata:
     :return:
     """
-    b = pack_value(value)
+    if metadata is None:
+        metadata = {}
+
+    b = pack_value(value, metadata)
     decoder = BitPackDecoder(b)
-    return value.__class__.bit_pack_unpack(decoder, {})
+    return value.__class__.bit_pack_unpack(decoder, metadata)
