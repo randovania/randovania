@@ -22,7 +22,7 @@ from randovania.interface_common.options import Options
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.resolver.exceptions import InvalidConfiguration
-from randovania.resolver.item_pool.ammo import items_for_ammo
+from randovania.generator.item_pool.ammo import items_for_ammo
 
 _EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion}, for a total of {total}."
                                  "\n{from_items} will be provided from major items.")

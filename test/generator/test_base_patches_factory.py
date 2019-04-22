@@ -13,7 +13,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutEl
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.resolver import base_patches_factory
+from randovania.generator import base_patches_factory
 
 
 def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
@@ -189,11 +189,11 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     assert result.hints == expected
 
 
-@patch("randovania.resolver.base_patches_factory.add_default_hints_to_patches", autospec=True)
-@patch("randovania.resolver.base_patches_factory.starting_location_for_configuration", autospec=True)
-@patch("randovania.resolver.base_patches_factory.gate_assignment_for_configuration", autospec=True)
-@patch("randovania.resolver.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
-@patch("randovania.resolver.generator.GamePatches.with_game")
+@patch("randovania.generator.base_patches_factory.add_default_hints_to_patches", autospec=True)
+@patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
+@patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
+@patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
+@patch("randovania.generator.generator.GamePatches.with_game")
 def test_create_base_patches(mock_with_game: MagicMock,
                              mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,

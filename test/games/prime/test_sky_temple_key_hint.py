@@ -5,7 +5,7 @@ import pytest
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
-from randovania.resolver.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator
 
 
 def _create_hint_text(hide_area: bool,

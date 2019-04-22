@@ -22,7 +22,7 @@ from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKey
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
-from randovania.resolver.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator
 
 _TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {

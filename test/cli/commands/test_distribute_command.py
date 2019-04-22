@@ -7,7 +7,7 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 
 @patch("randovania.interface_common.simplified_patcher.write_patcher_file_to_disk", autospec=True)
 @patch("randovania.layout.permalink.Permalink.from_str")
-@patch("randovania.resolver.generator.generate_list", autospec=True)
+@patch("randovania.generator.generator.generate_list", autospec=True)
 def test_distribute_command_logic(mock_generate_list: MagicMock,
                                   mock_from_str: MagicMock,
                                   mock_write_patcher_file_to_disk: MagicMock,

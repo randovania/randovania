@@ -7,7 +7,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.filler import retcon
+from randovania.generator.filler import retcon
 
 
 skip_generation_tests = pytest.mark.skipif(

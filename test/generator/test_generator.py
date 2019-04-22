@@ -11,7 +11,8 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTr
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.resolver import generator, debug
+from randovania.resolver import debug
+from randovania.generator import generator
 
 skip_generation_tests = pytest.mark.skipif(
     pytest.config.option.skip_generation_tests,
@@ -128,12 +129,12 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
     assert generated_description.without_solver_path == layout_description
 
 
-@patch("randovania.resolver.generator._assign_remaining_items", autospec=True)
-@patch("randovania.resolver.generator._run_filler", autospec=True)
-@patch("randovania.resolver.generator._validate_item_pool_size", autospec=True)
-@patch("randovania.resolver.base_patches_factory.create_base_patches", autospec=True)
-@patch("randovania.resolver.item_pool.pool_creator.calculate_item_pool", autospec=True)
-@patch("randovania.resolver.generator.Random", autospec=False)  # TODO: pytest-qt bug
+@patch("randovania.generator.generator._assign_remaining_items", autospec=True)
+@patch("randovania.generator.generator.run_filler", autospec=True)
+@patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
+@patch("randovania.generator.base_patches_factory.create_base_patches", autospec=True)
+@patch("randovania.generator.item_pool.pool_creator.calculate_item_pool", autospec=True)
+@patch("randovania.generator.generator.Random", autospec=False)  # TODO: pytest-qt bug
 def test_create_patches(mock_random: MagicMock,
                         mock_calculate_item_pool: MagicMock,
                         mock_create_base_patches: MagicMock,

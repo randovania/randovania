@@ -16,7 +16,7 @@ from randovania.gui.custom_spin_box import CustomSpinBox
 from randovania.gui.tracker_window_ui import Ui_TrackerWindow
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
-from randovania.resolver.item_pool import pool_creator
+from randovania.generator.item_pool import pool_creator
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_pickup_to_state

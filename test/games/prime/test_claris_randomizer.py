@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock, call, ANY
 import pytest
 
 import randovania
-import randovania.resolver.elevator_distributor
+import randovania.generator.elevator_distributor
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime import claris_randomizer
 from randovania.layout.layout_description import LayoutDescription

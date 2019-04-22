@@ -19,7 +19,7 @@ from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.major_item_state import MajorItemState
-from randovania.resolver.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator
 
 
 @pytest.fixture(

@@ -10,7 +10,7 @@ from randovania.layout.layout_configuration import LayoutTrickLevel, LayoutConfi
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.resolver import elevator_distributor
+from randovania.generator import elevator_distributor
 
 
 @pytest.mark.parametrize("value", LayoutTrickLevel)
