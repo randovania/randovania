@@ -138,7 +138,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
         {"instance_id": 3538975,
          "origin_location": {"world_asset_id": 1006255871, "area_asset_id": 1345979968},
          "target_location": {"world_asset_id": 2252328306, "area_asset_id": 408633584},
-         "room_name": "Transport to Temple Transport Amber"},
+         "room_name": "Transport to Temple Transport Emerald"},
 
         {"instance_id": 152,
          "origin_location": {"world_asset_id": 2252328306, "area_asset_id": 408633584},
@@ -205,7 +205,6 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
          "target_location": {"world_asset_id": 1039999561, "area_asset_id": 3205424168},
          "room_name": "Transport to Lower Torvus Access"}
     ]
-    print(json.dumps(result))
     assert result == expected
 
 
