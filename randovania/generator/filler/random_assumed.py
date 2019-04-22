@@ -6,10 +6,10 @@ from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.resolver import debug
-from randovania.resolver.filler_library import filter_unassigned_pickup_nodes
-from randovania.resolver.generator_reach import advance_reach_with_possible_unsafe_resources, \
+from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes
+from randovania.generator.generator_reach import advance_reach_with_possible_unsafe_resources, \
     reach_with_all_safe_resources, collect_all_safe_resources_in_reach, filter_reachable, pickup_nodes_that_can_reach
+from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup, add_pickup_to_state

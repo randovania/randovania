@@ -4,8 +4,8 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import echoes_lib
+from randovania.generator import generator
 from randovania.layout.permalink import Permalink
-from randovania.resolver import generator
 
 
 def batch_distribute_helper(base_permalink: Permalink,

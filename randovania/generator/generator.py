@@ -1,22 +1,20 @@
 import multiprocessing.dummy
 from random import Random
-from typing import Tuple, Iterator, Optional, Callable, TypeVar, Union, List
+from typing import Tuple, Iterator, Optional, Callable, TypeVar, List
 
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import ResourceNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.generator import base_patches_factory
+from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
+from randovania.generator.filler.runner import run_filler
+from randovania.generator.item_pool import pool_creator
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
-from randovania.resolver import resolver, base_patches_factory, bootstrap
+from randovania.resolver import resolver
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
-from randovania.resolver.filler.retcon import retcon_playthrough_filler
-from randovania.resolver.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
-from randovania.resolver.item_pool import pool_creator
 from randovania.resolver.state import State
 
 T = TypeVar("T")
@@ -70,13 +68,11 @@ def generate_list(permalink: Permalink,
     def create_failure(message: str):
         return GenerationFailure(message, permalink=permalink)
 
-    new_patches = None
-
     with multiprocessing.dummy.Pool(1) as dummy_pool:
         patches_async = dummy_pool.apply_async(func=_create_patches,
                                                kwds=create_patches_params)
         try:
-            new_patches = patches_async.get(timeout)
+            new_patches: GamePatches = patches_async.get(timeout)
         except multiprocessing.TimeoutError:
             raise create_failure("Timeout reached when generating patches.")
 
@@ -112,22 +108,6 @@ def generate_list(permalink: Permalink,
     )
 
 
-Action = Union[ResourceNode, PickupEntry]
-
-
-def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], List[PickupEntry]]:
-    major_items = []
-    expansions = []
-
-    for pickup in item_pool:
-        if pickup.item_category == ItemCategory.EXPANSION:
-            expansions.append(pickup)
-        else:
-            major_items.append(pickup)
-
-    return major_items, expansions
-
-
 def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription) -> None:
     num_pickup_nodes = len(list(filter_pickup_nodes(game.world_list.all_nodes)))
     if len(item_pool) > num_pickup_nodes:
@@ -156,33 +136,8 @@ def _create_patches(
 
     _validate_item_pool_size(item_pool, game)
 
-    filler_patches, remaining_items = _run_filler(configuration, game, item_pool, pool_patches, rng, status_update)
+    filler_patches, remaining_items = run_filler(configuration, game, item_pool, pool_patches, rng, status_update)
     return _assign_remaining_items(rng, game, filler_patches, remaining_items)
-
-
-def _run_filler(configuration: LayoutConfiguration,
-                game: GameDescription,
-                item_pool: List[PickupEntry],
-                patches: GamePatches,
-                rng: Random,
-                status_update: Callable[[str], None],
-                ):
-    major_items, expansions = _split_expansions(item_pool)
-    rng.shuffle(major_items)
-    rng.shuffle(expansions)
-
-    major_configuration = configuration.major_items_configuration
-
-    logic, state = bootstrap.logic_bootstrap(configuration, game, patches)
-    logic.game.simplify_connections(state.resources)
-
-    filler_patches = retcon_playthrough_filler(
-        logic, state, major_items, rng,
-        minimum_random_starting_items=major_configuration.minimum_random_starting_items,
-        maximum_random_starting_items=major_configuration.maximum_random_starting_items,
-        status_update=status_update)
-
-    return filler_patches, major_items + expansions
 
 
 def _assign_remaining_items(rng: Random,

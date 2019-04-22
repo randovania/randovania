@@ -1,41 +1,55 @@
 import collections
 import itertools
 from random import Random
-from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List
+from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List, TypeVar, Any
 
-from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import ResourceNode, PickupNode, Node
+from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
-from randovania.game_description.resources.scan_asset import ScanAsset
-from randovania.resolver import debug
-from randovania.resolver.generator_reach import GeneratorReach, collectable_resource_nodes, \
+from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
+from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup
 
+X = TypeVar("X")
+
+
+def _filter_not_in_dict(elements: Iterator[X],
+                        dictionary: Dict[X, Any],
+                        ) -> Iterator[X]:
+    for index in elements:
+        if index not in dictionary:
+            yield index
+
 
 class UncollectedState(NamedTuple):
     indices: Set[PickupIndex]
+    logbooks: Set[LogbookAsset]
     resources: Set[ResourceNode]
 
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> "UncollectedState":
         return UncollectedState(
-            set(_filter_unassigned_pickup_indices(reach.state.collected_pickup_indices,
-                                                  reach.state.patches.pickup_assignment)),
+            set(_filter_not_in_dict(reach.state.collected_pickup_indices,
+                                    reach.state.patches.pickup_assignment)),
+            set(_filter_not_in_dict(reach.state.collected_scan_assets,
+                                    reach.state.patches.hints)),
             set(collectable_resource_nodes(reach.connected_nodes, reach))
         )
 
     def __sub__(self, other: "UncollectedState") -> "UncollectedState":
         return UncollectedState(
             self.indices - other.indices,
+            self.logbooks - other.logbooks,
             self.resources - other.resources
         )
 
@@ -76,7 +90,7 @@ def retcon_playthrough_filler(logic: Logic,
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
 
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
-    scan_asset_seen_count: Dict[ScanAsset, int] = collections.defaultdict(int)
+    scan_asset_seen_count: Dict[LogbookAsset, int] = collections.defaultdict(int)
     num_random_starting_items_placed = 0
 
     while pickups_left:
@@ -102,7 +116,9 @@ def retcon_playthrough_filler(logic: Logic,
                                                        action_report)
 
         try:
-            action = next(iterate_with_weights(list(actions_weights.keys()), actions_weights, rng))
+            action = next(iterate_with_weights(items=list(actions_weights.keys()),
+                                               item_weights=actions_weights,
+                                               rng=rng))
         except StopIteration:
             if actions_weights:
                 action = rng.choice(list(actions_weights.keys()))
@@ -121,9 +137,17 @@ def retcon_playthrough_filler(logic: Logic,
                 assert pickup_index_weight, "Pickups should only be added to the actions dict " \
                                             "when there are unassigned pickups"
 
-                pickup_index = next(iterate_with_weights(list(current_uncollected.indices), pickup_index_weight, rng))
+                pickup_index = next(iterate_with_weights(items=list(current_uncollected.indices),
+                                                         item_weights=pickup_index_weight,
+                                                         rng=rng))
 
-                next_state = reach.state.assign_pickup_to_index(pickup_index, action)
+                next_state = reach.state.assign_pickup_to_index(action, pickup_index)
+                if current_uncollected.logbooks:
+                    next_state.patches = next_state.patches.assign_hint(
+                        rng.choice(list(current_uncollected.logbooks)),
+                        Hint(HintType.LOCATION, HintLocationPrecision.DETAILED,
+                             HintItemPrecision.DETAILED, pickup_index)
+                    )
 
                 print_retcon_place_pickup(action, logic, pickup_index)
 
@@ -133,7 +157,7 @@ def retcon_playthrough_filler(logic: Logic,
                     raise RuntimeError("Attempting to place more extra starting items than the allowed.")
 
                 if debug.debug_level() > 1:
-                    print(f"Adding {action.name} as a starting item")
+                    print(f"\n--> Adding {action.name} as a starting item")
 
                 next_state = reach.state.assign_pickup_to_starting_items(action)
 
@@ -195,28 +219,6 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            ) -> float:
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
     weight = len(potential_uncollected.resources) + len(potential_uncollected.indices)
-
-    # def _path(node):
-    #     return str([
-    #         reach.logic.game.node_name(node) for node in potential_reach._reachable_paths[node]
-    #     ])
-    #
-    # messages = [
-    #     reach.logic.game.node_name(node) + ": " + _path(node)
-    #     for node in potential_uncollected.resources
-    # ]
-    # for index in _filter_unassigned_pickup_indices(potential_reach.state.collected_pickup_indices,
-    #                                                pickup_assignment):
-    #     if reach.state.has_resource(index):
-    #         continue
-    #     for node in potential_reach.nodes:
-    #         if isinstance(node, PickupNode) and node.pickup_index == index:
-    #             messages.append("Collected Pickup Node: {}".format(reach.logic.game.node_name(node)))
-    #
-    # if messages:
-    #     messages = "\n* " + "\n* ".join(messages)
-    # else:
-    #     messages = ""
 
     return weight
 
@@ -311,11 +313,3 @@ def print_new_resources(logic: Logic,
                     path = paths.get(reach.state.node, [])
                     print([node.name for node in path])
         print("")
-
-
-def _filter_unassigned_pickup_indices(indices: Iterator[PickupIndex],
-                                      pickup_assignment: PickupAssignment,
-                                      ) -> Iterator[PickupIndex]:
-    for index in indices:
-        if index not in pickup_assignment:
-            yield index

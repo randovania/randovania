@@ -1,10 +1,10 @@
 import dataclasses
 import hashlib
-import math
 from enum import Enum
 from typing import Iterator, Tuple, TypeVar, List
 
 import bitstruct
+import math
 
 T = TypeVar("T")
 

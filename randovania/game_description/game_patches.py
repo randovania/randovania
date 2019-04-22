@@ -6,6 +6,8 @@ from typing import Dict, Tuple, Iterator
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, GateAssignment
 from randovania.game_description.dock import DockWeakness, DockConnection
+from randovania.game_description.hint import Hint
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources
@@ -26,6 +28,7 @@ class GamePatches:
     translator_gates: GateAssignment
     starting_items: CurrentResources
     starting_location: AreaLocation
+    hints: Dict[LogbookAsset, Hint]
 
     @classmethod
     def with_game(cls, game: "GameDescription") -> "GamePatches":
@@ -34,7 +37,7 @@ class GamePatches:
             for node in game.all_editable_teleporter_nodes()
         }
 
-        return GamePatches({}, elevator_connection, {}, {}, {}, {}, game.starting_location)
+        return GamePatches({}, elevator_connection, {}, {}, {}, {}, game.starting_location, {})
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupEntry]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -71,3 +74,8 @@ class GamePatches:
             current[resource] = current.get(resource, 0) + quantity
 
         return dataclasses.replace(self, starting_items=current)
+
+    def assign_hint(self, logbook: LogbookAsset, hint: Hint) -> "GamePatches":
+        current = copy.copy(self.hints)
+        current[logbook] = hint
+        return dataclasses.replace(self, hints=current)

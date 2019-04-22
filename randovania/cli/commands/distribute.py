@@ -3,10 +3,11 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import echoes_lib
+from randovania.generator import generator
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.permalink import Permalink
-from randovania.resolver import debug, generator
+from randovania.resolver import debug
 
 
 def distribute_command_logic(args):
