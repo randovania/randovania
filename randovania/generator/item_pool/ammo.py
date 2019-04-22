@@ -3,10 +3,10 @@ from typing import Dict, Iterator, List
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.generator.item_pool.pickup_creator import create_ammo_expansion
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.ammo_state import AmmoState
 from randovania.resolver.exceptions import InvalidConfiguration
-from randovania.generator.item_pool.pickup_creator import create_ammo_expansion
 
 
 def add_ammo(resource_database: ResourceDatabase,

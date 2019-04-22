@@ -2,10 +2,10 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.games.prime import claris_randomizer
+from randovania.generator import generator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.generator import generator
 
 
 def randomize_command_logic(args):

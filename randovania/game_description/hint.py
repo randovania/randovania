@@ -1,10 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 from random import Random
-from typing import Union
 
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
 class HintType(Enum):

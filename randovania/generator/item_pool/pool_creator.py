@@ -4,12 +4,12 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import add_resources_into_another
-from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
 from randovania.generator.item_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
+from randovania.layout.layout_configuration import LayoutConfiguration
 
 
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
