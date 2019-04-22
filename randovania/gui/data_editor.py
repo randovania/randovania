@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 from typing import Dict, Optional
 
@@ -32,7 +33,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
+        self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
+
         self.save_database_button.clicked.connect(self._prompt_save_database)
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
@@ -93,6 +96,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.selected_node_button = self.sender()
             self.update_selected_node()
 
+    def _on_click_link_to_other_node(self, link: str):
+        info = re.match(r"^node://([^)]+)/([^)]+)/([^)]+)$", link)
+        if info:
+            world_name, area_name, node_name = info.group(1, 2, 3)
+            self.world_selector_box.setCurrentIndex(self.world_selector_box.findText(world_name))
+            self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
+            for radio_button in self.radio_button_to_node.keys():
+                if radio_button.text() == node_name:
+                    radio_button.setChecked(True)
+
     def update_selected_node(self):
         node = self.current_node
         assert node is not None
@@ -101,14 +114,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if isinstance(node, DockNode):
             other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
-            msg = "{} to {}".format(node.default_dock_weakness.name, self.world_list.node_name(other))
+            msg = "{} to <a href='node://{}'>{}</a>".format(
+                node.default_dock_weakness.name,
+                self.world_list.node_name(other, with_world=True),
+                self.world_list.node_name(other)
+            )
 
         elif node.is_resource_node:
             msg = str(node)
 
         elif isinstance(node, TeleporterNode):
             other = self.world_list.resolve_teleporter_connection(node.default_connection)
-            msg = "Connects to {}".format(self.world_list.node_name(other, with_world=True))
+            msg = "Connects to <a href='node://{0}'>{0}</a>".format(self.world_list.node_name(other, with_world=True))
         else:
             msg = ""
 

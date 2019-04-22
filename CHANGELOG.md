@@ -56,6 +56,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Areas with names starting with !! are now hidden in the Data Visualizer.
 
+-   Added: Docks and Elevators now have usable links in the Data Visualizer. These links
+    brings you to the matching node.
+
 ## [0.25.0] - 2019-03-24
 
 -   Changed: Reworked requirements for getting the Missile in Crossroads from the doors. You can:
