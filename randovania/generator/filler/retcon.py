@@ -6,6 +6,7 @@ from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Cal
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.logbook_asset import LogbookAsset
@@ -76,6 +77,10 @@ def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResource
     return frozenset(resource for resource, _ in resource_gain)
 
 
+def _should_have_hint(item_category: ItemCategory) -> bool:
+    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
+
+
 def retcon_playthrough_filler(logic: Logic,
                               initial_state: State,
                               pickups_left: List[PickupEntry],
@@ -142,7 +147,7 @@ def retcon_playthrough_filler(logic: Logic,
                                                          rng=rng))
 
                 next_state = reach.state.assign_pickup_to_index(action, pickup_index)
-                if current_uncollected.logbooks:
+                if current_uncollected.logbooks and _should_have_hint(action.item_category):
                     next_state.patches = next_state.patches.assign_hint(
                         rng.choice(list(current_uncollected.logbooks)),
                         Hint(HintType.LOCATION, HintLocationPrecision.DETAILED,
