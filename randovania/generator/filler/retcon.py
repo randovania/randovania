@@ -5,7 +5,7 @@ from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Cal
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
@@ -150,8 +150,7 @@ def retcon_playthrough_filler(logic: Logic,
                 if current_uncollected.logbooks and _should_have_hint(action.item_category):
                     next_state.patches = next_state.patches.assign_hint(
                         rng.choice(list(current_uncollected.logbooks)),
-                        Hint(HintType.LOCATION, HintLocationPrecision.DETAILED,
-                             HintItemPrecision.DETAILED, pickup_index)
+                        Hint(HintType.LOCATION, None, None, pickup_index)
                     )
 
                 print_retcon_place_pickup(action, logic, pickup_index)
