@@ -199,6 +199,16 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             except InvalidConfiguration as invalid_config:
                 self._ammo_pickup_widgets[ammo][1].setText(str(invalid_config))
 
+        # Item pool count
+        self.item_pool_count_label.setText(
+            "Items in pool: {}/119".format(
+                sum(state.num_shuffled_pickups for state in major_configuration.items_state.values())
+                + sum(state.pickup_count for state in ammo_configuration.items_state.values())
+                + 9 # Dark Agon, Dark Torvus, and Ing Hive keys
+                + layout.sky_temple_keys.num_keys
+            )
+        )
+
     # Item Alternatives
 
     def _register_alternatives_events(self):

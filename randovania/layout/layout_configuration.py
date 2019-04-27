@@ -43,6 +43,15 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     def default(cls) -> "LayoutSkyTempleKeyMode":
         return cls.NINE
 
+    @property
+    def num_keys(self):
+        if self == self.ALL_BOSSES:
+            return 9
+        elif self == self.ALL_GUARDIANS:
+            return 3
+        else:
+            return self.value
+
 
 class LayoutElevators(BitPackEnum, Enum):
     VANILLA = "vanilla"
