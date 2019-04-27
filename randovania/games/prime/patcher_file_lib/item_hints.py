@@ -84,7 +84,8 @@ def create_hints(patches: GamePatches,
                     node=hint_name_creator.index_node_name(hint.target),
                 )
             else:
-                message = "{node} has nothing.".format(
+                message = "{determiner} Energy Transfer Module can be found at {node}.".format(
+                    determiner="The" if len(patches.pickup_assignment) == 118 else "An",
                     node=hint_name_creator.index_node_name(hint.target),
                 )
 
