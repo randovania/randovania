@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>566</width>
-    <height>468</height>
+    <height>705</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -49,8 +49,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>548</width>
-         <height>450</height>
+         <width>554</width>
+         <height>693</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
@@ -99,54 +99,19 @@
           </layout>
          </widget>
         </item>
-        <item row="2" column="1" rowspan="2">
-         <widget class="QGroupBox" name="ammo_box">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="title">
-           <string>Ammo</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <layout class="QVBoxLayout" name="ammo_layout">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetMinimumSize</enum>
-           </property>
-          </layout>
-         </widget>
-        </item>
-        <item row="2" column="0" rowspan="2">
-         <widget class="QGroupBox" name="major_items_box">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="title">
-           <string>Major Items</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <layout class="QGridLayout" name="major_items_layout">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetMinimumSize</enum>
-           </property>
-          </layout>
-         </widget>
-        </item>
         <item row="1" column="0" colspan="2">
          <widget class="QGroupBox" name="random_starting_box">
           <property name="title">
            <string>Random Starting Items</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
+           <item row="2" column="0">
+            <widget class="QLabel" name="maximum_starting_label">
+             <property name="text">
+              <string>Maximum</string>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="minimum_starting_label">
              <property name="text">
@@ -157,10 +122,10 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="maximum_starting_label">
-             <property name="text">
-              <string>Maximum</string>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="minimum_starting_spinbox">
+             <property name="maximum">
+              <number>30</number>
              </property>
             </widget>
            </item>
@@ -174,17 +139,83 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="minimum_starting_spinbox">
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="maximum_starting_spinbox">
              <property name="maximum">
               <number>30</number>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QSpinBox" name="maximum_starting_spinbox">
-             <property name="maximum">
-              <number>30</number>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QGroupBox" name="item_pool_box">
+          <property name="toolTipDuration">
+           <number>-1</number>
+          </property>
+          <property name="title">
+           <string>Item Pool</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="1" column="1">
+            <widget class="QGroupBox" name="ammo_box">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>Ammo</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <layout class="QVBoxLayout" name="ammo_layout">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QGroupBox" name="major_items_box">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>Major Items</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <layout class="QGridLayout" name="major_items_layout">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="item_pool_count_label">
+             <property name="toolTip">
+              <string>If there are fewer than 119 items, the rest of the item locations will contain Energy Transfer Modules.</string>
+             </property>
+             <property name="text">
+              <string>Items in pool: #/119</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
