@@ -74,7 +74,6 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         super().__init__()
         self.setupUi(self)
         self._options = options
-        is_preview_mode = tab_service.is_preview_mode
 
         game_description = default_database.default_prime2_game_description(False)
         self.world_list = game_description.world_list
@@ -85,7 +84,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.setup_elevator_elements()
         self.setup_sky_temple_elements()
         self.setup_starting_area_elements()
-        self.setup_translators_elements(is_preview_mode)
+        self.setup_translators_elements()
         self.setup_hint_elements()
 
         # Alignment
@@ -239,7 +238,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             return True
 
     # Translator Gates
-    def setup_translators_elements(self, is_preview_mode: bool):
+    def setup_translators_elements(self):
         randomizer_data = default_data.decode_randomizer_data()
 
         self.always_up_gfmc_compound_check.stateChanged.connect(
@@ -248,12 +247,6 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             functools.partial(self._on_always_up_check_changed, "fixed_torvus_temple"))
         self.always_up_great_temple_check.stateChanged.connect(
             functools.partial(self._on_always_up_check_changed, "fixed_great_temple"))
-
-        if not is_preview_mode:
-            self.translators_description.setText(self.translators_description.text().split("Some translator gates")[0])
-            self.always_up_gfmc_compound_check.hide()
-            self.always_up_torvus_temple_check.hide()
-            self.always_up_great_temple_check.hide()
 
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
         self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
