@@ -559,7 +559,7 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
     result = patcher_file._pickup_scan(pickup)
 
     # Assert
-    assert result == "Progressive Suit:\nProvides the following in order: Dark Suit, Light Suit"
+    assert result == "Progressive Suit: Provides the following in order: Dark Suit, Light Suit"
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
