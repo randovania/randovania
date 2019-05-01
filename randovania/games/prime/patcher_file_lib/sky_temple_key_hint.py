@@ -4,7 +4,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
-from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator, create_simple_logbook_hint
+from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -35,7 +35,7 @@ def create_hints(patches: GamePatches,
     :param hide_area: Should the hint include only the world?
     :return:
     """
-    hint_name_creator = HintNameCreator(world_list, hide_area)
+    location_hint_creator = LocationHintCreator(world_list)
     sky_temple_key_hints = {}
 
     for pickup_index, pickup in patches.pickup_assignment.items():
@@ -54,7 +54,7 @@ def create_hints(patches: GamePatches,
 
             sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}".format(
                 _sky_temple_key_name(key_number),
-                hint_name_creator.index_node_name(pickup_index),
+                location_hint_creator.index_node_name(pickup_index, hide_area),
             )
 
     for starting_resource, quantity in patches.starting_items.items():

@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Tuple, Dict
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 
@@ -30,6 +31,10 @@ class ItemCategory(BitPackEnum, Enum):
     def long_name(self):
         return LONG_NAMES[self]
 
+    @property
+    def hint_details(self) -> Tuple[str, str]:
+        return HINT_DETAILS[self]
+
 
 MAJOR_ITEM_CATEGORIES = {
     ItemCategory.VISOR,
@@ -60,4 +65,20 @@ LONG_NAMES = {
     ItemCategory.SKY_TEMPLE_KEY: "Sky Temple Keys",
     ItemCategory.ETM: "Energy Transfer Module",
     ItemCategory.EXPANSION: "Expansions",
+}
+
+HINT_DETAILS: Dict[ItemCategory, Tuple[str, str]] = {
+    ItemCategory.VISOR: ("A ", "visor"),
+    ItemCategory.SUIT: ("A ", "suit"),
+    ItemCategory.BEAM: ("A ", "beam"),
+    ItemCategory.MORPH_BALL: ("A ", "morph ball system"),
+    ItemCategory.MOVEMENT: ("A ", "movement system"),
+    ItemCategory.MISSILE: ("A ", "missile system"),
+    ItemCategory.BEAM_COMBO: ("A ", "beam combo"),
+    ItemCategory.TRANSLATOR: ("A ", "translator"),
+    ItemCategory.ENERGY_TANK: ("An ", "Energy Tank"),
+    ItemCategory.TEMPLE_KEY: ("A ", "Temple Key"),
+    ItemCategory.SKY_TEMPLE_KEY: ("A ", "Sky Temple Key"),
+    ItemCategory.ETM: ("An ", "Energy Transfer Module"),
+    ItemCategory.EXPANSION: ("An ", "expansion"),
 }
