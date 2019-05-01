@@ -1,12 +1,16 @@
+import copy
 import dataclasses
 from random import Random
 from typing import List, Tuple, Callable, TypeVar
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision
+from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, Hint, HintType
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.retcon import retcon_playthrough_filler
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import bootstrap
@@ -117,6 +121,23 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
     })
 
 
+def fill_unassigned_hints(patches: GamePatches,
+                          world_list: WorldList,
+                          rng: Random,
+                          ) -> GamePatches:
+
+    new_hints = copy.copy(patches.hints)
+    possible_indices = list(patches.pickup_assignment.keys())
+
+    for node in world_list.all_nodes:
+        if isinstance(node, LogbookNode):
+            logbook_asset = node.resource()
+            if logbook_asset not in new_hints:
+                new_hints[logbook_asset] = Hint(HintType.LOCATION, None, None, rng.choice(possible_indices))
+
+    return dataclasses.replace(patches, hints=new_hints)
+
+
 def run_filler(configuration: LayoutConfiguration,
                game: GameDescription,
                item_pool: List[PickupEntry],
@@ -149,9 +170,11 @@ def run_filler(configuration: LayoutConfiguration,
         maximum_random_starting_items=major_configuration.maximum_random_starting_items,
         status_update=status_update)
 
+    full_hints_patches = fill_unassigned_hints(filler_patches, game.world_list, rng)
+
     if configuration.hints.item_hints:
-        result = add_hints_precision(filler_patches, rng)
+        result = add_hints_precision(full_hints_patches, rng)
     else:
-        result = replace_hints_without_precision_with_jokes(filler_patches)
+        result = replace_hints_without_precision_with_jokes(full_hints_patches)
 
     return result, major_items + expansions
