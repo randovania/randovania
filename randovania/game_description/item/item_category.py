@@ -40,7 +40,6 @@ MAJOR_ITEM_CATEGORIES = {
     ItemCategory.MISSILE,
     ItemCategory.BEAM_COMBO,
     ItemCategory.TRANSLATOR,
-    ItemCategory.ENERGY_TANK,
 }
 
 TEMPLE_KEY_CATEGORIES = {
