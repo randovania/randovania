@@ -76,7 +76,7 @@ def test_create_hints_nothing(empty_patches):
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#a84343;World - Area&pop;"),
     (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#a84343;World&pop;"),
-    (HintLocationPrecision.WRONG_GAME, "&push;&main-color=#45f731;Towerp&pop;"),
+    (HintLocationPrecision.WRONG_GAME, "&push;&main-color=#45f731;Tower&pop;"),
 ])
 def test_create_hints_item_detailed(empty_patches, pickup,
                                     item, location):
