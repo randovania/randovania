@@ -1,8 +1,10 @@
 from random import Random
 from typing import Dict
 
+from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintType
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib.hint_name_creator import HintNameCreator, create_simple_logbook_hint
 
@@ -47,6 +49,7 @@ for i in range(1, 4):
 for i in range(1, 10):
     _DET_NULL.append(f"Sky Temple Key {i}")
 
+
 def create_hints(patches: GamePatches,
                  world_list: WorldList,
                  hide_area: bool,
@@ -69,14 +72,7 @@ def create_hints(patches: GamePatches,
         if hint.hint_type == HintType.LOCATION:
             pickup = patches.pickup_assignment.get(hint.target)
             if pickup is not None:
-                if pickup.name in _DET_NULL:
-                    determiner = ""
-                elif tuple(pickup_entry.name for pickup_entry in patches.pickup_assignment.values()).count(pickup.name) == 1:
-                    determiner = "The "
-                elif pickup.name in _DET_AN:
-                    determiner = "An "
-                else:
-                    determiner = "A "
+                determiner = _calculate_determiner(patches.pickup_assignment, pickup)
 
                 message = "{determiner}{pickup} can be found at {node}.".format(
                     determiner=determiner,
@@ -97,6 +93,22 @@ def create_hints(patches: GamePatches,
             hints_for_asset.get(asset_id, "Someone forgot to leave a message."))
         for asset_id in _LORE_SCANS
     ]
+
+
+def _calculate_determiner(pickup_assignment: PickupAssignment,
+                          pickup: PickupEntry,
+                          ) -> str:
+
+    if pickup.name in _DET_NULL:
+        determiner = ""
+    elif tuple(pickup_entry.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
+        determiner = "The "
+    elif pickup.name in _DET_AN:
+        determiner = "An "
+    else:
+        determiner = "A "
+
+    return determiner
 
 
 def hide_hints() -> list:
