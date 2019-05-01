@@ -13,8 +13,8 @@ from randovania.layout.ammo_configuration import AmmoConfiguration
     params=[
         {"encoded": b'\x00', "items_state": {}},
         {"encoded": b'!@', "maximum_ammo": {"45": 20}},
-        {"encoded": b'\x02\x0c\x00', "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
-        {"encoded": b'!B\x0c\x00', "maximum_ammo": {"45": 20},
+        {"encoded": b'\x02\x0c\x80', "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
+        {"encoded": b'!B\x0c\x80', "maximum_ammo": {"45": 20},
          "items_state": {"Missile Expansion": {"variance": 0, "pickup_count": 12}}},
     ],
     name="config_with_data")

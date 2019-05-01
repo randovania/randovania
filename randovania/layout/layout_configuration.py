@@ -74,8 +74,6 @@ class LayoutConfiguration(BitPackDataClass):
     hints: HintConfiguration
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     split_beam_ammo: bool = True
-    missile_launcher_required: bool = True
-    main_power_bombs_required: bool = True
 
     @property
     def game_data(self) -> dict:
@@ -94,8 +92,6 @@ class LayoutConfiguration(BitPackDataClass):
             "translator_configuration": self.translator_configuration.as_json,
             "hints": self.hints.as_json,
             "split_beam_ammo": self.split_beam_ammo,
-            "missile_launcher_required": self.missile_launcher_required,
-            "main_power_bombs_required": self.main_power_bombs_required,
         }
 
     @classmethod
@@ -116,8 +112,6 @@ class LayoutConfiguration(BitPackDataClass):
             translator_configuration=TranslatorConfiguration.from_json(json_dict["translator_configuration"]),
             hints=HintConfiguration.from_json(json_dict["hints"]),
             split_beam_ammo=json_dict["split_beam_ammo"],
-            missile_launcher_required=json_dict["missile_launcher_required"],
-            main_power_bombs_required=json_dict["main_power_bombs_required"],
         )
 
     @classmethod
