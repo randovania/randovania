@@ -328,7 +328,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         current_row = 0
         for major_item_category in ItemCategory:
-            if not major_item_category.is_major_category:
+            if not major_item_category.is_major_category and major_item_category != ItemCategory.ENERGY_TANK:
                 continue
 
             category_button = QToolButton(self.major_items_box)
