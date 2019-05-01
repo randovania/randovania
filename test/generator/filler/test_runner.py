@@ -34,7 +34,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     configuration = LayoutConfiguration.default()
     rng = Random(5000)
     status_update = MagicMock()
-    item_pool = []
+    item_pool = [pickup]
     patches = GamePatches.with_game(echoes_game_description)
 
     logbook_nodes = [node for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
@@ -52,3 +52,4 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     assert len(result_patches.hints) == len(logbook_nodes)
     assert [hint for hint in patches.hints.values()
             if hint.item_precision is None or hint.location_precision is None] == []
+    assert remaining_items == [pickup]
