@@ -32,6 +32,20 @@ _LORE_SCANS = {
     0xF2BF7438: "Luminoth Lore translated. (Twilight)",  # 47265C0B
 }
 
+_DET_AN = [
+    "Annihilator Beam",
+    "Amber Translator",
+    "Echo Visor",
+    "Emerald Translator",
+    "Energy Transfer Module",
+    "Energy Tank",
+]
+
+_DET_NULL = []
+for i in range(1, 4):
+    _DET_NULL.extend([f"Dark Agon Key {i}", f"Dark Torvus Key {i}", f"Ing Hive Key {i}"])
+for i in range(1, 10):
+    _DET_NULL.append(f"Sky Temple Key {i}")
 
 def create_hints(patches: GamePatches,
                  world_list: WorldList,
@@ -55,12 +69,23 @@ def create_hints(patches: GamePatches,
         if hint.hint_type == HintType.LOCATION:
             pickup = patches.pickup_assignment.get(hint.target)
             if pickup is not None:
-                message = "A {pickup} can be found at {node}.".format(
+                if pickup.name in _DET_NULL:
+                    determiner = ""
+                elif tuple(pickup_entry.name for pickup_entry in patches.pickup_assignment.values()).count(pickup.name) == 1:
+                    determiner = "The "
+                elif pickup.name in _DET_AN:
+                    determiner = "An "
+                else:
+                    determiner = "A "
+
+                message = "{determiner}{pickup} can be found at {node}.".format(
+                    determiner=determiner,
                     pickup=hint_name_creator.item_name(pickup),
                     node=hint_name_creator.index_node_name(hint.target),
                 )
             else:
-                message = "{node} has nothing.".format(
+                message = "{determiner} Energy Transfer Module can be found at {node}.".format(
+                    determiner="The" if len(patches.pickup_assignment) == 118 else "An",
                     node=hint_name_creator.index_node_name(hint.target),
                 )
 
