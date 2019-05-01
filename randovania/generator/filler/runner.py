@@ -143,8 +143,11 @@ def run_filler(configuration: LayoutConfiguration,
                patches: GamePatches,
                rng: Random,
                status_update: Callable[[str], None],
-               ):
+               ) -> Tuple[GamePatches, List[PickupEntry]]:
     """
+    Runs the filler logic for the given configuration and item pool.
+    Returns a GamePatches with progression items and hints assigned, along with all items in the pool
+    that weren't assigned.
 
     :param configuration:
     :param game:
@@ -169,6 +172,7 @@ def run_filler(configuration: LayoutConfiguration,
         maximum_random_starting_items=major_configuration.maximum_random_starting_items,
         status_update=status_update)
 
+    # Since we haven't added expansions yet, these hints will always be for items added by the filler.
     full_hints_patches = fill_unassigned_hints(filler_patches, game.world_list, rng)
 
     if configuration.hints.item_hints:
