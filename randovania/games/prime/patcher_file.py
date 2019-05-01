@@ -394,6 +394,15 @@ def create_patcher_file(description: LayoutDescription,
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
+    result["starting_popup"] = [
+        "Starting items:",
+        ", ".join(
+            "{}{}".format("{} ".format(quantity) if quantity > 1 else "", item.long_name)
+            for item, quantity in patches.starting_items.items()
+            if quantity > 0
+        )
+    ]
+
     # Add the pickups
     if cosmetic_patches.disable_hud_popup:
         memo_data = None
