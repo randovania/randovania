@@ -7,15 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   **MAJOR** - Added: Option to require Missile Launcher and main Power Bombs for the
+    respective expansions to work.
+
+-   **MAJOR** - Added: Option to change which translator each translator gate in the
+    game needs, including choosing a random one.
+    
+-   **MAJOR** - Added: Luminoth Lore scans now includes hints for where major items
+    are located, as well as what the Temple Guardians bosses drop and vanilla Light Suit.
+
 -   Added: Welcome tab, with instructions on how to use Randovania.
 
 -   Added: Option to specify how many items Randovania will randomly place on your
     starting inventory.
-
--   Added: Option to require Missile Launcher and main Power Bombs for the respective
-    expansions to work.
-
--   Added: Option to change which translator each translator gate in the game needs.
 
 -   Added: Option to change how much damage you take from Dark Aether when using
     Varia Suit and Dark Suit.
@@ -33,9 +37,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Changed: Crossing the statue in Training Chamber before it's moved with Boost and
     Spider is now Hard and above, from Hypermode.
-    
--   Added: Luminoth Lore scans now includes hints for where major items are located,
-    as well as what the Temple Guardians bosses drop and vanilla Light Suit.
     
 -   Added: Option to disable the Sky Temple Key hints or to hide the Area name.    
     
@@ -62,9 +63,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Docks and Elevators now have usable links in the Data Visualizer. These links
     brings you to the matching node.
     
--   Added: The message when collecting the item in Mining Station B now displays when in the wrong layer.
+-   Added: The message when collecting the item in Mining Station B now displays when in
+    the wrong layer.
 
--   Added: A warning now shows when going on top of the ship in GFMC Compound before beating Jump Guardian.
+-   Added: A warning now shows when going on top of the ship in GFMC Compound before
+    beating Jump Guardian.
 
 ## [0.25.0] - 2019-03-24
 
