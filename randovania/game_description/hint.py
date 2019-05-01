@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from random import Random
+from typing import List
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -23,8 +24,8 @@ class HintItemPrecision(Enum):
     WRONG_GAME = "wrong-game"
 
     @classmethod
-    def random(cls, rng: Random) -> "HintItemPrecision":
-        return rng.choice([cls.DETAILED, cls.DETAILED, cls.PRECISE_CATEGORY, cls.GENERAL_CATEGORY, cls.WRONG_GAME])
+    def weighted_list(cls) -> List["HintItemPrecision"]:
+        return [cls.DETAILED, cls.DETAILED, cls.PRECISE_CATEGORY, cls.GENERAL_CATEGORY, cls.WRONG_GAME]
 
 
 class HintLocationPrecision(Enum):
@@ -38,8 +39,8 @@ class HintLocationPrecision(Enum):
     WRONG_GAME = "wrong-game"
 
     @classmethod
-    def random(cls, rng: Random) -> "HintLocationPrecision":
-        return rng.choice([cls.DETAILED, cls.DETAILED, cls.DETAILED, cls.WORLD_ONLY, cls.WRONG_GAME])
+    def weighted_list(cls) -> List["HintLocationPrecision"]:
+        return [cls.DETAILED, cls.DETAILED, cls.DETAILED, cls.WORLD_ONLY, cls.WRONG_GAME]
 
 
 @dataclass(frozen=True)
