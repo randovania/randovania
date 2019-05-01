@@ -9,7 +9,7 @@ from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
 class AmmoState(BitPackValue):
     variance: int = 0
     pickup_count: int = 0
-    requires_major_item: bool = False
+    requires_major_item: bool = True
 
     @classmethod
     def maximum_pickup_count(cls) -> int:
