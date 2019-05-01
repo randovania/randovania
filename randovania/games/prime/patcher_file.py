@@ -357,7 +357,7 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     # Location Hints
     string_patches.extend(
-        item_hints.create_hints(patches, game.world_list, False, rng)
+        item_hints.create_hints(patches, game.world_list, rng)
     )
 
     # Sky Temple Keys

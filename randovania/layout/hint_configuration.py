@@ -16,6 +16,7 @@ class SkyTempleKeyHintMode(BitPackEnum, Enum):
 
 @dataclasses.dataclass(frozen=True)
 class HintConfiguration(BitPackDataClass):
+    item_hints: bool = True
     sky_temple_keys: SkyTempleKeyHintMode = SkyTempleKeyHintMode.default()
 
     @classmethod
@@ -25,6 +26,7 @@ class HintConfiguration(BitPackDataClass):
     @property
     def as_json(self) -> dict:
         return {
+            "item_hints": self.item_hints,
             "sky_temple_keys": self.sky_temple_keys.value,
         }
 
@@ -34,6 +36,9 @@ class HintConfiguration(BitPackDataClass):
 
         if "sky_temple_keys" in value:
             params["sky_temple_keys"] = SkyTempleKeyHintMode(value["sky_temple_keys"])
+
+        if "item_hints" in value:
+            params["item_hints"] = value["item_hints"]
 
         return cls(**params)
 
