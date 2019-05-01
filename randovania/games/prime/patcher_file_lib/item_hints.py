@@ -138,7 +138,7 @@ def create_hints(patches: GamePatches,
     hints_for_asset: Dict[int, str] = {}
 
     for asset, hint in patches.hints.items():
-        if _is_total_joke(hint) and rng.random() < 0.5:
+        if _is_total_joke(hint):
             message = color_as_joke(rng.choice(_JOKE_HINTS))
 
         elif hint.hint_type == HintType.LOCATION:
