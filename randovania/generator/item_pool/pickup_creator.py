@@ -100,7 +100,7 @@ def create_ammo_expansion(ammo: Ammo,
                  for item, count in zip(ammo.items, ammo_count)]
     resources.append((resource_database.item_percentage, 1))
 
-    if requires_major_item:
+    if ammo.temporaries and requires_major_item:
         temporary_resources = [(_get_item(resource_database, item), count)
                                for item, count in zip(ammo.temporaries, ammo_count)]
         temporary_resources.append((resource_database.item_percentage, 1))
