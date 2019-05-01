@@ -61,6 +61,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Docks and Elevators now have usable links in the Data Visualizer. These links
     brings you to the matching node.
+    
+-   Added: The message when collecting the item in Mining Station B now displays when in the wrong layer.
+
+-   Added: A warning now shows when going on top of the ship in GFMC Compound before beating Jump Guardian.
 
 ## [0.25.0] - 2019-03-24
 

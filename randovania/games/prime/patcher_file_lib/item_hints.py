@@ -70,6 +70,7 @@ _PRIME_3_LOCATIONS = [
     "Command Vault",
     "Proving Grounds",
     "Temple of Bryyo",
+    "Tower",
 ]
 
 _DET_AN = [
