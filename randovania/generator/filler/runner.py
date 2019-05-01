@@ -9,7 +9,6 @@ from randovania.game_description.hint import HintItemPrecision, HintLocationPrec
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.retcon import retcon_playthrough_filler
 from randovania.layout.layout_configuration import LayoutConfiguration

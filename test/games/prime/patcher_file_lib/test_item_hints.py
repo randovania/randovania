@@ -44,7 +44,7 @@ def test_create_hints_nothing(empty_patches):
     asset_id = 1000
     pickup_index = PickupIndex(50)
 
-    logbook_node, pickup_node, world_list = _create_world_list(asset_id, pickup_index)
+    logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
 
     patches = dataclasses.replace(
         empty_patches,
@@ -84,7 +84,7 @@ def test_create_hints_item_detailed(empty_patches, pickup,
     asset_id = 1000
     pickup_index = PickupIndex(50)
 
-    logbook_node, pickup_node, world_list = _create_world_list(asset_id, pickup_index)
+    logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
 
     patches = dataclasses.replace(
         empty_patches,
