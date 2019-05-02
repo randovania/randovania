@@ -11,8 +11,8 @@ from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xc0\x08@', "replace": {}},
-        {"encoded": b'\xc1B@\x84', "replace": {
+        {"encoded": b'\xe0\x04 ', "replace": {}},
+        {"encoded": b'\xe0\xa1 B', "replace": {
             "items_state": {
                 "Spider Ball": {
                     "include_copy_in_original_location": True,
@@ -31,6 +31,7 @@ def _config_with_data(request):
 
     data["progressive_suit"] = True
     data["progressive_grapple"] = True
+    data["progressive_launcher"] = True
     data["minimum_random_starting_items"] = True
     data["maximum_random_starting_items"] = True
 
