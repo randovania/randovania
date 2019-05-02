@@ -13,13 +13,14 @@ from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain
+from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -369,6 +370,27 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
+def _create_starting_popup(layout_configuration: LayoutConfiguration,
+                           resource_database: ResourceDatabase,
+                           starting_items: CurrentResources) -> list:
+
+    initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
+
+    extra_items = [
+        "{}{}".format("{} ".format(quantity) if quantity > 1 else "", item.long_name)
+        for item, quantity in starting_items.items()
+        if 0 < quantity != initial_items.get(item, 0)
+    ]
+
+    if extra_items:
+        return [
+            "Extra starting items:",
+            ", ".join(extra_items)
+        ]
+    else:
+        return []
+
+
 def create_patcher_file(description: LayoutDescription,
                         cosmetic_patches: CosmeticPatches,
                         ) -> dict:
@@ -392,14 +414,7 @@ def create_patcher_file(description: LayoutDescription,
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
-    result["starting_popup"] = [
-        "Starting items:",
-        ", ".join(
-            "{}{}".format("{} ".format(quantity) if quantity > 1 else "", item.long_name)
-            for item, quantity in patches.starting_items.items()
-            if quantity > 0
-        )
-    ]
+    result["starting_popup"] = _create_starting_popup(layout, game.resource_database, patches.starting_items)
 
     # Add the pickups
     if cosmetic_patches.disable_hud_popup:
