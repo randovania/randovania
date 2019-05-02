@@ -48,6 +48,7 @@ _JOKE_HINTS = [
      "200mL of water to maintain optimum hydration."),
     "Make sure to collect an ETM, otherwise your run isn't valid.",
     "You're not authorized to view this hint.",
+    "Kirby fell down here.",
 ]
 
 _PRIME_1_LOCATIONS = [
