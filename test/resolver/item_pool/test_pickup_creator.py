@@ -97,6 +97,7 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
 def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoes_resource_database):
     # Setup
     missile = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 44)
+    missile_launcher = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 73)
     temporary = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
 
     state = MajorItemState(
@@ -121,6 +122,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
             ConditionalResources(
                 "Missile Launcher", None,
                 resources=(
+                    (missile_launcher, 1),
                     (missile, ammo_quantity),
                     (echoes_resource_database.item_percentage, 1),
                 )
@@ -137,6 +139,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
 @pytest.mark.parametrize("requires_major_item", [False, True])
 def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_database):
     # Setup
+    primary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 73)
     ammo_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 40)
     ammo_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 42)
     temporary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
@@ -146,6 +149,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
         name="The Item",
         maximum=100,
         items=(40, 42),
+        unlocked_by=73,
         temporaries=(71, 72),
         models=(10, 20),
     )
@@ -172,7 +176,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
         model_index=10,
         resources=(
             ConditionalResources(None, None, temporary_resources),
-            ConditionalResources(None, ammo_a, item_resources),
+            ConditionalResources(None, primary_a, item_resources),
         ) if requires_major_item else (
             ConditionalResources(None, None, item_resources),
         ),

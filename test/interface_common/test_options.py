@@ -58,8 +58,6 @@ def test_migrate_from_v1(option):
             },
             "hints": {},
             "split_beam_ammo": True,
-            "missile_launcher_required": True,
-            "main_power_bombs_required": True,
         },
         "cosmetic_patches": {
             "disable_hud_popup": True,
