@@ -119,6 +119,10 @@ def _convert_v7(options: dict) -> dict:
         }
         layout_configuration["hints"] = {}
 
+        layout_configuration.pop("missile_launcher_required", None)
+        layout_configuration.pop("main_power_bombs_required", None)
+        layout_configuration["major_items_configuration"]["progressive_launcher"] = True
+
     return options
 
 

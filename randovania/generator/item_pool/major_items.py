@@ -27,7 +27,7 @@ def add_major_items(resource_database: ResourceDatabase,
     for item, state in major_items_configuration.items_state.items():
         if len(item.ammo_index) != len(state.included_ammo):
             raise InvalidConfiguration(
-                "Item {0.name} uses {0.ammo} as ammo, but there's only {1} values in included_ammo".format(
+                "Item {0.name} uses {0.ammo_index} as ammo, but there's only {1} values in included_ammo".format(
                     item, len(state.included_ammo)))
 
         if state.include_copy_in_original_location:
