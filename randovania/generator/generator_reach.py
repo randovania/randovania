@@ -113,12 +113,12 @@ class GeneratorReach:
         game = self._logic.game
 
         extra_requirement = _extra_requirement_for_node(game, node)
+        requirement_to_leave = node.requirements_to_leave(self._state.patches, self._state.resources)
 
         for target_node, requirements in game.world_list.potential_nodes_from(node, self.state.patches):
             if target_node is None:
                 continue
 
-            requirement_to_leave = node.requirements_to_leave(self._state.patches, self._state.resources)
             if requirement_to_leave != RequirementSet.trivial():
                 requirements = requirements.union(requirement_to_leave)
 
