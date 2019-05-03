@@ -102,6 +102,7 @@ def resolve(configuration: LayoutConfiguration,
     event_pickup.replace_with_event_pickups(game)
 
     logic, starting_state = logic_bootstrap(configuration, game, patches)
+    starting_state.resources["add_self_as_requirement_to_resources"] = 1
     debug.log_resolve_start()
 
     return advance_depth(starting_state, logic, status_update)

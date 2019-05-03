@@ -132,12 +132,10 @@ class WorldReader:
     def __init__(self,
                  resource_database: ResourceDatabase,
                  dock_weakness_database: DockWeaknessDatabase,
-                 add_self_as_requirement_to_resources: bool,
                  ):
 
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
-        self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
     def read_node(self, data: Dict) -> Node:
         name: str = data["name"]
@@ -213,14 +211,8 @@ class WorldReader:
             origin = nodes[i]
             connections[origin] = {}
 
-            extra_requirement = None
-            if isinstance(origin, (PickupNode, EventNode)) and self.add_self_as_requirement_to_resources:
-                extra_requirement = RequirementList.with_single_resource(origin.resource())
-
             for target_name, target_requirements in origin_data["connections"].items():
                 the_set = read_requirement_set(target_requirements, self.resource_database)
-                if extra_requirement is not None:
-                    the_set = the_set.union(RequirementSet([extra_requirement]))
 
                 if the_set != RequirementSet.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
@@ -259,16 +251,14 @@ def read_initial_states(data: Dict[str, List], resource_database: ResourceDataba
     }
 
 
-def decode_data_with_world_reader(data: Dict,
-                                  add_self_as_requirement_to_resources: bool,
-                                  ) -> Tuple[WorldReader, GameDescription]:
+def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
     game = data["game"]
     game_name = data["game_name"]
 
     resource_database = read_resource_database(data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
-    world_reader = WorldReader(resource_database, dock_weakness_database, add_self_as_requirement_to_resources)
+    world_reader = WorldReader(resource_database, dock_weakness_database)
     world_list = world_reader.read_world_list(data["worlds"])
 
     victory_condition = read_requirement_set(data["victory_condition"], resource_database)
@@ -284,9 +274,8 @@ def decode_data_with_world_reader(data: Dict,
         victory_condition=victory_condition,
         starting_location=starting_location,
         initial_states=initial_states,
-        add_self_as_requirement_to_resources=add_self_as_requirement_to_resources,
     )
 
 
-def decode_data(data: Dict, add_self_as_requirement_to_resources: bool = True) -> GameDescription:
-    return decode_data_with_world_reader(data, add_self_as_requirement_to_resources)[1]
+def decode_data(data: Dict) -> GameDescription:
+    return decode_data_with_world_reader(data)[1]

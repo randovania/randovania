@@ -79,6 +79,16 @@ class PickupNode(ResourceNode):
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        if current_resources.get("add_self_as_requirement_to_resources") == 1:
+            return RequirementSet([
+                RequirementList(0, [
+                    IndividualRequirement(self.pickup_index, 1, False),
+                ])
+            ])
+        else:
+            return RequirementSet.trivial()
+
     def resource(self) -> ResourceInfo:
         return self.pickup_index
 
@@ -99,6 +109,16 @@ class EventNode(ResourceNode):
 
     def __repr__(self):
         return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
+
+    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        if current_resources.get("add_self_as_requirement_to_resources") == 1:
+            return RequirementSet([
+                RequirementList(0, [
+                    IndividualRequirement(self.event, 1, False),
+                ])
+            ])
+        else:
+            return RequirementSet.trivial()
 
     def resource(self) -> ResourceInfo:
         return self.event
