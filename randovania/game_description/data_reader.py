@@ -214,7 +214,7 @@ class WorldReader:
             connections[origin] = {}
 
             extra_requirement = None
-            if origin.is_resource_node and self.add_self_as_requirement_to_resources:
+            if isinstance(origin, (PickupNode, EventNode)) and self.add_self_as_requirement_to_resources:
                 extra_requirement = RequirementList.with_single_resource(origin.resource())
 
             for target_name, target_requirements in origin_data["connections"].items():

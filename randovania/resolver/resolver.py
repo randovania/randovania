@@ -3,7 +3,9 @@ from typing import Optional, Tuple, Callable
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import debug, event_pickup
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -21,7 +23,7 @@ def _simplify_requirement_list(self: RequirementList, state: State) -> Optional[
         if item.satisfied(state.resources, state.resource_database):
             continue
 
-        if not isinstance(item.resource, PickupIndex):
+        if item.resource.resource_type.is_usable_for_requirement:
             # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
             items.append(item)
 
