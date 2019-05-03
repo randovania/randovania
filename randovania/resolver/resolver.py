@@ -3,7 +3,6 @@ from typing import Optional, Tuple, Callable
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import debug, event_pickup
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -21,7 +20,7 @@ def _simplify_requirement_list(self: RequirementList, state: State) -> Optional[
         if item.satisfied(state.resources, state.resource_database):
             continue
 
-        if not isinstance(item.resource, PickupIndex):
+        if item.resource.resource_type.is_usable_for_requirement:
             # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
             items.append(item)
 
@@ -100,6 +99,7 @@ def resolve(configuration: LayoutConfiguration,
     event_pickup.replace_with_event_pickups(game)
 
     logic, starting_state = logic_bootstrap(configuration, game, patches)
+    starting_state.resources["add_self_as_requirement_to_resources"] = 1
     debug.log_resolve_start()
 
     return advance_depth(starting_state, logic, status_update)

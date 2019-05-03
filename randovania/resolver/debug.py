@@ -15,7 +15,7 @@ _DEBUG_LEVEL = 0
 count = 0
 _gd: GameDescription = None
 _current_indent = 0
-_last_printed_additional = {}
+_last_printed_additional = None
 
 
 def n(node: Node, with_world=False) -> str:
@@ -57,8 +57,9 @@ def _indent(offset=0):
 
 
 def log_resolve_start():
-    global _current_indent
+    global _current_indent, _last_printed_additional
     _current_indent = 0
+    _last_printed_additional = {}
 
 
 def log_new_advance(state: "State", reach: "ResolverReach"):
@@ -88,8 +89,7 @@ def log_rollback(state, has_action):
 
 def log_skip_action_missing_requirement(node: Node, game: GameDescription, requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
-        last_printed = _last_printed_additional.get(node)
-        if last_printed == requirement_set:
+        if node in _last_printed_additional and _last_printed_additional[node] == requirement_set:
             print("{}* Skip {}, same additional".format(_indent(), n(node)))
         else:
             print("{}* Skip {}, missing additional:".format(_indent(), n(node)))

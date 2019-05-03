@@ -59,11 +59,12 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes.append(node)
 
+            requirement_to_leave = node.requirements_to_leave(initial_state.patches, initial_state.resources)
+
             for target_node, requirements in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
                 if target_node in checked_nodes or target_node in nodes_to_check:
                     continue
 
-                requirement_to_leave = node.requirements_to_leave(initial_state.patches, initial_state.resources)
                 if requirement_to_leave != RequirementSet.trivial():
                     requirements = requirements.union(requirement_to_leave)
 

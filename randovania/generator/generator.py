@@ -61,7 +61,7 @@ def generate_list(permalink: Permalink,
 
     create_patches_params = {
         "permalink": permalink,
-        "game": data_reader.decode_data(data, False),
+        "game": data_reader.decode_data(data),
         "status_update": status_update
     }
 
