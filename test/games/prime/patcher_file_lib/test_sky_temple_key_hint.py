@@ -15,7 +15,7 @@ def _create_hint_text(hide_area: bool,
     if hide_area:
         key_location = key_location.split(" - ")[0]
 
-    message = "The {} Sky Temple Key is located in &push;&main-color=#a84343;{}&pop;".format(key_text, key_location)
+    message = "The {} Sky Temple Key is located in &push;&main-color=#a84343;{}&pop;.".format(key_text, key_location)
     return [message, "", message]
 
 
