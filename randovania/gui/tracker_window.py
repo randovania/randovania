@@ -43,7 +43,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         set_default_window_icon(self)
 
         self.layout_configuration = layout_configuration
-        self.game_description = data_reader.decode_data(layout_configuration.game_data, True)
+        self.game_description = data_reader.decode_data(layout_configuration.game_data)
 
         base_patches = GamePatches.with_game(self.game_description)
         pool_patches, item_pool = pool_creator.calculate_item_pool(self.layout_configuration,
@@ -53,6 +53,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.logic, self._initial_state = logic_bootstrap(layout_configuration,
                                                           self.game_description,
                                                           pool_patches)
+        self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)

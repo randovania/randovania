@@ -59,7 +59,7 @@ def convert_database_command_logic(args):
     data = decode_data_file(args)
 
     if args.decode_to_game_description:
-        data = data_writer.write_game_description(data_reader.decode_data(data, False))
+        data = data_writer.write_game_description(data_reader.decode_data(data))
 
     output_binary: Optional[Path] = args.output_binary
     output_json: Optional[Path] = args.output_json

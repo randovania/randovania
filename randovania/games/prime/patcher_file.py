@@ -405,7 +405,7 @@ def create_patcher_file(description: LayoutDescription,
     patches = description.patches
     rng = Random(description.permalink.as_str)
 
-    game = data_reader.decode_data(layout.game_data, add_self_as_requirement_to_resources=False)
+    game = data_reader.decode_data(layout.game_data)
     useless_pickup = pickup_creator.create_useless_pickup(game.resource_database)
 
     result = {}

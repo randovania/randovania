@@ -73,7 +73,7 @@ def test_create_spawn_point_field(echoes_resource_database, empty_patches):
 
 def test_create_elevators_field_no_elevator(empty_patches):
     # Setup
-    game = data_reader.decode_data(default_data.decode_default_prime2(), False)
+    game = data_reader.decode_data(default_data.decode_default_prime2())
 
     # Run
     with pytest.raises(ValueError) as exp:
@@ -87,7 +87,7 @@ def test_create_elevators_field_no_elevator(empty_patches):
 def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_resource_database, empty_patches):
     # Setup
-    game = data_reader.decode_data(default_data.decode_default_prime2(), False)
+    game = data_reader.decode_data(default_data.decode_default_prime2())
     patches = GamePatches.with_game(game)
 
     elevator_connection = copy.copy(patches.elevator_connection)
