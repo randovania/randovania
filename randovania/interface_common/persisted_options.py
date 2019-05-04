@@ -156,8 +156,8 @@ def _convert_v7(options: dict) -> dict:
         major_items_configuration["progressive_launcher"] = True
         major_items_configuration["minimum_random_starting_items"] = 0
         major_items_configuration["maximum_random_starting_items"] = 0
-        major_items_configuration["items_state"].pop("Missile Launcher")
-        major_items_configuration["items_state"].pop("Seeker Launcher")
+        major_items_configuration["items_state"].pop("Missile Launcher", None)
+        major_items_configuration["items_state"].pop("Seeker Launcher", None)
 
         ammo_configuration = layout_configuration["ammo_configuration"]
         for item_state in ammo_configuration["items_state"].values():
