@@ -1,6 +1,3 @@
-from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-
 _CURRENT_OPTIONS_FILE_VERSION = 8
 
 
@@ -88,8 +85,41 @@ def _convert_v6(options: dict) -> dict:
         if layout_configuration.get("sky_temple_keys") in ("fully-random", "vanilla"):
             layout_configuration["sky_temple_keys"] = 9
 
-        layout_configuration["major_items_configuration"] = MajorItemsConfiguration.default().as_json
-        layout_configuration["ammo_configuration"] = AmmoConfiguration.default().as_json
+        layout_configuration["major_items_configuration"] = {
+            "items_state": {},
+            "progressive_suit": True,
+            "progressive_grapple": True,
+        }
+        layout_configuration["ammo_configuration"] = {
+            "maximum_ammo": {
+                "44": 170,
+                "43": 10,
+                "45": 250,
+                "46": 250
+            },
+            "items_state": {
+                "Missile Expansion": {
+                    "variance": 0,
+                    "pickup_count": 33
+                },
+                "Power Bomb Expansion": {
+                    "variance": 0,
+                    "pickup_count": 8
+                },
+                "Dark Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 10
+                },
+                "Light Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 10
+                },
+                "Beam Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 0
+                }
+            }
+        }
         layout_configuration["split_beam_ammo"] = True
         layout_configuration["missile_launcher_required"] = True
         layout_configuration["main_power_bombs_required"] = True
@@ -121,7 +151,20 @@ def _convert_v7(options: dict) -> dict:
 
         layout_configuration.pop("missile_launcher_required", None)
         layout_configuration.pop("main_power_bombs_required", None)
-        layout_configuration["major_items_configuration"]["progressive_launcher"] = True
+
+        major_items_configuration = layout_configuration["major_items_configuration"]
+        major_items_configuration["progressive_launcher"] = True
+        major_items_configuration["minimum_random_starting_items"] = 0
+        major_items_configuration["maximum_random_starting_items"] = 0
+        major_items_configuration["items_state"].pop("Missile Launcher", None)
+        major_items_configuration["items_state"].pop("Seeker Launcher", None)
+
+        ammo_configuration = layout_configuration["ammo_configuration"]
+        for item_state in ammo_configuration["items_state"].values():
+            if item_state.get("variance") == 0:
+                item_state.pop("variance")
+            if item_state.get("pickup_count") == 0:
+                item_state.pop("pickup_count")
 
     return options
 
