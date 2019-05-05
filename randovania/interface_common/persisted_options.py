@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 8
+_CURRENT_OPTIONS_FILE_VERSION = 9
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -169,6 +169,15 @@ def _convert_v7(options: dict) -> dict:
     return options
 
 
+def _convert_v8(options: dict) -> dict:
+    if "layout_configuration" in options:
+        ammo_configuration = options["layout_configuration"]["ammo_configuration"]
+        if ammo_configuration["maximum_ammo"]["44"] == 170:
+            ammo_configuration["maximum_ammo"]["44"] = 175
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     1: _convert_v1,
     2: _convert_v2,
@@ -177,6 +186,7 @@ _CONVERTER_FOR_VERSION = {
     5: _convert_v5,
     6: _convert_v6,
     7: _convert_v7,
+    8: _convert_v8,
 }
 
 
