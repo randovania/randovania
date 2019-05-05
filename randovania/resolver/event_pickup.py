@@ -37,7 +37,7 @@ class EventPickupNode(ResourceNode):
     def can_collect(self, patches, current_resources: CurrentResources) -> bool:
         event_collect = self.event_node.can_collect(patches, current_resources)
         pickup_collect = self.pickup_node.can_collect(patches, current_resources)
-        return event_collect and pickup_collect
+        return event_collect or pickup_collect
 
     def resource_gain_on_collect(self, patches, current_resources: CurrentResources) -> ResourceGain:
         yield from self.event_node.resource_gain_on_collect(patches, current_resources)
