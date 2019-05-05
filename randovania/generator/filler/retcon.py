@@ -150,7 +150,7 @@ def retcon_playthrough_filler(logic: Logic,
                 if current_uncollected.logbooks and _should_have_hint(action.item_category):
                     next_state.patches = next_state.patches.assign_hint(
                         rng.choice(list(current_uncollected.logbooks)),
-                        Hint(HintType.LOCATION, None, None, pickup_index)
+                        Hint(HintType.LOCATION, None, pickup_index)
                     )
 
                 print_retcon_place_pickup(action, logic, pickup_index)
