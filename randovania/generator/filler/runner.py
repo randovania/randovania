@@ -5,7 +5,7 @@ from typing import List, Tuple, Callable, TypeVar
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, Hint, HintType, PrecisionPair
+from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_entry import PickupEntry

@@ -4,16 +4,16 @@ from unittest.mock import MagicMock, patch, call, ANY
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair
+from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.generator import base_patches_factory
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator import base_patches_factory
 
 
 def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
