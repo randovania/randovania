@@ -227,6 +227,10 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
     return weight
 
 
+def _items_for_pickup(pickup: PickupEntry) -> int:
+    return 1
+
+
 def _calculate_potential_actions(reach: GeneratorReach,
                                  progression_pickups: Tuple[PickupEntry, ...],
                                  current_uncollected: UncollectedState,
@@ -242,16 +246,20 @@ def _calculate_potential_actions(reach: GeneratorReach,
         options_considered += 1
         status_update("Checked {} of {} options.".format(options_considered, total_options))
 
-    total_options += len(progression_pickups)
-    for progression in progression_pickups:
-        items_for_progression = 1
-        if items_for_progression <= len(
-                current_uncollected.indices) or items_for_progression <= free_starting_items_spots:
-            actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach,
-                                                                                                   progression),
-                                                                  current_uncollected,
-                                                                  progression.name) + progression.probability_offset
-            update_for_option()
+    usable_progression_pickups = [
+        progression
+        for progression in progression_pickups
+        if _items_for_pickup(progression) <= len(current_uncollected.indices) or (
+                not uncollected_resource_nodes and _items_for_pickup(progression) <= free_starting_items_spots)
+    ]
+
+    total_options += len(usable_progression_pickups)
+
+    for progression in usable_progression_pickups:
+        actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach, progression),
+                                                              current_uncollected,
+                                                              progression.name) + progression.probability_offset
+        update_for_option()
 
     for resource in uncollected_resource_nodes:
         actions_weights[resource] = _calculate_weights_for(
