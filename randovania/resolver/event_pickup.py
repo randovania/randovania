@@ -30,7 +30,6 @@ class EventPickupNode(ResourceNode):
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
         return RequirementSet([
             RequirementList(0, [
-                IndividualRequirement(self.event_node.event, 1, False),
                 IndividualRequirement(self.pickup_node.pickup_index, 1, False),
             ])
         ])
