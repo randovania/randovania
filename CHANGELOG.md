@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.26.1] - 2019-05-06
+## [0.26.1] - 2019-05-05
 
 -   Fixed: The in-app changelog and new version checker now works again.
+-   Fixed: Patching with HUD text on and using expansions locked by major item now works.
+
 
 ## [0.26.0] - 2019-05-05
 

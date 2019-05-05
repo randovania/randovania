@@ -13,7 +13,8 @@ from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources
+from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources, \
+    ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
@@ -63,6 +64,20 @@ _TELEPORTERS_THAT_KEEP_NAME_WHEN_VANILLA = {
     589949,  # Sky Temple Energy Controller
 }
 
+_RESOURCE_NAME_TRANSLATION = {
+    'Temporary Missile': 'Missile',
+    'Temporary Power Bombs': 'Power Bomb',
+}
+
+
+def _resource_user_friendly_name(resource: ResourceInfo) -> str:
+    """
+    Gets a name that we should display to the user for the given resource.
+    :param resource:
+    :return:
+    """
+    return _RESOURCE_NAME_TRANSLATION.get(resource.long_name, resource.long_name)
+
 
 def _create_spawn_point_field(patches: GamePatches,
                               resource_database: ResourceDatabase,
@@ -102,7 +117,7 @@ def _pickup_scan(pickup: PickupEntry) -> str:
     return "{0} that provides {1}".format(
         pickup.name,
         ", ".join(
-            "{} {}".format(quantity, resource.long_name)
+            "{} {}".format(quantity, _resource_user_friendly_name(resource))
             for resource, quantity in pickup.resources[-1].resources
         )
     )
@@ -127,7 +142,7 @@ def _get_single_hud_text(pickup_name: str,
         return "{} acquired!".format(pickup_name)
     else:
         return memo_data[pickup_name].format(**{
-            resource.long_name: quantity
+            _resource_user_friendly_name(resource): quantity
             for resource, quantity in resources
         })
 
@@ -377,7 +392,7 @@ def _create_starting_popup(layout_configuration: LayoutConfiguration,
     initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
 
     extra_items = [
-        "{}{}".format("{} ".format(quantity) if quantity > 1 else "", item.long_name)
+        "{}{}".format("{} ".format(quantity) if quantity > 1 else "", _resource_user_friendly_name(item))
         for item, quantity in starting_items.items()
         if 0 < quantity != initial_items.get(item, 0)
     ]
