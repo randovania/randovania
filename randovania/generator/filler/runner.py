@@ -5,7 +5,7 @@ from typing import List, Tuple, Callable, TypeVar
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, Hint, HintType
+from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -66,30 +66,19 @@ def add_hints_precision(patches: GamePatches,
     hints_to_replace = {
         asset: hint
         for asset, hint in patches.hints.items()
-        if hint.location_precision is None or hint.item_precision is None
+        if hint.precision is None
     }
 
     asset_ids = list(hints_to_replace.keys())
 
-    # Add random item precisions
+    # Add random precisions
     rng.shuffle(asset_ids)
-    item_precisions = []
+    precisions = []
     for asset_id in asset_ids:
-        item_precisions = _create_weighted_list(rng, item_precisions,
-                                                HintItemPrecision.weighted_list)
-        precision = item_precisions.pop()
+        precisions = _create_weighted_list(rng, precisions, PrecisionPair.weighted_list)
+        precision = precisions.pop()
 
-        hints_to_replace[asset_id] = dataclasses.replace(hints_to_replace[asset_id], item_precision=precision)
-
-    # Add random location precisions
-    rng.shuffle(asset_ids)
-    location_precisions = []
-    for asset_id in asset_ids:
-        location_precisions = _create_weighted_list(rng, location_precisions,
-                                                    HintLocationPrecision.weighted_list)
-        precision = location_precisions.pop()
-
-        hints_to_replace[asset_id] = dataclasses.replace(hints_to_replace[asset_id], location_precision=precision)
+        hints_to_replace[asset_id] = dataclasses.replace(hints_to_replace[asset_id], precision=precision)
 
     # Replace the hints the in the patches
     return dataclasses.replace(patches, hints={
@@ -107,11 +96,9 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
     """
 
     hints_to_replace = {
-        asset: dataclasses.replace(hint,
-                                   item_precision=HintItemPrecision.WRONG_GAME,
-                                   location_precision=HintLocationPrecision.WRONG_GAME)
+        asset: dataclasses.replace(hint, precision=PrecisionPair.joke())
         for asset, hint in patches.hints.items()
-        if hint.location_precision is None or hint.item_precision is None
+        if hint.precision
     }
 
     return dataclasses.replace(patches, hints={
@@ -132,7 +119,7 @@ def fill_unassigned_hints(patches: GamePatches,
         if isinstance(node, LogbookNode):
             logbook_asset = node.resource()
             if logbook_asset not in new_hints:
-                new_hints[logbook_asset] = Hint(HintType.LOCATION, None, None, rng.choice(possible_indices))
+                new_hints[logbook_asset] = Hint(HintType.LOCATION, None, rng.choice(possible_indices))
 
     return dataclasses.replace(patches, hints=new_hints)
 
