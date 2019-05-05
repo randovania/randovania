@@ -6,7 +6,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair
+from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
