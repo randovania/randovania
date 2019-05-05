@@ -30,7 +30,6 @@ class EventPickupNode(ResourceNode):
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
         return RequirementSet([
             RequirementList(0, [
-                IndividualRequirement(self.event_node.event, 1, False),
                 IndividualRequirement(self.pickup_node.pickup_index, 1, False),
             ])
         ])
@@ -63,13 +62,6 @@ def replace_with_event_pickups(game: GameDescription):
             nodes_to_replace.append((event_node, next_node))
 
         for event_node, next_node in nodes_to_replace:
-            expected_requirement = RequirementSet([
-                RequirementList(0, [
-                    IndividualRequirement(event_node.resource(), 1, False),
-                    IndividualRequirement(next_node.resource(), 1, False),
-                ])
-            ])
-
             combined_node = EventPickupNode(
                 "EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
                 event_node.heal or next_node.heal,
@@ -83,7 +75,4 @@ def replace_with_event_pickups(game: GameDescription):
                 if event_node in connections:
                     connections[combined_node] = connections.pop(event_node)
 
-            area.connections[combined_node] = {
-                target_node: requirements.union(expected_requirement)
-                for target_node, requirements in area.connections.pop(next_node).items()
-            }
+            area.connections[combined_node] = area.connections.pop(next_node)
