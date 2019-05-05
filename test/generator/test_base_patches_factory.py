@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch, call, ANY
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
@@ -172,7 +172,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     rng = MagicMock()
 
     def _create_hint(number: int):
-        return Hint(HintType.LOCATION, HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair.detailed(), PickupIndex(number))
 
     expected = {
         LogbookAsset(1041207119): _create_hint(24),

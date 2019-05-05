@@ -90,10 +90,6 @@ for i in range(1, 10):
     _DET_NULL.append(f"Sky Temple Key {i}")
 
 
-def _is_total_joke(hint: Hint) -> bool:
-    return hint.location_precision == HintLocationPrecision.WRONG_GAME and hint.item_precision == HintItemPrecision.WRONG_GAME
-
-
 def create_hints(patches: GamePatches,
                  world_list: WorldList,
                  rng: Random,
@@ -116,7 +112,7 @@ def create_hints(patches: GamePatches,
     hints_for_asset: Dict[int, str] = {}
 
     for asset, hint in patches.hints.items():
-        if _is_total_joke(hint):
+        if hint.precision.is_joke:
             message = color_as_joke(rng.choice(_JOKE_HINTS))
 
         elif hint.hint_type == HintType.LOCATION:
