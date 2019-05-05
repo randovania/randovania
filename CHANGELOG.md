@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.26.1] - 2019-05-05
 
 -   Fixed: The in-app changelog and new version checker now works again.
+
 -   Fixed: Patching with HUD text on and using expansions locked by major item now works.
+
+-   Changed: Missile target default is now 175, since Seeker Launcher now defaults to
+    giving 5 missiles.
 
 
 ## [0.26.0] - 2019-05-05
