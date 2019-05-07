@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.26.2] - 2019-05-07
+
 -   Fixed: An empty box no longer shows up when starting a game with no
     extra starting items.
 	
