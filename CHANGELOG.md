@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Fixed: An empty box no longer shows up when starting a game with no
+    extra starting items.
+	
+-   Fixed: A potential crash involving HUD Memos when a game is randomized
+    multiple times.
+
+
 ## [0.26.1] - 2019-05-05
 
 -   Fixed: The in-app changelog and new version checker now works again.
