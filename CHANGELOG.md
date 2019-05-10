@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.26.3] - 2019-05-10
+
 -   Changed: Tracker now raises an error if the current configuration is unsupported.
 
 -   Fixed: Tracker no longer shows an error when opening.
