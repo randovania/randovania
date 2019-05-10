@@ -131,7 +131,8 @@ def _create_patches(
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
-    base_patches = base_patches_factory.create_base_patches(rng, game, permalink)
+    base_patches = base_patches_factory.create_base_patches(permalink.layout_configuration, permalink.seed_number,
+                                                            rng, game)
     pool_patches, item_pool = pool_creator.calculate_item_pool(configuration, game.resource_database, base_patches)
 
     _validate_item_pool_size(item_pool, game)
