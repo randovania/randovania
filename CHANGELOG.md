@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Tracker now raises an error if the current configuration is unsupported.
+
+-   Fixed: Tracker no longer shows an error when opening.
+
 ## [0.26.2] - 2019-05-07
 
 -   Fixed: An empty box no longer shows up when starting a game with no

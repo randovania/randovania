@@ -160,7 +160,8 @@ def test_create_patches(mock_random: MagicMock,
 
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
-    mock_create_base_patches.assert_called_once_with(mock_random.return_value, game, permalink)
+    mock_create_base_patches.assert_called_once_with(permalink.layout_configuration, permalink.seed_number,
+                                                     mock_random.return_value, game)
 
     # pool
     mock_calculate_item_pool.assert_called_once_with(permalink.layout_configuration,
