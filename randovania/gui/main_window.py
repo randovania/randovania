@@ -26,7 +26,7 @@ from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
-from randovania.gui.tracker_window import TrackerWindow
+from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
 from randovania.resolver import debug
@@ -195,7 +195,16 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self._seed_details.show()
 
     def _open_tracker(self):
-        self._tracker = TrackerWindow(self._options.layout_configuration)
+        try:
+            self._tracker = TrackerWindow(self._options.layout_configuration)
+        except InvalidLayoutForTracker as e:
+            QMessageBox.critical(
+                self,
+                "Unsupported configuration for Tracker",
+                str(e)
+            )
+            return
+
         self._tracker.show()
 
     def _export_iso(self):

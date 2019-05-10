@@ -19,17 +19,25 @@ from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
-def add_elevator_connections_to_patches(permalink: Permalink,
+class MissingRng(Exception):
+    pass
+
+
+def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguration,
+                                        seed_number: int,
                                         patches: GamePatches) -> GamePatches:
     """
-
-    :param permalink:
+    :param layout_configuration:
+    :param seed_number:
     :param patches:
     :return:
     """
-    if permalink.layout_configuration.elevators == LayoutElevators.RANDOMIZED:
+    if layout_configuration.elevators == LayoutElevators.RANDOMIZED:
+        if seed_number is None:
+            raise MissingRng("Elevator")
+
         elevator_connection = copy.copy(patches.elevator_connection)
-        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number))
+        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(seed_number))
         return dataclasses.replace(patches, elevator_connection=elevator_connection)
     else:
         return patches
@@ -52,6 +60,8 @@ def gate_assignment_for_configuration(configuration: LayoutConfiguration,
     result = {}
     for gate, requirement in configuration.translator_configuration.translator_requirement.items():
         if requirement == LayoutTranslatorRequirement.RANDOM:
+            if rng is None:
+                raise MissingRng("Translator")
             requirement = rng.choice(choices)
 
         result[gate] = resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_index)
@@ -73,6 +83,8 @@ def starting_location_for_configuration(configuration: LayoutConfiguration,
 
     elif starting_location.configuration == StartingLocationConfiguration.RANDOM_SAVE_STATION:
         save_stations = [node for node in game.world_list.all_nodes if node.name == "Save Station"]
+        if rng is None:
+            raise MissingRng("Starting Location")
         save_station = rng.choice(save_stations)
         return game.world_list.node_to_area_location(save_station)
 
@@ -115,30 +127,35 @@ def add_default_hints_to_patches(rng: Random,
     return patches
 
 
-def create_base_patches(rng: Random,
+def create_base_patches(configuration: LayoutConfiguration,
+                        seed_number: int,
+                        rng: Random,
                         game: GameDescription,
-                        permalink: Permalink,
                         ) -> GamePatches:
     """
 
+    :param configuration:
+    :param seed_number:
     :param rng:
     :param game:
-    :param permalink:
     :return:
     """
 
+    # TODO: we shouldn't need the seed_number!
+
     patches = GamePatches.with_game(game)
-    patches = add_elevator_connections_to_patches(permalink, patches)
+    patches = add_elevator_connections_to_patches(configuration, seed_number, patches)
 
     # Gates
     patches = patches.assign_gate_assignment(
-        gate_assignment_for_configuration(permalink.layout_configuration, game.resource_database, rng))
+        gate_assignment_for_configuration(configuration, game.resource_database, rng))
 
     # Starting Location
     patches = patches.assign_starting_location(
-        starting_location_for_configuration(permalink.layout_configuration, game, rng))
+        starting_location_for_configuration(configuration, game, rng))
 
     # Hints
-    patches = add_default_hints_to_patches(rng, patches, game.world_list)
+    if rng is not None:
+        patches = add_default_hints_to_patches(rng, patches, game.world_list)
 
     return patches
