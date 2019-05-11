@@ -164,6 +164,10 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 self._ammo_pickup_widgets[ammo][5].setChecked(state.requires_major_item)
 
             try:
+                if state.pickup_count == 0:
+                    self._ammo_pickup_widgets[ammo][1].setText("No expansions will be created.")
+                    continue
+
                 ammo_per_pickup = items_for_ammo(ammo, state, ammo_provided,
                                                  previous_pickup_for_item,
                                                  ammo_configuration.maximum_ammo)
@@ -171,10 +175,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 totals = functools.reduce(lambda a, b: [x + y for x, y in zip(a, b)],
                                           ammo_per_pickup,
                                           [0 for _ in ammo.items])
-
-                if state.pickup_count == 0:
-                    self._ammo_pickup_widgets[ammo][1].setText("No expansions will be created.")
-                    continue
 
                 if {total % state.pickup_count for total in totals} == {0}:
                     count_text_template = _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT
@@ -184,8 +184,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 self._ammo_pickup_widgets[ammo][1].setText(
                     count_text_template.format(
                         per_expansion=" and ".join(
-                            "{} {}".format(
-                                total // state.pickup_count,
+                            "{:.3g} {}".format(
+                                total / state.pickup_count,
                                 item_for_index[ammo_index].long_name
                             )
                             for ammo_index, total in zip(ammo.items, totals)
