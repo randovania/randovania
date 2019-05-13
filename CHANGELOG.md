@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Joke item and locations now have a `(?)` added to make then slightly more
+    obvious they're not serious.
+
 -   Changed: Average ammo provided per expansion is now shown with more precision.
 
 ## [0.26.3] - 2019-05-10
