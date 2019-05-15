@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Average ammo provided per expansion is now shown with more precision.
 
+-   Added: `randovania echoes database list-dangerous-usage` command to list all
+	paths that requires a resource to not be collected.
+
 ## [0.26.3] - 2019-05-10
 
 -   Changed: Tracker now raises an error if the current configuration is unsupported.
