@@ -119,7 +119,8 @@ def create_hints(patches: GamePatches,
             pickup = patches.pickup_assignment.get(hint.target)
 
             if hint.location_precision == HintLocationPrecision.WRONG_GAME:
-                node_name = color_as_joke(joke_locations.pop() if joke_locations else "an unknown location")
+                node_name = color_as_joke("{} (?)".format(joke_locations.pop())
+                                          if joke_locations else "an unknown location")
             else:
                 node_name = color_text_as_red(hint_name_creator.index_node_name(
                     hint.target,
@@ -164,7 +165,7 @@ def _calculate_pickup_hint(precision: HintItemPrecision,
                            joke_items: List[str],
                            ) -> Tuple[bool, str, str]:
     if precision == HintItemPrecision.WRONG_GAME:
-        return True, "The ", joke_items.pop()
+        return True, "The ", joke_items.pop() + " (?)"
 
     elif precision == HintItemPrecision.GENERAL_CATEGORY:
         if pickup.item_category.is_major_category:
