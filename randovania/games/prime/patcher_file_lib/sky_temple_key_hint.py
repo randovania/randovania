@@ -53,7 +53,7 @@ def create_hints(patches: GamePatches,
 
             assert resource.index not in sky_temple_key_hints
 
-            sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}".format(
+            sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}.".format(
                 _sky_temple_key_name(key_number),
                 color_text_as_red(
                     location_hint_creator.index_node_name(pickup_index, hide_area),

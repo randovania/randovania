@@ -6,11 +6,11 @@ from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, Q
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import Node
+from randovania.game_description.node import Node, ResourceNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
+from randovania.generator import base_patches_factory
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
@@ -20,6 +20,10 @@ from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_pickup_to_state
+
+
+class InvalidLayoutForTracker(Exception):
+    pass
 
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
@@ -43,9 +47,15 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         set_default_window_icon(self)
 
         self.layout_configuration = layout_configuration
-        self.game_description = data_reader.decode_data(layout_configuration.game_data, True)
+        self.game_description = data_reader.decode_data(layout_configuration.game_data)
 
-        base_patches = GamePatches.with_game(self.game_description)
+        try:
+            base_patches = base_patches_factory.create_base_patches(self.layout_configuration, None, None,
+                                                                    self.game_description)
+        except base_patches_factory.MissingRng as e:
+            raise InvalidLayoutForTracker("Layout is configured to have random {}, "
+                                          "but that isn't supported by the tracker.".format(e))
+
         pool_patches, item_pool = pool_creator.calculate_item_pool(self.layout_configuration,
                                                                    self.game_description.resource_database,
                                                                    base_patches)
@@ -53,6 +63,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.logic, self._initial_state = logic_bootstrap(layout_configuration,
                                                           self.game_description,
                                                           pool_patches)
+        self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
@@ -85,7 +96,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         return self.hide_collected_resources_check.isChecked()
 
     @property
-    def _collected_nodes(self) -> Set[Node]:
+    def _collected_nodes(self) -> Set[ResourceNode]:
         return self._starting_nodes | set(action for action in self._actions if action.is_resource_node)
 
     def _pretty_node_name(self, node: Node) -> str:

@@ -42,7 +42,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.verticalLayout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
-        world_reader, self.game_description = data_reader.decode_data_with_world_reader(data, False)
+        world_reader, self.game_description = data_reader.decode_data_with_world_reader(data)
         self.generic_index = world_reader.generic_index
 
         self.resource_database = self.game_description.resource_database

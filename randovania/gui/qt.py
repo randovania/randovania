@@ -51,6 +51,7 @@ def show_main_window(app: QApplication, args):
     main_window = MainWindow(options, getattr(args, "preview", False))
     app.main_window = main_window
     main_window.show()
+    main_window.request_new_data()
 
 
 def show_data_editor(app: QApplication, args):

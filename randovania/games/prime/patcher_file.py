@@ -13,13 +13,15 @@ from randovania.game_description.node import TeleporterNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain
+from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, CurrentResources, \
+    ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -62,6 +64,20 @@ _TELEPORTERS_THAT_KEEP_NAME_WHEN_VANILLA = {
     589949,  # Sky Temple Energy Controller
 }
 
+_RESOURCE_NAME_TRANSLATION = {
+    'Temporary Missile': 'Missile',
+    'Temporary Power Bombs': 'Power Bomb',
+}
+
+
+def _resource_user_friendly_name(resource: ResourceInfo) -> str:
+    """
+    Gets a name that we should display to the user for the given resource.
+    :param resource:
+    :return:
+    """
+    return _RESOURCE_NAME_TRANSLATION.get(resource.long_name, resource.long_name)
+
 
 def _create_spawn_point_field(patches: GamePatches,
                               resource_database: ResourceDatabase,
@@ -101,7 +117,7 @@ def _pickup_scan(pickup: PickupEntry) -> str:
     return "{0} that provides {1}".format(
         pickup.name,
         ", ".join(
-            "{} {}".format(quantity, resource.long_name)
+            "{} {}".format(quantity, _resource_user_friendly_name(resource))
             for resource, quantity in pickup.resources[-1].resources
         )
     )
@@ -126,7 +142,7 @@ def _get_single_hud_text(pickup_name: str,
         return "{} acquired!".format(pickup_name)
     else:
         return memo_data[pickup_name].format(**{
-            resource.long_name: quantity
+            _resource_user_friendly_name(resource): quantity
             for resource, quantity in resources
         })
 
@@ -369,6 +385,27 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
+def _create_starting_popup(layout_configuration: LayoutConfiguration,
+                           resource_database: ResourceDatabase,
+                           starting_items: CurrentResources) -> list:
+
+    initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
+
+    extra_items = [
+        "{}{}".format("{} ".format(quantity) if quantity > 1 else "", _resource_user_friendly_name(item))
+        for item, quantity in starting_items.items()
+        if 0 < quantity != initial_items.get(item, 0)
+    ]
+
+    if extra_items:
+        return [
+            "Extra starting items:",
+            ", ".join(extra_items)
+        ]
+    else:
+        return []
+
+
 def create_patcher_file(description: LayoutDescription,
                         cosmetic_patches: CosmeticPatches,
                         ) -> dict:
@@ -383,7 +420,7 @@ def create_patcher_file(description: LayoutDescription,
     patches = description.patches
     rng = Random(description.permalink.as_str)
 
-    game = data_reader.decode_data(layout.game_data, add_self_as_requirement_to_resources=False)
+    game = data_reader.decode_data(layout.game_data)
     useless_pickup = pickup_creator.create_useless_pickup(game.resource_database)
 
     result = {}
@@ -392,14 +429,7 @@ def create_patcher_file(description: LayoutDescription,
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 
-    result["starting_popup"] = [
-        "Starting items:",
-        ", ".join(
-            "{}{}".format("{} ".format(quantity) if quantity > 1 else "", item.long_name)
-            for item, quantity in patches.starting_items.items()
-            if quantity > 0
-        )
-    ]
+    result["starting_popup"] = _create_starting_popup(layout, game.resource_database, patches.starting_items)
 
     # Add the pickups
     if cosmetic_patches.disable_hud_popup:

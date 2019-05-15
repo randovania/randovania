@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.area import Area
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
@@ -50,8 +50,7 @@ def test_create_hints_nothing(empty_patches):
         empty_patches,
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
-                                          HintLocationPrecision.DETAILED,
-                                          HintItemPrecision.DETAILED,
+                                          PrecisionPair.detailed(),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -71,12 +70,12 @@ def test_create_hints_nothing(empty_patches):
     (HintItemPrecision.DETAILED, "The &push;&main-color=#a84343;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "A &push;&main-color=#a84343;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "A &push;&main-color=#a84343;major item&pop;"),
-    (HintItemPrecision.WRONG_GAME, "The &push;&main-color=#45f731;X-Ray Visor&pop;"),
+    (HintItemPrecision.WRONG_GAME, "The &push;&main-color=#45f731;X-Ray Visor (?)&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#a84343;World - Area&pop;"),
     (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#a84343;World&pop;"),
-    (HintLocationPrecision.WRONG_GAME, "&push;&main-color=#45f731;Tower&pop;"),
+    (HintLocationPrecision.WRONG_GAME, "&push;&main-color=#45f731;Tower (?)&pop;"),
 ])
 def test_create_hints_item_detailed(empty_patches, pickup,
                                     item, location):
@@ -93,8 +92,7 @@ def test_create_hints_item_detailed(empty_patches, pickup,
         },
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
-                                          location[0],
-                                          item[0],
+                                          PrecisionPair(location[0], item[0]),
                                           pickup_index)
         })
     rng = MagicMock()

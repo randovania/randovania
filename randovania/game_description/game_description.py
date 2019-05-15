@@ -38,7 +38,6 @@ class GameDescription:
     initial_states: Dict[str, ResourceGainTuple]
     dangerous_resources: FrozenSet[SimpleResourceInfo]
     world_list: WorldList
-    add_self_as_requirement_to_resources: bool
 
     def __deepcopy__(self, memodict):
         return GameDescription(
@@ -50,7 +49,6 @@ class GameDescription:
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,
             initial_states=copy.copy(self.initial_states),
-            add_self_as_requirement_to_resources=self.add_self_as_requirement_to_resources,
         )
 
     def __init__(self,
@@ -63,7 +61,6 @@ class GameDescription:
                  starting_location: AreaLocation,
                  initial_states: Dict[str, ResourceGainTuple],
                  world_list: WorldList,
-                 add_self_as_requirement_to_resources: bool
                  ):
         self.game = game
         self.game_name = game_name
@@ -74,7 +71,6 @@ class GameDescription:
         self.starting_location = starting_location
         self.initial_states = initial_states
         self.world_list = world_list
-        self.add_self_as_requirement_to_resources = add_self_as_requirement_to_resources
 
         # TODO: refresh dangerous_resources during simplify_connections
         self.dangerous_resources = frozenset(

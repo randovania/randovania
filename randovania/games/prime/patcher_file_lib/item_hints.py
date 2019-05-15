@@ -48,6 +48,7 @@ _JOKE_HINTS = [
      "200mL of water to maintain optimum hydration."),
     "Make sure to collect an ETM, otherwise your run isn't valid.",
     "You're not authorized to view this hint.",
+    "Kirby fell down here.",
 ]
 
 _PRIME_1_LOCATIONS = [
@@ -89,10 +90,6 @@ for i in range(1, 10):
     _DET_NULL.append(f"Sky Temple Key {i}")
 
 
-def _is_total_joke(hint: Hint) -> bool:
-    return hint.location_precision == HintLocationPrecision.WRONG_GAME and hint.item_precision == HintItemPrecision.WRONG_GAME
-
-
 def create_hints(patches: GamePatches,
                  world_list: WorldList,
                  rng: Random,
@@ -115,14 +112,15 @@ def create_hints(patches: GamePatches,
     hints_for_asset: Dict[int, str] = {}
 
     for asset, hint in patches.hints.items():
-        if _is_total_joke(hint):
+        if hint.precision.is_joke:
             message = color_as_joke(rng.choice(_JOKE_HINTS))
 
         elif hint.hint_type == HintType.LOCATION:
             pickup = patches.pickup_assignment.get(hint.target)
 
             if hint.location_precision == HintLocationPrecision.WRONG_GAME:
-                node_name = color_as_joke(joke_locations.pop() if joke_locations else "an unknown location")
+                node_name = color_as_joke("{} (?)".format(joke_locations.pop())
+                                          if joke_locations else "an unknown location")
             else:
                 node_name = color_text_as_red(hint_name_creator.index_node_name(
                     hint.target,
@@ -167,7 +165,7 @@ def _calculate_pickup_hint(precision: HintItemPrecision,
                            joke_items: List[str],
                            ) -> Tuple[bool, str, str]:
     if precision == HintItemPrecision.WRONG_GAME:
-        return True, "The ", joke_items.pop()
+        return True, "The ", joke_items.pop() + " (?)"
 
     elif precision == HintItemPrecision.GENERAL_CATEGORY:
         if pickup.item_category.is_major_category:

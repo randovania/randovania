@@ -10,6 +10,7 @@ import pytest
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry, ResourceConversion
@@ -18,13 +19,14 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.prime import patcher_file, default_data
+from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
-from randovania.generator.item_pool import pickup_creator
 
 
 def test_add_header_data_to_result():
@@ -73,7 +75,7 @@ def test_create_spawn_point_field(echoes_resource_database, empty_patches):
 
 def test_create_elevators_field_no_elevator(empty_patches):
     # Setup
-    game = data_reader.decode_data(default_data.decode_default_prime2(), False)
+    game = data_reader.decode_data(default_data.decode_default_prime2())
 
     # Run
     with pytest.raises(ValueError) as exp:
@@ -87,7 +89,7 @@ def test_create_elevators_field_no_elevator(empty_patches):
 def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_resource_database, empty_patches):
     # Setup
-    game = data_reader.decode_data(default_data.decode_default_prime2(), False)
+    game = data_reader.decode_data(default_data.decode_default_prime2())
     patches = GamePatches.with_game(game)
 
     elevator_connection = copy.copy(patches.elevator_connection)
@@ -560,6 +562,25 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
 
     # Assert
     assert result == "Progressive Suit: Provides the following in order: Dark Suit, Light Suit"
+
+
+@pytest.mark.parametrize("disable_hud_popup", [False, True])
+def test_create_pickup_all_from_pool(echoes_resource_database,
+                                     disable_hud_popup: bool
+                                     ):
+    layout_configuration = LayoutConfiguration.from_params()
+    item_pool = pool_creator.calculate_pool_results(layout_configuration, echoes_resource_database)[0]
+    index = PickupIndex(0)
+    if disable_hud_popup:
+        memo_data = None
+    else:
+        memo_data = default_prime2_memo_data()
+
+    for item in item_pool:
+        try:
+            patcher_file._create_pickup(index, item, item, PickupModelStyle.ALL_VISIBLE, memo_data)
+        except Exception as e:
+            assert str(e) == item.name
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)

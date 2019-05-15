@@ -59,7 +59,7 @@ def convert_database_command_logic(args):
     data = decode_data_file(args)
 
     if args.decode_to_game_description:
-        data = data_writer.write_game_description(data_reader.decode_data(data, False))
+        data = data_writer.write_game_description(data_reader.decode_data(data))
 
     output_binary: Optional[Path] = args.output_binary
     output_json: Optional[Path] = args.output_json
@@ -258,6 +258,48 @@ def _list_paths_with_resource(game: GameDescription,
     print("Total routes: {}".format(count))
 
 
+def list_paths_with_dangerous_logic(args):
+    game = load_game_description(args)
+    print_only_area = args.print_only_area
+    count = 0
+
+    for world in game.world_list.worlds:
+        for area in world.areas:
+            area_had_resource = False
+
+            for source, connection in area.connections.items():
+                for target, requirements in connection.items():
+                    for alternative in requirements.alternatives:
+                        for individual in alternative.values():
+                            if individual.negate:
+                                area_had_resource = True
+                                if not print_only_area:
+                                    print("At {0.name}/{1.name}, from {2} to {3}:\n{4}\n".format(
+                                        world,
+                                        area,
+                                        source.name,
+                                        target.name,
+                                        sorted(individual for individual in alternative.values())))
+                                count += 1
+
+            if area_had_resource and print_only_area:
+                print("{0.name}/{1.name}".format(world, area))
+
+    print("Total routes: {}".format(count))
+
+
+def list_paths_with_dangerous_command(sub_parsers):
+    parser = sub_parsers.add_parser(
+        "list-dangerous-usage",
+        help="List all connections that needs a resource to be missing.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )  # type: ArgumentParser
+    add_data_file_argument(parser)
+    parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
+                        action="store_true")
+    parser.set_defaults(func=list_paths_with_dangerous_logic)
+
+
 def list_paths_with_difficulty_logic(args):
     gd = load_game_description(args)
     _list_paths_with_resource(
@@ -327,6 +369,7 @@ def create_subparsers(sub_parsers):
     create_convert_database_command(sub_parsers)
     view_area_command(sub_parsers)
     export_areas_command(sub_parsers)
+    list_paths_with_dangerous_command(sub_parsers)
     list_paths_with_difficulty_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
 

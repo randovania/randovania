@@ -4,16 +4,16 @@ from unittest.mock import MagicMock, patch, call, ANY
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.generator import base_patches_factory
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator import base_patches_factory
 
 
 def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
@@ -22,7 +22,9 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
     permalink = Permalink.default()
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(permalink, GamePatches.with_game(game))
+    result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
+                                                                      permalink.seed_number,
+                                                                      GamePatches.with_game(game))
 
     # Assert
     assert result == GamePatches.with_game(game)
@@ -60,7 +62,10 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data):
                                    })
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(permalink, GamePatches.with_game(game))
+    result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
+                                                                      permalink.seed_number,
+                                                                      GamePatches.with_game(game),
+                                                                      )
 
     # Assert
     assert result == expected
@@ -172,7 +177,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     rng = MagicMock()
 
     def _create_hint(number: int):
-        return Hint(HintType.LOCATION, HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair.detailed(), PickupIndex(number))
 
     expected = {
         LogbookAsset(1041207119): _create_hint(24),
@@ -203,7 +208,8 @@ def test_create_base_patches(mock_with_game: MagicMock,
     # Setup
     rng = MagicMock()
     game = MagicMock()
-    permalink = MagicMock()
+    layout_configuration = MagicMock()
+    seed_number = 123456
 
     first_patches = mock_with_game.return_value
     second_patches = mock_add_elevator_connections_to_patches.return_value
@@ -211,19 +217,20 @@ def test_create_base_patches(mock_with_game: MagicMock,
     fourth_patches = third_patches.assign_starting_location.return_value
 
     # Run
-    result = base_patches_factory.create_base_patches(rng, game, permalink)
+    result = base_patches_factory.create_base_patches(layout_configuration,
+                                                      seed_number,
+                                                      rng, game)
 
     # Assert
     mock_with_game.assert_called_once_with(game)
-    mock_add_elevator_connections_to_patches.assert_called_once_with(permalink, first_patches)
+    mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, seed_number, first_patches)
 
     # Gate Assignment
-    mock_gate_assignment_for_configuration.assert_called_once_with(
-        permalink.layout_configuration, game.resource_database, rng)
+    mock_gate_assignment_for_configuration.assert_called_once_with(layout_configuration, game.resource_database, rng)
     second_patches.assign_gate_assignment.assert_called_once_with(mock_gate_assignment_for_configuration.return_value)
 
     # Starting Location
-    mock_starting_location_for_config.assert_called_once_with(permalink.layout_configuration, game, rng)
+    mock_starting_location_for_config.assert_called_once_with(layout_configuration, game, rng)
     third_patches.assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
     # Hints

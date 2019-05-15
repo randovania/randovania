@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Joke item and locations now have a `(?)` added to make then slightly more
+    obvious they're not serious.
+
+-   Changed: Average ammo provided per expansion is now shown with more precision.
+
+-   Added: `randovania echoes database list-dangerous-usage` command to list all
+	paths that requires a resource to not be collected.
+
+## [0.26.3] - 2019-05-10
+
+-   Changed: Tracker now raises an error if the current configuration is unsupported.
+
+-   Fixed: Tracker no longer shows an error when opening.
+
+## [0.26.2] - 2019-05-07
+
+-   Fixed: An empty box no longer shows up when starting a game with no
+    extra starting items.
+	
+-   Fixed: A potential crash involving HUD Memos when a game is randomized
+    multiple times.
+
+
+## [0.26.1] - 2019-05-05
+
+-   Fixed: The in-app changelog and new version checker now works again.
+
+-   Fixed: Patching with HUD text on and using expansions locked by major item now works.
+
+-   Changed: Missile target default is now 175, since Seeker Launcher now defaults to
+    giving 5 missiles.
+
+
+## [0.26.0] - 2019-05-05
+
 -   **MAJOR** - Added: Option to require Missile Launcher and main Power Bombs for the
     respective expansions to work.
 
