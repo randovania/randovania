@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Method to open the Seeker door in Hydrodynamo Station without the Seeker Launcher,
     using Screw Attack and one missile (Hard and Above).
 
+-   Changed: The Ing Windchamber puzzle now only requires four missiles instead of five.
+
 ## [0.26.3] - 2019-05-10
 
 -   Changed: Tracker now raises an error if the current configuration is unsupported.
