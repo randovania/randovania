@@ -15,6 +15,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: `randovania echoes database list-dangerous-usage` command to list all
 	paths that requires a resource to not be collected.
 
+-   Added: Methods to get to Sunburst location by reaching the platform with the cannon
+    with a scan dash (Normal and above) or with just Space Jump Boots (Easy and above).
+	
+-   Added: Method to leave and enter the arena in Agon Temple with only Space Jump Boots
+    (Trivial and above to enter; Easy and above to leave).
+
+-   Added: Method to get to Darkburst location in Mining Station B via a Bomb Space Jump
+    and without Screw Attack (Easy and above).
+
+-   Fixed: In Hydrodynamo Station, going from the door to Hydrodynamo Shaft to the door to
+    Save Station B now always requires all three locks in Hydrodynamo Station to be unlocked.
+
+-   Added: Method to cross Phazon Pit using a Bomb Space Jump (Easy and above).
+
+-   Added: Method to open the Seeker door in Hydrodynamo Station without the Seeker Launcher,
+    using Screw Attack and one missile (Hard and Above).
+
 ## [0.26.3] - 2019-05-10
 
 -   Changed: Tracker now raises an error if the current configuration is unsupported.
