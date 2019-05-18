@@ -98,7 +98,7 @@ class GameDescription:
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
     yield database.energy_tank
-    yield resource.reductions[0].inventory_item
+    yield from (reduction.inventory_item for reduction in resource.reductions)
 
 
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
