@@ -143,14 +143,14 @@ def print_actions_of_reach(reach: GeneratorReach):
     if _DEBUG_LEVEL <= 1:
         return
 
-    logic = reach.logic
+    game = reach.game
     actions = get_collectable_resource_nodes_of_reach(reach)
 
     for action in actions:
         print("++ Safe? {1} -- {0} -- Dangerous? {2}".format(
-            logic.game.node_name(action),
+            game.world_list.node_name(action),
             reach.is_safe_node(action),
-            action.resource() in logic.game.dangerous_resources
+            action.resource() in game.dangerous_resources
         ))
 
 

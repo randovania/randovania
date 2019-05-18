@@ -129,9 +129,7 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
             resources[item] = _minimal_restrictions_custom_item_count.get(item.index, 1)
 
 
-def calculate_starting_state(logic: Logic, patches: GamePatches) -> "State":
-    game = logic.game
-
+def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "State":
     # TODO: is this fast start?
     initial_game_state = game.initial_states["Default"]
 
@@ -185,7 +183,7 @@ def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
 def logic_bootstrap(configuration: LayoutConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
-                    ) -> Tuple[Logic, State]:
+                    ) -> Tuple[GameDescription, State]:
     """
     Core code for starting a new Logic/State.
     :param configuration:
@@ -198,8 +196,7 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     debug._gd = game
 
     game = copy.deepcopy(game)
-    logic = Logic(game, configuration)
-    starting_state = calculate_starting_state(logic, patches)
+    starting_state = calculate_starting_state(game, patches)
 
     if configuration.trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
         _add_minimal_restrictions_initial_resources(starting_state.resources,
@@ -215,4 +212,4 @@ def logic_bootstrap(configuration: LayoutConfiguration,
 
     game.simplify_connections(starting_state.resources)
 
-    return logic, starting_state
+    return game, starting_state

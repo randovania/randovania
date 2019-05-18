@@ -60,9 +60,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                                    self.game_description.resource_database,
                                                                    base_patches)
 
-        self.logic, self._initial_state = logic_bootstrap(layout_configuration,
-                                                          self.game_description,
-                                                          pool_patches)
+        self.game_description, self._initial_state = logic_bootstrap(layout_configuration,
+                                                                     self.game_description,
+                                                                     pool_patches)
+        self.logic = Logic(self.game_description, layout_configuration)
+
         self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)

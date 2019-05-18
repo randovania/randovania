@@ -3,7 +3,7 @@ import itertools
 from random import Random
 from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List, TypeVar, Any
 
-from randovania.game_description.game_description import calculate_interesting_resources
+from randovania.game_description.game_description import calculate_interesting_resources, GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
 from randovania.game_description.item.item_category import ItemCategory
@@ -17,7 +17,6 @@ from randovania.generator.generator_reach import GeneratorReach, collectable_res
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
 from randovania.resolver import debug
-from randovania.resolver.logic import Logic
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup
 
@@ -81,7 +80,7 @@ def _should_have_hint(item_category: ItemCategory) -> bool:
     return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
 
 
-def retcon_playthrough_filler(logic: Logic,
+def retcon_playthrough_filler(game: GameDescription,
                               initial_state: State,
                               pickups_left: List[PickupEntry],
                               rng: Random,
@@ -92,7 +91,7 @@ def retcon_playthrough_filler(logic: Logic,
     debug.debug_print("Major items: {}".format([item.name for item in pickups_left]))
     last_message = "Starting."
 
-    reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
+    reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
 
     pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
     scan_asset_seen_count: Dict[LogbookAsset, int] = collections.defaultdict(int)
@@ -102,15 +101,15 @@ def retcon_playthrough_filler(logic: Logic,
         current_uncollected = UncollectedState.from_reach(reach)
 
         progression_pickups = _calculate_progression_pickups(pickups_left, reach)
-        print_retcon_loop_start(current_uncollected, logic, pickups_left, reach)
+        print_retcon_loop_start(current_uncollected, game, pickups_left, reach)
 
         for pickup_index in reach.state.collected_pickup_indices:
             pickup_index_seen_count[pickup_index] += 1
-        print_new_resources(logic, reach, pickup_index_seen_count, "Pickup Index")
+        print_new_resources(game, reach, pickup_index_seen_count, "Pickup Index")
 
         for scan_asset in reach.state.collected_scan_assets:
             scan_asset_seen_count[scan_asset] += 1
-        print_new_resources(logic, reach, scan_asset_seen_count, "Scan Asset")
+        print_new_resources(game, reach, scan_asset_seen_count, "Scan Asset")
 
         def action_report(message: str):
             status_update("{} {}".format(last_message, message))
@@ -153,7 +152,7 @@ def retcon_playthrough_filler(logic: Logic,
                         Hint(HintType.LOCATION, None, pickup_index)
                     )
 
-                print_retcon_place_pickup(action, logic, pickup_index)
+                print_retcon_place_pickup(action, game, pickup_index)
 
             else:
                 num_random_starting_items_placed += 1
@@ -177,13 +176,13 @@ def retcon_playthrough_filler(logic: Logic,
         else:
             last_message = "Triggered an event out of {} options.".format(len(actions_weights))
             status_update(last_message)
-            debug_print_collect_event(action, logic)
+            debug_print_collect_event(action, game)
             # This action is potentially dangerous. Use `act_on` to remove invalid paths
             reach.act_on(action)
 
         reach = advance_reach_with_possible_unsafe_resources(reach)
 
-        if logic.game.victory_condition.satisfied(reach.state.resources, reach.state.resource_database):
+        if game.victory_condition.satisfied(reach.state.resources, reach.state.resource_database):
             debug.debug_print("Finished because we can win")
             break
 
@@ -275,13 +274,13 @@ def _calculate_potential_actions(reach: GeneratorReach,
     return actions_weights
 
 
-def debug_print_collect_event(action, logic):
+def debug_print_collect_event(action, game):
     if debug.debug_level() > 0:
-        print("\n--> Collecting {}".format(logic.game.world_list.node_name(action, with_world=True)))
+        print("\n--> Collecting {}".format(game.world_list.node_name(action, with_world=True)))
 
 
 def print_retcon_loop_start(current_uncollected: UncollectedState,
-                            logic: Logic,
+                            game: GameDescription,
                             pickups_left: Iterator[PickupEntry],
                             reach: GeneratorReach,
                             ):
@@ -293,27 +292,27 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
 
         print("\n\n===============================")
         print("\n>>> From {}, {} open pickup indices, {} open resources{}".format(
-            logic.game.world_list.node_name(reach.state.node, with_world=True),
+            game.world_list.node_name(reach.state.node, with_world=True),
             len(current_uncollected.indices),
             len(current_uncollected.resources),
             extra
         ))
 
 
-def print_retcon_place_pickup(action: PickupEntry, logic: Logic, pickup_index: PickupIndex):
-    world_list = logic.game.world_list
+def print_retcon_place_pickup(action: PickupEntry, game: GameDescription, pickup_index: PickupIndex):
+    world_list = game.world_list
     if debug.debug_level() > 0:
         print("\n--> Placing {} at {}".format(
             action.name,
             world_list.node_name(find_node_with_resource(pickup_index, world_list.all_nodes), with_world=True)))
 
 
-def print_new_resources(logic: Logic,
+def print_new_resources(game: GameDescription,
                         reach: GeneratorReach,
                         seen_count: Dict[ResourceInfo, int],
                         label: str,
                         ):
-    world_list = logic.game.world_list
+    world_list = game.world_list
     if debug.debug_level() > 0:
         for index, count in seen_count.items():
             if count == 1:
