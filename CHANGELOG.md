@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   *Major* - Changed: Optimized the seed generation step. It should now take roughly
+    half as long or even faster. 
+
 -   Changed: Joke item and locations now have a `(?)` added to make then slightly more
     obvious they're not serious.
 
