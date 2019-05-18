@@ -18,12 +18,12 @@ class GraphPath(NamedTuple):
         if self.previous_node is None:
             return False
         else:
-            return (self.previous_node, self.node) in digraph.edges
+            return (self.previous_node.index, self.node.index) in digraph.edges
 
     def add_to_graph(self, digraph: networkx.DiGraph):
-        digraph.add_node(self.node)
+        digraph.add_node(self.node.index)
         if self.previous_node is not None:
-            digraph.add_edge(self.previous_node, self.node, requirements=self.requirements)
+            digraph.add_edge(self.previous_node.index, self.node.index, requirements=self.requirements)
 
 
 def filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
@@ -62,9 +62,9 @@ class GeneratorReach:
     _digraph: networkx.DiGraph
     _state: State
     _game: GameDescription
-    _reachable_paths: Optional[Dict[Node, List[Node]]]
-    _reachable_costs: Optional[Dict[Node, int]]
-    _node_reachable_cache: Dict[Node, bool]
+    _reachable_paths: Optional[Dict[int, List[Node]]]
+    _reachable_costs: Optional[Dict[int, int]]
+    _node_reachable_cache: Dict[int, bool]
     _unreachable_paths: Dict[Tuple[Node, Node], RequirementSet]
     _safe_nodes: Optional[Set[Node]]
     _is_node_safe_cache: Dict[Node, bool]
@@ -162,9 +162,9 @@ class GeneratorReach:
         if self._safe_nodes is not None:
             return
 
-        self._connected_components = list(networkx.strongly_connected_components(self._digraph))
-        for component in self._connected_components:
-            if self._state.node in component:
+        connected_components = list(networkx.strongly_connected_components(self._digraph))
+        for component in connected_components:
+            if self._state.node.index in component:
                 assert self._safe_nodes is None
                 self._safe_nodes = component
 
@@ -174,28 +174,38 @@ class GeneratorReach:
         if self._reachable_paths is not None:
             return
 
+        all_nodes = self.game.world_list.all_nodes
+
+        def weight(source: int, target: int, attributes):
+            if self._can_advance(all_nodes[target]):
+                return 0
+            else:
+                return 1
+
         self._reachable_costs, self._reachable_paths = networkx.multi_source_dijkstra(
             self._digraph,
-            {self.state.node},
-            weight=lambda source, target, attributes: 0 if self._can_advance(target) else 1)
+            {self.state.node.index},
+            weight=weight)
 
     def is_reachable_node(self, node: Node) -> bool:
-        cached_value = self._node_reachable_cache.get(node)
+        index = node.index
+
+        cached_value = self._node_reachable_cache.get(index)
         if cached_value is not None:
             return cached_value
 
         self._calculate_reachable_paths()
 
-        cost = self._reachable_costs.get(node)
+        cost = self._reachable_costs.get(index)
         if cost is not None:
             if cost == 0:
-                self._node_reachable_cache[node] = True
+                self._node_reachable_cache[index] = True
             elif cost == 1:
-                self._node_reachable_cache[node] = (not self._can_advance(node))
+                self._node_reachable_cache[index] = (not self._can_advance(node))
             else:
-                self._node_reachable_cache[node] = False
+                self._node_reachable_cache[index] = False
 
-            return self._node_reachable_cache[node]
+            return self._node_reachable_cache[index]
         else:
             return False
 
@@ -206,8 +216,9 @@ class GeneratorReach:
         :return:
         """
         self._calculate_reachable_paths()
-        for node in self._reachable_paths.keys():
-            yield node
+        all_nodes = self.game.world_list.all_nodes
+        for index in self._reachable_paths.keys():
+            yield all_nodes[index]
 
     @property
     def state(self) -> State:
@@ -219,8 +230,9 @@ class GeneratorReach:
 
     @property
     def nodes(self) -> Iterator[Node]:
-        for node in sorted(self._digraph):
-            yield node
+        all_nodes = self.game.world_list.all_nodes
+        graph_nodes = [all_nodes[index] for index in self._digraph]
+        return sorted(graph_nodes)
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
@@ -234,7 +246,7 @@ class GeneratorReach:
             return is_safe
 
         self._calculate_safe_nodes()
-        self._is_node_safe_cache[node] = node in self._safe_nodes
+        self._is_node_safe_cache[node] = node.index in self._safe_nodes
         return self._is_node_safe_cache[node]
 
     def advance_to(self, new_state: State,
@@ -244,8 +256,8 @@ class GeneratorReach:
         # assert self.is_reachable_node(new_state.node)
 
         if is_safe or self.is_safe_node(new_state.node):
-            for node, _ in list(filter(lambda x: not x[1], self._node_reachable_cache.items())):
-                del self._node_reachable_cache[node]
+            for index, _ in list(filter(lambda x: not x[1], self._node_reachable_cache.items())):
+                del self._node_reachable_cache[index]
 
             for node, _ in list(filter(lambda x: not x[1], self._is_node_safe_cache.items())):
                 del self._is_node_safe_cache[node]
@@ -294,8 +306,8 @@ class GeneratorReach:
         self.advance_to(new_state)
 
     def shortest_path_from(self, node: Node) -> Dict[Node, Tuple[Node, ...]]:
-        if node in self._digraph:
-            return networkx.shortest_path(self._digraph, node)
+        if node.index in self._digraph:
+            return networkx.shortest_path(self._digraph, node.index)
         else:
             return {}
 
