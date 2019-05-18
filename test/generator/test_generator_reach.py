@@ -168,7 +168,7 @@ def test_reach_size_from_start(echoes_game_description):
     game, state = logic_bootstrap(configuration, echoes_game_description, patches)
 
     # Run
-    reach = GeneratorReach.reach_from_state(echoes_game_description, state)
+    reach = GeneratorReach.reach_from_state(game, state)
 
     # Assert
     assert len(list(reach.nodes)) == 25
