@@ -127,7 +127,7 @@ def read_dock_weakness_database(data: Dict,
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    generic_index: int = 0
+    generic_index: int = -1
 
     def __init__(self,
                  resource_database: ResourceDatabase,
@@ -141,19 +141,19 @@ class WorldReader:
         name: str = data["name"]
         heal: bool = data["heal"]
         node_type: int = data["node_type"]
+        self.generic_index += 1
 
         if node_type == 0:
-            self.generic_index += 1
             return GenericNode(name, heal, self.generic_index)
 
         elif node_type == 1:
-            return DockNode(name, heal, data["dock_index"],
+            return DockNode(name, heal, self.generic_index, data["dock_index"],
                             DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
                             self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
                                                                               data["dock_weakness_index"]))
 
         elif node_type == 2:
-            return PickupNode(name, heal, PickupIndex(data["pickup_index"]))
+            return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]))
 
         elif node_type == 3:
             instance_id = data["teleporter_instance_id"]
@@ -161,15 +161,15 @@ class WorldReader:
             destination_world_asset_id = data["destination_world_asset_id"]
             destination_area_asset_id = data["destination_area_asset_id"]
 
-            return TeleporterNode(name, heal, instance_id,
+            return TeleporterNode(name, heal, self.generic_index, instance_id,
                                   AreaLocation(destination_world_asset_id, destination_area_asset_id))
 
         elif node_type == 4:
-            return EventNode(name, heal,
+            return EventNode(name, heal, self.generic_index,
                              self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
 
         elif node_type == 5:
-            return TranslatorGateNode(name, heal,
+            return TranslatorGateNode(name, heal, self.generic_index,
                                       TranslatorGate(data["gate_index"]),
                                       find_resource_info_with_long_name(
                                           self.resource_database.item,
@@ -189,7 +189,7 @@ class WorldReader:
             else:
                 hint_index = None
 
-            return LogbookNode(name, heal, data["string_asset_id"],
+            return LogbookNode(name, heal, self.generic_index, data["string_asset_id"],
                                find_resource_info_with_long_name(
                                    self.resource_database.item,
                                    "Scan Visor"
