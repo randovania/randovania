@@ -17,6 +17,7 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 class Node:
     name: str
     heal: bool
+    index: int
 
     def __lt__(self, other):
         return self.name < other.name
@@ -50,7 +51,7 @@ class ResourceNode(Node):
 
 @dataclasses.dataclass(frozen=True)
 class GenericNode(Node):
-    index: int
+    pass
 
 
 @dataclasses.dataclass(frozen=True)

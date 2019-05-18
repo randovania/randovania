@@ -14,7 +14,7 @@ def _logbook_node(request):
     scan_visor = SimpleResourceInfo(1, "Scan", "S", ResourceType.ITEM)
     translator = SimpleResourceInfo(2, "Translator", "T", ResourceType.ITEM)
 
-    node = LogbookNode("Logbook", False,
+    node = LogbookNode("Logbook", False, 0,
                        1000, scan_visor, LoreType.LUMINOTH_LORE,
                        translator if has_translator else None, None)
 

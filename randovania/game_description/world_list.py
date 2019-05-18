@@ -18,6 +18,7 @@ class WorldList:
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
+    _nodes: Tuple[Node, ...]
 
     def __deepcopy__(self, memodict):
         return WorldList(
@@ -27,6 +28,12 @@ class WorldList:
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
+
+        self._nodes = tuple(self._iterate_over_nodes())
+
+    def _iterate_over_nodes(self) -> Iterator[Node]:
+        for world in self.worlds:
+            yield from world.all_nodes
 
     def world_with_name(self, world_name: str) -> World:
         for world in self.worlds:
@@ -58,9 +65,8 @@ class WorldList:
             yield from world.areas
 
     @property
-    def all_nodes(self) -> Iterator[Node]:
-        for world in self.worlds:
-            yield from world.all_nodes
+    def all_nodes(self) -> Tuple[Node, ...]:
+        return self._nodes
 
     def area_name(self, area: Area, separator: str = "/") -> str:
         return "{}{}{}".format(
