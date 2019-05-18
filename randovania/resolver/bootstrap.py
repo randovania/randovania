@@ -106,7 +106,7 @@ def static_resources_for_layout_logic(
 
     for trick in resource_database.trick:
         if trick.index in tricks_enabled:
-            static_resources[trick] = 1
+            static_resources[trick] = 5
         else:
             static_resources[trick] = 0
 
