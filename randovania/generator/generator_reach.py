@@ -6,7 +6,6 @@ import networkx
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, ResourceNode, PickupNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
-from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
 
@@ -62,7 +61,7 @@ def filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
 class GeneratorReach:
     _digraph: networkx.DiGraph
     _state: State
-    _logic: Logic
+    _game: GameDescription
     _reachable_paths: Optional[Dict[Node, List[Node]]]
     _reachable_costs: Optional[Dict[Node, int]]
     _node_reachable_cache: Dict[Node, bool]
@@ -72,7 +71,7 @@ class GeneratorReach:
 
     def __deepcopy__(self, memodict):
         reach = GeneratorReach(
-            self._logic,
+            self._game,
             self._state,
             self._digraph.copy()
         )
@@ -86,12 +85,12 @@ class GeneratorReach:
         return reach
 
     def __init__(self,
-                 logic: Logic,
+                 game: GameDescription,
                  state: State,
                  graph: networkx.DiGraph
                  ):
 
-        self._logic = logic
+        self._game = game
         self._state = state
         self._digraph = graph
         self._unreachable_paths = {}
@@ -101,21 +100,19 @@ class GeneratorReach:
 
     @classmethod
     def reach_from_state(cls,
-                         logic: Logic,
+                         game: GameDescription,
                          initial_state: State,
                          ) -> "GeneratorReach":
 
-        reach = cls(logic, initial_state, networkx.DiGraph())
+        reach = cls(game, initial_state, networkx.DiGraph())
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 
     def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet, bool]]:
-        game = self._logic.game
-
-        extra_requirement = _extra_requirement_for_node(game, node)
+        extra_requirement = _extra_requirement_for_node(self._game, node)
         requirement_to_leave = node.requirements_to_leave(self._state.patches, self._state.resources)
 
-        for target_node, requirements in game.world_list.potential_nodes_from(node, self.state.patches):
+        for target_node, requirements in self._game.world_list.potential_nodes_from(node, self.state.patches):
             if target_node is None:
                 continue
 
@@ -217,8 +214,8 @@ class GeneratorReach:
         return self._state
 
     @property
-    def logic(self) -> Logic:
-        return self._logic
+    def game(self) -> GameDescription:
+        return self._game
 
     @property
     def nodes(self) -> Iterator[Node]:
@@ -278,7 +275,7 @@ class GeneratorReach:
         new_dangerous_resources = set(
             resource
             for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources)
-            if resource in self.logic.game.dangerous_resources
+            if resource in self.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)
 
@@ -307,7 +304,7 @@ class GeneratorReach:
         for (_, node), requirements in self._unreachable_paths.items():
             if self.is_reachable_node(node):
                 continue
-            requirements = requirements.simplify(self.state.resources, self.logic.game.resource_database)
+            requirements = requirements.simplify(self.state.resources, self.game.resource_database)
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
@@ -332,7 +329,7 @@ def get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
     generator = filter_reachable(
         filter_out_dangerous_actions(
             collectable_resource_nodes(reach.nodes, reach),
-            reach.logic.game),
+            reach.game),
         reach
     )
     for node in generator:
@@ -365,14 +362,14 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 
 
-def reach_with_all_safe_resources(logic: Logic, initial_state: State) -> GeneratorReach:
+def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -> GeneratorReach:
     """
     Creates a new GeneratorReach using the given state and then collect all safe resources
-    :param logic:
+    :param game:
     :param initial_state:
     :return:
     """
-    reach = GeneratorReach.reach_from_state(logic, initial_state)
+    reach = GeneratorReach.reach_from_state(game, initial_state)
     collect_all_safe_resources_in_reach(reach)
     return reach
 
@@ -384,7 +381,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
     :return:
     """
 
-    logic = previous_reach.logic
+    game = previous_reach.game
     collect_all_safe_resources_in_reach(previous_reach)
     initial_state = previous_reach.state
 
@@ -404,7 +401,7 @@ def advance_reach_with_possible_unsafe_resources(previous_reach: GeneratorReach)
             next_next_state = next_reach.state.copy()
             next_next_state.node = initial_state.node
 
-            next_reach = reach_with_all_safe_resources(logic, next_next_state)
+            next_reach = reach_with_all_safe_resources(game, next_next_state)
             if previous_safe_nodes <= set(next_reach.safe_nodes):
                 # print("Non-safe {} could reach back to where we were".format(logic.game.node_name(action)))
                 return advance_reach_with_possible_unsafe_resources(next_reach)
