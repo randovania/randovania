@@ -39,6 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Sanctuary Temple Access now requires a way to defeat the Quad to get through.
 
+-   Added: Support for damage requirements without exactly one damage reduction item.
+
 ## [0.26.3] - 2019-05-10
 
 -   Changed: Tracker now raises an error if the current configuration is unsupported.
