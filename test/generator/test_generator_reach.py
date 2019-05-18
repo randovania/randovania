@@ -17,16 +17,15 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
-from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.layout.patcher_configuration import PatcherConfiguration
-from randovania.layout.permalink import Permalink
 from randovania.generator import base_patches_factory
-from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
 from randovania.generator.item_pool.pool_creator import calculate_item_pool
-from randovania.resolver.logic import Logic
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
+from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state
 
 
@@ -49,18 +48,18 @@ def _test_data():
     patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(
         configuration, game.resource_database, Random(15000)
     ))
-    logic, state = logic_bootstrap(configuration, game, patches)
+    game, state = logic_bootstrap(configuration, game, patches)
 
-    return logic, state, permalink
-
-
-def _create_reach_with_unsafe(logic: Logic, state: State) -> GeneratorReach:
-    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, state))
+    return game, state, permalink
 
 
-def _create_reaches_and_compare(logic: Logic, state: State) -> Tuple[GeneratorReach, GeneratorReach]:
-    first_reach = _create_reach_with_unsafe(logic, state)
-    second_reach = _create_reach_with_unsafe(logic, first_reach.state)
+def _create_reach_with_unsafe(game: GameDescription, state: State) -> GeneratorReach:
+    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, state))
+
+
+def _create_reaches_and_compare(game: GameDescription, state: State) -> Tuple[GeneratorReach, GeneratorReach]:
+    first_reach = _create_reach_with_unsafe(game, state)
+    second_reach = _create_reach_with_unsafe(game, first_reach.state)
 
     assert first_reach.is_safe_node(first_reach.state.node)
     assert second_reach.is_safe_node(first_reach.state.node)
@@ -84,18 +83,18 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 def test_calculate_reach_with_all_pickups(test_data):
-    logic, state, _ = test_data
+    game, state, _ = test_data
 
-    item_pool = calculate_item_pool(LayoutConfiguration.from_params(), logic.game.resource_database, state.patches)
+    item_pool = calculate_item_pool(LayoutConfiguration.from_params(), game.resource_database, state.patches)
     add_resources_into_another(state.resources, item_pool[0].starting_items)
     for pickup in item_pool[1]:
         add_pickup_to_state(state, pickup)
 
-    first_reach, second_reach = _create_reaches_and_compare(logic, state)
+    first_reach, second_reach = _create_reaches_and_compare(game, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
     found_pickups = set(filter_pickup_nodes(filter_reachable(second_reach.nodes, first_reach)))
-    all_pickups = set(filter_pickup_nodes(logic.game.world_list.all_nodes))
+    all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
 
     # assert (len(list(first_reach.nodes)), len(first_actions)) == (898, 9)
     # assert (len(list(second_reach.nodes)), len(second_actions)) == (898, 9)
@@ -132,13 +131,12 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                          node_c: RequirementSet.trivial(),
                      },
                  }
-            )
+                 )
         ])
     ])
     game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
                            echoes_resource_database, RequirementSet.impossible(),
                            None, {}, world_list)
-    logic = Logic(game, LayoutConfiguration.from_params())
 
     patches = GamePatches.with_game(game)
     patches = patches.assign_gate_assignment({
@@ -148,7 +146,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                           node_a, patches, None, echoes_resource_database)
 
     # Run
-    reach = reach_with_all_safe_resources(logic, initial_state)
+    reach = reach_with_all_safe_resources(game, initial_state)
 
     # Assert
     if has_translator:

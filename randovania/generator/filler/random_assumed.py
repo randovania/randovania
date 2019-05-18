@@ -24,8 +24,9 @@ def random_assumed_filler(logic: Logic,
                           ) -> PickupAssignment:
     pickup_assignment = copy.copy(patches.pickup_assignment)
     print("Major items: {}".format([item.name for item in available_pickups]))
+    game = logic.game
 
-    base_reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(logic, initial_state))
+    base_reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
 
     reaches_for_pickup = {}
 
@@ -56,15 +57,15 @@ def random_assumed_filler(logic: Logic,
 
         try:
             pickup_node = next(pickup_nodes_that_can_reach(iterate_with_weights(pickup_nodes, actions_weights, rng),
-                                                           reach_with_all_safe_resources(logic, escape_state),
+                                                           reach_with_all_safe_resources(game, escape_state),
                                                            set(reach.safe_nodes)))
             print("Placed {} at {}. Had {} available of {} nodes.".format(pickup.name,
-                                                                          logic.game.node_name(pickup_node, True),
+                                                                          game.world_list.node_name(pickup_node, True),
                                                                           num_nodes,
                                                                           len(total_pickup_nodes)))
 
         except StopIteration:
-            print("\n".join(logic.game.node_name(node, True) for node in reach.safe_nodes))
+            print("\n".join(game.world_list.node_name(node, True) for node in reach.safe_nodes))
             raise Exception("Couldn't place {}. Had {} available of {} nodes.".format(pickup.name,
                                                                                       num_nodes,
                                                                                       len(total_pickup_nodes)

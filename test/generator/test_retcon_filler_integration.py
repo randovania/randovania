@@ -27,10 +27,11 @@ def test_retcon_filler_integration():
     patches = GamePatches.with_game(game)
     available_pickups = game.pickup_database.all_useful_pickups
 
-    logic, state = logic_bootstrap(layout_configuration, game, patches)
-    logic.game.simplify_connections(state.resources)
+    new_game, state = logic_bootstrap(layout_configuration, game, patches)
+    new_game.simplify_connections(state.resources)
 
-    filler_patches = retcon.retcon_playthrough_filler(logic, state, tuple(available_pickups), rng,
+    filler_patches = retcon.retcon_playthrough_filler(new_game,
+                                                      state, tuple(available_pickups), rng,
                                                       0, 0,
                                                       status_update)
     assert filler_patches == patches
