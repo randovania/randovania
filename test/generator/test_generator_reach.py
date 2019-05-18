@@ -107,10 +107,10 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     # Setup
     scan_visor = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 10)
 
-    node_a = GenericNode("Node A", True, 1)
-    node_b = GenericNode("Node B", True, 2)
-    node_c = GenericNode("Node C", True, 3)
-    translator_node = TranslatorGateNode("Translator Gate", True, 4, TranslatorGate(1), scan_visor)
+    node_a = GenericNode("Node A", True, 0)
+    node_b = GenericNode("Node B", True, 1)
+    node_c = GenericNode("Node C", True, 2)
+    translator_node = TranslatorGateNode("Translator Gate", True, 3, TranslatorGate(1), scan_visor)
 
     world_list = WorldList([
         World("Test World", 1, [
