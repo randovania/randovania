@@ -49,6 +49,7 @@ _JOKE_HINTS = [
     "Make sure to collect an ETM, otherwise your run isn't valid.",
     "You're not authorized to view this hint.",
     "Kirby fell down here.",
+    "Magoo.",
 ]
 
 _PRIME_1_LOCATIONS = [
