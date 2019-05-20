@@ -15,6 +15,10 @@ with everything ready to use. Just extract and run!
 Join the Metroid Prime Randomizer Discord: <https://discord.gg/gymstUz>
 
 ## Credits
+Game patching written by [Claris](https://www.twitch.tv/claris).
+
+GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with some
+contributions by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook).
 
 Many thanks to [Claris](https://www.twitch.tv/claris) for
 making the Echoes Randomizer and both collecting and providing this
