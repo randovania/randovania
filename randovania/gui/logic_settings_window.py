@@ -2,11 +2,13 @@ import dataclasses
 import functools
 from typing import Optional, Dict
 
-from PySide2 import QtCore
+from PySide2 import QtCore, QtWidgets
 from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
@@ -49,11 +51,42 @@ _TRICK_LEVEL_DESCRIPTION = {
         "such as Polluted Mire without Space Jump. No OOB is included."
     ],
     LayoutTrickLevel.MINIMAL_RESTRICTIONS: [
-        ("This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind "
-         "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible."),
-        "Since there aren't many checks, out of bounds tricks will probably be necessary for many items."
+        "This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind "
+        "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible.",
     ],
 }
+
+
+_CONFIGURABLE_TRICKS = {
+    0,  # Scan Dash
+    1,  # Difficult Bomb Jump
+    2,  # Slope Jump
+    3,  # R Jump
+    4,  # BSJ
+    5,  # Roll Jump
+    6,  # Underwater Dash
+    7,  # Air Underwater
+    8,  # Floaty
+    9,  # Infinite Speed
+    10,  # SA without SJ
+    11,  # Wall Boost
+    12,  # Jump off Enemy
+    15,  # Instant Morph
+}
+
+
+def _used_tricks(world_list: WorldList):
+    result = set()
+
+    for area in world_list.all_areas:
+        for node in area.nodes:
+            for connection in area.connections[node].values():
+                for alternative in connection.alternatives:
+                    for individual in alternative.values():
+                        if individual.resource.resource_type == ResourceType.TRICK:
+                            result.add(individual.resource)
+
+    return result
 
 
 def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
@@ -67,6 +100,8 @@ def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
 
 class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
+    _checkbox_for_trick: Dict[SimpleResourceInfo, QtWidgets.QCheckBox]
+    _slider_for_trick: Dict[SimpleResourceInfo, QtWidgets.QSlider]
     _options: Options
     world_list: WorldList
 
@@ -144,6 +179,57 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self.logic_combo_box.setItemData(i, trick_level)
 
         self.logic_combo_box.currentIndexChanged.connect(self._on_trick_level_changed)
+
+        self.trick_difficulties_layout = QtWidgets.QGridLayout()
+        self._checkbox_for_trick = {}
+        self._slider_for_trick = {}
+        row = 0
+
+        used_tricks = _used_tricks(self.world_list)
+
+        for i, trick_level in enumerate(LayoutTrickLevel):
+            if trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+                continue
+
+            difficulty_label = QtWidgets.QLabel(self.trick_level_tab)
+            difficulty_label.setFixedWidth(40)
+            difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
+
+            difficulty_label.setText(trick_level.long_name)
+            self.trick_difficulties_layout.addWidget(difficulty_label, row, i + 2, 1, 1)
+
+        row = 1
+        for trick in self.resource_database.trick:
+            if trick.index not in _CONFIGURABLE_TRICKS or trick not in used_tricks:
+                continue
+
+            trick_configurable = QtWidgets.QCheckBox(self.trick_level_tab)
+            trick_configurable.setFixedWidth(20)
+            self.checkbox_for_trick[trick] = trick_configurable
+            self.trick_difficulties_layout.addWidget(trick_configurable, row, 0, 1, 1)
+
+            trick_label = QtWidgets.QLabel(self.trick_level_tab)
+            trick_label.setText(trick.long_name)
+
+            self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
+
+            horizontal_slider = QtWidgets.QSlider(self.trick_level_tab)
+            horizontal_slider.setMaximum(5)
+            horizontal_slider.setPageStep(2)
+            horizontal_slider.setFixedWidth(43 * 6)
+            horizontal_slider.setOrientation(QtCore.Qt.Horizontal)
+            horizontal_slider.setTickPosition(QtWidgets.QSlider.TicksAbove)
+            horizontal_slider.setEnabled(False)
+            self.slider_for_trick[trick] = horizontal_slider
+            self.trick_difficulties_layout.addWidget(horizontal_slider, row, 2, 1, 6)
+
+            tool_button = QtWidgets.QToolButton(self.trick_level_tab)
+            tool_button.setText("?")
+            self.trick_difficulties_layout.addWidget(tool_button, row, 8, 1, 1)
+
+            row += 1
+
+        self.trick_level_layout.addLayout(self.trick_difficulties_layout)
 
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()

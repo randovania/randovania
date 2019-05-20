@@ -24,6 +24,21 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     def default(cls) -> "LayoutTrickLevel":
         return cls.NO_TRICKS
 
+    @property
+    def long_name(self) -> str:
+        return _PRETTY_TRICK_LEVEL_NAME[self]
+
+
+_PRETTY_TRICK_LEVEL_NAME = {
+    LayoutTrickLevel.NO_TRICKS: "No Tricks",
+    LayoutTrickLevel.TRIVIAL: "Trivial",
+    LayoutTrickLevel.EASY: "Easy",
+    LayoutTrickLevel.NORMAL: "Normal",
+    LayoutTrickLevel.HARD: "Hard",
+    LayoutTrickLevel.HYPERMODE: "Hypermode",
+    LayoutTrickLevel.MINIMAL_RESTRICTIONS: "Minimal Checking",
+}
+
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     ALL_BOSSES = "all-bosses"
