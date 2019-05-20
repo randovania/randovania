@@ -83,7 +83,7 @@ _test_descriptions = [
         ,
     ),
     _create_test_layout_description(
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
+        configuration=LayoutConfiguration.from_params(global_trick_level=LayoutTrickLevel.HYPERMODE,
                                                       ),
         pickup_mapping=[91, 45, 17, 24, 4, 2, 23, 59, 2, 0, 2, 68, 8, 38, 2, 2, 2, 7, 4, 115, 37, 2, 86, 2, 76, 2, 4, 2,
                         117, 112, 17, 2, 2, 2, 13, 39, 88, 82, 102, 50, 57, 2, 52, 116, 2, 4, 2, 8, 118, 2, 2, 2, 1, 2,
@@ -94,7 +94,7 @@ _test_descriptions = [
         ,
     ),
     _create_test_layout_description(
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
+        configuration=LayoutConfiguration.from_params(global_trick_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
                                                       sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
                                                       ),
         pickup_mapping=[8, 2, 4, 2, 21, 2, 38, 115, 2, 2, 86, 2, 2, 2, 8, 109, 76, 44, 100, 2, 8, 2, 4, 8, 2, 116, 2,

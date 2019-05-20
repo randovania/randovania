@@ -138,6 +138,16 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         set_combo_with_value(self.logic_combo_box, trick_level)
         self.logic_level_label.setText(_get_trick_level_description(trick_level))
 
+        per_trick_level = options.layout_configuration.per_trick_level
+
+        for trick, checkbox in self._checkbox_for_trick.items():
+            checkbox.setEnabled(trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS)
+            checkbox.setChecked(trick.index in per_trick_level.values)
+
+        for trick, slider in self._slider_for_trick.items():
+            level = per_trick_level.values.get(trick.index, trick_level)
+            slider.setValue(list(LayoutTrickLevel).index(level))
+
         # Elevator
         set_combo_with_value(self.elevators_combo, options.layout_configuration_elevators)
 
@@ -205,7 +215,8 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
             trick_configurable = QtWidgets.QCheckBox(self.trick_level_tab)
             trick_configurable.setFixedWidth(20)
-            self.checkbox_for_trick[trick] = trick_configurable
+            trick_configurable.stateChanged.connect(functools.partial(self._on_check_trick_configurable, trick))
+            self._checkbox_for_trick[trick] = trick_configurable
             self.trick_difficulties_layout.addWidget(trick_configurable, row, 0, 1, 1)
 
             trick_label = QtWidgets.QLabel(self.trick_level_tab)
@@ -220,7 +231,8 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             horizontal_slider.setOrientation(QtCore.Qt.Horizontal)
             horizontal_slider.setTickPosition(QtWidgets.QSlider.TicksAbove)
             horizontal_slider.setEnabled(False)
-            self.slider_for_trick[trick] = horizontal_slider
+            horizontal_slider.valueChanged.connect(functools.partial(self._on_slide_trick_slider, trick))
+            self._slider_for_trick[trick] = horizontal_slider
             self.trick_difficulties_layout.addWidget(horizontal_slider, row, 2, 1, 6)
 
             tool_button = QtWidgets.QToolButton(self.trick_level_tab)
@@ -230,6 +242,26 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             row += 1
 
         self.trick_level_layout.addLayout(self.trick_difficulties_layout)
+
+    def _on_check_trick_configurable(self, trick: SimpleResourceInfo, enabled: int):
+        enabled = bool(enabled)
+
+        with self._options:
+            values = self._options.layout_configuration.per_trick_level.values
+            if enabled:
+                values[trick.index] = self.logic_combo_box.currentData()
+            else:
+                del values[trick.index]
+            self._options._check_editable_and_mark_dirty()
+
+        self._slider_for_trick[trick].setEnabled(enabled)
+
+    def _on_slide_trick_slider(self, trick: SimpleResourceInfo, value: int):
+        if self._slider_for_trick[trick].isEnabled():
+            with self._options:
+                values = self._options.layout_configuration.per_trick_level.values
+                values[trick.index] = list(LayoutTrickLevel)[value]
+                self._options._check_editable_and_mark_dirty()
 
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()

@@ -1,7 +1,8 @@
 import dataclasses
 from enum import Enum
+from typing import Tuple, Iterator
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
+from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass, BitPackValue, BitPackDecoder
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
@@ -77,9 +78,29 @@ class LayoutElevators(BitPackEnum, Enum):
         return cls.VANILLA
 
 
+class PerTrickLevelConfiguration(BitPackValue):
+    values = {}
+
+    @classmethod
+    def default(cls):
+        return cls()
+
+    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+        yield from []
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+        return cls()
+
+    def __eq__(self, other):
+        # TODO: remove this
+        return True
+
+
 @dataclasses.dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
-    trick_level: LayoutTrickLevel
+    global_trick_level: LayoutTrickLevel
+    per_trick_level: PerTrickLevelConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     elevators: LayoutElevators
     starting_location: StartingLocation
@@ -98,7 +119,7 @@ class LayoutConfiguration(BitPackDataClass):
     def as_json(self) -> dict:
         return {
             "game": "mp2-echoes",
-            "trick_level": self.trick_level.value,
+            "trick_level": self.global_trick_level.value,
             "sky_temple_keys": self.sky_temple_keys.value,
             "elevators": self.elevators.value,
             "starting_location": self.starting_location.as_json,
@@ -112,7 +133,7 @@ class LayoutConfiguration(BitPackDataClass):
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return cls.from_params(
-            trick_level=LayoutTrickLevel(json_dict["trick_level"]),
+            global_trick_level=LayoutTrickLevel(json_dict["trick_level"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),
@@ -140,7 +161,7 @@ class LayoutConfiguration(BitPackDataClass):
     @classmethod
     def default(cls) -> "LayoutConfiguration":
         return cls.from_params(
-            trick_level=LayoutTrickLevel.default(),
+            global_trick_level=LayoutTrickLevel.default(),
             sky_temple_keys=LayoutSkyTempleKeyMode.default(),
             elevators=LayoutElevators.default(),
             starting_location=StartingLocation.default(),

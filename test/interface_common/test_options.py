@@ -195,7 +195,7 @@ def test_serialize_fields(option: Options):
 
 _sample_layout_configurations = [
     {
-        "trick_level": trick_level,
+        "global_trick_level": trick_level,
         "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
         "elevators": LayoutElevators.RANDOMIZED,
         "starting_location": StartingLocation.default(),
@@ -219,7 +219,7 @@ def test_edit_layout_trick_level(option: Options,
     option._nested_autosave_level = 1
 
     # Run
-    initial_layout_configuration_params["trick_level"] = new_trick_level
+    initial_layout_configuration_params["global_trick_level"] = new_trick_level
     setattr(option, "layout_configuration_trick_level", new_trick_level)
 
     # Assert

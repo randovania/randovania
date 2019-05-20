@@ -61,7 +61,7 @@ def _layout_config_with_data(request):
          patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)), \
          patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)):
         yield request.param["encoded"], LayoutConfiguration.from_params(
-            trick_level=request.param["trick"],
+            global_trick_level=request.param["trick"],
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
             starting_location=starting_location,

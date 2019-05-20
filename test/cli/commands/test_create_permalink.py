@@ -33,7 +33,7 @@ def test_create_permalink_logic(mock_print: MagicMock,
             warp_to_start=args.warp_to_start,
         ),
         layout_configuration=LayoutConfiguration.from_params(
-            trick_level=LayoutTrickLevel.HARD,
+            global_trick_level=LayoutTrickLevel.HARD,
             sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
             elevators=LayoutElevators.VANILLA,
             starting_location=StartingLocation.default(),

@@ -158,7 +158,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 def test_reach_size_from_start(echoes_game_description):
     # Setup
     configuration = LayoutConfiguration.from_params(
-        trick_level=LayoutTrickLevel.HYPERMODE,
+        global_trick_level=LayoutTrickLevel.HYPERMODE,
     )
     patches = GamePatches.with_game(echoes_game_description)
     patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(

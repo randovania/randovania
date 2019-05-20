@@ -42,7 +42,7 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
 
     # TODO: support for item loss
     return LayoutConfiguration.from_params(
-        trick_level=LayoutTrickLevel(args.trick_level),
+        global_trick_level=LayoutTrickLevel(args.trick_level),
         sky_temple_keys=LayoutSkyTempleKeyMode(sky_temple_keys),
         elevators=LayoutElevators.VANILLA,
         starting_location=StartingLocation.default(),
