@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Support for damage requirements without exactly one damage reduction item.
 
+-   Changed: Seed validation should run faster and with less errors now.
+
 ## [0.26.3] - 2019-05-10
 
 -   Changed: Tracker now raises an error if the current configuration is unsupported.
