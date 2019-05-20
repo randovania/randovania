@@ -96,7 +96,9 @@ class ResolverReach:
         else:
             satisfiable_requirements = frozenset()
 
-        return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements, logic)
+        return ResolverReach(reach_nodes, path_to_node,
+                             satisfiable_requirements,
+                             logic)
 
     def possible_actions(self,
                          state: State) -> Iterator[ResourceNode]:
