@@ -198,11 +198,11 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     game = copy.deepcopy(game)
     starting_state = calculate_starting_state(game, patches)
 
-    if configuration.trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+    if configuration.global_trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
         _add_minimal_restrictions_initial_resources(starting_state.resources,
                                                     game.resource_database)
 
-    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level,
+    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.global_trick_level,
                                                                            game.resource_database)
     add_resources_into_another(starting_state.resources, static_resources)
     add_resources_into_another(starting_state.resources,

@@ -353,11 +353,11 @@ class Options:
 
     @property
     def layout_configuration_trick_level(self) -> LayoutTrickLevel:
-        return self.layout_configuration.trick_level
+        return self.layout_configuration.global_trick_level
 
     @layout_configuration_trick_level.setter
     def layout_configuration_trick_level(self, value: LayoutTrickLevel):
-        self.set_layout_configuration_field("trick_level", value)
+        self.set_layout_configuration_field("global_trick_level", value)
 
     @property
     def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:
