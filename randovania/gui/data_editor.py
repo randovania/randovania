@@ -8,7 +8,7 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, Q
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
-from randovania.game_description.node import Node, DockNode, TeleporterNode
+from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
 from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.world import World
 from randovania.gui.common_qt_lib import set_default_window_icon
@@ -249,7 +249,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         self.generic_index += 1
-        new_node = Node(node_name, True, self.generic_index)
+        new_node = GenericNode(node_name, True, self.generic_index)
         self.current_area.nodes.append(new_node)
         self.current_area.connections[new_node] = {}
 
@@ -258,7 +258,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _remove_node(self):
         current_node = self.current_node
 
-        if not isinstance(current_node, Node):
+        if not isinstance(current_node, GenericNode):
             QMessageBox.warning(self, "Delete Node", "Can only remove Generic Nodes")
             return
 
