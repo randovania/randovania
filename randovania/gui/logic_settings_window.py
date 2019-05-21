@@ -3,7 +3,7 @@ import functools
 from typing import Optional, Dict
 
 from PySide2 import QtCore, QtWidgets
-from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
+from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel, QGridLayout
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
@@ -197,17 +197,6 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
         used_tricks = _used_tricks(self.world_list)
 
-        for i, trick_level in enumerate(LayoutTrickLevel):
-            if trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
-                continue
-
-            difficulty_label = QtWidgets.QLabel(self.trick_level_tab)
-            difficulty_label.setFixedWidth(40)
-            difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
-
-            difficulty_label.setText(trick_level.long_name)
-            self.trick_difficulties_layout.addWidget(difficulty_label, row, i + 2, 1, 1)
-
         row = 1
         for trick in sorted(self.resource_database.trick, key=lambda trick: trick.long_name):
             if trick.index not in _CONFIGURABLE_TRICKS or trick not in used_tricks:
@@ -223,21 +212,37 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             trick_label.setText(trick.long_name)
 
             self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
-
+            
+            slider_layout = QtWidgets.QGridLayout()
+            slider_layout.setHorizontalSpacing(0)
+            for i in range(12):
+                slider_layout.setColumnStretch(i, 1)
+            
             horizontal_slider = QtWidgets.QSlider(self.trick_level_tab)
             horizontal_slider.setMaximum(5)
             horizontal_slider.setPageStep(2)
-            horizontal_slider.setFixedWidth(43 * 6)
             horizontal_slider.setOrientation(QtCore.Qt.Horizontal)
             horizontal_slider.setTickPosition(QtWidgets.QSlider.TicksAbove)
             horizontal_slider.setEnabled(False)
             horizontal_slider.valueChanged.connect(functools.partial(self._on_slide_trick_slider, trick))
             self._slider_for_trick[trick] = horizontal_slider
-            self.trick_difficulties_layout.addWidget(horizontal_slider, row, 2, 1, 6)
+            slider_layout.addWidget(horizontal_slider, 0, 1, 1, 10)
+            
+            for i, trick_level in enumerate(LayoutTrickLevel):
+                if trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+                    continue
+                
+                difficulty_label = QtWidgets.QLabel(self.trick_level_tab)
+                difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
+                difficulty_label.setText(trick_level.long_name)
+            
+                slider_layout.addWidget(difficulty_label, 1, 2*i, 1, 2)
+            
+            self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
             tool_button = QtWidgets.QToolButton(self.trick_level_tab)
             tool_button.setText("?")
-            self.trick_difficulties_layout.addWidget(tool_button, row, 8, 1, 1)
+            self.trick_difficulties_layout.addWidget(tool_button, row, 3, 1, 1)
 
             row += 1
 
