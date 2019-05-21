@@ -1,4 +1,4 @@
-from distutils.version import StrictVersion, LooseVersion
+from distutils.version import StrictVersion
 from typing import NamedTuple, List, Tuple, Optional
 
 from randovania import VERSION
