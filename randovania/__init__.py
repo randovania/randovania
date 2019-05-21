@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from .version import version
 
 
 def get_data_path() -> Path:
@@ -10,4 +11,5 @@ def get_data_path() -> Path:
     return file_dir.joinpath("data")
 
 
-VERSION = "0.26.3"
+__version__ = version
+VERSION = version
