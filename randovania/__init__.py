@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
-from .version import version
+
+from randovania.version import version
 
 
 def get_data_path() -> Path:
