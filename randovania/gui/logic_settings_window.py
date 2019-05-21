@@ -209,7 +209,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self.trick_difficulties_layout.addWidget(difficulty_label, row, i + 2, 1, 1)
 
         row = 1
-        for trick in self.resource_database.trick:
+        for trick in sorted(self.resource_database.trick, key=lambda trick: trick.long_name):
             if trick.index not in _CONFIGURABLE_TRICKS or trick not in used_tricks:
                 continue
 
