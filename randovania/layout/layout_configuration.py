@@ -25,6 +25,23 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     def default(cls) -> "LayoutTrickLevel":
         return cls.NO_TRICKS
 
+    @classmethod
+    def from_number(cls, number: int) -> "LayoutTrickLevel":
+        if number == 0:
+            return cls.NO_TRICKS
+        elif number == 1:
+            return cls.TRIVIAL
+        elif number == 2:
+            return cls.EASY
+        elif number == 3:
+            return cls.NORMAL
+        elif number == 4:
+            return cls.HARD
+        elif number == 5:
+            return cls.HYPERMODE
+        else:
+            raise ValueError(f"No trick level with number {number}")
+
     @property
     def long_name(self) -> str:
         return _PRETTY_TRICK_LEVEL_NAME[self]
