@@ -74,6 +74,19 @@ _CONFIGURABLE_TRICKS = {
     15,  # Instant Morph
 }
 
+def _difficulties_for_trick(world_list: WorldList, trick: SimpleResourceInfo):
+    result = set()
+
+    for area in world_list.all_areas:
+        for node in area.nodes:
+            for connection in area.connections[node].values():
+                for alternative in connection.alternatives:
+                    for individual in alternative.values():
+                        if individual.resource == trick:
+                            result.add(LayoutTrickLevel.from_number(individual.amount))
+
+    return result
+
 
 def _used_tricks(world_list: WorldList):
     result = set()
@@ -228,15 +241,14 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self._slider_for_trick[trick] = horizontal_slider
             slider_layout.addWidget(horizontal_slider, 0, 1, 1, 10)
             
+            difficulties_for_trick = _difficulties_for_trick(self.world_list, trick)
             for i, trick_level in enumerate(LayoutTrickLevel):
-                if trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
-                    continue
+                if trick_level == LayoutTrickLevel.NO_TRICKS or trick_level in difficulties_for_trick:
+                    difficulty_label = QtWidgets.QLabel(self.trick_level_tab)
+                    difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
+                    difficulty_label.setText(trick_level.long_name)
                 
-                difficulty_label = QtWidgets.QLabel(self.trick_level_tab)
-                difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
-                difficulty_label.setText(trick_level.long_name)
-            
-                slider_layout.addWidget(difficulty_label, 1, 2*i, 1, 2)
+                    slider_layout.addWidget(difficulty_label, 1, 2*i, 1, 2)
             
             self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
