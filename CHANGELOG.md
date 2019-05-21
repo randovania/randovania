@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Average ammo provided per expansion is now shown with more precision.
 
 -   Added: `randovania echoes database list-dangerous-usage` command to list all
-	paths that requires a resource to not be collected.
+	paths that require a resource to not be collected.
 
 -   Added: Methods to get to Sunburst location by reaching the platform with the cannon
     with a scan dash (Normal and above) or with just Space Jump Boots (Easy and above).
@@ -44,11 +44,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Support for damage requirements without exactly one damage reduction item.
 
--   Changed: Seed validation should run faster and with less errors now.
+-   Changed: Seed validation should run faster and with fewer errors now.
 
 -   Added: Another joke hint.
 
 -   Changed: Updated credits.
+
+-   Fixed: Crossing Sanctuary Entrance via the Spider Ball Track now requires Boost Ball.
+
+-   Added: Method to cross Sanctuary Entrance with Screw Attack and without Space Jump Boots
+    (Trivial and above).
+
+-   Added: Method to cross Sanctuary Entrance, from the door to Power Junction to the door to
+    Temple Transport Access, with Spider Ball and Power Bombs (Easy and above).
+    
+-   Fixed: The method to get the Sanctuary Entrance item without Spider Ball now requires
+    Spider Guardian to not have been defeated.
+
+-   Added: Method to get to and use the Vigilance Class Turret in Sanctuary Entrance using
+    Space Jump Boots, Screw Attack, and Spider Ball. Spider Ball isn't required if Spider
+    Guardian hasn't been defeated.
+
+-   Fixed: In Sanctuary Entrance, going up the Spider Ball Track near the lore scan via the
+    intended method now requires Boost Ball and the Morph Ball Bomb.
+
+-   Added: Methods to go up the Spider Ball Track near the lore scan in Sanctuary Entrance
+    with Spider Ball and only one of the following items:
+    - Morph Ball Bomb (Trivial and above);
+    - Boost Ball (Trivial and above);
+    - Space Jump Boots (Easy and above).
+
 
 ## [0.26.3] - 2019-05-10
 
