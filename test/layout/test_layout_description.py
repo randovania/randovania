@@ -6,7 +6,8 @@ import pytest
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
-from randovania.layout.layout_configuration import LayoutTrickLevel, LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink

@@ -1,7 +1,8 @@
 from argparse import ArgumentParser
 
-from randovania.layout.layout_configuration import LayoutTrickLevel, LayoutSkyTempleKeyMode, LayoutConfiguration, \
+from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode, LayoutConfiguration, \
     LayoutElevators
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.starting_location import StartingLocation
 
 
@@ -42,7 +43,7 @@ def get_layout_configuration_from_args(args) -> LayoutConfiguration:
 
     # TODO: support for item loss
     return LayoutConfiguration.from_params(
-        global_trick_level=LayoutTrickLevel(args.trick_level),
+        trick_level_configuration=TrickLevelConfiguration(args.trick_level),
         sky_temple_keys=LayoutSkyTempleKeyMode(sky_temple_keys),
         elevators=LayoutElevators.VANILLA,
         starting_location=StartingLocation.default(),

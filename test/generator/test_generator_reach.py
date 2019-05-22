@@ -22,7 +22,8 @@ from randovania.generator.generator_reach import GeneratorReach, filter_reachabl
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
 from randovania.generator.item_pool.pool_creator import calculate_item_pool
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -158,7 +159,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 def test_reach_size_from_start(echoes_game_description):
     # Setup
     configuration = LayoutConfiguration.from_params(
-        global_trick_level=LayoutTrickLevel.HYPERMODE,
+        trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HYPERMODE),
     )
     patches = GamePatches.with_game(echoes_game_description)
     patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(

@@ -2,8 +2,9 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
     LayoutSkyTempleKeyMode
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocation
@@ -52,7 +53,7 @@ def test_decode_invalid(invalid: str):
 @pytest.mark.parametrize("layout", [
     LayoutConfiguration.default(),
     LayoutConfiguration.from_params(
-        global_trick_level=LayoutTrickLevel.HARD,
+        trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_GUARDIANS,
         elevators=LayoutElevators.RANDOMIZED,
     ),
@@ -104,7 +105,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock):
             warp_to_start=False,
         ),
         layout_configuration=LayoutConfiguration.from_params(
-            global_trick_level=LayoutTrickLevel.HARD,
+            trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
             elevators=LayoutElevators.RANDOMIZED,
         ),
     )

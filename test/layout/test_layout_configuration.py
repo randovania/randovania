@@ -7,8 +7,9 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode, \
     LayoutElevators
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -61,7 +62,7 @@ def _layout_config_with_data(request):
          patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)), \
          patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)):
         yield request.param["encoded"], LayoutConfiguration.from_params(
-            global_trick_level=request.param["trick"],
+            trick_level_configuration=TrickLevelConfiguration(request.param["trick"]),
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
             starting_location=starting_location,
