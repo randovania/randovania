@@ -207,22 +207,26 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.trick_difficulties_layout = QtWidgets.QGridLayout()
         self._checkbox_for_trick = {}
         self._slider_for_trick = {}
-        row = 0
 
         used_tricks = _used_tricks(self.world_list)
 
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+
         row = 1
-        for trick in sorted(self.resource_database.trick, key=lambda trick: trick.long_name):
+        for trick in sorted(self.resource_database.trick, key=lambda _trick: _trick.long_name):
             if trick.index not in _CONFIGURABLE_TRICKS or trick not in used_tricks:
                 continue
 
-            trick_configurable = QtWidgets.QCheckBox(self.trick_level_tab)
-            trick_configurable.setFixedWidth(20)
+            trick_configurable = QtWidgets.QCheckBox(self.trick_level_scroll_contents)
+            trick_configurable.setFixedWidth(16)
             trick_configurable.stateChanged.connect(functools.partial(self._on_check_trick_configurable, trick))
             self._checkbox_for_trick[trick] = trick_configurable
             self.trick_difficulties_layout.addWidget(trick_configurable, row, 0, 1, 1)
 
-            trick_label = QtWidgets.QLabel(self.trick_level_tab)
+            trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
+            trick_label.setSizePolicy(size_policy)
+            trick_label.setWordWrap(True)
+            trick_label.setFixedWidth(80)
             trick_label.setText(trick.long_name)
 
             self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
@@ -232,7 +236,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             for i in range(12):
                 slider_layout.setColumnStretch(i, 1)
             
-            horizontal_slider = QtWidgets.QSlider(self.trick_level_tab)
+            horizontal_slider = QtWidgets.QSlider(self.trick_level_scroll_contents)
             horizontal_slider.setMaximum(5)
             horizontal_slider.setPageStep(2)
             horizontal_slider.setOrientation(QtCore.Qt.Horizontal)
@@ -245,7 +249,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             difficulties_for_trick = _difficulties_for_trick(self.world_list, trick)
             for i, trick_level in enumerate(LayoutTrickLevel):
                 if trick_level == LayoutTrickLevel.NO_TRICKS or trick_level in difficulties_for_trick:
-                    difficulty_label = QtWidgets.QLabel(self.trick_level_tab)
+                    difficulty_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
                     difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
                     difficulty_label.setText(trick_level.long_name)
                 
@@ -253,7 +257,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             
             self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
-            tool_button = QtWidgets.QToolButton(self.trick_level_tab)
+            tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
             tool_button.setText("?")
             self.trick_difficulties_layout.addWidget(tool_button, row, 3, 1, 1)
 
