@@ -1,5 +1,5 @@
 import copy
-from typing import Tuple, Set
+from typing import Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -8,10 +8,9 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources, add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.translator_configuration import TranslatorConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
-from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
 _items_to_not_add_in_minimal_restrictions = {

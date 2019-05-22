@@ -181,7 +181,8 @@ def _convert_v8(options: dict) -> dict:
 def _convert_v9(options: dict) -> dict:
     if "layout_configuration" in options:
         options["layout_configuration"]["trick_level"] = {
-            "global_level": options["layout_configuration"].get("trick_level", "no-tricks")
+            "global_level": options["layout_configuration"].get("trick_level", "no-tricks"),
+            "specific_levels": {},
         }
 
     return options

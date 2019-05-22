@@ -19,9 +19,9 @@ from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
