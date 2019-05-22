@@ -10,7 +10,6 @@ from randovania.gui.tab_service import TabService
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 
-
 pytestmark  = pytest.mark.skipif(
     pytest.config.option.skip_gui_tests,
     reason="skipped due to --skip-gui-tests")

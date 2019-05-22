@@ -1,6 +1,5 @@
 import sys
 from multiprocessing import connection
-from pathlib import Path
 from unittest.mock import patch, MagicMock, ANY, call
 
 import pytest

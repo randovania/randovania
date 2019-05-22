@@ -1,5 +1,3 @@
-import copy
-
 import pytest
 
 from randovania.bitpacking import bitpacking

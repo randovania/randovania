@@ -5,8 +5,8 @@ import randovania.generator.item_pool.pickup_creator
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.major_item_state import MajorItemState
 
 

@@ -7,13 +7,13 @@ from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_patches import GamePatches
+from randovania.generator import generator
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
-from randovania.generator import generator
 
 skip_generation_tests = pytest.mark.skipif(
     pytest.config.option.skip_generation_tests,

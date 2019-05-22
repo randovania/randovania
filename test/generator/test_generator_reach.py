@@ -23,9 +23,9 @@ from randovania.generator.generator_reach import GeneratorReach, filter_reachabl
     advance_reach_with_possible_unsafe_resources
 from randovania.generator.item_pool.pool_creator import calculate_item_pool
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state
 

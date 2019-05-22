@@ -10,7 +10,6 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, LayoutSkyTempleKeyMode
-from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink

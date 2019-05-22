@@ -15,11 +15,11 @@ from randovania.game_description.resources.pickup_entry import ConditionalResour
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.generator.item_pool import pickup_creator
 from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.major_item_state import MajorItemState
-from randovania.generator.item_pool import pickup_creator
 
 
 @pytest.fixture(

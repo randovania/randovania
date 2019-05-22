@@ -5,8 +5,8 @@ import pytest
 
 from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
 @pytest.fixture(name="database")

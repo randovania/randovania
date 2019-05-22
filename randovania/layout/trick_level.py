@@ -3,6 +3,7 @@ import dataclasses
 from enum import Enum
 from typing import List, Dict, Iterator, Tuple, FrozenSet, Optional
 
+from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackValue, BitPackDecoder
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
@@ -50,27 +51,69 @@ class TrickLevelConfiguration(BitPackValue):
     global_level: LayoutTrickLevel = dataclasses.field(default_factory=LayoutTrickLevel.default)
     specific_levels: Dict[int, LayoutTrickLevel] = dataclasses.field(default_factory=dict)
 
+    def __post_init__(self):
+        if not isinstance(self.global_level, LayoutTrickLevel):
+            raise ValueError(f"Invalid global_level `{self.global_level}`, expected a LayoutTrickLevel")
+
+        all_possible_tricks = TrickLevelConfiguration.all_possible_tricks()
+        for trick, level in self.specific_levels.items():
+            if trick not in all_possible_tricks:
+                raise ValueError(f"Trick `{trick}` not a possible trick.")
+
+            if not isinstance(self.global_level, LayoutTrickLevel):
+                raise ValueError(f"Invalid level `{self.global_level}` for trick {trick}, expected a LayoutTrickLevel")
+
     @classmethod
     def default(cls):
         return cls()
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        yield from []
+        yield from self.global_level.bit_pack_encode(metadata)
+
+        encodable_levels = list(LayoutTrickLevel)
+        encodable_levels.remove(LayoutTrickLevel.MINIMAL_RESTRICTIONS)
+
+        for trick in sorted(TrickLevelConfiguration.all_possible_tricks()):
+            if trick in self.specific_levels:
+                yield from bitpacking.encode_bool(True)
+                yield from bitpacking.pack_array_element(self.specific_levels[trick], encodable_levels)
+            else:
+                yield from bitpacking.encode_bool(False)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        return cls()
+        global_level = LayoutTrickLevel.bit_pack_unpack(decoder, metadata)
+
+        encodable_levels = list(LayoutTrickLevel)
+        encodable_levels.remove(LayoutTrickLevel.MINIMAL_RESTRICTIONS)
+
+        specific_levels = {}
+        for trick in sorted(cls.all_possible_tricks()):
+            if bitpacking.decode_bool(decoder):
+                specific_levels[trick] = decoder.decode_element(encodable_levels)
+
+        return cls(global_level, specific_levels)
 
     @property
     def as_json(self) -> dict:
+        specific_levels = {
+            str(trick): level.value
+            for trick, level in self.specific_levels.items()
+        }
+
         return {
             "global_level": self.global_level.value,
+            "specific_levels": specific_levels,
         }
 
     @classmethod
     def from_json(cls, value: dict):
         return cls(
             global_level=LayoutTrickLevel(value["global_level"]),
+            specific_levels={
+                int(trick): LayoutTrickLevel(level)
+                for trick, level in value["specific_levels"].items()
+            },
         )
 
     def has_specific_level_for_trick(self, trick: SimpleResourceInfo) -> bool:

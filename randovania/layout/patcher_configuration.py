@@ -1,6 +1,5 @@
 import copy
 import dataclasses
-from dataclasses import dataclass
 from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackDataClass, BitPackEnum

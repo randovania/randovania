@@ -3,10 +3,10 @@ from unittest.mock import patch, MagicMock
 import randovania.cli.commands.create_permalink
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
     LayoutSkyTempleKeyMode
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.starting_location import StartingLocation
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 @patch("randovania.cli.commands.create_permalink._print_permalink", autospec=True)

@@ -11,9 +11,9 @@ from randovania.interface_common.options import Options
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
     LayoutSkyTempleKeyMode
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 @pytest.fixture(name="option")
@@ -46,6 +46,7 @@ def test_migrate_from_v1(option):
         "layout_configuration": {
             "trick_level": {
                 "global_level": "normal",
+                "specific_levels": {},
             },
             "sky_temple_keys": 9,
             "starting_resources": "vanilla-item-loss-enabled",
