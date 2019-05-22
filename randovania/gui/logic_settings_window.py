@@ -159,6 +159,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
         for trick, slider in self._slider_for_trick.items():
             level = per_trick_level.values.get(trick.index, trick_level)
+            slider.setEnabled(trick.index in per_trick_level.values)
             slider.setValue(list(LayoutTrickLevel).index(level))
 
         # Elevator
@@ -235,7 +236,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             horizontal_slider.setMaximum(5)
             horizontal_slider.setPageStep(2)
             horizontal_slider.setOrientation(QtCore.Qt.Horizontal)
-            horizontal_slider.setTickPosition(QtWidgets.QSlider.TicksAbove)
+            horizontal_slider.setTickPosition(QtWidgets.QSlider.TicksBelow)
             horizontal_slider.setEnabled(False)
             horizontal_slider.valueChanged.connect(functools.partial(self._on_slide_trick_slider, trick))
             self._slider_for_trick[trick] = horizontal_slider
@@ -271,13 +272,11 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
                 del values[trick.index]
             self._options._check_editable_and_mark_dirty()
 
-        self._slider_for_trick[trick].setEnabled(enabled)
-
     def _on_slide_trick_slider(self, trick: SimpleResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
             with self._options:
                 values = self._options.layout_configuration.per_trick_level.values
-                values[trick.index] = list(LayoutTrickLevel)[value]
+                values[trick.index] = LayoutTrickLevel.from_number(value)
                 self._options._check_editable_and_mark_dirty()
 
     def _on_trick_level_changed(self):
