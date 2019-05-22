@@ -1,6 +1,6 @@
 import dataclasses
 from enum import Enum
-from typing import Tuple, Iterator
+from typing import Tuple, Iterator, List, Dict, FrozenSet
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass, BitPackValue, BitPackDecoder
 from randovania.game_description.default_database import default_prime2_item_database
@@ -27,25 +27,18 @@ class LayoutTrickLevel(BitPackEnum, Enum):
 
     @classmethod
     def from_number(cls, number: int) -> "LayoutTrickLevel":
-        if number == 0:
-            return cls.NO_TRICKS
-        elif number == 1:
-            return cls.TRIVIAL
-        elif number == 2:
-            return cls.EASY
-        elif number == 3:
-            return cls.NORMAL
-        elif number == 4:
-            return cls.HARD
-        elif number == 5:
-            return cls.HYPERMODE
-        else:
-            raise ValueError(f"No trick level with number {number}")
+        return _TRICK_LEVEL_ORDER[number]
+
+    @property
+    def as_number(self) -> int:
+        return _TRICK_LEVEL_ORDER.index(self)
 
     @property
     def long_name(self) -> str:
         return _PRETTY_TRICK_LEVEL_NAME[self]
 
+
+_TRICK_LEVEL_ORDER: List[LayoutTrickLevel] = list(LayoutTrickLevel)
 
 _PRETTY_TRICK_LEVEL_NAME = {
     LayoutTrickLevel.NO_TRICKS: "No Tricks",
@@ -96,7 +89,7 @@ class LayoutElevators(BitPackEnum, Enum):
 
 
 class PerTrickLevelConfiguration(BitPackValue):
-    values = {}
+    values: Dict[int, LayoutTrickLevel] = {}
 
     @classmethod
     def default(cls):
@@ -112,6 +105,26 @@ class PerTrickLevelConfiguration(BitPackValue):
     def __eq__(self, other):
         # TODO: remove this
         return True
+
+    @classmethod
+    def all_possible_tricks(cls) -> FrozenSet[int]:
+        return frozenset({
+            0,  # Scan Dash
+            1,  # Difficult Bomb Jump
+            2,  # Slope Jump
+            3,  # R Jump
+            4,  # BSJ
+            5,  # Roll Jump
+            6,  # Underwater Dash
+            7,  # Air Underwater
+            8,  # Floaty
+            9,  # Infinite Speed
+            10,  # SA without SJ
+            11,  # Wall Boost
+            12,  # Jump off Enemy
+            # 14,  # Controller Reset
+            15,  # Instant Morph
+        })
 
 
 @dataclasses.dataclass(frozen=True)
