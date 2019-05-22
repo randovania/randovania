@@ -1,8 +1,6 @@
-from pyqt_distutils.build_ui import build_ui
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
-
-from randovania import VERSION
+from pyqt_distutils.build_ui import build_ui
 
 
 class custom_build_py(build_py):
@@ -16,7 +14,9 @@ with open("README.md") as readme_file:
 
 setup(
     name='randovania',
-    version=VERSION,
+    use_scm_version={
+        "write_to": "randovania/version.py",
+    },
     author='Henrique Gemignani',
     url='https://github.com/randovania/randovania',
     description='A randomizer for the Metroid Prime 2: Echoes.',
@@ -45,6 +45,10 @@ setup(
         'Topic :: Games/Entertainment',
     ],
     python_requires=">=3.7",
+    setup_requires=[
+        "setuptools_scm",
+        "pyqt-distutils",
+    ],
     install_requires=[
         'PySide2>=5.12',
         'aiofiles',
