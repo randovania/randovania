@@ -3,7 +3,7 @@ import functools
 from typing import Optional, Dict
 
 from PySide2 import QtCore, QtWidgets
-from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel, QGridLayout
+from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
@@ -18,7 +18,8 @@ from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
+    PerTrickLevelConfiguration
 from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
@@ -56,23 +57,6 @@ _TRICK_LEVEL_DESCRIPTION = {
     ],
 }
 
-
-_CONFIGURABLE_TRICKS = {
-    0,  # Scan Dash
-    1,  # Difficult Bomb Jump
-    2,  # Slope Jump
-    3,  # R Jump
-    4,  # BSJ
-    5,  # Roll Jump
-    6,  # Underwater Dash
-    7,  # Air Underwater
-    8,  # Floaty
-    9,  # Infinite Speed
-    10,  # SA without SJ
-    11,  # Wall Boost
-    12,  # Jump off Enemy
-    15,  # Instant Morph
-}
 
 def _difficulties_for_trick(world_list: WorldList, trick: SimpleResourceInfo):
     result = set()
@@ -208,13 +192,14 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self._checkbox_for_trick = {}
         self._slider_for_trick = {}
 
+        configurable_tricks = PerTrickLevelConfiguration.all_possible_tricks()
         used_tricks = _used_tricks(self.world_list)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 
         row = 1
         for trick in sorted(self.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick.index not in _CONFIGURABLE_TRICKS or trick not in used_tricks:
+            if trick.index not in configurable_tricks or trick not in used_tricks:
                 continue
 
             trick_configurable = QtWidgets.QCheckBox(self.trick_level_scroll_contents)
