@@ -114,7 +114,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         configuration = description.permalink.layout_configuration
         self.layout_seed_value_label.setText(str(description.permalink.seed_number))
-        self.layout_trick_value_label.setText(configuration.global_trick_level.value)
+        self.layout_trick_value_label.setText(configuration.trick_level_configuration.global_level.value)
         self.layout_keys_value_label.setText(str(configuration.sky_temple_keys.value))
         self.layout_elevators_value_label.setText(configuration.elevators.value)
 

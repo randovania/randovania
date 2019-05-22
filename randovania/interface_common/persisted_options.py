@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 9
+_CURRENT_OPTIONS_FILE_VERSION = 10
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -178,6 +178,15 @@ def _convert_v8(options: dict) -> dict:
     return options
 
 
+def _convert_v9(options: dict) -> dict:
+    if "layout_configuration" in options:
+        options["layout_configuration"]["trick_level"] = {
+            "global_level": options["layout_configuration"].get("trick_level", "no-tricks")
+        }
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     1: _convert_v1,
     2: _convert_v2,
@@ -187,6 +196,7 @@ _CONVERTER_FOR_VERSION = {
     6: _convert_v6,
     7: _convert_v7,
     8: _convert_v8,
+    9: _convert_v9,
 }
 
 

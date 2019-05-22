@@ -7,7 +7,8 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, PerTrickLevelConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
@@ -48,28 +49,26 @@ _events_for_vanilla_item_loss_from_ship = {
 }
 
 
-def static_resources_for_layout_logic(global_layout_logic: LayoutTrickLevel,
-                                      per_trick_level: PerTrickLevelConfiguration,
+def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
                                       resource_database: ResourceDatabase,
                                       ) -> Tuple[int, CurrentResources]:
     """
-    :param global_layout_logic:
-    :param per_trick_level:
+    :param configuration:
     :param resource_database:
     :return:
     """
 
-    all_used_tricks = PerTrickLevelConfiguration.all_possible_tricks()
+    all_used_tricks = TrickLevelConfiguration.all_possible_tricks()
     static_resources = {}
 
     for trick in resource_database.trick:
         if trick.index in all_used_tricks:
-            static_resources[trick] = per_trick_level.values.get(trick.index, global_layout_logic).as_number
+            static_resources[trick] = configuration.level_for_trick(trick).as_number
 
     # Exclude from Room Rando
     static_resources[resource_database.get_by_type_and_index(ResourceType.TRICK, 18)] = 5
 
-    return global_layout_logic.as_number, static_resources
+    return configuration.global_level.as_number, static_resources
 
 
 def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
@@ -157,12 +156,11 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     game = copy.deepcopy(game)
     starting_state = calculate_starting_state(game, patches)
 
-    if configuration.global_trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+    if configuration.trick_level_configuration.global_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
         _add_minimal_restrictions_initial_resources(starting_state.resources,
                                                     game.resource_database)
 
-    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.global_trick_level,
-                                                                           configuration.per_trick_level,
+    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
                                                                            game.resource_database)
     add_resources_into_another(starting_state.resources, static_resources)
     add_resources_into_another(starting_state.resources,

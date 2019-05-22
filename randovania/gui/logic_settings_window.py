@@ -18,8 +18,8 @@ from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutElevators, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
-    PerTrickLevelConfiguration
+from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
@@ -130,21 +130,19 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     # Options
     def on_options_changed(self, options: Options):
         # Trick Level
-        trick_level = options.layout_configuration_trick_level
+        trick_level_configuration = options.layout_configuration.trick_level_configuration
+        trick_level = trick_level_configuration.global_level
 
         set_combo_with_value(self.logic_combo_box, trick_level)
         self.logic_level_label.setText(_get_trick_level_description(trick_level))
 
-        per_trick_level = options.layout_configuration.per_trick_level
-
         for trick, checkbox in self._checkbox_for_trick.items():
             checkbox.setEnabled(trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS)
-            checkbox.setChecked(trick.index in per_trick_level.values)
+            checkbox.setChecked(trick_level_configuration.has_specific_level_for_trick(trick))
 
         for trick, slider in self._slider_for_trick.items():
-            level = per_trick_level.values.get(trick.index, trick_level)
-            slider.setEnabled(trick.index in per_trick_level.values)
-            slider.setValue(list(LayoutTrickLevel).index(level))
+            slider.setEnabled(trick_level_configuration.has_specific_level_for_trick(trick))
+            slider.setValue(trick_level_configuration.level_for_trick(trick).as_number)
 
         # Elevator
         set_combo_with_value(self.elevators_combo, options.layout_configuration_elevators)
@@ -192,7 +190,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self._checkbox_for_trick = {}
         self._slider_for_trick = {}
 
-        configurable_tricks = PerTrickLevelConfiguration.all_possible_tricks()
+        configurable_tricks = TrickLevelConfiguration.all_possible_tricks()
         used_tricks = _used_tricks(self.world_list)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
@@ -253,24 +251,34 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     def _on_check_trick_configurable(self, trick: SimpleResourceInfo, enabled: int):
         enabled = bool(enabled)
 
-        with self._options:
-            values = self._options.layout_configuration.per_trick_level.values
-            if enabled:
-                values[trick.index] = self.logic_combo_box.currentData()
-            else:
-                del values[trick.index]
-            self._options._check_editable_and_mark_dirty()
+        with self._options as options:
+            options.set_layout_configuration_field(
+                "trick_level_configuration",
+                options.layout_configuration.trick_level_configuration.set_level_for_trick(
+                    trick,
+                    self.logic_combo_box.currentData() if enabled else None
+                )
+            )
 
     def _on_slide_trick_slider(self, trick: SimpleResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
-            with self._options:
-                values = self._options.layout_configuration.per_trick_level.values
-                values[trick.index] = LayoutTrickLevel.from_number(value)
-                self._options._check_editable_and_mark_dirty()
+            with self._options as options:
+                options.set_layout_configuration_field(
+                    "trick_level_configuration",
+                    options.layout_configuration.trick_level_configuration.set_level_for_trick(
+                        trick,
+                        LayoutTrickLevel.from_number(value)
+                    )
+                )
 
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()
-        _update_options_when_true(self._options, "layout_configuration_trick_level", trick_level, True)
+        with self._options as options:
+            options.set_layout_configuration_field(
+                "trick_level_configuration",
+                dataclasses.replace(options.layout_configuration.trick_level_configuration,
+                                    global_level=trick_level)
+            )
 
     # Elevator
     def setup_elevator_elements(self):
