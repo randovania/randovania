@@ -20,7 +20,7 @@ from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     edit_mode: bool
     selected_node_button: QRadioButton = None
-    radio_button_to_node: Dict[QRadioButton, Node] = {}
+    radio_button_to_node: Dict[QRadioButton, Node]
     _area_with_displayed_connections: Optional[Area] = None
     _previous_selected_node: Optional[Node] = None
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
@@ -29,7 +29,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
+
         self.edit_mode = edit_mode
+        self.radio_button_to_node = {}
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
