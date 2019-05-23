@@ -7,12 +7,13 @@ from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_patches import GamePatches
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode
+from randovania.generator import generator
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
-from randovania.generator import generator
 
 skip_generation_tests = pytest.mark.skipif(
     pytest.config.option.skip_generation_tests,
@@ -83,8 +84,9 @@ _test_descriptions = [
         ,
     ),
     _create_test_layout_description(
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.HYPERMODE,
-                                                      ),
+        configuration=LayoutConfiguration.from_params(
+            trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HYPERMODE),
+        ),
         pickup_mapping=[91, 45, 17, 24, 4, 2, 23, 59, 2, 0, 2, 68, 8, 38, 2, 2, 2, 7, 4, 115, 37, 2, 86, 2, 76, 2, 4, 2,
                         117, 112, 17, 2, 2, 2, 13, 39, 88, 82, 102, 50, 57, 2, 52, 116, 2, 4, 2, 8, 118, 2, 2, 2, 1, 2,
                         2, 53, 74, 2, 2, 114, 4, 2, 4, 8, 2, 8, 2, 2, 19, 2, 43, 2, 2, 2, 2, 2, 2, 8, 4, 2, 2, 2, 4,
@@ -94,9 +96,10 @@ _test_descriptions = [
         ,
     ),
     _create_test_layout_description(
-        configuration=LayoutConfiguration.from_params(trick_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
-                                                      sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
-                                                      ),
+        configuration=LayoutConfiguration.from_params(
+            trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.MINIMAL_RESTRICTIONS),
+            sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
+        ),
         pickup_mapping=[8, 2, 4, 2, 21, 2, 38, 115, 2, 2, 86, 2, 2, 2, 8, 109, 76, 44, 100, 2, 8, 2, 4, 8, 2, 116, 2,
                         69, 2, 57, 2, 4, 2, 4, 8, 17, 2, 11, 117, 8, 39, 2, 2, 53, 27, 2, 2, 59, 2, 2, 79, 4, 24, 2, 2,
                         4, 46, 17, 4, 2, 1, 17, 74, 8, 2, 4, 43, 17, 13, 2, 118, 88, 4, 2, 2, 15, 2, 2, 8, 45, 112, 2,

@@ -9,10 +9,11 @@ import randovania.interface_common.options
 import randovania.interface_common.persisted_options
 from randovania.interface_common.options import Options
 from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
     LayoutSkyTempleKeyMode
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 @pytest.fixture(name="option")
@@ -43,7 +44,10 @@ def test_migrate_from_v1(option):
             "pickup_model_data_source": "etm",
         },
         "layout_configuration": {
-            "trick_level": "normal",
+            "trick_level": {
+                "global_level": "normal",
+                "specific_levels": {},
+            },
             "sky_temple_keys": 9,
             "starting_resources": "vanilla-item-loss-enabled",
             "starting_location": "ship",
@@ -195,7 +199,7 @@ def test_serialize_fields(option: Options):
 
 _sample_layout_configurations = [
     {
-        "trick_level": trick_level,
+        "trick_level_configuration": TrickLevelConfiguration(trick_level),
         "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
         "elevators": LayoutElevators.RANDOMIZED,
         "starting_location": StartingLocation.default(),
@@ -219,8 +223,8 @@ def test_edit_layout_trick_level(option: Options,
     option._nested_autosave_level = 1
 
     # Run
-    initial_layout_configuration_params["trick_level"] = new_trick_level
-    setattr(option, "layout_configuration_trick_level", new_trick_level)
+    initial_layout_configuration_params["trick_level_configuration"] = TrickLevelConfiguration(new_trick_level)
+    option.set_layout_configuration_field("trick_level_configuration", TrickLevelConfiguration(new_trick_level))
 
     # Assert
     assert option.layout_configuration == LayoutConfiguration.from_params(**initial_layout_configuration_params)

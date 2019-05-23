@@ -3,7 +3,6 @@ import pytest
 from randovania.game_description.requirements import RequirementSet
 from randovania.gui.data_editor import DataEditorWindow
 
-
 pytestmark = pytest.mark.skipif(
     pytest.config.option.skip_gui_tests,
     reason="skipped due to --skip-gui-tests")

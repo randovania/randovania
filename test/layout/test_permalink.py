@@ -2,11 +2,11 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutElevators, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
     LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocation
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
@@ -25,7 +25,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "YAAAfRePAWOAAADmgEU="
+    assert encoded == "cAAAfRePAAAFjgAAA5oH"
 
 
 @pytest.mark.parametrize("invalid", [
@@ -52,7 +52,7 @@ def test_decode_invalid(invalid: str):
 @pytest.mark.parametrize("layout", [
     LayoutConfiguration.default(),
     LayoutConfiguration.from_params(
-        trick_level=LayoutTrickLevel.HARD,
+        trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_GUARDIANS,
         elevators=LayoutElevators.RANDOMIZED,
     ),
@@ -94,7 +94,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "YAAAfReLCXOAAADmgNM="
+    encoded = "cAAAfReLCAAFzgAAA5of"
 
     expected = Permalink(
         seed_number=1000,
@@ -104,7 +104,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock):
             warp_to_start=False,
         ),
         layout_configuration=LayoutConfiguration.from_params(
-            trick_level=LayoutTrickLevel.HARD,
+            trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
             elevators=LayoutElevators.RANDOMIZED,
         ),
     )
@@ -126,7 +126,7 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            mock_layout_unpack: MagicMock,
                            ):
 
-    encoded = "YAAAfRgguw=="
+    encoded = "cAAAfRggwQ=="
     patcher_configuration = mock_packer_unpack.return_value
     layout_configuration = mock_layout_unpack.return_value
 

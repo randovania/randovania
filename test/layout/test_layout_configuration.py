@@ -7,11 +7,12 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel, LayoutSkyTempleKeyMode, \
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode, \
     LayoutElevators
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
+from randovania.layout.trick_level import TrickLevelConfiguration
 
 
 @dataclass(frozen=True)
@@ -26,42 +27,40 @@ class DummyValue(BitPackValue):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x16\x80',
-         "trick": LayoutTrickLevel.NO_TRICKS,
+        {"encoded": b'\xb4',
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'\xa0\x80',
-         "trick": LayoutTrickLevel.HYPERMODE,
+        {"encoded": b'\x04',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'\x89\x80',
-         "trick": LayoutTrickLevel.HARD,
+        {"encoded": b'L',
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
          "elevators": LayoutElevators.RANDOMIZED,
          },
-        {"encoded": b'\xc3\x80',
-         "trick": LayoutTrickLevel.MINIMAL_RESTRICTIONS,
+        {"encoded": b'\x1c',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.RANDOMIZED,
          },
     ],
     name="layout_config_with_data")
 def _layout_config_with_data(request):
+    trick_config = DummyValue()
     starting_location = DummyValue()
     major_items = DummyValue()
     ammo_config = DummyValue()
     translator_config = DummyValue()
     hints = DummyValue()
 
-    with patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
+    with patch.multiple(TrickLevelConfiguration, bit_pack_unpack=MagicMock(return_value=trick_config)), \
+         patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
          patch.multiple(MajorItemsConfiguration, bit_pack_unpack=MagicMock(return_value=major_items)), \
          patch.multiple(AmmoConfiguration, bit_pack_unpack=MagicMock(return_value=ammo_config)), \
          patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)), \
          patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)):
         yield request.param["encoded"], LayoutConfiguration.from_params(
-            trick_level=request.param["trick"],
+            trick_level_configuration=trick_config,
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
             starting_location=starting_location,

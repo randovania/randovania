@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum
-from random import Random
 from typing import List, NamedTuple, Optional
 
 from randovania.game_description.resources.pickup_index import PickupIndex

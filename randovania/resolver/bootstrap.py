@@ -1,15 +1,16 @@
 import copy
-from typing import Tuple, Set
+from typing import Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase, find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutTrickLevel
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.translator_configuration import TranslatorConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
-from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
 _items_to_not_add_in_minimal_restrictions = {
@@ -47,70 +48,26 @@ _events_for_vanilla_item_loss_from_ship = {
 }
 
 
-def expand_layout_logic(logic: LayoutTrickLevel) -> Tuple[int, Set[int]]:
+def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
+                                      resource_database: ResourceDatabase,
+                                      ) -> Tuple[int, CurrentResources]:
     """
-
-    :param logic:
-    :return:
-    """
-    tricks = {
-        0,  # Scan Dash
-        1,  # Difficult Bomb Jump
-        2,  # Slope Jump
-        3,  # R Jump
-        4,  # BSJ
-        5,  # Roll Jump
-        6,  # Underwater Dash
-        7,  # Air Underwater
-        8,  # Floaty
-        9,  # Infinite Speed
-        10,  # SA without SJ
-        11,  # Wall Boost
-        12,  # Jump off Enemy
-        # 14,  # Controller Reset
-        15,  # Instant Morph
-        18,  # Exclude from Room Rando
-    }
-
-    # Skipping Controller Reset and Exclude from Room Randomizer
-
-    if logic == LayoutTrickLevel.NO_TRICKS:
-        return 0, set()
-    elif logic == LayoutTrickLevel.TRIVIAL:
-        return 1, set()
-    elif logic == LayoutTrickLevel.EASY:
-        return 2, tricks
-    elif logic == LayoutTrickLevel.NORMAL:
-        return 3, tricks
-    elif logic == LayoutTrickLevel.HARD:
-        return 4, tricks
-    elif logic == LayoutTrickLevel.HYPERMODE or logic == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
-        return 5, tricks
-    else:
-        raise RuntimeError("Unsupported logic")
-
-
-def static_resources_for_layout_logic(
-        layout_logic: LayoutTrickLevel,
-        resource_database: ResourceDatabase,
-) -> Tuple[int, CurrentResources]:
-    """
-
-    :param layout_logic:
+    :param configuration:
     :param resource_database:
     :return:
     """
 
+    all_used_tricks = TrickLevelConfiguration.all_possible_tricks()
     static_resources = {}
-    difficulty_level, tricks_enabled = expand_layout_logic(layout_logic)
 
     for trick in resource_database.trick:
-        if trick.index in tricks_enabled:
-            static_resources[trick] = 5
-        else:
-            static_resources[trick] = 0
+        if trick.index in all_used_tricks:
+            static_resources[trick] = configuration.level_for_trick(trick).as_number
 
-    return difficulty_level, static_resources
+    # Exclude from Room Rando
+    static_resources[resource_database.get_by_type_and_index(ResourceType.TRICK, 18)] = 5
+
+    return configuration.global_level.as_number, static_resources
 
 
 def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
@@ -198,11 +155,11 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     game = copy.deepcopy(game)
     starting_state = calculate_starting_state(game, patches)
 
-    if configuration.trick_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+    if configuration.trick_level_configuration.global_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
         _add_minimal_restrictions_initial_resources(starting_state.resources,
                                                     game.resource_database)
 
-    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level,
+    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
                                                                            game.resource_database)
     add_resources_into_another(starting_state.resources, static_resources)
     add_resources_into_another(starting_state.resources,
