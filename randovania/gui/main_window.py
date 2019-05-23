@@ -119,6 +119,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
                 return
 
     def dropEvent(self, event):
+        from randovania.gui.iso_management_window import ISOManagementWindow
+
         for url in event.mimeData().urls():
             iso_path = url.toLocalFile()
             if os.path.splitext(iso_path)[1] == ".iso":
