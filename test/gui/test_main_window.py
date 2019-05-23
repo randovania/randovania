@@ -21,7 +21,7 @@ def _default_main_window() -> MainWindow:
     return create_window(Options(MagicMock()))
 
 
-@patch("randovania.gui.main_window.ISOManagementWindow.load_game", autospec=True)
+@patch("randovania.gui.iso_management_window.ISOManagementWindow.load_game", autospec=True)
 def test_drop_iso_event(mock_load_game: MagicMock,
                         default_main_window: MainWindow,
                         qtbot,
@@ -40,7 +40,7 @@ def test_drop_iso_event(mock_load_game: MagicMock,
     mock_load_game.assert_called_once_with(default_main_window.windows[0], Path("directory/games/game.iso"))
 
 
-@patch("randovania.gui.main_window.ISOManagementWindow.load_game", autospec=True)
+@patch("randovania.gui.iso_management_window.ISOManagementWindow.load_game", autospec=True)
 def test_drop_random_event(mock_load_game: MagicMock,
                            default_main_window: MainWindow,
                            qtbot,
