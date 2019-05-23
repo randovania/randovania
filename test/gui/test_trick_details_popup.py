@@ -1,10 +1,15 @@
 from unittest.mock import MagicMock
 
+import pytest
 from PySide2.QtWidgets import QWidget
 
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.gui import trick_details_popup
 from randovania.layout.trick_level import LayoutTrickLevel
+
+pytestmark = pytest.mark.skipif(
+    pytest.config.option.skip_gui_tests,
+    reason="skipped due to --skip-gui-tests")
 
 
 def test_click_on_link(echoes_game_description,
