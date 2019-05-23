@@ -17,12 +17,7 @@ from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file, \
     set_default_window_icon
-from randovania.gui.cosmetic_window import CosmeticWindow
 from randovania.gui.data_editor import DataEditorWindow
-from randovania.gui.game_patches_window import GamePatchesWindow
-from randovania.gui.iso_management_window import ISOManagementWindow
-from randovania.gui.logic_settings_window import LogicSettingsWindow
-from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
@@ -40,6 +35,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     menu_new_version: Optional[QAction] = None
     _current_version_url: Optional[str] = None
     _options: Options
+    _data_visualizer: Optional[DataEditorWindow] = None
 
     @property
     def _tab_widget(self):
@@ -79,6 +75,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         _translate = QtCore.QCoreApplication.translate
         self.tabs = []
+
+        from randovania.gui.game_patches_window import GamePatchesWindow
+        from randovania.gui.iso_management_window import ISOManagementWindow
+        from randovania.gui.logic_settings_window import LogicSettingsWindow
+        from randovania.gui.cosmetic_window import CosmeticWindow
+        from randovania.gui.main_rules import MainRulesWindow
 
         self.tab_windows = [
             (ISOManagementWindow, "ROM Settings"),
@@ -170,7 +172,20 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     # Menu Actions
     def _open_data_visualizer(self):
+        self.open_data_visualizer_at(None, None)
+
+    def open_data_visualizer_at(self,
+                                world_name: Optional[str],
+                                area_name: Optional[str],
+                                ):
         self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2(), False)
+
+        if world_name is not None:
+            self._data_visualizer.focus_on_world(world_name)
+
+        if area_name is not None:
+            self._data_visualizer.focus_on_area(area_name)
+
         self._data_visualizer.show()
 
     def _open_data_editor_default(self):
@@ -220,7 +235,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             options.advanced_timeout_during_generation = is_checked
 
     def _update_hints_text(self):
-        game_description = default_database.default_prime2_game_description(False)
+        game_description = default_database.default_prime2_game_description()
 
         entries = []
         for world in game_description.world_list.worlds:

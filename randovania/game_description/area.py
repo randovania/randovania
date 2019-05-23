@@ -1,4 +1,4 @@
-from typing import NamedTuple, List, Dict, Optional
+from typing import NamedTuple, List, Dict, Optional, Iterator, Tuple
 
 from randovania.game_description.node import Node, DockNode
 from randovania.game_description.requirements import RequirementSet
@@ -33,3 +33,13 @@ class Area(NamedTuple):
                 return node
 
         return None
+
+    @property
+    def all_connections(self) -> Iterator[Tuple[Node, Node, RequirementSet]]:
+        """
+        Iterates over all paths there are in this area.
+        :return: source, target and the requirements for it
+        """
+        for source in self.nodes:
+            for target, requirements in self.connections[source].items():
+                yield source, target, requirements
