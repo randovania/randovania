@@ -15,7 +15,8 @@ from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
-from randovania.gui.tab_service import TabService
+from randovania.gui.main_window import MainWindow
+from randovania.gui.trick_details_popup import TrickDetailsPopup
 from randovania.interface_common.options import Options
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode
@@ -62,12 +63,10 @@ def _difficulties_for_trick(world_list: WorldList, trick: SimpleResourceInfo):
     result = set()
 
     for area in world_list.all_areas:
-        for node in area.nodes:
-            for connection in area.connections[node].values():
-                for alternative in connection.alternatives:
-                    for individual in alternative.values():
-                        if individual.resource == trick:
-                            result.add(LayoutTrickLevel.from_number(individual.amount))
+        for _, _, requirements in area.all_connections:
+            for individual in requirements.all_individual:
+                if individual.resource == trick:
+                    result.add(LayoutTrickLevel.from_number(individual.amount))
 
     return result
 
@@ -76,12 +75,10 @@ def _used_tricks(world_list: WorldList):
     result = set()
 
     for area in world_list.all_areas:
-        for node in area.nodes:
-            for connection in area.connections[node].values():
-                for alternative in connection.alternatives:
-                    for individual in alternative.values():
-                        if individual.resource.resource_type == ResourceType.TRICK:
-                            result.add(individual.resource)
+        for _, _, requirements in area.all_connections:
+            for individual in requirements.all_individual:
+                if individual.resource.resource_type == ResourceType.TRICK:
+                    result.add(individual.resource)
 
     return result
 
@@ -102,14 +99,15 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
     _options: Options
     world_list: WorldList
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, main_window: MainWindow, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
         self.setupUi(self)
         self._options = options
+        self._main_window = main_window
 
-        game_description = default_database.default_prime2_game_description(False)
-        self.world_list = game_description.world_list
-        self.resource_database = game_description.resource_database
+        self.game_description = default_database.default_prime2_game_description()
+        self.world_list = self.game_description.world_list
+        self.resource_database = self.game_description.resource_database
 
         # Update with Options
         self.setup_trick_level_elements()
@@ -247,7 +245,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
             tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
             tool_button.setText("?")
-            tool_button.setVisible(False)
+            tool_button.clicked.connect(functools.partial(self._open_trick_details_popup, trick))
             self.trick_difficulties_layout.addWidget(tool_button, row, 3, 1, 1)
 
             row += 1
@@ -285,6 +283,15 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
                 dataclasses.replace(options.layout_configuration.trick_level_configuration,
                                     global_level=trick_level)
             )
+
+    def _open_trick_details_popup(self, trick: SimpleResourceInfo):
+        self._trick_details_popup = TrickDetailsPopup(
+            self._main_window,
+            self.game_description,
+            trick,
+            self._options.layout_configuration.trick_level_configuration.level_for_trick(trick),
+        )
+        self._trick_details_popup.show()
 
     # Elevator
     def setup_elevator_elements(self):
