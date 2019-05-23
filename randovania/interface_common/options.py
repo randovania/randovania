@@ -9,8 +9,7 @@ from randovania.interface_common import persistence
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, LayoutTrickLevel, \
-    LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, LayoutSkyTempleKeyMode
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -350,14 +349,6 @@ class Options:
                          dataclasses.replace(self.cosmetic_patches, pickup_markers=value))
 
     # Access to fields inside LayoutConfiguration
-
-    @property
-    def layout_configuration_trick_level(self) -> LayoutTrickLevel:
-        return self.layout_configuration.trick_level
-
-    @layout_configuration_trick_level.setter
-    def layout_configuration_trick_level(self, value: LayoutTrickLevel):
-        self.set_layout_configuration_field("trick_level", value)
 
     @property
     def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:

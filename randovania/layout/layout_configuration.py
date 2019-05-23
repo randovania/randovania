@@ -9,20 +9,7 @@ from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
-
-
-class LayoutTrickLevel(BitPackEnum, Enum):
-    NO_TRICKS = "no-tricks"
-    TRIVIAL = "trivial"
-    EASY = "easy"
-    NORMAL = "normal"
-    HARD = "hard"
-    HYPERMODE = "hypermode"
-    MINIMAL_RESTRICTIONS = "minimal-restrictions"
-
-    @classmethod
-    def default(cls) -> "LayoutTrickLevel":
-        return cls.NO_TRICKS
+from randovania.layout.trick_level import TrickLevelConfiguration
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
@@ -64,7 +51,7 @@ class LayoutElevators(BitPackEnum, Enum):
 
 @dataclasses.dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
-    trick_level: LayoutTrickLevel
+    trick_level_configuration: TrickLevelConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     elevators: LayoutElevators
     starting_location: StartingLocation
@@ -83,7 +70,7 @@ class LayoutConfiguration(BitPackDataClass):
     def as_json(self) -> dict:
         return {
             "game": "mp2-echoes",
-            "trick_level": self.trick_level.value,
+            "trick_level": self.trick_level_configuration.as_json,
             "sky_temple_keys": self.sky_temple_keys.value,
             "elevators": self.elevators.value,
             "starting_location": self.starting_location.as_json,
@@ -97,7 +84,7 @@ class LayoutConfiguration(BitPackDataClass):
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return cls.from_params(
-            trick_level=LayoutTrickLevel(json_dict["trick_level"]),
+            trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),
@@ -124,11 +111,4 @@ class LayoutConfiguration(BitPackDataClass):
 
     @classmethod
     def default(cls) -> "LayoutConfiguration":
-        return cls.from_params(
-            trick_level=LayoutTrickLevel.default(),
-            sky_temple_keys=LayoutSkyTempleKeyMode.default(),
-            elevators=LayoutElevators.default(),
-            starting_location=StartingLocation.default(),
-            major_items_configuration=MajorItemsConfiguration.default(),
-            ammo_configuration=AmmoConfiguration.default(),
-        )
+        return cls.from_params()
