@@ -14,7 +14,7 @@ class StartingLocationConfiguration(BitPackEnum, Enum):
 
 
 def _areas_list():
-    world_list = default_database.default_prime2_game_description(False).world_list
+    world_list = default_database.default_prime2_game_description().world_list
     return world_list, list(world_list.all_areas)
 
 

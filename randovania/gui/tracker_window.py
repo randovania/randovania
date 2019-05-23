@@ -28,8 +28,8 @@ class InvalidLayoutForTracker(Exception):
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker state
-    _collected_pickups: Dict[PickupEntry, int] = {}
-    _actions: List[Node] = []
+    _collected_pickups: Dict[PickupEntry, int]
+    _actions: List[Node]
 
     # Tracker configuration
     logic: Logic
@@ -38,14 +38,18 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _initial_state: State
 
     # UI tools
-    _asset_id_to_item: Dict[int, QTreeWidgetItem] = {}
-    _node_to_item: Dict[Node, QTreeWidgetItem] = {}
+    _asset_id_to_item: Dict[int, QTreeWidgetItem]
+    _node_to_item: Dict[Node, QTreeWidgetItem]
 
     def __init__(self, layout_configuration: LayoutConfiguration):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
+        self._collected_pickups = {}
+        self._actions = []
+        self._asset_id_to_item = {}
+        self._node_to_item = {}
         self.layout_configuration = layout_configuration
         self.game_description = data_reader.decode_data(layout_configuration.game_data)
 

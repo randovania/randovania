@@ -15,8 +15,7 @@ def default_prime2_resource_database() -> ResourceDatabase:
     return read_resource_database(default_data.decode_default_prime2()["resource_database"])
 
 
-def default_prime2_game_description(add_self_as_requirement_to_resources: bool = True,
-                                    ) -> GameDescription:
+def default_prime2_game_description() -> GameDescription:
     return data_reader.decode_data(default_data.decode_default_prime2())
 
 

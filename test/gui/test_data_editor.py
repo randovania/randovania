@@ -27,3 +27,20 @@ def test_apply_edit_connections_change(echoes_game_data,
 
     # Assert
     assert landing_site.connections[source][target] == RequirementSet.trivial()
+
+
+def test_select_area_by_name(echoes_game_data,
+                             qtbot,
+                             ):
+    # Setup
+    window = DataEditorWindow(echoes_game_data, True)
+    qtbot.addWidget(window)
+
+    # Run
+    window.focus_on_world("Torvus Bog")
+
+    assert window.current_area.name != "Forgotten Bridge"
+    window.focus_on_area("Forgotten Bridge")
+
+    # Assert
+    assert window.current_area.name == "Forgotten Bridge"
