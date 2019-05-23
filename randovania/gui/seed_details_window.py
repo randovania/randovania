@@ -34,14 +34,17 @@ def _hide_pickup_spoiler(button):
 
 class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     _on_bulk_change: bool = False
-    _history_items: List[QRadioButton] = []
-    pickup_spoiler_buttons: List[QPushButton] = []
+    _history_items: List[QRadioButton]
+    pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
 
     def __init__(self, json_path: Path):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
+
+        self._history_items = []
+        self.pickup_spoiler_buttons = []
         self.layout_description = LayoutDescription.from_file(json_path)
 
         # Keep the Layout Description visualizer ready, but invisible.

@@ -20,7 +20,7 @@ from randovania.gui.data_editor_ui import Ui_DataEditorWindow
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     edit_mode: bool
     selected_node_button: QRadioButton = None
-    radio_button_to_node: Dict[QRadioButton, Node] = {}
+    radio_button_to_node: Dict[QRadioButton, Node]
     _area_with_displayed_connections: Optional[Area] = None
     _previous_selected_node: Optional[Node] = None
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
@@ -29,7 +29,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
+
         self.edit_mode = edit_mode
+        self.radio_button_to_node = {}
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
@@ -96,12 +98,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.selected_node_button = self.sender()
             self.update_selected_node()
 
+    def focus_on_world(self, world_name: str):
+        self.world_selector_box.setCurrentIndex(self.world_selector_box.findText(world_name))
+
+    def focus_on_area(self, area_name: str):
+        self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
+
     def _on_click_link_to_other_node(self, link: str):
         info = re.match(r"^node://([^)]+)/([^)]+)/([^)]+)$", link)
         if info:
             world_name, area_name, node_name = info.group(1, 2, 3)
-            self.world_selector_box.setCurrentIndex(self.world_selector_box.findText(world_name))
-            self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
+            self.focus_on_world(world_name)
+            self.focus_on_area(area_name)
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
                     radio_button.setChecked(True)

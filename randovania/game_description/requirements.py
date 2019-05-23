@@ -356,10 +356,19 @@ class RequirementSet:
     def progression_resources(self) -> FrozenSet[SimpleResourceInfo]:
         return frozenset(
             individual.resource
-            for alternative in self.alternatives
-            for individual in alternative.values()
+            for individual in self.all_individual
             if isinstance(individual.resource, SimpleResourceInfo) and not individual.negate
         )
+
+    @property
+    def all_individual(self) -> Iterator[IndividualRequirement]:
+        """
+        Iterates over all individual requirements involved in this set
+        :return:
+        """
+        for alternative in self.alternatives:
+            for individual in alternative.values():
+                yield individual
 
 
 SatisfiableRequirements = FrozenSet[RequirementList]
