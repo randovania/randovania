@@ -79,6 +79,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Boost Ball (Trivial and above);
     - Space Jump Boots (Easy and above).
 
+-   Changed: In Sanctuary Temple, getting to the door to Controller Access via scan dashing
+    is now Hard and above, from Normal and above.
 
 ## [0.26.3] - 2019-05-10
 
