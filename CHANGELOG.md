@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.27.0] - 2019-05-28
+
 -   *Major* - Changed: Optimized the seed generation step. It should now take roughly
     half as long or even faster. 
     
@@ -81,6 +83,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: In Sanctuary Temple, getting to the door to Controller Access via scan dashing
     is now Hard and above, from Normal and above.
+    
+-   Added: A tab with all change logs.
 
 ## [0.26.3] - 2019-05-10
 
