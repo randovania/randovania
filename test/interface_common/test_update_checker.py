@@ -22,7 +22,7 @@ def test_versions_to_display_for_releases(current_version, last_changelog_versio
     ]
 
     # Run
-    change_logs, version_to_display = update_checker.versions_to_display_for_releases(
+    all_change_logs, change_logs, version_to_display = update_checker.versions_to_display_for_releases(
         StrictVersion("0.{}.0".format(current_version)),
         StrictVersion("0.{}.0".format(last_changelog_version)),
         releases)
@@ -37,4 +37,8 @@ def test_versions_to_display_for_releases(current_version, last_changelog_versio
     assert change_logs == [
         "## v0.{0}.0\n\nChangelog v0.{0}.0".format(i)
         for i in reversed(range(last_changelog_version + 1, current_version + 1))
+    ]
+    assert all_change_logs == [
+        "## v0.{0}.0\n\nChangelog v0.{0}.0".format(i)
+        for i in reversed(range(1, current_version + 1))
     ]
