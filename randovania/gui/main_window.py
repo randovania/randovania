@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Optional
 
 import markdown
-from PySide2 import QtCore
+from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
 from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
@@ -137,14 +137,35 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
-        change_logs, version_to_display = update_checker.versions_to_display_for_releases(
+        all_change_logs, new_change_logs, version_to_display = update_checker.versions_to_display_for_releases(
             current_version, last_changelog, releases)
 
         if version_to_display is not None:
             self.display_new_version(version_to_display)
 
-        if change_logs:
-            QMessageBox.information(self, "What's new", markdown.markdown("\n".join(change_logs)))
+        if all_change_logs:
+            changelog_tab = QtWidgets.QWidget()
+            changelog_tab.setObjectName("changelog_tab")
+            changelog_tab_layout = QtWidgets.QVBoxLayout(changelog_tab)
+            changelog_tab_layout.setObjectName("changelog_tab_layout")
+            changelog_scroll_area = QtWidgets.QScrollArea(changelog_tab)
+            changelog_scroll_area.setWidgetResizable(True)
+            changelog_scroll_area.setObjectName("changelog_scroll_area")
+            changelog_scroll_contents = QtWidgets.QWidget()
+            changelog_scroll_contents.setGeometry(QtCore.QRect(0, 0, 489, 337))
+            changelog_scroll_contents.setObjectName("changelog_scroll_contents")
+            changelog_scroll_layout = QtWidgets.QVBoxLayout(changelog_scroll_contents)
+            changelog_scroll_layout.setObjectName("changelog_scroll_layout")
+            changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
+            changelog_label.setObjectName("changelog_label")
+            changelog_label.setText(markdown.markdown("\n".join(all_change_logs)))
+            changelog_scroll_layout.addWidget(changelog_label)
+            changelog_scroll_area.setWidget(changelog_scroll_contents)
+            changelog_tab_layout.addWidget(changelog_scroll_area)
+            self.welcome_tab_widget.addTab(changelog_tab, "Change Log")
+
+        if new_change_logs:
+            QMessageBox.information(self, "What's new", markdown.markdown("\n".join(new_change_logs)))
             with self._options as options:
                 options.last_changelog_displayed = current_version
 

@@ -32,8 +32,9 @@ def get_version_for_release(release: dict) -> VersionDescription:
 def versions_to_display_for_releases(current_version: StrictVersion,
                                      last_changelog_version: StrictVersion,
                                      releases: List[dict],
-                                     ) -> Tuple[List[str], Optional[VersionDescription]]:
-    change_logs = []
+                                     ) -> Tuple[List[str], List[str], Optional[VersionDescription]]:
+    all_change_logs = []
+    new_change_logs = []
     displayed_new_version = False
     version_to_display = None
 
@@ -46,7 +47,11 @@ def versions_to_display_for_releases(current_version: StrictVersion,
                 version_to_display = version
                 displayed_new_version = True
 
-        elif strict_version > last_changelog_version:
-            change_logs.append("## {}\n\n{}".format(version.tag_name, version.change_log))
+        else:
+            log = "## {}\n\n{}".format(version.tag_name, version.change_log)
+            all_change_logs.append(log)
 
-    return change_logs, version_to_display
+            if strict_version > last_changelog_version:
+                new_change_logs.append(log)
+
+    return all_change_logs, new_change_logs, version_to_display
