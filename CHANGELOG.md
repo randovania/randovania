@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   *Major* - Changed: The resolver now keeps track of current energy during resolution.
+    This ensures you'll always have enough Energy Tanks for trips to Dark Aether.
+
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 
@@ -20,11 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Added: It's now possible to check where a certain trick is used on each
     difficulty.
-    
--   Added: Hint Scans are valued more by the logic, making Translators more likely.
 
--   *Major* - Changed: The resolver now keeps track of current energy during resolution.
-    This ensures you'll always have enough Energy Tanks for trips to Dark Aether.
+-   Added: Hint Scans are valued more by the logic, making Translators more likely.
 
 -   Changed: Joke item and locations now have a `(?)` added to make then slightly more
     obvious they're not serious.
