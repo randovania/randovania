@@ -37,7 +37,7 @@ class IndividualRequirement(NamedTuple):
 
         if self.resource.resource_type == ResourceType.DAMAGE:
             assert not self.negate, "Damage requirements shouldn't have the negate flag"
-            
+
             return current_energy > self.damage(current_resources)
 
         has_amount = current_resources.get(self.resource, 0) >= self.amount

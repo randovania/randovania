@@ -27,7 +27,7 @@ class DamageResourceInfo(NamedTuple):
                 multiplier *= reduction.damage_multiplier
 
         return multiplier
-        
+
     def __str__(self):
         return "Damage {}".format(self.long_name)
     
