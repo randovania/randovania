@@ -2,7 +2,6 @@ import base64
 import hashlib
 import json
 from dataclasses import dataclass
-from distutils.version import StrictVersion
 from pathlib import Path
 from typing import NamedTuple, Tuple, List
 
