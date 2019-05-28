@@ -53,11 +53,11 @@ def make_single_set(id_req: Tuple[SimpleResourceInfo, IndividualRequirement]) ->
     return RequirementSet([RequirementList(0, [id_req[1]])])
 
 
-def test_empty_requirement_set(database):
+def test_empty_requirement_set():
     assert not RequirementSet([]).satisfied({}, 99)
 
 
-def test_empty_requirement_list(database):
+def test_empty_requirement_list():
     assert RequirementList(0, []).satisfied({}, 99)
 
 
