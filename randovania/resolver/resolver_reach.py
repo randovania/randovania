@@ -69,12 +69,11 @@ class ResolverReach:
                     requirements = requirements.union(requirement_to_leave)
 
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = requirements.satisfied(initial_state.resources,
-                                                   initial_state.resource_database)
+                satisfied = requirements.satisfied(initial_state.resources, initial_state.energy)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
                     satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources,
-                                                                                  initial_state.resource_database)
+                                                                                  initial_state.energy)
 
                 if satisfied:
                     nodes_to_check.append(target_node)
@@ -101,28 +100,30 @@ class ResolverReach:
                              logic)
 
     def possible_actions(self,
-                         state: State) -> Iterator[ResourceNode]:
+                         state: State) -> Iterator[Tuple[ResourceNode, int]]:
 
         for node in self.collectable_resource_nodes(state):
-            if self._logic.get_additional_requirements(node).satisfied(state.resources, state.resource_database):
-                yield node
+            additional_requirements = self._logic.get_additional_requirements(node)
+            if additional_requirements.satisfied(state.resources, state.energy):
+                yield node, additional_requirements.minimum_damage(state.resources, state.energy)
             else:
                 debug.log_skip_action_missing_requirement(node, self._logic.game,
                                                           self._logic.get_additional_requirements(node))
 
-    def satisfiable_actions(self, state: State) -> Iterator[ResourceNode]:
+    def satisfiable_actions(self, state: State) -> Iterator[Tuple[ResourceNode, int]]:
 
         if self._satisfiable_requirements:
             # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
             interesting_resources = calculate_interesting_resources(self._satisfiable_requirements,
                                                                     state.resources,
+                                                                    state.energy,
                                                                     state.resource_database)
 
             # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
-            for action in self.possible_actions(state):
+            for action, damage in self.possible_actions(state):
                 for resource, amount in action.resource_gain_on_collect(state.patches, state.resources):
                     if resource in interesting_resources:
-                        yield action
+                        yield action, damage
                         break
 
     def collectable_resource_nodes(self,

@@ -30,9 +30,9 @@ def test_logbook_node_requirements_to_leave(logbook_node,
     to_leave = node.requirements_to_leave(empty_patches, {})
 
     # Assert
-    assert not to_leave.satisfied({}, None)
-    assert to_leave.satisfied({scan_visor: 1}, None) != has_translator
-    assert to_leave.satisfied({scan_visor: 1, translator: 1}, None)
+    assert not to_leave.satisfied({}, 99)
+    assert to_leave.satisfied({scan_visor: 1}, 99) != has_translator
+    assert to_leave.satisfied({scan_visor: 1, translator: 1}, 99)
 
 
 def test_logbook_node_can_collect(logbook_node,

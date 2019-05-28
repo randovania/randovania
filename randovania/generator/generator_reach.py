@@ -122,7 +122,7 @@ class GeneratorReach:
             if extra_requirement is not None:
                 requirements = requirements.union(extra_requirement)
 
-            satisfied = requirements.satisfied(self._state.resources, self._state.resource_database)
+            satisfied = requirements.satisfied(self._state.resources, self._state.energy)
             yield target_node, requirements, satisfied
 
     def _expand_graph(self, paths_to_check: List[GraphPath]):
@@ -273,7 +273,7 @@ class GeneratorReach:
         # Check if we can expand the corners of our graph
         # TODO: check if expensive. We filter by only nodes that depends on a new resource
         for edge, requirements in self._unreachable_paths.items():
-            if requirements.satisfied(self._state.resources, self._state.resource_database):
+            if requirements.satisfied(self._state.resources, self._state.energy):
                 from_node, to_node = edge
                 paths_to_check.append(GraphPath(from_node, to_node, requirements))
                 edges_to_remove.append(edge)
@@ -297,7 +297,7 @@ class GeneratorReach:
                 requirements: RequirementSet = attributes["requirements"]
                 dangerous = requirements.dangerous_resources
                 if dangerous and new_dangerous_resources.intersection(dangerous):
-                    if not requirements.satisfied(new_state.resources, new_state.resource_database):
+                    if not requirements.satisfied(new_state.resources, new_state.energy):
                         edges_to_remove.append((source, target))
 
             for edge in edges_to_remove:

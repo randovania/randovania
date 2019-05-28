@@ -21,7 +21,7 @@ def _simplify_requirement_list(self: RequirementList, state: State,
         if item.negate:
             return None
 
-        if item.satisfied(state.resources, state.resource_database):
+        if item.satisfied(state.resources, state.energy):
             continue
 
         if item.resource.resource_type.is_usable_for_requirement and item.resource not in dangerous_resources:
@@ -75,19 +75,22 @@ def _inner_advance_depth(state: State,
     :return:
     """
 
-    if logic.game.victory_condition.satisfied(state.resources, state.resource_database):
+    if logic.game.victory_condition.satisfied(state.resources, state.energy):
         return state, True
 
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
+    if state.node.heal:
+        state = state.heal()
+
     debug.log_new_advance(state, reach)
     status_update("Resolving... {} total resources".format(len(state.resources)))
 
-    for action in reach.possible_actions(state):
+    for action, damage in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action):
 
-            potential_state = state.act_on_node(action, path=reach.path_to_node[action])
+            potential_state = state.act_on_node(action, path=reach.path_to_node[action], damage=damage)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
             # If we can go back to where we were, it's a simple safe node
@@ -104,9 +107,9 @@ def _inner_advance_depth(state: State,
                 return new_result
 
     has_action = False
-    for action in reach.satisfiable_actions(state):
+    for action, damage in reach.satisfiable_actions(state):
         new_result = _inner_advance_depth(
-            state=state.act_on_node(action, path=reach.path_to_node[action]),
+            state=state.act_on_node(action, path=reach.path_to_node[action], damage=damage),
             logic=logic,
             status_update=status_update)
 

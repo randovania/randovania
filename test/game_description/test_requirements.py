@@ -54,11 +54,11 @@ def make_single_set(id_req: Tuple[SimpleResourceInfo, IndividualRequirement]) ->
 
 
 def test_empty_requirement_set(database):
-    assert not RequirementSet([]).satisfied({}, database)
+    assert not RequirementSet([]).satisfied({}, 99)
 
 
 def test_empty_requirement_list(database):
-    assert RequirementList(0, []).satisfied({}, database)
+    assert RequirementList(0, []).satisfied({}, 99)
 
 
 def test_simplify_requirement_set_static(database):
@@ -158,7 +158,7 @@ def test_minimum_satisfied_difficulty(database: ResourceDatabase, resources, exp
         for x in resources
     }
     res[database.difficulty_resource] = 10
-    diff = the_set.minimum_satisfied_difficulty(res, database)
+    diff = the_set.minimum_satisfied_difficulty(res, 99, database)
     assert diff == expected_level
 
 
