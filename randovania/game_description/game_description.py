@@ -78,7 +78,7 @@ class GameDescription:
             _calculate_dangerous_resources_in_db(self.dock_weakness_database))
 
     def simplify_connections(self, resources):
-        self.world_list.simplify_connections(resources, self.resource_database)
+        self.world_list.simplify_connections(resources)
 
     def all_editable_teleporter_nodes(self) -> Iterator[TeleporterNode]:
         energy_controllers = {

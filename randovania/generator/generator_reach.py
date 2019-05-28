@@ -316,7 +316,7 @@ class GeneratorReach:
         for (_, node), requirements in self._unreachable_paths.items():
             if self.is_reachable_node(node):
                 continue
-            requirements = requirements.simplify(self.state.resources, self.game.resource_database)
+            requirements = requirements.simplify(self.state.resources)
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
