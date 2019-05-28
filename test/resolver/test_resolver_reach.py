@@ -7,7 +7,7 @@ from randovania.resolver.resolver_reach import ResolverReach
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = ResolverReach([], {}, frozenset(), MagicMock())
+    reach = ResolverReach({}, {}, frozenset(), MagicMock())
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -23,7 +23,7 @@ def test_possible_actions_no_resources():
     type(node_b).is_resource_node = prop_b = PropertyMock(return_value=True)
 
     # Run
-    reach = ResolverReach([node_a, node_b], {}, frozenset(), MagicMock())
+    reach = ResolverReach({node_a: 1, node_b: 1}, {}, frozenset(), MagicMock())
     options = list(action for action, damage in reach.possible_actions(state))
 
     # Assert
@@ -42,7 +42,7 @@ def test_possible_actions_with_event():
     event.can_collect.return_value = True
 
     # Run
-    reach = ResolverReach([event], {}, frozenset(), logic)
+    reach = ResolverReach({event: 1}, {}, frozenset(), logic)
     options = list(action for action, damage in reach.possible_actions(state))
 
     # Assert
