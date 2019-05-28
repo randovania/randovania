@@ -23,6 +23,11 @@ from randovania.resolver.state import State, state_with_pickup
 X = TypeVar("X")
 
 
+_RESOURCES_WEIGHT_MULTIPLIER = 1
+_INDICES_WEIGHT_MULTIPLIER = 1
+_LOGBOOKS_WEIGHT_MULTIPLIER = 1
+
+
 def _filter_not_in_dict(elements: Iterator[X],
                         dictionary: Dict[X, Any],
                         ) -> Iterator[X]:
@@ -221,7 +226,11 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            name: str
                            ) -> float:
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
-    weight = len(potential_uncollected.resources) + len(potential_uncollected.indices)
+    weight = sum([
+        len(potential_uncollected.resources) * _RESOURCES_WEIGHT_MULTIPLIER,
+        len(potential_uncollected.indices) * _INDICES_WEIGHT_MULTIPLIER,
+        len(potential_uncollected.logbooks) * _LOGBOOKS_WEIGHT_MULTIPLIER,
+    ])
 
     return weight
 
