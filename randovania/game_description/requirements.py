@@ -138,10 +138,11 @@ class RequirementList:
         """
         A list is considered satisfied if each IndividualRequirement that belongs to it is satisfied.
         In particular, an empty RequirementList is considered satisfied.
-        :param database:
         :param current_resources:
+        :param current_energy:
         :return:
         """
+
         energy = current_energy
         for requirement in self.values():
             if requirement.satisfied(current_resources, current_energy):
@@ -151,13 +152,10 @@ class RequirementList:
                 return False
         return True
 
-    def simplify(self,
-                 static_resources: CurrentResources,
-                 database: ResourceDatabase) -> Optional["RequirementList"]:
+    def simplify(self, static_resources: CurrentResources) -> Optional["RequirementList"]:
         """
         Creates a new RequirementList that does not contain reference to resources in static_resources
         :param static_resources:
-        :param database:
         :return: None if this RequirementList is impossible to satisfy, otherwise the simplified RequirementList.
         """
         items = []
@@ -316,10 +314,10 @@ class RequirementSet:
         else:
             return None
 
-    def simplify(self, static_resources: CurrentResources, database: ResourceDatabase) -> "RequirementSet":
+    def simplify(self, static_resources: CurrentResources) -> "RequirementSet":
         """"""
         new_alternatives = [
-            alternative.simplify(static_resources, database)
+            alternative.simplify(static_resources)
             for alternative in self.alternatives
         ]
         return RequirementSet(alternative

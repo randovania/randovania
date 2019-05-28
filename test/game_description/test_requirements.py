@@ -61,7 +61,7 @@ def test_empty_requirement_list(database):
     assert RequirementList(0, []).satisfied({}, 99)
 
 
-def test_simplify_requirement_set_static(database):
+def test_simplify_requirement_set_static():
     res_a, id_req_a = make_req_a()
     res_b, id_req_b = make_req_b()
 
@@ -70,9 +70,9 @@ def test_simplify_requirement_set_static(database):
         RequirementList(0, [id_req_b]),
     ])
 
-    simple_1 = the_set.simplify({res_a: 0, res_b: 0}, database)
-    simple_2 = the_set.simplify({res_a: 0, res_b: 1}, database)
-    simple_3 = the_set.simplify({res_a: 1, res_b: 1}, database)
+    simple_1 = the_set.simplify({res_a: 0, res_b: 0})
+    simple_2 = the_set.simplify({res_a: 0, res_b: 1})
+    simple_3 = the_set.simplify({res_a: 1, res_b: 1})
 
     assert simple_1.alternatives == frozenset()
     assert simple_2.alternatives == frozenset([RequirementList(0, [])])
