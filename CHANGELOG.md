@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Added: It's now possible to check where a certain trick is used on each
     difficulty.
+    
+-   Added: Hint Scans are valued more by the logic, making Translators more likely.
 
 -   Changed: Joke item and locations now have a `(?)` added to make then slightly more
     obvious they're not serious.
