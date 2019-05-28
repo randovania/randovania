@@ -187,7 +187,7 @@ def retcon_playthrough_filler(game: GameDescription,
 
         reach = advance_reach_with_possible_unsafe_resources(reach)
 
-        if game.victory_condition.satisfied(reach.state.resources, reach.state.resource_database):
+        if game.victory_condition.satisfied(reach.state.resources, reach.state.energy):
             debug.debug_print("Finished because we can win")
             break
 
@@ -207,6 +207,7 @@ def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
     interesting_resources = calculate_interesting_resources(
         satisfiable_requirements,
         reach.state.resources,
+        reach.state.energy,
         reach.state.resource_database
     )
 
