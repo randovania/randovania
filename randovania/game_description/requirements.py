@@ -288,8 +288,8 @@ class RequirementSet:
         """
         Checks if at least one alternative is satisfied with the given resources.
         In particular, an empty RequirementSet is *never* considered satisfied.
-        :param database:
         :param current_resources:
+        :param current_energy:
         :return:
         """
         return any(
@@ -299,12 +299,11 @@ class RequirementSet:
     def minimum_satisfied_difficulty(self,
                                      current_resources: CurrentResources,
                                      current_energy: int,
-                                     database: ResourceDatabase,
                                      ) -> Optional[int]:
         """
         Gets the minimum difficulty that is currently satisfied
-        :param database:
         :param current_resources:
+        :param current_energy:
         :return:
         """
         difficulties = [
