@@ -2,7 +2,6 @@ from functools import lru_cache
 from math import ceil
 from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple
 
-from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
