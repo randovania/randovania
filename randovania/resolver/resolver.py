@@ -81,9 +81,6 @@ def _inner_advance_depth(state: State,
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
-    if state.node.heal:
-        state = state.heal()
-
     debug.log_new_advance(state, reach)
     status_update("Resolving... {} total resources".format(len(state.resources)))
 

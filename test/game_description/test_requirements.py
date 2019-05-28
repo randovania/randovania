@@ -158,7 +158,7 @@ def test_minimum_satisfied_difficulty(database: ResourceDatabase, resources, exp
         for x in resources
     }
     res[database.difficulty_resource] = 10
-    diff = the_set.minimum_satisfied_difficulty(res, 99, database)
+    diff = the_set.minimum_satisfied_difficulty(res, 99)
     assert diff == expected_level
 
 
