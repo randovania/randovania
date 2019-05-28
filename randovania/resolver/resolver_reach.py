@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Dict, Set, List, Iterator, Tuple, FrozenSet
+from typing import Dict, Set, Iterator, Tuple, FrozenSet
 
 import math
 

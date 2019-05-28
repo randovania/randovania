@@ -24,7 +24,7 @@ class IndividualRequirement(NamedTuple):
             database.get_by_type_and_index(resource_type, requirement_index),
             amount,
             negate)
-    
+
     def damage(self, current_resources: CurrentResources) -> int:
         if self.resource.resource_type == ResourceType.DAMAGE:
             return ceil(self.resource.damage_reduction(current_resources) * self.amount)
