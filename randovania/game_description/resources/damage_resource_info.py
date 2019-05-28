@@ -18,7 +18,7 @@ class DamageResourceInfo(NamedTuple):
     @property
     def resource_type(self) -> ResourceType:
         return ResourceType.DAMAGE
-    
+
     def damage_reduction(self, current_resources: "CurrentResources") -> float:
         multiplier = 1
 
