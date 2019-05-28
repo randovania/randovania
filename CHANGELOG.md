@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Added: Hint Scans are valued more by the logic, making Translators more likely.
 
+-   *Major* - Changed: The resolver now keeps track of current energy during resolution.
+    This ensures you'll always have enough Energy Tanks for trips to Dark Aether.
+
 -   Changed: Joke item and locations now have a `(?)` added to make then slightly more
     obvious they're not serious.
 
