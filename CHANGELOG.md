@@ -20,15 +20,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Changed: There's no more hints with joke locations.
 
+-   Added: Method to open Seeker doors with Seeker Launcher, Screw Attack, and 4 missiles.
+
 ## [0.27.1] - 2019-05-30
 
--   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 
+-   Fixed: Specific trick levels are now persisted correctly across multiple sessions.
 
 ## [0.27.0] - 2019-05-28
 
 -   *Major* - Changed: Optimized the seed generation step. It should now take roughly
     half as long or even faster. 
-    
+
 -   *Major* - Added: It's now possible to configure the difficulty on a per-trick basis.
 
 -   *Major* - Added: It's now possible to check where a certain trick is used on each
@@ -83,7 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to cross Sanctuary Entrance, from the door to Power Junction to the door to
     Temple Transport Access, with Spider Ball and Power Bombs (Easy and above).
-    
+
 -   Fixed: The method to get the Sanctuary Entrance item without Spider Ball now requires
     Spider Guardian to not have been defeated.
 
@@ -102,7 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: In Sanctuary Temple, getting to the door to Controller Access via scan dashing
     is now Hard and above, from Normal and above.
-    
+
 -   Added: A tab with all change logs.
 
 ## [0.26.3] - 2019-05-10
@@ -137,7 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   **MAJOR** - Added: Option to change which translator each translator gate in the
     game needs, including choosing a random one.
-    
+
 -   **MAJOR** - Added: Luminoth Lore scans now includes hints for where major items
     are located, as well as what the Temple Guardians bosses drop and vanilla Light Suit.
 
@@ -148,7 +150,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Option to change how much damage you take from Dark Aether when using
     Varia Suit and Dark Suit.
-  
+
 -   Added: Progressive Launcher: a progression between Missile Launcher and Seeker Launcher.
 
 -   Changed: Logic considers the Translator Gates in GFMC Compound and Torvus Temple
@@ -161,19 +163,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The Slope Jump method in Great Bridge for Abandoned Worksite is now Hard
     and above, from Normal.
-    
+
 -   Changed: Crossing the statue in Training Chamber before it's moved with Boost and
     Spider is now Hard and above, from Hypermode.
-    
+
 -   Added: Option to disable the Sky Temple Key hints or to hide the Area name.    
-    
+
 -   Changed: The location in the Sky Temple Key hint is now colored.
 
 -   Changed: There can now be a total of 99 of any single Major Item, up from 9.
 
 -   Changed: Improved elevator room names. There's now a short and clear name for all
     elevators.
-    
+
 -   Changed: The changed room names now apply for when elevators are vanilla as well.
 
 -   Fixed: Going from randomized elevators to vanilla elevators no longer requires a
@@ -189,7 +191,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Docks and Elevators now have usable links in the Data Visualizer. These links
     brings you to the matching node.
-    
+
 -   Added: The message when collecting the item in Mining Station B now displays when in
     the wrong layer.
 
