@@ -84,10 +84,10 @@ def _inner_advance_depth(state: State,
     debug.log_new_advance(state, reach)
     status_update("Resolving... {} total resources".format(len(state.resources)))
 
-    for action, damage in reach.possible_actions(state):
+    for action, energy in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action):
 
-            potential_state = state.act_on_node(action, path=reach.path_to_node[action], damage=damage)
+            potential_state = state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
             # If we can go back to where we were, it's a simple safe node
@@ -104,9 +104,9 @@ def _inner_advance_depth(state: State,
                 return new_result
 
     has_action = False
-    for action, damage in reach.satisfiable_actions(state):
+    for action, energy in reach.satisfiable_actions(state):
         new_result = _inner_advance_depth(
-            state=state.act_on_node(action, path=reach.path_to_node[action], damage=damage),
+            state=state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy),
             logic=logic,
             status_update=status_update)
 
