@@ -13,7 +13,7 @@ from randovania.resolver.state import State
 
 class ResolverReach:
     _nodes: Tuple[Node, ...]
-    _damage_for_node: Dict[Node, int]
+    _energy_at_node: Dict[Node, int]
     path_to_node: Dict[Node, Tuple[Node, ...]]
     _satisfiable_requirements: SatisfiableRequirements
     _safe_nodes: FrozenSet[Node]
@@ -37,7 +37,7 @@ class ResolverReach:
                  requirements: SatisfiableRequirements,
                  logic: Logic):
         self._nodes = tuple(nodes.keys())
-        self._damage_for_node = nodes
+        self._energy_at_node = nodes
         self._logic = logic
         self.path_to_node = path_to_node
         self._satisfiable_requirements = requirements
@@ -122,9 +122,8 @@ class ResolverReach:
 
         for node in self.collectable_resource_nodes(state):
             additional_requirements = self._logic.get_additional_requirements(node)
-            if additional_requirements.satisfied(state.resources, state.energy):
-                yield node, self._damage_for_node[node] + additional_requirements.minimum_damage(state.resources,
-                                                                                                 state.energy)
+            if additional_requirements.satisfied(state.resources, self._energy_at_node[node]):
+                yield node, self._energy_at_node[node]
             else:
                 debug.log_skip_action_missing_requirement(node, self._logic.game,
                                                           self._logic.get_additional_requirements(node))
@@ -139,10 +138,10 @@ class ResolverReach:
                                                                     state.resource_database)
 
             # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
-            for action, damage in self.possible_actions(state):
+            for action, energy in self.possible_actions(state):
                 for resource, amount in action.resource_gain_on_collect(state.patches, state.resources):
                     if resource in interesting_resources:
-                        yield action, damage
+                        yield action, energy
                         break
 
     def collectable_resource_nodes(self,

@@ -86,11 +86,11 @@ class State:
     def maximum_energy(self) -> int:
         return _energy_for(self.resources, self.resource_database)
 
-    def collect_resource_node(self, node: ResourceNode, damage: int) -> "State":
+    def collect_resource_node(self, node: ResourceNode, new_energy: int) -> "State":
         """
         Creates a new State that has the given ResourceNode collected.
         :param node:
-        :param damage:
+        :param new_energy: How much energy you should have when collecting this resource
         :return:
         """
 
@@ -102,14 +102,16 @@ class State:
         add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches, self.resources),
                                                new_resources)
 
-        energy = self.energy - damage
+        energy = new_energy
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
             energy = _energy_for(new_resources, self.resource_database)
 
         return State(new_resources, energy, self.node, self.patches, self, self.resource_database)
 
-    def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = (), damage: int = 0) -> "State":
-        new_state = self.collect_resource_node(node, damage)
+    def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = (), new_energy: Optional[int] = None) -> "State":
+        if new_energy is None:
+            new_energy = self.energy
+        new_state = self.collect_resource_node(node, new_energy)
         new_state.node = node
         new_state.path_from_previous_state = path
         return new_state
