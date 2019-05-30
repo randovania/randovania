@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 
+
 ## [0.27.0] - 2019-05-28
 
 -   *Major* - Changed: Optimized the seed generation step. It should now take roughly
