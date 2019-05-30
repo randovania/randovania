@@ -172,6 +172,10 @@ class LoreType(Enum):
     PIRATE_LORE = "pirate-lore"
     SKY_TEMPLE_KEY_HINT = "sky-temple-key-hint"
 
+    @property
+    def holds_generic_hint(self) -> bool:
+        return self in {LoreType.LUMINOTH_LORE, LoreType.PIRATE_LORE}
+
 
 @dataclasses.dataclass(frozen=True)
 class LogbookNode(ResourceNode):

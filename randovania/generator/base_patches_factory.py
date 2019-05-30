@@ -7,7 +7,7 @@ from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
-from randovania.game_description.node import LogbookNode
+from randovania.game_description.node import LogbookNode, LoreType
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -23,14 +23,14 @@ class MissingRng(Exception):
     pass
 
 
-# B-Stl -> DE525E1D -> Agon Wastes - Main Reactor -> Dark Oasis -> 53
-# C-Rch -> A9909E66 -> Sanctuary Fortress - Dynamo Works -> Hive Dynamo Works -> 106
-# D-Isl -> 28E8C41A -> Temple Grounds - Storage Cavern A -> Ing Reliquary -> 19
-# G-Sch -> 939AFF16 -> Torvus Bog - Catacombs -> Dungeon -> 91
-# J-Fme -> 65206511 -> Temple Grounds - Industrial Site -> Accursed Lake -> 15
-# J-Stl -> 150E8DB8 -> Agon Wastes - Central Mining Station -> Battleground -> 45
 # M-Dhe -> E3B417BF -> Temple Grounds - Landing Site -> Defiled Shrine -> 11
+# J-Fme -> 65206511 -> Temple Grounds - Industrial Site -> Accursed Lake -> 15
+# D-Isl -> 28E8C41A -> Temple Grounds - Storage Cavern A -> Ing Reliquary -> 19
+# J-Stl -> 150E8DB8 -> Agon Wastes - Central Mining Station -> Battleground -> 45
+# B-Stl -> DE525E1D -> Agon Wastes - Main Reactor -> Dark Oasis -> 53
 # S-Dly -> 58C62CB3 -> Torvus Bog - Torvus Lagoon -> Poisoned Bog -> 68
+# G-Sch -> 939AFF16 -> Torvus Bog - Catacombs -> Dungeon -> 91
+# C-Rch -> A9909E66 -> Sanctuary Fortress - Dynamo Works -> Hive Dynamo Works -> 106
 # S-Jrs -> 62CC4DC3 -> Sanctuary Fortress - Sanctuary Entrance -> Hive Entrance -> 117
 
 _KEYBEARERS_HINTS = {
@@ -126,6 +126,15 @@ def add_default_hints_to_patches(rng: Random,
     :param world_list:
     :return:
     """
+
+    for node in world_list.all_nodes:
+        if isinstance(node, LogbookNode) and node.lore_type == LoreType.LUMINOTH_WARRIOR:
+            patches = patches.assign_hint(node.resource(),
+                                          Hint(HintType.LOCATION,
+                                               PrecisionPair(HintLocationPrecision.DETAILED,
+                                                             HintItemPrecision.PRECISE_CATEGORY),
+                                               PickupIndex(node.hint_index)))
+
     # TODO: this should be a flag in PickupNode
     indices_with_hint = [
         PickupIndex(24),  # Light Suit
@@ -135,7 +144,9 @@ def add_default_hints_to_patches(rng: Random,
     ]
     all_logbook_assets = [node.resource()
                           for node in world_list.all_nodes
-                          if isinstance(node, LogbookNode) and node.resource() not in patches.hints]
+                          if isinstance(node, LogbookNode)
+                          and node.resource() not in patches.hints
+                          and node.lore_type.holds_generic_hint]
 
     rng.shuffle(indices_with_hint)
     rng.shuffle(all_logbook_assets)
@@ -146,13 +157,6 @@ def add_default_hints_to_patches(rng: Random,
 
         logbook_asset = all_logbook_assets.pop()
         patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION, PrecisionPair.detailed(), index))
-
-    for asset, index in _KEYBEARERS_HINTS.items():
-        patches = patches.assign_hint(asset,
-                                      Hint(HintType.LOCATION,
-                                           PrecisionPair(HintLocationPrecision.DETAILED,
-                                                         HintItemPrecision.PRECISE_CATEGORY),
-                                           index))
 
     return patches
 
