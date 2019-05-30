@@ -6,8 +6,9 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, PrecisionPair
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
 from randovania.game_description.node import LogbookNode
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
@@ -20,6 +21,29 @@ from randovania.layout.translator_configuration import LayoutTranslatorRequireme
 
 class MissingRng(Exception):
     pass
+
+
+# B-Stl -> DE525E1D -> Agon Wastes - Main Reactor -> Dark Oasis -> 53
+# C-Rch -> A9909E66 -> Sanctuary Fortress - Dynamo Works -> Hive Dynamo Works -> 106
+# D-Isl -> 28E8C41A -> Temple Grounds - Storage Cavern A -> Ing Reliquary -> 19
+# G-Sch -> 939AFF16 -> Torvus Bog - Catacombs -> Dungeon -> 91
+# J-Fme -> 65206511 -> Temple Grounds - Industrial Site -> Accursed Lake -> 15
+# J-Stl -> 150E8DB8 -> Agon Wastes - Central Mining Station -> Battleground -> 45
+# M-Dhe -> E3B417BF -> Temple Grounds - Landing Site -> Defiled Shrine -> 11
+# S-Dly -> 58C62CB3 -> Torvus Bog - Torvus Lagoon -> Poisoned Bog -> 68
+# S-Jrs -> 62CC4DC3 -> Sanctuary Fortress - Sanctuary Entrance -> Hive Entrance -> 117
+
+_KEYBEARERS_HINTS = {
+    LogbookAsset(0xDE525E1D): PickupIndex(53),
+    LogbookAsset(0xA9909E66): PickupIndex(106),
+    LogbookAsset(0x28E8C41A): PickupIndex(19),
+    LogbookAsset(0x939AFF16): PickupIndex(91),
+    LogbookAsset(0x65206511): PickupIndex(15),
+    LogbookAsset(0x150E8DB8): PickupIndex(45),
+    LogbookAsset(0xE3B417BF): PickupIndex(11),
+    LogbookAsset(0x58C62CB3): PickupIndex(68),
+    LogbookAsset(0x62CC4DC3): PickupIndex(117),
+}
 
 
 def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguration,
@@ -122,6 +146,13 @@ def add_default_hints_to_patches(rng: Random,
 
         logbook_asset = all_logbook_assets.pop()
         patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION, PrecisionPair.detailed(), index))
+
+    for asset, index in _KEYBEARERS_HINTS.items():
+        patches = patches.assign_hint(asset,
+                                      Hint(HintType.LOCATION,
+                                           PrecisionPair(HintLocationPrecision.DETAILED,
+                                                         HintItemPrecision.PRECISE_CATEGORY),
+                                           index))
 
     return patches
 
