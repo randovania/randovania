@@ -55858,7 +55858,10 @@
                                 "Door to Power Junction": [
                                     []
                                 ],
-                                "Pickup (Power Bomb)": [
+                                "Lore Scan": [
+                                    []
+                                ],
+                                "Canon to Pickup": [
                                     [
                                         {
                                             "requirement_type": 0,
@@ -55969,8 +55972,48 @@
                                             "negate": false
                                         }
                                     ]
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Canon to Pickup",
+                            "heal": true,
+                            "node_type": 0,
+                            "connections": {
+                                "Door to Power Junction": [
+                                    []
                                 ],
-                                "Lore Scan": [
+                                "Pickup (Power Bomb)": [
+                                    [
+                                        {
+                                            "requirement_type": 0,
+                                            "requirement_index": 15,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    ]
+                                ],
+                                "Keybearer Corpse (S-Jrs)": [
+                                    [
+                                        {
+                                            "requirement_type": 1,
+                                            "requirement_index": 50,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Keybearer Corpse (S-Jrs)",
+                            "heal": true,
+                            "node_type": 6,
+                            "string_asset_id": 1657556419,
+                            "lore_type": 1,
+                            "extra": 117,
+                            "connections": {
+                                "Canon to Pickup": [
                                     []
                                 ]
                             }
