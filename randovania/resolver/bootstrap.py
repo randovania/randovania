@@ -102,6 +102,7 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
 
     starting_state = State(
         initial_resources,
+        99 + (100 * initial_resources.get(game.resource_database.energy_tank, 0)),
         starting_node,
         patches,
         None,

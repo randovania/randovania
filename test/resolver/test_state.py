@@ -1,23 +1,30 @@
-from unittest.mock import MagicMock
+from unittest.mock import Mock
 
 import pytest
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.resolver import state
 
 
-def test_collected_pickup_indices():
+@pytest.fixture(name="database")
+def _database() -> ResourceDatabase:
+    return Mock(energy_tank=SimpleResourceInfo(42, "Energy Tank", "EnergyTank", ResourceType.ITEM),
+                item_percentage=SimpleResourceInfo(47, "Item Percentage", "Percentage", ResourceType.ITEM))
+
+
+def test_collected_pickup_indices(database):
     # Setup
     resources = {
         SimpleResourceInfo(1, "A", "A", ResourceType.ITEM): 5,
         PickupIndex(1): 1,
         PickupIndex(15): 1
     }
-    s = state.State(resources, None, None, None, None)
+    s = state.State(resources, 99, None, None, None, database)
 
     # Run
     indices = list(s.collected_pickup_indices)
@@ -26,9 +33,9 @@ def test_collected_pickup_indices():
     assert indices == [PickupIndex(1), PickupIndex(15)]
 
 
-def test_add_pickup_to_state():
+def test_add_pickup_to_state(database):
     # Starting State
-    s = state.State({}, None, None, None, None)
+    s = state.State({}, 99, None, None, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
@@ -50,13 +57,13 @@ def test_add_pickup_to_state():
 
 
 @pytest.mark.parametrize("collected", [False, True])
-def test_assign_pickup_to_index(collected: bool, empty_patches):
+def test_assign_pickup_to_index(collected: bool, empty_patches, database):
     # Setup
     starting_resources = {}
     index = PickupIndex(1)
     if collected:
         starting_resources[index] = 1
-    starting = state.State(starting_resources, None, empty_patches, None, None)
+    starting = state.State(starting_resources, 99, None, empty_patches, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     p = PickupEntry("A", 2, ItemCategory.SUIT,
@@ -75,12 +82,10 @@ def test_assign_pickup_to_index(collected: bool, empty_patches):
         assert final.resources == {}
 
 
-def test_assign_pickup_to_starting_items(empty_patches):
+def test_assign_pickup_to_starting_items(empty_patches, database):
     # Setup
-    resource_database = MagicMock()
-    resource_database.item_percentage = SimpleResourceInfo(99, "%", "%", ResourceType.ITEM)
 
-    starting = state.State({}, None, empty_patches, None, resource_database)
+    starting = state.State({}, 99, None, empty_patches, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
@@ -88,7 +93,7 @@ def test_assign_pickup_to_starting_items(empty_patches):
                     resources=(
                         ConditionalResources(None, None, (
                             (resource_a, 5),
-                            (resource_database.item_percentage, 1),
+                            (database.item_percentage, 1),
                         )),
                     ),
                     convert_resources=(
@@ -103,9 +108,9 @@ def test_assign_pickup_to_starting_items(empty_patches):
     assert final.resources == {resource_a: 5, resource_b: 0}
 
 
-def test_state_with_pickup():
+def test_state_with_pickup(database):
     # Setup
-    starting = state.State({}, None, None, None, None)
+    starting = state.State({}, 99, None, None, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     p = PickupEntry("A", 2, ItemCategory.SUIT,

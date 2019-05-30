@@ -8,7 +8,6 @@ from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode
 from randovania.game_description.requirements import RequirementSet
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world import World
 
@@ -175,22 +174,18 @@ class WorldList:
         yield from self.connections_from(node, patches)
         yield from self.area_connections_from(node)
 
-    def simplify_connections(self,
-                             static_resources: CurrentResources,
-                             resource_database: ResourceDatabase,
-                             ) -> None:
+    def simplify_connections(self, static_resources: CurrentResources) -> None:
         """
         Simplifies all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
         :param static_resources:
-        :param resource_database:
         :return:
         """
         for world in self.worlds:
             for area in world.areas:
                 for connections in area.connections.values():
                     for target, value in connections.items():
-                        connections[target] = value.simplify(static_resources, resource_database)
+                        connections[target] = value.simplify(static_resources)
 
     def calculate_relevant_resources(self, patches: GamePatches) -> FrozenSet[ResourceInfo]:
         results = set()

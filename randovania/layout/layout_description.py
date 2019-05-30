@@ -2,7 +2,6 @@ import base64
 import hashlib
 import json
 from dataclasses import dataclass
-from distutils.version import StrictVersion
 from pathlib import Path
 from typing import NamedTuple, Tuple, List
 
@@ -36,10 +35,10 @@ class LayoutDescription:
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
         version = json_dict["info"]["version"]
-        version_as_obj = StrictVersion(version)
-
-        if version_as_obj < StrictVersion("0.26.0"):
-            raise RuntimeError("Unsupported log file version '{}'.".format(version))
+        # version_as_obj = StrictVersion(version)
+        #
+        # if version_as_obj < StrictVersion("0.26.0"):
+        #     raise RuntimeError("Unsupported log file version '{}'.".format(version))
 
         # TODO: add try/catch to throw convert potential errors in "seed from future version broke"
         permalink = Permalink.from_json_dict(json_dict["info"]["permalink"])

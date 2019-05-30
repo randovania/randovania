@@ -7,7 +7,7 @@ from randovania.resolver.resolver_reach import ResolverReach
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = ResolverReach([], {}, frozenset(), MagicMock())
+    reach = ResolverReach({}, {}, frozenset(), MagicMock())
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -23,8 +23,8 @@ def test_possible_actions_no_resources():
     type(node_b).is_resource_node = prop_b = PropertyMock(return_value=True)
 
     # Run
-    reach = ResolverReach([node_a, node_b], {}, frozenset(), MagicMock())
-    options = list(reach.possible_actions(state))
+    reach = ResolverReach({node_a: 1, node_b: 1}, {}, frozenset(), MagicMock())
+    options = list(action for action, damage in reach.possible_actions(state))
 
     # Assert
     assert options == []
@@ -42,13 +42,12 @@ def test_possible_actions_with_event():
     event.can_collect.return_value = True
 
     # Run
-    reach = ResolverReach([event], {}, frozenset(), logic)
-    options = list(reach.possible_actions(state))
+    reach = ResolverReach({event: 1}, {}, frozenset(), logic)
+    options = list(action for action, damage in reach.possible_actions(state))
 
     # Assert
     assert options == [event]
     prop.assert_called_once_with()
     event.can_collect.assert_called_once_with(state.patches, state.resources)
     logic.get_additional_requirements.assert_called_once_with(event)
-    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources,
-                                                                                     state.resource_database)
+    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, 1)
