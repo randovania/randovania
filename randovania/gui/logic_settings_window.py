@@ -134,13 +134,15 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         set_combo_with_value(self.logic_combo_box, trick_level)
         self.logic_level_label.setText(_get_trick_level_description(trick_level))
 
-        for trick, checkbox in self._checkbox_for_trick.items():
-            checkbox.setEnabled(trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS)
-            checkbox.setChecked(trick_level_configuration.has_specific_level_for_trick(trick))
+        for (trick, checkbox), slider in zip(self._checkbox_for_trick.items(), self._slider_for_trick.values()):
+            assert self._slider_for_trick[trick] is slider
 
-        for trick, slider in self._slider_for_trick.items():
-            slider.setEnabled(trick_level_configuration.has_specific_level_for_trick(trick))
+            has_specific_level = trick_level_configuration.has_specific_level_for_trick(trick)
+
+            checkbox.setEnabled(trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS)
+            slider.setEnabled(has_specific_level)
             slider.setValue(trick_level_configuration.level_for_trick(trick).as_number)
+            checkbox.setChecked(has_specific_level)
 
         # Elevator
         set_combo_with_value(self.elevators_combo, options.layout_configuration_elevators)
@@ -256,13 +258,14 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         enabled = bool(enabled)
 
         with self._options as options:
-            options.set_layout_configuration_field(
-                "trick_level_configuration",
-                options.layout_configuration.trick_level_configuration.set_level_for_trick(
-                    trick,
-                    self.logic_combo_box.currentData() if enabled else None
+            if options.layout_configuration.trick_level_configuration.has_specific_level_for_trick(trick) != enabled:
+                options.set_layout_configuration_field(
+                    "trick_level_configuration",
+                    options.layout_configuration.trick_level_configuration.set_level_for_trick(
+                        trick,
+                        self.logic_combo_box.currentData() if enabled else None
+                    )
                 )
-            )
 
     def _on_slide_trick_slider(self, trick: SimpleResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
