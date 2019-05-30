@@ -1,21 +1,11 @@
 from functools import lru_cache
+from math import ceil
 from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple
 
-from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-
-
-def _calculate_reduction(resource: DamageResourceInfo, current_resources: CurrentResources) -> float:
-    multiplier = 1
-
-    for reduction in resource.reductions:
-        if current_resources.get(reduction.inventory_item, 0) > 0:
-            multiplier *= reduction.damage_multiplier
-
-    return multiplier
 
 
 class IndividualRequirement(NamedTuple):
@@ -35,17 +25,19 @@ class IndividualRequirement(NamedTuple):
             amount,
             negate)
 
-    def satisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
+    def damage(self, current_resources: CurrentResources) -> int:
+        if self.resource.resource_type == ResourceType.DAMAGE:
+            return ceil(self.resource.damage_reduction(current_resources) * self.amount)
+        else:
+            return 0
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
 
-        if isinstance(self.resource, DamageResourceInfo):
+        if self.resource.resource_type == ResourceType.DAMAGE:
             assert not self.negate, "Damage requirements shouldn't have the negate flag"
-            # TODO: actually implement the damage resources
 
-            current_energy = current_resources.get(database.energy_tank, 0) * 100
-            damage = _calculate_reduction(self.resource, current_resources) * self.amount
-
-            return current_energy >= damage
+            return current_energy > self.damage(current_resources)
 
         has_amount = current_resources.get(self.resource, 0) >= self.amount
         if self.negate:
@@ -134,28 +126,35 @@ class RequirementList:
         else:
             return "Trivial"
 
-    def amount_unsatisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
-        return sum(not requirement.satisfied(current_resources, database)
+    def amount_unsatisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+        return sum(not requirement.satisfied(current_resources, current_energy)
                    for requirement in self.values())
 
-    def satisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
+    def damage(self, current_resources: CurrentResources) -> int:
+        return sum(requirement.damage(current_resources) for requirement in self.values())
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         """
-        A list is considered satisfied if all IndividualRequirement that belongs to it are satisfied.
+        A list is considered satisfied if each IndividualRequirement that belongs to it is satisfied.
         In particular, an empty RequirementList is considered satisfied.
-        :param database:
         :param current_resources:
+        :param current_energy:
         :return:
         """
-        return all(requirement.satisfied(current_resources, database)
-                   for requirement in self.values())
 
-    def simplify(self,
-                 static_resources: CurrentResources,
-                 database: ResourceDatabase) -> Optional["RequirementList"]:
+        energy = current_energy
+        for requirement in self.values():
+            if requirement.satisfied(current_resources, current_energy):
+                if requirement.resource.resource_type == ResourceType.DAMAGE:
+                    energy -= requirement.damage(current_resources)
+            else:
+                return False
+        return True
+
+    def simplify(self, static_resources: CurrentResources) -> Optional["RequirementList"]:
         """
         Creates a new RequirementList that does not contain reference to resources in static_resources
         :param static_resources:
-        :param database:
         :return: None if this RequirementList is impossible to satisfy, otherwise the simplified RequirementList.
         """
         items = []
@@ -163,7 +162,7 @@ class RequirementList:
             if static_resources.get(item.resource) is not None:
                 # If the resource is a static resource, we either remove it from the list or
                 # consider this list impossible
-                if not item.satisfied(static_resources, database):
+                if not item.satisfied(static_resources, 0):
                     return None
             else:
                 # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
@@ -275,43 +274,49 @@ class RequirementSet:
         # No alternatives makes satisfied always return False
         return cls([])
 
-    def satisfied(self, current_resources: CurrentResources, database: ResourceDatabase) -> bool:
+    def minimum_damage(self, current_resources: CurrentResources, current_energy: int) -> int:
+        damage = 1499
+        for requirement_list in self.alternatives:
+            if requirement_list.satisfied(current_resources, current_energy):
+                damage = min(damage, requirement_list.damage(current_resources))
+        return damage
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         """
         Checks if at least one alternative is satisfied with the given resources.
         In particular, an empty RequirementSet is *never* considered satisfied.
-        :param database:
         :param current_resources:
+        :param current_energy:
         :return:
         """
         return any(
-            requirement_list.satisfied(current_resources, database)
+            requirement_list.satisfied(current_resources, current_energy)
             for requirement_list in self.alternatives)
 
     def minimum_satisfied_difficulty(self,
                                      current_resources: CurrentResources,
-                                     database: ResourceDatabase,
+                                     current_energy: int,
                                      ) -> Optional[int]:
         """
         Gets the minimum difficulty that is currently satisfied
-        :param database:
         :param current_resources:
+        :param current_energy:
         :return:
         """
         difficulties = [
             requirement_list.difficulty_level
             for requirement_list in self.alternatives
-            if requirement_list.satisfied(current_resources, database)
+            if requirement_list.satisfied(current_resources, current_energy)
         ]
         if difficulties:
             return min(difficulties)
         else:
             return None
 
-    def simplify(self, static_resources: CurrentResources,
-                 database: ResourceDatabase) -> "RequirementSet":
+    def simplify(self, static_resources: CurrentResources) -> "RequirementSet":
         """"""
         new_alternatives = [
-            alternative.simplify(static_resources, database)
+            alternative.simplify(static_resources)
             for alternative in self.alternatives
         ]
         return RequirementSet(alternative

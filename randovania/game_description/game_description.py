@@ -78,7 +78,7 @@ class GameDescription:
             _calculate_dangerous_resources_in_db(self.dock_weakness_database))
 
     def simplify_connections(self, resources):
-        self.world_list.simplify_connections(resources, self.resource_database)
+        self.world_list.simplify_connections(resources)
 
     def all_editable_teleporter_nodes(self) -> Iterator[TeleporterNode]:
         energy_controllers = {
@@ -103,6 +103,7 @@ def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDataba
 
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
                                     resources: CurrentResources,
+                                    energy: int,
                                     database: ResourceDatabase) -> FrozenSet[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList """
 
@@ -110,12 +111,12 @@ def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequire
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(resources, database):
+            if not requirement_list.satisfied(resources, energy):
 
                 for individual in requirement_list.values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
-                    if not individual.negate and not individual.satisfied(resources, database):
+                    if not individual.negate and not individual.satisfied(resources, energy):
                         if isinstance(individual.resource, DamageResourceInfo):
                             yield from _resources_for_damage(individual.resource, database)
                         else:
