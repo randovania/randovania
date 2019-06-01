@@ -1,13 +1,16 @@
 import functools
-from typing import Optional, Dict, Set, List, Tuple
+import json
+from pathlib import Path
+from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox, \
+    QAction
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import Node, ResourceNode
+from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.generator import base_patches_factory
@@ -26,6 +29,26 @@ class InvalidLayoutForTracker(Exception):
     pass
 
 
+def _load_previous_state(persistence_path: Path,
+                         layout_configuration: LayoutConfiguration,
+                         ) -> Optional[dict]:
+    previous_layout_path = persistence_path.joinpath("layout_configuration.json")
+    if not previous_layout_path.is_file():
+        return None
+
+    with previous_layout_path.open() as previous_layout_file:
+        previous_layout = LayoutConfiguration.from_json_dict(json.load(previous_layout_file))
+        if previous_layout != layout_configuration:
+            return None
+
+    previous_state_path = persistence_path.joinpath("state.json")
+    if not previous_state_path.is_file():
+        return None
+
+    with previous_state_path.open() as previous_state_file:
+        return json.load(previous_state_file)
+
+
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     # Tracker state
     _collected_pickups: Dict[PickupEntry, int]
@@ -35,22 +58,31 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     logic: Logic
     game_description: GameDescription
     layout_configuration: LayoutConfiguration
+    persistence_path: Path
     _initial_state: State
 
     # UI tools
     _asset_id_to_item: Dict[int, QTreeWidgetItem]
     _node_to_item: Dict[Node, QTreeWidgetItem]
+    _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, CustomSpinBox]]
+    _during_setup = False
 
-    def __init__(self, layout_configuration: LayoutConfiguration):
+    def __init__(self, persistence_path: Path, layout_configuration: LayoutConfiguration):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
+        self.menu_reset_action = QAction("Reset", self)
+        self.menu_reset_action.triggered.connect(self._confirm_reset)
+        self.menu_bar.addAction(self.menu_reset_action)
+
         self._collected_pickups = {}
+        self._widget_for_pickup = {}
         self._actions = []
         self._asset_id_to_item = {}
         self._node_to_item = {}
         self.layout_configuration = layout_configuration
+        self.persistence_path = persistence_path
         self.game_description = data_reader.decode_data(layout_configuration.game_data)
 
         try:
@@ -91,7 +123,42 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             for node in self.game_description.world_list.all_nodes
             if node.is_resource_node and node.resource() in self._initial_state.resources
         }
-        self._add_new_action(self._initial_state.node)
+
+        persistence_path.mkdir(parents=True, exist_ok=True)
+
+        previous_state = _load_previous_state(persistence_path, layout_configuration)
+        if previous_state is not None:
+            pickup_name_to_pickup = {pickup.name: pickup for pickup in self._collected_pickups.keys()}
+            self.bulk_change_quantity({
+                pickup_name_to_pickup[pickup_name]: quantity
+                for pickup_name, quantity in previous_state["collected_pickups"].items()
+            })
+            self._add_new_actions([
+                self.game_description.world_list.all_nodes[index]
+                for index in previous_state["actions"]
+            ])
+        else:
+            with persistence_path.joinpath("layout_configuration.json").open("w") as layout_file:
+                json.dump(layout_configuration.as_json, layout_file)
+            self._add_new_action(self._initial_state.node)
+
+    def reset(self):
+        self.bulk_change_quantity({
+            pickup: 0
+            for pickup in self._collected_pickups.keys()
+        })
+
+        while len(self._actions) > 1:
+            self._actions.pop()
+            self.actions_list.takeItem(len(self._actions))
+
+        self._refresh_for_new_action()
+
+    def _confirm_reset(self):
+        reply = QMessageBox.question(self, "Reset Tracker?", "Do you want to reset the tracker progression?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.reset()
 
     @property
     def _show_only_resource_nodes(self) -> bool:
@@ -115,8 +182,12 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.update_locations_tree_for_reachable_nodes()
 
     def _add_new_action(self, node: Node):
-        self.actions_list.addItem(self._pretty_node_name(node))
-        self._actions.append(node)
+        self._add_new_actions([node])
+
+    def _add_new_actions(self, nodes: Iterator[Node]):
+        for node in nodes:
+            self.actions_list.addItem(self._pretty_node_name(node))
+            self._actions.append(node)
         self._refresh_for_new_action()
 
     def _undo_last_action(self):
@@ -127,7 +198,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
 
-        if node is not None and node != self._actions[-1]:
+        if not item.isDisabled() and node is not None and node != self._actions[-1]:
             self._add_new_action(node)
 
     def update_locations_tree_for_reachable_nodes(self):
@@ -154,10 +225,28 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item = self._node_to_item[node]
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
+                        resource_node: ResourceNode = node
+                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources))
                         node_item.setCheckState(0, Qt.Checked if is_collected else Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
                 self._asset_id_to_item[area.area_asset_id].setHidden(not area_is_visible)
+
+        # Persist the current state
+        with self.persistence_path.joinpath("state.json").open("w") as state_file:
+            json.dump(
+                {
+                    "actions": [
+                        node.index
+                        for node in self._actions
+                    ],
+                    "collected_pickups": {
+                        pickup.name: quantity
+                        for pickup, quantity in self._collected_pickups.items()
+                    }
+                },
+                state_file
+            )
 
     def setup_possible_locations_tree(self):
         """
@@ -180,7 +269,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
                 for node in area.nodes:
                     node_item = QTreeWidgetItem(area_item)
-                    node_item.setText(0, node.name)
+                    if isinstance(node, TranslatorGateNode):
+                        translator = self._initial_state.patches.translator_gates[node.gate]
+                        node_item.setText(0, "{} ({})".format(node.name, translator.short_name))
+                    else:
+                        node_item.setText(0, node.name)
                     node_item.node = node
                     if node.is_resource_node:
                         node_item.setFlags(node_item.flags() & ~Qt.ItemIsUserCheckable)
@@ -194,7 +287,18 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 quantity = 0
 
         self._collected_pickups[pickup] = quantity
-        self.update_locations_tree_for_reachable_nodes()
+        if not self._during_setup:
+            self.update_locations_tree_for_reachable_nodes()
+
+    def bulk_change_quantity(self, new_quantity: Dict[PickupEntry, int]):
+        self._during_setup = True
+        for pickup, quantity in new_quantity.items():
+            widget = self._widget_for_pickup[pickup]
+            if isinstance(widget, QCheckBox):
+                widget.setChecked(quantity > 0)
+            else:
+                widget.setValue(quantity)
+        self._during_setup = False
 
     def _create_widgets_with_quantity(self,
                                       pickup: PickupEntry,
@@ -211,6 +315,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         spin_bix.setMaximumWidth(50)
         spin_bix.setMaximum(quantity)
         spin_bix.valueChanged.connect(functools.partial(self._change_item_quantity, pickup, False))
+        self._widget_for_pickup[pickup] = spin_bix
         parent_layout.addWidget(spin_bix, row, 1)
 
     def setup_pickups_box(self, item_pool: List[PickupEntry]):
@@ -265,6 +370,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     check_box = QCheckBox(parent_widget)
                     check_box.setText(pickup.name)
                     check_box.stateChanged.connect(functools.partial(self._change_item_quantity, pickup, True))
+                    self._widget_for_pickup[pickup] = check_box
 
                     column = column_for_parent[parent_widget]
                     parent_layout.addWidget(check_box, row, column)
