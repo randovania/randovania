@@ -234,7 +234,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     def _open_tracker(self):
         try:
-            self._tracker = TrackerWindow(self._options.layout_configuration)
+            self._tracker = TrackerWindow(self._options.tracker_files_path, self._options.layout_configuration)
         except InvalidLayoutForTracker as e:
             QMessageBox.critical(
                 self,
