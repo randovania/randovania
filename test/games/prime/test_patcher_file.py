@@ -646,7 +646,7 @@ def test_create_patcher_file(test_files_dir):
     assert len(result["translator_gates"]) == 17
 
     assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 31
+    assert len(result["string_patches"]) == 40
 
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,

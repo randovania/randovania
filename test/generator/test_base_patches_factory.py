@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch, call, ANY
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, PrecisionPair
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
@@ -179,7 +179,26 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     def _create_hint(number: int):
         return Hint(HintType.LOCATION, PrecisionPair.detailed(), PickupIndex(number))
 
+    def _keybearer(number: int):
+        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
+                                                     HintItemPrecision.PRECISE_CATEGORY), PickupIndex(number))
+
     expected = {
+        # Keybearer
+        LogbookAsset(0xE3B417BF): _keybearer(11),
+        LogbookAsset(0x65206511): _keybearer(15),
+        LogbookAsset(0x28E8C41A): _keybearer(19),
+        # Agon
+        LogbookAsset(0x150E8DB8): _keybearer(45),
+        LogbookAsset(0xDE525E1D): _keybearer(53),
+        # Torvus
+        LogbookAsset(0x58C62CB3): _keybearer(68),
+        LogbookAsset(0x939AFF16): _keybearer(91),
+        # Sanctuary
+        LogbookAsset(0x62CC4DC3): _keybearer(117),
+        LogbookAsset(0xA9909E66): _keybearer(106),
+
+        # Locations with hints
         LogbookAsset(1041207119): _create_hint(24),
         LogbookAsset(4115881194): _create_hint(43),
         LogbookAsset(1948976790): _create_hint(79),

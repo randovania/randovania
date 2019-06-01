@@ -172,5 +172,5 @@ def test_reach_size_from_start(echoes_game_description):
     reach = GeneratorReach.reach_from_state(game, state)
 
     # Assert
-    assert len(list(reach.nodes)) == 25
+    assert len(list(reach.nodes)) == 26
     assert len(list(reach.safe_nodes)) == 4

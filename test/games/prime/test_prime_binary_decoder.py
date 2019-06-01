@@ -129,6 +129,7 @@ def _comparable_dict(value):
     reason="Missing prime2.json"
 )
 def test_full_data_encode_is_equal():
+    # The prime2.json may be missing if we're running using a Pyinstaller binary
     # Setup
     json_database_file = get_data_path().joinpath("json_data", "prime2.json")
 
