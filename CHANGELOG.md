@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   *Major* - Changed: The resolver now keeps track of current energy during resolution.
     This ensures you'll always have enough Energy Tanks for trips to Dark Aether.
     
+-   Added: The tracker now persists the current state.
+    
 -   Changed: Increased Hint Scan value for logic to the intended value from the previous
     change.
     

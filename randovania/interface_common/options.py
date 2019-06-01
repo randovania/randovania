@@ -184,6 +184,10 @@ class Options:
     def game_files_path(self) -> Path:
         return self._data_dir.joinpath("extracted_game")
 
+    @property
+    def tracker_files_path(self) -> Path:
+        return self._data_dir.joinpath("tracker")
+
     # Access to Direct fields
     @property
     def last_changelog_displayed(self) -> StrictVersion:
