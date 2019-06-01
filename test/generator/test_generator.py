@@ -159,7 +159,7 @@ def test_create_patches(mock_random: MagicMock,
     mock_run_filler.return_value = filler_patches, remaining_items
 
     # Run
-    result = generator._create_patches(permalink, game, status_update)
+    result = generator._create_randomized_patches(permalink, game, status_update)
 
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
@@ -176,6 +176,8 @@ def test_create_patches(mock_random: MagicMock,
         permalink.layout_configuration, game, item_pool, pool_patches, mock_random.return_value, status_update
     )
     mock_assign_remaining_items.assert_called_once_with(
-        mock_random.return_value, game, filler_patches, remaining_items
+        mock_random.return_value, game.world_list, filler_patches.pickup_assignment, remaining_items
     )
-    assert result == mock_assign_remaining_items.return_value
+    filler_patches.assign_pickup_assignment.assert_called_once_with(mock_assign_remaining_items.return_value)
+
+    assert result == filler_patches.assign_pickup_assignment.return_value

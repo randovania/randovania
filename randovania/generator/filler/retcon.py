@@ -27,6 +27,10 @@ _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 2.5
 
 
+class UnableToGenerate(RuntimeError):
+    pass
+
+
 def _filter_not_in_dict(elements: Iterator[X],
                         dictionary: Dict[X, Any],
                         ) -> Iterator[X]:
@@ -131,7 +135,7 @@ def retcon_playthrough_filler(game: GameDescription,
             if actions_weights:
                 action = rng.choice(list(actions_weights.keys()))
             else:
-                raise RuntimeError("Unable to generate, no actions found after placing {} items.".format(
+                raise UnableToGenerate("Unable to generate, no actions found after placing {} items.".format(
                     len(reach.state.patches.pickup_assignment)))
 
         if isinstance(action, PickupEntry):

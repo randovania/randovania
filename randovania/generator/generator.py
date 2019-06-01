@@ -4,9 +4,11 @@ from typing import Tuple, Iterator, Optional, Callable, TypeVar, List
 
 from randovania import VERSION
 from randovania.game_description import data_reader
+from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.world_list import WorldList
 from randovania.generator import base_patches_factory
 from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
 from randovania.generator.filler.runner import run_filler
@@ -69,7 +71,7 @@ def generate_list(permalink: Permalink,
         return GenerationFailure(message, permalink=permalink)
 
     with multiprocessing.dummy.Pool(1) as dummy_pool:
-        patches_async = dummy_pool.apply_async(func=_create_patches,
+        patches_async = dummy_pool.apply_async(func=_create_randomized_patches,
                                                kwds=create_patches_params)
         try:
             new_patches: GamePatches = patches_async.get(timeout)
@@ -116,7 +118,7 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
                                                                                              num_pickup_nodes))
 
 
-def _create_patches(
+def _create_randomized_patches(
         permalink: Permalink,
         game: GameDescription,
         status_update: Callable[[str], None],
@@ -131,46 +133,45 @@ def _create_patches(
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
-    base_patches = base_patches_factory.create_base_patches(permalink.layout_configuration, permalink.seed_number,
-                                                            rng, game)
+    base_patches = base_patches_factory.create_base_patches(configuration, permalink.seed_number, rng, game)
     pool_patches, item_pool = pool_creator.calculate_item_pool(configuration, game.resource_database, base_patches)
-
     _validate_item_pool_size(item_pool, game)
-
     filler_patches, remaining_items = run_filler(configuration, game, item_pool, pool_patches, rng, status_update)
-    return _assign_remaining_items(rng, game, filler_patches, remaining_items)
+
+    return filler_patches.assign_pickup_assignment(
+        _assign_remaining_items(rng, game.world_list, filler_patches.pickup_assignment, remaining_items)
+    )
 
 
 def _assign_remaining_items(rng: Random,
-                            game: GameDescription,
-                            patches: GamePatches,
+                            world_list: WorldList,
+                            pickup_assignment: PickupAssignment,
                             remaining_items: List[PickupEntry],
-                            ) -> GamePatches:
+                            ) -> PickupAssignment:
     """
 
     :param rng:
-    :param game:
-    :param patches:
+    :param world_list:
+    :param pickup_assignment:
     :param remaining_items:
     :return:
     """
 
-    unassigned_pickups = [
+    unassigned_pickup_indices = [
         pickup_node
-        for pickup_node in filter_unassigned_pickup_nodes(game.world_list.all_nodes, patches.pickup_assignment)
+        for pickup_node in filter_unassigned_pickup_nodes(world_list.all_nodes, pickup_assignment)
     ]
 
-    if len(remaining_items) > len(unassigned_pickups):
+    if len(remaining_items) > len(unassigned_pickup_indices):
         raise InvalidConfiguration(
             "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
-                                                                                         len(unassigned_pickups)))
+                                                                                         len(unassigned_pickup_indices)))
 
     # Shuffle the items to add and the spots to choose from
     rng.shuffle(remaining_items)
-    rng.shuffle(unassigned_pickups)
+    rng.shuffle(unassigned_pickup_indices)
 
-    new_assignments = [
-        (pickup_node.pickup_index, item)
-        for pickup_node, item in zip(unassigned_pickups, remaining_items)
-    ]
-    return patches.assign_new_pickups(new_assignments)
+    return {
+        pickup_node.pickup_index: item
+        for pickup_node, item in zip(unassigned_pickup_indices, remaining_items)
+    }
