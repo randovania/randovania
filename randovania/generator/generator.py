@@ -51,11 +51,19 @@ def _state_to_solver_path(final_state: State,
     )
 
 
-def generate_list(permalink: Permalink,
-                  status_update: Optional[Callable[[str], None]],
-                  validate_after_generation: bool,
-                  timeout: Optional[int] = 600,
-                  ) -> LayoutDescription:
+def generate_description(permalink: Permalink,
+                         status_update: Optional[Callable[[str], None]],
+                         validate_after_generation: bool,
+                         timeout: Optional[int] = 600,
+                         ) -> LayoutDescription:
+    """
+    Creates a LayoutDescription for the given Permalink.
+    :param permalink:
+    :param status_update:
+    :param validate_after_generation:
+    :param timeout:
+    :return:
+    """
     if status_update is None:
         status_update = id
 

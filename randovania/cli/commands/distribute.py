@@ -19,8 +19,8 @@ def distribute_command_logic(args):
     permalink = Permalink.from_str(args.permalink)
 
     before = time.perf_counter()
-    layout_description = generator.generate_list(permalink=permalink, status_update=status_update,
-                                                 validate_after_generation=args.validate, timeout=None)
+    layout_description = generator.generate_description(permalink=permalink, status_update=status_update,
+                                                        validate_after_generation=args.validate, timeout=None)
     after = time.perf_counter()
     print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
 
