@@ -47,20 +47,20 @@ _KEYBEARERS_HINTS = {
 
 
 def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguration,
-                                        seed_number: int,
+                                        rng: Random,
                                         patches: GamePatches) -> GamePatches:
     """
     :param layout_configuration:
-    :param seed_number:
+    :param rng:
     :param patches:
     :return:
     """
     if layout_configuration.elevators == LayoutElevators.RANDOMIZED:
-        if seed_number is None:
+        if rng is None:
             raise MissingRng("Elevator")
 
         elevator_connection = copy.copy(patches.elevator_connection)
-        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(seed_number))
+        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(rng))
         return dataclasses.replace(patches, elevator_connection=elevator_connection)
     else:
         return patches
@@ -162,14 +162,12 @@ def add_default_hints_to_patches(rng: Random,
 
 
 def create_base_patches(configuration: LayoutConfiguration,
-                        seed_number: int,
                         rng: Random,
                         game: GameDescription,
                         ) -> GamePatches:
     """
 
     :param configuration:
-    :param seed_number:
     :param rng:
     :param game:
     :return:
@@ -178,7 +176,7 @@ def create_base_patches(configuration: LayoutConfiguration,
     # TODO: we shouldn't need the seed_number!
 
     patches = GamePatches.with_game(game)
-    patches = add_elevator_connections_to_patches(configuration, seed_number, patches)
+    patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates
     patches = patches.assign_gate_assignment(

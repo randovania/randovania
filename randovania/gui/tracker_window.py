@@ -86,7 +86,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.game_description = data_reader.decode_data(layout_configuration.game_data)
 
         try:
-            base_patches = base_patches_factory.create_base_patches(self.layout_configuration, None, None,
+            base_patches = base_patches_factory.create_base_patches(self.layout_configuration, None,
                                                                     self.game_description)
         except base_patches_factory.MissingRng as e:
             raise InvalidLayoutForTracker("Layout is configured to have random {}, "
