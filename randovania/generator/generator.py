@@ -2,6 +2,8 @@ import multiprocessing.dummy
 from random import Random
 from typing import Tuple, Iterator, Optional, Callable, TypeVar, List
 
+import tenacity
+
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.assignment import PickupAssignment
@@ -10,9 +12,11 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.generator import base_patches_factory
-from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes
+from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes, \
+    UnableToGenerate
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.item_pool import pool_creator
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
 from randovania.resolver import resolver
@@ -126,11 +130,10 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
                                                                                              num_pickup_nodes))
 
 
-def _create_randomized_patches(
-        permalink: Permalink,
-        game: GameDescription,
-        status_update: Callable[[str], None],
-) -> GamePatches:
+def _create_randomized_patches(permalink: Permalink,
+                               game: GameDescription,
+                               status_update: Callable[[str], None],
+                               ) -> GamePatches:
     """
 
     :param permalink:
@@ -141,14 +144,32 @@ def _create_randomized_patches(
     rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
-    base_patches = base_patches_factory.create_base_patches(configuration, rng, game)
-    pool_patches, item_pool = pool_creator.calculate_item_pool(configuration, game.resource_database, base_patches)
-    _validate_item_pool_size(item_pool, game)
-    filler_patches, remaining_items = run_filler(configuration, game, item_pool, pool_patches, rng, status_update)
+    filler_patches, remaining_items = _retryable_create_patches(configuration, game, rng, status_update)
 
     return filler_patches.assign_pickup_assignment(
         _assign_remaining_items(rng, game.world_list, filler_patches.pickup_assignment, remaining_items)
     )
+
+
+@tenacity.retry(stop=tenacity.stop_after_attempt(5),
+                retry=tenacity.retry_if_exception_type(UnableToGenerate))
+def _retryable_create_patches(configuration: LayoutConfiguration,
+                              game: GameDescription,
+                              rng: Random,
+                              status_update: Callable[[str], None],
+                              ) -> Tuple[GamePatches, List[PickupEntry]]:
+    """
+    Runs the rng-dependant parts of the generation, with retries
+    :param configuration:
+    :param game:
+    :param rng:
+    :param status_update:
+    :return:
+    """
+    base_patches = base_patches_factory.create_base_patches(configuration, rng, game)
+    pool_patches, item_pool = pool_creator.calculate_item_pool(configuration, game.resource_database, base_patches)
+    _validate_item_pool_size(item_pool, game)
+    return run_filler(configuration, game, item_pool, pool_patches, rng, status_update)
 
 
 def _assign_remaining_items(rng: Random,
@@ -173,7 +194,8 @@ def _assign_remaining_items(rng: Random,
     if len(remaining_items) > len(unassigned_pickup_indices):
         raise InvalidConfiguration(
             "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
-                                                                                         len(unassigned_pickup_indices)))
+                                                                                         len(
+                                                                                             unassigned_pickup_indices)))
 
     # Shuffle the items to add and the spots to choose from
     rng.shuffle(remaining_items)

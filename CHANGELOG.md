@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     Ing Cache.
     
 -   Added: The tracker now persists the current state.
+
+-   Added: Some generation failures are now automatically retried, using the same permalink.
     
 -   Changed: Increased Hint Scan value for logic to the intended value from the previous
     change.

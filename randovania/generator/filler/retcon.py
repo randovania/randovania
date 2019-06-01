@@ -13,6 +13,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
@@ -25,10 +26,6 @@ X = TypeVar("X")
 _RESOURCES_WEIGHT_MULTIPLIER = 1
 _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 2.5
-
-
-class UnableToGenerate(RuntimeError):
-    pass
 
 
 def _filter_not_in_dict(elements: Iterator[X],
