@@ -69,7 +69,7 @@ def show_tracker(app: QApplication, args):
     if not load_options_from_disk(options):
         raise SystemExit(1)
 
-    app.tracker = TrackerWindow(options.layout_configuration)
+    app.tracker = TrackerWindow(options.tracker_files_path, options.layout_configuration)
     app.tracker.show()
 
 
