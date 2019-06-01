@@ -193,8 +193,9 @@ def write_area(area: Area) -> dict:
     for node in area.nodes:
         data = write_node(node)
         data["connections"] = {
-            target_node.name: write_requirement_set(requirements_set)
-            for target_node, requirements_set in area.connections[node].items()
+            target_node.name: write_requirement_set(area.connections[node][target_node])
+            for target_node in area.nodes
+            if target_node in area.connections[node]
         }
         nodes.append(data)
 
