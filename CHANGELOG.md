@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Changed: Increased Hint Scan value for logic to the intended value from the previous
     change.
+    
+-   Changed: There's no more hints with joke locations.
 
 ## [0.27.1] - 2019-05-30
 
