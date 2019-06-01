@@ -1,4 +1,5 @@
 import dataclasses
+from random import Random
 from unittest.mock import MagicMock, patch, call, ANY
 
 from randovania.game_description import data_reader
@@ -23,7 +24,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
 
     # Run
     result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
-                                                                      permalink.seed_number,
+                                                                      Random(permalink.seed_number),
                                                                       GamePatches.with_game(game))
 
     # Assert
@@ -39,31 +40,31 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data):
                                                  elevators=LayoutElevators.RANDOMIZED))
     expected = dataclasses.replace(GamePatches.with_game(game),
                                    elevator_connection={
-                                       589851: AreaLocation(1039999561, 3479543630),
-                                       1572998: AreaLocation(464164546, 3528156989),
-                                       1966093: AreaLocation(1039999561, 1868895730),
-                                       2097251: AreaLocation(1119434212, 2806956034),
+                                       589851: AreaLocation(1039999561, 1868895730),
+                                       1572998: AreaLocation(1039999561, 3479543630),
+                                       1966093: AreaLocation(2252328306, 408633584),
+                                       2097251: AreaLocation(1119434212, 3331021649),
                                        136970379: AreaLocation(2252328306, 2068511343),
-                                       3342446: AreaLocation(2252328306, 2399252740),
-                                       3538975: AreaLocation(2252328306, 408633584),
-                                       152: AreaLocation(1006255871, 1345979968),
-                                       393260: AreaLocation(1119434212, 3331021649),
-                                       524321: AreaLocation(1006255871, 3455543403),
+                                       3342446: AreaLocation(1039999561, 3205424168),
+                                       3538975: AreaLocation(1119434212, 2806956034),
+                                       152: AreaLocation(1006255871, 2889020216),
+                                       393260: AreaLocation(464164546, 3145160350),
+                                       524321: AreaLocation(464164546, 900285955),
                                        589949: AreaLocation(1006255871, 2278776548),
-                                       122: AreaLocation(464164546, 900285955),
-                                       1245307: AreaLocation(1006255871, 1287880522),
-                                       2949235: AreaLocation(2252328306, 2556480432),
-                                       129: AreaLocation(1006255871, 2889020216),
-                                       2162826: AreaLocation(1006255871, 2918020398),
-                                       4522032: AreaLocation(464164546, 3145160350),
-                                       38: AreaLocation(1006255871, 1660916974),
-                                       1245332: AreaLocation(1119434212, 1473133138),
-                                       1638535: AreaLocation(1039999561, 3205424168),
+                                       122: AreaLocation(464164546, 3528156989),
+                                       1245307: AreaLocation(1006255871, 1345979968),
+                                       2949235: AreaLocation(1006255871, 1287880522),
+                                       129: AreaLocation(1006255871, 2918020398),
+                                       2162826: AreaLocation(1006255871, 1660916974),
+                                       4522032: AreaLocation(1006255871, 3455543403),
+                                       38: AreaLocation(1119434212, 1473133138),
+                                       1245332: AreaLocation(2252328306, 2399252740),
+                                       1638535: AreaLocation(2252328306, 2556480432),
                                    })
 
     # Run
     result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
-                                                                      permalink.seed_number,
+                                                                      Random(permalink.seed_number),
                                                                       GamePatches.with_game(game),
                                                                       )
 
@@ -228,7 +229,6 @@ def test_create_base_patches(mock_with_game: MagicMock,
     rng = MagicMock()
     game = MagicMock()
     layout_configuration = MagicMock()
-    seed_number = 123456
 
     first_patches = mock_with_game.return_value
     second_patches = mock_add_elevator_connections_to_patches.return_value
@@ -236,13 +236,11 @@ def test_create_base_patches(mock_with_game: MagicMock,
     fourth_patches = third_patches.assign_starting_location.return_value
 
     # Run
-    result = base_patches_factory.create_base_patches(layout_configuration,
-                                                      seed_number,
-                                                      rng, game)
+    result = base_patches_factory.create_base_patches(layout_configuration, rng, game)
 
     # Assert
     mock_with_game.assert_called_once_with(game)
-    mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, seed_number, first_patches)
+    mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, first_patches)
 
     # Gate Assignment
     mock_gate_assignment_for_configuration.assert_called_once_with(layout_configuration, game.resource_database, rng)
