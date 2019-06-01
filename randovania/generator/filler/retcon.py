@@ -1,7 +1,7 @@
 import collections
 import itertools
 from random import Random
-from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List, TypeVar, Any
+from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List, TypeVar, Any, Optional
 
 from randovania.game_description.game_description import calculate_interesting_resources, GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -21,7 +21,6 @@ from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup
 
 X = TypeVar("X")
-
 
 _RESOURCES_WEIGHT_MULTIPLIER = 1
 _INDICES_WEIGHT_MULTIPLIER = 1
@@ -152,12 +151,13 @@ def retcon_playthrough_filler(game: GameDescription,
 
                 next_state = reach.state.assign_pickup_to_index(action, pickup_index)
                 if current_uncollected.logbooks and _should_have_hint(action.item_category):
-                    next_state.patches = next_state.patches.assign_hint(
-                        rng.choice(list(current_uncollected.logbooks)),
-                        Hint(HintType.LOCATION, None, pickup_index)
-                    )
+                    hint_location: Optional[LogbookAsset] = rng.choice(list(current_uncollected.logbooks))
+                    next_state.patches = next_state.patches.assign_hint(hint_location,
+                                                                        Hint(HintType.LOCATION, None, pickup_index))
+                else:
+                    hint_location = None
 
-                print_retcon_place_pickup(action, game, pickup_index)
+                print_retcon_place_pickup(action, game, pickup_index, hint_location)
 
             else:
                 num_random_starting_items_placed += 1
@@ -309,12 +309,22 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
         ))
 
 
-def print_retcon_place_pickup(action: PickupEntry, game: GameDescription, pickup_index: PickupIndex):
+def print_retcon_place_pickup(action: PickupEntry, game: GameDescription,
+                              pickup_index: PickupIndex, hint: Optional[LogbookAsset]):
     world_list = game.world_list
     if debug.debug_level() > 0:
-        print("\n--> Placing {} at {}".format(
+        if hint is not None:
+            hint_string = " with hint at {}".format(
+                world_list.node_name(find_node_with_resource(hint, world_list.all_nodes),
+                                     with_world=True))
+        else:
+            hint_string = ""
+
+        print("\n--> Placing {0} at {1}{2}".format(
             action.name,
-            world_list.node_name(find_node_with_resource(pickup_index, world_list.all_nodes), with_world=True)))
+            world_list.node_name(find_node_with_resource(pickup_index, world_list.all_nodes), with_world=True),
+            hint_string
+        ))
 
 
 def print_new_resources(game: GameDescription,
