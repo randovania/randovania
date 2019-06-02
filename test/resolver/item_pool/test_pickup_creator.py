@@ -57,7 +57,8 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
 
     # Run
     result = randovania.generator.item_pool.pickup_creator.create_major_item(major_item, state, percentage,
-                                                                             echoes_resource_database)
+                                                                             echoes_resource_database,
+                                                                             None, False)
 
     # Assert
     assert result == PickupEntry(
@@ -112,7 +113,9 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
         echoes_item_database.major_items["Missile Launcher"],
         state,
         True,
-        echoes_resource_database
+        echoes_resource_database,
+        echoes_item_database.ammo["Missile Expansion"],
+        True
     )
 
     # Assert
@@ -132,6 +135,74 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
             ResourceConversion(source=temporary, target=missile),
         ),
         model_index=24,
+        item_category=ItemCategory.MISSILE,
+    )
+
+
+@pytest.mark.parametrize("ammo_quantity", [0, 10, 15])
+@pytest.mark.parametrize("ammo_requires_major_item", [False, True])
+def test_create_seeker_launcher(ammo_quantity: int,
+                                ammo_requires_major_item: bool,
+                                echoes_item_database,
+                                echoes_resource_database,
+                                ):
+    # Setup
+    missile = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 44)
+    missile_launcher = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 73)
+    seeker_launcher = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 26)
+    temporary = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
+
+    state = MajorItemState(
+        include_copy_in_original_location=False,
+        num_shuffled_pickups=0,
+        num_included_in_starting_items=0,
+        included_ammo=(ammo_quantity,),
+    )
+
+    # Run
+    result = randovania.generator.item_pool.pickup_creator.create_major_item(
+        echoes_item_database.major_items["Seeker Launcher"],
+        state,
+        True,
+        echoes_resource_database,
+        echoes_item_database.ammo["Missile Expansion"],
+        ammo_requires_major_item
+    )
+
+    # Assert
+    locked_conditional = (
+        ConditionalResources(
+            "Seeker Launcher", None,
+            resources=(
+                (seeker_launcher, 1),
+                (temporary, ammo_quantity),
+                (echoes_resource_database.item_percentage, 1),
+            )
+        ),
+        ConditionalResources(
+            "Seeker Launcher", missile_launcher,
+            resources=(
+                (seeker_launcher, 1),
+                (missile, ammo_quantity),
+                (echoes_resource_database.item_percentage, 1),
+            )
+        ),
+    )
+    normal_resources = (
+        ConditionalResources(
+            "Seeker Launcher", None,
+            resources=(
+                (seeker_launcher, 1),
+                (missile, ammo_quantity),
+                (echoes_resource_database.item_percentage, 1),
+            )
+        ),
+    )
+
+    assert result == PickupEntry(
+        name="Seeker Launcher",
+        resources=locked_conditional if ammo_requires_major_item else normal_resources,
+        model_index=25,
         item_category=ItemCategory.MISSILE,
     )
 

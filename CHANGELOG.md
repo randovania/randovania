@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Changed: There's no more hints with joke locations.
 
+-   Fixed: Seeker Missile's included missiles now respect the "needs Missile Launcher"
+    option.
+
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 

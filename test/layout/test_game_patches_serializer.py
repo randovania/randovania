@@ -100,7 +100,8 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
     if request.param.get("pickup"):
         data["_locations_internal"], pickup_name = request.param.get("pickup")
         pickup = pickup_creator.create_major_item(echoes_item_database.major_items[pickup_name],
-                                                  MajorItemState(), True, game.resource_database)
+                                                  MajorItemState(), True, game.resource_database,
+                                                  None, False)
 
         patches = patches.assign_new_pickups([(PickupIndex(5), pickup)])
         data["locations"]["Temple Grounds"]['Transport to Agon Wastes/Pickup (Missile)'] = pickup_name
