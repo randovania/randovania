@@ -8,7 +8,6 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_major_item
 from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.ammo_state import AmmoState
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.resolver.exceptions import InvalidConfiguration
 
