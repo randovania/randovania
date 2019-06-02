@@ -11,6 +11,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_MODEL, DARK_TEMPLE_KEY_NAMES, DARK_TEMPLE_KEY_ITEMS, \
     SKY_TEMPLE_KEY_MODEL, SKY_TEMPLE_KEY_ITEMS, USELESS_PICKUP_MODEL, USELESS_PICKUP_ITEM
 from randovania.layout.major_item_state import MajorItemState
+from randovania.resolver.exceptions import InvalidConfiguration
 
 
 def _get_item(resource_database: ResourceDatabase, index: int,
@@ -22,6 +23,8 @@ def create_major_item(item: MajorItem,
                       state: MajorItemState,
                       include_percentage: bool,
                       resource_database: ResourceDatabase,
+                      ammo: Optional[Ammo],
+                      ammo_requires_major_item: bool,
 
                       ) -> PickupEntry:
     """
@@ -30,16 +33,20 @@ def create_major_item(item: MajorItem,
     :param state:
     :param item:
     :param resource_database:
+    :param ammo:
+    :param ammo_requires_major_item:
     :return:
     """
 
-    def _create_resources(base_resource: Optional[int]) -> Tuple[ResourceQuantity, ...]:
+    def _create_resources(base_resource: Optional[int],
+                          temporary_ammo: bool = False) -> Tuple[ResourceQuantity, ...]:
         resources = []
 
         if base_resource is not None:
             resources.append((_get_item(resource_database, base_resource), 1))
 
-        for ammo_index, ammo_count in zip(item.ammo_index, state.included_ammo):
+        for ammo_index, ammo_count in zip(ammo.temporaries if temporary_ammo else item.ammo_index,
+                                          state.included_ammo):
             resources.append((_get_item(resource_database, ammo_index), ammo_count))
 
         if include_percentage:
@@ -48,14 +55,38 @@ def create_major_item(item: MajorItem,
         return tuple(resources)
 
     if item.progression:
-        conditional_resources = tuple(
-            ConditionalResources(
-                name=_get_item(resource_database, item.progression[i]).long_name,
-                item=_get_item(resource_database, item.progression[i - 1]) if i > 0 else None,
-                resources=_create_resources(progression)
+        if ammo_requires_major_item and ammo.unlocked_by != item.progression[0] and ammo.unlocked_by is not None:
+            if len(item.progression) != 1:
+                raise InvalidConfiguration(
+                    ("Item {item.name} uses ammo {ammo.name} that is locked behind {ammo.unlocked_by},"
+                     "but it also has progression. This is unsupported.").format(
+                        ammo=ammo,
+                        item=item,
+                    )
+                )
+
+            name = _get_item(resource_database, item.progression[0]).long_name
+            conditional_resources = (
+                ConditionalResources(
+                    name=name,
+                    item=None,
+                    resources=_create_resources(item.progression[0], True)
+                ),
+                ConditionalResources(
+                    name=name,
+                    item=_get_item(resource_database, ammo.unlocked_by),
+                    resources=_create_resources(item.progression[0])
+                )
             )
-            for i, progression in enumerate(item.progression)
-        )
+        else:
+            conditional_resources = tuple(
+                ConditionalResources(
+                    name=_get_item(resource_database, item.progression[i]).long_name,
+                    item=_get_item(resource_database, item.progression[i - 1]) if i > 0 else None,
+                    resources=_create_resources(progression)
+                )
+                for i, progression in enumerate(item.progression)
+            )
     else:
         conditional_resources = (
             ConditionalResources(name=item.name, item=None, resources=_create_resources(None)),
