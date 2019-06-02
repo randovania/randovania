@@ -179,6 +179,32 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         set_combo_with_value(self.hint_sky_temple_key_combo, options.layout_configuration.hints.sky_temple_keys)
 
     # Trick Level
+
+    def _create_difficulty_details_row(self):
+        row = 1
+
+        trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
+        trick_label.setWordWrap(True)
+        trick_label.setFixedWidth(80)
+        trick_label.setText("Difficulty Details")
+
+        self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
+
+        slider_layout = QtWidgets.QGridLayout()
+        slider_layout.setHorizontalSpacing(0)
+        for i in range(12):
+            slider_layout.setColumnStretch(i, 1)
+
+        for i, trick_level in enumerate(LayoutTrickLevel):
+            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_RESTRICTIONS}:
+                tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
+                tool_button.setText(trick_level.long_name)
+                tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
+
+                slider_layout.addWidget(tool_button, 1, 2 * i, 1, 2)
+
+        self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
+
     def setup_trick_level_elements(self):
         # logic_combo_box
         for i, trick_level in enumerate(LayoutTrickLevel):
@@ -195,7 +221,9 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 
-        row = 1
+        self._create_difficulty_details_row()
+
+        row = 2
         for trick in sorted(self.resource_database.trick, key=lambda _trick: _trick.long_name):
             if trick.index not in configurable_tricks or trick not in used_tricks:
                 continue
@@ -293,6 +321,15 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
             self.game_description,
             trick,
             self._options.layout_configuration.trick_level_configuration.level_for_trick(trick),
+        )
+        self._trick_details_popup.show()
+
+    def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
+        self._trick_details_popup = TrickDetailsPopup(
+            self._main_window,
+            self.game_description,
+            None,
+            difficulty,
         )
         self._trick_details_popup.show()
 

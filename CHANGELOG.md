@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: The tracker now persists the current state.
 
 -   Added: Some generation failures are now automatically retried, using the same permalink.
+
+-   Added: Buttons to see what a difficulty unlocks that doesn't involve tricks at all.
     
 -   Changed: Increased Hint Scan value for logic to the intended value from the previous
     change.
