@@ -13,6 +13,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
@@ -131,7 +132,7 @@ def retcon_playthrough_filler(game: GameDescription,
             if actions_weights:
                 action = rng.choice(list(actions_weights.keys()))
             else:
-                raise RuntimeError("Unable to generate, no actions found after placing {} items.".format(
+                raise UnableToGenerate("Unable to generate, no actions found after placing {} items.".format(
                     len(reach.state.patches.pickup_assignment)))
 
         if isinstance(action, PickupEntry):

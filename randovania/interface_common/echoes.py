@@ -22,10 +22,10 @@ def _generate_layout_worker(output_pipe,
         if not timeout_during_generation:
             extra_args["timeout"] = None
 
-        layout_description = generator.generate_list(permalink,
-                                                     status_update=status_update,
-                                                     validate_after_generation=validate_after_generation,
-                                                     **extra_args)
+        layout_description = generator.generate_description(permalink,
+                                                            status_update=status_update,
+                                                            validate_after_generation=validate_after_generation,
+                                                            **extra_args)
         output_pipe.send(layout_description)
     except Exception as e:
         traceback.print_exc()

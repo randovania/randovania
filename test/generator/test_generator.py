@@ -121,7 +121,7 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
     status_update = MagicMock()
     mock_permalink_as_str.return_value = "fixed-seed!"
 
-    generated_description = generator.generate_list(
+    generated_description = generator.generate_description(
         layout_description.permalink, status_update=status_update, validate_after_generation=True, timeout=None)
 
     # indices: List[int] = [None] * echoes_pickup_database.total_pickup_count
@@ -159,12 +159,11 @@ def test_create_patches(mock_random: MagicMock,
     mock_run_filler.return_value = filler_patches, remaining_items
 
     # Run
-    result = generator._create_patches(permalink, game, status_update)
+    result = generator._create_randomized_patches(permalink, game, status_update)
 
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
-    mock_create_base_patches.assert_called_once_with(permalink.layout_configuration, permalink.seed_number,
-                                                     mock_random.return_value, game)
+    mock_create_base_patches.assert_called_once_with(permalink.layout_configuration, mock_random.return_value, game)
 
     # pool
     mock_calculate_item_pool.assert_called_once_with(permalink.layout_configuration,
@@ -176,6 +175,8 @@ def test_create_patches(mock_random: MagicMock,
         permalink.layout_configuration, game, item_pool, pool_patches, mock_random.return_value, status_update
     )
     mock_assign_remaining_items.assert_called_once_with(
-        mock_random.return_value, game, filler_patches, remaining_items
+        mock_random.return_value, game.world_list, filler_patches.pickup_assignment, remaining_items
     )
-    assert result == mock_assign_remaining_items.return_value
+    filler_patches.assign_pickup_assignment.assert_called_once_with(mock_assign_remaining_items.return_value)
+
+    assert result == filler_patches.assign_pickup_assignment.return_value

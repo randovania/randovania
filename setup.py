@@ -60,6 +60,7 @@ setup(
         'num2words',
         'bitstruct',
         'construct',
+        'tenacity',
         'pytest',
         'pytest-cov',
         'pytest-qt',
