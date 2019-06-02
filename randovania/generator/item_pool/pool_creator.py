@@ -32,7 +32,8 @@ def calculate_pool_results(layout_configuration: LayoutConfiguration,
 
     # Adding major items to the pool
     _extend_pool_results(base_results, add_major_items(resource_database,
-                                                       layout_configuration.major_items_configuration))
+                                                       layout_configuration.major_items_configuration,
+                                                       layout_configuration.ammo_configuration))
 
     # Adding ammo to the pool
     base_results[0].extend(add_ammo(resource_database,
