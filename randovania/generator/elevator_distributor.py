@@ -1,5 +1,6 @@
 import copy
 from collections import defaultdict
+from random import Random
 from typing import List, Dict, Optional
 
 from randovania.game_description.area_location import AreaLocation
@@ -35,7 +36,6 @@ class Elevator:
 
     def __init__(self, instance_id: int, world_asset_id: int, area_asset_id: int, destination_world: int,
                  destination_area: int):
-
         self.world_asset_id = world_asset_id
         self.area_asset_id = area_asset_id
         self.instance_id = instance_id
@@ -52,74 +52,7 @@ class Elevator:
         other.connected_elevator = self
 
 
-class ElevatorRandom:
-    """Reference implementation:
-    https://github.com/EthanArmbrust/new-prime-seed-generator/blob/master/src/Random.cpp"""
-
-    def __init__(self, seed):
-        self.SeedArray = [Int32(0)] * 56  # type: List[Int32]
-
-        if seed < 0:
-            raise ValueError("Invalid seed: must be >= 0")
-
-        if seed > 0x7fffffff:
-            raise ValueError("Invalid seed: must be <= 0x7fffffff (2147483647)")
-
-        # Initialize our Seed array.
-        # This algorithm comes from Numerical Recipes in C (2nd Ed.)
-        mj = MSEED - Int32(seed)
-        self.SeedArray[55] = mj
-        mk = Int32(1)
-        # Apparently the range [1..55] is special (Knuth) and so we're wasting the 0'th position.
-        for i in range(1, 55):
-            ii = (21 * i) % 55
-            self.SeedArray[ii] = mk
-            mk = mj - mk
-            if mk.value < 0:
-                mk += MBIG
-            mj = self.SeedArray[ii]
-
-        for _ in range(1, 5):
-            for i in range(1, 56):
-                idx = 1 + (i + 30) % 55
-                self.SeedArray[i] -= self.SeedArray[idx]
-                if self.SeedArray[i].value < 0:
-                    self.SeedArray[i] += MBIG
-
-        self.inext = 0
-        self.inextp = 21
-
-    def next_with_max(self, max_value: int) -> int:
-        return int(self.sample() * max_value)
-
-    def _internal_sample(self) -> Int32:
-        inext = self.inext
-        inextp = self.inextp
-
-        inext += 1
-        if inext >= 0x38:
-            inext = 1
-
-        inextp += 1
-        if inextp >= 0x38:
-            inextp = 1
-
-        num = self.SeedArray[inext] - self.SeedArray[inextp]
-        if num == MBIG:
-            num -= 1
-        if num.value < 0:
-            num += MBIG
-
-        self.SeedArray[inext] = num
-        self.inext = inext
-        self.inextp = inextp
-        return num
-
-    def sample(self) -> float:
-        return self._internal_sample().value / MBIG.value
-
-
-def try_randomize_elevators(randomizer: ElevatorRandom,
+def try_randomize_elevators(rng: Random,
                             ) -> List[Elevator]:
     elevator_database: List[Elevator] = copy.deepcopy(echoes_elevators)
 
@@ -136,7 +69,7 @@ def try_randomize_elevators(randomizer: ElevatorRandom,
             if elevator not in source_elevators
         ]
         source_elevator = source_elevators[0]
-        target_elevator = target_elevators[randomizer.next_with_max(len(target_elevators) - 1)]
+        target_elevator = rng.choice(target_elevators)
 
         source_elevator.connect_to(target_elevator)
 
@@ -163,15 +96,15 @@ def try_randomize_elevators(randomizer: ElevatorRandom,
             celevator_list3 = celevator_list1
         else:
             # Randomization failed
-            return try_randomize_elevators(randomizer)
+            return try_randomize_elevators(rng)
 
     return elevator_database
 
 
-def elevator_connections_for_seed_number(seed_number: int,
+def elevator_connections_for_seed_number(rng: Random,
                                          ) -> Dict[int, AreaLocation]:
     elevator_connection = {}
-    for elevator in try_randomize_elevators(ElevatorRandom(seed_number)):
+    for elevator in try_randomize_elevators(rng):
         elevator_connection[elevator.instance_id] = AreaLocation(
             elevator.connected_elevator.world_asset_id,
             elevator.connected_elevator.area_asset_id

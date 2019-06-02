@@ -21,7 +21,7 @@ def batch_distribute_helper(base_permalink: Permalink,
     )
 
     start_time = time.perf_counter()
-    description = generator.generate_list(permalink, None, validate)
+    description = generator.generate_description(permalink, None, validate)
     delta_time = time.perf_counter() - start_time
 
     description.save_to_file(output_dir.joinpath("{}.json".format(seed_number)))
