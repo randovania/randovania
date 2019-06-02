@@ -555,7 +555,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_database):
     # Setup
     progressive_suit = echoes_item_database.major_items["Progressive Suit"]
-    pickup = pickup_creator.create_major_item(progressive_suit, MajorItemState(), False, echoes_resource_database)
+    pickup = pickup_creator.create_major_item(progressive_suit, MajorItemState(), False, echoes_resource_database,
+                                              None, False)
 
     # Run
     result = patcher_file._pickup_scan(pickup)
