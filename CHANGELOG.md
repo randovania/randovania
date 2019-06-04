@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Seeker Missile's included missiles now respect the "needs Missile Launcher"
     option.
+    
+-   Changed: Progressive Launcher is now disabled by default.
 
 ## [0.27.1] - 2019-05-30
 
