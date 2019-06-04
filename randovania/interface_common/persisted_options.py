@@ -153,7 +153,7 @@ def _convert_v7(options: dict) -> dict:
         layout_configuration.pop("main_power_bombs_required", None)
 
         major_items_configuration = layout_configuration["major_items_configuration"]
-        major_items_configuration["progressive_launcher"] = True
+        major_items_configuration["progressive_launcher"] = False
         major_items_configuration["minimum_random_starting_items"] = 0
         major_items_configuration["maximum_random_starting_items"] = 0
         major_items_configuration["items_state"].pop("Missile Launcher", None)
