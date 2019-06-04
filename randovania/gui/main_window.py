@@ -27,6 +27,14 @@ from randovania.interface_common.options import Options
 from randovania.resolver import debug
 
 
+_DISABLE_VALIDATION_WARNING = """
+<html><head/><body>
+<p>While it sometimes throws errors, the validation is what guarantees that your seed is completable.<br/>
+Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable with possibly unbeatable seeds.
+</p><p align="center">Are you sure you want to disable validation?</p></body></html>
+"""
+
+
 class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
@@ -249,8 +257,23 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         pass
 
     def _on_validate_seed_change(self):
+        old_value = self._options.advanced_validate_seed_after
+        new_value = self.menu_action_validate_seed_after.isChecked()
+
+        if old_value and not new_value:
+            box = QMessageBox(self)
+            box.setWindowTitle("Disable validation?")
+            box.setText(_DISABLE_VALIDATION_WARNING)
+            box.setIcon(QMessageBox.Warning)
+            box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            box.setDefaultButton(QMessageBox.No)
+            user_response = box.exec_()
+            if user_response != QMessageBox.Yes:
+                self.menu_action_validate_seed_after.setChecked(True)
+                return
+
         with self._options as options:
-            options.advanced_validate_seed_after = self.menu_action_validate_seed_after.isChecked()
+            options.advanced_validate_seed_after = new_value
 
     def _on_generate_time_limit_change(self):
         is_checked = self.menu_action_timeout_generation_after_a_time_limit.isChecked()
