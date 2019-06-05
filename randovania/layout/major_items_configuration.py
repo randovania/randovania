@@ -16,7 +16,7 @@ class MajorItemsConfiguration(BitPackValue):
     items_state: Dict[MajorItem, MajorItemState]
     progressive_suit: bool = True
     progressive_grapple: bool = True
-    progressive_launcher: bool = True
+    progressive_launcher: bool = False
     minimum_random_starting_items: int = 0
     maximum_random_starting_items: int = 0
 
