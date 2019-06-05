@@ -54,7 +54,8 @@ _TRICK_LEVEL_DESCRIPTION = {
     ],
     LayoutTrickLevel.MINIMAL_RESTRICTIONS: [
         "This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind "
-        "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible.",
+        "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible. "
+        "There are no guarantees that a seed will be possible in this case."
     ],
 }
 
