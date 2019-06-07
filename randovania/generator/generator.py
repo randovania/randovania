@@ -152,7 +152,8 @@ def _create_randomized_patches(permalink: Permalink,
 
 
 @tenacity.retry(stop=tenacity.stop_after_attempt(5),
-                retry=tenacity.retry_if_exception_type(UnableToGenerate))
+                retry=tenacity.retry_if_exception_type(UnableToGenerate),
+                reraise=True)
 def _retryable_create_patches(configuration: LayoutConfiguration,
                               game: GameDescription,
                               rng: Random,
