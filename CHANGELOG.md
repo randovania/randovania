@@ -11,19 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Changed: The resolver now keeps track of current energy during resolution.
     This ensures you'll always have enough Energy Tanks for trips to Dark Aether.
-    
+
 -   *Major* - Added: Scanning a keybearer corpse provides a hint of what is in the matching Flying
     Ing Cache.
-    
+
 -   Added: The tracker now persists the current state.
 
 -   Added: Some generation failures are now automatically retried, using the same permalink.
 
 -   Added: Buttons to see what a difficulty unlocks that doesn't involve tricks at all.
-    
+
 -   Changed: Increased Hint Scan value for logic to the intended value from the previous
     change.
-    
+
 -   Changed: There's no more hints with joke locations.
 
 -   Changed: The lore hint in Mining Station A is now able to be scanned from the room center.
@@ -32,12 +32,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Seeker Missile's included missiles now respect the "needs Missile Launcher"
     option.
-    
+
 -   Changed: Progressive Launcher is now disabled by default.
 
 -   Fixed: Clicking the connection's link in the Data Visualizer should now always work.
 
 -   Changed: Hint Locations page now has a more usable UI. 
+
+-   Changed: Screw Attacking without Space Jump Boots in Hive Temple is no longer required on No Tricks.
 
 ## [0.27.1] - 2019-05-30
 
