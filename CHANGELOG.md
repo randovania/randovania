@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: In Hive Temple, scan dashing to the door to Temple Security Access is now Hypermode difficulty,
     from Hard and above.
 
+-   Changed: The method to get the Main Research item with only Spider Ball was removed.
+
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 
