@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Changed: Progressive Launcher is now disabled by default.
 
+-   Fixed: Clicking the connection's link in the Data Visualizer should now always work. 
+
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 

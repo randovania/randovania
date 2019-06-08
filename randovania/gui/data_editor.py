@@ -105,7 +105,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
 
     def _on_click_link_to_other_node(self, link: str):
-        info = re.match(r"^node://([^)]+)/([^)]+)/([^)]+)$", link)
+        info = re.match(r"^node://([^/]+)/([^/]+)/(.+)$", link)
         if info:
             world_name, area_name, node_name = info.group(1, 2, 3)
             self.focus_on_world(world_name)
@@ -122,7 +122,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if isinstance(node, DockNode):
             other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
-            msg = "{} to <a href='node://{}'>{}</a>".format(
+            msg = "{} to <a href=\"node://{}\">{}</a>".format(
                 node.default_dock_weakness.name,
                 self.world_list.node_name(other, with_world=True),
                 self.world_list.node_name(other)
@@ -133,7 +133,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         elif isinstance(node, TeleporterNode):
             other = self.world_list.resolve_teleporter_connection(node.default_connection)
-            msg = "Connects to <a href='node://{0}'>{0}</a>".format(self.world_list.node_name(other, with_world=True))
+            msg = "Connects to <a href=\"node://{0}\">{0}</a>".format(self.world_list.node_name(other, with_world=True))
         else:
             msg = ""
 
