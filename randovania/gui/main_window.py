@@ -12,7 +12,7 @@ from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
 
 from randovania import VERSION
 from randovania.game_description import default_database
-from randovania.game_description.node import LogbookNode
+from randovania.game_description.node import LogbookNode, LoreType
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file, \
@@ -283,36 +283,44 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     def _update_hints_text(self):
         game_description = default_database.default_prime2_game_description()
 
-        entries = []
+        number_for_hint_type = {
+            hint_type: i + 1
+            for i, hint_type in enumerate(LoreType)
+        }
+        used_hint_types = set()
+
+        self.hint_tree_widget.setSortingEnabled(False)
+
         for world in game_description.world_list.worlds:
-            areas_text = []
+
+            world_item = QtWidgets.QTreeWidgetItem(self.hint_tree_widget)
+            world_item.setText(0, world.name)
+            world_item.setExpanded(True)
+
             for area in world.areas:
-                hint_types = []
+                hint_types = {}
+
                 for node in area.nodes:
                     if isinstance(node, LogbookNode):
-                        hint_types.append(node.lore_type.value)
                         if node.required_translator is not None:
-                            hint_types[-1] += " / {}".format(node.required_translator.short_name)
+                            hint_types[node.lore_type] = node.required_translator.short_name
+                        else:
+                            hint_types[node.lore_type] = "✓"
 
                 if hint_types:
-                    areas_text.append("{}: {}".format(area.name, ", ".join(hint_types)))
+                    area_item = QtWidgets.QTreeWidgetItem(world_item)
+                    area_item.setText(0, area.name)
 
-            if areas_text:
-                entries.append("{}<ul>{}</ul><br />".format(
-                    world.name,
-                    "".join(
-                        f"<li>{area_hints}</li>"
-                        for area_hints in areas_text
-                    )
-                ))
+                    for hint_type, text in hint_types.items():
+                        area_item.setText(number_for_hint_type[hint_type], text)
+                        used_hint_types.add(hint_type)
 
-        hint_list = "<ul>{}</ul>".format(
-            "".join(
-                f"<li>{entry}</li>"
-                for entry in entries
-            )
-        )
-        self.hint_label.setText(self.hint_label.text().format(hint_list=hint_list))
+        self.hint_tree_widget.resizeColumnToContents(0)
+        self.hint_tree_widget.setSortingEnabled(True)
+        self.hint_tree_widget.sortByColumn(0, QtCore.Qt.AscendingOrder)
+
+        for hint_type in used_hint_types:
+            self.hint_tree_widget.headerItem().setText(number_for_hint_type[hint_type], hint_type.long_name)
 
     # Background Process
 

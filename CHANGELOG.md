@@ -33,7 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Changed: Progressive Launcher is now disabled by default.
 
--   Fixed: Clicking the connection's link in the Data Visualizer should now always work. 
+-   Fixed: Clicking the connection's link in the Data Visualizer should now always work.
+
+-   Changed: Hint Locations page now has a more usable UI. 
 
 ## [0.27.1] - 2019-05-30
 
