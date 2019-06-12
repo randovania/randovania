@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Changed: There's no more hints with joke locations.
 
+-   Changed: The lore hint in Mining Station A is now able to be scanned from the room center.
+
 -   Added: A warning is now displayed when trying to disable validation.
 
 -   Fixed: Seeker Missile's included missiles now respect the "needs Missile Launcher"
