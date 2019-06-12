@@ -4,8 +4,7 @@ from distutils.version import StrictVersion
 from pathlib import Path
 from typing import Optional, TypeVar, Callable, Any
 
-import randovania
-from randovania.interface_common import persistence
+from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 from randovania.layout.ammo_configuration import AmmoConfiguration
@@ -74,7 +73,7 @@ class Options:
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
-        self._last_changelog_displayed = randovania.VERSION
+        self._last_changelog_displayed = str(update_checker.strict_current_version())
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
