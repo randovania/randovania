@@ -7,6 +7,7 @@ import pytest
 
 import randovania.interface_common.options
 import randovania.interface_common.persisted_options
+from randovania.interface_common import update_checker
 from randovania.interface_common.options import Options
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
@@ -192,7 +193,7 @@ def test_serialize_fields(option: Options):
     assert result == {
         "version": randovania.interface_common.persisted_options._CURRENT_OPTIONS_FILE_VERSION,
         "options": {
-            "last_changelog_displayed": randovania.VERSION,
+            "last_changelog_displayed": str(update_checker.strict_current_version()),
         }
     }
 

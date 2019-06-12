@@ -30,7 +30,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="welcome_tab">
        <attribute name="title">
@@ -77,8 +77,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>146</width>
-                 <height>1222</height>
+                 <width>541</width>
+                 <height>372</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -124,8 +124,8 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>124</width>
-                 <height>2697</height>
+                 <width>531</width>
+                 <height>460</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_5">
@@ -163,8 +163,8 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>144</width>
-                 <height>3680</height>
+                 <width>531</width>
+                 <height>426</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="differences_scroll_layout">
@@ -191,7 +191,7 @@ p, li { white-space: pre-wrap; }
            <attribute name="title">
             <string>Hints Locations</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_7">
+           <layout class="QVBoxLayout" name="hint_tab_layout">
             <item>
              <widget class="QScrollArea" name="hint_scroll_area">
               <property name="widgetResizable">
@@ -205,15 +205,15 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>96</width>
-                 <height>277</height>
+                 <width>541</width>
+                 <height>372</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_8">
+               <layout class="QVBoxLayout" name="hint_scroll_layout_2">
                 <item>
                  <widget class="QLabel" name="hint_label">
                   <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hints are placed in the game by replacing Logbook scans. The following are the scans that may have a hint added to them:&lt;/p&gt;{hint_list}&lt;/body&gt;&lt;/html&gt;</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hints are placed in the game by replacing Logbook scans. The following are the scans that may have a hint added to them:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -221,6 +221,15 @@ p, li { white-space: pre-wrap; }
                   <property name="wordWrap">
                    <bool>true</bool>
                   </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTreeWidget" name="hint_tree_widget">
+                  <column>
+                   <property name="text">
+                    <string>Location</string>
+                   </property>
+                  </column>
                  </widget>
                 </item>
                </layout>
@@ -244,8 +253,8 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>101</width>
-                 <height>824</height>
+                 <width>541</width>
+                 <height>372</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="hint_scroll_layout">
@@ -393,7 +402,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>587</width>
-     <height>29</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_open">
