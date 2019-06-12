@@ -176,6 +176,18 @@ class LoreType(Enum):
     def holds_generic_hint(self) -> bool:
         return self in {LoreType.LUMINOTH_LORE, LoreType.PIRATE_LORE}
 
+    @property
+    def long_name(self) -> str:
+        return _LORE_TYPE_LONG_NAME[self]
+
+
+_LORE_TYPE_LONG_NAME = {
+    LoreType.LUMINOTH_LORE: "Luminoth Lore",
+    LoreType.LUMINOTH_WARRIOR: "Keybearer Corpse",
+    LoreType.PIRATE_LORE: "Pirate Lore",
+    LoreType.SKY_TEMPLE_KEY_HINT: "Sky Temple Key Hint",
+}
+
 
 @dataclasses.dataclass(frozen=True)
 class LogbookNode(ResourceNode):
