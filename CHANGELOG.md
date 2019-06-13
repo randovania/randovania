@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to open the gate in Main Reactor with Space Jump Boots and Screw Attack.
 
+-   Changed: Opening the barrier in Crypt with Screw Attack is now always Easy and above.
+
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 
