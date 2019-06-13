@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.28.0]
+## [0.28.0] - 2019-06-12
 
 -   *Major* - Changed: The resolver now keeps track of current energy during resolution.
     This ensures you'll always have enough Energy Tanks for trips to Dark Aether.
