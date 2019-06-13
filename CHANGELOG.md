@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Method to open Seeker Launcher blast shields with four missiles, Seeker Launcher, and Screw Attack (Easy
     and above). Underwater, the trick Air Underwater is also required, and the difficulty is Normal and above.
 
+-   Fixed: Dark world damage during the Quadraxis fight is now correctly calculated.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
