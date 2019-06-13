@@ -61,6 +61,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to climb to the door to Crypt Tunnel in Crypt via a Bomb Space Jump (Normal and above).
 
+-   Added: Method to open Seeker Launcher blast shields with four missiles, Seeker Launcher, and Screw Attack (Easy
+    and above). Underwater, the trick Air Underwater is also required, and the difficulty is Normal and above.
+
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 
