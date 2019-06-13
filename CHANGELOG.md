@@ -10,6 +10,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: the "Blind Jump" trick in places where jumping onto invisible platforms without the
     Dark Visor is required.
 
+-   Changed: Screw Attacking without Space Jump Boots in Hive Temple is no longer required on No Tricks.
+
+-   Changed: In Hive Temple, scan dashing to the door to Temple Security Access is now Hypermode difficulty,
+    from Hard and above.
+
+-   Changed: The method to get the Main Research item with only Spider Ball was removed.
+
+-   Fixed: Using charged Light Beam shots to get the item in Hazing Cliff now requires 5 or more Light Ammo.
+
+-   Added: Method to open the gate in Main Reactor with Space Jump Boots and Screw Attack.
+
+-   Changed: Opening the barrier in Crypt with Screw Attack is now always Easy and above.
+
+-   Added: Method to climb to the door to Crypt Tunnel in Crypt via a Bomb Space Jump (Normal and above).
+
+-   Added: Method to open Seeker Launcher blast shields with four missiles, Seeker Launcher, and Screw Attack (Easy
+    and above). Underwater, the trick Air Underwater is also required, and the difficulty is Normal and above.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
@@ -46,24 +64,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Hint Locations page now has a more usable UI. 
 
--   Changed: Screw Attacking without Space Jump Boots in Hive Temple is no longer required on No Tricks.
-
--   Changed: In Hive Temple, scan dashing to the door to Temple Security Access is now Hypermode difficulty,
-    from Hard and above.
-
--   Changed: The method to get the Main Research item with only Spider Ball was removed.
-
--   Fixed: Using charged Light Beam shots to get the item in Hazing Cliff now requires 5 or more Light Ammo.
-
--   Added: Method to open the gate in Main Reactor with Space Jump Boots and Screw Attack.
-
--   Changed: Opening the barrier in Crypt with Screw Attack is now always Easy and above.
-
--   Added: Method to climb to the door to Crypt Tunnel in Crypt via a Bomb Space Jump (Normal and above).
-
--   Added: Method to open Seeker Launcher blast shields with four missiles, Seeker Launcher, and Screw Attack (Easy
-    and above). Underwater, the trick Air Underwater is also required, and the difficulty is Normal and above.
-
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions. 
@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Changed: Optimized the seed generation step. It should now take roughly
     half as long or even faster. 
-    
+
 -   *Major* - Added: It's now possible to configure the difficulty on a per-trick basis.
 
 -   *Major* - Added: It's now possible to check where a certain trick is used on each
