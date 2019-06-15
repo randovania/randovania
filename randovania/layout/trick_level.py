@@ -143,19 +143,20 @@ class TrickLevelConfiguration(BitPackValue):
     @classmethod
     def all_possible_tricks(cls) -> FrozenSet[int]:
         return frozenset({
-            0,  # Scan Dash
-            1,  # Difficult Bomb Jump
-            2,  # Slope Jump
-            3,  # R Jump
-            4,  # BSJ
-            5,  # Roll Jump
-            6,  # Underwater Dash
-            7,  # Air Underwater
-            8,  # Floaty
-            9,  # Infinite Speed
+            0,   # Scan Dash
+            1,   # Difficult Bomb Jump
+            2,   # Slope Jump
+            3,   # R Jump
+            4,   # BSJ
+            5,   # Roll Jump
+            6,   # Underwater Dash
+            7,   # Air Underwater
+            8,   # Floaty
+            9,   # Infinite Speed
             10,  # SA without SJ
             11,  # Wall Boost
             12,  # Jump off Enemy
-            # 14,  # Controller Reset
+            # 14,# Controller Reset
             15,  # Instant Morph
+            26,  # Blind Jump
         })
