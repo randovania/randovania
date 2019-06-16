@@ -41,6 +41,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Methods to climb Mining Plaza using the Morph Ball Bomb (Trivial and above) and using Screw Attack
     without Space Jump Boots (Easy and above).
 
+-   Changed: In Forgotten Bridge, the difficulty of scan dashing to the door to Abandoned Worksite or the portal to
+    Dark Forgotten Bridge was lowered to Easy, from Normal.
+
+-   Added: In Forgotten Bridge, a method to get to the door to Grove Access from the portal to Dark Forgotten Bridge
+    using only Screw Attack (Easy and above).
+
+-   Added: In Forgotten Bridge, a method to get to the door to Abandoned Worksite via a roll jump (Easy and above).
+
+-   Added: In Forgotten Bridge, a method to get to the bridge center from the door to Grove Access via a scan dash
+    (Easy and above).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
