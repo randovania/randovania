@@ -38,6 +38,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Central Mining Station, a method to get to upper door to Command Center Access using a
     Bomb Space Jump (Easy and above) and another using Space Jump Boots and Screw Attack (Easy and above).
 
+-   Added: Methods to climb Mining Plaza using the Morph Ball Bomb (Trivial and above) and using Screw Attack
+    without Space Jump Boots (Easy and above).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
