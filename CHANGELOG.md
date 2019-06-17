@@ -52,6 +52,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Forgotten Bridge, a method to get to the bridge center from the door to Grove Access via a scan dash
     (Easy and above).
 
+-   Added: In Hydrodynamo Station a method to get from the room's top to the door to Save Station B with Screw Attack
+    without Space Jump Boots (Trivial and above).
+
+-   Changed: Climbing Hydrodynamo Station with only Gravity Boost and before all three locks are unlocked is now
+    Trivial difficulty (from No Tricks).
+
+-   Changed: Getting to the three doors in the middle section of Hydrodynamo Station using Air Underwater is now
+    Normal difficulty (from Hard).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
