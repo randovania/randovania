@@ -74,6 +74,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Hive Dynamo Works, a method to cross the gap from the door to Hive Dynamo Access by abusing terminal
     fall (Easy and above).
 
+-   Changed: In Hive Dynamo Works, returning from the Flying Ing Cache location using Space Jump Boots and
+    Screw Attack is now Trivial difficulty (from Easy).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
