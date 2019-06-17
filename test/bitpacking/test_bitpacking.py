@@ -31,6 +31,8 @@ def test_encode_int_with_limits_round_trip(value: int,
 
 @pytest.fixture(
     params=[
+        (0, (1, 4), [(0, 2)]),
+        (1, (1, 4), [(1, 2), (0, 4)]),
         (5, (10,), [(5, 11)]),
         (50, (10,), [(50, 11)]),
         (5, (10, 100), [(5, 11)]),
@@ -70,6 +72,22 @@ def test_decode_int_with_limits(limits_fixture):
         for _, limit in encoded
     ])
     assert result == value
+
+
+@pytest.mark.parametrize(["value", "limits", "expected"], [
+    (0, (1, 4), "u1"),
+    (1, (1, 4), "u1u2"),
+    (2, (1, 4), "u1u2"),
+    (3, (1, 4), "u1u2"),
+    (4, (1, 4), "u1u2"),
+])
+def test_encode_int_with_limits_bitstring(value, limits, expected):
+
+    # Run
+    result = bitpacking._format_string_for(list(bitpacking.encode_int_with_limits(value, limits)))
+
+    # Assert
+    assert result == expected
 
 
 @pytest.fixture(
