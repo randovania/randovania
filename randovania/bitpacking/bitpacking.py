@@ -197,11 +197,15 @@ def decode_bool(decoder: BitPackDecoder) -> bool:
     return bool(decoder.decode_single(2))
 
 
-def _pack_encode_results(values: List[Tuple[int, int]]):
-    f = "".join(
+def _format_string_for(values: List[Tuple[int, int]]) -> str:
+    return "".join(
         "u{}".format(_bits_for_number(v))
         for _, v in values
     )
+
+
+def _pack_encode_results(values: List[Tuple[int, int]]):
+    f = _format_string_for(values)
     return bitstruct.compile(f).pack(*[argument for argument, _ in values])
 
 
