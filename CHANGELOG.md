@@ -61,6 +61,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Getting to the three doors in the middle section of Hydrodynamo Station using Air Underwater is now
     Normal difficulty (from Hard).
 
+-   Fixed: A method to get the item in the Sunburst location by abusing terminal fall now has a damage requirement.
+
+-   Added: A method to get to the turret in Sanctuary Entrance with only Space Jump Boots and Screw Attack, even
+    after the bridge is destroyed.
+
+-   Fixed: Lowering the portal barrier in Hive Dynamo Works now requires five missiles.
+
+-   Added: Methods to cross Hive Dynamo Works using a roll jump (Easy and above) and using Space Jump Boots and
+    Screw Attack (No Tricks).
+
+-   Added: In Hive Dynamo Works, a method to cross the gap from the door to Hive Dynamo Access by abusing terminal
+    fall (Easy and above).
+
+-   Changed: In Hive Dynamo Works, returning from the Flying Ing Cache location using Space Jump Boots and
+    Screw Attack is now Trivial difficulty (from Easy).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
