@@ -66,6 +66,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: A method to get to the turret in Sanctuary Entrance with only Space Jump Boots and Screw Attack, even
     after the bridge is destroyed.
 
+-   Fixed: Lowering the portal barrier in Hive Dynamo Works now requires five missiles.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
