@@ -61,6 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Getting to the three doors in the middle section of Hydrodynamo Station using Air Underwater is now
     Normal difficulty (from Hard).
 
+-   Fixed: A method to get the item in the Sunburst location by abusing terminal fall now has a damage requirement.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
