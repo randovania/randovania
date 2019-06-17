@@ -10,6 +10,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: the "Blind Jump" trick in places where jumping onto invisible platforms without the
     Dark Visor is required.
 
+-   Changed: Screw Attacking without Space Jump Boots in Hive Temple is no longer required on No Tricks.
+
+-   Changed: In Hive Temple, scan dashing to the door to Temple Security Access is now Hypermode difficulty,
+    from Hard and above.
+
+-   Changed: The method to get the Main Research item with only Spider Ball was removed.
+
+-   Fixed: Using charged Light Beam shots to get the item in Hazing Cliff now requires 5 or more Light Ammo.
+
+-   Added: Method to open the gate in Main Reactor with Space Jump Boots and Screw Attack.
+
+-   Changed: Opening the barrier in Crypt with Screw Attack is now always Easy and above.
+
+-   Added: Method to climb to the door to Crypt Tunnel in Crypt via a Bomb Space Jump (Normal and above).
+
+-   Added: Method to open Seeker Launcher blast shields with four missiles, Seeker Launcher, and Screw Attack (Easy
+    and above). Underwater, the trick Air Underwater is also required, and the difficulty is Normal and above.
+
+-   Fixed: Dark world damage during the Quadraxis fight is now correctly calculated.
+
+-   Fixed: Requirements for crossing Sacred Path were added.
+
+-   Added: Method to cross gap in the upper level of Command Center using Screw Attack without Space Jump Boots
+    (Trivial and above).
+
+-   Added: In Central Mining Station, a method to get to upper door to Command Center Access using a
+    Bomb Space Jump (Easy and above) and another using Space Jump Boots and Screw Attack (Easy and above).
+
+-   Added: Methods to climb Mining Plaza using the Morph Ball Bomb (Trivial and above) and using Screw Attack
+    without Space Jump Boots (Easy and above).
+
+-   Changed: In Forgotten Bridge, the difficulty of scan dashing to the door to Abandoned Worksite or the portal to
+    Dark Forgotten Bridge was lowered to Easy, from Normal.
+
+-   Added: In Forgotten Bridge, a method to get to the door to Grove Access from the portal to Dark Forgotten Bridge
+    using only Screw Attack (Easy and above).
+
+-   Added: In Forgotten Bridge, a method to get to the door to Abandoned Worksite via a roll jump (Easy and above).
+
+-   Added: In Forgotten Bridge, a method to get to the bridge center from the door to Grove Access via a scan dash
+    (Easy and above).
+
+-   Added: In Hydrodynamo Station a method to get from the room's top to the door to Save Station B with Screw Attack
+    without Space Jump Boots (Trivial and above).
+
+-   Changed: Climbing Hydrodynamo Station with only Gravity Boost and before all three locks are unlocked is now
+    Trivial difficulty (from No Tricks).
+
+-   Changed: Getting to the three doors in the middle section of Hydrodynamo Station using Air Underwater is now
+    Normal difficulty (from Hard).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
@@ -18,19 +69,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Changed: The resolver now keeps track of current energy during resolution.
     This ensures you'll always have enough Energy Tanks for trips to Dark Aether.
-    
+
 -   *Major* - Added: Scanning a keybearer corpse provides a hint of what is in the matching Flying
     Ing Cache.
-    
+
 -   Added: The tracker now persists the current state.
 
 -   Added: Some generation failures are now automatically retried, using the same permalink.
 
 -   Added: Buttons to see what a difficulty unlocks that doesn't involve tricks at all.
-    
+
 -   Changed: Increased Hint Scan value for logic to the intended value from the previous
     change.
-    
+
 -   Changed: There's no more hints with joke locations.
 
 -   Changed: The lore hint in Mining Station A is now able to be scanned from the room center.
@@ -39,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Seeker Missile's included missiles now respect the "needs Missile Launcher"
     option.
-    
+
 -   Changed: Progressive Launcher is now disabled by default.
 
 -   Fixed: Clicking the connection's link in the Data Visualizer should now always work.
@@ -54,7 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Changed: Optimized the seed generation step. It should now take roughly
     half as long or even faster. 
-    
+
 -   *Major* - Added: It's now possible to configure the difficulty on a per-trick basis.
 
 -   *Major* - Added: It's now possible to check where a certain trick is used on each
