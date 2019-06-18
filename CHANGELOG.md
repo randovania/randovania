@@ -78,7 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     Screw Attack is now Trivial difficulty (from Easy).
 
 -   Added: Method to cross Watch Station Access from the door to Main Gyro Chamber using a Bomb Space Jump and
-    Screw Attack without Space Jump Boots (Hard and above).
+    Screw Attack without Space Jump Boots (Normal and above).
 
 ## [0.28.1] - 2019-06-14
 
