@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   Added: the "Blind Jump" trick in places where jumping onto invisible platforms without the
-    Dark Visor is required.
+-   Added: the "Invisible Objects" trick in places where a visor would otherwise be used to be able to see
+    something (such as an invisible platform).
 
 -   Changed: Screw Attacking without Space Jump Boots in Hive Temple is no longer required on No Tricks.
 
