@@ -77,6 +77,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: In Hive Dynamo Works, returning from the Flying Ing Cache location using Space Jump Boots and
     Screw Attack is now Trivial difficulty (from Easy).
 
+-   Added: Method to cross Watch Station Access from the door to Main Gyro Chamber using a Bomb Space Jump and
+    Screw Attack without Space Jump Boots (Hard and above).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
