@@ -80,6 +80,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Method to cross Watch Station Access from the door to Main Gyro Chamber using a Bomb Space Jump and
     Screw Attack without Space Jump Boots (Normal and above).
 
+-   Added: In Watch Station Access, method to get from the scan post to the door to Watch Station by bomb jumping
+    (Trivial and above) and by using Screw Attack without Space Jump Boots (Easy and above).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
