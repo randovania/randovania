@@ -83,6 +83,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Watch Station Access, method to get from the scan post to the door to Watch Station by bomb jumping
     (Trivial and above) and by using Screw Attack without Space Jump Boots (Easy and above).
 
+-   Fixed: The instant morph into the Morph Ball tunnel in Hall of Honored Dead now lists the Instant Morph trick.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
