@@ -90,10 +90,7 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
     # TODO: is this fast start?
     initial_game_state = game.initial_states["Default"]
 
-    starting_area = game.world_list.area_by_asset_id(patches.starting_location.area_asset_id)
-
-    starting_node = starting_area.nodes[starting_area.default_node_index]
-
+    starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
     initial_resources = copy.copy(patches.starting_items)
     initial_resources[game.resource_database.trivial_resource()] = 1
 
