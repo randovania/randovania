@@ -88,6 +88,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Method to get into the Morph Ball tunnel in Hall of Honored Dead using Space Jump Boots and Screw Attack
     (Easy and above).
 
+-   Added: In Phazon Site, methods to get to the door to Bitter Well and to remove the barrier using Screw Attack
+    without Space Jump Boots (both Easy difficulty).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
