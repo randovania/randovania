@@ -91,6 +91,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Phazon Site, methods to get to the door to Bitter Well and to remove the barrier using Screw Attack
     without Space Jump Boots (both Easy difficulty).
 
+-   Changed: The method to get to the door to Ing Cache 2 in Phazon Site by scan dashing is now Hard difficulty
+    (from Normal).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
