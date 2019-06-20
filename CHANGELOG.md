@@ -113,6 +113,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fixed: The method to get to the top of the Training Chamber statue using Gravity Boost and Spider Ball now lists
     the Instant Morph trick.
 
+-   Added: In Training Chamber, a method of getting to the top of the statue from the door to Fortress Transport Access
+    using just Space Jump Boots (Easy and above).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
