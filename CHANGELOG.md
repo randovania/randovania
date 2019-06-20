@@ -107,6 +107,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: A method to get to the door to Fortress Transport Access from the top of the statue in Training Chamber
     using only Space Jump Boots (Easy and above). Morph Ball is also required if the statue hasn't been moved.
 
+-   Added: A method to get to the doors to Transit Tunnel West/East in Training Chamber using Air Underwater (Normal
+    and above).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
