@@ -77,6 +77,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: In Hive Dynamo Works, returning from the Flying Ing Cache location using Space Jump Boots and
     Screw Attack is now Trivial difficulty (from Easy).
 
+-   Added: Method to cross Watch Station Access from the door to Main Gyro Chamber using a Bomb Space Jump and
+    Screw Attack without Space Jump Boots (Normal and above).
+
+-   Added: In Watch Station Access, method to get from the scan post to the door to Watch Station by bomb jumping
+    (Trivial and above) and by using Screw Attack without Space Jump Boots (Easy and above).
+
+-   Fixed: The instant morph into the Morph Ball tunnel in Hall of Honored Dead now lists the Instant Morph trick.
+
+-   Added: Method to get into the Morph Ball tunnel in Hall of Honored Dead using Space Jump Boots and Screw Attack
+    (Easy and above).
+
+-   Added: In Phazon Site, methods to get to the door to Bitter Well and to remove the barrier using Screw Attack
+    without Space Jump Boots (both Easy difficulty).
+
+-   Changed: The method to get to the door to Ing Cache 2 in Phazon Site by scan dashing is now Hard difficulty
+    (from Normal).
+
+-   Changed: The method to go over the Training Chamber statue from the back using Boost Ball and Spider Ball is
+    now Normal difficulty (from Hard).
+
+-   Added: In Phazon Site, a method to get to the door to Bitter Well by bomb jumping (Trivial and above).
+
+-   Added: Many connections in Sacrificial Chamber.
+
+-   Fixed: The methods to get to the top of the Training Chamber statue using Boost Ball and Spider Ball now require
+    that the statue has not been moved.
+
+-   Added: A method to get to the door to Fortress Transport Access from the top of the statue in Training Chamber
+    using only Space Jump Boots (Easy and above). Morph Ball is also required if the statue hasn't been moved.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
