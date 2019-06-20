@@ -101,6 +101,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Many connections in Sacrificial Chamber.
 
+-   Fixed: The methods to get to the top of the Training Chamber statue using Boost Ball and Spider Ball now require
+    that the statue has not been moved.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
