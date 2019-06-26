@@ -17,10 +17,12 @@ _items_to_not_add_in_minimal_restrictions = {
     # Dark Visor
     10,
 
-    # Light Suit
+    # Dark Suit, Light Suit
+    13,
     14,
 
-    # Screw Attack
+    # Grapple, Screw Attack
+    23,
     27,
 
     # Sky Temple Keys
@@ -72,6 +74,8 @@ def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
 
 def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
                                                 resource_database: ResourceDatabase,
+                                                progressive_grapple: bool,
+                                                progressive_suit: bool,
                                                 ) -> None:
     # TODO: this function assumes we're talking about Echoes
     for event in resource_database.event:
@@ -81,8 +85,14 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
         if event.index not in {8, 28}:
             resources[event] = 1
 
+    items_to_skip = copy.copy(_items_to_not_add_in_minimal_restrictions)
+    if not progressive_grapple:
+        items_to_skip.remove(23)
+    if not progressive_suit:
+        items_to_skip.remove(13)
+
     for item in resource_database.item:
-        if item.index not in _items_to_not_add_in_minimal_restrictions:
+        if item.index not in items_to_skip:
             resources[item] = _minimal_restrictions_custom_item_count.get(item.index, 1)
 
 
@@ -154,8 +164,12 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     starting_state = calculate_starting_state(game, patches)
 
     if configuration.trick_level_configuration.global_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+        major_items_config = configuration.major_items_configuration
         _add_minimal_restrictions_initial_resources(starting_state.resources,
-                                                    game.resource_database)
+                                                    game.resource_database,
+                                                    major_items_config.progressive_grapple,
+                                                    major_items_config.progressive_suit,
+                                                    )
 
     difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
                                                                            game.resource_database)
