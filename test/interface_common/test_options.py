@@ -53,6 +53,7 @@ def test_migrate_from_v1(option):
             "starting_resources": "vanilla-item-loss-enabled",
             "starting_location": "ship",
             "elevators": "vanilla",
+            "randomization_mode": "full",
             "major_items_configuration": MajorItemsConfiguration.default().as_json,
             "ammo_configuration": AmmoConfiguration.default().as_json,
             "translator_configuration": {
