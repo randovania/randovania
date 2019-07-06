@@ -369,11 +369,11 @@ class Options:
     @layout_configuration_elevators.setter
     def layout_configuration_elevators(self, value: LayoutElevators):
         self.set_layout_configuration_field("elevators", value)
-    
+
     @property
     def randomization_mode(self) -> RandomizationMode:
         return self.layout_configuration.randomization_mode
-    
+
     @randomization_mode.setter
     def randomization_mode(self, value: RandomizationMode):
         self.set_layout_configuration_field("randomization_mode", value)

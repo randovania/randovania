@@ -363,7 +363,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         
         self.full_randomization_radio_button.toggled.connect(on_randomization_mode_update_function(RandomizationMode.FULL))
         self.major_minor_split_radio_button.toggled.connect(on_randomization_mode_update_function(RandomizationMode.MAJOR_MINOR_SPLIT))
-    
+
     # Random Starting
 
     def _register_random_starting_events(self):

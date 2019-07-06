@@ -15,7 +15,7 @@ from randovania.layout.trick_level import TrickLevelConfiguration
 class RandomizationMode(BitPackEnum, Enum):
     FULL = "full"
     MAJOR_MINOR_SPLIT = "major/minor split"
-    
+
     @classmethod
     def default(cls) -> "RandomizationMode":
         return cls.FULL
