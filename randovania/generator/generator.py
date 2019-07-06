@@ -16,7 +16,7 @@ from randovania.generator.filler.filler_library import filter_unassigned_pickup_
     UnableToGenerate
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration, RandomizationMode
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
 from randovania.resolver import resolver
@@ -147,7 +147,7 @@ def _create_randomized_patches(permalink: Permalink,
     filler_patches, remaining_items = _retryable_create_patches(configuration, game, rng, status_update)
 
     return filler_patches.assign_pickup_assignment(
-        _assign_remaining_items(rng, game.world_list, filler_patches.pickup_assignment, remaining_items)
+        _assign_remaining_items(rng, game.world_list, filler_patches.pickup_assignment, remaining_items, configuration.randomization_mode)
     )
 
 
@@ -177,6 +177,7 @@ def _assign_remaining_items(rng: Random,
                             world_list: WorldList,
                             pickup_assignment: PickupAssignment,
                             remaining_items: List[PickupEntry],
+                            randomization_mode: RandomizationMode,
                             ) -> PickupAssignment:
     """
 
@@ -188,21 +189,34 @@ def _assign_remaining_items(rng: Random,
     """
 
     unassigned_pickup_indices = [
-        pickup_node
+        pickup_node.pickup_index
         for pickup_node in filter_unassigned_pickup_nodes(world_list.all_nodes, pickup_assignment)
     ]
 
-    if len(remaining_items) > len(unassigned_pickup_indices):
+    num_ETMs = len(unassigned_pickup_indices) - len(remaining_items)
+    if num_ETMs < 0:
         raise InvalidConfiguration(
             "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
-                                                                                         len(
-                                                                                             unassigned_pickup_indices)))
+                                                                                         len(unassigned_pickup_indices)))
+
 
     # Shuffle the items to add and the spots to choose from
     rng.shuffle(remaining_items)
     rng.shuffle(unassigned_pickup_indices)
 
-    return {
-        pickup_node.pickup_index: item
-        for pickup_node, item in zip(unassigned_pickup_indices, remaining_items)
-    }
+    assignment = {}
+
+    if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+        remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_ETMs)
+        unassigned_major_locations = [pickup_index for pickup_index in unassigned_pickup_indices if pickup_index.is_major_location]
+        for pickup_index, item in zip(unassigned_major_locations, remaining_majors):
+            if item is not None:
+                assignment[pickup_index] = item
+                remaining_items.remove(item)
+            unassigned_pickup_indices.remove(pickup_index)
+
+    assignment.update({
+        pickup_index: item
+        for pickup_index, item in zip(unassigned_pickup_indices, remaining_items)
+    })
+    return assignment
