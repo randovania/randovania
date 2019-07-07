@@ -193,8 +193,8 @@ def _assign_remaining_items(rng: Random,
         for pickup_node in filter_unassigned_pickup_nodes(world_list.all_nodes, pickup_assignment)
     ]
 
-    num_ETMs = len(unassigned_pickup_indices) - len(remaining_items)
-    if num_ETMs < 0:
+    num_etm = len(unassigned_pickup_indices) - len(remaining_items)
+    if num_etm < 0:
         raise InvalidConfiguration(
             "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
                                                                                          len(unassigned_pickup_indices)))
@@ -207,8 +207,9 @@ def _assign_remaining_items(rng: Random,
     assignment = {}
 
     if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-        remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_ETMs)
+        remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_etm)
         unassigned_major_locations = [pickup_index for pickup_index in unassigned_pickup_indices if pickup_index.is_major_location]
+        
         for pickup_index, item in zip(unassigned_major_locations, remaining_majors):
             if item is not None:
                 assignment[pickup_index] = item
