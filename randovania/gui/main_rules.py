@@ -360,7 +360,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                     with self._options as options:
                         options.randomization_mode = value
             return update_function
-        
+
         self.full_randomization_radio_button.toggled.connect(on_randomization_mode_update_function(RandomizationMode.FULL))
         self.major_minor_split_radio_button.toggled.connect(on_randomization_mode_update_function(RandomizationMode.MAJOR_MINOR_SPLIT))
 
