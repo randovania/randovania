@@ -204,6 +204,7 @@ ConstructNode = Struct(
 
 ConstructArea = Struct(
     name=CString("utf8"),
+    in_dark_aether=Flag,
     asset_id=Int32ub,
     _node_count=Rebuild(Byte, lambda this: len(this.nodes)),
     default_node_index=Byte,
