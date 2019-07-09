@@ -109,7 +109,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: A method to get to the door to Fortress Transport Access from the top of the statue in Training Chamber
     using only Space Jump Boots (Easy and above). Morph Ball is also required if the statue hasn't been moved.
 
+-   Changed: The slope jump to get to the item in Temple Assembly Site is now Normal difficulty (from Hard).
+
 -   Added: In the data visualizer, the damage requirements now have more descriptive names.
+
 
 ## [0.28.1] - 2019-06-14
 
