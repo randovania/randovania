@@ -118,6 +118,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Training Chamber, a method of getting to the top of the statue from the door to Fortress Transport Access
     using just Space Jump Boots (Easy and above).
 
+-   Added: Many connections in Windchamber Gateway.
+
 -   Added: Method to get from the Kinetic Orb Cannon to the door to Transit Tunnel West via Grapple Beam in
     Gathering Hall.
 
