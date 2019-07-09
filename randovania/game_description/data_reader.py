@@ -202,7 +202,6 @@ class WorldReader:
             raise Exception("Unknown node type: {}".format(node_type))
 
     def read_area(self, data: Dict) -> Area:
-        name = data["name"]
         nodes = read_array(data["nodes"], self.read_node)
         nodes_by_name = {node.name: node for node in nodes}
 
@@ -217,8 +216,8 @@ class WorldReader:
                 if the_set != RequirementSet.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
 
-        return Area(name, data["asset_id"], data["default_node_index"], nodes,
-                    connections)
+        return Area(data["name"], data["in_dark_aether"], data["asset_id"], data["default_node_index"],
+                    nodes, connections)
 
     def read_area_list(self, data: List[Dict]) -> List[Area]:
         return read_array(data, self.read_area)
