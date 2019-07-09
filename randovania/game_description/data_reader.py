@@ -153,7 +153,7 @@ class WorldReader:
                                                                               data["dock_weakness_index"]))
 
         elif node_type == 2:
-            return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]))
+            return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]), data["major_location"])
 
         elif node_type == 3:
             instance_id = data["teleporter_instance_id"]

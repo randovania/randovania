@@ -132,11 +132,11 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
         for item in [self._dark_ammo_item, self._light_ammo_item]:
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
-        
+
         # Randomization Mode
         self.full_randomization_radio_button.setChecked(options.randomization_mode is RandomizationMode.FULL)
         self.major_minor_split_radio_button.setChecked(options.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT)
-        
+
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
         self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_items)
