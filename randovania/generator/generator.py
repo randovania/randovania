@@ -188,36 +188,33 @@ def _assign_remaining_items(rng: Random,
     :return:
     """
 
-    unassigned_pickup_indices = [
-        pickup_node.pickup_index
-        for pickup_node in filter_unassigned_pickup_nodes(world_list.all_nodes, pickup_assignment)
-    ]
+    unassigned_pickup_nodes = list(filter_unassigned_pickup_nodes(world_list.all_nodes, pickup_assignment))
 
-    num_etm = len(unassigned_pickup_indices) - len(remaining_items)
+    num_etm = len(unassigned_pickup_nodes) - len(remaining_items)
     if num_etm < 0:
         raise InvalidConfiguration(
             "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
-                                                                                         len(unassigned_pickup_indices)))
+                                                                                         len(unassigned_pickup_nodes)))
 
 
     # Shuffle the items to add and the spots to choose from
     rng.shuffle(remaining_items)
-    rng.shuffle(unassigned_pickup_indices)
+    rng.shuffle(unassigned_pickup_nodes)
 
     assignment = {}
 
     if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
         remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_etm)
-        unassigned_major_locations = [pickup_index for pickup_index in unassigned_pickup_indices if pickup_index.is_major_location]
+        unassigned_major_locations = [pickup_node for pickup_node in unassigned_pickup_node if pickup_node.is_major_location]
 
-        for pickup_index, item in zip(unassigned_major_locations, remaining_majors):
+        for pickup_node, item in zip(unassigned_major_locations, remaining_majors):
             if item is not None:
-                assignment[pickup_index] = item
+                assignment[pickup_node.pickup_index] = item
                 remaining_items.remove(item)
-            unassigned_pickup_indices.remove(pickup_index)
+            unassigned_pickup_indices.remove(pickup_node.pickup_index)
 
     assignment.update({
-        pickup_index: item
-        for pickup_index, item in zip(unassigned_pickup_indices, remaining_items)
+        pickup_node.pickup_index: item
+        for pickup_ode, item in zip(unassigned_pickup_nodes, remaining_items)
     })
     return assignment
