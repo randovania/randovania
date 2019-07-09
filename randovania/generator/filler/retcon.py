@@ -140,9 +140,10 @@ def retcon_playthrough_filler(game: GameDescription,
         if isinstance(action, PickupEntry):
             assert action in pickups_left
 
-            uncollected_indices = current_uncollected.indices
-            if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                uncollected_indices = [pickup_index for pickup_index in uncollected_indices if pickup_index.is_major_location]
+            if randomization_mode is RandomizationMode.FULL:
+                uncollected_indices = current_uncollected.indices
+            elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+                uncollected_indices = [pickup_node.pickup_index for node in current_uncollected if pickup_node.is_major_location]
 
             if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
                 pickup_index_weight = {
