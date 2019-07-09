@@ -201,6 +201,7 @@ def write_area(area: Area) -> dict:
 
     return {
         "name": area.name,
+        "in_dark_aether": area.in_dark_aether,
         "asset_id": area.area_asset_id,
         "default_node_index": area.default_node_index,
         "nodes": nodes

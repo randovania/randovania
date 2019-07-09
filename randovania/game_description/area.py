@@ -6,6 +6,7 @@ from randovania.game_description.requirements import RequirementSet
 
 class Area(NamedTuple):
     name: str
+    in_dark_aether: bool
     area_asset_id: int
     default_node_index: int
     nodes: List[Node]
