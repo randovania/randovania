@@ -115,7 +115,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 
     world_list = WorldList([
         World("Test World", 1, [
-            Area("Test Area A", 10, 0, [node_a, node_b, node_c, translator_node],
+            Area("Test Area A", False, 10, 0, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: RequirementSet.trivial(),
@@ -132,7 +132,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                          node_c: RequirementSet.trivial(),
                      },
                  }
-                 )
+                )
         ])
     ])
     game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
