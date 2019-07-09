@@ -181,6 +181,7 @@ ConstructNode = Struct(
             ),
             2: Struct(
                 pickup_index=Byte,
+                major_location=Flag,
             ),
             3: Struct(
                 destination_world_asset_id=Int32ub,
