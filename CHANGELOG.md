@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: the "Invisible Objects" trick in places where a visor would otherwise be used to be able to see
     something (such as an invisible platform).
-    
+
 -   Fixed: Minimal Checking now correctly handles progressive suit and grapple.
 
 -   Changed: Screw Attacking without Space Jump Boots in Hive Temple is no longer required on No Tricks.
@@ -103,16 +103,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Many connections in Sacrificial Chamber.
 
--   Fixed: The methods to get to the top of the Training Chamber statue using Boost Ball and Spider Ball now require
-    that the statue has not been moved.
-
 -   Added: A method to get to the door to Fortress Transport Access from the top of the statue in Training Chamber
     using only Space Jump Boots (Easy and above). Morph Ball is also required if the statue hasn't been moved.
+
+-   Added: A method to get to the doors to Transit Tunnel West/East in Training Chamber using Air Underwater (Normal
+    and above).
+
+-   Fixed: The method to get to the top of the Training Chamber statue using Gravity Boost and Spider Ball now lists
+    the Instant Morph trick.
+
+-   Added: In Training Chamber, a method of getting to the top of the statue from the door to Fortress Transport Access
+    using just Space Jump Boots (Easy and above).
+
+-   Added: Many connections in Windchamber Gateway.
+
+-   Added: Method to get from the Kinetic Orb Cannon to the door to Transit Tunnel West via Grapple Beam in
+    Gathering Hall.
+
+-   Fixed: The slope jump in Abandoned Base now has a damage requirement.
+
+-   Added: Method of getting the Temple Assembly Site item with Screw Attack and without Space Jump Boots.
 
 -   Changed: The slope jump to get to the item in Temple Assembly Site is now Normal difficulty (from Hard).
 
 -   Added: In the data visualizer, the damage requirements now have more descriptive names.
-
 
 ## [0.28.1] - 2019-06-14
 
