@@ -133,6 +133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Landing Site, method of reaching the door to Service Access from the Save Station using Space Jump and 
     Screw Attack (No Tricks and above).
 
+-   Fixed: The Culling Chamber item now has a damage requirement.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
