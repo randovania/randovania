@@ -103,6 +103,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Many connections in Sacrificial Chamber.
 
+-   Fixed: The methods to get to the top of the Training Chamber statue using Boost Ball and Spider Ball now require
+    that the statue has not been moved.
+
 -   Added: A method to get to the door to Fortress Transport Access from the top of the statue in Training Chamber
     using only Space Jump Boots (Easy and above). Morph Ball is also required if the statue hasn't been moved.
 
