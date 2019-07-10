@@ -132,7 +132,7 @@ def retcon_playthrough_filler(game: GameDescription,
             if actions_weights:
                 action = rng.choice(list(actions_weights.keys()))
             else:
-                raise UnableToGenerate("Unable to generate, no actions found after placing {} items.".format(
+                raise UnableToGenerate("Unable to generate; no actions found after placing {} items.".format(
                     len(reach.state.patches.pickup_assignment)))
 
         if isinstance(action, PickupEntry):
@@ -163,7 +163,7 @@ def retcon_playthrough_filler(game: GameDescription,
             else:
                 num_random_starting_items_placed += 1
                 if num_random_starting_items_placed > maximum_random_starting_items:
-                    raise RuntimeError("Attempting to place more extra starting items than the allowed.")
+                    raise UnableToGenerate("Attempting to place more extra starting items than the number allowed.")
 
                 if debug.debug_level() > 1:
                     print(f"\n--> Adding {action.name} as a starting item")
