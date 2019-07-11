@@ -77,7 +77,7 @@ HINT_DETAILS: Dict[ItemCategory, Tuple[str, str]] = {
     ItemCategory.BEAM_COMBO: ("A ", "beam combo"),
     ItemCategory.TRANSLATOR: ("A ", "translator"),
     ItemCategory.ENERGY_TANK: ("An ", "Energy Tank"),
-    ItemCategory.TEMPLE_KEY: ("A ", "Temple Key"),
+    ItemCategory.TEMPLE_KEY: ("A ", "red Temple Key"),
     ItemCategory.SKY_TEMPLE_KEY: ("A ", "Sky Temple Key"),
     ItemCategory.ETM: ("An ", "Energy Transfer Module"),
     ItemCategory.EXPANSION: ("An ", "expansion"),
