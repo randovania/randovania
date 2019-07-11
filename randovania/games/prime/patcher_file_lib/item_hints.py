@@ -169,7 +169,7 @@ def _calculate_pickup_hint(precision: HintItemPrecision,
 
     elif precision == HintItemPrecision.GENERAL_CATEGORY:
         if pickup.item_category.is_major_category:
-            return False, "A ", "major item"
+            return False, "A ", "major upgrade"
         elif pickup.item_category.is_key:
             return False, "A ", "key"
         else:

@@ -131,6 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Some item categories were given clearer names:
     - Dark Agon Keys, Dark Torvus Keys, and Ing Hive Keys are now referred to as "red Temple Keys" instead of
     "Temple Keys".
+    - Items that aren't keys or expansions are collectively referred to as "major upgades" instead of "major items".
 
 ## [0.28.1] - 2019-06-14
 
