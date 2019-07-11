@@ -11,7 +11,7 @@ class ItemCategory(BitPackEnum, Enum):
     MORPH_BALL = "morph_ball"
     MOVEMENT = "movement"
     MISSILE = "missile"
-    BEAM_COMBO = "beam_combo"
+    CHARGE_COMBO = "charge_combo"
     TRANSLATOR = "translator"
     ENERGY_TANK = "energy_tank"
     TEMPLE_KEY = "temple_key"
@@ -43,7 +43,7 @@ MAJOR_ITEM_CATEGORIES = {
     ItemCategory.MORPH_BALL,
     ItemCategory.MOVEMENT,
     ItemCategory.MISSILE,
-    ItemCategory.BEAM_COMBO,
+    ItemCategory.CHARGE_COMBO,
     ItemCategory.TRANSLATOR,
 }
 
@@ -58,7 +58,7 @@ LONG_NAMES = {
     ItemCategory.MORPH_BALL: "Morph Ball",
     ItemCategory.MOVEMENT: "Movement",
     ItemCategory.MISSILE: "Missile",
-    ItemCategory.BEAM_COMBO: "Beam Combos",
+    ItemCategory.CHARGE_COMBO: "Charge Combos",
     ItemCategory.TRANSLATOR: "Translators",
     ItemCategory.ENERGY_TANK: "Energy Tanks",
     ItemCategory.TEMPLE_KEY: "Temple Keys",
@@ -74,7 +74,7 @@ HINT_DETAILS: Dict[ItemCategory, Tuple[str, str]] = {
     ItemCategory.MORPH_BALL: ("A ", "morph ball system"),
     ItemCategory.MOVEMENT: ("A ", "movement system"),
     ItemCategory.MISSILE: ("A ", "missile system"),
-    ItemCategory.BEAM_COMBO: ("A ", "beam combo"),
+    ItemCategory.CHARGE_COMBO: ("A ", "Charge Combo"),
     ItemCategory.TRANSLATOR: ("A ", "translator"),
     ItemCategory.ENERGY_TANK: ("An ", "Energy Tank"),
     ItemCategory.TEMPLE_KEY: ("A ", "red Temple Key"),

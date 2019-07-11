@@ -133,6 +133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     "Temple Keys".
     - Items that aren't keys or expansions are collectively referred to as "major upgades" instead of "major items".
 
+-   Fixed: "Beam combos" are now called "Charge Combos".
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
