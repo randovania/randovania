@@ -69,7 +69,7 @@ def test_create_hints_nothing(empty_patches):
 @pytest.mark.parametrize("item", [
     (HintItemPrecision.DETAILED, "The &push;&main-color=#a84343;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "A &push;&main-color=#a84343;movement system&pop;"),
-    (HintItemPrecision.GENERAL_CATEGORY, "A &push;&main-color=#a84343;major item&pop;"),
+    (HintItemPrecision.GENERAL_CATEGORY, "A &push;&main-color=#a84343;major upgrade&pop;"),
     (HintItemPrecision.WRONG_GAME, "The &push;&main-color=#45f731;X-Ray Visor (?)&pop;"),
 ])
 @pytest.mark.parametrize("location", [
