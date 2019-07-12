@@ -128,6 +128,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In the data visualizer, the damage requirements now have more descriptive names.
 
+-   Fixed: Requirements for crossing Dynamo Access were added.
+
+-   Added: In Landing Site, method of reaching the door to Service Access from the Save Station using Space Jump and 
+    Screw Attack (No Tricks and above).
+
+-   Fixed: The Culling Chamber item now has a damage requirement.
+
 -   Changed: Some item categories were given clearer names:
     - Dark Agon Keys, Dark Torvus Keys, and Ing Hive Keys are now referred to as "red Temple Keys" instead of
     "Temple Keys".
