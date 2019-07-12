@@ -22,11 +22,12 @@ class LocationHintCreator:
 
     def node_name(self, pickup_node: PickupNode, hide_area: bool) -> str:
         if hide_area:
-            return self.world_list.nodes_to_world(pickup_node).name
+            return self.world_list.world_name_from_node(pickup_node, True)
         else:
             return self.world_list.area_name(
                 self.world_list.nodes_to_area(pickup_node),
-                " - "
+                " - ",
+                True
             )
 
 
