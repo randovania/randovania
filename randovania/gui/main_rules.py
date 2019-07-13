@@ -16,6 +16,7 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.main_rules_ui import Ui_MainRules
 from randovania.gui.tab_service import TabService
@@ -91,7 +92,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._beam_ammo_item = item_database.ammo["Beam Ammo Expansion"]
 
         self._register_alternatives_events()
-        self._register_randomization_mode_events()
+        self._setup_randomization_mode_combo()
         self._register_random_starting_events()
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
@@ -134,8 +135,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
 
         # Randomization Mode
-        self.full_randomization_radio_button.setChecked(options.randomization_mode is RandomizationMode.FULL)
-        self.major_minor_split_radio_button.setChecked(options.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT)
+        set_combo_with_value(self.randomization_mode_combo, options.randomization_mode)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -353,16 +353,15 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             options.ammo_configuration = ammo_configuration
 
     # Randomization Mode
-    def _register_randomization_mode_events(self):
-        def on_randomization_mode_update_function(value):
-            def update_function(checked):
-                if checked:
-                    with self._options as options:
-                        options.randomization_mode = value
-            return update_function
 
-        self.full_randomization_radio_button.toggled.connect(on_randomization_mode_update_function(RandomizationMode.FULL))
-        self.major_minor_split_radio_button.toggled.connect(on_randomization_mode_update_function(RandomizationMode.MAJOR_MINOR_SPLIT))
+    def _setup_randomization_mode_combo(self):
+        self.randomization_mode_combo.setItemData(0, RandomizationMode.FULL)
+        self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
+        self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
+
+    def _on_update_randomization_mode(self):
+        with self._options as options:
+            options.randomization_mode = self.randomization_mode_combo.currentData()
 
     # Random Starting
 
