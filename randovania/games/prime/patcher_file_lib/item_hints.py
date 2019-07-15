@@ -9,7 +9,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
-    color_as_joke, color_text_as_red
+    color_text, TextColor
 
 _PRIME_1_ITEMS = [
     "Varia Suit",
@@ -125,19 +125,19 @@ def create_hints(patches: GamePatches,
 
     for asset, hint in patches.hints.items():
         if hint.precision.is_joke:
-            message = color_as_joke(rng.choice(_JOKE_HINTS))
+            message = color_text(TextColor.JOKE, rng.choice(_JOKE_HINTS))
 
         else:
             pickup = patches.pickup_assignment.get(hint.target)
 
             # Determine location name
             if hint.hint_type is HintType.GUARDIAN:
-                node_name = color_text_as_red(_GUARDIAN_NAMES[hint.target])
+                node_name = color_text(TextColor.GUARDIAN, _GUARDIAN_NAMES[hint.target])
             elif hint.location_precision == HintLocationPrecision.WRONG_GAME:
-                node_name = color_as_joke("{} (?)".format(joke_locations.pop())
+                node_name = color_text(TextColor.JOKE, "{} (?)".format(joke_locations.pop())
                                         if joke_locations else "an unknown location")
             else:
-                node_name = color_text_as_red(hint_name_creator.index_node_name(
+                node_name = color_text(TextColor.LOCATION, hint_name_creator.index_node_name(
                     hint.target,
                     hint.location_precision != HintLocationPrecision.DETAILED
                 ))
@@ -158,7 +158,7 @@ def create_hints(patches: GamePatches,
             if hint.hint_type is HintType.LOCATION:
                 determiner = determiner.title()
 
-            pickup_name = color_as_joke(pickup_name) if is_joke else color_text_as_red(pickup_name)
+            pickup_name = color_text(TextColor.JOKE if is_joke else TextColor.ITEM, pickup_name)
             message = _HINT_MESSAGE_TEMPLATES[hint.hint_type].format(determiner=determiner,
                                                                      pickup=pickup_name,
                                                                      node=node_name)

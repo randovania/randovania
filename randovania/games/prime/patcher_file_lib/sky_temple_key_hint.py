@@ -5,7 +5,7 @@ from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
-    color_text_as_red
+    color_text, TextColor
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -55,7 +55,7 @@ def create_hints(patches: GamePatches,
 
             sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}.".format(
                 _sky_temple_key_name(key_number),
-                color_text_as_red(
+                color_text(TextColor.LOCATION,
                     location_hint_creator.index_node_name(pickup_index, hide_area),
                 ),
             )
