@@ -177,33 +177,36 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     # Setup
     rng = MagicMock()
 
-    def _create_hint(number: int):
+    def _location_hint(number: int):
         return Hint(HintType.LOCATION, PrecisionPair.detailed(), PickupIndex(number))
 
-    def _keybearer(number: int):
+    def _guardian_hint(number: int):
+        return Hint(HintType.GUARDIAN, PrecisionPair.detailed(), PickupIndex(number))
+
+    def _keybearer_hint(number: int):
         return Hint(HintType.KEYBEARER, PrecisionPair(HintLocationPrecision.DETAILED,
                                                       HintItemPrecision.PRECISE_CATEGORY), PickupIndex(number))
 
     expected = {
         # Keybearer
-        LogbookAsset(0xE3B417BF): _keybearer(11),
-        LogbookAsset(0x65206511): _keybearer(15),
-        LogbookAsset(0x28E8C41A): _keybearer(19),
+        LogbookAsset(0xE3B417BF): _keybearer_hint(11),
+        LogbookAsset(0x65206511): _keybearer_hint(15),
+        LogbookAsset(0x28E8C41A): _keybearer_hint(19),
         # Agon
-        LogbookAsset(0x150E8DB8): _keybearer(45),
-        LogbookAsset(0xDE525E1D): _keybearer(53),
+        LogbookAsset(0x150E8DB8): _keybearer_hint(45),
+        LogbookAsset(0xDE525E1D): _keybearer_hint(53),
         # Torvus
-        LogbookAsset(0x58C62CB3): _keybearer(68),
-        LogbookAsset(0x939AFF16): _keybearer(91),
+        LogbookAsset(0x58C62CB3): _keybearer_hint(68),
+        LogbookAsset(0x939AFF16): _keybearer_hint(91),
         # Sanctuary
-        LogbookAsset(0x62CC4DC3): _keybearer(117),
-        LogbookAsset(0xA9909E66): _keybearer(106),
+        LogbookAsset(0x62CC4DC3): _keybearer_hint(117),
+        LogbookAsset(0xA9909E66): _keybearer_hint(106),
 
         # Locations with hints
-        LogbookAsset(1041207119): _create_hint(24),
-        LogbookAsset(4115881194): _create_hint(43),
-        LogbookAsset(1948976790): _create_hint(79),
-        LogbookAsset(3212301619): _create_hint(115),
+        LogbookAsset(1041207119): _location_hint(24),
+        LogbookAsset(4115881194): _guardian_hint(43),
+        LogbookAsset(1948976790): _guardian_hint(79),
+        LogbookAsset(3212301619): _guardian_hint(115),
     }
 
     # Run

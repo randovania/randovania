@@ -6,6 +6,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintType, HintLocationPrecision, HintItemPrecision
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
     color_as_joke, color_text_as_red
@@ -88,9 +89,16 @@ for i in range(1, 4):
 for i in range(1, 10):
     _DET_NULL.append(f"Sky Temple Key {i}")
 
+_GUARDIAN_NAMES = {
+    PickupIndex(43): "Amorbis",
+    PickupIndex(79): "Chykka",
+    PickupIndex(115): "Quadraxis",
+}
+
 _HINT_MESSAGE_TEMPLATES = {
+    HintType.KEYBEARER: "The Flying Ing Cache in {node} contains {determiner}{pickup}.",
+    HintType.GUARDIAN: "{node} guards {determiner}{pickup}.",
     HintType.LOCATION: "{determiner}{pickup} can be found in {node}.",
-    HintType.KEYBEARER: "The Flying Ing Cache in {node} contains {determiner}{pickup}."
 }
 
 
@@ -122,7 +130,10 @@ def create_hints(patches: GamePatches,
         else:
             pickup = patches.pickup_assignment.get(hint.target)
 
-            if hint.location_precision == HintLocationPrecision.WRONG_GAME:
+            # Determine location name
+            if hint.hint_type is HintType.GUARDIAN:
+                node_name = _GUARDIAN_NAMES[hint.target]
+            elif hint.location_precision == HintLocationPrecision.WRONG_GAME:
                 node_name = color_as_joke("{} (?)".format(joke_locations.pop())
                                         if joke_locations else "an unknown location")
             else:
@@ -131,6 +142,7 @@ def create_hints(patches: GamePatches,
                     hint.location_precision != HintLocationPrecision.DETAILED
                 ))
 
+            # Determine pickup name
             if pickup is not None:
                 is_joke, determiner, pickup_name = _calculate_pickup_hint(hint.item_precision,
                                                                           _calculate_determiner(

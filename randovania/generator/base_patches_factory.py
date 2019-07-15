@@ -137,10 +137,10 @@ def add_default_hints_to_patches(rng: Random,
 
     # TODO: this should be a flag in PickupNode
     indices_with_hint = [
-        PickupIndex(24),  # Light Suit
-        PickupIndex(43),  # Dark Suit
-        PickupIndex(79),  # Dark Visor
-        PickupIndex(115),  # Annihilator Beam
+        (PickupIndex(24), HintType.LOCATION),  # Light Suit
+        (PickupIndex(43), HintType.GUARDIAN),  # Dark Suit (Amorbis)
+        (PickupIndex(79), HintType.GUARDIAN),  # Dark Visor (Chykka)
+        (PickupIndex(115), HintType.GUARDIAN), # Annihilator Beam (Quadraxis)
     ]
     all_logbook_assets = [node.resource()
                           for node in world_list.all_nodes
@@ -151,12 +151,12 @@ def add_default_hints_to_patches(rng: Random,
     rng.shuffle(indices_with_hint)
     rng.shuffle(all_logbook_assets)
 
-    for index in indices_with_hint:
+    for index, hint_type in indices_with_hint:
         if not all_logbook_assets:
             break
 
         logbook_asset = all_logbook_assets.pop()
-        patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION, PrecisionPair.detailed(), index))
+        patches = patches.assign_hint(logbook_asset, Hint(hint_type, PrecisionPair.detailed(), index))
 
     return patches
 

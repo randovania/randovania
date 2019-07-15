@@ -150,6 +150,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: The hints acquired from keybearer corpses now clarify that the item is the one contained in a Flying
     Ing Cache.
 
+-   Changed: Each hint for the items guarded by Amorbis, Chykka, and Quadraxis now contains the corresponding
+    Guardian's name.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
