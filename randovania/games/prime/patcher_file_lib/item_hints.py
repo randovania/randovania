@@ -44,12 +44,14 @@ _PRIME_3_ITEMS = [
 
 _JOKE_HINTS = [
     "Did you remember to check Trial Tunnel?",
-    ("By this point in your run, you should have consumed at least "
-     "200 mL of water to maintain optimum hydration."),
+    "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
     "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
     "You're not authorized to view this hint.",
     "Kirby fell down here.",
     "Magoo.",
+    "Back in my day, we didn't need hints!",
+    "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
+    "Warning! Dark Aether's atmosphere is dangerous! Energized safe zones don't last forever!",
 ]
 
 _PRIME_1_LOCATIONS = [
