@@ -153,6 +153,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Each hint for the items guarded by Amorbis, Chykka, and Quadraxis now contains the corresponding
     Guardian's name.
 
+-   Changed: Item names in hints are now colored blue.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
