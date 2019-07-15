@@ -9,6 +9,9 @@ class HintType(Enum):
     # Keybearer corpses
     KEYBEARER = "keybearer"
 
+    # Amorbis, Chykka, and Quadraxis
+    GUARDIAN = "guardian"
+
     # All other hints
     LOCATION = "location"
 
