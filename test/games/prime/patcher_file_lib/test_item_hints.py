@@ -68,18 +68,17 @@ def test_create_hints_nothing(empty_patches):
 
 @pytest.mark.parametrize("hint_type", [HintType.LOCATION, HintType.KEYBEARER])
 @pytest.mark.parametrize("item", [
-    (HintItemPrecision.DETAILED, "The &push;&main-color=#a84343;Pickup&pop;"),
-    (HintItemPrecision.PRECISE_CATEGORY, "A &push;&main-color=#a84343;movement system&pop;"),
-    (HintItemPrecision.GENERAL_CATEGORY, "A &push;&main-color=#a84343;major upgrade&pop;"),
-    (HintItemPrecision.WRONG_GAME, "The &push;&main-color=#45f731;X-Ray Visor (?)&pop;"),
+    (HintItemPrecision.DETAILED, "the &push;&main-color=#a84343;Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#a84343;movement system&pop;"),
+    (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#a84343;major upgrade&pop;"),
+    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45f731;X-Ray Visor (?)&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#a84343;World - Area&pop;"),
     (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#a84343;World&pop;"),
     (HintLocationPrecision.WRONG_GAME, "&push;&main-color=#45f731;Tower (?)&pop;"),
 ])
-def test_create_hints_item_detailed(hint_type, empty_patches, pickup,
-                                    item, location):
+def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, location):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
@@ -106,9 +105,49 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup,
     if location[0] == HintLocationPrecision.WRONG_GAME and item[0] == HintItemPrecision.WRONG_GAME:
         message = "&push;&main-color=#45f731;Did you remember to check Trial Tunnel?&pop;"
     elif hint_type == HintType.LOCATION:
-        message = "{} can be found in {}.".format(item[1], location[1])
+        message = "{} can be found in {}.".format(item[1][0].upper() + item[1][1:], location[1])
     elif hint_type == HintType.KEYBEARER:
-        message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1][0].lower() + item[1][1:])
+        message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
+    assert result == [
+        {'asset_id': asset_id, 'strings': [message, '', message]}
+    ]
+
+@pytest.mark.parametrize("pickup_index_and_guardian", [
+    (PickupIndex(43), "&push;&main-color=#a84343;Amorbis&pop;"),
+    (PickupIndex(79), "&push;&main-color=#a84343;Chykka&pop;"),
+    (PickupIndex(115), "&push;&main-color=#a84343;Quadraxis&pop;"),
+])
+@pytest.mark.parametrize("item", [
+    (HintItemPrecision.DETAILED, "the &push;&main-color=#a84343;Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#a84343;movement system&pop;"),
+    (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#a84343;major upgrade&pop;"),
+    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45f731;X-Ray Visor (?)&pop;"),
+])
+def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item):
+    # Setup
+    asset_id = 1000
+    pickup_index, guardian = pickup_index_and_guardian
+
+    logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
+
+    patches = dataclasses.replace(
+        empty_patches,
+        pickup_assignment={
+            pickup_index: pickup,
+        },
+        hints={
+            logbook_node.resource(): Hint(HintType.GUARDIAN,
+                                          PrecisionPair(PrecisionPair.detailed(), item[0]),
+                                          pickup_index)
+        })
+    rng = MagicMock()
+    rng.choice.side_effect = lambda x: x[0]
+
+    # Run
+    result = item_hints.create_hints(patches, world_list, rng)
+
+    # Assert
+    message = f"{guardian} guards {item[1]}."
     assert result == [
         {'asset_id': asset_id, 'strings': [message, '', message]}
     ]
