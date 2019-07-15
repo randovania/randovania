@@ -46,7 +46,7 @@ _JOKE_HINTS = [
     "Did you remember to check Trial Tunnel?",
     ("By this point in your run, you should have consumed at least "
      "200 mL of water to maintain optimum hydration."),
-    "Make sure to collect an ETM, otherwise your run isn't valid.",
+    "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
     "You're not authorized to view this hint.",
     "Kirby fell down here.",
     "Magoo.",
