@@ -59,7 +59,7 @@ def test_create_hints_nothing(empty_patches):
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
-    message = ("An &push;&main-color=#a84343;Energy Transfer Module&pop; can be found at "
+    message = ("An &push;&main-color=#a84343;Energy Transfer Module&pop; can be found in "
                "&push;&main-color=#a84343;World - Area&pop;.")
     assert result == [
         {'asset_id': asset_id, 'strings': [message, '', message]}
@@ -106,9 +106,9 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup,
     if location[0] == HintLocationPrecision.WRONG_GAME and item[0] == HintItemPrecision.WRONG_GAME:
         message = "&push;&main-color=#45f731;Did you remember to check Trial Tunnel?&pop;"
     elif hint_type == HintType.LOCATION:
-        message = "{} can be found at {}.".format(item[1], location[1])
+        message = "{} can be found in {}.".format(item[1], location[1])
     elif hint_type == HintType.KEYBEARER:
-        message = "The Flying Ing Cache at {} contains {}.".format(location[1], item[1][0].lower() + item[1][1:])
+        message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1][0].lower() + item[1][1:])
     assert result == [
         {'asset_id': asset_id, 'strings': [message, '', message]}
     ]
