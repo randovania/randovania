@@ -63,7 +63,6 @@ _PRIME_1_LOCATIONS = [
     "Phendrana Shorelines",
     "Plasma Processing",
     "Elite Quarters",
-
 ]
 
 _PRIME_3_LOCATIONS = [
@@ -88,6 +87,11 @@ for i in range(1, 4):
     _DET_NULL.extend([f"Dark Agon Key {i}", f"Dark Torvus Key {i}", f"Ing Hive Key {i}"])
 for i in range(1, 10):
     _DET_NULL.append(f"Sky Temple Key {i}")
+
+_HINT_MESSAGE_TEMPLATES = {
+    HintType.LOCATION: "{determiner}{pickup} can be found at {node}.",
+    HintType.KEYBEARER: "The Flying Ing Cache at {node} contains {determiner}{pickup}."
+}
 
 
 def create_hints(patches: GamePatches,
@@ -115,12 +119,12 @@ def create_hints(patches: GamePatches,
         if hint.precision.is_joke:
             message = color_as_joke(rng.choice(_JOKE_HINTS))
 
-        elif hint.hint_type == HintType.LOCATION:
+        else:
             pickup = patches.pickup_assignment.get(hint.target)
 
             if hint.location_precision == HintLocationPrecision.WRONG_GAME:
                 node_name = color_as_joke("{} (?)".format(joke_locations.pop())
-                                          if joke_locations else "an unknown location")
+                                        if joke_locations else "an unknown location")
             else:
                 node_name = color_text_as_red(hint_name_creator.index_node_name(
                     hint.target,
@@ -136,17 +140,16 @@ def create_hints(patches: GamePatches,
                                                                           joke_items)
             else:
                 is_joke = False
-                determiner = "The " if len(patches.pickup_assignment) == 118 else "An "
+                determiner = "the " if len(patches.pickup_assignment) == 118 else "an "
                 pickup_name = "Energy Transfer Module"
 
-            message = "{determiner}{pickup} can be found at {node}.".format(
-                determiner=determiner,
-                pickup=color_as_joke(pickup_name) if is_joke else color_text_as_red(pickup_name),
-                node=node_name,
-            )
-        else:
-            message = "This kind of hint should never happen."
+            if hint.hint_type is HintType.LOCATION:
+                determiner = determiner.title()
 
+            pickup_name = color_as_joke(pickup_name) if is_joke else color_text_as_red(pickup_name)
+            message = _HINT_MESSAGE_TEMPLATES[hint.hint_type].format(determiner=determiner,
+                                                                     pickup=pickup_name,
+                                                                     node=node_name)
         hints_for_asset[asset.asset_id] = message
 
     return [
@@ -164,18 +167,18 @@ def _calculate_pickup_hint(precision: HintItemPrecision,
                            pickup: PickupEntry,
                            joke_items: List[str],
                            ) -> Tuple[bool, str, str]:
-    if precision == HintItemPrecision.WRONG_GAME:
-        return True, "The ", joke_items.pop() + " (?)"
+    if precision is HintItemPrecision.WRONG_GAME:
+        return True, "the ", joke_items.pop() + " (?)"
 
-    elif precision == HintItemPrecision.GENERAL_CATEGORY:
+    elif precision is HintItemPrecision.GENERAL_CATEGORY:
         if pickup.item_category.is_major_category:
-            return False, "A ", "major upgrade"
+            return False, "a ", "major upgrade"
         elif pickup.item_category.is_key:
-            return False, "A ", "Dark Temple Key"
+            return False, "a ", "Dark Temple Key"
         else:
-            return False, "An ", "expansion"
+            return False, "an ", "expansion"
 
-    elif precision == HintItemPrecision.PRECISE_CATEGORY:
+    elif precision is HintItemPrecision.PRECISE_CATEGORY:
         details = pickup.item_category.hint_details
         return False, details[0], details[1]
 
@@ -189,11 +192,11 @@ def _calculate_determiner(pickup_assignment: PickupAssignment,
     if pickup.name in _DET_NULL:
         determiner = ""
     elif tuple(pickup_entry.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
-        determiner = "The "
+        determiner = "the "
     elif pickup.name in _DET_AN:
-        determiner = "An "
+        determiner = "an "
     else:
-        determiner = "A "
+        determiner = "a "
 
     return determiner
 

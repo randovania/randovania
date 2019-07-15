@@ -130,7 +130,7 @@ def add_default_hints_to_patches(rng: Random,
     for node in world_list.all_nodes:
         if isinstance(node, LogbookNode) and node.lore_type == LoreType.LUMINOTH_WARRIOR:
             patches = patches.assign_hint(node.resource(),
-                                          Hint(HintType.LOCATION,
+                                          Hint(HintType.KEYBEARER,
                                                PrecisionPair(HintLocationPrecision.DETAILED,
                                                              HintItemPrecision.PRECISE_CATEGORY),
                                                PickupIndex(node.hint_index)))

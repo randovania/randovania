@@ -66,6 +66,7 @@ def test_create_hints_nothing(empty_patches):
     ]
 
 
+@pytest.mark.parametrize("hint_type", [HintType.LOCATION, HintType.KEYBEARER])
 @pytest.mark.parametrize("item", [
     (HintItemPrecision.DETAILED, "The &push;&main-color=#a84343;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "A &push;&main-color=#a84343;movement system&pop;"),
@@ -77,7 +78,7 @@ def test_create_hints_nothing(empty_patches):
     (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#a84343;World&pop;"),
     (HintLocationPrecision.WRONG_GAME, "&push;&main-color=#45f731;Tower (?)&pop;"),
 ])
-def test_create_hints_item_detailed(empty_patches, pickup,
+def test_create_hints_item_detailed(hint_type, empty_patches, pickup,
                                     item, location):
     # Setup
     asset_id = 1000
@@ -91,7 +92,7 @@ def test_create_hints_item_detailed(empty_patches, pickup,
             pickup_index: pickup,
         },
         hints={
-            logbook_node.resource(): Hint(HintType.LOCATION,
+            logbook_node.resource(): Hint(hint_type,
                                           PrecisionPair(location[0], item[0]),
                                           pickup_index)
         })
@@ -104,8 +105,10 @@ def test_create_hints_item_detailed(empty_patches, pickup,
     # Assert
     if location[0] == HintLocationPrecision.WRONG_GAME and item[0] == HintItemPrecision.WRONG_GAME:
         message = "&push;&main-color=#45f731;Did you remember to check Trial Tunnel?&pop;"
-    else:
-        message = "{0} can be found at {1}.".format(item[1], location[1])
+    elif hint_type == HintType.LOCATION:
+        message = "{} can be found at {}.".format(item[1], location[1])
+    elif hint_type == HintType.KEYBEARER:
+        message = "The Flying Ing Cache at {} contains {}.".format(location[1], item[1][0].lower() + item[1][1:])
     assert result == [
         {'asset_id': asset_id, 'strings': [message, '', message]}
     ]
