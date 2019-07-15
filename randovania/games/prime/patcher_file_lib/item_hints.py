@@ -89,8 +89,8 @@ for i in range(1, 10):
     _DET_NULL.append(f"Sky Temple Key {i}")
 
 _HINT_MESSAGE_TEMPLATES = {
-    HintType.LOCATION: "{determiner}{pickup} can be found at {node}.",
-    HintType.KEYBEARER: "The Flying Ing Cache at {node} contains {determiner}{pickup}."
+    HintType.LOCATION: "{determiner}{pickup} can be found in {node}.",
+    HintType.KEYBEARER: "The Flying Ing Cache in {node} contains {determiner}{pickup}."
 }
 
 
