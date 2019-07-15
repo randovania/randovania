@@ -147,7 +147,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
-    message = f"{guardian} guards {item[1]}."
+    message = f"{guardian} is guarding {item[1]}."
     assert result == [
         {'asset_id': asset_id, 'strings': [message, '', message]}
     ]

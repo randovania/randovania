@@ -99,7 +99,7 @@ _GUARDIAN_NAMES = {
 
 _HINT_MESSAGE_TEMPLATES = {
     HintType.KEYBEARER: "The Flying Ing Cache in {node} contains {determiner}{pickup}.",
-    HintType.GUARDIAN: "{node} guards {determiner}{pickup}.",
+    HintType.GUARDIAN: "{node} is guarding {determiner}{pickup}.",
     HintType.LOCATION: "{determiner}{pickup} can be found in {node}.",
 }
 
