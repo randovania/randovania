@@ -44,8 +44,8 @@ _PRIME_3_ITEMS = [
 
 _JOKE_HINTS = [
     "Did you remember to check Trial Tunnel?",
-    ("By this point in your playthrough, you should have consumed at least "
-     "200mL of water to maintain optimum hydration."),
+    ("By this point in your run, you should have consumed at least "
+     "200 mL of water to maintain optimum hydration."),
     "Make sure to collect an ETM, otherwise your run isn't valid.",
     "You're not authorized to view this hint.",
     "Kirby fell down here.",
