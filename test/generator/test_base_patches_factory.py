@@ -177,8 +177,8 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     # Setup
     rng = MagicMock()
 
-    def _location_hint(number: int):
-        return Hint(HintType.LOCATION, PrecisionPair.detailed(), PickupIndex(number))
+    def _light_suit_location_hint(number: int):
+        return Hint(HintType.LIGHT_SUIT_LOCATION, PrecisionPair.detailed(), PickupIndex(number))
 
     def _guardian_hint(number: int):
         return Hint(HintType.GUARDIAN, PrecisionPair.detailed(), PickupIndex(number))
@@ -203,7 +203,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
         LogbookAsset(0xA9909E66): _keybearer_hint(106),
 
         # Locations with hints
-        LogbookAsset(1041207119): _location_hint(24),
+        LogbookAsset(1041207119): _light_suit_location_hint(24),
         LogbookAsset(4115881194): _guardian_hint(43),
         LogbookAsset(1948976790): _guardian_hint(79),
         LogbookAsset(3212301619): _guardian_hint(115),

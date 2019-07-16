@@ -12,6 +12,9 @@ class HintType(Enum):
     # Amorbis, Chykka, and Quadraxis
     GUARDIAN = "guardian"
 
+    # Vanilla Light Suit location
+    LIGHT_SUIT_LOCATION = "light-suit-location"
+
     # All other hints
     LOCATION = "location"
 
