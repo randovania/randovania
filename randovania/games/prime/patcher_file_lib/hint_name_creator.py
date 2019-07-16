@@ -34,7 +34,7 @@ class LocationHintCreator:
 
 class TextColor(Enum):
     GUARDIAN = "#a84343"
-    ITEM = "#246acc"
+    ITEM = "#FF6705B3"
     JOKE = "#45f731"
     LOCATION = "#a84343"
 
