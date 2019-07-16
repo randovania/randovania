@@ -51,7 +51,7 @@ _JOKE_HINTS = [
     "Magoo.",
     "Back in my day, we didn't need hints!",
     "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
-    "Warning! Dark Aether's atmosphere is dangerous! Energized safe zones don't last forever!",
+    "Warning! Dark Aether's atmosphere is dangerous! Energized Safe Zones don't last forever!",
 ]
 
 _PRIME_1_LOCATIONS = [
