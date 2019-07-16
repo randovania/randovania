@@ -59,7 +59,7 @@ def test_create_hints_nothing(empty_patches):
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
-    message = ("An &push;&main-color=#246acc;Energy Transfer Module&pop; can be found in "
+    message = ("An &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
                "&push;&main-color=#a84343;World - Area&pop;.")
     assert result == [
         {'asset_id': asset_id, 'strings': [message, '', message]}
@@ -68,9 +68,9 @@ def test_create_hints_nothing(empty_patches):
 
 @pytest.mark.parametrize("hint_type", [HintType.LOCATION, HintType.KEYBEARER])
 @pytest.mark.parametrize("item", [
-    (HintItemPrecision.DETAILED, "the &push;&main-color=#246acc;Pickup&pop;"),
-    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#246acc;movement system&pop;"),
-    (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#246acc;major upgrade&pop;"),
+    (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
+    (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
     (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45f731;X-Ray Visor (?)&pop;"),
 ])
 @pytest.mark.parametrize("location", [
@@ -118,9 +118,9 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     (PickupIndex(115), "&push;&main-color=#a84343;Quadraxis&pop;"),
 ])
 @pytest.mark.parametrize("item", [
-    (HintItemPrecision.DETAILED, "the &push;&main-color=#246acc;Pickup&pop;"),
-    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#246acc;movement system&pop;"),
-    (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#246acc;major upgrade&pop;"),
+    (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
+    (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
     (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45f731;X-Ray Visor (?)&pop;"),
 ])
 def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item):
