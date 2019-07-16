@@ -137,7 +137,7 @@ def add_default_hints_to_patches(rng: Random,
 
     # TODO: this should be a flag in PickupNode
     indices_with_hint = [
-        (PickupIndex(24), HintType.LOCATION),  # Light Suit
+        (PickupIndex(24), HintType.LIGHT_SUIT_LOCATION),  # Light Suit
         (PickupIndex(43), HintType.GUARDIAN),  # Dark Suit (Amorbis)
         (PickupIndex(79), HintType.GUARDIAN),  # Dark Visor (Chykka)
         (PickupIndex(115), HintType.GUARDIAN), # Annihilator Beam (Quadraxis)
