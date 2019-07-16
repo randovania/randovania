@@ -33,10 +33,10 @@ class LocationHintCreator:
 
 
 class TextColor(Enum):
-    GUARDIAN = "#a84343"
+    GUARDIAN = "#FF3333"
     ITEM = "#FF6705B3"
-    JOKE = "#45f731"
-    LOCATION = "#a84343"
+    JOKE = "#45F731"
+    LOCATION = "#FF3333"
 
 
 def color_text(color: TextColor, text:str):
