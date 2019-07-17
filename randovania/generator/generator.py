@@ -205,7 +205,7 @@ def _assign_remaining_items(rng: Random,
 
     if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
         remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_etm)
-        unassigned_major_locations = [pickup_node for pickup_node in unassigned_pickup_node if pickup_node.major_location]
+        unassigned_major_locations = [pickup_node for pickup_node in unassigned_pickup_nodes if pickup_node.major_location]
 
         for pickup_node, item in zip(unassigned_major_locations, remaining_majors):
             if item is not None:
