@@ -13,7 +13,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
-from randovania.generator.filler.filler_library import UnableToGenerate
+from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
@@ -143,7 +143,7 @@ def retcon_playthrough_filler(game: GameDescription,
             if randomization_mode is RandomizationMode.FULL:
                 uncollected_indices = current_uncollected.indices
             elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                uncollected_indices = [pickup_node.pickup_index for node in current_uncollected if pickup_node.is_major_location]
+                uncollected_indices = [pickup_node.pickup_index for pickup_node in filter_pickup_nodes(current_uncollected.resources) if pickup_node.major_location]
 
             if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
                 pickup_index_weight = {
