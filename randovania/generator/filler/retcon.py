@@ -143,7 +143,8 @@ def retcon_playthrough_filler(game: GameDescription,
             if randomization_mode is RandomizationMode.FULL:
                 uncollected_indices = current_uncollected.indices
             elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                uncollected_indices = [pickup_node.pickup_index for pickup_node in filter_pickup_nodes(current_uncollected.resources) if pickup_node.major_location]
+                major_indices = {pickup_node.pickup_index for pickup_node in filter_pickup_nodes(reach.state.collected_resource_nodes) if pickup_node.major_location}
+                uncollected_indices = current_uncollected.indices & major_indices
 
             if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
                 pickup_index_weight = {
