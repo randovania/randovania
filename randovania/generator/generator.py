@@ -211,7 +211,7 @@ def _assign_remaining_items(rng: Random,
             if item is not None:
                 assignment[pickup_node.pickup_index] = item
                 remaining_items.remove(item)
-            unassigned_pickup_indices.remove(pickup_node.pickup_index)
+            unassigned_pickup_nodes.remove(pickup_node)
 
     assignment.update({
         pickup_node.pickup_index: item
