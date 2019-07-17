@@ -163,6 +163,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Item scans were slightly edited.
 
+-   Changed: The Sky Temple Key hints no longer use ordinal numbers.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
