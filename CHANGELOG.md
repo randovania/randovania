@@ -149,6 +149,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: "Beam combos" are now called "Charge Combos".
 
+-   Changed: Windows releases are created with PyInstaller 3.5.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
