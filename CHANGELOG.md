@@ -153,6 +153,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: The Watch Station Access roll jump now has a damage requirement.
 
+-   Changed: The Watch Station Access roll jump is now Normal (from Easy).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
