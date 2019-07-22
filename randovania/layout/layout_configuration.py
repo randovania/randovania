@@ -21,6 +21,16 @@ class RandomizationMode(BitPackEnum, Enum):
         return cls.FULL
 
 
+class LayoutDamageStrictness(BitPackEnum, Enum):
+    STRICT = 1.0
+    MEDIUM = 1.5
+    LENIENT = 2.0
+
+    @classmethod
+    def default(cls):
+        return cls.MEDIUM
+
+
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     ALL_BOSSES = "all-bosses"
     ALL_GUARDIANS = "all-guardians"
@@ -64,6 +74,7 @@ class LayoutElevators(BitPackEnum, Enum):
 @dataclasses.dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
     trick_level_configuration: TrickLevelConfiguration
+    damage_strictness: LayoutDamageStrictness
     sky_temple_keys: LayoutSkyTempleKeyMode
     elevators: LayoutElevators
     starting_location: StartingLocation
@@ -84,6 +95,7 @@ class LayoutConfiguration(BitPackDataClass):
         return {
             "game": "mp2-echoes",
             "trick_level": self.trick_level_configuration.as_json,
+            "damage_strictness": self.damage_strictness.value,
             "sky_temple_keys": self.sky_temple_keys.value,
             "elevators": self.elevators.value,
             "starting_location": self.starting_location.as_json,
@@ -99,6 +111,7 @@ class LayoutConfiguration(BitPackDataClass):
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return cls.from_params(
             trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"]),
+            damage_strictness=LayoutDamageStrictness(json_dict["damage_strictness"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),

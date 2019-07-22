@@ -51,6 +51,7 @@ def test_migrate_from_v1(option):
                 "global_level": "normal",
                 "specific_levels": {},
             },
+            "damage_strictness": 1.0,
             "sky_temple_keys": 9,
             "starting_resources": "vanilla-item-loss-enabled",
             "starting_location": "ship",
