@@ -57,7 +57,6 @@ setup(
         'nod>=1.1',
         'requests',
         'networkx',
-        'num2words',
         'bitstruct',
         'construct',
         'tenacity',

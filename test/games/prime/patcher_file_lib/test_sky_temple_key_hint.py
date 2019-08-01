@@ -9,23 +9,23 @@ from randovania.generator.item_pool import pickup_creator
 
 
 def _create_hint_text(hide_area: bool,
-                      key_text: str,
+                      key_number: int,
                       key_location: str,
                       ) -> List[str]:
     if hide_area:
         key_location = key_location.split(" - ")[0]
 
-    message = "The {} Sky Temple Key is located in &push;&main-color=#FF3333;{}&pop;.".format(key_text, key_location)
+    message = f"&push;&main-color=#FF6705B3;Sky Temple Key {key_number}&pop; is located in &push;&main-color=#FF3333;{key_location}&pop;."
     return [message, "", message]
 
 
-def make_starting_stk_hint(key_text: str) -> List[str]:
-    message = "The {} Sky Temple Key has no need to be located.".format(key_text)
+def make_starting_stk_hint(key_number: int) -> List[str]:
+    message = f"&push;&main-color=#FF6705B3;Sky Temple Key {key_number}&pop; has no need to be located."
     return [message, "", message]
 
 
-def make_useless_stk_hint(key_text: str) -> List[str]:
-    message = "The {} Sky Temple Key is lost somewhere in Aether.".format(key_text)
+def make_useless_stk_hint(key_number: int) -> List[str]:
+    message = f"&push;&main-color=#FF6705B3;Sky Temple Key {key_number}&pop; is lost somewhere in Aether."
     return [message, "", message]
 
 
@@ -39,23 +39,23 @@ def test_create_hints_all_placed(hide_area: bool,
     ])
     expected = [
         {"asset_id": 0xD97685FE,
-         "strings": _create_hint_text(hide_area, "1st", "Sky Temple Grounds - Profane Path")},
+         "strings": _create_hint_text(hide_area, 1, "Sky Temple Grounds - Profane Path")},
         {"asset_id": 0x32413EFD,
-         "strings": _create_hint_text(hide_area, "2nd", "Sky Temple Grounds - Phazon Grounds")},
+         "strings": _create_hint_text(hide_area, 2, "Sky Temple Grounds - Phazon Grounds")},
         {"asset_id": 0xDD8355C3,
-         "strings": _create_hint_text(hide_area, "3rd", "Sky Temple Grounds - Ing Reliquary")},
+         "strings": _create_hint_text(hide_area, 3, "Sky Temple Grounds - Ing Reliquary")},
         {"asset_id": 0x3F5F4EBA,
-         "strings": _create_hint_text(hide_area, "4th", "Great Temple - Transport A Access")},
+         "strings": _create_hint_text(hide_area, 4, "Great Temple - Transport A Access")},
         {"asset_id": 0xD09D2584,
-         "strings": _create_hint_text(hide_area, "5th", "Great Temple - Temple Sanctuary")},
+         "strings": _create_hint_text(hide_area, 5, "Great Temple - Temple Sanctuary")},
         {"asset_id": 0x3BAA9E87,
-         "strings": _create_hint_text(hide_area, "6th", "Great Temple - Transport B Access")},
+         "strings": _create_hint_text(hide_area, 6, "Great Temple - Transport B Access")},
         {"asset_id": 0xD468F5B9,
-         "strings": _create_hint_text(hide_area, "7th", "Great Temple - Main Energy Controller")},
+         "strings": _create_hint_text(hide_area, 7, "Great Temple - Main Energy Controller")},
         {"asset_id": 0x2563AE34,
-         "strings": _create_hint_text(hide_area, "8th", "Great Temple - Main Energy Controller")},
+         "strings": _create_hint_text(hide_area, 8, "Great Temple - Main Energy Controller")},
         {"asset_id": 0xCAA1C50A,
-         "strings": _create_hint_text(hide_area, "9th", "Agon Wastes - Mining Plaza")},
+         "strings": _create_hint_text(hide_area, 9, "Agon Wastes - Mining Plaza")},
     ]
 
     # Run
@@ -76,23 +76,23 @@ def test_create_hints_all_starting(hide_area: bool,
 
     expected = [
         {"asset_id": 0xD97685FE,
-         "strings": make_starting_stk_hint("1st")},
+         "strings": make_starting_stk_hint(1)},
         {"asset_id": 0x32413EFD,
-         "strings": make_starting_stk_hint("2nd")},
+         "strings": make_starting_stk_hint(2)},
         {"asset_id": 0xDD8355C3,
-         "strings": make_starting_stk_hint("3rd")},
+         "strings": make_starting_stk_hint(3)},
         {"asset_id": 0x3F5F4EBA,
-         "strings": make_starting_stk_hint("4th")},
+         "strings": make_starting_stk_hint(4)},
         {"asset_id": 0xD09D2584,
-         "strings": make_starting_stk_hint("5th")},
+         "strings": make_starting_stk_hint(5)},
         {"asset_id": 0x3BAA9E87,
-         "strings": make_starting_stk_hint("6th")},
+         "strings": make_starting_stk_hint(6)},
         {"asset_id": 0xD468F5B9,
-         "strings": make_starting_stk_hint("7th")},
+         "strings": make_starting_stk_hint(7)},
         {"asset_id": 0x2563AE34,
-         "strings": make_starting_stk_hint("8th")},
+         "strings": make_starting_stk_hint(8)},
         {"asset_id": 0xCAA1C50A,
-         "strings": make_starting_stk_hint("9th")},
+         "strings": make_starting_stk_hint(9)},
     ]
 
     # Run
@@ -106,23 +106,23 @@ def test_hide_hints():
     # Setup
     expected = [
         {"asset_id": 0xD97685FE,
-         "strings": make_useless_stk_hint("1st")},
+         "strings": make_useless_stk_hint(1)},
         {"asset_id": 0x32413EFD,
-         "strings": make_useless_stk_hint("2nd")},
+         "strings": make_useless_stk_hint(2)},
         {"asset_id": 0xDD8355C3,
-         "strings": make_useless_stk_hint("3rd")},
+         "strings": make_useless_stk_hint(3)},
         {"asset_id": 0x3F5F4EBA,
-         "strings": make_useless_stk_hint("4th")},
+         "strings": make_useless_stk_hint(4)},
         {"asset_id": 0xD09D2584,
-         "strings": make_useless_stk_hint("5th")},
+         "strings": make_useless_stk_hint(5)},
         {"asset_id": 0x3BAA9E87,
-         "strings": make_useless_stk_hint("6th")},
+         "strings": make_useless_stk_hint(6)},
         {"asset_id": 0xD468F5B9,
-         "strings": make_useless_stk_hint("7th")},
+         "strings": make_useless_stk_hint(7)},
         {"asset_id": 0x2563AE34,
-         "strings": make_useless_stk_hint("8th")},
+         "strings": make_useless_stk_hint(8)},
         {"asset_id": 0xCAA1C50A,
-         "strings": make_useless_stk_hint("9th")},
+         "strings": make_useless_stk_hint(9)},
     ]
 
     # Run
