@@ -42,8 +42,8 @@ _TRICK_LEVEL_DESCRIPTION = {
         "of game mechanics, making it ideal for casual and first time players."
     ],
     LayoutTrickLevel.TRIVIAL: [
-        "This mode includes strategies that abuses oversights in the game, such as being able to activate the "
-        "Hive Dynamo Works portal from the other side of the chasm and bomb jumping in Temple Assembly Site."
+        "This mode includes strategies that abuses oversights in the game, such as bomb jumping to the item "
+        "in Temple Assembly Site and destroying the gate in Trooper Security Station with Screw Attack."
     ],
     LayoutTrickLevel.EASY: ["This mode assumes you can do simple tricks."],
     LayoutTrickLevel.NORMAL: ["This mode expands on the Easy mode, including more difficult to execute tricks."],
