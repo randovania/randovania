@@ -175,7 +175,8 @@ def test_create_patches(mock_random: MagicMock,
         permalink.layout_configuration, game, item_pool, pool_patches, mock_random.return_value, status_update
     )
     mock_assign_remaining_items.assert_called_once_with(
-        mock_random.return_value, game.world_list, filler_patches.pickup_assignment, remaining_items
+        mock_random.return_value, game.world_list, filler_patches.pickup_assignment,
+        remaining_items, permalink.layout_configuration.randomization_mode
     )
     filler_patches.assign_pickup_assignment.assert_called_once_with(mock_assign_remaining_items.return_value)
 

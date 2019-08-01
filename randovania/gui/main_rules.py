@@ -16,10 +16,12 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.main_rules_ui import Ui_MainRules
 from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
+from randovania.layout.layout_configuration import RandomizationMode
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.resolver.exceptions import InvalidConfiguration
@@ -90,6 +92,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._beam_ammo_item = item_database.ammo["Beam Ammo Expansion"]
 
         self._register_alternatives_events()
+        self._setup_randomization_mode_combo()
         self._register_random_starting_events()
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
@@ -130,6 +133,9 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
         for item in [self._dark_ammo_item, self._light_ammo_item]:
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
+
+        # Randomization Mode
+        set_combo_with_value(self.randomization_mode_combo, options.randomization_mode)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -345,6 +351,17 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             })
 
             options.ammo_configuration = ammo_configuration
+
+    # Randomization Mode
+
+    def _setup_randomization_mode_combo(self):
+        self.randomization_mode_combo.setItemData(0, RandomizationMode.FULL)
+        self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
+        self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
+
+    def _on_update_randomization_mode(self):
+        with self._options as options:
+            options.randomization_mode = self.randomization_mode_combo.currentData()
 
     # Random Starting
 

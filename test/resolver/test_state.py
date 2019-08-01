@@ -24,7 +24,7 @@ def test_collected_pickup_indices(database):
         PickupIndex(1): 1,
         PickupIndex(15): 1
     }
-    s = state.State(resources, 99, None, None, None, database)
+    s = state.State(resources, (), 99, None, None, None, database)
 
     # Run
     indices = list(s.collected_pickup_indices)
@@ -35,7 +35,7 @@ def test_collected_pickup_indices(database):
 
 def test_add_pickup_to_state(database):
     # Starting State
-    s = state.State({}, 99, None, None, None, database)
+    s = state.State({}, (), 99, None, None, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
@@ -63,7 +63,7 @@ def test_assign_pickup_to_index(collected: bool, empty_patches, database):
     index = PickupIndex(1)
     if collected:
         starting_resources[index] = 1
-    starting = state.State(starting_resources, 99, None, empty_patches, None, database)
+    starting = state.State(starting_resources, (), 99, None, empty_patches, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     p = PickupEntry("A", 2, ItemCategory.SUIT,
@@ -85,7 +85,7 @@ def test_assign_pickup_to_index(collected: bool, empty_patches, database):
 def test_assign_pickup_to_starting_items(empty_patches, database):
     # Setup
 
-    starting = state.State({}, 99, None, empty_patches, None, database)
+    starting = state.State({}, (), 99, None, empty_patches, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
@@ -110,7 +110,7 @@ def test_assign_pickup_to_starting_items(empty_patches, database):
 
 def test_state_with_pickup(database):
     # Setup
-    starting = state.State({}, 99, None, None, None, database)
+    starting = state.State({}, (), 99, None, None, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     p = PickupEntry("A", 2, ItemCategory.SUIT,
