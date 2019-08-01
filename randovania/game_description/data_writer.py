@@ -149,6 +149,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, PickupNode):
         data["node_type"] = 2
         data["pickup_index"] = node.pickup_index.index
+        data["major_location"] = node.major_location
 
     elif isinstance(node, TeleporterNode):
         data["node_type"] = 3

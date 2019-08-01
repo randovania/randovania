@@ -155,6 +155,7 @@ def run_filler(configuration: LayoutConfiguration,
 
     filler_patches = retcon_playthrough_filler(
         new_game, state, major_items, rng,
+        randomization_mode=configuration.randomization_mode,
         minimum_random_starting_items=major_configuration.minimum_random_starting_items,
         maximum_random_starting_items=major_configuration.maximum_random_starting_items,
         status_update=status_update)

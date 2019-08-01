@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+-   *Major* - There is now an option for a major/minor split randomization mode, in which expansions and
+    non-expansion items are shuffled separately.
 
 -   *Major* - Changed: Item hints and Sky Temple Key hints now distinguish between the light and dark worlds.
     For example, the room in which Quadraxis resides will be shown as "Ing Hive - Hive Temple" rather than

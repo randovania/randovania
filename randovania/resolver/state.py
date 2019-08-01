@@ -28,6 +28,7 @@ def _energy_for(resources: CurrentResources,
 
 class State:
     resources: CurrentResources
+    collected_resource_nodes: Tuple[ResourceNode]
     energy: int
     node: Node
     patches: GamePatches
@@ -37,6 +38,7 @@ class State:
 
     def __init__(self,
                  resources: CurrentResources,
+                 collected_resource_nodes: Tuple[ResourceNode],
                  energy: int,
                  node: Node,
                  patches: GamePatches,
@@ -44,6 +46,7 @@ class State:
                  resource_database: ResourceDatabase):
 
         self.resources = resources
+        self.collected_resource_nodes = collected_resource_nodes
         self.node = node
         self.patches = patches
         self.path_from_previous_state = ()
@@ -58,6 +61,7 @@ class State:
 
     def copy(self) -> "State":
         return State(copy.copy(self.resources),
+                     self.collected_resource_nodes,
                      self.energy,
                      self.node,
                      self.patches,
@@ -77,10 +81,10 @@ class State:
                 yield resource
 
     def take_damage(self, damage: int) -> "State":
-        return State(self.resources, self.energy - damage, self.node, self.patches, self, self.resource_database)
+        return State(self.resources, self.collected_resource_nodes, self.energy - damage, self.node, self.patches, self, self.resource_database)
 
     def heal(self) -> "State":
-        return State(self.resources, self.maximum_energy, self.node, self.patches, self, self.resource_database)
+        return State(self.resources, self.collected_resource_nodes, self.maximum_energy, self.node, self.patches, self, self.resource_database)
 
     @property
     def maximum_energy(self) -> int:
@@ -106,7 +110,7 @@ class State:
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
             energy = _energy_for(new_resources, self.resource_database)
 
-        return State(new_resources, energy, self.node, self.patches, self, self.resource_database)
+        return State(new_resources, self.collected_resource_nodes + (node,), energy, self.node, self.patches, self, self.resource_database)
 
     def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = (), new_energy: Optional[int] = None) -> "State":
         if new_energy is None:
@@ -129,6 +133,7 @@ class State:
 
         return State(
             new_resources,
+            self.collected_resource_nodes,
             energy,
             self.node,
             new_patches,
@@ -148,6 +153,7 @@ class State:
 
         return State(
             new_resources,
+            self.collected_resource_nodes,
             self.energy + _energy_tank_difference(new_resources, self.resources,
                                                   self.resource_database) * ENERGY_PER_TANK,
             self.node,
