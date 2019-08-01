@@ -8,7 +8,8 @@ from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
+    LayoutSkyTempleKeyMode, RandomizationMode
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -368,6 +369,14 @@ class Options:
     @layout_configuration_elevators.setter
     def layout_configuration_elevators(self, value: LayoutElevators):
         self.set_layout_configuration_field("elevators", value)
+
+    @property
+    def randomization_mode(self) -> RandomizationMode:
+        return self.layout_configuration.randomization_mode
+
+    @randomization_mode.setter
+    def randomization_mode(self, value: RandomizationMode):
+        self.set_layout_configuration_field("randomization_mode", value)
 
     @property
     def major_items_configuration(self) -> MajorItemsConfiguration:

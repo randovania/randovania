@@ -13,10 +13,11 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
-from randovania.generator.filler.filler_library import UnableToGenerate
+from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
+from randovania.layout.layout_configuration import RandomizationMode
 from randovania.resolver import debug
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup
@@ -89,6 +90,7 @@ def retcon_playthrough_filler(game: GameDescription,
                               initial_state: State,
                               pickups_left: List[PickupEntry],
                               rng: Random,
+                              randomization_mode: RandomizationMode,
                               minimum_random_starting_items: int,
                               maximum_random_starting_items: int,
                               status_update: Callable[[str], None],
@@ -138,15 +140,21 @@ def retcon_playthrough_filler(game: GameDescription,
         if isinstance(action, PickupEntry):
             assert action in pickups_left
 
-            if num_random_starting_items_placed >= minimum_random_starting_items and current_uncollected.indices:
+            if randomization_mode is RandomizationMode.FULL:
+                uncollected_indices = current_uncollected.indices
+            elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+                major_indices = {pickup_node.pickup_index for pickup_node in filter_pickup_nodes(reach.state.collected_resource_nodes) if pickup_node.major_location}
+                uncollected_indices = current_uncollected.indices & major_indices
+
+            if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
                 pickup_index_weight = {
                     pickup_index: 1 / (min(pickup_index_seen_count[pickup_index], 10) ** 2)
-                    for pickup_index in current_uncollected.indices
+                    for pickup_index in uncollected_indices
                 }
                 assert pickup_index_weight, "Pickups should only be added to the actions dict " \
                                             "when there are unassigned pickups"
 
-                pickup_index = next(iterate_with_weights(items=list(current_uncollected.indices),
+                pickup_index = next(iterate_with_weights(items=uncollected_indices,
                                                          item_weights=pickup_index_weight,
                                                          rng=rng))
 
