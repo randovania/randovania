@@ -74,7 +74,7 @@ HINT_DETAILS: Dict[ItemCategory, Tuple[str, str]] = {
     ItemCategory.MORPH_BALL: ("a ", "morph ball system"),
     ItemCategory.MOVEMENT: ("a ", "movement system"),
     ItemCategory.MISSILE: ("a ", "missile system"),
-    ItemCategory.CHARGE_COMBO: ("a ", "Charge Combo"),
+    ItemCategory.CHARGE_COMBO: ("a ", "charge combo"),
     ItemCategory.TRANSLATOR: ("a ", "translator"),
     ItemCategory.ENERGY_TANK: ("an ", "Energy Tank"),
     ItemCategory.TEMPLE_KEY: ("a ", "red Temple Key"),

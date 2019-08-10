@@ -147,7 +147,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Items that aren't keys or expansions are collectively referred to as "major upgades" instead of "major items".
     - Red Temple Keys and Sky Temple Keys are now collectively referred to as "Dark Temple Keys" instead of "keys".
 
--   Fixed: "Beam combos" are now called "Charge Combos".
+-   Fixed: "Beam combos" are now called "charge combos".
 
 -   Changed: The hints acquired from keybearer corpses now clarify that the item is the one contained in a Flying
     Ing Cache.
