@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+-   *Major* - There is now an option for a major/minor split randomization mode, in which expansions and
+    non-expansion items are shuffled separately.
 
 -   *Major* - Changed: Item hints and Sky Temple Key hints now distinguish between the light and dark worlds.
     For example, the room in which Quadraxis resides will be shown as "Ing Hive - Hive Temple" rather than
@@ -165,6 +167,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The Sky Temple Key hints no longer use ordinal numbers.
 
+-   Changed: Windows releases are created with PyInstaller 3.5.
+
+-   Changed: The trick to shoot the Seeker targets in Hive Dynamo Works from the wrong side is now Easy (from Trivial).
+
+-   Fixed: The Watch Station Access roll jump now has a damage requirement.
+
+-   Changed: The Watch Station Access roll jump is now Normal (from Easy).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
@@ -200,6 +210,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fixed: Clicking the connection's link in the Data Visualizer should now always work.
 
 -   Changed: Hint Locations page now has a more usable UI.
+
+-   Changed: On No Tricks, the logic will ensure that you can get Missiles, Seeker Launcher, and either
+    Grapple Beam or both Space Jump Boots and Screw Attack before fighting Chykka.
 
 ## [0.27.1] - 2019-05-30
 

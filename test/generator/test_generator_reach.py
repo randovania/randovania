@@ -143,7 +143,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     patches = patches.assign_gate_assignment({
         TranslatorGate(1): scan_visor
     })
-    initial_state = State({scan_visor: 1 if has_translator else 0}, 99,
+    initial_state = State({scan_visor: 1 if has_translator else 0}, (), 99,
                           node_a, patches, None, echoes_resource_database)
 
     # Run

@@ -12,6 +12,14 @@ from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.trick_level import TrickLevelConfiguration
 
 
+class RandomizationMode(BitPackEnum, Enum):
+    FULL = "full"
+    MAJOR_MINOR_SPLIT = "major/minor split"
+
+    @classmethod
+    def default(cls) -> "RandomizationMode":
+        return cls.FULL
+
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     ALL_BOSSES = "all-bosses"
     ALL_GUARDIANS = "all-guardians"
@@ -55,6 +63,7 @@ class LayoutConfiguration(BitPackDataClass):
     sky_temple_keys: LayoutSkyTempleKeyMode
     elevators: LayoutElevators
     starting_location: StartingLocation
+    randomization_mode: RandomizationMode
     major_items_configuration: MajorItemsConfiguration
     ammo_configuration: AmmoConfiguration
     translator_configuration: TranslatorConfiguration
@@ -74,6 +83,7 @@ class LayoutConfiguration(BitPackDataClass):
             "sky_temple_keys": self.sky_temple_keys.value,
             "elevators": self.elevators.value,
             "starting_location": self.starting_location.as_json,
+            "randomization_mode": self.randomization_mode.value,
             "major_items_configuration": self.major_items_configuration.as_json,
             "ammo_configuration": self.ammo_configuration.as_json,
             "translator_configuration": self.translator_configuration.as_json,
@@ -88,6 +98,7 @@ class LayoutConfiguration(BitPackDataClass):
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),
+            randomization_mode=RandomizationMode(json_dict["randomization_mode"]),
             major_items_configuration=MajorItemsConfiguration.from_json(
                 json_dict["major_items_configuration"],
                 default_prime2_item_database(),
