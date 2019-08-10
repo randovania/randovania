@@ -76,6 +76,7 @@ class TeleporterNode(Node):
 @dataclasses.dataclass(frozen=True)
 class PickupNode(ResourceNode):
     pickup_index: PickupIndex
+    major_location: bool
 
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)

@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 10
+_CURRENT_OPTIONS_FILE_VERSION = 11
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -187,17 +187,23 @@ def _convert_v9(options: dict) -> dict:
 
     return options
 
+def _convert_v10(options: dict) -> dict:
+    if "layout_configuration" in options and "randomization_mode" not in options["layout_configuration"]:
+        options["layout_configuration"]["randomization_mode"] = "full"
+    return options
+
 
 _CONVERTER_FOR_VERSION = {
-    1: _convert_v1,
-    2: _convert_v2,
-    3: _convert_v3,
-    4: _convert_v4,
-    5: _convert_v5,
-    6: _convert_v6,
-    7: _convert_v7,
-    8: _convert_v8,
-    9: _convert_v9,
+    1:  _convert_v1,
+    2:  _convert_v2,
+    3:  _convert_v3,
+    4:  _convert_v4,
+    5:  _convert_v5,
+    6:  _convert_v6,
+    7:  _convert_v7,
+    8:  _convert_v8,
+    9:  _convert_v9,
+    10: _convert_v10
 }
 
 
