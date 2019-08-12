@@ -6,6 +6,16 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 class HintType(Enum):
+    # Keybearer corpses
+    KEYBEARER = "keybearer"
+
+    # Amorbis, Chykka, and Quadraxis
+    GUARDIAN = "guardian"
+
+    # Vanilla Light Suit location
+    LIGHT_SUIT_LOCATION = "light-suit-location"
+
+    # All other hints
     LOCATION = "location"
 
 
@@ -88,6 +98,7 @@ class Hint:
     @property
     def as_json(self):
         return {
+            "hint_type": self.hint_type.value,
             "location_precision": self.precision.location.value,
             "item_precision": self.precision.item.value,
             "target": self.target.index,
@@ -96,7 +107,7 @@ class Hint:
     @classmethod
     def from_json(cls, value) -> "Hint":
         return Hint(
-            hint_type=HintType.LOCATION,
+            hint_type=HintType(value["hint_type"]),
             precision=PrecisionPair(
                 location=HintLocationPrecision(value["location_precision"]),
                 item=HintItemPrecision(value["item_precision"]),

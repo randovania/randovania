@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Dict
 
 from randovania.game_description.node import PickupNode
@@ -31,12 +32,15 @@ class LocationHintCreator:
             )
 
 
-def color_text_as_red(text: str) -> str:
-    return "&push;&main-color=#a84343;{}&pop;".format(text)
+class TextColor(Enum):
+    GUARDIAN = "#FF3333"
+    ITEM = "#FF6705B3"
+    JOKE = "#45F731"
+    LOCATION = "#FF3333"
 
 
-def color_as_joke(text: str) -> str:
-    return "&push;&main-color=#45f731;{}&pop;".format(text)
+def color_text(color: TextColor, text:str):
+    return f"&push;&main-color={color.value};{text}&pop;"
 
 
 def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:

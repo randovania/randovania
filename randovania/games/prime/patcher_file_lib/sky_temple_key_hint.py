@@ -1,11 +1,9 @@
-import num2words
-
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
-    color_text_as_red
+    color_text, TextColor
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -21,7 +19,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 
 
 def _sky_temple_key_name(key_number: int) -> str:
-    return num2words.num2words(key_number, lang='en', to='ordinal_num')
+    return color_text(TextColor.ITEM, f"Sky Temple Key {key_number}")
 
 
 def create_hints(patches: GamePatches,
@@ -53,9 +51,9 @@ def create_hints(patches: GamePatches,
 
             assert resource.index not in sky_temple_key_hints
 
-            sky_temple_key_hints[resource.index] = "The {} Sky Temple Key is located in {}.".format(
+            sky_temple_key_hints[resource.index] = "{} is located in {}.".format(
                 _sky_temple_key_name(key_number),
-                color_text_as_red(
+                color_text(TextColor.LOCATION,
                     location_hint_creator.index_node_name(pickup_index, hide_area),
                 ),
             )
@@ -69,7 +67,7 @@ def create_hints(patches: GamePatches,
             continue
 
         assert starting_resource.index not in sky_temple_key_hints
-        sky_temple_key_hints[starting_resource.index] = "The {} Sky Temple Key has no need to be located.".format(
+        sky_temple_key_hints[starting_resource.index] = "{} has no need to be located.".format(
             _sky_temple_key_name(key_number),
         )
 
@@ -96,7 +94,7 @@ def hide_hints() -> list:
     return [
         create_simple_logbook_hint(
             _SKY_TEMPLE_KEY_SCAN_ASSETS[key_number],
-            "The {} Sky Temple Key is lost somewhere in Aether.".format(_sky_temple_key_name(key_number + 1)),
+            "{} is lost somewhere in Aether.".format(_sky_temple_key_name(key_number + 1)),
         )
         for key_number in range(9)
     ]
