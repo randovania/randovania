@@ -424,7 +424,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     }
     assert result[4] == {
         "pickup_index": 4,
-        "scan": "C that provides 2 B, 1 A" if has_scan_text else "Unknown item",
+        "scan": "C that provides 2 B and 1 A" if has_scan_text else "Unknown item",
         "model_index": 2 if model_style == PickupModelStyle.ALL_VISIBLE else 30,
         "hud_text": ["C acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ['Unknown item acquired!'],
         "sound_index": 0,
@@ -562,7 +562,7 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
     result = patcher_file._pickup_scan(pickup)
 
     # Assert
-    assert result == "Progressive Suit: Provides the following in order: Dark Suit, Light Suit"
+    assert result == "Progressive Suit. Provides the following in order: Dark Suit, Light Suit"
 
 
 @pytest.mark.parametrize("disable_hud_popup", [False, True])

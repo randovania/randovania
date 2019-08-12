@@ -109,14 +109,14 @@ def _get_jingle_index_for(category: ItemCategory) -> int:
 def _pickup_scan(pickup: PickupEntry) -> str:
     if pickup.item_category != ItemCategory.EXPANSION:
         if len(pickup.resources) > 1 and all(conditional.name is not None for conditional in pickup.resources):
-            return "{}: Provides the following in order: {}".format(
+            return "{}. Provides the following in order: {}".format(
                 pickup.name, ", ".join(conditional.name for conditional in pickup.resources))
         else:
             return pickup.name
 
-    return "{0} that provides {1}".format(
+    return "{} that provides {}".format(
         pickup.name,
-        ", ".join(
+        " and ".join(
             "{} {}".format(quantity, _resource_user_friendly_name(resource))
             for resource, quantity in pickup.resources[-1].resources
         )
