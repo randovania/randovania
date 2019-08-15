@@ -175,6 +175,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The Watch Station Access roll jump is now Normal (from Easy).
 
+-   Fixed: Added missing Space Jump Boots requirement for a Bomb Space Jump in Mining Station B.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
