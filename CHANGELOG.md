@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     For example, the room in which Quadraxis resides will be shown as "Ing Hive - Hive Temple" rather than
     "Sanctuary Fortress - Hive Temple".
 
--   Added: the "Invisible Objects" trick in places where a visor would otherwise be used to be able to see
+-   *Major* - Added: the "Invisible Objects" trick in places where a visor would otherwise be used to be able to see
     something (such as an invisible platform).
 
 -   Fixed: Minimal Checking now correctly handles progressive suit and grapple.
