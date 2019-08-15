@@ -216,6 +216,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: On No Tricks, the logic will ensure that you can get Missiles, Seeker Launcher, and either
     Grapple Beam or both Space Jump Boots and Screw Attack before fighting Chykka.
 
+-   Added: Methods to cross Workers Path with Screw Attack.
+
 ## [0.27.1] - 2019-05-30
 
 -   Fixed: Specific trick levels are now persisted correctly across multiple sessions.
