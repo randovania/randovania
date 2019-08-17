@@ -60,7 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Forgotten Bridge, a method to get to the bridge center from the door to Grove Access via a scan dash
     (Easy and above).
 
--   Added: In Hydrodynamo Station a method to get from the room's top to the door to Save Station B with Screw Attack
+-   Added: In Hydrodynamo Station, a method to get from the room's top to the door to Save Station B with Screw Attack
     without Space Jump Boots (Trivial and above).
 
 -   Changed: Climbing Hydrodynamo Station with only Gravity Boost and before all three locks are unlocked is now
@@ -175,6 +175,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The Watch Station Access roll jump is now Normal (from Easy).
 
+-   Fixed: Added missing Space Jump Boots requirement for a Bomb Space Jump in Mining Station B.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
@@ -213,6 +215,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: On No Tricks, the logic will ensure that you can get Missiles, Seeker Launcher, and either
     Grapple Beam or both Space Jump Boots and Screw Attack before fighting Chykka.
+
+-   Added: Methods to cross Workers Path with Screw Attack.
 
 ## [0.27.1] - 2019-05-30
 
