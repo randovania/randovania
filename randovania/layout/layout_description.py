@@ -102,7 +102,7 @@ class LayoutDescription:
     @property
     def shareable_word_hash(self) -> str:
         rng = Random(sum([hash_byte * (2**8)**i for i, hash_byte in enumerate(self._shareable_hash_bytes)]))
-        return " ".join(rng.sample(_shareable_hash_words(), 4))
+        return " ".join(rng.sample(_shareable_hash_words(), 3))
 
     def save_to_file(self, json_path: Path):
         with json_path.open("w") as open_file:
