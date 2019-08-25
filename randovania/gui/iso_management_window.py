@@ -255,10 +255,8 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
                              message: str, **kawgs):
         def work(progress_update: ProgressUpdateCallable):
             try:
-                job(progress_update=progress_update,
-                    options=self._options,
-                    **kawgs)
-                progress_update("Success!", 1)
+                layout = job(progress_update=progress_update, options=self._options, **kawgs)
+                progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
 
             except GenerationFailure as generate_exception:
                 self.failed_to_generate_signal.emit(generate_exception)
