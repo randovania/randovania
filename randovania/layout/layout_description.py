@@ -2,9 +2,12 @@ import base64
 import hashlib
 import json
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
+from random import Random
 from typing import NamedTuple, Tuple, List
 
+from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.layout import game_patches_serializer
 from randovania.layout.permalink import Permalink
@@ -24,6 +27,10 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
         for step in playthrough
     )
 
+@lru_cache(maxsize=1)
+def _shareable_hash_words():
+    with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
+        return json.load(hash_words_file)
 
 @dataclass(frozen=True)
 class LayoutDescription:
@@ -82,12 +89,20 @@ class LayoutDescription:
         return result
 
     @property
-    def shareable_hash(self) -> str:
+    def _shareable_hash_bytes(self) -> bytes:
         dict_to_serialize = game_patches_serializer.serialize(self.patches,
                                                               self.permalink.layout_configuration.game_data)
         bytes_representation = json.dumps(dict_to_serialize).encode()
-        hashed_bytes = hashlib.blake2b(bytes_representation, digest_size=5).digest()
-        return base64.b32encode(hashed_bytes).decode()
+        return hashlib.blake2b(bytes_representation, digest_size=5).digest()
+
+    @property
+    def shareable_hash(self) -> str:
+        return base64.b32encode(self._shareable_hash_bytes).decode()
+
+    @property
+    def shareable_word_hash(self) -> str:
+        rng = Random(sum([hash_byte * (2**8)**i for i, hash_byte in enumerate(self._shareable_hash_bytes)]))
+        return " ".join(rng.sample(_shareable_hash_words(), 4))
 
     def save_to_file(self, json_path: Path):
         with json_path.open("w") as open_file:
