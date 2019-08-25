@@ -33,10 +33,11 @@ def test_add_header_data_to_result():
     # Setup
     description = MagicMock()
     description.permalink.as_str = "<permalink>"
+    description.shareable_word_hash = "<shareable_word_hash>"
     description.shareable_hash = "<shareable_hash>"
     expected = {
         "permalink": "<permalink>",
-        "seed_hash": "<shareable_hash>",
+        "seed_hash": "- <shareable_word_hash> (<shareable_hash>)",
         "randovania_version": randovania.VERSION,
     }
     result = {}
