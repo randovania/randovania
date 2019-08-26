@@ -12,6 +12,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
                  ("randovania/data/binary_data", "data/binary_data"),
                  ("randovania/data/item_database", "data/item_database"),
+                 ("randovania/data/hash_words", "data/hash_words"),
                  ("randovania/data/gui_assets", "data/gui_assets"),
              ],
              hiddenimports=[

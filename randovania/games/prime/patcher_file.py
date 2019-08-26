@@ -474,5 +474,5 @@ def create_patcher_file(description: LayoutDescription,
 
 def _add_header_data_to_result(description: LayoutDescription, result: dict) -> None:
     result["permalink"] = description.permalink.as_str
-    result["seed_hash"] = description.shareable_hash
+    result["seed_hash"] = f"- {description.shareable_word_hash} ({description.shareable_hash})"
     result["randovania_version"] = randovania.VERSION
