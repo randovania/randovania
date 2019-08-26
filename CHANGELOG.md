@@ -179,6 +179,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Added missing Space Jump Boots requirement for a Bomb Space Jump in Mining Station B.
 
+-   Added: The seed hash is shown in Randovania's GUI after patching is done.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
