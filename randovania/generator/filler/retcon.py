@@ -238,6 +238,7 @@ def retcon_playthrough_filler(game: GameDescription,
                                                          item_weights=pickup_index_weights,
                                                          rng=rng))
                 next_state = reach.state.assign_pickup_to_index(action, pickup_index)
+                print_retcon_place_pickup(action, game, pickup_index, hint_location)
 
             else:
                 num_random_starting_items_placed += 1
@@ -392,21 +393,12 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
         ))
 
 
-def print_retcon_place_pickup(action: PickupEntry, game: GameDescription,
-                              pickup_index: PickupIndex, hint: Optional[LogbookAsset]):
+def print_retcon_place_pickup(action: PickupEntry, game: GameDescription, pickup_index: PickupIndex):
     world_list = game.world_list
     if debug.debug_level() > 0:
-        if hint is not None:
-            hint_string = " with hint at {}".format(
-                world_list.node_name(find_node_with_resource(hint, world_list.all_nodes),
-                                     with_world=True))
-        else:
-            hint_string = ""
-
-        print("\n--> Placing {0} at {1}{2}".format(
+        print("\n--> Placing {} at {}".format(
             action.name,
             world_list.node_name(find_node_with_resource(pickup_index, world_list.all_nodes), with_world=True),
-            hint_string
         ))
 
 
