@@ -71,7 +71,7 @@ def test_create_hints_nothing(empty_patches):
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
-    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;Hyper Grapple (?)&pop;"),
+    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;X-Ray Visor (?)&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;World - Area&pop;"),
@@ -96,15 +96,14 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
                                           pickup_index)
         })
     rng = MagicMock()
-    rng.choice.side_effect = lambda x: x[0]
+    rng.shuffle.side_effect = lambda x: x.sort()
 
     # Run
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
     if location[0] == HintLocationPrecision.WRONG_GAME and item[0] == HintItemPrecision.WRONG_GAME:
-        message = "&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!" \
-                  " Energized Safe Zones don't last forever!&pop;"
+        message = "&push;&main-color=#45F731;You're not authorized to view this hint.&pop;"
     elif hint_type == HintType.LOCATION:
         message = "{} can be found in {}.".format(item[1][0].upper() + item[1][1:], location[1])
     elif hint_type == HintType.KEYBEARER:
@@ -120,7 +119,7 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
-    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;Hyper Grapple (?)&pop;"),
+    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;X-Ray Visor (?)&pop;"),
 ])
 def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item):
     # Setup
@@ -140,7 +139,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
                                           pickup_index)
         })
     rng = MagicMock()
-    rng.choice.side_effect = lambda x: x[0]
+    rng.shuffle.side_effect = lambda x: x.sort()
 
     # Run
     result = item_hints.create_hints(patches, world_list, rng)
@@ -153,7 +152,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
-    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;Hyper Grapple (?)&pop;"),
+    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;X-Ray Visor (?)&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     HintLocationPrecision.DETAILED,
@@ -178,15 +177,14 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item, location)
                                           pickup_index)
         })
     rng = MagicMock()
-    rng.choice.side_effect = lambda x: x[0]
+    rng.shuffle.side_effect = lambda x: x.sort()
 
     # Run
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
     if location is HintLocationPrecision.WRONG_GAME and item[0] is HintItemPrecision.WRONG_GAME:
-        message = "&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!" \
-                  " Energized Safe Zones don't last forever!&pop;"
+        message = "&push;&main-color=#45F731;You're not authorized to view this hint.&pop;"
     else:
         message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
