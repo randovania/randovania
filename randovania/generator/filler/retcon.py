@@ -122,13 +122,13 @@ def _place_hints(final_state: State, rng: Random, status_update: Callable[[str],
         state_sequence.append(state_sequence[-1].previous_state)
     state_sequence = tuple(reversed(state_sequence))
 
-    indices_with_hints = {index for index in final_state.patches.pickup_assignment if
-                          _should_have_hint(final_state.patches.pickup_assignment[index].item_category)}
+    indices_with_hints = {index for index, pickup in final_state.patches.pickup_assignment.items()
+                          if _should_have_hint(pickup.item_category)}
 
     sequence = []
     for state in state_sequence[1:]:
         new_indices = list((set(state.collected_pickup_indices) & indices_with_hints)
-                           - (set(state.previous_state.collected_pickup_indices) | set(patches.starting_items)))
+                           - set(state.previous_state.collected_pickup_indices))
         rng.shuffle(new_indices)
 
         new_logbook_assets = list(set(state.collected_scan_assets)
