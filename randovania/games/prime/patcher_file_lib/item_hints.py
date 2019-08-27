@@ -120,15 +120,17 @@ def create_hints(patches: GamePatches,
     hint_name_creator = LocationHintCreator(world_list)
     joke_items = list(sorted(set(_PRIME_1_ITEMS) | set(_PRIME_3_ITEMS)))
     joke_locations = list(sorted(set(_PRIME_3_LOCATIONS)))
+    joke_hints = _JOKE_HINTS.copy()
 
     rng.shuffle(joke_items)
     rng.shuffle(joke_locations)
+    rng.shuffle(joke_hints)
 
     hints_for_asset: Dict[int, str] = {}
 
     for asset, hint in patches.hints.items():
         if hint.precision.is_joke:
-            message = color_text(TextColor.JOKE, rng.choice(_JOKE_HINTS))
+            message = color_text(TextColor.JOKE, joke_hints.pop())
 
         else:
             pickup = patches.pickup_assignment.get(hint.target)
