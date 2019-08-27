@@ -119,7 +119,7 @@ def create_hints(patches: GamePatches,
 
     hint_name_creator = LocationHintCreator(world_list)
     joke_items = (_PRIME_1_ITEMS + _PRIME_3_ITEMS).copy()
-    joke_locations = _PRIME_3_LOCATIONS.copy()
+    joke_locations = (_PRIME_1_LOCATIONS + _PRIME_3_LOCATIONS).copy()
     joke_hints = _JOKE_HINTS.copy()
 
     rng.shuffle(joke_items)
