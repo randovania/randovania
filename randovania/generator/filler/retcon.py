@@ -112,6 +112,41 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
 def _should_have_hint(item_category: ItemCategory) -> bool:
     return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
 
+def _place_hints(final_state: State, rng: Random, status_update: Callable[[str], None]) -> GamePatches:
+    status_update("Placing hints...")
+
+    patches = final_state.patches
+
+    state_sequence = [final_state]
+    while state_sequence[-1].previous_state:
+        state_sequence.append(state_sequence[-1].previous_state)
+    state_sequence = tuple(reversed(state_sequence))
+
+    indices_with_hints = {index for index in final_state.patches.pickup_assignment if
+                          _should_have_hint(final_state.patches.pickup_assignment[index].item_category)}
+
+    sequence = []
+    for state in state_sequence[1:]:
+        new_indices = list((set(state.collected_pickup_indices) & indices_with_hints)
+                           - (set(state.previous_state.collected_pickup_indices) | set(patches.starting_items)))
+        rng.shuffle(new_indices)
+
+        new_logbook_assets = list(set(state.collected_scan_assets)
+                                  - (set(state.previous_state.collected_scan_assets) | set(patches.hints)))
+        rng.shuffle(new_logbook_assets)
+
+        sequence.append((new_indices, new_logbook_assets))
+
+    hints_placed = 0
+    index_list = sum((indices for indices, _ in sequence), [])
+    for indices, logbooks in sequence:
+        while index_list and index_list[0] in indices:
+            del index_list[0]
+        while index_list and logbooks:
+            patches = patches.assign_hint(logbooks.pop(0), Hint(HintType.LOCATION, None, index_list.pop(0)))
+
+    return patches
+
 
 def retcon_playthrough_filler(game: GameDescription,
                               initial_state: State,
@@ -136,6 +171,8 @@ def retcon_playthrough_filler(game: GameDescription,
     pickup_index_seen_count: DefaultDict[PickupIndex, int] = collections.defaultdict(int)
     scan_asset_seen_count: DefaultDict[LogbookAsset, int] = collections.defaultdict(int)
     num_random_starting_items_placed = 0
+
+    pickup_sequence = dict()
 
     while pickups_left:
         current_uncollected = UncollectedState.from_reach(reach)
@@ -200,16 +237,7 @@ def retcon_playthrough_filler(game: GameDescription,
                 pickup_index = next(iterate_with_weights(items=iter(uncollected_indices),
                                                          item_weights=pickup_index_weights,
                                                          rng=rng))
-
                 next_state = reach.state.assign_pickup_to_index(action, pickup_index)
-                if current_uncollected.logbooks and _should_have_hint(action.item_category):
-                    hint_location: Optional[LogbookAsset] = rng.choice(list(current_uncollected.logbooks))
-                    next_state.patches = next_state.patches.assign_hint(hint_location,
-                                                                        Hint(HintType.LOCATION, None, pickup_index))
-                else:
-                    hint_location = None
-
-                print_retcon_place_pickup(action, game, pickup_index, hint_location)
 
             else:
                 num_random_starting_items_placed += 1
@@ -246,7 +274,7 @@ def retcon_playthrough_filler(game: GameDescription,
     if not pickups_left:
         debug.debug_print("Finished because we have nothing else to distribute")
 
-    return reach.state.patches
+    return _place_hints(reach.state, rng, status_update)
 
 
 def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],

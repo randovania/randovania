@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Fix AttributeError preventing major/minor randomization from working.
 
--   Fixed: Seeds where no progression is needed to finish should no longer fail to generate. 
+-   Fixed: Seeds where no progression is needed to finish should no longer fail to generate.
 
 ## [0.29.0] - 2019-10-01
 
