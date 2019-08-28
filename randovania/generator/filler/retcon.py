@@ -135,9 +135,11 @@ def _place_hints(final_state: State, rng: Random, status_update: Callable[[str],
                                   - (set(state.previous_state.collected_scan_assets) | set(patches.hints)))
         rng.shuffle(new_logbook_assets)
 
-        sequence.append((new_indices, new_logbook_assets))
+        if sequence and not new_logbook_assets:
+            sequence[-1][0].extend(new_indices)
+        else:
+            sequence.append((new_indices, new_logbook_assets))
 
-    hints_placed = 0
     index_list = sum((indices for indices, _ in sequence), [])
     for indices, logbooks in sequence:
         while index_list and index_list[0] in indices:
@@ -238,7 +240,7 @@ def retcon_playthrough_filler(game: GameDescription,
                                                          item_weights=pickup_index_weights,
                                                          rng=rng))
                 next_state = reach.state.assign_pickup_to_index(action, pickup_index)
-                print_retcon_place_pickup(action, game, pickup_index, hint_location)
+                print_retcon_place_pickup(action, game, pickup_index)
 
             else:
                 num_random_starting_items_placed += 1
