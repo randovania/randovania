@@ -7,8 +7,6 @@ from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
 
 from randovania.game_description.game_description import calculate_interesting_resources, GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.logbook_asset import LogbookAsset
@@ -17,6 +15,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes
+from randovania.generator.filler.hint_placement import place_hints
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
@@ -107,47 +106,6 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
             result[index] = weight_from_collected_indices * weight_from_seen_count
 
     return result
-
-
-def _should_have_hint(item_category: ItemCategory) -> bool:
-    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
-
-def _place_hints(final_state: State, rng: Random, status_update: Callable[[str], None]) -> GamePatches:
-    status_update("Placing hints...")
-
-    patches = final_state.patches
-
-    state_sequence = [final_state]
-    while state_sequence[-1].previous_state:
-        state_sequence.append(state_sequence[-1].previous_state)
-    state_sequence = tuple(reversed(state_sequence))
-
-    indices_with_hints = {index for index, pickup in final_state.patches.pickup_assignment.items()
-                          if _should_have_hint(pickup.item_category)}
-
-    sequence = []
-    for state in state_sequence[1:]:
-        new_indices = list((set(state.collected_pickup_indices) & indices_with_hints)
-                           - set(state.previous_state.collected_pickup_indices))
-        rng.shuffle(new_indices)
-
-        new_logbook_assets = list(set(state.collected_scan_assets)
-                                  - (set(state.previous_state.collected_scan_assets) | set(patches.hints)))
-        rng.shuffle(new_logbook_assets)
-
-        if sequence and not new_logbook_assets:
-            sequence[-1][0].extend(new_indices)
-        else:
-            sequence.append((new_indices, new_logbook_assets))
-
-    index_list = sum((indices for indices, _ in sequence), [])
-    for indices, logbooks in sequence:
-        while index_list and index_list[0] in indices:
-            del index_list[0]
-        while index_list and logbooks:
-            patches = patches.assign_hint(logbooks.pop(0), Hint(HintType.LOCATION, None, index_list.pop(0)))
-
-    return patches
 
 
 def retcon_playthrough_filler(game: GameDescription,
@@ -277,7 +235,7 @@ def retcon_playthrough_filler(game: GameDescription,
     if not pickups_left:
         debug.debug_print("Finished because we have nothing else to distribute")
 
-    return _place_hints(reach.state, rng, status_update)
+    return place_hints(reach.state, rng, status_update)
 
 
 def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
