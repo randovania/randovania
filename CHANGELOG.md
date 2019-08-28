@@ -136,6 +136,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In the data visualizer, the damage requirements now have more descriptive names.
 
+-   Added: In the data visualizer, requirements are now described with simpler to understand terms.
+
 -   Fixed: Requirements for crossing Dynamo Access were added.
 
 -   Added: In Landing Site, method of reaching the door to Service Access from the Save Station using Space Jump and
