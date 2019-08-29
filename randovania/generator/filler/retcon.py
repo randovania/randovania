@@ -132,8 +132,6 @@ def retcon_playthrough_filler(game: GameDescription,
     scan_asset_seen_count: DefaultDict[LogbookAsset, int] = collections.defaultdict(int)
     num_random_starting_items_placed = 0
 
-    pickup_sequence = dict()
-
     while pickups_left:
         current_uncollected = UncollectedState.from_reach(reach)
 
@@ -235,7 +233,7 @@ def retcon_playthrough_filler(game: GameDescription,
     if not pickups_left:
         debug.debug_print("Finished because we have nothing else to distribute")
 
-    return place_hints(reach.state, rng, status_update)
+    return place_hints(reach.state, rng, game.world_list, status_update)
 
 
 def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
