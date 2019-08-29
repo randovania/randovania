@@ -58,6 +58,9 @@ def place_hints(final_state: State, rng: Random, world_list: WorldList, status_u
         else:
             sequence.append((new_indices, new_logbook_assets))
 
+        if len(sequence) >= 2:
+            sequence[-2][0].extend(new_indices)
+
     unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
                                  if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint]
     rng.shuffle(unassigned_logbook_assets)
