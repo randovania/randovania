@@ -19,17 +19,6 @@ class ResourceType(Enum):
     def is_usable_for_requirement(self) -> bool:
         return self not in _TYPES_NO_FOR_REQUIREMENT
 
-    @property
-    def short_name(self) -> Optional[str]:
-        if self == ResourceType.ITEM:
-            return "I"
-        elif self == ResourceType.EVENT:
-            return "E"
-        elif self == ResourceType.TRICK:
-            return "T"
-        else:
-            return None
-
     def __lt__(self, other):
         return self.value < other.value
 
