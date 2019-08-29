@@ -96,7 +96,6 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
                                           pickup_index)
         })
     rng = MagicMock()
-    rng.shuffle.side_effect = lambda x: x.sort()
 
     # Run
     result = item_hints.create_hints(patches, world_list, rng)
@@ -139,7 +138,6 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
                                           pickup_index)
         })
     rng = MagicMock()
-    rng.shuffle.side_effect = lambda x: x.sort()
 
     # Run
     result = item_hints.create_hints(patches, world_list, rng)
@@ -177,7 +175,6 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item, location)
                                           pickup_index)
         })
     rng = MagicMock()
-    rng.shuffle.side_effect = lambda x: x.sort()
 
     # Run
     result = item_hints.create_hints(patches, world_list, rng)
