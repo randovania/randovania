@@ -10,6 +10,7 @@ from randovania.game_description.requirements import RequirementSet, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.layout.trick_level import LayoutTrickLevel
 
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,
@@ -80,7 +81,7 @@ class ItemRow:
                                                                self.parent)
 
         self.negate_combo = QComboBox(parent)
-        self.negate_combo.addItem(">=", False)
+        self.negate_combo.addItem("≥", False)
         self.negate_combo.addItem("<", True)
         self.negate_combo.setCurrentIndex(int(item.negate))
         self.negate_combo.setMinimumWidth(40)
@@ -162,13 +163,14 @@ class ConnectionsVisualizer:
 
         if requirement_set is not None:
             empty = True
-            for alternative in sorted(requirement_set.alternatives):
-                if alternative.items or self.edit_mode:
-                    empty = False
-                    self._add_box_with_requirements(alternative)
+
+            for alternative in sorted(requirement_set.alternatives,
+                                      key=lambda req_list: (req_list.difficulty_level, req_list.items)):
+                empty = False
+                self._add_box_with_requirements(alternative)
 
             if empty and not self.edit_mode:
-                self._add_box_with_labels(["Trivial."])
+                self._add_box_with_labels(["No requirements."])
 
         elif not self.edit_mode:
             self._add_box_with_labels(["Impossible to Reach."])
@@ -213,13 +215,24 @@ class ConnectionsVisualizer:
         vertical_layout.setObjectName(f"Layout with index {self._current_last_index - 1}")
         vertical_layout.setAlignment(Qt.AlignTop)
 
+        empty = True
+        trick_level = LayoutTrickLevel.NO_TRICKS
+
         for item in sorted(alternative.items):
             if self.edit_mode:
                 ItemRow(group_box, vertical_layout, self.resource_database, item, group_box.rows)
             else:
-                label = QLabel(group_box)
-                label.setText(str(item))
-                vertical_layout.addWidget(label)
+                if item.resource.resource_type == ResourceType.DIFFICULTY:
+                    trick_level = LayoutTrickLevel.from_number(item.amount)
+                else:
+                    empty = False
+                    label = QLabel(group_box)
+                    if item.resource.resource_type == ResourceType.TRICK:
+                        label.setText(f"{item.resource} ({LayoutTrickLevel.from_number(item.amount).long_name})")
+                    else:
+                        label.setText(item.pretty_text)
+
+                    vertical_layout.addWidget(label)
 
         if self.edit_mode:
             tools_layout = QHBoxLayout(group_box)
@@ -245,6 +258,13 @@ class ConnectionsVisualizer:
                 vertical_layout.addLayout(tools_layout)
 
             add_new_button.clicked.connect(_new_row)
+
+        else:
+            group_box.setTitle(f"Difficulty: {trick_level.long_name}")
+            if empty:
+                label = QLabel(group_box)
+                label.setText("No requirements.")
+                vertical_layout.addWidget(label)
 
         return group_box
 

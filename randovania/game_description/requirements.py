@@ -48,13 +48,15 @@ class IndividualRequirement(NamedTuple):
     def __repr__(self):
         return "{} {} {}".format(
             self.resource,
-            "<" if self.negate else ">=",
+            "<" if self.negate else "≥",
             self.amount)
 
     @property
     def pretty_text(self):
         if self.amount == 1:
-            return "{}{}".format("No " if self.negate else "", self.resource)
+            negated_prefix = "No " if self.resource.resource_type is ResourceType.ITEM else "Before "
+            non_negated_prefix = "After " if self.resource.resource_type is ResourceType.EVENT else ""
+            return "{}{}".format(negated_prefix if self.negate else non_negated_prefix, self.resource)
         else:
             return str(self)
 
