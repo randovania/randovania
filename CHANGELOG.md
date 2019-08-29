@@ -185,6 +185,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Joke hints are now used at most once each when placing hints.
 
+-   Fixed: Added proper default nodes for rooms that were missing one, allowing those rooms to be selected as the
+    starting room.
+
 
 ## [0.28.1] - 2019-06-14
 
