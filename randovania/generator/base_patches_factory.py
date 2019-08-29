@@ -127,12 +127,9 @@ def starting_location_for_configuration(configuration: LayoutConfiguration,
         raise ValueError("Invalid configuration for StartLocation {}".format(starting_location))
 
 
-def add_default_hints_to_patches(rng: Random,
-                                 patches: GamePatches,
-                                 world_list: WorldList,
-                                 ) -> GamePatches:
+def add_keybearer_hints_to_patches(patches: GamePatches, world_list: WorldList) -> GamePatches:
     """
-    Adds hints for the locations
+    Adds hints for the keybearer corpses.
     :param rng:
     :param patches:
     :param world_list:
@@ -177,6 +174,6 @@ def create_base_patches(configuration: LayoutConfiguration,
 
     # Hints
     if rng is not None:
-        patches = add_default_hints_to_patches(rng, patches, game.world_list)
+        patches = add_keybearer_hints_to_patches(patches, game.world_list)
 
     return patches

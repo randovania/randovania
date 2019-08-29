@@ -38,9 +38,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
 
     logbook_nodes = [node for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
 
-    mock_retcon_playthrough_filler.return_value = patches.assign_hint(
-        logbook_nodes[0].resource(), Hint(HintType.LOCATION, None, PickupIndex(0))
-    ).assign_pickup_assignment({PickupIndex(1): pickup})
+    mock_retcon_playthrough_filler.return_value = patches
 
     # Run
     result_patches, remaining_items = runner.run_filler(configuration, echoes_game_description,
@@ -48,9 +46,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
                                                         rng, status_update)
 
     # Assert
-    assert len(result_patches.hints) == len(logbook_nodes)
-    assert [hint for hint in patches.hints.values()
-            if hint.item_precision is None or hint.location_precision is None] == []
+    assert len(result_patches.hints) == 0
     assert remaining_items == [pickup]
 
 

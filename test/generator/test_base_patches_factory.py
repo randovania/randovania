@@ -175,16 +175,8 @@ def test_starting_location_for_configuration_random_save_station():
     assert result is game.world_list.node_to_area_location.return_value
 
 
-def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
+def test_add_keybearer_hints_to_patches(echoes_game_description, empty_patches):
     # Setup
-    rng = MagicMock()
-
-    def _light_suit_location_hint(number: int):
-        return Hint(HintType.LIGHT_SUIT_LOCATION, PrecisionPair.detailed(), PickupIndex(number))
-
-    def _guardian_hint(number: int):
-        return Hint(HintType.GUARDIAN, PrecisionPair.detailed(), PickupIndex(number))
-
     def _keybearer_hint(number: int):
         return Hint(HintType.KEYBEARER, PrecisionPair(HintLocationPrecision.DETAILED,
                                                       HintItemPrecision.PRECISE_CATEGORY), PickupIndex(number))
@@ -203,30 +195,23 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
         # Sanctuary
         LogbookAsset(0x62CC4DC3): _keybearer_hint(117),
         LogbookAsset(0xA9909E66): _keybearer_hint(106),
-
-        # Locations with hints
-        LogbookAsset(1041207119): _light_suit_location_hint(24),
-        LogbookAsset(4115881194): _guardian_hint(43),
-        LogbookAsset(1948976790): _guardian_hint(79),
-        LogbookAsset(3212301619): _guardian_hint(115),
     }
 
     # Run
-    result = base_patches_factory.add_default_hints_to_patches(rng, empty_patches, echoes_game_description.world_list)
+    result = base_patches_factory.add_keybearer_hints_to_patches(empty_patches, echoes_game_description.world_list)
 
     # Assert
-    rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
     assert result.hints == expected
 
 
-@patch("randovania.generator.base_patches_factory.add_default_hints_to_patches", autospec=True)
+@patch("randovania.generator.base_patches_factory.add_keybearer_hints_to_patches", autospec=True)
 @patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
 def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
-                             mock_add_default_hints_to_patches: MagicMock,
+                             mock_add_keybearer_hints_to_patches: MagicMock,
                              ):
     # Setup
     rng = MagicMock()
@@ -254,6 +239,6 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     third_patches.assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
     # Hints
-    mock_add_default_hints_to_patches.assert_called_once_with(rng, fourth_patches, game.world_list)
+    mock_add_keybearer_hints_to_patches.assert_called_once_with(fourth_patches, game.world_list)
 
-    assert result is mock_add_default_hints_to_patches.return_value
+    assert result is mock_add_keybearer_hints_to_patches.return_value

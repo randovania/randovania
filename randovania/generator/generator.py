@@ -12,8 +12,9 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.generator import base_patches_factory
-from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes, \
-    UnableToGenerate
+from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, \
+    filter_pickup_nodes, UnableToGenerate
+from randovania.generator.filler.hint_placement import place_hints
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.layout_configuration import LayoutConfiguration, RandomizationMode
@@ -72,10 +73,12 @@ def generate_description(permalink: Permalink,
         status_update = id
 
     data = permalink.layout_configuration.game_data
+    rng = Random(permalink.as_str)
 
     create_patches_params = {
         "permalink": permalink,
         "game": data_reader.decode_data(data),
+        "rng": rng,
         "status_update": status_update
     }
 
@@ -126,29 +129,33 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
     num_pickup_nodes = len(list(filter_pickup_nodes(game.world_list.all_nodes)))
     if len(item_pool) > num_pickup_nodes:
         raise InvalidConfiguration(
-            "Item pool has {0} items, but there's only {1} pickups spots in the game".format(len(item_pool),
-                                                                                             num_pickup_nodes))
+            "Item pool has {} items, but there's only {} pickups spots in the game".format(len(item_pool),
+                                                                                           num_pickup_nodes))
 
 
 def _create_randomized_patches(permalink: Permalink,
                                game: GameDescription,
+                               rng: Random,
                                status_update: Callable[[str], None],
                                ) -> GamePatches:
     """
 
     :param permalink:
     :param game:
+    :param rng:
     :param status_update:
     :return:
     """
-    rng = Random(permalink.as_str)
     configuration = permalink.layout_configuration
 
-    filler_patches, remaining_items = _retryable_create_patches(configuration, game, rng, status_update)
+    final_state, remaining_items = _retryable_create_patches(configuration, game, rng, status_update)
 
-    return filler_patches.assign_pickup_assignment(
-        _assign_remaining_items(rng, game.world_list, filler_patches.pickup_assignment, remaining_items, configuration.randomization_mode)
+    all_pickups_patches = final_state.patches.assign_pickup_assignment(
+        _assign_remaining_items(rng, game.world_list, final_state.patches.pickup_assignment, remaining_items,
+                                configuration.randomization_mode)
     )
+    return place_hints(permalink.layout_configuration, final_state, all_pickups_patches,
+                       rng, game.world_list, status_update)
 
 
 @tenacity.retry(stop=tenacity.stop_after_attempt(15),
@@ -158,7 +165,7 @@ def _retryable_create_patches(configuration: LayoutConfiguration,
                               game: GameDescription,
                               rng: Random,
                               status_update: Callable[[str], None],
-                              ) -> Tuple[GamePatches, List[PickupEntry]]:
+                              ) -> Tuple[State, List[PickupEntry]]:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param configuration:

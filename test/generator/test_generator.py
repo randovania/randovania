@@ -132,6 +132,7 @@ def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
     assert generated_description.without_solver_path == layout_description
 
 
+@patch("randovania.generator.generator.place_hints", autospec=True)
 @patch("randovania.generator.generator._assign_remaining_items", autospec=True)
 @patch("randovania.generator.generator.run_filler", autospec=True)
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
@@ -144,6 +145,7 @@ def test_create_patches(mock_random: MagicMock,
                         mock_validate_item_pool_size: MagicMock,
                         mock_run_filler: MagicMock,
                         mock_assign_remaining_items: MagicMock,
+                        mock_place_hints: MagicMock,
                         ):
     # Setup
     game = default_prime2_game_description()
@@ -152,17 +154,16 @@ def test_create_patches(mock_random: MagicMock,
     permalink = MagicMock()
     pool_patches = MagicMock()
     item_pool = MagicMock()
-    filler_patches = MagicMock()
+    final_state = MagicMock()
     remaining_items = MagicMock()
 
     mock_calculate_item_pool.return_value = pool_patches, item_pool
-    mock_run_filler.return_value = filler_patches, remaining_items
+    mock_run_filler.return_value = final_state, remaining_items
 
     # Run
-    result = generator._create_randomized_patches(permalink, game, status_update)
+    result = generator._create_randomized_patches(permalink, game, mock_random.return_value, status_update)
 
     # Assert
-    mock_random.assert_called_once_with(permalink.as_str)
     mock_create_base_patches.assert_called_once_with(permalink.layout_configuration, mock_random.return_value, game)
 
     # pool
@@ -175,9 +176,13 @@ def test_create_patches(mock_random: MagicMock,
         permalink.layout_configuration, game, item_pool, pool_patches, mock_random.return_value, status_update
     )
     mock_assign_remaining_items.assert_called_once_with(
-        mock_random.return_value, game.world_list, filler_patches.pickup_assignment,
+        mock_random.return_value, game.world_list, final_state.patches.pickup_assignment,
         remaining_items, permalink.layout_configuration.randomization_mode
     )
-    filler_patches.assign_pickup_assignment.assert_called_once_with(mock_assign_remaining_items.return_value)
+    final_state.patches.assign_pickup_assignment.assert_called_once_with(mock_assign_remaining_items.return_value)
 
-    assert result == filler_patches.assign_pickup_assignment.return_value
+    mock_place_hints.assert_called_once_with(permalink.layout_configuration, final_state,
+                                             final_state.patches.assign_pickup_assignment.return_value,
+                                             mock_random.return_value, game.world_list, status_update)
+
+    assert result == mock_place_hints.return_value

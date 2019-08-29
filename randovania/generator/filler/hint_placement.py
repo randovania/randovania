@@ -1,5 +1,6 @@
+import dataclasses
 from random import Random
-from typing import Callable
+from typing import Callable, List, TypeVar
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair
@@ -17,6 +18,37 @@ _SPECIAL_HINTS = {
     PickupIndex(79):  HintType.GUARDIAN, # Dark Visor (Chykka)
     PickupIndex(115): HintType.GUARDIAN, # Annihilator Beam (Quadraxis)
 }
+
+T = TypeVar("T")
+
+def _create_weighted_list(rng: Random,
+                          current: List[T],
+                          factory: Callable[[], List[T]],
+                          ) -> List[T]:
+    """
+    Ensures we always have a non-empty list.
+    :param rng:
+    :param current:
+    :param factory:
+    :return:
+    """
+    if not current:
+        current = factory()
+        rng.shuffle(current)
+
+    return current
+
+
+def _should_have_hint(item_category: ItemCategory) -> bool:
+    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
+
+
+def _hint_for_index(index: PickupIndex) -> Hint:
+    if index in _SPECIAL_HINTS:
+        return Hint(_SPECIAL_HINTS[index], PrecisionPair.detailed(), index)
+    else:
+        return Hint(HintType.LOCATION, None, index)
+
 
 def add_hint_precisions(patches: GamePatches, rng: Random) -> GamePatches:
     """
@@ -69,22 +101,10 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches) -> GamePatc
     })
 
 
-def _should_have_hint(item_category: ItemCategory) -> bool:
-    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
-
-
-def _hint_for_index(index: PickupIndex) -> Hint:
-    if index in _SPECIAL_HINTS:
-        return Hint(_SPECIAL_HINTS[index], PrecisionPair.detailed(), index)
-    else:
-        return Hint(HintType.LOCATION, None, index)
-
-
-def place_hints(configuration: LayoutConfiguration, final_state: State, rng: Random, world_list: WorldList,
-                status_update: Callable[[str], None]) -> GamePatches:
+def place_hints(configuration: LayoutConfiguration, final_state: State, patches: GamePatches, rng: Random,
+                world_list: WorldList, status_update: Callable[[str], None]) -> GamePatches:
     status_update("Placing hints...")
 
-    patches = final_state.patches
     special_hints = _SPECIAL_HINTS.copy()
 
     state_sequence = [final_state]
@@ -92,7 +112,7 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, rng: Ran
         state_sequence.append(state_sequence[-1].previous_state)
     state_sequence = tuple(reversed(state_sequence))
 
-    indices_with_hints = {index for index, pickup in final_state.patches.pickup_assignment.items()
+    indices_with_hints = {index for index, pickup in patches.pickup_assignment.items()
                           if _should_have_hint(pickup.item_category) or index in special_hints}
 
     sequence = []

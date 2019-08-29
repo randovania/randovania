@@ -1,5 +1,4 @@
 import copy
-import dataclasses
 from random import Random
 from typing import List, Tuple, Callable, TypeVar
 
@@ -11,12 +10,10 @@ from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
-from randovania.generator.filler.hint_placement import place_hints
 from randovania.generator.filler.retcon import retcon_playthrough_filler
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import bootstrap
-
-T = TypeVar("T")
+from randovania.resolver.state import State
 
 
 def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], List[PickupEntry]]:
@@ -37,34 +34,16 @@ def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], 
     return major_items, expansions
 
 
-def _create_weighted_list(rng: Random,
-                          current: List[T],
-                          factory: Callable[[], List[T]],
-                          ) -> List[T]:
-    """
-    Ensures we always have a non-empty list.
-    :param rng:
-    :param current:
-    :param factory:
-    :return:
-    """
-    if not current:
-        current = factory()
-        rng.shuffle(current)
-
-    return current
-
-
 def run_filler(configuration: LayoutConfiguration,
                game: GameDescription,
                item_pool: List[PickupEntry],
                patches: GamePatches,
                rng: Random,
                status_update: Callable[[str], None],
-               ) -> Tuple[GamePatches, List[PickupEntry]]:
+               ) -> Tuple[State, List[PickupEntry]]:
     """
     Runs the filler logic for the given configuration and item pool.
-    Returns a GamePatches with progression items and hints assigned, along with all items in the pool
+    Returns a GamePatches with progression items assigned, along with all items in the pool
     that weren't assigned.
 
     :param configuration:
@@ -91,5 +70,4 @@ def run_filler(configuration: LayoutConfiguration,
         maximum_random_starting_items=major_configuration.maximum_random_starting_items,
         status_update=status_update)
 
-    # Since we haven't added expansions yet, these hints will always be for items added by the filler.
-    return place_hints(configuration, final_state, rng, game.world_list, status_update), major_items + expansions
+    return final_state, major_items + expansions
