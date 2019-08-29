@@ -7,6 +7,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.state import State
 
 # TODO: this should be a flag in PickupNode
@@ -16,6 +17,56 @@ _SPECIAL_HINTS = {
     PickupIndex(79):  HintType.GUARDIAN, # Dark Visor (Chykka)
     PickupIndex(115): HintType.GUARDIAN, # Annihilator Beam (Quadraxis)
 }
+
+def add_hint_precisions(patches: GamePatches, rng: Random) -> GamePatches:
+    """
+    Adds precision to all hints that are missing one.
+    :param patches:
+    :param rng:
+    :return:
+    """
+
+    hints_to_replace = {
+        asset: hint
+        for asset, hint in patches.hints.items()
+        if hint.precision is None
+    }
+
+    asset_ids = list(hints_to_replace.keys())
+
+    # Add random precisions
+    rng.shuffle(asset_ids)
+    precisions = []
+    for asset_id in asset_ids:
+        precisions = _create_weighted_list(rng, precisions, PrecisionPair.weighted_list)
+        precision = precisions.pop()
+
+        hints_to_replace[asset_id] = dataclasses.replace(hints_to_replace[asset_id], precision=precision)
+
+    # Replace the hints the in the patches
+    return dataclasses.replace(patches, hints={
+        asset: hints_to_replace.get(asset, hint)
+        for asset, hint in patches.hints.items()
+    })
+
+
+def replace_hints_without_precision_with_jokes(patches: GamePatches) -> GamePatches:
+    """
+    Adds WRONG_GAME precision to all hints that are missing one precision.
+    :param patches:
+    :return:
+    """
+
+    hints_to_replace = {
+        asset: dataclasses.replace(hint, precision=PrecisionPair.joke())
+        for asset, hint in patches.hints.items()
+        if hint.precision
+    }
+
+    return dataclasses.replace(patches, hints={
+        asset: hints_to_replace.get(asset, hint)
+        for asset, hint in patches.hints.items()
+    })
 
 
 def _should_have_hint(item_category: ItemCategory) -> bool:
@@ -29,7 +80,8 @@ def _hint_for_index(index: PickupIndex) -> Hint:
         return Hint(HintType.LOCATION, None, index)
 
 
-def place_hints(final_state: State, rng: Random, world_list: WorldList, status_update: Callable[[str], None]) -> GamePatches:
+def place_hints(configuration: LayoutConfiguration, final_state: State, rng: Random, world_list: WorldList,
+                status_update: Callable[[str], None]) -> GamePatches:
     status_update("Placing hints...")
 
     patches = final_state.patches
@@ -86,5 +138,11 @@ def place_hints(final_state: State, rng: Random, world_list: WorldList, status_u
     # Fill remaining hint locations with jokes
     while unassigned_logbook_assets:
         patches = patches.assign_hint(unassigned_logbook_assets.pop(), Hint(HintType.LOCATION, PrecisionPair.joke(), PickupIndex(-1)))
+
+    # Fill in hint precisions
+    if configuration.hints.item_hints:
+        patches = add_hint_precisions(patches, rng)
+    else:
+        patches = replace_hints_without_precision_with_jokes(patches)
 
     return patches
