@@ -118,9 +118,9 @@ def create_hints(patches: GamePatches,
     """
 
     hint_name_creator = LocationHintCreator(world_list)
-    joke_items = list(set(_PRIME_1_ITEMS) | set(_PRIME_3_ITEMS)).copy()
-    joke_locations = list(set(_PRIME_1_LOCATIONS) | set(_PRIME_3_LOCATIONS)).copy()
-    joke_hints = _JOKE_HINTS.copy()
+    joke_items = sorted(set(_PRIME_1_ITEMS) | set(_PRIME_3_ITEMS))
+    joke_locations = sorted(set(_PRIME_1_LOCATIONS) | set(_PRIME_3_LOCATIONS))
+    joke_hints = sorted(_JOKE_HINTS)
 
     rng.shuffle(joke_items)
     rng.shuffle(joke_locations)
