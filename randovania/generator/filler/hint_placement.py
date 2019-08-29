@@ -9,8 +9,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.resolver.state import State
 
-_NUM_REGULAR_HINTS = 22
-
 # TODO: this should be a flag in PickupNode
 _SPECIAL_HINTS = {
     PickupIndex(24):  HintType.LIGHT_SUIT_LOCATION,  # Light Suit
@@ -23,11 +21,13 @@ _SPECIAL_HINTS = {
 def _should_have_hint(item_category: ItemCategory) -> bool:
     return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
 
+
 def _hint_for_index(index: PickupIndex) -> Hint:
     if index in _SPECIAL_HINTS:
         return Hint(_SPECIAL_HINTS[index], PrecisionPair.detailed(), index)
     else:
         return Hint(HintType.LOCATION, None, index)
+
 
 def place_hints(final_state: State, rng: Random, world_list: WorldList, status_update: Callable[[str], None]) -> GamePatches:
     status_update("Placing hints...")
@@ -58,30 +58,30 @@ def place_hints(final_state: State, rng: Random, world_list: WorldList, status_u
         else:
             sequence.append((new_indices, new_logbook_assets))
 
+    unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
+                                 if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint]
+    rng.shuffle(unassigned_logbook_assets)
+
     index_list = sum((indices for indices, _ in sequence), [])
-    hints_placed = 0
     for indices, logbooks in sequence:
         while index_list and index_list[0] in indices:
             del index_list[0]
-        while index_list and logbooks and hints_placed + len(special_hints) < _NUM_REGULAR_HINTS:
+        while index_list and logbooks and len(unassigned_logbook_assets) > len(special_hints):
             hint_index = index_list.pop(0)
             if hint_index in special_hints:
                 del special_hints[hint_index]
 
-            patches = patches.assign_hint(logbooks.pop(0), _hint_for_index(hint_index))
-            hints_placed += 1
+            hint_logbook = logbooks.pop(0)
+            unassigned_logbook_assets.remove(hint_logbook)
+
+            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
 
     # Place remaining Guardian/vanilla Light Suit hints
-    if hints_placed < _NUM_REGULAR_HINTS:
-        unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
-                                     if isinstance(node, LogbookNode) and node.resource() not in patches.hints
-                                     and node.lore_type.holds_generic_hint]
-        rng.shuffle(unassigned_logbook_assets)
+    for index in special_hints:
+        patches = patches.assign_hint(unassigned_logbook_assets.pop(), _hint_for_index(index))
 
-        for index, logbook in zip(special_hints, unassigned_logbook_assets):
-            patches = patches.assign_hint(logbook, _hint_for_index(index))
-            hints_placed += 1
-
-    #print(f"Hints placed: {hints_placed}")
+    # Fill remaining hint locations with jokes
+    while unassigned_logbook_assets:
+        patches = patches.assign_hint(unassigned_logbook_assets.pop(), Hint(HintType.LOCATION, PrecisionPair.joke(), PickupIndex(-1)))
 
     return patches
