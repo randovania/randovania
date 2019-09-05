@@ -180,6 +180,10 @@ def logic_bootstrap(configuration: LayoutConfiguration,
                                                                     configuration.translator_configuration))
     starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level
 
+    # All version differences are patched out from the game
+    starting_state.resources[find_resource_info_with_long_name(game.resource_database.version,
+                                                               "NTSC")] = 1
+
     game.simplify_connections(starting_state.resources)
 
     return game, starting_state
