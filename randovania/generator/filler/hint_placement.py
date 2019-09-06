@@ -7,6 +7,7 @@ from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.state import State
@@ -39,8 +40,8 @@ def _create_weighted_list(rng: Random,
     return current
 
 
-def _should_have_hint(item_category: ItemCategory) -> bool:
-    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
+def _should_have_hint(pickup: PickupEntry) -> bool:
+    return pickup.can_get_hint
 
 
 def _hint_for_index(index: PickupIndex) -> Hint:
@@ -113,12 +114,12 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
     state_sequence = tuple(reversed(state_sequence))
 
     indices_with_hints = {index for index, pickup in patches.pickup_assignment.items()
-                          if _should_have_hint(pickup.item_category) or index in special_hints}
+                          if _should_have_hint(pickup) or index in special_hints}
 
     sequence = []
     for state in state_sequence[1:]:
         new_indices = sorted((set(state.collected_pickup_indices) & indices_with_hints)
-                           - set(state.previous_state.collected_pickup_indices))
+                             - set(state.previous_state.collected_pickup_indices))
         rng.shuffle(new_indices)
 
         new_logbook_assets = sorted(set(state.collected_scan_assets)
@@ -132,6 +133,7 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
 
         if len(sequence) >= 2:
             sequence[-2][0].extend(new_indices)
+
 
     unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
                                  if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint]
@@ -157,7 +159,9 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
 
     # Fill remaining hint locations with jokes
     while unassigned_logbook_assets:
-        patches = patches.assign_hint(unassigned_logbook_assets.pop(), Hint(HintType.LOCATION, PrecisionPair.joke(), PickupIndex(-1)))
+        patches = patches.assign_hint(unassigned_logbook_assets.pop(),
+                                      Hint(HintType.LOCATION, PrecisionPair.joke(), PickupIndex(-1))
+                                      )
 
     # Fill in hint precisions
     if configuration.hints.item_hints:

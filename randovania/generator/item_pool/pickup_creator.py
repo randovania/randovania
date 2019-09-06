@@ -9,7 +9,7 @@ from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_MODEL, DARK_TEMPLE_KEY_NAMES, DARK_TEMPLE_KEY_ITEMS, \
-    SKY_TEMPLE_KEY_MODEL, SKY_TEMPLE_KEY_ITEMS, USELESS_PICKUP_MODEL, USELESS_PICKUP_ITEM
+    SKY_TEMPLE_KEY_MODEL, SKY_TEMPLE_KEY_ITEMS, USELESS_PICKUP_MODEL, USELESS_PICKUP_ITEM, BAD_CHARGE_COMBO_ITEMS
 from randovania.layout.major_item_state import MajorItemState
 from randovania.resolver.exceptions import InvalidConfiguration
 
@@ -25,7 +25,6 @@ def create_major_item(item: MajorItem,
                       resource_database: ResourceDatabase,
                       ammo: Optional[Ammo],
                       ammo_requires_major_item: bool,
-
                       ) -> PickupEntry:
     """
     Creates a Pickup for the given MajorItem
@@ -106,11 +105,13 @@ def create_major_item(item: MajorItem,
 
     return PickupEntry(
         name=item.name,
-        resources=conditional_resources,
         model_index=item.model_index,
         item_category=item.item_category,
-        probability_offset=item.probability_offset,
+        can_get_hint=item.item_category.is_major_category and any(index not in BAD_CHARGE_COMBO_ITEMS
+                                                                  for index in item.progression),
+        resources=conditional_resources,
         convert_resources=convert_resources,
+        probability_offset=item.probability_offset,
     )
 
 
@@ -147,9 +148,10 @@ def create_ammo_expansion(ammo: Ammo,
 
     return PickupEntry(
         name=ammo.name,
-        resources=conditional_resources,
         model_index=ammo.models[0],  # TODO: use a random model
         item_category=ItemCategory.EXPANSION,
+        can_get_hint=False,
+        resources=conditional_resources,
     )
 
 
@@ -167,13 +169,14 @@ def create_dark_temple_key(key_number: int,
 
     return PickupEntry(
         name=DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
+        model_index=DARK_TEMPLE_KEY_MODEL,
+        item_category=ItemCategory.TEMPLE_KEY,
+        can_get_hint=True,
         resources=(
             ConditionalResources(None, None, tuple([
                 (_get_item(resource_database, DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)
             ])),
         ),
-        model_index=DARK_TEMPLE_KEY_MODEL,
-        item_category=ItemCategory.TEMPLE_KEY,
         probability_offset=3,
     )
 
@@ -190,13 +193,14 @@ def create_sky_temple_key(key_number: int,
 
     return PickupEntry(
         name="Sky Temple Key {}".format(key_number + 1),
+        model_index=SKY_TEMPLE_KEY_MODEL,
+        item_category=ItemCategory.SKY_TEMPLE_KEY,
+        can_get_hint=False,
         resources=(
             ConditionalResources(None, None, tuple([
                 (_get_item(resource_database, SKY_TEMPLE_KEY_ITEMS[key_number]), 1)
             ])),
         ),
-        model_index=SKY_TEMPLE_KEY_MODEL,
-        item_category=ItemCategory.SKY_TEMPLE_KEY,
         probability_offset=3,
     )
 
@@ -209,13 +213,14 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
     """
     return PickupEntry(
         name="Energy Transfer Module",
+        model_index=USELESS_PICKUP_MODEL,
+        item_category=ItemCategory.ETM,
+        can_get_hint=False,
         resources=(
             ConditionalResources(None, None, tuple([
                 (_get_item(resource_database, USELESS_PICKUP_ITEM), 1)
             ])),
         ),
-        model_index=USELESS_PICKUP_MODEL,
-        item_category=ItemCategory.ETM,
     )
 
 

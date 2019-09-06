@@ -86,6 +86,7 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
             ResourceConversion(source=temporary_b, target=ammo_b),
         ) if has_convert else (),
         item_category=ItemCategory.MORPH_BALL,
+        can_get_hint=True,
         probability_offset=5,
     )
 
@@ -136,6 +137,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
         ),
         model_index=24,
         item_category=ItemCategory.MISSILE,
+        can_get_hint=True,
     )
 
 
@@ -204,6 +206,7 @@ def test_create_seeker_launcher(ammo_quantity: int,
         resources=locked_conditional if ammo_requires_major_item else normal_resources,
         model_index=25,
         item_category=ItemCategory.MISSILE,
+        can_get_hint=True,
     )
 
 
