@@ -52,7 +52,7 @@ def batch_distribute_command_logic(args):
         for seed_number in range(base_permalink.seed_number, base_permalink.seed_number + args.seed_count):
             pool.apply_async(
                 func=batch_distribute_helper,
-                args=(base_permalink, seed_number, output_dir, validate),
+                args=(base_permalink, seed_number, validate, output_dir),
                 callback=callback,
                 error_callback=error_callback,
             )
