@@ -1,11 +1,12 @@
 import dataclasses
 from random import Random
-from typing import Callable, List, TypeVar
+from typing import Callable, List, TypeVar, Union
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
@@ -38,10 +39,6 @@ def _create_weighted_list(rng: Random,
         rng.shuffle(current)
 
     return current
-
-
-def _should_have_hint(pickup: PickupEntry) -> bool:
-    return pickup.can_get_hint
 
 
 def _hint_for_index(index: PickupIndex) -> Hint:
@@ -106,19 +103,17 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
                 world_list: WorldList, status_update: Callable[[str], None]) -> GamePatches:
     status_update("Placing hints...")
 
-    special_hints = _SPECIAL_HINTS.copy()
-
     state_sequence = [final_state]
     while state_sequence[-1].previous_state:
         state_sequence.append(state_sequence[-1].previous_state)
     state_sequence = tuple(reversed(state_sequence))
 
-    indices_with_hints = {index for index, pickup in patches.pickup_assignment.items()
-                          if _should_have_hint(pickup) or index in special_hints}
+    possible_hint_indices = {index for index, pickup in patches.pickup_assignment.items()
+                             if pickup.can_get_hint or index in _SPECIAL_HINTS}
 
-    sequence = []
+    sequence: List[Union[PickupIndex, LogbookAsset]] = []
     for state in state_sequence[1:]:
-        new_indices = sorted((set(state.collected_pickup_indices) & indices_with_hints)
+        new_indices = sorted((set(state.collected_pickup_indices) & possible_hint_indices)
                              - set(state.previous_state.collected_pickup_indices))
         rng.shuffle(new_indices)
 
@@ -126,32 +121,31 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
                                   - (set(state.previous_state.collected_scan_assets) | set(patches.hints)))
         rng.shuffle(new_logbook_assets)
 
-        if sequence and not new_logbook_assets:
-            sequence[-1][0].extend(new_indices)
-        else:
-            sequence.append((new_indices, new_logbook_assets))
+        sequence.extend((*new_indices, *new_logbook_assets))
 
-        if len(sequence) >= 2:
-            sequence[-2][0].extend(new_indices)
-
-
+    sequence_types = [type(resource) for resource in sequence]
+    indices_with_hints = set()
+    special_hints_remaining = _SPECIAL_HINTS.copy()
     unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
-                                 if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint]
+                                 if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
+                                 and node.resource() not in patches.hints]
     rng.shuffle(unassigned_logbook_assets)
 
-    index_list = sum((indices for indices, _ in sequence), [])
-    for indices, logbooks in sequence:
-        while index_list and index_list[0] in indices:
-            del index_list[0]
-        while index_list and logbooks and len(unassigned_logbook_assets) > len(special_hints):
-            hint_index = index_list.pop(0)
-            if hint_index in special_hints:
-                del special_hints[hint_index]
+    for i, resource in enumerate(sequence):
+        if isinstance(resource, LogbookAsset) and len(unassigned_logbook_assets) > len(special_hints):
+            hint_logbook = resource
 
-            hint_logbook = logbooks.pop(0)
-            unassigned_logbook_assets.remove(hint_logbook)
+            for resource in sequence[sequence_types.index(PickupIndex, i) + 1:]:
+                if isinstance(resource, PickupIndex) and resource not in indices_with_hints:
+                    hint_index = resource
+                    break
+            else:
+                break
 
             patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
+            indices_with_hints.add(hint_index)
+            special_hints_remaining.discard(hint_index)
+            unassigned_logbook_assets.remove(hint_logbook)
 
     # Place remaining Guardian/vanilla Light Suit hints
     for index in special_hints:
