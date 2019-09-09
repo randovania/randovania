@@ -171,7 +171,7 @@ def create_dark_temple_key(key_number: int,
         name=DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
         model_index=DARK_TEMPLE_KEY_MODEL,
         item_category=ItemCategory.TEMPLE_KEY,
-        can_get_hint=True,
+        can_get_hint=False,
         resources=(
             ConditionalResources(None, None, tuple([
                 (_get_item(resource_database, DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1)

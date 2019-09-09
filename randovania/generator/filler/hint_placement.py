@@ -125,14 +125,14 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
 
     sequence_types = [type(resource) for resource in sequence]
     indices_with_hints = set()
-    special_hints_remaining = _SPECIAL_HINTS.copy()
+    special_hint_indices_remaining = set(_SPECIAL_HINTS)
     unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
                                  if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
                                  and node.resource() not in patches.hints]
     rng.shuffle(unassigned_logbook_assets)
 
     for i, resource in enumerate(sequence):
-        if isinstance(resource, LogbookAsset) and len(unassigned_logbook_assets) > len(special_hints):
+        if isinstance(resource, LogbookAsset) and len(unassigned_logbook_assets) > len(special_hint_indices_remaining):
             hint_logbook = resource
 
             for resource in sequence[sequence_types.index(PickupIndex, i) + 1:]:
@@ -144,11 +144,11 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
 
             patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
             indices_with_hints.add(hint_index)
-            special_hints_remaining.discard(hint_index)
+            special_hint_indices_remaining.discard(hint_index)
             unassigned_logbook_assets.remove(hint_logbook)
 
     # Place remaining Guardian/vanilla Light Suit hints
-    for index in special_hints:
+    for index in special_hint_indices_remaining:
         patches = patches.assign_hint(unassigned_logbook_assets.pop(), _hint_for_index(index))
 
     # Fill remaining hint locations with jokes
