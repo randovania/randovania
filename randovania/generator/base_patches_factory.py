@@ -46,6 +46,8 @@ _KEYBEARERS_HINTS = {
     LogbookAsset(0x62CC4DC3): PickupIndex(117),
 }
 
+_NUM_JOKE_HINTS = 2
+
 
 def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguration,
                                         rng: Random,
@@ -138,11 +140,21 @@ def add_keybearer_hints_to_patches(patches: GamePatches, world_list: WorldList) 
 
     for node in world_list.all_nodes:
         if isinstance(node, LogbookNode) and node.lore_type == LoreType.LUMINOTH_WARRIOR:
-            patches = patches.assign_hint(node.resource(),
-                                          Hint(HintType.KEYBEARER,
-                                               PrecisionPair(HintLocationPrecision.DETAILED,
-                                                             HintItemPrecision.PRECISE_CATEGORY),
-                                               PickupIndex(node.hint_index)))
+            patches = patches.assign_hint(node.resource(), Hint(
+                HintType.KEYBEARER,
+                PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY),
+                PickupIndex(node.hint_index),
+            ))
+
+    return patches
+
+
+def add_joke_hints_to_patches(patches: GamePatches, world_list: WorldList, rng: Random) -> GamePatches:
+    unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes if isinstance(node, LogbookNode)
+                                 and node.lore_type.holds_generic_hint and node.resource() not in patches.hints]
+
+    for logbook in rng.sample(unassigned_logbook_assets, _NUM_JOKE_HINTS):
+        patches = patches.assign_hint(logbook, Hint(HintType.LOCATION, PrecisionPair.joke(), PickupIndex(-1)))
 
     return patches
 
@@ -173,7 +185,7 @@ def create_base_patches(configuration: LayoutConfiguration,
         starting_location_for_configuration(configuration, game, rng))
 
     # Hints
-    if rng is not None:
-        patches = add_keybearer_hints_to_patches(patches, game.world_list)
+    patches = add_keybearer_hints_to_patches(patches, game.world_list)
+    patches = add_joke_hints_to_patches(patches, game.world_list, rng)
 
     return patches
