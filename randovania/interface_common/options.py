@@ -139,9 +139,17 @@ class Options:
         data_to_persist = self._serialize_fields()
 
         self._data_dir.mkdir(parents=True, exist_ok=True)
-        with self._data_dir.joinpath("config.json").open("w") as options_file:
+
+        # Write to a separate file, so we don't corrupt the existing one in case we unexpectedly
+        # are unable to finish writing the file
+        new_config_path = self._data_dir.joinpath("config_new.json")
+        with new_config_path.open("w") as options_file:
             json.dump(data_to_persist, options_file,
                       indent=4, separators=(',', ': '))
+
+        # Place the new, complete, config to the desired path
+        config_path = self._data_dir.joinpath("config.json")
+        new_config_path.replace(config_path)
 
     def __enter__(self):
         self._nested_autosave_level += 1
