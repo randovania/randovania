@@ -91,7 +91,15 @@ class Options:
         setattr(self, "_" + field_name, value)
 
     def load_from_disk(self, ignore_decode_errors: bool = False):
-        persisted_data = self._read_persisted_options()
+        try:
+            persisted_data = self._read_persisted_options()
+
+        except json.decoder.JSONDecodeError as e:
+            if ignore_decode_errors:
+                persisted_data = None
+            else:
+                raise DecodeFailedException(f"Unable to decode JSON: {e}")
+
         if persisted_data is None:
             return
 
