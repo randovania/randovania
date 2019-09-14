@@ -6,7 +6,6 @@ from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
     DefaultDict, Mapping, FrozenSet, Callable, List, TypeVar, Any, Optional
 
 from randovania.game_description.game_description import calculate_interesting_resources, GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.logbook_asset import LogbookAsset
