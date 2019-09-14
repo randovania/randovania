@@ -166,9 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Item names in hints are now colored orange instead of red.
 
--   Changed: Some joke hints were slightly edited.
-
--   Added: More joke hints!
+-   Changed: Some hints were added, some removed, and some modified.
 
 -   Changed: Item scans were slightly edited.
 
