@@ -23,6 +23,7 @@ _SPECIAL_HINTS = {
 
 T = TypeVar("T")
 
+
 def _create_weighted_list(rng: Random,
                           current: List[T],
                           factory: Callable[[], List[T]],
@@ -150,6 +151,34 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
     # Place remaining Guardian/vanilla Light Suit hints
     for index in special_hint_indices_remaining:
         patches = patches.assign_hint(unassigned_logbook_assets.pop(), _hint_for_index(index))
+
+    # Try to fill remaining hint locations with hints for major upgrades near the end of the sequence
+    if unassigned_logbook_assets:
+        end_of_sequence_indices = []
+        for resource in reversed(sequence):
+            if isinstance(resource, LogbookAsset):
+                break
+            elif resource not in indices_with_hints:
+                end_of_sequence_indices.append(resource)
+        rng.shuffle(end_of_sequence_indices)
+
+        while unassigned_logbook_assets and end_of_sequence_indices:
+            hint_index = end_of_sequence_indices.pop()
+            hint_logbook = unassigned_logbook_assets.pop()
+            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
+            indices_with_hints.add(hint_index)
+
+    # Try to fill remaining hint locations with hints for major upgrades that aren't in the sequence
+    # (not including Darkburst, Sunburst, and Sonic Boom)
+    if unassigned_logbook_assets:
+        out_of_sequence_indices = list(possible_hint_indices - indices_with_hints - set(sequence))
+        rng.shuffle(out_of_sequence_indices)
+
+        while unassigned_logbook_assets and out_of_sequence_indices:
+            hint_index = out_of_sequence_indices.pop()
+            hint_logbook = unassigned_logbook_assets.pop()
+            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
+            indices_with_hints.add(hint_index)
 
     # Fill remaining hint locations with jokes
     while unassigned_logbook_assets:
