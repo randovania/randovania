@@ -198,6 +198,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Method to get to the Darkburst location in Mining Station B with just Space Jump Boots and Screw Attack,
     and without using slope jumps or bomb space jumps (Hypermode difficulty).
 
+-   Added: Method to manipulate Power Bomb Guardian into opening the Power Bomb Blast Shield on the door to
+    Undertemple Access, using Boost Ball (Normal and above).
+
 
 ## [0.28.1] - 2019-06-14
 
