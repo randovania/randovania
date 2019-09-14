@@ -127,15 +127,20 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
     sequence_types = [type(resource) for resource in sequence]
     indices_with_hints = set()
     special_hint_indices_remaining = set(_SPECIAL_HINTS)
+
     unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
                                  if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
                                  and node.resource() not in patches.hints]
     rng.shuffle(unassigned_logbook_assets)
 
+    # Fill hint locations with hints for in-sequence items
     for i, resource in enumerate(sequence):
         if isinstance(resource, LogbookAsset) and len(unassigned_logbook_assets) > len(special_hint_indices_remaining):
             hint_logbook = resource
 
+            # Forbid hints for the index such that there are not other indices between it and our current logbook
+            # asset in the sequence. This prevents hints for items in the same room as the hints if the item is
+            # collectable at the same time as the hint (which is usually the case).
             for resource in sequence[sequence_types.index(PickupIndex, i) + 1:]:
                 if isinstance(resource, PickupIndex) and resource not in indices_with_hints:
                     hint_index = resource
@@ -152,7 +157,8 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
     for index in special_hint_indices_remaining:
         patches = patches.assign_hint(unassigned_logbook_assets.pop(), _hint_for_index(index))
 
-    # Try to fill remaining hint locations with hints for major upgrades near the end of the sequence
+    # Try to fill remaining hint locations with hints for indices that come after all of the logbook assets
+    # in the sequence
     if unassigned_logbook_assets:
         end_of_sequence_indices = []
         for resource in reversed(sequence):
@@ -168,8 +174,7 @@ def place_hints(configuration: LayoutConfiguration, final_state: State, patches:
             patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
             indices_with_hints.add(hint_index)
 
-    # Try to fill remaining hint locations with hints for major upgrades that aren't in the sequence
-    # (not including Darkburst, Sunburst, and Sonic Boom)
+    # Try to fill remaining hint locations with hints for indices that aren't in the sequence
     if unassigned_logbook_assets:
         out_of_sequence_indices = list(possible_hint_indices - indices_with_hints - set(sequence))
         rng.shuffle(out_of_sequence_indices)
