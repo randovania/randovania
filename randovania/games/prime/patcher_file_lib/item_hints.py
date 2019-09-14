@@ -150,12 +150,12 @@ def create_hints(patches: GamePatches,
 
             # Determine pickup name
             if pickup is not None:
-                is_joke, determiner, pickup_name = _calculate_pickup_hint(hint.item_precision,
-                                                                          _calculate_determiner(
-                                                                              patches.pickup_assignment,
-                                                                              pickup),
-                                                                          pickup,
-                                                                          joke_items)
+                is_joke, determiner, pickup_name = _calculate_pickup_hint(
+                    hint.item_precision,
+                    _calculate_determiner(patches.pickup_assignment, pickup),
+                    pickup,
+                    joke_items,
+                )
             else:
                 is_joke = False
                 determiner = "the " if len(patches.pickup_assignment) == 118 else "an "
@@ -173,8 +173,8 @@ def create_hints(patches: GamePatches,
     return [
         create_simple_logbook_hint(
             logbook_node.string_asset_id,
-            hints_for_asset.get(logbook_node.string_asset_id, "Someone forgot to leave a message."))
-
+            hints_for_asset.get(logbook_node.string_asset_id, "Someone forgot to leave a message."),
+        )
         for logbook_node in world_list.all_nodes
         if isinstance(logbook_node, LogbookNode)
     ]
@@ -204,9 +204,7 @@ def _calculate_pickup_hint(precision: HintItemPrecision,
         return False, determiner, pickup.name
 
 
-def _calculate_determiner(pickup_assignment: PickupAssignment,
-                          pickup: PickupEntry,
-                          ) -> str:
+def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry) -> str:
     if pickup.name in _DET_NULL:
         determiner = ""
     elif tuple(pickup_entry.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
@@ -226,9 +224,5 @@ def hide_hints(world_list: WorldList) -> list:
     :return:
     """
 
-    return [
-        create_simple_logbook_hint(logbook_node.string_asset_id, "Some item was placed somewhere.")
-
-        for logbook_node in world_list.all_nodes
-        if isinstance(logbook_node, LogbookNode)
-    ]
+    return [create_simple_logbook_hint(logbook_node.string_asset_id, "Some item was placed somewhere.")
+            for logbook_node in world_list.all_nodes if isinstance(logbook_node, LogbookNode)]
