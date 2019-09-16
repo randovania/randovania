@@ -1,6 +1,7 @@
 from typing import NamedTuple, List, Dict, Optional, Iterator, Tuple
 
-from randovania.game_description.node import Node, DockNode
+from randovania.game_description.node import Node, DockNode, PickupNode
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.requirements import RequirementSet
 
 
@@ -44,3 +45,15 @@ class Area(NamedTuple):
         for source in self.nodes:
             for target, requirements in self.connections[source].items():
                 yield source, target, requirements
+
+    @property
+    def pickup_indices(self) -> Iterator[PickupIndex]:
+        for node in self.nodes:
+            if isinstance(node, PickupNode):
+                yield node.pickup_index
+
+    @property
+    def major_pickup_indices(self) -> Iterator[PickupIndex]:
+        for node in self.nodes:
+            if isinstance(node, PickupNode) and node.is_major_location:
+                yield node.pickup_index
