@@ -102,7 +102,8 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
 
     # Assert
     if location[0] == HintLocationPrecision.WRONG_GAME and item[0] == HintItemPrecision.WRONG_GAME:
-        message = "&push;&main-color=#45F731;You're not authorized to view this hint.&pop;"
+        message = "&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!" \
+                  " Energized Safe Zones don't last forever!&pop;"
     elif hint_type == HintType.LOCATION:
         message = "{} can be found in {}.".format(item[1][0].upper() + item[1][1:], location[1])
     elif hint_type == HintType.KEYBEARER:
@@ -181,7 +182,8 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item, location)
 
     # Assert
     if location is HintLocationPrecision.WRONG_GAME and item[0] is HintItemPrecision.WRONG_GAME:
-        message = "&push;&main-color=#45F731;You're not authorized to view this hint.&pop;"
+        message = "&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!" \
+                  " Energized Safe Zones don't last forever!&pop;"
     else:
         message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]

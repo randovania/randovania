@@ -11,6 +11,20 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
     color_text, TextColor
 
+# Guidelines for joke hints:
+# 1. They should clearly be jokes, and not real hints or the result of a bug.
+# 2. They shouldn't reference real-world people.
+# 3. They should be understandable by as many people as possible.
+_JOKE_HINTS = [
+    "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
+    "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
+    "Adam has not yet authorized the use of this hint.",
+    "Back in my day, we didn't need hints!",
+    "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
+    "Warning! Dark Aether's atmosphere is dangerous! Energized Safe Zones don't last forever!",
+    "A really important item can be found at - (transmission ends)",
+]
+
 _PRIME_1_ITEMS = [
     "Varia Suit",
     "Wave Beam",
@@ -40,18 +54,6 @@ _PRIME_3_ITEMS = [
     "Hazard Shield",
     "Nova Beam",
     "Hyper Grapple",
-]
-
-_JOKE_HINTS = [
-    "Did you remember to check Trial Tunnel?",
-    "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
-    "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
-    "You're not authorized to view this hint.",
-    "Kirby fell down here.",
-    "Magoo.",
-    "Back in my day, we didn't need hints!",
-    "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
-    "Warning! Dark Aether's atmosphere is dangerous! Energized Safe Zones don't last forever!",
 ]
 
 _PRIME_1_LOCATIONS = [
@@ -130,6 +132,9 @@ def create_hints(patches: GamePatches,
 
     for asset, hint in patches.hints.items():
         if hint.precision.is_joke:
+            if not joke_hints:
+                joke_hints = sorted(_JOKE_HINTS)
+                rng.shuffle(joke_hints)
             message = color_text(TextColor.JOKE, joke_hints.pop())
 
         else:
@@ -140,7 +145,7 @@ def create_hints(patches: GamePatches,
                 node_name = color_text(TextColor.GUARDIAN, _GUARDIAN_NAMES[hint.target])
             elif hint.location_precision == HintLocationPrecision.WRONG_GAME:
                 node_name = color_text(TextColor.JOKE, "{} (?)".format(joke_locations.pop())
-                                        if joke_locations else "an unknown location")
+                                       if joke_locations else "an unknown location")
             else:
                 node_name = color_text(TextColor.LOCATION, hint_name_creator.index_node_name(
                     hint.target,
@@ -149,12 +154,12 @@ def create_hints(patches: GamePatches,
 
             # Determine pickup name
             if pickup is not None:
-                is_joke, determiner, pickup_name = _calculate_pickup_hint(hint.item_precision,
-                                                                          _calculate_determiner(
-                                                                              patches.pickup_assignment,
-                                                                              pickup),
-                                                                          pickup,
-                                                                          joke_items)
+                is_joke, determiner, pickup_name = _calculate_pickup_hint(
+                    hint.item_precision,
+                    _calculate_determiner(patches.pickup_assignment, pickup),
+                    pickup,
+                    joke_items,
+                )
             else:
                 is_joke = False
                 determiner = "the " if len(patches.pickup_assignment) == 118 else "an "
@@ -172,8 +177,8 @@ def create_hints(patches: GamePatches,
     return [
         create_simple_logbook_hint(
             logbook_node.string_asset_id,
-            hints_for_asset.get(logbook_node.string_asset_id, "Someone forgot to leave a message."))
-
+            hints_for_asset.get(logbook_node.string_asset_id, "Someone forgot to leave a message."),
+        )
         for logbook_node in world_list.all_nodes
         if isinstance(logbook_node, LogbookNode)
     ]
@@ -203,9 +208,7 @@ def _calculate_pickup_hint(precision: HintItemPrecision,
         return False, determiner, pickup.name
 
 
-def _calculate_determiner(pickup_assignment: PickupAssignment,
-                          pickup: PickupEntry,
-                          ) -> str:
+def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry) -> str:
     if pickup.name in _DET_NULL:
         determiner = ""
     elif tuple(pickup_entry.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
@@ -225,9 +228,5 @@ def hide_hints(world_list: WorldList) -> list:
     :return:
     """
 
-    return [
-        create_simple_logbook_hint(logbook_node.string_asset_id, "Some item was placed somewhere.")
-
-        for logbook_node in world_list.all_nodes
-        if isinstance(logbook_node, LogbookNode)
-    ]
+    return [create_simple_logbook_hint(logbook_node.string_asset_id, "Some item was placed somewhere.")
+            for logbook_node in world_list.all_nodes if isinstance(logbook_node, LogbookNode)]
