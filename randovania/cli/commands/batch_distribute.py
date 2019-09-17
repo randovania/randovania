@@ -1,3 +1,4 @@
+import math
 import multiprocessing
 import time
 from argparse import ArgumentParser
@@ -10,6 +11,7 @@ from randovania.layout.permalink import Permalink
 
 def batch_distribute_helper(base_permalink: Permalink,
                             seed_number: int,
+                            timeout: int,
                             validate: bool,
                             output_dir: Path,
                             ) -> float:
@@ -21,7 +23,8 @@ def batch_distribute_helper(base_permalink: Permalink,
     )
 
     start_time = time.perf_counter()
-    description = generator.generate_description(permalink, None, validate)
+    description = generator.generate_description(permalink=permalink, status_update=None,
+                                                 validate_after_generation=validate, timeout=timeout)
     delta_time = time.perf_counter() - start_time
 
     description.save_to_file(output_dir.joinpath("{}.json".format(seed_number)))
@@ -31,28 +34,33 @@ def batch_distribute_helper(base_permalink: Permalink,
 def batch_distribute_command_logic(args):
     finished_count = 0
 
+    timeout: int = args.timeout
     validate: bool = args.validate
 
     output_dir: Path = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    seed_count = args.seed_count
+    num_digits = math.ceil(math.log10(seed_count + 1))
+    number_format = "[{0:" + str(num_digits) + "d}/{1}] "
     base_permalink = Permalink.from_str(args.permalink)
 
-    def callback(result):
+    def report_update(msg: str):
         nonlocal finished_count
         finished_count += 1
-        print("Finished seed in {} seconds. At {} of {} seeds.".format(result, finished_count, args.seed_count))
+        print(number_format.format(finished_count, seed_count) + msg)
+
+    def callback(result):
+        report_update(f"Finished seed in {result} seconds.")
 
     def error_callback(e):
-        nonlocal finished_count
-        finished_count += 1
-        print("Failed to generate seed: {}".format(e))
+        report_update(f"Failed to generate seed: {e}")
 
     with multiprocessing.Pool() as pool:
         for seed_number in range(base_permalink.seed_number, base_permalink.seed_number + args.seed_count):
             pool.apply_async(
                 func=batch_distribute_helper,
-                args=(base_permalink, seed_number, validate, output_dir),
+                args=(base_permalink, seed_number, timeout, validate, output_dir),
                 callback=callback,
                 error_callback=error_callback,
             )
@@ -67,6 +75,11 @@ def add_batch_distribute_command(sub_parsers):
     )
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=90,
+        help="How many seconds to wait before timing out a generation/validation.")
     echoes_lib.add_validate_argument(parser)
     parser.add_argument(
         "seed_count",
