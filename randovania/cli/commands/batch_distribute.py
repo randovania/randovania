@@ -6,6 +6,7 @@ from pathlib import Path
 
 from randovania.cli import echoes_lib
 from randovania.generator import generator
+from randovania.interface_common import sleep_inhibitor
 from randovania.layout.permalink import Permalink
 
 
@@ -56,7 +57,7 @@ def batch_distribute_command_logic(args):
     def error_callback(e):
         report_update(f"Failed to generate seed: {e}")
 
-    with multiprocessing.Pool() as pool:
+    with multiprocessing.Pool() as pool, sleep_inhibitor.get_inhibitor():
         for seed_number in range(base_permalink.seed_number, base_permalink.seed_number + args.seed_count):
             pool.apply_async(
                 func=batch_distribute_helper,
