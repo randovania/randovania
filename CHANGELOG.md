@@ -191,6 +191,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fixed: Added proper default nodes for rooms that were missing one, allowing those rooms to be selected as the
     starting room.
 
+-   Added: Method to unblock the portal in Mining Station B without Scan Visor (Normal and above).
+
+-   Added: Method to get to the Darkburst location in Mining Station B with just Space Jump Boots and Screw Attack,
+    and without using slope jumps or bomb space jumps (Hypermode difficulty).
+
+-   Added: Method to manipulate Power Bomb Guardian into opening the Power Bomb Blast Shield on the door to
+    Undertemple Access, using Boost Ball (Normal and above).
+
+-   Fixed: The method to open the Hydrodynamo Station Seeker door using Screw Attack without Seeker Launcher now
+    requires Gravity Boost to not have been collected.
+
+-   Added: Method to get to the portal in Mining Station B with Space Jump Boots and Screw Attack (Trivial and above).
+
 
 ## [0.28.1] - 2019-06-14
 
