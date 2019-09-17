@@ -11,6 +11,20 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
     color_text, TextColor
 
+# Guidelines for joke hints:
+# 1. They should clearly be jokes, and not real hints or the result of a bug.
+# 2. They shouldn't reference real-world people.
+# 3. They should be understandable by as many people as possible.
+_JOKE_HINTS = [
+    "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
+    "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
+    "Adam has not yet authorized the use of this hint.",
+    "Back in my day, we didn't need hints!",
+    "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
+    "Warning! Dark Aether's atmosphere is dangerous! Energized Safe Zones don't last forever!",
+    "A really important item can be found at - (transmission ends)",
+]
+
 _PRIME_1_ITEMS = [
     "Varia Suit",
     "Wave Beam",
@@ -40,16 +54,6 @@ _PRIME_3_ITEMS = [
     "Hazard Shield",
     "Nova Beam",
     "Hyper Grapple",
-]
-
-_JOKE_HINTS = [
-    "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
-    "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
-    "Adam has not yet authorized the use of this hint.",
-    "Back in my day, we didn't need hints!",
-    "Hear the words of O-Lir, last Sentinel of the Fortress Temple. May they serve you well.",
-    "Warning! Dark Aether's atmosphere is dangerous! Energized Safe Zones don't last forever!",
-    "A really important item can be found at - (transmission ends)",
 ]
 
 _PRIME_1_LOCATIONS = [
