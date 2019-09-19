@@ -27,10 +27,12 @@ def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPat
         for step in playthrough
     )
 
+
 @lru_cache(maxsize=1)
 def _shareable_hash_words():
     with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
         return json.load(hash_words_file)
+
 
 @dataclass(frozen=True)
 class LayoutDescription:
@@ -101,7 +103,7 @@ class LayoutDescription:
 
     @property
     def shareable_word_hash(self) -> str:
-        rng = Random(sum([hash_byte * (2**8)**i for i, hash_byte in enumerate(self._shareable_hash_bytes)]))
+        rng = Random(sum([hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(self._shareable_hash_bytes)]))
         return " ".join(rng.sample(_shareable_hash_words(), 3))
 
     def save_to_file(self, json_path: Path):
