@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Minimal Checking now correctly handles progressive suit and grapple.
 
+-   Fixed: Config files with invalid JSON are now correctly dealt with.
+
 -   Changed: All NTSC-specific tricks are now in logic. These are always in logic, since the fixes from other versions
     are patched out.
 
