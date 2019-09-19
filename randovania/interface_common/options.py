@@ -90,7 +90,12 @@ class Options:
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)
 
-    def load_from_disk(self, ignore_decode_errors: bool = False):
+    def load_from_disk(self, ignore_decode_errors: bool = False) -> bool:
+        """
+        Loads the file created with `_save_to_disk`.
+        :param ignore_decode_errors: If True, errors in the config file are ignored.
+        :return: True, if a valid file exists.
+        """
         try:
             persisted_data = self._read_persisted_options()
 
@@ -101,10 +106,11 @@ class Options:
                 raise DecodeFailedException(f"Unable to decode JSON: {e}")
 
         if persisted_data is None:
-            return
+            return False
 
         persisted_options = get_persisted_options_from_data(persisted_data)
         self.load_from_persisted_options(persisted_options, ignore_decode_errors)
+        return True
 
     def load_from_persisted_options(self,
                                     persisted_options: dict,
