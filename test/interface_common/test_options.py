@@ -1,4 +1,5 @@
 import itertools
+import json
 from pathlib import Path
 from typing import List
 from unittest.mock import patch, MagicMock, call
@@ -8,7 +9,7 @@ import pytest
 import randovania.interface_common.options
 import randovania.interface_common.persisted_options
 from randovania.interface_common import update_checker
-from randovania.interface_common.options import Options
+from randovania.interface_common.options import Options, DecodeFailedException
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
     LayoutSkyTempleKeyMode
@@ -253,3 +254,39 @@ def test_edit_during_options_changed(tmpdir):
     # Assert
     assert option.output_directory == Path("final")
     assert option.output_directory == second_option.output_directory
+
+
+@pytest.mark.parametrize("ignore_decode_errors", [False, True])
+def test_load_from_disk_missing_json(ignore_decode_errors: bool,
+                                     tmpdir):
+    # Setup
+    option = Options(Path(tmpdir))
+    tmpdir.join("config.json").write_text("", "utf-8")
+
+    if ignore_decode_errors:
+        result = option.load_from_disk(ignore_decode_errors)
+        assert result != ignore_decode_errors
+    else:
+        with pytest.raises(DecodeFailedException):
+            option.load_from_disk(ignore_decode_errors)
+
+
+@pytest.mark.parametrize("ignore_decode_errors", [False])
+def test_load_from_disk_invalid_json(ignore_decode_errors: bool,
+                                     tmpdir):
+    # Setup
+    option = Options(Path(tmpdir))
+    tmpdir.join("config.json").write_text(
+        json.dumps(randovania.interface_common.persisted_options.serialized_data_for_options({
+            "patcher_configuration": {
+                "pickup_model_style": "invalid-value"
+            }
+        })),
+        "utf-8")
+
+    if ignore_decode_errors:
+        result = option.load_from_disk(ignore_decode_errors)
+        assert result != ignore_decode_errors
+    else:
+        with pytest.raises(DecodeFailedException):
+            option.load_from_disk(ignore_decode_errors)
