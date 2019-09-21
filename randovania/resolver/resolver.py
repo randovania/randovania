@@ -2,7 +2,7 @@ from typing import Optional, Tuple, Callable, FrozenSet
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import PickupNode, ResourceNode
+from randovania.game_description.node import PickupNode, ResourceNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -46,17 +46,27 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
                           if alternative is not None)
 
 
-def _should_check_if_action_is_safe(state: State, action: ResourceNode) -> bool:
+def _should_check_if_action_is_safe(state: State,
+                                    action: ResourceNode,
+                                    dangerous_resources: FrozenSet[SimpleResourceInfo]) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
     :param action:
     :return:
     """
+    if any(resource in dangerous_resources
+           for resource in action.resource_gain_on_collect(state.patches, state.resources)):
+        return False
+
+    if isinstance(action, EventNode):
+        return True
+
     if isinstance(action, PickupNode):
         pickup = state.patches.pickup_assignment.get(action.pickup_index)
         if pickup is not None and pickup.item_category.is_major_category:
             return True
+
     return False
 
 
@@ -85,7 +95,7 @@ def _inner_advance_depth(state: State,
     status_update("Resolving... {} total resources".format(len(state.resources)))
 
     for action, energy in reach.possible_actions(state):
-        if _should_check_if_action_is_safe(state, action):
+        if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
 
             potential_state = state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
@@ -98,11 +108,12 @@ def _inner_advance_depth(state: State,
                                                   reach=potential_reach)
 
                 if not new_result[1]:
-                    debug.log_rollback(state, True)
+                    debug.log_rollback(state, True, True)
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
 
+    debug.log_checking_satisfiable_actions()
     has_action = False
     for action, energy in reach.satisfiable_actions(state):
         new_result = _inner_advance_depth(
@@ -116,7 +127,7 @@ def _inner_advance_depth(state: State,
         else:
             has_action = True
 
-    debug.log_rollback(state, has_action)
+    debug.log_rollback(state, has_action, False)
     additional_requirements = reach.satisfiable_as_requirement_set
 
     if has_action:
