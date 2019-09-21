@@ -1,6 +1,6 @@
 import dataclasses
 from random import Random
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
