@@ -1,6 +1,6 @@
 import dataclasses
 from random import Random
-from typing import Callable, List, TypeVar, Union
+from typing import Callable, List, TypeVar, Union, AbstractSet
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair
@@ -45,6 +45,115 @@ def _hint_for_index(index: PickupIndex) -> Hint:
         return Hint(_SPECIAL_HINTS[index], PrecisionPair.detailed(), index)
     else:
         return Hint(HintType.LOCATION, None, index)
+
+
+def _get_sequence(final_state: State,
+                  patches: GamePatches,
+                  possible_hint_indices: AbstractSet[PickupIndex],
+                  rng: Random,
+                  ) -> List[Union[PickupIndex, LogbookAsset]]:
+    state_sequence = [final_state]
+    while state_sequence[-1].previous_state:
+        state_sequence.append(state_sequence[-1].previous_state)
+    state_sequence = tuple(reversed(state_sequence))
+
+    sequence = []
+    for state in state_sequence[1:]:
+        new_indices = sorted((set(state.collected_pickup_indices) & possible_hint_indices)
+                             - set(state.previous_state.collected_pickup_indices))
+        rng.shuffle(new_indices)
+
+        new_logbook_assets = sorted(set(state.collected_scan_assets)
+                                  - (set(state.previous_state.collected_scan_assets) | set(patches.hints)))
+        rng.shuffle(new_logbook_assets)
+
+        sequence.extend((*new_indices, *new_logbook_assets))
+
+    return sequence
+
+
+def place_hints(configuration: LayoutConfiguration, final_state: State, patches: GamePatches, rng: Random,
+                world_list: WorldList, status_update: Callable[[str], None]) -> GamePatches:
+    status_update("Placing hints...")
+
+    possible_hint_indices = {index for index, pickup in patches.pickup_assignment.items()
+                             if pickup.can_get_hint or index in _SPECIAL_HINTS}
+
+    sequence = _get_sequence(final_state, patches, possible_hint_indices, rng)
+
+    sequence_types = [type(resource) for resource in sequence]
+    indices_with_hints = set()
+    special_hint_indices_remaining = set(_SPECIAL_HINTS)
+
+    unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
+                                 if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
+                                 and node.resource() not in patches.hints]
+    rng.shuffle(unassigned_logbook_assets)
+
+    # Fill hint locations with hints for in-sequence items
+    for i, resource in enumerate(sequence):
+        if isinstance(resource, LogbookAsset) and len(unassigned_logbook_assets) > len(special_hint_indices_remaining):
+            hint_logbook = resource
+
+            # Forbid hints for the index such that there are not other indices between it and our current logbook
+            # asset in the sequence. This prevents hints for items in the same room as the hints if the item is
+            # collectable at the same time as the hint (which is usually the case).
+            for resource in sequence[sequence_types.index(PickupIndex, i) + 1:]:
+                if isinstance(resource, PickupIndex) and resource not in indices_with_hints:
+                    hint_index = resource
+                    break
+            else:
+                break
+
+            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
+            indices_with_hints.add(hint_index)
+            special_hint_indices_remaining.discard(hint_index)
+            unassigned_logbook_assets.remove(hint_logbook)
+
+    # Place remaining Guardian/vanilla Light Suit hints
+    for index in special_hint_indices_remaining:
+        patches = patches.assign_hint(unassigned_logbook_assets.pop(), _hint_for_index(index))
+
+    # Try to fill remaining hint locations with hints for indices that come after all of the logbook assets in the sequence
+    if unassigned_logbook_assets:
+        end_of_sequence_indices = []
+        for resource in reversed(sequence):
+            if isinstance(resource, LogbookAsset):
+                break
+            elif resource not in indices_with_hints:
+                end_of_sequence_indices.append(resource)
+        rng.shuffle(end_of_sequence_indices)
+
+        while unassigned_logbook_assets and end_of_sequence_indices:
+            hint_index = end_of_sequence_indices.pop()
+            hint_logbook = unassigned_logbook_assets.pop()
+            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
+            indices_with_hints.add(hint_index)
+
+    # Try to fill remaining hint locations with hints for indices that aren't in the sequence
+    if unassigned_logbook_assets:
+        out_of_sequence_indices = list(possible_hint_indices - indices_with_hints - set(sequence))
+        rng.shuffle(out_of_sequence_indices)
+
+        while unassigned_logbook_assets and out_of_sequence_indices:
+            hint_index = out_of_sequence_indices.pop()
+            hint_logbook = unassigned_logbook_assets.pop()
+            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
+            indices_with_hints.add(hint_index)
+
+    # Fill remaining hint locations with jokes
+    while unassigned_logbook_assets:
+        patches = patches.assign_hint(unassigned_logbook_assets.pop(),
+                                      Hint(HintType.LOCATION, PrecisionPair.joke(), PickupIndex(-1))
+                                      )
+
+    # Fill in hint precisions
+    if configuration.hints.item_hints:
+        patches = add_hint_precisions(patches, rng)
+    else:
+        patches = replace_hints_without_precision_with_jokes(patches)
+
+    return patches
 
 
 def add_hint_precisions(patches: GamePatches, rng: Random) -> GamePatches:
@@ -96,103 +205,3 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches) -> GamePatc
         asset: hints_to_replace.get(asset, hint)
         for asset, hint in patches.hints.items()
     })
-
-
-def place_hints(configuration: LayoutConfiguration, final_state: State, patches: GamePatches, rng: Random,
-                world_list: WorldList, status_update: Callable[[str], None]) -> GamePatches:
-    status_update("Placing hints...")
-
-    state_sequence = [final_state]
-    while state_sequence[-1].previous_state:
-        state_sequence.append(state_sequence[-1].previous_state)
-    state_sequence = tuple(reversed(state_sequence))
-
-    possible_hint_indices = {index for index, pickup in patches.pickup_assignment.items()
-                             if pickup.can_get_hint or index in _SPECIAL_HINTS}
-
-    sequence: List[Union[PickupIndex, LogbookAsset]] = []
-    for state in state_sequence[1:]:
-        new_indices = sorted((set(state.collected_pickup_indices) & possible_hint_indices)
-                             - set(state.previous_state.collected_pickup_indices))
-        rng.shuffle(new_indices)
-
-        new_logbook_assets = sorted(set(state.collected_scan_assets)
-                                  - (set(state.previous_state.collected_scan_assets) | set(patches.hints)))
-        rng.shuffle(new_logbook_assets)
-
-        sequence.extend((*new_indices, *new_logbook_assets))
-
-    sequence_types = [type(resource) for resource in sequence]
-    indices_with_hints = set()
-    special_hint_indices_remaining = set(_SPECIAL_HINTS)
-
-    unassigned_logbook_assets = [node.resource() for node in world_list.all_nodes
-                                 if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
-                                 and node.resource() not in patches.hints]
-    rng.shuffle(unassigned_logbook_assets)
-
-    # Fill hint locations with hints for in-sequence items
-    for i, resource in enumerate(sequence):
-        if isinstance(resource, LogbookAsset) and len(unassigned_logbook_assets) > len(special_hint_indices_remaining):
-            hint_logbook = resource
-
-            # Forbid hints for the index such that there are not other indices between it and our current logbook
-            # asset in the sequence. This prevents hints for items in the same room as the hints if the item is
-            # collectable at the same time as the hint (which is usually the case).
-            for resource in sequence[sequence_types.index(PickupIndex, i) + 1:]:
-                if isinstance(resource, PickupIndex) and resource not in indices_with_hints:
-                    hint_index = resource
-                    break
-            else:
-                break
-
-            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
-            indices_with_hints.add(hint_index)
-            special_hint_indices_remaining.discard(hint_index)
-            unassigned_logbook_assets.remove(hint_logbook)
-
-    # Place remaining Guardian/vanilla Light Suit hints
-    for index in special_hint_indices_remaining:
-        patches = patches.assign_hint(unassigned_logbook_assets.pop(), _hint_for_index(index))
-
-    # Try to fill remaining hint locations with hints for indices that come after all of the logbook assets
-    # in the sequence
-    if unassigned_logbook_assets:
-        end_of_sequence_indices = []
-        for resource in reversed(sequence):
-            if isinstance(resource, LogbookAsset):
-                break
-            elif resource not in indices_with_hints:
-                end_of_sequence_indices.append(resource)
-        rng.shuffle(end_of_sequence_indices)
-
-        while unassigned_logbook_assets and end_of_sequence_indices:
-            hint_index = end_of_sequence_indices.pop()
-            hint_logbook = unassigned_logbook_assets.pop()
-            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
-            indices_with_hints.add(hint_index)
-
-    # Try to fill remaining hint locations with hints for indices that aren't in the sequence
-    if unassigned_logbook_assets:
-        out_of_sequence_indices = list(possible_hint_indices - indices_with_hints - set(sequence))
-        rng.shuffle(out_of_sequence_indices)
-
-        while unassigned_logbook_assets and out_of_sequence_indices:
-            hint_index = out_of_sequence_indices.pop()
-            hint_logbook = unassigned_logbook_assets.pop()
-            patches = patches.assign_hint(hint_logbook, _hint_for_index(hint_index))
-            indices_with_hints.add(hint_index)
-
-    # Fill remaining hint locations with jokes
-    while unassigned_logbook_assets:
-        patches = patches.assign_hint(unassigned_logbook_assets.pop(),
-                                      Hint(HintType.LOCATION, PrecisionPair.joke(), PickupIndex(-1))
-                                      )
-
-    # Fill in hint precisions
-    if configuration.hints.item_hints:
-        patches = add_hint_precisions(patches, rng)
-    else:
-        patches = replace_hints_without_precision_with_jokes(patches)
-
-    return patches
