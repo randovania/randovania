@@ -51,7 +51,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.world_list = self.game_description.world_list
 
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
-            self.world_selector_box.addItem(world.name, userData=world)
+            self.world_selector_box.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
 
         self.update_edit_mode()
 
@@ -99,7 +99,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.update_selected_node()
 
     def focus_on_world(self, world_name: str):
-        self.world_selector_box.setCurrentIndex(self.world_selector_box.findText(world_name))
+        world = self.world_list.world_with_name(world_name)
+        self.world_selector_box.setCurrentIndex(self.world_selector_box.findData(world))
 
     def focus_on_area(self, area_name: str):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))

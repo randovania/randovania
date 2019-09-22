@@ -220,6 +220,7 @@ ConstructArea = Struct(
 
 ConstructWorld = Struct(
     name=CString("utf8"),
+    dark_name=CString("utf8"),
     asset_id=Int32ub,
     areas=PrefixedArray(Byte, ConstructArea),
 )

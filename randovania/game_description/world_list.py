@@ -11,14 +11,6 @@ from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world import World
 
-_DARK_WORLD_NAMES = {
-    "Temple Grounds": "Sky Temple Grounds",
-    "Great Temple": "Sky Temple",
-    "Agon Wastes": "Dark Agon Wastes",
-    "Torvus Bog": "Dark Torvus Bog",
-    "Sanctuary Fortress": "Ing Hive",
-}
-
 
 class WorldList:
     worlds: List[World]
@@ -44,7 +36,7 @@ class WorldList:
 
     def world_with_name(self, world_name: str) -> World:
         for world in self.worlds:
-            if world.name == world_name:
+            if world.name == world_name or world.dark_name == world_name:
                 return world
         raise KeyError("Unknown name: {}".format(world_name))
 
@@ -83,11 +75,12 @@ class WorldList:
                     yield world, area, node
 
     def world_name_from_area(self, area: Area, distinguish_dark_aether: bool = False) -> str:
-        world_name = self.world_with_area(area).name
-        if distinguish_dark_aether and area.in_dark_aether:
-            world_name = _DARK_WORLD_NAMES[world_name]
+        world = self.world_with_area(area)
 
-        return world_name
+        if distinguish_dark_aether and area.in_dark_aether:
+            return world.dark_name
+        else:
+            return world.name
 
     def world_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
         return self.world_name_from_area(self.nodes_to_area(node), distinguish_dark_aether)
@@ -109,7 +102,7 @@ class WorldList:
 
         world_name, area_name, node_name = match.group(1, 2, 3)
         for world in self.worlds:
-            if world_name is not None and world.name != world_name:
+            if world_name is not None and world_name not in (world.name, world.dark_name):
                 continue
 
             for area in world.areas:
