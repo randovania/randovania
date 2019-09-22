@@ -1,6 +1,7 @@
 import base64
+import collections
 import re
-from typing import Dict, List, Iterator, Tuple
+from typing import Dict, List, Iterator, Tuple, DefaultDict
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
@@ -118,26 +119,30 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
                                          pickup_assignment: PickupAssignment,
                                          ordered_pickups: List[PickupEntry],
                                          ) -> Dict[str, Dict[str, str]]:
-    items_locations = {}
 
-    for world in sorted(world_list.worlds, key=lambda w: w.name):
-        items_in_world = {}
-        items_locations[world.name] = items_in_world
+    items_locations: DefaultDict[str, Dict[str, str]] = collections.defaultdict(dict)
 
-        for node in sorted(world.all_nodes, key=lambda w: w.name):
-            if not node.is_resource_node or not isinstance(node, PickupNode):
-                continue
+    for world, area, node in world_list.all_worlds_areas_nodes:
+        if not node.is_resource_node or not isinstance(node, PickupNode):
+            continue
 
-            if node.pickup_index in pickup_assignment:
-                pickup = pickup_assignment[node.pickup_index]
-                ordered_pickups.append(pickup)
-                item_name = pickup.name
-            else:
-                item_name = "Nothing"
+        if node.pickup_index in pickup_assignment:
+            pickup = pickup_assignment[node.pickup_index]
+            ordered_pickups.append(pickup)
+            item_name = pickup.name
+        else:
+            item_name = "Nothing"
 
-            items_in_world[world_list.node_name(node)] = item_name
+        world_name = world.dark_name if area.in_dark_aether else world.name
+        items_locations[world_name][world_list.node_name(node)] = item_name
 
-    return items_locations
+    return {
+        world: {
+            area: item
+            for area, item in sorted(items_locations[world].items())
+        }
+        for world in sorted(items_locations.keys())
+    }
 
 
 def _node_mapping_to_elevator_connection(world_list: WorldList,
@@ -192,14 +197,16 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
     ordered_pickups = []
 
     result = {
-        "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location)),
+        "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location), True),
         "starting_items": {
             resource_info.long_name: quantity
             for resource_info, quantity in patches.starting_items.items()
         },
         "elevators": {
-            world_list.area_name(world_list.nodes_to_area(_find_node_with_teleporter(world_list, teleporter_id))):
-                world_list.area_name(world_list.nodes_to_area(world_list.resolve_teleporter_connection(connection)))
+            world_list.area_name(world_list.nodes_to_area(_find_node_with_teleporter(world_list,
+                                                                                     teleporter_id)), True):
+                world_list.area_name(world_list.nodes_to_area(world_list.resolve_teleporter_connection(connection)),
+                                     True)
             for teleporter_id, connection in patches.elevator_connection.items()
         },
         "translators": {
