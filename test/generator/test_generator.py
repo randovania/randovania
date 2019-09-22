@@ -42,7 +42,7 @@ def _create_test_layout_description(
             patcher_configuration=PatcherConfiguration.default(),
             layout_configuration=configuration,
         ),
-        patches=GamePatches.with_game(game).assign_new_pickups([
+        patches=game.create_game_patches().assign_new_pickups([
             # (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])
             # for i, new_index in enumerate(pickup_mapping)
         ]),

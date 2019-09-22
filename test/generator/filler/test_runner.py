@@ -35,7 +35,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     rng = Random(5000)
     status_update = MagicMock()
     item_pool = [pickup]
-    patches = GamePatches.with_game(echoes_game_description)
+    patches = echoes_game_description.create_game_patches()
 
     logbook_nodes = [node for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
 

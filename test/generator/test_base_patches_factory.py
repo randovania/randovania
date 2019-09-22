@@ -25,10 +25,10 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
     # Run
     result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
                                                                       Random(permalink.seed_number),
-                                                                      GamePatches.with_game(game))
+                                                                      game.create_game_patches())
 
     # Assert
-    assert result == GamePatches.with_game(game)
+    assert result == game.create_game_patches()
 
 
 def test_add_elevator_connections_to_patches_random(echoes_game_data):
@@ -38,7 +38,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data):
         Permalink.default(),
         layout_configuration=dataclasses.replace(LayoutConfiguration.default(),
                                                  elevators=LayoutElevators.RANDOMIZED))
-    expected = dataclasses.replace(GamePatches.with_game(game),
+    expected = dataclasses.replace(game.create_game_patches(),
                                    elevator_connection={
                                        589851: AreaLocation(1039999561, 1868895730),
                                        1572998: AreaLocation(1039999561, 3479543630),
@@ -60,12 +60,14 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data):
                                        38: AreaLocation(1119434212, 1473133138),
                                        1245332: AreaLocation(2252328306, 2399252740),
                                        1638535: AreaLocation(2252328306, 2556480432),
+                                       204865660: AreaLocation(464164546,1564082177),
+                                       4260106: AreaLocation(464164546, 3136899603),
                                    })
 
     # Run
     result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
                                                                       Random(permalink.seed_number),
-                                                                      GamePatches.with_game(game),
+                                                                      game.create_game_patches(),
                                                                       )
 
     # Assert
@@ -221,9 +223,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
 @patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
-@patch("randovania.generator.generator.GamePatches.with_game")
-def test_create_base_patches(mock_with_game: MagicMock,
-                             mock_add_elevator_connections_to_patches: MagicMock,
+def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
                              mock_add_default_hints_to_patches: MagicMock,
@@ -233,7 +233,7 @@ def test_create_base_patches(mock_with_game: MagicMock,
     game = MagicMock()
     layout_configuration = MagicMock()
 
-    first_patches = mock_with_game.return_value
+    first_patches = game.create_game_patches.return_value
     second_patches = mock_add_elevator_connections_to_patches.return_value
     third_patches = second_patches.assign_gate_assignment.return_value
     fourth_patches = third_patches.assign_starting_location.return_value
@@ -242,7 +242,7 @@ def test_create_base_patches(mock_with_game: MagicMock,
     result = base_patches_factory.create_base_patches(layout_configuration, rng, game)
 
     # Assert
-    mock_with_game.assert_called_once_with(game)
+    game.create_game_patches.assert_called_once_with()
     mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, first_patches)
 
     # Gate Assignment

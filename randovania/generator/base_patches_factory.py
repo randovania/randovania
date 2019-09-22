@@ -2,6 +2,7 @@ import copy
 import dataclasses
 from random import Random
 
+from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
@@ -59,8 +60,19 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
         if rng is None:
             raise MissingRng("Elevator")
 
+        world_list = default_database.default_prime2_game_description().world_list
+        areas_to_not_change = {
+            2278776548,  # Sky Temple Gateway
+            2068511343,  # Sky Temple Energy Controller
+            3136899603,  # Aerie Transport Station
+            1564082177,  # Aerie
+        }
+
         elevator_connection = copy.copy(patches.elevator_connection)
-        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(rng))
+        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(
+            rng=rng,
+            elevator_database=elevator_distributor.create_elevator_database(world_list, areas_to_not_change)
+        ))
         return dataclasses.replace(patches, elevator_connection=elevator_connection)
     else:
         return patches
@@ -175,7 +187,7 @@ def create_base_patches(configuration: LayoutConfiguration,
 
     # TODO: we shouldn't need the seed_number!
 
-    patches = GamePatches.with_game(game)
+    patches = game.create_game_patches()
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates

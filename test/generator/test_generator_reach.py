@@ -45,7 +45,7 @@ def _test_data():
         patcher_configuration=PatcherConfiguration.default(),
         layout_configuration=configuration,
     )
-    patches = GamePatches.with_game(game)
+    patches = game.create_game_patches()
     patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(
         configuration, game.resource_database, Random(15000)
     ))
@@ -139,7 +139,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                            echoes_resource_database, RequirementSet.impossible(),
                            None, {}, world_list)
 
-    patches = GamePatches.with_game(game)
+    patches = game.create_game_patches()
     patches = patches.assign_gate_assignment({
         TranslatorGate(1): scan_visor
     })
@@ -161,7 +161,7 @@ def test_reach_size_from_start(echoes_game_description):
     configuration = LayoutConfiguration.from_params(
         trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HYPERMODE),
     )
-    patches = GamePatches.with_game(echoes_game_description)
+    patches = echoes_game_description.create_game_patches()
     patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(
         configuration, echoes_game_description.resource_database, Random(15000)
     ))
