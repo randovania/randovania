@@ -7,6 +7,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 
 class World(NamedTuple):
     name: str
+    dark_name: str
     world_asset_id: int
     areas: List[Area]
 
