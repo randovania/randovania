@@ -228,32 +228,30 @@ def _list_paths_with_resource(game: GameDescription,
                               needed_quantity: Optional[int]):
     count = 0
 
-    for world in game.world_list.worlds:
-        for area in world.areas:
-            area_had_resource = False
+    for area in game.world_list.all_areas:
+        area_had_resource = False
 
-            for source, connection in area.connections.items():
-                for target, requirements in connection.items():
-                    for alternative in requirements.alternatives:
-                        individual = alternative.get(resource)
-                        if individual is None:
-                            continue
+        for source, connection in area.connections.items():
+            for target, requirements in connection.items():
+                for alternative in requirements.alternatives:
+                    individual = alternative.get(resource)
+                    if individual is None:
+                        continue
 
-                        if needed_quantity is None or needed_quantity == individual.amount:
-                            area_had_resource = True
-                            if not print_only_area:
-                                print("At {0.name}/{1.name}, from {2} to {3}:\n{4}\n".format(
-                                    world,
-                                    area,
-                                    source.name,
-                                    target.name,
-                                    sorted(individual for individual in alternative.values()
-                                           if individual.resource != resource)
-                                ))
-                            count += 1
+                    if needed_quantity is None or needed_quantity == individual.amount:
+                        area_had_resource = True
+                        if not print_only_area:
+                            print("At {0}, from {1} to {2}:\n{3}\n".format(
+                                game.world_list.area_name(area, True),
+                                source.name,
+                                target.name,
+                                sorted(individual for individual in alternative.values()
+                                       if individual.resource != resource)
+                            ))
+                        count += 1
 
-            if area_had_resource and print_only_area:
-                print("{0.name}/{1.name}".format(world, area))
+        if area_had_resource and print_only_area:
+            print(game.world_list.area_name(area, True))
 
     print("Total routes: {}".format(count))
 
@@ -263,27 +261,26 @@ def list_paths_with_dangerous_logic(args):
     print_only_area = args.print_only_area
     count = 0
 
-    for world in game.world_list.worlds:
-        for area in world.areas:
-            area_had_resource = False
+    for area in game.world_list.all_areas:
+        area_had_resource = False
 
-            for source, connection in area.connections.items():
-                for target, requirements in connection.items():
-                    for alternative in requirements.alternatives:
-                        for individual in alternative.values():
-                            if individual.negate:
-                                area_had_resource = True
-                                if not print_only_area:
-                                    print("At {0.name}/{1.name}, from {2} to {3}:\n{4}\n".format(
-                                        world,
-                                        area,
-                                        source.name,
-                                        target.name,
-                                        sorted(individual for individual in alternative.values())))
-                                count += 1
+        for source, connection in area.connections.items():
+            for target, requirements in connection.items():
+                for alternative in requirements.alternatives:
+                    for individual in alternative.values():
+                        if individual.negate:
+                            area_had_resource = True
+                            if not print_only_area:
+                                print("At {0}, from {1} to {2}:\n{4}\n".format(
+                                    game.world_list.area_name(area, True),
+                                    area,
+                                    source.name,
+                                    target.name,
+                                    sorted(individual for individual in alternative.values())))
+                            count += 1
 
-            if area_had_resource and print_only_area:
-                print("{0.name}/{1.name}".format(world, area))
+        if area_had_resource and print_only_area:
+            print(game.world_list.area_name(area, True))
 
     print("Total routes: {}".format(count))
 
