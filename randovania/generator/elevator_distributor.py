@@ -1,29 +1,11 @@
 import copy
 from collections import defaultdict
 from random import Random
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple, AbstractSet
 
 from randovania.game_description.area_location import AreaLocation
-
-
-class Int32:
-    def __init__(self, value):
-        # Wrap value into [-2**31, 2**31-1]
-        self.value = (value + 2 ** 31) % 2 ** 32 - 2 ** 31
-
-    def __int__(self):
-        return self.value
-
-    def __add__(self, other):
-        return Int32(self.value + other.value)
-
-    def __sub__(self, other):
-        return Int32(self.value - other.value)
-
-
-MBIG = Int32(0x7fffffff)
-MSEED = Int32(0x9a4ec86)
-MZ = 0
+from randovania.game_description.node import TeleporterNode
+from randovania.game_description.world_list import WorldList
 
 
 class Elevator:
@@ -53,8 +35,9 @@ class Elevator:
 
 
 def try_randomize_elevators(rng: Random,
+                            echoes_elevators: Tuple[Elevator, ...],
                             ) -> List[Elevator]:
-    elevator_database: List[Elevator] = copy.deepcopy(echoes_elevators)
+    elevator_database: List[Elevator] = list(echoes_elevators)
 
     elevator_list = copy.copy(elevator_database)
     elevators_by_world: Dict[int, List[Elevator]] = defaultdict(list)
@@ -96,15 +79,16 @@ def try_randomize_elevators(rng: Random,
             celevator_list3 = celevator_list1
         else:
             # Randomization failed
-            return try_randomize_elevators(rng)
+            return try_randomize_elevators(rng, echoes_elevators)
 
     return elevator_database
 
 
 def elevator_connections_for_seed_number(rng: Random,
+                                         elevator_database: Tuple[Elevator, ...],
                                          ) -> Dict[int, AreaLocation]:
     elevator_connection = {}
-    for elevator in try_randomize_elevators(rng):
+    for elevator in try_randomize_elevators(rng, elevator_database):
         elevator_connection[elevator.instance_id] = AreaLocation(
             elevator.connected_elevator.world_asset_id,
             elevator.connected_elevator.area_asset_id
@@ -112,23 +96,22 @@ def elevator_connections_for_seed_number(rng: Random,
     return elevator_connection
 
 
-echoes_elevators = [
-    Elevator(589851, 1006255871, 2918020398, 2252328306, 2556480432),
-    Elevator(1572998, 1006255871, 1660916974, 1119434212, 1473133138),
-    Elevator(1966093, 1006255871, 2889020216, 1039999561, 1868895730),
-    Elevator(2097251, 1006255871, 1287880522, 2252328306, 2399252740),
-    Elevator(3342446, 1006255871, 3455543403, 464164546, 3528156989),
-    Elevator(3538975, 1006255871, 1345979968, 2252328306, 408633584),
-    Elevator(152, 2252328306, 408633584, 1006255871, 1345979968),
-    Elevator(393260, 2252328306, 2556480432, 1006255871, 2918020398),
-    Elevator(524321, 2252328306, 2399252740, 1006255871, 1287880522),
-    Elevator(122, 1119434212, 1473133138, 1006255871, 1660916974),
-    Elevator(1245307, 1119434212, 2806956034, 1039999561, 3479543630),
-    Elevator(2949235, 1119434212, 3331021649, 464164546, 900285955),
-    Elevator(129, 1039999561, 1868895730, 1006255871, 2889020216),
-    Elevator(2162826, 1039999561, 3479543630, 1119434212, 2806956034),
-    Elevator(4522032, 1039999561, 3205424168, 464164546, 3145160350),
-    Elevator(38, 464164546, 3528156989, 1006255871, 3455543403),
-    Elevator(1245332, 464164546, 900285955, 1119434212, 3331021649),
-    Elevator(1638535, 464164546, 3145160350, 1039999561, 3205424168),
-]
+def create_elevator_database(world_list: WorldList,
+                             areas_to_not_change: AbstractSet[int],
+                             ) -> Tuple[Elevator, ...]:
+    """
+    Creates a tuple of Elevator objects, exclude those that belongs to one of the areas provided.
+    :param world_list:
+    :param areas_to_not_change: Set of asset_id of Areas whose teleporters are to be ignored
+    :return:
+    """
+    return tuple(
+        Elevator(node.teleporter_instance_id,
+                 world.world_asset_id,
+                 area.area_asset_id,
+                 node.default_connection.world_asset_id,
+                 node.default_connection.area_asset_id)
+
+        for world, area, node in world_list.all_worlds_areas_nodes
+        if isinstance(node, TeleporterNode) and node.editable and area.area_asset_id not in areas_to_not_change
+    )

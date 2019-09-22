@@ -11,7 +11,6 @@ from randovania.game_description.requirements import RequirementSet
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world import World
 
-
 _DARK_WORLD_NAMES = {
     "Temple Grounds": "Sky Temple Grounds",
     "Great Temple": "Sky Temple",
@@ -19,6 +18,7 @@ _DARK_WORLD_NAMES = {
     "Torvus Bog": "Dark Torvus Bog",
     "Sanctuary Fortress": "Ing Hive",
 }
+
 
 class WorldList:
     worlds: List[World]
@@ -75,11 +75,18 @@ class WorldList:
     def all_nodes(self) -> Tuple[Node, ...]:
         return self._nodes
 
+    @property
+    def all_worlds_areas_nodes(self) -> Iterable[Tuple[World, Area, Node]]:
+        for world in self.worlds:
+            for area in world.areas:
+                for node in area.nodes:
+                    yield world, area, node
+
     def world_name_from_area(self, area: Area, distinguish_dark_aether: bool = False) -> str:
         world_name = self.world_with_area(area).name
         if distinguish_dark_aether and area.in_dark_aether:
             world_name = _DARK_WORLD_NAMES[world_name]
-        
+
         return world_name
 
     def world_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
@@ -92,7 +99,7 @@ class WorldList:
             area.name)
 
     def node_name(self, node: Node, with_world=False, distinguish_dark_aether: bool = False) -> str:
-        prefix = "{}/".format(self.world_name_from_node(node)) if with_world else ""
+        prefix = "{}/".format(self.world_name_from_node(node, distinguish_dark_aether)) if with_world else ""
         return "{}{}/{}".format(prefix, self.nodes_to_area(node).name, node.name)
 
     def node_from_name(self, name: str) -> Node:
