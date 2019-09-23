@@ -1,3 +1,4 @@
+import collections
 import copy
 import dataclasses
 
@@ -44,13 +45,13 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
             "Temple Grounds/Transport to Agon Wastes": "Agon Wastes/Transport to Temple Grounds",
             "Temple Grounds/Transport to Torvus Bog": "Torvus Bog/Transport to Temple Grounds",
             "Temple Grounds/Temple Transport B": "Great Temple/Temple Transport B",
-            "Temple Grounds/Sky Temple Gateway": "Great Temple/Sky Temple Energy Controller",
             "Temple Grounds/Transport to Sanctuary Fortress": "Sanctuary Fortress/Transport to Temple Grounds",
             "Temple Grounds/Temple Transport A": "Great Temple/Temple Transport A",
             "Great Temple/Temple Transport A": "Temple Grounds/Temple Transport A",
             "Great Temple/Temple Transport C": "Temple Grounds/Temple Transport C",
             "Great Temple/Temple Transport B": "Temple Grounds/Temple Transport B",
-            "Great Temple/Sky Temple Energy Controller": "Temple Grounds/Sky Temple Gateway",
+            "Sky Temple Grounds/Sky Temple Gateway": "Sky Temple/Sky Temple Energy Controller",
+            "Sky Temple/Sky Temple Energy Controller": "Sky Temple Grounds/Sky Temple Gateway",
             "Agon Wastes/Transport to Temple Grounds": "Temple Grounds/Transport to Agon Wastes",
             "Agon Wastes/Transport to Torvus Bog": "Torvus Bog/Transport to Agon Wastes",
             "Agon Wastes/Transport to Sanctuary Fortress": "Sanctuary Fortress/Transport to Agon Wastes",
@@ -64,18 +65,25 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
             "Sanctuary Fortress/Aerie Transport Station": "Sanctuary Fortress/Aerie",
         },
         "translators": {},
-        "locations": {
-            world.name: {
-                game.world_list.node_name(node): "Nothing"
-                for node in world.all_nodes
-                if node.is_resource_node and isinstance(node, PickupNode)
-            }
-            for world in sorted(game.world_list.worlds, key=lambda w: w.name)
-        },
+        "locations": {},
         "hints": {},
         "_locations_internal": "",
     }
     patches = game.create_game_patches()
+
+    locations = collections.defaultdict(dict)
+    for world, area, node in game.world_list.all_worlds_areas_nodes:
+        if node.is_resource_node and isinstance(node, PickupNode):
+            world_name = world.dark_name if area.in_dark_aether else world.name
+            locations[world_name][game.world_list.node_name(node)] = "Nothing"
+
+    data["locations"] = {
+        world: {
+            area: item
+            for area, item in sorted(locations[world].items())
+        }
+        for world in sorted(locations.keys())
+    }
 
     if request.param.get("starting_item"):
         item_name = request.param.get("starting_item")
