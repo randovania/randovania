@@ -291,6 +291,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.hint_tree_widget.setSortingEnabled(False)
 
+        # TODO: This ignores the Dark World names. But there's currently no logbook nodes in Dark World.
         for world in game_description.world_list.worlds:
 
             world_item = QtWidgets.QTreeWidgetItem(self.hint_tree_widget)

@@ -254,6 +254,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         """
         self.possible_locations_tree.itemDoubleClicked.connect(self._on_tree_node_double_clicked)
 
+        # TODO: Dark World names
         for world in self.game_description.world_list.worlds:
             world_item = QTreeWidgetItem(self.possible_locations_tree)
             world_item.setText(0, world.name)

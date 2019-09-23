@@ -77,8 +77,8 @@ class WorldList:
     def world_name_from_area(self, area: Area, distinguish_dark_aether: bool = False) -> str:
         world = self.world_with_area(area)
 
-        if distinguish_dark_aether and area.in_dark_aether:
-            return world.dark_name
+        if distinguish_dark_aether:
+            return world.correct_name(area.in_dark_aether)
         else:
             return world.name
 
