@@ -59,7 +59,9 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
             "Torvus Bog/Transport to Sanctuary Fortress": "Sanctuary Fortress/Transport to Torvus Bog",
             "Sanctuary Fortress/Transport to Temple Grounds": "Temple Grounds/Transport to Sanctuary Fortress",
             "Sanctuary Fortress/Transport to Agon Wastes": "Agon Wastes/Transport to Sanctuary Fortress",
-            "Sanctuary Fortress/Transport to Torvus Bog": "Torvus Bog/Transport to Sanctuary Fortress"
+            "Sanctuary Fortress/Transport to Torvus Bog": "Torvus Bog/Transport to Sanctuary Fortress",
+            "Sanctuary Fortress/Aerie": "Sanctuary Fortress/Aerie Transport Station",
+            "Sanctuary Fortress/Aerie Transport Station": "Sanctuary Fortress/Aerie",
         },
         "translators": {},
         "locations": {
@@ -73,7 +75,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         "hints": {},
         "_locations_internal": "",
     }
-    patches = GamePatches.with_game(game)
+    patches = game.create_game_patches()
 
     if request.param.get("starting_item"):
         item_name = request.param.get("starting_item")
