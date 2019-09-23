@@ -84,10 +84,11 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         ]
 
         if areas_to_show:
-            self.area_list_label.setText("<br />".join(
-                f'<a href="data-editor://{world.name}/{area.name}">{world.name} - {area.name}</a>'
-                for (world, area) in sorted(areas_to_show, key=lambda item: (item[0].name, item[1].name))
-            ))
+            lines = [
+                f'<a href="data-editor://{world.correct_name(area.in_dark_aether)}/{area.name}">{world.correct_name(area.in_dark_aether)} - {area.name}</a>'
+                for (world, area) in areas_to_show
+            ]
+            self.area_list_label.setText("<br />".join(sorted(lines)))
 
         else:
             self.area_list_label.setText("This trick is not used in this level.")

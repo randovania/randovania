@@ -214,6 +214,7 @@ def write_area(area: Area) -> dict:
 def write_world(world: World) -> dict:
     return {
         "name": world.name,
+        "dark_name": world.dark_name,
         "asset_id": world.world_asset_id,
         "areas": [
             write_area(area)

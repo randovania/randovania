@@ -376,7 +376,7 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.startingarea_combo.setItemData(2, StartingLocationConfiguration.CUSTOM)
 
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
-            self.specific_starting_world_combo.addItem(world.name, userData=world)
+            self.specific_starting_world_combo.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
 
         self.specific_starting_world_combo.currentIndexChanged.connect(self._on_select_world)
         self.specific_starting_area_combo.currentIndexChanged.connect(self._on_select_area)

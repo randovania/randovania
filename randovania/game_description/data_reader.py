@@ -226,7 +226,7 @@ class WorldReader:
         return read_array(data, self.read_area)
 
     def read_world(self, data: Dict) -> World:
-        return World(data["name"], data["asset_id"],
+        return World(data["name"], data["dark_name"], data["asset_id"],
                      self.read_area_list(data["areas"]))
 
     def read_world_list(self, data: List[Dict]) -> WorldList:
