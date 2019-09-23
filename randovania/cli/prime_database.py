@@ -168,10 +168,9 @@ def export_areas_command_logic(args):
                          "Interact while OOB and go back in bounds",
                          "Interact while OOB and stay out of bounds",
                          "Requirements for going OOB"))
-        for world in gd.world_list.worlds:
-            for area in world.areas:
-                for node in area.nodes:
-                    writer.writerow((world.name, area.name, node.name, False, False, False))
+
+        for world, area, node in gd.world_list.all_worlds_areas_nodes:
+            writer.writerow((world.name, area.name, node.name, False, False, False))
 
 
 def export_areas_command(sub_parsers):
@@ -210,16 +209,15 @@ def _modify_resources(game: GameDescription,
         else:
             return alternative
 
-    for world in game.world_list.worlds:
-        for area in world.areas:
-            for source, connection in area.connections.items():
-                connection.update({
-                    target: RequirementSet(
-                        _replace(alternative)
-                        for alternative in requirements.alternatives
-                    )
-                    for target, requirements in connection.items()
-                })
+    for area in game.world_list.all_areas:
+        for source, connection in area.connections.items():
+            connection.update({
+                target: RequirementSet(
+                    _replace(alternative)
+                    for alternative in requirements.alternatives
+                )
+                for target, requirements in connection.items()
+            })
 
 
 def _list_paths_with_resource(game: GameDescription,

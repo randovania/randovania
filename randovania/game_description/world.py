@@ -1,7 +1,7 @@
 from typing import NamedTuple, List, Iterator
 
 from randovania.game_description.area import Area
-from randovania.game_description.node import Node, PickupNode
+from randovania.game_description.node import Node
 from randovania.game_description.resources.pickup_index import PickupIndex
 
 
@@ -44,3 +44,6 @@ class World(NamedTuple):
             if area.name == area_name:
                 return area
         raise KeyError("Unknown name: {}".format(area_name))
+
+    def correct_name(self, in_dark_world: bool) -> str:
+        return self.dark_name if in_dark_world else self.name
