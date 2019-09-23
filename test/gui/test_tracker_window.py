@@ -12,78 +12,78 @@ def _layout_config():
     return LayoutConfiguration.default()
 
 
-def test_load_previous_state_no_previous_layout(tmpdir, layout_config):
+def test_load_previous_state_no_previous_layout(tmp_path: Path, layout_config):
     # Run
-    result = tracker_window._load_previous_state(Path(tmpdir), layout_config)
+    result = tracker_window._load_previous_state(tmp_path, layout_config)
 
     # Assert
     assert result is None
 
 
-def test_load_previous_state_previous_layout_not_json(tmpdir, layout_config):
+def test_load_previous_state_previous_layout_not_json(tmp_path: Path, layout_config):
     # Setup
-    tmpdir.join("layout_configuration.json").write_text("this is not a json", "utf-8")
+    tmp_path.joinpath("layout_configuration.json").write_text("this is not a json")
 
     # Run
-    result = tracker_window._load_previous_state(Path(tmpdir), layout_config)
+    result = tracker_window._load_previous_state(tmp_path, layout_config)
 
     # Assert
     assert result is None
 
 
-def test_load_previous_state_previous_layout_not_layout(tmpdir, layout_config):
+def test_load_previous_state_previous_layout_not_layout(tmp_path: Path, layout_config):
     # Setup
-    tmpdir.join("layout_configuration.json").write_text(json.dumps({"trick_level": "foo"}), "utf-8")
-    tmpdir.join("state.json").write_text("[]", "utf-8")
+    tmp_path.joinpath("layout_configuration.json").write_text(json.dumps({"trick_level": "foo"}))
+    tmp_path.joinpath("state.json").write_text("[]")
 
     # Run
-    result = tracker_window._load_previous_state(Path(tmpdir), layout_config)
+    result = tracker_window._load_previous_state(tmp_path, layout_config)
 
     # Assert
     assert result is None
 
 
-def test_load_previous_state_missing_state(tmpdir, layout_config):
+def test_load_previous_state_missing_state(tmp_path: Path, layout_config):
     # Setup
-    tmpdir.join("layout_configuration.json").write_text(json.dumps(layout_config.as_json), "utf-8")
+    tmp_path.joinpath("layout_configuration.json").write_text(json.dumps(layout_config.as_json))
 
     # Run
-    result = tracker_window._load_previous_state(Path(tmpdir), layout_config)
+    result = tracker_window._load_previous_state(tmp_path, layout_config)
 
     # Assert
     assert result is None
 
 
-def test_load_previous_state_invalid_state(tmpdir, layout_config):
+def test_load_previous_state_invalid_state(tmp_path: Path, layout_config):
     # Setup
-    tmpdir.join("layout_configuration.json").write_text(json.dumps(layout_config.as_json), "utf-8")
-    tmpdir.join("state.json").write_text("", "utf-8")
+    tmp_path.joinpath("layout_configuration.json").write_text(json.dumps(layout_config.as_json))
+    tmp_path.joinpath("state.json").write_text("")
 
     # Run
-    result = tracker_window._load_previous_state(Path(tmpdir), layout_config)
+    result = tracker_window._load_previous_state(tmp_path, layout_config)
 
     # Assert
     assert result is None
 
 
-def test_load_previous_state_success(tmpdir, layout_config):
+def test_load_previous_state_success(tmp_path: Path, layout_config):
     # Setup
     data = {"asdf": 5, "zxcv": 123}
-    tmpdir.join("layout_configuration.json").write_text(json.dumps(layout_config.as_json), "utf-8")
-    tmpdir.join("state.json").write_text(json.dumps(data), "utf-8")
+    tmp_path.joinpath("layout_configuration.json").write_text(json.dumps(layout_config.as_json))
+    tmp_path.joinpath("state.json").write_text(json.dumps(data))
 
     # Run
-    result = tracker_window._load_previous_state(Path(tmpdir), layout_config)
+    result = tracker_window._load_previous_state(tmp_path, layout_config)
 
     # Assert
     assert result == data
 
 
-def test_window_creation(skip_qtbot, tmpdir, layout_config):
+def test_window_creation(skip_qtbot, tmp_path: Path, layout_config):
     # Setup
 
     # Run
-    window = tracker_window.TrackerWindow(Path(tmpdir), layout_config)
+    window = tracker_window.TrackerWindow(tmp_path, layout_config)
     skip_qtbot.add_widget(window)
     window.reset()
 
