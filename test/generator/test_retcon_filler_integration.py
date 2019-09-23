@@ -23,7 +23,7 @@ def test_retcon_filler_integration():
     status_update = MagicMock()
 
     game = data_reader.decode_data(layout_configuration.game_data)
-    patches = GamePatches.with_game(game)
+    patches = game.create_game_patches()
     available_pickups = game.pickup_database.all_useful_pickups
 
     new_game, state = logic_bootstrap(layout_configuration, game, patches)

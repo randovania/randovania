@@ -59,11 +59,6 @@ _CUSTOM_NAMES_FOR_ELEVATORS = {
     3145160350: "Sanctuary Vault side",
 }
 
-_TELEPORTERS_THAT_KEEP_NAME_WHEN_VANILLA = {
-    136970379,  # Sky Temple Gateway
-    589949,  # Sky Temple Energy Controller
-}
-
 _RESOURCE_NAME_TRANSLATION = {
     'Temporary Missile': 'Missile',
     'Temporary Power Bombs': 'Power Bomb',
@@ -281,7 +276,7 @@ def _pretty_name_for_elevator(world_list: WorldList,
     :param connection:
     :return:
     """
-    if original_teleporter_node.teleporter_instance_id in _TELEPORTERS_THAT_KEEP_NAME_WHEN_VANILLA:
+    if original_teleporter_node.keep_name_when_vanilla:
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
@@ -305,9 +300,12 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
     """
 
     world_list = game.world_list
+
     nodes_by_teleporter_id = {
         node.teleporter_instance_id: node
-        for node in game.all_editable_teleporter_nodes()
+
+        for node in world_list.all_nodes
+        if isinstance(node, TeleporterNode) and node.editable
     }
 
     if len(patches.elevator_connection) != len(nodes_by_teleporter_id):
