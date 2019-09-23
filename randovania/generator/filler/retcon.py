@@ -267,11 +267,11 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            name: str
                            ) -> float:
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
-    return 1 - (2 ** -sum((
-        _RESOURCES_WEIGHT_MULTIPLIER * len(potential_uncollected.resources),
-        _INDICES_WEIGHT_MULTIPLIER   * len(potential_uncollected.indices),
-        _LOGBOOKS_WEIGHT_MULTIPLIER  * len(potential_uncollected.logbooks),
-    )))
+    return sum((
+        _RESOURCES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.resources)),
+        _INDICES_WEIGHT_MULTIPLIER   * int(bool(potential_uncollected.indices)),
+        _LOGBOOKS_WEIGHT_MULTIPLIER  * int(bool(potential_uncollected.logbooks)),
+    ))
 
 
 def _items_for_pickup(pickup: PickupEntry) -> int:
