@@ -764,6 +764,11 @@
                 "index": 92,
                 "long_name": "Undertemple Blast Shield Destroyed by PB Guardian",
                 "short_name": "Event92"
+            },
+            {
+                "index": 93,
+                "long_name": "Dark Samus 3 and 4",
+                "short_name": "Event93"
             }
         ],
         "tricks": [
@@ -7716,14 +7721,10 @@
                             }
                         },
                         {
-                            "name": "Dock to !!game_end_part1",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 2,
-                            "connected_area_asset_id": 517527729,
-                            "connected_dock_index": 4,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
+                            "name": "Event - Dark Samus 3 and 4",
+                            "heal": false,
+                            "node_type": 4,
+                            "event_index": 93,
                             "connections": {}
                         },
                         {
@@ -7746,7 +7747,7 @@
                                         }
                                     ]
                                 ],
-                                "Dock to !!game_end_part1": [
+                                "Event - Dark Samus 3 and 4": [
                                     [
                                         {
                                             "requirement_type": 0,
@@ -8599,40 +8600,6 @@
                     ]
                 },
                 {
-                    "name": "!!game_end_part1",
-                    "in_dark_aether": true,
-                    "asset_id": 517527729,
-                    "default_node_index": 0,
-                    "nodes": [
-                        {
-                            "name": "Dock to Sky Temple Gateway",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 4,
-                            "connected_area_asset_id": 2278776548,
-                            "connected_dock_index": 2,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to !!game_end_part2": [
-                                    []
-                                ]
-                            }
-                        },
-                        {
-                            "name": "Dock to !!game_end_part2",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 3,
-                            "connected_area_asset_id": 2555161119,
-                            "connected_dock_index": 3,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {}
-                        }
-                    ]
-                },
-                {
                     "name": "Fortress Transport Access",
                     "in_dark_aether": false,
                     "asset_id": 1894115037,
@@ -8762,40 +8729,6 @@
                                     ]
                                 ]
                             }
-                        }
-                    ]
-                },
-                {
-                    "name": "!!game_end_part2",
-                    "in_dark_aether": false,
-                    "asset_id": 2555161119,
-                    "default_node_index": 0,
-                    "nodes": [
-                        {
-                            "name": "Dock to !!game_end_part1",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 3,
-                            "connected_area_asset_id": 517527729,
-                            "connected_dock_index": 3,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to !!game_end_part3": [
-                                    []
-                                ]
-                            }
-                        },
-                        {
-                            "name": "Dock to !!game_end_part3",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 4,
-                            "connected_area_asset_id": 1393588666,
-                            "connected_dock_index": 2,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {}
                         }
                     ]
                 },
@@ -9069,40 +9002,6 @@
                     ]
                 },
                 {
-                    "name": "!!game_end_part3",
-                    "in_dark_aether": false,
-                    "asset_id": 1393588666,
-                    "default_node_index": 0,
-                    "nodes": [
-                        {
-                            "name": "Dock to !!game_end_part2",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 2,
-                            "connected_area_asset_id": 2555161119,
-                            "connected_dock_index": 4,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to !!game_end_part4": [
-                                    []
-                                ]
-                            }
-                        },
-                        {
-                            "name": "Dock to !!game_end_part4",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 3,
-                            "connected_area_asset_id": 1310017794,
-                            "connected_dock_index": 0,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {}
-                        }
-                    ]
-                },
-                {
                     "name": "Temple Transport A",
                     "in_dark_aether": false,
                     "asset_id": 1345979968,
@@ -9276,40 +9175,6 @@
                                             "negate": false
                                         }
                                     ]
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "!!game_end_part4",
-                    "in_dark_aether": false,
-                    "asset_id": 1310017794,
-                    "default_node_index": 1,
-                    "nodes": [
-                        {
-                            "name": "Dock to !!game_end_part5",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 1,
-                            "connected_area_asset_id": 2236193447,
-                            "connected_dock_index": 0,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {}
-                        },
-                        {
-                            "name": "Dock to !!game_end_part3",
-                            "heal": true,
-                            "node_type": 1,
-                            "dock_index": 0,
-                            "connected_area_asset_id": 1393588666,
-                            "connected_dock_index": 3,
-                            "dock_type": 2,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to !!game_end_part5": [
-                                    []
                                 ]
                             }
                         }
@@ -9512,30 +9377,6 @@
                                     ]
                                 ]
                             }
-                        }
-                    ]
-                },
-                {
-                    "name": "!!game_end_part5",
-                    "in_dark_aether": false,
-                    "asset_id": 2236193447,
-                    "default_node_index": 0,
-                    "nodes": [
-                        {
-                            "name": "Start",
-                            "heal": true,
-                            "node_type": 0,
-                            "connections": {
-                                "End": [
-                                    []
-                                ]
-                            }
-                        },
-                        {
-                            "name": "End",
-                            "heal": true,
-                            "node_type": 0,
-                            "connections": {}
                         }
                     ]
                 },
@@ -15572,7 +15413,7 @@
                                     ]
                                 ]
                             }
-                        },
+                        }
                     ]
                 },
                 {
