@@ -1,7 +1,8 @@
 import collections
 import itertools
 from random import Random
-from typing import Tuple, Iterator, NamedTuple, Set, Union, Dict, FrozenSet, Callable, List, TypeVar, Any, Optional
+from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
+    DefaultDict, Mapping, FrozenSet, Callable, List, TypeVar, Any, Optional
 
 from randovania.game_description.game_description import calculate_interesting_resources, GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -13,6 +14,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
@@ -82,6 +84,29 @@ def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResource
     return frozenset(resource for resource, _ in resource_gain)
 
 
+def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
+                                         assigned_indices: AbstractSet[PickupIndex],
+                                         seen_counts: Mapping[PickupIndex, int],
+                                         randomization_mode: RandomizationMode,
+                                         world_list: WorldList,
+                                         ) -> Dict[PickupIndex, float]:
+    total_seen_count = sum(seen_counts.values())
+    result = {}
+    for world in world_list.worlds:
+        if randomization_mode is RandomizationMode.FULL:
+            indices_in_world = set(world.pickup_indices)
+        elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+            indices_in_world = set(world.major_pickup_indices)
+
+        weight_from_collected_indices = len(indices_in_world) / ((1 + len(assigned_indices & indices_in_world)) ** 2)
+
+        for index in uncollected_indices & indices_in_world:
+            weight_from_seen_count = min(10, seen_counts[index]) ** -2
+            result[index] = weight_from_collected_indices * weight_from_seen_count
+
+    return result
+
+
 def _should_have_hint(item_category: ItemCategory) -> bool:
     return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
 
@@ -100,8 +125,8 @@ def retcon_playthrough_filler(game: GameDescription,
 
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
 
-    pickup_index_seen_count: Dict[PickupIndex, int] = collections.defaultdict(int)
-    scan_asset_seen_count: Dict[LogbookAsset, int] = collections.defaultdict(int)
+    pickup_index_seen_count: DefaultDict[PickupIndex, int] = collections.defaultdict(int)
+    scan_asset_seen_count: DefaultDict[LogbookAsset, int] = collections.defaultdict(int)
     num_random_starting_items_placed = 0
 
     while pickups_left:
@@ -121,7 +146,8 @@ def retcon_playthrough_filler(game: GameDescription,
         def action_report(message: str):
             status_update("{} {}".format(last_message, message))
 
-        actions_weights = _calculate_potential_actions(reach, progression_pickups,
+        actions_weights = _calculate_potential_actions(reach,
+                                                       progression_pickups,
                                                        current_uncollected,
                                                        maximum_random_starting_items - num_random_starting_items_placed,
                                                        action_report)
@@ -143,19 +169,24 @@ def retcon_playthrough_filler(game: GameDescription,
             if randomization_mode is RandomizationMode.FULL:
                 uncollected_indices = current_uncollected.indices
             elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                major_indices = {pickup_node.pickup_index for pickup_node in filter_pickup_nodes(reach.state.collected_resource_nodes) if pickup_node.major_location}
+                major_indices = {pickup_node.pickup_index
+                                 for pickup_node in filter_pickup_nodes(reach.state.collected_resource_nodes)
+                                 if pickup_node.major_location}
                 uncollected_indices = current_uncollected.indices & major_indices
 
             if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
-                pickup_index_weight = {
-                    pickup_index: 1 / (min(pickup_index_seen_count[pickup_index], 10) ** 2)
-                    for pickup_index in uncollected_indices
-                }
-                assert pickup_index_weight, "Pickups should only be added to the actions dict " \
+                pickup_index_weights = _calculate_uncollected_index_weights(
+                    uncollected_indices,
+                    set(reach.state.patches.pickup_assignment),
+                    pickup_index_seen_count,
+                    randomization_mode,
+                    game.world_list,
+                )
+                assert pickup_index_weights, "Pickups should only be added to the actions dict " \
                                             "when there are unassigned pickups"
 
                 pickup_index = next(iterate_with_weights(items=uncollected_indices,
-                                                         item_weights=pickup_index_weight,
+                                                         item_weights=pickup_index_weights,
                                                          rng=rng))
 
                 next_state = reach.state.assign_pickup_to_index(action, pickup_index)
@@ -236,13 +267,11 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            name: str
                            ) -> float:
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
-    weight = sum([
-        len(potential_uncollected.resources) * _RESOURCES_WEIGHT_MULTIPLIER,
-        len(potential_uncollected.indices) * _INDICES_WEIGHT_MULTIPLIER,
-        len(potential_uncollected.logbooks) * _LOGBOOKS_WEIGHT_MULTIPLIER,
-    ])
-
-    return weight
+    return sum((
+        _RESOURCES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.resources)),
+        _INDICES_WEIGHT_MULTIPLIER   * int(bool(potential_uncollected.indices)),
+        _LOGBOOKS_WEIGHT_MULTIPLIER  * int(bool(potential_uncollected.logbooks)),
+    ))
 
 
 def _items_for_pickup(pickup: PickupEntry) -> int:

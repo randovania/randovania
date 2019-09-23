@@ -1,7 +1,8 @@
 from typing import NamedTuple, List, Iterator
 
 from randovania.game_description.area import Area
-from randovania.game_description.node import Node
+from randovania.game_description.node import Node, PickupNode
+from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 class World(NamedTuple):
@@ -20,6 +21,16 @@ class World(NamedTuple):
         """
         for area in self.areas:
             yield from area.nodes
+
+    @property
+    def pickup_indices(self) -> Iterator[PickupIndex]:
+        for area in self.areas:
+            yield from area.pickup_indices
+
+    @property
+    def major_pickup_indices(self) -> Iterator[PickupIndex]:
+        for area in self.areas:
+            yield from area.major_pickup_indices
 
     def area_by_asset_id(self, asset_id: int) -> Area:
         for area in self.areas:
