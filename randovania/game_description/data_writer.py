@@ -156,6 +156,8 @@ def write_node(node: Node) -> dict:
         data["destination_world_asset_id"] = node.default_connection.world_asset_id
         data["destination_area_asset_id"] = node.default_connection.area_asset_id
         data["teleporter_instance_id"] = node.teleporter_instance_id
+        data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
+        data["editable"] = node.editable
 
     elif isinstance(node, EventNode):
         data["node_type"] = 4

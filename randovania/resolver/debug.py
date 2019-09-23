@@ -29,7 +29,7 @@ def pretty_print_area(area: Area):
     print("Asset id: {}".format(area.area_asset_id))
     for node in area.nodes:
         print(">", node.name, type(node))
-        for target_node, requirements in world_list.potential_nodes_from(node, GamePatches.with_game(_gd)):
+        for target_node, requirements in world_list.potential_nodes_from(node, _gd.create_game_patches()):
             if target_node is None:
                 print("  > None?")
             else:
