@@ -79,3 +79,10 @@ def pytest_addoption(parser):
                      default=False, help="Skips running GUI tests")
     parser.addoption('--skip-echo-tool', action='store_true', dest="skip_echo_tool",
                      default=False, help="Skips running tests that uses the echo tool")
+
+
+@pytest.fixture()
+def skip_qtbot(request, qtbot):
+    if request.config.option.skip_gui_tests:
+        pytest.skip()
+    return qtbot
