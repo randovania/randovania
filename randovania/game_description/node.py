@@ -68,6 +68,8 @@ class DockNode(Node):
 class TeleporterNode(Node):
     teleporter_instance_id: int
     default_connection: AreaLocation
+    keep_name_when_vanilla: bool
+    editable: bool
 
     def __repr__(self):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)
@@ -82,6 +84,7 @@ class PickupNode(ResourceNode):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
     def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+        # FIXME: using non-resource as key in CurrentResources
         if current_resources.get("add_self_as_requirement_to_resources") == 1:
             return RequirementSet([
                 RequirementList(0, [

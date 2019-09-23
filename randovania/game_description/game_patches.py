@@ -32,9 +32,12 @@ class GamePatches:
 
     @classmethod
     def with_game(cls, game: "GameDescription") -> "GamePatches":
+        from randovania.game_description.node import TeleporterNode
         elevator_connection = {
             node.teleporter_instance_id: node.default_connection
-            for node in game.all_editable_teleporter_nodes()
+
+            for node in game.world_list.all_nodes
+            if isinstance(node, TeleporterNode) and node.editable
         }
 
         return GamePatches({}, elevator_connection, {}, {}, {}, {}, game.starting_location, {})

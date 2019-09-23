@@ -29,7 +29,7 @@ def pretty_print_area(area: Area):
     print("Asset id: {}".format(area.area_asset_id))
     for node in area.nodes:
         print(">", node.name, type(node))
-        for target_node, requirements in world_list.potential_nodes_from(node, GamePatches.with_game(_gd)):
+        for target_node, requirements in world_list.potential_nodes_from(node, _gd.create_game_patches()):
             if target_node is None:
                 print("  > None?")
             else:
@@ -80,10 +80,16 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
                 print("{}: {}".format(_indent(), n(node)))
 
 
-def log_rollback(state, has_action):
+def log_checking_satisfiable_actions():
+    if _DEBUG_LEVEL > 1:
+        print("{}# Satisfiable Actions".format(_indent()))
+
+
+def log_rollback(state, has_action, possible_action: bool):
     global _current_indent
     if _DEBUG_LEVEL > 1:
-        print("{}* Rollback {}; Had action? {}".format(_indent(), n(state.node), has_action))
+        print("{}* Rollback {}; Had action? {}; Possible Action? {}".format(_indent(),
+                                                                            n(state.node), has_action, possible_action))
     _current_indent -= 1
 
 

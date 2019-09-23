@@ -187,6 +187,8 @@ ConstructNode = Struct(
                 destination_world_asset_id=Int32ub,
                 destination_area_asset_id=Int32ub,
                 teleporter_instance_id=Int32ub,
+                keep_name_when_vanilla=Flag,
+                editable=Flag,
             ),
             4: Struct(
                 event_index=Byte,
