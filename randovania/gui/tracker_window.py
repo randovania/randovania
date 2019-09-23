@@ -33,20 +33,21 @@ def _load_previous_state(persistence_path: Path,
                          layout_configuration: LayoutConfiguration,
                          ) -> Optional[dict]:
     previous_layout_path = persistence_path.joinpath("layout_configuration.json")
-    if not previous_layout_path.is_file():
+    try:
+        with previous_layout_path.open() as previous_layout_file:
+            previous_layout = LayoutConfiguration.from_json_dict(json.load(previous_layout_file))
+    except (FileNotFoundError, TypeError, KeyError, json.JSONDecodeError):
         return None
 
-    with previous_layout_path.open() as previous_layout_file:
-        previous_layout = LayoutConfiguration.from_json_dict(json.load(previous_layout_file))
-        if previous_layout != layout_configuration:
-            return None
+    if previous_layout != layout_configuration:
+        return None
 
     previous_state_path = persistence_path.joinpath("state.json")
-    if not previous_state_path.is_file():
+    try:
+        with previous_state_path.open() as previous_state_file:
+            return json.load(previous_state_file)
+    except (FileNotFoundError, json.JSONDecodeError):
         return None
-
-    with previous_state_path.open() as previous_state_file:
-        return json.load(previous_state_file)
 
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
@@ -125,22 +126,33 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         }
 
         persistence_path.mkdir(parents=True, exist_ok=True)
-
         previous_state = _load_previous_state(persistence_path, layout_configuration)
-        if previous_state is not None:
-            pickup_name_to_pickup = {pickup.name: pickup for pickup in self._collected_pickups.keys()}
-            self.bulk_change_quantity({
-                pickup_name_to_pickup[pickup_name]: quantity
-                for pickup_name, quantity in previous_state["collected_pickups"].items()
-            })
-            self._add_new_actions([
-                self.game_description.world_list.all_nodes[index]
-                for index in previous_state["actions"]
-            ])
-        else:
+
+        if not self.apply_previous_state(previous_state):
             with persistence_path.joinpath("layout_configuration.json").open("w") as layout_file:
                 json.dump(layout_configuration.as_json, layout_file)
             self._add_new_action(self._initial_state.node)
+
+    def apply_previous_state(self, previous_state: Optional[dict]) -> bool:
+        if previous_state is None:
+            return False
+
+        try:
+            pickup_name_to_pickup = {pickup.name: pickup for pickup in self._collected_pickups.keys()}
+            quantity_to_change = {
+                pickup_name_to_pickup[pickup_name]: quantity
+                for pickup_name, quantity in previous_state["collected_pickups"].items()
+            }
+            previous_actions = [
+                self.game_description.world_list.all_nodes[index]
+                for index in previous_state["actions"]
+            ]
+        except KeyError:
+            return False
+
+        self.bulk_change_quantity(quantity_to_change)
+        self._add_new_actions(previous_actions)
+        return True
 
     def reset(self):
         self.bulk_change_quantity({
