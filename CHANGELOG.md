@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Added: Title screen now shows a three-word representation of the seed hash.
 
+-   Added: As an experimental feature, it is now possible to shuffle Power Beam, Charge Beam, Scan Visor and Morph Ball.
+    These items use Energy Transfer Module model in game.
+    
+-   Added: You can now place a pickup that temporarily gives Cannon Ball when collected. It uses Boost Ball's model.
+
 -   Fixed: Minimal Checking now correctly handles progressive suit and grapple.
 
 -   Fixed: Config files with invalid JSON are now correctly dealt with.
