@@ -1,6 +1,7 @@
 import copy
 import dataclasses
 from random import Random
+from typing import Optional
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
@@ -50,7 +51,7 @@ _NUM_JOKE_HINTS = 2
 
 
 def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguration,
-                                        rng: Random,
+                                        rng: Optional[Random],
                                         patches: GamePatches) -> GamePatches:
     """
     :param layout_configuration:
@@ -82,7 +83,7 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
 
 def gate_assignment_for_configuration(configuration: LayoutConfiguration,
                                       resource_database: ResourceDatabase,
-                                      rng: Random,
+                                      rng: Optional[Random],
                                       ) -> GateAssignment:
     """
     :param configuration:
@@ -108,7 +109,7 @@ def gate_assignment_for_configuration(configuration: LayoutConfiguration,
 
 def starting_location_for_configuration(configuration: LayoutConfiguration,
                                         game: GameDescription,
-                                        rng: Random,
+                                        rng: Optional[Random],
                                         ) -> AreaLocation:
     starting_location = configuration.starting_location
 
@@ -160,7 +161,7 @@ def add_joke_hints_to_patches(patches: GamePatches, world_list: WorldList, rng: 
 
 
 def create_base_patches(configuration: LayoutConfiguration,
-                        rng: Random,
+                        rng: Optional[Random],
                         game: GameDescription,
                         ) -> GamePatches:
     """
@@ -186,6 +187,8 @@ def create_base_patches(configuration: LayoutConfiguration,
 
     # Hints
     patches = add_keybearer_hints_to_patches(patches, game.world_list)
-    patches = add_joke_hints_to_patches(patches, game.world_list, rng)
+
+    if rng is not None:
+        patches = add_joke_hints_to_patches(patches, game.world_list, rng)
 
     return patches
