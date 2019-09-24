@@ -73,6 +73,9 @@ class ItemConfigurationPopup(QDialog, Ui_ItemConfigurationPopup):
             self.included_box.setEnabled(False)
             self.state = self._create_state(num_included_in_starting_items=1)
         else:
+            if self._item.warning is not None:
+                self.warning_label.setText(self._item.warning)
+                self.warning_label.show()
             self.state = starting_state
 
     @property
