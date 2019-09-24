@@ -208,7 +208,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to get to the portal in Mining Station B with Space Jump Boots and Screw Attack (Trivial and above).
 
--   Fixed: Transport A Access now correctly needs Morph Ball to access the Save Station.
+-   Fixed: Transport A Access, Collapsed Tunnel, Dynamo Chamber, Trooper Security Station, Mining Station Access,
+    Portal Access A now correctly requires Morph Ball. 
 
 -   Fixed: Controller Transport now correctly needs Scan Visor.
 
