@@ -210,6 +210,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Transport A Access now correctly needs Morph Ball to access the Save Station.
 
+-   Fixed: Controller Transport now correctly needs Scan Visor.
+
 -   Changed: The generator is now more likely to fill the worlds evenly.
 
 
