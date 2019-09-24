@@ -29,6 +29,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Improved the performance of the resolver considerably.
 
+-   Added: In the data visualizer, the damage requirements now have more descriptive names.
+
+-   Added: In the data visualizer, requirements are now described with simpler to understand terms.
+
+-   Changed: Some item categories were given clearer names:
+    - Dark Agon Keys, Dark Torvus Keys, and Ing Hive Keys are now referred to as "red Temple Keys" instead of
+    "Temple Keys".
+    - Items that aren't keys or expansions are collectively referred to as "major upgrades" instead of "major items".
+    - Red Temple Keys and Sky Temple Keys are now collectively referred to as "Dark Temple Keys" instead of "keys".
+
+-   Fixed: "Beam combos" are now called "charge combos".
+
+-   Changed: The hints acquired from keybearer corpses now clarify that the item is the one contained in a Flying
+    Ing Cache.
+
+-   Changed: Each hint for the items guarded by Amorbis, Chykka, and Quadraxis now contains the corresponding
+    Guardian's name.
+
+-   Changed: The hint for the vanilla Light Suit location now has special text.
+
+-   Changed: Item names in hints are now colored orange instead of red.
+
+-   Changed: Some hints were added, some removed, and some modified.
+
+-   Changed: Item scans were slightly edited.
+
+-   Changed: The Sky Temple Key hints no longer use ordinal numbers.
+
+-   Added: The seed hash is shown in Randovania's GUI after patching is done.
+
+-   Changed: Generation will now be retried more times before giving up.
+
+-   Changed: Joke hints are now used at most once each when placing hints.
+
+-   Changed: The generator is now more likely to fill the worlds evenly.
+
+-   Fixed: Added proper default nodes for rooms that were missing one, allowing those rooms to be selected as the
+    starting room.
+    
+-   Changed: Windows releases are now created with PyInstaller 3.5.
+
+### Logic Database changes 
+
 -   Changed: All NTSC-specific tricks are now in logic. These are always in logic, since the fixes from other versions
     are patched out.
 
@@ -146,42 +189,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The slope jump to get to the item in Temple Assembly Site is now Normal difficulty (from Hard).
 
--   Added: In the data visualizer, the damage requirements now have more descriptive names.
-
--   Added: In the data visualizer, requirements are now described with simpler to understand terms.
-
 -   Fixed: Requirements for crossing Dynamo Access were added.
 
 -   Added: In Landing Site, method of reaching the door to Service Access from the Save Station using Space Jump and
     Screw Attack (No Tricks and above).
 
 -   Fixed: The Culling Chamber item now has a damage requirement.
-
--   Changed: Some item categories were given clearer names:
-    - Dark Agon Keys, Dark Torvus Keys, and Ing Hive Keys are now referred to as "red Temple Keys" instead of
-    "Temple Keys".
-    - Items that aren't keys or expansions are collectively referred to as "major upgrades" instead of "major items".
-    - Red Temple Keys and Sky Temple Keys are now collectively referred to as "Dark Temple Keys" instead of "keys".
-
--   Fixed: "Beam combos" are now called "charge combos".
-
--   Changed: The hints acquired from keybearer corpses now clarify that the item is the one contained in a Flying
-    Ing Cache.
-
--   Changed: Each hint for the items guarded by Amorbis, Chykka, and Quadraxis now contains the corresponding
-    Guardian's name.
-
--   Changed: The hint for the vanilla Light Suit location now has special text.
-
--   Changed: Item names in hints are now colored orange instead of red.
-
--   Changed: Some hints were added, some removed, and some modified.
-
--   Changed: Item scans were slightly edited.
-
--   Changed: The Sky Temple Key hints no longer use ordinal numbers.
-
--   Changed: Windows releases are created with PyInstaller 3.5.
 
 -   Changed: The trick to shoot the Seeker targets in Hive Dynamo Works from the wrong side is now Easy (from Trivial).
 
@@ -190,15 +203,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: The Watch Station Access roll jump is now Normal (from Easy).
 
 -   Fixed: Added missing Space Jump Boots requirement for a Bomb Space Jump in Mining Station B.
-
--   Added: The seed hash is shown in Randovania's GUI after patching is done.
-
--   Changed: Generation will now be retried more times before giving up.
-
--   Changed: Joke hints are now used at most once each when placing hints.
-
--   Fixed: Added proper default nodes for rooms that were missing one, allowing those rooms to be selected as the
-    starting room.
 
 -   Added: Method to unblock the portal in Mining Station B without Scan Visor (Normal and above).
 
