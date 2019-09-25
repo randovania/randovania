@@ -16,6 +16,7 @@ class MajorItem:
     required: bool = False
     original_index: Optional[PickupIndex] = None
     probability_offset: int = 0
+    warning: Optional[str] = None
 
     @classmethod
     def from_json(cls, name: str, value: dict) -> "MajorItem":
@@ -29,6 +30,7 @@ class MajorItem:
             required=value.get("required", False),
             original_index=PickupIndex(value["original_index"]) if "original_index" in value else None,
             probability_offset=value["probability_offset"],
+            warning=value.get("warning"),
         )
 
     @property
@@ -44,4 +46,6 @@ class MajorItem:
         }
         if self.original_index is not None:
             result["original_index"] = self.original_index.index
+        if self.warning is not None:
+            result["warning"] = self.warning
         return result
