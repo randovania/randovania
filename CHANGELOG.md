@@ -235,6 +235,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Connections in Venomous Pond were redone.
 
+-   Changed: Getting to the door to Dark Transit Station in Trial Grounds with no items is now Hard difficulty, from
+    Easy.
+
+-   Added: Methods to get to the door to Dark Transit Station in Trial Grounds with Screw Attack without Space Jump
+    Boots (Easy and above) and with a Bomb Space Jump (Normal and above).
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
