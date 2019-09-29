@@ -72,6 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Windows releases are now created with PyInstaller 3.5.
 
+-   Changed: The generator is now more likely to fill the worlds evenly.
+
 ### Logic Database changes
 
 -   Changed: All NTSC-specific tricks are now in logic. These are always in logic, since the fixes from other versions
@@ -216,12 +218,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to get to the portal in Mining Station B with Space Jump Boots and Screw Attack (Trivial and above).
 
--   Fixed: Transport A Access, Collapsed Tunnel, Dynamo Chamber, Trooper Security Station, Mining Station Access,
-    Portal Access A now correctly requires Morph Ball.
+-   Fixed: Transport A Access, Collapsed Tunnel, Dynamo Chamber, Trooper Security Station, Mining Station Access, and
+    Portal Access A now correctly require Morph Ball.
 
--   Fixed: Controller Transport now correctly needs Scan Visor.
-
--   Changed: The generator is now more likely to fill the worlds evenly.
+-   Fixed: Elevator rooms with missing Scan Visor requirements now have them.
 
 -   Fixed: Removed erroneously added method to cross Sanctuary Entrance with Screw Attack without Space Jump Boots.
 
