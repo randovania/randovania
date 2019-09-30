@@ -121,7 +121,7 @@ def _inner_advance_depth(state: State,
 
     debug.log_checking_satisfiable_actions()
     has_action = False
-    for action, energy in reach.satisfiable_actions(state):
+    for action, energy in reach.satisfiable_actions(state, logic.game.victory_condition):
         new_result = _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy),
             logic=logic,
