@@ -241,6 +241,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Methods to get to the door to Dark Transit Station in Trial Grounds with Screw Attack without Space Jump
     Boots (Easy and above) and with a Bomb Space Jump (Normal and above).
 
+-   Fixed: Added missing requirements for the Dark Samus 3 and 4 fight.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
