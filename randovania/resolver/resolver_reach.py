@@ -1,7 +1,6 @@
+import math
 from collections import defaultdict
 from typing import Dict, Set, Iterator, Tuple, FrozenSet
-
-import math
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, Node
@@ -128,21 +127,24 @@ class ResolverReach:
                 debug.log_skip_action_missing_requirement(node, self._logic.game,
                                                           self._logic.get_additional_requirements(node))
 
-    def satisfiable_actions(self, state: State) -> Iterator[Tuple[ResourceNode, int]]:
+    def satisfiable_actions(self,
+                            state: State,
+                            victory_condition: RequirementSet,
+                            ) -> Iterator[Tuple[ResourceNode, int]]:
 
-        if self._satisfiable_requirements:
-            # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
-            interesting_resources = calculate_interesting_resources(self._satisfiable_requirements,
-                                                                    state.resources,
-                                                                    state.energy,
-                                                                    state.resource_database)
+        # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
+        interesting_resources = calculate_interesting_resources(
+            self._satisfiable_requirements.union(victory_condition.alternatives),
+            state.resources,
+            state.energy,
+            state.resource_database)
 
-            # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
-            for action, energy in self.possible_actions(state):
-                for resource, amount in action.resource_gain_on_collect(state.patches, state.resources):
-                    if resource in interesting_resources:
-                        yield action, energy
-                        break
+        # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
+        for action, energy in self.possible_actions(state):
+            for resource, amount in action.resource_gain_on_collect(state.patches, state.resources):
+                if resource in interesting_resources:
+                    yield action, energy
+                    break
 
     def collectable_resource_nodes(self,
                                    state: State) -> Iterator[ResourceNode]:

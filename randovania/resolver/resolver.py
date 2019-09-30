@@ -8,6 +8,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import debug, event_pickup
 from randovania.resolver.bootstrap import logic_bootstrap
+from randovania.resolver.event_pickup import EventPickupNode
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State
@@ -62,9 +63,14 @@ def _should_check_if_action_is_safe(state: State,
     if isinstance(action, EventNode):
         return True
 
-    if isinstance(action, PickupNode):
-        pickup = state.patches.pickup_assignment.get(action.pickup_index)
-        if pickup is not None and pickup.item_category.is_major_category:
+    if isinstance(action, EventPickupNode):
+        pickup_node = action.pickup_node
+    else:
+        pickup_node = action
+
+    if isinstance(pickup_node, PickupNode):
+        pickup = state.patches.pickup_assignment.get(pickup_node.pickup_index)
+        if pickup is not None and (pickup.item_category.is_major_category or pickup.item_category.is_key):
             return True
 
     return False
@@ -115,7 +121,7 @@ def _inner_advance_depth(state: State,
 
     debug.log_checking_satisfiable_actions()
     has_action = False
-    for action, energy in reach.satisfiable_actions(state):
+    for action, energy in reach.satisfiable_actions(state, logic.game.victory_condition):
         new_result = _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy),
             logic=logic,

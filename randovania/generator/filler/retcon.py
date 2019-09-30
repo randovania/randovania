@@ -29,6 +29,7 @@ X = TypeVar("X")
 _RESOURCES_WEIGHT_MULTIPLIER = 1
 _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 2.5
+_VICTORY_WEIGHT = 1000
 
 
 def _filter_not_in_dict(elements: Iterator[X],
@@ -168,11 +169,15 @@ def retcon_playthrough_filler(game: GameDescription,
 
             if randomization_mode is RandomizationMode.FULL:
                 uncollected_indices = current_uncollected.indices
+
             elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
                 major_indices = {pickup_node.pickup_index
                                  for pickup_node in filter_pickup_nodes(reach.state.collected_resource_nodes)
                                  if pickup_node.major_location}
                 uncollected_indices = current_uncollected.indices & major_indices
+
+            else:
+                raise RuntimeError("Unknown randomization_mode: {}".format(randomization_mode))
 
             if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
                 pickup_index_weights = _calculate_uncollected_index_weights(
@@ -183,9 +188,9 @@ def retcon_playthrough_filler(game: GameDescription,
                     game.world_list,
                 )
                 assert pickup_index_weights, "Pickups should only be added to the actions dict " \
-                                            "when there are unassigned pickups"
+                                             "when there are unassigned pickups"
 
-                pickup_index = next(iterate_with_weights(items=uncollected_indices,
+                pickup_index = next(iterate_with_weights(items=iter(uncollected_indices),
                                                          item_weights=pickup_index_weights,
                                                          rng=rng))
 
@@ -266,11 +271,16 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            current_uncollected: UncollectedState,
                            name: str
                            ) -> float:
+
+    if potential_reach.game.victory_condition.satisfied(potential_reach.state.resources,
+                                                        potential_reach.state.energy):
+        return _VICTORY_WEIGHT
+
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
     return sum((
         _RESOURCES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.resources)),
-        _INDICES_WEIGHT_MULTIPLIER   * int(bool(potential_uncollected.indices)),
-        _LOGBOOKS_WEIGHT_MULTIPLIER  * int(bool(potential_uncollected.logbooks)),
+        _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
+        _LOGBOOKS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.logbooks)),
     ))
 
 
