@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.29.0] - 2019-09-30
 -   *Major* - There is now an option for a major/minor split randomization mode, in which expansions and
     non-expansion items are shuffled separately.
 
@@ -22,16 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     These items use Energy Transfer Module model in game.
     
 -   Added: You can now place a pickup that temporarily gives Cannon Ball when collected. It uses Boost Ball's model.
-
--   Fixed: Minimal Checking now correctly handles progressive suit and grapple.
-
--   Fixed: Config files with invalid JSON are now correctly dealt with.
-
--   Changed: Improved the performance of the resolver considerably.
-
--   Added: In the data visualizer, the damage requirements now have more descriptive names.
-
--   Added: In the data visualizer, requirements are now described with simpler to understand terms.
 
 -   Changed: Some item categories were given clearer names:
     - Dark Agon Keys, Dark Torvus Keys, and Ing Hive Keys are now referred to as "red Temple Keys" instead of
@@ -67,6 +59,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Added proper default nodes for rooms that were missing one, allowing those rooms to be selected as the
     starting room.
+
+-   Fixed: Minimal Checking now correctly handles progressive suit and grapple.
+
+-   Fixed: Config files with invalid JSON are now correctly dealt with.
+
+-   Changed: Improved the performance of the resolver considerably.
+
+-   Added: In the data visualizer, the damage requirements now have more descriptive names.
+
+-   Added: In the data visualizer, requirements are now described with simpler to understand terms.
     
 -   Changed: Windows releases are now created with PyInstaller 3.5.
 
