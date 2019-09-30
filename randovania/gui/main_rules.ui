@@ -63,14 +63,14 @@
            <item row="2" column="0">
             <widget class="QLabel" name="maximum_starting_label">
              <property name="text">
-              <string>Maximum</string>
+              <string>Start with at most this many items:</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="minimum_starting_label">
              <property name="text">
-              <string>Minimum</string>
+              <string>Start with at least this many items:</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -87,7 +87,7 @@
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="random_starting_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will add additional starting items if necessary to make the seed possible.&lt;br/&gt;You can enforce at least some items by increasing the minimum.&lt;br/&gt;The maximum causes the seed to fail instead of adding additional items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will add additional starting items if necessary to make the seed possible.&lt;br/&gt;The first value controls how many items are always added.&lt;br/&gt;The second value controls how many items the seed can have before it fails to generate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -272,7 +272,4 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="randomization_mode_radio_button_group"/>
- </buttongroups>
 </ui>
