@@ -243,6 +243,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Added missing requirements for the Dark Samus 3 and 4 fight.
 
+-   Changed: Fighting Dark Samus 2 with only Echo Visor is now Trivial difficulty, from Easy.
+
 ## [0.28.1] - 2019-06-14
 
 -   Fixed: Resetting settings would leave the launchers' configuration in an invalid state.
