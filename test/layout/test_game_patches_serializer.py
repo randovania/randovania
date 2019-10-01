@@ -16,11 +16,15 @@ from randovania.game_description.resources.pickup_entry import ConditionalResour
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
+from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 @pytest.fixture(
@@ -29,7 +33,7 @@ from randovania.layout.major_item_state import MajorItemState
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
-        {"pickup": ['HUhMANYCAA==', "Screw Attack"]},
+        {"pickup": ['BR2kJgBrAQA=', "Screw Attack"]},
         {"hint": [1000, {"hint_type": "location", "location_precision": "detailed",
                          "item_precision": "detailed", "target": 50}]},
     ],
@@ -75,7 +79,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
     for world, area, node in game.world_list.all_worlds_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
             world_name = world.dark_name if area.in_dark_aether else world.name
-            locations[world_name][game.world_list.node_name(node)] = "Nothing"
+            locations[world_name][game.world_list.node_name(node)] = game_patches_serializer._ETM_NAME
 
     data["locations"] = {
         world: {
@@ -190,3 +194,31 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
 
     # Assert
     assert pickup == decoded
+
+
+def test_round_trip_generated_patches(echoes_game_data):
+    # Setup
+    configuration = LayoutConfiguration.from_params(
+        trick_level_configuration=TrickLevelConfiguration(
+            global_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
+            specific_levels={},
+        )
+    )
+
+    patches = generator._create_randomized_patches(
+        permalink=Permalink(
+            seed_number=1000,
+            spoiler=True,
+            patcher_configuration=PatcherConfiguration.default(),
+            layout_configuration=configuration,
+        ),
+        game=data_reader.decode_data(echoes_game_data),
+        status_update=lambda x: None,
+    )
+
+    # Run
+    encoded = game_patches_serializer.serialize(patches, echoes_game_data)
+    decoded = game_patches_serializer.decode(encoded, configuration)
+
+    # Assert
+    assert patches == decoded

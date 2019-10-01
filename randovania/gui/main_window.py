@@ -60,7 +60,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
         if preview:
-            debug._DEBUG_LEVEL = 2
+            debug.set_level(2)
 
         # Signals
         self.newer_version_signal.connect(self.display_new_version)

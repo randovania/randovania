@@ -117,7 +117,7 @@ _test_descriptions = [
 @patch("randovania.layout.permalink.Permalink.as_str", new_callable=PropertyMock)
 def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,
                                      layout_description: LayoutDescription):
-    debug._DEBUG_LEVEL = 0
+    debug.set_level(0)
     status_update = MagicMock()
     mock_permalink_as_str.return_value = "fixed-seed!"
 
