@@ -78,7 +78,7 @@ def test_invalid_constructor_location_should_be_missing():
         {"encoded": b'\x00', "json": "ship"},
         {"encoded": b'@', "json": "random-save-station"},
         {"encoded": b'\x82@', "json": {"world_asset_id": 1006255871, "area_asset_id": 341957679}},
-        {"encoded": b'\x92\xc0', "json": {"world_asset_id": 1039999561, "area_asset_id": 3548128276}},
+        {"encoded": b'\x91\xc0', "json": {"world_asset_id": 1039999561, "area_asset_id": 3548128276}},
     ],
     name="location_with_data")
 def _location_with_data(request):

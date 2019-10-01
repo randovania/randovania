@@ -79,10 +79,10 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
                                                 ) -> None:
     # TODO: this function assumes we're talking about Echoes
     for event in resource_database.event:
-        # Ingoring these events:
-        # Emperor Ing (8), otherwise we're done automatically
+        # Ignoring these events:
+        # Dark Samus 3 and 4 (93), otherwise we're done automatically (TODO: get this from database)
         # Chykka (28), otherwise we can't collect Dark Visor
-        if event.index not in {8, 28}:
+        if event.index not in {28, 93}:
             resources[event] = 1
 
     items_to_skip = copy.copy(_items_to_not_add_in_minimal_restrictions)
