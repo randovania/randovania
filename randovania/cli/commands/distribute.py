@@ -11,7 +11,7 @@ from randovania.resolver import debug
 
 
 def distribute_command_logic(args):
-    debug._DEBUG_LEVEL = args.debug
+    debug.set_level(args.debug)
 
     def status_update(s):
         pass

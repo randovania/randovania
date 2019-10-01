@@ -160,6 +160,14 @@ def print_actions_of_reach(reach: GeneratorReach):
         ))
 
 
+def set_level(level: int):
+    global _DEBUG_LEVEL
+    if isinstance(level, int):
+        _DEBUG_LEVEL = level
+    else:
+        _DEBUG_LEVEL = 0
+
+
 def debug_level() -> int:
     return _DEBUG_LEVEL
 
