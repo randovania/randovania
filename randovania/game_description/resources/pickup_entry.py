@@ -33,7 +33,7 @@ class PickupEntry:
     item_category: ItemCategory
     resources: Tuple[ConditionalResources, ...]
     convert_resources: Tuple[ResourceConversion, ...] = tuple()
-    probability_offset: int = 0
+    probability_offset: float = 0
 
     def __post_init__(self):
         if not isinstance(self.resources, tuple):
