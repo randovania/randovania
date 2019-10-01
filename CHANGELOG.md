@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.29.0] - 2019-09-30
+## [0.29.0] - 2019-10-01
 -   *Major* - There is now an option for a major/minor split randomization mode, in which expansions and
     non-expansion items are shuffled separately.
 
