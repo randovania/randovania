@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: As an experimental feature, it is now possible to shuffle Power Beam, Charge Beam, Scan Visor and Morph Ball.
     These items use Energy Transfer Module model in game.
-    
+
 -   Added: You can now place a pickup that temporarily gives Cannon Ball when collected. It uses Boost Ball's model.
 
 -   Changed: Some item categories were given clearer names:
@@ -69,10 +69,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In the data visualizer, the damage requirements now have more descriptive names.
 
 -   Added: In the data visualizer, requirements are now described with simpler to understand terms.
-    
+
 -   Changed: Windows releases are now created with PyInstaller 3.5.
 
-### Logic Database changes 
+-   Changed: The generator is now more likely to fill the worlds evenly.
+
+### Logic Database changes
 
 -   Changed: All NTSC-specific tricks are now in logic. These are always in logic, since the fixes from other versions
     are patched out.
@@ -158,9 +160,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: In Phazon Site, methods to get to the door to Bitter Well and to remove the barrier using Screw Attack
     without Space Jump Boots (both Easy difficulty).
 
--   Changed: The method to get to the door to Ing Cache 2 in Phazon Site by scan dashing is now Hard difficulty
-    (from Normal).
-
 -   Changed: The method to go over the Training Chamber statue from the back using Boost Ball and Spider Ball is
     now Normal difficulty (from Hard).
 
@@ -219,13 +218,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Method to get to the portal in Mining Station B with Space Jump Boots and Screw Attack (Trivial and above).
 
--   Fixed: Transport A Access, Collapsed Tunnel, Dynamo Chamber, Trooper Security Station, Mining Station Access,
-    Portal Access A now correctly requires Morph Ball. 
+-   Fixed: Transport A Access, Collapsed Tunnel, Dynamo Chamber, Trooper Security Station, Mining Station Access, and
+    Portal Access A now correctly require Morph Ball.
 
--   Fixed: Controller Transport now correctly needs Scan Visor.
+-   Fixed: Elevator rooms with missing Scan Visor requirements now have them.
 
--   Changed: The generator is now more likely to fill the worlds evenly.
+-   Fixed: Removed erroneously added method to cross Sanctuary Entrance with Screw Attack without Space Jump Boots.
 
+-   Fixed: Going through Sacred Bridge on No Tricks now requires Scan Visor and Morph Ball when coming from GFMC
+    Compound.
+
+-   Added: Method to skip Scan Visor and Morph Ball using Space Jump Boots in Sacred Bridge, when coming from GFMC
+    Compound (Easy and above).
+
+-   Fixed: Added Scan Visor requirement in Temple Transport Access (Sanctuary).
+
+-   Changed: Connections in Venomous Pond were redone.
+
+-   Changed: Getting to the door to Dark Transit Station in Trial Grounds with no items is now Hard difficulty, from
+    Easy.
+
+-   Added: Methods to get to the door to Dark Transit Station in Trial Grounds with Screw Attack without Space Jump
+    Boots (Easy and above) and with a Bomb Space Jump (Normal and above).
+
+-   Fixed: Added missing requirements for the Dark Samus 3 and 4 fight.
+
+-   Changed: Fighting Dark Samus 2 with only Echo Visor is now Trivial difficulty, from Easy.
+
+-   Fixed: Power Bomb doors now require Morph Ball, and Super Missile doors now require Power Beam and Charge Beam.
+
+-   Added: Method to destroy the second web in Hive Tunnel when going through the room backwards using Sonic Boom
+    (Easy and above).
 
 ## [0.28.1] - 2019-06-14
 
