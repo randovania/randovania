@@ -55,5 +55,5 @@ class Area(NamedTuple):
     @property
     def major_pickup_indices(self) -> Iterator[PickupIndex]:
         for node in self.nodes:
-            if isinstance(node, PickupNode) and node.is_major_location:
+            if isinstance(node, PickupNode) and node.major_location:
                 yield node.pickup_index
