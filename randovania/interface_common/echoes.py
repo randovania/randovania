@@ -17,7 +17,7 @@ def _generate_layout_worker(output_pipe,
         def status_update(message: str):
             output_pipe.send(message)
 
-        debug._DEBUG_LEVEL = debug_level
+        debug.set_level(debug_level)
         extra_args = {}
         if not timeout_during_generation:
             extra_args["timeout"] = None
