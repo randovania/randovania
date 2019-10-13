@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
@@ -53,3 +52,19 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     assert [hint for hint in patches.hints.values()
             if hint.item_precision is None or hint.location_precision is None] == []
     assert remaining_items == [pickup]
+
+
+def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
+    # Setup
+    rng = Random(5000)
+    base_patches = echoes_game_description.create_game_patches()
+    expected_logbooks = sum(1 for node in echoes_game_description.world_list.all_nodes
+                            if isinstance(node, LogbookNode))
+
+    # Run
+    result = runner.fill_unassigned_hints(base_patches,
+                                          echoes_game_description.world_list,
+                                          rng)
+
+    # Assert
+    assert len(result.hints) == expected_logbooks

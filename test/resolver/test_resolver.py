@@ -12,7 +12,7 @@ skip_resolver_tests = pytest.mark.skipif(
 @skip_resolver_tests
 def test_resolver_with_log_file(test_files_dir):
     # Setup
-    debug._DEBUG_LEVEL = 0
+    debug.set_level(0)
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.json"))
     configuration = description.permalink.layout_configuration

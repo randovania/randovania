@@ -9,7 +9,7 @@ from randovania.resolver import debug, resolver
 
 
 def validate_command_logic(args):
-    debug._DEBUG_LEVEL = args.debug
+    debug.set_level(args.debug)
     data = prime_database.decode_data_file(args)
     game = data_reader.decode_data(data)
 
