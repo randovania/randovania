@@ -78,7 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
 
         # Menu Bar
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
-        self.menu_action_tracker.triggered.connect(self._open_tracker)
+        self.menu_action_map_tracker.triggered.connect(self._open_map_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
@@ -220,10 +220,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
             self._data_editor = DataEditorWindow(json.load(database_file), True)
             self._data_editor.show()
 
-    def _open_tracker(self):
+    def _open_map_tracker(self):
         try:
-            self._tracker = TrackerWindow(self._options.tracker_files_path,
-                                          self._options.selected_preset.layout_configuration)
+            self._map_tracker = TrackerWindow(self._options.tracker_files_path, self._options.layout_configuration)
         except InvalidLayoutForTracker as e:
             QMessageBox.critical(
                 self,
@@ -232,7 +231,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
             )
             return
 
-        self._tracker.show()
+        self._map_tracker.show()
 
     def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after
