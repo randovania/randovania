@@ -144,6 +144,7 @@ class ISOManagementWindow(QMainWindow, Ui_ISOManagementWindow):
             )
             self.loaded_game_updated.emit()
 
+        simplified_patcher.delete_files_location(self._options)
         self.background_processor.run_in_background_thread(work, "Will unpack ISO")
 
     def _load_game_button(self):
