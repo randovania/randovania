@@ -1,5 +1,6 @@
 import collections
 import itertools
+import pprint
 from random import Random
 from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
     DefaultDict, Mapping, FrozenSet, Callable, List, TypeVar, Any, Optional
@@ -121,7 +122,13 @@ def retcon_playthrough_filler(game: GameDescription,
                               maximum_random_starting_items: int,
                               status_update: Callable[[str], None],
                               ) -> GamePatches:
-    debug.debug_print("Major items: {}".format([item.name for item in pickups_left]))
+    debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
+        "*" * 100,
+        pprint.pformat({
+            item.name: pickups_left.count(item)
+            for item in sorted(set(pickups_left), key=lambda item: item.name)
+        })
+    ))
     last_message = "Starting."
 
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
