@@ -381,7 +381,7 @@ def print_new_resources(game: GameDescription,
                         label: str,
                         ):
     world_list = game.world_list
-    if debug.debug_level() > 0:
+    if debug.debug_level() > 1:
         for index, count in seen_count.items():
             if count == 1:
                 node = find_node_with_resource(index, world_list.all_nodes)
