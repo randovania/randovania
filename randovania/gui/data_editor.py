@@ -1,3 +1,4 @@
+import dataclasses
 import json
 import re
 from pathlib import Path
@@ -36,6 +37,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
+        self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
 
         self.save_database_button.clicked.connect(self._prompt_save_database)
@@ -114,6 +116,28 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
                     radio_button.setChecked(True)
+
+    def on_node_heals_check(self, state: int):
+        old_node = self.current_node
+        assert old_node is not None
+
+        new_node = dataclasses.replace(old_node, heal=bool(state))
+
+        if new_node != old_node:
+            area_node_list = self.current_area.nodes
+            for i, node in enumerate(area_node_list):
+                if node == old_node:
+                    area_node_list[i] = new_node
+
+            area_connections = self.current_area.connections
+            area_connections[new_node] = area_connections.pop(old_node)
+
+            for node_connections in area_connections.values():
+                if old_node in node_connections:
+                    node_connections[new_node] = node_connections.pop(old_node)
+
+            self.radio_button_to_node[self.selected_node_button] = new_node
+            self.update_selected_node()
 
     def update_selected_node(self):
         node = self.current_node
@@ -293,7 +317,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.new_node_button.setVisible(self.edit_mode)
         self.save_database_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
-        self.node_heals_check.setEnabled(self.edit_mode and False)
+        self.node_heals_check.setEnabled(self.edit_mode)
 
     @property
     def current_world(self) -> World:
