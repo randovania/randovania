@@ -167,4 +167,5 @@ class TrickLevelConfiguration(BitPackValue):
             15,  # Instant Morph
             26,  # Invisible Objects
             27,  # Standable Terrain
+            28,  # Terminal Fall Abuse
         })
