@@ -28,7 +28,7 @@ def _energy_for(resources: CurrentResources,
 
 class State:
     resources: CurrentResources
-    collected_resource_nodes: Tuple[ResourceNode]
+    collected_resource_nodes: Tuple[ResourceNode, ...]
     energy: int
     node: Node
     patches: GamePatches
@@ -38,7 +38,7 @@ class State:
 
     def __init__(self,
                  resources: CurrentResources,
-                 collected_resource_nodes: Tuple[ResourceNode],
+                 collected_resource_nodes: Tuple[ResourceNode, ...],
                  energy: int,
                  node: Node,
                  patches: GamePatches,
