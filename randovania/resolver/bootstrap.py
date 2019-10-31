@@ -25,6 +25,12 @@ _items_to_not_add_in_minimal_restrictions = {
     23,
     27,
 
+    # Dark Agon Temple Keys
+    32, 33, 34,
+
+    # Dark Torvus Temple Keys
+    35, 36, 37,
+
     # Sky Temple Keys
     29, 30, 31, 101, 102, 103, 104, 105, 106
 }
