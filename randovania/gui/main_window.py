@@ -170,7 +170,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             changelog_scroll_layout.addWidget(changelog_label)
             changelog_scroll_area.setWidget(changelog_scroll_contents)
             changelog_tab_layout.addWidget(changelog_scroll_area)
-            self.welcome_tab_widget.addTab(changelog_tab, "Change Log")
+            self.help_tab_widget.addTab(changelog_tab, "Change Log")
 
         if new_change_logs:
             QMessageBox.information(self, "What's new", markdown.markdown("\n".join(new_change_logs)))
