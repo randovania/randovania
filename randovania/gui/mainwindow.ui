@@ -40,17 +40,17 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="welcome_tab_widget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tab_intro">
            <attribute name="title">
             <string>Intro</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_6">
-            <item>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0" colspan="3">
              <widget class="QLabel" name="intro_label">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Randovania {version}.&lt;/p&gt;&lt;p&gt;Here you will be able to randomize many aspects of Metroid Prime 2: Echoes, while still being ensured it's possible to finish without any trick or glitch! What can be randomized?&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All 100 pickups (including the 4 translators), 9 temple keys, 9 Sky Temple keys and the Energy Transfer Module, for a total of 119 pickups.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The destination of all elevators.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The translator necessary for opening the Translator Gates.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;So have fun and start randomizing.&lt;/p&gt;&lt;hr/&gt;&lt;p&gt;Check &lt;span style=&quot; font-weight:600;&quot;&gt;Usage&lt;/span&gt; tab for details on how to use Randovania.&lt;/p&gt;&lt;p&gt;Check &lt;span style=&quot; font-weight:600;&quot;&gt;FAQ&lt;/span&gt; tab for important information about Metroid Prime 2.&lt;/p&gt;&lt;p&gt;For trick details, check Open -&amp;gt; Data Visualizer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Randovania {version}.&lt;/p&gt;&lt;p&gt;Here you will be able to randomize many aspects of Metroid Prime 2: Echoes, while still being ensured it's possible to finish without any trick or glitch! What can be randomized?&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All 100 pickups (including the 4 translators), 9 temple keys, 9 Sky Temple keys and the Energy Transfer Module, for a total of 119 pickups.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The destination of all elevators.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The translator necessary for opening the Translator Gates.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;So have fun and start randomizing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -60,13 +60,348 @@
               </property>
              </widget>
             </item>
+            <item row="5" column="0">
+             <widget class="QPushButton" name="open_faq_button">
+              <property name="text">
+               <string>Open FAQ</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QPushButton" name="open_database_viewer_button">
+              <property name="text">
+               <string>Open Database Viewer</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QPushButton" name="intro_play_now_button">
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Play Now</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" colspan="3">
+             <widget class="QLabel" name="help_offer_label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;hr/&gt;&lt;p&gt;Want to learn more about the randomizer?&lt;/p&gt;&lt;p&gt;Check out the &lt;span style=&quot; font-weight:600;&quot;&gt;FAQ &lt;/span&gt;for surprising behaviour of the game.&lt;br/&gt;Check the Database to check what's required to progress in each room.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <spacer name="intro_top_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="6" column="1">
+             <spacer name="intro_bottom_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="tab_play">
+           <attribute name="title">
+            <string>Play</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <spacer name="play_top_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="play_existing_permalink_group">
+              <property name="title">
+               <string>Existing Permalinks</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_8">
+               <item row="0" column="0">
+                <widget class="QLabel" name="import_permalink_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you playing with others?&lt;/p&gt;&lt;p&gt;Ask them for a permalink and import it here. You'll create the same seed as them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="import_permalink_button">
+                 <property name="text">
+                  <string>Import permalink</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="play_middle_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="play_new_permalink_group">
+              <property name="title">
+               <string>Creating a new Seed</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_5">
+               <item row="0" column="0">
+                <widget class="QLabel" name="create_new_seed_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Playing alone? Hosting a race?&lt;/p&gt;&lt;p&gt;Create a new seed here and then share the permalink!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="create_new_seed_button">
+                 <property name="text">
+                  <string>Create new seed</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="play_bottom_spacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_create_seed">
+           <attribute name="title">
+            <string>Generate Seed</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="5" column="1">
+             <widget class="QLabel" name="create_game_changes_label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Game Changes&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Missiles needs Launcher: Yes&lt;br/&gt;Power Bombs needs Main PBs: Yes&lt;br/&gt;Warp to Start: Yes&lt;br/&gt;Quality of Life Improvements: All&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="0">
+             <widget class="QPushButton" name="create_generate_button">
+              <property name="text">
+               <string>Generate</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <widget class="QPushButton" name="create_generate_race_button">
+              <property name="text">
+               <string>Generate for Race</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="create_item_placement_label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Item Placement&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Trick Level: Easy&lt;br/&gt;Randomization Mode: Full&lt;br/&gt;Random Starting Items: 0 to 4&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="create_difficulty_label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Difficulty&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Dark Aether Suit Damage: Normal&lt;br/&gt;Dark Aether Damage Strictness: Normal&lt;br/&gt;Pickup Model: Correct&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QComboBox" name="create_preset_combo"/>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLabel" name="create_sky_temple_keys_label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Sky Temple Keys&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Target: 9 of 9&lt;br/&gt;Location: Random&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="create_gameplay_label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Gameplay&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Starting Location: Ship&lt;br/&gt;Translator Gates: Effectively Vanilla&lt;br/&gt;Elevators: Vanilla&lt;br/&gt;Hints: On&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="create_customize_button">
+              <property name="text">
+               <string>Customize</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="create_items_label">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Items&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Progressive Suit: Yes&lt;br/&gt;Progressive Grapple: Yes&lt;br/&gt;Split Beam Ammo: Yes&lt;br/&gt;Starting Items: Post Item Loss&lt;br/&gt;Custom Items: Cannon Ball&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <spacer name="create_vertical_spacer_1">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="3" column="0" colspan="2">
+             <spacer name="create_vertical_spacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="6" column="0" colspan="2">
+             <spacer name="create_vertical_spacer_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="8" column="0" colspan="2">
+             <spacer name="create_vertical_spacer_4">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="help_tab">
+       <attribute name="title">
+        <string>Help</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTabWidget" name="help_tab_widget">
+          <property name="currentIndex">
+           <number>4</number>
+          </property>
           <widget class="QWidget" name="tab_usage">
            <attribute name="title">
             <string>Usage</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
+           <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
              <widget class="QScrollArea" name="usage_scroll_area">
               <property name="widgetResizable">
@@ -77,11 +412,11 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>541</width>
-                 <height>372</height>
+                 <width>129</width>
+                 <height>900</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
+               <layout class="QVBoxLayout" name="verticalLayout_9">
                 <item>
                  <widget class="QLabel" name="label">
                   <property name="text">
@@ -113,7 +448,7 @@ p, li { white-space: pre-wrap; }
            <attribute name="title">
             <string>FAQ</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_4">
+           <layout class="QGridLayout" name="gridLayout_6">
             <item row="0" column="0">
              <widget class="QScrollArea" name="faq_scroll_area">
               <property name="widgetResizable">
@@ -124,11 +459,11 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>531</width>
-                 <height>460</height>
+                 <width>91</width>
+                 <height>1350</height>
                 </rect>
                </property>
-               <layout class="QGridLayout" name="gridLayout_5">
+               <layout class="QGridLayout" name="gridLayout_7">
                 <item row="0" column="0">
                  <widget class="QLabel" name="faq_label">
                   <property name="text">
@@ -152,7 +487,7 @@ p, li { white-space: pre-wrap; }
            <attribute name="title">
             <string>Differences</string>
            </attribute>
-           <layout class="QVBoxLayout" name="differences_layout">
+           <layout class="QVBoxLayout" name="differences_layout_2">
             <item>
              <widget class="QScrollArea" name="differences_scroll_area">
               <property name="widgetResizable">
@@ -163,11 +498,11 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>531</width>
-                 <height>426</height>
+                 <width>101</width>
+                 <height>2036</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="differences_scroll_layout">
+               <layout class="QVBoxLayout" name="differences_scroll_layout_2">
                 <item>
                  <widget class="QLabel" name="differences_label">
                   <property name="text">
@@ -191,7 +526,7 @@ p, li { white-space: pre-wrap; }
            <attribute name="title">
             <string>Hints Locations</string>
            </attribute>
-           <layout class="QVBoxLayout" name="hint_tab_layout">
+           <layout class="QVBoxLayout" name="hint_tab_layout_2">
             <item>
              <widget class="QScrollArea" name="hint_scroll_area">
               <property name="widgetResizable">
@@ -205,11 +540,11 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>541</width>
-                 <height>372</height>
+                 <width>76</width>
+                 <height>288</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="hint_scroll_layout_2">
+               <layout class="QVBoxLayout" name="hint_scroll_layout_3">
                 <item>
                  <widget class="QLabel" name="hint_label">
                   <property name="text">
@@ -242,7 +577,7 @@ p, li { white-space: pre-wrap; }
            <attribute name="title">
             <string>Tracker</string>
            </attribute>
-           <layout class="QVBoxLayout" name="hint_layout">
+           <layout class="QVBoxLayout" name="hint_layout_2">
             <item>
              <widget class="QScrollArea" name="tracker_scroll_area">
               <property name="widgetResizable">
@@ -257,7 +592,7 @@ p, li { white-space: pre-wrap; }
                  <height>372</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="hint_scroll_layout">
+               <layout class="QVBoxLayout" name="hint_scroll_layout_4">
                 <item>
                  <widget class="QLabel" name="tracker_label">
                   <property name="text">
