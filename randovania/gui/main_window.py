@@ -1,7 +1,5 @@
 import asyncio
 import json
-import os
-from pathlib import Path
 from typing import Optional
 
 import markdown
@@ -24,8 +22,9 @@ from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
+from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.resolver import debug
-
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -81,27 +80,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.menu_action_export_iso.setEnabled(False)
 
-        _translate = QtCore.QCoreApplication.translate
-        self.tabs = []
-
-        from randovania.gui.game_patches_window import GamePatchesWindow
-        from randovania.gui.iso_management_window import ISOManagementWindow
-        from randovania.gui.logic_settings_window import LogicSettingsWindow
-        from randovania.gui.cosmetic_window import CosmeticWindow
-        from randovania.gui.main_rules import MainRulesWindow
-
-        self.tab_windows = [
-            (ISOManagementWindow, "ROM Settings"),
-            (GamePatchesWindow, "Game Patches"),
-            (MainRulesWindow, "Main Rules"),
-            (LogicSettingsWindow, "Logic Settings"),
-            (CosmeticWindow, "Cosmetic"),
-        ]
-
-        for i, tab in enumerate(self.tab_windows):
-            self.windows.append(tab[0](self, self, options))
-            self.tabs.append(self.windows[i].centralWidget)
-            self.tabWidget.insertTab(i + 1, self.tabs[i], _translate("MainWindow", tab[1]))
+        # Store the original text for the Layout details labels
+        for label in [self.create_item_placement_label,
+                      self.create_items_label,
+                      self.create_difficulty_label,
+                      self.create_gameplay_label,
+                      self.create_game_changes_label,
+                      self.create_sky_temple_keys_label]:
+            label.originalText = label.text()
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -116,24 +102,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     def closeEvent(self, event):
         self.stop_background_process()
-        for window in self.windows:
-            window.closeEvent(event)
         super().closeEvent(event)
-
-    def dragEnterEvent(self, event):
-        for url in event.mimeData().urls():
-            if os.path.splitext(url.toLocalFile())[1] == ".iso":
-                event.acceptProposedAction()
-                return
-
-    def dropEvent(self, event):
-        from randovania.gui.iso_management_window import ISOManagementWindow
-
-        for url in event.mimeData().urls():
-            iso_path = url.toLocalFile()
-            if os.path.splitext(iso_path)[1] == ".iso":
-                self.get_tab(ISOManagementWindow).load_game(Path(iso_path))
-                return
 
     # Releases info
     def request_new_data(self):
@@ -194,12 +163,121 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     # Options
     def on_options_changed(self):
-        for window in self.windows:
-            window.on_options_changed(self._options)
-
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
+
+        patcher = self._options.patcher_configuration
+        configuration = self._options.layout_configuration
+        major_items = configuration.major_items_configuration
+
+        def _bool_to_str(b: bool) -> str:
+            if b:
+                return "Yes"
+            else:
+                return "No"
+
+        # Item Placement
+        trick_level = configuration.trick_level_configuration.global_level.long_name
+        if configuration.trick_level_configuration.specific_levels:
+            trick_level += " (Custom)"
+
+        random_starting_items = "{} to {}".format(
+            major_items.minimum_random_starting_items,
+            major_items.maximum_random_starting_items,
+        )
+        if random_starting_items == "0 to 0":
+            random_starting_items = "None"
+
+        self.create_item_placement_label.setText(
+            self.create_item_placement_label.originalText.format(
+                trick_level=trick_level,
+                randomization_mode=configuration.randomization_mode.value,
+                random_starting_items=random_starting_items,
+            )
+        )
+
+        # Items
+        self.create_items_label.setText(
+            self.create_items_label.originalText.format(
+                progressive_suit=_bool_to_str(major_items.progressive_suit),
+                progressive_grapple=_bool_to_str(major_items.progressive_grapple),
+                split_beam_ammo=_bool_to_str(configuration.split_beam_ammo),
+                starting_items="Custom" if major_items.as_json["items_state"] else "Vanilla Item Loss",
+                custom_items="None",
+            )
+        )
+
+        # Difficulty
+        default_patcher = PatcherConfiguration()
+
+        if patcher.varia_suit_damage == default_patcher.varia_suit_damage and (
+                patcher.dark_suit_damage == default_patcher.dark_suit_damage):
+            dark_aether_suit_damage = "Normal"
+        else:
+            dark_aether_suit_damage = "Custom"
+
+        self.create_difficulty_label.setText(
+            self.create_difficulty_label.originalText.format(
+                dark_aether_suit_damage=dark_aether_suit_damage,
+                dark_aether_damage_strictness="Normal",
+                pickup_model=patcher.pickup_model_style.value,
+            )
+        )
+
+        # Gameplay
+        translator_gates = "Custom"
+        translator_configurations = [
+            (configuration.translator_configuration.with_vanilla_actual(), "Vanilla (Actual)"),
+            (configuration.translator_configuration.with_vanilla_colors(), "Vanilla (Colors)"),
+            (configuration.translator_configuration.with_full_random(), "Random"),
+        ]
+        for translator_config, name in translator_configurations:
+            if translator_config == configuration.translator_configuration:
+                translator_gates = name
+                break
+
+        self.create_gameplay_label.setText(
+            self.create_gameplay_label.originalText.format(
+                starting_location=configuration.starting_location.configuration.value,
+                translator_gates=translator_gates,
+                elevators=configuration.elevators.value,
+                hints="Yes",
+            )
+        )
+
+        # Game Changes
+        missile_launcher_required = True
+        main_pb_required = True
+        for ammo, state in configuration.ammo_configuration.items_state.items():
+            if ammo.name == "Missile Expansion":
+                missile_launcher_required = state.requires_major_item
+            elif ammo.name == "Power Bomb Expansion":
+                main_pb_required = state.requires_major_item
+
+        self.create_game_changes_label.setText(
+            self.create_game_changes_label.originalText.format(
+                missile_launcher_required=_bool_to_str(missile_launcher_required),
+                main_pb_required=_bool_to_str(main_pb_required),
+                warp_to_start=_bool_to_str(patcher.warp_to_start),
+                generic_patches="Some",
+            )
+        )
+
+        # Sky Temple Keys
+        if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
+            stk_location = "Bosses"
+        elif configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+            stk_location = "Guardians"
+        else:
+            stk_location = "Random"
+
+        self.create_sky_temple_keys_label.setText(
+            self.create_sky_temple_keys_label.originalText.format(
+                target="{0} of {0}".format(configuration.sky_temple_keys.num_keys),
+                location=stk_location,
+            )
+        )
 
     # Menu Actions
     def _open_data_visualizer(self):
