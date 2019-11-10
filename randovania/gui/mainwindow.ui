@@ -242,7 +242,7 @@
             <item row="5" column="1">
              <widget class="QLabel" name="create_game_changes_label">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Game Changes&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Missiles needs Launcher: Yes&lt;br/&gt;Power Bombs needs Main PBs: Yes&lt;br/&gt;Warp to Start: Yes&lt;br/&gt;Quality of Life Improvements: All&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Game Changes&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Missiles needs Launcher: {missile_launcher_required}&lt;br/&gt;Power Bombs needs Main PBs: {main_pb_required}&lt;br/&gt;Warp to Start: {warp_to_start}&lt;br/&gt;Quality of Life Improvements: {generic_patches}&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -266,7 +266,7 @@
             <item row="2" column="0">
              <widget class="QLabel" name="create_item_placement_label">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Item Placement&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Trick Level: Easy&lt;br/&gt;Randomization Mode: Full&lt;br/&gt;Random Starting Items: 0 to 4&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Item Placement&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Trick Level: {trick_level}&lt;br/&gt;Randomization Mode: {randomization_mode}&lt;br/&gt;Random Starting Items: {random_starting_items}&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -276,7 +276,7 @@
             <item row="7" column="0">
              <widget class="QLabel" name="create_difficulty_label">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Difficulty&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Dark Aether Suit Damage: Normal&lt;br/&gt;Dark Aether Damage Strictness: Normal&lt;br/&gt;Pickup Model: Correct&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Difficulty&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Dark Aether Suit Damage: {dark_aether_suit_damage}&lt;br/&gt;Dark Aether Damage Strictness: {dark_aether_damage_strictness}&lt;br/&gt;Pickup Model: {pickup_model}&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -289,7 +289,7 @@
             <item row="7" column="1">
              <widget class="QLabel" name="create_sky_temple_keys_label">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Sky Temple Keys&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Target: 9 of 9&lt;br/&gt;Location: Random&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Sky Temple Keys&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Target: {target}&lt;br/&gt;Location: {location}&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -299,7 +299,7 @@
             <item row="2" column="1">
              <widget class="QLabel" name="create_gameplay_label">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Gameplay&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Starting Location: Ship&lt;br/&gt;Translator Gates: Effectively Vanilla&lt;br/&gt;Elevators: Vanilla&lt;br/&gt;Hints: On&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;h5 style=&quot; margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Gameplay&lt;/span&gt;&lt;/h5&gt;&lt;p&gt;Starting Location: {starting_location}&lt;br/&gt;Translator Gates: {translator_gates}&lt;br/&gt;Elevators: {elevators}&lt;br/&gt;Hints: {hints}&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -316,7 +316,7 @@
             <item row="5" column="0">
              <widget class="QLabel" name="create_items_label">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Items&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Progressive Suit: Yes&lt;br/&gt;Progressive Grapple: Yes&lt;br/&gt;Split Beam Ammo: Yes&lt;br/&gt;Starting Items: Post Item Loss&lt;br/&gt;Custom Items: Cannon Ball&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-weight:600;&quot;&gt;Items&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Progressive Suit: {progressive_suit}&lt;br/&gt;Progressive Grapple: {progressive_grapple}&lt;br/&gt;Split Beam Ammo: {split_beam_ammo}&lt;br/&gt;Starting Items: {starting_items}&lt;br/&gt;Custom Items: {custom_items}&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
