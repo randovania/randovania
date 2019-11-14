@@ -8,7 +8,7 @@ from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
 from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
 
-from randovania import VERSION
+from randovania import VERSION, get_data_path
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.games.prime import default_data
@@ -89,6 +89,15 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
                       self.create_sky_temple_keys_label]:
             label.originalText = label.text()
 
+        with get_data_path().joinpath("presets", "presets.json").open() as presets_file:
+            self.presets = json.load(presets_file)
+
+        for preset in self.presets["presets"]:
+            self.create_preset_combo.addItem(preset["name"], preset)
+
+        self.create_preset_combo.currentIndexChanged.connect(self._on_select_preset)
+        self._on_select_preset()
+
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
         self._options = options
@@ -162,6 +171,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         QDesktopServices.openUrl(QUrl(self._current_version_url))
 
     # Options
+    def _on_select_preset(self):
+        self.create_preset_description.setText(self.create_preset_combo.currentData()["description"])
+
     def on_options_changed(self):
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
