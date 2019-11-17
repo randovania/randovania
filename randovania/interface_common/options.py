@@ -33,6 +33,7 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "create_spoiler": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
+    "selected_preset": Serializer(identity, str),
     "patcher_configuration": Serializer(lambda p: p.as_json, PatcherConfiguration.from_json_dict),
     "layout_configuration": Serializer(lambda p: p.as_json, LayoutConfiguration.from_json_dict),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
@@ -68,6 +69,7 @@ class Options:
     _seed_number: Optional[int] = None
     _create_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
+    _selected_preset: Optional[str] = None
     _patcher_configuration: Optional[PatcherConfiguration] = None
     _layout_configuration: Optional[LayoutConfiguration] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
@@ -248,6 +250,10 @@ class Options:
         self._edit_field("output_directory", value)
 
     @property
+    def selected_preset(self) -> Optional[str]:
+        return self._selected_preset
+
+    @property
     def patcher_configuration(self) -> PatcherConfiguration:
         return _return_with_default(self._patcher_configuration, PatcherConfiguration.default)
 
@@ -258,6 +264,12 @@ class Options:
     @property
     def cosmetic_patches(self) -> CosmeticPatches:
         return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
+
+    def set_preset(self, preset):
+        self._check_editable_and_mark_dirty()
+        self._patcher_configuration = PatcherConfiguration.from_json_dict(preset["patcher_configuration"])
+        self._layout_configuration = LayoutConfiguration.from_json_dict(preset["layout_configuration"])
+        self._selected_preset = preset["name"]
 
     # Advanced
 
