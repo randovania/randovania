@@ -22,7 +22,7 @@ from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
-from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode, LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.resolver import debug
 
@@ -93,10 +93,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             self.presets = json.load(presets_file)
 
         for preset in self.presets["presets"]:
+            with get_data_path().joinpath("presets", preset["path"]).open() as preset_file:
+                preset.update(json.load(preset_file))
             self.create_preset_combo.addItem(preset["name"], preset)
 
         self.create_preset_combo.currentIndexChanged.connect(self._on_select_preset)
-        self._on_select_preset()
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -172,12 +173,27 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     # Options
     def _on_select_preset(self):
-        self.create_preset_description.setText(self.create_preset_combo.currentData()["description"])
+        preset_data = self.create_preset_combo.currentData()
+
+        self.create_preset_description.setText(preset_data["description"])
+
+        with self._options as options:
+            options.set_preset(preset_data)
 
     def on_options_changed(self):
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
+
+        name = self._options.selected_preset
+        if name is None:
+            name = "Custom"
+
+        preset_item = self.create_preset_combo.findText(name)
+        if preset_item == self.create_preset_combo.currentIndex():
+            self._on_select_preset()
+        else:
+            self.create_preset_combo.setCurrentIndex(preset_item)
 
         patcher = self._options.patcher_configuration
         configuration = self._options.layout_configuration
