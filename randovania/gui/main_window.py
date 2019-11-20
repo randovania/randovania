@@ -6,7 +6,7 @@ import markdown
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog
 
 from randovania import VERSION, get_data_path
 from randovania.game_description import default_database
@@ -22,7 +22,7 @@ from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
-from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode, LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.resolver import debug
 
@@ -43,6 +43,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     _current_version_url: Optional[str] = None
     _options: Options
     _data_visualizer: Optional[DataEditorWindow] = None
+    _logic_settings_window = None
 
     @property
     def _tab_widget(self):
@@ -97,6 +98,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
                 preset.update(json.load(preset_file))
             self.create_preset_combo.addItem(preset["name"], preset)
 
+        self.create_customize_button.clicked.connect(self._on_customize_button)
         self.create_preset_combo.currentIndexChanged.connect(self._on_select_preset)
 
         # Setting this event only now, so all options changed trigger only once
@@ -172,6 +174,36 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         QDesktopServices.openUrl(QUrl(self._current_version_url))
 
     # Options
+    def _create_custom_preset_item(self):
+        custom_id = self.create_preset_combo.findText("Custom")
+        if custom_id != -1:
+            self.create_preset_combo.removeItem(custom_id)
+
+        preset = {
+            "name": "Custom",
+            "description": "A preset that was customized.",
+            "patcher_configuration": self._options.patcher_configuration.as_json,
+            "layout_configuration": self._options.layout_configuration.as_json,
+        }
+        self.create_preset_combo.addItem(preset["name"], preset)
+        self.create_preset_combo.setCurrentIndex(self.create_preset_combo.count() - 1)
+
+    def _on_customize_button(self):
+        current_preset = self.create_preset_combo.currentData()
+
+        from randovania.gui.logic_settings_window import LogicSettingsWindow
+        self._logic_settings_window = LogicSettingsWindow(self, self._options)
+        self._logic_settings_window.on_options_changed(self._options)
+
+        result = self._logic_settings_window.exec_()
+        self._logic_settings_window = None
+
+        if result == QDialog.Accepted:
+            self._create_custom_preset_item()
+        else:
+            with self._options as options:
+                options.set_preset(current_preset)
+
     def _on_select_preset(self):
         preset_data = self.create_preset_combo.currentData()
 
@@ -181,6 +213,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             options.set_preset(preset_data)
 
     def on_options_changed(self):
+        if self._logic_settings_window is not None:
+            self._logic_settings_window.on_options_changed(self._options)
+            return
+
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
@@ -190,7 +226,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             name = "Custom"
 
         preset_item = self.create_preset_combo.findText(name)
-        if preset_item == self.create_preset_combo.currentIndex():
+        if preset_item == -1:
+            self._create_custom_preset_item()
+        elif preset_item == self.create_preset_combo.currentIndex():
             self._on_select_preset()
         else:
             self.create_preset_combo.setCurrentIndex(preset_item)
