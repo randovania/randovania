@@ -1,7 +1,7 @@
 {
   "version": 1,
   "patcher_configuration": {
-    "menu_mod": false,
+    "menu_mod": true,
     "warp_to_start": true,
     "varia_suit_damage": 6.0,
     "dark_suit_damage": 1.2,
@@ -11,7 +11,7 @@
   "layout_configuration": {
     "game": "mp2-echoes",
     "trick_level": {
-      "global_level": "trivial",
+      "global_level": "no-tricks",
       "specific_levels": {}
     },
     "sky_temple_keys": 9,
@@ -19,38 +19,54 @@
     "starting_location": "ship",
     "randomization_mode": "full",
     "major_items_configuration": {
-      "items_state": {},
-      "progressive_suit": true,
-      "progressive_grapple": true,
+      "items_state": {
+        "Dark Suit": {
+          "num_shuffled_pickups": 1
+        },
+        "Light Suit": {
+          "num_shuffled_pickups": 1
+        },
+        "Progressive Suit": {},
+        "Grapple Beam": {
+          "num_shuffled_pickups": 1
+        },
+        "Screw Attack": {
+          "num_shuffled_pickups": 1
+        },
+        "Progressive Grapple": {}
+      },
+      "progressive_suit": false,
+      "progressive_grapple": false,
       "progressive_launcher": false,
       "minimum_random_starting_items": 0,
       "maximum_random_starting_items": 0
     },
     "ammo_configuration": {
       "maximum_ammo": {
-        "44": 175,
         "43": 10,
+        "44": 255,
         "45": 250,
         "46": 250
       },
       "items_state": {
+        "Beam Ammo Expansion": {
+          "pickup_count": 4
+        },
+        "Dark Ammo Expansion": {},
+        "Light Ammo Expansion": {},
         "Missile Expansion": {
-          "pickup_count": 33
+          "pickup_count": 49
         },
         "Power Bomb Expansion": {
           "pickup_count": 8
-        },
-        "Dark Ammo Expansion": {
-          "pickup_count": 10
-        },
-        "Light Ammo Expansion": {
-          "pickup_count": 10
-        },
-        "Beam Ammo Expansion": {}
+        }
       }
     },
     "translator_configuration": {
-      "translator_requirement": {},
+      "translator_requirement": {
+        "1": "amber",
+        "6": "emerald"
+      },
       "fixed_gfmc_compound": true,
       "fixed_torvus_temple": true,
       "fixed_great_temple": true
@@ -59,6 +75,6 @@
       "item_hints": true,
       "sky_temple_keys": "precise"
     },
-    "split_beam_ammo": true
+    "split_beam_ammo": false
   }
 }
