@@ -66,7 +66,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, options: Options):
         super().__init__()
         self.setupUi(self)
 

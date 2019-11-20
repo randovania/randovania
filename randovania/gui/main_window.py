@@ -269,7 +269,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
                 progressive_suit=_bool_to_str(major_items.progressive_suit),
                 progressive_grapple=_bool_to_str(major_items.progressive_grapple),
                 split_beam_ammo=_bool_to_str(configuration.split_beam_ammo),
-                starting_items="Custom" if major_items.as_json["items_state"] else "Vanilla Item Loss",
+                starting_items="???",
                 custom_items="None",
             )
         )
