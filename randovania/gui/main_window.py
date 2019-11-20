@@ -69,6 +69,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
         self.options_changed_signal.connect(self.on_options_changed)
 
+        self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentIndex(1))
+        self.import_permalink_button.clicked.connect(lambda: QMessageBox.warning(self, "Not Implemented", "This button is NYI."))
+        self.create_new_seed_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentIndex(2))
+
         # Menu Bar
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
         self.menu_action_existing_seed_details.triggered.connect(self._open_existing_seed_details)
