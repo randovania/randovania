@@ -3,7 +3,7 @@ import functools
 from typing import Optional, Dict
 
 from PySide2 import QtCore, QtWidgets
-from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
+from PySide2.QtWidgets import QComboBox, QLabel, QDialog
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
@@ -12,7 +12,6 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.main_window import MainWindow
@@ -93,14 +92,14 @@ def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
     )
 
 
-class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
+class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _checkbox_for_trick: Dict[SimpleResourceInfo, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[SimpleResourceInfo, QtWidgets.QSlider]
     _options: Options
     world_list: WorldList
 
-    def __init__(self, main_window: MainWindow, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, main_window: MainWindow, options: Options):
         super().__init__()
         self.setupUi(self)
         self._options = options
@@ -125,6 +124,9 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
         self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
+
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
 
     # Options
     def on_options_changed(self, options: Options):
