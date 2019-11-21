@@ -20,7 +20,7 @@ environment:
 install:
   - git submodule update --init --recursive
   - set PATH=%PYTHON%\Scripts;%PATH%
-  - "%PYTHON%\\python.exe -m pip install --upgrade pip"
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip wheel setuptools"
   - "%PYTHON%\\python.exe -m pip install https://github.com/enthought/pywin32-ctypes/archive/master.zip"
   - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
   - "%PYTHON%\\python.exe -m pip install -e ."
