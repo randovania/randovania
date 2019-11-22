@@ -85,6 +85,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.menu_action_export_iso.setEnabled(False)
 
+        if self.menu_action_export_iso is None:
+            # Hack
+            from randovania.gui.iso_management_window import ISOManagementWindow
+            print(ISOManagementWindow)
+
         # Store the original text for the Layout details labels
         for label in [self.create_item_placement_label,
                       self.create_items_label,
