@@ -13,12 +13,11 @@ from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.games.prime import default_data
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file, \
+from randovania.gui.common_qt_lib import prompt_user_for_database_file, \
     set_default_window_icon
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.mainwindow_ui import Ui_MainWindow
-from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
@@ -73,7 +72,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         # Menu Bar
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
-        self.menu_action_existing_seed_details.triggered.connect(self._open_existing_seed_details)
         self.menu_action_tracker.triggered.connect(self._open_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
@@ -90,6 +88,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self.generate_seed_tab = GenerateSeedTab(self, self, options)
         self.generate_seed_tab.setup_ui()
+
+        # HACK
+        from randovania.layout.layout_description import LayoutDescription
+        from pathlib import Path
+        from randovania.gui.seed_details_window import SeedDetailsWindow
+        details_window = SeedDetailsWindow(LayoutDescription.from_file(Path(r"C:\Users\henri\programming\randovania\test\test_files\log_files\seed_a.json")))
+        self.welcome_tab_widget.addTab(details_window.centralWidget, "Seed Details")
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -201,14 +206,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         with database_path.open("r") as database_file:
             self._data_editor = DataEditorWindow(json.load(database_file), True)
             self._data_editor.show()
-
-    def _open_existing_seed_details(self):
-        json_path = prompt_user_for_seed_log(self)
-        if json_path is None:
-            return
-
-        self._seed_details = SeedDetailsWindow(json_path)
-        self._seed_details.show()
 
     def _open_tracker(self):
         try:

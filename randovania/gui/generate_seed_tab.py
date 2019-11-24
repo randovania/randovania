@@ -1,29 +1,50 @@
 import json
+import random
 from functools import partial
 
-from PySide2.QtWidgets import QDialog
+from PySide2.QtCore import Signal
+from PySide2.QtWidgets import QDialog, QMessageBox, QWidget
 
 from randovania import get_data_path
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
+from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.resolver.exceptions import GenerationFailure
 
 
-class GenerateSeedTab:
+def show_failed_generation_exception(exception: GenerationFailure):
+    QMessageBox.critical(None,
+                         "An error occurred while generating a seed",
+                         "{}\n\nSome errors are expected to occur, please try again.".format(exception))
+
+
+class GenerateSeedTab(QWidget):
+    _current_lock_state: bool = True
     _logic_settings_window = None
 
+    failed_to_generate_signal = Signal(GenerationFailure)
+
     def __init__(self, background_processor: BackgroundTaskMixin, window: Ui_MainWindow, options: Options):
+        super().__init__()
+
         self.background_processor = background_processor
         self.window = window
         self._options = options
+
+        self.failed_to_generate_signal.connect(show_failed_generation_exception)
 
         with get_data_path().joinpath("presets", "presets.json").open() as presets_file:
             self.presets = json.load(presets_file)
 
     def setup_ui(self):
         window = self.window
+
+        # Progress
+        self.background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
 
         # Store the original text for the Layout details labels
         for label in [window.create_item_placement_label,
@@ -43,6 +64,10 @@ class GenerateSeedTab:
         window.create_preset_combo.currentIndexChanged.connect(self._on_select_preset)
         window.create_generate_button.clicked.connect(partial(self._generate_seed, True))
         window.create_generate_race_button.clicked.connect(partial(self._generate_seed, False))
+
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self._current_lock_state = value
+        self.window.welcome_tab.setEnabled(value)
 
     def _create_custom_preset_item(self):
         create_preset_combo = self.window.create_preset_combo
@@ -85,7 +110,20 @@ class GenerateSeedTab:
             options.set_preset(preset_data)
 
     def _generate_seed(self, spoiler: bool):
-        pass
+        with self._options as options:
+            options.seed_number = random.randint(0, 2 ** 31)
+            options.create_spoiler = spoiler
+
+        def work(progress_update: ProgressUpdateCallable):
+            try:
+                layout = simplified_patcher.generate_layout(progress_update=progress_update, options=self._options)
+                progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
+
+            except GenerationFailure as generate_exception:
+                self.failed_to_generate_signal.emit(generate_exception)
+                progress_update("Generation Failure: {}".format(generate_exception), -1)
+
+        self.background_processor.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):
         if self._logic_settings_window is not None:

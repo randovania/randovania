@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>852</width>
-    <height>607</height>
+    <width>568</width>
+    <height>329</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,44 +34,92 @@
         <string>Configuration</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="1" column="0">
-         <widget class="QLabel" name="layout_trick_text_label">
+        <item row="2" column="0">
+         <widget class="QLabel" name="layout_preset_text_label">
           <property name="text">
-           <string>Trick Level</string>
+           <string>Preset:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
+        <item row="4" column="0" colspan="3">
+         <widget class="QGroupBox" name="iso_box">
+          <property name="title">
+           <string/>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="load_game_button">
+             <property name="text">
+              <string>Load vanilla ISO</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="export_iso_button">
+             <property name="text">
+              <string>Save randomized ISO</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="export_log_button">
+             <property name="text">
+              <string>Save spoiler log</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="play_dolphin_button">
+             <property name="text">
+              <string>Play in Dolphin</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
         <item row="1" column="1">
-         <widget class="QLabel" name="layout_trick_value_label">
+         <widget class="QLabel" name="layout_seed_hash_value_label">
           <property name="text">
            <string>layout_trick_value_label</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="layout_seed_value_label">
+        <item row="2" column="1">
+         <widget class="QLabel" name="layout_preset_value_label">
           <property name="text">
            <string>TextLabel</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="layout_elevators_text_label">
-          <property name="text">
-           <string>Elevators: </string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="layout_permalink_edit">
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="layout_keys_text_label">
+        <item row="0" column="2">
+         <widget class="QPushButton" name="layout_permalink_copy_button">
           <property name="text">
-           <string>Sky Temple Keys:</string>
+           <string>Copy</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="cosmetic_settings_button">
+          <property name="text">
+           <string>See cosmetic settings</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="layout_seed_hash_text_label">
+          <property name="text">
+           <string>Seed Hash:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -79,48 +127,30 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QLabel" name="layout_seed_text_label">
+         <widget class="QLabel" name="layout_permalink_text_label">
           <property name="text">
-           <string>Seed:</string>
+           <string>Permalink:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="layout_keys_value_label">
-          <property name="text">
-           <string>TextLabel</string>
+        <item row="3" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="layout_elevators_value_label">
-          <property name="text">
-           <string>TextLabel</string>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
           </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="layout_starting_items_text_label">
-          <property name="text">
-           <string>Starting Items:</string>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="layout_starting_items_value_label">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -167,8 +197,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>796</width>
-             <height>493</height>
+             <width>528</width>
+             <height>238</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -194,55 +224,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="solver_path">
-       <attribute name="title">
-        <string>Spoiler: Solver Path</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
-         <widget class="QScrollArea" name="solver_path_scroll_area">
-          <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOn</enum>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustToContents</enum>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <widget class="QWidget" name="solver_path_contents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>796</width>
-             <height>521</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <layout class="QVBoxLayout" name="solver_path_content_layout">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Check the exported log file.</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -252,8 +233,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>852</width>
-     <height>21</height>
+     <width>568</width>
+     <height>17</height>
     </rect>
    </property>
   </widget>

@@ -38,14 +38,14 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
 
-    def __init__(self, json_path: Path):
+    def __init__(self, layout_description: LayoutDescription):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
         self._history_items = []
         self.pickup_spoiler_buttons = []
-        self.layout_description = LayoutDescription.from_file(json_path)
+        self.layout_description = layout_description
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers()
@@ -64,44 +64,48 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self._create_pickup_spoiler_combobox()
 
         game_description = default_prime2_game_description()
+        world_to_group = {}
+
         for world in game_description.world_list.worlds:
-            group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
-            group_box.setTitle(world.name)
-            vertical_layout = QVBoxLayout(group_box)
-            vertical_layout.setContentsMargins(8, 4, 8, 4)
-            vertical_layout.setSpacing(2)
-            group_box.vertical_layout = vertical_layout
+            for is_dark_world in [False, True]:
+                group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
+                group_box.setTitle(world.correct_name(is_dark_world))
+                vertical_layout = QVBoxLayout(group_box)
+                vertical_layout.setContentsMargins(8, 4, 8, 4)
+                vertical_layout.setSpacing(2)
+                group_box.vertical_layout = vertical_layout
 
-            vertical_layout.horizontal_layouts = []
+                vertical_layout.horizontal_layouts = []
+                world_to_group[world.correct_name(is_dark_world)] = group_box
+                self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
 
-            for node in world.all_nodes:
-                if not isinstance(node, PickupNode):
-                    continue
+        for world, area, node in game_description.world_list.all_worlds_areas_nodes:
+            if not isinstance(node, PickupNode):
+                continue
 
-                horizontal_layout = QHBoxLayout()
-                horizontal_layout.setSpacing(2)
+            group_box = world_to_group[world.correct_name(area.in_dark_aether)]
+            horizontal_layout = QHBoxLayout()
+            horizontal_layout.setSpacing(2)
 
-                label = QLabel(group_box)
-                label.setText(game_description.world_list.node_name(node))
-                horizontal_layout.addWidget(label)
-                horizontal_layout.label = label
+            label = QLabel(group_box)
+            label.setText(game_description.world_list.node_name(node))
+            horizontal_layout.addWidget(label)
+            horizontal_layout.label = label
 
-                push_button = QPushButton(group_box)
-                push_button.setFlat(True)
-                push_button.setText("Hidden")
-                push_button.item_is_hidden = True
-                push_button.pickup_index = node.pickup_index
-                push_button.clicked.connect(partial(self._toggle_pickup_spoiler, push_button))
-                push_button.item_name = "Nothing was Set, ohno"
-                push_button.row = horizontal_layout
-                horizontal_layout.addWidget(push_button)
-                horizontal_layout.button = push_button
-                self.pickup_spoiler_buttons.append(push_button)
+            push_button = QPushButton(group_box)
+            push_button.setFlat(True)
+            push_button.setText("Hidden")
+            push_button.item_is_hidden = True
+            push_button.pickup_index = node.pickup_index
+            push_button.clicked.connect(partial(self._toggle_pickup_spoiler, push_button))
+            push_button.item_name = "Nothing was Set, ohno"
+            push_button.row = horizontal_layout
+            horizontal_layout.addWidget(push_button)
+            horizontal_layout.button = push_button
+            self.pickup_spoiler_buttons.append(push_button)
 
-                vertical_layout.addLayout(horizontal_layout)
-                vertical_layout.horizontal_layouts.append(horizontal_layout)
-
-            self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
+            group_box.vertical_layout.addLayout(horizontal_layout)
+            group_box.vertical_layout.horizontal_layouts.append(horizontal_layout)
 
     def create_history_item(self, node):
         button = QRadioButton(self.layout_history_content)
@@ -115,23 +119,12 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_description = description
         self.layout_info_tab.show()
 
-        configuration = description.permalink.layout_configuration
-        self.layout_seed_value_label.setText(str(description.permalink.seed_number))
-        self.layout_trick_value_label.setText(configuration.trick_level_configuration.global_level.value)
-        self.layout_keys_value_label.setText(str(configuration.sky_temple_keys.value))
-        self.layout_elevators_value_label.setText(configuration.elevators.value)
-
-        starting_items = [
-            major_item.name if state.num_included_in_starting_items == 1 else "{} {}".format(
-                state.num_included_in_starting_items, major_item.name
-            )
-
-            for major_item, state in configuration.major_items_configuration.items_state.items()
-            if state.num_included_in_starting_items > 0
-        ]
-        self.layout_starting_items_value_label.setText(
-            ", ".join(starting_items)
-        )
+        self.layout_permalink_edit.setText(description.permalink.as_str)
+        self.layout_preset_value_label.setText("To be implemented")
+        self.layout_seed_hash_value_label.setText("{} ({})".format(
+            description.shareable_word_hash,
+            description.shareable_hash,
+        ))
 
         # Pickup spoiler combo
         pickup_names = {
