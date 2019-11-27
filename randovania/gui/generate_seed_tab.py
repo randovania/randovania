@@ -61,9 +61,9 @@ class GenerateSeedTab(QWidget):
             window.create_preset_combo.addItem(preset["name"], preset)
 
         window.create_customize_button.clicked.connect(self._on_customize_button)
-        window.create_preset_combo.currentIndexChanged.connect(self._on_select_preset)
-        window.create_generate_button.clicked.connect(partial(self._generate_seed, True))
-        window.create_generate_race_button.clicked.connect(partial(self._generate_seed, False))
+        window.create_preset_combo.activated.connect(self._on_select_preset)
+        window.create_generate_button.clicked.connect(partial(self._generate_new_seed, True))
+        window.create_generate_race_button.clicked.connect(partial(self._generate_new_seed, False))
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
@@ -72,16 +72,17 @@ class GenerateSeedTab(QWidget):
     def _create_custom_preset_item(self):
         create_preset_combo = self.window.create_preset_combo
 
-        custom_id = create_preset_combo.findText("Custom")
-        if custom_id != -1:
-            create_preset_combo.removeItem(custom_id)
-
         preset = {
             "name": "Custom",
             "description": "A preset that was customized.",
             "patcher_configuration": self._options.patcher_configuration.as_json,
             "layout_configuration": self._options.layout_configuration.as_json,
         }
+
+        custom_id = create_preset_combo.findText("Custom")
+        if custom_id != -1:
+            create_preset_combo.removeItem(custom_id)
+
         create_preset_combo.addItem(preset["name"], preset)
         create_preset_combo.setCurrentIndex(create_preset_combo.count() - 1)
 
@@ -97,9 +98,9 @@ class GenerateSeedTab(QWidget):
 
         if result == QDialog.Accepted:
             self._create_custom_preset_item()
-        else:
-            with self._options as options:
-                options.set_preset(current_preset)
+
+        with self._options as options:
+            options.set_preset(current_preset)
 
     def _on_select_preset(self):
         preset_data = self.window.create_preset_combo.currentData()
@@ -109,15 +110,21 @@ class GenerateSeedTab(QWidget):
         with self._options as options:
             options.set_preset(preset_data)
 
-    def _generate_seed(self, spoiler: bool):
+    # Generate seed
+
+    def _generate_new_seed(self, spoiler: bool):
         with self._options as options:
             options.seed_number = random.randint(0, 2 ** 31)
             options.create_spoiler = spoiler
 
+        self._generate_seed()
+
+    def _generate_seed(self):
         def work(progress_update: ProgressUpdateCallable):
             try:
                 layout = simplified_patcher.generate_layout(progress_update=progress_update, options=self._options)
                 progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
+                self.window.show_seed_tab(layout)
 
             except GenerationFailure as generate_exception:
                 self.failed_to_generate_signal.emit(generate_exception)
