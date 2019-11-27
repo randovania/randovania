@@ -18,10 +18,12 @@ from randovania.gui.common_qt_lib import prompt_user_for_database_file, \
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
+from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug
 
 _DISABLE_VALIDATION_WARNING = """
@@ -41,6 +43,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     _current_version_url: Optional[str] = None
     _options: Options
     _data_visualizer: Optional[DataEditorWindow] = None
+    _details_window: SeedDetailsWindow
 
     @property
     def _tab_widget(self):
@@ -67,7 +70,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.options_changed_signal.connect(self.on_options_changed)
 
         self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentIndex(1))
-        self.import_permalink_button.clicked.connect(lambda: QMessageBox.warning(self, "Not Implemented", "This button is NYI."))
+        self.import_permalink_button.clicked.connect(
+            lambda: QMessageBox.warning(self, "Not Implemented", "This button is NYI."))
         self.create_new_seed_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentIndex(2))
 
         # Menu Bar
@@ -90,11 +94,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.generate_seed_tab.setup_ui()
 
         # HACK
-        from randovania.layout.layout_description import LayoutDescription
-        from pathlib import Path
-        from randovania.gui.seed_details_window import SeedDetailsWindow
-        details_window = SeedDetailsWindow(LayoutDescription.from_file(Path(r"C:\Users\henri\programming\randovania\test\test_files\log_files\seed_a.json")))
-        self.welcome_tab_widget.addTab(details_window.centralWidget, "Seed Details")
+        self._details_window = SeedDetailsWindow()
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -110,6 +110,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     def closeEvent(self, event):
         self.stop_background_process()
         super().closeEvent(event)
+
+    # Generate Seed
+    def show_seed_tab(self, layout: LayoutDescription):
+        self._details_window.update_layout_description(layout)
+        self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Seed Details")
 
     # Releases info
     def request_new_data(self):
