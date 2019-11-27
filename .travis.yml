@@ -41,9 +41,8 @@ before_install:
 
 install:
 # Install pip 19.0+ to be able to install a manylinux2010 wheel of nod
-- python -m pip install --upgrade pip>=19.0
-# TODO: disable PEP 517 to dodge problem installing PyInstaller https://github.com/pypa/pip/issues/6163
-- python -m pip install -r requirements.txt --no-use-pep517
+- python -m pip install --upgrade pip>=19.0 wheel setuptools
+- python -m pip install -r requirements.txt
 # Installing pytest-xvfb breaks the tests on macOS, so let's install it only on linux for now
 # TODO: investigate this
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install pytest-xvfb; fi
