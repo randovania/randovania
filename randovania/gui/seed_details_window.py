@@ -38,20 +38,16 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
 
-    def __init__(self, layout_description: LayoutDescription):
+    def __init__(self):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
         self._history_items = []
         self.pickup_spoiler_buttons = []
-        self.layout_description = layout_description
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers()
-
-        # And update
-        self.update_layout_description(self.layout_description)
 
     # Layout Visualization
     def _create_pickup_spoiler_combobox(self):
