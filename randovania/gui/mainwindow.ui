@@ -40,7 +40,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="welcome_tab_widget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_intro">
            <attribute name="title">
@@ -169,7 +169,7 @@
                <item row="0" column="0">
                 <widget class="QLabel" name="import_permalink_label">
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you playing with others?&lt;/p&gt;&lt;p&gt;Ask them for a permalink and import it here. You'll create the same seed as them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you playing with others?&lt;/p&gt;&lt;p&gt;Ask them for a permalink and import it here. You'll create the same game as them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -199,20 +199,20 @@
             <item>
              <widget class="QGroupBox" name="play_new_permalink_group">
               <property name="title">
-               <string>Creating a new Seed</string>
+               <string>Creating a new Game</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_5">
                <item row="0" column="0">
                 <widget class="QLabel" name="create_new_seed_label">
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Playing alone? Hosting a race?&lt;/p&gt;&lt;p&gt;Create a new seed here and then share the permalink!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Playing alone? Hosting a race?&lt;/p&gt;&lt;p&gt;Create a new game here and then share the permalink!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
                 <widget class="QPushButton" name="create_new_seed_button">
                  <property name="text">
-                  <string>Create new seed</string>
+                  <string>Create new game</string>
                  </property>
                 </widget>
                </item>
@@ -418,7 +418,7 @@
         <item>
          <widget class="QTabWidget" name="help_tab_widget">
           <property name="currentIndex">
-           <number>4</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_usage">
            <attribute name="title">
@@ -435,8 +435,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>129</width>
-                 <height>900</height>
+                 <width>541</width>
+                 <height>372</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -787,7 +787,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Advanced</string>
     </property>
-    <addaction name="menu_action_export_iso"/>
+    <addaction name="menu_action_load_iso"/>
     <addaction name="menu_action_validate_seed_after"/>
     <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
    </widget>
@@ -820,9 +820,9 @@ p, li { white-space: pre-wrap; }
     <string>Existing Copy</string>
    </property>
   </action>
-  <action name="menu_action_export_iso">
+  <action name="menu_action_load_iso">
    <property name="text">
-    <string>Export ISO</string>
+    <string>Load vanilla game ISO</string>
    </property>
   </action>
   <action name="menu_action_validate_seed_after">

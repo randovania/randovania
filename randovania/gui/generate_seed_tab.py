@@ -161,9 +161,6 @@ class GenerateSeedTab(QWidget):
                 return "No"
 
         # Item Placement
-        trick_level = configuration.trick_level_configuration.global_level.long_name
-        if configuration.trick_level_configuration.specific_levels:
-            trick_level += " (Custom)"
 
         random_starting_items = "{} to {}".format(
             major_items.minimum_random_starting_items,
@@ -174,7 +171,7 @@ class GenerateSeedTab(QWidget):
 
         self.window.create_item_placement_label.setText(
             self.window.create_item_placement_label.originalText.format(
-                trick_level=trick_level,
+                trick_level=configuration.trick_level_configuration.pretty_description,
                 randomization_mode=configuration.randomization_mode.value,
                 random_starting_items=random_starting_items,
             )

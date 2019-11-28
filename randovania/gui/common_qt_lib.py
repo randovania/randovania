@@ -16,15 +16,23 @@ def lock_application(value: bool):
     QApplication.instance().main_window.setEnabled(value)
 
 
-def _prompt_user_for_file(window: QMainWindow, caption: str, filter: str) -> Optional[Path]:
+def _prompt_user_for_file(window: QMainWindow,
+                          caption: str,
+                          filter: str,
+                          new_file: bool = False) -> Optional[Path]:
     """
     Helper function for all `prompt_user_for_*` functions.
     :param window:
     :param caption:
     :param filter:
+    :param new_file: If false, prompt for an existing file.
     :return: A string if the user selected a file, None otherwise
     """
-    open_result = QFileDialog.getOpenFileName(window, caption=caption, filter=filter)
+    if new_file:
+        method = QFileDialog.getSaveFileName
+    else:
+        method = QFileDialog.getOpenFileName
+    open_result = method(window, caption=caption, filter=filter)
     if not open_result or open_result == ("", ""):
         return None
     return Path(open_result[0])
@@ -39,13 +47,24 @@ def prompt_user_for_input_iso(window: QMainWindow) -> Optional[Path]:
     return _prompt_user_for_file(window, caption="Select the vanilla Game ISO.", filter="*.iso")
 
 
-def prompt_user_for_seed_log(window: QMainWindow) -> Optional[Path]:
+def prompt_user_for_output_iso(window: QMainWindow) -> Optional[Path]:
     """
-    Shows an QFileDialog asking the user for a Randovania seed log
+    Shows an QFileDialog asking the user where to place the output ISO
     :param window:
     :return: A string if the user selected a file, None otherwise
     """
-    return _prompt_user_for_file(window, caption="Select a Randovania seed log.", filter="*.json")
+    return _prompt_user_for_file(window, caption="Where to place the Randomized Game ISO.",
+                                 filter="*.iso", new_file=True)
+
+
+def prompt_user_for_seed_log(window: QMainWindow, new_file: bool = False) -> Optional[Path]:
+    """
+    Shows an QFileDialog asking the user for a Randovania seed log
+    :param window:
+    :param new_file:
+    :return: A string if the user selected a file, None otherwise
+    """
+    return _prompt_user_for_file(window, caption="Select a Randovania seed log.", filter="*.json", new_file=new_file)
 
 
 def prompt_user_for_database_file(window: QMainWindow) -> Optional[Path]:

@@ -95,6 +95,13 @@ class TrickLevelConfiguration(BitPackValue):
         return cls(global_level, specific_levels)
 
     @property
+    def pretty_description(self) -> str:
+        description = self.global_level.long_name
+        if self.specific_levels:
+            description += " (Custom)"
+        return description
+
+    @property
     def as_json(self) -> dict:
         specific_levels = {
             str(trick): level.value
