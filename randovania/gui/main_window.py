@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import json
 from typing import Optional
 
@@ -12,16 +13,15 @@ from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.games.prime import default_data
+from randovania.gui import common_qt_lib
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import prompt_user_for_database_file, \
-    set_default_window_icon
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.mainwindow_ui import Ui_MainWindow
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
-from randovania.interface_common import github_releases_data, update_checker
+from randovania.interface_common import github_releases_data, update_checker, simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug
@@ -55,7 +55,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.setWindowTitle("Randovania {}".format(VERSION))
         self.is_preview_mode = preview
         self.setAcceptDrops(True)
-        set_default_window_icon(self)
+        common_qt_lib.set_default_window_icon(self)
 
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
@@ -79,22 +79,18 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.menu_action_tracker.triggered.connect(self._open_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
-        self.menu_action_export_iso.triggered.connect(self._export_iso)
+        self.menu_action_load_iso.triggered.connect(self._load_game_action)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
 
-        self.menu_action_export_iso.setEnabled(False)
-
-        if self.menu_action_export_iso is None:
+        if self.menu_action_load_iso is None:
             # Hack
             from randovania.gui.iso_management_window import ISOManagementWindow
             print(ISOManagementWindow)
 
         self.generate_seed_tab = GenerateSeedTab(self, self, options)
         self.generate_seed_tab.setup_ui()
-
-        # HACK
-        self._details_window = SeedDetailsWindow()
+        self._details_window = SeedDetailsWindow(self, options)
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -114,7 +110,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     # Generate Seed
     def show_seed_tab(self, layout: LayoutDescription):
         self._details_window.update_layout_description(layout)
-        self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Seed Details")
+        index = self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
+        self.welcome_tab_widget.setCurrentIndex(index)
 
     # Releases info
     def request_new_data(self):
@@ -180,6 +177,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             self._options.advanced_timeout_during_generation)
 
         self.generate_seed_tab.on_options_changed(self._options)
+        self._details_window.on_options_changed(self._options)
 
     # Menu Actions
     def _open_data_visualizer(self):
@@ -204,7 +202,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self._data_editor.show()
 
     def _open_data_editor_prompt(self):
-        database_path = prompt_user_for_database_file(self)
+        database_path = common_qt_lib.prompt_user_for_database_file(self)
         if database_path is None:
             return
 
@@ -225,8 +223,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
         self._tracker.show()
 
-    def _export_iso(self):
-        pass
+    def _load_game_action(self):
+        iso = common_qt_lib.prompt_user_for_input_iso(self)
+        if iso is not None:
+            self.run_in_background_thread(
+                functools.partial(simplified_patcher.unpack_iso,
+                                  input_iso=iso,
+                                  options=self._options),
+                "Will unpack ISO")
 
     def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after

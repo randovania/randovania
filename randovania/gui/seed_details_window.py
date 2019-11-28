@@ -3,12 +3,17 @@ from pathlib import Path
 from typing import List
 
 from PySide2 import QtCore
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
+from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
+    QApplication
 
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
-from randovania.gui.common_qt_lib import set_default_window_icon
+from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.common_qt_lib import set_default_window_icon, prompt_user_for_seed_log, prompt_user_for_output_iso
 from randovania.gui.seed_details_window_ui import Ui_SeedDetailsWindow
+from randovania.interface_common import simplified_patcher
+from randovania.interface_common.options import Options
+from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
 
@@ -37,17 +42,58 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     _history_items: List[QRadioButton]
     pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
+    _options: Options
 
-    def __init__(self):
+    def __init__(self, background_processor: BackgroundTaskMixin, options: Options):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
         self._history_items = []
         self.pickup_spoiler_buttons = []
+        self.background_processor = background_processor
+        self._options = options
+
+        # Signals
+        self.layout_permalink_copy_button.clicked.connect(self._copy_permalink)
+        self.export_log_button.clicked.connect(self._export_log)
+        self.export_iso_button.clicked.connect(self._export_iso)
+
+        # Cosmetic
+        self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
+        self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
+        self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
+        self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers()
+
+    # Operations
+    def _copy_permalink(self):
+        QApplication.clipboard().setText(self.layout_description.permalink.as_str)
+
+    def _export_log(self):
+        json_path = prompt_user_for_seed_log(self, new_file=True)
+        if json_path is not None:
+            self.layout_description.save_to_file(json_path)
+
+    def _export_iso(self):
+        iso_path = prompt_user_for_output_iso(self)
+        if iso_path is None:
+            return
+
+        layout = self.layout_description
+        options = self._options
+
+        def work(progress_update: ProgressUpdateCallable):
+            simplified_patcher.patch_game_with_existing_layout(
+                progress_update=progress_update,
+                options=options,
+                layout=layout,
+            )
+            progress_update(f"Finished!", 1)
+
+        self.background_processor.run_in_background_thread(work, "Exporting...")
 
     # Layout Visualization
     def _create_pickup_spoiler_combobox(self):
@@ -115,12 +161,15 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_description = description
         self.layout_info_tab.show()
 
+        self.export_log_button.setEnabled(description.permalink.spoiler)
         self.layout_permalink_edit.setText(description.permalink.as_str)
         self.layout_preset_value_label.setText("To be implemented")
         self.layout_seed_hash_value_label.setText("{} ({})".format(
             description.shareable_word_hash,
             description.shareable_hash,
         ))
+        self.layout_trick_level_text_value.setText(
+            description.permalink.layout_configuration.trick_level_configuration.pretty_description)
 
         # Pickup spoiler combo
         pickup_names = {
@@ -174,3 +223,16 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             visible = text == "None" or text == button.item_name
             button.setVisible(visible)
             button.row.label.setVisible(visible)
+
+    def _persist_option_then_notify(self, attribute_name: str):
+        def persist(value: int):
+            with self._options as options:
+                setattr(options, attribute_name, bool(value))
+
+        return persist
+
+    def on_options_changed(self, options: Options):
+        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
+        self.faster_credits_check.setChecked(options.speed_up_credits)
+        self.open_map_check.setChecked(options.open_map)
+        self.pickup_markers_check.setChecked(options.pickup_markers)
