@@ -37,6 +37,7 @@ def _hide_pickup_spoiler(button):
     button.item_is_hidden = True
 
 
+# TODO: this should not be a Window class
 class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton]
@@ -84,6 +85,9 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         layout = self.layout_description
         options = self._options
+
+        # TODO: actually use iso_path
+        # TODO: ask to load an ISO first
 
         def work(progress_update: ProgressUpdateCallable):
             simplified_patcher.patch_game_with_existing_layout(
