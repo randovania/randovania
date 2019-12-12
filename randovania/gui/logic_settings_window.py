@@ -12,6 +12,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
+from randovania.gui import common_qt_lib
 from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.main_rules import MainRulesWindow
@@ -103,6 +104,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     def __init__(self, main_window: MainWindow, options: Options):
         super().__init__()
         self.setupUi(self)
+        common_qt_lib.set_default_window_icon(self)
+
         self._options = options
         self._main_window = main_window
         self._main_rules = MainRulesWindow(options)
