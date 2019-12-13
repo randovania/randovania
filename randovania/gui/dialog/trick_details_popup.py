@@ -8,7 +8,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.gui.common_qt_lib import set_default_window_icon
+from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.main_window import MainWindow
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.layout.trick_level import LayoutTrickLevel

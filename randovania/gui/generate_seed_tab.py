@@ -6,7 +6,7 @@ from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget
 
 from randovania import get_data_path
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
@@ -91,7 +91,7 @@ class GenerateSeedTab(QWidget):
     def _on_customize_button(self):
         current_preset = self.window.create_preset_combo.currentData()
 
-        from randovania.gui.logic_settings_window import LogicSettingsWindow
+        from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
         self._logic_settings_window = LogicSettingsWindow(self.window, self._options)
         self._logic_settings_window.on_options_changed(self._options)
 
