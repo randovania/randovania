@@ -12,12 +12,12 @@ from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.games.prime import default_data
-from randovania.gui import common_qt_lib
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.permalink_dialog import PermalinkDialog
+from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker

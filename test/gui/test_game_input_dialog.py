@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from PySide2 import QtCore
 
-from randovania.gui.game_input_dialog import GameInputDialog
+from randovania.gui.dialog.game_input_dialog import GameInputDialog
 
 pytestmark = pytest.mark.skipif(
     pytest.config.option.skip_gui_tests,
