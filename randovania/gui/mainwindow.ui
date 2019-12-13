@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>648</width>
-    <height>581</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -28,7 +28,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="main_tab_widget">
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -115,7 +115,7 @@
              </spacer>
             </item>
             <item row="1" column="1">
-             <spacer name="verticalSpacer">
+             <spacer name="intro_vertical_spacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
@@ -791,6 +791,7 @@ p, li { white-space: pre-wrap; }
      <string>Advanced</string>
     </property>
     <addaction name="menu_action_load_iso"/>
+    <addaction name="menu_action_delete_loaded_game"/>
     <addaction name="menu_action_validate_seed_after"/>
     <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
    </widget>
@@ -848,6 +849,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Timeout generation after a time limit</string>
+   </property>
+  </action>
+  <action name="menu_action_delete_loaded_game">
+   <property name="text">
+    <string>Delete loaded game</string>
    </property>
   </action>
  </widget>
