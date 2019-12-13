@@ -13,6 +13,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.permalink import Permalink
 from randovania.resolver.exceptions import GenerationFailure
 
 
@@ -114,16 +115,20 @@ class GenerateSeedTab(QWidget):
     # Generate seed
 
     def _generate_new_seed(self, spoiler: bool):
-        with self._options as options:
-            options.seed_number = random.randint(0, 2 ** 31)
-            options.create_spoiler = spoiler
+        options = self._options
+        self.generate_seed_from_permalink(Permalink(
+            seed_number=random.randint(0, 2 ** 31),
+            spoiler=spoiler,
+            patcher_configuration=options.patcher_configuration,
+            layout_configuration=options.layout_configuration,
+        ))
 
-        self._generate_seed()
-
-    def _generate_seed(self):
+    def generate_seed_from_permalink(self, permalink: Permalink):
         def work(progress_update: ProgressUpdateCallable):
             try:
-                layout = simplified_patcher.generate_layout(progress_update=progress_update, options=self._options)
+                layout = simplified_patcher.generate_layout(progress_update=progress_update,
+                                                            permalink=permalink,
+                                                            options=self._options)
                 progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
                 self.window.show_seed_tab(layout)
 

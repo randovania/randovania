@@ -69,15 +69,16 @@ def test_generate_layout(mock_generate_layout: MagicMock,
                          ):
     # Setup
     options: Options = MagicMock()
+    permalink: Permalink = MagicMock()
     progress_update = MagicMock()
 
     # Run
-    simplified_patcher.generate_layout(options, progress_update)
+    simplified_patcher.generate_layout(options, permalink, progress_update)
 
     # Assert
     mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
     mock_generate_layout.assert_called_once_with(
-        permalink=options.permalink,
+        permalink=permalink,
         status_update=mock_constant_percentage_callback.return_value,
         validate_after_generation=options.advanced_validate_seed_after,
         timeout_during_generation=options.advanced_timeout_during_generation,
