@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: A Luminoth Lore scan is less likely to have hints for what was already accessible
+    when that scan was found. 
+
 -   Changed: Loading a new game will automatically clear any existing one.
 
 -   Changed: Minimal Checking now also checks of Dark Agon Temple Keys and Dark Torvus Temple Keys.
