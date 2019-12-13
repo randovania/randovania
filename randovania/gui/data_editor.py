@@ -14,7 +14,7 @@ from randovania.game_description.world import World
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.connections_editor import ConnectionsEditor
 from randovania.gui.connections_visualizer import ConnectionsVisualizer
-from randovania.gui.data_editor_ui import Ui_DataEditorWindow
+from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):

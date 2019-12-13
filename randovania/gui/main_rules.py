@@ -17,7 +17,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.item_configuration_popup import ItemConfigurationPopup
-from randovania.gui.main_rules_ui import Ui_MainRules
+from randovania.gui.generated.main_rules_ui import Ui_MainRules
 from randovania.interface_common.options import Options
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.layout_configuration import RandomizationMode

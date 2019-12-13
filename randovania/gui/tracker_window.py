@@ -17,7 +17,7 @@ from randovania.generator import base_patches_factory
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.common_qt_lib import set_default_window_icon
 from randovania.gui.custom_spin_box import CustomSpinBox
-from randovania.gui.tracker_window_ui import Ui_TrackerWindow
+from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
