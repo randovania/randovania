@@ -145,35 +145,6 @@ def test_export_layout():
     pass
 
 
-@patch("randovania.interface_common.simplified_patcher._internal_patch_iso", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.generate_layout", autospec=True)
-@patch("randovania.interface_common.status_update_lib.split_progress_update", autospec=True)
-def test_create_layout_then_export_iso(mock_split_progress_update: MagicMock,
-                                       mock_generate_layout: MagicMock,
-                                       mock_internal_patch_iso: MagicMock,
-                                       ):
-    # Setup
-    progress_update = MagicMock()
-    options: Options = MagicMock()
-
-    updaters = [MagicMock(), MagicMock(), MagicMock(), MagicMock()]
-    mock_split_progress_update.return_value = updaters
-
-    # Run
-    result = simplified_patcher.create_layout_then_export_iso(progress_update, options)
-
-    # Assert
-    mock_split_progress_update.assert_called_once_with(progress_update, 3)
-    mock_generate_layout.assert_called_once_with(options=options,
-                                                 progress_update=updaters[0])
-    mock_internal_patch_iso.assert_called_once_with(
-        updaters=updaters[1:],
-        layout=mock_generate_layout.return_value,
-        options=options,
-    )
-    assert result == mock_generate_layout.return_value
-
-
 @patch("randovania.games.prime.claris_randomizer.apply_layout", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.patch_game_name_and_id", autospec=True)
 def test_apply_layout(mock_patch_game_name_and_id: MagicMock,

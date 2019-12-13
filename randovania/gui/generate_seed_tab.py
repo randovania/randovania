@@ -85,6 +85,7 @@ class GenerateSeedTab(QWidget):
 
         create_preset_combo.addItem(preset["name"], preset)
         create_preset_combo.setCurrentIndex(create_preset_combo.count() - 1)
+        self.window.create_preset_description.setText(preset["description"])
 
     def _on_customize_button(self):
         current_preset = self.window.create_preset_combo.currentData()

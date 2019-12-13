@@ -1,17 +1,17 @@
 from functools import partial
-from pathlib import Path
 from typing import List
 
 from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
-    QApplication
+    QApplication, QDialog
 
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import set_default_window_icon, prompt_user_for_seed_log, prompt_user_for_output_iso
+from randovania.gui.common_qt_lib import set_default_window_icon, prompt_user_for_seed_log
+from randovania.gui.game_input_dialog import GameInputDialog
 from randovania.gui.seed_details_window_ui import Ui_SeedDetailsWindow
-from randovania.interface_common import simplified_patcher
+from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
@@ -79,22 +79,42 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             self.layout_description.save_to_file(json_path)
 
     def _export_iso(self):
-        iso_path = prompt_user_for_output_iso(self)
-        if iso_path is None:
-            return
-
         layout = self.layout_description
         options = self._options
 
-        # TODO: actually use iso_path
-        # TODO: ask to load an ISO first
+        dialog = GameInputDialog(options,
+                                 "Echoes Randomizer - {}.iso".format(
+                                     layout.shareable_word_hash
+                                 ))
+        result = dialog.exec_()
+
+        if result != QDialog.Accepted:
+            return
+
+        input_file = dialog.input_file
+        output_file = dialog.output_file
 
         def work(progress_update: ProgressUpdateCallable):
-            simplified_patcher.patch_game_with_existing_layout(
-                progress_update=progress_update,
-                options=options,
-                layout=layout,
-            )
+            num_updaters = 2
+            if input_file is not None:
+                num_updaters += 1
+            updaters = status_update_lib.split_progress_update(progress_update, num_updaters)
+
+            if input_file is not None:
+                simplified_patcher.unpack_iso(input_iso=input_file,
+                                              options=options,
+                                              progress_update=updaters[0])
+
+            # Apply Layout
+            simplified_patcher.apply_layout(layout=layout,
+                                            options=options,
+                                            progress_update=updaters[-2])
+
+            # Pack ISO
+            simplified_patcher.pack_iso(output_iso=output_file,
+                                        options=options,
+                                        progress_update=updaters[-1])
+
             progress_update(f"Finished!", 1)
 
         self.background_processor.run_in_background_thread(work, "Exporting...")

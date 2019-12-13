@@ -7,7 +7,7 @@ import markdown
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog
 
 from randovania import VERSION
 from randovania.game_description import default_database
@@ -18,6 +18,7 @@ from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.gui.permalink_dialog import PermalinkDialog
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
@@ -47,7 +48,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     @property
     def _tab_widget(self):
-        return self.tabWidget
+        return self.main_tab_widget
 
     def __init__(self, options: Options, preview: bool):
         super().__init__()
@@ -69,10 +70,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
         self.options_changed_signal.connect(self.on_options_changed)
 
-        self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentIndex(1))
-        self.import_permalink_button.clicked.connect(
-            lambda: QMessageBox.warning(self, "Not Implemented", "This button is NYI."))
-        self.create_new_seed_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentIndex(2))
+        self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_play))
+        self.open_faq_button.clicked.connect(self._open_faq)
+        self.open_database_viewer_button.clicked.connect(self._open_data_visualizer)
+
+        self.import_permalink_button.clicked.connect(self._import_permalink)
+        self.create_new_seed_button.clicked.connect(
+            lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
 
         # Menu Bar
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
@@ -80,13 +84,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_load_iso.triggered.connect(self._load_game_action)
+        self.menu_action_delete_loaded_game.triggered.connect(self._delete_game_action)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
-
-        if self.menu_action_load_iso is None:
-            # Hack
-            from randovania.gui.iso_management_window import ISOManagementWindow
-            print(ISOManagementWindow)
 
         self.generate_seed_tab = GenerateSeedTab(self, self, options)
         self.generate_seed_tab.setup_ui()
@@ -98,7 +98,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         with options:
             self.on_options_changed()
 
-        self.tabWidget.setCurrentIndex(0)
+        self.main_tab_widget.setCurrentIndex(0)
 
         # Update hints text
         self._update_hints_text()
@@ -108,10 +108,23 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         super().closeEvent(event)
 
     # Generate Seed
+    def _open_faq(self):
+        self.main_tab_widget.setCurrentWidget(self.help_tab)
+        self.help_tab_widget.setCurrentWidget(self.tab_faq)
+
+    def _import_permalink(self):
+        dialog = PermalinkDialog()
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            permalink = dialog.get_permalink_from_field()
+            QMessageBox.warning(self,
+                                "Not yet implemented",
+                                "The permalink is: {}".format(permalink.as_str))
+
     def show_seed_tab(self, layout: LayoutDescription):
         self._details_window.update_layout_description(layout)
-        index = self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
-        self.welcome_tab_widget.setCurrentIndex(index)
+        self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
+        self.welcome_tab_widget.setCurrentWidget(self._details_window.centralWidget)
 
     # Releases info
     def request_new_data(self):
@@ -231,6 +244,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
                                   input_iso=iso,
                                   options=self._options),
                 "Will unpack ISO")
+
+    def _delete_game_action(self):
+        simplified_patcher.delete_files_location(self._options)
 
     def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after
