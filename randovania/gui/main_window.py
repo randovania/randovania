@@ -17,7 +17,7 @@ from randovania.gui import common_qt_lib
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
-from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.gui.main_window_ui import Ui_MainWindow
 from randovania.gui.permalink_dialog import PermalinkDialog
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tab_service import TabService
