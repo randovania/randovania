@@ -15,14 +15,12 @@ from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.item_pool.ammo import items_for_ammo
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.main_rules_ui import Ui_MainRules
-from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
-from randovania.layout.layout_configuration import RandomizationMode
 from randovania.layout.ammo_state import AmmoState
+from randovania.layout.layout_configuration import RandomizationMode
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.resolver.exceptions import InvalidConfiguration
 
@@ -66,7 +64,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, options: Options):
         super().__init__()
         self.setupUi(self)
 
@@ -221,7 +219,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             "Items in pool: {}/119".format(
                 sum(state.num_shuffled_pickups for state in major_configuration.items_state.values())
                 + sum(state.pickup_count for state in ammo_configuration.items_state.values())
-                + 9 # Dark Agon, Dark Torvus, and Ing Hive keys
+                + 9  # Dark Agon, Dark Torvus, and Ing Hive keys
                 + layout.sky_temple_keys.num_keys
             )
         )

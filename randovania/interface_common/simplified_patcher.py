@@ -10,6 +10,7 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.permalink import Permalink
 
 
 def delete_files_location(options: Options, ):
@@ -49,16 +50,18 @@ def unpack_iso(input_iso: Path,
 
 
 def generate_layout(options: Options,
+                    permalink: Permalink,
                     progress_update: ProgressUpdateCallable,
                     ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the configured permalink
     :param options:
+    :param permalink:
     :param progress_update:
     :return:
     """
     return echoes.generate_layout(
-        permalink=options.permalink,
+        permalink=permalink,
         status_update=ConstantPercentageCallback(progress_update, -1),
         validate_after_generation=options.advanced_validate_seed_after,
         timeout_during_generation=options.advanced_timeout_during_generation,
@@ -177,48 +180,4 @@ def patch_game_with_existing_layout(progress_update: ProgressUpdateCallable,
         layout=layout,
         options=options,
     )
-
-
-def create_layout_then_export_iso(progress_update: ProgressUpdateCallable,
-                                  options: Options,
-                                  ) -> LayoutDescription:
-    """
-    Creates a new layout with the given seed and configured layout, then patches and exports an ISO
-    :param progress_update:
-    :param options:
-    :return:
-    """
-    updaters = status_update_lib.split_progress_update(
-        progress_update,
-        3
-    )
-
-    # Create a LayoutDescription
-    resulting_layout = generate_layout(options=options,
-                                       progress_update=updaters[0])
-
-    _internal_patch_iso(
-        updaters=updaters[1:],
-        layout=resulting_layout,
-        options=options,
-    )
-
-    return resulting_layout
-
-
-def create_layout_then_export(progress_update: ProgressUpdateCallable,
-                              options: Options,
-                              ) -> LayoutDescription:
-    """
-    Creates a new layout with the given seed and configured layout, then exports that layout
-    :param progress_update:
-    :param options:
-    :return:
-    """
-
-    # Create a LayoutDescription
-    resulting_layout = generate_layout(options=options,
-                                       progress_update=progress_update)
-    export_layout(resulting_layout, options)
-
-    return resulting_layout
+    progress_update("Finished!", 1)
