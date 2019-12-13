@@ -10,7 +10,7 @@ from randovania.layout.patcher_configuration import PickupModelStyle, PickupMode
 class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
     _options: Options
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, options: Options):
         super().__init__()
         self.setupUi(self)
         self._options = options

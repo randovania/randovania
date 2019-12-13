@@ -14,6 +14,7 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
 from randovania.gui import common_qt_lib
 from randovania.gui.common_qt_lib import set_combo_with_value
+from randovania.gui.game_patches_window import GamePatchesWindow
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.main_window import MainWindow
@@ -109,6 +110,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._options = options
         self._main_window = main_window
         self._main_rules = MainRulesWindow(options)
+        self._game_patches = GamePatchesWindow(options)
 
         self.game_description = default_database.default_prime2_game_description()
         self.world_list = self.game_description.world_list
@@ -116,6 +118,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         # Update with Options
         self.tab_widget.addTab(self._main_rules.centralWidget, "Main Rules")
+        self.tab_widget.addTab(self._game_patches.centralWidget, "Game Patches")
+
         self.setup_trick_level_elements()
         self.setup_elevator_elements()
         self.setup_sky_temple_elements()
@@ -137,6 +141,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     # Options
     def on_options_changed(self, options: Options):
         self._main_rules.on_options_changed(options)
+        self._game_patches.on_options_changed(options)
 
         # Trick Level
         trick_level_configuration = options.layout_configuration.trick_level_configuration
