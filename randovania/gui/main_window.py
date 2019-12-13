@@ -117,9 +117,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         result = dialog.exec_()
         if result == QDialog.Accepted:
             permalink = dialog.get_permalink_from_field()
-            QMessageBox.warning(self,
-                                "Not yet implemented",
-                                "The permalink is: {}".format(permalink.as_str))
+            self.generate_seed_tab.generate_seed_from_permalink(permalink)
 
     def show_seed_tab(self, layout: LayoutDescription):
         self._details_window.update_layout_description(layout)
