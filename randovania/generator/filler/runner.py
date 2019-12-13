@@ -14,7 +14,7 @@ from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.retcon import retcon_playthrough_filler
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.resolver import bootstrap
+from randovania.resolver import bootstrap, debug
 
 T = TypeVar("T")
 
@@ -113,7 +113,6 @@ def fill_unassigned_hints(patches: GamePatches,
                           world_list: WorldList,
                           rng: Random,
                           ) -> GamePatches:
-
     new_hints = copy.copy(patches.hints)
 
     # Get all LogbookAssets from the WorldList
@@ -132,6 +131,9 @@ def fill_unassigned_hints(patches: GamePatches,
     possible_indices -= {index for index in possible_indices
                          if not should_have_hint(patches.pickup_assignment[index].item_category)}
 
+    debug.debug_print("fill_unassigned_hints had {} decent indices for {} hint locations".format(
+        len(possible_indices), len(potential_hint_locations)))
+
     # But if we don't have enough hints, just pick randomly from everything
     if len(possible_indices) < len(potential_hint_locations):
         possible_indices = {node.pickup_index
@@ -144,6 +146,7 @@ def fill_unassigned_hints(patches: GamePatches,
 
     for logbook in sorted(potential_hint_locations):
         new_hints[logbook] = Hint(HintType.LOCATION, None, possible_indices.pop())
+        debug.debug_print(f"Added hint at {logbook} for item at {new_hints[logbook].target}")
 
     return dataclasses.replace(patches, hints=new_hints)
 
