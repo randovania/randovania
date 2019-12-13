@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: A Luminoth Lore scan is less likely to have hints for what was already accessible
     when that scan was found. 
+    
+-   Changed: The hints randomly assigned at the end of generation are less likely to be repeats.
 
 -   Changed: Loading a new game will automatically clear any existing one.
 
