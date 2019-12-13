@@ -8,7 +8,6 @@ from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
 from randovania.game_description.game_description import calculate_interesting_resources, GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
-from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import ResourceNode, Node
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.logbook_asset import LogbookAsset
@@ -16,7 +15,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world_list import WorldList
-from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes
+from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes, should_have_hint
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
@@ -107,10 +106,6 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
             result[index] = weight_from_collected_indices * weight_from_seen_count
 
     return result
-
-
-def _should_have_hint(item_category: ItemCategory) -> bool:
-    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
 
 
 def retcon_playthrough_filler(game: GameDescription,
@@ -264,7 +259,7 @@ def _calculate_hint_location_for_action(action: PickupEntry,
     Calculates where a hint for the given action should be placed.
     :return: A LogbookAsset to use, or None if no hint should be placed.
     """
-    if _should_have_hint(action.item_category):
+    if should_have_hint(action.item_category):
         potential_hint_locations = [
             logbook_asset
             for logbook_asset in current_uncollected.logbooks
