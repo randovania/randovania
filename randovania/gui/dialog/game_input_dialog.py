@@ -3,8 +3,8 @@ from typing import Optional
 
 from PySide2.QtWidgets import QMessageBox, QDialog
 
-from randovania.gui import common_qt_lib
-from randovania.gui.game_input_dialog_ui import Ui_GameInputDialog
+from randovania.gui.generated.game_input_dialog_ui import Ui_GameInputDialog
+from randovania.gui.lib import common_qt_lib
 from randovania.interface_common import simplified_patcher, game_workdir
 from randovania.interface_common.options import Options
 
