@@ -83,8 +83,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.menu_action_tracker.triggered.connect(self._open_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
-        self.menu_action_load_iso.triggered.connect(self._load_game_action)
-        self.menu_action_delete_loaded_game.triggered.connect(self._delete_game_action)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
 
@@ -233,18 +231,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             return
 
         self._tracker.show()
-
-    def _load_game_action(self):
-        iso = common_qt_lib.prompt_user_for_input_iso(self)
-        if iso is not None:
-            self.run_in_background_thread(
-                functools.partial(simplified_patcher.unpack_iso,
-                                  input_iso=iso,
-                                  options=self._options),
-                "Will unpack ISO")
-
-    def _delete_game_action(self):
-        simplified_patcher.delete_files_location(self._options)
 
     def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after
