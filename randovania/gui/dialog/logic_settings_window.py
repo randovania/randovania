@@ -12,13 +12,13 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
-from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.common_qt_lib import set_combo_with_value
+from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.game_patches_window import GamePatchesWindow
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
+from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.main_window import MainWindow
-from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.interface_common.options import Options
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode
