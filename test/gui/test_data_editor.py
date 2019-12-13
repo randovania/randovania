@@ -1,19 +1,13 @@
-import pytest
-
 from randovania.game_description.requirements import RequirementSet
 from randovania.gui.data_editor import DataEditorWindow
 
-pytestmark = pytest.mark.skipif(
-    pytest.config.option.skip_gui_tests,
-    reason="skipped due to --skip-gui-tests")
-
 
 def test_apply_edit_connections_change(echoes_game_data,
-                                       qtbot,
+                                       skip_qtbot,
                                        ):
     # Setup
     window = DataEditorWindow(echoes_game_data, True)
-    qtbot.addWidget(window)
+    skip_qtbot.addWidget(window)
     game = window.game_description
 
     landing_site = game.world_list.area_by_asset_id(1655756413)
@@ -30,11 +24,11 @@ def test_apply_edit_connections_change(echoes_game_data,
 
 
 def test_select_area_by_name(echoes_game_data,
-                             qtbot,
+                             skip_qtbot,
                              ):
     # Setup
     window = DataEditorWindow(echoes_game_data, True)
-    qtbot.addWidget(window)
+    skip_qtbot.addWidget(window)
 
     # Run
     window.focus_on_world("Torvus Bog")

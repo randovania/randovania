@@ -6,7 +6,6 @@ import pytest
 from randovania import VERSION
 from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
-from randovania.game_description.game_patches import GamePatches
 from randovania.generator import generator
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.layout_description import LayoutDescription
@@ -14,10 +13,6 @@ from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
-
-skip_generation_tests = pytest.mark.skipif(
-    pytest.config.option.skip_generation_tests,
-    reason="skipped due to --skip-generation-tests")
 
 
 def _create_test_layout_description(
@@ -111,8 +106,8 @@ _test_descriptions = [
 ]
 
 
-@skip_generation_tests
 @pytest.mark.skip
+@pytest.mark.skip_generation_tests
 @pytest.mark.parametrize("layout_description", _test_descriptions)
 @patch("randovania.layout.permalink.Permalink.as_str", new_callable=PropertyMock)
 def test_compare_generated_with_data(mock_permalink_as_str: PropertyMock,

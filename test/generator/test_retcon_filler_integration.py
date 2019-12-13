@@ -4,18 +4,13 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import data_reader
-from randovania.game_description.game_patches import GamePatches
 from randovania.generator.filler import retcon
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
 
-skip_generation_tests = pytest.mark.skipif(
-    pytest.config.option.skip_generation_tests,
-    reason="skipped due to --skip-generation-tests")
 
-
-@skip_generation_tests
 @pytest.mark.skip
+@pytest.mark.skip_generation_tests
 def test_retcon_filler_integration():
     layout_configuration = LayoutConfiguration.default()
 
@@ -34,4 +29,3 @@ def test_retcon_filler_integration():
                                                       0, 0,
                                                       status_update)
     assert filler_patches == patches
-

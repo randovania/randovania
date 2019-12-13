@@ -4,12 +4,8 @@ from randovania.game_description import data_reader
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import resolver, debug
 
-skip_resolver_tests = pytest.mark.skipif(
-    pytest.config.option.skip_resolver_tests,
-    reason="skipped due to --skip-resolver-tests")
 
-
-@skip_resolver_tests
+@pytest.mark.skip_resolver_tests
 def test_resolver_with_log_file(test_files_dir):
     # Setup
     debug.set_level(0)
