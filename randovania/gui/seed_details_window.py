@@ -7,10 +7,10 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout,
 
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_seed_log
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_seed_log
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable

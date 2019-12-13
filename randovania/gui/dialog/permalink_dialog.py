@@ -1,7 +1,7 @@
 from PySide2.QtWidgets import QDialog, QApplication
 
-from randovania.gui.lib import common_qt_lib
 from randovania.gui.generated.permalink_dialog_ui import Ui_PermalinkDialog
+from randovania.gui.lib import common_qt_lib
 from randovania.layout.permalink import Permalink
 
 
