@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.gui.logic_settings_window import LogicSettingsWindow
+from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.interface_common.options import Options
 
 pytestmark = pytest.mark.skipif(

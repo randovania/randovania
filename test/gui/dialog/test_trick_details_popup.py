@@ -4,7 +4,7 @@ import pytest
 from PySide2.QtWidgets import QWidget
 
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.gui import trick_details_popup
+from randovania.gui.dialog import trick_details_popup
 from randovania.layout.trick_level import LayoutTrickLevel
 
 pytestmark = pytest.mark.skipif(
