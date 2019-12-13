@@ -1,5 +1,4 @@
 import asyncio
-import functools
 import json
 from typing import Optional
 
@@ -20,9 +19,8 @@ from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.main_window_ui import Ui_MainWindow
 from randovania.gui.permalink_dialog import PermalinkDialog
 from randovania.gui.seed_details_window import SeedDetailsWindow
-from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
-from randovania.interface_common import github_releases_data, update_checker, simplified_patcher
+from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug
@@ -35,7 +33,7 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
+class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
     is_preview_mode: bool = False

@@ -1,8 +1,6 @@
 from PySide2.QtWidgets import QMainWindow, QComboBox
 
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.game_patches_window_ui import Ui_GamePatchesWindow
-from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 
