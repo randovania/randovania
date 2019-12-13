@@ -15,7 +15,7 @@ from randovania.games.prime import default_data
 from randovania.gui import common_qt_lib
 from randovania.gui.common_qt_lib import set_combo_with_value
 from randovania.gui.game_patches_window import GamePatchesWindow
-from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
+from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.main_window import MainWindow
 from randovania.gui.trick_details_popup import TrickDetailsPopup

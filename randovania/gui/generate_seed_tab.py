@@ -7,7 +7,7 @@ from PySide2.QtWidgets import QDialog, QMessageBox, QWidget
 
 from randovania import get_data_path
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.main_window_ui import Ui_MainWindow
+from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
