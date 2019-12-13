@@ -21,39 +21,8 @@ def _default_main_window() -> MainWindow:
     return create_window(Options(MagicMock()))
 
 
-@patch("randovania.gui.iso_management_window.ISOManagementWindow.load_game", autospec=True)
-def test_drop_iso_event(mock_load_game: MagicMock,
-                        default_main_window: MainWindow,
-                        qtbot,
-                        ):
-    # Setup
-    event = MagicMock()
-    urls = [MagicMock(), MagicMock()]
-    urls[0].toLocalFile.return_value = "directory/games/seed.json"
-    urls[1].toLocalFile.return_value = "directory/games/game.iso"
-    event.mimeData.return_value.urls.return_value = urls
-
-    # Run
-    default_main_window.dropEvent(event)
-
-    # Assert
-    mock_load_game.assert_called_once_with(default_main_window.windows[0], Path("directory/games/game.iso"))
-
-
-@patch("randovania.gui.iso_management_window.ISOManagementWindow.load_game", autospec=True)
-def test_drop_random_event(mock_load_game: MagicMock,
-                           default_main_window: MainWindow,
+def test_drop_random_event(default_main_window: MainWindow,
                            qtbot,
                            ):
-    # Setup
-    event = MagicMock()
-    urls = [MagicMock(), MagicMock()]
-    urls[0].toLocalFile.return_value = "directory/games/seed.json"
-    urls[1].toLocalFile.return_value = "directory/games/game.png"
-    event.mimeData.return_value.urls.return_value = []
-
-    # Run
-    default_main_window.dropEvent(event)
-
-    # Assert
-    mock_load_game.assert_not_called()
+    # Creating a window should not fail
+    pass

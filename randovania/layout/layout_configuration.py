@@ -20,6 +20,7 @@ class RandomizationMode(BitPackEnum, Enum):
     def default(cls) -> "RandomizationMode":
         return cls.FULL
 
+
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     ALL_BOSSES = "all-bosses"
     ALL_GUARDIANS = "all-guardians"

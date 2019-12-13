@@ -1,31 +1,29 @@
 import asyncio
 import json
-import os
-from pathlib import Path
 from typing import Optional
 
 import markdown
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import QUrl, Signal
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox
+from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog
 
 from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.games.prime import default_data
+from randovania.gui import common_qt_lib
 from randovania.gui.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.common_qt_lib import prompt_user_for_seed_log, prompt_user_for_database_file, \
-    set_default_window_icon
 from randovania.gui.data_editor import DataEditorWindow
-from randovania.gui.mainwindow_ui import Ui_MainWindow
+from randovania.gui.generate_seed_tab import GenerateSeedTab
+from randovania.gui.main_window_ui import Ui_MainWindow
+from randovania.gui.permalink_dialog import PermalinkDialog
 from randovania.gui.seed_details_window import SeedDetailsWindow
-from randovania.gui.tab_service import TabService
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
+from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug
-
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -35,7 +33,7 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
+class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
     is_preview_mode: bool = False
@@ -44,10 +42,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
     _current_version_url: Optional[str] = None
     _options: Options
     _data_visualizer: Optional[DataEditorWindow] = None
+    _details_window: SeedDetailsWindow
 
     @property
     def _tab_widget(self):
-        return self.tabWidget
+        return self.main_tab_widget
 
     def __init__(self, options: Options, preview: bool):
         super().__init__()
@@ -55,7 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.setWindowTitle("Randovania {}".format(VERSION))
         self.is_preview_mode = preview
         self.setAcceptDrops(True)
-        set_default_window_icon(self)
+        common_qt_lib.set_default_window_icon(self)
 
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
@@ -69,39 +68,25 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
         self.options_changed_signal.connect(self.on_options_changed)
 
+        self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_play))
+        self.open_faq_button.clicked.connect(self._open_faq)
+        self.open_database_viewer_button.clicked.connect(self._open_data_visualizer)
+
+        self.import_permalink_button.clicked.connect(self._import_permalink)
+        self.create_new_seed_button.clicked.connect(
+            lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
+
         # Menu Bar
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
-        self.menu_action_existing_seed_details.triggered.connect(self._open_existing_seed_details)
         self.menu_action_tracker.triggered.connect(self._open_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
-        self.menu_action_export_iso.triggered.connect(self._export_iso)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
 
-        self.menu_action_export_iso.setEnabled(False)
-
-        _translate = QtCore.QCoreApplication.translate
-        self.tabs = []
-
-        from randovania.gui.game_patches_window import GamePatchesWindow
-        from randovania.gui.iso_management_window import ISOManagementWindow
-        from randovania.gui.logic_settings_window import LogicSettingsWindow
-        from randovania.gui.cosmetic_window import CosmeticWindow
-        from randovania.gui.main_rules import MainRulesWindow
-
-        self.tab_windows = [
-            (ISOManagementWindow, "ROM Settings"),
-            (GamePatchesWindow, "Game Patches"),
-            (MainRulesWindow, "Main Rules"),
-            (LogicSettingsWindow, "Logic Settings"),
-            (CosmeticWindow, "Cosmetic"),
-        ]
-
-        for i, tab in enumerate(self.tab_windows):
-            self.windows.append(tab[0](self, self, options))
-            self.tabs.append(self.windows[i].centralWidget)
-            self.tabWidget.insertTab(i + 1, self.tabs[i], _translate("MainWindow", tab[1]))
+        self.generate_seed_tab = GenerateSeedTab(self, self, options)
+        self.generate_seed_tab.setup_ui()
+        self._details_window = SeedDetailsWindow(self, options)
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -109,31 +94,31 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         with options:
             self.on_options_changed()
 
-        self.tabWidget.setCurrentIndex(0)
+        self.main_tab_widget.setCurrentIndex(0)
 
         # Update hints text
         self._update_hints_text()
 
     def closeEvent(self, event):
         self.stop_background_process()
-        for window in self.windows:
-            window.closeEvent(event)
         super().closeEvent(event)
 
-    def dragEnterEvent(self, event):
-        for url in event.mimeData().urls():
-            if os.path.splitext(url.toLocalFile())[1] == ".iso":
-                event.acceptProposedAction()
-                return
+    # Generate Seed
+    def _open_faq(self):
+        self.main_tab_widget.setCurrentWidget(self.help_tab)
+        self.help_tab_widget.setCurrentWidget(self.tab_faq)
 
-    def dropEvent(self, event):
-        from randovania.gui.iso_management_window import ISOManagementWindow
+    def _import_permalink(self):
+        dialog = PermalinkDialog()
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            permalink = dialog.get_permalink_from_field()
+            self.generate_seed_tab.generate_seed_from_permalink(permalink)
 
-        for url in event.mimeData().urls():
-            iso_path = url.toLocalFile()
-            if os.path.splitext(iso_path)[1] == ".iso":
-                self.get_tab(ISOManagementWindow).load_game(Path(iso_path))
-                return
+    def show_seed_tab(self, layout: LayoutDescription):
+        self._details_window.update_layout_description(layout)
+        self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
+        self.welcome_tab_widget.setCurrentWidget(self._details_window.centralWidget)
 
     # Releases info
     def request_new_data(self):
@@ -170,7 +155,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             changelog_scroll_layout.addWidget(changelog_label)
             changelog_scroll_area.setWidget(changelog_scroll_contents)
             changelog_tab_layout.addWidget(changelog_scroll_area)
-            self.welcome_tab_widget.addTab(changelog_tab, "Change Log")
+            self.help_tab_widget.addTab(changelog_tab, "Change Log")
 
         if new_change_logs:
             QMessageBox.information(self, "What's new", markdown.markdown("\n".join(new_change_logs)))
@@ -194,12 +179,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
 
     # Options
     def on_options_changed(self):
-        for window in self.windows:
-            window.on_options_changed(self._options)
-
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
+
+        self.generate_seed_tab.on_options_changed(self._options)
+        self._details_window.on_options_changed(self._options)
 
     # Menu Actions
     def _open_data_visualizer(self):
@@ -224,21 +209,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
         self._data_editor.show()
 
     def _open_data_editor_prompt(self):
-        database_path = prompt_user_for_database_file(self)
+        database_path = common_qt_lib.prompt_user_for_database_file(self)
         if database_path is None:
             return
 
         with database_path.open("r") as database_file:
             self._data_editor = DataEditorWindow(json.load(database_file), True)
             self._data_editor.show()
-
-    def _open_existing_seed_details(self):
-        json_path = prompt_user_for_seed_log(self)
-        if json_path is None:
-            return
-
-        self._seed_details = SeedDetailsWindow(json_path)
-        self._seed_details.show()
 
     def _open_tracker(self):
         try:
@@ -252,9 +229,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, TabService, BackgroundTaskMixin):
             return
 
         self._tracker.show()
-
-    def _export_iso(self):
-        pass
 
     def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after

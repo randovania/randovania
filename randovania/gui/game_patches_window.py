@@ -1,8 +1,6 @@
 from PySide2.QtWidgets import QMainWindow, QComboBox
 
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.game_patches_window_ui import Ui_GamePatchesWindow
-from randovania.gui.tab_service import TabService
 from randovania.interface_common.options import Options
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 
@@ -10,7 +8,7 @@ from randovania.layout.patcher_configuration import PickupModelStyle, PickupMode
 class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
     _options: Options
 
-    def __init__(self, tab_service: TabService, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, options: Options):
         super().__init__()
         self.setupUi(self)
         self._options = options

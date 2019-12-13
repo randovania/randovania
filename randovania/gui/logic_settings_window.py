@@ -3,7 +3,7 @@ import functools
 from typing import Optional, Dict
 
 from PySide2 import QtCore, QtWidgets
-from PySide2.QtWidgets import QMainWindow, QComboBox, QLabel
+from PySide2.QtWidgets import QComboBox, QLabel, QDialog
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
@@ -12,9 +12,11 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
-from randovania.gui.background_task_mixin import BackgroundTaskMixin
+from randovania.gui import common_qt_lib
 from randovania.gui.common_qt_lib import set_combo_with_value
+from randovania.gui.game_patches_window import GamePatchesWindow
 from randovania.gui.logic_settings_window_ui import Ui_LogicSettingsWindow
+from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.main_window import MainWindow
 from randovania.gui.trick_details_popup import TrickDetailsPopup
 from randovania.interface_common.options import Options
@@ -93,24 +95,31 @@ def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
     )
 
 
-class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
+class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _checkbox_for_trick: Dict[SimpleResourceInfo, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[SimpleResourceInfo, QtWidgets.QSlider]
     _options: Options
     world_list: WorldList
 
-    def __init__(self, main_window: MainWindow, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, main_window: MainWindow, options: Options):
         super().__init__()
         self.setupUi(self)
+        common_qt_lib.set_default_window_icon(self)
+
         self._options = options
         self._main_window = main_window
+        self._main_rules = MainRulesWindow(options)
+        self._game_patches = GamePatchesWindow(options)
 
         self.game_description = default_database.default_prime2_game_description()
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
 
         # Update with Options
+        self.tab_widget.addTab(self._main_rules.centralWidget, "Main Rules")
+        self.tab_widget.addTab(self._game_patches.centralWidget, "Game Patches")
+
         self.setup_trick_level_elements()
         self.setup_elevator_elements()
         self.setup_sky_temple_elements()
@@ -126,8 +135,14 @@ class LogicSettingsWindow(QMainWindow, Ui_LogicSettingsWindow):
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
         self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
+
     # Options
     def on_options_changed(self, options: Options):
+        self._main_rules.on_options_changed(options)
+        self._game_patches.on_options_changed(options)
+
         # Trick Level
         trick_level_configuration = options.layout_configuration.trick_level_configuration
         trick_level = trick_level_configuration.global_level
