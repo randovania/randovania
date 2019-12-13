@@ -135,6 +135,7 @@ def retcon_playthrough_filler(game: GameDescription,
 
     pickup_index_seen_count: DefaultDict[PickupIndex, int] = collections.defaultdict(int)
     scan_asset_seen_count: DefaultDict[LogbookAsset, int] = collections.defaultdict(int)
+    scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]] = {}
     num_random_starting_items_placed = 0
 
     while pickups_left:
@@ -149,6 +150,9 @@ def retcon_playthrough_filler(game: GameDescription,
 
         for scan_asset in reach.state.collected_scan_assets:
             scan_asset_seen_count[scan_asset] += 1
+            if scan_asset_seen_count[scan_asset] == 1:
+                scan_asset_initial_pickups[scan_asset] = frozenset(reach.state.collected_pickup_indices)
+
         print_new_resources(game, reach, scan_asset_seen_count, "Scan Asset")
 
         def action_report(message: str):
@@ -202,12 +206,13 @@ def retcon_playthrough_filler(game: GameDescription,
                                                          rng=rng))
 
                 next_state = reach.state.assign_pickup_to_index(action, pickup_index)
-                if current_uncollected.logbooks and _should_have_hint(action.item_category):
-                    hint_location: Optional[LogbookAsset] = rng.choice(list(current_uncollected.logbooks))
+
+                # Place a hint for the new item
+                hint_location = _calculate_hint_location_for_action(action, current_uncollected, pickup_index, rng,
+                                                                    scan_asset_initial_pickups)
+                if hint_location is not None:
                     next_state.patches = next_state.patches.assign_hint(hint_location,
                                                                         Hint(HintType.LOCATION, None, pickup_index))
-                else:
-                    hint_location = None
 
                 print_retcon_place_pickup(action, game, pickup_index, hint_location)
 
@@ -249,6 +254,27 @@ def retcon_playthrough_filler(game: GameDescription,
     return reach.state.patches
 
 
+def _calculate_hint_location_for_action(action: PickupEntry,
+                                        current_uncollected: UncollectedState,
+                                        pickup_index: PickupIndex,
+                                        rng: Random,
+                                        scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]],
+                                        ) -> Optional[LogbookAsset]:
+    """
+    Calculates where a hint for the given action should be placed.
+    :return: A LogbookAsset to use, or None if no hint should be placed.
+    """
+    if _should_have_hint(action.item_category):
+        potential_hint_locations = [
+            logbook_asset
+            for logbook_asset in current_uncollected.logbooks
+            if pickup_index not in scan_asset_initial_pickups[logbook_asset]
+        ]
+        if potential_hint_locations:
+            return rng.choice(potential_hint_locations)
+    return None
+
+
 def _calculate_progression_pickups(pickups_left: Iterator[PickupEntry],
                                    reach: GeneratorReach,
                                    ) -> Tuple[PickupEntry, ...]:
@@ -278,7 +304,6 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
                            current_uncollected: UncollectedState,
                            name: str
                            ) -> float:
-
     if potential_reach.game.victory_condition.satisfied(potential_reach.state.resources,
                                                         potential_reach.state.energy):
         return _VICTORY_WEIGHT
