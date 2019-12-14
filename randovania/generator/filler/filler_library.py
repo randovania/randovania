@@ -1,6 +1,7 @@
 from typing import Iterator
 
 from randovania.game_description.assignment import PickupAssignment
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node, PickupNode
 
 
@@ -20,3 +21,7 @@ def filter_unassigned_pickup_nodes(nodes: Iterator[Node],
 
 class UnableToGenerate(RuntimeError):
     pass
+
+
+def should_have_hint(item_category: ItemCategory) -> bool:
+    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY

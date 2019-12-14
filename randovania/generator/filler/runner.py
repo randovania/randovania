@@ -1,18 +1,20 @@
 import copy
 import dataclasses
 from random import Random
-from typing import List, Tuple, Callable, TypeVar
+from typing import List, Tuple, Callable, TypeVar, Set
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
+from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.retcon import retcon_playthrough_filler
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.resolver import bootstrap
+from randovania.resolver import bootstrap, debug
 
 T = TypeVar("T")
 
@@ -111,20 +113,40 @@ def fill_unassigned_hints(patches: GamePatches,
                           world_list: WorldList,
                           rng: Random,
                           ) -> GamePatches:
-
     new_hints = copy.copy(patches.hints)
 
-    possible_indices = list(patches.pickup_assignment.keys())
-    if not possible_indices:
-        possible_indices = [node.pickup_index
-                            for node in world_list.all_nodes
-                            if isinstance(node, PickupNode)]
+    # Get all LogbookAssets from the WorldList
+    potential_hint_locations: Set[LogbookAsset] = {
+        node.resource()
+        for node in world_list.all_nodes
+        if isinstance(node, LogbookNode)
+    }
 
-    for node in world_list.all_nodes:
-        if isinstance(node, LogbookNode):
-            logbook_asset = node.resource()
-            if logbook_asset not in new_hints:
-                new_hints[logbook_asset] = Hint(HintType.LOCATION, None, rng.choice(possible_indices))
+    # But remove these that already have hints
+    potential_hint_locations -= patches.hints.keys()
+
+    # Get interesting items to place hints for
+    possible_indices = set(patches.pickup_assignment.keys())
+    possible_indices -= {hint.target for hint in patches.hints.values()}
+    possible_indices -= {index for index in possible_indices
+                         if not should_have_hint(patches.pickup_assignment[index].item_category)}
+
+    debug.debug_print("fill_unassigned_hints had {} decent indices for {} hint locations".format(
+        len(possible_indices), len(potential_hint_locations)))
+
+    # But if we don't have enough hints, just pick randomly from everything
+    if len(possible_indices) < len(potential_hint_locations):
+        possible_indices = {node.pickup_index
+                            for node in world_list.all_nodes
+                            if isinstance(node, PickupNode)}
+
+    # Get an stable order then shuffle
+    possible_indices = list(sorted(possible_indices))
+    rng.shuffle(possible_indices)
+
+    for logbook in sorted(potential_hint_locations):
+        new_hints[logbook] = Hint(HintType.LOCATION, None, possible_indices.pop())
+        debug.debug_print(f"Added hint at {logbook} for item at {new_hints[logbook].target}")
 
     return dataclasses.replace(patches, hints=new_hints)
 
