@@ -25,7 +25,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "gAAAfRePAAACwwAAAOaAig=="
+    assert encoded == "gAAAfRePAAACwMAAADmg/A=="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -54,7 +54,7 @@ def test_decode_invalid(invalid: str):
     LayoutConfiguration.from_params(
         trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_GUARDIANS,
-        elevators=LayoutElevators.RANDOMIZED,
+        elevators=LayoutElevators.TWO_WAY_RANDOMIZED,
     ),
 ])
 def test_round_trip(spoiler: bool,
@@ -94,7 +94,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "gAAAfReLCAAC4wAAAOaANg=="
+    encoded = "gAAAfReLCAACyMAAADmg/w=="
 
     expected = Permalink(
         seed_number=1000,
@@ -105,7 +105,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock):
         ),
         layout_configuration=LayoutConfiguration.from_params(
             trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
-            elevators=LayoutElevators.RANDOMIZED,
+            elevators=LayoutElevators.TWO_WAY_RANDOMIZED,
         ),
     )
 

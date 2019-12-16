@@ -37,7 +37,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data):
     permalink = dataclasses.replace(
         Permalink.default(),
         layout_configuration=dataclasses.replace(LayoutConfiguration.default(),
-                                                 elevators=LayoutElevators.RANDOMIZED))
+                                                 elevators=LayoutElevators.TWO_WAY_RANDOMIZED))
     expected = dataclasses.replace(game.create_game_patches(),
                                    elevator_connection={
                                        589851: AreaLocation(1039999561, 1868895730),

@@ -45,7 +45,7 @@ def test_round_trip_default(permalink: Permalink,
         permalink=permalink,
         patches=GamePatches(
             {},
-            elevator_distributor.elevator_connections_for_seed_number(permalink.seed_number),
+            elevator_distributor.two_way_elevator_connections(permalink.seed_number),
             {}, {}, (), game.starting_location
         ),
         solver_path=solver_path,

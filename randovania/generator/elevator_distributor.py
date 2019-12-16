@@ -33,6 +33,10 @@ class Elevator:
         self.connected_elevator = other
         other.connected_elevator = self
 
+    @property
+    def area_location(self):
+        return AreaLocation(self.world_asset_id, self.area_asset_id)
+
 
 def try_randomize_elevators(rng: Random,
                             echoes_elevators: Tuple[Elevator, ...],
@@ -84,16 +88,47 @@ def try_randomize_elevators(rng: Random,
     return elevator_database
 
 
-def elevator_connections_for_seed_number(rng: Random,
-                                         elevator_database: Tuple[Elevator, ...],
-                                         ) -> Dict[int, AreaLocation]:
-    elevator_connection = {}
-    for elevator in try_randomize_elevators(rng, elevator_database):
-        elevator_connection[elevator.instance_id] = AreaLocation(
-            elevator.connected_elevator.world_asset_id,
-            elevator.connected_elevator.area_asset_id
-        )
-    return elevator_connection
+def two_way_elevator_connections(rng: Random,
+                                 elevator_database: Tuple[Elevator, ...],
+                                 between_areas: bool
+                                 ) -> Dict[int, AreaLocation]:
+
+    if between_areas:
+        elevator_database = try_randomize_elevators(rng, elevator_database)
+    else:
+        assert len(elevator_database) % 2 == 0
+        elevators = list(elevator_database)
+        rng.shuffle(elevators)
+        while elevators:
+            elevators.pop().connect_to(elevators.pop())
+
+    return {
+        elevator.instance_id: elevator.connected_elevator.area_location
+        for elevator in elevator_database
+    }
+
+
+def one_way_elevator_connections(rng: Random,
+                                 elevator_database: Tuple[Elevator, ...],
+                                 world_list: WorldList,
+                                 elevator_target: bool
+                                 ) -> Dict[int, AreaLocation]:
+
+    if elevator_target:
+        target_locations = [elevator.area_location for elevator in elevator_database]
+    else:
+        target_locations = [
+            AreaLocation(world.world_asset_id, area.area_asset_id)
+            for world in world_list.worlds
+            for area in world.areas
+        ]
+
+    rng.shuffle(target_locations)
+
+    return {
+        elevator.instance_id: target_locations.pop()
+        for elevator in elevator_database
+    }
 
 
 def create_elevator_database(world_list: WorldList,
