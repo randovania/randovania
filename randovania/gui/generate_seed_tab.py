@@ -89,8 +89,6 @@ class GenerateSeedTab(QWidget):
         self.window.create_preset_description.setText(preset["description"])
 
     def _on_customize_button(self):
-        current_preset = self.window.create_preset_combo.currentData()
-
         from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
         self._logic_settings_window = LogicSettingsWindow(self.window, self._options)
         self._logic_settings_window.on_options_changed(self._options)
@@ -102,7 +100,7 @@ class GenerateSeedTab(QWidget):
             self._create_custom_preset_item()
 
         with self._options as options:
-            options.set_preset(current_preset)
+            options.set_preset(self.window.create_preset_combo.currentData())
 
     def _on_select_preset(self):
         preset_data = self.window.create_preset_combo.currentData()
