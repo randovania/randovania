@@ -56,7 +56,7 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
     :param patches:
     :return:
     """
-    if layout_configuration.elevators == LayoutElevators.RANDOMIZED:
+    if layout_configuration.elevators != LayoutElevators.VANILLA:
         if rng is None:
             raise MissingRng("Elevator")
 
@@ -68,11 +68,24 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
             1564082177,  # Aerie
         }
 
+        elevator_db = elevator_distributor.create_elevator_database(world_list, areas_to_not_change)
+
+        if layout_configuration.elevators in {LayoutElevators.TWO_WAY_RANDOMIZED, LayoutElevators.TWO_WAY_UNCHECKED}:
+            connections = elevator_distributor.two_way_elevator_connections(
+                rng=rng,
+                elevator_database=elevator_db,
+                between_areas=layout_configuration.elevators == LayoutElevators.TWO_WAY_RANDOMIZED
+            )
+        else:
+            connections = elevator_distributor.one_way_elevator_connections(
+                rng=rng,
+                elevator_database=elevator_db,
+                world_list=world_list,
+                elevator_target=layout_configuration.elevators == LayoutElevators.ONE_WAY_ELEVATOR
+            )
+
         elevator_connection = copy.copy(patches.elevator_connection)
-        elevator_connection.update(elevator_distributor.elevator_connections_for_seed_number(
-            rng=rng,
-            elevator_database=elevator_distributor.create_elevator_database(world_list, areas_to_not_change)
-        ))
+        elevator_connection.update(connections)
         return dataclasses.replace(patches, elevator_connection=elevator_connection)
     else:
         return patches
