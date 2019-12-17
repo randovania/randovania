@@ -204,7 +204,7 @@ _sample_layout_configurations = [
     {
         "trick_level_configuration": TrickLevelConfiguration(trick_level),
         "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
-        "elevators": LayoutElevators.RANDOMIZED,
+        "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
         "starting_location": StartingLocation.default(),
     }
     for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.HARD, LayoutTrickLevel.MINIMAL_RESTRICTIONS]

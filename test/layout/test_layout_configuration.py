@@ -27,21 +27,21 @@ class DummyValue(BitPackValue):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xb4',
+        {"encoded": b'\xb1',
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'\x04',
+        {"encoded": b'\x01',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'L',
+        {"encoded": b'C',
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
-         "elevators": LayoutElevators.RANDOMIZED,
+         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'\x1c',
+        {"encoded": b'\x13',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
-         "elevators": LayoutElevators.RANDOMIZED,
+         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
     ],
     name="layout_config_with_data")

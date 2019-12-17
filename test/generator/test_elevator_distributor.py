@@ -1,11 +1,14 @@
+import random
 from random import Random
 from typing import List
 from unittest.mock import patch, MagicMock
 
 import pytest
 
+from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.generator import elevator_distributor
+from randovania.generator.elevator_distributor import Elevator
 
 
 @pytest.mark.parametrize(["seed_number", "expected_ids"], [
@@ -33,8 +36,8 @@ def test_try_randomize_elevators(seed_number: int,
 
 
 @patch("randovania.generator.elevator_distributor.try_randomize_elevators", autospec=True)
-def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: MagicMock,
-                                              ):
+def test_two_way_elevator_connections_between_areas(mock_try_randomize_elevators: MagicMock,
+                                                    ):
     # Setup
     rng = MagicMock()
     elevator = MagicMock()
@@ -44,11 +47,79 @@ def test_elevator_connections_for_seed_number(mock_try_randomize_elevators: Magi
     ]
 
     # Run
-    result = elevator_distributor.elevator_connections_for_seed_number(rng, database)
+    result = elevator_distributor.two_way_elevator_connections(rng, database, True)
 
     # Assert
     mock_try_randomize_elevators.assert_called_once_with(rng, database)
     assert result == {
-        elevator.instance_id: AreaLocation(elevator.connected_elevator.world_asset_id,
-                                           elevator.connected_elevator.area_asset_id)
+        elevator.instance_id: elevator.connected_elevator.area_location,
+    }
+
+
+def test_two_way_elevator_connections_unchecked():
+    # Setup
+    rng = random.Random(5000)
+    elevators = [
+        Elevator(i, i, i, i, i)
+        for i in range(6)
+    ]
+    database = tuple(elevators)
+
+    # Run
+    result = elevator_distributor.two_way_elevator_connections(rng, database, False)
+
+    # Assert
+    assert result == {
+        0: AreaLocation(4, 4),
+        1: AreaLocation(2, 2),
+        2: AreaLocation(1, 1),
+        3: AreaLocation(5, 5),
+        4: AreaLocation(0, 0),
+        5: AreaLocation(3, 3),
+    }
+
+
+def test_one_way_elevator_connections_elevator_target():
+    # Setup
+    rng = random.Random(5000)
+    elevators = [
+        Elevator(i, i, i, i, i)
+        for i in range(6)
+    ]
+    database = tuple(elevators)
+
+    # Run
+    result = elevator_distributor.one_way_elevator_connections(rng, database, None, True)
+
+    # Assert
+    assert result == {
+        0: AreaLocation(1, 1),
+        1: AreaLocation(2, 2),
+        2: AreaLocation(3, 3),
+        3: AreaLocation(5, 5),
+        4: AreaLocation(0, 0),
+        5: AreaLocation(4, 4),
+    }
+
+
+def test_one_way_elevator_connections_any_target(echoes_game_description):
+    # Setup
+    rng = random.Random(5000)
+    elevators = [
+        Elevator(i, i, i, i, i)
+        for i in range(6)
+    ]
+    database = tuple(elevators)
+
+    # Run
+    result = elevator_distributor.one_way_elevator_connections(rng, database, echoes_game_description.world_list, False)
+
+    # Assert
+    assert result == {
+        0: AreaLocation(0x42B935E4, 0x40FFA8F7),
+        1: AreaLocation(0x3DFD2249, 0x308351E5),
+        2: AreaLocation(0x3DFD2249, 0xBBE4B3AE),
+        3: AreaLocation(0x1BAA96C2, 0xBB77569E),
+        4: AreaLocation(0x863FCD72, 0x185B40F0),
+        5: AreaLocation(0x1BAA96C2, 0xE32C7360),
     }

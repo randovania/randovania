@@ -153,7 +153,7 @@
        <item>
         <widget class="QLabel" name="elevators_description_label">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls what each elevator connects to.&lt;/p&gt;&lt;p&gt;Two-way: after taking an elevator, the elevator in the room you're left brings you to where you where.&lt;br/&gt;Between Areas: An elevator will never connect to another in the same area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls what each elevator connects to.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, between areas&lt;/span&gt;: after taking an elevator, the elevator in the room you're left brings you to where you where. An elevator will never connect to another in the same area.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, unchecked&lt;/span&gt;: after taking an elevator, the elevator in the room you're left brings you to where you where.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room&lt;/span&gt;: all elevators brings you to another elevator room, but going backwards can go somewhere else.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, anywhere&lt;/span&gt;: elevators are connected to any room from the game.&lt;br/&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Warning:&lt;/span&gt; there's an audio bug whenever you take an elevator. This bug lasts until you restart the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -170,6 +170,21 @@
          <item>
           <property name="text">
            <string>Random: Two-way, between areas</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Random: Two-way, unchecked</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Random: One-way, elevator room</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Random: One-way, anywhere</string>
           </property>
          </item>
         </widget>
@@ -338,8 +353,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>364</width>
-            <height>237</height>
+            <width>660</width>
+            <height>423</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="translators_layout">
