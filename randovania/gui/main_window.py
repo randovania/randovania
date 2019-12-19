@@ -87,6 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
         self.generate_seed_tab = GenerateSeedTab(self, self, options)
         self.generate_seed_tab.setup_ui()
         self._details_window = SeedDetailsWindow(self, options)
+        self._details_window.added_to_tab = False
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -117,7 +118,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
 
     def show_seed_tab(self, layout: LayoutDescription):
         self._details_window.update_layout_description(layout)
-        self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
+        if not self._details_window.added_to_tab:
+            self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
+            self._details_window.added_to_tab = True
         self.welcome_tab_widget.setCurrentWidget(self._details_window.centralWidget)
 
     # Releases info
