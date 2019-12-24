@@ -141,12 +141,13 @@ class GenerateSeedTab(QWidget):
             self._logic_settings_window.on_options_changed(self._options)
             return
 
+        create_preset_combo = self.window.create_preset_combo
         name = options.selected_preset
         if name is None:
-            name = "Custom"
+            preset_item = 0
+        else:
+            preset_item = create_preset_combo.findText(name)
 
-        create_preset_combo = self.window.create_preset_combo
-        preset_item = create_preset_combo.findText(name)
         if preset_item == -1:
             self._create_custom_preset_item()
         elif preset_item == create_preset_combo.currentIndex():

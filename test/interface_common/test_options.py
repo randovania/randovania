@@ -39,6 +39,7 @@ def test_migrate_from_v1(option):
     # Assert
     expected_data = {
         "last_changelog_displayed": "0.22.0",
+        "selected_preset": "Custom",
         "patcher_configuration": {
             "menu_mod": False,
             "warp_to_start": True,
