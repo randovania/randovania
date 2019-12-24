@@ -1,4 +1,4 @@
-_CURRENT_OPTIONS_FILE_VERSION = 11
+_CURRENT_OPTIONS_FILE_VERSION = 12
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -187,9 +187,15 @@ def _convert_v9(options: dict) -> dict:
 
     return options
 
+
 def _convert_v10(options: dict) -> dict:
     if "layout_configuration" in options and "randomization_mode" not in options["layout_configuration"]:
         options["layout_configuration"]["randomization_mode"] = "full"
+    return options
+
+
+def _convert_v11(options: dict) -> dict:
+    options["selected_preset"] = "Custom"
     return options
 
 
@@ -203,7 +209,8 @@ _CONVERTER_FOR_VERSION = {
     7:  _convert_v7,
     8:  _convert_v8,
     9:  _convert_v9,
-    10: _convert_v10
+    10: _convert_v10,
+    11: _convert_v11,
 }
 
 
