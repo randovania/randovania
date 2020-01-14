@@ -83,7 +83,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._progressive_grapple = item_database.major_items["Progressive Grapple"]
         self._missile_launcher = item_database.major_items["Missile Launcher"]
         self._seeker_launcher = item_database.major_items["Seeker Launcher"]
-        self._progressive_launcher = item_database.major_items["Progressive Launcher"]
         self._energy_tank_item = item_database.major_items["Energy Tank"]
         self._dark_ammo_item = item_database.ammo["Dark Ammo Expansion"]
         self._light_ammo_item = item_database.ammo["Light Ammo Expansion"]
@@ -119,13 +118,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             [self._grapple_beam, self._screw_attack],
             self._progressive_grapple,
             major_configuration.progressive_grapple
-        )
-
-        _update_elements_for_progressive_item(
-            self._boxes_for_category[ItemCategory.MISSILE][2],
-            [self._missile_launcher, self._seeker_launcher],
-            self._progressive_launcher,
-            major_configuration.progressive_launcher
         )
 
         _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
@@ -235,10 +227,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             self._persist_bool_major_configuration_field("progressive_grapple"))
         self.progressive_grapple_check.clicked.connect(self._change_progressive_grapple)
 
-        self.progressive_launcher_check.stateChanged.connect(
-            self._persist_bool_major_configuration_field("progressive_launcher"))
-        self.progressive_launcher_check.clicked.connect(self._change_progressive_launcher)
-
         self.split_ammo_check.stateChanged.connect(self._persist_bool_layout_field("split_beam_ammo"))
         self.split_ammo_check.clicked.connect(self._change_split_ammo)
 
@@ -295,32 +283,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
                 self._grapple_beam: grapple_state,
                 self._screw_attack: screw_state,
                 self._progressive_grapple: progressive_state,
-            })
-
-            options.major_items_configuration = major_configuration
-
-    def _change_progressive_launcher(self, has_progressive: bool):
-        with self._options as options:
-            major_configuration = options.major_items_configuration
-
-            # Progressive launcher is added twice to the list so it's value is doubled.
-            total = sum(major_configuration.items_state[item].included_ammo[0]
-                        for item in [self._missile_launcher, self._seeker_launcher,
-                                     self._progressive_launcher, self._progressive_launcher]) // 2
-
-            if has_progressive:
-                launcher_state = MajorItemState(included_ammo=(0,))
-                seekers_state = MajorItemState(included_ammo=(0,))
-                progressive_state = MajorItemState(num_shuffled_pickups=2, included_ammo=(total,))
-            else:
-                launcher_state = MajorItemState(num_shuffled_pickups=1, included_ammo=(total,))
-                seekers_state = MajorItemState(num_shuffled_pickups=1, included_ammo=(total,))
-                progressive_state = MajorItemState(included_ammo=(0,))
-
-            major_configuration = major_configuration.replace_states({
-                self._missile_launcher: launcher_state,
-                self._seeker_launcher: seekers_state,
-                self._progressive_launcher: progressive_state,
             })
 
             options.major_items_configuration = major_configuration
