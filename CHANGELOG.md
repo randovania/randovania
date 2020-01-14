@@ -12,7 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     and *One-way, anywhere*. The elevators tab has more details of how these work.
 
 -   Changed: A Luminoth Lore scan is less likely to have hints for what was already accessible
-    when that scan was found. 
+    when that scan was found.
+    
+-   Changed: Power Bombs and Progressive Grapple are now slightly more likely to appear earlier.
     
 -   Changed: The hints randomly assigned at the end of generation are less likely to be repeats.
 
