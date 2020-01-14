@@ -30,6 +30,17 @@ class LayoutDamageStrictness(BitPackEnum, Enum):
     def default(cls):
         return cls.MEDIUM
 
+    @property
+    def long_name(self) -> str:
+        if self == LayoutDamageStrictness.STRICT:
+            return "Strict"
+        elif self == LayoutDamageStrictness.MEDIUM:
+            return "Medium"
+        elif self == LayoutDamageStrictness.LENIENT:
+            return "Lenient"
+        else:
+            return "Custom"
+
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     ALL_BOSSES = "all-bosses"
