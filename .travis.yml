@@ -40,8 +40,7 @@ before_install:
 - python --version
 
 install:
-# Install pip 19.0+ to be able to install a manylinux2010 wheel of nod
-- python -m pip install --upgrade pip>=19.0 wheel setuptools
+- python -m pip install --upgrade -r requirements-setuptools.txt
 - python -m pip install -r requirements.txt
 # Installing pytest-xvfb breaks the tests on macOS, so let's install it only on linux for now
 # TODO: investigate this
