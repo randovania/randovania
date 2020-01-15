@@ -8,7 +8,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode, \
-    LayoutElevators, RandomizationMode
+    LayoutElevators, RandomizationMode, LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -27,21 +27,26 @@ class DummyValue(BitPackValue):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xb1',
+        {"encoded": b'l@',
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'\x01',
+        {"encoded": b'@@',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'C',
+        {"encoded": b'P\xc0',
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'\x13',
+        {"encoded": b'D\xc0',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
+         },
+        {"encoded": b'\x04\xc0',
+         "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
+         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
+         "damage_strictness": LayoutDamageStrictness.STRICT,
          },
     ],
     name="layout_config_with_data")
@@ -63,6 +68,7 @@ def _layout_config_with_data(request):
          patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)):
         yield request.param["encoded"], LayoutConfiguration.from_params(
             trick_level_configuration=trick_config,
+            damage_strictness=request.param.get("damage_strictness", LayoutDamageStrictness.MEDIUM),
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
             starting_location=starting_location,

@@ -22,7 +22,7 @@ def test_retcon_filler_integration():
     available_pickups = game.pickup_database.all_useful_pickups
 
     new_game, state = logic_bootstrap(layout_configuration, game, patches)
-    new_game.simplify_connections(state.resources)
+    new_game.patch_requirements(state.resources, layout_configuration.damage_strictness.value)
 
     filler_patches = retcon.retcon_playthrough_filler(new_game,
                                                       state, tuple(available_pickups), rng,

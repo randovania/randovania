@@ -192,18 +192,20 @@ class WorldList:
         yield from self.connections_from(node, patches)
         yield from self.area_connections_from(node)
 
-    def simplify_connections(self, static_resources: CurrentResources) -> None:
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float) -> None:
         """
-        Simplifies all Node connections, assuming the given resources will never change their quantity.
+        Patches all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
+        All damage requirements are multiplied by the given multiplier.
         :param static_resources:
+        :param damage_multiplier:
         :return:
         """
         for world in self.worlds:
             for area in world.areas:
                 for connections in area.connections.values():
                     for target, value in connections.items():
-                        connections[target] = value.simplify(static_resources)
+                        connections[target] = value.patch_requirements(static_resources, damage_multiplier)
 
     def calculate_relevant_resources(self, patches: GamePatches) -> FrozenSet[ResourceInfo]:
         results = set()
