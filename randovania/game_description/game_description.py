@@ -78,8 +78,8 @@ class GameDescription:
             _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
             _calculate_dangerous_resources_in_db(self.dock_weakness_database))
 
-    def simplify_connections(self, resources):
-        self.world_list.simplify_connections(resources)
+    def patch_requirements(self, resources, damage_multiplier: float):
+        self.world_list.patch_requirements(resources, damage_multiplier)
 
     def create_game_patches(self) -> GamePatches:
         elevator_connection = {

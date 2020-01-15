@@ -178,7 +178,7 @@ def run_filler(configuration: LayoutConfiguration,
     major_configuration = configuration.major_items_configuration
 
     new_game, state = bootstrap.logic_bootstrap(configuration, game, patches)
-    new_game.simplify_connections(state.resources)
+    new_game.patch_requirements(state.resources, configuration.damage_strictness.value)
 
     filler_patches = retcon_playthrough_filler(
         new_game, state, major_items, rng,

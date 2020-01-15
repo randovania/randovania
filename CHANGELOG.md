@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Three new methods of shuffling elevators: *Two-way, unchecked*, *One-way, elevator room*
     and *One-way, anywhere*. The elevators tab has more details of how these work.
 
+-   Added: Add a setting for how strict the damage requirements are.
+
 -   Changed: A Luminoth Lore scan is less likely to have hints for what was already accessible
     when that scan was found.
     

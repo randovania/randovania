@@ -190,6 +190,6 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     starting_state.resources[find_resource_info_with_long_name(game.resource_database.version,
                                                                "NTSC")] = 1
 
-    game.simplify_connections(starting_state.resources)
+    game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
     return game, starting_state
