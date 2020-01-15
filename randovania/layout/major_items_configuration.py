@@ -16,7 +16,6 @@ class MajorItemsConfiguration(BitPackValue):
     items_state: Dict[MajorItem, MajorItemState]
     progressive_suit: bool = True
     progressive_grapple: bool = True
-    progressive_launcher: bool = False
     minimum_random_starting_items: int = 0
     maximum_random_starting_items: int = 0
 
@@ -31,7 +30,6 @@ class MajorItemsConfiguration(BitPackValue):
             },
             "progressive_suit": self.progressive_suit,
             "progressive_grapple": self.progressive_grapple,
-            "progressive_launcher": self.progressive_launcher,
             "minimum_random_starting_items": self.minimum_random_starting_items,
             "maximum_random_starting_items": self.maximum_random_starting_items,
         }
@@ -48,7 +46,6 @@ class MajorItemsConfiguration(BitPackValue):
             items_state=items_state,
             progressive_suit=value["progressive_suit"],
             progressive_grapple=value["progressive_grapple"],
-            progressive_launcher=value["progressive_launcher"],
             minimum_random_starting_items=value["minimum_random_starting_items"],
             maximum_random_starting_items=value["maximum_random_starting_items"],
         )
@@ -56,7 +53,6 @@ class MajorItemsConfiguration(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         yield from bitpacking.encode_bool(self.progressive_suit)
         yield from bitpacking.encode_bool(self.progressive_grapple)
-        yield from bitpacking.encode_bool(self.progressive_launcher)
         default = MajorItemsConfiguration.default()
 
         result: List[Tuple[int, MajorItem, MajorItemState]] = []
@@ -81,7 +77,6 @@ class MajorItemsConfiguration(BitPackValue):
 
         progressive_suit = bitpacking.decode_bool(decoder)
         progressive_grapple = bitpacking.decode_bool(decoder)
-        progressive_launcher = bitpacking.decode_bool(decoder)
 
         default = MajorItemsConfiguration.default()
         num_items = decoder.decode_single(len(default.items_state))
@@ -103,7 +98,6 @@ class MajorItemsConfiguration(BitPackValue):
         return cls(items_state,
                    progressive_suit=progressive_suit,
                    progressive_grapple=progressive_grapple,
-                   progressive_launcher=progressive_launcher,
                    minimum_random_starting_items=minimum,
                    maximum_random_starting_items=maximum)
 
