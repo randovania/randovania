@@ -81,8 +81,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._grapple_beam = item_database.major_items["Grapple Beam"]
         self._screw_attack = item_database.major_items["Screw Attack"]
         self._progressive_grapple = item_database.major_items["Progressive Grapple"]
-        self._missile_launcher = item_database.major_items["Missile Launcher"]
-        self._seeker_launcher = item_database.major_items["Seeker Launcher"]
         self._energy_tank_item = item_database.major_items["Energy Tank"]
         self._dark_ammo_item = item_database.ammo["Dark Ammo Expansion"]
         self._light_ammo_item = item_database.ammo["Light Ammo Expansion"]
@@ -103,7 +101,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         self.progressive_suit_check.setChecked(major_configuration.progressive_suit)
         self.progressive_grapple_check.setChecked(major_configuration.progressive_grapple)
-        self.progressive_launcher_check.setChecked(major_configuration.progressive_launcher)
         self.split_ammo_check.setChecked(layout.split_beam_ammo)
 
         _update_elements_for_progressive_item(

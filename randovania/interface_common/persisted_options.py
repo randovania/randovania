@@ -197,7 +197,10 @@ def _convert_v10(options: dict) -> dict:
 def _convert_v11(options: dict) -> dict:
     options["selected_preset"] = "Custom"
     if "layout_configuration" in options:
-        options["layout_configuration"]["damage_strictness"] = 1.0
+        layout_configuration = options["layout_configuration"]
+        layout_configuration["damage_strictness"] = 1.0
+        layout_configuration["major_items_configuration"].pop("progressive_launcher")
+
     return options
 
 

@@ -11,8 +11,8 @@ from randovania.layout.major_items_configuration import MajorItemsConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xe0\x04 ', "replace": {}},
-        {"encoded": b'\xe0\xa1 B', "replace": {
+        {"encoded": b'\xc0\x08@', "replace": {}},
+        {"encoded": b'\xc1B@\x84', "replace": {
             "items_state": {
                 "Spider Ball": {
                     "include_copy_in_original_location": True,
