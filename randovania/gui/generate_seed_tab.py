@@ -205,7 +205,7 @@ class GenerateSeedTab(QWidget):
         self.window.create_difficulty_label.setText(
             self.window.create_difficulty_label.originalText.format(
                 dark_aether_suit_damage=dark_aether_suit_damage,
-                dark_aether_damage_strictness="Normal",
+                dark_aether_damage_strictness=configuration.damage_strictness.long_name,
                 pickup_model=patcher.pickup_model_style.value,
             )
         )
