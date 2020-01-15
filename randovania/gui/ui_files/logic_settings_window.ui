@@ -145,6 +145,45 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="damage_tab">
+      <attribute name="title">
+       <string>Damage</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="damage_strictness_label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This controls how strictly damage requirements are checked. The resolver will make sure you have at least X times as much energy as is required to satisfy damage requirements, where X is determined by the setting you choose.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="damage_strictness_combo">
+         <property name="currentText">
+          <string>Medium (1.5×)</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Strict (1×)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Medium (1.5×)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Lenient (2×)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="elevator_tab">
       <attribute name="title">
        <string>Elevators</string>

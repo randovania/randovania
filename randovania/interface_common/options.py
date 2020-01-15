@@ -9,7 +9,7 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
-    LayoutSkyTempleKeyMode, RandomizationMode
+    LayoutSkyTempleKeyMode, RandomizationMode, LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -395,6 +395,14 @@ class Options:
     @layout_configuration_sky_temple_keys.setter
     def layout_configuration_sky_temple_keys(self, value: LayoutSkyTempleKeyMode):
         self.set_layout_configuration_field("sky_temple_keys", value)
+
+    @property
+    def layout_configuration_damage_strictness(self) -> LayoutDamageStrictness:
+        return self.layout_configuration.damage_strictness
+
+    @layout_configuration_damage_strictness.setter
+    def layout_configuration_damage_strictness(self, value: LayoutDamageStrictness):
+        return self.set_layout_configuration_field("damage_strictness", value)
 
     @property
     def layout_configuration_elevators(self) -> LayoutElevators:
