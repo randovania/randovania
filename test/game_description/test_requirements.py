@@ -70,9 +70,9 @@ def test_simplify_requirement_set_static():
         RequirementList(0, [id_req_b]),
     ])
 
-    simple_1 = the_set.simplify({res_a: 0, res_b: 0})
-    simple_2 = the_set.simplify({res_a: 0, res_b: 1})
-    simple_3 = the_set.simplify({res_a: 1, res_b: 1})
+    simple_1 = the_set.patch_requirements({res_a: 0, res_b: 0}, 1)
+    simple_2 = the_set.patch_requirements({res_a: 0, res_b: 1}, 1)
+    simple_3 = the_set.patch_requirements({res_a: 1, res_b: 1}, 1)
 
     assert simple_1.alternatives == frozenset()
     assert simple_2.alternatives == frozenset([RequirementList(0, [])])

@@ -25,6 +25,10 @@ class IndividualRequirement(NamedTuple):
             amount,
             negate)
 
+    @property
+    def is_damage(self) -> bool:
+        return self.resource.resource_type == ResourceType.DAMAGE
+
     def damage(self, current_resources: CurrentResources) -> int:
         if self.resource.resource_type == ResourceType.DAMAGE:
             return ceil(self.resource.damage_reduction(current_resources) * self.amount)
@@ -34,7 +38,7 @@ class IndividualRequirement(NamedTuple):
     def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
 
-        if self.resource.resource_type == ResourceType.DAMAGE:
+        if self.is_damage:
             assert not self.negate, "Damage requirements shouldn't have the negate flag"
 
             return current_energy > self.damage(current_resources)
@@ -66,6 +70,13 @@ class IndividualRequirement(NamedTuple):
 
     def __lt__(self, other: "IndividualRequirement") -> bool:
         return self._as_comparison_tuple < other._as_comparison_tuple
+
+    def multiply_amount(self, multiplier: float) -> "IndividualRequirement":
+        return IndividualRequirement(
+            self.resource,
+            self.amount * multiplier,
+            self.negate,
+        )
 
 
 class RequirementList:
@@ -153,11 +164,14 @@ class RequirementList:
                 return False
         return True
 
-    def simplify(self, static_resources: CurrentResources) -> Optional["RequirementList"]:
+    def patch_requirements(self,
+                           static_resources: CurrentResources,
+                           damage_multiplier: float) -> Optional["RequirementList"]:
         """
         Creates a new RequirementList that does not contain reference to resources in static_resources
         :param static_resources:
-        :return: None if this RequirementList is impossible to satisfy, otherwise the simplified RequirementList.
+        :param damage_multiplier:
+        :return: None if this RequirementList is impossible to satisfy, otherwise the patched RequirementList.
         """
         items = []
         for item in self.values():
@@ -168,7 +182,10 @@ class RequirementList:
                     return None
             else:
                 # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
-                items.append(item)
+                if item.is_damage:
+                    items.append(item.multiply_amount(damage_multiplier))
+                else:
+                    items.append(item)
 
         return RequirementList(self.difficulty_level, items)
 
@@ -315,10 +332,10 @@ class RequirementSet:
         else:
             return None
 
-    def simplify(self, static_resources: CurrentResources) -> "RequirementSet":
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float) -> "RequirementSet":
         """"""
         new_alternatives = [
-            alternative.simplify(static_resources)
+            alternative.patch_requirements(static_resources, damage_multiplier)
             for alternative in self.alternatives
         ]
         return RequirementSet(alternative
