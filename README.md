@@ -32,11 +32,18 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 ## Developer Help
 
-1.  Download and install Python 3.7 64-bit: <https://www.python.org/downloads/release/python-372/>
-2.  Ensure you have an updated pip: `python -m pip install --upgrade pip`
-3.  Install requirements: `python -m pip install -r requirements.txt --no-use-pep517`
-4.  Install Randovania as editable: `python -m pip install -e .`
-5.  Do your changes
-6.  Run with `python -m randovania`
+### Dependencies
+
+* [Python 3.7 64-bit](https://www.python.org/downloads/release/python-376/)
+* [Git](https://git-scm.com/downloads)
+
+### Setup
+
+1.  Clone the git repository: `git clone https://github.com/randovania/randovania/`
+2.  With a terminal in the repository root:
+    1. Install pip/setuptools: `python -m pip install --upgrade -r requirements-setuptools.txt`
+    2. Install requirements:   `python -m pip install --upgrade -r requirements.txt`
+    3. Install Randovania as editable: `python -m pip install -e .`
+3.  Run with `python -m randovania`
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
