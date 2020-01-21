@@ -7,7 +7,8 @@ from randovania.game_description import data_reader
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import retcon
 from randovania.generator.filler.retcon import FillerConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, RandomizationMode
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.available_locations import RandomizationMode
 from randovania.resolver.bootstrap import logic_bootstrap
 
 
@@ -46,7 +47,7 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
     if has_exclusion:
         b_pickups.remove(PickupIndex(3))
 
-    assert indices_per_world == {world_a: a_pickups, world_b: b_pickups}
+    assert indices_per_world == [a_pickups, b_pickups]
     assert all_indices == a_pickups | b_pickups
 
 
