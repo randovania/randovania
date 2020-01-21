@@ -20,7 +20,7 @@ from randovania.gui.generated.main_rules_ui import Ui_MainRules
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.ammo_state import AmmoState
-from randovania.layout.layout_configuration import RandomizationMode
+from randovania.layout.available_locations import RandomizationMode
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import InvalidConfiguration

@@ -21,7 +21,7 @@ from randovania.generator.filler.filler_library import UnableToGenerate, filter_
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
-from randovania.layout.layout_configuration import RandomizationMode
+from randovania.layout.available_locations import RandomizationMode
 from randovania.resolver import debug
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup

@@ -5,20 +5,12 @@ from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.available_locations import AvailableLocationsConfiguration, RandomizationMode
 from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.trick_level import TrickLevelConfiguration
-
-
-class RandomizationMode(BitPackEnum, Enum):
-    FULL = "full"
-    MAJOR_MINOR_SPLIT = "major/minor split"
-
-    @classmethod
-    def default(cls) -> "RandomizationMode":
-        return cls.FULL
 
 
 class LayoutDamageStrictness(BitPackEnum, Enum):
@@ -89,13 +81,17 @@ class LayoutConfiguration(BitPackDataClass):
     sky_temple_keys: LayoutSkyTempleKeyMode
     elevators: LayoutElevators
     starting_location: StartingLocation
-    randomization_mode: RandomizationMode
+    available_locations: AvailableLocationsConfiguration
     major_items_configuration: MajorItemsConfiguration
     ammo_configuration: AmmoConfiguration
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     split_beam_ammo: bool = True
+
+    @property
+    def randomization_mode(self) -> RandomizationMode:
+        return self.available_locations.randomization_mode
 
     @property
     def game_data(self) -> dict:
@@ -110,7 +106,7 @@ class LayoutConfiguration(BitPackDataClass):
             "sky_temple_keys": self.sky_temple_keys.value,
             "elevators": self.elevators.value,
             "starting_location": self.starting_location.as_json,
-            "randomization_mode": self.randomization_mode.value,
+            "available_locations": self.available_locations.as_json,
             "major_items_configuration": self.major_items_configuration.as_json,
             "ammo_configuration": self.ammo_configuration.as_json,
             "translator_configuration": self.translator_configuration.as_json,
@@ -126,7 +122,7 @@ class LayoutConfiguration(BitPackDataClass):
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),
-            randomization_mode=RandomizationMode(json_dict["randomization_mode"]),
+            available_locations=AvailableLocationsConfiguration.from_json(json_dict["available_locations"]),
             major_items_configuration=MajorItemsConfiguration.from_json(
                 json_dict["major_items_configuration"],
                 default_prime2_item_database(),
