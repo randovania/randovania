@@ -1,6 +1,8 @@
 import json
 import random
+import uuid
 from functools import partial
+from typing import Dict
 
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget
@@ -14,6 +16,7 @@ from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import read_preset_list, Preset
 from randovania.resolver.exceptions import GenerationFailure
 
 
@@ -26,6 +29,8 @@ def show_failed_generation_exception(exception: GenerationFailure):
 class GenerateSeedTab(QWidget):
     _current_lock_state: bool = True
     _logic_settings_window = None
+    _custom_uuid = uuid.uuid4()
+    _uuid_to_preset: Dict[uuid.UUID, Preset]
 
     failed_to_generate_signal = Signal(GenerationFailure)
 
@@ -38,8 +43,7 @@ class GenerateSeedTab(QWidget):
 
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
 
-        with get_data_path().joinpath("presets", "presets.json").open() as presets_file:
-            self.presets = json.load(presets_file)
+        self._uuid_to_preset = {}
 
     def setup_ui(self):
         window = self.window
@@ -56,15 +60,19 @@ class GenerateSeedTab(QWidget):
                       window.create_sky_temple_keys_label]:
             label.originalText = label.text()
 
-        for preset in self.presets["presets"]:
-            with get_data_path().joinpath("presets", preset["path"]).open() as preset_file:
-                preset.update(json.load(preset_file))
-            window.create_preset_combo.addItem(preset["name"], preset)
+        for preset in read_preset_list():
+            preset_uuid = uuid.uuid4()
+            window.create_preset_combo.addItem(preset.name, preset_uuid)
+            self._uuid_to_preset[preset_uuid] = preset
 
         window.create_customize_button.clicked.connect(self._on_customize_button)
         window.create_preset_combo.activated.connect(self._on_select_preset)
         window.create_generate_button.clicked.connect(partial(self._generate_new_seed, True))
         window.create_generate_race_button.clicked.connect(partial(self._generate_new_seed, False))
+
+    @property
+    def _current_preset_data(self) -> Preset:
+        return self._uuid_to_preset[self.window.create_preset_combo.currentData()]
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
@@ -73,20 +81,22 @@ class GenerateSeedTab(QWidget):
     def _create_custom_preset_item(self):
         create_preset_combo = self.window.create_preset_combo
 
-        preset = {
-            "name": "Custom",
-            "description": "A preset that was customized.",
-            "patcher_configuration": self._options.patcher_configuration.as_json,
-            "layout_configuration": self._options.layout_configuration.as_json,
-        }
+        preset = Preset(
+            name="Custom",
+            description="A preset that was customized.",
+            patcher_configuration=self._options.patcher_configuration,
+            layout_configuration=self._options.layout_configuration,
+        )
 
         custom_id = create_preset_combo.findText("Custom")
         if custom_id != -1:
             create_preset_combo.removeItem(custom_id)
 
-        create_preset_combo.addItem(preset["name"], preset)
+        create_preset_combo.addItem(preset.name, self._custom_uuid)
+        self._uuid_to_preset[self._custom_uuid] = preset
+
         create_preset_combo.setCurrentIndex(create_preset_combo.count() - 1)
-        self.window.create_preset_description.setText(preset["description"])
+        self.window.create_preset_description.setText(preset.description)
 
     def _on_customize_button(self):
         from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
@@ -100,12 +110,12 @@ class GenerateSeedTab(QWidget):
             self._create_custom_preset_item()
 
         with self._options as options:
-            options.set_preset(self.window.create_preset_combo.currentData())
+            options.set_preset(self._current_preset_data)
 
     def _on_select_preset(self):
-        preset_data = self.window.create_preset_combo.currentData()
+        preset_data = self._current_preset_data
 
-        self.window.create_preset_description.setText(preset_data["description"])
+        self.window.create_preset_description.setText(preset_data.description)
 
         with self._options as options:
             options.set_preset(preset_data)

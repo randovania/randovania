@@ -13,6 +13,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutEl
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 
 T = TypeVar("T")
 
@@ -265,11 +266,11 @@ class Options:
     def cosmetic_patches(self) -> CosmeticPatches:
         return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
 
-    def set_preset(self, preset):
+    def set_preset(self, preset: Preset):
         self._check_editable_and_mark_dirty()
-        self._patcher_configuration = PatcherConfiguration.from_json_dict(preset["patcher_configuration"])
-        self._layout_configuration = LayoutConfiguration.from_json_dict(preset["layout_configuration"])
-        self._selected_preset = preset["name"]
+        self._patcher_configuration = preset.patcher_configuration
+        self._layout_configuration = preset.layout_configuration
+        self._selected_preset = preset.name
 
     # Advanced
 

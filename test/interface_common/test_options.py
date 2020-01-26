@@ -58,7 +58,12 @@ def test_migrate_from_v1(option):
             "elevators": "vanilla",
             "randomization_mode": "full",
             "major_items_configuration": MajorItemsConfiguration.default().as_json,
-            "ammo_configuration": AmmoConfiguration.default().as_json,
+            "ammo_configuration": {'items_state': {'Beam Ammo Expansion': {},
+                                                   'Dark Ammo Expansion': {'pickup_count': 10},
+                                                   'Light Ammo Expansion': {'pickup_count': 10},
+                                                   'Missile Expansion': {'pickup_count': 33},
+                                                   'Power Bomb Expansion': {'pickup_count': 8}},
+                                   'maximum_ammo': {'43': 10, '44': 175, '45': 250, '46': 250}},
             "translator_configuration": {
                 "translator_requirement": {},
                 "fixed_gfmc_compound": True,

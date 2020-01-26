@@ -36,8 +36,7 @@ class AmmoState(BitPackValue):
 
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
-            if value != field.default:
-                result[field.name] = value
+            result[field.name] = value
 
         return result
 
