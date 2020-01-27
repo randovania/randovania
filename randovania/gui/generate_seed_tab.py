@@ -2,7 +2,7 @@ import json
 import random
 import uuid
 from functools import partial
-from typing import Dict
+from typing import Dict, Optional
 
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget
@@ -12,6 +12,8 @@ from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
+from randovania.interface_common.preset_editor import PresetEditor
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -29,9 +31,9 @@ def show_failed_generation_exception(exception: GenerationFailure):
 class GenerateSeedTab(QWidget):
     _current_lock_state: bool = True
     _logic_settings_window = None
-    _custom_uuid = uuid.uuid4()
-    _uuid_to_preset: Dict[uuid.UUID, Preset]
+    _current_preset: Preset = None
 
+    preset_manager: PresetManager
     failed_to_generate_signal = Signal(GenerationFailure)
 
     def __init__(self, background_processor: BackgroundTaskMixin, window: Ui_MainWindow, options: Options):
@@ -40,10 +42,9 @@ class GenerateSeedTab(QWidget):
         self.background_processor = background_processor
         self.window = window
         self._options = options
+        self.preset_manager = PresetManager(options.data_dir)
 
         self.failed_to_generate_signal.connect(show_failed_generation_exception)
-
-        self._uuid_to_preset = {}
 
     def setup_ui(self):
         window = self.window
@@ -60,75 +61,69 @@ class GenerateSeedTab(QWidget):
                       window.create_sky_temple_keys_label]:
             label.originalText = label.text()
 
-        for preset in read_preset_list():
-            preset_uuid = uuid.uuid4()
-            window.create_preset_combo.addItem(preset.name, preset_uuid)
-            self._uuid_to_preset[preset_uuid] = preset
+        for preset in self.preset_manager.all_presets:
+            self._create_button_for_preset(preset)
 
         window.create_customize_button.clicked.connect(self._on_customize_button)
+        window.create_delete_button.clicked.connect(self._on_delete_preset_button)
         window.create_preset_combo.activated.connect(self._on_select_preset)
         window.create_generate_button.clicked.connect(partial(self._generate_new_seed, True))
         window.create_generate_race_button.clicked.connect(partial(self._generate_new_seed, False))
 
     @property
-    def _current_preset_data(self) -> Preset:
-        return self._uuid_to_preset[self.window.create_preset_combo.currentData()]
+    def _current_preset_data(self) -> Optional[Preset]:
+        return self.preset_manager.preset_for_name(self.window.create_preset_combo.currentData())
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
         self.window.welcome_tab.setEnabled(value)
 
-    def _create_custom_preset_item(self):
+    def _create_button_for_preset(self, preset: Preset):
         create_preset_combo = self.window.create_preset_combo
-
-        preset = Preset(
-            name="Custom",
-            description="A preset that was customized.",
-            patcher_configuration=self._options.patcher_configuration,
-            layout_configuration=self._options.layout_configuration,
-        )
-
-        custom_id = create_preset_combo.findText("Custom")
-        if custom_id != -1:
-            create_preset_combo.removeItem(custom_id)
-
-        create_preset_combo.addItem(preset.name, self._custom_uuid)
-        self._uuid_to_preset[self._custom_uuid] = preset
-
-        create_preset_combo.setCurrentIndex(create_preset_combo.count() - 1)
-        self.window.create_preset_description.setText(preset.description)
+        create_preset_combo.addItem(preset.name, preset.name)
 
     def _on_customize_button(self):
         from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
-        self._logic_settings_window = LogicSettingsWindow(self.window, self._options)
-        self._logic_settings_window.on_options_changed(self._options)
+
+        editor = PresetEditor(self._current_preset_data)
+        self._logic_settings_window = LogicSettingsWindow(self.window, editor)
+
+        self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
+        editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
 
         result = self._logic_settings_window.exec_()
         self._logic_settings_window = None
 
         if result == QDialog.Accepted:
-            self._create_custom_preset_item()
+            new_preset = editor.create_custom_preset_with()
 
-        with self._options as options:
-            options.set_preset(self._current_preset_data)
+            with self._options as options:
+                options.selected_preset_name = new_preset.name
+
+            if self.preset_manager.add_new_preset(new_preset):
+                self._create_button_for_preset(new_preset)
+            self.on_preset_changed(new_preset)
+
+    def _on_delete_preset_button(self):
+        self.preset_manager.delete_preset(self._current_preset_data)
+        self.window.create_preset_combo.removeItem(self.window.create_preset_combo.currentIndex())
+        self._on_select_preset()
 
     def _on_select_preset(self):
         preset_data = self._current_preset_data
-
-        self.window.create_preset_description.setText(preset_data.description)
-
+        self.on_preset_changed(preset_data)
         with self._options as options:
-            options.set_preset(preset_data)
+            options.selected_preset_name = preset_data.name
 
     # Generate seed
 
     def _generate_new_seed(self, spoiler: bool):
-        options = self._options
+        preset = self._current_preset_data
         self.generate_seed_from_permalink(Permalink(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
-            patcher_configuration=options.patcher_configuration,
-            layout_configuration=options.layout_configuration,
+            patcher_configuration=preset.patcher_configuration,
+            layout_configuration=preset.layout_configuration,
         ))
 
     def generate_seed_from_permalink(self, permalink: Permalink):
@@ -147,26 +142,29 @@ class GenerateSeedTab(QWidget):
         self.background_processor.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):
-        if self._logic_settings_window is not None:
-            self._logic_settings_window.on_options_changed(self._options)
-            return
+        if self._current_preset is None:
+            preset_name = options.selected_preset_name
+            if preset_name is not None:
+                index = self.window.create_preset_combo.findText(preset_name)
+                if index != -1:
+                    self.window.create_preset_combo.setCurrentIndex(index)
+                    self.on_preset_changed(self._current_preset_data)
+                    return
+
+            self.window.create_preset_combo.setCurrentIndex(0)
+            self.on_preset_changed(self.preset_manager.default_preset)
+
+    def on_preset_changed(self, preset: Preset):
+        self._current_preset = preset
+
+        self.window.create_preset_description.setText(preset.description)
+        self.window.create_delete_button.setEnabled(preset.base_preset_name is not None)
 
         create_preset_combo = self.window.create_preset_combo
-        name = options.selected_preset
-        if name is None:
-            preset_item = 0
-        else:
-            preset_item = create_preset_combo.findText(name)
+        create_preset_combo.setCurrentIndex(create_preset_combo.findText(preset.name))
 
-        if preset_item == -1:
-            self._create_custom_preset_item()
-        elif preset_item == create_preset_combo.currentIndex():
-            self._on_select_preset()
-        else:
-            create_preset_combo.setCurrentIndex(preset_item)
-
-        patcher = options.patcher_configuration
-        configuration = options.layout_configuration
+        patcher = preset.patcher_configuration
+        configuration = preset.layout_configuration
         major_items = configuration.major_items_configuration
 
         def _bool_to_str(b: bool) -> str:

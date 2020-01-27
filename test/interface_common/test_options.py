@@ -10,12 +10,6 @@ import randovania.interface_common.options
 import randovania.interface_common.persisted_options
 from randovania.interface_common import update_checker
 from randovania.interface_common.options import Options, DecodeFailedException
-from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
-    LayoutSkyTempleKeyMode
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.starting_location import StartingLocation
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 @pytest.fixture(name="option")
@@ -23,56 +17,22 @@ def _option() -> Options:
     return Options(MagicMock())
 
 
-def test_migrate_from_v1(option):
-    old_data = {"version": 1,
-                "options": {"hud_memo_popup_removal": True,
-                            "game_files_path": None,
-                            "show_advanced_options": False,
-                            "display_generate_help": True, "include_menu_mod": False, "layout_logic": "normal",
-                            "layout_mode": "standard", "layout_sky_temple_keys": "randomized",
-                            "layout_elevators": "vanilla", "layout_item_loss": "enabled", "quantity_for_pickup": {}}}
+def test_migrate_from_v11(option):
+    old_data = {"version": 11,
+                "options": {
+                    "cosmetic_patches": {
+                        "disable_hud_popup": True,
+                        "speed_up_credits": True,
+                        "open_map": True,
+                        "pickup_markers": True,
+                    }}}
 
     # Run
     new_data = randovania.interface_common.persisted_options.get_persisted_options_from_data(old_data)
-    option.load_from_persisted_options(new_data, False)
+    option.load_from_persisted(new_data, False)
 
     # Assert
     expected_data = {
-        "last_changelog_displayed": "0.22.0",
-        "selected_preset": "Custom",
-        "patcher_configuration": {
-            "menu_mod": False,
-            "warp_to_start": True,
-            "pickup_model_style": "all-visible",
-            "pickup_model_data_source": "etm",
-        },
-        "layout_configuration": {
-            "trick_level": {
-                "global_level": "normal",
-                "specific_levels": {},
-            },
-            "damage_strictness": 1.0,
-            "sky_temple_keys": 9,
-            "starting_resources": "vanilla-item-loss-enabled",
-            "starting_location": "ship",
-            "elevators": "vanilla",
-            "randomization_mode": "full",
-            "major_items_configuration": MajorItemsConfiguration.default().as_json,
-            "ammo_configuration": {'items_state': {'Beam Ammo Expansion': {},
-                                                   'Dark Ammo Expansion': {'pickup_count': 10},
-                                                   'Light Ammo Expansion': {'pickup_count': 10},
-                                                   'Missile Expansion': {'pickup_count': 33},
-                                                   'Power Bomb Expansion': {'pickup_count': 8}},
-                                   'maximum_ammo': {'43': 10, '44': 175, '45': 250, '46': 250}},
-            "translator_configuration": {
-                "translator_requirement": {},
-                "fixed_gfmc_compound": True,
-                "fixed_torvus_temple": True,
-                "fixed_great_temple": True,
-            },
-            "hints": {},
-            "split_beam_ammo": True,
-        },
         "cosmetic_patches": {
             "disable_hud_popup": True,
             "speed_up_credits": True,
@@ -207,39 +167,6 @@ def test_serialize_fields(option: Options):
     }
 
 
-_sample_layout_configurations = [
-    {
-        "trick_level_configuration": TrickLevelConfiguration(trick_level),
-        "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
-        "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
-        "starting_location": StartingLocation.default(),
-    }
-    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.HARD, LayoutTrickLevel.MINIMAL_RESTRICTIONS]
-]
-
-
-@pytest.fixture(params=_sample_layout_configurations, name="initial_layout_configuration_params")
-def _initial_layout_configuration_params(request) -> dict:
-    return request.param
-
-
-@pytest.mark.parametrize("new_trick_level",
-                         [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.TRIVIAL, LayoutTrickLevel.HYPERMODE])
-def test_edit_layout_trick_level(option: Options,
-                                 initial_layout_configuration_params: dict,
-                                 new_trick_level: LayoutTrickLevel):
-    # Setup
-    option._layout_configuration = LayoutConfiguration.from_params(**initial_layout_configuration_params)
-    option._nested_autosave_level = 1
-
-    # Run
-    initial_layout_configuration_params["trick_level_configuration"] = TrickLevelConfiguration(new_trick_level)
-    option.set_layout_configuration_field("trick_level_configuration", TrickLevelConfiguration(new_trick_level))
-
-    # Assert
-    assert option.layout_configuration == LayoutConfiguration.from_params(**initial_layout_configuration_params)
-
-
 def test_edit_during_options_changed(tmpdir):
     # Setup
     option = Options(Path(tmpdir))
@@ -285,7 +212,7 @@ def test_load_from_disk_invalid_json(ignore_decode_errors: bool,
     option = Options(Path(tmpdir))
     tmpdir.join("config.json").write_text(
         json.dumps(randovania.interface_common.persisted_options.serialized_data_for_options({
-            "patcher_configuration": {
+            "cosmetic_patches": {
                 "pickup_model_style": "invalid-value"
             }
         })),

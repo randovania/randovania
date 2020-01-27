@@ -1,7 +1,7 @@
 import dataclasses
 import json
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from randovania import get_data_path
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -12,6 +12,7 @@ from randovania.layout.patcher_configuration import PatcherConfiguration
 class Preset:
     name: str
     description: str
+    base_preset_name: Optional[str]
     patcher_configuration: PatcherConfiguration
     layout_configuration: LayoutConfiguration
 
@@ -20,6 +21,7 @@ class Preset:
         return {
             "name": self.name,
             "description": self.description,
+            "base_preset_name": self.base_preset_name,
             "patcher_configuration": self.patcher_configuration.as_json,
             "layout_configuration": self.layout_configuration.as_json,
         }
@@ -35,6 +37,7 @@ def read_preset_file(path: Path) -> Preset:
     return Preset(
         name=preset["name"],
         description=preset["description"],
+        base_preset_name=preset["base_preset_name"],
         patcher_configuration=PatcherConfiguration.from_json_dict(preset["patcher_configuration"]),
         layout_configuration=LayoutConfiguration.from_json_dict(preset["layout_configuration"]),
     )

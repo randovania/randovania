@@ -49,9 +49,9 @@ def test_blank_from_json():
     blank = TranslatorConfiguration.from_json({"translator_requirement": {}})
     assert blank.as_json == {
         "translator_requirement": {
-            {'0': 'violet', '1': 'violet', '2': 'violet', '3': 'violet', '4': 'amber', '5': 'violet', '6': 'violet',
-             '7': 'violet', '8': 'amber', '9': 'emerald', '10': 'amber', '11': 'amber', '12': 'emerald',
-             '13': 'emerald', '14': 'emerald', '15': 'cobalt', '16': 'cobalt'}
+            '0': 'violet', '1': 'violet', '2': 'violet', '3': 'violet', '4': 'amber', '5': 'violet', '6': 'violet',
+            '7': 'violet', '8': 'amber', '9': 'emerald', '10': 'amber', '11': 'amber', '12': 'emerald',
+            '13': 'emerald', '14': 'emerald', '15': 'cobalt', '16': 'cobalt'
         },
         "fixed_gfmc_compound": True,
         "fixed_great_temple": True,
