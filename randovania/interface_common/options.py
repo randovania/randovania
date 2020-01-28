@@ -7,12 +7,6 @@ from typing import Optional, TypeVar, Callable, Any
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
-from randovania.layout.ammo_configuration import AmmoConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
-    LayoutSkyTempleKeyMode, RandomizationMode, LayoutDamageStrictness
-from randovania.layout.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.patcher_configuration import PatcherConfiguration
-from randovania.layout.permalink import Permalink
 
 T = TypeVar("T")
 
@@ -31,11 +25,8 @@ _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
-    "create_spoiler": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
-    "selected_preset": Serializer(identity, str),
-    "patcher_configuration": Serializer(lambda p: p.as_json, PatcherConfiguration.from_json_dict),
-    "layout_configuration": Serializer(lambda p: p.as_json, LayoutConfiguration.from_json_dict),
+    "selected_preset_name": Serializer(identity, str),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
 }
 
@@ -66,12 +57,8 @@ class Options:
     _last_changelog_displayed: str
     _advanced_validate_seed_after: Optional[bool] = None
     _advanced_timeout_during_generation: Optional[bool] = None
-    _seed_number: Optional[int] = None
-    _create_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
-    _selected_preset: Optional[str] = None
-    _patcher_configuration: Optional[PatcherConfiguration] = None
-    _layout_configuration: Optional[LayoutConfiguration] = None
+    _selected_preset_name: Optional[str] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
 
     def __init__(self, data_dir: Path):
@@ -111,21 +98,21 @@ class Options:
             return False
 
         persisted_options = get_persisted_options_from_data(persisted_data)
-        self.load_from_persisted_options(persisted_options, ignore_decode_errors)
+        self.load_from_persisted(persisted_options, ignore_decode_errors)
         return True
 
-    def load_from_persisted_options(self,
-                                    persisted_options: dict,
-                                    ignore_decode_errors: bool,
-                                    ):
+    def load_from_persisted(self,
+                            persisted: dict,
+                            ignore_decode_errors: bool,
+                            ):
         """
         Loads fields from the given persisted options.
-        :param persisted_options:
+        :param persisted:
         :param ignore_decode_errors:
         :return:
         """
         for field_name, serializer in _SERIALIZER_FOR_FIELD.items():
-            value = persisted_options.get(field_name, None)
+            value = persisted.get(field_name, None)
             if value is not None:
                 try:
                     decoded = serializer.decode(value)
@@ -194,9 +181,6 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._advanced_validate_seed_after = None
         self._advanced_timeout_during_generation = None
-        self._create_spoiler = None
-        self._patcher_configuration = None
-        self._layout_configuration = None
         self._cosmetic_patches = None
 
     # Files paths
@@ -212,6 +196,10 @@ class Options:
     def tracker_files_path(self) -> Path:
         return self._data_dir.joinpath("tracker")
 
+    @property
+    def data_dir(self) -> Path:
+        return self._data_dir
+
     # Access to Direct fields
     @property
     def last_changelog_displayed(self) -> StrictVersion:
@@ -224,24 +212,6 @@ class Options:
             self._last_changelog_displayed = str(value)
 
     @property
-    def seed_number(self) -> Optional[int]:
-        return self._seed_number
-
-    @seed_number.setter
-    def seed_number(self, value: Optional[int]):
-        if value != self.seed_number:
-            self._check_editable_and_mark_dirty()
-            self._seed_number = value
-
-    @property
-    def create_spoiler(self) -> bool:
-        return _return_with_default(self._create_spoiler, lambda: True)
-
-    @create_spoiler.setter
-    def create_spoiler(self, value: bool):
-        self._edit_field("create_spoiler", value)
-
-    @property
     def output_directory(self) -> Optional[Path]:
         return self._output_directory
 
@@ -250,26 +220,16 @@ class Options:
         self._edit_field("output_directory", value)
 
     @property
-    def selected_preset(self) -> Optional[str]:
-        return self._selected_preset
+    def selected_preset_name(self) -> Optional[str]:
+        return self._selected_preset_name
 
-    @property
-    def patcher_configuration(self) -> PatcherConfiguration:
-        return _return_with_default(self._patcher_configuration, PatcherConfiguration.default)
-
-    @property
-    def layout_configuration(self) -> LayoutConfiguration:
-        return _return_with_default(self._layout_configuration, LayoutConfiguration.default)
+    @selected_preset_name.setter
+    def selected_preset_name(self, value: str):
+        self._edit_field("selected_preset_name", value)
 
     @property
     def cosmetic_patches(self) -> CosmeticPatches:
         return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
-
-    def set_preset(self, preset):
-        self._check_editable_and_mark_dirty()
-        self._patcher_configuration = PatcherConfiguration.from_json_dict(preset["patcher_configuration"])
-        self._layout_configuration = LayoutConfiguration.from_json_dict(preset["layout_configuration"])
-        self._selected_preset = preset["name"]
 
     # Advanced
 
@@ -290,64 +250,6 @@ class Options:
     def advanced_timeout_during_generation(self, value: bool):
         self._check_editable_and_mark_dirty()
         self._advanced_timeout_during_generation = value
-
-    # Permalink
-    @property
-    def permalink(self) -> Optional[Permalink]:
-        if self.seed_number is None:
-            return None
-
-        return Permalink(
-            seed_number=self.seed_number,
-            spoiler=self.create_spoiler,
-            patcher_configuration=self.patcher_configuration,
-            layout_configuration=self.layout_configuration,
-        )
-
-    @permalink.setter
-    def permalink(self, value: Permalink):
-        self._check_editable_and_mark_dirty()
-        self._seed_number = value.seed_number
-        self._create_spoiler = value.spoiler
-        self._patcher_configuration = value.patcher_configuration
-        self._layout_configuration = value.layout_configuration
-
-    # Access to fields inside PatcherConfiguration
-    @property
-    def include_menu_mod(self) -> bool:
-        return self.patcher_configuration.menu_mod
-
-    @include_menu_mod.setter
-    def include_menu_mod(self, value: bool):
-        self.set_patcher_configuration_field("menu_mod", value)
-
-    @property
-    def warp_to_start(self) -> bool:
-        return self.patcher_configuration.warp_to_start
-
-    @warp_to_start.setter
-    def warp_to_start(self, value: bool):
-        self.set_patcher_configuration_field("warp_to_start", value)
-
-    @property
-    def pickup_model_style(self):
-        return self.patcher_configuration.pickup_model_style
-
-    @pickup_model_style.setter
-    def pickup_model_style(self, value):
-        self.set_patcher_configuration_field("pickup_model_style", value)
-
-    @property
-    def pickup_model_data_source(self):
-        return self.patcher_configuration.pickup_model_data_source
-
-    @pickup_model_data_source.setter
-    def pickup_model_data_source(self, value):
-        self.set_patcher_configuration_field("pickup_model_data_source", value)
-
-    def set_patcher_configuration_field(self, field_name: str, value):
-        self._edit_field("patcher_configuration",
-                         dataclasses.replace(self.patcher_configuration, **{field_name: value}))
 
     # Access to fields inside CosmeticPatches
     @property
@@ -385,62 +287,6 @@ class Options:
     def pickup_markers(self, value: bool):
         self._edit_field("cosmetic_patches",
                          dataclasses.replace(self.cosmetic_patches, pickup_markers=value))
-
-    # Access to fields inside LayoutConfiguration
-
-    @property
-    def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:
-        return self.layout_configuration.sky_temple_keys
-
-    @layout_configuration_sky_temple_keys.setter
-    def layout_configuration_sky_temple_keys(self, value: LayoutSkyTempleKeyMode):
-        self.set_layout_configuration_field("sky_temple_keys", value)
-
-    @property
-    def layout_configuration_damage_strictness(self) -> LayoutDamageStrictness:
-        return self.layout_configuration.damage_strictness
-
-    @layout_configuration_damage_strictness.setter
-    def layout_configuration_damage_strictness(self, value: LayoutDamageStrictness):
-        return self.set_layout_configuration_field("damage_strictness", value)
-
-    @property
-    def layout_configuration_elevators(self) -> LayoutElevators:
-        return self.layout_configuration.elevators
-
-    @layout_configuration_elevators.setter
-    def layout_configuration_elevators(self, value: LayoutElevators):
-        self.set_layout_configuration_field("elevators", value)
-
-    @property
-    def randomization_mode(self) -> RandomizationMode:
-        return self.layout_configuration.randomization_mode
-
-    @randomization_mode.setter
-    def randomization_mode(self, value: RandomizationMode):
-        self.set_layout_configuration_field("randomization_mode", value)
-
-    @property
-    def major_items_configuration(self) -> MajorItemsConfiguration:
-        return self.layout_configuration.major_items_configuration
-
-    @major_items_configuration.setter
-    def major_items_configuration(self, value: MajorItemsConfiguration):
-        self.set_layout_configuration_field("major_items_configuration", value)
-
-    @property
-    def ammo_configuration(self) -> AmmoConfiguration:
-        return self.layout_configuration.ammo_configuration
-
-    @ammo_configuration.setter
-    def ammo_configuration(self, value: AmmoConfiguration):
-        self.set_layout_configuration_field("ammo_configuration", value)
-
-    def set_layout_configuration_field(self, field_name: str, value):
-        self._edit_field(
-            "layout_configuration",
-            dataclasses.replace(self.layout_configuration, **{field_name: value})
-        )
 
     ######
 
