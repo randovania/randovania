@@ -20,8 +20,10 @@ from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.main_rules import MainRulesWindow
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
+from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode, LayoutDamageStrictness
+from randovania.layout.preset import Preset
 from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
@@ -99,18 +101,18 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _checkbox_for_trick: Dict[SimpleResourceInfo, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[SimpleResourceInfo, QtWidgets.QSlider]
-    _options: Options
+    _editor: PresetEditor
     world_list: WorldList
 
-    def __init__(self, main_window: MainWindow, options: Options):
+    def __init__(self, main_window: MainWindow, editor: PresetEditor):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
 
-        self._options = options
+        self._editor = editor
         self._main_window = main_window
-        self._main_rules = MainRulesWindow(options)
-        self._game_patches = GamePatchesWindow(options)
+        self._main_rules = MainRulesWindow(editor)
+        self._game_patches = GamePatchesWindow(editor)
 
         self.game_description = default_database.default_prime2_game_description()
         self.world_list = self.game_description.world_list
@@ -120,6 +122,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.tab_widget.addTab(self._main_rules.centralWidget, "Main Rules")
         self.tab_widget.addTab(self._game_patches.centralWidget, "Game Patches")
 
+        self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
         self.setup_damage_strictness_elements()
         self.setup_elevator_elements()
@@ -140,12 +143,17 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.button_box.rejected.connect(self.reject)
 
     # Options
-    def on_options_changed(self, options: Options):
-        self._main_rules.on_options_changed(options)
-        self._game_patches.on_options_changed(options)
+    def on_preset_changed(self, preset: Preset):
+        self._main_rules.on_preset_changed(preset)
+        self._game_patches.on_preset_changed(preset)
+
+        # Variables
+        layout_config = preset.layout_configuration
+
+        self.name_edit.setText(preset.name)
 
         # Trick Level
-        trick_level_configuration = options.layout_configuration.trick_level_configuration
+        trick_level_configuration = preset.layout_configuration.trick_level_configuration
         trick_level = trick_level_configuration.global_level
 
         set_combo_with_value(self.logic_combo_box, trick_level)
@@ -162,13 +170,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             checkbox.setChecked(has_specific_level)
 
         # Damage
-        set_combo_with_value(self.damage_strictness_combo, options.layout_configuration_damage_strictness)
+        set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
 
         # Elevator
-        set_combo_with_value(self.elevators_combo, options.layout_configuration_elevators)
+        set_combo_with_value(self.elevators_combo, layout_config.elevators)
 
         # Sky Temple Keys
-        keys = options.layout_configuration_sky_temple_keys
+        keys = layout_config.sky_temple_keys
         if isinstance(keys.value, int):
             self.skytemple_slider.setValue(keys.value)
             data = int
@@ -177,7 +185,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         set_combo_with_value(self.skytemple_combo, data)
 
         # Starting Area
-        starting_location = options.layout_configuration.starting_location
+        starting_location = preset.layout_configuration.starting_location
         set_combo_with_value(self.startingarea_combo, starting_location.configuration)
 
         if starting_location.configuration == StartingLocationConfiguration.CUSTOM:
@@ -188,7 +196,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             set_combo_with_value(self.specific_starting_area_combo, world.area_by_asset_id(area_location.area_asset_id))
 
         # Translator Gates
-        translator_configuration = options.layout_configuration.translator_configuration
+        translator_configuration = preset.layout_configuration.translator_configuration
         self.always_up_gfmc_compound_check.setChecked(translator_configuration.fixed_gfmc_compound)
         self.always_up_torvus_temple_check.setChecked(translator_configuration.fixed_torvus_temple)
         self.always_up_great_temple_check.setChecked(translator_configuration.fixed_great_temple)
@@ -196,7 +204,11 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             set_combo_with_value(combo, translator_configuration.translator_requirement[gate])
 
         # Hints
-        set_combo_with_value(self.hint_sky_temple_key_combo, options.layout_configuration.hints.sky_temple_keys)
+        set_combo_with_value(self.hint_sky_temple_key_combo, preset.layout_configuration.hints.sky_temple_keys)
+
+    def _edit_name(self, value: str):
+        with self._editor as editor:
+            editor.name = value
 
     # Trick Level
 
@@ -305,7 +317,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     def _on_check_trick_configurable(self, trick: SimpleResourceInfo, enabled: int):
         enabled = bool(enabled)
 
-        with self._options as options:
+        with self._editor as options:
             if options.layout_configuration.trick_level_configuration.has_specific_level_for_trick(trick) != enabled:
                 options.set_layout_configuration_field(
                     "trick_level_configuration",
@@ -317,7 +329,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _on_slide_trick_slider(self, trick: SimpleResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
-            with self._options as options:
+            with self._editor as options:
                 options.set_layout_configuration_field(
                     "trick_level_configuration",
                     options.layout_configuration.trick_level_configuration.set_level_for_trick(
@@ -328,7 +340,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _on_trick_level_changed(self):
         trick_level = self.logic_combo_box.currentData()
-        with self._options as options:
+        with self._editor as options:
             options.set_layout_configuration_field(
                 "trick_level_configuration",
                 dataclasses.replace(options.layout_configuration.trick_level_configuration,
@@ -340,7 +352,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._main_window,
             self.game_description,
             trick,
-            self._options.layout_configuration.trick_level_configuration.level_for_trick(trick),
+            self._editor.layout_configuration.trick_level_configuration.level_for_trick(trick),
         )
         self._trick_details_popup.show()
 
@@ -361,7 +373,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self.damage_strictness_combo.options_field_name = "layout_configuration_damage_strictness"
         self.damage_strictness_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
-                                                                                   self._options,
+                                                                                   self._editor,
                                                                                    self.damage_strictness_combo))
 
     # Elevator
@@ -374,7 +386,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self.elevators_combo.options_field_name = "layout_configuration_elevators"
         self.elevators_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
-                                                                           self._options,
+                                                                           self._editor,
                                                                            self.elevators_combo))
 
     # Sky Temple Key
@@ -389,14 +401,14 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _on_sky_temple_key_combo_changed(self):
         combo_enum = self.skytemple_combo.currentData()
-        with self._options:
+        with self._editor:
             if combo_enum is int:
                 self.skytemple_slider.setEnabled(True)
-                self._options.layout_configuration_sky_temple_keys = LayoutSkyTempleKeyMode(
+                self._editor.layout_configuration_sky_temple_keys = LayoutSkyTempleKeyMode(
                     self.skytemple_slider.value())
             else:
                 self.skytemple_slider.setEnabled(False)
-                self._options.layout_configuration_sky_temple_keys = combo_enum
+                self._editor.layout_configuration_sky_temple_keys = combo_enum
 
     def _on_sky_temple_key_combo_slider_changed(self):
         self.skytemple_slider_label.setText(str(self.skytemple_slider.value()))
@@ -433,7 +445,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _update_starting_location(self):
         if self._has_valid_starting_location():
-            with self._options as options:
+            with self._editor as options:
                 options.set_layout_configuration_field(
                     "starting_location",
                     StartingLocation(self.startingarea_combo.currentData(), self.current_starting_area_location))
@@ -487,32 +499,32 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._combo_for_gate[combo.gate] = combo
 
     def _on_always_up_check_changed(self, field_name: str, new_value: int):
-        with self._options as options:
+        with self._editor as options:
             options.set_layout_configuration_field(
                 "translator_configuration",
                 dataclasses.replace(options.layout_configuration.translator_configuration,
                                     **{field_name: bool(new_value)}))
 
     def _on_randomize_all_gates_pressed(self):
-        with self._options as options:
+        with self._editor as options:
             options.set_layout_configuration_field(
                 "translator_configuration",
                 options.layout_configuration.translator_configuration.with_full_random())
 
     def _on_vanilla_actual_gates_pressed(self):
-        with self._options as options:
+        with self._editor as options:
             options.set_layout_configuration_field(
                 "translator_configuration",
                 options.layout_configuration.translator_configuration.with_vanilla_actual())
 
     def _on_vanilla_colors_gates_pressed(self):
-        with self._options as options:
+        with self._editor as options:
             options.set_layout_configuration_field(
                 "translator_configuration",
                 options.layout_configuration.translator_configuration.with_vanilla_colors())
 
     def _on_gate_combo_box_changed(self, combo: QComboBox, new_index: int):
-        with self._options as options:
+        with self._editor as options:
             options.set_layout_configuration_field(
                 "translator_configuration",
                 options.layout_configuration.translator_configuration.replace_requirement_for_gate(
@@ -526,7 +538,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.hint_sky_temple_key_combo.currentIndexChanged.connect(self._on_stk_combo_changed)
 
     def _on_stk_combo_changed(self, new_index: int):
-        with self._options as options:
+        with self._editor as options:
             options.set_layout_configuration_field(
                 "hints",
                 dataclasses.replace(options.layout_configuration.hints,

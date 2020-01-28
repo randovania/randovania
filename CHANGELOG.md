@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   *Major* - Added: Support for multiple presets of options, as well as saving your own presets.
+
+-   *Major* - Changed: The user experience for creating a new game has been changed completely.
+
 -   Added: Three new methods of shuffling elevators: *Two-way, unchecked*, *One-way, elevator room*
     and *One-way, anywhere*. The elevators tab has more details of how these work.
 

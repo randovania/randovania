@@ -1,13 +1,22 @@
-from unittest.mock import MagicMock
-
 from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
-from randovania.interface_common.options import Options
+from randovania.interface_common.preset_editor import PresetEditor
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.preset import Preset
 
 
-def test_on_options_changed(skip_qtbot):
+def test_on_preset_changed(skip_qtbot):
     # Setup
-    options = Options(MagicMock())
-    window = LogicSettingsWindow(None, options)
+    editor = PresetEditor(
+        Preset(
+            name="A name",
+            description="A preset that was customized.",
+            base_preset_name=None,
+            patcher_configuration=PatcherConfiguration.default(),
+            layout_configuration=LayoutConfiguration.default(),
+        )
+    )
+    window = LogicSettingsWindow(None, editor)
 
     # Run
-    window.on_options_changed(options)
+    window.on_preset_changed(editor.create_custom_preset_with())

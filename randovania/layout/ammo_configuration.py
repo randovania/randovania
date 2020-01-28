@@ -39,13 +39,13 @@ class AmmoConfiguration(BitPackValue):
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
         from randovania.game_description import default_database
         item_database = default_database.default_prime2_item_database()
-
         default = cls.default()
+
+        # Maximum Ammo
         has_value = {
             item_key: bool(decoder.decode_single(2))
             for item_key in default.maximum_ammo.keys()
         }
-
         maximum_ammo = {
             item_key: decoder.decode_single(256) if has_value[item_key] else default.maximum_ammo[item_key]
             for item_key, default_value in default.maximum_ammo.items()
