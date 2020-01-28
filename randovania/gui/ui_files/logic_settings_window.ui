@@ -18,6 +18,20 @@
     <widget class="QMenuBar" name="menuBar"/>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="name_layout">
+     <item>
+      <widget class="QLabel" name="name_label">
+       <property name="text">
+        <string>Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="name_edit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
       <number>0</number>
@@ -43,8 +57,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>660</width>
-            <height>423</height>
+            <width>674</width>
+            <height>425</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="trick_level_layout">
@@ -163,7 +177,7 @@
        <item>
         <widget class="QComboBox" name="damage_strictness_combo">
          <property name="currentText">
-          <string>Medium (1.5×)</string>
+          <string>Strict (1×)</string>
          </property>
          <item>
           <property name="text">
@@ -392,8 +406,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>660</width>
-            <height>423</height>
+            <width>674</width>
+            <height>425</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="translators_layout">

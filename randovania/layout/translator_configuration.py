@@ -95,13 +95,10 @@ class TranslatorConfiguration(BitPackValue):
 
     @property
     def as_json(self) -> dict:
-        default = TranslatorConfiguration.default()
-
         return {
             "translator_requirement": {
                 str(key.index): item.value
                 for key, item in self.translator_requirement.items()
-                if item != default.translator_requirement[key]
             },
             "fixed_gfmc_compound": self.fixed_gfmc_compound,
             "fixed_torvus_temple": self.fixed_torvus_temple,

@@ -1,17 +1,18 @@
 from PySide2.QtWidgets import QMainWindow, QComboBox
 
 from randovania.gui.generated.game_patches_window_ui import Ui_GamePatchesWindow
-from randovania.interface_common.options import Options
+from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
+from randovania.layout.preset import Preset
 
 
 class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
-    _options: Options
+    _editor: PresetEditor
 
-    def __init__(self, options: Options):
+    def __init__(self, editor: PresetEditor):
         super().__init__()
         self.setupUi(self)
-        self._options = options
+        self._editor = editor
 
         # Item Data
         for i, value in enumerate(PickupModelStyle):
@@ -37,33 +38,34 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
-            with self._options as options:
+            with self._editor as options:
                 setattr(options, attribute_name, bool(value))
 
         return persist
 
     def _persist_float(self, attribute_name: str):
         def persist(value: float):
-            with self._options as options:
+            with self._editor as options:
                 options.set_patcher_configuration_field(attribute_name, value)
 
         return persist
 
     def _persist_enum(self, combo: QComboBox, attribute_name: str):
         def persist(index: int):
-            with self._options as options:
+            with self._editor as options:
                 options.set_patcher_configuration_field(attribute_name, combo.itemData(index))
 
         return persist
 
-    def on_options_changed(self, options: Options):
-        self.warp_to_start_check.setChecked(options.warp_to_start)
-        self.include_menu_mod_check.setChecked(options.include_menu_mod)
+    def on_preset_changed(self, preset: Preset):
+        patcher_config = preset.patcher_configuration
+        self.warp_to_start_check.setChecked(patcher_config.warp_to_start)
+        self.include_menu_mod_check.setChecked(patcher_config.menu_mod)
 
-        self.varia_suit_spin_box.setValue(options.patcher_configuration.varia_suit_damage)
-        self.dark_suit_spin_box.setValue(options.patcher_configuration.dark_suit_damage)
+        self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
+        self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
 
-        self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(options.pickup_model_style))
+        self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(patcher_config.pickup_model_style))
         self.pickup_data_source_combo.setCurrentIndex(
-            self.pickup_data_source_combo.findData(options.pickup_model_data_source))
-        self.pickup_data_source_combo.setEnabled(options.pickup_model_style != PickupModelStyle.ALL_VISIBLE)
+            self.pickup_data_source_combo.findData(patcher_config.pickup_model_data_source))
+        self.pickup_data_source_combo.setEnabled(patcher_config.pickup_model_style != PickupModelStyle.ALL_VISIBLE)

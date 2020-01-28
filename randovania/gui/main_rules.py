@@ -18,10 +18,11 @@ from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.generated.main_rules_ui import Ui_MainRules
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
-from randovania.interface_common.options import Options
+from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.layout_configuration import RandomizationMode
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
+from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import InvalidConfiguration
 
 _EXPECTED_COUNT_TEXT_TEMPLATE = ("Each expansion will provide, on average, {per_expansion}, for a total of {total}."
@@ -64,11 +65,11 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
     _ammo_maximum_spinboxes: Dict[int, List[QSpinBox]]
     _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
 
-    def __init__(self, options: Options):
+    def __init__(self, editor: PresetEditor):
         super().__init__()
         self.setupUi(self)
 
-        self._options = options
+        self._editor = editor
         size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.gridLayout.setAlignment(Qt.AlignTop)
 
@@ -94,10 +95,10 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._create_energy_tank_box()
         self._create_ammo_pickup_boxes(size_policy, item_database)
 
-    def on_options_changed(self, options: Options):
+    def on_preset_changed(self, preset: Preset):
         # Item alternatives
-        layout = options.layout_configuration
-        major_configuration = options.major_items_configuration
+        layout = preset.layout_configuration
+        major_configuration = layout.major_items_configuration
 
         self.progressive_suit_check.setChecked(major_configuration.progressive_suit)
         self.progressive_grapple_check.setChecked(major_configuration.progressive_grapple)
@@ -122,7 +123,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
 
         # Randomization Mode
-        set_combo_with_value(self.randomization_mode_combo, options.randomization_mode)
+        set_combo_with_value(self.randomization_mode_combo, layout.randomization_mode)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -136,7 +137,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
         # Ammo
         ammo_provided = major_configuration.calculate_provided_ammo()
-        ammo_configuration = options.ammo_configuration
+        ammo_configuration = layout.ammo_configuration
 
         for ammo_item, maximum in ammo_configuration.maximum_ammo.items():
             for spinbox in self._ammo_maximum_spinboxes[ammo_item]:
@@ -229,21 +230,21 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
 
     def _persist_bool_layout_field(self, field_name: str):
         def bound(value: int):
-            with self._options as options:
+            with self._editor as options:
                 options.set_layout_configuration_field(field_name, bool(value))
 
         return bound
 
     def _persist_bool_major_configuration_field(self, field_name: str):
         def bound(value: int):
-            with self._options as options:
+            with self._editor as options:
                 kwargs = {field_name: bool(value)}
                 options.major_items_configuration = dataclasses.replace(options.major_items_configuration, **kwargs)
 
         return bound
 
     def _change_progressive_suit(self, has_progressive: bool):
-        with self._options as options:
+        with self._editor as options:
             major_configuration = options.major_items_configuration
 
             if has_progressive:
@@ -264,7 +265,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             options.major_items_configuration = major_configuration
 
     def _change_progressive_grapple(self, has_progressive: bool):
-        with self._options as options:
+        with self._editor as options:
             major_configuration = options.major_items_configuration
 
             if has_progressive:
@@ -285,7 +286,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             options.major_items_configuration = major_configuration
 
     def _change_split_ammo(self, has_split: bool):
-        with self._options as options:
+        with self._editor as options:
             ammo_configuration = options.ammo_configuration
 
             current_total = sum(
@@ -317,7 +318,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
 
     def _on_update_randomization_mode(self):
-        with self._options as options:
+        with self._editor as options:
             options.randomization_mode = self.randomization_mode_combo.currentData()
 
     # Random Starting
@@ -327,12 +328,12 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self.maximum_starting_spinbox.valueChanged.connect(self._on_update_maximum_starting)
 
     def _on_update_minimum_starting(self, value: int):
-        with self._options as options:
+        with self._editor as options:
             options.major_items_configuration = dataclasses.replace(options.major_items_configuration,
                                                                     minimum_random_starting_items=value)
 
     def _on_update_maximum_starting(self, value: int):
-        with self._options as options:
+        with self._editor as options:
             options.major_items_configuration = dataclasses.replace(options.major_items_configuration,
                                                                     maximum_random_starting_items=value)
 
@@ -396,14 +397,14 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         :param item:
         :return:
         """
-        major_items_configuration = self._options.major_items_configuration
+        major_items_configuration = self._editor.major_items_configuration
 
         popup = ItemConfigurationPopup(self, item, major_items_configuration.items_state[item])
         result = popup.exec_()
 
         if result == QDialog.Accepted:
-            with self._options:
-                self._options.major_items_configuration = major_items_configuration.replace_state_for_item(
+            with self._editor:
+                self._editor.major_items_configuration = major_items_configuration.replace_state_for_item(
                     item, popup.state
                 )
 
@@ -431,7 +432,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         category_layout.addWidget(self.energy_tank_shuffled_spinbox, 1, 1)
 
     def _on_update_starting_energy_tank(self, value: int):
-        with self._options as options:
+        with self._editor as options:
             major_configuration = options.major_items_configuration
             options.major_items_configuration = major_configuration.replace_state_for_item(
                 self._energy_tank_item,
@@ -440,7 +441,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             )
 
     def _on_update_shuffled_energy_tank(self, value: int):
-        with self._options as options:
+        with self._editor as options:
             major_configuration = options.major_items_configuration
             options.major_items_configuration = major_configuration.replace_state_for_item(
                 self._energy_tank_item,
@@ -536,13 +537,13 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             self.ammo_layout.addWidget(pickup_box)
 
     def _on_update_ammo_maximum_spinbox(self, ammo_int: int, value: int):
-        with self._options as options:
+        with self._editor as options:
             options.ammo_configuration = options.ammo_configuration.replace_maximum_for_item(
                 ammo_int, value
             )
 
     def _on_update_ammo_pickup_spinbox(self, ammo: Ammo, value: int):
-        with self._options as options:
+        with self._editor as options:
             ammo_configuration = options.ammo_configuration
             options.ammo_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo,
@@ -550,7 +551,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             )
 
     def _on_update_ammo_require_major_item(self, ammo: Ammo, value: int):
-        with self._options as options:
+        with self._editor as options:
             ammo_configuration = options.ammo_configuration
             options.ammo_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo,
