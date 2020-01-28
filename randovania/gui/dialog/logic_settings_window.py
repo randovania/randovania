@@ -124,7 +124,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
-        self.setup_damage_strictness_elements()
+        self.setup_damage_elements()
         self.setup_elevator_elements()
         self.setup_sky_temple_elements()
         self.setup_starting_area_elements()
@@ -149,6 +149,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         # Variables
         layout_config = preset.layout_configuration
+        patcher_config = preset.patcher_configuration
 
         self.name_edit.setText(preset.name)
 
@@ -171,6 +172,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         # Damage
         set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
+        self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
+        self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
 
         # Elevator
         set_combo_with_value(self.elevators_combo, layout_config.elevators)
@@ -366,7 +369,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._trick_details_popup.show()
 
     # Damage strictness
-    def setup_damage_strictness_elements(self):
+    def setup_damage_elements(self):
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
         self.damage_strictness_combo.setItemData(1, LayoutDamageStrictness.MEDIUM)
         self.damage_strictness_combo.setItemData(2, LayoutDamageStrictness.LENIENT)
@@ -375,6 +378,16 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.damage_strictness_combo.currentIndexChanged.connect(functools.partial(_update_options_by_value,
                                                                                    self._editor,
                                                                                    self.damage_strictness_combo))
+
+        def _persist_float(attribute_name: str):
+            def persist(value: float):
+                with self._editor as options:
+                    options.set_patcher_configuration_field(attribute_name, value)
+
+            return persist
+
+        self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
+        self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
 
     # Elevator
     def setup_elevator_elements(self):
