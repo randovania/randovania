@@ -28,9 +28,6 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
         self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
 
-        self.varia_suit_spin_box.valueChanged.connect(self._persist_float("varia_suit_damage"))
-        self.dark_suit_spin_box.valueChanged.connect(self._persist_float("dark_suit_damage"))
-
         self.pickup_model_combo.currentIndexChanged.connect(self._persist_enum(self.pickup_model_combo,
                                                                                "pickup_model_style"))
         self.pickup_data_source_combo.currentIndexChanged.connect(self._persist_enum(self.pickup_data_source_combo,
@@ -40,13 +37,6 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
         def persist(value: int):
             with self._editor as options:
                 setattr(options, attribute_name, bool(value))
-
-        return persist
-
-    def _persist_float(self, attribute_name: str):
-        def persist(value: float):
-            with self._editor as options:
-                options.set_patcher_configuration_field(attribute_name, value)
 
         return persist
 
@@ -61,9 +51,6 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
         patcher_config = preset.patcher_configuration
         self.warp_to_start_check.setChecked(patcher_config.warp_to_start)
         self.include_menu_mod_check.setChecked(patcher_config.menu_mod)
-
-        self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
-        self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
 
         self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(patcher_config.pickup_model_style))
         self.pickup_data_source_combo.setCurrentIndex(

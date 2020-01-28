@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>702</width>
-    <height>540</height>
+    <width>688</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="trick_level_tab">
       <attribute name="title">
@@ -57,8 +57,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>674</width>
-            <height>425</height>
+            <width>658</width>
+            <height>404</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="trick_level_layout">
@@ -163,38 +163,175 @@
       <attribute name="title">
        <string>Damage</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="damage_strictness_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This controls how strictly damage requirements are checked. The resolver will make sure you have at least X times as much energy as is required to satisfy damage requirements, where X is determined by the setting you choose.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <widget class="QGroupBox" name="damage_strictness_group">
+         <property name="title">
+          <string>Damage Strictness</string>
          </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
+         <layout class="QVBoxLayout" name="damage_strictness_layout">
+          <item>
+           <widget class="QLabel" name="damage_strictness_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Certain locations, such as rooms without safe zones in Dark Aether or bosses, requires a certain number of energy tanks (or suits).&lt;/p&gt;&lt;p&gt;This setting controls how much energy the logic will expect you to have to reach these locations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="damage_strictness_spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QComboBox" name="damage_strictness_combo">
+            <property name="currentText">
+             <string>Strict (1×)</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>Strict (1×)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Medium (1.5×)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Lenient (2×)</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="damage_strictness_combo">
-         <property name="currentText">
-          <string>Strict (1×)</string>
+        <widget class="QGroupBox" name="dark_aether_box">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <item>
-          <property name="text">
-           <string>Strict (1×)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Medium (1.5×)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Lenient (2×)</string>
-          </property>
-         </item>
+         <property name="title">
+          <string>Dark Aether damage</string>
+         </property>
+         <layout class="QGridLayout" name="dark_aether_layout">
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="varia_suit_spin_box">
+            <property name="suffix">
+             <string> energy/s</string>
+            </property>
+            <property name="maximum">
+             <double>60.000000000000000</double>
+            </property>
+            <property name="stepType">
+             <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+            </property>
+            <property name="value">
+             <double>6.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="varia_suit_label">
+            <property name="text">
+             <string>Varia Suit</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="dark_suit_label">
+            <property name="text">
+             <string>Dark Suit</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDoubleSpinBox" name="dark_suit_spin_box">
+            <property name="suffix">
+             <string> energy/s</string>
+            </property>
+            <property name="maximum">
+             <double>60.000000000000000</double>
+            </property>
+            <property name="stepType">
+             <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+            </property>
+            <property name="value">
+             <double>1.200000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="dark_aether_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much damage per second you take in Dark Aether, per suit.&lt;br/&gt;Light Suit is always imune.&lt;/p&gt;&lt;p&gt;Logic always use the default value for checking, so higher values may cause impossible games.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <spacer name="damage_strictness_spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="damage_spacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -406,8 +543,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>674</width>
-            <height>425</height>
+            <width>658</width>
+            <height>404</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="translators_layout">
