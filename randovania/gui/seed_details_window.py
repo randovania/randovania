@@ -195,11 +195,19 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_trick_level_text_value.setText(
             description.permalink.layout_configuration.trick_level_configuration.pretty_description)
 
-        # Pickup spoiler combo
-        pickup_names = {
-            pickup.name
-            for pickup in description.patches.pickup_assignment.values()
-        }
+        # Game Spoiler
+        has_spoiler = description.permalink.spoiler
+        self.pickup_tab.setEnabled(has_spoiler)
+
+        if has_spoiler:
+            pickup_names = {
+                pickup.name
+                for pickup in description.patches.pickup_assignment.values()
+            }
+        else:
+            pickup_names = {}
+            self.layout_info_tab.removeTab(self.layout_info_tab.indexOf(self.pickup_tab))
+
         self.pickup_spoiler_pickup_combobox.clear()
         self.pickup_spoiler_pickup_combobox.addItem("None")
         for pickup_name in sorted(pickup_names):
@@ -208,7 +216,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         for pickup_button in self.pickup_spoiler_buttons:
             pickup = description.patches.pickup_assignment.get(pickup_button.pickup_index)
             if pickup is not None:
-                pickup_button.item_name = pickup.name
+                pickup_button.item_name = pickup.name if has_spoiler else "????"
             else:
                 pickup_button.item_name = "Nothing"
 
