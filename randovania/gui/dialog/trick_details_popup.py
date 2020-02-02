@@ -1,7 +1,7 @@
 import re
 from typing import Optional
 
-from PySide2.QtWidgets import QDialog
+from PySide2.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
@@ -45,12 +45,13 @@ def _area_uses_trick(area: Area,
 
 class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
     def __init__(self,
+                 parent: QWidget,
                  window_manager: WindowManager,
                  game_description: GameDescription,
                  trick: Optional[SimpleResourceInfo],
                  level: LayoutTrickLevel,
                  ):
-        super().__init__(window_manager)
+        super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
 

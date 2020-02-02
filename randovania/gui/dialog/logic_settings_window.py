@@ -3,6 +3,7 @@ import functools
 from typing import Optional, Dict
 
 from PySide2 import QtCore, QtWidgets
+from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QComboBox, QLabel, QDialog
 
 from randovania.game_description import default_database
@@ -350,23 +351,28 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                                     global_level=trick_level)
             )
 
+    def _exec_trick_details(self, popup: TrickDetailsPopup):
+        self._trick_details_popup = popup
+        self._trick_details_popup.setWindowModality(Qt.WindowModal)
+        self._trick_details_popup.open()
+
     def _open_trick_details_popup(self, trick: SimpleResourceInfo):
-        self._trick_details_popup = TrickDetailsPopup(
+        self._exec_trick_details(TrickDetailsPopup(
+            self,
             self._window_manager,
             self.game_description,
             trick,
             self._editor.layout_configuration.trick_level_configuration.level_for_trick(trick),
-        )
-        self._trick_details_popup.show()
+        ))
 
     def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
-        self._trick_details_popup = TrickDetailsPopup(
+        self._exec_trick_details(TrickDetailsPopup(
+            self,
             self._window_manager,
             self.game_description,
             None,
             difficulty,
-        )
-        self._trick_details_popup.show()
+        ))
 
     # Damage strictness
     def setup_damage_elements(self):
