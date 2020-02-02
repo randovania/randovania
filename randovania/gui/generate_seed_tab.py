@@ -1,15 +1,14 @@
-import json
 import random
-import uuid
 from functools import partial
-from typing import Dict, Optional
+from typing import Optional
 
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget
 
-from randovania import get_data_path
+from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
@@ -18,14 +17,8 @@ from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import read_preset_list, Preset
+from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import GenerationFailure
-
-
-def show_failed_generation_exception(exception: GenerationFailure):
-    QMessageBox.critical(None,
-                         "An error occurred while generating a seed",
-                         "{}\n\nSome errors are expected to occur, please try again.".format(exception))
 
 
 class GenerateSeedTab(QWidget):
@@ -36,15 +29,17 @@ class GenerateSeedTab(QWidget):
     preset_manager: PresetManager
     failed_to_generate_signal = Signal(GenerationFailure)
 
-    def __init__(self, background_processor: BackgroundTaskMixin, window: Ui_MainWindow, options: Options):
+    def __init__(self, background_processor: BackgroundTaskMixin, window: Ui_MainWindow,
+                 window_manager: WindowManager, options: Options):
         super().__init__()
 
         self.background_processor = background_processor
         self.window = window
+        self._window_manager = window_manager
         self._options = options
         self.preset_manager = PresetManager(options.data_dir)
 
-        self.failed_to_generate_signal.connect(show_failed_generation_exception)
+        self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
     def setup_ui(self):
         window = self.window
@@ -70,6 +65,11 @@ class GenerateSeedTab(QWidget):
         window.create_generate_button.clicked.connect(partial(self._generate_new_seed, True))
         window.create_generate_race_button.clicked.connect(partial(self._generate_new_seed, False))
 
+    def _show_failed_generation_exception(self, exception: GenerationFailure):
+        QMessageBox.critical(self._window_manager,
+                             "An error occurred while generating a seed",
+                             "{}\n\nSome errors are expected to occur, please try again.".format(exception))
+
     @property
     def _current_preset_data(self) -> Optional[Preset]:
         return self.preset_manager.preset_for_name(self.window.create_preset_combo.currentData())
@@ -83,10 +83,8 @@ class GenerateSeedTab(QWidget):
         create_preset_combo.addItem(preset.name, preset.name)
 
     def _on_customize_button(self):
-        from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
-
         editor = PresetEditor(self._current_preset_data)
-        self._logic_settings_window = LogicSettingsWindow(self.window, editor)
+        self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
 
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())

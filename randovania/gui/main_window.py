@@ -1,5 +1,6 @@
 import asyncio
 import json
+from functools import partial
 from typing import Optional
 
 import markdown
@@ -18,11 +19,14 @@ from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
+from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLevel
 from randovania.resolver import debug
 
 _DISABLE_VALIDATION_WARNING = """
@@ -33,7 +37,7 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
+class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
     is_preview_mode: bool = False
@@ -43,6 +47,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
     _options: Options
     _data_visualizer: Optional[DataEditorWindow] = None
     _details_window: SeedDetailsWindow
+    _map_tracker: TrackerWindow
 
     @property
     def _tab_widget(self):
@@ -78,15 +83,15 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
 
         # Menu Bar
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
-        self.menu_action_map_tracker.triggered.connect(self._open_map_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
+        self._create_open_map_tracker_actions()
 
-        self.generate_seed_tab = GenerateSeedTab(self, self, options)
+        self.generate_seed_tab = GenerateSeedTab(self, self, self, options)
         self.generate_seed_tab.setup_ui()
-        self._details_window = SeedDetailsWindow(self, options)
+        self._details_window = SeedDetailsWindow(self, self, options)
         self._details_window.added_to_tab = False
 
         # Setting this event only now, so all options changed trigger only once
@@ -220,9 +225,21 @@ class MainWindow(QMainWindow, Ui_MainWindow, BackgroundTaskMixin):
             self._data_editor = DataEditorWindow(json.load(database_file), True)
             self._data_editor.show()
 
-    def _open_map_tracker(self):
+    def _create_open_map_tracker_actions(self):
+        for trick_level in LayoutTrickLevel:
+            if trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+                action = QtWidgets.QAction(self)
+                action.setText(trick_level.long_name)
+                self.menu_map_tracker.addAction(action)
+
+                configuration = LayoutConfiguration.from_params(
+                    trick_level_configuration=TrickLevelConfiguration(trick_level, {})
+                )
+                action.triggered.connect(partial(self.open_map_tracker, configuration))
+
+    def open_map_tracker(self, configuration: LayoutConfiguration):
         try:
-            self._map_tracker = TrackerWindow(self._options.tracker_files_path, self._options.layout_configuration)
+            self._map_tracker = TrackerWindow(self._options.tracker_files_path, configuration)
         except InvalidLayoutForTracker as e:
             QMessageBox.critical(
                 self,
