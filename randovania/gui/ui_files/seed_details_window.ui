@@ -34,59 +34,43 @@
         <string>Summary</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="4" column="3" colspan="2">
-         <widget class="QCheckBox" name="remove_hud_popup_check">
+        <item row="3" column="0">
+         <widget class="QLabel" name="layout_preset_text_label">
           <property name="text">
-           <string>Skip Item Acquisition Popups</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="3" colspan="2">
-         <widget class="QCheckBox" name="pickup_markers_check">
-          <property name="text">
-           <string>Replace Translator icons on map with item icons</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="layout_seed_hash_text_label">
-          <property name="text">
-           <string>Seed Hash:</string>
+           <string>Preset:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="layout_seed_hash_value_label">
-          <property name="text">
-           <string>layout_trick_value_label</string>
+        <item row="0" column="1" colspan="3">
+         <widget class="QLineEdit" name="layout_permalink_edit">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="1" column="3">
-         <widget class="QPushButton" name="export_log_button">
+        <item row="0" column="4" colspan="2">
+         <widget class="QPushButton" name="layout_permalink_copy_button">
           <property name="text">
-           <string>Save Spoiler</string>
+           <string>Copy</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="3" colspan="2">
-         <widget class="QCheckBox" name="open_map_check">
+        <item row="5" column="1">
+         <widget class="QLabel" name="layout_trick_level_text_value">
           <property name="text">
-           <string>Open map from start</string>
+           <string>trick_level</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="layout_preset_value_label">
-          <property name="text">
-           <string>preset_value</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
+        <item row="2" column="3">
          <widget class="QPushButton" name="export_iso_button">
           <property name="text">
            <string>Save ISO</string>
@@ -109,31 +93,28 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="3" colspan="2">
-         <widget class="QCheckBox" name="faster_credits_check">
+        <item row="2" column="4">
+         <widget class="QPushButton" name="export_log_button">
           <property name="text">
-           <string>Faster Credits</string>
+           <string>Save Spoiler</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="layout_trick_level_text_value">
+        <item row="7" column="3" colspan="3">
+         <widget class="QCheckBox" name="pickup_markers_check">
           <property name="text">
-           <string>trick_level</string>
+           <string>Replace Translator icons on map with item icons</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="layout_preset_text_label">
+        <item row="6" column="3" colspan="3">
+         <widget class="QCheckBox" name="open_map_check">
           <property name="text">
-           <string>Preset:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <string>Open map from start</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item row="5" column="0">
          <widget class="QLabel" name="layout_trick_level_text_label">
           <property name="text">
            <string>Trick Level:</string>
@@ -143,22 +124,51 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="4">
-         <widget class="QPushButton" name="layout_permalink_copy_button">
+        <item row="3" column="1">
+         <widget class="QLabel" name="layout_preset_value_label">
           <property name="text">
-           <string>Copy</string>
+           <string>preset_value</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" colspan="3">
-         <widget class="QLineEdit" name="layout_permalink_edit">
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-           </font>
+        <item row="3" column="3" colspan="3">
+         <widget class="QCheckBox" name="faster_credits_check">
+          <property name="text">
+           <string>Faster Credits</string>
           </property>
-          <property name="readOnly">
-           <bool>true</bool>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="layout_seed_hash_text_label">
+          <property name="text">
+           <string>Seed Hash:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="3" colspan="3">
+         <widget class="QCheckBox" name="remove_hud_popup_check">
+          <property name="text">
+           <string>Skip Item Acquisition Popups</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="layout_seed_hash_value_label">
+          <property name="text">
+           <string>layout_trick_value_label</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5">
+         <widget class="QToolButton" name="tool_button">
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="popupMode">
+           <enum>QToolButton::InstantPopup</enum>
           </property>
          </widget>
         </item>
@@ -207,8 +217,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>579</width>
-             <height>222</height>
+             <width>574</width>
+             <height>223</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -244,7 +254,7 @@
      <x>0</x>
      <y>0</y>
      <width>619</width>
-     <height>17</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>

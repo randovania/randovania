@@ -1,7 +1,7 @@
 import re
 from typing import Optional
 
-from PySide2.QtWidgets import QDialog
+from PySide2.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
@@ -10,7 +10,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.main_window import MainWindow
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.layout.trick_level import LayoutTrickLevel
 
 
@@ -45,7 +45,8 @@ def _area_uses_trick(area: Area,
 
 class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
     def __init__(self,
-                 parent: MainWindow,
+                 parent: QWidget,
+                 window_manager: WindowManager,
                  game_description: GameDescription,
                  trick: Optional[SimpleResourceInfo],
                  level: LayoutTrickLevel,
@@ -54,7 +55,7 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         self.setupUi(self)
         set_default_window_icon(self)
 
-        self._main_window = parent
+        self._window_manager = window_manager
 
         # setup
         if trick is not None:
@@ -100,4 +101,4 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         info = re.match(r"^data-editor://([^)]+)/([^)]+)$", link)
         if info:
             world_name, area_name = info.group(1, 2)
-            self._main_window.open_data_visualizer_at(world_name, area_name)
+            self._window_manager.open_data_visualizer_at(world_name, area_name)
