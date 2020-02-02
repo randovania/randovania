@@ -83,6 +83,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         # Menu Bar
         self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
+        self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
         self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
@@ -249,6 +250,28 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             return
 
         self._map_tracker.show()
+
+    def _open_item_tracker(self):
+        # Importing this at root level seems to crash linux tests :(
+        from PySide2.QtWebEngineWidgets import QWebEngineView
+
+        tracker_window = QMainWindow()
+        tracker_window.setWindowTitle("Item Tracker")
+        tracker_window.resize(370, 380)
+
+        web_view = QWebEngineView(tracker_window)
+        tracker_window.setCentralWidget(web_view)
+
+        self.web_view = web_view
+
+        def update_window_icon():
+            tracker_window.setWindowIcon(web_view.icon())
+
+        web_view.iconChanged.connect(update_window_icon)
+        web_view.load(QUrl("https://spaghettitoastbook.github.io/echoes/tracker/"))
+
+        tracker_window.show()
+        self._item_tracker_window = tracker_window
 
     def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after
