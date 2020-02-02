@@ -19,6 +19,7 @@ def test_click_on_link(echoes_game_description,
     # Run
     popup = trick_details_popup.TrickDetailsPopup(
         main_window,
+        main_window,
         echoes_game_description,
         SimpleResourceInfo(-1, "Nothing", "Nothing", None),
         LayoutTrickLevel.HARD
