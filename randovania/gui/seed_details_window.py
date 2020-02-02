@@ -3,7 +3,7 @@ from typing import List
 
 from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
-    QApplication, QDialog
+    QApplication, QDialog, QAction, QMenu
 
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
@@ -11,6 +11,7 @@ from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_seed_log
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
@@ -44,8 +45,9 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
     _options: Options
+    _window_manager: WindowManager
 
-    def __init__(self, background_processor: BackgroundTaskMixin, options: Options):
+    def __init__(self, background_processor: BackgroundTaskMixin, window_manager: WindowManager, options: Options):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
@@ -54,11 +56,20 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.pickup_spoiler_buttons = []
         self.background_processor = background_processor
         self._options = options
+        self._window_manager = window_manager
+
+        # Ui
+        self._tool_button_menu = QMenu(self.tool_button)
+        self._action_open_tracker = QAction(self)
+        self._action_open_tracker.setText("Open map tracker")
+        self._tool_button_menu.addAction(self._action_open_tracker)
+        self.tool_button.setMenu(self._tool_button_menu)
 
         # Signals
         self.layout_permalink_copy_button.clicked.connect(self._copy_permalink)
         self.export_log_button.clicked.connect(self._export_log)
         self.export_iso_button.clicked.connect(self._export_iso)
+        self._action_open_tracker.triggered.connect(self._open_map_tracker)
 
         # Cosmetic
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
@@ -118,6 +129,9 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             progress_update(f"Finished!", 1)
 
         self.background_processor.run_in_background_thread(work, "Exporting...")
+
+    def _open_map_tracker(self):
+        self._window_manager.open_map_tracker(self.layout_description.permalink.layout_configuration)
 
     # Layout Visualization
     def _create_pickup_spoiler_combobox(self):

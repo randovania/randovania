@@ -17,8 +17,8 @@ from randovania.gui.game_patches_window import GamePatchesWindow
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.main_rules import MainRulesWindow
-from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
@@ -104,13 +104,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _editor: PresetEditor
     world_list: WorldList
 
-    def __init__(self, main_window: MainWindow, editor: PresetEditor):
+    def __init__(self, window_manager: WindowManager, editor: PresetEditor):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
 
         self._editor = editor
-        self._main_window = main_window
+        self._window_manager = window_manager
         self._main_rules = MainRulesWindow(editor)
         self._game_patches = GamePatchesWindow(editor)
 
@@ -352,7 +352,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _open_trick_details_popup(self, trick: SimpleResourceInfo):
         self._trick_details_popup = TrickDetailsPopup(
-            self._main_window,
+            self._window_manager,
             self.game_description,
             trick,
             self._editor.layout_configuration.trick_level_configuration.level_for_trick(trick),
@@ -361,7 +361,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
         self._trick_details_popup = TrickDetailsPopup(
-            self._main_window,
+            self._window_manager,
             self.game_description,
             None,
             difficulty,
