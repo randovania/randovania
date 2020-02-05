@@ -1,5 +1,6 @@
 import random
 from functools import partial
+from itertools import zip_longest
 from typing import Optional
 
 from PySide2.QtCore import Signal
@@ -7,6 +8,7 @@ from PySide2.QtWidgets import QDialog, QMessageBox, QWidget
 
 from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
+from randovania.gui.lib import preset_describer
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
@@ -14,8 +16,6 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
-from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.resolver.exceptions import GenerationFailure
@@ -46,15 +46,6 @@ class GenerateSeedTab(QWidget):
 
         # Progress
         self.background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
-
-        # Store the original text for the Layout details labels
-        for label in [window.create_item_placement_label,
-                      window.create_items_label,
-                      window.create_difficulty_label,
-                      window.create_gameplay_label,
-                      window.create_game_changes_label,
-                      window.create_sky_temple_keys_label]:
-            label.originalText = label.text()
 
         for preset in self.preset_manager.all_presets:
             self._create_button_for_preset(preset)
@@ -116,12 +107,10 @@ class GenerateSeedTab(QWidget):
     # Generate seed
 
     def _generate_new_seed(self, spoiler: bool):
-        preset = self._current_preset_data
         self.generate_seed_from_permalink(Permalink(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
-            patcher_configuration=preset.patcher_configuration,
-            layout_configuration=preset.layout_configuration,
+            preset=self._current_preset_data,
         ))
 
     def generate_seed_from_permalink(self, permalink: Permalink):
@@ -161,111 +150,11 @@ class GenerateSeedTab(QWidget):
         create_preset_combo = self.window.create_preset_combo
         create_preset_combo.setCurrentIndex(create_preset_combo.findText(preset.name))
 
-        patcher = preset.patcher_configuration
-        configuration = preset.layout_configuration
-        major_items = configuration.major_items_configuration
+        categories = list(preset_describer.describe(preset))
+        left_categories = categories[::2]
+        right_categories = categories[1::2]
 
-        def _bool_to_str(b: bool) -> str:
-            if b:
-                return "Yes"
-            else:
-                return "No"
+        self.window.create_describe_left_label.setText(preset_describer.merge_categories(left_categories))
+        self.window.create_describe_right_label.setText(preset_describer.merge_categories(right_categories))
 
-        # Item Placement
 
-        random_starting_items = "{} to {}".format(
-            major_items.minimum_random_starting_items,
-            major_items.maximum_random_starting_items,
-        )
-        if random_starting_items == "0 to 0":
-            random_starting_items = "None"
-
-        self.window.create_item_placement_label.setText(
-            self.window.create_item_placement_label.originalText.format(
-                trick_level=configuration.trick_level_configuration.pretty_description,
-                randomization_mode=configuration.randomization_mode.value,
-                random_starting_items=random_starting_items,
-            )
-        )
-
-        # Items
-        self.window.create_items_label.setText(
-            self.window.create_items_label.originalText.format(
-                progressive_suit=_bool_to_str(major_items.progressive_suit),
-                progressive_grapple=_bool_to_str(major_items.progressive_grapple),
-                split_beam_ammo=_bool_to_str(configuration.split_beam_ammo),
-                starting_items="???",
-                custom_items="None",
-            )
-        )
-
-        # Difficulty
-        default_patcher = PatcherConfiguration()
-
-        if patcher.varia_suit_damage == default_patcher.varia_suit_damage and (
-                patcher.dark_suit_damage == default_patcher.dark_suit_damage):
-            dark_aether_suit_damage = "Normal"
-        else:
-            dark_aether_suit_damage = "Custom"
-
-        self.window.create_difficulty_label.setText(
-            self.window.create_difficulty_label.originalText.format(
-                dark_aether_suit_damage=dark_aether_suit_damage,
-                dark_aether_damage_strictness=configuration.damage_strictness.long_name,
-                pickup_model=patcher.pickup_model_style.value,
-            )
-        )
-
-        # Gameplay
-        translator_gates = "Custom"
-        translator_configurations = [
-            (configuration.translator_configuration.with_vanilla_actual(), "Vanilla (Actual)"),
-            (configuration.translator_configuration.with_vanilla_colors(), "Vanilla (Colors)"),
-            (configuration.translator_configuration.with_full_random(), "Random"),
-        ]
-        for translator_config, name in translator_configurations:
-            if translator_config == configuration.translator_configuration:
-                translator_gates = name
-                break
-
-        self.window.create_gameplay_label.setText(
-            self.window.create_gameplay_label.originalText.format(
-                starting_location=configuration.starting_location.configuration.value,
-                translator_gates=translator_gates,
-                elevators=configuration.elevators.value,
-                hints="Yes",
-            )
-        )
-
-        # Game Changes
-        missile_launcher_required = True
-        main_pb_required = True
-        for ammo, state in configuration.ammo_configuration.items_state.items():
-            if ammo.name == "Missile Expansion":
-                missile_launcher_required = state.requires_major_item
-            elif ammo.name == "Power Bomb Expansion":
-                main_pb_required = state.requires_major_item
-
-        self.window.create_game_changes_label.setText(
-            self.window.create_game_changes_label.originalText.format(
-                missile_launcher_required=_bool_to_str(missile_launcher_required),
-                main_pb_required=_bool_to_str(main_pb_required),
-                warp_to_start=_bool_to_str(patcher.warp_to_start),
-                generic_patches="Some",
-            )
-        )
-
-        # Sky Temple Keys
-        if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
-            stk_location = "Bosses"
-        elif configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-            stk_location = "Guardians"
-        else:
-            stk_location = "Random"
-
-        self.window.create_sky_temple_keys_label.setText(
-            self.window.create_sky_temple_keys_label.originalText.format(
-                target="{0} of {0}".format(configuration.sky_temple_keys.num_keys),
-                location=stk_location,
-            )
-        )

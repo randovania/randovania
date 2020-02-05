@@ -26,6 +26,16 @@ class Preset:
             "layout_configuration": self.layout_configuration.as_json,
         }
 
+    @classmethod
+    def from_json_dict(cls, value) -> "Preset":
+        return Preset(
+            name=value["name"],
+            description=value["description"],
+            base_preset_name=value["base_preset_name"],
+            patcher_configuration=PatcherConfiguration.from_json_dict(value["patcher_configuration"]),
+            layout_configuration=LayoutConfiguration.from_json_dict(value["layout_configuration"]),
+        )
+
 
 def read_preset_file(path: Path) -> Preset:
     with path.open() as preset_file:
@@ -34,13 +44,7 @@ def read_preset_file(path: Path) -> Preset:
     if preset["version"] != 1:
         raise ValueError("Unknown version")
 
-    return Preset(
-        name=preset["name"],
-        description=preset["description"],
-        base_preset_name=preset["base_preset_name"],
-        patcher_configuration=PatcherConfiguration.from_json_dict(preset["patcher_configuration"]),
-        layout_configuration=LayoutConfiguration.from_json_dict(preset["layout_configuration"]),
-    )
+    return Preset.from_json_dict(preset)
 
 
 def save_preset_file(preset: Preset, path: Path) -> None:

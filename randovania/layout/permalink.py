@@ -6,8 +6,10 @@ from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, single_byte_hash
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.preset import Preset
 
 _PERMALINK_MAX_VERSION = 16
 _PERMALINK_MAX_SEED = 2 ** 31
@@ -21,14 +23,21 @@ def _dictionary_byte_hash(data: dict) -> int:
 class Permalink(BitPackValue):
     seed_number: int
     spoiler: bool
-    patcher_configuration: PatcherConfiguration
-    layout_configuration: LayoutConfiguration
+    preset: Preset
 
     def __post_init__(self):
         if self.seed_number is None:
             raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
+
+    @property
+    def patcher_configuration(self) -> PatcherConfiguration:
+        return self.preset.patcher_configuration
+
+    @property
+    def layout_configuration(self) -> LayoutConfiguration:
+        return self.preset.layout_configuration
 
     @classmethod
     def current_version(cls) -> int:
@@ -42,8 +51,20 @@ class Permalink(BitPackValue):
         yield int(self.spoiler), 2
         yield _dictionary_byte_hash(self.layout_configuration.game_data), 256
 
-        yield from self.patcher_configuration.bit_pack_encode({})
-        yield from self.layout_configuration.bit_pack_encode({})
+        manager = PresetManager(None)
+
+        # Is this a custom preset?
+        is_custom_preset = self.preset.base_preset_name is not None
+        if is_custom_preset:
+            reference_preset = manager.preset_for_name(self.preset.base_preset_name)
+        else:
+            reference_preset = self.preset
+
+        yield from bitpacking.encode_bool(is_custom_preset)
+        yield from bitpacking.pack_array_element(reference_preset, manager.included_presets)
+        if is_custom_preset:
+            yield from self.patcher_configuration.bit_pack_encode({})
+            yield from self.layout_configuration.bit_pack_encode({})
 
     @classmethod
     def _raise_if_different_version(cls, version: int):
@@ -61,12 +82,27 @@ class Permalink(BitPackValue):
         version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED, 2)
         cls._raise_if_different_version(version)
 
-        included_data_hash = decoder.decode(256)[0]
+        included_data_hash = decoder.decode_single(256)
 
-        patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder, {})
-        layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder, {})
+        manager = PresetManager(None)
+        is_custom_preset = bitpacking.decode_bool(decoder)
+        reference_preset = decoder.decode_element(manager.included_presets)
 
-        expected_data_hash = _dictionary_byte_hash(layout_configuration.game_data)
+        if is_custom_preset:
+            patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder, {})
+            layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder, {})
+            preset = Preset(
+                name="{} Custom".format(reference_preset.name),
+                description="A customized preset.",
+                base_preset_name=reference_preset.name,
+                patcher_configuration=patcher_configuration,
+                layout_configuration=layout_configuration,
+            )
+
+        else:
+            preset = reference_preset
+
+        expected_data_hash = _dictionary_byte_hash(preset.layout_configuration.game_data)
         if included_data_hash != expected_data_hash:
             raise ValueError("Given permalink is for a Randovania database with hash '{}', "
                              "but current database has hash '{}'.".format(included_data_hash, expected_data_hash))
@@ -74,8 +110,7 @@ class Permalink(BitPackValue):
         return Permalink(
             seed,
             bool(spoiler),
-            patcher_configuration,
-            layout_configuration
+            preset,
         )
 
     @classmethod
@@ -83,8 +118,7 @@ class Permalink(BitPackValue):
         return Permalink(
             seed_number=param["seed"],
             spoiler=param["spoiler"],
-            patcher_configuration=PatcherConfiguration.from_json_dict(param["patcher_configuration"]),
-            layout_configuration=LayoutConfiguration.from_json_dict(param["layout_configuration"]),
+            preset=Preset.from_json_dict(param["preset"]),
         )
 
     @property
@@ -93,8 +127,7 @@ class Permalink(BitPackValue):
             "link": self.as_str,
             "seed": self.seed_number,
             "spoiler": self.spoiler,
-            "patcher_configuration": self.patcher_configuration.as_json,
-            "layout_configuration": self.layout_configuration.as_json,
+            "preset": self.preset.as_json,
         }
 
     @property
