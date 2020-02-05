@@ -208,22 +208,16 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         self.export_log_button.setEnabled(description.permalink.spoiler)
 
-        preset = Preset(name="To be implemented",
-                        description="??",
-                        base_preset_name=None,
-                        patcher_configuration=description.permalink.patcher_configuration,
-                        layout_configuration=description.permalink.layout_configuration)
-
         title_text = """
         <p>
             Permalink: <span style='font-weight:600;'>{description.permalink.as_str}</span><br/>
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
-            Preset Name: {preset.name}
+            Preset Name: {description.permalink.preset.name}
         </p>
-        """.format(preset=preset, description=description)
+        """.format(description=description)
         self.layout_title_label.setText(title_text)
 
-        categories = list(preset_describer.describe(preset))
+        categories = list(preset_describer.describe(description.permalink.preset))
         self.layout_description_left_label.setText(preset_describer.merge_categories(categories[::2]))
         self.layout_description_right_label.setText(preset_describer.merge_categories(categories[1::2]))
 

@@ -11,6 +11,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSk
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
 
@@ -34,8 +35,13 @@ def _create_test_layout_description(
         permalink=Permalink(
             seed_number=0,
             spoiler=True,
-            patcher_configuration=PatcherConfiguration.default(),
-            layout_configuration=configuration,
+            preset=Preset(
+                name="foo",
+                description="desc",
+                base_preset_name=None,
+                patcher_configuration=PatcherConfiguration.default(),
+                layout_configuration=configuration,
+            ),
         ),
         patches=game.create_game_patches().assign_new_pickups([
             # (PickupIndex(i), pickup_database.original_pickup_mapping[PickupIndex(new_index)])

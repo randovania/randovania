@@ -11,6 +11,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime import default_data
+from randovania.interface_common.preset_manager import PresetManager
 
 
 @pytest.fixture
@@ -29,6 +30,11 @@ def echo_tool(request, test_files_dir) -> Path:
 def simple_data(test_files_dir: Path) -> dict:
     with test_files_dir.joinpath("small_game_data.json").open("r") as small_game_data:
         return json.load(small_game_data)
+
+
+@pytest.fixture()
+def preset_manager(tmpdir) -> PresetManager:
+    return PresetManager(Path(tmpdir.join("presets")))
 
 
 @pytest.fixture()

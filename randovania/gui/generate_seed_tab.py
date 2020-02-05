@@ -107,12 +107,10 @@ class GenerateSeedTab(QWidget):
     # Generate seed
 
     def _generate_new_seed(self, spoiler: bool):
-        preset = self._current_preset_data
         self.generate_seed_from_permalink(Permalink(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
-            patcher_configuration=preset.patcher_configuration,
-            layout_configuration=preset.layout_configuration,
+            preset=self._current_preset_data,
         ))
 
     def generate_seed_from_permalink(self, permalink: Permalink):
