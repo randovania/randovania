@@ -11,22 +11,22 @@ class PresetManager:
     included_presets: List[Preset]
     custom_presets: Dict[str, Preset]
 
-    def __init__(self, data_dir: Path):
-        self._data_dir = data_dir.joinpath("presets")
-
+    def __init__(self, data_dir: Optional[Path]):
         self.included_presets = read_preset_list()
 
         self.custom_presets = {}
-        for preset_file in self._data_dir.glob("*.json"):
-            try:
-                preset = read_preset_file(preset_file)
-            except ValueError:
-                continue
+        if data_dir is not None:
+            self._data_dir = data_dir.joinpath("presets")
+            for preset_file in self._data_dir.glob("*.json"):
+                try:
+                    preset = read_preset_file(preset_file)
+                except ValueError:
+                    continue
 
-            if preset.name in self.custom_presets:
-                continue
+                if preset.name in self.custom_presets:
+                    continue
 
-            self.custom_presets[preset.name] = preset
+                self.custom_presets[preset.name] = preset
 
     @property
     def default_preset(self) -> Preset:
