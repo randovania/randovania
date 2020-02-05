@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
+    <width>707</width>
     <height>313</height>
    </rect>
   </property>
@@ -34,141 +34,95 @@
         <string>Summary</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="3" column="0">
-         <widget class="QLabel" name="layout_preset_text_label">
+        <item row="1" column="0" colspan="2">
+         <widget class="QLabel" name="layout_description_left_label">
           <property name="text">
-           <string>Preset:</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" colspan="3">
-         <widget class="QLineEdit" name="layout_permalink_edit">
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4" colspan="2">
-         <widget class="QPushButton" name="layout_permalink_copy_button">
+        <item row="1" column="2" colspan="2">
+         <widget class="QLabel" name="layout_description_right_label">
           <property name="text">
-           <string>Copy</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="layout_trick_level_text_value">
-          <property name="text">
-           <string>trick_level</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QPushButton" name="export_iso_button">
-          <property name="text">
-           <string>Save ISO</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="layout_permalink_text_label">
+        <item row="0" column="0" colspan="4">
+         <widget class="QLabel" name="layout_title_label">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Permalink:</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Permalink: ????&lt;br/&gt;Seed Hash: ????&lt;br/&gt;Preset Name: ???&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="4">
-         <widget class="QPushButton" name="export_log_button">
-          <property name="text">
-           <string>Save Spoiler</string>
+          <property name="textInteractionFlags">
+           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
           </property>
          </widget>
         </item>
-        <item row="7" column="3" colspan="3">
-         <widget class="QCheckBox" name="pickup_markers_check">
-          <property name="text">
-           <string>Replace Translator icons on map with item icons</string>
-          </property>
-         </widget>
+        <item row="1" column="4" colspan="3">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QCheckBox" name="faster_credits_check">
+            <property name="text">
+             <string>Faster Credits</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="remove_hud_popup_check">
+            <property name="text">
+             <string>Skip Item Acquisition Popups</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="open_map_check">
+            <property name="text">
+             <string>Open map from start</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="pickup_markers_check">
+            <property name="text">
+             <string>Replace Translator icons on map with item icons</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="6" column="3" colspan="3">
-         <widget class="QCheckBox" name="open_map_check">
-          <property name="text">
-           <string>Open map from start</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="layout_trick_level_text_label">
-          <property name="text">
-           <string>Trick Level:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLabel" name="layout_preset_value_label">
-          <property name="text">
-           <string>preset_value</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3" colspan="3">
-         <widget class="QCheckBox" name="faster_credits_check">
-          <property name="text">
-           <string>Faster Credits</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="layout_seed_hash_text_label">
-          <property name="text">
-           <string>Seed Hash:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="3" colspan="3">
-         <widget class="QCheckBox" name="remove_hud_popup_check">
-          <property name="text">
-           <string>Skip Item Acquisition Popups</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="layout_seed_hash_value_label">
-          <property name="text">
-           <string>layout_trick_value_label</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="5">
+        <item row="0" column="6">
          <widget class="QToolButton" name="tool_button">
           <property name="text">
            <string>...</string>
           </property>
           <property name="popupMode">
            <enum>QToolButton::InstantPopup</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QPushButton" name="export_log_button">
+          <property name="text">
+           <string>Save Spoiler</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="export_iso_button">
+          <property name="text">
+           <string>Save ISO</string>
           </property>
          </widget>
         </item>
@@ -217,7 +171,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>574</width>
+             <width>662</width>
              <height>223</height>
             </rect>
            </property>
@@ -253,7 +207,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>619</width>
+     <width>707</width>
      <height>18</height>
     </rect>
    </property>

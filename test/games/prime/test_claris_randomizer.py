@@ -12,6 +12,7 @@ from randovania.games.prime import claris_randomizer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -289,11 +290,16 @@ def test_apply_layout(
         permalink=Permalink(
             seed_number=1,
             spoiler=False,
-            patcher_configuration=PatcherConfiguration(
-                menu_mod=include_menu_mod,
-                warp_to_start=MagicMock(),
+            preset=Preset(
+                name="Name",
+                description="Desc",
+                base_preset_name=None,
+                patcher_configuration=PatcherConfiguration(
+                    menu_mod=include_menu_mod,
+                    warp_to_start=MagicMock(),
+                ),
+                layout_configuration=MagicMock()
             ),
-            layout_configuration=MagicMock()
         ),
         patches=MagicMock(),
         solver_path=(),

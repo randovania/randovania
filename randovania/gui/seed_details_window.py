@@ -9,6 +9,7 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.node import PickupNode
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
+from randovania.gui.lib import preset_describer
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_seed_log
 from randovania.gui.lib.window_manager import WindowManager
@@ -16,6 +17,7 @@ from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.preset import Preset
 
 
 def _unique(iterable):
@@ -60,16 +62,21 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         # Ui
         self._tool_button_menu = QMenu(self.tool_button)
+        self.tool_button.setMenu(self._tool_button_menu)
+
         self._action_open_tracker = QAction(self)
         self._action_open_tracker.setText("Open map tracker")
         self._tool_button_menu.addAction(self._action_open_tracker)
-        self.tool_button.setMenu(self._tool_button_menu)
+
+        self._action_copy_permalink = QAction(self)
+        self._action_copy_permalink.setText("Copy Permalink")
+        self._tool_button_menu.addAction(self._action_copy_permalink)
 
         # Signals
-        self.layout_permalink_copy_button.clicked.connect(self._copy_permalink)
         self.export_log_button.clicked.connect(self._export_log)
         self.export_iso_button.clicked.connect(self._export_iso)
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
+        self._action_copy_permalink.triggered.connect(self._copy_permalink)
 
         # Cosmetic
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
@@ -200,14 +207,19 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_info_tab.show()
 
         self.export_log_button.setEnabled(description.permalink.spoiler)
-        self.layout_permalink_edit.setText(description.permalink.as_str)
-        self.layout_preset_value_label.setText("To be implemented")
-        self.layout_seed_hash_value_label.setText("{} ({})".format(
-            description.shareable_word_hash,
-            description.shareable_hash,
-        ))
-        self.layout_trick_level_text_value.setText(
-            description.permalink.layout_configuration.trick_level_configuration.pretty_description)
+
+        title_text = """
+        <p>
+            Permalink: <span style='font-weight:600;'>{description.permalink.as_str}</span><br/>
+            Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
+            Preset Name: {description.permalink.preset.name}
+        </p>
+        """.format(description=description)
+        self.layout_title_label.setText(title_text)
+
+        categories = list(preset_describer.describe(description.permalink.preset))
+        self.layout_description_left_label.setText(preset_describer.merge_categories(categories[::2]))
+        self.layout_description_right_label.setText(preset_describer.merge_categories(categories[1::2]))
 
         # Game Spoiler
         has_spoiler = description.permalink.spoiler

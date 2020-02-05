@@ -6,18 +6,18 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutEl
     LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
-def test_encode(mock_dictionary_byte_hash: MagicMock):
+def test_encode(mock_dictionary_byte_hash: MagicMock, preset_manager):
     # Setup
     mock_dictionary_byte_hash.return_value = 120
     link = Permalink(
         seed_number=1000,
         spoiler=True,
-        patcher_configuration=PatcherConfiguration.default(),
-        layout_configuration=LayoutConfiguration.default(),
+        preset=preset_manager.default_preset,
     )
 
     # Run
@@ -25,7 +25,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "gAAAfRePAAABsDAAABzQuw=="
+    assert encoded == "gAAAfReAbw=="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -59,13 +59,21 @@ def test_decode_invalid(invalid: str):
 ])
 def test_round_trip(spoiler: bool,
                     patcher: PatcherConfiguration,
-                    layout: LayoutConfiguration):
+                    layout: LayoutConfiguration,
+                    preset_manager):
     # Setup
+    preset = Preset(
+        name="Beginner Friendly Custom",
+        description="A customized preset.",
+        base_preset_name=preset_manager.default_preset.name,
+        patcher_configuration=patcher,
+        layout_configuration=layout,
+    )
+
     link = Permalink(
         seed_number=1000,
         spoiler=spoiler,
-        patcher_configuration=patcher,
-        layout_configuration=layout,
+        preset=preset,
     )
 
     # Run
@@ -88,25 +96,18 @@ def test_decode_old_version(permalink: str, version: int):
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
-def test_decode(mock_dictionary_byte_hash: MagicMock):
+def test_decode(mock_dictionary_byte_hash: MagicMock, preset_manager):
     mock_dictionary_byte_hash.return_value = 120
     # We're mocking the database hash to avoid breaking tests every single time we change the database
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "gAAAfReLCAABsjAAABzQIw=="
+    encoded = "gAAAfReAbw=="
 
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
-        patcher_configuration=PatcherConfiguration(
-            menu_mod=True,
-            warp_to_start=False,
-        ),
-        layout_configuration=LayoutConfiguration.from_params(
-            trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
-            elevators=LayoutElevators.TWO_WAY_RANDOMIZED,
-        ),
+        preset=preset_manager.default_preset,
     )
 
     # Uncomment this line to quickly get the new encoded permalink
@@ -124,17 +125,22 @@ def test_decode(mock_dictionary_byte_hash: MagicMock):
 @patch("randovania.layout.patcher_configuration.PatcherConfiguration.bit_pack_unpack")
 def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            mock_layout_unpack: MagicMock,
+                           preset_manager,
                            ):
-
-    encoded = "gAAAfRggLQ=="
+    encoded = "gAAAfRgoMw=="
     patcher_configuration = mock_packer_unpack.return_value
     layout_configuration = mock_layout_unpack.return_value
 
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
-        patcher_configuration=patcher_configuration,
-        layout_configuration=layout_configuration,
+        preset=Preset(
+            name="Beginner Friendly Custom",
+            description="A customized preset.",
+            base_preset_name=preset_manager.default_preset.name,
+            patcher_configuration=patcher_configuration,
+            layout_configuration=layout_configuration,
+        ),
     )
     patcher_configuration.bit_pack_encode.return_value = []
     layout_configuration.bit_pack_encode.return_value = []

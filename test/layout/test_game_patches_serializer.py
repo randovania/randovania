@@ -24,6 +24,7 @@ from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
@@ -196,12 +197,16 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     assert pickup == decoded
 
 
-def test_round_trip_generated_patches(echoes_game_data):
+def test_round_trip_generated_patches(echoes_game_data, preset_manager):
     # Setup
-    configuration = LayoutConfiguration.from_params(
-        trick_level_configuration=TrickLevelConfiguration(
-            global_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
-            specific_levels={},
+    preset = dataclasses.replace(
+        preset_manager.default_preset,
+        layout_configuration=dataclasses.replace(
+            preset_manager.default_preset.layout_configuration,
+            trick_level_configuration=TrickLevelConfiguration(
+                global_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
+                specific_levels={},
+            )
         )
     )
 
@@ -209,8 +214,7 @@ def test_round_trip_generated_patches(echoes_game_data):
         permalink=Permalink(
             seed_number=1000,
             spoiler=True,
-            patcher_configuration=PatcherConfiguration.default(),
-            layout_configuration=configuration,
+            preset=preset,
         ),
         game=data_reader.decode_data(echoes_game_data),
         status_update=lambda x: None,
@@ -218,7 +222,7 @@ def test_round_trip_generated_patches(echoes_game_data):
 
     # Run
     encoded = game_patches_serializer.serialize(patches, echoes_game_data)
-    decoded = game_patches_serializer.decode(encoded, configuration)
+    decoded = game_patches_serializer.decode(encoded, preset.layout_configuration)
 
     # Assert
     assert patches == decoded

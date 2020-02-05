@@ -93,8 +93,7 @@ def test_output_name_for(mock_shareable_hash: PropertyMock,
     permalink_mock = MagicMock(spec=Permalink(
         seed_number=15000,
         spoiler=True,
-        patcher_configuration=PatcherConfiguration.default(),
-        layout_configuration=LayoutConfiguration.default(),
+        preset=None,
     ))
     layout = LayoutDescription(
         version="0.15.0",

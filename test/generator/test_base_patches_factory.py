@@ -20,11 +20,10 @@ from randovania.layout.translator_configuration import LayoutTranslatorRequireme
 def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
-    permalink = Permalink.default()
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
-                                                                      Random(permalink.seed_number),
+    result = base_patches_factory.add_elevator_connections_to_patches(LayoutConfiguration.default(),
+                                                                      Random(0),
                                                                       game.create_game_patches())
 
     # Assert
@@ -34,10 +33,8 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
 def test_add_elevator_connections_to_patches_random(echoes_game_data):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
-    permalink = dataclasses.replace(
-        Permalink.default(),
-        layout_configuration=dataclasses.replace(LayoutConfiguration.default(),
-                                                 elevators=LayoutElevators.TWO_WAY_RANDOMIZED))
+    layout_configuration = dataclasses.replace(LayoutConfiguration.default(),
+                                               elevators=LayoutElevators.TWO_WAY_RANDOMIZED)
     expected = dataclasses.replace(game.create_game_patches(),
                                    elevator_connection={
                                        589851: AreaLocation(1039999561, 1868895730),
@@ -60,13 +57,13 @@ def test_add_elevator_connections_to_patches_random(echoes_game_data):
                                        38: AreaLocation(1119434212, 1473133138),
                                        1245332: AreaLocation(2252328306, 2399252740),
                                        1638535: AreaLocation(2252328306, 2556480432),
-                                       204865660: AreaLocation(464164546,1564082177),
+                                       204865660: AreaLocation(464164546, 1564082177),
                                        4260106: AreaLocation(464164546, 3136899603),
                                    })
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(permalink.layout_configuration,
-                                                                      Random(permalink.seed_number),
+    result = base_patches_factory.add_elevator_connections_to_patches(layout_configuration,
+                                                                      Random(0),
                                                                       game.create_game_patches(),
                                                                       )
 
