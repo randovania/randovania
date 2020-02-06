@@ -1,3 +1,4 @@
+import dataclasses
 from unittest.mock import patch, MagicMock
 
 import pytest
@@ -43,31 +44,31 @@ def test_decode_invalid(invalid: str):
 
 @pytest.mark.parametrize("spoiler", [False, True])
 @pytest.mark.parametrize("patcher", [
-    PatcherConfiguration.default(),
-    PatcherConfiguration(
-        menu_mod=True,
-        warp_to_start=False,
-    ),
+    {},
+    {
+        "menu_mod": True,
+        "warp_to_start": False,
+    },
 ])
 @pytest.mark.parametrize("layout", [
-    LayoutConfiguration.default(),
-    LayoutConfiguration.from_params(
-        trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HARD),
-        sky_temple_keys=LayoutSkyTempleKeyMode.ALL_GUARDIANS,
-        elevators=LayoutElevators.TWO_WAY_RANDOMIZED,
-    ),
+    {},
+    {
+        "trick_level_configuration": TrickLevelConfiguration(LayoutTrickLevel.HARD),
+        "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
+        "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
+    },
 ])
 def test_round_trip(spoiler: bool,
-                    patcher: PatcherConfiguration,
-                    layout: LayoutConfiguration,
+                    patcher: dict,
+                    layout: dict,
                     preset_manager):
     # Setup
     preset = Preset(
         name="Beginner Friendly Custom",
         description="A customized preset.",
         base_preset_name=preset_manager.default_preset.name,
-        patcher_configuration=patcher,
-        layout_configuration=layout,
+        patcher_configuration=dataclasses.replace(preset_manager.default_preset.patcher_configuration, **patcher),
+        layout_configuration=dataclasses.replace(preset_manager.default_preset.layout_configuration, **layout),
     )
 
     link = Permalink(
@@ -159,5 +160,7 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
     assert encoded == round_trip
     mock_packer_unpack.assert_called_once()
     mock_layout_unpack.assert_called_once()
-    patcher_configuration.bit_pack_encode.assert_called_once_with({})
-    layout_configuration.bit_pack_encode.assert_called_once_with({})
+    patcher_configuration.bit_pack_encode.assert_called_once_with(
+        {"reference": preset_manager.default_preset.patcher_configuration})
+    layout_configuration.bit_pack_encode.assert_called_once_with(
+        {"reference": preset_manager.default_preset.layout_configuration})

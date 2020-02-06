@@ -8,8 +8,8 @@ from randovania.layout.layout_configuration import LayoutConfiguration
 
 
 @pytest.fixture(name="layout_config")
-def _layout_config():
-    return LayoutConfiguration.default()
+def _layout_config(default_layout_configuration):
+    return default_layout_configuration
 
 
 def test_load_previous_state_no_previous_layout(tmp_path: Path, layout_config):

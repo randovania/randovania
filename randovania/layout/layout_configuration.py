@@ -120,7 +120,7 @@ class LayoutConfiguration(BitPackDataClass):
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
-        return cls.from_params(
+        return LayoutConfiguration(
             trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"]),
             damage_strictness=LayoutDamageStrictness(json_dict["damage_strictness"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
@@ -139,15 +139,3 @@ class LayoutConfiguration(BitPackDataClass):
             hints=HintConfiguration.from_json(json_dict["hints"]),
             split_beam_ammo=json_dict["split_beam_ammo"],
         )
-
-    @classmethod
-    def from_params(cls, **kwargs) -> "LayoutConfiguration":
-        for field in dataclasses.fields(cls):
-            if field.name not in kwargs:
-                if field.default is dataclasses.MISSING:
-                    kwargs[field.name] = field.type.default()
-        return LayoutConfiguration(**kwargs)
-
-    @classmethod
-    def default(cls) -> "LayoutConfiguration":
-        return cls.from_params()

@@ -142,11 +142,11 @@ def test_encode(patches_with_data, echoes_game_data):
     assert encoded == expected
 
 
-def test_decode(patches_with_data):
+def test_decode(patches_with_data, default_layout_configuration):
     encoded, expected = patches_with_data
 
     # Run
-    decoded = game_patches_serializer.decode(encoded, LayoutConfiguration.default())
+    decoded = game_patches_serializer.decode(encoded, default_layout_configuration)
 
     # Assert
     assert decoded == expected

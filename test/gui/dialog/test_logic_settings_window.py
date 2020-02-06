@@ -5,17 +5,9 @@ from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
 
-def test_on_preset_changed(skip_qtbot):
+def test_on_preset_changed(skip_qtbot, preset_manager):
     # Setup
-    editor = PresetEditor(
-        Preset(
-            name="A name",
-            description="A preset that was customized.",
-            base_preset_name=None,
-            patcher_configuration=PatcherConfiguration.default(),
-            layout_configuration=LayoutConfiguration.default(),
-        )
-    )
+    editor = PresetEditor(preset_manager.default_preset)
     window = LogicSettingsWindow(None, editor)
 
     # Run

@@ -1,3 +1,4 @@
+import dataclasses
 from dataclasses import dataclass
 from unittest.mock import patch, MagicMock
 
@@ -27,30 +28,30 @@ class DummyValue(BitPackValue):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'l@',
+        {"encoded": b'l\x00',
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'@@',
+        {"encoded": b'@\x00',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'P\xc0',
+        {"encoded": b'P\x80',
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'D\xc0',
+        {"encoded": b'D\x80',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'\x04\xc0',
+        {"encoded": b'\x04\x80',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          "damage_strictness": LayoutDamageStrictness.STRICT,
          },
     ],
     name="layout_config_with_data")
-def _layout_config_with_data(request):
+def _layout_config_with_data(request, default_layout_configuration):
     trick_config = DummyValue()
     starting_location = DummyValue()
     randomization_mode = DummyValue()
@@ -66,7 +67,8 @@ def _layout_config_with_data(request):
          patch.multiple(AmmoConfiguration, bit_pack_unpack=MagicMock(return_value=ammo_config)), \
          patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)), \
          patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)):
-        yield request.param["encoded"], LayoutConfiguration.from_params(
+        yield request.param["encoded"], dataclasses.replace(
+            default_layout_configuration,
             trick_level_configuration=trick_config,
             damage_strictness=request.param.get("damage_strictness", LayoutDamageStrictness.MEDIUM),
             sky_temple_keys=request.param["sky_temple"],

@@ -1,3 +1,4 @@
+import dataclasses
 import json
 from pathlib import Path
 
@@ -42,9 +43,11 @@ def _initial_layout_configuration_params(request) -> dict:
                          [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.TRIVIAL, LayoutTrickLevel.HYPERMODE])
 def test_edit_layout_trick_level(editor: PresetEditor,
                                  initial_layout_configuration_params: dict,
+                                 default_layout_configuration,
                                  new_trick_level: LayoutTrickLevel):
     # Setup
-    editor._layout_configuration = LayoutConfiguration.from_params(**initial_layout_configuration_params)
+    editor._layout_configuration = dataclasses.replace(default_layout_configuration,
+                                                       **initial_layout_configuration_params)
     editor._nested_autosave_level = 1
 
     # Run
@@ -52,4 +55,5 @@ def test_edit_layout_trick_level(editor: PresetEditor,
     editor.set_layout_configuration_field("trick_level_configuration", TrickLevelConfiguration(new_trick_level))
 
     # Assert
-    assert editor.layout_configuration == LayoutConfiguration.from_params(**initial_layout_configuration_params)
+    assert editor.layout_configuration == dataclasses.replace(default_layout_configuration,
+                                                              **initial_layout_configuration_params)

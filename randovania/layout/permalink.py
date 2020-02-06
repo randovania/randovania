@@ -63,8 +63,8 @@ class Permalink(BitPackValue):
         yield from bitpacking.encode_bool(is_custom_preset)
         yield from bitpacking.pack_array_element(reference_preset, manager.included_presets)
         if is_custom_preset:
-            yield from self.patcher_configuration.bit_pack_encode({})
-            yield from self.layout_configuration.bit_pack_encode({})
+            yield from self.patcher_configuration.bit_pack_encode({"reference": reference_preset.patcher_configuration})
+            yield from self.layout_configuration.bit_pack_encode({"reference": reference_preset.layout_configuration})
 
     @classmethod
     def _raise_if_different_version(cls, version: int):
@@ -89,8 +89,10 @@ class Permalink(BitPackValue):
         reference_preset = decoder.decode_element(manager.included_presets)
 
         if is_custom_preset:
-            patcher_configuration = PatcherConfiguration.bit_pack_unpack(decoder, {})
-            layout_configuration = LayoutConfiguration.bit_pack_unpack(decoder, {})
+            patcher_configuration = PatcherConfiguration.bit_pack_unpack(
+                decoder, {"reference": reference_preset.patcher_configuration})
+            layout_configuration = LayoutConfiguration.bit_pack_unpack(
+                decoder, {"reference": reference_preset.layout_configuration})
             preset = Preset(
                 name="{} Custom".format(reference_preset.name),
                 description="A customized preset.",
@@ -160,12 +162,3 @@ class Permalink(BitPackValue):
                 permalink=param,
                 error=e,
             ))
-
-    @classmethod
-    def default(cls) -> "Permalink":
-        return Permalink(
-            seed_number=0,
-            spoiler=True,
-            patcher_configuration=PatcherConfiguration.default(),
-            layout_configuration=LayoutConfiguration.default(),
-        )
