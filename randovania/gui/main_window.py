@@ -1,4 +1,5 @@
 import asyncio
+import dataclasses
 import json
 from functools import partial
 from typing import Optional
@@ -88,12 +89,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
-        self._create_open_map_tracker_actions()
 
         self.generate_seed_tab = GenerateSeedTab(self, self, self, options)
         self.generate_seed_tab.setup_ui()
         self._details_window = SeedDetailsWindow(self, self, options)
         self._details_window.added_to_tab = False
+
+        # Needs the GenerateSeedTab
+        self._create_open_map_tracker_actions()
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -227,13 +230,16 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             self._data_editor.show()
 
     def _create_open_map_tracker_actions(self):
+        base_layout = self.generate_seed_tab.preset_manager.default_preset.layout_configuration
+
         for trick_level in LayoutTrickLevel:
             if trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS:
                 action = QtWidgets.QAction(self)
                 action.setText(trick_level.long_name)
                 self.menu_map_tracker.addAction(action)
 
-                configuration = LayoutConfiguration.from_params(
+                configuration = dataclasses.replace(
+                    base_layout,
                     trick_level_configuration=TrickLevelConfiguration(trick_level, {})
                 )
                 action.triggered.connect(partial(self.open_map_tracker, configuration))
