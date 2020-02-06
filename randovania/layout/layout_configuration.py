@@ -147,7 +147,3 @@ class LayoutConfiguration(BitPackDataClass):
                 if field.default is dataclasses.MISSING:
                     kwargs[field.name] = field.type.default()
         return LayoutConfiguration(**kwargs)
-
-    @classmethod
-    def default(cls) -> "LayoutConfiguration":
-        return cls.from_params()
