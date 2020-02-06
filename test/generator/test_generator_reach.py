@@ -1,3 +1,4 @@
+import dataclasses
 import pprint
 from random import Random
 from typing import Tuple, List, Iterator
@@ -83,9 +84,9 @@ def _compare_actions(first_reach: GeneratorReach,
 
 
 def test_calculate_reach_with_all_pickups(test_data):
-    game, state, _ = test_data
+    game, state, permalink = test_data
 
-    item_pool = calculate_item_pool(LayoutConfiguration.from_params(), game.resource_database, state.patches)
+    item_pool = calculate_item_pool(permalink.layout_configuration, game.resource_database, state.patches)
     add_resources_into_another(state.resources, item_pool[0].starting_items)
     for pickup in item_pool[1]:
         add_pickup_to_state(state, pickup)
@@ -155,9 +156,10 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
-def test_reach_size_from_start(echoes_game_description):
+def test_reach_size_from_start(echoes_game_description, default_layout_configuration):
     # Setup
-    configuration = LayoutConfiguration.from_params(
+    configuration = dataclasses.replace(
+        default_layout_configuration,
         trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HYPERMODE),
     )
     patches = echoes_game_description.create_game_patches()

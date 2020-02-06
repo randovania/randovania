@@ -160,12 +160,3 @@ class Permalink(BitPackValue):
                 permalink=param,
                 error=e,
             ))
-
-    @classmethod
-    def default(cls) -> "Permalink":
-        return Permalink(
-            seed_number=0,
-            spoiler=True,
-            patcher_configuration=PatcherConfiguration.default(),
-            layout_configuration=LayoutConfiguration.default(),
-        )

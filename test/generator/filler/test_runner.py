@@ -27,10 +27,10 @@ def _pickup() -> PickupEntry:
 @patch("randovania.generator.filler.runner.retcon_playthrough_filler", autospec=True)
 def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
                     echoes_game_description,
+                    default_layout_configuration,
                     pickup
                     ):
     # Setup
-    configuration = LayoutConfiguration.default()
     rng = Random(5000)
     status_update = MagicMock()
     item_pool = [pickup]
@@ -43,7 +43,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     ).assign_pickup_assignment({PickupIndex(1): pickup})
 
     # Run
-    result_patches, remaining_items = runner.run_filler(configuration, echoes_game_description,
+    result_patches, remaining_items = runner.run_filler(default_layout_configuration, echoes_game_description,
                                                         item_pool, patches,
                                                         rng, status_update)
 

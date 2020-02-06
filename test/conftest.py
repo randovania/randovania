@@ -12,6 +12,7 @@ from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime import default_data
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.layout.layout_configuration import LayoutConfiguration
 
 
 @pytest.fixture
@@ -35,6 +36,11 @@ def simple_data(test_files_dir: Path) -> dict:
 @pytest.fixture()
 def preset_manager(tmpdir) -> PresetManager:
     return PresetManager(Path(tmpdir.join("presets")))
+
+
+@pytest.fixture()
+def default_layout_configuration(preset_manager) -> LayoutConfiguration:
+    return preset_manager.default_preset.layout_configuration
 
 
 @pytest.fixture()

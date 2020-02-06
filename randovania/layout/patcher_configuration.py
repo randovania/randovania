@@ -65,7 +65,3 @@ class PatcherConfiguration(BitPackDataClass):
                 kwargs[field.name] = field.type(json_dict[field.name])
 
         return PatcherConfiguration(**kwargs)
-
-    @classmethod
-    def default(cls) -> "PatcherConfiguration":
-        return PatcherConfiguration()

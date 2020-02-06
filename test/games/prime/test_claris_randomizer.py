@@ -32,11 +32,6 @@ def _create_description_mock(permalink: Permalink, empty_patches: GamePatches):
     ))
 
 
-@pytest.fixture(name="description")
-def _description(empty_patches) -> LayoutDescription:
-    return _create_description_mock(Permalink.default(), empty_patches)
-
-
 @pytest.fixture(
     params=[False, True],
     name="mock_is_windows")

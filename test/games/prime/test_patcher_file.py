@@ -11,7 +11,6 @@ import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -22,7 +21,6 @@ from randovania.games.prime import patcher_file, default_data
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
@@ -578,10 +576,11 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
 
 @pytest.mark.parametrize("disable_hud_popup", [False, True])
 def test_create_pickup_all_from_pool(echoes_resource_database,
+                                     default_layout_configuration,
                                      disable_hud_popup: bool
                                      ):
-    layout_configuration = LayoutConfiguration.from_params()
-    item_pool = pool_creator.calculate_pool_results(layout_configuration, echoes_resource_database)[0]
+    item_pool = pool_creator.calculate_pool_results(default_layout_configuration,
+                                                    echoes_resource_database)[0]
     index = PickupIndex(0)
     if disable_hud_popup:
         memo_data = None

@@ -17,12 +17,13 @@ from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
-def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
+def test_add_elevator_connections_to_patches_vanilla(echoes_game_data,
+                                                     default_layout_configuration):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(LayoutConfiguration.default(),
+    result = base_patches_factory.add_elevator_connections_to_patches(default_layout_configuration,
                                                                       Random(0),
                                                                       game.create_game_patches())
 
@@ -30,10 +31,11 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_data):
     assert result == game.create_game_patches()
 
 
-def test_add_elevator_connections_to_patches_random(echoes_game_data):
+def test_add_elevator_connections_to_patches_random(echoes_game_data,
+                                                    default_layout_configuration):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
-    layout_configuration = dataclasses.replace(LayoutConfiguration.default(),
+    layout_configuration = dataclasses.replace(default_layout_configuration,
                                                elevators=LayoutElevators.TWO_WAY_RANDOMIZED)
     expected = dataclasses.replace(game.create_game_patches(),
                                    elevator_connection={

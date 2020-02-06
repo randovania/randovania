@@ -35,21 +35,6 @@ def add_layout_configuration_arguments(parser: ArgumentParser):
     )
 
 
-def get_layout_configuration_from_args(args) -> LayoutConfiguration:
-    try:
-        sky_temple_keys = int(args.sky_temple_keys)
-    except ValueError:
-        sky_temple_keys = args.sky_temple_keys
-
-    # TODO: support for item loss
-    return LayoutConfiguration.from_params(
-        trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel(args.trick_level)),
-        sky_temple_keys=LayoutSkyTempleKeyMode(sky_temple_keys),
-        elevators=LayoutElevators.VANILLA,
-        starting_location=StartingLocation.default(),
-    )
-
-
 def add_validate_argument(parser: ArgumentParser):
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--validate", action="store_true", dest="validate", default=True,

@@ -11,8 +11,8 @@ from randovania.resolver.bootstrap import logic_bootstrap
 
 @pytest.mark.skip
 @pytest.mark.skip_generation_tests
-def test_retcon_filler_integration():
-    layout_configuration = LayoutConfiguration.default()
+def test_retcon_filler_integration(default_layout_configuration):
+    layout_configuration = default_layout_configuration
 
     rng = Random("fixed-seed!")
     status_update = MagicMock()
