@@ -1,10 +1,10 @@
 import dataclasses
 import hashlib
+import math
 from enum import Enum
 from typing import Iterator, Tuple, TypeVar, List, Optional
 
 import bitstruct
-import math
 
 T = TypeVar("T")
 
@@ -141,16 +141,41 @@ def _get_bit_pack_value_for(value):
 
 class BitPackDataClass(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+        reference = metadata.get("reference")
+
         for field in dataclasses.fields(self):
-            yield from _get_bit_pack_value_for(getattr(self, field.name)).bit_pack_encode(field.metadata)
+            if not field.init:
+                continue
+
+            item = getattr(self, field.name)
+            if reference is not None:
+                is_different = item != getattr(reference, field.name)
+                yield from encode_bool(is_different)
+                if not is_different:
+                    continue
+
+            yield from _get_bit_pack_value_for(item).bit_pack_encode(field.metadata)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        args = {
-            field.name: _get_bit_pack_value_for_type(field.type).bit_pack_unpack(decoder, field.metadata)
-            for field in dataclasses.fields(cls)
-            if field.init
-        }
+        reference = metadata.get("reference")
+        args = {}
+
+        for field in dataclasses.fields(cls):
+            if not field.init:
+                continue
+
+            should_decode = True
+            if reference is not None:
+                if not decode_bool(decoder):
+                    item = getattr(reference, field.name)
+                    should_decode = False
+
+            if should_decode:
+                item = _get_bit_pack_value_for_type(field.type).bit_pack_unpack(decoder, field.metadata)
+
+            args[field.name] = item
+
         return cls(**args)
 
 
