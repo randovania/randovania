@@ -183,6 +183,40 @@ def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
     yield array.index(element), len(array)
 
 
+def _is_sorted(array: List[T]) -> bool:
+    return array == list(sorted(array))
+
+
+def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
+    assert _is_sorted(elements)
+    assert _is_sorted(array)
+
+    previous_index = 0
+    for item in elements:
+        index = array.index(item)
+        assert index is not None
+
+        yield index - previous_index, len(array) - previous_index + 1
+        previous_index = index
+
+    yield len(array) - previous_index, len(array) - previous_index + 1
+
+
+def decode_sorted_array_elements(decoder: BitPackDecoder, array: List[int]) -> List[int]:
+    result = []
+
+    previous_index = 0
+    while True:
+        index = decoder.decode_single(len(array) - previous_index + 1)
+        if index == len(array) - previous_index:
+            break
+
+        previous_index += index
+        result.append(array[previous_index])
+
+    return result
+
+
 def encode_int_with_limits(value: int, limits: Tuple[int, ...]) -> Iterator[Tuple[int, int]]:
     previous_limit_sum = 0
 

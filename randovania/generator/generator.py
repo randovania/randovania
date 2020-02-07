@@ -16,7 +16,8 @@ from randovania.generator.filler.filler_library import filter_unassigned_pickup_
     UnableToGenerate
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.item_pool import pool_creator
-from randovania.layout.layout_configuration import LayoutConfiguration, RandomizationMode
+from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.available_locations import RandomizationMode
 from randovania.layout.layout_description import LayoutDescription, SolverPath
 from randovania.layout.permalink import Permalink
 from randovania.resolver import resolver
@@ -147,7 +148,8 @@ def _create_randomized_patches(permalink: Permalink,
     filler_patches, remaining_items = _retryable_create_patches(configuration, game, rng, status_update)
 
     return filler_patches.assign_pickup_assignment(
-        _assign_remaining_items(rng, game.world_list, filler_patches.pickup_assignment, remaining_items, configuration.randomization_mode)
+        _assign_remaining_items(rng, game.world_list, filler_patches.pickup_assignment, remaining_items,
+                                configuration.randomization_mode)
     )
 
 
@@ -196,7 +198,6 @@ def _assign_remaining_items(rng: Random,
             "Received {} remaining items, but there's only {} unassigned pickups".format(len(remaining_items),
                                                                                          len(unassigned_pickup_nodes)))
 
-
     # Shuffle the items to add and the spots to choose from
     rng.shuffle(remaining_items)
     rng.shuffle(unassigned_pickup_nodes)
@@ -205,7 +206,8 @@ def _assign_remaining_items(rng: Random,
 
     if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
         remaining_majors = [item for item in remaining_items if not item.is_expansion] + ([None] * num_etm)
-        unassigned_major_locations = [pickup_node for pickup_node in unassigned_pickup_nodes if pickup_node.major_location]
+        unassigned_major_locations = [pickup_node for pickup_node in unassigned_pickup_nodes if
+                                      pickup_node.major_location]
 
         for pickup_node, item in zip(unassigned_major_locations, remaining_majors):
             if item is not None:

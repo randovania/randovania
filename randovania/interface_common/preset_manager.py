@@ -7,9 +7,15 @@ import slugify
 from randovania.layout.preset import Preset, read_preset_list, read_preset_file, save_preset_file
 
 
+class InvalidPreset(Exception):
+    def __init__(self, file: Path):
+        self.file = file
+
+
 class PresetManager:
     included_presets: List[Preset]
     custom_presets: Dict[str, Preset]
+    _data_dir: Optional[Path]
 
     def __init__(self, data_dir: Optional[Path]):
         self.included_presets = read_preset_list()
@@ -17,16 +23,23 @@ class PresetManager:
         self.custom_presets = {}
         if data_dir is not None:
             self._data_dir = data_dir.joinpath("presets")
-            for preset_file in self._data_dir.glob("*.json"):
-                try:
-                    preset = read_preset_file(preset_file)
-                except ValueError:
-                    continue
+        else:
+            self._data_dir = None
 
-                if preset.name in self.custom_presets:
+    def load_user_presets(self, ignore_invalid: bool):
+        for preset_file in self._data_dir.glob("*.json"):
+            try:
+                preset = read_preset_file(preset_file)
+            except (ValueError, KeyError):
+                if ignore_invalid:
                     continue
+                else:
+                    raise InvalidPreset(preset_file)
 
-                self.custom_presets[preset.name] = preset
+            if preset.name in self.custom_presets:
+                continue
+
+            self.custom_presets[preset.name] = preset
 
     @property
     def default_preset(self) -> Preset:
