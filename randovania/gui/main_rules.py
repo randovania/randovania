@@ -88,7 +88,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._beam_ammo_item = item_database.ammo["Beam Ammo Expansion"]
 
         self._register_alternatives_events()
-        self._setup_randomization_mode_combo()
         self._register_random_starting_events()
         self._create_categories_boxes(size_policy)
         self._create_major_item_boxes(item_database)
@@ -121,9 +120,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         _update_ammo_visibility(self._ammo_pickup_widgets[self._beam_ammo_item], not layout.split_beam_ammo)
         for item in [self._dark_ammo_item, self._light_ammo_item]:
             _update_ammo_visibility(self._ammo_pickup_widgets[item], layout.split_beam_ammo)
-
-        # Randomization Mode
-        set_combo_with_value(self.randomization_mode_combo, layout.randomization_mode)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -309,17 +305,6 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
             })
 
             options.ammo_configuration = ammo_configuration
-
-    # Randomization Mode
-
-    def _setup_randomization_mode_combo(self):
-        self.randomization_mode_combo.setItemData(0, RandomizationMode.FULL)
-        self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
-        self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
-
-    def _on_update_randomization_mode(self):
-        with self._editor as options:
-            options.randomization_mode = self.randomization_mode_combo.currentData()
 
     # Random Starting
 

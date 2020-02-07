@@ -62,3 +62,11 @@ class AvailableLocationsConfiguration(BitPackValue):
             randomization_mode=randomization_mode,
             excluded_indices=frozenset(PickupIndex(item) for item in indices),
         )
+
+    def ensure_index(self, index: PickupIndex, present: bool):
+        excluded_indices = set(self.excluded_indices)
+        if present:
+            excluded_indices.add(index)
+        elif index in excluded_indices:
+            excluded_indices.remove(index)
+        return dataclasses.replace(self, excluded_indices=frozenset(excluded_indices))
