@@ -1,4 +1,5 @@
 import collections
+import dataclasses
 import itertools
 import pprint
 from random import Random
@@ -14,12 +15,13 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes, should_have_hint
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
-from randovania.layout.layout_configuration import RandomizationMode
+from randovania.layout.available_locations import RandomizationMode
 from randovania.resolver import debug
 from randovania.resolver.random_lib import iterate_with_weights
 from randovania.resolver.state import State, state_with_pickup
@@ -30,6 +32,14 @@ _RESOURCES_WEIGHT_MULTIPLIER = 1
 _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 1
 _VICTORY_WEIGHT = 1000
+
+
+@dataclasses.dataclass(frozen=True)
+class FillerConfiguration:
+    randomization_mode: RandomizationMode
+    minimum_random_starting_items: int
+    maximum_random_starting_items: int
+    indices_to_exclude: FrozenSet[PickupIndex]
 
 
 def _filter_not_in_dict(elements: Iterator[X],
@@ -88,33 +98,48 @@ def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResource
 def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
                                          assigned_indices: AbstractSet[PickupIndex],
                                          seen_counts: Mapping[PickupIndex, int],
-                                         randomization_mode: RandomizationMode,
-                                         world_list: WorldList,
+                                         indices_groups: List[Set[PickupIndex]],
                                          ) -> Dict[PickupIndex, float]:
-    total_seen_count = sum(seen_counts.values())
     result = {}
-    for world in world_list.worlds:
-        if randomization_mode is RandomizationMode.FULL:
-            indices_in_world = set(world.pickup_indices)
-        elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-            indices_in_world = set(world.major_pickup_indices)
 
-        weight_from_collected_indices = len(indices_in_world) / ((1 + len(assigned_indices & indices_in_world)) ** 2)
+    for indices in indices_groups:
+        weight_from_collected_indices = len(indices) / ((1 + len(assigned_indices & indices)) ** 2)
 
-        for index in uncollected_indices & indices_in_world:
+        for index in uncollected_indices & indices:
             weight_from_seen_count = min(10, seen_counts[index]) ** -2
             result[index] = weight_from_collected_indices * weight_from_seen_count
 
     return result
 
 
+def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) -> Iterator[PickupIndex]:
+    if randomization_mode is RandomizationMode.FULL:
+        yield from world.pickup_indices
+    elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
+        yield from world.major_pickup_indices
+    else:
+        raise RuntimeError("Unknown randomization_mode: {}".format(randomization_mode))
+
+
+def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,
+                            ) -> Tuple[List[Set[PickupIndex]], Set[PickupIndex]]:
+    """
+    Groups indices into separated groups, so each group can be weighted separately.
+    """
+    indices_groups = [
+        set(world_indices_for_mode(world, configuration.randomization_mode)) - configuration.indices_to_exclude
+        for world in world_list.worlds
+    ]
+    all_indices = set().union(*indices_groups)
+
+    return indices_groups, all_indices
+
+
 def retcon_playthrough_filler(game: GameDescription,
                               initial_state: State,
                               pickups_left: List[PickupEntry],
                               rng: Random,
-                              randomization_mode: RandomizationMode,
-                              minimum_random_starting_items: int,
-                              maximum_random_starting_items: int,
+                              configuration: FillerConfiguration,
                               status_update: Callable[[str], None],
                               ) -> GamePatches:
     debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
@@ -126,12 +151,17 @@ def retcon_playthrough_filler(game: GameDescription,
     ))
     last_message = "Starting."
 
+    minimum_random_starting_items = configuration.minimum_random_starting_items
+    maximum_random_starting_items = configuration.maximum_random_starting_items
+
     reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
 
     pickup_index_seen_count: DefaultDict[PickupIndex, int] = collections.defaultdict(int)
     scan_asset_seen_count: DefaultDict[LogbookAsset, int] = collections.defaultdict(int)
     scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]] = {}
     num_random_starting_items_placed = 0
+
+    indices_groups, all_indices = build_available_indices(game.world_list, configuration)
 
     while pickups_left:
         current_uncollected = UncollectedState.from_reach(reach)
@@ -173,25 +203,14 @@ def retcon_playthrough_filler(game: GameDescription,
         if isinstance(action, PickupEntry):
             assert action in pickups_left
 
-            if randomization_mode is RandomizationMode.FULL:
-                uncollected_indices = current_uncollected.indices
-
-            elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                major_indices = {pickup_node.pickup_index
-                                 for pickup_node in filter_pickup_nodes(reach.state.collected_resource_nodes)
-                                 if pickup_node.major_location}
-                uncollected_indices = current_uncollected.indices & major_indices
-
-            else:
-                raise RuntimeError("Unknown randomization_mode: {}".format(randomization_mode))
+            uncollected_indices = current_uncollected.indices & all_indices
 
             if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
                 pickup_index_weights = _calculate_uncollected_index_weights(
                     uncollected_indices,
                     set(reach.state.patches.pickup_assignment),
                     pickup_index_seen_count,
-                    randomization_mode,
-                    game.world_list,
+                    indices_groups,
                 )
                 assert pickup_index_weights, "Pickups should only be added to the actions dict " \
                                              "when there are unassigned pickups"

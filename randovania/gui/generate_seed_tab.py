@@ -37,7 +37,6 @@ class GenerateSeedTab(QWidget):
         self.window = window
         self._window_manager = window_manager
         self._options = options
-        self.preset_manager = PresetManager(options.data_dir)
 
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
@@ -47,7 +46,7 @@ class GenerateSeedTab(QWidget):
         # Progress
         self.background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
 
-        for preset in self.preset_manager.all_presets:
+        for preset in self._window_manager.preset_manager.all_presets:
             self._create_button_for_preset(preset)
 
         window.create_customize_button.clicked.connect(self._on_customize_button)
@@ -63,7 +62,7 @@ class GenerateSeedTab(QWidget):
 
     @property
     def _current_preset_data(self) -> Optional[Preset]:
-        return self.preset_manager.preset_for_name(self.window.create_preset_combo.currentData())
+        return self._window_manager.preset_manager.preset_for_name(self.window.create_preset_combo.currentData())
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self._current_lock_state = value
@@ -89,12 +88,12 @@ class GenerateSeedTab(QWidget):
             with self._options as options:
                 options.selected_preset_name = new_preset.name
 
-            if self.preset_manager.add_new_preset(new_preset):
+            if self._window_manager.preset_manager.add_new_preset(new_preset):
                 self._create_button_for_preset(new_preset)
             self.on_preset_changed(new_preset)
 
     def _on_delete_preset_button(self):
-        self.preset_manager.delete_preset(self._current_preset_data)
+        self._window_manager.preset_manager.delete_preset(self._current_preset_data)
         self.window.create_preset_combo.removeItem(self.window.create_preset_combo.currentIndex())
         self._on_select_preset()
 
@@ -139,7 +138,7 @@ class GenerateSeedTab(QWidget):
                     return
 
             self.window.create_preset_combo.setCurrentIndex(0)
-            self.on_preset_changed(self.preset_manager.default_preset)
+            self.on_preset_changed(self._window_manager.preset_manager.default_preset)
 
     def on_preset_changed(self, preset: Preset):
         self._current_preset = preset

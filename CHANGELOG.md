@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Add a setting for how strict the damage requirements are.
 
+-   Added: It's now possible to exclude locations from having any progression on them.
+
 -   Changed: A Luminoth Lore scan is less likely to have hints for what was already accessible
     when that scan was found.
     

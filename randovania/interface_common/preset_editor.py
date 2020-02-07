@@ -2,6 +2,7 @@ import dataclasses
 from typing import Optional, Callable
 
 from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.available_locations import AvailableLocationsConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
     LayoutSkyTempleKeyMode, RandomizationMode, LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
@@ -141,12 +142,12 @@ class PresetEditor:
         self.set_layout_configuration_field("elevators", value)
 
     @property
-    def randomization_mode(self) -> RandomizationMode:
-        return self.layout_configuration.randomization_mode
+    def available_locations(self) -> AvailableLocationsConfiguration:
+        return self.layout_configuration.available_locations
 
-    @randomization_mode.setter
-    def randomization_mode(self, value: RandomizationMode):
-        self.set_layout_configuration_field("randomization_mode", value)
+    @available_locations.setter
+    def available_locations(self, value: AvailableLocationsConfiguration):
+        self.set_layout_configuration_field("available_locations", value)
 
     @property
     def major_items_configuration(self) -> MajorItemsConfiguration:

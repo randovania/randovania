@@ -7,9 +7,10 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.ammo_configuration import AmmoConfiguration
+from randovania.layout.available_locations import AvailableLocationsConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode, \
-    LayoutElevators, RandomizationMode, LayoutDamageStrictness
+    LayoutElevators, LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -54,7 +55,7 @@ class DummyValue(BitPackValue):
 def _layout_config_with_data(request, default_layout_configuration):
     trick_config = DummyValue()
     starting_location = DummyValue()
-    randomization_mode = DummyValue()
+    available_locations = DummyValue()
     major_items = DummyValue()
     ammo_config = DummyValue()
     translator_config = DummyValue()
@@ -62,7 +63,7 @@ def _layout_config_with_data(request, default_layout_configuration):
 
     with patch.multiple(TrickLevelConfiguration, bit_pack_unpack=MagicMock(return_value=trick_config)), \
          patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
-         patch.multiple(RandomizationMode, bit_pack_unpack=MagicMock(return_value=randomization_mode)), \
+         patch.multiple(AvailableLocationsConfiguration, bit_pack_unpack=MagicMock(return_value=available_locations)), \
          patch.multiple(MajorItemsConfiguration, bit_pack_unpack=MagicMock(return_value=major_items)), \
          patch.multiple(AmmoConfiguration, bit_pack_unpack=MagicMock(return_value=ammo_config)), \
          patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)), \
@@ -74,7 +75,7 @@ def _layout_config_with_data(request, default_layout_configuration):
             sky_temple_keys=request.param["sky_temple"],
             elevators=request.param["elevators"],
             starting_location=starting_location,
-            randomization_mode=randomization_mode,
+            available_locations=available_locations,
             major_items_configuration=major_items,
             ammo_configuration=ammo_config,
             translator_configuration=translator_config,

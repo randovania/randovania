@@ -135,3 +135,21 @@ def test_decode_bool(bool_fixture):
 def test_round_trip_float(value: float, metadata: dict):
     result = bitpacking.round_trip(bitpacking.BitPackFloat(value), metadata)
     assert result == value
+
+
+@pytest.mark.parametrize(["elements", "array"], [
+    ([], [10, 20]),
+    ([10], [10, 20]),
+    ([10, 20], [10, 20]),
+    ([10, 20], [10, 20, 30]),
+    ([10, 20], [10, 20, 30, 50]),
+    (list(range(15)), list(range(100))),
+])
+def test_sorted_array_elements_round_trip(elements, array):
+    generator = bitpacking.pack_sorted_array_elements(elements, array)
+    b = bitpacking._pack_encode_results(list(generator))
+    decoder = bitpacking.BitPackDecoder(b)
+
+    decoded_elements = bitpacking.decode_sorted_array_elements(decoder, array)
+
+    assert elements == decoded_elements
