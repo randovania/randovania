@@ -12,7 +12,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
-from randovania.generator.filler.retcon import retcon_playthrough_filler
+from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import bootstrap, debug
 
@@ -182,9 +182,12 @@ def run_filler(configuration: LayoutConfiguration,
 
     filler_patches = retcon_playthrough_filler(
         new_game, state, major_items, rng,
-        randomization_mode=configuration.randomization_mode,
-        minimum_random_starting_items=major_configuration.minimum_random_starting_items,
-        maximum_random_starting_items=major_configuration.maximum_random_starting_items,
+        configuration=FillerConfiguration(
+            randomization_mode=configuration.available_locations.randomization_mode,
+            minimum_random_starting_items=major_configuration.minimum_random_starting_items,
+            maximum_random_starting_items=major_configuration.maximum_random_starting_items,
+            indices_to_exclude=configuration.available_locations.excluded_indices,
+        ),
         status_update=status_update)
 
     # Since we haven't added expansions yet, these hints will always be for items added by the filler.

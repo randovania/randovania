@@ -4,9 +4,10 @@ import sys
 from argparse import ArgumentParser
 
 from PySide2 import QtCore
-from PySide2.QtWidgets import QApplication, QMessageBox
+from PySide2.QtWidgets import QApplication, QMessageBox, QWidget
 
 from randovania.interface_common.options import Options, DecodeFailedException
+from randovania.interface_common.preset_manager import PresetManager, InvalidPreset
 
 
 def catch_exceptions(t, val, tb):
@@ -20,13 +21,14 @@ old_hook = sys.excepthook
 
 
 def load_options_from_disk(options: Options) -> bool:
+    parent: QWidget = None
     try:
         options.load_from_disk()
         return True
 
     except DecodeFailedException as decode_failed:
         user_response = QMessageBox.critical(
-            None,
+            parent,
             "Error loading previous settings",
             ("The following error occurred while restoring your settings:\n"
              "{}\n\n"
@@ -41,14 +43,44 @@ def load_options_from_disk(options: Options) -> bool:
             return False
 
 
+def load_user_presets(preset_manager: PresetManager) -> bool:
+    parent: QWidget = None
+    try:
+        preset_manager.load_user_presets(False)
+        return True
+
+    except InvalidPreset as invalid_file:
+        user_response = QMessageBox.critical(
+            parent,
+            "Error loading saved preset",
+            ("An error happened when loading the preset '{}'.\n\n"
+             "Do you want to delete this preset? Say No to ignore all invalid presets in this session."
+             ).format(invalid_file.file.stem),
+            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
+            QMessageBox.No
+        )
+        if user_response == QMessageBox.Yes:
+            os.remove(invalid_file.file)
+            return load_user_presets(preset_manager)
+        elif user_response == QMessageBox.No:
+            preset_manager.load_user_presets(True)
+            return True
+        else:
+            return False
+
+
 def show_main_window(app: QApplication, args):
     options = Options.with_default_data_dir()
+    preset_manager = PresetManager(options.data_dir)
 
     if not load_options_from_disk(options):
         raise SystemExit(1)
 
+    if not load_user_presets(preset_manager):
+        raise SystemExit(2)
+
     from randovania.gui.main_window import MainWindow
-    main_window = MainWindow(options, getattr(args, "preview", False))
+    main_window = MainWindow(options, preset_manager, getattr(args, "preview", False))
     app.main_window = main_window
     main_window.show()
     main_window.request_new_data()

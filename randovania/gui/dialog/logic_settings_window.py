@@ -4,10 +4,13 @@ from typing import Optional, Dict
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QComboBox, QLabel, QDialog
+from PySide2.QtWidgets import QComboBox, QLabel, QDialog, QGroupBox, QVBoxLayout
 
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.default_database import default_prime2_game_description
+from randovania.game_description.node import PickupNode
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
@@ -22,6 +25,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.main_rules import MainRulesWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
+from randovania.layout.available_locations import RandomizationMode
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode, LayoutDamageStrictness
 from randovania.layout.preset import Preset
@@ -101,9 +105,11 @@ def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
 class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _checkbox_for_trick: Dict[SimpleResourceInfo, QtWidgets.QCheckBox]
+    _checkbox_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[SimpleResourceInfo, QtWidgets.QSlider]
     _editor: PresetEditor
     world_list: WorldList
+    _during_batch_check_update: bool = False
 
     def __init__(self, window_manager: WindowManager, editor: PresetEditor):
         super().__init__()
@@ -129,6 +135,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.setup_elevator_elements()
         self.setup_sky_temple_elements()
         self.setup_starting_area_elements()
+        self.setup_location_pool_elements()
         self.setup_translators_elements()
         self.setup_hint_elements()
 
@@ -198,6 +205,16 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
             set_combo_with_value(self.specific_starting_world_combo, world)
             set_combo_with_value(self.specific_starting_area_combo, world.area_by_asset_id(area_location.area_asset_id))
+
+        # Location Pool
+        available_locations = layout_config.available_locations
+        set_combo_with_value(self.randomization_mode_combo, available_locations.randomization_mode)
+
+        self._during_batch_check_update = True
+        for node, check in self._checkbox_for_node.items():
+            check.setChecked(node.pickup_index not in available_locations.excluded_indices)
+            check.setEnabled(available_locations.randomization_mode == RandomizationMode.FULL or node.major_location)
+        self._during_batch_check_update = False
 
         # Translator Gates
         translator_configuration = preset.layout_configuration.translator_configuration
@@ -485,6 +502,52 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             return self.specific_starting_area_combo.currentData() is not None
         else:
             return True
+
+    # Location Pool
+    def setup_location_pool_elements(self):
+        self.randomization_mode_combo.setItemData(0, RandomizationMode.FULL)
+        self.randomization_mode_combo.setItemData(1, RandomizationMode.MAJOR_MINOR_SPLIT)
+        self.randomization_mode_combo.currentIndexChanged.connect(self._on_update_randomization_mode)
+
+        game_description = default_prime2_game_description()
+        world_to_group = {}
+        self._checkbox_for_node = {}
+
+        for world in game_description.world_list.worlds:
+            for is_dark_world in [False, True]:
+                group_box = QGroupBox(self.excluded_locations_area_contents)
+                group_box.setTitle(world.correct_name(is_dark_world))
+                vertical_layout = QVBoxLayout(group_box)
+                vertical_layout.setContentsMargins(8, 4, 8, 4)
+                vertical_layout.setSpacing(2)
+                group_box.vertical_layout = vertical_layout
+
+                world_to_group[world.correct_name(is_dark_world)] = group_box
+                self.excluded_locations_area_layout.addWidget(group_box)
+
+        for world, area, node in game_description.world_list.all_worlds_areas_nodes:
+            if not isinstance(node, PickupNode):
+                continue
+
+            group_box = world_to_group[world.correct_name(area.in_dark_aether)]
+            check = QtWidgets.QCheckBox(group_box)
+            check.setText(game_description.world_list.node_name(node))
+            check.node = node
+            check.stateChanged.connect(functools.partial(self._on_check_location, check))
+            group_box.vertical_layout.addWidget(check)
+            self._checkbox_for_node[node] = check
+
+    def _on_update_randomization_mode(self):
+        with self._editor as editor:
+            editor.available_locations = dataclasses.replace(
+                editor.available_locations, randomization_mode=self.randomization_mode_combo.currentData())
+
+    def _on_check_location(self, check: QtWidgets.QCheckBox, _):
+        if self._during_batch_check_update:
+            return
+        with self._editor as editor:
+            editor.available_locations = editor.available_locations.ensure_index(check.node.pickup_index,
+                                                                                 not check.isChecked())
 
     # Translator Gates
     def setup_translators_elements(self):

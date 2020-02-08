@@ -25,6 +25,7 @@ from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLevel
@@ -49,12 +50,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     _data_visualizer: Optional[DataEditorWindow] = None
     _details_window: SeedDetailsWindow
     _map_tracker: TrackerWindow
+    _preset_manager: PresetManager
 
     @property
     def _tab_widget(self):
         return self.main_tab_widget
 
-    def __init__(self, options: Options, preview: bool):
+    @property
+    def preset_manager(self) -> PresetManager:
+        return self._preset_manager
+
+    def __init__(self, options: Options, preset_manager: PresetManager, preview: bool):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
@@ -63,6 +69,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         common_qt_lib.set_default_window_icon(self)
 
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
+
+        self._preset_manager = preset_manager
 
         if preview:
             debug.set_level(2)
@@ -230,7 +238,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             self._data_editor.show()
 
     def _create_open_map_tracker_actions(self):
-        base_layout = self.generate_seed_tab.preset_manager.default_preset.layout_configuration
+        base_layout = self.preset_manager.default_preset.layout_configuration
 
         for trick_level in LayoutTrickLevel:
             if trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS:
