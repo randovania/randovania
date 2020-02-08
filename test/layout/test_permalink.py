@@ -64,7 +64,7 @@ def test_round_trip(spoiler: bool,
                     preset_manager):
     # Setup
     preset = Preset(
-        name="Beginner Friendly Custom",
+        name="{} Custom".format(preset_manager.default_preset.name),
         description="A customized preset.",
         base_preset_name=preset_manager.default_preset.name,
         patcher_configuration=dataclasses.replace(preset_manager.default_preset.patcher_configuration, **patcher),
@@ -136,7 +136,7 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
         seed_number=1000,
         spoiler=True,
         preset=Preset(
-            name="Beginner Friendly Custom",
+            name="{} Custom".format(preset_manager.default_preset.name),
             description="A customized preset.",
             base_preset_name=preset_manager.default_preset.name,
             patcher_configuration=patcher_configuration,
