@@ -26,7 +26,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock, preset_manager):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "gAAAfReAbw=="
+    assert encoded == "kAAAfReAzg=="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -103,7 +103,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, preset_manager):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "gAAAfReAbw=="
+    encoded = "kAAAfReAzg=="
 
     expected = Permalink(
         seed_number=1000,
@@ -128,7 +128,7 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            mock_layout_unpack: MagicMock,
                            preset_manager,
                            ):
-    encoded = "gAAAfRgoMw=="
+    encoded = "kAAAfRgojw=="
     patcher_configuration = mock_packer_unpack.return_value
     layout_configuration = mock_layout_unpack.return_value
 
