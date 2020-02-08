@@ -105,7 +105,8 @@ def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
 class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _checkbox_for_trick: Dict[SimpleResourceInfo, QtWidgets.QCheckBox]
-    _checkbox_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
+    _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
+    _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[SimpleResourceInfo, QtWidgets.QSlider]
     _editor: PresetEditor
     world_list: WorldList
@@ -196,22 +197,21 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         set_combo_with_value(self.skytemple_combo, data)
 
         # Starting Area
-        starting_location = preset.layout_configuration.starting_location
-        set_combo_with_value(self.startingarea_combo, starting_location.configuration)
+        starting_locations = layout_config.starting_location.locations
 
-        if starting_location.configuration == StartingLocationConfiguration.CUSTOM:
-            area_location = starting_location.custom_location
-            world = self.world_list.world_by_asset_id(area_location.world_asset_id)
-
-            set_combo_with_value(self.specific_starting_world_combo, world)
-            set_combo_with_value(self.specific_starting_area_combo, world.area_by_asset_id(area_location.area_asset_id))
+        self._during_batch_check_update = True
+        for world in self.game_description.world_list.worlds:
+            for area in world.areas:
+                is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
+                self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
+        self._during_batch_check_update = False
 
         # Location Pool
         available_locations = layout_config.available_locations
         set_combo_with_value(self.randomization_mode_combo, available_locations.randomization_mode)
 
         self._during_batch_check_update = True
-        for node, check in self._checkbox_for_node.items():
+        for node, check in self._location_pool_for_node.items():
             check.setChecked(node.pickup_index not in available_locations.excluded_indices)
             check.setEnabled(available_locations.randomization_mode == RandomizationMode.FULL or node.major_location)
         self._during_batch_check_update = False
@@ -452,56 +452,63 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     # Starting Area
     def setup_starting_area_elements(self):
-        self.startingarea_combo.setItemData(0, StartingLocationConfiguration.SHIP)
-        self.startingarea_combo.setItemData(1, StartingLocationConfiguration.RANDOM_SAVE_STATION)
-        self.startingarea_combo.setItemData(2, StartingLocationConfiguration.CUSTOM)
+        game_description = default_prime2_game_description()
+        world_to_group = {}
+        self._starting_location_for_area = {}
 
-        for world in sorted(self.world_list.worlds, key=lambda x: x.name):
-            self.specific_starting_world_combo.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
+        for row, world in enumerate(game_description.world_list.worlds):
+            for column, is_dark_world in enumerate([False, True]):
+                group_box = QGroupBox(self.starting_locations_contents)
+                group_box.setTitle(world.correct_name(is_dark_world))
+                vertical_layout = QVBoxLayout(group_box)
+                vertical_layout.setContentsMargins(8, 4, 8, 4)
+                vertical_layout.setSpacing(2)
+                vertical_layout.setAlignment(QtCore.Qt.AlignTop)
+                group_box.vertical_layout = vertical_layout
 
-        self.specific_starting_world_combo.currentIndexChanged.connect(self._on_select_world)
-        self.specific_starting_area_combo.currentIndexChanged.connect(self._on_select_area)
-        self.startingarea_combo.currentIndexChanged.connect(self._on_starting_area_configuration_changed)
+                world_to_group[world.correct_name(is_dark_world)] = group_box
+                self.starting_locations_layout.addWidget(group_box, row, column)
 
-    def _on_starting_area_configuration_changed(self):
-        specific_enabled = self.startingarea_combo.currentData() == StartingLocationConfiguration.CUSTOM
-        self.specific_starting_world_combo.setEnabled(specific_enabled)
-        self.specific_starting_area_combo.setEnabled(specific_enabled)
-        self._on_select_world()
-        self._update_starting_location()
+        for world in game_description.world_list.worlds:
+            for area in sorted(world.areas, key=lambda a: a.name):
+                group_box = world_to_group[world.correct_name(area.in_dark_aether)]
+                check = QtWidgets.QCheckBox(group_box)
+                check.setText(area.name)
+                check.area_location = AreaLocation(world.world_asset_id, area.area_asset_id)
+                check.stateChanged.connect(functools.partial(self._on_check_starting_area, check))
+                group_box.vertical_layout.addWidget(check)
+                self._starting_location_for_area[area.area_asset_id] = check
 
-    def _on_select_world(self):
-        self.specific_starting_area_combo.clear()
-        for area in sorted(self.specific_starting_world_combo.currentData().areas, key=lambda x: x.name):
-            self.specific_starting_area_combo.addItem(area.name, userData=area)
+        self.starting_area_quick_fill_ship.clicked.connect(self._starting_location_on_select_ship)
+        self.starting_area_quick_fill_save_station.clicked.connect(self._starting_location_on_select_save_station)
 
-    def _on_select_area(self):
-        if self.specific_starting_area_combo.currentData() is not None:
-            self._update_starting_location()
-
-    def _update_starting_location(self):
-        if self._has_valid_starting_location():
-            with self._editor as options:
-                options.set_layout_configuration_field(
-                    "starting_location",
-                    StartingLocation(self.startingarea_combo.currentData(), self.current_starting_area_location))
-
-    @property
-    def current_starting_area_location(self) -> Optional[AreaLocation]:
-        if self.specific_starting_world_combo.isEnabled():
-            return AreaLocation(
-                self.specific_starting_world_combo.currentData().world_asset_id,
-                self.specific_starting_area_combo.currentData().area_asset_id,
+    def _on_check_starting_area(self, check, _):
+        if self._during_batch_check_update:
+            return
+        with self._editor as editor:
+            editor.set_layout_configuration_field(
+                "starting_location",
+                editor.layout_configuration.starting_location.ensure_has_location(check.area_location,
+                                                                                  check.isChecked())
             )
-        else:
-            return None
 
-    def _has_valid_starting_location(self):
-        current_config = self.startingarea_combo.currentData()
-        if current_config == StartingLocationConfiguration.CUSTOM:
-            return self.specific_starting_area_combo.currentData() is not None
-        else:
-            return True
+    def _starting_location_on_select_ship(self):
+        with self._editor as editor:
+            editor.set_layout_configuration_field(
+                "starting_location",
+                StartingLocation.with_elements([self.game_description.starting_location])
+            )
+
+    def _starting_location_on_select_save_station(self):
+        world_list = self.game_description.world_list
+        save_stations = [world_list.node_to_area_location(node)
+                         for node in world_list.all_nodes if node.name == "Save Station"]
+
+        with self._editor as editor:
+            editor.set_layout_configuration_field(
+                "starting_location",
+                StartingLocation.with_elements(save_stations)
+            )
 
     # Location Pool
     def setup_location_pool_elements(self):
@@ -511,7 +518,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         game_description = default_prime2_game_description()
         world_to_group = {}
-        self._checkbox_for_node = {}
+        self._location_pool_for_node = {}
 
         for world in game_description.world_list.worlds:
             for is_dark_world in [False, True]:
@@ -535,7 +542,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             check.node = node
             check.stateChanged.connect(functools.partial(self._on_check_location, check))
             group_box.vertical_layout.addWidget(check)
-            self._checkbox_for_node[node] = check
+            self._location_pool_for_node[node] = check
 
     def _on_update_randomization_mode(self):
         with self._editor as editor:

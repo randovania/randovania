@@ -4,16 +4,13 @@ from unittest.mock import MagicMock, patch, call, ANY
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.generator import base_patches_factory
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
-from randovania.layout.permalink import Permalink
-from randovania.layout.starting_location import StartingLocationConfiguration
+from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
@@ -123,55 +120,6 @@ def test_gate_assignment_for_configuration_all_random(echoes_resource_database):
         TranslatorGate(15): violet,
         TranslatorGate(23): emerald,
     }
-
-
-def test_starting_location_for_configuration_ship():
-    # Setup
-    configuration = MagicMock()
-    configuration.starting_location.configuration = StartingLocationConfiguration.SHIP
-    game = MagicMock()
-    rng = MagicMock()
-
-    # Run
-    result = base_patches_factory.starting_location_for_configuration(configuration, game, rng)
-
-    # Assert
-    assert result is game.starting_location
-
-
-def test_starting_location_for_configuration_custom():
-    # Setup
-    configuration = MagicMock()
-    configuration.starting_location.configuration = StartingLocationConfiguration.CUSTOM
-    game = MagicMock()
-    rng = MagicMock()
-
-    # Run
-    result = base_patches_factory.starting_location_for_configuration(configuration, game, rng)
-
-    # Assert
-    assert result is configuration.starting_location.custom_location
-
-
-def test_starting_location_for_configuration_random_save_station():
-    # Setup
-    configuration = MagicMock()
-    configuration.starting_location.configuration = StartingLocationConfiguration.RANDOM_SAVE_STATION
-    game = MagicMock()
-    save_1 = MagicMock()
-    save_1.name = "Save Station"
-    save_2 = MagicMock()
-    save_2.name = "Save Station"
-    game.world_list.all_nodes = [save_1, save_2, MagicMock()]
-    rng = MagicMock()
-
-    # Run
-    result = base_patches_factory.starting_location_for_configuration(configuration, game, rng)
-
-    # Assert
-    rng.choice.assert_called_once_with([save_1, save_2])
-    game.world_list.node_to_area_location.assert_called_once_with(rng.choice.return_value)
-    assert result is game.world_list.node_to_area_location.return_value
 
 
 def test_add_default_hints_to_patches(echoes_game_description, empty_patches):

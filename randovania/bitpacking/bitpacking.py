@@ -202,7 +202,7 @@ def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tu
     yield len(array) - previous_index, len(array) - previous_index + 1
 
 
-def decode_sorted_array_elements(decoder: BitPackDecoder, array: List[int]) -> List[int]:
+def decode_sorted_array_elements(decoder: BitPackDecoder, array: List[T]) -> List[T]:
     result = []
 
     previous_index = 0

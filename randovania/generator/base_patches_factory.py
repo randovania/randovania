@@ -16,7 +16,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.generator import elevator_distributor
 from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
-from randovania.layout.starting_location import StartingLocationConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
@@ -121,23 +120,17 @@ def starting_location_for_configuration(configuration: LayoutConfiguration,
                                         game: GameDescription,
                                         rng: Random,
                                         ) -> AreaLocation:
-    starting_location = configuration.starting_location
-
-    if starting_location.configuration == StartingLocationConfiguration.SHIP:
-        return game.starting_location
-
-    elif starting_location.configuration == StartingLocationConfiguration.CUSTOM:
-        return starting_location.custom_location
-
-    elif starting_location.configuration == StartingLocationConfiguration.RANDOM_SAVE_STATION:
-        save_stations = [node for node in game.world_list.all_nodes if node.name == "Save Station"]
+    locations = list(configuration.starting_location.locations)
+    if len(locations) == 0:
+        raise ValueError("No available starting locations")
+    elif len(locations) == 1:
+        location = locations[0]
+    else:
         if rng is None:
             raise MissingRng("Starting Location")
-        save_station = rng.choice(save_stations)
-        return game.world_list.node_to_area_location(save_station)
+        location = rng.choice(locations)
 
-    else:
-        raise ValueError("Invalid configuration for StartLocation {}".format(starting_location))
+    return location
 
 
 def add_default_hints_to_patches(rng: Random,
@@ -165,7 +158,7 @@ def add_default_hints_to_patches(rng: Random,
         (PickupIndex(24), HintType.LIGHT_SUIT_LOCATION),  # Light Suit
         (PickupIndex(43), HintType.GUARDIAN),  # Dark Suit (Amorbis)
         (PickupIndex(79), HintType.GUARDIAN),  # Dark Visor (Chykka)
-        (PickupIndex(115), HintType.GUARDIAN), # Annihilator Beam (Quadraxis)
+        (PickupIndex(115), HintType.GUARDIAN),  # Annihilator Beam (Quadraxis)
     ]
     all_logbook_assets = [node.resource()
                           for node in world_list.all_nodes
