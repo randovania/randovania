@@ -1,5 +1,6 @@
 from typing import List, Dict, Iterable, Tuple
 
+from randovania.game_description import data_reader
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
@@ -47,6 +48,8 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     patcher = preset.patcher_configuration
     configuration = preset.layout_configuration
     major_items = configuration.major_items_configuration
+
+    game_description = data_reader.decode_data(preset.layout_configuration.game_data)
 
     format_params = {}
 
@@ -101,7 +104,14 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
             translator_gates = name
             break
 
-    format_params["starting_location"] = configuration.starting_location.configuration.value
+    starting_locations = configuration.starting_location.locations
+
+    if len(starting_locations) == 1:
+        area = game_description.world_list.area_by_area_location(next(iter(starting_locations)))
+        format_params["starting_location"] = game_description.world_list.area_name(area, distinguish_dark_aether=True)
+    else:
+        format_params["starting_location"] = "{} locations".format(len(starting_locations))
+
     format_params["translator_gates"] = translator_gates
     format_params["elevators"] = configuration.elevators.value
     format_params["hints"] = "Yes"
