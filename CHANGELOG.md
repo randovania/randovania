@@ -32,9 +32,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Minimal Checking now also checks of Dark Agon Temple Keys and Dark Torvus Temple Keys.
 
--   Removed: The Progressive Launcher has been removed. 
+-   Removed: The Progressive Launcher has been removed.
 
 -   Removed: The create-permalink command line argument has been removed.
+
+### Logic Database changes
+
+-   Fixed: Spider Guardian fight now requires Dynamo Works Quads Gone to be triggered.
+
+-   Fixed: Boost Guardian now properly requires Bombs.
+
+-   Added: Escaping Dark Torvus Arena with a BSJ, for Normal. (See #581).
+
+-   Added: Activating the Industrial Site gate backwards, using charged Annihilator Beam, for Trivial. (See #582).
 
 ## [0.29.1] - 2019-10-01
 
