@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Removed: The create-permalink command line argument has been removed.
 
+### Logic Database changes
+
+-   Fixed: Spider Guardian fight now requires Dynamo Works Quads Gone to be triggered.
+
 ## [0.29.1] - 2019-10-01
 
 -   Fixed: Fix AttributeError preventing major/minor randomization from working.
