@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Optional, Union, Tuple
+from typing import Iterator, Union, Tuple, List, FrozenSet
 
+from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
 from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
@@ -15,69 +16,74 @@ class StartingLocationConfiguration(BitPackEnum, Enum):
 
 def _areas_list():
     world_list = default_database.default_prime2_game_description().world_list
-    return world_list, list(world_list.all_areas)
+    areas = [
+        AreaLocation(world.world_asset_id, area.area_asset_id)
+        for world in world_list.worlds
+        for area in world.areas
+    ]
+    return list(sorted(areas))
 
 
 @dataclass(frozen=True)
 class StartingLocation(BitPackValue):
-    configuration: StartingLocationConfiguration
-    _custom_location: Optional[AreaLocation]
+    locations: FrozenSet[AreaLocation]
 
-    def __post_init__(self):
-        if self._custom_location is None:
-            if self.configuration == StartingLocationConfiguration.CUSTOM:
-                raise ValueError("Configuration is CUSTOM, but not custom_location set")
-        else:
-            if self.configuration != StartingLocationConfiguration.CUSTOM:
-                raise ValueError("custom_location set to {}, but configuration is {} instead of CUSTOM".format(
-                    self._custom_location, str(self.configuration)
-                ))
+    @classmethod
+    def with_elements(cls, elements: Iterator[AreaLocation]) -> "StartingLocation":
+        return cls(frozenset(sorted(elements)))
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        yield from self.configuration.bit_pack_encode({})
-
-        if self._custom_location is not None:
-            world_list, areas = _areas_list()
-            area = world_list.area_by_area_location(self._custom_location)
-
-            yield areas.index(area), len(areas)
+        yield from bitpacking.pack_sorted_array_elements(list(sorted(self.locations)), _areas_list())
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "StartingLocation":
-        configuration = StartingLocationConfiguration.bit_pack_unpack(decoder, {})
-        location = None
-
-        if configuration == StartingLocationConfiguration.CUSTOM:
-            world_list, areas = _areas_list()
-
-            area_index = decoder.decode(len(areas))[0]
-            area = areas[area_index]
-
-            location = AreaLocation(world_list.world_with_area(area).world_asset_id,
-                                    area.area_asset_id)
-
-        return cls(configuration, location)
-
-    @classmethod
-    def default(cls) -> "StartingLocation":
-        return cls(StartingLocationConfiguration.SHIP, None)
+        return cls.with_elements(bitpacking.decode_sorted_array_elements(decoder, _areas_list()))
 
     @property
-    def as_json(self) -> Union[str, dict]:
-        if self.configuration != StartingLocationConfiguration.CUSTOM:
-            return self.configuration.value
-        else:
-            return self._custom_location.as_json
+    def as_json(self) -> list:
+        world_list = default_database.default_prime2_game_description().world_list
+        return list(sorted(
+            world_list.area_name(world_list.area_by_area_location(location))
+            for location in self.locations
+        ))
 
     @classmethod
-    def from_json(cls, value: Union[str, dict]) -> "StartingLocation":
-        if isinstance(value, str):
-            return cls(StartingLocationConfiguration(value), None)
-        else:
-            return cls(StartingLocationConfiguration.CUSTOM, AreaLocation.from_json(value))
+    def from_json(cls, value: list) -> "StartingLocation":
+        if not isinstance(value, list):
+            raise ValueError("StartingLocation from_json must receive a list, got {}".format(type(value)))
 
-    @property
-    def custom_location(self) -> AreaLocation:
-        if self.configuration != StartingLocationConfiguration.CUSTOM:
-            raise ValueError("Attempting to use custom_location of a non-CUSTOM location")
-        return self._custom_location
+        world_list = default_database.default_prime2_game_description().world_list
+
+        elements = []
+        for location in value:
+            world_name, area_name = location.split("/")
+            world = world_list.world_with_name(world_name)
+            area = world.area_by_name(area_name)
+            elements.append(AreaLocation(world.world_asset_id, area.area_asset_id))
+
+        return cls.with_elements(elements)
+
+    # @property
+    # def locations(self) -> List[AreaLocation]:
+    #     game = default_database.default_prime2_game_description()
+    #
+    #     if self.configuration == StartingLocationConfiguration.SHIP:
+    #         return [game.starting_location]
+    #
+    #     elif self.configuration == StartingLocationConfiguration.CUSTOM:
+    #         return [self.custom_location]
+    #
+    #     elif self.configuration == StartingLocationConfiguration.RANDOM_SAVE_STATION:
+    #         return [game.world_list.node_to_area_location(node)
+    #                 for node in game.world_list.all_nodes if node.name == "Save Station"]
+    #     else:
+    #         raise ValueError("Invalid configuration for StartLocation {}".format(self))
+
+    def ensure_has_location(self, area_location: AreaLocation, enabled: bool) -> "StartingLocation":
+        new_locations = set(self.locations)
+        if enabled:
+            new_locations.add(area_location)
+        elif area_location in new_locations:
+            new_locations.remove(area_location)
+
+        return StartingLocation.with_elements(iter(new_locations))
