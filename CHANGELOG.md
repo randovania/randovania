@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Escaping Dark Torvus Arena with a BSJ, for Normal. (See #581).
 
+-   Added: Activating the Industrial Site gate backwards, using charged Annihilator Beam, for Trivial. (See #582).
+
 ## [0.29.1] - 2019-10-01
 
 -   Fixed: Fix AttributeError preventing major/minor randomization from working.
