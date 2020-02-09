@@ -80,6 +80,17 @@ def prompt_user_for_database_file(window: QMainWindow) -> Optional[Path]:
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
 
 
+def prompt_user_for_preset_file(window: QMainWindow, new_file: bool) -> Optional[Path]:
+    """
+    Shows an QFileDialog asking the user for a Randovania preset file
+    :param window:
+    :param new_file: If it should be an existing file (False) or not.
+    :return: A path if the user selected a file, None otherwise
+    """
+    return _prompt_user_for_file(window, caption="Select a Randovania Preset file.", filter="*.randovania_preset",
+                                 new_file=new_file)
+
+
 def set_default_window_icon(window: QWidget):
     """
     Sets the window icon for the given widget to the default icon
