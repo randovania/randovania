@@ -21,6 +21,7 @@ from randovania.games.prime import patcher_file, default_data
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
@@ -238,24 +239,19 @@ def test_create_translator_gates_field():
     ]
 
 
-def test_apply_translator_gate_patches():
+@pytest.mark.parametrize("elevators", [LayoutElevators.VANILLA, LayoutElevators.TWO_WAY_RANDOMIZED])
+def test_apply_translator_gate_patches(elevators):
     # Setup
     target = {}
-    translator_gates = TranslatorConfiguration(
-        {},
-        fixed_gfmc_compound=MagicMock(),
-        fixed_torvus_temple=MagicMock(),
-        fixed_great_temple=MagicMock(),
-    )
 
     # Run
-    patcher_file._apply_translator_gate_patches(target, translator_gates)
+    patcher_file._apply_translator_gate_patches(target, elevators)
 
     # Assert
     assert target == {
-        "always_up_gfmc_compound": translator_gates.fixed_gfmc_compound,
-        "always_up_torvus_temple": translator_gates.fixed_torvus_temple,
-        "always_up_great_temple": translator_gates.fixed_great_temple,
+        "always_up_gfmc_compound": True,
+        "always_up_torvus_temple": True,
+        "always_up_great_temple": elevators != LayoutElevators.VANILLA,
     }
 
 
@@ -639,7 +635,6 @@ def test_create_patcher_file(test_files_dir):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.json"))
     cosmetic_patches = CosmeticPatches()
-    translator_gates = description.permalink.layout_configuration.translator_configuration
 
     # Run
     result = patcher_file.create_patcher_file(description, cosmetic_patches)
@@ -669,7 +664,7 @@ def test_create_patcher_file(test_files_dir):
         "full_map_at_start": cosmetic_patches.open_map,
         "dark_world_varia_suit_damage": description.permalink.patcher_configuration.varia_suit_damage,
         "dark_world_dark_suit_damage": description.permalink.patcher_configuration.dark_suit_damage,
-        "always_up_gfmc_compound": translator_gates.fixed_gfmc_compound,
-        "always_up_torvus_temple": translator_gates.fixed_torvus_temple,
-        "always_up_great_temple": translator_gates.fixed_great_temple,
+        "always_up_gfmc_compound": True,
+        "always_up_torvus_temple": True,
+        "always_up_great_temple": False,
     }
