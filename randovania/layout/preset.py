@@ -41,7 +41,7 @@ def read_preset_file(path: Path) -> Preset:
     with path.open() as preset_file:
         preset = json.load(preset_file)
 
-    if preset["version"] != 1:
+    if preset["schema_version"] != 1:
         raise ValueError("Unknown version")
 
     return Preset.from_json_dict(preset)
@@ -49,7 +49,7 @@ def read_preset_file(path: Path) -> Preset:
 
 def save_preset_file(preset: Preset, path: Path) -> None:
     preset_json = {
-        "version": 1,
+        "schema_version": 1,
     }
     preset_json.update(preset.as_json)
 
