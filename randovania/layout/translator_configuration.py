@@ -57,10 +57,6 @@ class TranslatorConfiguration(BitPackValue):
             self.with_full_random().translator_requirement,
             self.translator_requirement,
         ]
-        yield from bitpacking.encode_bool(self.fixed_gfmc_compound)
-        yield from bitpacking.encode_bool(self.fixed_torvus_temple)
-        yield from bitpacking.encode_bool(self.fixed_great_temple)
-
         yield from bitpacking.pack_array_element(self.translator_requirement, templates)
         if templates.index(self.translator_requirement) == 3:
             for translator in self.translator_requirement.values():
@@ -75,11 +71,6 @@ class TranslatorConfiguration(BitPackValue):
             cls.default().with_full_random().translator_requirement,
             None,
         ]
-
-        fixed_gfmc_compound = bitpacking.decode_bool(decoder)
-        fixed_torvus_temple = bitpacking.decode_bool(decoder)
-        fixed_great_temple = bitpacking.decode_bool(decoder)
-
         translator_requirement = decoder.decode_element(templates)
         if translator_requirement is None:
             translator_requirement = {}
@@ -88,9 +79,6 @@ class TranslatorConfiguration(BitPackValue):
 
         return cls(
             translator_requirement,
-            fixed_gfmc_compound=fixed_gfmc_compound,
-            fixed_torvus_temple=fixed_torvus_temple,
-            fixed_great_temple=fixed_great_temple,
         )
 
     @property
@@ -100,9 +88,6 @@ class TranslatorConfiguration(BitPackValue):
                 str(key.index): item.value
                 for key, item in self.translator_requirement.items()
             },
-            "fixed_gfmc_compound": self.fixed_gfmc_compound,
-            "fixed_torvus_temple": self.fixed_torvus_temple,
-            "fixed_great_temple": self.fixed_great_temple,
         }
 
     @classmethod
