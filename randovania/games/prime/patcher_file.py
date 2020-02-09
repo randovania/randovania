@@ -21,7 +21,7 @@ from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hi
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
-from randovania.layout.layout_configuration import LayoutConfiguration
+from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 from randovania.layout.translator_configuration import TranslatorConfiguration
@@ -341,16 +341,16 @@ def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
     ]
 
 
-def _apply_translator_gate_patches(specific_patches: dict, translator_gates: TranslatorConfiguration) -> None:
+def _apply_translator_gate_patches(specific_patches: dict, elevators: LayoutElevators) -> None:
     """
 
     :param specific_patches:
     :param translator_gates:
     :return:
     """
-    specific_patches["always_up_gfmc_compound"] = translator_gates.fixed_gfmc_compound
-    specific_patches["always_up_torvus_temple"] = translator_gates.fixed_torvus_temple
-    specific_patches["always_up_great_temple"] = translator_gates.fixed_great_temple
+    specific_patches["always_up_gfmc_compound"] = True
+    specific_patches["always_up_torvus_temple"] = True
+    specific_patches["always_up_great_temple"] = elevators != LayoutElevators.VANILLA
 
 
 def _create_string_patches(hint_config: HintConfiguration,
@@ -465,7 +465,7 @@ def create_patcher_file(description: LayoutDescription,
         "dark_world_dark_suit_damage": patcher_config.dark_suit_damage,
     }
 
-    _apply_translator_gate_patches(result["specific_patches"], layout.translator_configuration)
+    _apply_translator_gate_patches(result["specific_patches"], layout.elevators)
 
     return result
 

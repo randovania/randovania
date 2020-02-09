@@ -27,9 +27,12 @@ class PresetManager:
             self._data_dir = None
 
     def load_user_presets(self, ignore_invalid: bool):
-        for preset_file in self._data_dir.glob("*.json"):
+        for preset_file in self._data_dir.glob("*.randovania_preset"):
             try:
                 preset = read_preset_file(preset_file)
+                if self._included_preset_with_name(preset.name) is not None:
+                    raise ValueError("A default preset with name '{}' already exists.".format(preset.name))
+
             except (ValueError, KeyError):
                 if ignore_invalid:
                     continue
@@ -56,6 +59,9 @@ class PresetManager:
         :param: new_preset
         :return True, if there wasn't any preset with that name
         """
+        if self._included_preset_with_name(new_preset.name) is not None:
+            raise ValueError("A default preset with name '{}' already exists.".format(new_preset.name))
+
         existed_before = new_preset.name in self.custom_presets
         self.custom_presets[new_preset.name] = new_preset
 
@@ -68,12 +74,18 @@ class PresetManager:
         del self.custom_presets[preset.name]
         os.remove(self._file_name_for_preset(preset))
 
-    def preset_for_name(self, preset_name: str) -> Optional[Preset]:
+    def _included_preset_with_name(self, preset_name: str) -> Optional[Preset]:
         for preset in self.included_presets:
             if preset.name == preset_name:
                 return preset
 
+        return None
+
+    def preset_for_name(self, preset_name: str) -> Optional[Preset]:
+        preset = self._included_preset_with_name(preset_name)
+        if preset is not None:
+            return preset
         return self.custom_presets.get(preset_name)
 
     def _file_name_for_preset(self, preset: Preset) -> Path:
-        return self._data_dir.joinpath("{}.json".format(slugify.slugify(preset.name)))
+        return self._data_dir.joinpath("{}.randovania_preset".format(slugify.slugify(preset.name)))
