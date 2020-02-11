@@ -144,6 +144,7 @@ def test_round_trip_float(value: float, metadata: dict):
     ([10, 20], [10, 20, 30]),
     ([10, 20], [10, 20, 30, 50]),
     (list(range(15)), list(range(100))),
+    ([x * 2 for x in range(150)], list(range(300))),
 ])
 def test_sorted_array_elements_round_trip(elements, array):
     generator = bitpacking.pack_sorted_array_elements(elements, array)
@@ -153,3 +154,21 @@ def test_sorted_array_elements_round_trip(elements, array):
     decoded_elements = bitpacking.decode_sorted_array_elements(decoder, array)
 
     assert elements == decoded_elements
+
+
+@pytest.mark.parametrize(["elements", "array", "expected_size"], [
+    ([], [], 0),
+    ([], range(100), 8),
+    ([90], range(100), 15),
+    (range(100), range(100), 8),
+    (range(100), range(300), 216),
+    (list(range(100)) + list(range(200, 300)), range(300), 711),
+    (range(200), range(300), 117),
+    (range(200, 300), range(300), 117),
+    ([x * 2 for x in range(150)], range(300), 970),
+])
+def test_sorted_array_elements_size(elements, array, expected_size):
+    count = 0
+    for _, size in bitpacking.pack_sorted_array_elements(list(elements), list(array)):
+        count += bitpacking._bits_for_number(size)
+    assert count == expected_size

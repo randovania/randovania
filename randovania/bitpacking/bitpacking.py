@@ -106,13 +106,12 @@ class BitPackEnum(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         cls: Enum = self.__class__
         values = list(cls.__members__.values())
-        yield values.index(self), len(values)
+        yield from pack_array_element(self, values)
 
     @classmethod
     def bit_pack_unpack(cls: "Enum", decoder: BitPackDecoder, metadata):
         items = list(cls.__members__.values())
-        index = decoder.decode(len(items))[0]
-        return items[index]
+        return decoder.decode_element(items)
 
 
 _default_bit_pack_classes = {
@@ -187,34 +186,68 @@ def _is_sorted(array: List[T]) -> bool:
     return array == list(sorted(array))
 
 
-def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
-    assert _is_sorted(elements)
-    assert _is_sorted(array)
+def _aux_pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
+    yield len(elements), len(array) + 1
 
     previous_index = 0
-    for item in elements:
+    for i, item in enumerate(elements):
         index = array.index(item)
         assert index is not None
 
-        yield index - previous_index, len(array) - previous_index + 1
+        remaining_size = len(array) - previous_index - (len(elements) - i)
+        if remaining_size > 0:
+            yield index - previous_index, remaining_size + 1
         previous_index = index
 
-    yield len(array) - previous_index, len(array) - previous_index + 1
+
+def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
+    assert _is_sorted(elements)
+    assert _is_sorted(array)
+    assert len(array) == len(set(array))
+
+    if not array:
+        return
+
+    inverted_elements = [item for item in array if item not in elements]
+
+    normal_results = list(_aux_pack_sorted_array_elements(elements, array))
+    inverted_results = list(_aux_pack_sorted_array_elements(inverted_elements, array))
+
+    bits_for_normal = sum(_bits_for_number(v[1]) for v in normal_results)
+    bits_for_inverted = sum(_bits_for_number(v[1]) for v in inverted_results)
+
+    should_invert = bits_for_normal > bits_for_inverted
+    yield from encode_bool(should_invert)
+    if should_invert:
+        yield from inverted_results
+    else:
+        yield from normal_results
 
 
 def decode_sorted_array_elements(decoder: BitPackDecoder, array: List[T]) -> List[T]:
     result = []
 
+    if not array:
+        return []
+
+    inverted = decode_bool(decoder)
+    elements_size = decoder.decode_single(len(array) + 1)
+
     previous_index = 0
-    while True:
-        index = decoder.decode_single(len(array) - previous_index + 1)
-        if index == len(array) - previous_index:
-            break
+    for i in range(elements_size):
+        remaining_size = len(array) - previous_index - (elements_size - i)
+        if remaining_size > 0:
+            index = decoder.decode_single(remaining_size + 1)
+        else:
+            index = 0
 
         previous_index += index
         result.append(array[previous_index])
 
-    return result
+    if inverted:
+        return [item for item in array if item not in result]
+    else:
+        return result
 
 
 def encode_int_with_limits(value: int, limits: Tuple[int, ...]) -> Iterator[Tuple[int, int]]:
