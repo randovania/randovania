@@ -186,6 +186,15 @@ def _is_sorted(array: List[T]) -> bool:
     return array == list(sorted(array))
 
 
+def _limits_for_size(remaining_size: int) -> Tuple[int, ...]:
+    if remaining_size > 4:
+        return 4, remaining_size
+    elif remaining_size > 0:
+        return remaining_size,
+    else:
+        return ()
+
+
 def _aux_pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
     yield len(elements), len(array) + 1
 
@@ -195,8 +204,7 @@ def _aux_pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterat
         assert index is not None
 
         remaining_size = len(array) - previous_index - (len(elements) - i)
-        if remaining_size > 0:
-            yield index - previous_index, remaining_size + 1
+        yield from encode_int_with_limits(index - previous_index, _limits_for_size(remaining_size))
         previous_index = index
 
 
@@ -236,10 +244,7 @@ def decode_sorted_array_elements(decoder: BitPackDecoder, array: List[T]) -> Lis
     previous_index = 0
     for i in range(elements_size):
         remaining_size = len(array) - previous_index - (elements_size - i)
-        if remaining_size > 0:
-            index = decoder.decode_single(remaining_size + 1)
-        else:
-            index = 0
+        index = decode_int_with_limits(decoder, _limits_for_size(remaining_size))
 
         previous_index += index
         result.append(array[previous_index])
