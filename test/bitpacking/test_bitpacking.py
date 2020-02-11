@@ -159,13 +159,14 @@ def test_sorted_array_elements_round_trip(elements, array):
 @pytest.mark.parametrize(["elements", "array", "expected_size"], [
     ([], [], 0),
     ([], range(100), 8),
-    ([90], range(100), 15),
+    ([90], range(100), 18),
     (range(100), range(100), 8),
-    (range(100), range(300), 216),
-    (list(range(100)) + list(range(200, 300)), range(300), 711),
-    (range(200), range(300), 117),
-    (range(200, 300), range(300), 117),
-    ([x * 2 for x in range(150)], range(300), 970),
+    (range(100), range(300), 219),
+    (list(range(100)) + list(range(200, 300)), range(300), 318),
+    (range(200), range(300), 120),
+    (range(200, 300), range(300), 120),
+    ([x * 2 for x in range(150)], range(300), 458),
+    ([x * 3 for x in range(100)], range(300), 310),
 ])
 def test_sorted_array_elements_size(elements, array, expected_size):
     count = 0
