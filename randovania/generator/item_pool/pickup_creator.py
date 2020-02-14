@@ -174,7 +174,7 @@ def create_dark_temple_key(key_number: int,
         ),
         model_index=DARK_TEMPLE_KEY_MODEL,
         item_category=ItemCategory.TEMPLE_KEY,
-        probability_offset=3,
+        probability_offset=1.5,
     )
 
 
