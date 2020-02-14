@@ -60,6 +60,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     def preset_manager(self) -> PresetManager:
         return self._preset_manager
 
+    @property
+    def main_window(self) -> QMainWindow:
+        return self
+
     def __init__(self, options: Options, preset_manager: PresetManager, preview: bool):
         super().__init__()
         self.setupUi(self)

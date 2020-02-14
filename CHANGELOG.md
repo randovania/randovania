@@ -34,6 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Removed: The Progressive Launcher has been removed.
 
+-   Removed: The settings for fixing the translator gates have been removed for now, to be re-added
+    on a future "Advanced" tab.
+
 -   Removed: The create-permalink command line argument has been removed.
 
 ### Logic Database changes

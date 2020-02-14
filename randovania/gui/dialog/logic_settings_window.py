@@ -218,9 +218,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         # Translator Gates
         translator_configuration = preset.layout_configuration.translator_configuration
-        self.always_up_gfmc_compound_check.setChecked(translator_configuration.fixed_gfmc_compound)
-        self.always_up_torvus_temple_check.setChecked(translator_configuration.fixed_torvus_temple)
-        self.always_up_great_temple_check.setChecked(translator_configuration.fixed_great_temple)
         for gate, combo in self._combo_for_gate.items():
             set_combo_with_value(combo, translator_configuration.translator_requirement[gate])
 
@@ -560,13 +557,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     def setup_translators_elements(self):
         randomizer_data = default_data.decode_randomizer_data()
 
-        self.always_up_gfmc_compound_check.stateChanged.connect(
-            functools.partial(self._on_always_up_check_changed, "fixed_gfmc_compound"))
-        self.always_up_torvus_temple_check.stateChanged.connect(
-            functools.partial(self._on_always_up_check_changed, "fixed_torvus_temple"))
-        self.always_up_great_temple_check.stateChanged.connect(
-            functools.partial(self._on_always_up_check_changed, "fixed_great_temple"))
-
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
         self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
         self.translator_vanilla_colors_button.clicked.connect(self._on_vanilla_colors_gates_pressed)
@@ -586,13 +576,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
             self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
             self._combo_for_gate[combo.gate] = combo
-
-    def _on_always_up_check_changed(self, field_name: str, new_value: int):
-        with self._editor as options:
-            options.set_layout_configuration_field(
-                "translator_configuration",
-                dataclasses.replace(options.layout_configuration.translator_configuration,
-                                    **{field_name: bool(new_value)}))
 
     def _on_randomize_all_gates_pressed(self):
         with self._editor as options:

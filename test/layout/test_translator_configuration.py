@@ -7,10 +7,10 @@ from randovania.layout.translator_configuration import TranslatorConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\xe0', "json": {"translator_requirement": {}}},
-        {"encoded": b'\xe8', "json": TranslatorConfiguration.default().with_vanilla_colors().as_json},
-        {"encoded": b'\xf0', "json": TranslatorConfiguration.default().with_full_random().as_json},
-        {"encoded": b'\xf8\x00\x18\x01D\xa4\x9b', "json": {"translator_requirement": {
+        {"encoded": b'\x00', "json": {"translator_requirement": {}}},
+        {"encoded": b'@', "json": TranslatorConfiguration.default().with_vanilla_colors().as_json},
+        {"encoded": b'\x80', "json": TranslatorConfiguration.default().with_full_random().as_json},
+        {"encoded": b'\xc0\x00\xc0\n%$\xd8', "json": {"translator_requirement": {
             "5": "random"
         }}},
     ],
@@ -52,8 +52,5 @@ def test_blank_from_json():
             '0': 'violet', '1': 'violet', '2': 'violet', '3': 'violet', '4': 'amber', '5': 'violet', '6': 'violet',
             '7': 'violet', '8': 'amber', '9': 'emerald', '10': 'amber', '11': 'amber', '12': 'emerald',
             '13': 'emerald', '14': 'emerald', '15': 'cobalt', '16': 'cobalt'
-        },
-        "fixed_gfmc_compound": True,
-        "fixed_great_temple": True,
-        "fixed_torvus_temple": True
+        }
     }
