@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: The pickup notice for a locked expansion is more clear of what's going on. 
+
 -   Changed: Shortened permalinks with customized starting locations.
 
 ## [1.0.0] - 2020-02-09
