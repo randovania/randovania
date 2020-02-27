@@ -246,8 +246,8 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
         name="The Item",
         model_index=10,
         resources=(
-            ConditionalResources(None, None, temporary_resources),
-            ConditionalResources(None, primary_a, item_resources),
+            ConditionalResources("Temporary Missile", None, temporary_resources),
+            ConditionalResources("The Item", primary_a, item_resources),
         ) if requires_major_item else (
             ConditionalResources(None, None, item_resources),
         ),

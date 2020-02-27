@@ -1,5 +1,5 @@
 from random import Random
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import randovania
 from randovania.game_description import data_reader
@@ -24,7 +24,6 @@ from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKey
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
-from randovania.layout.translator_configuration import TranslatorConfiguration
 
 _TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
@@ -130,20 +129,17 @@ def _create_pickup_resources_for(resources: ResourceGain):
 
 
 def _get_single_hud_text(pickup_name: str,
-                         memo_data: Optional[Dict[str, str]],
+                         memo_data: Dict[str, str],
                          resources: ResourceGainTuple,
                          ) -> str:
-    if memo_data is None:
-        return "{} acquired!".format(pickup_name)
-    else:
-        return memo_data[pickup_name].format(**{
-            _resource_user_friendly_name(resource): quantity
-            for resource, quantity in resources
-        })
+    return memo_data[pickup_name].format(**{
+        _resource_user_friendly_name(resource): quantity
+        for resource, quantity in resources
+    })
 
 
 def _get_all_hud_text(pickup: PickupEntry,
-                      memo_data: Optional[Dict[str, str]],
+                      memo_data: Dict[str, str],
                       ) -> List[str]:
     return [
         _get_single_hud_text(conditional.name or pickup.name, memo_data, conditional.resources)
@@ -154,7 +150,7 @@ def _get_all_hud_text(pickup: PickupEntry,
 def _calculate_hud_text(pickup: PickupEntry,
                         visual_pickup: PickupEntry,
                         model_style: PickupModelStyle,
-                        memo_data: Optional[Dict[str, str]],
+                        memo_data: Dict[str, str],
                         ) -> List[str]:
     """
     Calculates what the hud_text for a pickup should be
@@ -180,7 +176,7 @@ def _create_pickup(original_index: PickupIndex,
                    pickup: PickupEntry,
                    visual_pickup: PickupEntry,
                    model_style: PickupModelStyle,
-                   memo_data: Optional[Dict[str, str]],
+                   memo_data: Dict[str, str],
                    ) -> dict:
     model_pickup = pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
 
@@ -235,7 +231,7 @@ def _create_pickup_list(patches: GamePatches,
                         rng: Random,
                         model_style: PickupModelStyle,
                         data_source: PickupModelDataSource,
-                        memo_data: Optional[Dict[str, str]],
+                        memo_data: Dict[str, str],
                         ) -> list:
     """
     Creates the patcher data for all pickups in the game
@@ -386,7 +382,6 @@ def _create_string_patches(hint_config: HintConfiguration,
 def _create_starting_popup(layout_configuration: LayoutConfiguration,
                            resource_database: ResourceDatabase,
                            starting_items: CurrentResources) -> list:
-
     initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
 
     extra_items = [
@@ -402,6 +397,18 @@ def _create_starting_popup(layout_configuration: LayoutConfiguration,
         ]
     else:
         return []
+
+
+class _SimplifiedMemo(dict):
+    def __missing__(self, key):
+        return "{} acquired!".format(key)
+
+
+def _simplified_memo_data() -> Dict[str, str]:
+    result = _SimplifiedMemo()
+    result["Temporary Power Bombs"] = "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
+    result["Temporary Missile"] = "Missile Expansion acquired, but the Missile Launcher, is required to use it."
+    return result
 
 
 def create_patcher_file(description: LayoutDescription,
@@ -431,7 +438,7 @@ def create_patcher_file(description: LayoutDescription,
 
     # Add the pickups
     if cosmetic_patches.disable_hud_popup:
-        memo_data = None
+        memo_data = _simplified_memo_data()
     else:
         memo_data = default_prime2_memo_data()
 

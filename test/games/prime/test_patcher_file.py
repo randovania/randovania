@@ -25,7 +25,6 @@ from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
-from randovania.layout.translator_configuration import TranslatorConfiguration
 
 
 def test_add_header_data_to_result():
@@ -255,6 +254,14 @@ def test_apply_translator_gate_patches(elevators):
     }
 
 
+def test_get_single_hud_text_locked_pbs():
+    # Run
+    result = patcher_file._get_single_hud_text("Temporary Power Bombs", patcher_file._simplified_memo_data(), tuple())
+
+    # Assert
+    assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
+
+
 @pytest.mark.parametrize("order", [
     ("X", "Y"),
     ("Y", "X"),
@@ -345,7 +352,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                                               rng,
                                               model_style,
                                               PickupModelDataSource.ETM,
-                                              None,
+                                              patcher_file._SimplifiedMemo(),
                                               )
 
     # Assert
@@ -494,7 +501,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
                                               rng,
                                               PickupModelStyle.HIDE_ALL,
                                               PickupModelDataSource.RANDOM,
-                                              memo_data if has_memo_data else None,
+                                              memo_data,
                                               )
 
     # Assert
@@ -579,15 +586,12 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
                                                     echoes_resource_database)[0]
     index = PickupIndex(0)
     if disable_hud_popup:
-        memo_data = None
+        memo_data = patcher_file._SimplifiedMemo()
     else:
         memo_data = default_prime2_memo_data()
 
     for item in item_pool:
-        try:
-            patcher_file._create_pickup(index, item, item, PickupModelStyle.ALL_VISIBLE, memo_data)
-        except Exception as e:
-            assert str(e) == item.name
+        patcher_file._create_pickup(index, item, item, PickupModelStyle.ALL_VISIBLE, memo_data)
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
