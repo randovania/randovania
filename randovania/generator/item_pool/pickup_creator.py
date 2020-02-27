@@ -137,8 +137,8 @@ def create_ammo_expansion(ammo: Ammo,
         temporary_resources.append((resource_database.item_percentage, 1))
 
         conditional_resources = (
-            ConditionalResources(None, None, tuple(temporary_resources)),
-            ConditionalResources(None, _get_item(resource_database, ammo.unlocked_by), tuple(resources)),
+            ConditionalResources(temporary_resources[0][0].long_name, None, tuple(temporary_resources)),
+            ConditionalResources(ammo.name, _get_item(resource_database, ammo.unlocked_by), tuple(resources)),
         )
     else:
         conditional_resources = (
