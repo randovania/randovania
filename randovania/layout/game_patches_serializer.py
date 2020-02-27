@@ -41,11 +41,12 @@ class BitPackPickupEntry:
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         items = self.database.item
+        has_name = any(cond.name is not None for cond in self.value.resources)
 
         yield self.value.model_index, 255
         yield from BitPackFloat(self.value.probability_offset).bit_pack_encode(_PROBABILITY_OFFSET_META)
         yield from self.value.item_category.bit_pack_encode({})
-        yield int(any(cond.name is not None for cond in self.value.resources)), 2
+        yield from bitpacking.encode_bool(has_name)
         yield len(self.value.resources) - 1, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES
 
         for i, conditional in enumerate(self.value.resources):
@@ -56,6 +57,9 @@ class BitPackPickupEntry:
             for resource, quantity in conditional.resources:
                 yield from bitpacking.pack_array_element(resource, items)
                 yield quantity, 255
+
+            if has_name:
+                yield from bitpacking.encode_bool(conditional.name == self.value.name)
 
         yield len(self.value.convert_resources), MAXIMUM_PICKUP_CONVERSION + 1
         for conversion in self.value.convert_resources:
@@ -85,7 +89,10 @@ class BitPackPickupEntry:
                 resources.append((resource, quantity))
 
             if has_name:
-                item_name = resources[0][0].long_name
+                if bitpacking.decode_bool(decoder):
+                    item_name = name
+                else:
+                    item_name = resources[0][0].long_name
 
             conditional_resources.append(ConditionalResources(
                 name=item_name,
