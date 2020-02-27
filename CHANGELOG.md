@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   Added: The pickup notice for a locked expansion is more clear of what's going on. 
+-   Added: The pickup notice for a locked expansion is more clear of what's going on.
+
+-   Added: The "Save ISO" dialog now remembers the last output directory used. 
 
 -   Changed: Shortened permalinks with customized starting locations.
 
