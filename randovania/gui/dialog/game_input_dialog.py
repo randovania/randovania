@@ -39,6 +39,10 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
 
         self.input_file_edit.has_error = False
         self.output_file_edit.has_error = False
+
+        if options.output_directory is not None:
+            self.output_file_edit.setText(str(options.output_directory.joinpath(self.default_iso_name)))
+
         self._validate_input_file()
         self._validate_output_file()
 

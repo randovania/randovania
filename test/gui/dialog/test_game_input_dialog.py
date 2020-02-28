@@ -12,7 +12,9 @@ def test_on_output_file_button_exists(mock_prompt_user_for_output_iso: MagicMock
                                       tmpdir):
     # Setup
     temp_path = Path(tmpdir)
-    window = GameInputDialog(MagicMock(), "random game.iso")
+    options = MagicMock()
+    options.output_directory = None
+    window = GameInputDialog(options, "random game.iso")
     mock_prompt_user_for_output_iso.return_value = temp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -31,7 +33,9 @@ def test_on_output_file_button_cancel(mock_prompt_user_for_output_iso: MagicMock
                                       tmpdir):
     # Setup
     temp_path = Path(tmpdir)
-    window = GameInputDialog(MagicMock(), "random game.iso")
+    options = MagicMock()
+    options.output_directory = None
+    window = GameInputDialog(options, "random game.iso")
     mock_prompt_user_for_output_iso.return_value = None
 
     # Run
