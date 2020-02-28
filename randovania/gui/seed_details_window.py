@@ -112,6 +112,9 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         input_file = dialog.input_file
         output_file = dialog.output_file
 
+        with options:
+            options.output_directory = output_file.parent
+
         def work(progress_update: ProgressUpdateCallable):
             num_updaters = 2
             if input_file is not None:
