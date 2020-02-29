@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Shortened permalinks with customized starting locations.
 
+-   Fixed: When changing a preset name, the cursor no longer moves to end after any change. 
+
 ## [1.0.0] - 2020-02-09
 
 -   *Major* - Added: Support for multiple presets of options, as well as saving your own presets.
