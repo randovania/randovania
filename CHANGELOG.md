@@ -10,7 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The pickup notice for a locked expansion is more clear of what's going on.
 
--   Added: The "Save ISO" dialog now remembers the last output directory used. 
+-   Added: The "Save ISO" dialog now remembers the last output directory used.
+
+-   Changed: The "Save Spoiler" button now provides a default name for the spoiler file. 
 
 -   Changed: Shortened permalinks with customized starting locations.
 
