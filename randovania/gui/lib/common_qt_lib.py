@@ -61,14 +61,16 @@ def prompt_user_for_output_iso(window: QMainWindow,
                                  filter="*.iso", new_file=True)
 
 
-def prompt_user_for_seed_log(window: QMainWindow, new_file: bool = False) -> Optional[Path]:
+def prompt_user_for_output_seed_log(window: QMainWindow, default_name: str) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania seed log
     :param window:
-    :param new_file:
+    :param default_name:
     :return: A string if the user selected a file, None otherwise
     """
-    return _prompt_user_for_file(window, caption="Select a Randovania seed log.", filter="*.json", new_file=new_file)
+    return _prompt_user_for_file(window, caption="Select a Randovania seed log.",
+                                 dir=default_name,
+                                 filter="*.json", new_file=True)
 
 
 def prompt_user_for_database_file(window: QMainWindow) -> Optional[Path]:
