@@ -42,6 +42,10 @@ class LayoutDescription:
     solver_path: Tuple[SolverPath, ...]
 
     @classmethod
+    def file_extension(cls) -> str:
+        return "rdvgame"
+
+    @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
         version = json_dict["info"]["version"]
         # version_as_obj = StrictVersion(version)

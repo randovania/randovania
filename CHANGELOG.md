@@ -12,7 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The "Save ISO" dialog now remembers the last output directory used.
 
--   Changed: The "Save Spoiler" button now provides a default name for the spoiler file. 
+-   Added: A copy of the game file is automatically saved to 
+    `%LOCALAPPDATA%\Randovania\game_history` whenever a game is generated. There's no
+    interface in Randovania to view this history.
+
+-   Changed: The "Save Spoiler" button now provides a default name for the game file. 
 
 -   Changed: Shortened permalinks with customized starting locations.
 

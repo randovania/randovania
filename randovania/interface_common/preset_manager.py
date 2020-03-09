@@ -2,8 +2,6 @@ import os
 from pathlib import Path
 from typing import List, Optional, Iterator, Dict
 
-import slugify
-
 from randovania.layout.preset import Preset, read_preset_list, read_preset_file, save_preset_file
 
 
@@ -88,4 +86,4 @@ class PresetManager:
         return self.custom_presets.get(preset_name)
 
     def _file_name_for_preset(self, preset: Preset) -> Path:
-        return self._data_dir.joinpath("{}.randovania_preset".format(slugify.slugify(preset.name)))
+        return self._data_dir.joinpath("{}.randovania_preset".format(preset.slug_name))
