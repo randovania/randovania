@@ -318,7 +318,7 @@ def test_apply_layout(
         mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
     else:
         mock_create_pak_backups.assert_not_called()
-    game_root.joinpath.assert_called_once_with("files", "randovania.json")
+    game_root.joinpath.assert_called_once_with("files", "randovania.{}".format(LayoutDescription.file_extension()))
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
 
     mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
