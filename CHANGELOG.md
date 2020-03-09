@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2020-03-10
+
 -   Added: The pickup notice for a locked expansion is more clear of what's going on.
 
 -   Added: The "Save ISO" dialog now remembers the last output directory used.
@@ -19,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: The "Save Spoiler" button now provides a default name for the game file. 
 
 -   Changed: Shortened permalinks with customized starting locations.
+
+-   Changed: Preset are now exported to `.rdvpreset` files, to avoid Discord truncating the
+    file names.
 
 -   Fixed: When changing a preset name, the cursor no longer moves to end after any change.
 

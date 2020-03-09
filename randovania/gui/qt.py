@@ -8,6 +8,7 @@ from PySide2.QtWidgets import QApplication, QMessageBox, QWidget
 
 from randovania.interface_common.options import Options, DecodeFailedException
 from randovania.interface_common.preset_manager import PresetManager, InvalidPreset
+from randovania.layout.preset import Preset
 
 
 def catch_exceptions(t, val, tb):
@@ -72,6 +73,9 @@ def load_user_presets(preset_manager: PresetManager) -> bool:
 def show_main_window(app: QApplication, args):
     options = Options.with_default_data_dir()
     preset_manager = PresetManager(options.data_dir)
+
+    for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
+        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{Preset.file_extension()}"))
 
     if not load_options_from_disk(options):
         raise SystemExit(1)
