@@ -17,7 +17,6 @@ from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 
 
 def _unique(iterable):
@@ -92,7 +91,8 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         QApplication.clipboard().setText(self.layout_description.permalink.as_str)
 
     def _export_log(self):
-        default_name = "Echoes Randomizer - {}.json".format(self.layout_description.shareable_word_hash)
+        default_name = "Echoes Randomizer - {}.{}".format(self.layout_description.shareable_word_hash,
+                                                          self.layout_description.file_extension())
         json_path = prompt_user_for_output_seed_log(self, default_name=default_name)
         if json_path is not None:
             self.layout_description.save_to_file(json_path)

@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 from typing import List, Optional
 
+import slugify
+
 from randovania import get_data_path
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -15,6 +17,10 @@ class Preset:
     base_preset_name: Optional[str]
     patcher_configuration: PatcherConfiguration
     layout_configuration: LayoutConfiguration
+
+    @property
+    def slug_name(self) -> str:
+        return slugify.slugify(self.name)
 
     @property
     def as_json(self) -> dict:

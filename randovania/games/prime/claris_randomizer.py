@@ -203,7 +203,7 @@ def apply_layout(description: LayoutDescription,
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     if backup_files_path is not None:
         _create_pak_backups(game_root, backup_files_path, status_update)
-    description.save_to_file(game_root.joinpath("files", "randovania.json"))
+    description.save_to_file(game_root.joinpath("files", f"randovania.{description.file_extension()}"))
 
     _modern_api(game_root, status_update, description, cosmetic_patches)
 
