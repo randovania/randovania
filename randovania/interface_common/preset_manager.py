@@ -25,7 +25,7 @@ class PresetManager:
             self._data_dir = None
 
     def load_user_presets(self, ignore_invalid: bool):
-        for preset_file in self._data_dir.glob("*.randovania_preset"):
+        for preset_file in self._data_dir.glob(f"*.{Preset.file_extension()}"):
             try:
                 preset = read_preset_file(preset_file)
                 if self._included_preset_with_name(preset.name) is not None:
@@ -86,4 +86,4 @@ class PresetManager:
         return self.custom_presets.get(preset_name)
 
     def _file_name_for_preset(self, preset: Preset) -> Path:
-        return self._data_dir.joinpath("{}.randovania_preset".format(preset.slug_name))
+        return self._data_dir.joinpath("{}.{}".format(preset.slug_name, preset.file_extension()))

@@ -18,6 +18,10 @@ class Preset:
     patcher_configuration: PatcherConfiguration
     layout_configuration: LayoutConfiguration
 
+    @classmethod
+    def file_extension(cls) -> str:
+        return "rdvpreset"
+
     @property
     def slug_name(self) -> str:
         return slugify.slugify(self.name)
