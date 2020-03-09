@@ -5,6 +5,7 @@ from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow, QWidget, QComboBox, QTextEdit
 
 from randovania import get_data_path
+from randovania.layout.preset import Preset
 
 
 def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
@@ -89,7 +90,9 @@ def prompt_user_for_preset_file(window: QMainWindow, new_file: bool) -> Optional
     :param new_file: If it should be an existing file (False) or not.
     :return: A path if the user selected a file, None otherwise
     """
-    return _prompt_user_for_file(window, caption="Select a Randovania Preset file.", filter="*.randovania_preset",
+    return _prompt_user_for_file(window, caption="Select a Randovania Preset file.",
+                                 filter=f"Randovania Preset, *.{Preset.file_extension()};;"
+                                        f"All Files (*.*)",
                                  new_file=new_file)
 
 
