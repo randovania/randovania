@@ -18,7 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: When changing a preset name, the cursor no longer moves to end after any change.
 
--   Fixed: The second Portal Chamber is now correctly considered a Dark Torvus Bog room. 
+### Logic Database changes
+
+-   Fixed: The pickup in Undertransit One now requires Power Bombs, to avoid soft locks.
+
+-   Fixed: The second Portal Chamber is now correctly considered a Dark Torvus Bog room.
 
 ## [1.0.0] - 2020-02-09
 
