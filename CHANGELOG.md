@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The preset summary now includes if menu mod is enabled.
 
+-   Fixed: The cursor no longer snaps to the end on all changes, in the permalink
+    input field.
+
 -   Fixed: "Starting Items" is now properly implemented in the preset summary.
     
 -   Changed: "Custom Items" is now "Item Pool" in the preset summary, and lists all
