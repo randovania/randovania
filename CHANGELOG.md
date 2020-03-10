@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: The preset summary now includes if menu mod is enabled.
+
 -   Fixed: "Starting Items" and "Custom Items" are now properly implemented in the
     preset summary.
 
