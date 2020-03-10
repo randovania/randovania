@@ -28,7 +28,7 @@ class PermalinkDialog(QDialog, Ui_PermalinkDialog):
 
     def _on_permalink_changed(self, value: str):
         common_qt_lib.set_error_border_stylesheet(self.permalink_edit, False)
-        self.permalink_edit.setText(self.permalink_edit.text().strip())
+        common_qt_lib.set_edit_if_different(self.permalink_edit, self.permalink_edit.text().strip())
         self.accept_button.setEnabled(False)
 
         try:
