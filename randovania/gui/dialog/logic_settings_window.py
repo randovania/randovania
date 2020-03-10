@@ -160,8 +160,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         layout_config = preset.layout_configuration
         patcher_config = preset.patcher_configuration
 
-        if self.name_edit.text() != preset.name:
-            self.name_edit.setText(preset.name)
+        # Title
+        common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
 
         # Trick Level
         trick_level_configuration = preset.layout_configuration.trick_level_configuration
