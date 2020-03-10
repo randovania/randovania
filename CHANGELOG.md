@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: The preset summary now includes if menu mod is enabled.
+
+-   Fixed: "Starting Items" is now properly implemented in the preset summary.
+    
+-   Changed: "Custom Items" is now "Item Pool" in the preset summary, and lists all
+    deviations from the standard item pool.
+
 ## [1.1.0] - 2020-03-10
 
 -   Added: The pickup notice for a locked expansion is more clear of what's going on.
