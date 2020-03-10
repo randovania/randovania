@@ -1,7 +1,9 @@
-from typing import List, Dict, Iterable, Tuple
+from typing import List, Iterable, Tuple, Dict
 
 from randovania.game_description import data_reader
+from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
@@ -40,8 +42,39 @@ _TEMPLATE_STRINGS = {
         # "Location: {location}",
     ],
 }
+_EXPECTED_ITEMS = {
+    "Scan Visor",
+    "Morph Ball",
+    "Power Beam",
+    "Charge Beam",
+}
 
 PresetDescription = Tuple[str, List[str]]
+
+
+def _calculate_starting_items(items_state: Dict[MajorItem, MajorItemState]) -> str:
+    starting_items = []
+    for major_item, item_state in items_state.items():
+        if major_item.required:
+            continue
+
+        count = item_state.num_included_in_starting_items
+        if count > 0:
+            if major_item.name in _EXPECTED_ITEMS:
+                continue
+            if count > 1:
+                starting_items.append(f"{count} {major_item.name}")
+            else:
+                starting_items.append(major_item.name)
+
+        elif major_item.name in _EXPECTED_ITEMS:
+            starting_items.append(f"No {major_item.name}")
+
+    if starting_items:
+        return ", ".join(starting_items)
+    else:
+        # If an expected item is missing, it's added as "No X". So empty starting_items means it's precisely vanilla
+        return "Vanilla"
 
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
@@ -76,7 +109,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["progressive_suit"] = _bool_to_str(major_items.progressive_suit)
     format_params["progressive_grapple"] = _bool_to_str(major_items.progressive_grapple)
     format_params["split_beam_ammo"] = _bool_to_str(configuration.split_beam_ammo)
-    format_params["starting_items"] = "???"
+    format_params["starting_items"] = _calculate_starting_items(configuration.major_items_configuration.items_state)
     format_params["custom_items"] = "None"
 
     # Difficulty
