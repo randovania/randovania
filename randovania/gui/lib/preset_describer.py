@@ -30,6 +30,7 @@ _TEMPLATE_STRINGS = {
         "Missiles needs Launcher: {missile_launcher_required}",
         "Power Bombs needs Main PBs: {main_pb_required}",
         "Warp to Start: {warp_to_start}",
+        "Menu Mod included? {menu_mod}",
         # "Quality of Life Improvements: {generic_patches}",
     ],
     "Difficulty": [
@@ -181,6 +182,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["main_pb_required"] = _bool_to_str(main_pb_required)
     format_params["warp_to_start"] = _bool_to_str(patcher.warp_to_start)
     format_params["generic_patches"] = "Some"
+    format_params["menu_mod"] = _bool_to_str(patcher.menu_mod)
 
     # Sky Temple Keys
     if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:
