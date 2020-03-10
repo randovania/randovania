@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   Fixed: "Starting Items" is now properly implemented in the preset summary.
+-   Fixed: "Starting Items" and "Custom Items" are now properly implemented in the
+    preset summary.
 
 ## [1.1.0] - 2020-03-10
 
