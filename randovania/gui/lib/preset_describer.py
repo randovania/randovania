@@ -1,9 +1,11 @@
+import copy
 from typing import List, Iterable, Tuple, Dict
 
 from randovania.game_description import data_reader
 from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
@@ -18,7 +20,7 @@ _TEMPLATE_STRINGS = {
         "Progressive Grapple: {progressive_grapple}",
         "Split Beam Ammo: {split_beam_ammo}",
         "Starting Items: {starting_items}",
-        "Custom Items: {custom_items}",
+        "Item Pool: {item_pool}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
@@ -81,20 +83,44 @@ def _calculate_starting_items(items_state: Dict[MajorItem, MajorItemState]) -> s
         return "Vanilla"
 
 
-def _calculate_custom_items(items_state: Dict[MajorItem, MajorItemState]) -> str:
-    custom_items = []
+def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
+    item_pool = []
 
-    for major_item, item_state in items_state.items():
-        if major_item.name not in _CUSTOM_ITEMS:
+    unexpected_items = _EXPECTED_ITEMS | _CUSTOM_ITEMS
+    if configuration.progressive_grapple:
+        unexpected_items.add("Grapple Beam")
+        unexpected_items.add("Screw Attack")
+    else:
+        unexpected_items.add("Progressive Grapple")
+
+    if configuration.progressive_suit:
+        unexpected_items.add("Dark Suit")
+        unexpected_items.add("Light Suit")
+    else:
+        unexpected_items.add("Progressive Suit")
+
+    for major_item, item_state in configuration.items_state.items():
+        if major_item.required:
             continue
 
-        if item_state.num_included_in_starting_items > 0 or item_state.num_shuffled_pickups > 0:
-            custom_items.append(major_item.name)
+        item_was_expected = major_item.name not in unexpected_items
 
-    if custom_items:
-        return ", ".join(custom_items)
+        if item_state.num_shuffled_pickups > 0 or item_state.include_copy_in_original_location:
+            item_in_pool = True
+        else:
+            item_in_pool = False
+
+        if item_in_pool:
+            if not item_was_expected:
+                item_pool.append(major_item.name)
+        else:
+            if item_was_expected and item_state.num_included_in_starting_items == 0:
+                item_pool.append(f"No {major_item.name}")
+
+    if item_pool:
+        return ", ".join(item_pool)
     else:
-        return "Nothing"
+        return "Default"
 
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
@@ -130,7 +156,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["progressive_grapple"] = _bool_to_str(major_items.progressive_grapple)
     format_params["split_beam_ammo"] = _bool_to_str(configuration.split_beam_ammo)
     format_params["starting_items"] = _calculate_starting_items(configuration.major_items_configuration.items_state)
-    format_params["custom_items"] = _calculate_custom_items(configuration.major_items_configuration.items_state)
+    format_params["item_pool"] = _calculate_item_pool(configuration.major_items_configuration)
 
     # Difficulty
     default_patcher = PatcherConfiguration()
