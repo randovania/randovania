@@ -48,6 +48,9 @@ _EXPECTED_ITEMS = {
     "Power Beam",
     "Charge Beam",
 }
+_CUSTOM_ITEMS = {
+    "Cannon Ball",
+}
 
 PresetDescription = Tuple[str, List[str]]
 
@@ -75,6 +78,22 @@ def _calculate_starting_items(items_state: Dict[MajorItem, MajorItemState]) -> s
     else:
         # If an expected item is missing, it's added as "No X". So empty starting_items means it's precisely vanilla
         return "Vanilla"
+
+
+def _calculate_custom_items(items_state: Dict[MajorItem, MajorItemState]) -> str:
+    custom_items = []
+
+    for major_item, item_state in items_state.items():
+        if major_item.name not in _CUSTOM_ITEMS:
+            continue
+
+        if item_state.num_included_in_starting_items > 0 or item_state.num_shuffled_pickups > 0:
+            custom_items.append(major_item.name)
+
+    if custom_items:
+        return ", ".join(custom_items)
+    else:
+        return "Nothing"
 
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
@@ -110,7 +129,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["progressive_grapple"] = _bool_to_str(major_items.progressive_grapple)
     format_params["split_beam_ammo"] = _bool_to_str(configuration.split_beam_ammo)
     format_params["starting_items"] = _calculate_starting_items(configuration.major_items_configuration.items_state)
-    format_params["custom_items"] = "None"
+    format_params["custom_items"] = _calculate_custom_items(configuration.major_items_configuration.items_state)
 
     # Difficulty
     default_patcher = PatcherConfiguration()
