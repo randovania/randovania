@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
+    must be collected for the appropriate events to be triggered. 
+
+## [1.1.1] - 2020-03-11
+
 -   Added: The preset summary now includes if menu mod is enabled.
 
 -   Fixed: The cursor no longer snaps to the end on all changes, in the permalink
