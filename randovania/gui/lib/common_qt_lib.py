@@ -2,9 +2,11 @@ from pathlib import Path
 from typing import Iterator, Optional
 
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow, QWidget, QComboBox, QTextEdit
+from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow, QWidget, QComboBox, QTextEdit, \
+    QLineEdit
 
 from randovania import get_data_path
+from randovania.layout.preset import Preset
 
 
 def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
@@ -89,7 +91,9 @@ def prompt_user_for_preset_file(window: QMainWindow, new_file: bool) -> Optional
     :param new_file: If it should be an existing file (False) or not.
     :return: A path if the user selected a file, None otherwise
     """
-    return _prompt_user_for_file(window, caption="Select a Randovania Preset file.", filter="*.randovania_preset",
+    return _prompt_user_for_file(window, caption="Select a Randovania Preset file.",
+                                 filter=f"Randovania Preset, *.{Preset.file_extension()};;"
+                                        f"All Files (*.*)",
                                  new_file=new_file)
 
 
@@ -119,3 +123,15 @@ def set_error_border_stylesheet(edit: QTextEdit, has_error: bool):
                            ":disabled { border: 1px solid red; background: #CCC }")
     else:
         edit.setStyleSheet("")
+
+
+def set_edit_if_different(edit: QLineEdit, new_text: str):
+    """
+    Sets the text of the given QLineEdit only if it differs from the current value.
+    Prevents snapping the user's cursor to the end unnecessarily.
+    :param edit:
+    :param new_text:
+    :return:
+    """
+    if edit.text() != new_text:
+        edit.setText(new_text)

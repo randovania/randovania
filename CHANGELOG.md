@@ -8,17 +8,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
+    must be collected for the appropriate events to be triggered. 
+
+## [1.1.1] - 2020-03-11
+
+-   Added: The preset summary now includes if menu mod is enabled.
+
+-   Fixed: The cursor no longer snaps to the end on all changes, in the permalink
+    input field.
+
+-   Fixed: "Starting Items" is now properly implemented in the preset summary.
+    
+-   Changed: "Custom Items" is now "Item Pool" in the preset summary, and lists all
+    deviations from the standard item pool.
+
+## [1.1.0] - 2020-03-10
+
 -   Added: The pickup notice for a locked expansion is more clear of what's going on.
 
 -   Added: The "Save ISO" dialog now remembers the last output directory used.
 
--   Changed: The "Save Spoiler" button now provides a default name for the spoiler file. 
+-   Added: A copy of the game file is automatically saved to 
+    `%LOCALAPPDATA%\Randovania\game_history` whenever a game is generated. There's no
+    interface in Randovania to view this history.
+
+-   Changed: The "Save Spoiler" button now provides a default name for the game file. 
 
 -   Changed: Shortened permalinks with customized starting locations.
 
+-   Changed: Preset are now exported to `.rdvpreset` files, to avoid Discord truncating the
+    file names.
+
 -   Fixed: When changing a preset name, the cursor no longer moves to end after any change.
 
--   Fixed: The second Portal Chamber is now correctly considered a Dark Torvus Bog room. 
+### Logic Database changes
+
+-   Fixed: The pickup in Undertransit One now requires Power Bombs, to avoid soft locks.
+
+-   Fixed: The second Portal Chamber is now correctly considered a Dark Torvus Bog room.
 
 ## [1.0.0] - 2020-02-09
 

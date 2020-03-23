@@ -1,7 +1,11 @@
-from typing import List, Dict, Iterable, Tuple
+import copy
+from typing import List, Iterable, Tuple, Dict
 
 from randovania.game_description import data_reader
+from randovania.game_description.item.major_item import MajorItem
 from randovania.layout.layout_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.major_item_state import MajorItemState
+from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
@@ -16,7 +20,7 @@ _TEMPLATE_STRINGS = {
         "Progressive Grapple: {progressive_grapple}",
         "Split Beam Ammo: {split_beam_ammo}",
         "Starting Items: {starting_items}",
-        "Custom Items: {custom_items}",
+        "Item Pool: {item_pool}",
     ],
     "Gameplay": [
         "Starting Location: {starting_location}",
@@ -28,6 +32,7 @@ _TEMPLATE_STRINGS = {
         "Missiles needs Launcher: {missile_launcher_required}",
         "Power Bombs needs Main PBs: {main_pb_required}",
         "Warp to Start: {warp_to_start}",
+        "Menu Mod included? {menu_mod}",
         # "Quality of Life Improvements: {generic_patches}",
     ],
     "Difficulty": [
@@ -40,8 +45,82 @@ _TEMPLATE_STRINGS = {
         # "Location: {location}",
     ],
 }
+_EXPECTED_ITEMS = {
+    "Scan Visor",
+    "Morph Ball",
+    "Power Beam",
+    "Charge Beam",
+}
+_CUSTOM_ITEMS = {
+    "Cannon Ball",
+}
 
 PresetDescription = Tuple[str, List[str]]
+
+
+def _calculate_starting_items(items_state: Dict[MajorItem, MajorItemState]) -> str:
+    starting_items = []
+    for major_item, item_state in items_state.items():
+        if major_item.required:
+            continue
+
+        count = item_state.num_included_in_starting_items
+        if count > 0:
+            if major_item.name in _EXPECTED_ITEMS:
+                continue
+            if count > 1:
+                starting_items.append(f"{count} {major_item.name}")
+            else:
+                starting_items.append(major_item.name)
+
+        elif major_item.name in _EXPECTED_ITEMS:
+            starting_items.append(f"No {major_item.name}")
+
+    if starting_items:
+        return ", ".join(starting_items)
+    else:
+        # If an expected item is missing, it's added as "No X". So empty starting_items means it's precisely vanilla
+        return "Vanilla"
+
+
+def _calculate_item_pool(configuration: MajorItemsConfiguration) -> str:
+    item_pool = []
+
+    unexpected_items = _EXPECTED_ITEMS | _CUSTOM_ITEMS
+    if configuration.progressive_grapple:
+        unexpected_items.add("Grapple Beam")
+        unexpected_items.add("Screw Attack")
+    else:
+        unexpected_items.add("Progressive Grapple")
+
+    if configuration.progressive_suit:
+        unexpected_items.add("Dark Suit")
+        unexpected_items.add("Light Suit")
+    else:
+        unexpected_items.add("Progressive Suit")
+
+    for major_item, item_state in configuration.items_state.items():
+        if major_item.required:
+            continue
+
+        item_was_expected = major_item.name not in unexpected_items
+
+        if item_state.num_shuffled_pickups > 0 or item_state.include_copy_in_original_location:
+            item_in_pool = True
+        else:
+            item_in_pool = False
+
+        if item_in_pool:
+            if not item_was_expected:
+                item_pool.append(major_item.name)
+        else:
+            if item_was_expected and item_state.num_included_in_starting_items == 0:
+                item_pool.append(f"No {major_item.name}")
+
+    if item_pool:
+        return ", ".join(item_pool)
+    else:
+        return "Default"
 
 
 def describe(preset: Preset) -> Iterable[PresetDescription]:
@@ -76,8 +155,8 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["progressive_suit"] = _bool_to_str(major_items.progressive_suit)
     format_params["progressive_grapple"] = _bool_to_str(major_items.progressive_grapple)
     format_params["split_beam_ammo"] = _bool_to_str(configuration.split_beam_ammo)
-    format_params["starting_items"] = "???"
-    format_params["custom_items"] = "None"
+    format_params["starting_items"] = _calculate_starting_items(configuration.major_items_configuration.items_state)
+    format_params["item_pool"] = _calculate_item_pool(configuration.major_items_configuration)
 
     # Difficulty
     default_patcher = PatcherConfiguration()
@@ -129,6 +208,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["main_pb_required"] = _bool_to_str(main_pb_required)
     format_params["warp_to_start"] = _bool_to_str(patcher.warp_to_start)
     format_params["generic_patches"] = "Some"
+    format_params["menu_mod"] = _bool_to_str(patcher.menu_mod)
 
     # Sky Temple Keys
     if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:

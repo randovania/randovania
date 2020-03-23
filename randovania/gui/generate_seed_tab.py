@@ -1,6 +1,8 @@
+import datetime
+import json
 import random
 from functools import partial
-from itertools import zip_longest
+from pathlib import Path
 from typing import Optional
 
 from PySide2.QtCore import Signal
@@ -14,11 +16,21 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.interface_common.preset_manager import PresetManager
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset, save_preset_file, read_preset_file
 from randovania.resolver.exceptions import GenerationFailure
+
+
+def persist_layout(data_dir: Path, description: LayoutDescription):
+    history_dir = data_dir.joinpath("game_history")
+    history_dir.mkdir(parents=True, exist_ok=True)
+
+    date_format = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    file_path = history_dir.joinpath(
+        f"{date_format}-{description.permalink.preset.slug_name}.{description.file_extension()}")
+    description.save_to_file(file_path)
 
 
 class GenerateSeedTab(QWidget):
@@ -174,7 +186,8 @@ class GenerateSeedTab(QWidget):
                                                             permalink=permalink,
                                                             options=self._options)
                 progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
-                self.window.show_seed_tab(layout)
+                persist_layout(self._options.data_dir, layout)
+                self._window_manager.show_seed_tab(layout)
 
             except GenerationFailure as generate_exception:
                 self.failed_to_generate_signal.emit(generate_exception)
@@ -210,5 +223,3 @@ class GenerateSeedTab(QWidget):
 
         self.window.create_describe_left_label.setText(preset_describer.merge_categories(left_categories))
         self.window.create_describe_right_label.setText(preset_describer.merge_categories(right_categories))
-
-
