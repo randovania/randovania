@@ -7,7 +7,7 @@ from typing import TypeVar, BinaryIO, Dict, TextIO
 
 import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch
+    Short, PrefixedArray, Array, Switch, If
 
 X = TypeVar('X')
 current_format_version = 6
@@ -187,6 +187,8 @@ ConstructNode = Struct(
                 destination_world_asset_id=Int32ub,
                 destination_area_asset_id=Int32ub,
                 teleporter_instance_id=Int32ub,
+                _has_scan_asset_id=Rebuild(Flag, lambda this: this.scan_asset_id is not None),
+                scan_asset_id=If(lambda this: this._has_scan_asset_id, Int32ub),
                 keep_name_when_vanilla=Flag,
                 editable=Flag,
             ),
