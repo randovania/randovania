@@ -1,5 +1,5 @@
 from random import Random
-from typing import Dict, List
+from typing import Dict, List, Iterator
 
 import randovania
 from randovania.game_description import data_reader
@@ -261,6 +261,18 @@ def _create_pickup_list(patches: GamePatches,
     return pickups
 
 
+def _elevator_area_name(world_list: WorldList,
+                        area_location: AreaLocation,
+                        ) -> str:
+    if area_location.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
+        return _CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
+
+    else:
+        world = world_list.world_by_area_location(area_location)
+        area = world.area_by_asset_id(area_location.area_asset_id)
+        return area.name
+
+
 def _pretty_name_for_elevator(world_list: WorldList,
                               original_teleporter_node: TeleporterNode,
                               connection: AreaLocation,
@@ -276,15 +288,7 @@ def _pretty_name_for_elevator(world_list: WorldList,
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
-    if connection.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
-        target_area_name = _CUSTOM_NAMES_FOR_ELEVATORS[connection.area_asset_id]
-
-    else:
-        world = world_list.world_by_area_location(connection)
-        area = world.area_by_asset_id(connection.area_asset_id)
-        target_area_name = area.name
-
-    return "Transport to {}".format(target_area_name)
+    return "Transport to {}".format(_elevator_area_name(world_list, connection))
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
@@ -296,17 +300,12 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
     """
 
     world_list = game.world_list
+    nodes_by_teleporter_id = _get_nodes_by_teleporter_id(world_list)
+    elevator_connection = patches.elevator_connection
 
-    nodes_by_teleporter_id = {
-        node.teleporter_instance_id: node
-
-        for node in world_list.all_nodes
-        if isinstance(node, TeleporterNode) and node.editable
-    }
-
-    if len(patches.elevator_connection) != len(nodes_by_teleporter_id):
+    if len(elevator_connection) != len(nodes_by_teleporter_id):
         raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
-            len(nodes_by_teleporter_id), len(patches.elevator_connection)
+            len(nodes_by_teleporter_id), len(elevator_connection)
         ))
 
     elevators = [
@@ -316,10 +315,20 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
             "target_location": connection.as_json,
             "room_name": _pretty_name_for_elevator(world_list, nodes_by_teleporter_id[instance_id], connection)
         }
-        for instance_id, connection in patches.elevator_connection.items()
+        for instance_id, connection in elevator_connection.items()
     ]
 
     return elevators
+
+
+def _get_nodes_by_teleporter_id(world_list: WorldList) -> Dict[int, TeleporterNode]:
+    nodes_by_teleporter_id = {
+        node.teleporter_instance_id: node
+
+        for node in world_list.all_nodes
+        if isinstance(node, TeleporterNode) and node.editable
+    }
+    return nodes_by_teleporter_id
 
 
 def _create_translator_gates_field(gate_assignment: GateAssignment) -> list:
@@ -341,12 +350,27 @@ def _apply_translator_gate_patches(specific_patches: dict, elevators: LayoutElev
     """
 
     :param specific_patches:
-    :param translator_gates:
+    :param elevators:
     :return:
     """
     specific_patches["always_up_gfmc_compound"] = True
     specific_patches["always_up_torvus_temple"] = True
     specific_patches["always_up_great_temple"] = elevators != LayoutElevators.VANILLA
+
+
+def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connection: Dict[int, AreaLocation],
+                                       ) -> Iterator[dict]:
+    nodes_by_teleporter_id = _get_nodes_by_teleporter_id(world_list)
+
+    for teleporter_id, node in nodes_by_teleporter_id.items():
+        if node.scan_asset_id is None:
+            continue
+
+        target_area_name = _elevator_area_name(world_list, elevator_connection[teleporter_id])
+        yield {
+            "asset_id": node.scan_asset_id,
+            "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
+        }
 
 
 def _create_string_patches(hint_config: HintConfiguration,
@@ -375,6 +399,9 @@ def _create_string_patches(hint_config: HintConfiguration,
     else:
         string_patches.extend(sky_temple_key_hint.create_hints(patches, game.world_list,
                                                                stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
+
+    # Elevator Scans
+    string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
 
     return string_patches
 
