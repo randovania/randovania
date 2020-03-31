@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
     must be collected for the appropriate events to be triggered. 
 
+### Logic Database changes
+
+-   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs. 
+
 ## [1.1.1] - 2020-03-11
 
 -   Added: The preset summary now includes if menu mod is enabled.
