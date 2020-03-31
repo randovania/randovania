@@ -68,6 +68,7 @@ class DockNode(Node):
 class TeleporterNode(Node):
     teleporter_instance_id: int
     default_connection: AreaLocation
+    scan_asset_id: Optional[str]
     keep_name_when_vanilla: bool
     editable: bool
 

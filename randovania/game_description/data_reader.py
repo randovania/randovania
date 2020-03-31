@@ -163,6 +163,7 @@ class WorldReader:
 
             return TeleporterNode(name, heal, self.generic_index, instance_id,
                                   AreaLocation(destination_world_asset_id, destination_area_asset_id),
+                                  data["scan_asset_id"],
                                   data["keep_name_when_vanilla"],
                                   data["editable"],
                                   )
