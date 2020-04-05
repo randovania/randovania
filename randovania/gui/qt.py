@@ -2,7 +2,6 @@ import asyncio
 import os
 import sys
 from argparse import ArgumentParser
-from pathlib import Path
 
 from PySide2 import QtCore
 from PySide2.QtCore import Qt
@@ -129,22 +128,21 @@ def run(args):
 
     sys.excepthook = catch_exceptions
 
-    if preview:
-        app.game_connection = GameConnection()
+    app.game_connection = GameConnection()
 
-        if getattr(args, "debug_game_backend", False):
-            backend = DebugBackendWindow()
-            backend.show()
-        else:
-            backend = DolphinBackend()
+    if getattr(args, "debug_game_backend", False):
+        backend = DebugBackendWindow()
+        backend.show()
+    else:
+        backend = DolphinBackend()
 
-        app.game_connection.set_backend(backend)
+    app.game_connection.set_backend(backend)
 
-        @asyncClose
-        async def _on_last_window_closed():
-            await app.game_connection.stop()
+    @asyncClose
+    async def _on_last_window_closed():
+        await app.game_connection.stop()
 
-        app.lastWindowClosed.connect(_on_last_window_closed, Qt.QueuedConnection)
+    app.lastWindowClosed.connect(_on_last_window_closed, Qt.QueuedConnection)
 
     target_window = getattr(args, "window", None)
     if target_window == "data-editor":
@@ -155,8 +153,7 @@ def run(args):
         show_main_window(app, preview)
 
     with loop:
-        if preview:
-            loop.create_task(app.game_connection.start())
+        loop.create_task(app.game_connection.start())
         sys.exit(loop.run_forever())
 
 

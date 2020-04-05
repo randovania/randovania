@@ -4,6 +4,7 @@ from PySide2.QtCore import Signal, QObject
 from _nod import Enum
 
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_info import CurrentResources
 
 
 class ConnectionStatus(Enum):
@@ -21,6 +22,9 @@ class ConnectionBase(QObject):
         raise NotImplementedError()
 
     async def display_message(self, message: str):
+        raise NotImplementedError()
+
+    async def get_inventory(self) -> CurrentResources:
         raise NotImplementedError()
 
     def send_pickup(self, pickup: PickupEntry):
