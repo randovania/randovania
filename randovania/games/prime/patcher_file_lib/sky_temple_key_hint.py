@@ -1,9 +1,12 @@
+from typing import Dict
+
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import resource_info
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
     color_text, TextColor
+from randovania.interface_common.players_configuration import PlayersConfiguration
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,
@@ -22,14 +25,16 @@ def _sky_temple_key_name(key_number: int) -> str:
     return color_text(TextColor.ITEM, f"Sky Temple Key {key_number}")
 
 
-def create_hints(patches: GamePatches,
+def create_hints(all_patches: Dict[int, GamePatches],
+                 players_config: PlayersConfiguration,
                  world_list: WorldList,
                  hide_area: bool,
                  ) -> list:
     """
     Creates the string patches entries that changes the Sky Temple Gateway hint scans with hints for where
     the STK actually are.
-    :param patches:
+    :param all_patches:
+    :param players_config:
     :param world_list:
     :param hide_area: Should the hint include only the world?
     :return:
@@ -37,28 +42,34 @@ def create_hints(patches: GamePatches,
     location_hint_creator = LocationHintCreator(world_list)
     sky_temple_key_hints = {}
 
-    for pickup_index, pickup in patches.pickup_assignment.items():
-        resources = resource_info.convert_resource_gain_to_current_resources(pickup.resource_gain({}))
-
-        for resource, quantity in resources.items():
-            if quantity < 1:
+    for other_player, patches in all_patches.items():
+        for pickup_index, target in patches.pickup_assignment.items():
+            if target.player != players_config.player_index:
                 continue
+            resources = resource_info.convert_resource_gain_to_current_resources(target.pickup.resource_gain({}))
 
-            try:
-                key_number = echoes_items.SKY_TEMPLE_KEY_ITEMS.index(resource.index) + 1
-            except ValueError:
-                continue
+            for resource, quantity in resources.items():
+                if quantity < 1:
+                    continue
 
-            assert resource.index not in sky_temple_key_hints
+                try:
+                    key_number = echoes_items.SKY_TEMPLE_KEY_ITEMS.index(resource.index) + 1
+                except ValueError:
+                    continue
 
-            sky_temple_key_hints[resource.index] = "{} is located in {}.".format(
-                _sky_temple_key_name(key_number),
-                color_text(TextColor.LOCATION,
-                    location_hint_creator.index_node_name(pickup_index, hide_area),
-                ),
-            )
+                assert resource.index not in sky_temple_key_hints
 
-    for starting_resource, quantity in patches.starting_items.items():
+                player_name = f"{players_config.player_names[other_player]}'s "
+
+                sky_temple_key_hints[resource.index] = "{} is located in {}{}.".format(
+                    _sky_temple_key_name(key_number),
+                    color_text(TextColor.LOCATION, player_name) if len(all_patches) > 1 else "",
+                    color_text(TextColor.LOCATION,
+                               location_hint_creator.index_node_name(pickup_index, hide_area),
+                               ),
+                )
+
+    for starting_resource, quantity in all_patches[players_config.player_index].starting_items.items():
         if quantity < 1:
             continue
         try:

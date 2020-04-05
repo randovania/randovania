@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from random import Random
-from typing import NamedTuple, Tuple, List
+from typing import NamedTuple, Tuple, List, Dict
 
 from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
@@ -38,8 +38,11 @@ def _shareable_hash_words():
 class LayoutDescription:
     version: str
     permalink: Permalink
-    patches: GamePatches
+    all_patches: Dict[int, GamePatches]
     solver_path: Tuple[SolverPath, ...]
+
+    def __post_init__(self):
+        object.__setattr__(self, "__cached_serialized_patches", None)
 
     @classmethod
     def file_extension(cls) -> str:
@@ -62,7 +65,11 @@ class LayoutDescription:
         return LayoutDescription(
             version=version,
             permalink=permalink,
-            patches=game_patches_serializer.decode(json_dict["game_modifications"], permalink.layout_configuration),
+            all_patches=game_patches_serializer.decode(
+                json_dict["game_modifications"], {
+                    index: preset.layout_configuration
+                    for index, preset in permalink.presets.items()
+                }),
             solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
         )
 
@@ -70,6 +77,20 @@ class LayoutDescription:
     def from_file(cls, json_path: Path) -> "LayoutDescription":
         with json_path.open("r") as open_file:
             return cls.from_json_dict(json.load(open_file))
+
+    @property
+    def _serialized_patches(self):
+        cached_result = object.__getattribute__(self, "__cached_serialized_patches")
+        if cached_result is None:
+            cached_result = game_patches_serializer.serialize(
+                self.all_patches,
+                {
+                    index: preset.layout_configuration.game_data
+                    for index, preset in self.permalink.presets.items()
+                })
+            object.__setattr__(self, "__cached_serialized_patches", cached_result)
+
+        return cached_result
 
     @property
     def as_json(self) -> dict:
@@ -81,9 +102,7 @@ class LayoutDescription:
         }
 
         if self.permalink.spoiler:
-            result["game_modifications"] = game_patches_serializer.serialize(
-                self.patches, self.permalink.layout_configuration.game_data)
-
+            result["game_modifications"] = self._serialized_patches
             result["playthrough"] = [
                 {
                     "path_from_previous": path.previous_nodes,
@@ -96,9 +115,7 @@ class LayoutDescription:
 
     @property
     def _shareable_hash_bytes(self) -> bytes:
-        dict_to_serialize = game_patches_serializer.serialize(self.patches,
-                                                              self.permalink.layout_configuration.game_data)
-        bytes_representation = json.dumps(dict_to_serialize).encode()
+        bytes_representation = json.dumps(self._serialized_patches).encode()
         return hashlib.blake2b(bytes_representation, digest_size=5).digest()
 
     @property
@@ -123,5 +140,5 @@ class LayoutDescription:
         return LayoutDescription(
             permalink=self.permalink,
             version=self.version,
-            patches=self.patches,
+            all_patches=self.all_patches,
             solver_path=())

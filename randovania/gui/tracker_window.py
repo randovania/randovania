@@ -13,7 +13,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
-from randovania.generator import base_patches_factory
+from randovania.generator import base_patches_factory, generator
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -84,21 +84,17 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._node_to_item = {}
         self.layout_configuration = layout_configuration
         self.persistence_path = persistence_path
-        self.game_description = data_reader.decode_data(layout_configuration.game_data)
 
+        player_index = 0  # FIXME
         try:
-            base_patches = base_patches_factory.create_base_patches(self.layout_configuration, None,
-                                                                    self.game_description)
+            player_pool = generator.create_player_pool(None, self.layout_configuration, player_index)
         except base_patches_factory.MissingRng as e:
             raise InvalidLayoutForTracker("Layout is configured to have random {}, "
                                           "but that isn't supported by the tracker.".format(e))
 
-        pool_patches, item_pool = pool_creator.calculate_item_pool(self.layout_configuration,
-                                                                   self.game_description.resource_database,
-                                                                   base_patches)
-
+        pool_patches = player_pool.patches
         self.game_description, self._initial_state = logic_bootstrap(layout_configuration,
-                                                                     self.game_description,
+                                                                     player_pool.game,
                                                                      pool_patches)
         self.logic = Logic(self.game_description, layout_configuration)
 
@@ -116,7 +112,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             )
         ))
 
-        self.setup_pickups_box(item_pool)
+        self.setup_pickups_box(player_pool.pickups)
         self.setup_possible_locations_tree()
 
         self._starting_nodes = {

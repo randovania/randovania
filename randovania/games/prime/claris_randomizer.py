@@ -12,6 +12,7 @@ from randovania.games.prime import patcher_file, dol_patcher
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.game_workdir import validate_game_files_path
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
@@ -179,6 +180,7 @@ def _add_menu_mod_to_files(
 
 
 def apply_layout(description: LayoutDescription,
+                 players_config: PlayersConfiguration,
                  cosmetic_patches: CosmeticPatches,
                  backup_files_path: Optional[Path],
                  progress_update: ProgressUpdateCallable,
@@ -186,15 +188,16 @@ def apply_layout(description: LayoutDescription,
                  ):
     """
     Applies the modifications listed in the given LayoutDescription to the game in game_root.
-    :param cosmetic_patches:
     :param description:
+    :param players_config:
+    :param cosmetic_patches:
     :param game_root:
     :param backup_files_path: Path to use as pak backup, to remove/add menu mod.
     :param progress_update:
     :return:
     """
 
-    patcher_configuration = description.permalink.patcher_configuration
+    patcher_configuration = description.permalink.get_preset(players_config.player_index).patcher_configuration
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
         progress_update, 400 if patcher_configuration.menu_mod else 100)
@@ -204,7 +207,7 @@ def apply_layout(description: LayoutDescription,
         _create_pak_backups(game_root, backup_files_path, status_update)
     description.save_to_file(game_root.joinpath("files", f"randovania.{description.file_extension()}"))
 
-    _modern_api(game_root, status_update, description, cosmetic_patches)
+    _modern_api(game_root, status_update, description, players_config, cosmetic_patches)
     dol_patcher.apply_patches(game_root, cosmetic_patches)
 
     if patcher_configuration.menu_mod:
@@ -214,6 +217,7 @@ def apply_layout(description: LayoutDescription,
 def _modern_api(game_root: Path,
                 status_update: Callable[[str], None],
                 description: LayoutDescription,
+                players_config: PlayersConfiguration,
                 cosmetic_patches: CosmeticPatches,
                 ):
     """
@@ -224,7 +228,7 @@ def _modern_api(game_root: Path,
     :param cosmetic_patches:
     :return:
     """
-    patcher_data = patcher_file.create_patcher_file(description, cosmetic_patches)
+    patcher_data = patcher_file.create_patcher_file(description, players_config, cosmetic_patches)
 
     if description.permalink.spoiler:
         with game_root.joinpath("files", "patcher_data.json").open("w") as patcher_data_file:

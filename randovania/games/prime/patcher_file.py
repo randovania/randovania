@@ -5,7 +5,7 @@ from typing import Dict, List, Iterator
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.assignment import GateAssignment
+from randovania.game_description.assignment import GateAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -21,6 +21,7 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
@@ -173,59 +174,116 @@ def _calculate_hud_text(pickup: PickupEntry,
         return _get_all_hud_text(pickup, memo_data)
 
 
-def _create_pickup(original_index: PickupIndex,
-                   pickup: PickupEntry,
-                   visual_pickup: PickupEntry,
-                   model_style: PickupModelStyle,
-                   memo_data: Dict[str, str],
-                   ) -> dict:
-    model_pickup = pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
-    model_index = model_pickup.model_index
+class PickupCreator:
+    def create_pickup_data(self,
+                           original_index: PickupIndex,
+                           pickup_target: PickupTarget,
+                           visual_pickup: PickupEntry,
+                           model_style: PickupModelStyle,
+                           scan_text: str) -> dict:
+        raise NotImplementedError()
 
-    # TODO: less improvised, really
-    if model_index == 22 and random.randint(0, 8192) == 0:
-        # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
-        model_index = 23
+    def create_pickup(self,
+                      original_index: PickupIndex,
+                      pickup_target: PickupTarget,
+                      visual_pickup: PickupEntry,
+                      model_style: PickupModelStyle,
+                      ) -> dict:
+        model_pickup = pickup_target.pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
 
-    result = {
-        "pickup_index": original_index.index,
-        "resources": _create_pickup_resources_for(pickup.resources[0].resources),
-        "conditional_resources": [
+        if model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}:
+            scan_text = _pickup_scan(pickup_target.pickup)
+        else:
+            scan_text = visual_pickup.name
+
+        # TODO: less improvised, really
+        model_index = model_pickup.model_index
+        if model_index == 22 and random.randint(0, 8192) == 0:
+            # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
+            model_index = 23
+
+        result = {
+            "pickup_index": original_index.index,
+            **self.create_pickup_data(original_index, pickup_target, visual_pickup, model_style, scan_text),
+            "model_index": model_index,
+            "sound_index": 1 if model_pickup.item_category.is_key else 0,
+            "jingle_index": _get_jingle_index_for(model_pickup.item_category),
+        }
+        return result
+
+
+class PickupCreatorSolo(PickupCreator):
+    def __init__(self, memo_data: Dict[str, str]):
+        self.memo_data = memo_data
+
+    def create_pickup_data(self,
+                           original_index: PickupIndex,
+                           pickup_target: PickupTarget,
+                           visual_pickup: PickupEntry,
+                           model_style: PickupModelStyle,
+                           scan_text: str) -> dict:
+        return {
+            "resources": _create_pickup_resources_for(pickup_target.pickup.resources[0].resources),
+            "conditional_resources": [
+                {
+                    "item": conditional.item.index,
+                    "resources": _create_pickup_resources_for(conditional.resources),
+                }
+                for conditional in pickup_target.pickup.resources[1:]
+            ],
+            "convert": [
+                {
+                    "from_item": conversion.source.index,
+                    "to_item": conversion.target.index,
+                    "clear_source": conversion.clear_source,
+                    "overwrite_target": conversion.overwrite_target,
+                }
+                for conversion in pickup_target.pickup.convert_resources
+            ],
+            "hud_text": _calculate_hud_text(pickup_target.pickup, visual_pickup, model_style, self.memo_data),
+            "scan": scan_text,
+        }
+
+
+class PickupCreatorMulti(PickupCreator):
+    def __init__(self, player_names: Dict[int, str]):
+        self.player_names = player_names
+
+    def create_pickup_data(self,
+                           original_index: PickupIndex,
+                           pickup_target: PickupTarget,
+                           visual_pickup: PickupEntry,
+                           model_style: PickupModelStyle,
+                           scan_text: str) -> dict:
+        resources = [
             {
-                "item": conditional.item.index,
-                "resources": _create_pickup_resources_for(conditional.resources),
-            }
-            for conditional in pickup.resources[1:]
-        ],
-        "convert": [
-            {
-                "from_item": conversion.source.index,
-                "to_item": conversion.target.index,
-                "clear_source": conversion.clear_source,
-                "overwrite_target": conversion.overwrite_target,
-            }
-            for conversion in pickup.convert_resources
-        ],
+                "index": 74,
+                "amount": original_index.index + 1,
+            },
+        ]
+        resources.extend(
+            entry
+            for entry in _create_pickup_resources_for(pickup_target.pickup.resources[0].resources)
+            if entry["index"] == 47
+        )
 
-        "hud_text": _calculate_hud_text(pickup, visual_pickup, model_style, memo_data),
-
-        "scan": _pickup_scan(pickup) if model_style in {PickupModelStyle.ALL_VISIBLE,
-                                                        PickupModelStyle.HIDE_MODEL} else visual_pickup.name,
-        "model_index": model_index,
-        "sound_index": 1 if model_pickup.item_category.is_key else 0,
-        "jingle_index": _get_jingle_index_for(model_pickup.item_category),
-    }
-    return result
+        return {
+            "resources": resources,
+            "conditional_resources": [],
+            "convert": [],
+            "hud_text": [f"{self.player_names[pickup_target.player]} acquired {pickup_target.pickup.name}!"],
+            "scan": f"{self.player_names[pickup_target.player]}'s {scan_text}",
+        }
 
 
 def _get_visual_model(original_index: int,
-                      pickup_list: List[PickupEntry],
+                      pickup_list: List[PickupTarget],
                       data_source: PickupModelDataSource,
                       ) -> PickupEntry:
     if data_source == PickupModelDataSource.ETM:
         return pickup_creator.create_visual_etm()
     elif data_source == PickupModelDataSource.RANDOM:
-        return pickup_list[original_index % len(pickup_list)]
+        return pickup_list[original_index % len(pickup_list)].pickup
     elif data_source == PickupModelDataSource.LOCATION:
         raise NotImplementedError()
     else:
@@ -233,21 +291,22 @@ def _get_visual_model(original_index: int,
 
 
 def _create_pickup_list(patches: GamePatches,
-                        useless_pickup: PickupEntry,
+                        useless_target: PickupTarget,
                         pickup_count: int,
                         rng: Random,
                         model_style: PickupModelStyle,
                         data_source: PickupModelDataSource,
-                        memo_data: Dict[str, str],
+                        creator: PickupCreator,
                         ) -> list:
     """
     Creates the patcher data for all pickups in the game
     :param patches:
-    :param useless_pickup:
+    :param useless_target:
     :param pickup_count:
     :param rng:
     :param model_style:
     :param data_source:
+    :param creator:
     :return:
     """
     pickup_assignment = patches.pickup_assignment
@@ -256,12 +315,11 @@ def _create_pickup_list(patches: GamePatches,
     rng.shuffle(pickup_list)
 
     pickups = [
-        _create_pickup(PickupIndex(i),
-                       pickup_assignment.get(PickupIndex(i), useless_pickup),
-                       _get_visual_model(i, pickup_list, data_source),
-                       model_style,
-                       memo_data,
-                       )
+        creator.create_pickup(PickupIndex(i),
+                              pickup_assignment.get(PickupIndex(i), useless_target),
+                              _get_visual_model(i, pickup_list, data_source),
+                              model_style,
+                              )
         for i in range(pickup_count)
     ]
 
@@ -382,7 +440,8 @@ def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connectio
 
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
-                           patches: GamePatches,
+                           all_patches: Dict[int, GamePatches],
+                           players_config: PlayersConfiguration,
                            rng: Random,
                            ) -> list:
     """
@@ -392,6 +451,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     :param patches:
     :return:
     """
+    patches = all_patches[players_config.player_index]
     string_patches = []
 
     # Location Hints
@@ -404,7 +464,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
         string_patches.extend(sky_temple_key_hint.hide_hints())
     else:
-        string_patches.extend(sky_temple_key_hint.create_hints(patches, game.world_list,
+        string_patches.extend(sky_temple_key_hint.create_hints(all_patches, players_config, game.world_list,
                                                                stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
 
     # Elevator Scans
@@ -413,17 +473,22 @@ def _create_string_patches(hint_config: HintConfiguration,
     return string_patches
 
 
-def _create_starting_popup(layout_configuration: LayoutConfiguration,
-                           resource_database: ResourceDatabase,
-                           starting_items: CurrentResources) -> list:
+def additional_starting_items(layout_configuration: LayoutConfiguration,
+                              resource_database: ResourceDatabase,
+                              starting_items: CurrentResources) -> List[str]:
     initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
 
-    extra_items = [
+    return [
         "{}{}".format("{} ".format(quantity) if quantity > 1 else "", _resource_user_friendly_name(item))
         for item, quantity in starting_items.items()
         if 0 < quantity != initial_items.get(item, 0)
     ]
 
+
+def _create_starting_popup(layout_configuration: LayoutConfiguration,
+                           resource_database: ResourceDatabase,
+                           starting_items: CurrentResources) -> list:
+    extra_items = additional_starting_items(layout_configuration, resource_database, starting_items)
     if extra_items:
         return [
             "Extra starting items:",
@@ -446,21 +511,25 @@ def _simplified_memo_data() -> Dict[str, str]:
 
 
 def create_patcher_file(description: LayoutDescription,
+                        players_config: PlayersConfiguration,
                         cosmetic_patches: CosmeticPatches,
                         ) -> dict:
     """
 
     :param description:
+    :param players_config:
     :param cosmetic_patches:
     :return:
     """
-    patcher_config = description.permalink.patcher_configuration
-    layout = description.permalink.layout_configuration
-    patches = description.patches
+    preset = description.permalink.get_preset(players_config.player_index)
+    patcher_config = preset.patcher_configuration
+    layout = preset.layout_configuration
+    patches = description.all_patches[players_config.player_index]
     rng = Random(description.permalink.as_str)
 
     game = data_reader.decode_data(layout.game_data)
-    useless_pickup = pickup_creator.create_useless_pickup(game.resource_database)
+    useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
+                                  players_config.player_index)
 
     result = {}
     _add_header_data_to_result(description, result)
@@ -471,16 +540,21 @@ def create_patcher_file(description: LayoutDescription,
     result["starting_popup"] = _create_starting_popup(layout, game.resource_database, patches.starting_items)
 
     # Add the pickups
-    if cosmetic_patches.disable_hud_popup:
-        memo_data = _simplified_memo_data()
+    if description.permalink.player_count == 1:
+        if cosmetic_patches.disable_hud_popup:
+            memo_data = _simplified_memo_data()
+        else:
+            memo_data = default_prime2_memo_data()
+        creator = PickupCreatorSolo(memo_data)
     else:
-        memo_data = default_prime2_memo_data()
+        creator = PickupCreatorMulti(players_config.player_names)
 
-    result["pickups"] = _create_pickup_list(patches, useless_pickup, _TOTAL_PICKUP_COUNT,
+    result["pickups"] = _create_pickup_list(patches,
+                                            useless_target, _TOTAL_PICKUP_COUNT,
                                             rng,
                                             patcher_config.pickup_model_style,
                                             patcher_config.pickup_model_data_source,
-                                            memo_data,
+                                            creator=creator,
                                             )
 
     # Add the elevators
@@ -490,9 +564,9 @@ def create_patcher_file(description: LayoutDescription,
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
 
     # Scan hints
-    result["string_patches"] = _create_string_patches(layout.hints, game, patches, rng)
+    result["string_patches"] = _create_string_patches(layout.hints, game, description.all_patches, players_config, rng)
 
-    # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
+    # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
     result["specific_patches"] = {
         "hive_chamber_b_post_state": True,

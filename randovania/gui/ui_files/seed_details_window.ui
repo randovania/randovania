@@ -34,49 +34,14 @@
         <string>Summary</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="1" column="0" colspan="2">
-         <widget class="QLabel" name="layout_description_left_label">
+        <item row="0" column="4">
+         <widget class="QPushButton" name="export_iso_button">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
+           <string>Save ISO</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="2" colspan="2">
-         <widget class="QLabel" name="layout_description_right_label">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="4">
-         <widget class="QLabel" name="layout_title_label">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Permalink: ????&lt;br/&gt;Seed Hash: ????&lt;br/&gt;Preset Name: ???&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="textInteractionFlags">
-           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4" colspan="3">
+        <item row="2" column="4" colspan="3">
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QCheckBox" name="faster_credits_check">
@@ -132,12 +97,50 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="4">
-         <widget class="QPushButton" name="export_iso_button">
+        <item row="0" column="0" colspan="4">
+         <widget class="QLabel" name="layout_title_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Save ISO</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Permalink: ????&lt;br/&gt;Seed Hash: ????&lt;br/&gt;Preset Name: ???&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textInteractionFlags">
+           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
           </property>
          </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="layout_description_left_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2" colspan="2">
+         <widget class="QLabel" name="layout_description_right_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <widget class="QComboBox" name="player_index_combo"/>
         </item>
        </layout>
       </widget>
@@ -146,7 +149,7 @@
         <string>Spoiler: Pickups</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="2">
+        <item row="2" column="2">
          <widget class="QComboBox" name="pickup_spoiler_pickup_combobox">
           <item>
            <property name="text">
@@ -155,7 +158,7 @@
           </item>
          </widget>
         </item>
-        <item row="0" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="pickup_spoiler_label">
           <property name="toolTip">
            <string>Enter text to the right to filter the list below</string>
@@ -165,7 +168,14 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0" colspan="3">
+        <item row="2" column="1">
+         <widget class="QPushButton" name="pickup_spoiler_show_all_button">
+          <property name="text">
+           <string>Show All</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="3">
          <widget class="QScrollArea" name="pickup_spoiler_scroll_area">
           <property name="verticalScrollBarPolicy">
            <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -185,7 +195,7 @@
              <x>0</x>
              <y>0</y>
              <width>651</width>
-             <height>199</height>
+             <height>159</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -202,10 +212,17 @@
           </widget>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="pickup_spoiler_show_all_button">
+        <item row="0" column="0" colspan="3">
+         <widget class="QLabel" name="spoiler_starting_location_label">
           <property name="text">
-           <string>Show All</string>
+           <string>Starting Location</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QLabel" name="spoiler_starting_items_label">
+          <property name="text">
+           <string>Starting Items</string>
           </property>
          </widget>
         </item>
