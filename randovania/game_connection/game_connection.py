@@ -5,6 +5,7 @@ from asyncqt import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, ConnectionBase, ConnectionStatus
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_info import CurrentResources
 
 
 class GameConnection(ConnectionBase):
@@ -52,6 +53,9 @@ class GameConnection(ConnectionBase):
 
     async def display_message(self, message: str):
         return await self.backend.display_message(message)
+
+    async def get_inventory(self) -> CurrentResources:
+        return await self.backend.get_inventory()
 
     def send_pickup(self, pickup: PickupEntry):
         return self.backend.send_pickup(pickup)
