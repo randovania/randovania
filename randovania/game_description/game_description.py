@@ -89,7 +89,7 @@ class GameDescription:
             if isinstance(node, TeleporterNode) and node.editable
         }
 
-        return GamePatches({}, elevator_connection, {}, {}, {}, {}, self.starting_location, {})
+        return GamePatches(None, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {})
 
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:

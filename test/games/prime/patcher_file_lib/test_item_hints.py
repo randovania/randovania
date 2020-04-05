@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.area import Area
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
@@ -88,7 +89,7 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: pickup,
+            pickup_index: PickupTarget(pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(hint_type,
@@ -131,7 +132,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: pickup,
+            pickup_index: PickupTarget(pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(HintType.GUARDIAN,
@@ -168,7 +169,7 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item, location)
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: pickup,
+            pickup_index: PickupTarget(pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(HintType.LIGHT_SUIT_LOCATION,

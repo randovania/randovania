@@ -9,6 +9,7 @@ import randovania
 import randovania.generator.elevator_distributor
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime import claris_randomizer
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
@@ -287,7 +288,7 @@ def test_apply_layout(
         permalink=Permalink(
             seed_number=1,
             spoiler=False,
-            preset=Preset(
+            presets={0: Preset(
                 name="Name",
                 description="Desc",
                 base_preset_name=None,
@@ -296,19 +297,21 @@ def test_apply_layout(
                     warp_to_start=MagicMock(),
                 ),
                 layout_configuration=MagicMock()
-            ),
+            )},
         ),
-        patches=MagicMock(),
+        all_patches={0: MagicMock()},
         solver_path=(),
     )
 
     game_root = MagicMock(spec=Path())
     backup_files_path = MagicMock() if has_backup_path else None
     progress_update = MagicMock()
+    player_config = PlayersConfiguration(0, {0: "you"})
     status_update = mock_create_progress_update_from_successive_messages.return_value
 
     # Run
-    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root)
+    claris_randomizer.apply_layout(description, player_config, cosmetic_patches,
+                                   backup_files_path, progress_update, game_root)
 
     # Assert
     mock_create_progress_update_from_successive_messages.assert_called_once_with(
@@ -323,7 +326,7 @@ def test_apply_layout(
     game_root.joinpath.assert_called_once_with("files", "randovania.{}".format(LayoutDescription.file_extension()))
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
 
-    mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
+    mock_modern_api.assert_called_once_with(game_root, status_update, description, player_config, cosmetic_patches)
     mock_apply_patches.assert_called_once_with(game_root, cosmetic_patches)
 
     if include_menu_mod:
@@ -349,11 +352,11 @@ def test_modern_api(mock_run_with_args: MagicMock,
     mock_create_patcher_file.return_value = {"some_data": 123}
 
     # Run
-    claris_randomizer._modern_api(game_root, status_update, description, cosmetic_patches)
+    claris_randomizer._modern_api(game_root, status_update, description, 0, cosmetic_patches)
 
     # Assert
     mock_base_args.assert_called_once_with(game_root)
-    mock_create_patcher_file.assert_called_once_with(description, cosmetic_patches)
+    mock_create_patcher_file.assert_called_once_with(description, 0, cosmetic_patches)
     mock_run_with_args.assert_called_once_with([], '{"some_data": 123}', "Randomized!", status_update)
 
 

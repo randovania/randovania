@@ -29,7 +29,7 @@ def persist_layout(data_dir: Path, description: LayoutDescription):
 
     date_format = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     file_path = history_dir.joinpath(
-        f"{date_format}-{description.permalink.preset.slug_name}.{description.file_extension()}")
+        f"{date_format}-{description.shareable_word_hash}.{description.file_extension()}")
     description.save_to_file(file_path)
 
 
@@ -61,6 +61,8 @@ class GenerateSeedTab(QWidget):
 
         for preset in self._window_manager.preset_manager.all_presets:
             self._create_button_for_preset(preset)
+
+        self.window.num_players_spin_box.setVisible(self._window_manager.is_preview_mode and False)
 
         # Menu
         self._tool_button_menu = QMenu(window.preset_tool_button)
@@ -173,10 +175,16 @@ class GenerateSeedTab(QWidget):
     # Generate seed
 
     def _generate_new_seed(self, spoiler: bool):
+        preset = self._current_preset_data
+        num_players = self.window.num_players_spin_box.value()
+
         self.generate_seed_from_permalink(Permalink(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
-            preset=self._current_preset_data,
+            presets={
+                i: preset
+                for i in range(num_players)
+            },
         ))
 
     def generate_seed_from_permalink(self, permalink: Permalink):

@@ -4,8 +4,6 @@ from pathlib import Path
 
 from randovania.cli import echoes_lib
 from randovania.generator import generator
-from randovania.interface_common import simplified_patcher
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.permalink import Permalink
 from randovania.resolver import debug
 
@@ -25,11 +23,6 @@ def distribute_command_logic(args):
     print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
 
     layout_description.save_to_file(args.output_file)
-    simplified_patcher.write_patcher_file_to_disk(
-        args.output_file.with_suffix(".patcher-json"),
-        layout_description,
-        CosmeticPatches.default(),
-    )
 
 
 def add_distribute_command(sub_parsers):

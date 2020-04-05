@@ -85,66 +85,6 @@ def test_generate_layout(mock_generate_layout: MagicMock,
     )
 
 
-@patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
-       new_callable=PropertyMock)
-def test_output_name_for(mock_shareable_hash: PropertyMock,
-                         empty_patches):
-    # Setup
-    permalink_mock = MagicMock(spec=Permalink(
-        seed_number=15000,
-        spoiler=True,
-        preset=None,
-    ))
-    layout = LayoutDescription(
-        version="0.15.0",
-        permalink=permalink_mock,
-        patches=empty_patches,
-        solver_path=()
-    )
-    mock_shareable_hash.return_value = "PermalinkStr"
-
-    # Run
-    result = simplified_patcher._output_name_for(layout)
-
-    # Assert
-    assert result == "Echoes Randomizer - PermalinkStr"
-
-
-@patch("randovania.interface_common.simplified_patcher.write_patcher_file_to_disk", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.pack_iso", autospec=True)
-@patch("randovania.interface_common.simplified_patcher.apply_layout", autospec=True)
-def test_internal_patch_iso(mock_apply_layout: MagicMock,
-                            mock_pack_iso: MagicMock,
-                            mock_write_patcher_file_to_disk: MagicMock,
-                            empty_patches
-                            ):
-    # Setup
-    layout = MagicMock(spec=LayoutDescription(version="0.15.0", permalink=MagicMock(),
-                                              patches=empty_patches, solver_path=()))
-    layout.shareable_hash = "layout"
-    options = MagicMock()
-    options.output_directory = Path("fun")
-
-    name = "Echoes Randomizer - layout"
-    output_iso = Path("fun", name + ".iso")
-    output_json = Path("fun", name + ".json")
-    patcher_json = Path("fun", name + "-patcher.json")
-    updaters = [MagicMock(), MagicMock()]
-
-    # Run
-    simplified_patcher._internal_patch_iso(updaters, layout, options)
-
-    # Assert
-    mock_apply_layout.assert_called_once_with(layout=layout, options=options, progress_update=updaters[0])
-    mock_pack_iso.assert_called_once_with(output_iso=output_iso, options=options, progress_update=updaters[1])
-    layout.save_to_file.assert_called_once_with(output_json)
-    mock_write_patcher_file_to_disk.assert_called_once_with(patcher_json, layout, options.cosmetic_patches)
-
-
-def test_export_layout():
-    pass
-
-
 @patch("randovania.games.prime.claris_randomizer.apply_layout", autospec=True)
 @patch("randovania.interface_common.simplified_patcher.patch_game_name_and_id", autospec=True)
 def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
@@ -152,13 +92,13 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
                       empty_patches
                       ):
     # Setup
-    layout = MagicMock(spec=LayoutDescription(version="0.15.0", permalink=MagicMock(),
-                                              patches=empty_patches, solver_path=()))
+    layout = MagicMock()
     progress_update = MagicMock()
     options: Options = MagicMock()
+    players_config = MagicMock()
 
     # Run
-    simplified_patcher.apply_layout(layout, options, progress_update)
+    simplified_patcher.apply_layout(layout, options, players_config, progress_update)
 
     # Assert
     mock_patch_game_name_and_id.assert_called_once_with(
@@ -166,6 +106,7 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
     )
     mock_claris_apply_layout.assert_called_once_with(
         description=layout,
+        players_config=players_config,
         cosmetic_patches=options.cosmetic_patches,
         game_root=options.game_files_path,
         backup_files_path=options.backup_files_path,

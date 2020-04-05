@@ -138,7 +138,7 @@ def create_hints(patches: GamePatches,
             message = color_text(TextColor.JOKE, joke_hints.pop())
 
         else:
-            pickup = patches.pickup_assignment.get(hint.target)
+            target = patches.pickup_assignment.get(hint.target)
 
             # Determine location name
             if hint.hint_type is HintType.GUARDIAN:
@@ -153,11 +153,11 @@ def create_hints(patches: GamePatches,
                 ))
 
             # Determine pickup name
-            if pickup is not None:
+            if target is not None:
                 is_joke, determiner, pickup_name = _calculate_pickup_hint(
                     hint.item_precision,
-                    _calculate_determiner(patches.pickup_assignment, pickup),
-                    pickup,
+                    _calculate_determiner(patches.pickup_assignment, target.pickup),
+                    target.pickup,
                     joke_items,
                 )
             else:
@@ -211,7 +211,7 @@ def _calculate_pickup_hint(precision: HintItemPrecision,
 def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry) -> str:
     if pickup.name in _DET_NULL:
         determiner = ""
-    elif tuple(pickup_entry.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
+    elif tuple(pickup_entry.pickup.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
         determiner = "the "
     elif pickup.name in _DET_AN:
         determiner = "an "

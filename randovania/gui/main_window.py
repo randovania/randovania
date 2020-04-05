@@ -46,7 +46,7 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
-    is_preview_mode: bool = False
+    _is_preview_mode: bool = False
 
     menu_new_version: Optional[QAction] = None
     _current_version_url: Optional[str] = None
@@ -68,11 +68,15 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     def main_window(self) -> QMainWindow:
         return self
 
+    @property
+    def is_preview_mode(self) -> bool:
+        return self._is_preview_mode
+
     def __init__(self, options: Options, preset_manager: PresetManager, preview: bool):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
-        self.is_preview_mode = preview
+        self._is_preview_mode = preview
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
 

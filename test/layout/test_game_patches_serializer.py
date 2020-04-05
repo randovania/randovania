@@ -7,7 +7,7 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader
-from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import PickupNode
@@ -20,11 +20,8 @@ from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout import game_patches_serializer
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
-from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.major_item_state import MajorItemState
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
@@ -34,7 +31,7 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
-        {"pickup": ['BR2kJgBrAYA=', "Screw Attack"]},
+        {"pickup": ['BQ7SEwA1gMA=', "Screw Attack"]},
         {"hint": [1000, {"hint_type": "location", "location_precision": "detailed",
                          "item_precision": "detailed", "target": 50}]},
     ],
@@ -74,7 +71,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         "hints": {},
         "_locations_internal": "",
     }
-    patches = game.create_game_patches()
+    patches = dataclasses.replace(game.create_game_patches(), player_index=0)
 
     locations = collections.defaultdict(dict)
     for world, area, node in game.world_list.all_worlds_areas_nodes:
@@ -119,7 +116,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
                                                   MajorItemState(), True, game.resource_database,
                                                   None, False)
 
-        patches = patches.assign_new_pickups([(PickupIndex(5), pickup)])
+        patches = patches.assign_new_pickups([(PickupIndex(5), PickupTarget(pickup, 0))])
         data["locations"]["Temple Grounds"]['Transport to Agon Wastes/Pickup (Missile)'] = pickup_name
 
     if request.param.get("hint"):
@@ -134,7 +131,7 @@ def test_encode(patches_with_data, echoes_game_data):
     expected, patches = patches_with_data
 
     # Run
-    encoded = game_patches_serializer.serialize(patches, echoes_game_data)
+    encoded = game_patches_serializer.serialize_single(0, 1, patches, echoes_game_data)
 
     # Assert
     for key, value in expected["locations"].items():
@@ -146,7 +143,7 @@ def test_decode(patches_with_data, default_layout_configuration):
     encoded, expected = patches_with_data
 
     # Run
-    decoded = game_patches_serializer.decode(encoded, default_layout_configuration)
+    decoded = game_patches_serializer.decode_single(0, 1, encoded, default_layout_configuration)
 
     # Assert
     assert decoded == expected
@@ -210,19 +207,18 @@ def test_round_trip_generated_patches(echoes_game_data, preset_manager):
         )
     )
 
-    patches = generator._create_randomized_patches(
+    all_patches = generator._create_randomized_patches(
         permalink=Permalink(
             seed_number=1000,
             spoiler=True,
-            preset=preset,
+            presets={0: preset},
         ),
-        game=data_reader.decode_data(echoes_game_data),
         status_update=lambda x: None,
     )
 
     # Run
-    encoded = game_patches_serializer.serialize(patches, echoes_game_data)
-    decoded = game_patches_serializer.decode(encoded, preset.layout_configuration)
+    encoded = game_patches_serializer.serialize(all_patches, {0: echoes_game_data})
+    decoded = game_patches_serializer.decode(encoded, {0: preset.layout_configuration})
 
     # Assert
-    assert patches == decoded
+    assert all_patches == decoded

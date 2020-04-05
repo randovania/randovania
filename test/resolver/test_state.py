@@ -56,32 +56,6 @@ def test_add_pickup_to_state(database):
     }
 
 
-@pytest.mark.parametrize("collected", [False, True])
-def test_assign_pickup_to_index(collected: bool, empty_patches, database):
-    # Setup
-    starting_resources = {}
-    index = PickupIndex(1)
-    if collected:
-        starting_resources[index] = 1
-    starting = state.State(starting_resources, (), 99, None, empty_patches, None, database)
-
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    p = PickupEntry("A", 2, ItemCategory.SUIT,
-                    (
-                        ConditionalResources(None, None, ((resource_a, 1),)),
-                    ))
-
-    # Run
-    final = starting.assign_pickup_to_index(p, index)
-
-    # Assert
-    assert final.patches.pickup_assignment == {index: p}
-    if collected:
-        assert final.resources == {index: 1, resource_a: 1}
-    else:
-        assert final.resources == {}
-
-
 def test_assign_pickup_to_starting_items(empty_patches, database):
     # Setup
 
