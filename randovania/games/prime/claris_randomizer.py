@@ -114,6 +114,7 @@ def _base_args(game_root: Path,
     return [
         _get_randomizer_path(),
         game_root,
+        "-test",
     ]
 
 
