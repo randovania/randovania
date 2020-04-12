@@ -470,6 +470,72 @@ def _create_string_patches(hint_config: HintConfiguration,
     # Elevator Scans
     string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
 
+    string_patches.extend([
+        {
+            "asset_id": 3271034066,
+            "strings": [
+                'Hints', 'Violet', 'Cobalt', 'Technology', 'Keys 1, 2, 3', 'Keys 7, 8, 9', 'Regular Hints',
+                'Emerald', 'Amber', '&line-spacing=75;Flying Ing\nCache Hints', 'Keys 4, 5, 6', 'Keys 1, 2, 3',
+                '&line-spacing=75;Torvus Energy\nController', 'Underground Tunnel', 'Training Chamber',
+                'Catacombs', 'Gathering Hall', '&line-spacing=75;Fortress\nTransport\nAccess',
+                '&line-spacing=75;Hall of Combat\nMastery', 'Main Gyro Chamber',
+                '&line-spacing=75;Sanctuary\nEnergy\nController', 'Main Research', 'Watch Station',
+                'Sanctuary Entrance', '&line-spacing=75;Transport to\nAgon Wastes', 'Mining Plaza',
+                '&line-spacing=75;Agon Energy\nController', 'Portal Terminal', 'Mining Station B',
+                'Mining Station A', 'Meeting Grounds', 'Path of Eyes', 'Path of Roots',
+                '&line-spacing=75;Main Energy\nController', "A-Kul's Testament",
+                '&line-spacing=75;Central\nMining\nStation', 'Main Reactor', 'Torvus Lagoon', 'Catacombs',
+                'Sanctuary Entrance', "C-Rch's Testament", 'Storage Cavern A', 'Landing Site', 'Industrial Site',
+                '&line-spacing=75;Sky Temple\nKey Hints', 'Keys 7, 8, 9', 'Keys 4, 5, 6', 'Sky Temple Key 1',
+                'Sky Temple Key 2', 'Sky Temple Key 3', 'Sky Temple Key 4', 'Sky Temple Key 5',
+                'Sky Temple Key 6', 'Sky Temple Key 7', 'Sky Temple Key 8', 'Sky Temple Key 9'
+            ],
+        }, {
+            "asset_id": 2301408881,
+            "strings": [
+                'Research', 'Mechanisms', 'Luminoth Technology', 'Biology', 'GF Security', 'Vehicles',
+                'Aether Studies', 'Aether', 'Dark Aether', 'Phazon', 'Sandgrass', 'Blueroot Tree',
+                'Ing Webtrap',
+                'Webling', 'U-Mos', 'Bladepod', 'Ing Storage', 'Flying Ing Cache', 'Torvus Bearerpod',
+                'Agon Bearerpod', 'Ingworm Cache', 'Ingsphere Cache', 'Plantforms', 'Darklings',
+                'GF Gate Mk VI',
+                'GF Gate Mk VII', 'GF Lock Mk V', 'GF Defense Shield', 'Kinetic Orb Cannon', 'GF Bridge',
+                "Samus's Gunship", 'GFS Tyr', 'Pirate Skiff', 'Visors', 'Weapon Systems', 'Armor',
+                'Morph Ball Systems', 'Movement Systems', 'Beam Weapons', 'Scan Visor', 'Combat Visor',
+                'Dark Visor',
+                'Echo Visor', 'Morph Ball', 'Boost Ball', 'Spider Ball', 'Morph Ball Bomb', 'Power Bomb',
+                'Dark Bomb', 'Light Bomb', 'Annihilator Bomb', 'Space Jump Boots', 'Screw Attack',
+                'Gravity Boost',
+                'Grapple Beam', 'Varia Suit', 'Dark Suit', 'Light Suit', 'Power Beam', 'Dark Beam',
+                'Light Beam',
+                'Annihilator Beam', 'Missile Launcher', 'Seeker Missile Launcher', 'Super Missile',
+                'Sonic Boom',
+                'Darkburst', 'Sunburst', 'Charge Beam', 'Missile Systems', 'Charge Combos', 'Morph Balls',
+                'Bomb Systems', 'Miscellaneous', 'Dark Temple Keys', 'Bloatsac', 'Luminoth Technology',
+                'Light Beacons', 'Light Crystals', 'Lift Crystals', 'Utility Crystals', 'Light Crystal',
+                'Energized Crystal', 'Nullified Crystal', 'Super Crystal', 'Light Beacon', 'Energized Beacon',
+                'Nullified Beacon', 'Super Beacon', 'Inactive Beacon', 'Dark Lift Crystal',
+                'Light Lift Crystal',
+                'Liftvine Crystal', 'Torvus Hanging Pod', 'Sentinel Crystal', 'Dark Sentinel Crystal',
+                'Systems',
+                'Bomb Slot', 'Spinner', 'Grapple Point', 'Spider Ball Track', 'Energy Tank',
+                'Beam Ammo Expansion',
+                'Missile Expansion', 'Dark Agon Keys', 'Dark Torvus Keys', 'Ing Hive Keys', 'Sky Temple Keys',
+                'Temple Grounds', 'Keys Dark Torvus', 'Torvus Bog', 'Agon Wastes', 'Dark Agon Temple Key 1',
+                'Dark Agon Temple Key 2', 'Dark Agon Temple Key 3', 'Dark Torvus Temple Key 1',
+                'Dark Torvus Temple Key 2', 'Dark Torvus Temple Key 3', 'Ing Hive Temple Key 1',
+                'Ing Hive Temple Key 2', 'Ing Hive Temple Key 3', 'Sky Temple Key 1', 'Sky Temple Key 2',
+                'Sky Temple Key 3', 'Sky Temple Key 4', 'Sky Temple Key 5', 'Sky Temple Key 6',
+                'Sky Temple Key 7',
+                'Sky Temple Key 8', 'Sky Temple Key 9', 'Suit Expansions', 'Charge Combo', 'Ingclaw',
+                'Dormant Ingclaw', 'Power Bomb Expansion', 'Energy Transfer Module', 'Cocoons',
+                'Splinter Cocoon',
+                'War Wasp Hive', 'Metroid Cocoon', 'Dark Aether', 'Aether', 'Dark Portal', 'Light Portal',
+                'Energy Controller', 'Wall Jump Surface',
+            ]
+        },
+    ])
+
     return string_patches
 
 
