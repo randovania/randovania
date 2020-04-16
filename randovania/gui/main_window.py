@@ -1,25 +1,29 @@
 import asyncio
 import dataclasses
+import functools
 import json
 from functools import partial
 from typing import Optional
 
 import markdown
 from PySide2 import QtCore, QtWidgets
-from PySide2.QtCore import QUrl, Signal
+from PySide2.QtCore import QUrl, Signal, Qt
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog
+from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog, QMenu
 
 from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime import default_data
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
+from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
@@ -109,6 +113,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         # Needs the GenerateSeedTab
         self._create_open_map_tracker_actions()
+        self._setup_difficulties_menu()
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -290,6 +295,62 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         tracker_window.show()
         self._item_tracker_window = tracker_window
+
+    # Difficulties stuff
+
+    def _exec_trick_details(self, popup: TrickDetailsPopup):
+        self._trick_details_popup = popup
+        self._trick_details_popup.setWindowModality(Qt.WindowModal)
+        self._trick_details_popup.open()
+
+    def _open_trick_details_popup(self, trick: SimpleResourceInfo, level: LayoutTrickLevel):
+        self._exec_trick_details(TrickDetailsPopup(
+            self,
+            self,
+            default_database.default_prime2_game_description(),
+            trick,
+            level,
+        ))
+
+    def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
+        self._exec_trick_details(TrickDetailsPopup(
+            self,
+            self,
+            default_database.default_prime2_game_description(),
+            None,
+            difficulty,
+        ))
+
+    def _setup_difficulties_menu(self):
+        game = default_database.default_prime2_game_description()
+        for i, trick_level in enumerate(LayoutTrickLevel):
+            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_RESTRICTIONS}:
+                difficulty_action = QAction(self)
+                difficulty_action.setText(trick_level.long_name)
+                self.menu_difficulties.addAction(difficulty_action)
+                difficulty_action.triggered.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
+
+        configurable_tricks = TrickLevelConfiguration.all_possible_tricks()
+        tricks_in_use = used_tricks(game.world_list)
+
+        for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
+            if trick.index not in configurable_tricks or trick not in tricks_in_use:
+                continue
+
+            trick_menu = QMenu(self)
+            trick_menu.setTitle(trick.long_name)
+            self.menu_trick_details.addAction(trick_menu.menuAction())
+
+            used_difficulties = difficulties_for_trick(game.world_list, trick)
+            for i, trick_level in enumerate(LayoutTrickLevel):
+                if trick_level in used_difficulties:
+                    difficulty_action = QAction(self)
+                    difficulty_action.setText(trick_level.long_name)
+                    trick_menu.addAction(difficulty_action)
+                    difficulty_action.triggered.connect(
+                        functools.partial(self._open_trick_details_popup, trick, trick_level))
+
+    # ==========
 
     def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after
