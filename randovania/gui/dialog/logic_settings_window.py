@@ -1,6 +1,6 @@
 import dataclasses
 import functools
-from typing import Optional, Dict
+from typing import Dict
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
@@ -10,8 +10,6 @@ from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
@@ -21,6 +19,7 @@ from randovania.gui.game_patches_window import GamePatchesWindow
 from randovania.gui.generated.logic_settings_window_ui import Ui_LogicSettingsWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
+from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.main_rules import MainRulesWindow
 from randovania.interface_common.options import Options
@@ -29,7 +28,7 @@ from randovania.layout.available_locations import RandomizationMode
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode, LayoutDamageStrictness
 from randovania.layout.preset import Preset
-from randovania.layout.starting_location import StartingLocationConfiguration, StartingLocation
+from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
@@ -67,30 +66,6 @@ _TRICK_LEVEL_DESCRIPTION = {
         "There are no guarantees that a seed will be possible in this case."
     ],
 }
-
-
-def _difficulties_for_trick(world_list: WorldList, trick: SimpleResourceInfo):
-    result = set()
-
-    for area in world_list.all_areas:
-        for _, _, requirements in area.all_connections:
-            for individual in requirements.all_individual:
-                if individual.resource == trick:
-                    result.add(LayoutTrickLevel.from_number(individual.amount))
-
-    return result
-
-
-def _used_tricks(world_list: WorldList):
-    result = set()
-
-    for area in world_list.all_areas:
-        for _, _, requirements in area.all_connections:
-            for individual in requirements.all_individual:
-                if individual.resource.resource_type == ResourceType.TRICK:
-                    result.add(individual.resource)
-
-    return result
 
 
 def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
@@ -268,7 +243,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._slider_for_trick = {}
 
         configurable_tricks = TrickLevelConfiguration.all_possible_tricks()
-        used_tricks = _used_tricks(self.world_list)
+        tricks_in_use = used_tricks(self.world_list)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 
@@ -276,7 +251,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         row = 2
         for trick in sorted(self.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick.index not in configurable_tricks or trick not in used_tricks:
+            if trick.index not in configurable_tricks or trick not in tricks_in_use:
                 continue
 
             if row > 1:
@@ -313,9 +288,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._slider_for_trick[trick] = horizontal_slider
             slider_layout.addWidget(horizontal_slider, 0, 1, 1, 10)
 
-            difficulties_for_trick = _difficulties_for_trick(self.world_list, trick)
+            used_difficulties = difficulties_for_trick(self.world_list, trick)
             for i, trick_level in enumerate(LayoutTrickLevel):
-                if trick_level == LayoutTrickLevel.NO_TRICKS or trick_level in difficulties_for_trick:
+                if trick_level == LayoutTrickLevel.NO_TRICKS or trick_level in used_difficulties:
                     difficulty_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
                     difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
                     difficulty_label.setText(trick_level.long_name)
