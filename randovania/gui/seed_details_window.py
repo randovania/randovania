@@ -11,7 +11,7 @@ from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib import preset_describer
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_seed_log
+from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
@@ -93,7 +93,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     def _export_log(self):
         default_name = "Echoes Randomizer - {}.{}".format(self.layout_description.shareable_word_hash,
                                                           self.layout_description.file_extension())
-        json_path = prompt_user_for_output_seed_log(self, default_name=default_name)
+        json_path = prompt_user_for_output_game_log(self, default_name=default_name)
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
 
