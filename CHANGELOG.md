@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
     Trick Level tab when customizing a preset. 
+    
+-   Added: Play -> Import game file, to load spoiler logs.
 
 -   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
     must be collected for the appropriate events to be triggered. 
