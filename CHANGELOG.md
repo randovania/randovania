@@ -21,6 +21,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs. 
 
+-   Fixed: Bioenergy Production correctly requires Scan Visor for connections using the racks.
+
+-   Added: In Bioenergy Production, method of reaching the Storage C door with Space Jump and Screw Attack (Easy and above)
+
+-   Added: In Bioenergy Production, method of reaching the Storage C door using a roll jump (Normal and above).
+
+-   Added: In Bioenergy Production, method of reaching the Ventilation Area B door using Screw Attack without Space Jump (Normal and above).
+
+-   Added: In Bioenergy Production, additional upper level connections using Space Jump and Screw Attack.
+
+-   Added: In Sandcanyon, method of reaching the center platform using a roll jump and boost ball (Hard and above).
+
+-   Changed: In Command Center Access, the wall boosts to reach the lower Central Mining Station and Command Center doors from the morph ball tunnel are now Normal difficulty (from Hard).
+
+-   Changed: In Portal Chamber (both light and dark Torvus) , all wall boosts are now Normal difficulty (from Hard).
+
+-   Changed: In Undertransit Two, all wall boosts are now Easy difficulty (from Hard).
+
+-   Changed: In Temple Security Access, all wall boosts are now Normal difficulty (from Hard).
+
+-   Changed: In Watch Station, all wall boosts are now Normal difficulty (from Hard).
+
+-   Added: In Watch Station, a wall boost method of reaching the Watch Station Access door from the Sentinel's Path door using Spider Ball and Boost Ball (Normal and above).
+
+-   Changed: In Service Access, methods using a wall boost to reach the Meeting Grounds door from the upper Morph Ball tunnel are now Normal difficulty (from Hard).
+
+-   Changed: In Great Bridge, the wall boost to reach the lower Temple Access Door from the Path of Roots door is now Easy difficulty (from Hard).
+
+-   Changed: In Transit Tunnel East, the wall boost to reach the Training Chamber door from the Catacombs door is now Easy dififculty (from Hard).
+
+-   Changed: In Transit Tunnel South, all wall boosts are now Easy difficulty (from Hard).
+
 ## [1.1.1] - 2020-03-11
 
 -   Added: The preset summary now includes if menu mod is enabled.
