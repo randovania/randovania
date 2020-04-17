@@ -40,6 +40,8 @@ class BitPackDecoder:
         return self.decode(value)[0]
 
     def decode_element(self, array: List[T]) -> T:
+        if len(array) == 1:
+            return array[0]
         return array[self.decode_single(len(array))]
 
     def peek(self, *args) -> Tuple[int, ...]:
@@ -179,7 +181,11 @@ class BitPackDataClass(BitPackValue):
 
 
 def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
-    yield array.index(element), len(array)
+    if len(array) > 1:
+        yield array.index(element), len(array)
+    else:
+        if element not in array:
+            raise ValueError("given element is not in array")
 
 
 def _is_sorted(array: List[T]) -> bool:
