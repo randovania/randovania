@@ -95,6 +95,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self.open_database_viewer_button.clicked.connect(self._open_data_visualizer)
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
+        self.import_game_file_button.clicked.connect(self._import_spoiler_log)
         self.create_new_seed_button.clicked.connect(
             lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
 
@@ -141,6 +142,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         if result == QDialog.Accepted:
             permalink = dialog.get_permalink_from_field()
             self.generate_seed_tab.generate_seed_from_permalink(permalink)
+
+    def _import_spoiler_log(self):
+        json_path = common_qt_lib.prompt_user_for_input_game_log(self)
+        if json_path is not None:
+            layout = LayoutDescription.from_file(json_path)
+            self.show_seed_tab(layout)
 
     def show_seed_tab(self, layout: LayoutDescription):
         self._details_window.update_layout_description(layout)
