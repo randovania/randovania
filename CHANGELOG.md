@@ -55,6 +55,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: In Transit Tunnel South, all wall boosts are now Easy difficulty (from Hard).
 
+-   Added: In Hall of Honored Dead, a method of obtaining the item with Power Bombs (Trivial and above).
+
 ## [1.1.1] - 2020-03-11
 
 -   Added: The preset summary now includes if menu mod is enabled.
