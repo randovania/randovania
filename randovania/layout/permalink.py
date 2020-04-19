@@ -30,6 +30,7 @@ class Permalink(BitPackValue):
             raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
+        object.__setattr__(self, "__cached_as_str", None)
 
     @property
     def patcher_configuration(self) -> PatcherConfiguration:
@@ -134,10 +135,15 @@ class Permalink(BitPackValue):
 
     @property
     def as_str(self) -> str:
+        cached_result = object.__getattribute__(self, "__cached_as_str")
+        if cached_result is not None:
+            return cached_result
         try:
             b = bitpacking.pack_value(self)
             b += bytes([single_byte_hash(b)])
-            return base64.b64encode(b).decode("utf-8")
+            result = base64.b64encode(b).decode("utf-8")
+            object.__setattr__(self, "__cached_as_str", result)
+            return result
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
 
