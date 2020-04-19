@@ -101,15 +101,20 @@ def gate_assignment_for_configuration(configuration: LayoutConfiguration,
     :return:
     """
 
-    choices = list(LayoutTranslatorRequirement)
-    choices.remove(LayoutTranslatorRequirement.RANDOM)
+    all_choices = list(LayoutTranslatorRequirement)
+    all_choices.remove(LayoutTranslatorRequirement.RANDOM)
+    all_choices.remove(LayoutTranslatorRequirement.RANDOM_WITH_REMOVED)
+    without_removed = copy.copy(all_choices)
+    without_removed.remove(LayoutTranslatorRequirement.REMOVED)
+    random_requirements = {LayoutTranslatorRequirement.RANDOM, LayoutTranslatorRequirement.RANDOM_WITH_REMOVED}
 
     result = {}
     for gate, requirement in configuration.translator_configuration.translator_requirement.items():
-        if requirement == LayoutTranslatorRequirement.RANDOM:
+        if requirement in random_requirements:
             if rng is None:
                 raise MissingRng("Translator")
-            requirement = rng.choice(choices)
+            requirement = rng.choice(all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
+                                     else without_removed)
 
         result[gate] = resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_index)
 
