@@ -22,6 +22,7 @@ from randovania.generator import base_patches_factory
 from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
+from randovania.generator.item_pool import pool_creator
 from randovania.generator.item_pool.pool_creator import calculate_item_pool
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -162,10 +163,10 @@ def test_reach_size_from_start(echoes_game_description, default_layout_configura
         default_layout_configuration,
         trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HYPERMODE),
     )
-    patches = echoes_game_description.create_game_patches()
-    patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(
-        configuration, echoes_game_description.resource_database, Random(15000)
-    ))
+
+    base_patches = base_patches_factory.create_base_patches(configuration, Random(15000), echoes_game_description)
+    patches, _ = pool_creator.calculate_item_pool(configuration, echoes_game_description.resource_database,
+                                                  base_patches)
 
     game, state = logic_bootstrap(configuration, echoes_game_description, patches)
 
@@ -173,5 +174,5 @@ def test_reach_size_from_start(echoes_game_description, default_layout_configura
     reach = GeneratorReach.reach_from_state(game, state)
 
     # Assert
-    assert len(list(reach.nodes)) == 25
-    assert len(list(reach.safe_nodes)) == 4
+    assert len(list(reach.nodes)) == 44
+    assert len(list(reach.safe_nodes)) == 5
