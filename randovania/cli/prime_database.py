@@ -161,22 +161,23 @@ def view_area_command(sub_parsers):
 
 def export_areas_command_logic(args):
     gd = load_game_description(args)
+    output_file: Path = args.output_file
 
-    with args.output_file.open("w", newline='') as output:
-        writer = csv.writer(output)
-        writer.writerow(("World", "Area", "Node", "Can go back in bounds",
-                         "Interact while OOB and go back in bounds",
-                         "Interact while OOB and stay out of bounds",
-                         "Requirements for going OOB"))
+    with output_file.open("w", encoding="utf-8") as output:
+        def print_to_file(*args):
+            output.write("\t".join(str(arg) for arg in args) + "\n")
 
-        for world, area, node in gd.world_list.all_worlds_areas_nodes:
-            writer.writerow((world.name, area.name, node.name, False, False, False))
+        for world in gd.world_list.worlds:
+            output.write("====================\n{}\n".format(world.name))
+            for area in world.areas:
+                output.write("----------------\n")
+                debug.pretty_print_area(area, print_function=print_to_file)
 
 
 def export_areas_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "export-areas",
-        help="Export a CSV with the areas of the game.",
+        help="Export a text file with all areas and their requirements",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
     add_data_file_argument(parser)
