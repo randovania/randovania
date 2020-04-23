@@ -57,6 +57,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In Hall of Honored Dead, a method of obtaining the item with Power Bombs (Trivial and above).
 
+-   Added: Many Light Ammo/Dark Ammo/Morph Ball/Charge Beam requirements.
+
+-   Added: In Bioenergy Production, methods of reaching the item and the door to Ventilation Area B using a Bomb Space Jump and Screw Attack without Space Jump (Hypermode).
+
+-   Fixed: Biostorage Station now requires Space Jump or Scan Visor to reach the upper level (No Tricks and above).
+
+-   Changed: In Sand Processing, the method of reaching the item without Boost Ball requires the Bomb Space Jump trick, and no longer requires Screw Attack.
+
+-   Added: In GFMC Compound, a method of reaching the ship item with Screw Attack (Normal and above).
+
+-   Added: In Main Gyro Chamber, a method of reaching the bottom of the gyro area from the middle of the room with Screw Attack (Easy and aboive).
+
+-   Changed: In Workers Path, Morph Ball Bomb is no longer required.
+
+-   Changed: In Main Reactor, unlocking the gate no longer requires Space Jump, and is now Trivial difficulty (from Easy).
+
+-   Added: In Landing Site, a method of reaching the door to Service Access using Morph Ball Bomb and a Slope Jump (Normal and above).
+
+-   Added: Methods of climbing Central Station Access and Warrior's Walk using Screw Attack (Hard and above) and a wall boost (Hypermode).
+
+-   Added: A method of opening the echo gate in Hive Dynamo Access from the Hive Gyro chamber side using Sonic Boom (Easy and above).
+
+-   Changed: In Reliquary Grounds, the method of reaching the door to Ing Reliquary using Screw Attack is now Normal difficulty (from Hard).
+
+-   Added: In Reliquary Grounds, a method of reaching the door to Ing Reliquary using Morph Ball Bomb and Screw Attack without Space Jump (Easy and above).
+
+-   Added: In Phazon Pit, a method of reaching the door to Phazon Grounds using a roll jump and boost ball (Hard and above).
+
+-   Changed: Climbing Hall of Stairs with Space Jump is now Trivial difficulty (from Easy).
+
+-   Added: In Transport Center, a method of reaching the elevator door from the portal using Screw Attack without Space Jump (Trivial and above).
+
+
+
 ## [1.1.1] - 2020-03-11
 
 -   Added: The preset summary now includes if menu mod is enabled.
