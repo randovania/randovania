@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The export-areas command line option now outputs details about requirements for each area.
 
+-   Added: The command line option "permalink", that creates a permalink based on a given preset.
+
 ### Logic Database changes
 
 -   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs. 

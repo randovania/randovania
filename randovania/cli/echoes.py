@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 from randovania.cli import prime_database
 from randovania.cli.commands.batch_distribute import add_batch_distribute_command
 from randovania.cli.commands.distribute import add_distribute_command
+from randovania.cli.commands.permalink_command import add_permalink_command
 from randovania.cli.commands.randomize_command import add_randomize_command
 from randovania.cli.commands.refresh_presets import add_refresh_presets_command
 from randovania.cli.commands.validate import add_validate_command
@@ -17,6 +18,7 @@ def create_subparsers(sub_parsers):
     )
     sub_parsers = parser.add_subparsers(dest="command")
     add_validate_command(sub_parsers)
+    add_permalink_command(sub_parsers)
     add_distribute_command(sub_parsers)
     add_randomize_command(sub_parsers)
     add_batch_distribute_command(sub_parsers)

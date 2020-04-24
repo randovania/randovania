@@ -12,7 +12,7 @@ from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
 
 _PERMALINK_MAX_VERSION = 16
-_PERMALINK_MAX_SEED = 2 ** 31
+PERMALINK_MAX_SEED = 2 ** 31
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -28,7 +28,7 @@ class Permalink(BitPackValue):
     def __post_init__(self):
         if self.seed_number is None:
             raise ValueError("Missing seed number")
-        if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
+        if not (0 <= self.seed_number < PERMALINK_MAX_SEED):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
 
     @property
@@ -47,7 +47,7 @@ class Permalink(BitPackValue):
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         yield self.current_version(), _PERMALINK_MAX_VERSION
-        yield self.seed_number, _PERMALINK_MAX_SEED
+        yield self.seed_number, PERMALINK_MAX_SEED
         yield int(self.spoiler), 2
         yield _dictionary_byte_hash(self.layout_configuration.game_data), 256
 
@@ -79,7 +79,7 @@ class Permalink(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Permalink":
-        version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED, 2)
+        version, seed, spoiler = decoder.decode(_PERMALINK_MAX_VERSION, PERMALINK_MAX_SEED, 2)
         cls._raise_if_different_version(version)
 
         included_data_hash = decoder.decode_single(256)

@@ -18,7 +18,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import Permalink, PERMALINK_MAX_SEED
 from randovania.layout.preset import Preset, save_preset_file, read_preset_file
 from randovania.resolver.exceptions import GenerationFailure
 
@@ -174,7 +174,7 @@ class GenerateSeedTab(QWidget):
 
     def _generate_new_seed(self, spoiler: bool):
         self.generate_seed_from_permalink(Permalink(
-            seed_number=random.randint(0, 2 ** 31),
+            seed_number=random.randint(0, PERMALINK_MAX_SEED),
             spoiler=spoiler,
             preset=self._current_preset_data,
         ))
