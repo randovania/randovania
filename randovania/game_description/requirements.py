@@ -267,7 +267,7 @@ class RequirementSet:
     def __repr__(self):
         return repr(self.alternatives)
 
-    def pretty_print(self, indent=""):
+    def pretty_print(self, indent="", print_function=print):
         to_print = []
         if self == RequirementSet.impossible():
             to_print.append("Impossible")
@@ -279,7 +279,7 @@ class RequirementSet:
                 for alternative in self.alternatives
             )
         for line in sorted(to_print):
-            print(indent + line)
+            print_function(indent + line)
 
     @classmethod
     @lru_cache()
