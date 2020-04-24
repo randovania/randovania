@@ -22,20 +22,20 @@ def n(node: Node, with_world=False) -> str:
     return _gd.world_list.node_name(node, with_world) if node is not None else "None"
 
 
-def pretty_print_area(area: Area):
+def pretty_print_area(area: Area, print_function=print):
     world_list = _gd.world_list
 
-    print(area.name)
-    print("Asset id: {}".format(area.area_asset_id))
+    print_function(area.name)
+    print_function("Asset id: {}".format(area.area_asset_id))
     for node in area.nodes:
-        print(">", node.name, type(node))
+        print_function(f"> {node.name}")
         for target_node, requirements in world_list.potential_nodes_from(node, _gd.create_game_patches()):
             if target_node is None:
-                print("  > None?")
+                print_function("  > None?")
             else:
-                print("  >", n(target_node))
-                requirements.pretty_print("      ")
-        print()
+                print_function("  >", n(target_node))
+                requirements.pretty_print("      ", print_function)
+        print_function()
 
 
 def sorted_requirementset_print(new_requirements: Set[RequirementList]):
