@@ -77,7 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Methods of climbing Central Station Access and Warrior's Walk using Screw Attack (Hard and above) and a wall boost (Hypermode).
 
--   Added: A method of opening the echo gate in Hive Dynamo Access from the Hive Gyro chamber side using Sonic Boom (Easy and above).
+-   Added: A method of opening the echo gate in Hive Dynamo Access from the Hive Gyro chamber side using Sonic Boom or Darkburst (Easy and above).
 
 -   Changed: In Reliquary Grounds, the method of reaching the door to Ing Reliquary using Screw Attack is now Normal difficulty (from Hard).
 
@@ -88,6 +88,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Climbing Hall of Stairs with Space Jump is now Trivial difficulty (from Easy).
 
 -   Added: In Transport Center, a method of reaching the elevator door from the portal using Screw Attack without Space Jump (Trivial and above).
+
+-   Added: In Mining Station A, a method to reach the Temple Access door using Screw Attack (Trivial and above).
+
+-   Added: In Gathering Hall, a method to reach the Transit Tunnel South from the Gathering Access door using Space Jump (Easy and above).
+
+-   Added: In Industrial Site, a method of opening the Industrial Site gate from the wrong side using a missile (Trivial and above).
+
+-   Fixed: Removing the Aerial Training Site barrier requires Scan Visor.
 
 
 
