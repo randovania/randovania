@@ -1,8 +1,8 @@
 from typing import NamedTuple, List, Dict, Optional, Iterator, Tuple
 
 from randovania.game_description.node import Node, DockNode, PickupNode
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.requirements import RequirementSet
 
 
 class Area(NamedTuple):
@@ -11,7 +11,7 @@ class Area(NamedTuple):
     area_asset_id: int
     default_node_index: int
     nodes: List[Node]
-    connections: Dict[Node, Dict[Node, RequirementSet]]
+    connections: Dict[Node, Dict[Node, Requirement]]
 
     def __repr__(self):
         return "Area[{}]".format(self.name)
@@ -37,7 +37,7 @@ class Area(NamedTuple):
         return None
 
     @property
-    def all_connections(self) -> Iterator[Tuple[Node, Node, RequirementSet]]:
+    def all_connections(self) -> Iterator[Tuple[Node, Node, Requirement]]:
         """
         Iterates over all paths there are in this area.
         :return: source, target and the requirements for it

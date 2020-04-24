@@ -9,7 +9,7 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, Q
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.world import World
 from randovania.gui.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
@@ -197,12 +197,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             assert len(self.current_area.nodes) == 1
             return
 
-        requirement_set = self.current_area.connections[self.current_node].get(self.current_connection_node)
+        requirement = self.current_area.connections[self.current_node].get(self.current_connection_node)
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,
             self.alternatives_grid_layout,
             self.resource_database,
-            requirement_set,
+            requirement,
             False
         )
 
@@ -213,18 +213,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert from_node is not None
         assert target_node is not None
 
-        requirement_set = self.current_area.connections[from_node].get(target_node)
-        editor = ConnectionsEditor(self, self.resource_database, requirement_set)
+        requirement = self.current_area.connections[from_node].get(target_node)
+        editor = ConnectionsEditor(self, self.resource_database, requirement)
         result = editor.exec_()
 
         if result == QDialog.Accepted:
-            self._apply_edit_connections(from_node, target_node, editor.final_requirement_set)
+            self._apply_edit_connections(from_node, target_node, editor.final_requirement)
 
     def _apply_edit_connections(self, from_node: Node, target_node: Node,
-                                requirement_set: Optional[RequirementSet]):
+                                requirement: Optional[Requirement]):
 
         current_connections = self.current_area.connections[from_node]
-        self.current_area.connections[from_node][target_node] = requirement_set
+        self.current_area.connections[from_node][target_node] = requirement
         if self.current_area.connections[from_node][target_node] is None:
             del self.current_area.connections[from_node][target_node]
 

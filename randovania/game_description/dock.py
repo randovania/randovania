@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import unique, Enum
 from typing import NamedTuple, List
 
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements import Requirement
 
 
 @unique
@@ -17,7 +17,7 @@ class DockWeakness(NamedTuple):
     index: int
     name: str
     is_blast_shield: bool
-    requirements: RequirementSet
+    requirement: Requirement
     dock_type: DockType
 
     def __repr__(self):

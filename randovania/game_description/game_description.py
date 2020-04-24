@@ -7,7 +7,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
-from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
+from randovania.game_description.requirements import SatisfiableRequirements, Requirement
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
@@ -18,14 +18,14 @@ from randovania.game_description.world_list import WorldList
 def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[SimpleResourceInfo]:
     for list_by_type in db:
         for dock_weakness in list_by_type:
-            yield from dock_weakness.requirements.dangerous_resources
+            yield from dock_weakness.requirement.as_set.dangerous_resources
 
 
 def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
     for area in areas:
         for node in area.nodes:
-            for connection in area.connections[node].values():
-                yield from connection.dangerous_resources
+            for requirement in area.connections[node].values():
+                yield from requirement.as_set.dangerous_resources
 
 
 class GameDescription:
@@ -34,7 +34,7 @@ class GameDescription:
     dock_weakness_database: DockWeaknessDatabase
 
     resource_database: ResourceDatabase
-    victory_condition: RequirementSet
+    victory_condition: Requirement
     starting_location: AreaLocation
     initial_states: Dict[str, ResourceGainTuple]
     dangerous_resources: FrozenSet[SimpleResourceInfo]
@@ -58,7 +58,7 @@ class GameDescription:
                  dock_weakness_database: DockWeaknessDatabase,
 
                  resource_database: ResourceDatabase,
-                 victory_condition: RequirementSet,
+                 victory_condition: Requirement,
                  starting_location: AreaLocation,
                  initial_states: Dict[str, ResourceGainTuple],
                  world_list: WorldList,

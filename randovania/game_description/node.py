@@ -5,7 +5,7 @@ from typing import Optional
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockConnection
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
+from randovania.game_description.requirements import ResourceRequirement, Requirement, RequirementAnd
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
@@ -29,8 +29,8 @@ class Node:
     def is_resource_node(self) -> bool:
         return False
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        return RequirementSet.trivial()
+    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+        return Requirement.trivial()
 
 
 @dataclasses.dataclass(frozen=True)
@@ -84,16 +84,12 @@ class PickupNode(ResourceNode):
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
         # FIXME: using non-resource as key in CurrentResources
         if current_resources.get("add_self_as_requirement_to_resources") == 1:
-            return RequirementSet([
-                RequirementList(0, [
-                    IndividualRequirement(self.pickup_index, 1, False),
-                ])
-            ])
+            return ResourceRequirement(self.pickup_index, 1, False)
         else:
-            return RequirementSet.trivial()
+            return Requirement.trivial()
 
     def resource(self) -> ResourceInfo:
         return self.pickup_index
@@ -116,15 +112,11 @@ class EventNode(ResourceNode):
     def __repr__(self):
         return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
+    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
         if current_resources.get("add_self_as_requirement_to_resources") == 1:
-            return RequirementSet([
-                RequirementList(0, [
-                    IndividualRequirement(self.event, 1, False),
-                ])
-            ])
+            return ResourceRequirement(self.event, 1, False)
         else:
-            return RequirementSet.trivial()
+            return Requirement.trivial()
 
     def resource(self) -> ResourceInfo:
         return self.event
@@ -144,12 +136,10 @@ class TranslatorGateNode(ResourceNode):
     def __repr__(self):
         return "TranslatorGateNode({!r} -> {})".format(self.name, self.gate.index)
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        return RequirementSet([
-            RequirementList(0, [
-                IndividualRequirement(patches.translator_gates[self.gate], 1, False),
-                IndividualRequirement(self.scan_visor, 1, False),
-            ])
+    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+        return RequirementAnd([
+            ResourceRequirement(patches.translator_gates[self.gate], 1, False),
+            ResourceRequirement(self.scan_visor, 1, False),
         ])
 
     def resource(self) -> ResourceInfo:
@@ -215,12 +205,12 @@ class LogbookNode(ResourceNode):
             f"/{extra}" if extra is not None else ""
         )
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        items = [IndividualRequirement(self.scan_visor, 1, False)]
+    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+        items = [ResourceRequirement(self.scan_visor, 1, False)]
         if self.required_translator is not None:
-            items.append(IndividualRequirement(self.required_translator, 1, False))
+            items.append(ResourceRequirement(self.required_translator, 1, False))
 
-        return RequirementSet([RequirementList(0, items)])
+        return RequirementAnd(items)
 
     def resource(self) -> ResourceInfo:
         return LogbookAsset(self.string_asset_id)
