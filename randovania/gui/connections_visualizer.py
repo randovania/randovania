@@ -6,7 +6,8 @@ from PySide2.QtGui import QIntValidator
 from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
     QLineEdit
 
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
+from randovania.game_description.requirements import RequirementSet, RequirementList, ResourceRequirement, Requirement, \
+    RequirementOr, RequirementAnd
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
@@ -59,7 +60,7 @@ def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWi
 class ItemRow:
     def __init__(self,
                  parent: QWidget, parent_layout: QVBoxLayout,
-                 resource_database: ResourceDatabase, item: IndividualRequirement,
+                 resource_database: ResourceDatabase, item: ResourceRequirement,
                  rows: List["ItemRow"]
                  ):
         self.parent = parent
@@ -126,8 +127,8 @@ class ItemRow:
         self._rows.remove(self)
 
     @property
-    def current_individual(self) -> IndividualRequirement:
-        return IndividualRequirement(
+    def current_individual(self) -> ResourceRequirement:
+        return ResourceRequirement(
             self.resource_name_combo.currentData(),
             int(self.amount_edit.text()),
             self.negate_combo.currentData()
@@ -148,11 +149,11 @@ class ConnectionsVisualizer:
                  parent: QWidget,
                  grid_layout: QGridLayout,
                  resource_database: ResourceDatabase,
-                 requirement_set: Optional[RequirementSet],
+                 requirement: Optional[Requirement],
                  edit_mode: bool,
                  num_columns_for_alternatives: int = 2
                  ):
-        assert requirement_set != RequirementSet.impossible()
+        assert requirement != Requirement.impossible()
 
         self.parent = parent
         self.resource_database = resource_database
@@ -161,10 +162,10 @@ class ConnectionsVisualizer:
         self._elements = []
         self.num_columns_for_alternatives = num_columns_for_alternatives
 
-        if requirement_set is not None:
+        if requirement is not None:
             empty = True
 
-            for alternative in sorted(requirement_set.alternatives,
+            for alternative in sorted(requirement.as_set.alternatives,
                                       key=lambda req_list: (req_list.difficulty_level, req_list.items)):
                 empty = False
                 self._add_box_with_requirements(alternative)
@@ -249,7 +250,7 @@ class ConnectionsVisualizer:
             tools_layout.addWidget(delete_button)
 
             def _new_row():
-                empty_item = IndividualRequirement(
+                empty_item = ResourceRequirement(
                     self.resource_database.get_by_type(ResourceType.ITEM)[0],
                     1, False
                 )
@@ -269,7 +270,7 @@ class ConnectionsVisualizer:
         return group_box
 
     def new_alternative(self):
-        self._add_box_with_requirements(RequirementList(0, []))
+        self._add_box_with_requirements(RequirementList([]))
 
     def _delete_alternative(self, group: QGroupBox):
         index = self._elements.index(group)
@@ -281,15 +282,14 @@ class ConnectionsVisualizer:
         for element in self._elements:
             element.deleteLater()
 
-    def build_requirement_set(self) -> Optional[RequirementSet]:
-        return RequirementSet(
+    def build_requirement(self) -> Optional[Requirement]:
+        return RequirementOr(
             [
-                RequirementList.without_misc_resources(
+                RequirementAnd(
                     [
                         row.current_individual
                         for row in element.rows
-                    ],
-                    self.resource_database
+                    ]
                 )
                 for element in self._elements
             ]

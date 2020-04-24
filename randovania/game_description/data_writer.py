@@ -5,7 +5,8 @@ from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, LoreType
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
+from randovania.game_description.requirements import ResourceRequirement, \
+    RequirementOr, RequirementAnd
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -14,7 +15,7 @@ from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
 
-def write_individual_requirement(individual: IndividualRequirement) -> dict:
+def write_individual_requirement(individual: ResourceRequirement) -> dict:
     return {
         "requirement_type": individual.resource.resource_type.value,
         "requirement_index": individual.resource.index,
@@ -23,17 +24,17 @@ def write_individual_requirement(individual: IndividualRequirement) -> dict:
     }
 
 
-def write_requirement_list(requirement_list: RequirementList) -> list:
+def write_requirement_list(requirement_list: RequirementAnd) -> list:
     return [
         write_individual_requirement(individual)
-        for individual in sorted(requirement_list.values())
+        for individual in sorted(requirement_list.items)
     ]
 
 
-def write_requirement_set(requirement_set: RequirementSet) -> list:
+def write_requirement_set(requirement_set: RequirementOr) -> list:
     return [
         write_requirement_list(l)
-        for l in sorted(requirement_set.alternatives, key=lambda x: x.sorted)
+        for l in sorted(requirement_set.items, key=lambda x: x.sorted)
     ]
 
 
@@ -105,7 +106,7 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "index": dock_weakness.index,
         "name": dock_weakness.name,
         "is_blast_door": dock_weakness.is_blast_shield,
-        "requirement_set": write_requirement_set(dock_weakness.requirements)
+        "requirement_set": write_requirement_set(dock_weakness.requirement)
     }
 
 

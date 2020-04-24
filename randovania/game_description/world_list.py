@@ -7,7 +7,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world import World
 
@@ -143,12 +143,12 @@ class WorldList:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
         return area.nodes[area.default_node_index]
 
-    def connections_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, RequirementSet]]:
+    def connections_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, Requirement]]:
         """
         Queries all nodes from other areas you can go from a given node. Aka, doors and teleporters
         :param patches:
         :param node:
-        :return: Generator of pairs Node + RequirementSet for going to that node
+        :return: Generator of pairs Node + Requirement for going to that node
         """
         if isinstance(node, DockNode):
             # TODO: respect is_blast_shield: if already opened once, no requirement needed.
@@ -159,35 +159,35 @@ class WorldList:
                 dock_weakness = patches.dock_weakness.get((original_area.area_asset_id, node.dock_index),
                                                           node.default_dock_weakness)
 
-                yield target_node, dock_weakness.requirements
+                yield target_node, dock_weakness.requirement
             except IndexError:
                 # TODO: fix data to not having docks pointing to nothing
-                yield None, RequirementSet.impossible()
+                yield None, Requirement.impossible()
 
         if isinstance(node, TeleporterNode):
             try:
-                yield self.resolve_teleporter_node(node, patches), RequirementSet.trivial()
+                yield self.resolve_teleporter_node(node, patches), Requirement.trivial()
             except IndexError:
                 # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
                 print("Teleporter is broken!", node)
-                yield None, RequirementSet.impossible()
+                yield None, Requirement.impossible()
 
-    def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+    def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, Requirement]]:
         """
         Queries all nodes from the same area you can go from a given node.
         :param node:
-        :return: Generator of pairs Node + RequirementSet for going to that node
+        :return: Generator of pairs Node + Requirement for going to that node
         """
         area = self.nodes_to_area(node)
         for target_node, requirements in area.connections[node].items():
             yield target_node, requirements
 
-    def potential_nodes_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, RequirementSet]]:
+    def potential_nodes_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, Requirement]]:
         """
         Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
         :param node:
         :param patches:
-        :return: Generator of pairs Node + RequirementSet for going to that node
+        :return: Generator of pairs Node + Requirement for going to that node
         """
         yield from self.connections_from(node, patches)
         yield from self.area_connections_from(node)
@@ -206,17 +206,6 @@ class WorldList:
                 for connections in area.connections.values():
                     for target, value in connections.items():
                         connections[target] = value.patch_requirements(static_resources, damage_multiplier)
-
-    def calculate_relevant_resources(self, patches: GamePatches) -> FrozenSet[ResourceInfo]:
-        results = set()
-
-        for node in self.all_nodes:
-            for _, requirements in self.potential_nodes_from(node, patches):
-                for alternative in requirements.alternatives:
-                    for individual in alternative.items:
-                        results.add(individual.resource)
-
-        return frozenset(results)
 
     def area_by_area_location(self, location: AreaLocation) -> Area:
         return self.world_by_asset_id(location.world_asset_id).area_by_asset_id(location.area_asset_id)
