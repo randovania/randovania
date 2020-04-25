@@ -317,7 +317,7 @@ class GeneratorReach:
         for (_, node), requirement in self._unreachable_paths.items():
             if self.is_reachable_node(node):
                 continue
-            requirements = requirement.patch_requirements(self.state.resources, 1).as_set
+            requirements = requirement.patch_requirements(self.state.resources, 1).simplify().as_set
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:

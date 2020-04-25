@@ -205,7 +205,7 @@ class WorldList:
             for area in world.areas:
                 for connections in area.connections.values():
                     for target, value in connections.items():
-                        connections[target] = value.patch_requirements(static_resources, damage_multiplier)
+                        connections[target] = value.patch_requirements(static_resources, damage_multiplier).simplify()
 
     def area_by_area_location(self, location: AreaLocation) -> Area:
         return self.world_by_asset_id(location.world_asset_id).area_by_asset_id(location.area_asset_id)
