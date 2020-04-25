@@ -62,23 +62,43 @@ def read_damage_resource_info_array(data: List[Dict], items: List[SimpleResource
 
 def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
                               ) -> ResourceRequirement:
+    data = data["data"]
     return ResourceRequirement.with_data(
         resource_database,
-        ResourceType(data["requirement_type"]), data["requirement_index"],
+        ResourceType(data["type"]), data["index"],
         data["amount"], data["negate"])
 
 
-def read_requirement_and(data: List[Dict],
+def read_requirement_and(data: Dict,
                          resource_database: ResourceDatabase,
                          ) -> RequirementAnd:
-    individuals = read_array(data, lambda x: read_resource_requirement(x, resource_database=resource_database))
-    return RequirementAnd(individuals)
+    return RequirementAnd([
+        read_requirement(item, resource_database)
+        for item in data["data"]
+    ])
 
 
-def read_requirement_or(data: List[List[Dict]],
+def read_requirement_or(data: Dict,
                         resource_database: ResourceDatabase) -> RequirementOr:
-    alternatives = read_array(data, lambda x: read_requirement_and(x, resource_database=resource_database))
-    return RequirementOr(alternatives)
+    return RequirementOr([
+        read_requirement(item, resource_database)
+        for item in data["data"]
+    ])
+
+
+def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Requirement:
+    req_type = data["type"]
+    if req_type == "resource":
+        return read_resource_requirement(data, resource_database)
+
+    elif req_type == "and":
+        return read_requirement_and(data, resource_database)
+
+    elif req_type == "or":
+        return read_requirement_or(data, resource_database)
+
+    else:
+        raise ValueError(f"Unknown requirement type: {req_type}")
 
 
 # Resource Gain
@@ -104,7 +124,7 @@ def read_dock_weakness(item: Dict, resource_database: ResourceDatabase, dock_typ
     return DockWeakness(item["index"],
                         item["name"],
                         item["is_blast_door"],
-                        read_requirement_or(item["requirement_set"], resource_database),
+                        read_requirement(item["requirement"], resource_database),
                         dock_type)
 
 
@@ -144,19 +164,19 @@ class WorldReader:
         node_type: int = data["node_type"]
         self.generic_index += 1
 
-        if node_type == 0:
+        if node_type == "generic":
             return GenericNode(name, heal, self.generic_index)
 
-        elif node_type == 1:
+        elif node_type == "dock":
             return DockNode(name, heal, self.generic_index, data["dock_index"],
                             DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
                             self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
                                                                               data["dock_weakness_index"]))
 
-        elif node_type == 2:
+        elif node_type == "pickup":
             return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]), data["major_location"])
 
-        elif node_type == 3:
+        elif node_type == "teleporter":
             instance_id = data["teleporter_instance_id"]
 
             destination_world_asset_id = data["destination_world_asset_id"]
@@ -169,11 +189,11 @@ class WorldReader:
                                   data["editable"],
                                   )
 
-        elif node_type == 4:
+        elif node_type == "event":
             return EventNode(name, heal, self.generic_index,
                              self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
 
-        elif node_type == 5:
+        elif node_type == "translator_gate":
             return TranslatorGateNode(name, heal, self.generic_index,
                                       TranslatorGate(data["gate_index"]),
                                       find_resource_info_with_long_name(
@@ -181,8 +201,8 @@ class WorldReader:
                                           "Scan Visor"
                                       ))
 
-        elif node_type == 6:
-            lore_type = list(LoreType)[data["lore_type"]]
+        elif node_type == "logbook":
+            lore_type = LoreType(data["lore_type"])
 
             if lore_type == LoreType.LUMINOTH_LORE:
                 required_translator = self.resource_database.get_item(data["extra"])
@@ -216,7 +236,7 @@ class WorldReader:
             connections[origin] = {}
 
             for target_name, target_requirement in origin_data["connections"].items():
-                the_set = read_requirement_or(target_requirement, self.resource_database)
+                the_set = read_requirement(target_requirement, self.resource_database)
 
                 if the_set != Requirement.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
@@ -265,7 +285,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     world_reader = WorldReader(resource_database, dock_weakness_database)
     world_list = world_reader.read_world_list(data["worlds"])
 
-    victory_condition = read_requirement_or(data["victory_condition"], resource_database)
+    victory_condition = read_requirement(data["victory_condition"], resource_database)
     starting_location = AreaLocation.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
 

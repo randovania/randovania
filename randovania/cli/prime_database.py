@@ -29,8 +29,7 @@ def decode_data_file(args) -> Dict:
     if data_file_path is None:
         return default_data.decode_default_prime2()
     else:
-        extra_path = data_file_path.parent.joinpath(data_file_path.stem + "_extra.json")
-        return binary_data.decode_file_path(data_file_path, extra_path)
+        return binary_data.decode_file_path(data_file_path)
 
 
 def add_data_file_argument(parser: ArgumentParser):
@@ -49,10 +48,7 @@ def add_data_file_argument(parser: ArgumentParser):
 
 def export_as_binary(data: dict, output_binary: Path):
     with output_binary.open("wb") as x:  # type: BinaryIO
-        extra_data = binary_data.encode(data, x)
-
-    with output_binary.parent.joinpath(output_binary.stem + "_extra.json").open("w") as x:  # type: TextIO
-        json.dump(extra_data, x, indent=4)
+        binary_data.encode(data, x)
 
 
 def convert_database_command_logic(args):

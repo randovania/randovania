@@ -6,7 +6,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, LoreType
 from randovania.game_description.requirements import ResourceRequirement, \
-    RequirementOr, RequirementAnd
+    RequirementOr, RequirementAnd, Requirement
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -15,27 +15,50 @@ from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
 
-def write_individual_requirement(individual: ResourceRequirement) -> dict:
+def write_resource_requirement(requirement: ResourceRequirement) -> dict:
     return {
-        "requirement_type": individual.resource.resource_type.value,
-        "requirement_index": individual.resource.index,
-        "amount": individual.amount,
-        "negate": individual.negate
+        "type": "resource",
+        "data": {
+            "type": requirement.resource.resource_type.value,
+            "index": requirement.resource.index,
+            "amount": requirement.amount,
+            "negate": requirement.negate,
+        }
     }
 
 
-def write_requirement_list(requirement_list: RequirementAnd) -> list:
-    return [
-        write_individual_requirement(individual)
-        for individual in sorted(requirement_list.items)
-    ]
+def write_requirement_and(requirement: RequirementAnd) -> dict:
+    return {
+        "type": "and",
+        "data": [
+            write_requirement(item)
+            for item in requirement.items
+        ]
+    }
 
 
-def write_requirement_set(requirement_set: RequirementOr) -> list:
-    return [
-        write_requirement_list(l)
-        for l in sorted(requirement_set.items, key=lambda x: x.sorted)
-    ]
+def write_requirement_or(requirement: RequirementOr) -> dict:
+    return {
+        "type": "or",
+        "data": [
+            write_requirement(item)
+            for item in requirement.items
+        ]
+    }
+
+
+def write_requirement(requirement: Requirement) -> dict:
+    if isinstance(requirement, ResourceRequirement):
+        return write_resource_requirement(requirement)
+
+    elif isinstance(requirement, RequirementOr):
+        return write_requirement_or(requirement)
+
+    elif isinstance(requirement, RequirementAnd):
+        return write_requirement_and(requirement)
+
+    else:
+        raise ValueError(f"Unknown requirement type: {type(requirement)}")
 
 
 # Resource
@@ -106,7 +129,7 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "index": dock_weakness.index,
         "name": dock_weakness.name,
         "is_blast_door": dock_weakness.is_blast_shield,
-        "requirement_set": write_requirement_set(dock_weakness.requirement)
+        "requirement": write_requirement(dock_weakness.requirement)
     }
 
 
@@ -137,10 +160,10 @@ def write_node(node: Node) -> dict:
     }
 
     if isinstance(node, GenericNode):
-        data["node_type"] = 0
+        data["node_type"] = "generic"
 
     elif isinstance(node, DockNode):
-        data["node_type"] = 1
+        data["node_type"] = "dock"
         data["dock_index"] = node.dock_index
         data["connected_area_asset_id"] = node.default_connection.area_asset_id
         data["connected_dock_index"] = node.default_connection.dock_index
@@ -148,12 +171,12 @@ def write_node(node: Node) -> dict:
         data["dock_weakness_index"] = node.default_dock_weakness.index
 
     elif isinstance(node, PickupNode):
-        data["node_type"] = 2
+        data["node_type"] = "pickup"
         data["pickup_index"] = node.pickup_index.index
         data["major_location"] = node.major_location
 
     elif isinstance(node, TeleporterNode):
-        data["node_type"] = 3
+        data["node_type"] = "teleporter"
         data["destination_world_asset_id"] = node.default_connection.world_asset_id
         data["destination_area_asset_id"] = node.default_connection.area_asset_id
         data["teleporter_instance_id"] = node.teleporter_instance_id
@@ -162,17 +185,17 @@ def write_node(node: Node) -> dict:
         data["editable"] = node.editable
 
     elif isinstance(node, EventNode):
-        data["node_type"] = 4
+        data["node_type"] = "event"
         data["event_index"] = node.resource().index
 
     elif isinstance(node, TranslatorGateNode):
-        data["node_type"] = 5
+        data["node_type"] = "translator_gate"
         data["gate_index"] = node.gate.index
 
     elif isinstance(node, LogbookNode):
-        data["node_type"] = 6
+        data["node_type"] = "logbook"
         data["string_asset_id"] = node.string_asset_id
-        data["lore_type"] = list(LoreType).index(node.lore_type)
+        data["lore_type"] = node.lore_type.value
 
         if node.lore_type == LoreType.LUMINOTH_LORE:
             data["extra"] = node.required_translator.index
@@ -198,7 +221,7 @@ def write_area(area: Area) -> dict:
     for node in area.nodes:
         data = write_node(node)
         data["connections"] = {
-            target_node.name: write_requirement_set(area.connections[node][target_node])
+            target_node.name: write_requirement(area.connections[node][target_node])
             for target_node in area.nodes
             if target_node in area.connections[node]
         }
@@ -249,7 +272,7 @@ def write_game_description(game: GameDescription) -> dict:
 
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
-        "victory_condition": write_requirement_set(game.victory_condition),
+        "victory_condition": write_requirement(game.victory_condition),
 
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "worlds": write_world_list(game.world_list),
