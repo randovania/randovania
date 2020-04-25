@@ -270,3 +270,38 @@ def test_trivial_requirement_damage():
 
 def test_trivial_requirement_str():
     assert str(Requirement.trivial()) == "Trivial"
+
+
+@pytest.mark.parametrize(["original", "expected"], [
+    (
+        RequirementOr([
+            RequirementAnd([
+                _req("A"),
+            ]),
+        ]),
+        _req("A"),
+    ),
+    (
+        RequirementAnd([
+            RequirementOr([
+                _req("A"),
+            ]),
+        ]),
+        _req("A"),
+    ),
+    (
+        RequirementAnd([
+            RequirementOr([
+                _req("B"),
+                Requirement.trivial()
+            ]),
+            RequirementAnd([
+                Requirement.trivial(),
+                _req("A"),
+            ]),
+        ]),
+        _req("A"),
+    ),
+])
+def test_simplified_requirement(original, expected):
+    assert original.simplify() == expected
