@@ -24,14 +24,23 @@
             }
         ]
     },
-    "victory_condition": [
-        [
+    "victory_condition": {
+        "type": "or",
+        "data": [
             {
-                "requirement_type": 1,
-                "requirement_index": 1,
-                "amount": 3,
-                "negate": false
+                "type": "and",
+                "data": [
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 1,
+                            "index": 93,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    }
+                ]
             }
         ]
-    ]
+    }
 }

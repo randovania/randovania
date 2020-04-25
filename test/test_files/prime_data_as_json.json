@@ -26,12 +26,9 @@
         "short_name": "Event1"
       }
     ],
-    "tricks": [
-    ],
-    "damage": [
-    ],
-    "versions": [
-    ],
+    "tricks": [],
+    "damage": [],
+    "versions": [],
     "misc": [
       {
         "index": 0,
@@ -77,21 +74,49 @@
       }
     ]
   },
+  "victory_condition": {
+    "type": "or",
+    "data": [
+      {
+        "type": "and",
+        "data": [
+          {
+            "type": "resource",
+            "data": {
+              "type": 1,
+              "index": 1,
+              "amount": 3,
+              "negate": false
+            }
+          }
+        ]
+      }
+    ]
+  },
   "dock_weakness_database": {
     "door": [
       {
         "index": 0,
         "name": "Normal Door",
         "is_blast_door": false,
-        "requirement_set": [
-          []
-        ]
+        "requirement": {
+          "type": "or",
+          "data": [
+            {
+              "type": "and",
+              "data": []
+            }
+          ]
+        }
       },
       {
         "index": 8,
         "name": "Permanently Locked",
         "is_blast_door": false,
-        "requirement_set": []
+        "requirement": {
+          "type": "or",
+          "data": []
+        }
       }
     ],
     "portal": [
@@ -99,22 +124,18 @@
         "index": 0,
         "name": "Scan Portal",
         "is_blast_door": false,
-        "requirement_set": [
-          []
-        ]
+        "requirement": {
+          "type": "or",
+          "data": [
+            {
+              "type": "and",
+              "data": []
+            }
+          ]
+        }
       }
     ]
   },
-  "victory_condition": [
-    [
-      {
-        "requirement_type": 1,
-        "requirement_index": 1,
-        "amount": 3,
-        "negate": false
-      }
-    ]
-  ],
   "worlds": [
     {
       "name": "Temple Grounds",
@@ -130,39 +151,57 @@
             {
               "name": "Save Station",
               "heal": true,
-              "node_type": 0,
+              "node_type": "generic",
               "connections": {
-                "Door to Service Access": [
-                  [
+                "Door to Service Access": {
+                  "type": "or",
+                  "data": [
                     {
-                      "requirement_type": 0,
-                      "requirement_index": 2,
-                      "amount": 1,
-                      "negate": false
-                    },
-                    {
-                      "requirement_type": 0,
-                      "requirement_index": 24,
-                      "amount": 1,
-                      "negate": false
+                      "type": "and",
+                      "data": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": 0,
+                            "index": 2,
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": 0,
+                            "index": 24,
+                            "amount": 1,
+                            "negate": false
+                          }
+                        }
+                      ]
                     }
                   ]
-                ]
+                }
               }
             },
             {
               "name": "Door to Service Access",
               "heal": true,
-              "node_type": 1,
+              "node_type": "dock",
               "dock_index": 0,
               "connected_area_asset_id": 2679590972,
               "connected_dock_index": 0,
               "dock_type": 0,
               "dock_weakness_index": 0,
               "connections": {
-                "Save Station": [
-                  []
-                ]
+                "Save Station": {
+                  "type": "or",
+                  "data": [
+                    {
+                      "type": "and",
+                      "data": []
+                    }
+                  ]
+                }
               }
             }
           ]
@@ -176,7 +215,7 @@
             {
               "name": "Door to Landing Site",
               "heal": true,
-              "node_type": 1,
+              "node_type": "dock",
               "dock_index": 0,
               "connected_area_asset_id": 1655756413,
               "connected_dock_index": 0,
@@ -187,7 +226,7 @@
             {
               "name": "Luminoth Lore",
               "heal": true,
-              "node_type": 6,
+              "node_type": "logbook",
               "string_asset_id": 1000,
               "lore_type": 0,
               "extra": 2,
@@ -196,7 +235,7 @@
             {
               "name": "Luminoth Warrior",
               "heal": true,
-              "node_type": 6,
+              "node_type": "logbook",
               "string_asset_id": 2000,
               "lore_type": 1,
               "extra": 2,
@@ -205,7 +244,7 @@
             {
               "name": "Pirate Lore",
               "heal": true,
-              "node_type": 6,
+              "node_type": "logbook",
               "string_asset_id": 3000,
               "lore_type": 2,
               "extra": 0,
