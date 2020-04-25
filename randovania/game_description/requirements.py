@@ -27,6 +27,17 @@ class Requirement:
         """
         raise NotImplementedError()
 
+    def simplify(self) -> "Requirement":
+        """
+        Creates a new Requirement without some redundant complexities, like:
+        - RequirementAnd/RequirementOr of exactly one item
+        - RequirementAnd/RequirementOr of others of the same type.
+        - RequirementAnd with impossible among the items
+        - RequirementOr with trivial among the items
+        :return:
+        """
+        raise NotImplementedError()
+
     @property
     def as_set(self) -> "RequirementSet":
         raise NotImplementedError()
@@ -54,24 +65,6 @@ class RequirementAnd(Requirement):
     def __init__(self, items: Iterable[Requirement]):
         self.items = tuple(items)
 
-    @classmethod
-    def simplified(cls, items: Iterable[Requirement]) -> "RequirementAnd":
-        expanded = []
-        for item in items:
-            if isinstance(item, RequirementAnd):
-                expanded.extend(item.items)
-            else:
-                expanded.append(item)
-
-        new_items = []
-        for item in expanded:
-            if item == Requirement.impossible():
-                return item
-            elif item != Requirement.trivial():
-                new_items.append(item)
-
-        return cls(new_items)
-
     def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
         return sum(
             item.damage(current_resources, current_energy)
@@ -86,9 +79,30 @@ class RequirementAnd(Requirement):
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
                            ) -> Requirement:
-        return RequirementAnd.simplified(
+        return RequirementAnd(
             item.patch_requirements(static_resources, damage_multiplier) for item in self.items
         )
+
+    def simplify(self) -> Requirement:
+        expanded = []
+        for item in self.items:
+            simplified_item = item.simplify()
+            if isinstance(simplified_item, RequirementAnd):
+                expanded.extend(simplified_item.items)
+            else:
+                expanded.append(simplified_item)
+
+        new_items = []
+        for item in expanded:
+            if item == Requirement.impossible():
+                return item
+            elif item != Requirement.trivial():
+                new_items.append(item)
+
+        if len(new_items) == 1:
+            return new_items[0]
+
+        return RequirementAnd(new_items)
 
     @property
     def as_set(self) -> "RequirementSet":
@@ -115,10 +129,7 @@ class RequirementAnd(Requirement):
     def __str__(self) -> str:
         if self.items:
             visual_items = [str(item) for item in self.items]
-            if len(self.items) > 1:
-                return "({})".format(" and ".join(sorted(visual_items)))
-            else:
-                return visual_items[0]
+            return "({})".format(" and ".join(sorted(visual_items)))
         else:
             return "Trivial"
 
@@ -129,24 +140,6 @@ class RequirementOr(Requirement):
 
     def __init__(self, items: Iterable[Requirement]):
         self.items = tuple(items)
-
-    @classmethod
-    def simplified(cls, items: Iterable[Requirement]) -> "RequirementOr":
-        expanded = []
-        for item in items:
-            if isinstance(item, RequirementOr):
-                expanded.extend(item.items)
-            else:
-                expanded.append(item)
-
-        new_items = []
-        for item in expanded:
-            if item == Requirement.trivial():
-                return item
-            elif item != Requirement.impossible():
-                new_items.append(item)
-
-        return cls(new_items)
 
     def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
         try:
@@ -166,9 +159,30 @@ class RequirementOr(Requirement):
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
                            ) -> Requirement:
-        return RequirementOr.simplified(
+        return RequirementOr(
             item.patch_requirements(static_resources, damage_multiplier) for item in self.items
         )
+
+    def simplify(self) -> Requirement:
+        expanded = []
+        for item in self.items:
+            simplified = item.simplify()
+            if isinstance(simplified, RequirementOr):
+                expanded.extend(simplified.items)
+            else:
+                expanded.append(simplified)
+
+        new_items = []
+        for item in expanded:
+            if item == Requirement.trivial():
+                return item
+            elif item != Requirement.impossible():
+                new_items.append(item)
+
+        if len(new_items) == 1:
+            return new_items[0]
+
+        return RequirementOr(new_items)
 
     @property
     def as_set(self) -> "RequirementSet":
@@ -243,6 +257,9 @@ class ResourceRequirement(NamedTuple, Requirement):
             return not has_amount
         else:
             return has_amount
+
+    def simplify(self) -> Requirement:
+        return self
 
     def __repr__(self):
         return "{} {} {}".format(
