@@ -3,7 +3,6 @@ from typing import Set
 
 from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -135,14 +134,6 @@ def print_distribute_fill_pickup_index(pickup_index: PickupIndex, action: Pickup
         print("Placed {} at {}".format(
             action,
             n(target_node, with_world=True)))
-
-
-def print_distribute_place_item(pickup_node, item: PickupEntry, logic):
-    if _DEBUG_LEVEL > 1:
-        print("Placed {} at {} after {} sightings".format(
-            item.name,
-            n(pickup_node, with_world=True),
-            logic.node_sightings[pickup_node]))
 
 
 def print_actions_of_reach(reach: GeneratorReach):

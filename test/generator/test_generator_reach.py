@@ -11,7 +11,7 @@ from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node, PickupNode, GenericNode, TranslatorGateNode
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements import RequirementSet, Requirement
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.translator_gate import TranslatorGate
@@ -119,25 +119,25 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
             Area("Test Area A", False, 10, 0, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
-                         node_b: RequirementSet.trivial(),
-                         translator_node: RequirementSet.trivial(),
+                         node_b: Requirement.trivial(),
+                         translator_node: Requirement.trivial(),
                      },
                      node_b: {
-                         node_a: RequirementSet.trivial(),
+                         node_a: Requirement.trivial(),
                      },
                      node_c: {
-                         translator_node: RequirementSet.trivial(),
+                         translator_node: Requirement.trivial(),
                      },
                      translator_node: {
-                         node_a: RequirementSet.trivial(),
-                         node_c: RequirementSet.trivial(),
+                         node_a: Requirement.trivial(),
+                         node_c: Requirement.trivial(),
                      },
                  }
-                )
+                 )
         ])
     ])
     game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
-                           echoes_resource_database, RequirementSet.impossible(),
+                           echoes_resource_database, Requirement.impossible(),
                            None, {}, world_list)
 
     patches = game.create_game_patches()

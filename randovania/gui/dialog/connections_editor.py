@@ -2,7 +2,7 @@ from typing import Optional
 
 from PySide2.QtWidgets import QDialog, QWidget
 
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements import RequirementSet, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
@@ -10,7 +10,7 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 
 
 class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
-    def __init__(self, parent: QWidget, resource_database: ResourceDatabase, requirement_set: Optional[RequirementSet]):
+    def __init__(self, parent: QWidget, resource_database: ResourceDatabase, requirement: Optional[Requirement]):
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -19,15 +19,15 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
             self.visualizer_contents,
             self.gridLayout,
             resource_database,
-            requirement_set,
+            requirement,
             True,
             num_columns_for_alternatives=1
         )
         self.new_alternative_button.clicked.connect(self._connections_visualizer.new_alternative)
 
     @property
-    def final_requirement_set(self) -> Optional[RequirementSet]:
-        result = self._connections_visualizer.build_requirement_set()
-        if result == RequirementSet.impossible():
+    def final_requirement(self) -> Optional[Requirement]:
+        result = self._connections_visualizer.build_requirement()
+        if result == Requirement.impossible():
             return None
         return result

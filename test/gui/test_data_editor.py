@@ -1,4 +1,4 @@
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements import Requirement
 from randovania.gui.data_editor import DataEditorWindow
 
 
@@ -17,10 +17,10 @@ def test_apply_edit_connections_change(echoes_game_data,
     # Run
     window.world_selector_box.setCurrentIndex(window.world_selector_box.findText("Temple Grounds (Sky Temple Grounds)"))
     window.area_selector_box.setCurrentIndex(window.area_selector_box.findText(landing_site.name))
-    window._apply_edit_connections(source, target, RequirementSet.trivial())
+    window._apply_edit_connections(source, target, Requirement.trivial())
 
     # Assert
-    assert landing_site.connections[source][target] == RequirementSet.trivial()
+    assert landing_site.connections[source][target] == Requirement.trivial()
 
 
 def test_select_area_by_name(echoes_game_data,
