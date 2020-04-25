@@ -209,10 +209,7 @@ class RequirementOr(Requirement):
     def __str__(self) -> str:
         if self.items:
             visual_items = [str(item) for item in self.items]
-            if len(self.items) > 1:
-                return "({})".format(" or ".join(sorted(visual_items)))
-            else:
-                return visual_items[0]
+            return "({})".format(" or ".join(sorted(visual_items)))
         else:
             return "Impossible"
 
