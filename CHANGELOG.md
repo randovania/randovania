@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The export-areas command line option now outputs details about requirements for each area.
 
+-   Internal: Updated the database file format for a more flexible requirement description.
+
 ### Logic Database changes
 
 -   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs. 

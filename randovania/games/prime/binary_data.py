@@ -1,18 +1,19 @@
 import copy
 import functools
-import json
 import operator
 from pathlib import Path
-from typing import TypeVar, BinaryIO, Dict, TextIO
+from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
     Short, PrefixedArray, Array, Switch, If
 
-X = TypeVar('X')
-current_format_version = 6
+from randovania.game_description.node import LoreType
 
-_IMPOSSIBLE_SET = [[{'requirement_type': 5, 'requirement_index': 1, 'amount': 1, 'negate': False}]]
+X = TypeVar('X')
+current_format_version = 7
+
+_IMPOSSIBLE_SET = {"type": "or", "data": []}
 
 # Requirement
 
@@ -29,7 +30,7 @@ def sort_requirement_list(item: list):
         tuple())
 
 
-def _convert_to_raw_python(value):
+def _convert_to_raw_python(value) -> Any:
     if isinstance(value, construct.ListContainer):
         return [
             _convert_to_raw_python(item)
@@ -43,12 +44,18 @@ def _convert_to_raw_python(value):
             if not key.startswith("_")
         }
 
+    if isinstance(value, construct.EnumIntegerString):
+        return str(value)
+
     return value
 
 
-def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
+def decode(binary_io: BinaryIO) -> Dict:
     decoded = _convert_to_raw_python(ConstructGame.parse_stream(binary_io))
-    extra = json.load(extra_io)
+
+    decoded.pop("format_version")
+    decoded.pop("magic_number")
+    decoded["initial_states"] = dict(decoded["initial_states"])
 
     for world in decoded["worlds"]:
         for area in world["areas"]:
@@ -69,29 +76,37 @@ def decode(binary_io: BinaryIO, extra_io: TextIO) -> Dict:
                         j += 1
 
                     if connection != _IMPOSSIBLE_SET:
-                        node["connections"][area["nodes"][j]["name"]] = list(sorted(connection,
-                                                                                    key=sort_requirement_list))
+                        node["connections"][area["nodes"][j]["name"]] = connection
+                        # node["connections"][area["nodes"][j]["name"]] = list(sorted(connection,
+                        #                                                             key=sort_requirement_list))
                     j += 1
 
-    return {
-        "game": decoded["game"],
-        "game_name": decoded["game_name"],
-        "resource_database": decoded["resource_database"],
-        "starting_location": extra["starting_location"],
-        "initial_states": extra["initial_states"],
-        "victory_condition": extra["victory_condition"],
-        "dock_weakness_database": decoded["dock_weakness_database"],
-        "worlds": decoded["worlds"],
+    fields = [
+        "game",
+        "game_name",
+        "resource_database",
+        "starting_location",
+        "initial_states",
+        "victory_condition",
+        "dock_weakness_database",
+        "worlds",
+    ]
+    result = {
+        field_name: decoded.pop(field_name)
+        for field_name in fields
     }
+    if decoded:
+        raise ValueError(f"Unexpected fields remaining in data: {list(decoded.keys())}")
+
+    return result
 
 
-def decode_file_path(binary_file_path: Path, extra_file_path: Path) -> Dict:
-    with binary_file_path.open("rb") as binary_io:  # type: BinaryIO
-        with extra_file_path.open("r") as extra:
-            return decode(binary_io, extra)
+def decode_file_path(binary_file_path: Path) -> Dict:
+    with binary_file_path.open("rb") as binary_io:
+        return decode(binary_io)
 
 
-def encode(original_data: Dict, x: BinaryIO) -> dict:
+def encode(original_data: Dict, x: BinaryIO) -> None:
     data = copy.deepcopy(original_data)
 
     for world in data["worlds"]:
@@ -114,6 +129,8 @@ def encode(original_data: Dict, x: BinaryIO) -> dict:
                     "data": node,
                 }
 
+    data["initial_states"] = list(data["initial_states"].items())
+
     ConstructGame.build_stream(data, x)
 
     # Resource Info database
@@ -122,8 +139,12 @@ def encode(original_data: Dict, x: BinaryIO) -> dict:
     data.pop("resource_database")
     data.pop("dock_weakness_database")
     data.pop("worlds")
+    data.pop("victory_condition")
+    data.pop("starting_location")
+    data.pop("initial_states")
 
-    return data
+    if data:
+        raise ValueError(f"Unexpected fields remaining in data: {list(data.keys())}")
 
 
 ConstructResourceInfo = Struct(
@@ -132,20 +153,29 @@ ConstructResourceInfo = Struct(
     short_name=CString("utf8"),
 )
 
-ConstructIndividualRequirement = Struct(
-    requirement_type=Byte,
-    requirement_index=Byte,
+ConstructResourceRequirement = Struct(
+    type=Byte,
+    index=Byte,
     amount=Short,
     negate=Flag,
 )
-ConstructRequirementList = PrefixedArray(Byte, ConstructIndividualRequirement)
-ConstructRequirementSet = PrefixedArray(Byte, ConstructRequirementList)
+
+requirement_type_map = {
+    "resource": ConstructResourceRequirement,
+}
+
+ConstructRequirement = Struct(
+    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}),
+    data=Switch(lambda this: this.type, requirement_type_map)
+)
+requirement_type_map["and"] = PrefixedArray(Byte, ConstructRequirement)
+requirement_type_map["or"] = PrefixedArray(Byte, ConstructRequirement)
 
 ConstructDockWeakness = Struct(
     index=Byte,
     name=CString("utf8"),
     is_blast_door=Flag,
-    requirement_set=ConstructRequirementSet,
+    requirement=ConstructRequirement,
 )
 
 ConstructResourceDatabase = Struct(
@@ -164,14 +194,22 @@ ConstructResourceDatabase = Struct(
     difficulty=PrefixedArray(Byte, ConstructResourceInfo),
 )
 
+ConstructResourceGain = Struct(
+    resource_type=Byte,
+    resource_index=Byte,
+    amount=Short,
+)
+
+ConstructLoreType = construct.Enum(Byte, **{lore_type.value: i for i, lore_type in enumerate(LoreType)})
+
 ConstructNode = Struct(
     name=CString("utf8"),
     heal=Flag,
-    node_type=Byte,
+    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5, logbook=6),
     data=Switch(
         lambda this: this.node_type,
         {
-            1: Struct(
+            "dock": Struct(
                 dock_index=Byte,
                 connected_area_asset_id=Int32ub,
                 connected_dock_index=Byte,
@@ -179,11 +217,11 @@ ConstructNode = Struct(
                 dock_weakness_index=Byte,
                 _=Const(b"\x00\x00\x00"),
             ),
-            2: Struct(
+            "pickup": Struct(
                 pickup_index=Byte,
                 major_location=Flag,
             ),
-            3: Struct(
+            "teleporter": Struct(
                 destination_world_asset_id=Int32ub,
                 destination_area_asset_id=Int32ub,
                 teleporter_instance_id=Int32ub,
@@ -192,15 +230,15 @@ ConstructNode = Struct(
                 keep_name_when_vanilla=Flag,
                 editable=Flag,
             ),
-            4: Struct(
+            "event": Struct(
                 event_index=Byte,
             ),
-            5: Struct(
+            "translator_gate": Struct(
                 gate_index=Byte,
             ),
-            6: Struct(
+            "logbook": Struct(
                 string_asset_id=Int32ub,
-                lore_type=Byte,
+                lore_type=ConstructLoreType,
                 extra=Byte,
             )
         }
@@ -216,7 +254,7 @@ ConstructArea = Struct(
     nodes=Array(lambda this: this._node_count, ConstructNode),
     connections=Array(
         lambda this: this._node_count,
-        Array(lambda this: this._node_count - 1, ConstructRequirementSet)
+        Array(lambda this: this._node_count - 1, ConstructRequirement)
     )
 )
 
@@ -237,5 +275,11 @@ ConstructGame = Struct(
         door=PrefixedArray(Byte, ConstructDockWeakness),
         portal=PrefixedArray(Byte, ConstructDockWeakness),
     ),
+    victory_condition=ConstructRequirement,
+    starting_location=Struct(
+        world_asset_id=Int32ub,
+        area_asset_id=Int32ub,
+    ),
+    initial_states=PrefixedArray(Byte, construct.Sequence(CString("utf8"), PrefixedArray(Byte, ConstructResourceGain))),
     worlds=PrefixedArray(Byte, ConstructWorld),
 )
