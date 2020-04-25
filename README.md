@@ -17,12 +17,11 @@ Join the Metroid Prime Randomizer Discord: <https://discord.gg/gymstUz>
 ## Credits
 Game patching written by [Claris](https://www.twitch.tv/claris).
 
-GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with some
-contributions by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook).
+GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with contributions 
+by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook) and [gollop](https://github.com/gollop).
 
-Many thanks to [Claris](https://www.twitch.tv/claris) for
-making the Echoes Randomizer and both collecting and providing this
-incredible set of data which powers Randovania.
+Many thanks to Claris for making the original Echoes Randomizer and both collecting and providing this
+incredible initial set of data which powers Randovania.
 
 Claris also made the included [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z),
 a tool for practicing Echoes. For more information, see the
@@ -47,3 +46,8 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 3.  Run with `python -m randovania`
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
+
+### Third Party packages
+
+Our requirements.txt is kept up to do date with help from PyUp.io, which automatically opens
+pull requests to update when new releases are made.
