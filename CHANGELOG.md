@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   *Major* - Added: Translator gates can be configured as Unlocked: the hologram will be invisible and can be scanned
     without any translator.
 
+-   *Major* - Changed: The database now uses a new format which allows for any combination of "Or"/"And" statements.
+    The Data Visualizer and Editor were both updated to take advantage of this.
+
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
     Trick Level tab when customizing a preset. 
     
@@ -29,8 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: In Menu Mod, the list of rooms to warp to is now sorted.
 
 -   Changed: The export-areas command line option now outputs details about requirements for each area.
-
--   Internal: Updated the database file format for a more flexible requirement description.
 
 -   Internal: A human-readable copy of the database is now kept next to the database file, for easier diffs.
 

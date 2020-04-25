@@ -1,17 +1,15 @@
-from functools import partial
-from typing import Optional, Iterable, List
+from typing import Optional, List
 
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIntValidator
 from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
     QLineEdit
 
-from randovania.game_description.requirements import RequirementSet, RequirementList, ResourceRequirement, Requirement, \
-    RequirementOr, RequirementAnd
+from randovania.game_description import data_writer
+from randovania.game_description.requirements import ResourceRequirement, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.layout.trick_level import LayoutTrickLevel
 
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,
@@ -138,159 +136,53 @@ class ItemRow:
 class ConnectionsVisualizer:
     parent: QWidget
     resource_database: ResourceDatabase
-    edit_mode: bool
     grid_layout: QGridLayout
     _elements: List[QWidget]
-    num_columns_for_alternatives: int
-
-    _current_last_index: int = 0
 
     def __init__(self,
                  parent: QWidget,
                  grid_layout: QGridLayout,
                  resource_database: ResourceDatabase,
-                 requirement: Optional[Requirement],
-                 edit_mode: bool,
-                 num_columns_for_alternatives: int = 2
+                 requirement: Requirement,
+                 edit_mode: bool
                  ):
-        assert requirement != Requirement.impossible()
-
         self.parent = parent
         self.resource_database = resource_database
         self.edit_mode = edit_mode
         self.grid_layout = grid_layout
         self._elements = []
-        self.num_columns_for_alternatives = num_columns_for_alternatives
 
-        if requirement is not None:
-            empty = True
+        self._add_widget_for_requirement_array(requirement)
 
-            for alternative in sorted(requirement.as_set.alternatives,
-                                      key=lambda req_list: (req_list.difficulty_level, req_list.items)):
-                empty = False
-                self._add_box_with_requirements(alternative)
+    def _add_widget_for_requirement_array(self, requirement: Requirement):
+        parents = [(self.parent, self.grid_layout)]
+        self.grid_layout.setAlignment(Qt.AlignTop)
 
-            if empty and not self.edit_mode:
-                self._add_box_with_labels(["No requirements."])
+        next_title = ""
 
-        elif not self.edit_mode:
-            self._add_box_with_labels(["Impossible to Reach."])
+        current_depth = 0
+        for depth, text in data_writer.pretty_print_requirement(requirement):
+            if depth > current_depth:
+                group_box = QGroupBox(parents[current_depth][0])
+                group_box.setTitle(next_title)
+                self._elements.append(group_box)
+                vertical_layout = QVBoxLayout(group_box)
+                vertical_layout.setAlignment(Qt.AlignTop)
+                parents[current_depth][1].addWidget(group_box)
+                parents.append((group_box, vertical_layout))
 
-    def _add_element_to_grid(self, element: QWidget, index: int = None):
-        if index is None:
-            index = self._current_last_index
-        self.grid_layout.addWidget(element,
-                                   index // self.num_columns_for_alternatives,
-                                   index % self.num_columns_for_alternatives)
+            elif depth < current_depth:
+                parents.pop()
 
-    def _create_box_in_grid(self) -> QGroupBox:
-        group_box = QGroupBox(self.parent)
-        group_box.setObjectName(f"Box with index {self._current_last_index}")
-        self._elements.append(group_box)
-        self._add_element_to_grid(group_box)
-        self._current_last_index += 1
-        return group_box
-
-    def _add_box_with_labels(self, labels: Iterable[str]) -> QGroupBox:
-        group_box = self._create_box_in_grid()
-
-        vertical_layout = QVBoxLayout(group_box)
-        vertical_layout.setObjectName(f"Layout with index {self._current_last_index - 1}")
-        vertical_layout.setAlignment(Qt.AlignTop)
-        vertical_layout.setContentsMargins(11, 11, 11, 11)
-        vertical_layout.setSpacing(6)
-        group_box.vertical_layout = vertical_layout
-
-        for text in labels:
-            label = QLabel(group_box)
-            label.setText(text)
-            vertical_layout.addWidget(label)
-
-        return group_box
-
-    def _add_box_with_requirements(self, alternative: RequirementList):
-        group_box = self._create_box_in_grid()
-        group_box.rows = []
-
-        vertical_layout = QVBoxLayout(group_box)
-        vertical_layout.setObjectName(f"Layout with index {self._current_last_index - 1}")
-        vertical_layout.setAlignment(Qt.AlignTop)
-
-        empty = True
-        trick_level = LayoutTrickLevel.NO_TRICKS
-
-        for item in sorted(alternative.items):
-            if self.edit_mode:
-                ItemRow(group_box, vertical_layout, self.resource_database, item, group_box.rows)
+            current_depth = depth
+            if "of the following" in text:
+                next_title = text
             else:
-                if item.resource.resource_type == ResourceType.DIFFICULTY:
-                    trick_level = LayoutTrickLevel.from_number(item.amount)
-                else:
-                    empty = False
-                    label = QLabel(group_box)
-                    if item.resource.resource_type == ResourceType.TRICK:
-                        label.setText(f"{item.resource} ({LayoutTrickLevel.from_number(item.amount).long_name})")
-                    else:
-                        label.setText(item.pretty_text)
-
-                    vertical_layout.addWidget(label)
-
-        if self.edit_mode:
-            tools_layout = QHBoxLayout(group_box)
-            tools_layout.setObjectName(f"Tools layout with index {self._current_last_index - 1}")
-            vertical_layout.addLayout(tools_layout)
-
-            add_new_button = QPushButton(group_box)
-            add_new_button.setText("New Requirement")
-            tools_layout.addWidget(add_new_button)
-
-            delete_button = QPushButton(group_box)
-            delete_button.setText("Delete")
-            delete_button.clicked.connect(partial(self._delete_alternative, group_box))
-            tools_layout.addWidget(delete_button)
-
-            def _new_row():
-                empty_item = ResourceRequirement(
-                    self.resource_database.get_by_type(ResourceType.ITEM)[0],
-                    1, False
-                )
-                ItemRow(group_box, vertical_layout, self.resource_database, empty_item, group_box.rows)
-                vertical_layout.removeItem(tools_layout)
-                vertical_layout.addLayout(tools_layout)
-
-            add_new_button.clicked.connect(_new_row)
-
-        else:
-            group_box.setTitle(f"Difficulty: {trick_level.long_name}")
-            if empty:
-                label = QLabel(group_box)
-                label.setText("No requirements.")
-                vertical_layout.addWidget(label)
-
-        return group_box
-
-    def new_alternative(self):
-        self._add_box_with_requirements(RequirementList([]))
-
-    def _delete_alternative(self, group: QGroupBox):
-        index = self._elements.index(group)
-        assert index is not None
-        del self._elements[index]
-        group.deleteLater()
+                label = QLabel(parents[current_depth][0])
+                label.setText(text)
+                self._elements.append(label)
+                parents[current_depth][1].addWidget(label)
 
     def deleteLater(self):
         for element in self._elements:
             element.deleteLater()
-
-    def build_requirement(self) -> Optional[Requirement]:
-        return RequirementOr(
-            [
-                RequirementAnd(
-                    [
-                        row.current_individual
-                        for row in element.rows
-                    ]
-                )
-                for element in self._elements
-            ]
-        )

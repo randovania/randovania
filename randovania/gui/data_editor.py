@@ -7,14 +7,13 @@ from typing import Dict, Optional
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 
-import randovania
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world import World
 from randovania.games.prime import default_data
-from randovania.gui.connections_visualizer import ConnectionsVisualizer
+from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -225,7 +224,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             assert len(self.current_area.nodes) == 1
             return
 
-        requirement = self.current_area.connections[self.current_node].get(self.current_connection_node)
+        requirement = self.current_area.connections[self.current_node].get(self.current_connection_node,
+                                                                           Requirement.impossible())
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,
             self.alternatives_grid_layout,
@@ -241,7 +241,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert from_node is not None
         assert target_node is not None
 
-        requirement = self.current_area.connections[from_node].get(target_node)
+        requirement = self.current_area.connections[from_node].get(target_node, Requirement.impossible())
         editor = ConnectionsEditor(self, self.resource_database, requirement)
         result = editor.exec_()
 
