@@ -3,9 +3,7 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
-    LayoutSkyTempleKeyMode
-from randovania.layout.patcher_configuration import PatcherConfiguration
+from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTempleKeyMode
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
@@ -164,3 +162,25 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
         {"reference": preset_manager.default_preset.patcher_configuration})
     layout_configuration.bit_pack_encode.assert_called_once_with(
         {"reference": preset_manager.default_preset.layout_configuration})
+
+
+@patch("randovania.layout.permalink.Permalink.bit_pack_encode", autospec=True)
+def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
+                                 preset_manager):
+    # Setup
+    mock_bit_pack_encode.return_value = []
+    link = Permalink(
+        seed_number=1000,
+        spoiler=True,
+        preset=preset_manager.default_preset,
+    )
+
+    # Run
+    str1 = link.as_str
+    str2 = link.as_str
+
+    # Assert
+    assert str1 == "Lg=="
+    assert str1 == str2
+    assert str2 == object.__getattribute__(link, "__cached_as_str")
+    mock_bit_pack_encode.assert_called_once_with(link, {})

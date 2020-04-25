@@ -82,7 +82,6 @@ def test_decode_int_with_limits(limits_fixture):
     (4, (1, 4), "u1u2"),
 ])
 def test_encode_int_with_limits_bitstring(value, limits, expected):
-
     # Run
     result = bitpacking._format_string_for(list(bitpacking.encode_int_with_limits(value, limits)))
 
@@ -173,3 +172,27 @@ def test_sorted_array_elements_size(elements, array, expected_size):
     for _, size in bitpacking.pack_sorted_array_elements(list(elements), list(array)):
         count += bitpacking._bits_for_number(size)
     assert count == expected_size
+
+
+def test_pack_array_element_missing():
+    with pytest.raises(ValueError):
+        list(bitpacking.pack_array_element(5, [10, 25]))
+
+
+def test_pack_array_element_single():
+    assert len(list(bitpacking.pack_array_element("x", ["x"]))) == 0
+
+
+@pytest.mark.parametrize(["element", "array"], [
+    (10, [10, 20]),
+    ("x", [10, "x", 20]),
+    ("x", ["x"]),
+])
+def test_array_elements_round_trip(element, array):
+    generator = bitpacking.pack_array_element(element, array)
+    b = bitpacking._pack_encode_results(list(generator))
+    decoder = bitpacking.BitPackDecoder(b)
+
+    decoded_element = decoder.decode_element(array)
+
+    assert element == decoded_element
