@@ -1,4 +1,4 @@
-from typing import List, Callable, TypeVar, Tuple, Dict, Optional
+from typing import List, Callable, TypeVar, Tuple, Dict
 
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -6,7 +6,8 @@ from randovania.game_description.dock import DockWeakness, DockType, DockWeaknes
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     TranslatorGateNode, LogbookNode, LoreType
-from randovania.game_description.requirements import IndividualRequirement, RequirementList, RequirementSet
+from randovania.game_description.requirements import ResourceRequirement, Requirement, \
+    RequirementOr, RequirementAnd
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase, \
@@ -59,25 +60,25 @@ def read_damage_resource_info_array(data: List[Dict], items: List[SimpleResource
 # Requirement
 
 
-def read_individual_requirement(data: Dict, resource_database: ResourceDatabase
-                                ) -> IndividualRequirement:
-    return IndividualRequirement.with_data(
+def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
+                              ) -> ResourceRequirement:
+    return ResourceRequirement.with_data(
         resource_database,
         ResourceType(data["requirement_type"]), data["requirement_index"],
         data["amount"], data["negate"])
 
 
-def read_requirement_list(data: List[Dict],
-                          resource_database: ResourceDatabase,
-                          ) -> Optional[RequirementList]:
-    individuals = read_array(data, lambda x: read_individual_requirement(x, resource_database=resource_database))
-    return RequirementList.without_misc_resources(individuals, resource_database)
+def read_requirement_and(data: List[Dict],
+                         resource_database: ResourceDatabase,
+                         ) -> RequirementAnd:
+    individuals = read_array(data, lambda x: read_resource_requirement(x, resource_database=resource_database))
+    return RequirementAnd(individuals)
 
 
-def read_requirement_set(data: List[List[Dict]],
-                         resource_database: ResourceDatabase) -> RequirementSet:
-    alternatives = read_array(data, lambda x: read_requirement_list(x, resource_database=resource_database))
-    return RequirementSet(alternative for alternative in alternatives if alternative is not None)
+def read_requirement_or(data: List[List[Dict]],
+                        resource_database: ResourceDatabase) -> RequirementOr:
+    alternatives = read_array(data, lambda x: read_requirement_and(x, resource_database=resource_database))
+    return RequirementOr(alternatives)
 
 
 # Resource Gain
@@ -103,7 +104,7 @@ def read_dock_weakness(item: Dict, resource_database: ResourceDatabase, dock_typ
     return DockWeakness(item["index"],
                         item["name"],
                         item["is_blast_door"],
-                        read_requirement_set(item["requirement_set"], resource_database),
+                        read_requirement_or(item["requirement_set"], resource_database),
                         dock_type)
 
 
@@ -116,10 +117,10 @@ def read_dock_weakness_database(data: Dict,
     return DockWeaknessDatabase(
         door=door_types,
         morph_ball=[
-            DockWeakness(0, "Morph Ball Door", False, RequirementSet.trivial(), DockType.MORPH_BALL_DOOR)
+            DockWeakness(0, "Morph Ball Door", False, Requirement.trivial(), DockType.MORPH_BALL_DOOR)
         ],
         other=[
-            DockWeakness(0, "Other Door", False, RequirementSet.trivial(), DockType.OTHER)
+            DockWeakness(0, "Other Door", False, Requirement.trivial(), DockType.OTHER)
         ],
         portal=portal_types)
 
@@ -214,10 +215,10 @@ class WorldReader:
             origin = nodes[i]
             connections[origin] = {}
 
-            for target_name, target_requirements in origin_data["connections"].items():
-                the_set = read_requirement_set(target_requirements, self.resource_database)
+            for target_name, target_requirement in origin_data["connections"].items():
+                the_set = read_requirement_or(target_requirement, self.resource_database)
 
-                if the_set != RequirementSet.impossible():
+                if the_set != Requirement.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
 
         return Area(data["name"], data["in_dark_aether"], data["asset_id"], data["default_node_index"],
@@ -264,7 +265,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     world_reader = WorldReader(resource_database, dock_weakness_database)
     world_list = world_reader.read_world_list(data["worlds"])
 
-    victory_condition = read_requirement_set(data["victory_condition"], resource_database)
+    victory_condition = read_requirement_or(data["victory_condition"], resource_database)
     starting_location = AreaLocation.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
 
