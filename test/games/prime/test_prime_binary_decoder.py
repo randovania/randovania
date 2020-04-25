@@ -1,7 +1,6 @@
 import io
 import json
 from pathlib import Path
-from typing import BinaryIO, TextIO
 
 import pytest
 
@@ -30,7 +29,10 @@ def test_simple_round_trip():
             "Default": [
             ]
         },
-        "victory_condition": [],
+        "victory_condition": {
+            "type": "and",
+            "data": []
+        },
         "dock_weakness_database": {
             "door": [],
             "portal": []
@@ -38,21 +40,11 @@ def test_simple_round_trip():
         "worlds": [],
     }
 
-    s = io.StringIO()
-    s_io: TextIO = s
-    json.dump({
-        "starting_location": sample_data["starting_location"],
-        "initial_states": sample_data["initial_states"],
-        "victory_condition": sample_data["victory_condition"],
-    }, s)
-
     b = io.BytesIO()
-    b_io: BinaryIO = b
-    binary_data.encode(sample_data, b_io)
+    binary_data.encode(sample_data, b)
 
-    s.seek(0)
     b.seek(0)
-    decoded = binary_data.decode(b_io, s_io)
+    decoded = binary_data.decode(b)
 
     assert sample_data == decoded
 
@@ -61,26 +53,20 @@ def test_complex_encode(test_files_dir):
     with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         data = json.load(data_file)
 
-    with test_files_dir.joinpath("prime_extra_data.json").open("r") as data_file:
-        extra_data = json.load(data_file)
-
     b = io.BytesIO()
-    b_io = b  # type: BinaryIO
 
     # Run
-    remaining_data = binary_data.encode(data, b_io)
+    binary_data.encode(data, b)
+    # Whenever the file format changes, we can use the following line to force update our test file
+    # test_files_dir.joinpath("prime_data_as_binary.bin").write_bytes(b.getvalue())
 
     # Assert
     assert test_files_dir.joinpath("prime_data_as_binary.bin").read_bytes() == b.getvalue()
-    assert extra_data == remaining_data
 
 
 def test_complex_decode(test_files_dir):
     # Run
-    decoded_data = binary_data.decode_file_path(
-        Path(test_files_dir.joinpath("prime_data_as_binary.bin")),
-        Path(test_files_dir.joinpath("prime_extra_data.json"))
-    )
+    decoded_data = binary_data.decode_file_path(Path(test_files_dir.joinpath("prime_data_as_binary.bin")))
 
     # Assert
     with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
@@ -100,12 +86,11 @@ def test_full_file_round_trip():
 
     # Run 1
     output_io = io.BytesIO()
-    remaining_data = binary_data.encode(original_data, output_io)
+    binary_data.encode(original_data, output_io)
 
     # Run 2
     output_io.seek(0)
-    text_io = io.StringIO(json.dumps(remaining_data))
-    final_data = binary_data.decode(output_io, text_io)
+    final_data = binary_data.decode(output_io)
 
     # Assert
     assert final_data == original_data
@@ -137,12 +122,10 @@ def test_full_data_encode_is_equal():
         json_database = json.load(open_file)
 
     b = io.BytesIO()
-    extra = io.StringIO()
-    json.dump(binary_data.encode(json_database, b), extra)
+    binary_data.encode(json_database, b)
 
     b.seek(0)
-    extra.seek(0)
-    decoded_database = binary_data.decode(b, extra)
+    decoded_database = binary_data.decode(b)
 
     # Run
     assert json_database == decoded_database
@@ -150,3 +133,38 @@ def test_full_data_encode_is_equal():
     comparable_json = _comparable_dict(json_database)
     comparable_binary = _comparable_dict(decoded_database)
     assert comparable_json == comparable_binary
+
+
+@pytest.mark.parametrize("req", [
+    {"type": "or", "data": []},
+    {"type": "and", "data": []},
+    {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
+])
+def test_encode_requirement_simple(req):
+    # Run
+    encoded = binary_data.ConstructRequirement.build(req)
+    decoded = binary_data._convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
+
+    # Assert
+    assert req == decoded
+
+
+def test_encode_requirement_complex():
+    # Setup
+    req = {
+        "type": "and",
+        "data": [
+            {"type": "or", "data": []},
+            {"type": "and", "data": []},
+            {"type": "or", "data": []},
+            {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
+            {"type": "or", "data": []},
+        ]
+    }
+
+    # Run
+    encoded = binary_data.ConstructRequirement.build(req)
+    decoded = binary_data._convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
+
+    # Assert
+    assert req == decoded
