@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Logic Database changes
 
+-   Fixed: Staging Area is now correctly considered a dark world room.
+
 -   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs. 
 
 -   Fixed: Bioenergy Production correctly requires Scan Visor for connections using the racks.

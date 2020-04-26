@@ -165,5 +165,7 @@ class TrickLevelConfiguration(BitPackValue):
             12,  # Jump off Enemy
             # 14,# Controller Reset
             15,  # Instant Morph
-            26,  # Blind Jump
+            26,  # Invisible Objects
+            27,  # Standable Terrain
+            28,  # Terminal Fall Abuse
         })
