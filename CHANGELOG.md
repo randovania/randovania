@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Added: Play -> Import game file, to load spoiler logs.
 
+-   Added: The "Heals?" checkbox in the database editor now works.
+
 -   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
     must be collected for the appropriate events to be triggered. 
     
