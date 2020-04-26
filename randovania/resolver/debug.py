@@ -27,13 +27,13 @@ def pretty_print_area(area: Area, print_function=print):
     print_function(area.name)
     print_function("Asset id: {}".format(area.area_asset_id))
     for node in area.nodes:
-        print_function(f"> {node.name}")
-        for target_node, requirements in world_list.potential_nodes_from(node, _gd.create_game_patches()):
+        print_function(f"> {node.name}; Heals? {node.heal}")
+        for target_node, requirement in world_list.potential_nodes_from(node, _gd.create_game_patches()):
             if target_node is None:
                 print_function("  > None?")
             else:
                 print_function("  >", n(target_node))
-                requirements.pretty_print("      ", print_function)
+                requirement.as_set.pretty_print("      ", print_function)
         print_function()
 
 
