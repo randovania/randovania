@@ -39,9 +39,13 @@ def generate_layout(permalink: Permalink,
                     ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(False)
 
+    debug_level = debug.debug_level()
+    if not permalink.spoiler:
+        debug_level = 0
+
     process = multiprocessing.Process(
         target=_generate_layout_worker,
-        args=(output_pipe, permalink, validate_after_generation, timeout_during_generation, debug.debug_level())
+        args=(output_pipe, permalink, validate_after_generation, timeout_during_generation, debug_level)
     )
     process.start()
     try:
