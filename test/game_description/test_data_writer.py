@@ -1,5 +1,9 @@
+import io
 import json
 
+import pytest
+
+import randovania
 from randovania.game_description import data_reader, data_writer
 from randovania.games.prime import default_data
 
@@ -23,3 +27,10 @@ def test_round_trip_small(test_files_dir):
 
     assert original_data == encoded_data
 
+
+@pytest.mark.skipif(randovania.is_frozen(), reason="frozen executable doesn't have JSON files")
+def test_commited_human_readable_description(echoes_game_description):
+    buffer = io.StringIO()
+    data_writer.write_human_readable_world_list(echoes_game_description, buffer)
+
+    assert default_data.prime2_human_readable_path().read_text("utf-8") == buffer.getvalue()

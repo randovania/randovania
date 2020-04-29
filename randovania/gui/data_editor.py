@@ -7,11 +7,13 @@ from typing import Dict, Optional
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 
+import randovania
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world import World
+from randovania.games.prime import default_data
 from randovania.gui.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
@@ -40,7 +42,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
 
-        self.save_database_button.clicked.connect(self._prompt_save_database)
+        self.save_database_button.setEnabled(default_data.prime2_json_path().is_file())
+        self.save_database_button.clicked.connect(self._save_as_internal_database)
+        self.menu_export_database.triggered.connect(self._prompt_save_database)
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.verticalLayout.setAlignment(Qt.AlignTop)
@@ -270,6 +274,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         with path.open("w") as open_file:
             json.dump(data, open_file, indent=4)
 
+    def _save_as_internal_database(self):
+        self._save_database(default_data.prime2_json_path())
+        with default_data.prime2_human_readable_path().open("w", encoding="utf-8") as output:
+            data_writer.write_human_readable_world_list(self.game_description, output)
+
     def _create_new_node(self):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
         if not did_confirm:
@@ -313,6 +322,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.on_select_area()
 
     def update_edit_mode(self):
+        self.menu_bar.setVisible(self.edit_mode)
         self.delete_node_button.setVisible(self.edit_mode)
         self.new_node_button.setVisible(self.edit_mode)
         self.save_database_button.setVisible(self.edit_mode)
