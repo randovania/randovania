@@ -53,8 +53,54 @@
     <item row="3" column="0">
      <widget class="QPushButton" name="save_database_button">
       <property name="text">
-       <string>Save database as</string>
+       <string>Save as database</string>
       </property>
+     </widget>
+    </item>
+    <item row="2" column="1" rowspan="2">
+     <widget class="QGroupBox" name="connections_group">
+      <property name="title">
+       <string>Connections</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QComboBox" name="other_node_connection_combo">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="other_node_connection_edit_button">
+         <property name="text">
+          <string>Edit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QScrollArea" name="other_node_alternatives_scroll_area">
+         <property name="lineWidth">
+          <number>4</number>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="other_node_alternatives_contents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>502</width>
+            <height>205</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item row="0" column="0" colspan="2">
@@ -118,55 +164,9 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="1" rowspan="2">
-     <widget class="QGroupBox" name="connections_group">
-      <property name="title">
-       <string>Connections</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QComboBox" name="other_node_connection_combo">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="other_node_connection_edit_button">
-         <property name="text">
-          <string>Edit</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QScrollArea" name="other_node_alternatives_scroll_area">
-         <property name="lineWidth">
-          <number>4</number>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="other_node_alternatives_contents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>506</width>
-            <height>234</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="QMenuBar" name="menu_bar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -175,6 +175,12 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_export_database">
+    <property name="title">
+     <string>Export database</string>
+    </property>
+   </widget>
+   <addaction name="menu_export_database"/>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

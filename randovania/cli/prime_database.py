@@ -1,5 +1,4 @@
 import argparse
-import csv
 import json
 from argparse import ArgumentParser
 from pathlib import Path
@@ -7,7 +6,6 @@ from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import RequirementSet, RequirementList, ResourceRequirement
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.games.prime import binary_data, default_data
@@ -100,7 +98,8 @@ def create_convert_database_command(sub_parsers):
 
 
 def view_area_command_logic(args):
-    world_list = load_game_description(args).world_list
+    game = load_game_description(args)
+    world_list = game.world_list
 
     try:
         world = world_list.world_with_name(args.world)
@@ -118,7 +117,7 @@ def view_area_command_logic(args):
         print(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
         raise SystemExit(1)
 
-    debug.pretty_print_area(area)
+    data_writer.pretty_print_area(game, area)
 
 
 def load_game_description(args) -> GameDescription:
@@ -160,14 +159,7 @@ def export_areas_command_logic(args):
     output_file: Path = args.output_file
 
     with output_file.open("w", encoding="utf-8") as output:
-        def print_to_file(*args):
-            output.write("\t".join(str(arg) for arg in args) + "\n")
-
-        for world in gd.world_list.worlds:
-            output.write("====================\n{}\n".format(world.name))
-            for area in world.areas:
-                output.write("----------------\n")
-                debug.pretty_print_area(area, print_function=print_to_file)
+        data_writer.write_human_readable_world_list(gd, output)
 
 
 def export_areas_command(sub_parsers):
@@ -191,8 +183,8 @@ def _list_paths_with_resource(game: GameDescription,
         area_had_resource = False
 
         for source, connection in area.connections.items():
-            for target, requirements in connection.items():
-                for alternative in requirements.alternatives:
+            for target, requirement in connection.items():
+                for alternative in requirement.as_set.alternatives:
                     individual = alternative.get(resource)
                     if individual is None:
                         continue
@@ -224,8 +216,8 @@ def list_paths_with_dangerous_logic(args):
         area_had_resource = False
 
         for source, connection in area.connections.items():
-            for target, requirements in connection.items():
-                for alternative in requirements.alternatives:
+            for target, requirement in connection.items():
+                for alternative in requirement.as_set.alternatives:
                     for individual in alternative.values():
                         if individual.negate:
                             area_had_resource = True
@@ -245,11 +237,11 @@ def list_paths_with_dangerous_logic(args):
 
 
 def list_paths_with_dangerous_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "list-dangerous-usage",
         help="List all connections that needs a resource to be missing.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
                         action="store_true")
@@ -267,11 +259,11 @@ def list_paths_with_difficulty_logic(args):
 
 
 def list_paths_with_difficulty_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "list-difficulty-usage",
         help="List all connections that needs the difficulty.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
                         action="store_true")
@@ -303,11 +295,11 @@ def list_paths_with_resource_logic(args):
 
 
 def list_paths_with_resource_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "list-resource-usage",
         help="List all connections that needs the resource.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
                         action="store_true")
@@ -316,10 +308,10 @@ def list_paths_with_resource_command(sub_parsers):
 
 
 def create_subparsers(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "database",
         help="Actions for database manipulation"
-    )  # type: ArgumentParser
+    )
 
     sub_parsers = parser.add_subparsers(dest="database_command")
     create_convert_database_command(sub_parsers)
