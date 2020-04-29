@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Internal: Updated the database file format for a more flexible requirement description.
 
+-   Fixed: Debug logs can no longer be enabled for non-spoiler permalinks. 
+
 ### Logic Database changes
 
 -   Fixed: Staging Area is now correctly considered a dark world room.

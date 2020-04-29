@@ -11,12 +11,12 @@ from randovania.resolver import debug
 
 
 def distribute_command_logic(args):
-    debug.set_level(args.debug)
-
     def status_update(s):
         pass
 
     permalink = Permalink.from_str(args.permalink)
+    if permalink.spoiler:
+        debug.set_level(args.debug)
 
     before = time.perf_counter()
     layout_description = generator.generate_description(permalink=permalink, status_update=status_update,
