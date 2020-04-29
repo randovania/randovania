@@ -1,13 +1,22 @@
 import functools
 import json
+from pathlib import Path
 
 from randovania import get_data_path
 from randovania.games.prime.binary_data import decode_file_path
 
 
+def prime2_json_path() -> Path:
+    return get_data_path().joinpath("json_data", "prime2.json")
+
+
+def prime2_human_readable_path() -> Path:
+    return prime2_json_path().with_suffix(".txt")
+
+
 @functools.lru_cache()
 def decode_default_prime2() -> dict:
-    json_database = get_data_path().joinpath("json_data", "prime2.json")
+    json_database = prime2_json_path()
 
     if json_database.exists():
         with json_database.open("r") as open_file:

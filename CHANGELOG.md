@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Internal: Updated the database file format for a more flexible requirement description.
 
+-   Internal: A human-readable copy of the database is now kept next to the database file, for easier diffs.
+
 -   Fixed: Debug logs can no longer be enabled for non-spoiler permalinks. 
 
 ### Logic Database changes

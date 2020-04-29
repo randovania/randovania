@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Callable, Dict, Tuple
+from typing import List, TypeVar, Callable, Dict, Tuple, TextIO
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
@@ -277,3 +277,28 @@ def write_game_description(game: GameDescription) -> dict:
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "worlds": write_world_list(game.world_list),
     }
+
+
+def pretty_print_area(game: GameDescription, area: Area, print_function=print):
+    print_function(area.name)
+    print_function("Asset id: {}".format(area.area_asset_id))
+    for node in area.nodes:
+        print_function(f"> {node.name}; Heals? {node.heal}")
+        for target_node, requirement in game.world_list.potential_nodes_from(node, game.create_game_patches()):
+            if target_node is None:
+                print_function("  > None?")
+            else:
+                print_function("  > {}".format(game.world_list.node_name(target_node)))
+                requirement.as_set.pretty_print("      ", print_function)
+        print_function()
+
+
+def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:
+    def print_to_file(*args):
+        output.write("\t".join(str(arg) for arg in args) + "\n")
+
+    for world in game.world_list.worlds:
+        output.write("====================\n{}\n".format(world.name))
+        for area in world.areas:
+            output.write("----------------\n")
+            pretty_print_area(game, area, print_function=print_to_file)
