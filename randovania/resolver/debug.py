@@ -1,7 +1,6 @@
 import time
 from typing import Set
 
-from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
@@ -19,22 +18,6 @@ _last_printed_additional = None
 
 def n(node: Node, with_world=False) -> str:
     return _gd.world_list.node_name(node, with_world) if node is not None else "None"
-
-
-def pretty_print_area(area: Area, print_function=print):
-    world_list = _gd.world_list
-
-    print_function(area.name)
-    print_function("Asset id: {}".format(area.area_asset_id))
-    for node in area.nodes:
-        print_function(f"> {node.name}; Heals? {node.heal}")
-        for target_node, requirement in world_list.potential_nodes_from(node, _gd.create_game_patches()):
-            if target_node is None:
-                print_function("  > None?")
-            else:
-                print_function("  >", n(target_node))
-                requirement.as_set.pretty_print("      ", print_function)
-        print_function()
 
 
 def sorted_requirementset_print(new_requirements: Set[RequirementList]):
