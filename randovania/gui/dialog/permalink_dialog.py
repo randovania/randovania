@@ -30,12 +30,14 @@ class PermalinkDialog(QDialog, Ui_PermalinkDialog):
         common_qt_lib.set_error_border_stylesheet(self.permalink_edit, False)
         common_qt_lib.set_edit_if_different(self.permalink_edit, self.permalink_edit.text().strip())
         self.accept_button.setEnabled(False)
+        self.import_error_label.setText("")
 
         try:
             # Ignoring return value: we only want to know if it's valid
             self.get_permalink_from_field()
             self.accept_button.setEnabled(True)
-        except ValueError:
+        except ValueError as e:
+            self.import_error_label.setText(f"Invalid permalink: {e}")
             common_qt_lib.set_error_border_stylesheet(self.permalink_edit, True)
 
     def _on_paste_button(self):
