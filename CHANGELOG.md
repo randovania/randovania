@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The "Heals?" checkbox in the database editor now works.
 
+-   Added: The permalink import dialog now shows an error message for invalid permalinks.
+
 -   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
     must be collected for the appropriate events to be triggered. 
     
