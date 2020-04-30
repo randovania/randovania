@@ -34,7 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Internal: A human-readable copy of the database is now kept next to the database file, for easier diffs.
 
--   Fixed: Debug logs can no longer be enabled for non-spoiler permalinks. 
+-   Fixed: Debug logs can no longer be enabled for non-spoiler permalinks.
+
+-   Added: Missile Expansions have a 1/8192 chance of using Dark Missile Trooper model.
 
 ### Logic Database changes
 
