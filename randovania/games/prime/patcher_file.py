@@ -1,3 +1,4 @@
+import random
 from random import Random
 from typing import Dict, List, Iterator
 
@@ -179,6 +180,12 @@ def _create_pickup(original_index: PickupIndex,
                    memo_data: Dict[str, str],
                    ) -> dict:
     model_pickup = pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
+    model_index = model_pickup.model_index
+
+    # TODO: less improvised, really
+    if model_index == 22 and random.randint(0, 8192) == 0:
+        # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
+        model_index = 23
 
     result = {
         "pickup_index": original_index.index,
@@ -204,7 +211,7 @@ def _create_pickup(original_index: PickupIndex,
 
         "scan": _pickup_scan(pickup) if model_style in {PickupModelStyle.ALL_VISIBLE,
                                                         PickupModelStyle.HIDE_MODEL} else visual_pickup.name,
-        "model_index": model_pickup.model_index,
+        "model_index": model_index,
         "sound_index": 1 if model_pickup.item_category.is_key else 0,
         "jingle_index": _get_jingle_index_for(model_pickup.item_category),
     }
