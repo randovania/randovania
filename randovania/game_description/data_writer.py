@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Callable, Dict, Tuple, TextIO
+from typing import List, TypeVar, Callable, Dict, Tuple, TextIO, Union, Iterator
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
@@ -10,9 +10,11 @@ from randovania.game_description.requirements import ResourceRequirement, \
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.layout.trick_level import LayoutTrickLevel
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
@@ -279,6 +281,64 @@ def write_game_description(game: GameDescription) -> dict:
     }
 
 
+def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
+    if requirement.resource.resource_type == ResourceType.TRICK:
+        return f"{requirement.resource} ({LayoutTrickLevel.from_number(requirement.amount).long_name})"
+    elif requirement.resource.resource_type == ResourceType.DIFFICULTY:
+        trick_level = LayoutTrickLevel.from_number(requirement.amount)
+        return f"Difficulty: {trick_level.long_name}"
+    else:
+        return requirement.pretty_text
+
+
+def pretty_print_requirement_array(requirement: Union[RequirementAnd, RequirementOr],
+                                   level: int) -> Iterator[Tuple[int, str]]:
+    if len(requirement.items) == 1:
+        yield from pretty_print_requirement(requirement.items[0], level)
+        return
+
+    resource_requirements = [item for item in requirement.items
+                             if isinstance(item, ResourceRequirement)]
+    other_requirements = [item for item in requirement.items
+                          if not isinstance(item, ResourceRequirement)]
+    pretty_resources = [
+        pretty_print_resource_requirement(item)
+        for item in sorted(resource_requirements)
+    ]
+
+    if isinstance(requirement, RequirementOr):
+        title = "Any"
+        combinator = " or "
+    else:
+        title = "All"
+        combinator = " and "
+
+    if len(other_requirements) == 0:
+        yield level, combinator.join(pretty_resources)
+    else:
+        yield level, f"{title} of the following:"
+        if pretty_resources:
+            yield level + 1, combinator.join(pretty_resources)
+        for item in other_requirements:
+            yield from pretty_print_requirement(item, level + 1)
+
+
+def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterator[Tuple[int, str]]:
+    if requirement == Requirement.impossible():
+        yield level, "Impossible"
+
+    elif requirement == Requirement.trivial():
+        yield level, "Trivial"
+
+    elif isinstance(requirement, (RequirementAnd, RequirementOr)):
+        yield from pretty_print_requirement_array(requirement, level)
+
+    elif isinstance(requirement, ResourceRequirement):
+        yield level, pretty_print_resource_requirement(requirement)
+    else:
+        raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
+
+
 def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function(area.name)
     print_function("Asset id: {}".format(area.area_asset_id))
@@ -289,7 +349,8 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
                 print_function("  > None?")
             else:
                 print_function("  > {}".format(game.world_list.node_name(target_node)))
-                requirement.as_set.pretty_print("      ", print_function)
+                for level, text in pretty_print_requirement(requirement.simplify()):
+                    print_function("      {}{}".format("    " * level, text))
         print_function()
 
 
