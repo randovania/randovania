@@ -186,7 +186,6 @@ def apply_layout(description: LayoutDescription,
                  ):
     """
     Applies the modifications listed in the given LayoutDescription to the game in game_root.
-    :param use_modern_api:
     :param cosmetic_patches:
     :param description:
     :param game_root:
