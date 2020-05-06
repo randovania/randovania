@@ -1,108 +1,68 @@
-import mmap
-import re
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Tuple, Dict, BinaryIO, Iterator
+from typing import BinaryIO
 
-from randovania.game_description.area_location import AreaLocation
-
-GameVersion = str
-
-# TODO: these maybe also include the target register
-_instructions = {
-    "lis": 0x3c80,
-    "addi": 0x3884,
-}
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 
 
-class UnsupportedVersion(Exception):
-    pass
+def _apply_string_display_patch(binary_version: int, dol_file: BinaryIO):
+    patch_for_binary_versions = {
+        0x003A22A0: {
+            "message_receiver_offset": 0x34E20,
+            "message_receiver_string_ref": [0x80, 0x3a, 0x63, 0x80],
+            "wstring_constructor": [0x80, 0x2f, 0xf3, 0xdc],
+            "display_hud_memo": [0x80, 0x06, 0xb3, 0xc8],
+        }
+    }
+    patches = patch_for_binary_versions[binary_version]
+
+    message_receiver_string_ref = patches["message_receiver_string_ref"]
+    address_wstring_constructor = patches["wstring_constructor"]
+    address_display_hud_memo = patches["display_hud_memo"]
+
+    message_receiver_patch = bytes([
+        0x94, 0x21, 0xFF, 0xD4,
+        0x7C, 0x08, 0x02, 0xA6,
+        0x90, 0x01, 0x00, 0x30,
+        0x88, 0x83, 0x00, 0x02,
+        0x2C, 0x04, 0x00, 0x00,
+        0x41, 0x82, 0x00, 0x60,
+        0x38, 0xC0, 0x00, 0x00,
+        0x98, 0xC3, 0x00, 0x02,
+        0x3C, 0xA0, 0x41, 0x00,
+        0x38, 0xE0, 0x00, 0x01,
+        0x39, 0x20, 0x00, 0x09,
+        0x90, 0xA1, 0x00, 0x10,
+        0x98, 0xE1, 0x00, 0x14,
+        0x98, 0xC1, 0x00, 0x15,
+        0x98, 0xC1, 0x00, 0x16,
+        0x98, 0xE1, 0x00, 0x17,
+        0x91, 0x21, 0x00, 0x18,
+        0x38, 0x61, 0x00, 0x1C,
+        0x3C, 0x80, message_receiver_string_ref[0], message_receiver_string_ref[1],
+        0x60, 0x84, message_receiver_string_ref[2], message_receiver_string_ref[3],
+        0x3D, 0x80, address_wstring_constructor[0], address_wstring_constructor[1],
+        0x61, 0x8C, address_wstring_constructor[2], address_wstring_constructor[3],
+        0x7D, 0x89, 0x03, 0xA6,
+        0x4E, 0x80, 0x04, 0x21,
+        0x38, 0x81, 0x00, 0x10,
+        0x3D, 0x80, address_display_hud_memo[0], address_display_hud_memo[1],
+        0x61, 0x8C, address_display_hud_memo[2], address_display_hud_memo[3],
+        0x7D, 0x89, 0x03, 0xA6,
+        0x4E, 0x80, 0x04, 0x21,
+        0x80, 0x01, 0x00, 0x30,
+        0x7C, 0x08, 0x03, 0xA6,
+        0x38, 0x21, 0x00, 0x2C,
+        0x4E, 0x80, 0x00, 0x20,
+    ])
+
+    dol_file.seek(patches["message_receiver_offset"])
+    dol_file.write(message_receiver_patch)
 
 
-@dataclass
-class FullLoadInstruction:
-    high_bits_load: int
-    low_bits_load: int
+def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
+    with game_root.joinpath("sys/main.dol").open("rb") as dol_file:
+        dol_file.seek(0x1C)
+        binary_version = int.from_bytes(dol_file.read(4), byteorder='big')
 
-    def check_has_instructions(self, dol: BinaryIO, game_version: GameVersion):
-        _check_instruction_at(dol, self.high_bits_load, "lis", game_version)
-        _check_instruction_at(dol, self.low_bits_load, "addi", game_version)
-
-    def write_value(self, dol: BinaryIO, value: int):
-        if value < 0 or value > 0xFFFFFFFF:
-            raise ValueError("Invalid value: {}. Must be a unsigned 32-bit value".format(value))
-
-        high_value = value >> 16
-        low_value = value & 0xFFFF
-
-        if low_value >> 15:
-            # When low_value is considered negative, adding it will subtract the overflow bit
-            # Add one to high_value to fix it
-            high_value += 1
-
-        dol.seek(self.high_bits_load + 2)
-        dol.write(high_value.to_bytes(2, "big"))
-        dol.seek(self.low_bits_load + 2)
-        dol.write(low_value.to_bytes(2, "big"))
-
-
-@dataclass
-class EchoesInitialLocationInstructions:
-    world_load: Tuple[FullLoadInstruction, FullLoadInstruction]
-    area_load: FullLoadInstruction
-
-    @property
-    def all_instructions(self) -> Iterator[FullLoadInstruction]:
-        yield from self.world_load
-        yield self.area_load
-
-
-_initial_location_instructions_per_version: Dict[GameVersion, EchoesInitialLocationInstructions] = {
-    "v1.028": EchoesInitialLocationInstructions(
-        world_load=(FullLoadInstruction(0x00140378, 0x00140380), FullLoadInstruction(0x00140388, 0x00140390)),
-        area_load=FullLoadInstruction(0x00140398, 0x0014039c),
-    )
-}
-
-
-def _check_instruction_at(dol: BinaryIO, offset: int, instruction: str, game_version: GameVersion):
-    dol.seek(offset)
-    value = dol.read(2)
-    if value != _instructions[instruction].to_bytes(2, "big"):
-        raise RuntimeError(
-            "Expected an `{instruction}` ({instruction_value}:x) instruction at {offset:x}"
-            ", but found {value:x} instead. Is this really a {version} version ISO?".format(
-                instruction=instruction,
-                instruction_value=_instructions[instruction],
-                offset=offset,
-                value=value,
-                version=game_version,
-            ))
-
-
-def get_version_for_binary(dol_path: Path) -> str:
-    with dol_path.open("rb") as dol:
-        with mmap.mmap(dol.fileno(), 0, access=mmap.ACCESS_READ) as mm:
-            match = re.search(b"!#\$MetroidBuildInfo!#\$Build (v\d\.\d{3})", mm)
-            if match:
-                return match.group(1).decode("ASCII")
-            else:
-                raise RuntimeError("Invalid dol. File at '{}' is not a Metroid Prime 2 dol".format(dol_path))
-
-
-def change_starting_spawn(game_root: Path, new_starting_location: AreaLocation):
-    dol_path = game_root.joinpath("sys", "main.dol")
-
-    version = get_version_for_binary(dol_path)
-    try:
-        location_instructions = _initial_location_instructions_per_version[version]
-    except KeyError:
-        raise UnsupportedVersion("Game version '{}' is currently unsupported by Randovania".format(version))
-
-    with dol_path.open("r+b") as dol:
-        for offset in location_instructions.all_instructions:
-            offset.check_has_instructions(dol, version)
-
-        for offset in location_instructions.world_load:
-            offset.write_value(dol, new_starting_location.world_asset_id)
-        location_instructions.area_load.write_value(dol, new_starting_location.area_asset_id)
+    with game_root.joinpath("sys/main.dol").open("r+b") as dol_file:
+        _apply_string_display_patch(binary_version, dol_file)
