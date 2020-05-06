@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Callable, List, Union, Optional
 
 from randovania import get_data_path
-from randovania.games.prime import patcher_file
+from randovania.games.prime import patcher_file, dol_patcher
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.game_workdir import validate_game_files_path
@@ -206,6 +206,7 @@ def apply_layout(description: LayoutDescription,
     description.save_to_file(game_root.joinpath("files", f"randovania.{description.file_extension()}"))
 
     _modern_api(game_root, status_update, description, cosmetic_patches)
+    dol_patcher.apply_patches(game_root, cosmetic_patches)
 
     if patcher_configuration.menu_mod:
         _add_menu_mod_to_files(game_root, status_update)
@@ -234,5 +235,3 @@ def _modern_api(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-
-
