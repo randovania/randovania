@@ -17,9 +17,9 @@ class SoundMode(Enum):
 class EchoesUserPreferences:
     sound_mode: SoundMode = SoundMode.STEREO
     screen_brightness: int = _int_field(4, 0, 8)
-    screen_x_offset: int = _int_field(4, -0x1e, 0x1f)
-    screen_y_offset: int = _int_field(4, -0x1e, 0x1f)
-    screen_stretch: int = _int_field(4, -10, 0x10)
+    screen_x_offset: int = _int_field(0, -0x1e, 0x1f)
+    screen_y_offset: int = _int_field(0, -0x1e, 0x1f)
+    screen_stretch: int = _int_field(0, -10, 10)
     sfx_volume: int = _int_field(0x69, 0x00, 0x69)
     music_volume: int = _int_field(0x4f, 0x00, 0x69)
     hud_alpha: int = _int_field(0xff, 0x00, 0xff)
