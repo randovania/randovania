@@ -8,7 +8,7 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 _GC_NTSC_DOL_VERSION = 0x003A22A0
-_GC_PAL_DOL_VERSION = None
+_GC_PAL_DOL_VERSION = 0x003A2660
 
 
 @dataclasses.dataclass(frozen=True)
