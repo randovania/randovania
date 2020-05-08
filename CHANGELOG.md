@@ -14,8 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   *Major* - Added: Translator gates can be configured as Unlocked: the hologram will be invisible and can be scanned
     without any translator.
 
+-   *Major* - Added: The default in-game options can now be configured from Randovania.
+
 -   *Major* - Changed: The database now uses a new format which allows for any combination of "Or"/"And" statements.
     The Data Visualizer and Editor were both updated to take advantage of this.
+
+-   Added: The in-game Hint System has been removed. The option for it remains, but does nothing.
 
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
     Trick Level tab when customizing a preset. 
