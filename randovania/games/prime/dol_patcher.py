@@ -1,25 +1,67 @@
+import dataclasses
+import struct
 from pathlib import Path
 from typing import BinaryIO
 
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 _GC_NTSC_DOL_VERSION = 0x003A22A0
 
 
-def _apply_string_display_patch(binary_version: int, dol_file: BinaryIO):
-    patch_for_binary_versions = {
-        _GC_NTSC_DOL_VERSION: {
-            "message_receiver_offset": 0x34E20,
-            "message_receiver_string_ref": [0x80, 0x3a, 0x63, 0x80],
-            "wstring_constructor": [0x80, 0x2f, 0xf3, 0xdc],
-            "display_hud_memo": [0x80, 0x06, 0xb3, 0xc8],
-        }
-    }
-    patches = patch_for_binary_versions[binary_version]
+@dataclasses.dataclass(frozen=True)
+class StringDisplayPatchOffsets:
+    message_receiver_file_offset: int
+    message_receiver_string_ref: int
+    wstring_constructor: int
+    display_hud_memo: int
 
-    message_receiver_string_ref = patches["message_receiver_string_ref"]
-    address_wstring_constructor = patches["wstring_constructor"]
-    address_display_hud_memo = patches["display_hud_memo"]
+
+@dataclasses.dataclass(frozen=True)
+class PatchesForVersion:
+    string_display: StringDisplayPatchOffsets
+    game_options_file_offset: int
+
+
+_ALL_VERSIONS_PATCHES = {
+    _GC_NTSC_DOL_VERSION: PatchesForVersion(
+        string_display=StringDisplayPatchOffsets(
+            message_receiver_file_offset=0x34E20,
+            message_receiver_string_ref=0x803a6380,
+            wstring_constructor=0x802ff3dc,
+            display_hud_memo=0x8006b3c8,
+        ),
+        game_options_file_offset=0x15E95C,
+    ),
+}
+
+_PREFERENCES_ORDER = (
+    "sound_mode",
+    "screen_brightness",
+    "screen_x_offset",
+    "screen_y_offset",
+    "screen_stretch",
+    "sfx_vol",
+    "music_vol",
+    "hud_alpha",
+    "helmet_alpha",
+)
+_FLAGS_ORDER = (
+    "hud_lag",
+    "invert_y_axis",
+    "rumble",
+    None,  # crashes, maybe swapBeamsControls
+    "hint_system",
+    None,  # 5: doesn't crash, unknown
+    None,  # 6: doesn't crash, unknown
+    None,  # 7: doesn't crash, unknown
+)
+
+
+def _apply_string_display_patch(patch_offsets: StringDisplayPatchOffsets, dol_file: BinaryIO):
+    message_receiver_string_ref = struct.pack(">I", patch_offsets.message_receiver_string_ref)
+    address_wstring_constructor = struct.pack(">I", patch_offsets.wstring_constructor)
+    address_display_hud_memo = struct.pack(">I", patch_offsets.display_hud_memo)
 
     message_receiver_patch = bytes([
         0x94, 0x21, 0xFF, 0xD4,
@@ -57,70 +99,37 @@ def _apply_string_display_patch(binary_version: int, dol_file: BinaryIO):
         0x4E, 0x80, 0x00, 0x20,
     ])
 
-    dol_file.seek(patches["message_receiver_offset"])
+    dol_file.seek(patch_offsets.message_receiver_file_offset)
     dol_file.write(message_receiver_patch)
 
 
-def _apply_game_options_patch(binary_version: int, cosmetic_patches: CosmeticPatches, dol_file: BinaryIO):
-    constructor_versions = {
-        _GC_NTSC_DOL_VERSION: 0x15E95C,
-    }
-    game_options_offset = constructor_versions[binary_version]
-
-    preferences = {
-        "sound_mode": 1,
-        "screen_brightness": 4,
-        "screen_x_offset": 0,
-        "screen_y_offset": 0,
-        "screen_scretch": 0,
-        "sfx_vol": 0x69,
-        "music_vol": 0x4f,
-        "hud_alpha": 0xff,
-        "helmet_alpha": 0xff,
-    }
-
-    bitmask_flags = [False] * 8
-    # 0: hud lag
-    # 1: invert y-axis
-    # 2: rumble
-    # 3: crashes
-    # 4: hint system
-    # 5: doesn't crash, unknown
-    # 6: doesn't crash, unknown
-    # 7: doesn't crash, unknown
-    bitmask_flags[0] = True
-    bitmask = int("".join(str(int(flag)) for flag in bitmask_flags), 2)
-
-    # Value ranges
-    # screen_brightness: [0, 8]
-    # screen_x_offset/screen_y_offset: [-0x1e, 0x1f]
-    # screen_scretch: [-10, 10]
-    # For sfx_vol/music_vol: [0x00, 0x69]
-
-    # Patch stuff up
-    # preferences["screen_brightness"] = 1
-    # preferences["screen_x_offset"] = 12
-    # preferences["screen_y_offset"] = 16
-    # preferences["screen_scretch"] = 20
-    # preferences["hud_alpha"] = 0xf0
-    # preferences["helmet_alpha"] = 0x10
-
+def _apply_game_options_patch(game_options_file_offset: int, user_preferences: EchoesUserPreferences,
+                              dol_file: BinaryIO):
     patch = [
-        # Unknown instructions, but keep for safety
+        # Unknown purpose, but keep for safety
         0x93, 0xe1, 0x00, 0x1c,  # *(r1 + 0x1c) = r31   (stw r31,0x1c(r1))
 
         0x7c, 0x7f, 0x1b, 0x78,  # r31 = r3 (ori r31,r3,r3)
         0x38, 0x61, 0x00, 0x08,  # r3 = r1 + 0x8 (addi r3,r1,0x8) For a later function call we don't touch
     ]
-    for i, value in enumerate(preferences.values()):
+
+    flag_values = [
+        getattr(user_preferences, flag_name)
+        if flag_name is not None else False
+        for flag_name in _FLAGS_ORDER
+    ]
+    for i, preference_name in enumerate(_PREFERENCES_ORDER):
+        encoded_value = struct.pack(">h", getattr(user_preferences, preference_name))
         patch.extend([
-            0x38, 0x00, 0x00, value,       # r0 = value (li r0, value)
+            0x38, 0x00, encoded_value[0], encoded_value[1],  # r0 = value (li r0, value)
             0x90, 0x1f, 0x00, (0x04 * i),  # *(r31 + offset) = r0  (stw r0,offset(r31))
         ])
+
+    bit_mask = int("".join(str(int(flag)) for flag in flag_values), 2)
     patch.extend([
-        0x38, 0x00, 0x00, bitmask,
-        # 0x90, 0x1f, 0x00, (0x04 * len(preferences)),
-        0x98, 0x1f, 0x00, (0x04 * len(preferences)),
+        0x38, 0x00, 0x00, bit_mask,
+        # 0x90, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
+        0x98, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
     ])
 
     # final_offset = 0x15E9E4
@@ -136,7 +145,7 @@ def _apply_game_options_patch(binary_version: int, cosmetic_patches: CosmeticPat
 
     patch.extend([0x60, 0x00, 0x00, 0x00] * (bytes_to_fill // 4))
 
-    dol_file.seek(game_options_offset)
+    dol_file.seek(game_options_file_offset)
     dol_file.write(bytes(patch))
 
 
@@ -145,6 +154,9 @@ def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
         dol_file.seek(0x1C)
         binary_version = int.from_bytes(dol_file.read(4), byteorder='big')
 
+    version_patches = _ALL_VERSIONS_PATCHES[binary_version]
+
     with game_root.joinpath("sys/main.dol").open("r+b") as dol_file:
-        _apply_string_display_patch(binary_version, dol_file)
-        _apply_game_options_patch(binary_version, cosmetic_patches, dol_file)
+        _apply_string_display_patch(version_patches.string_display, dol_file)
+        _apply_game_options_patch(version_patches.game_options_file_offset,
+                                  cosmetic_patches.user_preferences, dol_file)
