@@ -1,5 +1,6 @@
 import dataclasses
 import struct
+from enum import Enum
 from pathlib import Path
 from typing import BinaryIO
 
@@ -7,6 +8,7 @@ from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 _GC_NTSC_DOL_VERSION = 0x003A22A0
+_GC_PAL_DOL_VERSION = None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -33,6 +35,15 @@ _ALL_VERSIONS_PATCHES = {
         ),
         game_options_file_offset=0x15E95C,
     ),
+    _GC_PAL_DOL_VERSION: PatchesForVersion(
+        string_display=StringDisplayPatchOffsets(
+            message_receiver_file_offset=0x15EB9C,
+            message_receiver_string_ref=0x803a680a,
+            wstring_constructor=0x802ff734,
+            display_hud_memo=0x8006b504,
+        ),
+        game_options_file_offset=0x15EBB0,
+    ),
 }
 
 _PREFERENCES_ORDER = (
@@ -41,8 +52,8 @@ _PREFERENCES_ORDER = (
     "screen_x_offset",
     "screen_y_offset",
     "screen_stretch",
-    "sfx_vol",
-    "music_vol",
+    "sfx_volume",
+    "music_volume",
     "hud_alpha",
     "helmet_alpha",
 )
@@ -113,18 +124,21 @@ def _apply_game_options_patch(game_options_file_offset: int, user_preferences: E
         0x38, 0x61, 0x00, 0x08,  # r3 = r1 + 0x8 (addi r3,r1,0x8) For a later function call we don't touch
     ]
 
-    flag_values = [
-        getattr(user_preferences, flag_name)
-        if flag_name is not None else False
-        for flag_name in _FLAGS_ORDER
-    ]
     for i, preference_name in enumerate(_PREFERENCES_ORDER):
-        encoded_value = struct.pack(">h", getattr(user_preferences, preference_name))
+        value = getattr(user_preferences, preference_name)
+        if isinstance(value, Enum):
+            value = value.value
+        encoded_value = struct.pack(">h", value)
         patch.extend([
             0x38, 0x00, encoded_value[0], encoded_value[1],  # r0 = value (li r0, value)
             0x90, 0x1f, 0x00, (0x04 * i),  # *(r31 + offset) = r0  (stw r0,offset(r31))
         ])
 
+    flag_values = [
+        getattr(user_preferences, flag_name)
+        if flag_name is not None else False
+        for flag_name in _FLAGS_ORDER
+    ]
     bit_mask = int("".join(str(int(flag)) for flag in flag_values), 2)
     patch.extend([
         0x38, 0x00, 0x00, bit_mask,
@@ -150,13 +164,23 @@ def _apply_game_options_patch(game_options_file_offset: int, user_preferences: E
 
 
 def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
-    with game_root.joinpath("sys/main.dol").open("rb") as dol_file:
-        dol_file.seek(0x1C)
-        binary_version = int.from_bytes(dol_file.read(4), byteorder='big')
+    binary_version = _read_binary_version(game_root)
+    try:
+        version_patches = _ALL_VERSIONS_PATCHES[binary_version]
+    except KeyError:
+        raise RuntimeError(f"Unsupported game version")
 
-    version_patches = _ALL_VERSIONS_PATCHES[binary_version]
-
-    with game_root.joinpath("sys/main.dol").open("r+b") as dol_file:
+    with _get_dol_path(game_root).open("r+b") as dol_file:
         _apply_string_display_patch(version_patches.string_display, dol_file)
         _apply_game_options_patch(version_patches.game_options_file_offset,
                                   cosmetic_patches.user_preferences, dol_file)
+
+
+def _get_dol_path(game_root: Path) -> Path:
+    return game_root.joinpath("sys/main.dol")
+
+
+def _read_binary_version(game_root: Path) -> int:
+    with _get_dol_path(game_root).open("rb") as dol_file:
+        dol_file.seek(0x1C)
+        return int.from_bytes(dol_file.read(4), byteorder='big')

@@ -8,6 +8,8 @@ from randovania.interface_common.echoes_user_preferences import EchoesUserPrefer
 
 
 class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
+    preferences: EchoesUserPreferences
+
     def __init__(self, parent: QWidget, current: EchoesUserPreferences):
         super().__init__(parent)
         self.setupUi(self)
@@ -33,6 +35,8 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
             self.sound_mode_combo.addItem(sound_mode.name, sound_mode)
         self.on_new_user_preferences(current)
 
+        self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
+
         for field_name, slider in self.field_to_slider_mapping.items():
             slider.valueChanged.connect(partial(self._on_slider_update, slider, field_name))
 
@@ -56,6 +60,12 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
             elif field.name in self.field_to_check_mapping:
                 check = self.field_to_check_mapping[field.name]
                 check.setChecked(getattr(user_preferences, field.name))
+
+    def _on_sound_mode_update(self):
+        self.preferences = dataclasses.replace(
+            self.preferences,
+            sound_mode=self.sound_mode_combo.currentData()
+        )
 
     def _on_slider_update(self, slider: QSlider, field_name: str, _):
         self.preferences = dataclasses.replace(
