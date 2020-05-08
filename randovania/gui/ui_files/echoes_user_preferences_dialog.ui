@@ -14,6 +14,13 @@
    <string>Game Patching</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="2">
+    <widget class="QPushButton" name="reset_button">
+     <property name="text">
+      <string>Reset to Defaults</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0">
     <widget class="QPushButton" name="accept_button">
      <property name="text">
@@ -25,13 +32,6 @@
     <widget class="QPushButton" name="cancel_button">
      <property name="text">
       <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="reset_button">
-     <property name="text">
-      <string>Reset to Defaults</string>
      </property>
     </widget>
    </item>
@@ -66,6 +66,13 @@
           <string>Visor</string>
          </property>
          <layout class="QGridLayout" name="visor_layout">
+          <item row="2" column="0" colspan="2">
+           <widget class="QCheckBox" name="hud_lag_check">
+            <property name="text">
+             <string>Hud Lag</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="hud_alpha_label">
             <property name="text">
@@ -73,8 +80,8 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QSlider" name="hud_alpha_slider">
+          <item row="1" column="1">
+           <widget class="QSlider" name="helmet_alpha_slider">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -90,8 +97,8 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QSlider" name="helmet_alpha_slider">
+          <item row="0" column="1">
+           <widget class="QSlider" name="hud_alpha_slider">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -100,10 +107,17 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="hud_lag_check">
+          <item row="0" column="2">
+           <widget class="QLabel" name="hud_alpha_value_label">
             <property name="text">
-             <string>Hud Lag</string>
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="helmet_alpha_value_label">
+            <property name="text">
+             <string>TextLabel</string>
             </property>
            </widget>
           </item>
@@ -152,9 +166,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="sound_mode_combo"/>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="sfx_volume_label">
             <property name="text">
@@ -168,6 +179,9 @@
              <string>Music Volume</string>
             </property>
            </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="sound_mode_combo"/>
           </item>
           <item row="1" column="1">
            <widget class="QSlider" name="sfx_volume_slider">
@@ -189,6 +203,20 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="sfx_volume_value_label">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="music_volume_value_label">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -205,6 +233,13 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="screen_x_offset_label">
+            <property name="text">
+             <string>Screen X Offset</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QSlider" name="screen_brightness_slider">
             <property name="orientation">
@@ -215,17 +250,13 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="screen_x_offset_label">
-            <property name="text">
-             <string>Screen X Offset</string>
+          <item row="2" column="1">
+           <widget class="QSlider" name="screen_y_offset_slider">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="screen_y_offset_label">
-            <property name="text">
-             <string>Screen Y Offset</string>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
             </property>
            </widget>
           </item>
@@ -246,8 +277,8 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QSlider" name="screen_y_offset_slider">
+          <item row="3" column="1">
+           <widget class="QSlider" name="screen_stretch_slider">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -256,13 +287,38 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QSlider" name="screen_stretch_slider">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="2" column="0">
+           <widget class="QLabel" name="screen_y_offset_label">
+            <property name="text">
+             <string>Screen Y Offset</string>
             </property>
-            <property name="tickPosition">
-             <enum>QSlider::TicksBelow</enum>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="screen_brightness_value_label">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="screen_x_offset_value_label">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="screen_y_offset_value_label">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="screen_stretch_value_label">
+            <property name="text">
+             <string>TextLabel</string>
             </property>
            </widget>
           </item>
