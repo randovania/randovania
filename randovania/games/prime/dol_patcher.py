@@ -74,6 +74,53 @@ def _apply_string_display_patch(patch_offsets: StringDisplayPatchOffsets, dol_fi
     address_wstring_constructor = struct.pack(">I", patch_offsets.wstring_constructor)
     address_display_hud_memo = struct.pack(">I", patch_offsets.display_hud_memo)
 
+    # setup stack
+    # stwu r1,-0x2C(r1)
+    # mfspr r0,LR
+    # stw r0,0x30(r1)
+
+    # # return if displayed
+    # lbz r4,0x2(r3)
+    # cmpwi r4,0x0
+    # beq end
+
+    # # otherwise set displayed
+    # li r6,0x0
+    # stb r6,0x2(r3)
+
+    # # setup CHUDMemoParms
+    # lis r5,0x4100 # 8.0f
+    # li r7,0x1
+    # li r9,0x9
+    # stw r5,0x10(r1) # display time (seconds)
+    # stb r7,0x14(r1) # clear memo window
+    # stb r6,0x15(r1) # fade out only
+    # stb r6,0x16(r1) # hint memo
+    # stb r7,0x17(r1) # fade in text
+    # stw r9,0x18(r1) # unk
+
+    # # setup wstring
+    # addi r3,r1,0x1C
+    # lis r4,0x803a      # string pointer
+    # ori r4,r4,0x6380
+    # lis r12,0x802f     # wstring_l constructor
+    # ori r12,r12,0xf3dc
+    # mtspr CTR,r12
+    # bctrl # rstl::wstring_l
+
+    # # r3 = wstring
+    # addi r4,r1,0x10
+    # lis r12,0x8006     # DisplayHudMemo address
+    # ori r12,r12,0xb3c8
+    # mtspr CTR,r12
+    # bctrl # CSamusHud::DisplayHudMemo
+
+    # end:
+    # lwz r0,0x30(r1)
+    # mtspr LR,r0
+    # addi r1,r1,0x2C
+    # blr
+
     message_receiver_patch = bytes([
         0x94, 0x21, 0xFF, 0xD4,
         0x7C, 0x08, 0x02, 0xA6,
