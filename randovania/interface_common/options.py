@@ -6,6 +6,7 @@ from typing import Optional, TypeVar, Callable, Any
 
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 
 T = TypeVar("T")
@@ -287,6 +288,15 @@ class Options:
     def pickup_markers(self, value: bool):
         self._edit_field("cosmetic_patches",
                          dataclasses.replace(self.cosmetic_patches, pickup_markers=value))
+
+    @property
+    def user_preferences(self) -> EchoesUserPreferences:
+        return self.cosmetic_patches.user_preferences
+
+    @user_preferences.setter
+    def user_preferences(self, value: EchoesUserPreferences):
+        self._edit_field("cosmetic_patches",
+                         dataclasses.replace(self.cosmetic_patches, user_preferences=value))
 
     ######
 
