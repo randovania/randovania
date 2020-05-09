@@ -7,6 +7,7 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout,
 
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
+from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib import preset_describer
@@ -82,6 +83,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
         self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
         self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
+        self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers()
@@ -298,3 +300,10 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.faster_credits_check.setChecked(options.speed_up_credits)
         self.open_map_check.setChecked(options.open_map)
         self.pickup_markers_check.setChecked(options.pickup_markers)
+
+    def _open_user_preferences_dialog(self):
+        dialog = EchoesUserPreferencesDialog(self, self._options.user_preferences)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
+            with self._options as options:
+                options.user_preferences = dialog.preferences
