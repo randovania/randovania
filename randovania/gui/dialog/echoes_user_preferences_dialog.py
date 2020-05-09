@@ -1,10 +1,19 @@
 import dataclasses
 from functools import partial
 
-from PySide2.QtWidgets import QDialog, QWidget, QCheckBox, QSlider
+from PySide2.QtWidgets import QDialog, QWidget, QCheckBox, QSlider, QLabel
 
 from randovania.gui.generated.echoes_user_preferences_dialog_ui import Ui_EchoesUserPreferencesDialog
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences, SoundMode
+
+
+def update_label_with_slider(label: QLabel, slider: QSlider):
+    if label.display_as_percentage:
+        min_value = slider.minimum()
+        percentage = (slider.value() - min_value) / (slider.maximum() - min_value)
+        label.setText(f"{percentage * 100: 3.0f}%")
+    else:
+        label.setText(str(slider.value()))
 
 
 class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
@@ -57,6 +66,10 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
                 slider.setMaximum(field.metadata["max"])
                 slider.setValue(getattr(user_preferences, field.name))
 
+                value_label: QLabel = getattr(self, f"{field.name}_value_label")
+                value_label.display_as_percentage = field.metadata["display_as_percentage"]
+                update_label_with_slider(value_label, slider)
+
             elif field.name in self.field_to_check_mapping:
                 check = self.field_to_check_mapping[field.name]
                 check.setChecked(getattr(user_preferences, field.name))
@@ -72,6 +85,7 @@ class EchoesUserPreferencesDialog(QDialog, Ui_EchoesUserPreferencesDialog):
             self.preferences,
             **{field_name: slider.value()}
         )
+        update_label_with_slider(getattr(self, f"{field_name}_value_label"), slider)
 
     def _on_check_update(self, check: QCheckBox, field_name: str, _):
         self.preferences = dataclasses.replace(

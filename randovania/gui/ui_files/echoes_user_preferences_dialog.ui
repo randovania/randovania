@@ -46,7 +46,7 @@
         <x>0</x>
         <y>0</y>
         <width>373</width>
-        <height>524</height>
+        <height>550</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -66,7 +66,7 @@
           <string>Visor</string>
          </property>
          <layout class="QGridLayout" name="visor_layout">
-          <item row="2" column="0" colspan="2">
+          <item row="3" column="0" colspan="2">
            <widget class="QCheckBox" name="hud_lag_check">
             <property name="text">
              <string>Hud Lag</string>
@@ -90,10 +90,24 @@
             </property>
            </widget>
           </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="hud_alpha_value_label">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="helmet_alpha_label">
             <property name="text">
              <string>Helmet Opacity</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="helmet_alpha_value_label">
+            <property name="text">
+             <string>TextLabel</string>
             </property>
            </widget>
           </item>
@@ -107,17 +121,16 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="hud_alpha_value_label">
-            <property name="text">
-             <string>TextLabel</string>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="checkBox">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="helmet_alpha_value_label">
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The in-game Hint System has been removed. The option for it remains, but does nothing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="text">
-             <string>TextLabel</string>
+             <string>Hint System</string>
             </property>
            </widget>
           </item>
