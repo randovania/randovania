@@ -264,6 +264,7 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
 @pytest.mark.parametrize("has_backup_path", [False, True])
 @patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
+@patch("randovania.games.prime.dol_patcher.apply_patches", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._modern_api", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._create_pak_backups", autospec=True)
@@ -273,6 +274,7 @@ def test_apply_layout(
         mock_create_pak_backups: MagicMock,
         mock_add_menu_mod_to_files: MagicMock,
         mock_modern_api: MagicMock,
+        mock_apply_patches: MagicMock,
         mock_create_progress_update_from_successive_messages: MagicMock,
         mock_save_to_file: MagicMock,
         include_menu_mod: bool,
@@ -322,6 +324,7 @@ def test_apply_layout(
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
 
     mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
+    mock_apply_patches.assert_called_once_with(game_root, cosmetic_patches)
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
