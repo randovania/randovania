@@ -302,6 +302,38 @@ def test_trivial_requirement_str():
         ]),
         _req("A"),
     ),
+    (
+        RequirementOr([
+            _req("A"),
+            RequirementAnd([_req("B"), _req("C")]),
+            RequirementAnd([_req("B"), _req("D")]),
+        ]),
+        RequirementOr([
+            _req("A"),
+            RequirementAnd([
+                _req("B"),
+                RequirementOr([
+                    _req("C"),
+                    _req("D"),
+                ]),
+            ]),
+        ]),
+    ),
+    (
+        RequirementOr([
+            RequirementAnd([_req("B"), _req("C")]),
+            RequirementAnd([_req("B"), _req("D")]),
+        ]),
+        RequirementAnd([
+            _req("B"),
+            RequirementOr([
+                _req("C"),
+                _req("D"),
+            ]),
+        ]),
+    ),
 ])
 def test_simplified_requirement(original, expected):
-    assert original.simplify() == expected
+    simplified = original.simplify()
+    assert simplified == expected
+    assert simplified.as_set == expected.as_set

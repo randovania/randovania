@@ -179,10 +179,46 @@ class RequirementOr(Requirement):
             elif item != Requirement.impossible():
                 new_items.append(item)
 
-        if len(new_items) == 1:
-            return new_items[0]
+        num_and_requirements = 0
+        common_requirements = None
+        for item in new_items:
+            if isinstance(item, RequirementAnd):
+                num_and_requirements += 1
+                if common_requirements is None:
+                    common_requirements = item.items
+                else:
+                    common_requirements = [
+                        common
+                        for common in common_requirements
+                        if common in item.items
+                    ]
 
-        return RequirementOr(new_items)
+        # Only extract the common requirements if there's more than 1 requirement
+        if num_and_requirements >= 2 and common_requirements:
+            simplified_items = []
+            common_new_or = []
+
+            for item in new_items:
+                if isinstance(item, RequirementAnd):
+                    assert set(common_requirements) <= set(item.items)
+                    simplified_condition = [it for it in item.items if it not in common_requirements]
+                    if simplified_condition:
+                        common_new_or.append(RequirementAnd(simplified_condition) if len(simplified_condition) > 1
+                                             else simplified_condition[0])
+                else:
+                    simplified_items.append(item)
+
+            common_requirements.append(RequirementOr(common_new_or))
+            simplified_items.append(RequirementAnd(common_requirements))
+            final_items = simplified_items
+
+        else:
+            final_items = new_items
+
+        if len(final_items) == 1:
+            return final_items[0]
+
+        return RequirementOr(final_items)
 
     @property
     def as_set(self) -> "RequirementSet":
