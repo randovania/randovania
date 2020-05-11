@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 from random import Random
-from typing import List, Tuple, Callable, TypeVar, Set
+from typing import List, Tuple, Callable, TypeVar, Set, Dict
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -12,7 +12,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
-from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration
+from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import bootstrap, debug
 
@@ -129,7 +129,7 @@ def fill_unassigned_hints(patches: GamePatches,
     possible_indices = set(patches.pickup_assignment.keys())
     possible_indices -= {hint.target for hint in patches.hints.values()}
     possible_indices -= {index for index in possible_indices
-                         if not should_have_hint(patches.pickup_assignment[index].item_category)}
+                         if not should_have_hint(patches.pickup_assignment[index].pickup.item_category)}
 
     debug.debug_print("fill_unassigned_hints had {} decent indices for {} hint locations".format(
         len(possible_indices), len(potential_hint_locations)))
@@ -151,51 +151,79 @@ def fill_unassigned_hints(patches: GamePatches,
     return dataclasses.replace(patches, hints=new_hints)
 
 
-def run_filler(configuration: LayoutConfiguration,
-               game: GameDescription,
-               item_pool: List[PickupEntry],
-               patches: GamePatches,
-               rng: Random,
+@dataclasses.dataclass(frozen=True)
+class PlayerPool:
+    game: GameDescription
+    configuration: LayoutConfiguration
+    patches: GamePatches
+    pickups: List[PickupEntry]
+
+
+@dataclasses.dataclass(frozen=True)
+class FillerPlayerResult:
+    game: GameDescription
+    patches: GamePatches
+    unassigned_pickups: List[PickupEntry]
+
+
+def run_filler(rng: Random,
+               player_pools: Dict[int, PlayerPool],
                status_update: Callable[[str], None],
-               ) -> Tuple[GamePatches, List[PickupEntry]]:
+               ) -> Dict[int, FillerPlayerResult]:
     """
     Runs the filler logic for the given configuration and item pool.
     Returns a GamePatches with progression items and hints assigned, along with all items in the pool
     that weren't assigned.
 
-    :param configuration:
-    :param game:
-    :param item_pool:
-    :param patches:
+    :param player_pools:
     :param rng:
     :param status_update:
     :return:
     """
-    major_items, expansions = _split_expansions(item_pool)
-    rng.shuffle(major_items)
-    rng.shuffle(expansions)
 
-    major_configuration = configuration.major_items_configuration
+    player_states = {}
+    player_expansions = {}
 
-    new_game, state = bootstrap.logic_bootstrap(configuration, game, patches)
-    new_game.patch_requirements(state.resources, configuration.damage_strictness.value)
+    for index, pool in player_pools.items():
+        major_items, player_expansions[index] = _split_expansions(pool.pickups)
+        rng.shuffle(major_items)
+        rng.shuffle(player_expansions[index])
 
-    filler_patches = retcon_playthrough_filler(
-        new_game, state, major_items, rng,
-        configuration=FillerConfiguration(
-            randomization_mode=configuration.available_locations.randomization_mode,
-            minimum_random_starting_items=major_configuration.minimum_random_starting_items,
-            maximum_random_starting_items=major_configuration.maximum_random_starting_items,
-            indices_to_exclude=configuration.available_locations.excluded_indices,
-        ),
-        status_update=status_update)
+        new_game, state = bootstrap.logic_bootstrap(pool.configuration, pool.game, pool.patches)
+        new_game.patch_requirements(state.resources, pool.configuration.damage_strictness.value)
 
-    # Since we haven't added expansions yet, these hints will always be for items added by the filler.
-    full_hints_patches = fill_unassigned_hints(filler_patches, game.world_list, rng)
+        major_configuration = pool.configuration.major_items_configuration
+        player_states[index] = PlayerState(
+            game=new_game,
+            initial_state=state,
+            pickups_left=major_items,
+            configuration=FillerConfiguration(
+                randomization_mode=pool.configuration.available_locations.randomization_mode,
+                minimum_random_starting_items=major_configuration.minimum_random_starting_items,
+                maximum_random_starting_items=major_configuration.maximum_random_starting_items,
+                indices_to_exclude=pool.configuration.available_locations.excluded_indices,
+            ),
+        )
 
-    if configuration.hints.item_hints:
-        result = add_hints_precision(full_hints_patches, rng)
-    else:
-        result = replace_hints_without_precision_with_jokes(full_hints_patches)
+    filler_result = retcon_playthrough_filler(rng, player_states, status_update=status_update)
 
-    return result, major_items + expansions
+    results = {}
+
+    for index, patches in filler_result.items():
+        game = player_pools[index].game
+
+        # Since we haven't added expansions yet, these hints will always be for items added by the filler.
+        full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng)
+
+        if player_pools[index].configuration.hints.item_hints:
+            result = add_hints_precision(full_hints_patches, rng)
+        else:
+            result = replace_hints_without_precision_with_jokes(full_hints_patches)
+
+        results[index] = FillerPlayerResult(
+            game=game,
+            patches=result,
+            unassigned_pickups=player_states[index].pickups_left + player_expansions[index],
+        )
+
+    return results

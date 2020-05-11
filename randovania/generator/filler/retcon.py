@@ -6,6 +6,7 @@ from random import Random
 from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
     DefaultDict, Mapping, FrozenSet, Callable, List, TypeVar, Any, Optional
 
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import calculate_interesting_resources, GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
@@ -135,59 +136,97 @@ def build_available_indices(world_list: WorldList, configuration: FillerConfigur
     return indices_groups, all_indices
 
 
-def retcon_playthrough_filler(game: GameDescription,
-                              initial_state: State,
-                              pickups_left: List[PickupEntry],
-                              rng: Random,
-                              configuration: FillerConfiguration,
+class PlayerState:
+    pickup_index_seen_count: DefaultDict[PickupIndex, int]
+    scan_asset_seen_count: DefaultDict[LogbookAsset, int]
+    scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]
+    num_random_starting_items_placed: int
+
+    def __init__(self, game: GameDescription, initial_state: State,
+                 pickups_left: List[PickupEntry],
+                 configuration: FillerConfiguration):
+        self.game = game
+        self.reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
+        self.pickups_left = pickups_left
+        self.configuration = configuration
+
+        self.pickup_index_seen_count = collections.defaultdict(int)
+        self.scan_asset_seen_count = collections.defaultdict(int)
+        self.scan_asset_initial_pickups = {}
+        self.num_random_starting_items_placed = 0
+        self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
+
+    def advance_pickup_index_seen_count(self):
+        for pickup_index in self.reach.state.collected_pickup_indices:
+            self.pickup_index_seen_count[pickup_index] += 1
+
+        print_new_resources(self.game, self.reach, self.pickup_index_seen_count, "Pickup Index")
+
+    def advance_scan_asset_seen_count(self):
+        for scan_asset in self.reach.state.collected_scan_assets:
+            self.scan_asset_seen_count[scan_asset] += 1
+            if self.scan_asset_seen_count[scan_asset] == 1:
+                self.scan_asset_initial_pickups[scan_asset] = frozenset(self.reach.state.collected_pickup_indices)
+
+        print_new_resources(self.game, self.reach, self.scan_asset_seen_count, "Scan Asset")
+
+    def calculate_potential_actions(self, status_update: Callable[[str], None]):
+        current_uncollected = UncollectedState.from_reach(self.reach)
+        progression_pickups = _calculate_progression_pickups(self.pickups_left, self.reach)
+
+        print_retcon_loop_start(current_uncollected, self.game, self.pickups_left, self.reach)
+
+        return _calculate_potential_actions(self.reach,
+                                            progression_pickups,
+                                            current_uncollected,
+                                            (self.configuration.maximum_random_starting_items
+                                             - self.num_random_starting_items_placed),
+                                            status_update)
+
+    def victory_condition_satisfied(self):
+        return self.game.victory_condition.satisfied(self.reach.state.resources, self.reach.state.energy)
+
+
+def retcon_playthrough_filler(rng: Random,
+                              player_states: Dict[int, PlayerState],
                               status_update: Callable[[str], None],
-                              ) -> GamePatches:
+                              ) -> Dict[int, GamePatches]:
     debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
         "*" * 100,
-        pprint.pformat({
-            item.name: pickups_left.count(item)
-            for item in sorted(set(pickups_left), key=lambda item: item.name)
-        })
+        "\n".join(
+            "Player {}: {}".format(
+                player_index,
+                pprint.pformat({
+                    item.name: player_state.pickups_left.count(item)
+                    for item in sorted(set(player_state.pickups_left), key=lambda item: item.name)
+                })
+            )
+            for player_index, player_state in player_states.items()
+        )
     ))
     last_message = "Starting."
 
-    minimum_random_starting_items = configuration.minimum_random_starting_items
-    maximum_random_starting_items = configuration.maximum_random_starting_items
+    def action_report(message: str):
+        status_update("{} {}".format(last_message, message))
 
-    reach = advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, initial_state))
+    for player_state in player_states.values():
+        player_state.advance_pickup_index_seen_count()
+        player_state.advance_scan_asset_seen_count()
 
-    pickup_index_seen_count: DefaultDict[PickupIndex, int] = collections.defaultdict(int)
-    scan_asset_seen_count: DefaultDict[LogbookAsset, int] = collections.defaultdict(int)
-    scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]] = {}
-    num_random_starting_items_placed = 0
+    players_to_check = []
 
-    indices_groups, all_indices = build_available_indices(game.world_list, configuration)
+    while True:
+        if not players_to_check:
+            players_to_check = [player_index for player_index, player_state in player_states.items()
+                                if not player_state.victory_condition_satisfied()]
+            if not players_to_check:
+                debug.debug_print("Finished because we can win")
+                break
+            rng.shuffle(players_to_check)
+        player_to_check = players_to_check.pop()
 
-    while pickups_left:
-        current_uncollected = UncollectedState.from_reach(reach)
-
-        progression_pickups = _calculate_progression_pickups(pickups_left, reach)
-        print_retcon_loop_start(current_uncollected, game, pickups_left, reach)
-
-        for pickup_index in reach.state.collected_pickup_indices:
-            pickup_index_seen_count[pickup_index] += 1
-        print_new_resources(game, reach, pickup_index_seen_count, "Pickup Index")
-
-        for scan_asset in reach.state.collected_scan_assets:
-            scan_asset_seen_count[scan_asset] += 1
-            if scan_asset_seen_count[scan_asset] == 1:
-                scan_asset_initial_pickups[scan_asset] = frozenset(reach.state.collected_pickup_indices)
-
-        print_new_resources(game, reach, scan_asset_seen_count, "Scan Asset")
-
-        def action_report(message: str):
-            status_update("{} {}".format(last_message, message))
-
-        actions_weights = _calculate_potential_actions(reach,
-                                                       progression_pickups,
-                                                       current_uncollected,
-                                                       maximum_random_starting_items - num_random_starting_items_placed,
-                                                       action_report)
+        current_player = player_states[player_to_check]
+        actions_weights = current_player.calculate_potential_actions(action_report)
 
         try:
             action = next(iterate_with_weights(items=list(actions_weights.keys()),
@@ -198,74 +237,92 @@ def retcon_playthrough_filler(game: GameDescription,
                 action = rng.choice(list(actions_weights.keys()))
             else:
                 raise UnableToGenerate("Unable to generate; no actions found after placing {} items.".format(
-                    len(reach.state.patches.pickup_assignment)))
+                    len(current_player.reach.state.patches.pickup_assignment)))
 
         if isinstance(action, PickupEntry):
-            assert action in pickups_left
+            assert action in current_player.pickups_left
 
-            uncollected_indices = current_uncollected.indices & all_indices
+            all_weights = _calculate_all_pickup_indices_weight(player_states)
 
-            if num_random_starting_items_placed >= minimum_random_starting_items and uncollected_indices:
-                pickup_index_weights = _calculate_uncollected_index_weights(
-                    uncollected_indices,
-                    set(reach.state.patches.pickup_assignment),
-                    pickup_index_seen_count,
-                    indices_groups,
-                )
-                assert pickup_index_weights, "Pickups should only be added to the actions dict " \
-                                             "when there are unassigned pickups"
+            if all_weights and (current_player.num_random_starting_items_placed
+                                >= current_player.configuration.minimum_random_starting_items):
 
-                pickup_index = next(iterate_with_weights(items=iter(uncollected_indices),
-                                                         item_weights=pickup_index_weights,
-                                                         rng=rng))
+                player_index, pickup_index = next(iterate_with_weights(items=iter(all_weights.keys()),
+                                                                       item_weights=all_weights,
+                                                                       rng=rng))
 
-                next_state = reach.state.assign_pickup_to_index(action, pickup_index)
+                index_owner_state = player_states[player_index]
+                index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_new_pickups([
+                    (pickup_index, PickupTarget(action, player_to_check)),
+                ])
 
                 # Place a hint for the new item
-                hint_location = _calculate_hint_location_for_action(action, current_uncollected, pickup_index, rng,
-                                                                    scan_asset_initial_pickups)
+                hint_location = _calculate_hint_location_for_action(
+                    action,
+                    UncollectedState.from_reach(index_owner_state.reach),
+                    pickup_index,
+                    rng,
+                    index_owner_state.scan_asset_initial_pickups,
+                )
                 if hint_location is not None:
-                    next_state.patches = next_state.patches.assign_hint(hint_location,
-                                                                        Hint(HintType.LOCATION, None, pickup_index))
+                    index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_hint(
+                        hint_location, Hint(HintType.LOCATION, None, pickup_index))
 
-                print_retcon_place_pickup(action, game, pickup_index, hint_location)
+                if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
+                    current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
+
+                print_retcon_place_pickup(player_to_check, action, index_owner_state.game, pickup_index, hint_location, player_index)
 
             else:
-                num_random_starting_items_placed += 1
-                if num_random_starting_items_placed > maximum_random_starting_items:
+                current_player.num_random_starting_items_placed += 1
+                if (current_player.num_random_starting_items_placed
+                        > current_player.configuration.maximum_random_starting_items):
                     raise UnableToGenerate("Attempting to place more extra starting items than the number allowed.")
 
                 if debug.debug_level() > 1:
                     print(f"\n--> Adding {action.name} as a starting item")
 
-                next_state = reach.state.assign_pickup_to_starting_items(action)
+                current_player.reach.advance_to(current_player.reach.state.assign_pickup_to_starting_items(action))
 
             # TODO: this item is potentially dangerous and we should remove the invalidated paths
-            pickups_left.remove(action)
+            current_player.pickups_left.remove(action)
 
-            last_message = "Placed {} items so far, {} left.".format(
-                len(next_state.patches.pickup_assignment), len(pickups_left) - 1)
+            count_pickups_left = sum(len(player_state.pickups_left) for player_state in player_states.values())
+            last_message = "{} items left.".format(count_pickups_left)
             status_update(last_message)
-
-            reach.advance_to(next_state)
 
         else:
             last_message = "Triggered an event out of {} options.".format(len(actions_weights))
             status_update(last_message)
-            debug_print_collect_event(action, game)
+            debug_print_collect_event(action, current_player.game)
             # This action is potentially dangerous. Use `act_on` to remove invalid paths
-            reach.act_on(action)
+            current_player.reach.act_on(action)
 
-        reach = advance_reach_with_possible_unsafe_resources(reach)
+        current_player.reach = advance_reach_with_possible_unsafe_resources(current_player.reach)
+        current_player.advance_pickup_index_seen_count()
+        current_player.advance_scan_asset_seen_count()
 
-        if game.victory_condition.satisfied(reach.state.resources, reach.state.energy):
-            debug.debug_print("Finished because we can win")
-            break
+    return {
+        index: player_state.reach.state.patches
+        for index, player_state in player_states.items()
+    }
 
-    if not pickups_left:
-        debug.debug_print("Finished because we have nothing else to distribute")
 
-    return reach.state.patches
+def _calculate_all_pickup_indices_weight(player_states: Dict[int, PlayerState],
+                                         ) -> Dict[Tuple[int, PickupIndex], float]:
+    all_weights = {}
+
+    for player_index, player_state in player_states.items():
+        pickup_index_weights = _calculate_uncollected_index_weights(
+            player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
+            set(player_state.reach.state.patches.pickup_assignment),
+            player_state.pickup_index_seen_count,
+            player_state.indices_groups,
+        )
+        for pickup_index, weight in pickup_index_weights.items():
+            all_weights[(player_index, pickup_index)] = weight
+
+    return all_weights
 
 
 def _calculate_hint_location_for_action(action: PickupEntry,
@@ -403,8 +460,9 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
         ))
 
 
-def print_retcon_place_pickup(action: PickupEntry, game: GameDescription,
-                              pickup_index: PickupIndex, hint: Optional[LogbookAsset]):
+def print_retcon_place_pickup(owner_index: int, action: PickupEntry, game: GameDescription,
+                              pickup_index: PickupIndex, hint: Optional[LogbookAsset],
+                              player_index: int):
     world_list = game.world_list
     if debug.debug_level() > 0:
         if hint is not None:
@@ -414,10 +472,12 @@ def print_retcon_place_pickup(action: PickupEntry, game: GameDescription,
         else:
             hint_string = ""
 
-        print("\n--> Placing {0} at {1}{2}".format(
+        print("\n--> Placing player {4}'s {0} at player {3}'s {1}{2}".format(
             action.name,
             world_list.node_name(find_node_with_resource(pickup_index, world_list.all_nodes), with_world=True),
-            hint_string
+            hint_string,
+            player_index,
+            owner_index,
         ))
 
 

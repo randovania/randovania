@@ -24,3 +24,7 @@ class WindowManager(QWidget):
     @property
     def main_window(self) -> QMainWindow:
         raise NotImplemented()
+
+    @property
+    def is_preview_mode(self) -> bool:
+        raise NotImplemented()
