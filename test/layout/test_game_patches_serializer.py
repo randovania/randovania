@@ -207,14 +207,14 @@ def test_round_trip_generated_patches(echoes_game_data, preset_manager):
         )
     )
 
-    all_patches = generator._create_randomized_patches(
+    all_patches = generator._async_create_description(
         permalink=Permalink(
             seed_number=1000,
             spoiler=True,
             presets={0: preset},
         ),
         status_update=lambda x: None,
-    )
+    ).all_patches
 
     # Run
     encoded = game_patches_serializer.serialize(all_patches, {0: echoes_game_data})

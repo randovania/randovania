@@ -166,10 +166,16 @@ class FillerPlayerResult:
     unassigned_pickups: List[PickupEntry]
 
 
+@dataclasses.dataclass(frozen=True)
+class FillerResults:
+    player_results: Dict[int, FillerPlayerResult]
+    action_log: Tuple[str, ...]
+
+
 def run_filler(rng: Random,
                player_pools: Dict[int, PlayerPool],
                status_update: Callable[[str], None],
-               ) -> Dict[int, FillerPlayerResult]:
+               ) -> FillerResults:
     """
     Runs the filler logic for the given configuration and item pool.
     Returns a GamePatches with progression items and hints assigned, along with all items in the pool
@@ -205,7 +211,7 @@ def run_filler(rng: Random,
             ),
         )
 
-    filler_result = retcon_playthrough_filler(rng, player_states, status_update=status_update)
+    filler_result, actions_log = retcon_playthrough_filler(rng, player_states, status_update=status_update)
 
     results = {}
 
@@ -226,4 +232,4 @@ def run_filler(rng: Random,
             unassigned_pickups=player_states[index].pickups_left + player_expansions[index],
         )
 
-    return results
+    return FillerResults(results, actions_log)

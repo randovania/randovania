@@ -1,7 +1,7 @@
 import dataclasses
 import multiprocessing.dummy
 from random import Random
-from typing import Tuple, Iterator, Optional, Callable, TypeVar, List, Dict
+from typing import Iterator, Optional, Callable, List, Dict
 
 import tenacity
 
@@ -15,47 +15,22 @@ from randovania.game_description.world_list import WorldList
 from randovania.generator import base_patches_factory
 from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes, \
     UnableToGenerate
-from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool
+from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.available_locations import RandomizationMode
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.layout.layout_description import LayoutDescription, SolverPath
+from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration
 from randovania.resolver.state import State
 
-T = TypeVar("T")
-
 
 def _iterate_previous_states(state: State) -> Iterator[State]:
     while state:
         yield state
         state = state.previous_state
-
-
-def _state_to_solver_path(final_state: State,
-                          game: GameDescription
-                          ) -> Tuple[SolverPath, ...]:
-    world_list = game.world_list
-
-    def build_previous_nodes(s: State):
-        if s.path_from_previous_state:
-            return tuple(
-                world_list.node_name(node) for node in s.path_from_previous_state
-                if node is not s.previous_state.node
-            )
-        else:
-            return tuple()
-
-    return tuple(
-        SolverPath(
-            node_name=world_list.node_name(state.node, with_world=True),
-            previous_nodes=build_previous_nodes(state)
-        )
-        for state in reversed(list(_iterate_previous_states(final_state)))
-    )
 
 
 def generate_description(permalink: Permalink,
@@ -83,17 +58,17 @@ def generate_description(permalink: Permalink,
         return GenerationFailure(message, permalink=permalink)
 
     with multiprocessing.dummy.Pool(1) as dummy_pool:
-        patches_async = dummy_pool.apply_async(func=_create_randomized_patches,
-                                               kwds=create_patches_params)
+        result_async = dummy_pool.apply_async(func=_async_create_description,
+                                              kwds=create_patches_params)
         try:
-            new_patches: Dict[int, GamePatches] = patches_async.get(timeout)
+            result: LayoutDescription = result_async.get(timeout)
         except multiprocessing.TimeoutError:
-            raise create_failure("Timeout reached when generating patches.")
+            raise create_failure("Timeout reached when generating.")
 
         if validate_after_generation and permalink.player_count == 1:
             resolve_params = {
                 "configuration": permalink.presets[0].layout_configuration,
-                "patches": new_patches[0],
+                "patches": result.all_patches[0],
                 "status_update": status_update,
             }
             final_state_async = dummy_pool.apply_async(func=resolver.resolve,
@@ -108,14 +83,7 @@ def generate_description(permalink: Permalink,
                 # Why is final_state_by_distribution not OK?
                 raise create_failure("Generated seed was considered impossible by the solver")
 
-        solver_path = tuple()
-
-    return LayoutDescription(
-        permalink=permalink,
-        version=VERSION,
-        all_patches=new_patches,
-        solver_path=solver_path
-    )
+    return result
 
 
 def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription) -> None:
@@ -163,9 +131,9 @@ def _distribute_remaining_items(rng: Random,
     # }
 
 
-def _create_randomized_patches(permalink: Permalink,
-                               status_update: Callable[[str], None],
-                               ) -> Dict[int, GamePatches]:
+def _async_create_description(permalink: Permalink,
+                              status_update: Callable[[str], None],
+                              ) -> LayoutDescription:
     """
     :param permalink:
     :param status_update:
@@ -179,7 +147,13 @@ def _create_randomized_patches(permalink: Permalink,
     }
 
     filler_results = _retryable_create_patches(rng, presets, status_update)
-    return _distribute_remaining_items(rng, filler_results)
+    all_patches = _distribute_remaining_items(rng, filler_results.player_results)
+    return LayoutDescription(
+        permalink=permalink,
+        version=VERSION,
+        all_patches=all_patches,
+        item_order=filler_results.action_log,
+    )
 
 
 def create_player_pool(rng: Random, configuration: LayoutConfiguration, player_index: int) -> PlayerPool:
@@ -210,7 +184,7 @@ def create_player_pool(rng: Random, configuration: LayoutConfiguration, player_i
 def _retryable_create_patches(rng: Random,
                               presets: Dict[int, Preset],
                               status_update: Callable[[str], None],
-                              ) -> Dict[int, FillerPlayerResult]:
+                              ) -> FillerResults:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param rng:

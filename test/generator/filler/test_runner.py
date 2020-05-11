@@ -28,15 +28,17 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     patches = patches.assign_hint(
         logbook_nodes[0].resource(), Hint(HintType.LOCATION, None, PickupIndex(0))
     )
+    action_log = (MagicMock(), MagicMock())
 
-    mock_retcon_playthrough_filler.return_value = {0: patches}
+    mock_retcon_playthrough_filler.return_value = {0: patches}, action_log
 
     # Run
     filler_result = runner.run_filler(rng, player_pools, status_update)
 
-    assert len(filler_result) == 1
-    result_patches = filler_result[0].patches
-    remaining_items = filler_result[0].unassigned_pickups
+    assert filler_result.action_log == action_log
+    assert len(filler_result.player_results) == 1
+    result_patches = filler_result.player_results[0].patches
+    remaining_items = filler_result.player_results[0].unassigned_pickups
 
     # Assert
     assert len(result_patches.hints) == len(logbook_nodes)
