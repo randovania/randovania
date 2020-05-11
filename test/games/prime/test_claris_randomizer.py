@@ -300,7 +300,7 @@ def test_apply_layout(
             )},
         ),
         all_patches={0: MagicMock()},
-        solver_path=(),
+        item_order=(),
     )
 
     game_root = MagicMock(spec=Path())

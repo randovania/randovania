@@ -1,7 +1,9 @@
 from typing import Callable, Union
 from unittest.mock import MagicMock, patch, call
 
+import randovania
 from randovania.generator import generator
+from randovania.layout.layout_description import LayoutDescription
 
 
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
@@ -28,7 +30,7 @@ def test_create_patches(mock_random: MagicMock,
     permalink.get_preset.side_effect = lambda i: presets[i]
 
     # Run
-    result = generator._create_randomized_patches(permalink, status_update)
+    result = generator._async_create_description(permalink, status_update)
 
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
@@ -41,6 +43,11 @@ def test_create_patches(mock_random: MagicMock,
         for i in range(num_players)
     ])
     mock_run_filler.assert_called_once_with(rng, {i: player_pools[i] for i in range(num_players)}, status_update)
-    mock_distribute_remaining_items.assert_called_once_with(rng, mock_run_filler.return_value)
+    mock_distribute_remaining_items.assert_called_once_with(rng, mock_run_filler.return_value.player_results)
 
-    assert result == mock_distribute_remaining_items.return_value
+    assert result == LayoutDescription(
+        permalink=permalink,
+        version=randovania.VERSION,
+        all_patches=mock_distribute_remaining_items.return_value,
+        item_order=mock_run_filler.return_value.action_log,
+    )
