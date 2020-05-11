@@ -16,15 +16,15 @@ def test_encode(mock_dictionary_byte_hash: MagicMock, preset_manager):
     link = Permalink(
         seed_number=1000,
         spoiler=True,
-        preset=preset_manager.default_preset,
+        presets={0: preset_manager.default_preset},
     )
 
     # Run
     encoded = link.as_str
 
     # Assert
-    mock_dictionary_byte_hash.assert_called_once_with(link.layout_configuration.game_data)
-    assert encoded == "kAAAfReAzg=="
+    mock_dictionary_byte_hash.assert_called_once_with(preset_manager.default_preset.layout_configuration.game_data)
+    assert encoded == "oAAAfRQeABo="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -72,7 +72,7 @@ def test_round_trip(spoiler: bool,
     link = Permalink(
         seed_number=1000,
         spoiler=spoiler,
-        preset=preset,
+        presets={0: preset},
     )
 
     # Run
@@ -101,12 +101,12 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, preset_manager):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "kAAAfReAzg=="
+    encoded = "oAAAfRQeABo="
 
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
-        preset=preset_manager.default_preset,
+        presets={0: preset_manager.default_preset},
     )
 
     # Uncomment this line to quickly get the new encoded permalink
@@ -120,26 +120,33 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, preset_manager):
     assert link == expected
 
 
+@pytest.mark.parametrize(["encoded", "num_players"], [
+    ("oAAAfRUggB0=", 1),
+    ("oAAAfRgBIKB2", 2),
+    ("oAAAfRghIL/gbQ==", 10),
+])
 @patch("randovania.layout.layout_configuration.LayoutConfiguration.bit_pack_unpack")
 @patch("randovania.layout.patcher_configuration.PatcherConfiguration.bit_pack_unpack")
 def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            mock_layout_unpack: MagicMock,
                            preset_manager,
+                           encoded,
+                           num_players,
                            ):
-    encoded = "kAAAfRgojw=="
     patcher_configuration = mock_packer_unpack.return_value
     layout_configuration = mock_layout_unpack.return_value
+    preset = Preset(
+        name="{} Custom".format(preset_manager.default_preset.name),
+        description="A customized preset.",
+        base_preset_name=preset_manager.default_preset.name,
+        patcher_configuration=patcher_configuration,
+        layout_configuration=layout_configuration,
+    )
 
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
-        preset=Preset(
-            name="{} Custom".format(preset_manager.default_preset.name),
-            description="A customized preset.",
-            base_preset_name=preset_manager.default_preset.name,
-            patcher_configuration=patcher_configuration,
-            layout_configuration=layout_configuration,
-        ),
+        presets={i: preset for i in range(num_players)},
     )
     patcher_configuration.bit_pack_encode.return_value = []
     layout_configuration.bit_pack_encode.return_value = []
@@ -150,8 +157,8 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
     # print(expected.as_str)
 
     # Run
-    link = Permalink.from_str(encoded)
     round_trip = expected.as_str
+    link = Permalink.from_str(encoded)
 
     # Assert
     assert link == expected
@@ -172,7 +179,7 @@ def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
     link = Permalink(
         seed_number=1000,
         spoiler=True,
-        preset=preset_manager.default_preset,
+        presets={0: preset_manager.default_preset},
     )
 
     # Run

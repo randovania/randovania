@@ -100,9 +100,9 @@ class PickupNode(ResourceNode):
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.pickup_index, 1
 
-        pickup = patches.pickup_assignment.get(self.pickup_index)
-        if pickup is not None:
-            yield from pickup.resource_gain(current_resources)
+        target = patches.pickup_assignment.get(self.pickup_index)
+        if target is not None and target.player == patches.player_index:
+            yield from target.pickup.resource_gain(current_resources)
 
 
 @dataclasses.dataclass(frozen=True)

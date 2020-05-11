@@ -2,10 +2,12 @@ from typing import List
 
 import pytest
 
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint
 from randovania.generator.item_pool import pickup_creator
+from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 def _create_hint_text(hide_area: bool,
@@ -34,7 +36,8 @@ def test_create_hints_all_placed(hide_area: bool,
                                  empty_patches, echoes_game_description):
     # Setup
     patches = empty_patches.assign_new_pickups([
-        (PickupIndex(17 + key), pickup_creator.create_sky_temple_key(key, echoes_game_description.resource_database))
+        (PickupIndex(17 + key),
+         PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game_description.resource_database), 0))
         for key in range(9)
     ])
     expected = [
@@ -59,7 +62,8 @@ def test_create_hints_all_placed(hide_area: bool,
     ]
 
     # Run
-    result = sky_temple_key_hint.create_hints(patches, echoes_game_description.world_list, hide_area)
+    result = sky_temple_key_hint.create_hints({0: patches}, PlayersConfiguration(0, {0: "you"}),
+                                              echoes_game_description.world_list, hide_area)
 
     # Assert
     assert result == expected
@@ -96,7 +100,8 @@ def test_create_hints_all_starting(hide_area: bool,
     ]
 
     # Run
-    result = sky_temple_key_hint.create_hints(patches, echoes_game_description.world_list, hide_area)
+    result = sky_temple_key_hint.create_hints({0: patches}, PlayersConfiguration(0, {0: "you"}),
+                                              echoes_game_description.world_list, hide_area)
 
     # Assert
     assert result == expected

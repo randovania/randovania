@@ -19,7 +19,7 @@ def test_batch_distribute_helper(mock_perf_counter: MagicMock,
     expected_permalink = Permalink(
         seed_number=seed_number,
         spoiler=True,
-        preset=base_permalink.preset,
+        presets=base_permalink.presets,
     )
 
     mock_perf_counter.side_effect = [1000, 5000]

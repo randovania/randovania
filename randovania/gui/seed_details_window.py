@@ -1,5 +1,5 @@
 from functools import partial
-from typing import List
+from typing import List, Dict
 
 from PySide2 import QtCore
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
@@ -7,6 +7,7 @@ from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout,
 
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
+from randovania.games.prime import patcher_file
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
@@ -16,6 +17,7 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_use
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
@@ -31,7 +33,12 @@ def _unique(iterable):
 
 
 def _show_pickup_spoiler(button):
-    button.setText(button.item_name)
+    target_player = getattr(button, "target_player", None)
+    if target_player is not None:
+        label = f"{button.item_name} for {button.player_names[target_player]}"
+    else:
+        label = button.item_name
+    button.setText(label)
     button.item_is_hidden = False
 
 
@@ -48,6 +55,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
     layout_description: LayoutDescription
     _options: Options
     _window_manager: WindowManager
+    _player_names: Dict[int, str]
 
     def __init__(self, background_processor: BackgroundTaskMixin, window_manager: WindowManager, options: Options):
         super().__init__()
@@ -72,11 +80,16 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self._action_copy_permalink.setText("Copy Permalink")
         self._tool_button_menu.addAction(self._action_copy_permalink)
 
+        self._action_open_dolphin = QAction(self)
+        self._action_open_dolphin.setText("Open Dolphin Hook")
+        self._tool_button_menu.addAction(self._action_open_dolphin)
+
         # Signals
         self.export_log_button.clicked.connect(self._export_log)
         self.export_iso_button.clicked.connect(self._export_iso)
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
+        self.player_index_combo.activated.connect(self._update_current_player)
 
         # Cosmetic
         self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
@@ -87,6 +100,10 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers()
+
+    @property
+    def current_player_index(self) -> int:
+        return self.player_index_combo.currentData()
 
     # Operations
     def _copy_permalink(self):
@@ -114,6 +131,8 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         input_file = dialog.input_file
         output_file = dialog.output_file
+        player_index = self.current_player_index
+        player_names = self._player_names
 
         with options:
             options.output_directory = output_file.parent
@@ -131,6 +150,10 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
             # Apply Layout
             simplified_patcher.apply_layout(layout=layout,
+                                            players_config=PlayersConfiguration(
+                                                player_index=player_index,
+                                                player_names=player_names,
+                                            ),
                                             options=options,
                                             progress_update=updaters[-2])
 
@@ -144,7 +167,8 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.background_processor.run_in_background_thread(work, "Exporting...")
 
     def _open_map_tracker(self):
-        self._window_manager.open_map_tracker(self.layout_description.permalink.layout_configuration)
+        current_preset = self.layout_description.permalink.presets[self.current_player_index]
+        self._window_manager.open_map_tracker(current_preset.layout_configuration)
 
     # Layout Visualization
     def _create_pickup_spoiler_combobox(self):
@@ -214,31 +238,67 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         self.export_log_button.setEnabled(description.permalink.spoiler)
 
+        self._player_names = {
+            i: f"Player {i + 1}"
+            for i in range(description.permalink.player_count)
+        }
+
+        self.player_index_combo.clear()
+        for i in range(description.permalink.player_count):
+            self.player_index_combo.addItem(self._player_names[i], i)
+        self.player_index_combo.setCurrentIndex(0)
+        self.player_index_combo.setVisible(description.permalink.player_count > 1)
+
+        self._update_current_player()
+
+    def _update_current_player(self):
+        description = self.layout_description
+        current_player = self.current_player_index
+        preset = description.permalink.get_preset(current_player)
+
         title_text = """
         <p>
             Permalink: <span style='font-weight:600;'>{description.permalink.as_str}</span><br/>
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
-            Preset Name: {description.permalink.preset.name}
+            Preset Name: {preset.name}
         </p>
-        """.format(description=description)
+        """.format(description=description, preset=preset)
         self.layout_title_label.setText(title_text)
 
-        categories = list(preset_describer.describe(description.permalink.preset))
+        categories = list(preset_describer.describe(preset))
         self.layout_description_left_label.setText(preset_describer.merge_categories(categories[::2]))
         self.layout_description_right_label.setText(preset_describer.merge_categories(categories[1::2]))
 
         # Game Spoiler
         has_spoiler = description.permalink.spoiler
         self.pickup_tab.setEnabled(has_spoiler)
+        patches = description.all_patches[current_player]
 
         if has_spoiler:
             pickup_names = {
-                pickup.name
-                for pickup in description.patches.pickup_assignment.values()
+                pickup.pickup.name
+                for pickup in patches.pickup_assignment.values()
             }
+            game_description = default_prime2_game_description()
+            starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
+
+            extra_items = patcher_file.additional_starting_items(preset.layout_configuration,
+                                                                 game_description.resource_database,
+                                                                 patches.starting_items)
+
+            self.spoiler_starting_location_label.setText("Starting Location: {}".format(
+                game_description.world_list.area_name(starting_area, distinguish_dark_aether=True, separator=" - ")
+            ))
+            self.spoiler_starting_items_label.setText("Random Starting Items: {}".format(
+                ", ".join(extra_items)
+                if extra_items else "None"
+            ))
+
         else:
             pickup_names = {}
             self.layout_info_tab.removeTab(self.layout_info_tab.indexOf(self.pickup_tab))
+            self.spoiler_starting_location_label.setText("Starting Location")
+            self.spoiler_starting_items_label.setText("Random Starting Items")
 
         self.pickup_spoiler_pickup_combobox.clear()
         self.pickup_spoiler_pickup_combobox.addItem("None")
@@ -246,9 +306,14 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
 
         for pickup_button in self.pickup_spoiler_buttons:
-            pickup = description.patches.pickup_assignment.get(pickup_button.pickup_index)
-            if pickup is not None:
-                pickup_button.item_name = pickup.name if has_spoiler else "????"
+            pickup_target = patches.pickup_assignment.get(pickup_button.pickup_index)
+
+            pickup_button.target_player = None
+            if pickup_target is not None:
+                pickup_button.item_name = pickup_target.pickup.name if has_spoiler else "????"
+                if has_spoiler and description.permalink.player_count > 1:
+                    pickup_button.target_player = pickup_target.player
+                    pickup_button.player_names = self._player_names
             else:
                 pickup_button.item_name = "Nothing"
 

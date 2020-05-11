@@ -120,12 +120,9 @@ class State:
         new_state.path_from_previous_state = path
         return new_state
 
-    def assign_pickup_to_index(self, pickup: PickupEntry, index: PickupIndex) -> "State":
-        new_patches = self.patches.assign_new_pickups([(index, pickup)])
+    def assign_pickup_resources(self, pickup: PickupEntry) -> "State":
         new_resources = copy.copy(self.resources)
-
-        if index in self.resources:
-            add_resource_gain_to_current_resources(pickup.resource_gain(self.resources), new_resources)
+        add_resource_gain_to_current_resources(pickup.resource_gain(self.resources), new_resources)
 
         energy = self.energy
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
@@ -136,7 +133,7 @@ class State:
             self.collected_resource_nodes,
             energy,
             self.node,
-            new_patches,
+            self.patches,
             self,
             self.resource_database
         )

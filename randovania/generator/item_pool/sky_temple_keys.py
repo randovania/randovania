@@ -1,6 +1,5 @@
-from typing import List
+from typing import List, Dict
 
-from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -22,7 +21,7 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
     """
 
     item_pool: List[PickupEntry] = []
-    new_assignment: PickupAssignment = {}
+    new_assignment: Dict[PickupIndex, PickupEntry] = {}
     initial_resources: CurrentResources = {}
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
@@ -49,7 +48,7 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
             initial_resources
         )
 
-    return item_pool, new_assignment, initial_resources
+    return PoolResults(item_pool, new_assignment, initial_resources)
 
 
 _GUARDIAN_INDICES = [

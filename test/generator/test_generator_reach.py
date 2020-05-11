@@ -9,23 +9,19 @@ from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import ResourceNode, Node, PickupNode, GenericNode, TranslatorGateNode
-from randovania.game_description.requirements import RequirementSet, Requirement
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
-from randovania.generator import base_patches_factory
+from randovania.generator import base_patches_factory, generator
 from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
 from randovania.generator.item_pool import pool_creator
-from randovania.generator.item_pool.pool_creator import calculate_item_pool
-from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
@@ -33,7 +29,9 @@ from randovania.resolver.state import State, add_pickup_to_state
 
 
 def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
-    return filter(lambda node: isinstance(node, PickupNode), nodes)
+    for node in nodes:
+        if isinstance(node, PickupNode):
+            yield node
 
 
 @pytest.fixture(name="test_data")
@@ -43,9 +41,9 @@ def _test_data(preset_manager):
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
-        preset=preset_manager.default_preset,
+        presets={0: preset_manager.default_preset},
     )
-    configuration = permalink.preset.layout_configuration
+    configuration = permalink.get_preset(0).layout_configuration
     patches = game.create_game_patches()
     patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(
         configuration, game.resource_database, Random(15000)
@@ -87,9 +85,12 @@ def _compare_actions(first_reach: GeneratorReach,
 def test_calculate_reach_with_all_pickups(test_data):
     game, state, permalink = test_data
 
-    item_pool = calculate_item_pool(permalink.layout_configuration, game.resource_database, state.patches)
-    add_resources_into_another(state.resources, item_pool[0].starting_items)
-    for pickup in item_pool[1]:
+    pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).layout_configuration,
+                                                       game.resource_database)
+    add_resources_into_another(state.resources, pool_results.initial_resources)
+    for pickup in pool_results.pickups:
+        add_pickup_to_state(state, pickup)
+    for pickup in pool_results.assignment.values():
         add_pickup_to_state(state, pickup)
 
     first_reach, second_reach = _create_reaches_and_compare(game, state)
@@ -159,16 +160,13 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 
 def test_reach_size_from_start(echoes_game_description, default_layout_configuration):
     # Setup
-    configuration = dataclasses.replace(
+    layout_configuration = dataclasses.replace(
         default_layout_configuration,
         trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HYPERMODE),
     )
+    player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0)
 
-    base_patches = base_patches_factory.create_base_patches(configuration, Random(15000), echoes_game_description)
-    patches, _ = pool_creator.calculate_item_pool(configuration, echoes_game_description.resource_database,
-                                                  base_patches)
-
-    game, state = logic_bootstrap(configuration, echoes_game_description, patches)
+    game, state = logic_bootstrap(layout_configuration, player_pool.game, player_pool.patches)
 
     # Run
     reach = GeneratorReach.reach_from_state(game, state)
