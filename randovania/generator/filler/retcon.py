@@ -190,7 +190,14 @@ class PlayerState:
 def retcon_playthrough_filler(rng: Random,
                               player_states: Dict[int, PlayerState],
                               status_update: Callable[[str], None],
-                              ) -> Dict[int, GamePatches]:
+                              ) -> Tuple[Dict[int, GamePatches], Tuple[str, ...]]:
+    """
+    Runs the retcon logic.
+    :param rng:
+    :param player_states:
+    :param status_update:
+    :return: A GamePatches for each player and a sequence of placed items.
+    """
     debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
         "*" * 100,
         "\n".join(
@@ -214,6 +221,7 @@ def retcon_playthrough_filler(rng: Random,
         player_state.advance_scan_asset_seen_count()
 
     players_to_check = []
+    actions_log = []
 
     while True:
         if not players_to_check:
@@ -271,7 +279,9 @@ def retcon_playthrough_filler(rng: Random,
                 if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
                     current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
 
-                print_retcon_place_pickup(player_to_check, action, index_owner_state.game, pickup_index, hint_location, player_index)
+                spoiler_entry = pickup_placement_spoiler_entry(player_to_check, action, index_owner_state.game,
+                                                               pickup_index, hint_location, player_index,
+                                                               len(player_states) > 1)
 
             else:
                 current_player.num_random_starting_items_placed += 1
@@ -279,10 +289,14 @@ def retcon_playthrough_filler(rng: Random,
                         > current_player.configuration.maximum_random_starting_items):
                     raise UnableToGenerate("Attempting to place more extra starting items than the number allowed.")
 
-                if debug.debug_level() > 1:
-                    print(f"\n--> Adding {action.name} as a starting item")
+                spoiler_entry = f"{action.name} as starting item"
+                if len(player_states) > 1:
+                    spoiler_entry += f" for player {player_to_check}"
 
                 current_player.reach.advance_to(current_player.reach.state.assign_pickup_to_starting_items(action))
+
+            actions_log.append(spoiler_entry)
+            debug.debug_print(f"\n>>>> {spoiler_entry}")
 
             # TODO: this item is potentially dangerous and we should remove the invalidated paths
             current_player.pickups_left.remove(action)
@@ -305,7 +319,7 @@ def retcon_playthrough_filler(rng: Random,
     return {
         index: player_state.reach.state.patches
         for index, player_state in player_states.items()
-    }
+    }, tuple(actions_log)
 
 
 def _calculate_all_pickup_indices_weight(player_states: Dict[int, PlayerState],
@@ -460,25 +474,25 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
         ))
 
 
-def print_retcon_place_pickup(owner_index: int, action: PickupEntry, game: GameDescription,
-                              pickup_index: PickupIndex, hint: Optional[LogbookAsset],
-                              player_index: int):
+def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: GameDescription,
+                                   pickup_index: PickupIndex, hint: Optional[LogbookAsset],
+                                   player_index: int, add_indices: bool) -> str:
     world_list = game.world_list
-    if debug.debug_level() > 0:
-        if hint is not None:
-            hint_string = " with hint at {}".format(
-                world_list.node_name(find_node_with_resource(hint, world_list.all_nodes),
-                                     with_world=True))
-        else:
-            hint_string = ""
+    if hint is not None:
+        hint_string = " with hint at {}".format(
+            world_list.node_name(find_node_with_resource(hint, world_list.all_nodes),
+                                 with_world=True, distinguish_dark_aether=True))
+    else:
+        hint_string = ""
 
-        print("\n--> Placing player {4}'s {0} at player {3}'s {1}{2}".format(
-            action.name,
-            world_list.node_name(find_node_with_resource(pickup_index, world_list.all_nodes), with_world=True),
-            hint_string,
-            player_index,
-            owner_index,
-        ))
+    pickup_node = find_node_with_resource(pickup_index, world_list.all_nodes)
+    return "{4}{0} at {3}{1}{2}".format(
+        action.name,
+        world_list.node_name(pickup_node, with_world=True, distinguish_dark_aether=True),
+        hint_string,
+        f"Player {player_index + 1}'s " if add_indices else "",
+        f"player {owner_index + 1}'s " if add_indices else "",
+    )
 
 
 def print_new_resources(game: GameDescription,

@@ -5,27 +5,12 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from random import Random
-from typing import NamedTuple, Tuple, List, Dict
+from typing import Tuple, Dict
 
 from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.layout import game_patches_serializer
 from randovania.layout.permalink import Permalink
-
-
-class SolverPath(NamedTuple):
-    node_name: str
-    previous_nodes: Tuple[str, ...]
-
-
-def _playthrough_list_to_solver_path(playthrough: List[dict]) -> Tuple[SolverPath, ...]:
-    return tuple(
-        SolverPath(
-            node_name=step["node"],
-            previous_nodes=tuple(step["path_from_previous"])
-        )
-        for step in playthrough
-    )
 
 
 @lru_cache(maxsize=1)
@@ -39,7 +24,7 @@ class LayoutDescription:
     version: str
     permalink: Permalink
     all_patches: Dict[int, GamePatches]
-    solver_path: Tuple[SolverPath, ...]
+    item_order: Tuple[str, ...]
 
     def __post_init__(self):
         object.__setattr__(self, "__cached_serialized_patches", None)
@@ -70,7 +55,7 @@ class LayoutDescription:
                     index: preset.layout_configuration
                     for index, preset in permalink.presets.items()
                 }),
-            solver_path=_playthrough_list_to_solver_path(json_dict["playthrough"]),
+            item_order=json_dict["item_order"],
         )
 
     @classmethod
@@ -103,13 +88,7 @@ class LayoutDescription:
 
         if self.permalink.spoiler:
             result["game_modifications"] = self._serialized_patches
-            result["playthrough"] = [
-                {
-                    "path_from_previous": path.previous_nodes,
-                    "node": path.node_name,
-                }
-                for path in self.solver_path
-            ]
+            result["item_order"] = self.item_order
 
         return result
 
@@ -132,7 +111,7 @@ class LayoutDescription:
             json.dump(self.as_json, open_file, indent=4, separators=(',', ': '))
 
     @property
-    def without_solver_path(self) -> "LayoutDescription":
+    def without_item_order(self) -> "LayoutDescription":
         """
         A solver path is way too big to reasonably store for test purposes, so use LayoutDescriptions with an empty one.
         :return:
@@ -141,4 +120,4 @@ class LayoutDescription:
             permalink=self.permalink,
             version=self.version,
             all_patches=self.all_patches,
-            solver_path=())
+            item_order=())
