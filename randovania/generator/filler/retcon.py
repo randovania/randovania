@@ -490,8 +490,8 @@ def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: 
         action.name,
         world_list.node_name(pickup_node, with_world=True, distinguish_dark_aether=True),
         hint_string,
-        f"Player {player_index + 1}'s " if add_indices else "",
-        f"player {owner_index + 1}'s " if add_indices else "",
+        f"player {player_index + 1}'s " if add_indices else "",
+        f"Player {owner_index + 1}'s " if add_indices else "",
     )
 
 

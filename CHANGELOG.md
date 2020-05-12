@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The in-game Hint System has been removed. The option for it remains, but does nothing.
 
+-   Changed: The spoiler log now lists the order in which items where placed, with their location and hints,
+    instead of a detailed playthrough for completion.
+
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
     Trick Level tab when customizing a preset. 
     
