@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The permalink import dialog now shows an error message for invalid permalinks.
 
+-   Changed: One-way elevators now have a chance of warping to credits.
+
 -   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
     must be collected for the appropriate events to be triggered. 
     
