@@ -86,6 +86,7 @@ class LayoutConfiguration(BitPackDataClass):
     ammo_configuration: AmmoConfiguration
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration
+    skip_final_bosses: bool = False
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     split_beam_ammo: bool = True
 
@@ -111,6 +112,7 @@ class LayoutConfiguration(BitPackDataClass):
             "ammo_configuration": self.ammo_configuration.as_json,
             "translator_configuration": self.translator_configuration.as_json,
             "hints": self.hints.as_json,
+            "skip_final_bosses": self.skip_final_bosses,
             "split_beam_ammo": self.split_beam_ammo,
         }
 
@@ -133,5 +135,6 @@ class LayoutConfiguration(BitPackDataClass):
             ),
             translator_configuration=TranslatorConfiguration.from_json(json_dict["translator_configuration"]),
             hints=HintConfiguration.from_json(json_dict["hints"]),
+            skip_final_bosses=json_dict.get("skip_final_bosses", False),
             split_beam_ammo=json_dict["split_beam_ammo"],
         )

@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   *Major* - Changed: The database now uses a new format which allows for any combination of "Or"/"And" statements.
     The Data Visualizer and Editor were both updated to take advantage of this.
 
+-   Added: An option to connect Sky Temple Gateway directly to the credits, skipping the final bosses.
+
 -   Added: The in-game Hint System has been removed. The option for it remains, but does nothing.
 
 -   Changed: The spoiler log now lists the order in which items where placed, with their location and hints,
