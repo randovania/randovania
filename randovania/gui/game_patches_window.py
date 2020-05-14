@@ -27,6 +27,7 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
         # Signals
         self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
+        self.skip_final_bosses_check.stateChanged.connect(self._persist_option_then_notify("skip_final_bosses"))
 
         self.pickup_model_combo.currentIndexChanged.connect(self._persist_enum(self.pickup_model_combo,
                                                                                "pickup_model_style"))
@@ -51,6 +52,7 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
         patcher_config = preset.patcher_configuration
         self.warp_to_start_check.setChecked(patcher_config.warp_to_start)
         self.include_menu_mod_check.setChecked(patcher_config.menu_mod)
+        self.skip_final_bosses_check.setChecked(preset.layout_configuration.skip_final_bosses)
 
         self.pickup_model_combo.setCurrentIndex(self.pickup_model_combo.findData(patcher_config.pickup_model_style))
         self.pickup_data_source_combo.setCurrentIndex(

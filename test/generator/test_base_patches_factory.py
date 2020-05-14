@@ -2,6 +2,8 @@ import dataclasses
 from random import Random
 from unittest.mock import MagicMock, patch, call, ANY
 
+import pytest
+
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
@@ -14,33 +16,43 @@ from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
+@pytest.mark.parametrize("skip_final_bosses", [False, True])
 def test_add_elevator_connections_to_patches_vanilla(echoes_game_data,
+                                                     skip_final_bosses: bool,
                                                      default_layout_configuration):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
+    expected = dataclasses.replace(game.create_game_patches())
+    if skip_final_bosses:
+        expected.elevator_connection[136970379] = AreaLocation(1006255871, 1393588666)
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(default_layout_configuration,
-                                                                      Random(0),
-                                                                      game.create_game_patches())
+    result = base_patches_factory.add_elevator_connections_to_patches(
+        dataclasses.replace(default_layout_configuration, skip_final_bosses=skip_final_bosses),
+        Random(0),
+        game.create_game_patches())
 
     # Assert
-    assert result == game.create_game_patches()
+    assert result == expected
 
 
+@pytest.mark.parametrize("skip_final_bosses", [False, True])
 def test_add_elevator_connections_to_patches_random(echoes_game_data,
+                                                    skip_final_bosses: bool,
                                                     default_layout_configuration):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
     layout_configuration = dataclasses.replace(default_layout_configuration,
-                                               elevators=LayoutElevators.TWO_WAY_RANDOMIZED)
+                                               elevators=LayoutElevators.TWO_WAY_RANDOMIZED,
+                                               skip_final_bosses=skip_final_bosses)
     expected = dataclasses.replace(game.create_game_patches(),
                                    elevator_connection={
                                        589851: AreaLocation(1039999561, 1868895730),
                                        1572998: AreaLocation(1039999561, 3479543630),
                                        1966093: AreaLocation(2252328306, 408633584),
                                        2097251: AreaLocation(1119434212, 3331021649),
-                                       136970379: AreaLocation(2252328306, 2068511343),
+                                       136970379: (AreaLocation(1006255871, 1393588666)
+                                                   if skip_final_bosses else AreaLocation(2252328306, 2068511343)),
                                        3342446: AreaLocation(1039999561, 3205424168),
                                        3538975: AreaLocation(1119434212, 2806956034),
                                        152: AreaLocation(1006255871, 2889020216),
