@@ -116,10 +116,12 @@ def test_one_way_elevator_connections_any_target(echoes_game_description):
 
     # Assert
     assert result == {
-        0: AreaLocation(0x42B935E4, 0x40FFA8F7),
-        1: AreaLocation(0x3DFD2249, 0x308351E5),
-        2: AreaLocation(0x3DFD2249, 0xBBE4B3AE),
-        3: AreaLocation(0x1BAA96C2, 0xBB77569E),
-        4: AreaLocation(0x863FCD72, 0x185B40F0),
-        5: AreaLocation(0x1BAA96C2, 0xE32C7360),
+        0: AreaLocation(0x42B935E4, 0xA4B2CB7E),
+        1: AreaLocation(0x3DFD2249, 0xCB165BD8),
+        2: AreaLocation(0x3DFD2249, 0x63190A61),
+        3: AreaLocation(0x1BAA96C2, 0xA2406387),
+        4: AreaLocation(0x3BFA3EFF, 0x531079BA),
+        5: AreaLocation(0x1BAA96C2, 0x844A690C),
     }
+
+
