@@ -7,13 +7,27 @@
     <x>0</x>
     <y>0</y>
     <width>407</width>
-    <height>243</height>
+    <height>235</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Game Patching</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="6" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QCheckBox" name="auto_save_spoiler_check">
+     <property name="text">
+      <string>Include a spoiler log on same directory</string>
+     </property>
+    </widget>
+   </item>
    <item row="4" column="2">
     <widget class="QPushButton" name="output_file_button">
      <property name="text">
@@ -21,21 +35,25 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="3">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLineEdit" name="output_file_edit">
+     <property name="placeholderText">
+      <string>Path where to place randomized game</string>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="input_file_label">
+     <property name="maximumSize">
       <size>
-       <width>20</width>
+       <width>16777215</width>
        <height>20</height>
       </size>
      </property>
-    </spacer>
+     <property name="text">
+      <string>Input File (Vanilla Gamecube ISO)</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="description_label">
@@ -47,17 +65,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="input_file_button">
-     <property name="text">
-      <string>Select File</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLineEdit" name="input_file_edit">
+     <property name="placeholderText">
+      <string>Path to vanilla Gamecube ISO</string>
      </property>
     </widget>
    </item>
@@ -65,20 +76,6 @@
     <widget class="QPushButton" name="cancel_button">
      <property name="text">
       <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QLineEdit" name="output_file_edit">
-     <property name="placeholderText">
-      <string>Path where to place randomized game</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLineEdit" name="input_file_edit">
-     <property name="placeholderText">
-      <string>Path to vanilla Gamecube ISO</string>
      </property>
     </widget>
    </item>
@@ -95,16 +92,10 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="input_file_label">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="input_file_button">
      <property name="text">
-      <string>Input File (Vanilla Gamecube ISO)</string>
+      <string>Select File</string>
      </property>
     </widget>
    </item>
