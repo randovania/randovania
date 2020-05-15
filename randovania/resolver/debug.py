@@ -45,6 +45,11 @@ def log_resolve_start():
 
 
 def log_new_advance(state: "State", reach: "ResolverReach"):
+    from randovania.resolver.state import State
+    from randovania.resolver.resolver_reach import ResolverReach
+    state: State
+    reach: ResolverReach
+
     global _current_indent
     increment_attempts()
     _current_indent += 1
@@ -53,6 +58,8 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
             resource = state.node.resource()
             if isinstance(resource, PickupIndex):
                 resource = state.patches.pickup_assignment.get(resource)
+                if resource is not None:
+                    resource = resource.pickup
         else:
             resource = None
 
