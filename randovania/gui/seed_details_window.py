@@ -118,12 +118,15 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
     def _export_iso(self):
         layout = self.layout_description
+        has_spoiler = layout.permalink.spoiler
         options = self._options
 
         dialog = GameInputDialog(options,
                                  "Echoes Randomizer - {}.iso".format(
                                      layout.shareable_word_hash
-                                 ))
+                                 ),
+                                 has_spoiler,
+                                 )
         result = dialog.exec_()
 
         if result != QDialog.Accepted:
@@ -131,11 +134,13 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         input_file = dialog.input_file
         output_file = dialog.output_file
+        auto_save_spoiler = dialog.auto_save_spoiler
         player_index = self.current_player_index
         player_names = self._player_names
 
         with options:
             options.output_directory = output_file.parent
+            options.auto_save_spoiler = auto_save_spoiler
 
         def work(progress_update: ProgressUpdateCallable):
             num_updaters = 2
@@ -161,6 +166,8 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             simplified_patcher.pack_iso(output_iso=output_file,
                                         options=options,
                                         progress_update=updaters[-1])
+            if has_spoiler and auto_save_spoiler:
+                layout.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
 
             progress_update(f"Finished!", 1)
 

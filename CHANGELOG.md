@@ -50,6 +50,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Missile Expansions have a 1/8192 chance of using Dark Missile Trooper model.
 
+-   Fixed: Progress bar no longer goes to an indefinite status when generation fails.
+
+-   Added: checkbox for automatically exporting a spoiler log next to the ISO.
+
 ### Logic Database changes
 
 -   Fixed: Staging Area is now correctly considered a dark world room.
