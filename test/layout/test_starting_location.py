@@ -8,8 +8,8 @@ from randovania.layout.starting_location import StartingLocation
 @pytest.fixture(
     params=[
         {"encoded": b'\x00\x00', "json": []},
-        {"encoded": b'\x00a<', "json": ["Temple Grounds/Landing Site"]},
-        {"encoded": b'\x00\xa3N(', "json": ["Agon Wastes/Save Station 1", "Agon Wastes/Save Station 2"]},
+        {"encoded": b'\x00a@', "json": ["Temple Grounds/Landing Site"]},
+        {"encoded": b'\x00\xa3R(', "json": ["Agon Wastes/Save Station 1", "Agon Wastes/Save Station 2"]},
     ],
     name="location_with_data")
 def _location_with_data(request):

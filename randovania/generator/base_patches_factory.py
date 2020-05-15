@@ -55,6 +55,8 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
     :param patches:
     :return:
     """
+    elevator_connection = copy.copy(patches.elevator_connection)
+
     if layout_configuration.elevators != LayoutElevators.VANILLA:
         if rng is None:
             raise MissingRng("Elevator")
@@ -83,11 +85,12 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
                 elevator_target=layout_configuration.elevators == LayoutElevators.ONE_WAY_ELEVATOR
             )
 
-        elevator_connection = copy.copy(patches.elevator_connection)
         elevator_connection.update(connections)
-        return dataclasses.replace(patches, elevator_connection=elevator_connection)
-    else:
-        return patches
+
+    if layout_configuration.skip_final_bosses:
+        elevator_connection[136970379] = AreaLocation(1006255871, 1393588666)
+
+    return dataclasses.replace(patches, elevator_connection=elevator_connection)
 
 
 def gate_assignment_for_configuration(configuration: LayoutConfiguration,

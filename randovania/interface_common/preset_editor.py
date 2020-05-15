@@ -165,6 +165,14 @@ class PresetEditor:
     def ammo_configuration(self, value: AmmoConfiguration):
         self.set_layout_configuration_field("ammo_configuration", value)
 
+    @property
+    def skip_final_bosses(self) -> bool:
+        return self.layout_configuration.skip_final_bosses
+
+    @skip_final_bosses.setter
+    def skip_final_bosses(self, value: bool):
+        self.set_layout_configuration_field("skip_final_bosses", value)
+
     def set_layout_configuration_field(self, field_name: str, value):
         self._edit_field(
             "layout_configuration",
