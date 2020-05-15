@@ -26,6 +26,7 @@ _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
+    "auto_save_spoiler": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
     "selected_preset_name": Serializer(identity, str),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
@@ -58,6 +59,7 @@ class Options:
     _last_changelog_displayed: str
     _advanced_validate_seed_after: Optional[bool] = None
     _advanced_timeout_during_generation: Optional[bool] = None
+    _auto_save_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
     _selected_preset_name: Optional[str] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
@@ -182,6 +184,7 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._advanced_validate_seed_after = None
         self._advanced_timeout_during_generation = None
+        self._auto_save_spoiler = None
         self._cosmetic_patches = None
 
     # Files paths
@@ -219,6 +222,14 @@ class Options:
     @output_directory.setter
     def output_directory(self, value: Optional[Path]):
         self._edit_field("output_directory", value)
+        
+    @property
+    def auto_save_spoiler(self) -> bool:
+        return _return_with_default(self._auto_save_spoiler, lambda: False)
+    
+    @auto_save_spoiler.setter
+    def auto_save_spoiler(self, value: bool):
+        self._edit_field("auto_save_spoiler", value)
 
     @property
     def selected_preset_name(self) -> Optional[str]:

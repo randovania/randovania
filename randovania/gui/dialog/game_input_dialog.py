@@ -16,7 +16,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     _has_game: bool
     _current_lock_state: bool = True
 
-    def __init__(self, options: Options, default_iso_name: str):
+    def __init__(self, options: Options, default_iso_name: str, spoiler: bool):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -32,6 +32,10 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         # Output
         self.output_file_edit.textChanged.connect(self._validate_output_file)
         self.output_file_button.clicked.connect(self._on_output_file_button)
+
+        # Spoiler
+        self.auto_save_spoiler_check.setEnabled(spoiler)
+        self.auto_save_spoiler_check.setChecked(options.auto_save_spoiler)
 
         # Accept/Reject
         self.accept_button.clicked.connect(self.accept)
@@ -57,6 +61,10 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     @property
     def output_file(self) -> Path:
         return Path(self.output_file_edit.text())
+
+    @property
+    def auto_save_spoiler(self) -> bool:
+        return self.auto_save_spoiler_check.isChecked()
 
     def _update_accept_button(self):
         self.accept_button.setEnabled(not (self.input_file_edit.has_error or self.output_file_edit.has_error))
