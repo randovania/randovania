@@ -18,7 +18,16 @@ class BackgroundTaskMixin:
                                  target,
                                  starting_message: str,
                                  kwargs=None):
-        def progress_update(message: str, progress: float):
+
+        last_progress = 0
+
+        def progress_update(message: str, progress: Optional[float]):
+            nonlocal last_progress
+            if progress is None:
+                progress = last_progress
+            else:
+                last_progress = progress
+
             if self.abort_background_task_requested:
                 self.progress_update_signal.emit("{} - Aborted".format(message), int(progress * 100))
                 raise AbortBackgroundTask()
@@ -32,7 +41,7 @@ class BackgroundTaskMixin:
                 pass
             except Exception as e:
                 traceback.print_exc()
-                progress_update("Error: {}".format(e), -1)
+                progress_update("Error: {}".format(e), None)
             finally:
                 self.background_tasks_button_lock_signal.emit(True)
                 self._background_thread = None
