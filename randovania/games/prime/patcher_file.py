@@ -438,6 +438,74 @@ def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connectio
         }
 
 
+def _logbook_title_string_patches():
+    return [
+        {
+            "asset_id": 3271034066,
+            "strings": [
+                'Hints', 'Violet', 'Cobalt', 'Technology', 'Keys 1, 2, 3', 'Keys 7, 8, 9', 'Regular Hints',
+                'Emerald', 'Amber', '&line-spacing=75;Flying Ing\nCache Hints', 'Keys 4, 5, 6', 'Keys 1, 2, 3',
+                '&line-spacing=75;Torvus Energy\nController', 'Underground Tunnel', 'Training Chamber',
+                'Catacombs', 'Gathering Hall', '&line-spacing=75;Fortress\nTransport\nAccess',
+                '&line-spacing=75;Hall of Combat\nMastery', 'Main Gyro Chamber',
+                '&line-spacing=75;Sanctuary\nEnergy\nController', 'Main Research', 'Watch Station',
+                'Sanctuary Entrance', '&line-spacing=75;Transport to\nAgon Wastes', 'Mining Plaza',
+                '&line-spacing=75;Agon Energy\nController', 'Portal Terminal', 'Mining Station B',
+                'Mining Station A', 'Meeting Grounds', 'Path of Eyes', 'Path of Roots',
+                '&line-spacing=75;Main Energy\nController', "A-Kul's Testament",
+                '&line-spacing=75;Central\nMining\nStation', 'Main Reactor', 'Torvus Lagoon', 'Catacombs',
+                'Sanctuary Entrance', "Dynamo Works", 'Storage Cavern A', 'Landing Site', 'Industrial Site',
+                '&line-spacing=75;Sky Temple\nKey Hints', 'Keys 7, 8, 9', 'Keys 4, 5, 6', 'Sky Temple Key 1',
+                'Sky Temple Key 2', 'Sky Temple Key 3', 'Sky Temple Key 4', 'Sky Temple Key 5',
+                'Sky Temple Key 6', 'Sky Temple Key 7', 'Sky Temple Key 8', 'Sky Temple Key 9'
+            ],
+        }, {
+            "asset_id": 2301408881,
+            "strings": [
+                'Research', 'Mechanisms', 'Luminoth Technology', 'Biology', 'GF Security', 'Vehicles',
+                'Aether Studies', 'Aether', 'Dark Aether', 'Phazon', 'Sandgrass', 'Blueroot Tree',
+                'Ing Webtrap',
+                'Webling', 'U-Mos', 'Bladepod', 'Ing Storage', 'Flying Ing Cache', 'Torvus Bearerpod',
+                'Agon Bearerpod', 'Ingworm Cache', 'Ingsphere Cache', 'Plantforms', 'Darklings',
+                'GF Gate Mk VI',
+                'GF Gate Mk VII', 'GF Lock Mk V', 'GF Defense Shield', 'Kinetic Orb Cannon', 'GF Bridge',
+                "Samus's Gunship", 'GFS Tyr', 'Pirate Skiff', 'Visors', 'Weapon Systems', 'Armor',
+                'Morph Ball Systems', 'Movement Systems', 'Beam Weapons', 'Scan Visor', 'Combat Visor',
+                'Dark Visor',
+                'Echo Visor', 'Morph Ball', 'Boost Ball', 'Spider Ball', 'Morph Ball Bomb', 'Power Bomb',
+                'Dark Bomb', 'Light Bomb', 'Annihilator Bomb', 'Space Jump Boots', 'Screw Attack',
+                'Gravity Boost',
+                'Grapple Beam', 'Varia Suit', 'Dark Suit', 'Light Suit', 'Power Beam', 'Dark Beam',
+                'Light Beam',
+                'Annihilator Beam', 'Missile Launcher', 'Seeker Missile Launcher', 'Super Missile',
+                'Sonic Boom',
+                'Darkburst', 'Sunburst', 'Charge Beam', 'Missile Systems', 'Charge Combos', 'Morph Balls',
+                'Bomb Systems', 'Miscellaneous', 'Dark Temple Keys', 'Bloatsac', 'Luminoth Technology',
+                'Light Beacons', 'Light Crystals', 'Lift Crystals', 'Utility Crystals', 'Light Crystal',
+                'Energized Crystal', 'Nullified Crystal', 'Super Crystal', 'Light Beacon', 'Energized Beacon',
+                'Nullified Beacon', 'Super Beacon', 'Inactive Beacon', 'Dark Lift Crystal',
+                'Light Lift Crystal',
+                'Liftvine Crystal', 'Torvus Hanging Pod', 'Sentinel Crystal', 'Dark Sentinel Crystal',
+                'Systems',
+                'Bomb Slot', 'Spinner', 'Grapple Point', 'Spider Ball Track', 'Energy Tank',
+                'Beam Ammo Expansion',
+                'Missile Expansion', 'Dark Agon Keys', 'Dark Torvus Keys', 'Ing Hive Keys', 'Sky Temple Keys',
+                'Temple Grounds', 'Sanctuary Fortress', 'Torvus Bog', 'Agon Wastes', 'Dark Agon Temple Key 1',
+                'Dark Agon Temple Key 2', 'Dark Agon Temple Key 3', 'Dark Torvus Temple Key 1',
+                'Dark Torvus Temple Key 2', 'Dark Torvus Temple Key 3', 'Ing Hive Temple Key 1',
+                'Ing Hive Temple Key 2', 'Ing Hive Temple Key 3', 'Sky Temple Key 1', 'Sky Temple Key 2',
+                'Sky Temple Key 3', 'Sky Temple Key 4', 'Sky Temple Key 5', 'Sky Temple Key 6',
+                'Sky Temple Key 7',
+                'Sky Temple Key 8', 'Sky Temple Key 9', 'Suit Expansions', 'Charge Combo', 'Ingclaw',
+                'Dormant Ingclaw', 'Power Bomb Expansion', 'Energy Transfer Module', 'Cocoons',
+                'Splinter Cocoon',
+                'War Wasp Hive', 'Metroid Cocoon', 'Dark Aether', 'Aether', 'Dark Portal', 'Light Portal',
+                'Energy Controller', 'Wall Jump Surface',
+            ]
+        },
+    ]
+
+
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
                            all_patches: Dict[int, GamePatches],
@@ -469,6 +537,8 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     # Elevator Scans
     string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
+
+    string_patches.extend(_logbook_title_string_patches())
 
     return string_patches
 
@@ -579,6 +649,29 @@ def create_patcher_file(description: LayoutDescription,
         "dark_world_varia_suit_damage": patcher_config.varia_suit_damage,
         "dark_world_dark_suit_damage": patcher_config.dark_suit_damage,
     }
+
+    result["logbook_patches"] = [
+        {"asset_id": 25, "connections": [81, 166, 195], },
+        {"asset_id": 38, "connections": [4, 33, 120, 251, 364], },
+        {"asset_id": 60, "connections": [38, 74, 154, 196], },
+        {"asset_id": 74, "connections": [59, 75, 82, 102, 260], },
+        {"asset_id": 81, "connections": [148, 151, 156], },
+        {"asset_id": 119, "connections": [60, 254, 326], },
+        {"asset_id": 124, "connections": [35, 152, 355], },
+        {"asset_id": 129, "connections": [29, 118, 367], },
+        {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342], },
+        {"asset_id": 166, "connections": [45, 303, 317], },
+        {"asset_id": 194, "connections": [1, 6], },
+        {"asset_id": 195, "connections": [159, 221, 231], },
+        {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379], },
+        {"asset_id": 233, "connections": [58, 191, 373], },
+        {"asset_id": 241, "connections": [223, 284], },
+        {"asset_id": 254, "connections": [129, 233, 319], },
+        {"asset_id": 318, "connections": [119, 216, 277, 343], },
+        {"asset_id": 319, "connections": [52, 289, 329], },
+        {"asset_id": 326, "connections": [124, 194, 241, 327], },
+        {"asset_id": 327, "connections": [46, 275], },
+    ]
 
     _apply_translator_gate_patches(result["specific_patches"], layout.elevators)
 
