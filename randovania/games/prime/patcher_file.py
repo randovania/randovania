@@ -438,39 +438,8 @@ def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connectio
         }
 
 
-def _create_string_patches(hint_config: HintConfiguration,
-                           game: GameDescription,
-                           all_patches: Dict[int, GamePatches],
-                           players_config: PlayersConfiguration,
-                           rng: Random,
-                           ) -> list:
-    """
-
-    :param hint_config:
-    :param game:
-    :param patches:
-    :return:
-    """
-    patches = all_patches[players_config.player_index]
-    string_patches = []
-
-    # Location Hints
-    string_patches.extend(
-        item_hints.create_hints(patches, game.world_list, rng)
-    )
-
-    # Sky Temple Keys
-    stk_mode = hint_config.sky_temple_keys
-    if stk_mode == SkyTempleKeyHintMode.DISABLED:
-        string_patches.extend(sky_temple_key_hint.hide_hints())
-    else:
-        string_patches.extend(sky_temple_key_hint.create_hints(all_patches, players_config, game.world_list,
-                                                               stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
-
-    # Elevator Scans
-    string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
-
-    string_patches.extend([
+def _logbook_title_string_patches():
+    return [
         {
             "asset_id": 3271034066,
             "strings": [
@@ -534,7 +503,42 @@ def _create_string_patches(hint_config: HintConfiguration,
                 'Energy Controller', 'Wall Jump Surface',
             ]
         },
-    ])
+    ]
+
+
+def _create_string_patches(hint_config: HintConfiguration,
+                           game: GameDescription,
+                           all_patches: Dict[int, GamePatches],
+                           players_config: PlayersConfiguration,
+                           rng: Random,
+                           ) -> list:
+    """
+
+    :param hint_config:
+    :param game:
+    :param patches:
+    :return:
+    """
+    patches = all_patches[players_config.player_index]
+    string_patches = []
+
+    # Location Hints
+    string_patches.extend(
+        item_hints.create_hints(patches, game.world_list, rng)
+    )
+
+    # Sky Temple Keys
+    stk_mode = hint_config.sky_temple_keys
+    if stk_mode == SkyTempleKeyHintMode.DISABLED:
+        string_patches.extend(sky_temple_key_hint.hide_hints())
+    else:
+        string_patches.extend(sky_temple_key_hint.create_hints(all_patches, players_config, game.world_list,
+                                                               stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
+
+    # Elevator Scans
+    string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
+
+    string_patches.extend(_logbook_title_string_patches())
 
     return string_patches
 
