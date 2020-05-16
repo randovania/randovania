@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: The spoiler log now lists the order in which items where placed, with their location and hints,
     instead of a detailed playthrough for completion.
 
+-   Changed: The logbook entries that contains hints are now named after the room they're in, with the categories
+    being about which kind of hint they are.
+    KNOW ISSUE: While scanning something, the categories that show up are incorrect.
+
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
     Trick Level tab when customizing a preset. 
     
