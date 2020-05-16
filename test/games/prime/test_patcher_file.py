@@ -605,12 +605,14 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
+@patch("randovania.games.prime.patcher_file._logbook_title_string_patches", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.item_hints.create_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
 def test_create_string_patches(mock_stk_create_hints: MagicMock,
                                mock_stk_hide_hints: MagicMock,
                                mock_item_create_hints: MagicMock,
+                               mock_logbook_title_string_patches: MagicMock,
                                stk_mode: SkyTempleKeyHintMode,
                                ):
     # Setup
@@ -621,6 +623,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     mock_stk_create_hints.return_value = ["show", "hints"]
     mock_stk_hide_hints.return_value = ["hide", "hints"]
     player_config = PlayersConfiguration(0, {0: "you"})
+    mock_logbook_title_string_patches.return_values = []
 
     # Run
     result = patcher_file._create_string_patches(HintConfiguration(sky_temple_keys=stk_mode),
@@ -633,6 +636,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
     # Assert
     expected_result = ["item", "hints"]
     mock_item_create_hints.assert_called_once_with(all_patches[player_config.player_index], game.world_list, rng)
+    mock_logbook_title_string_patches.assert_called_once_with()
 
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
         mock_stk_hide_hints.assert_called_once_with()
@@ -672,7 +676,7 @@ def test_create_patcher_file(test_files_dir):
     assert len(result["translator_gates"]) == 17
 
     assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 58
+    assert len(result["string_patches"]) == 60
 
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
