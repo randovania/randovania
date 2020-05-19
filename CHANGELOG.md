@@ -56,7 +56,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Progress bar no longer goes to an indefinite status when generation fails.
 
--   Added: checkbox for automatically exporting a spoiler log next to the ISO.
+-   Added: Checkbox for automatically exporting a spoiler log next to the ISO.
+
+-   Fixed: Only the last digit of the game id is changed, instead of the full game id.
 
 ### Logic Database changes
 
