@@ -99,11 +99,28 @@ class StringDisplayPatchAddresses:
 
 
 @dataclasses.dataclass(frozen=True)
+class HealthCapacityAddresses:
+    base_health_capacity: int
+    energy_tank_capacity: int
+
+
+@dataclasses.dataclass(frozen=True)
+class BeamCostAddresses:
+    uncharged_cost: int
+    charged_cost: int
+    charge_combo_ammo_cost: int
+    charge_combo_missile_cost: int
+    get_beam_ammo_type_and_costs: int
+
+
+@dataclasses.dataclass(frozen=True)
 class PatchesForVersion:
     description: str
     build_string_address: int
     build_string: bytes
     string_display: StringDisplayPatchAddresses
+    health_capacity: HealthCapacityAddresses
+    beam_cost_addresses: BeamCostAddresses
     game_options_constructor_address: int
 
 
@@ -119,6 +136,17 @@ _ALL_VERSIONS_PATCHES = [
             display_hud_memo=0x8006b3c8,
             cstate_manager_global=0x803db6e0,
         ),
+        health_capacity=HealthCapacityAddresses(
+            base_health_capacity=0x8041abe4,
+            energy_tank_capacity=0x8041abe0,
+        ),
+        beam_cost_addresses=BeamCostAddresses(
+            uncharged_cost=0x803aa8c8,
+            charged_cost=0x803aa8d8,
+            charge_combo_ammo_cost=0x803aa8e8,
+            charge_combo_missile_cost=0x803a74ac,
+            get_beam_ammo_type_and_costs=0x801cccb0,
+        ),
         game_options_constructor_address=0x80161b48,
     ),
     PatchesForVersion(
@@ -131,6 +159,17 @@ _ALL_VERSIONS_PATCHES = [
             wstring_constructor=0x802ff734,
             display_hud_memo=0x8006b504,
             cstate_manager_global=0x803dc900,
+        ),
+        health_capacity=HealthCapacityAddresses(
+            base_health_capacity=0x8041bedc,
+            energy_tank_capacity=0x8041bed8,
+        ),
+        beam_cost_addresses=BeamCostAddresses(
+            uncharged_cost=0x803abc28,
+            charged_cost=0x803abc38,
+            charge_combo_ammo_cost=0x803abc48,
+            charge_combo_missile_cost=0x803a7c04,
+            get_beam_ammo_type_and_costs=0x801ccfe4,
         ),
         game_options_constructor_address=0x80161d9c,
     ),
@@ -297,6 +336,25 @@ def _apply_game_options_patch(game_options_constructor_offset: int, user_prefere
     dol_file.write(game_options_constructor_offset + 8 * 4, patch)
 
 
+def _apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, dol_file: DolFile):
+    tank_capacity = 100
+
+    dol_file.write(patch_addresses.base_health_capacity, struct.pack(">f", tank_capacity - 1))
+    dol_file.write(patch_addresses.energy_tank_capacity, struct.pack(">f", tank_capacity))
+
+
+def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, dol_file: DolFile):
+    uncharged_costs = struct.pack(">llll", 0, 1, 1, 1)
+    charged_costs = struct.pack(">llll", 0, 5, 5, 5)
+    combo_costs = struct.pack(">llll", 0, 30, 30, 30)
+    missile_costs = struct.pack(">llll", 5, 5, 5, 5)
+
+    dol_file.write(patch_addresses.uncharged_cost, uncharged_costs)
+    dol_file.write(patch_addresses.charged_cost, charged_costs)
+    dol_file.write(patch_addresses.charge_combo_ammo_cost, combo_costs)
+    dol_file.write(patch_addresses.charge_combo_missile_cost, missile_costs)
+
+
 def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
     dol_file = DolFile(_get_dol_path(game_root))
 
@@ -307,6 +365,8 @@ def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
         _apply_string_display_patch(version_patches.string_display, dol_file)
         _apply_game_options_patch(version_patches.game_options_constructor_address,
                                   cosmetic_patches.user_preferences, dol_file)
+        _apply_energy_tank_capacity_patch(version_patches.health_capacity, dol_file)
+        _apply_beam_cost_patch(version_patches.beam_cost_addresses, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:
