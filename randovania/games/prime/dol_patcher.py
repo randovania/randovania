@@ -28,7 +28,7 @@ class DolHeader:
 
     @classmethod
     def from_bytes(cls, data: bytes) -> "DolHeader":
-        struct_format = ">" + "L" * _NUM_SECTIONS
+        struct_format = f">{_NUM_SECTIONS}L"
         offset_for_section = struct.unpack_from(struct_format, data, 0)
         base_address_for_section = struct.unpack_from(struct_format, data, 0x48)
         size_for_section = struct.unpack_from(struct_format, data, 0x90)
@@ -344,15 +344,70 @@ def _apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, 
 
 
 def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, dol_file: DolFile):
-    uncharged_costs = struct.pack(">llll", 0, 1, 1, 1)
+    uncharged_costs = struct.pack(">llll", 1, 1, 1, 1)
     charged_costs = struct.pack(">llll", 0, 5, 5, 5)
     combo_costs = struct.pack(">llll", 0, 30, 30, 30)
     missile_costs = struct.pack(">llll", 5, 5, 5, 5)
+    ammo_types = [
+        (-1, -1),  # Power
+        (0x2d, -1),  # Dark
+        (0x2e, -1),  # Light
+        (0x2e, 0x2d)  # Annihilator
+    ]
 
     dol_file.write(patch_addresses.uncharged_cost, uncharged_costs)
     dol_file.write(patch_addresses.charged_cost, charged_costs)
     dol_file.write(patch_addresses.charge_combo_ammo_cost, combo_costs)
     dol_file.write(patch_addresses.charge_combo_missile_cost, missile_costs)
+
+    # we start our patch right after the `addi r3,r31,0x0`
+    patch_offset = 0x40
+
+    def enc(i, x):
+        return struct.pack(">h", ammo_types[i][x])
+
+    patch = [
+        0x81, 0x59, 0x07, 0x74,  # lwz r10,0x774(r25)           # r10 = get current beam
+        0x55, 0x4a, 0x10, 0x3a,  # rlwinm r10,r10,0x2,0x0,0x1d  # r10 *= 4
+
+        0x7c, 0x03, 0x50, 0x2e,  # lwzx r0,r3,r10               # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
+        0x90, 0x1d, 0x00, 0x00,  # stw r0,0x0(r29)              # *outBeamAmmoCost = r0
+
+        0x81, 0x59, 0x07, 0x74,  # lwz r10,0x774(r25)           # r10 = get current beam
+        0x39, 0x4a, 0x00, 0x01,  # addi r10,r10,0x1             # r10 = r10
+        0x7d, 0x49, 0x03, 0xa6,  # mtspr CTR,r10                # count_register = r10
+
+        # Power Beam
+        0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
+        0x38, 0x60, *enc(0, 0),  # li r3, <type>
+        0x39, 0x20, *enc(0, 1),  # li r9, <type>
+        0x42, 0x80, 0x00, 0x2c,  # b update_out_beam_type
+
+        # Dark Beam
+        0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
+        0x38, 0x60, *enc(1, 0),  # li r3, <type>
+        0x39, 0x20, *enc(1, 1),  # li r9, <type>
+        0x42, 0x80, 0x00, 0x1c,  # b update_out_beam_type
+
+        # Light Beam
+        0x42, 0x00, 0x00, 0x10,  # bdnz light_beam               # if (--count_register > 0) goto
+        0x38, 0x60, *enc(2, 0),  # li r3, <type>
+        0x39, 0x20, *enc(2, 1),  # li r9, <type>
+        0x42, 0x80, 0x00, 0x0c,  # b update_out_beam_type
+
+        # Annihilator Beam
+        0x38, 0x60, *enc(3, 0),  # li r3, <type>
+        0x39, 0x20, *enc(3, 1),  # li r9, <type>
+
+        # update_out_beam_type
+        0x90, 0x7b, 0x00, 0x00,  # stw r0,0x0(r27)              # *outBeamAmmoTypeA = r3
+        0x91, 0x3c, 0x00, 0x00,  # stw r0,0x0(r28)              # *outBeamAmmoTypeB = r8
+
+        0x42, 0x80, 0x00, 0x18,  # b body_end
+        # jump to the code for getting the charged/combo costs and then check if has ammo
+        # The address in question is at 0x801ccd64 for NTSC
+    ]
+    dol_file.write(patch_addresses.get_beam_ammo_type_and_costs + patch_offset, patch)
 
 
 def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
