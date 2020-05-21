@@ -138,7 +138,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         ])
     ])
     game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
-                           echoes_resource_database, Requirement.impossible(),
+                           echoes_resource_database, None, Requirement.impossible(),
                            None, {}, world_list)
 
     patches = game.create_game_patches()

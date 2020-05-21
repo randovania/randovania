@@ -4,6 +4,8 @@ from enum import Enum
 from pathlib import Path
 from typing import BinaryIO, Optional, Tuple, Iterable
 
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.game_description.game_patches import GamePatches
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
@@ -317,7 +319,6 @@ def _apply_game_options_patch(game_options_constructor_offset: int, user_prefere
     bit_mask = int("".join(str(int(flag)) for flag in flag_values), 2)
     patch.extend([
         0x38, 0x00, 0x00, bit_mask,
-        # 0x90, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
         0x98, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
     ])
     patch.extend([
@@ -338,41 +339,54 @@ def _apply_game_options_patch(game_options_constructor_offset: int, user_prefere
     if bytes_to_fill % 4 != 0:
         raise RuntimeError(f"The space left ({bytes_to_fill}) for is not a multiple of 4")
 
+    # ori r0, r0, 0x0 is a no-op
     patch.extend([0x60, 0x00, 0x00, 0x00] * (bytes_to_fill // 4))
     dol_file.write(game_options_constructor_offset + 8 * 4, patch)
 
 
-def _apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, dol_file: DolFile):
-    tank_capacity = 100
+def _apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, game_specific: EchoesGameSpecific,
+                                      dol_file: DolFile):
+    """
+    Patches the base health capacity and the energy tank capacity with matching values.
+    """
+    tank_capacity = game_specific.energy_per_tank
 
     dol_file.write(patch_addresses.base_health_capacity, struct.pack(">f", tank_capacity - 1))
     dol_file.write(patch_addresses.energy_tank_capacity, struct.pack(">f", tank_capacity))
 
 
-def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, dol_file: DolFile):
-    uncharged_costs = struct.pack(">llll", 1, 1, 1, 1)
-    charged_costs = struct.pack(">llll", 0, 5, 5, 5)
-    combo_costs = struct.pack(">llll", 0, 30, 30, 30)
-    missile_costs = struct.pack(">llll", 5, 5, 5, 5)
-    ammo_types = [
-        (-1, -1),  # Power
-        (0x2d, -1),  # Dark
-        (0x2e, -1),  # Light
-        (0x2e, 0x2d)  # Annihilator
-    ]
+def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: EchoesGameSpecific,
+                           dol_file: DolFile):
+    uncharged_costs = []
+    charged_costs = []
+    combo_costs = []
+    missile_costs = []
+    ammo_types = []
 
-    dol_file.write(patch_addresses.uncharged_cost, uncharged_costs)
-    dol_file.write(patch_addresses.charged_cost, charged_costs)
-    dol_file.write(patch_addresses.charge_combo_ammo_cost, combo_costs)
-    dol_file.write(patch_addresses.charge_combo_missile_cost, missile_costs)
+    for beam_config in game_specific.beam_configurations:
+        uncharged_costs.append(beam_config.uncharged_cost)
+        charged_costs.append(beam_config.charged_cost)
+        combo_costs.append(beam_config.combo_ammo_cost)
+        missile_costs.append(beam_config.combo_missile_cost)
+        ammo_types.append((
+            beam_config.ammo_a.index if beam_config.ammo_a is not None else -1,
+            beam_config.ammo_b.index if beam_config.ammo_b is not None else -1,
+        ))
 
-    # we start our patch right after the `addi r3,r31,0x0`
-    patch_offset = 0x40
+    uncharged_costs_patch = struct.pack(">llll", *uncharged_costs)
+    charged_costs_patch = struct.pack(">llll", *charged_costs)
+    combo_costs_patch = struct.pack(">llll", *combo_costs)
+    missile_costs_patch = struct.pack(">llll", *missile_costs)
 
     def enc(i, x):
         return struct.pack(">h", ammo_types[i][x])
 
-    patch = [
+    # TODO: patch CPlayerGun::IsOutOfAmmoToShoot
+
+    # The following patch also changes the fact that the game doesn't check if there's enough ammo for Power Beam
+    # we start our patch right after the `addi r3,r31,0x0`
+    ammo_type_patch_offset = 0x40
+    ammo_type_patch = [
         0x81, 0x59, 0x07, 0x74,  # lwz r10,0x774(r25)           # r10 = get current beam
         0x55, 0x4a, 0x10, 0x3a,  # rlwinm r10,r10,0x2,0x0,0x1d  # r10 *= 4
 
@@ -413,10 +427,15 @@ def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, dol_file: DolFile
         # jump to the code for getting the charged/combo costs and then check if has ammo
         # The address in question is at 0x801ccd64 for NTSC
     ]
-    dol_file.write(patch_addresses.get_beam_ammo_type_and_costs + patch_offset, patch)
+
+    dol_file.write(patch_addresses.uncharged_cost, uncharged_costs_patch)
+    dol_file.write(patch_addresses.charged_cost, charged_costs_patch)
+    dol_file.write(patch_addresses.charge_combo_ammo_cost, combo_costs_patch)
+    dol_file.write(patch_addresses.charge_combo_missile_cost, missile_costs_patch)
+    dol_file.write(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset, ammo_type_patch)
 
 
-def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
+def apply_patches(game_root: Path, game_patches: GamePatches, cosmetic_patches: CosmeticPatches):
     dol_file = DolFile(_get_dol_path(game_root))
 
     version_patches = _read_binary_version(dol_file)
@@ -426,8 +445,8 @@ def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
         _apply_string_display_patch(version_patches.string_display, dol_file)
         _apply_game_options_patch(version_patches.game_options_constructor_address,
                                   cosmetic_patches.user_preferences, dol_file)
-        _apply_energy_tank_capacity_patch(version_patches.health_capacity, dol_file)
-        _apply_beam_cost_patch(version_patches.beam_cost_addresses, dol_file)
+        _apply_energy_tank_capacity_patch(version_patches.health_capacity, game_patches.game_specific, dol_file)
+        _apply_beam_cost_patch(version_patches.beam_cost_addresses, game_patches.game_specific, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:

@@ -101,6 +101,34 @@ class BitPackFloat(BitPackValue):
         return float((decoded / (10 ** metadata["precision"])) + metadata["min"])
 
 
+class BitPackInt(BitPackValue):
+    value: int
+
+    def __init__(self, value: int):
+        self.value = value
+
+    def bit_pack_encode(self, metadata: dict) -> Iterator[Tuple[int, int]]:
+        if "if_different" in metadata:
+            same = self.value == metadata["if_different"]
+            yield from encode_bool(same)
+            if same:
+                return
+
+        value_range = metadata["max"] - metadata["min"]
+        yield self.value - metadata["min"], value_range
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> float:
+        if "if_different" in metadata:
+            same = decode_bool(decoder)
+            if same:
+                return metadata["if_different"]
+
+        value_range = (metadata["max"] - metadata["min"])
+        decoded = decoder.decode_single(value_range)
+        return decoded + metadata["min"]
+
+
 class BitPackEnum(BitPackValue):
     def __reduce__(self):
         return None
@@ -118,6 +146,7 @@ class BitPackEnum(BitPackValue):
 
 _default_bit_pack_classes = {
     bool: BitPackBool,
+    int: BitPackInt,
     float: BitPackFloat,
 }
 

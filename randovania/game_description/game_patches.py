@@ -6,6 +6,7 @@ from typing import Dict, Tuple, Iterator
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, GateAssignment, PickupTarget
 from randovania.game_description.dock import DockWeakness, DockConnection
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.hint import Hint
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -28,18 +29,7 @@ class GamePatches:
     starting_items: CurrentResources
     starting_location: AreaLocation
     hints: Dict[LogbookAsset, Hint]
-
-    @classmethod
-    def with_game(cls, game: "GameDescription") -> "GamePatches":
-        from randovania.game_description.node import TeleporterNode
-        elevator_connection = {
-            node.teleporter_instance_id: node.default_connection
-
-            for node in game.world_list.all_nodes
-            if isinstance(node, TeleporterNode) and node.editable
-        }
-
-        return GamePatches(None, {}, elevator_connection, {}, {}, {}, {}, game.starting_location, {})
+    game_specific: EchoesGameSpecific
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupTarget]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
