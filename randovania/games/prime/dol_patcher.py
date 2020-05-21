@@ -320,6 +320,12 @@ def _apply_game_options_patch(game_options_constructor_offset: int, user_prefere
         # 0x90, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
         0x98, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
     ])
+    patch.extend([
+        0x38, 0x00, 0x00, 0x00,  # li r0, value)
+        0x90, 0x1f, 0x00, 0x2c,  # stw r0 ,0x2c (r31)
+        0x90, 0x1f, 0x00, 0x30,  # stw r0 ,0x30 (r31)
+        0x90, 0x1f, 0x00, 0x34,  # stw r0 ,0x34 (r31)
+    ])
 
     # final_offset = 0x15E9E4
     # total_bytes_to_patch = final_offset - game_options_offset
