@@ -16,10 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   *Major* - Added: The default in-game options can now be configured from Randovania.
 
+-   *Major* - Added: How much ammo each beam uses to shoot uncharged, charged and charge combos is now configurable,
+    along with the ammo it uses.
+
 -   *Major* - Changed: The database now uses a new format which allows for any combination of "Or"/"And" statements.
     The Data Visualizer and Editor were both updated to take advantage of this.
 
 -   Added: An option to connect Sky Temple Gateway directly to the credits, skipping the final bosses.
+
+-   Added: How much energy you get for each Energy Tank is now configurable.
 
 -   Added: The in-game Hint System has been removed. The option for it remains, but does nothing.
 

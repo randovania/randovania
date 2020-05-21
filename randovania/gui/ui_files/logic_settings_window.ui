@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>514</height>
+    <width>765</width>
+    <height>682</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,8 +57,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>651</width>
-            <height>404</height>
+            <width>725</width>
+            <height>534</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="trick_level_layout">
@@ -165,9 +165,64 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
+        <widget class="QGroupBox" name="energy_tank_box">
+         <property name="title">
+          <string>Energy tank capacity</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="energy_tank_capacity_spin_box">
+            <property name="suffix">
+             <string> energy</string>
+            </property>
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QLabel" name="energy_tank_capacity_description">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much energy each Energy Tank you collect will provide. Your base energy is always this quantity, minus 1.&lt;/p&gt;&lt;p&gt;While logic will respect this value, only the original value (100) has been tested.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="energy_tank_capacity_label">
+            <property name="text">
+             <string>Energy per tank</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <spacer name="energy_tank_capacity_spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="damage_strictness_group">
          <property name="title">
-          <string>Damage Strictness</string>
+          <string>Logic damage strictness</string>
          </property>
          <layout class="QVBoxLayout" name="damage_strictness_layout">
           <item>
@@ -321,7 +376,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="damage_spacer">
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -509,8 +564,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>649</width>
-            <height>301</height>
+            <width>723</width>
+            <height>388</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="starting_locations_layout"/>
@@ -580,8 +635,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>635</width>
-               <height>249</height>
+               <width>699</width>
+               <height>316</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="excluded_locations_area_layout"/>
@@ -623,8 +678,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>651</width>
-            <height>404</height>
+            <width>725</width>
+            <height>534</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="translators_layout">
@@ -698,6 +753,59 @@
           </property>
          </item>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="beam_configuration_tab">
+      <attribute name="title">
+       <string>Beam Configuration</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="beam_configuration_tab_layout">
+       <item>
+        <widget class="QLabel" name="beam_configuration_label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure what each beam uses as ammo and how much ammo is consumed when shooting it uncharged, charged or with a charge combo.&lt;/p&gt;&lt;p&gt;Logic always uses the default values.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Known Issue: &lt;/span&gt;If you're out of the ammo a beam normally uses, you'll be unable to shoot that beam regardless of what it actually uses to shoot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="beam_configuration_group">
+         <property name="title">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+         <layout class="QGridLayout" name="beam_configuration_layout"/>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
