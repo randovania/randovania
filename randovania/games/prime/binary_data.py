@@ -85,6 +85,7 @@ def decode(binary_io: BinaryIO) -> Dict:
         "game",
         "game_name",
         "resource_database",
+        "game_specific",
         "starting_location",
         "initial_states",
         "victory_condition",
@@ -137,6 +138,7 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
     data.pop("game")
     data.pop("game_name")
     data.pop("resource_database")
+    data.pop("game_specific")
     data.pop("dock_weakness_database")
     data.pop("worlds")
     data.pop("victory_condition")
@@ -192,6 +194,23 @@ ConstructResourceDatabase = Struct(
     versions=PrefixedArray(Byte, ConstructResourceInfo),
     misc=PrefixedArray(Byte, ConstructResourceInfo),
     difficulty=PrefixedArray(Byte, ConstructResourceInfo),
+)
+
+ConstructEchoesBeamConfiguration = Struct(
+    item_index=Byte,
+    _has_ammo_a=Rebuild(Flag, lambda this: this.ammo_a is not None),
+    ammo_a=If(lambda this: this._has_ammo_a, Byte),
+    _has_ammo_b=Rebuild(Flag, lambda this: this.ammo_b is not None),
+    ammo_b=If(lambda this: this._has_ammo_b, Byte),
+    uncharged_cost=Byte,
+    charged_cost=Byte,
+    combo_missile_cost=Byte,
+    combo_ammo_cost=Byte,
+)
+
+ConstructEchoesGameSpecific = Struct(
+    energy_per_tank=Float32b,
+    beam_configurations=PrefixedArray(Byte, ConstructEchoesBeamConfiguration),
 )
 
 ConstructResourceGain = Struct(
@@ -271,6 +290,7 @@ ConstructGame = Struct(
     game=Byte,
     game_name=CString("utf8"),
     resource_database=ConstructResourceDatabase,
+    game_specific=ConstructEchoesGameSpecific,
     dock_weakness_database=Struct(
         door=PrefixedArray(Byte, ConstructDockWeakness),
         portal=PrefixedArray(Byte, ConstructDockWeakness),

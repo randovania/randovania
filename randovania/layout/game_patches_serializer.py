@@ -1,5 +1,6 @@
 import base64
 import collections
+import dataclasses
 import re
 from typing import Dict, List, Iterator, Tuple, DefaultDict
 
@@ -286,6 +287,11 @@ def decode_single(player_index: int, num_players: int, game_modifications: dict,
     :return:
     """
     game = data_reader.decode_data(configuration.game_data)
+    game_specific = dataclasses.replace(
+        game.game_specific,
+        energy_per_tank=configuration.energy_per_tank,
+        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
+
     world_list = game.world_list
 
     # Starting Location
@@ -359,6 +365,7 @@ def decode_single(player_index: int, num_players: int, game_modifications: dict,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
         hints=hints,
+        game_specific=game_specific,
     )
 
 

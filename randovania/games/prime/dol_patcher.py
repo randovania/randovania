@@ -4,6 +4,8 @@ from enum import Enum
 from pathlib import Path
 from typing import BinaryIO, Optional, Tuple, Iterable
 
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.game_description.game_patches import GamePatches
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
@@ -28,7 +30,7 @@ class DolHeader:
 
     @classmethod
     def from_bytes(cls, data: bytes) -> "DolHeader":
-        struct_format = ">" + "L" * _NUM_SECTIONS
+        struct_format = f">{_NUM_SECTIONS}L"
         offset_for_section = struct.unpack_from(struct_format, data, 0)
         base_address_for_section = struct.unpack_from(struct_format, data, 0x48)
         size_for_section = struct.unpack_from(struct_format, data, 0x90)
@@ -99,11 +101,28 @@ class StringDisplayPatchAddresses:
 
 
 @dataclasses.dataclass(frozen=True)
+class HealthCapacityAddresses:
+    base_health_capacity: int
+    energy_tank_capacity: int
+
+
+@dataclasses.dataclass(frozen=True)
+class BeamCostAddresses:
+    uncharged_cost: int
+    charged_cost: int
+    charge_combo_ammo_cost: int
+    charge_combo_missile_cost: int
+    get_beam_ammo_type_and_costs: int
+
+
+@dataclasses.dataclass(frozen=True)
 class PatchesForVersion:
     description: str
     build_string_address: int
     build_string: bytes
     string_display: StringDisplayPatchAddresses
+    health_capacity: HealthCapacityAddresses
+    beam_cost_addresses: BeamCostAddresses
     game_options_constructor_address: int
 
 
@@ -119,6 +138,17 @@ _ALL_VERSIONS_PATCHES = [
             display_hud_memo=0x8006b3c8,
             cstate_manager_global=0x803db6e0,
         ),
+        health_capacity=HealthCapacityAddresses(
+            base_health_capacity=0x8041abe4,
+            energy_tank_capacity=0x8041abe0,
+        ),
+        beam_cost_addresses=BeamCostAddresses(
+            uncharged_cost=0x803aa8c8,
+            charged_cost=0x803aa8d8,
+            charge_combo_ammo_cost=0x803aa8e8,
+            charge_combo_missile_cost=0x803a74ac,
+            get_beam_ammo_type_and_costs=0x801cccb0,
+        ),
         game_options_constructor_address=0x80161b48,
     ),
     PatchesForVersion(
@@ -131,6 +161,17 @@ _ALL_VERSIONS_PATCHES = [
             wstring_constructor=0x802ff734,
             display_hud_memo=0x8006b504,
             cstate_manager_global=0x803dc900,
+        ),
+        health_capacity=HealthCapacityAddresses(
+            base_health_capacity=0x8041bedc,
+            energy_tank_capacity=0x8041bed8,
+        ),
+        beam_cost_addresses=BeamCostAddresses(
+            uncharged_cost=0x803abc28,
+            charged_cost=0x803abc38,
+            charge_combo_ammo_cost=0x803abc48,
+            charge_combo_missile_cost=0x803a7c04,
+            get_beam_ammo_type_and_costs=0x801ccfe4,
         ),
         game_options_constructor_address=0x80161d9c,
     ),
@@ -278,8 +319,13 @@ def _apply_game_options_patch(game_options_constructor_offset: int, user_prefere
     bit_mask = int("".join(str(int(flag)) for flag in flag_values), 2)
     patch.extend([
         0x38, 0x00, 0x00, bit_mask,
-        # 0x90, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
         0x98, 0x1f, 0x00, (0x04 * len(_PREFERENCES_ORDER)),
+    ])
+    patch.extend([
+        0x38, 0x00, 0x00, 0x00,  # li r0, value)
+        0x90, 0x1f, 0x00, 0x2c,  # stw r0 ,0x2c (r31)
+        0x90, 0x1f, 0x00, 0x30,  # stw r0 ,0x30 (r31)
+        0x90, 0x1f, 0x00, 0x34,  # stw r0 ,0x34 (r31)
     ])
 
     # final_offset = 0x15E9E4
@@ -293,11 +339,103 @@ def _apply_game_options_patch(game_options_constructor_offset: int, user_prefere
     if bytes_to_fill % 4 != 0:
         raise RuntimeError(f"The space left ({bytes_to_fill}) for is not a multiple of 4")
 
+    # ori r0, r0, 0x0 is a no-op
     patch.extend([0x60, 0x00, 0x00, 0x00] * (bytes_to_fill // 4))
     dol_file.write(game_options_constructor_offset + 8 * 4, patch)
 
 
-def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
+def _apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, game_specific: EchoesGameSpecific,
+                                      dol_file: DolFile):
+    """
+    Patches the base health capacity and the energy tank capacity with matching values.
+    """
+    tank_capacity = game_specific.energy_per_tank
+
+    dol_file.write(patch_addresses.base_health_capacity, struct.pack(">f", tank_capacity - 1))
+    dol_file.write(patch_addresses.energy_tank_capacity, struct.pack(">f", tank_capacity))
+
+
+def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: EchoesGameSpecific,
+                           dol_file: DolFile):
+    uncharged_costs = []
+    charged_costs = []
+    combo_costs = []
+    missile_costs = []
+    ammo_types = []
+
+    for beam_config in game_specific.beam_configurations:
+        uncharged_costs.append(beam_config.uncharged_cost)
+        charged_costs.append(beam_config.charged_cost)
+        combo_costs.append(beam_config.combo_ammo_cost)
+        missile_costs.append(beam_config.combo_missile_cost)
+        ammo_types.append((
+            beam_config.ammo_a.index if beam_config.ammo_a is not None else -1,
+            beam_config.ammo_b.index if beam_config.ammo_b is not None else -1,
+        ))
+
+    uncharged_costs_patch = struct.pack(">llll", *uncharged_costs)
+    charged_costs_patch = struct.pack(">llll", *charged_costs)
+    combo_costs_patch = struct.pack(">llll", *combo_costs)
+    missile_costs_patch = struct.pack(">llll", *missile_costs)
+
+    def enc(i, x):
+        return struct.pack(">h", ammo_types[i][x])
+
+    # TODO: patch CPlayerGun::IsOutOfAmmoToShoot
+
+    # The following patch also changes the fact that the game doesn't check if there's enough ammo for Power Beam
+    # we start our patch right after the `addi r3,r31,0x0`
+    ammo_type_patch_offset = 0x40
+    ammo_type_patch = [
+        0x81, 0x59, 0x07, 0x74,  # lwz r10,0x774(r25)           # r10 = get current beam
+        0x55, 0x4a, 0x10, 0x3a,  # rlwinm r10,r10,0x2,0x0,0x1d  # r10 *= 4
+
+        0x7c, 0x03, 0x50, 0x2e,  # lwzx r0,r3,r10               # r0 = BeamIdToUnchargedShotAmmoCost[currentBeam]
+        0x90, 0x1d, 0x00, 0x00,  # stw r0,0x0(r29)              # *outBeamAmmoCost = r0
+
+        0x81, 0x59, 0x07, 0x74,  # lwz r10,0x774(r25)           # r10 = get current beam
+        0x39, 0x4a, 0x00, 0x01,  # addi r10,r10,0x1             # r10 = r10
+        0x7d, 0x49, 0x03, 0xa6,  # mtspr CTR,r10                # count_register = r10
+
+        # Power Beam
+        0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
+        0x38, 0x60, *enc(0, 0),  # li r3, <type>
+        0x39, 0x20, *enc(0, 1),  # li r9, <type>
+        0x42, 0x80, 0x00, 0x2c,  # b update_out_beam_type
+
+        # Dark Beam
+        0x42, 0x00, 0x00, 0x10,  # bdnz dark_beam               # if (--count_register > 0) goto
+        0x38, 0x60, *enc(1, 0),  # li r3, <type>
+        0x39, 0x20, *enc(1, 1),  # li r9, <type>
+        0x42, 0x80, 0x00, 0x1c,  # b update_out_beam_type
+
+        # Light Beam
+        0x42, 0x00, 0x00, 0x10,  # bdnz light_beam               # if (--count_register > 0) goto
+        0x38, 0x60, *enc(2, 0),  # li r3, <type>
+        0x39, 0x20, *enc(2, 1),  # li r9, <type>
+        0x42, 0x80, 0x00, 0x0c,  # b update_out_beam_type
+
+        # Annihilator Beam
+        0x38, 0x60, *enc(3, 0),  # li r3, <type>
+        0x39, 0x20, *enc(3, 1),  # li r9, <type>
+
+        # update_out_beam_type
+        0x90, 0x7b, 0x00, 0x00,  # stw r0,0x0(r27)              # *outBeamAmmoTypeA = r3
+        0x91, 0x3c, 0x00, 0x00,  # stw r0,0x0(r28)              # *outBeamAmmoTypeB = r8
+
+        0x42, 0x80, 0x00, 0x18,  # b body_end
+        # jump to the code for getting the charged/combo costs and then check if has ammo
+        # The address in question is at 0x801ccd64 for NTSC
+    ]
+
+    dol_file.write(patch_addresses.uncharged_cost, uncharged_costs_patch)
+    dol_file.write(patch_addresses.charged_cost, charged_costs_patch)
+    dol_file.write(patch_addresses.charge_combo_ammo_cost, combo_costs_patch)
+    dol_file.write(patch_addresses.charge_combo_missile_cost, missile_costs_patch)
+    dol_file.write(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset, ammo_type_patch)
+
+
+def apply_patches(game_root: Path, game_patches: GamePatches, cosmetic_patches: CosmeticPatches):
     dol_file = DolFile(_get_dol_path(game_root))
 
     version_patches = _read_binary_version(dol_file)
@@ -307,6 +445,8 @@ def apply_patches(game_root: Path, cosmetic_patches: CosmeticPatches):
         _apply_string_display_patch(version_patches.string_display, dol_file)
         _apply_game_options_patch(version_patches.game_options_constructor_address,
                                   cosmetic_patches.user_preferences, dol_file)
+        _apply_energy_tank_capacity_patch(version_patches.health_capacity, game_patches.game_specific, dol_file)
+        _apply_beam_cost_patch(version_patches.beam_cost_addresses, game_patches.game_specific, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:

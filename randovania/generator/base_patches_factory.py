@@ -187,6 +187,18 @@ def add_default_hints_to_patches(rng: Random,
     return patches
 
 
+def add_game_specific_from_config(patches: GamePatches, configuration: LayoutConfiguration, game: GameDescription,
+                                  ) -> GamePatches:
+    return dataclasses.replace(
+        patches,
+        game_specific=dataclasses.replace(
+            patches.game_specific,
+            energy_per_tank=configuration.energy_per_tank,
+            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database)
+        )
+    )
+
+
 def create_base_patches(configuration: LayoutConfiguration,
                         rng: Random,
                         game: GameDescription,
@@ -198,10 +210,10 @@ def create_base_patches(configuration: LayoutConfiguration,
     :param game:
     :return:
     """
-
-    # TODO: we shouldn't need the seed_number!
-
     patches = game.create_game_patches()
+
+    patches = add_game_specific_from_config(patches, configuration, game)
+
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates

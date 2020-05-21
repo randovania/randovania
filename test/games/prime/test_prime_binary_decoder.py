@@ -21,6 +21,10 @@ def test_simple_round_trip():
             "misc": [],
             "difficulty": [],
         },
+        "game_specific": {
+            "energy_per_tank": 100.0,
+            "beam_configurations": []
+        },
         "starting_location": {
             "world_asset_id": 1006255871,
             "area_asset_id": 1655756413
@@ -58,7 +62,7 @@ def test_complex_encode(test_files_dir):
     # Run
     binary_data.encode(data, b)
     # Whenever the file format changes, we can use the following line to force update our test file
-    # test_files_dir.joinpath("prime_data_as_binary.bin").write_bytes(b.getvalue())
+    # test_files_dir.joinpath("prime_data_as_binary.bin").write_bytes(b.getvalue()); assert False
 
     # Assert
     assert test_files_dir.joinpath("prime_data_as_binary.bin").read_bytes() == b.getvalue()

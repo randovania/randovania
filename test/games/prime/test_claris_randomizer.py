@@ -327,7 +327,7 @@ def test_apply_layout(
     mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
 
     mock_modern_api.assert_called_once_with(game_root, status_update, description, player_config, cosmetic_patches)
-    mock_apply_patches.assert_called_once_with(game_root, cosmetic_patches)
+    mock_apply_patches.assert_called_once_with(game_root, description.all_patches[0], cosmetic_patches)
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)

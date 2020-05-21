@@ -8,6 +8,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
+from randovania.layout.beam_configuration import BeamConfiguration
 from randovania.layout.hint_configuration import HintConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutSkyTempleKeyMode, \
     LayoutElevators, LayoutDamageStrictness
@@ -29,23 +30,23 @@ class DummyValue(BitPackValue):
 
 @pytest.fixture(
     params=[
-        {"encoded": b'l ',
+        {"encoded": b'l0',
          "sky_temple": LayoutSkyTempleKeyMode.NINE,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'@ ',
+        {"encoded": b'@0',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_BOSSES,
          "elevators": LayoutElevators.VANILLA,
          },
-        {"encoded": b'P\xa0',
+        {"encoded": b'P\xb0',
          "sky_temple": LayoutSkyTempleKeyMode.TWO,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'D\xa0',
+        {"encoded": b'D\xb0',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          },
-        {"encoded": b'\x04\xa0',
+        {"encoded": b'\x04\xb0',
          "sky_temple": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
          "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
          "damage_strictness": LayoutDamageStrictness.STRICT,
@@ -60,6 +61,7 @@ def _layout_config_with_data(request, default_layout_configuration):
     ammo_config = DummyValue()
     translator_config = DummyValue()
     hints = DummyValue()
+    beam_configuration = DummyValue()
 
     with patch.multiple(TrickLevelConfiguration, bit_pack_unpack=MagicMock(return_value=trick_config)), \
          patch.multiple(StartingLocation, bit_pack_unpack=MagicMock(return_value=starting_location)), \
@@ -67,7 +69,8 @@ def _layout_config_with_data(request, default_layout_configuration):
          patch.multiple(MajorItemsConfiguration, bit_pack_unpack=MagicMock(return_value=major_items)), \
          patch.multiple(AmmoConfiguration, bit_pack_unpack=MagicMock(return_value=ammo_config)), \
          patch.multiple(TranslatorConfiguration, bit_pack_unpack=MagicMock(return_value=translator_config)), \
-         patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)):
+         patch.multiple(HintConfiguration, bit_pack_unpack=MagicMock(return_value=hints)), \
+         patch.multiple(BeamConfiguration, bit_pack_unpack=MagicMock(return_value=beam_configuration)):
         yield request.param["encoded"], dataclasses.replace(
             default_layout_configuration,
             trick_level_configuration=trick_config,
@@ -80,6 +83,7 @@ def _layout_config_with_data(request, default_layout_configuration):
             ammo_configuration=ammo_config,
             translator_configuration=translator_config,
             hints=hints,
+            beam_configuration=beam_configuration,
         )
 
 

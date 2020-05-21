@@ -6,6 +6,7 @@ from typing import List, Optional
 import slugify
 
 from randovania import get_data_path
+from randovania.layout import preset_migration
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 
@@ -51,15 +52,12 @@ def read_preset_file(path: Path) -> Preset:
     with path.open() as preset_file:
         preset = json.load(preset_file)
 
-    if preset["schema_version"] != 1:
-        raise ValueError("Unknown version")
-
-    return Preset.from_json_dict(preset)
+    return Preset.from_json_dict(preset_migration.convert_to_current_version(preset))
 
 
 def save_preset_file(preset: Preset, path: Path) -> None:
     preset_json = {
-        "schema_version": 1,
+        "schema_version": preset_migration.CURRENT_PRESET_VERSION,
     }
     preset_json.update(preset.as_json)
 

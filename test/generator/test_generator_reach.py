@@ -8,6 +8,7 @@ import pytest
 from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import ResourceNode, Node, PickupNode, GenericNode, TranslatorGateNode
 from randovania.game_description.requirements import Requirement
@@ -137,8 +138,9 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                  )
         ])
     ])
+    game_specific = EchoesGameSpecific(energy_per_tank=100, beam_configurations=())
     game = GameDescription(0, "", DockWeaknessDatabase([], [], [], []),
-                           echoes_resource_database, Requirement.impossible(),
+                           echoes_resource_database, game_specific, Requirement.impossible(),
                            None, {}, world_list)
 
     patches = game.create_game_patches()
