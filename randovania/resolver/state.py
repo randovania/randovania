@@ -10,20 +10,12 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another, convert_resource_gain_to_current_resources
 
-ENERGY_PER_TANK = 100
-
 
 def _energy_tank_difference(new_resources: CurrentResources,
                             old_resources: CurrentResources,
                             database: ResourceDatabase,
                             ) -> int:
     return new_resources.get(database.energy_tank, 0) - old_resources.get(database.energy_tank, 0)
-
-
-def _energy_for(resources: CurrentResources,
-                database: ResourceDatabase,
-                ) -> int:
-    return 99 + (ENERGY_PER_TANK * resources.get(database.energy_tank, 0))
 
 
 class State:
@@ -81,14 +73,20 @@ class State:
                 yield resource
 
     def take_damage(self, damage: int) -> "State":
-        return State(self.resources, self.collected_resource_nodes, self.energy - damage, self.node, self.patches, self, self.resource_database)
+        return State(self.resources, self.collected_resource_nodes, self.energy - damage, self.node, self.patches, self,
+                     self.resource_database)
 
     def heal(self) -> "State":
-        return State(self.resources, self.collected_resource_nodes, self.maximum_energy, self.node, self.patches, self, self.resource_database)
+        return State(self.resources, self.collected_resource_nodes, self.maximum_energy, self.node, self.patches, self,
+                     self.resource_database)
+
+    def _energy_for(self, resources: CurrentResources) -> int:
+        energy_per_tank = self.patches.game_specific.energy_per_tank
+        return (energy_per_tank - 1) + (energy_per_tank * resources.get(self.resource_database.energy_tank, 0))
 
     @property
     def maximum_energy(self) -> int:
-        return _energy_for(self.resources, self.resource_database)
+        return self._energy_for(self.resources)
 
     def collect_resource_node(self, node: ResourceNode, new_energy: int) -> "State":
         """
@@ -108,9 +106,10 @@ class State:
 
         energy = new_energy
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
-            energy = _energy_for(new_resources, self.resource_database)
+            energy = self._energy_for(new_resources)
 
-        return State(new_resources, self.collected_resource_nodes + (node,), energy, self.node, self.patches, self, self.resource_database)
+        return State(new_resources, self.collected_resource_nodes + (node,), energy, self.node, self.patches, self,
+                     self.resource_database)
 
     def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = (), new_energy: Optional[int] = None) -> "State":
         if new_energy is None:
@@ -126,7 +125,7 @@ class State:
 
         energy = self.energy
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
-            energy = _energy_for(new_resources, self.resource_database)
+            energy = self._energy_for(new_resources)
 
         return State(
             new_resources,
@@ -148,11 +147,13 @@ class State:
         add_resources_into_another(new_resources, pickup_resources)
         new_patches = self.patches.assign_extra_initial_items(pickup_resources)
 
+        energy_per_tank = self.patches.game_specific.energy_per_tank
+
         return State(
             new_resources,
             self.collected_resource_nodes,
             self.energy + _energy_tank_difference(new_resources, self.resources,
-                                                  self.resource_database) * ENERGY_PER_TANK,
+                                                  self.resource_database) * energy_per_tank,
             self.node,
             new_patches,
             self,
