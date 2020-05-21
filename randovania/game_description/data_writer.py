@@ -3,6 +3,7 @@ from typing import List, TypeVar, Callable, Dict, Tuple, TextIO, Union, Iterator
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, LoreType
 from randovania.game_description.requirements import ResourceRequirement, \
@@ -148,6 +149,30 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
     }
 
 
+# Game Specific
+
+def write_echoes_beam_configuration(beam_config: EchoesBeamConfiguration) -> dict:
+    return {
+        "item_index": beam_config.item.index,
+        "ammo_a": beam_config.ammo_a.index if beam_config.ammo_a is not None else None,
+        "ammo_b": beam_config.ammo_b.index if beam_config.ammo_b is not None else None,
+        "uncharged_cost": beam_config.uncharged_cost,
+        "charged_cost": beam_config.charged_cost,
+        "combo_missile_cost": beam_config.combo_missile_cost,
+        "combo_ammo_cost": beam_config.combo_ammo_cost,
+    }
+
+
+def write_game_specific(game_specific: EchoesGameSpecific) -> dict:
+    return {
+        "energy_per_tank": game_specific.energy_per_tank,
+        "beam_configurations": [
+            write_echoes_beam_configuration(beam)
+            for beam in game_specific.beam_configurations
+        ]
+    }
+
+
 # World/Area/Nodes
 
 def write_node(node: Node) -> dict:
@@ -272,6 +297,7 @@ def write_game_description(game: GameDescription) -> dict:
         "game_name": game.game_name,
         "resource_database": write_resource_database(game.resource_database),
 
+        "game_specific": write_game_specific(game.game_specific),
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
         "victory_condition": write_requirement(game.victory_condition),

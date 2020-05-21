@@ -209,7 +209,7 @@ def apply_layout(description: LayoutDescription,
     description.save_to_file(game_root.joinpath("files", f"randovania.{description.file_extension()}"))
 
     _modern_api(game_root, status_update, description, players_config, cosmetic_patches)
-    dol_patcher.apply_patches(game_root, cosmetic_patches)
+    dol_patcher.apply_patches(game_root, description.all_patches[players_config.player_index], cosmetic_patches)
 
     if patcher_configuration.menu_mod:
         _add_menu_mod_to_files(game_root, status_update)
