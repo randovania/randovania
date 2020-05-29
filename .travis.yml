@@ -15,45 +15,36 @@ matrix:
         - INCLUDE_SDIST=true
 
     - os: osx
-      osx_image: xcode10.1
+      osx_image: xcode11.3
       language: generic
-      env:
-        - PYENV_VERSION=3.7.1
-
-  allow_failures:
-    - os: osx
 
 deploy:
   provider: script
-  script: python -m twine upload dist/*
+  script: python3 -m twine upload dist/*
   skip_cleanup: true
   on:
     tags: true
     condition: $INCLUDE_SDIST = true
 
 before_install:
-- |
-      if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        wget https://github.com/praekeltfoundation/travis-pyenv/releases/download/0.4.0/setup-pyenv.sh
-        source setup-pyenv.sh
-      fi
 - python --version
 
 install:
-- python -m pip install --upgrade -r requirements-setuptools.txt
-- python -m pip install -r requirements.txt
+- python3 -m pip install --upgrade -r requirements-setuptools.txt
+- python3 -m pip install -r requirements.txt
 # Installing pytest-xvfb breaks the tests on macOS, so let's install it only on linux for now
 # TODO: investigate this
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install pytest-xvfb pyvirtualdisplay==0.2.5; fi
-- python -m pip install -e .
-- python -m pip install codecov
-- python -m pip uninstall -y randovania
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python3 -m pip install pytest-xvfb pyvirtualdisplay==0.2.5; fi
+- python3 -m pip install -e .
+- python3 -m pip install codecov
+- python3 -m pip uninstall -y randovania
 
 script:
-- python setup.py bdist_wheel
-- python -m pip install --upgrade dist/*
-- python -m pytest --cov randovania
-- if [[ "$INCLUDE_SDIST" == "true" ]]; then python setup.py sdist; fi
+- python3 setup.py bdist_wheel
+- python3 -m pip install --upgrade dist/*
+- python3 -m pytest --cov randovania
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python3 create_windows_release.py; fi
+- if [[ "$INCLUDE_SDIST" == "true" ]]; then python3 setup.py sdist; fi
 
 after_success:
   - codecov
