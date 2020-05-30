@@ -33,9 +33,8 @@ deploy:
     file_glob: true
     file: "dist/*-macos.tar.gz"
     skip_cleanup: true
-    draft: true
     on:
-#      tags: true
+      tags: true
       repo: randovania/randovania
       condition: $TRAVIS_OS_NAME = osx
 
