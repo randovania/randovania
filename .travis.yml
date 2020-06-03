@@ -15,45 +15,50 @@ matrix:
         - INCLUDE_SDIST=true
 
     - os: osx
-      osx_image: xcode10.1
+      osx_image: xcode11.3
       language: generic
-      env:
-        - PYENV_VERSION=3.7.1
-
-  allow_failures:
-    - os: osx
 
 deploy:
-  provider: script
-  script: python -m twine upload dist/*
-  skip_cleanup: true
-  on:
-    tags: true
-    condition: $INCLUDE_SDIST = true
+  - provider: script
+    script: python3 -m twine upload dist/*
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: randovania/randovania
+      condition: $INCLUDE_SDIST = true
+
+  - provider: releases
+    api_key:
+      secure: BIeKxvAV/3F8/1jYywvoxEbKz63L2aoaGY/O15Va57YPRcVDy87W5u0swrl026c6lmfAt0F3Il80hvt9rRnQNk9R7Mee/qD1DAQQtw8IxnGrTJzn9o4Q5ELJmJl+Heujiam/7HQnDoFHicd328FiNNXtP+4e7m9e7m6/x2FzhTjX/Kczf+3UiP+h+2EUDY2Mh+PwE5eGi0aE5mmEXE7yjraiWLT8oucxOzXVTqa/WoXo18fzRfwZ+1eaWuKLoRAE4QA1fOf7bTgbOvS9N48je/S0Q42rFbiw05V4jW9guhMIPmQCGUK4nzY28OYTWtTr5G5c4oS+kUK/89ikA5fxFVdOm2gyn4G9eRhZmB5SN2n0NzPTv3T58FBuqMQN46ooHYsV1MT3yfUY7vpL3029qgSEGmQcZdHogcD2p3LtvQ+Yom0kEtfk32FdtLn8pSsgKhGyyZWlRXegP3CU6y2MayCYTD3nqHNmPZYFymCfBDDjHkgjPesZOZKHp7iSnoQMIJmaK4WMhNlle9BxuYvzUKqLPOOU3EeTwabwernm4Qln56g09cTbxk56LMYMgCLFp86JAevdD0bJz5snLUi27aDzzP7ur2hg5k74cdkDBSV61NByMO7CQI38go5/MjUDph9F/b+rd5vCeoIsxq2xEVZRplMa61BLy1A8GQWnPyQ=
+    file_glob: true
+    file: "dist/*-macos.tar.gz"
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: randovania/randovania
+      condition: $TRAVIS_OS_NAME = osx
 
 before_install:
-- |
-      if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        wget https://github.com/praekeltfoundation/travis-pyenv/releases/download/0.4.0/setup-pyenv.sh
-        source setup-pyenv.sh
-      fi
 - python --version
 
 install:
-- python -m pip install --upgrade -r requirements-setuptools.txt
-- python -m pip install -r requirements.txt
+- python3 -m pip install --upgrade -r requirements-setuptools.txt
+- python3 -m pip install -r requirements.txt
 # Installing pytest-xvfb breaks the tests on macOS, so let's install it only on linux for now
 # TODO: investigate this
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python -m pip install pytest-xvfb; fi
-- python -m pip install -e .
-- python -m pip install codecov
-- python -m pip uninstall -y randovania
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python3 -m pip install pytest-xvfb pyvirtualdisplay==0.2.5; fi
+- python3 -m pip install -e .
+- python3 -m pip install codecov
+- python3 -m pip uninstall -y randovania
 
 script:
-- python setup.py bdist_wheel
-- python -m pip install --upgrade dist/*
-- python -m pytest --cov randovania
-- if [[ "$INCLUDE_SDIST" == "true" ]]; then python setup.py sdist; fi
+- python3 setup.py bdist_wheel
+- python3 -m pip install --upgrade dist/*
+- python3 -m pytest --cov randovania
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python3 tools/create_release.py; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then dist/randovania/randovania --version; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool; fi
+- if [[ "$INCLUDE_SDIST" == "true" ]]; then python3 setup.py sdist; fi
 
 after_success:
   - codecov

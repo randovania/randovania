@@ -1,5 +1,6 @@
 # -*- mode: python -*-
 
+import randovania
 block_cipher = None
 icon_path = "randovania/data/icons/sky_temple_key_NqN_icon.ico"
 
@@ -48,3 +49,12 @@ coll = COLLECT(exe,
                strip=False,
                upx=False,
                name='randovania')
+app = BUNDLE(coll,
+         name='Randovania.app',
+         icon="tools/sky_temple_key.icns",
+         bundle_identifier="run.metroidprime.randovania",
+         info_plist={
+            "LSBackgroundOnly": False,
+            "CFBundleShortVersionString": randovania.VERSION,
+         }
+         )
