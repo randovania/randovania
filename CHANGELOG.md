@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: The reset map tracker menu action is now visible on non-windows platforms.
+
+## [1.2.1] - 2020-05-30
+
 -   Added: Randovania releases now includes a packages for macOS.
 
 ## [1.2.0] - 2020-05-25

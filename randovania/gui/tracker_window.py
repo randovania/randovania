@@ -73,10 +73,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.setupUi(self)
         set_default_window_icon(self)
 
-        self.menu_reset_action = QAction("Reset", self)
-        self.menu_reset_action.triggered.connect(self._confirm_reset)
-        self.menu_bar.addAction(self.menu_reset_action)
-
         self._collected_pickups = {}
         self._widget_for_pickup = {}
         self._actions = []
@@ -100,6 +96,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 
+        self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
