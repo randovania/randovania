@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Re-organized the tabs in the preset customization window
+
 -   Changed: The reset map tracker menu action is now visible on non-windows platforms.
 
 ## [1.2.1] - 2020-05-30

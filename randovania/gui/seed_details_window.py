@@ -83,6 +83,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self._action_open_dolphin = QAction(self)
         self._action_open_dolphin.setText("Open Dolphin Hook")
         self._tool_button_menu.addAction(self._action_open_dolphin)
+        self._action_open_dolphin.setVisible(False)
 
         # Signals
         self.export_log_button.clicked.connect(self._export_log)

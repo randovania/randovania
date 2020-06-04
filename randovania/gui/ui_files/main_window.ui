@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>648</width>
+    <width>714</width>
     <height>596</height>
    </rect>
   </property>
@@ -26,7 +26,19 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="main_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>8</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>4</number>
+    </property>
     <item>
      <widget class="QTabWidget" name="main_tab_widget">
       <property name="currentIndex">
@@ -36,7 +48,19 @@
        <attribute name="title">
         <string>Welcome</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="welcome_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item row="0" column="0">
          <widget class="QTabWidget" name="welcome_tab_widget">
           <property name="currentIndex">
@@ -46,7 +70,19 @@
            <attribute name="title">
             <string>Intro</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_4">
+           <layout class="QGridLayout" name="intro_layout">
+            <property name="leftMargin">
+             <number>8</number>
+            </property>
+            <property name="topMargin">
+             <number>4</number>
+            </property>
+            <property name="rightMargin">
+             <number>8</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item row="0" column="0" colspan="3">
              <widget class="QLabel" name="intro_label">
               <property name="text">
@@ -146,7 +182,19 @@
            <attribute name="title">
             <string>Play</string>
            </attribute>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
+           <layout class="QVBoxLayout" name="play_layout">
+            <property name="leftMargin">
+             <number>8</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <spacer name="play_top_spacer">
               <property name="orientation">
@@ -165,7 +213,7 @@
               <property name="title">
                <string>Existing Permalinks</string>
               </property>
-              <layout class="QGridLayout" name="gridLayout_8">
+              <layout class="QGridLayout" name="play_existing_permalink_layout">
                <item row="1" column="0">
                 <widget class="QPushButton" name="import_permalink_button">
                  <property name="text">
@@ -215,7 +263,7 @@
               <property name="title">
                <string>Creating a new Game</string>
               </property>
-              <layout class="QGridLayout" name="gridLayout_5">
+              <layout class="QGridLayout" name="play_new_permalink_layout">
                <item row="0" column="0">
                 <widget class="QLabel" name="create_new_seed_label">
                  <property name="text">
@@ -252,7 +300,19 @@
            <attribute name="title">
             <string>Generate Game</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_9">
+           <layout class="QGridLayout" name="create_layout">
+            <property name="leftMargin">
+             <number>8</number>
+            </property>
+            <property name="topMargin">
+             <number>4</number>
+            </property>
+            <property name="rightMargin">
+             <number>8</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item row="3" column="0" colspan="4">
              <spacer name="create_vertical_spacer_1">
               <property name="orientation">
@@ -267,7 +327,7 @@
              </spacer>
             </item>
             <item row="1" column="0" colspan="4">
-             <layout class="QHBoxLayout" name="horizontalLayout">
+             <layout class="QHBoxLayout" name="create_seed_first_row_layout">
               <item>
                <widget class="QLabel" name="create_choose_preset_label">
                 <property name="maximumSize">
@@ -407,7 +467,19 @@
        <attribute name="title">
         <string>Help</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="help_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QTabWidget" name="help_tab_widget">
           <property name="currentIndex">
@@ -417,7 +489,19 @@
            <attribute name="title">
             <string>FAQ</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_6">
+           <layout class="QGridLayout" name="faq_layout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item row="0" column="0">
              <widget class="QScrollArea" name="faq_scroll_area">
               <property name="widgetResizable">
@@ -428,8 +512,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>570</width>
-                 <height>592</height>
+                 <width>685</width>
+                 <height>692</height>
                 </rect>
                </property>
                <layout class="QGridLayout" name="gridLayout_7">
@@ -456,7 +540,19 @@
            <attribute name="title">
             <string>Differences</string>
            </attribute>
-           <layout class="QVBoxLayout" name="differences_layout_2">
+           <layout class="QVBoxLayout" name="differences_tab_layout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QScrollArea" name="differences_scroll_area">
               <property name="widgetResizable">
@@ -467,8 +563,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>570</width>
-                 <height>722</height>
+                 <width>685</width>
+                 <height>796</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="differences_scroll_layout_2">
@@ -495,7 +591,19 @@
            <attribute name="title">
             <string>Hints Locations</string>
            </attribute>
-           <layout class="QVBoxLayout" name="hint_tab_layout_2">
+           <layout class="QVBoxLayout" name="hint_tab_layout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QScrollArea" name="hint_scroll_area">
               <property name="widgetResizable">
@@ -509,11 +617,11 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>342</height>
+                 <width>700</width>
+                 <height>447</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="hint_scroll_layout_3">
+               <layout class="QVBoxLayout" name="hint_scroll_layout">
                 <item>
                  <widget class="QLabel" name="hint_label">
                   <property name="text">
@@ -546,7 +654,19 @@
            <attribute name="title">
             <string>Tracker</string>
            </attribute>
-           <layout class="QVBoxLayout" name="hint_layout_2">
+           <layout class="QVBoxLayout" name="tracker_tab_layout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QScrollArea" name="tracker_scroll_area">
               <property name="widgetResizable">
@@ -557,11 +677,11 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>531</height>
+                 <width>700</width>
+                 <height>447</height>
                 </rect>
                </property>
-               <layout class="QVBoxLayout" name="hint_scroll_layout_4">
+               <layout class="QVBoxLayout" name="tracker_scroll_area_layout">
                 <item>
                  <widget class="QLabel" name="tracker_label">
                   <property name="text">
@@ -589,21 +709,33 @@
        <attribute name="title">
         <string>About</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_2">
+       <layout class="QGridLayout" name="about_layout">
+        <property name="leftMargin">
+         <number>8</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>8</number>
+        </property>
+        <property name="bottomMargin">
+         <number>8</number>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="about_label">
           <property name="text">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Randovania&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/henriquegemignani/randovania&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/randovania/randovania&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;This software is covered by the &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;GNU General Public License v3 (GPL v3)&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Community&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Make sure to visit the Metroid Prime Randomizer Discord server!&lt;/span&gt;&lt;br /&gt;&lt;a href=&quot;https://discordapp.com/invite/gymstUz&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://discordapp.com/invite/gymstUz&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Credits&lt;/span&gt;&lt;br /&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Game patching was written by &lt;/span&gt;&lt;a href=&quot;https://twitter.com/ClarisRobyn&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Claris&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;br /&gt;GUI and logic written by &lt;/span&gt;&lt;a href=&quot;https://github.com/henriquegemignani/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Henrique Gemignani&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;, with contributions by &lt;/span&gt;&lt;a href=&quot;https://www.twitch.tv/spaghettitoastbook&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;SpaghettiToastBook&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; and &lt;/span&gt;&lt;a href=&quot;https://github.com/gollop&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;gollop&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Room data collected by Claris.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;BashPrime, Pwootage, and April Wade made &lt;/span&gt;&lt;a href=&quot;https://randomizer.metroidprime.run/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://randomizer.metroidprime.run/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;, from which the GUI was based.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:14pt;&quot;&gt;Randovania&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/henriquegemignani/randovania&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/randovania/randovania&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;This software is covered by the &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0.en.html&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;GNU General Public License v3 (GPL v3)&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:14pt;&quot;&gt;Community&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;Make sure to visit the Metroid Prime Randomizer Discord server!&lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://discordapp.com/invite/gymstUz&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://discordapp.com/invite/gymstUz&lt;/span&gt;&lt;/a&gt;&lt;a href=&quot;https://discordapp.com/invite/gymstUz&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:14pt;&quot;&gt;Credits&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;Game patching was written by &lt;/span&gt;&lt;a href=&quot;https://twitter.com/ClarisRobyn&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Claris&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;.&lt;br /&gt;GUI and logic written by &lt;/span&gt;&lt;a href=&quot;https://github.com/henriquegemignani/&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Henrique Gemignani&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;, with contributions by &lt;/span&gt;&lt;a href=&quot;https://www.twitch.tv/spaghettitoastbook&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;SpaghettiToastBook&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt; and &lt;/span&gt;&lt;a href=&quot;https://github.com/gollop&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;gollop&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;Room data collected by Claris.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;BashPrime, Pwootage, and April Wade made &lt;/span&gt;&lt;a href=&quot;https://randomizer.metroidprime.run/&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;https://randomizer.metroidprime.run/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt;&quot;&gt;, from which the GUI was based.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -625,7 +757,19 @@ p, li { white-space: pre-wrap; }
       <property name="title">
        <string>Progress</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_3">
+      <layout class="QGridLayout" name="progress_box_layout">
+       <property name="leftMargin">
+        <number>8</number>
+       </property>
+       <property name="topMargin">
+        <number>8</number>
+       </property>
+       <property name="rightMargin">
+        <number>8</number>
+       </property>
+       <property name="bottomMargin">
+        <number>8</number>
+       </property>
        <item row="0" column="3">
         <widget class="QPushButton" name="stop_background_process_button">
          <property name="enabled">
@@ -705,8 +849,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>648</width>
-     <height>21</height>
+     <width>714</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_open">
