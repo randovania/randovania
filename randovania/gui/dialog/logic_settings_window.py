@@ -110,8 +110,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.resource_database = self.game_description.resource_database
 
         # Update with Options
-        self.tab_widget.addTab(self._main_rules.centralWidget, "Main Rules")
-        self.tab_widget.addTab(self._game_patches.centralWidget, "Game Patches")
+        self.logic_tab_widget.addTab(self._main_rules.centralWidget, "Item Pool")
+        self.patches_tab_widget.addTab(self._game_patches.centralWidget, "Other")
 
         self.name_edit.textEdited.connect(self._edit_name)
         self.setup_trick_level_elements()
