@@ -12,9 +12,10 @@ from randovania.layout.preset import Preset
 
 
 def catch_exceptions(t, val, tb):
-    QMessageBox.critical(None,
-                         "An exception was raised",
-                         "An unhandled Exception occurred:\n{}".format(val))
+    if not isinstance(val, KeyboardInterrupt):
+        QMessageBox.critical(None,
+                             "An exception was raised",
+                             "An unhandled Exception occurred:\n{}".format(val))
     old_hook(t, val, tb)
 
 
