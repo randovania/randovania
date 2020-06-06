@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The reset map tracker menu action is now visible on non-windows platforms.
 
+-   Fixed: Exporting ISOs with Menu Mod should now work on macOS.
+
 ## [1.2.1] - 2020-05-30
 
 -   Added: Randovania releases now includes a packages for macOS.
