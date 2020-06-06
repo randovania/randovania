@@ -211,13 +211,13 @@
             <item>
              <widget class="QGroupBox" name="play_existing_permalink_group">
               <property name="title">
-               <string>Existing Permalinks</string>
+               <string>Existing games</string>
               </property>
               <layout class="QGridLayout" name="play_existing_permalink_layout">
-               <item row="1" column="0">
-                <widget class="QPushButton" name="import_permalink_button">
+               <item row="0" column="0">
+                <widget class="QLabel" name="import_permalink_label">
                  <property name="text">
-                  <string>Import permalink</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you playing with others?&lt;/p&gt;&lt;p&gt;Ask them for a permalink and import it here. You'll create the same game as them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -228,10 +228,20 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="import_permalink_label">
+               <item row="4" column="0">
+                <widget class="QLabel" name="browse_sessions_label">
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you playing with others?&lt;/p&gt;&lt;p&gt;Ask them for a permalink and import it here. You'll create the same game as them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Joining a race or multiworld that someone else created? Browse all existing sessions here!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="import_permalink_button">
+                 <property name="text">
+                  <string>Import permalink</string>
                  </property>
                 </widget>
                </item>
@@ -239,6 +249,13 @@
                 <widget class="QPushButton" name="import_game_file_button">
                  <property name="text">
                   <string>Import game file</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QPushButton" name="browse_sessions_button">
+                 <property name="text">
+                  <string>Browse for a session</string>
                  </property>
                 </widget>
                </item>
@@ -259,11 +276,21 @@
              </spacer>
             </item>
             <item>
-             <widget class="QGroupBox" name="play_new_permalink_group">
+             <widget class="QGroupBox" name="play_new_game_group">
               <property name="title">
-               <string>Creating a new Game</string>
+               <string>Creating a new game</string>
               </property>
               <layout class="QGridLayout" name="play_new_permalink_layout">
+               <item row="2" column="0">
+                <widget class="QLabel" name="host_new_game_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Want to race with others? Or just want to play a multiworld?&lt;/p&gt;&lt;p&gt;Host a new online session and invite people!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="create_new_seed_label">
                  <property name="text">
@@ -275,6 +302,13 @@
                 <widget class="QPushButton" name="create_new_seed_button">
                  <property name="text">
                   <string>Create new game</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QPushButton" name="host_new_game_button">
+                 <property name="text">
+                  <string>Host new session</string>
                  </property>
                 </widget>
                </item>
@@ -898,6 +932,9 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="menu_action_validate_seed_after"/>
     <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
+    <addaction name="separator"/>
+    <addaction name="action_login_to_discord"/>
+    <addaction name="action_login_as_guest"/>
    </widget>
    <addaction name="menu_open"/>
    <addaction name="menu_edit"/>
@@ -963,6 +1000,24 @@ p, li { white-space: pre-wrap; }
   <action name="menu_action_open_auto_tracker">
    <property name="text">
     <string>Automatic Dolphin Item Tracker</string>
+   </property>
+  </action>
+  <action name="action_login_to_discord">
+   <property name="text">
+    <string>Login to Discord</string>
+   </property>
+  </action>
+  <action name="action_login_as_guest">
+   <property name="text">
+    <string>Login as guest</string>
+   </property>
+  </action>
+  <action name="actionLogged_in_as">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Logged in as {}</string>
    </property>
   </action>
  </widget>

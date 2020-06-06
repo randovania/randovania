@@ -9,7 +9,8 @@ import markdown
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import QUrl, Signal, Qt
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog, QMenu
+from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog, QMenu, QInputDialog
+from asyncqt import asyncSlot
 from asyncqt import asyncSlot
 
 from randovania import VERSION
@@ -20,12 +21,14 @@ from randovania.games.prime import default_data
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
+from randovania.gui.game_session_window import GameSessionWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.online_game_list_window import GameSessionBrowserDialog
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
@@ -56,6 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     _details_window: SeedDetailsWindow
     _map_tracker: TrackerWindow
     _preset_manager: PresetManager
+    game_session_window: Optional[GameSessionWindow] = None
 
     @property
     def _tab_widget(self):
@@ -101,6 +105,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
+        self.browse_sessions_button.clicked.connect(self._browse_for_game_session)
+        self.host_new_game_button.clicked.connect(self._host_game_session)
         self.create_new_seed_button.clicked.connect(
             lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
 
@@ -112,6 +118,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
+        self.action_login_to_discord.triggered.connect(self._login_to_discord)
+        self.action_login_as_guest.triggered.connect(self._login_as_guest)
 
         self.generate_seed_tab = GenerateSeedTab(self, self, self, options)
         self.generate_seed_tab.setup_ui()
@@ -154,6 +162,55 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         if json_path is not None:
             layout = LayoutDescription.from_file(json_path)
             self.show_seed_tab(layout)
+
+    def _game_session_active(self) -> bool:
+        if self.game_session_window is None or self.game_session_window.has_closed:
+            return False
+        else:
+            QMessageBox.critical(
+                self,
+                "Game Session in progress",
+                "There's already a game session window open. Please close it first.",
+                QMessageBox.Ok
+            )
+            self.game_session_window.activateWindow()
+            return True
+
+    def _browse_for_game_session(self):
+        if self._game_session_active():
+            return
+
+        browser = GameSessionBrowserDialog()
+        browser.refresh()
+        if browser.exec_() == browser.Accepted:
+            self.game_session_window = GameSessionWindow(common_qt_lib.get_network_client().current_game_session,
+                                                         self.preset_manager,
+                                                         self._options)
+            self.game_session_window.show()
+
+    @asyncSlot()
+    async def _login_to_discord(self):
+        await common_qt_lib.get_network_client().login_to_discord()
+
+    @asyncSlot()
+    async def _login_as_guest(self):
+        await common_qt_lib.get_network_client().login_as_guest()
+
+    @asyncSlot()
+    async def _host_game_session(self):
+        if self._game_session_active():
+            return
+
+        dialog = QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter session name")
+        dialog.setLabelText("Select a name for the session:")
+        if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
+            return
+
+        new_session = await common_qt_lib.get_network_client().create_new_session(dialog.textValue())
+        self.game_session_window = GameSessionWindow(new_session, self.preset_manager, self._options)
+        self.game_session_window.show()
 
     def show_seed_tab(self, layout: LayoutDescription):
         self._details_window.update_layout_description(layout)

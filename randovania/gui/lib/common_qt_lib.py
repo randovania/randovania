@@ -7,6 +7,7 @@ from PySide2.QtWidgets import QCheckBox, QApplication, QFileDialog, QMainWindow,
 
 from randovania import get_data_path
 from randovania.game_connection.game_connection import GameConnection
+from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 
@@ -149,6 +150,10 @@ def set_edit_if_different(edit: QLineEdit, new_text: str):
     """
     if edit.text() != new_text:
         edit.setText(new_text)
+
+
+def get_network_client() -> QtNetworkClient:
+    return QApplication.instance().network_client
 
 
 def get_game_connection() -> GameConnection:

@@ -73,6 +73,8 @@ setup(
         'construct<2.10',
         'tenacity',
         'python-slugify',
+        'python-socketio[asyncio_client]',
+        'aiohttp[speedups]',
     ],
     extras_require={
         "gui": [
@@ -82,7 +84,16 @@ setup(
             'asyncqt',
             'dolphin-memory-engine>=1.0.2',
             'markdown',
+            'pypresence',
             'requests',
+        ],
+        "server": [
+            "cryptography",
+            "eventlet",
+            "flask-discord",
+            "flask-socketio",
+            "peewee",
+            "requests-oauthlib",
         ],
         "test": [
             'pytest',
