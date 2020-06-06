@@ -13,6 +13,8 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.network_common.admin_actions import SessionAdminUserAction
 
 T = TypeVar("T")
 
@@ -90,6 +92,14 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
     @asyncSlot()
     async def _setup_locations_combo(self):
+        network_client = common_qt_lib.get_network_client()
+        game_session = network_client.current_game_session
+        user = network_client.current_user
+
+        patcher_data = await network_client.session_admin_player(game_session.id, user.id,
+                                                                 SessionAdminUserAction.CREATE_PATCHER_FILE,
+                                                                 CosmeticPatches().as_json)
+
         game = default_database.default_prime2_game_description()
         index_to_name = {
             node.pickup_index.index: game.world_list.area_name(area, distinguish_dark_aether=True, separator=" - ")
@@ -97,8 +107,13 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
             if isinstance(node, PickupNode)
         }
 
+        names = {}
+        for pickup in patcher_data["pickups"]:
+            names[pickup["pickup_index"]] = "{}: {}".format(index_to_name[pickup["pickup_index"]],
+                                                            pickup["hud_text"][0])
+
         self.collect_location_combo.clear()
-        for index, name in sorted(index_to_name.items()):
+        for index, name in sorted(names.items()):
             self.collect_location_combo.addItem(name, index)
 
         self.collect_location_button.setEnabled(True)

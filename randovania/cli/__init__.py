@@ -3,11 +3,12 @@ import os
 import sys
 
 import randovania
-from randovania.cli import echoes, gui
+from randovania.cli import echoes, multiworld, gui
 
 
 def create_subparsers(root_parser):
     echoes.create_subparsers(root_parser)
+    multiworld.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
 
 
