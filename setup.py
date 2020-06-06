@@ -80,6 +80,7 @@ setup(
             'aiofiles',
             'appdirs',
             'asyncqt',
+            'dolphin-memory-engine>=1.0.2',
             'markdown',
             'requests',
         ],
