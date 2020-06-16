@@ -19,6 +19,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              ],
              hiddenimports=[
                 "unittest.mock",
+                "pkg_resources.py2_warn",
              ],
              hookspath=[
                  # https://github.com/pyinstaller/pyinstaller/issues/4040
