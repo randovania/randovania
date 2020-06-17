@@ -46,14 +46,14 @@ install:
 - python3 -m pip install -r requirements.txt
 # Installing pytest-xvfb breaks the tests on macOS, so let's install it only on linux for now
 # TODO: investigate this
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python3 -m pip install pytest-xvfb pyvirtualdisplay==0.2.5; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python3 -m pip install -r requirements-xvfb.txt; fi
 - python3 -m pip install -e .
 - python3 -m pip install codecov
 - python3 -m pip uninstall -y randovania
 
 script:
 - python3 setup.py bdist_wheel
-- python3 -m pip install --upgrade dist/*
+- python3 -m pip install --upgrade dist/*.whl
 - python3 -m pytest --cov randovania
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python3 tools/create_release.py; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then dist/randovania/randovania --version; fi
