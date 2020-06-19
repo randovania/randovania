@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: The elevator scan now includes the world of the connected area.
+
+## [1.2.2] - 2020-06-06
+
 -   Changed: Re-organized the tabs in the preset customization window
 
 -   Changed: The reset map tracker menu action is now visible on non-windows platforms.
