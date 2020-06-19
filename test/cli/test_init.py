@@ -6,8 +6,8 @@ from randovania import cli
 
 
 @patch("randovania.cli.echoes.create_subparsers", autospec=True)
-@patch("randovania.cli.qt.create_subparsers", autospec=True)
-def test_create_subparsers(mock_qt_create_subparsers: MagicMock,
+@patch("randovania.cli.gui.create_subparsers", autospec=True)
+def test_create_subparsers(mock_gui_create_subparsers: MagicMock,
                            mock_echoes_create_subparsers: MagicMock,
                            ):
     # Setup
@@ -18,7 +18,7 @@ def test_create_subparsers(mock_qt_create_subparsers: MagicMock,
 
     # Assert
     mock_echoes_create_subparsers.assert_called_once_with(root_parser)
-    mock_qt_create_subparsers.assert_called_once_with(root_parser)
+    mock_gui_create_subparsers.assert_called_once_with(root_parser)
 
 
 @pytest.mark.parametrize("args", [
@@ -43,20 +43,6 @@ def test_parse_args_invalid(args):
 
     with pytest.raises(SystemExit, match="^0$"):
         parser.parse_args(args)
-
-
-@patch("randovania.cli.qt.run", autospec=True)
-def test_run_args_no_option(mock_qt_run: MagicMock,
-                            ):
-    # Setup
-    args = MagicMock()
-    args.func = None
-
-    # Run
-    cli._run_args(args)
-
-    # Assert
-    mock_qt_run.assert_called_once_with(args)
 
 
 def test_run_args_with_func():
