@@ -71,7 +71,7 @@ def load_user_presets(preset_manager: PresetManager) -> bool:
             return False
 
 
-def show_main_window(app: QApplication, args):
+def show_main_window(app: QApplication, is_preview: bool):
     options = Options.with_default_data_dir()
     preset_manager = PresetManager(options.data_dir)
 
@@ -85,13 +85,13 @@ def show_main_window(app: QApplication, args):
         raise SystemExit(2)
 
     from randovania.gui.main_window import MainWindow
-    main_window = MainWindow(options, preset_manager, getattr(args, "preview", False))
+    main_window = MainWindow(options, preset_manager, is_preview)
     app.main_window = main_window
     main_window.show()
     main_window.request_new_data()
 
 
-def show_data_editor(app: QApplication, args):
+def show_data_editor(app: QApplication):
     from randovania.games.prime import default_data
     from randovania.gui.data_editor import DataEditorWindow
 
@@ -99,7 +99,7 @@ def show_data_editor(app: QApplication, args):
     app.data_visualizer.show()
 
 
-def show_tracker(app: QApplication, args):
+def show_tracker(app: QApplication):
     from randovania.gui.tracker_window import TrackerWindow
 
     options = Options.with_default_data_dir()
@@ -123,11 +123,11 @@ def run(args):
 
     target_window = getattr(args, "window", None)
     if target_window == "data-editor":
-        show_data_editor(app, args)
+        show_data_editor(app)
     elif target_window == "tracker":
-        show_tracker(app, args)
+        show_tracker(app)
     else:
-        show_main_window(app, args)
+        show_main_window(app, getattr(args, "preview", False))
 
     with loop:
         sys.exit(loop.run_forever())
