@@ -2,16 +2,13 @@ import argparse
 import os
 import sys
 
-import pytest
-
 import randovania
-from randovania.cli import echoes
-from randovania.gui import qt
+from randovania.cli import echoes, gui
 
 
 def create_subparsers(root_parser):
     echoes.create_subparsers(root_parser)
-    qt.create_subparsers(root_parser)
+    gui.create_subparsers(root_parser)
 
 
 def _print_version(args):
@@ -22,19 +19,23 @@ def _print_version(args):
 
 def _create_parser():
     parser = argparse.ArgumentParser()
+
     create_subparsers(parser.add_subparsers(dest="game"))
     parser.add_argument("--version", action="store_const",
                         const=_print_version, dest="func")
+
+    parser.set_defaults(func=(gui.open_gui if gui.has_gui
+                              else lambda args: parser.print_help()))
+
     return parser
 
 
 def _run_args(args):
-    if getattr(args, "func", None) is None:
-        args.func = qt.run
     args.func(args)
 
 
 def run_pytest(argv):
+    import pytest
     sys.exit(pytest.main(argv[2:], plugins=[]))
 
 
