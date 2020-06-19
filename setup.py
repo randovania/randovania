@@ -1,6 +1,10 @@
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
-from pyqt_distutils.build_ui import build_ui
+
+try:
+    from pyqt_distutils.build_ui import build_ui
+except ModuleNotFoundError:
+    build_ui = None
 
 
 class custom_build_py(build_py):
@@ -63,20 +67,28 @@ setup(
         "pyqt-distutils",
     ],
     install_requires=[
-        'PySide2>=5.12',
-        'aiofiles',
-        'appdirs',
-        'asyncqt',
         'nod>=1.1',
-        'requests',
         'networkx',
         'bitstruct',
-        'construct',
+        'construct<2.10',
         'tenacity',
-        'pytest',
-        'pytest-cov',
-        'pytest-qt',
+        'slugify',
+        'python-slugify',
     ],
+    extras_require={
+        "gui": [
+            'PySide2>=5.12',
+            'aiofiles',
+            'appdirs',
+            'asyncqt',
+            'requests',
+        ],
+        "test": [
+            'pytest',
+            'pytest-cov',
+            'pytest-qt',
+        ]
+    },
     entry_points={
         'console_scripts': [
             "randovania = randovania.__main__:main"
