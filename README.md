@@ -7,7 +7,7 @@ You could find the Light Beam right off the start, or the Bombs deep inside Sanc
 
 ### Windows
 
-In the [releases page](https://github.com/henriquegemignani/randovania/releases), we have zip files
+In the [releases page](https://github.com/randovania/randovania/releases), we have zip files
 with everything ready to use. Just extract and run!
 
 ## Community
