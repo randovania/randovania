@@ -226,7 +226,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             self._options.advanced_timeout_during_generation)
 
         self.generate_seed_tab.on_options_changed(self._options)
-        self._details_window.on_options_changed(self._options)
 
     # Menu Actions
     def _open_data_visualizer(self):

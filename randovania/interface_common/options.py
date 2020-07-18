@@ -243,6 +243,10 @@ class Options:
     def cosmetic_patches(self) -> CosmeticPatches:
         return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
 
+    @cosmetic_patches.setter
+    def cosmetic_patches(self, value: CosmeticPatches):
+        self._edit_field("cosmetic_patches", value)
+
     # Advanced
 
     @property
@@ -262,52 +266,6 @@ class Options:
     def advanced_timeout_during_generation(self, value: bool):
         self._check_editable_and_mark_dirty()
         self._advanced_timeout_during_generation = value
-
-    # Access to fields inside CosmeticPatches
-    @property
-    def hud_memo_popup_removal(self) -> bool:
-        return self.cosmetic_patches.disable_hud_popup
-
-    @hud_memo_popup_removal.setter
-    def hud_memo_popup_removal(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, disable_hud_popup=value))
-
-    @property
-    def speed_up_credits(self) -> bool:
-        return self.cosmetic_patches.speed_up_credits
-
-    @speed_up_credits.setter
-    def speed_up_credits(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, speed_up_credits=value))
-
-    @property
-    def open_map(self) -> bool:
-        return self.cosmetic_patches.open_map
-
-    @open_map.setter
-    def open_map(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, open_map=value))
-
-    @property
-    def pickup_markers(self) -> bool:
-        return self.cosmetic_patches.pickup_markers
-
-    @pickup_markers.setter
-    def pickup_markers(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, pickup_markers=value))
-
-    @property
-    def user_preferences(self) -> EchoesUserPreferences:
-        return self.cosmetic_patches.user_preferences
-
-    @user_preferences.setter
-    def user_preferences(self, value: EchoesUserPreferences):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, user_preferences=value))
 
     ######
 
