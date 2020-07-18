@@ -93,10 +93,6 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.player_index_combo.activated.connect(self._update_current_player)
 
         # Cosmetic
-        self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
-        self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
-        self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
-        self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
 
         # Keep the Layout Description visualizer ready, but invisible.
@@ -361,22 +357,9 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             button.setVisible(visible)
             button.row.label.setVisible(visible)
 
-    def _persist_option_then_notify(self, attribute_name: str):
-        def persist(value: int):
-            with self._options as options:
-                setattr(options, attribute_name, bool(value))
-
-        return persist
-
-    def on_options_changed(self, options: Options):
-        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
-        self.faster_credits_check.setChecked(options.speed_up_credits)
-        self.open_map_check.setChecked(options.open_map)
-        self.pickup_markers_check.setChecked(options.pickup_markers)
-
     def _open_user_preferences_dialog(self):
-        dialog = EchoesUserPreferencesDialog(self, self._options.user_preferences)
+        dialog = EchoesUserPreferencesDialog(self, self._options.cosmetic_patches)
         result = dialog.exec_()
         if result == QDialog.Accepted:
             with self._options as options:
-                options.user_preferences = dialog.preferences
+                options.cosmetic_patches = dialog.cosmetic_patches
