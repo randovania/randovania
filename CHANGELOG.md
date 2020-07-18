@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The elevator scan now includes the world of the connected area.
 
+-   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
