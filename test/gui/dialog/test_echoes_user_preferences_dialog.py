@@ -1,9 +1,10 @@
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
+from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences, SoundMode
 
 
 def test_change_sound_mode(skip_qtbot):
-    preferences = EchoesUserPreferences(sound_mode=SoundMode.MONO)
+    preferences = CosmeticPatches(user_preferences=EchoesUserPreferences(sound_mode=SoundMode.MONO))
 
     dialog = EchoesUserPreferencesDialog(None, preferences)
     skip_qtbot.addWidget(dialog)
@@ -14,7 +15,7 @@ def test_change_sound_mode(skip_qtbot):
 
 
 def test_change_sfx_volume(skip_qtbot):
-    preferences = EchoesUserPreferences(sfx_volume=15)
+    preferences = CosmeticPatches(user_preferences=EchoesUserPreferences(sfx_volume=15))
 
     dialog = EchoesUserPreferencesDialog(None, preferences)
     skip_qtbot.addWidget(dialog)
@@ -25,7 +26,7 @@ def test_change_sfx_volume(skip_qtbot):
 
 
 def test_change_hud_lag(skip_qtbot):
-    preferences = EchoesUserPreferences(hud_lag=False)
+    preferences = CosmeticPatches(user_preferences=EchoesUserPreferences(hud_lag=False))
 
     dialog = EchoesUserPreferencesDialog(None, preferences)
     skip_qtbot.addWidget(dialog)
