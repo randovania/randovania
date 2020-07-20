@@ -4,6 +4,7 @@ import copy
 import csv
 import json
 import os
+import re
 from pathlib import Path
 from statistics import stdev
 from typing import Dict, Tuple, Optional
@@ -17,7 +18,14 @@ def read_json(path: Path) -> dict:
         return json.load(x)
 
 
-def accumulate_results(layout: dict,
+_KEY_MATCH = re.compile(r"Key (\d+)")
+
+
+def _filter_key_number(name: str) -> str:
+    return _KEY_MATCH.sub("Key", name)
+
+
+def accumulate_results(game_modifications: dict,
                        items: Dict[str, Dict[str, int]],
                        locations: Dict[str, Dict[str, int]],
                        item_hints: Dict[str, Dict[str, int]],
@@ -26,12 +34,13 @@ def accumulate_results(layout: dict,
                        index_to_location: Dict[int, Tuple[str, str]],
                        logbook_to_name: Dict[str, str],
                        ):
-    for worlds, world_data in layout["game_modifications"]["locations"].items():
+    for worlds, world_data in game_modifications["locations"].items():
         for area_name, item_name in world_data.items():
+            item_name = _filter_key_number(item_name)
             items[item_name][area_name] += 1
             locations[area_name][item_name] += 1
 
-    for logbook_asset, hint_data in layout["game_modifications"]["hints"].items():
+    for logbook_asset, hint_data in game_modifications["hints"].items():
         if hint_data["hint_type"] != "location":
             continue
 
@@ -41,8 +50,9 @@ def accumulate_results(layout: dict,
             item_name = "Nothing"
         else:
             area_name, location_name = index_to_location[hint_data["target"]]
-            item_name = layout["game_modifications"]["locations"][area_name][location_name]
+            item_name = game_modifications["locations"][area_name][location_name]
 
+        item_name = _filter_key_number(item_name)
         location_hints[logbook_asset][item_name] += 1
         item_hints[item_name][logbook_asset] += 1
 
@@ -87,9 +97,10 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     location_hints = collections.defaultdict(item_creator)
 
     game_description = default_prime2_game_description()
+    world_list = game_description.world_list
     index_to_location = {
-        node.pickup_index.index: (game_description.world_list.nodes_to_world(node).name,
-                                  game_description.world_list.node_name(node))
+        node.pickup_index.index: (world_list.world_name_from_node(node, distinguish_dark_aether=True),
+                                  world_list.node_name(node))
         for node in game_description.world_list.all_nodes
         if isinstance(node, PickupNode)
     }
@@ -103,10 +114,11 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str]):
     seed_count = 0
     pickup_count = None
     for seed in Path(seeds_dir).glob("**/*.json"):
-        accumulate_results(read_json(seed),
-                           items, locations,
-                           item_hints, location_hints,
-                           index_to_location, logbook_to_name)
+        for game_modifications in read_json(seed)["game_modifications"]:
+            accumulate_results(game_modifications,
+                               items, locations,
+                               item_hints, location_hints,
+                               index_to_location, logbook_to_name)
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
         seed_count += 1
