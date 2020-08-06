@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
 
+### Logic Database changes
+
+-   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Normal and above).
+
+-   Added: In Controller Access (Agon, Torvus, Sanctuary), method of reaching the Energy Controller and returning without Bombs (Hypermode).
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
