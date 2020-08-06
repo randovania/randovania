@@ -38,12 +38,15 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 ### Setup
 
-1.  Clone the git repository: `git clone https://github.com/randovania/randovania/`
-2.  With a terminal in the repository root:
-    1. Install pip/setuptools: `python -m pip install --upgrade -r requirements-setuptools.txt`
-    2. Install requirements:   `python -m pip install --upgrade -r requirements.txt`
-    3. Install Randovania as editable: `python -m pip install -e .`
-3.  Run with `python -m randovania`
+1. Clone this repository
+2. Open a terminal in the repository root
+3. Create a virtual environment: `py -3.7 -m venv venv`
+4. Activate the virtual environment `venv\scripts\activate`
+5. Install pip/setuptools: `python -m pip install --upgrade -r requirements-setuptools.txt`
+6. Install requirements: `python -m pip install --upgrade -r requirements.txt`
+7. Generate the UI files: `python setup.py build_ui`
+7. Install Randovania as editable: `python -m pip install -e .`
+8. Run with `python -m randovania`
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
