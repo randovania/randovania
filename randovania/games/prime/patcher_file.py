@@ -27,6 +27,8 @@ from randovania.layout.layout_configuration import LayoutConfiguration, LayoutEl
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 
+_EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
+_EASTER_EGG_SHINY_MISSILE = 8192
 _TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
     # Great Temple
@@ -134,6 +136,9 @@ def _get_single_hud_text(pickup_name: str,
                          memo_data: Dict[str, str],
                          resources: ResourceGainTuple,
                          ) -> str:
+    if pickup_name == "Energy Transfer Module" and random.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0:
+        return "Run validated!"
+
     return memo_data[pickup_name].format(**{
         _resource_user_friendly_name(resource): quantity
         for resource, quantity in resources
@@ -198,7 +203,7 @@ class PickupCreator:
 
         # TODO: less improvised, really
         model_index = model_pickup.model_index
-        if model_index == 22 and random.randint(0, 8192) == 0:
+        if model_index == 22 and random.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
             # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
             model_index = 23
 
