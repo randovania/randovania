@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In Controller Access (Agon, Torvus, Sanctuary), method of reaching the Energy Controller and returning without Bombs (Hypermode).
 
+-   Added: In Putrid Alcove, damage requirements have been added for getting the item and leaving, with just Space Jump and just Bombs.
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
