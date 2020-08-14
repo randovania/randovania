@@ -290,10 +290,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                                 "A node named '{}' already exists.".format(node_name))
             return
 
+        self._do_create_node(node_name)
+
+    def _do_create_node(self, node_name: str):
         self.generic_index += 1
         new_node = GenericNode(node_name, True, self.generic_index)
         self.current_area.nodes.append(new_node)
         self.current_area.connections[new_node] = {}
+        self.game_description.world_list.refresh_node_cache()
 
         self.on_select_area()
 
@@ -319,6 +323,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             other_nodes.pop(current_node, None)
 
         self.current_area.nodes.remove(current_node)
+        self.game_description.world_list.refresh_node_cache()
         self.on_select_area()
 
     def update_edit_mode(self):
