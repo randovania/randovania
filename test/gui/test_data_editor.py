@@ -1,8 +1,12 @@
+import io
+import json
+from pathlib import Path
 from unittest.mock import patch, ANY
 
 import pytest
 from PySide2.QtWidgets import QDialog
 
+from randovania.game_description import data_reader, data_writer
 from randovania.game_description.requirements import Requirement
 from randovania.gui.data_editor import DataEditorWindow
 
@@ -73,3 +77,33 @@ def test_open_edit_connection(mock_apply_edit_connections,
                                                             editor.final_requirement)
     else:
         mock_apply_edit_connections.assert_not_called()
+
+
+@patch("randovania.gui.data_editor.default_data.prime2_json_path", autospec=True)
+@patch("randovania.gui.data_editor.default_data.prime2_human_readable_path", autospec=True)
+def test_create_node_and_save(mock_prime2_human_readable_path,
+                              mock_prime2_json_path,
+                              tmpdir,
+                              echoes_game_data,
+                              skip_qtbot):
+    # Setup
+    mock_prime2_human_readable_path.return_value = Path(tmpdir).joinpath("human")
+    mock_prime2_json_path.return_value = Path(tmpdir).joinpath("database")
+
+    window = DataEditorWindow(echoes_game_data, True)
+    skip_qtbot.addWidget(window)
+
+    # Run
+    window._do_create_node("Some Node")
+    window._save_as_internal_database()
+
+    # Assert
+    with mock_prime2_json_path.return_value.open() as data_file:
+        exported_data = json.load(data_file)
+    exported_game = data_reader.decode_data(exported_data)
+
+    output = io.StringIO()
+    data_writer.write_human_readable_world_list(exported_game, output)
+
+    assert mock_prime2_human_readable_path.return_value.read_text("utf-8") == output.getvalue()
+

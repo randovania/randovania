@@ -26,8 +26,10 @@ class WorldList:
 
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
-        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
+        self.refresh_node_cache()
 
+    def refresh_node_cache(self):
+        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
