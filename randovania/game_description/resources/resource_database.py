@@ -6,20 +6,23 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
-def find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
+class MissingResource(ValueError):
+    pass
+
+
+def find_resource_info_with_id(info_list: List[ResourceInfo], index: int, resource_type: ResourceType):
     for info in info_list:
         if info.index == index:
             return info
-    raise ValueError(
-        "Resource with index {} not found in {}".format(index, info_list))
+    indices = [info.index for info in info_list]
+    raise MissingResource(f"{resource_type} Resource with index {index} not found in {indices}")
 
 
 def find_resource_info_with_long_name(info_list: List[ResourceInfo], long_name: str):
     for info in info_list:
         if info.long_name == long_name:
             return info
-    raise ValueError(
-        "Resource with long_name '{}' not found in {} resources".format(long_name, len(info_list)))
+    raise MissingResource(f"Resource with long_name '{long_name}' not found in {len(info_list)} resources")
 
 
 class ResourceDatabase(NamedTuple):
@@ -52,8 +55,7 @@ class ResourceDatabase(NamedTuple):
 
     def get_by_type_and_index(self, resource_type: ResourceType,
                               index: int) -> ResourceInfo:
-        return find_resource_info_with_id(
-            self.get_by_type(resource_type), index)
+        return find_resource_info_with_id(self.get_by_type(resource_type), index, resource_type)
 
     def get_item(self, index: int) -> SimpleResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, index)
