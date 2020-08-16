@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
 
+-   Changed: Better error messages when there are references to unknown resources in the database.
+
 ### Logic Database changes
 
 -   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Normal and above).

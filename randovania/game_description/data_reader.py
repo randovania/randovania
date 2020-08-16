@@ -12,7 +12,7 @@ from randovania.game_description.requirements import ResourceRequirement, Requir
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase, \
-    find_resource_info_with_long_name
+    find_resource_info_with_long_name, MissingResource
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -40,7 +40,7 @@ def read_resource_info_array(data: List[Dict], resource_type: ResourceType) -> L
 # Damage
 
 def read_damage_reduction(data: Dict, items: List[SimpleResourceInfo]) -> DamageReduction:
-    return DamageReduction(find_resource_info_with_id(items, data["index"]),
+    return DamageReduction(find_resource_info_with_id(items, data["index"], ResourceType.ITEM),
                            data["multiplier"])
 
 
@@ -183,73 +183,76 @@ class WorldReader:
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
 
+    def _get_scan_visor(self) -> SimpleResourceInfo:
+        return find_resource_info_with_long_name(
+            self.resource_database.item,
+            "Scan Visor"
+        )
+
     def read_node(self, data: Dict) -> Node:
         name: str = data["name"]
-        heal: bool = data["heal"]
-        node_type: int = data["node_type"]
         self.generic_index += 1
+        try:
+            heal: bool = data["heal"]
+            node_type: int = data["node_type"]
 
-        if node_type == "generic":
-            return GenericNode(name, heal, self.generic_index)
+            if node_type == "generic":
+                return GenericNode(name, heal, self.generic_index)
 
-        elif node_type == "dock":
-            return DockNode(name, heal, self.generic_index, data["dock_index"],
-                            DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
-                            self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
-                                                                              data["dock_weakness_index"]))
+            elif node_type == "dock":
+                return DockNode(name, heal, self.generic_index, data["dock_index"],
+                                DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
+                                self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
+                                                                                  data["dock_weakness_index"]))
 
-        elif node_type == "pickup":
-            return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]), data["major_location"])
+            elif node_type == "pickup":
+                return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]), data["major_location"])
 
-        elif node_type == "teleporter":
-            instance_id = data["teleporter_instance_id"]
+            elif node_type == "teleporter":
+                instance_id = data["teleporter_instance_id"]
 
-            destination_world_asset_id = data["destination_world_asset_id"]
-            destination_area_asset_id = data["destination_area_asset_id"]
+                destination_world_asset_id = data["destination_world_asset_id"]
+                destination_area_asset_id = data["destination_area_asset_id"]
 
-            return TeleporterNode(name, heal, self.generic_index, instance_id,
-                                  AreaLocation(destination_world_asset_id, destination_area_asset_id),
-                                  data["scan_asset_id"],
-                                  data["keep_name_when_vanilla"],
-                                  data["editable"],
-                                  )
+                return TeleporterNode(name, heal, self.generic_index, instance_id,
+                                      AreaLocation(destination_world_asset_id, destination_area_asset_id),
+                                      data["scan_asset_id"],
+                                      data["keep_name_when_vanilla"],
+                                      data["editable"],
+                                      )
 
-        elif node_type == "event":
-            return EventNode(name, heal, self.generic_index,
-                             self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
+            elif node_type == "event":
+                return EventNode(name, heal, self.generic_index,
+                                 self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
 
-        elif node_type == "translator_gate":
-            return TranslatorGateNode(name, heal, self.generic_index,
-                                      TranslatorGate(data["gate_index"]),
-                                      find_resource_info_with_long_name(
-                                          self.resource_database.item,
-                                          "Scan Visor"
-                                      ))
+            elif node_type == "translator_gate":
+                return TranslatorGateNode(name, heal, self.generic_index,
+                                          TranslatorGate(data["gate_index"]),
+                                          self._get_scan_visor())
 
-        elif node_type == "logbook":
-            lore_type = LoreType(data["lore_type"])
+            elif node_type == "logbook":
+                lore_type = LoreType(data["lore_type"])
 
-            if lore_type == LoreType.LUMINOTH_LORE:
-                required_translator = self.resource_database.get_item(data["extra"])
+                if lore_type == LoreType.LUMINOTH_LORE:
+                    required_translator = self.resource_database.get_item(data["extra"])
+                else:
+                    required_translator = None
+
+                if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
+                    hint_index = data["extra"]
+                else:
+                    hint_index = None
+
+                return LogbookNode(name, heal, self.generic_index, data["string_asset_id"],
+                                   self._get_scan_visor(),
+                                   lore_type,
+                                   required_translator,
+                                   hint_index)
             else:
-                required_translator = None
+                raise Exception(f"Unknown type: {node_type}")
 
-            if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
-                hint_index = data["extra"]
-            else:
-                hint_index = None
-
-            return LogbookNode(name, heal, self.generic_index, data["string_asset_id"],
-                               find_resource_info_with_long_name(
-                                   self.resource_database.item,
-                                   "Scan Visor"
-                               ),
-                               lore_type,
-                               required_translator,
-                               hint_index)
-
-        else:
-            raise Exception("Unknown node type: {}".format(node_type))
+        except Exception as e:
+            raise Exception(f"In node {name}, got error: {e}")
 
     def read_area(self, data: Dict) -> Area:
         nodes = read_array(data["nodes"], self.read_node)
@@ -261,7 +264,11 @@ class WorldReader:
             connections[origin] = {}
 
             for target_name, target_requirement in origin_data["connections"].items():
-                the_set = read_requirement(target_requirement, self.resource_database)
+                try:
+                    the_set = read_requirement(target_requirement, self.resource_database)
+                except MissingResource as e:
+                    raise MissingResource(
+                        f"In area {data['name']}, connection from {origin.name} to {target_name} got error: {e}")
 
                 if the_set != Requirement.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
