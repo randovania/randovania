@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
 
+-   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
+
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
 
 ### Logic Database changes
