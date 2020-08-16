@@ -55,6 +55,9 @@ def replace_with_event_pickups(game: GameDescription):
             if not isinstance(next_node, PickupNode):
                 continue
 
+            if sum(1 for connections in area.connections.values() if next_node in connections) > 1:
+                continue
+
             nodes_to_replace.append((event_node, next_node))
 
         for event_node, next_node in nodes_to_replace:
