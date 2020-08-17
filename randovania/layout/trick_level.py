@@ -11,9 +11,9 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 class LayoutTrickLevel(BitPackEnum, Enum):
     NO_TRICKS = "no-tricks"
     TRIVIAL = "trivial"
-    EASY = "easy"
     NORMAL = "normal"
     HARD = "hard"
+    VETERAN = "veteran"
     HYPERMODE = "hypermode"
     MINIMAL_RESTRICTIONS = "minimal-restrictions"
 
@@ -38,11 +38,11 @@ _TRICK_LEVEL_ORDER: List[LayoutTrickLevel] = list(LayoutTrickLevel)
 _PRETTY_TRICK_LEVEL_NAME = {
     LayoutTrickLevel.NO_TRICKS: "No Tricks",
     LayoutTrickLevel.TRIVIAL: "Trivial",
-    LayoutTrickLevel.EASY: "Easy",
     LayoutTrickLevel.NORMAL: "Normal",
     LayoutTrickLevel.HARD: "Hard",
+    LayoutTrickLevel.VETERAN: "Veteran",
     LayoutTrickLevel.HYPERMODE: "Hypermode",
-    LayoutTrickLevel.MINIMAL_RESTRICTIONS: "Minimal Checking",
+    LayoutTrickLevel.MINIMAL_RESTRICTIONS: "Minimal Restrictions",
 }
 
 
