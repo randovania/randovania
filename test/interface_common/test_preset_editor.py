@@ -29,7 +29,7 @@ _sample_layout_configurations = [
         "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
     }
-    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.HARD, LayoutTrickLevel.MINIMAL_RESTRICTIONS]
+    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.VETERAN, LayoutTrickLevel.MINIMAL_RESTRICTIONS]
 ]
 
 

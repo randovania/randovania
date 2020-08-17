@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Options for configuring usage of Boost Jump, Extended Dash and Bomb Slots without Bombs. 
 
+-   Changed: The following trick level difficulties were renamed:
+    - Hard -> Veteran
+    - Normal -> Hard
+    - Easy -> Normal
+    - Minimal Checking -> Minimal Restrictions
+
 ### Logic Database changes
 
 -   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Normal and above).
