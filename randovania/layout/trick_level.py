@@ -168,4 +168,7 @@ class TrickLevelConfiguration(BitPackValue):
             26,  # Invisible Objects
             27,  # Standable Terrain
             28,  # Terminal Fall Abuse
+            29,  # Boost Jump
+            30,  # Extended Dash
+            31,  # Bomb Slot without Bombs
         })

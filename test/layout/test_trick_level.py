@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 from randovania.bitpacking import bitpacking
@@ -20,7 +22,8 @@ def _configuration_with_data(request):
     return request.param["encoded"], TrickLevelConfiguration.from_json(request.param["json"])
 
 
-def test_decode(configuration_with_data):
+@patch("randovania.layout.trick_level.TrickLevelConfiguration.all_possible_tricks", return_value=set(range(14)))
+def test_decode(mock_possible_tricks, configuration_with_data):
     # Setup
     data, expected = configuration_with_data
 
@@ -32,7 +35,8 @@ def test_decode(configuration_with_data):
     assert result == expected
 
 
-def test_encode(configuration_with_data):
+@patch("randovania.layout.trick_level.TrickLevelConfiguration.all_possible_tricks", return_value=set(range(14)))
+def test_encode(mock_possible_tricks, configuration_with_data):
     # Setup
     expected, value = configuration_with_data
 
