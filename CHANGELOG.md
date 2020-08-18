@@ -24,9 +24,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Normal and above).
 
--   Added: In Controller Access (Agon, Torvus, Sanctuary), method of reaching the Energy Controller and returning without Bombs (Hypermode).
+-   Added: In all Light/Dark Controller Access rooms (Agon, Torvus, Sanctuary), method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
 
 -   Added: In Putrid Alcove, damage requirements have been added for getting the item and leaving, with just Space Jump and just Bombs.
+
+-	Added: In Torvus Grove, method of climbing the room without Boost Ball (Hard and above).
+
+-	Added: Method to open Seeker Missile Locks with Screw Attack in various rooms (Phazon Grounds, Shrine Access, Plain of Dark Worship, Poisoned Bog) (Hard and above).
+
+-	Added: Method to open most Bomb Slots without Bombs (Hypermode).
+
+-	Added: Methods to climb Main Hydrochamber and Hydrodynamo Station without Gravity Boost and with Air Underwater (Normal and above), Space Jump, and Screw Attack (Hypermode).
+
+-	Added: Method to climb Transport Center with Space Jump and Slope Jump (Normal and above).
+
+-	Added: Method to climb Doomed Entry with Space Jump and Screw Attack (Trival and above).
+
+-	Added: Method of fighting Quadraxis with Power Bombs instead of Bombs (Trivial and above).
+
+-	Added: Method of leaving Hive Temple without Spider Ball (Hypermode).
 
 ## [1.2.2] - 2020-06-06
 
@@ -67,7 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: The logbook entries that contains hints are now named after the room they're in, with the categories
     being about which kind of hint they are.
-    KNOW ISSUE: While scanning something, the categories that show up are incorrect.
+    KNOWN ISSUE: While scanning something, the categories that show up are incorrect.
 
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
     Trick Level tab when customizing a preset. 
@@ -149,7 +165,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In GFMC Compound, a method of reaching the ship item with Screw Attack (Normal and above).
 
--   Added: In Main Gyro Chamber, a method of reaching the bottom of the gyro area from the middle of the room with Screw Attack (Easy and aboive).
+-   Added: In Main Gyro Chamber, a method of reaching the bottom of the gyro area from the middle of the room with Screw Attack (Easy and above).
 
 -   Changed: In Workers Path, Morph Ball Bomb is no longer required.
 
