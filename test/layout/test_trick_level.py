@@ -9,10 +9,10 @@ from randovania.layout.trick_level import TrickLevelConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'`\x00\x00', "json": {"global_level": "normal", "specific_levels": {}}},
+        {"encoded": b'`\x00\x00', "json": {"global_level": "hard", "specific_levels": {}}},
         {"encoded": b'\xc0\x00\x00', "json": {"global_level": "minimal-restrictions", "specific_levels": {}}},
-        {"encoded": b'P\x00\x00', "json": {"global_level": "easy", "specific_levels": {0: "no-tricks"}}},
-        {"encoded": b'{\xbb\xbb\xbb\xbb\xbb\xa0', "json": {"global_level": "normal", "specific_levels": {
+        {"encoded": b'P\x00\x00', "json": {"global_level": "normal", "specific_levels": {0: "no-tricks"}}},
+        {"encoded": b'{\xbb\xbb\xbb\xbb\xbb\xa0', "json": {"global_level": "hard", "specific_levels": {
             i: "hypermode"
             for i in range(12)
         }}},
