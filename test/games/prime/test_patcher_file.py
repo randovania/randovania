@@ -348,7 +348,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
         PickupIndex(3): PickupTarget(pickup_a, 0),
         PickupIndex(4): PickupTarget(pickup_c, 0),
     })
-    creator = patcher_file.PickupCreatorSolo(patcher_file._SimplifiedMemo())
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._SimplifiedMemo())
 
     # Run
     result = patcher_file._create_pickup_list(patches,
@@ -501,7 +501,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
             for name in ("A", "B", "C", "Useless")
         }
 
-    creator = patcher_file.PickupCreatorSolo(memo_data)
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
 
     # Run
     result = patcher_file._create_pickup_list(patches,
@@ -598,10 +598,29 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
         memo_data = patcher_file._SimplifiedMemo()
     else:
         memo_data = default_prime2_memo_data()
-    creator = patcher_file.PickupCreatorSolo(memo_data)
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
 
     for item in item_pool.pickups:
         creator.create_pickup(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
+
+
+def test_run_validated_hud_text():
+    # Setup
+    rng = MagicMock()
+    rng.randint.return_value = 0
+    creator = patcher_file.PickupCreatorSolo(rng, patcher_file._SimplifiedMemo())
+    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
+    pickup = PickupEntry("Energy Transfer Module", 1, ItemCategory.TEMPLE_KEY,
+                         (
+                             ConditionalResources("Energy Transfer Module", None, ((resource_a, 1),)),
+                         ))
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data['hud_text'] == ['Run validated!']
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
