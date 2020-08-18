@@ -54,9 +54,9 @@ _TRICK_LEVEL_DESCRIPTION = {
         "This mode includes strategies that abuses oversights in the game, such as bomb jumping to the item "
         "in Temple Assembly Site and destroying the gate in Trooper Security Station with Screw Attack."
     ],
-    LayoutTrickLevel.EASY: ["This mode assumes you can do simple tricks."],
-    LayoutTrickLevel.NORMAL: ["This mode expands on the Easy mode, including more difficult to execute tricks."],
-    LayoutTrickLevel.HARD: ["This mode expands on Normal with additional tricks, such as Grand Abyss scan dash."],
+    LayoutTrickLevel.NORMAL: ["This mode assumes you can do simple tricks."],
+    LayoutTrickLevel.HARD: ["This mode expands on the Easy mode, including more difficult to execute tricks."],
+    LayoutTrickLevel.VETERAN: ["This mode expands on Normal with additional tricks, such as Grand Abyss scan dash."],
     LayoutTrickLevel.HYPERMODE: [
         "This mode considers every single trick and path known to Randovania as valid, "
         "such as Polluted Mire without Space Jump. No OOB is included."
