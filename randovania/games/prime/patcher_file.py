@@ -136,9 +136,6 @@ def _get_single_hud_text(pickup_name: str,
                          memo_data: Dict[str, str],
                          resources: ResourceGainTuple,
                          ) -> str:
-    if pickup_name == "Energy Transfer Module" and random.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0:
-        return "Run validated!"
-
     return memo_data[pickup_name].format(**{
         _resource_user_friendly_name(resource): quantity
         for resource, quantity in resources
@@ -180,6 +177,9 @@ def _calculate_hud_text(pickup: PickupEntry,
 
 
 class PickupCreator:
+    def __init__(self, rng: Random):
+        self.rng = rng
+
     def create_pickup_data(self,
                            original_index: PickupIndex,
                            pickup_target: PickupTarget,
@@ -203,7 +203,7 @@ class PickupCreator:
 
         # TODO: less improvised, really
         model_index = model_pickup.model_index
-        if model_index == 22 and random.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
+        if model_index == 22 and self.rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
             # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
             model_index = 23
 
@@ -218,7 +218,8 @@ class PickupCreator:
 
 
 class PickupCreatorSolo(PickupCreator):
-    def __init__(self, memo_data: Dict[str, str]):
+    def __init__(self, rng: Random, memo_data: Dict[str, str]):
+        super().__init__(rng)
         self.memo_data = memo_data
 
     def create_pickup_data(self,
@@ -227,6 +228,12 @@ class PickupCreatorSolo(PickupCreator):
                            visual_pickup: PickupEntry,
                            model_style: PickupModelStyle,
                            scan_text: str) -> dict:
+
+        hud_text = _calculate_hud_text(pickup_target.pickup, visual_pickup, model_style, self.memo_data)
+        if hud_text == ["Energy Transfer Module acquired!"] and (
+                self.rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
+            hud_text = ["Run validated!"]
+
         return {
             "resources": _create_pickup_resources_for(pickup_target.pickup.resources[0].resources),
             "conditional_resources": [
@@ -245,13 +252,14 @@ class PickupCreatorSolo(PickupCreator):
                 }
                 for conversion in pickup_target.pickup.convert_resources
             ],
-            "hud_text": _calculate_hud_text(pickup_target.pickup, visual_pickup, model_style, self.memo_data),
+            "hud_text": hud_text,
             "scan": scan_text,
         }
 
 
 class PickupCreatorMulti(PickupCreator):
-    def __init__(self, player_names: Dict[int, str]):
+    def __init__(self, rng: Random, player_names: Dict[int, str]):
+        super().__init__(rng)
         self.player_names = player_names
 
     def create_pickup_data(self,
@@ -624,9 +632,9 @@ def create_patcher_file(description: LayoutDescription,
             memo_data = _simplified_memo_data()
         else:
             memo_data = default_prime2_memo_data()
-        creator = PickupCreatorSolo(memo_data)
+        creator = PickupCreatorSolo(rng, memo_data)
     else:
-        creator = PickupCreatorMulti(players_config.player_names)
+        creator = PickupCreatorMulti(rng, players_config.player_names)
 
     result["pickups"] = _create_pickup_list(patches,
                                             useless_target, _TOTAL_PICKUP_COUNT,
