@@ -50,6 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Added: Method of leaving Hive Temple without Spider Ball (Hypermode).
 
+-	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Hard and above).
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
