@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Logic Database changes
 
+-   Added: In Watch Station Access, added methods to cross the pit in either direction using Boost Ball and no Space Jump.
+
+-   Changed: Cleaned up Torvus Training Chamber to include tricks originally listed from either Transit Tunnel door to reach Transit Access, to also give access to Room Center, for ease of logic navigation.
+
 -   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Normal and above).
 
 -   Added: In Controller Access (Agon, Torvus, Sanctuary), method of reaching the Energy Controller and returning without Bombs (Hypermode).
