@@ -345,6 +345,45 @@ class ResourceRequirement(NamedTuple, Requirement):
         ])
 
 
+class RequirementTemplate(Requirement):
+    database: ResourceDatabase
+    template_name: str
+
+    def __init__(self, database: ResourceDatabase, template_name: str):
+        self.database = database
+        self.template_name = template_name
+
+    @property
+    def template_requirement(self) -> Requirement:
+        return self.database.requirement_template[self.template_name]
+
+    def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
+        return self.template_requirement.damage(current_resources, current_energy)
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+        return self.template_requirement.satisfied(current_resources, current_energy)
+
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           ) -> Requirement:
+        return self.template_requirement.patch_requirements(static_resources, damage_multiplier)
+
+    def simplify(self) -> Requirement:
+        return self
+
+    @property
+    def as_set(self) -> "RequirementSet":
+        return self.template_requirement.as_set
+
+    def __eq__(self, other):
+        return isinstance(other, RequirementTemplate) and self.template_name == other.template_name
+
+    def __hash__(self) -> int:
+        return hash((self.database, self.template_name))
+
+    def __str__(self) -> str:
+        return self.template_name
+
+
 class RequirementList:
     items: FrozenSet[ResourceRequirement]
     _cached_hash: Optional[int] = None
