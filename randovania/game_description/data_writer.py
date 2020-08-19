@@ -7,7 +7,7 @@ from randovania.game_description.echoes_game_specific import EchoesBeamConfigura
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, LoreType
 from randovania.game_description.requirements import ResourceRequirement, \
-    RequirementOr, RequirementAnd, Requirement
+    RequirementOr, RequirementAnd, Requirement, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -50,6 +50,13 @@ def write_requirement_or(requirement: RequirementOr) -> dict:
     }
 
 
+def write_requirement_template(requirement: RequirementTemplate) -> dict:
+    return {
+        "type": "template",
+        "data": requirement.template_name
+    }
+
+
 def write_requirement(requirement: Requirement) -> dict:
     if isinstance(requirement, ResourceRequirement):
         return write_resource_requirement(requirement)
@@ -59,6 +66,9 @@ def write_requirement(requirement: Requirement) -> dict:
 
     elif isinstance(requirement, RequirementAnd):
         return write_requirement_and(requirement)
+
+    elif isinstance(requirement, RequirementTemplate):
+        return write_requirement_template(requirement)
 
     else:
         raise ValueError(f"Unknown requirement type: {type(requirement)}")
@@ -122,6 +132,10 @@ def write_resource_database(resource_database: ResourceDatabase):
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
         "difficulty": write_array(resource_database.difficulty, write_simple_resource),
+        "requirement_template": {
+            name: write_requirement(requirement)
+            for name, requirement in resource_database.requirement_template.items()
+        }
     }
 
 
@@ -361,6 +375,9 @@ def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterat
 
     elif isinstance(requirement, ResourceRequirement):
         yield level, pretty_print_resource_requirement(requirement)
+
+    elif isinstance(requirement, RequirementTemplate):
+        yield level, requirement.template_name
     else:
         raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
 
@@ -384,6 +401,13 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
     def print_to_file(*args):
         output.write("\t".join(str(arg) for arg in args) + "\n")
 
+    output.write("====================\nTemplates\n")
+    for template_name, template in game.resource_database.requirement_template.items():
+        output.write(f"\n* {template_name}:\n")
+        for level, text in pretty_print_requirement(template):
+            output.write("      {}{}\n".format("    " * level, text))
+
+    output.write("\n")
     for world in game.world_list.worlds:
         output.write("====================\n{}\n".format(world.name))
         for area in world.areas:

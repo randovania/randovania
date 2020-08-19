@@ -20,6 +20,7 @@ def test_simple_round_trip():
             "versions": [],
             "misc": [],
             "difficulty": [],
+            "requirement_template": {},
         },
         "game_specific": {
             "energy_per_tank": 100.0,
@@ -143,6 +144,7 @@ def test_full_data_encode_is_equal():
     {"type": "or", "data": []},
     {"type": "and", "data": []},
     {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
+    {"type": "template", "data": "Example Template"},
 ])
 def test_encode_requirement_simple(req):
     # Run
@@ -163,6 +165,7 @@ def test_encode_requirement_complex():
             {"type": "or", "data": []},
             {"type": "resource", "data": {"type": 2, "index": 5, "amount": 7, "negate": True}},
             {"type": "or", "data": []},
+            {"type": "template", "data": "Example Template"},
         ]
     }
 
@@ -172,3 +175,29 @@ def test_encode_requirement_complex():
 
     # Assert
     assert req == decoded
+
+
+def test_encode_resource_database():
+    # Setup
+    resource_database = {
+        "items": [],
+        "events": [],
+        "tricks": [],
+        "damage": [],
+        "versions": [],
+        "misc": [],
+        "difficulty": [],
+        "requirement_template": {
+            "Foo": {
+                "type": "or",
+                "data": []
+            }
+        },
+    }
+    resource_database["requirement_template"] = list(resource_database["requirement_template"].items())
+
+    # Run
+    encoded = binary_data.ConstructResourceDatabase.build(resource_database)
+
+    # Assert
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'

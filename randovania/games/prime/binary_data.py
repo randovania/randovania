@@ -6,7 +6,7 @@ from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If
+    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence
 
 from randovania.game_description.node import LoreType
 
@@ -56,6 +56,7 @@ def decode(binary_io: BinaryIO) -> Dict:
     decoded.pop("format_version")
     decoded.pop("magic_number")
     decoded["initial_states"] = dict(decoded["initial_states"])
+    decoded["resource_database"]["requirement_template"] = dict(decoded["resource_database"]["requirement_template"])
 
     for world in decoded["worlds"]:
         for area in world["areas"]:
@@ -130,6 +131,7 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
                     "data": node,
                 }
 
+    data["resource_database"]["requirement_template"] = list(data["resource_database"]["requirement_template"].items())
     data["initial_states"] = list(data["initial_states"].items())
 
     ConstructGame.build_stream(data, x)
@@ -164,10 +166,11 @@ ConstructResourceRequirement = Struct(
 
 requirement_type_map = {
     "resource": ConstructResourceRequirement,
+    "template": CString("utf8"),
 }
 
 ConstructRequirement = Struct(
-    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}),
+    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3),
     data=Switch(lambda this: this.type, requirement_type_map)
 )
 requirement_type_map["and"] = PrefixedArray(Byte, ConstructRequirement)
@@ -194,6 +197,7 @@ ConstructResourceDatabase = Struct(
     versions=PrefixedArray(Byte, ConstructResourceInfo),
     misc=PrefixedArray(Byte, ConstructResourceInfo),
     difficulty=PrefixedArray(Byte, ConstructResourceInfo),
+    requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement))
 )
 
 ConstructEchoesBeamConfiguration = Struct(
