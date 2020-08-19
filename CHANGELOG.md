@@ -28,21 +28,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Logic Database changes
 
--   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Normal and above).
+-   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Hard and above).
 
 -   Added: In all Light/Dark Controller Access rooms (Agon, Torvus, Sanctuary), method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
 
 -   Added: In Putrid Alcove, damage requirements have been added for getting the item and leaving, with just Space Jump and just Bombs.
 
--	Added: In Torvus Grove, method of climbing the room without Boost Ball (Hard and above).
+-	Added: In Torvus Grove, method of climbing the room without Boost Ball (Veteran and above).
 
--	Added: Method to open Seeker Missile Locks with Screw Attack in various rooms (Phazon Grounds, Shrine Access, Plain of Dark Worship, Poisoned Bog) (Hard and above).
+-	Added: Method to open Seeker Missile Locks with Screw Attack in various rooms (Phazon Grounds, Shrine Access, Plain of Dark Worship, Poisoned Bog) (Veteran and above).
 
 -	Added: Method to open most Bomb Slots without Bombs (Hypermode).
 
--	Added: Methods to climb Main Hydrochamber and Hydrodynamo Station without Gravity Boost and with Air Underwater (Normal and above), Space Jump, and Screw Attack (Hypermode).
+-	Added: Methods to climb Main Hydrochamber and Hydrodynamo Station without Gravity Boost and with Air Underwater (Hard and above), Space Jump, and Screw Attack (Hypermode).
 
--	Added: Method to climb Transport Center with Space Jump and Slope Jump (Normal and above).
+-	Added: Method to climb Transport Center with Space Jump and Slope Jump (Hard and above).
 
 -	Added: Method to climb Doomed Entry with Space Jump and Screw Attack (Trival and above).
 
@@ -50,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Added: Method of leaving Hive Temple without Spider Ball (Hypermode).
 
--	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Hard and above).
+-	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Veteran and above).
 
 ## [1.2.2] - 2020-06-06
 
