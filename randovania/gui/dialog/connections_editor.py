@@ -7,7 +7,7 @@ from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QHBo
     QLineEdit
 
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
-    RequirementOr, RequirementAnd
+    RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
@@ -63,6 +63,15 @@ def _create_default_resource_requirement(resource_database: ResourceDatabase) ->
         resource_database.get_by_type(ResourceType.ITEM)[0],
         1, False
     )
+
+
+def _create_default_template_requirement(resource_database: ResourceDatabase) -> RequirementTemplate:
+    template_name = None
+    for template_name in resource_database.requirement_template.keys():
+        break
+    if template_name is None:
+        raise RuntimeError("No templates?!")
+    return RequirementTemplate(resource_database, template_name)
 
 
 class ResourceRequirementEditor:
@@ -179,8 +188,38 @@ class ArrayRequirementEditor:
         ])
 
 
+class TemplateRequirementEditor:
+    def __init__(self,
+                 parent: QWidget, layout: QHBoxLayout,
+                 resource_database: ResourceDatabase, item: RequirementTemplate,
+                 ):
+        self.parent = parent
+        self.layout = layout
+        self.resource_database = resource_database
+
+        template_name_combo = QComboBox(parent)
+
+        for template_name in sorted(resource_database.requirement_template.keys()):
+            template_name_combo.addItem(template_name)
+            if template_name == item.template_name:
+                template_name_combo.setCurrentIndex(template_name_combo.count() - 1)
+
+        self.template_name_combo = template_name_combo
+        self.layout.addWidget(self.template_name_combo)
+
+    def deleteLater(self):
+        self.template_name_combo.deleteLater()
+
+    @property
+    def current_requirement(self) -> RequirementTemplate:
+        return RequirementTemplate(
+            self.resource_database,
+            self.template_name_combo.currentText(),
+        )
+
+
 class RequirementEditor:
-    _editor: Union[None, ResourceRequirementEditor, ArrayRequirementEditor]
+    _editor: Union[None, ResourceRequirementEditor, ArrayRequirementEditor, TemplateRequirementEditor]
 
     def __init__(self,
                  parent: QWidget,
@@ -212,6 +251,7 @@ class RequirementEditor:
         self.requirement_type_combo.addItem("Resource", ResourceRequirement)
         self.requirement_type_combo.addItem("Or", RequirementOr)
         self.requirement_type_combo.addItem("And", RequirementAnd)
+        self.requirement_type_combo.addItem("Template", RequirementTemplate)
         self.requirement_type_combo.setMaximumWidth(75)
         self.requirement_type_combo.activated.connect(self._on_change_requirement_type)
         self.line_layout.addWidget(self.requirement_type_combo)
@@ -224,6 +264,9 @@ class RequirementEditor:
 
         elif isinstance(requirement, (RequirementOr, RequirementAnd)):
             self._editor = ArrayRequirementEditor(self.parent, self.parent_layout, self.resource_database, requirement)
+
+        elif isinstance(requirement, RequirementTemplate):
+            self._editor = TemplateRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
 
         else:
             raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
@@ -238,6 +281,9 @@ class RequirementEditor:
         elif isinstance(current_requirement, (RequirementOr, RequirementAnd)):
             self._last_items = current_requirement.items
 
+        elif isinstance(current_requirement, RequirementTemplate):
+            pass
+
         else:
             raise RuntimeError(f"Unknown requirement type: {type(current_requirement)} - {current_requirement}")
 
@@ -247,6 +293,8 @@ class RequirementEditor:
                 new_requirement = _create_default_resource_requirement(self.resource_database)
             else:
                 new_requirement = self._last_resource
+        elif new_class == RequirementTemplate:
+            new_requirement = _create_default_template_requirement(self.resource_database)
         else:
             new_requirement = new_class(self._last_items)
 

@@ -1,4 +1,4 @@
-from typing import List, NamedTuple
+from typing import List, NamedTuple, Dict
 
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_info import ResourceInfo
@@ -33,6 +33,7 @@ class ResourceDatabase(NamedTuple):
     version: List[SimpleResourceInfo]
     misc: List[SimpleResourceInfo]
     difficulty: List[SimpleResourceInfo]
+    requirement_template: Dict[str, "Requirement"]
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
