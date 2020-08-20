@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Better error messages when there are references to unknown resources in the database.
 
+-   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
+
 -   Added: Options for configuring usage of Boost Jump, Extended Dash and Bomb Slots without Bombs. 
 
 -   Changed: The following trick level difficulties were renamed:

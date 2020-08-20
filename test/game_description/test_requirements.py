@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.requirements import ResourceRequirement, RequirementList, RequirementSet, \
-    RequirementAnd, RequirementOr, Requirement, MAX_DAMAGE
+    RequirementAnd, RequirementOr, Requirement, MAX_DAMAGE, RequirementTemplate
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
@@ -28,6 +28,7 @@ def _database() -> ResourceDatabase:
         difficulty=[
             SimpleResourceInfo(0, "Difficulty", "Difficulty", ""),
         ],
+        requirement_template={},
     )
 
 
@@ -274,42 +275,56 @@ def test_trivial_requirement_str():
 
 @pytest.mark.parametrize(["original", "expected"], [
     (
-        RequirementOr([
-            RequirementAnd([
-                _req("A"),
+            RequirementOr([
+                RequirementAnd([
+                    _req("A"),
+                ]),
             ]),
-        ]),
-        _req("A"),
+            _req("A"),
     ),
     (
-        RequirementAnd([
+            RequirementAnd([
+                RequirementOr([
+                    _req("A"),
+                ]),
+            ]),
+            _req("A"),
+    ),
+    (
+            RequirementAnd([
+                RequirementOr([
+                    _req("B"),
+                    Requirement.trivial()
+                ]),
+                RequirementAnd([
+                    Requirement.trivial(),
+                    _req("A"),
+                ]),
+            ]),
+            _req("A"),
+    ),
+    (
             RequirementOr([
                 _req("A"),
+                RequirementAnd([_req("B"), _req("C")]),
+                RequirementAnd([_req("B"), _req("D")]),
             ]),
-        ]),
-        _req("A"),
-    ),
-    (
-        RequirementAnd([
             RequirementOr([
-                _req("B"),
-                Requirement.trivial()
-            ]),
-            RequirementAnd([
-                Requirement.trivial(),
                 _req("A"),
+                RequirementAnd([
+                    _req("B"),
+                    RequirementOr([
+                        _req("C"),
+                        _req("D"),
+                    ]),
+                ]),
             ]),
-        ]),
-        _req("A"),
     ),
     (
-        RequirementOr([
-            _req("A"),
-            RequirementAnd([_req("B"), _req("C")]),
-            RequirementAnd([_req("B"), _req("D")]),
-        ]),
-        RequirementOr([
-            _req("A"),
+            RequirementOr([
+                RequirementAnd([_req("B"), _req("C")]),
+                RequirementAnd([_req("B"), _req("D")]),
+            ]),
             RequirementAnd([
                 _req("B"),
                 RequirementOr([
@@ -317,23 +332,21 @@ def test_trivial_requirement_str():
                     _req("D"),
                 ]),
             ]),
-        ]),
-    ),
-    (
-        RequirementOr([
-            RequirementAnd([_req("B"), _req("C")]),
-            RequirementAnd([_req("B"), _req("D")]),
-        ]),
-        RequirementAnd([
-            _req("B"),
-            RequirementOr([
-                _req("C"),
-                _req("D"),
-            ]),
-        ]),
     ),
 ])
 def test_simplified_requirement(original, expected):
     simplified = original.simplify()
     assert simplified == expected
     assert simplified.as_set == expected.as_set
+
+
+def test_requirement_template(database):
+    # Setup
+    database.requirement_template["Use A"] = _make_req("A")[1]
+    use_a = RequirementTemplate(database, "Use A")
+
+    # Run
+    as_set = use_a.as_set
+
+    # Assert
+    assert as_set == make_single_set(_make_req("A"))

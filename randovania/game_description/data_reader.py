@@ -3,12 +3,12 @@ from typing import List, Callable, TypeVar, Tuple, Dict
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockType, DockWeaknessDatabase, DockConnection
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     TranslatorGateNode, LogbookNode, LoreType
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
-    RequirementOr, RequirementAnd
+    RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase, \
@@ -87,6 +87,10 @@ def read_requirement_or(data: Dict,
     ])
 
 
+def read_requirement_template(data: Dict, resource_database: ResourceDatabase) -> RequirementTemplate:
+    return RequirementTemplate(resource_database, data["data"])
+
+
 def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Requirement:
     req_type = data["type"]
     if req_type == "resource":
@@ -97,6 +101,9 @@ def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Require
 
     elif req_type == "or":
         return read_requirement_or(data, resource_database)
+
+    elif req_type == "template":
+        return read_requirement_template(data, resource_database)
 
     else:
         raise ValueError(f"Unknown requirement type: {req_type}")
@@ -206,7 +213,8 @@ class WorldReader:
                                                                                   data["dock_weakness_index"]))
 
             elif node_type == "pickup":
-                return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]), data["major_location"])
+                return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]),
+                                  data["major_location"])
 
             elif node_type == "teleporter":
                 instance_id = data["teleporter_instance_id"]
@@ -287,9 +295,16 @@ class WorldReader:
         return WorldList(read_array(data, self.read_world))
 
 
+def read_requirement_templates(data: Dict, database: ResourceDatabase) -> Dict[str, Requirement]:
+    return {
+        name: read_requirement(item, database)
+        for name, item in data.items()
+    }
+
+
 def read_resource_database(data: Dict) -> ResourceDatabase:
     item = read_resource_info_array(data["items"], ResourceType.ITEM)
-    return ResourceDatabase(
+    db = ResourceDatabase(
         item=item,
         event=read_resource_info_array(data["events"], ResourceType.EVENT),
         trick=read_resource_info_array(data["tricks"], ResourceType.TRICK),
@@ -297,7 +312,10 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
         version=read_resource_info_array(data["versions"], ResourceType.VERSION),
         misc=read_resource_info_array(data["misc"], ResourceType.MISC),
         difficulty=read_resource_info_array(data["difficulty"], ResourceType.DIFFICULTY),
+        requirement_template={},
     )
+    db.requirement_template.update(read_requirement_templates(data["requirement_template"], db))
+    return db
 
 
 def read_initial_states(data: Dict[str, List], resource_database: ResourceDatabase) -> Dict[str, ResourceGainTuple]:
