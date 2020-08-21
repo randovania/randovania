@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Logic Database changes
 
+-   Added: Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
+
 -   Added: In Putrid Alcove, added harder damage requirements using multiple trips.
 
 -   Added: In Watch Station Access, added methods to cross the pit in either direction using Boost Ball and no Space Jump.
