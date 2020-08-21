@@ -60,11 +60,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Fixed: Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
--	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way.
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Normal and above).
 
 -	Fixed: Trooper Security Station Event now requires Scan Visor coming from Communication Area.
 
 -	Added: Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
+
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Hard and above).
 
 ## [1.2.2] - 2020-06-06
 
