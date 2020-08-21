@@ -52,13 +52,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Added: Method of leaving Hive Temple without Spider Ball (Hypermode).
 
+-	Fixed: Sand Processing item now requires Scan Visor.
+
 -	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Veteran and above).
 
 -	Fixed: Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
 
 -	Fixed: Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
--	Fixed: Added Inivisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way.
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way.
+
+-	Fixed: Trooper Security Station Event now requires Scan Visor coming from Communication Area.
 
 ## [1.2.2] - 2020-06-06
 
