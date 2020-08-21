@@ -64,6 +64,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Fixed: Trooper Security Station Event now requires Scan Visor coming from Communication Area.
 
+-	Added: Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
