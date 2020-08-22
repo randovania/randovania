@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     
 -   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
 
+-   Added: Energy Tanks have doubled weight for the generator.
+
 ### Logic Database changes
 
 -   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Hard and above).
