@@ -334,6 +334,14 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Grand Windchamber, reaching the pickup with Terminal Fall Abuse after solving the Ing Windchamber puzzle is now Beginner (from Intermediate).
 
+-   Added: Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
+
+-   Added: In Putrid Alcove, added harder damage requirements using multiple trips.
+
+-   Added: In Watch Station Access, added methods to cross the pit in either direction using Boost Ball and no Space Jump.
+
+-   Changed: Cleaned up Torvus Training Chamber to include tricks originally listed from either Transit Tunnel door to reach Transit Access, to also give access to Room Center, for ease of logic navigation.
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
