@@ -58,6 +58,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Fixed: Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
 
+-   Added: Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
+
+-   Added: In Putrid Alcove, added harder damage requirements using multiple trips.
+
+-   Added: In Watch Station Access, added methods to cross the pit in either direction using Boost Ball and no Space Jump.
+
+-   Changed: Cleaned up Training Chamber nodes for ease of logic navigation.
+
 -	Fixed: Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
 -	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Normal and above).
