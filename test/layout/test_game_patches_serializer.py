@@ -31,7 +31,7 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
-        {"pickup": ['BQ7SEwA1gMA=', "Screw Attack"]},
+        {"pickup": ['BQ7pCYAawGA=', "Screw Attack"]},
         {"hint": [1000, {"hint_type": "location", "location_precision": "detailed",
                          "item_precision": "detailed", "target": 50}]},
     ],
