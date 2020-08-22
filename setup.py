@@ -72,16 +72,16 @@ setup(
         'bitstruct',
         'construct<2.10',
         'tenacity',
-        'slugify',
         'python-slugify',
     ],
     extras_require={
         "gui": [
-            'PySide2>=5.12',
+            'PySide2>=5.12,<5.15',
             'aiofiles',
             'appdirs',
             'asyncqt',
             'requests',
+            'markdown',
         ],
         "test": [
             'pytest',
