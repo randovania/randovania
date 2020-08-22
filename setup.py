@@ -80,8 +80,8 @@ setup(
             'aiofiles',
             'appdirs',
             'asyncqt',
-            'requests',
             'markdown',
+            'requests',
         ],
         "test": [
             'pytest',
