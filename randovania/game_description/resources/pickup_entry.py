@@ -34,6 +34,7 @@ class PickupEntry:
     resources: Tuple[ConditionalResources, ...]
     convert_resources: Tuple[ResourceConversion, ...] = tuple()
     probability_offset: float = 0
+    probability_multiplier: float = 1
 
     def __post_init__(self):
         if not isinstance(self.resources, tuple):

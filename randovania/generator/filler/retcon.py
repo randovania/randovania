@@ -18,14 +18,14 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
-from randovania.generator.filler.filler_library import UnableToGenerate, filter_pickup_nodes, should_have_hint
+from randovania.generator.filler.filler_library import UnableToGenerate, should_have_hint
 from randovania.generator.generator_reach import GeneratorReach, collectable_resource_nodes, \
     advance_reach_with_possible_unsafe_resources, reach_with_all_safe_resources, \
     get_collectable_resource_nodes_of_reach, advance_to_with_reach_copy
 from randovania.layout.available_locations import RandomizationMode
 from randovania.resolver import debug
 from randovania.resolver.random_lib import iterate_with_weights
-from randovania.resolver.state import State, state_with_pickup
+from randovania.resolver.state import State
 
 X = TypeVar("X")
 
@@ -430,9 +430,10 @@ def _calculate_potential_actions(reach: GeneratorReach,
     total_options += len(usable_progression_pickups)
 
     for progression in usable_progression_pickups:
-        actions_weights[progression] = _calculate_weights_for(_calculate_reach_for_progression(reach, progression),
-                                                              current_uncollected,
-                                                              progression.name) + progression.probability_offset
+        base_weight = _calculate_weights_for(_calculate_reach_for_progression(reach, progression),
+                                             current_uncollected,
+                                             progression.name)
+        actions_weights[progression] = base_weight * progression.probability_multiplier + progression.probability_offset
         update_for_option()
 
     for resource in uncollected_resource_nodes:
