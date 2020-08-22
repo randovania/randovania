@@ -85,7 +85,7 @@ def find_node_with_resource(resource: ResourceInfo,
 def _calculate_reach_for_progression(reach: GeneratorReach,
                                      progression: PickupEntry,
                                      ) -> GeneratorReach:
-    return advance_to_with_reach_copy(reach, state_with_pickup(reach.state, progression))
+    return advance_to_with_reach_copy(reach, reach.state.assign_pickup_resources(progression))
 
 
 Action = Union[ResourceNode, PickupEntry]
