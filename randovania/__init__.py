@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 
@@ -14,6 +15,17 @@ def get_data_path() -> Path:
     else:
         file_dir = Path(__file__).parent
     return file_dir.joinpath("data")
+
+
+def get_configuration() -> dict:
+    try:
+        with get_data_path().joinpath("configuration.json").open() as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {
+            "server_address": "http://127.0.0.1:5000",
+            "socketio_path": "/socket.io",
+        }
 
 
 __version__ = version
