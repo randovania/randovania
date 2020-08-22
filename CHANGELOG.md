@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Normal -> Hard
     - Easy -> Normal
     - Minimal Checking -> Minimal Restrictions
+    
+-   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
 
 ### Logic Database changes
 
