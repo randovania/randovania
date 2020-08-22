@@ -72,7 +72,6 @@ setup(
         'bitstruct',
         'construct<2.10',
         'tenacity',
-        'slugify',
         'python-slugify',
     ],
     extras_require={
