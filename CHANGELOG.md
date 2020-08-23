@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: An automatic item tracker based on a Dolphin running on the same computer.
+
 -   Changed: The elevator scan now includes the world of the connected area.
 
 -   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.

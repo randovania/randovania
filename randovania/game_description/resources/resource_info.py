@@ -13,15 +13,16 @@ ResourceGain = Iterator[ResourceQuantity]
 CurrentResources = Dict[ResourceInfo, int]
 
 
-def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources):
+def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources) -> CurrentResources:
     """
     Adds all resources from the given gain to the given CurrentResources
     :param resource_gain:
     :param resources:
-    :return:
+    :return: resources
     """
     for resource, quantity in resource_gain:
         resources[resource] = resources.get(resource, 0) + quantity
+    return resources
 
 
 def add_resources_into_another(target: CurrentResources, source: CurrentResources) -> None:

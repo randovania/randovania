@@ -22,7 +22,7 @@ install:
   - set PATH=%PYTHON%\Scripts;%PATH%
   - "%PYTHON%\\python.exe -m pip install --upgrade -r requirements-setuptools.txt"
   - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
-  - "%PYTHON%\\python.exe -m pip install -e ."
+  - "%PYTHON%\\python.exe -m pip install -e . -e .[gui] -e .[test]"
   - "%PYTHON%\\python.exe -m pip install codecov"
 
 build: off

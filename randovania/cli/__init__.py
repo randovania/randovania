@@ -36,7 +36,7 @@ def _run_args(args):
 
 def run_pytest(argv):
     import pytest
-    sys.exit(pytest.main(argv[2:], plugins=[]))
+    sys.exit(pytest.main(argv[2:], plugins=["pytest_asyncio"]))
 
 
 def run_cli(argv):

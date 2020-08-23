@@ -80,13 +80,16 @@ setup(
             'aiofiles',
             'appdirs',
             'asyncqt',
-            'requests',
+            'dolphin-memory-engine>=1.0.2',
             'markdown',
+            'requests',
         ],
         "test": [
             'pytest',
             'pytest-cov',
             'pytest-qt',
+            'pytest-asyncio',
+            'mock>=4.0',
         ]
     },
     entry_points={

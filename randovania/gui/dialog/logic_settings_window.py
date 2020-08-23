@@ -1,6 +1,6 @@
 import dataclasses
 import functools
-from typing import Dict
+from typing import Dict, Optional
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
@@ -95,7 +95,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     world_list: WorldList
     _during_batch_check_update: bool = False
 
-    def __init__(self, window_manager: WindowManager, editor: PresetEditor):
+    def __init__(self, window_manager: Optional[WindowManager], editor: PresetEditor):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -234,13 +234,14 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         for i in range(12):
             slider_layout.setColumnStretch(i, 1)
 
-        for i, trick_level in enumerate(LayoutTrickLevel):
-            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_RESTRICTIONS}:
-                tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
-                tool_button.setText(trick_level.long_name)
-                tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
+        if self._window_manager is not None:
+            for i, trick_level in enumerate(LayoutTrickLevel):
+                if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_RESTRICTIONS}:
+                    tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
+                    tool_button.setText(trick_level.long_name)
+                    tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
 
-                slider_layout.addWidget(tool_button, 1, 2 * i, 1, 2)
+                    slider_layout.addWidget(tool_button, 1, 2 * i, 1, 2)
 
         self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
@@ -312,10 +313,11 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
             self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
-            tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
-            tool_button.setText("?")
-            tool_button.clicked.connect(functools.partial(self._open_trick_details_popup, trick))
-            self.trick_difficulties_layout.addWidget(tool_button, row, 3, 1, 1)
+            if self._window_manager is not None:
+                tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
+                tool_button.setText("?")
+                tool_button.clicked.connect(functools.partial(self._open_trick_details_popup, trick))
+                self.trick_difficulties_layout.addWidget(tool_button, row, 3, 1, 1)
 
             row += 1
 
