@@ -88,6 +88,8 @@ setup(
             'pytest',
             'pytest-cov',
             'pytest-qt',
+            'pytest-asyncio',
+            'mock>=4.0',
         ]
     },
     entry_points={
