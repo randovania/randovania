@@ -18,6 +18,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/presets", "data/presets"),
              ],
              hiddenimports=[
+                "mock",
                 "unittest.mock",
                 "pkg_resources.py2_warn",
              ],
