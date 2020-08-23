@@ -621,6 +621,9 @@ def create_patcher_file(description: LayoutDescription,
     result = {}
     _add_header_data_to_result(description, result)
 
+    result["menu_mod"] = patcher_config.menu_mod
+    result["user_preferences"] = cosmetic_patches.user_preferences.as_json
+
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
 

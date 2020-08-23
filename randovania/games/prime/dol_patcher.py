@@ -98,6 +98,7 @@ class StringDisplayPatchAddresses:
     wstring_constructor: int
     display_hud_memo: int
     cstate_manager_global: int
+    max_message_size: int
 
 
 @dataclasses.dataclass(frozen=True)
@@ -126,7 +127,7 @@ class PatchesForVersion:
     game_options_constructor_address: int
 
 
-_ALL_VERSIONS_PATCHES = [
+ALL_VERSIONS_PATCHES = [
     PatchesForVersion(
         description="Gamecube NTSC",
         build_string_address=0x803ac3b0,
@@ -137,6 +138,7 @@ _ALL_VERSIONS_PATCHES = [
             wstring_constructor=0x802ff3dc,
             display_hud_memo=0x8006b3c8,
             cstate_manager_global=0x803db6e0,
+            max_message_size=0x58,
         ),
         health_capacity=HealthCapacityAddresses(
             base_health_capacity=0x8041abe4,
@@ -161,6 +163,7 @@ _ALL_VERSIONS_PATCHES = [
             wstring_constructor=0x802ff734,
             display_hud_memo=0x8006b504,
             cstate_manager_global=0x803dc900,
+            max_message_size=0x58,
         ),
         health_capacity=HealthCapacityAddresses(
             base_health_capacity=0x8041bedc,
@@ -435,7 +438,7 @@ def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ec
     dol_file.write(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset, ammo_type_patch)
 
 
-def apply_patches(game_root: Path, game_patches: GamePatches, cosmetic_patches: CosmeticPatches):
+def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_preferences: EchoesUserPreferences):
     dol_file = DolFile(_get_dol_path(game_root))
 
     version_patches = _read_binary_version(dol_file)
@@ -444,9 +447,9 @@ def apply_patches(game_root: Path, game_patches: GamePatches, cosmetic_patches: 
     with dol_file:
         _apply_string_display_patch(version_patches.string_display, dol_file)
         _apply_game_options_patch(version_patches.game_options_constructor_address,
-                                  cosmetic_patches.user_preferences, dol_file)
-        _apply_energy_tank_capacity_patch(version_patches.health_capacity, game_patches.game_specific, dol_file)
-        _apply_beam_cost_patch(version_patches.beam_cost_addresses, game_patches.game_specific, dol_file)
+                                  user_preferences, dol_file)
+        _apply_energy_tank_capacity_patch(version_patches.health_capacity, game_specific, dol_file)
+        _apply_beam_cost_patch(version_patches.beam_cost_addresses, game_specific, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:
@@ -456,7 +459,7 @@ def _get_dol_path(game_root: Path) -> Path:
 def _read_binary_version(dol_file: DolFile) -> PatchesForVersion:
     dol_file.set_editable(False)
     with dol_file:
-        for version in _ALL_VERSIONS_PATCHES:
+        for version in ALL_VERSIONS_PATCHES:
             build_string = dol_file.read(version.build_string_address, len(version.build_string))
             if build_string == version.build_string:
                 return version

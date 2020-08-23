@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.games.prime import iso_packager, claris_randomizer
 from randovania.games.prime.banner_patcher import patch_game_name_and_id
 from randovania.interface_common import echoes
@@ -90,6 +91,34 @@ def apply_layout(layout: LayoutDescription,
                                    progress_update=progress_update,
                                    game_root=game_files_path,
                                    )
+
+
+def apply_patcher_file(patcher_file: dict,
+                       game_specific: EchoesGameSpecific,
+                       shareable_hash: str,
+                       options: Options,
+                       progress_update: ProgressUpdateCallable):
+    """
+    Applies the given LayoutDescription to the files listed in options
+    :param options:
+    :param patcher_file:
+    :param game_specific:
+    :param shareable_hash:
+    :param progress_update:
+    :return:
+    """
+    game_files_path = options.game_files_path
+    backup_files_path = options.backup_files_path
+
+    patch_game_name_and_id(game_files_path, "Metroid Prime 2: Randomizer - {}".format(shareable_hash))
+
+    claris_randomizer.apply_patcher_file(
+        game_root=game_files_path,
+        backup_files_path=backup_files_path,
+        patcher_data=patcher_file,
+        game_specific=game_specific,
+        progress_update=progress_update,
+    )
 
 
 def pack_iso(output_iso: Path,

@@ -52,7 +52,7 @@ install:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python3 -m pip install -r requirements-xvfb.txt; fi
 # twine is only used for publishing
 - if [[ "$INCLUDE_SDIST" == "true" ]]; then python3 -m venv twine-venv && twine-venv/bin/python -m pip install -r requirements-twine.txt; fi
-- python3 -m pip install -e .
+- python3 -m pip install -e . -e ".[gui]" -e ".[test]"
 - python3 -m pip install codecov
 - python3 -m pip uninstall -y randovania
 
