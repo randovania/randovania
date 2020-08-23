@@ -1,8 +1,11 @@
 ====================
 Templates
 
-* Use Screw Attack:
-      Space Jump Boots and Screw Attack
+* Use Screw Attack (Space Jump):
+      Morph Ball Bomb and Space Jump Boots and Screw Attack
+
+* Use Screw Attack (No Space Jump):
+      Morph Ball Bomb and Screw Attack
 
 * Shoot Sunburst:
       Light Beam and Sunburst and Charge Beam and Missile ≥ 5 and Light Ammo ≥ 30
@@ -37,14 +40,20 @@ Asset id: 1655756413
 > Save Station; Heals? True
   > Landing Site/Door to Service Access
       Any of the following:
-          Light Beam and Morph Ball and Morph Ball Bomb and Charge Beam and Difficulty: Trivial
-          Light Beam and Morph Ball and Morph Ball Bomb and Light Ammo and Difficulty: Trivial
-          Light Beam and Charge Beam and Space Jump Boots
-          Light Beam and Space Jump Boots and Light Ammo
+          All of the following:
+              Light Beam and Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
+              Charge Beam or Light Ammo
+          All of the following:
+              Light Beam and Space Jump Boots
+              Charge Beam or Light Ammo
           Morph Ball and Morph Ball Bomb and Slope Jump (Hard) and Difficulty: Hard
           Morph Ball and Morph Ball Bomb and Bomb Space Jump (Veteran) and Difficulty: Veteran
-          Space Jump Boots and Screw Attack
+          Use Screw Attack (Space Jump)
           Space Jump Boots and Slope Jump (Normal) and Difficulty: Normal
+          All of the following:
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Normal) and Standable Terrain (Normal) and Difficulty: Normal
+              Use Screw Attack (No Space Jump)
+          Space Jump Boots and Standable Terrain (Normal) and Difficulty: Normal
   > Landing Site/Door to Hive Access Tunnel
       After Landing Site Webs
   > Landing Site/Event - Landing Site Webs
@@ -65,10 +74,10 @@ Asset id: 1655756413
       After Landing Site Webs
   > Landing Site/Event - Landing Site Webs
       All of the following:
-          Difficulty: Trivial
+          Knowledge (Trivial) and Difficulty: Trivial
           Any of the following:
               Morph Ball and Boost Ball
-              Space Jump Boots and Screw Attack
+              Use Screw Attack (Space Jump)
 
 > Event - Landing Site Webs; Heals? False
   > Landing Site/Save Station
@@ -128,7 +137,10 @@ Asset id: 2679590972
           Any of the following:
               Boost Ball and Morph Ball Bomb
               Boost Ball and Wall Boost (Veteran) and Difficulty: Veteran
-              Morph Ball Bomb and Difficulty: Normal
+              Morph Ball Bomb and Difficult Movement (Normal) and Difficulty: Normal
+              All of the following:
+                  Boost Ball and Wall Boost (Hard) and Screw Attack into Tunnels (Hard) and Difficulty: Hard
+                  Use Screw Attack (Space Jump)
   > Service Access/Door to Meeting Grounds
       All of the following:
           Morph Ball
@@ -153,8 +165,8 @@ Asset id: 2679590972
               Boost Ball and Wall Boost (Veteran) and Difficulty: Veteran
   > Service Access/Morph Ball Door to Meeting Grounds
       Any of the following:
-          Difficulty: Normal
           Morph Ball and Boost Ball
+          Difficult Movement (Normal) and Difficulty: Normal
   > Service Access/Door to Meeting Grounds
       All of the following:
           Morph Ball
@@ -220,7 +232,7 @@ Asset id: 2068656603
   > Path of Honor/Door to Hall of Honored Dead
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
 
 > Door to Hall of Honored Dead; Heals? True
   > Hall of Honored Dead/Door to Path of Honor
@@ -372,15 +384,18 @@ Asset id: 3098756660
               Missile ≥ 5
               Space Jump Boots and Screw Attack and Missile ≥ 4 and Difficulty: Normal
   > Hall of Honored Dead/Morph Ball Door to Path of Honor
-      All of the following:
-          Space Jump Boots and Difficulty: Normal
-          Screw Attack or Instant Morph (Normal)
+      Any of the following:
+          All of the following:
+              Screw Attack into Tunnels (Normal) and Difficulty: Normal
+              Use Screw Attack (Space Jump)
+          Space Jump Boots and Instant Morph (Normal)
+          Morph Ball and Morph Ball Bomb and Bomb Space Jump (Veteran) and Instant Morph (Veteran) and Difficulty: Veteran
   > Hall of Honored Dead/Pickup (Seeker Launcher)
       All of the following:
           Morph Ball and Boost Ball
           Any of the following:
               Morph Ball Bomb
-              Power Bomb ≥ 3 and Difficulty: Trivial
+              Power Bomb ≥ 3 and Knowledge (Trivial) and Difficulty: Trivial
 
 > Morph Ball Door to Path of Honor; Heals? True
   > Path of Honor/Morph Ball Door to Hall of Honored Dead
@@ -409,11 +424,11 @@ Asset id: 1198237772
   > Hall of Eyes/Door to Path of Eyes
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
   > Hall of Eyes/Portal to Base Access
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
 
 > Portal to Base Access; Heals? True
   > Base Access/Portal to Hall of Eyes
@@ -467,13 +482,16 @@ Asset id: 1655474884
   > Hive Transport Area/Door to Industrial Site
       Trivial
   > Industrial Site/Event - Industrial Site Gate
-      Power Beam and Scan Visor
-  > Industrial Site/Front of Lift Scan
       All of the following:
-          Difficulty: Normal
-          Any of the following:
-              Space Jump Boots
-              Morph Ball and Morph Ball Bomb
+          Scan Visor
+          Power Beam or Missile
+  > Industrial Site/Front of Lift Scan
+      Any of the following:
+          Space Jump Boots and Instant Morph (Hard) and Difficulty: Hard
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Normal) and Difficulty: Normal
+          All of the following:
+              Knowledge (Trivial) and Difficulty: Trivial
+              Use Screw Attack (Space Jump)
 
 > Event - Industrial Site Gate; Heals? True
   > Industrial Site/Door to Hive Transport Area
@@ -485,14 +503,17 @@ Asset id: 1655474884
   > Industrial Site/Door to Collapsed Tunnel
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
   > Industrial Site/Door to Hive Transport Area
-      All of the following:
-          Morph Ball and Difficulty: Normal
-          Morph Ball Bomb or Space Jump Boots
+      Any of the following:
+          Space Jump Boots and Instant Morph (Hard) and Difficulty: Hard
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Normal) and Difficulty: Normal
+          All of the following:
+              Knowledge (Trivial) and Difficulty: Trivial
+              Use Screw Attack (Space Jump)
   > Industrial Site/Event - Industrial Site Gate
       All of the following:
-          Scan Visor and Difficulty: Trivial
+          Scan Visor and Open Gates from Behind (Trivial) and Difficulty: Trivial
           Any of the following:
               Missile
               Annihilator Beam and Charge Beam and Dark Ammo ≥ 5 and Light Ammo ≥ 5
@@ -554,7 +575,7 @@ Asset id: 360901706
       After Hive Tunnel Web
   > Hive Tunnel/Event - Hive Tunnel Web
       All of the following:
-          Difficulty: Normal
+          Open Gates from Behind (Normal) and Difficulty: Normal
           Any of the following:
               Shoot Darkburst
               Shoot Sonic Boom
@@ -582,12 +603,12 @@ Asset id: 1752128027
   > Base Access/Door to Abandoned Base
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
           Slope Jump (Normal) and Difficulty: Normal
   > Base Access/Portal to Hall of Eyes
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
           Slope Jump (Normal) and Difficulty: Normal
 
 > Door to Abandoned Base; Heals? True
@@ -625,15 +646,17 @@ Asset id: 3997643454
           After Path of Eyes Light Block to Windchamber Gateway
           Any of the following:
               Space Jump Boots
-              Light Beam and Screw Attack and Difficulty: Veteran
-              Morph Ball and Morph Ball Bomb and Difficulty: Normal
+              All of the following:
+                  Light Beam and Screw Attack without Space Jump (Veteran) and Difficulty: Veteran
+                  Use Screw Attack (No Space Jump)
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Normal) and Difficulty: Normal
   > Path of Eyes/Front of Translator Gate
       All of the following:
           After Path of Eyes Light Block to Windchamber Gateway
           Any of the following:
-              Light Beam and Morph Ball and Morph Ball Bomb and Difficulty: Hypermode
+              Light Beam and Morph Ball and Morph Ball Bomb and Bomb Space Jump (Hypermode) and Difficulty: Hypermode
               Light Beam and Space Jump Boots
-              Space Jump Boots and Difficulty: Normal
+              Space Jump Boots and Standable Terrain (Normal) and Difficulty: Normal
 
 > Portal from Abandoned Base; Heals? True
   > Abandoned Base/Portal to Path of Eyes
@@ -653,22 +676,20 @@ Asset id: 3997643454
                   Difficulty: Normal
                   Any of the following:
                       Light Beam and Slope Jump (Normal)
-                      Morph Ball and Morph Ball Bomb
+                      Morph Ball and Morph Ball Bomb and Bomb Jump (Normal)
   > Path of Eyes/Event - Path of Eyes Light Block to Windchamber Gateway
       All of the following:
           Light Beam
           Any of the following:
-              Charge Beam and Space Jump Boots
-              Charge Beam and Slope Jump (Normal) and Difficulty: Normal
-              Space Jump Boots and Light Ammo
-              Light Ammo and Slope Jump (Normal) and Difficulty: Normal
+              Charge Beam or Space Jump Boots or Light Ammo
+              Slope Jump (Normal) and Difficulty: Normal
   > Path of Eyes/Front of Translator Gate
       Any of the following:
-          Light Beam and Morph Ball and Morph Ball Bomb and Difficulty: Hypermode
+          Light Beam and Morph Ball and Morph Ball Bomb and Bomb Space Jump (Hypermode) and Difficulty: Hypermode
           Light Beam and Space Jump Boots
-          Morph Ball and Boost Ball and Morph Ball Bomb and NTSC and Difficulty: Hard
+          Morph Ball and Boost Ball and Morph Ball Bomb and Knowledge (Hard) and NTSC and Difficulty: Hard
           Morph Ball and After Path of Eyes Light Block In Tunnel
-          Space Jump Boots and Difficulty: Normal
+          Space Jump Boots and Standable Terrain (Normal) and Difficulty: Normal
 
 > Door to Torvus Transport Access; Heals? True
   > Torvus Transport Access/Door to Path of Eyes
@@ -872,13 +893,13 @@ Asset id: 3337937090
       Trivial
   > Abandoned Base/Portal to Path of Eyes
       Any of the following:
-          Morph Ball and Boost Ball and Morph Ball Bomb and Ingclaw Vapor Damage ≥ 400 and Difficulty: Normal
+          Morph Ball and Boost Ball and Morph Ball Bomb and Bomb Jump (Normal) and Ingclaw Vapor Damage ≥ 400 and Difficulty: Normal
           Morph Ball and Morph Ball Bomb and Space Jump Boots and Ingclaw Vapor Damage ≥ 1500
-          Morph Ball and Morph Ball Bomb and Ingclaw Vapor Damage ≥ 500 and Difficulty: Normal
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Normal) and Ingclaw Vapor Damage ≥ 500 and Difficulty: Normal
           Space Jump Boots and Slope Jump (Hard) and Ingclaw Vapor Damage ≥ 70 and Difficulty: Hard
           All of the following:
               Dark World Damage ≥ 40 and Difficulty: Normal
-              Use Screw Attack
+              Use Screw Attack (Space Jump)
 
 ----------------
 Windchamber Gateway
@@ -902,16 +923,25 @@ Asset id: 1966181726
       Any of the following:
           Grapple Beam
           All of the following:
-              Space Jump Boots
-              Screw Attack or Difficulty: Normal
+              Space Jump Boots and Difficulty: Normal
+              Any of the following:
+                  Standable Terrain (Normal)
+                  Scan Visor and Combat/Scan Dash (Normal)
+                  Morph Ball and Roll Jump (Normal)
+          Morph Ball and Boost Ball and Boost Jump (Hard) and Difficulty: Hard
+          Use Screw Attack (Space Jump)
 
 > Pickup (Energy Tank); Heals? True
   > Windchamber Gateway/Door to Grand Windchamber
       Any of the following:
           Grapple Beam
           All of the following:
-              Space Jump Boots
-              Screw Attack or Difficulty: Normal
+              Space Jump Boots and Difficulty: Normal
+              Any of the following:
+                  Morph Ball and Roll Jump (Normal)
+                  Scan Visor and Combat/Scan Dash (Normal)
+          Use Screw Attack (Space Jump)
+          Scan Visor and Extended Dash (Veteran) and Difficulty: Veteran
 
 ----------------
 Torvus Transport Access
@@ -1012,7 +1042,11 @@ Asset id: 1263425809
   > Temple Assembly Site/Portal to Plain of Dark Worship
       After Temple Assembly Site Light Block
   > Temple Assembly Site/Door to Dynamo Chamber
-      Trivial
+      Any of the following:
+          Scan Visor or Space Jump Boots
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
+          Before Temple Assembly Site Light Block and Combat/Scan Dash (Normal) and Difficulty: Normal
+          Morph Ball and Roll Jump (Hard) and Difficulty: Hard
   > Temple Assembly Site/Door to Collapsed Tunnel
       Trivial
   > Temple Assembly Site/Pickup (Missile)
@@ -1020,8 +1054,10 @@ Asset id: 1263425809
           Morph Ball
           Any of the following:
               Space Jump Boots
-              Morph Ball Bomb and Difficulty: Trivial
-              Screw Attack and Screw Attack without Space Jump (Normal) and Difficulty: Normal
+              Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
+              All of the following:
+                  Screw Attack without Space Jump (Normal) and Difficulty: Normal
+                  Use Screw Attack (No Space Jump)
               Slope Jump (Hard) and Difficulty: Hard
   > Temple Assembly Site/Event - Temple Assembly Site Light Block
       All of the following:
@@ -1110,13 +1146,15 @@ Asset id: 2909835645
       Any of the following:
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Hard) and Difficulty: Hard
           Grapple Beam and After Ing Windchamber Puzzle
-          Space Jump Boots and Screw Attack
+          Use Screw Attack (Space Jump)
   > Grand Windchamber/Pickup (Sunburst)
       All of the following:
           Morph Ball
           Any of the following:
               Scan Visor and Space Jump Boots and After Ing Windchamber Puzzle and Combat/Scan Dash (Hard) and Difficulty: Hard
-              Morph Ball Bomb and Space Jump Boots and Screw Attack and Bomb Space Jump (Hard) and Difficulty: Hard
+              All of the following:
+                  Morph Ball Bomb and Bomb Space Jump (Hard) and Difficulty: Hard
+                  Use Screw Attack (Space Jump)
               Grapple Beam and After Ing Windchamber Puzzle
 
 > Portal to Ing Windchamber; Heals? True
@@ -1140,7 +1178,7 @@ Asset id: 2909835645
       Any of the following:
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Hard) and Difficulty: Hard
           Grapple Beam and After Ing Windchamber Puzzle
-          Space Jump Boots and Screw Attack
+          Use Screw Attack (Space Jump)
   > Grand Windchamber/Portal to Ing Windchamber
       Trivial
   > Grand Windchamber/Pickup (Sunburst)
@@ -1148,15 +1186,17 @@ Asset id: 2909835645
           Morph Ball
           Any of the following:
               Scan Visor and Space Jump Boots and After Ing Windchamber Puzzle and Combat/Scan Dash (Hard) and Difficulty: Hard
-              Morph Ball Bomb and Space Jump Boots and Screw Attack and Bomb Space Jump (Hard) and Difficulty: Hard
+              All of the following:
+                  Morph Ball Bomb and Bomb Space Jump (Hard) and Difficulty: Hard
+                  Use Screw Attack (Space Jump)
               Grapple Beam and After Ing Windchamber Puzzle
-              Space Jump Boots and After Ing Windchamber Puzzle and Normal Damage ≥ 10 and Difficulty: Normal
+              Space Jump Boots and After Ing Windchamber Puzzle and Terminal Fall Abuse (Normal) and Normal Damage ≥ 10 and Difficulty: Normal
 
 > Pickup (Sunburst); Heals? True
   > Grand Windchamber/Door to Windchamber Tunnel
       Any of the following:
-          After Ing Windchamber Puzzle
-          Space Jump Boots and Difficulty: Normal
+          Space Jump Boots
+          After Ing Windchamber Puzzle and Standable Terrain (Trivial)
   > Grand Windchamber/Door to Windchamber Gateway
       Trivial
 
@@ -1190,13 +1230,9 @@ Asset id: 3032508327
                   Morph Ball
                   Any of the following:
                       Power Bomb
-                      Morph Ball Bomb and Difficulty: Trivial
+                      Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
   > Dynamo Chamber/Event - Dynamo Chamber Gates
-      All of the following:
-          Scan Visor and Before Dynamo Chamber Gates and Difficulty: Trivial
-          Any of the following:
-              Space Jump Boots
-              Morph Ball and Morph Ball Bomb
+      Scan Visor and Before Dynamo Chamber Gates and Open Gates from Behind (Trivial) and Difficulty: Trivial
 
 > Door to Temple Assembly Site; Heals? True
   > Temple Assembly Site/Door to Dynamo Chamber
@@ -1210,7 +1246,7 @@ Asset id: 3032508327
                   Morph Ball
                   Any of the following:
                       Power Bomb
-                      Morph Ball Bomb and Difficulty: Trivial
+                      Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
   > Dynamo Chamber/Pickup (Power Bomb)
       Morph Ball and Power Bomb
   > Dynamo Chamber/Event - Dynamo Chamber Gates
@@ -1230,7 +1266,7 @@ Asset id: 3032508327
               Morph Ball
               Any of the following:
                   Power Bomb
-                  Morph Ball Bomb and Difficulty: Trivial
+                  Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
   > Dynamo Chamber/Pickup (Power Bomb)
       Morph Ball and Power Bomb
 
@@ -1280,11 +1316,13 @@ Asset id: 67496868
       Any of the following:
           Ingclaw Vapor Damage ≥ 1500
           All of the following:
-              Difficulty: Normal
+              Difficult Movement (Normal) and Difficulty: Normal
               Any of the following:
                   Ingclaw Vapor Damage ≥ 330
                   Morph Ball and Boost Ball and Ingclaw Vapor Damage ≥ 230
-                  Space Jump Boots and Screw Attack and Ingclaw Vapor Damage ≥ 120
+                  All of the following:
+                      Ingclaw Vapor Damage ≥ 120
+                      Use Screw Attack (Space Jump)
 
 > Portal to Temple Assembly Site; Heals? True
   > Temple Assembly Site/Portal to Plain of Dark Worship
@@ -1303,31 +1341,37 @@ Asset id: 67496868
       Any of the following:
           Ingclaw Vapor Damage ≥ 1500
           All of the following:
-              Difficulty: Normal
+              Difficult Movement (Normal) and Difficulty: Normal
               Any of the following:
                   Ingclaw Vapor Damage ≥ 330
                   Morph Ball and Boost Ball and Ingclaw Vapor Damage ≥ 230
-                  Space Jump Boots and Screw Attack and Ingclaw Vapor Damage ≥ 120
+                  All of the following:
+                      Ingclaw Vapor Damage ≥ 120
+                      Use Screw Attack (Space Jump)
 
 > Pickup (Missile); Heals? False
   > Plain of Dark Worship/Door to Lake Access
       Any of the following:
           Ingclaw Vapor Damage ≥ 1500
           All of the following:
-              Difficulty: Normal
+              Difficult Movement (Normal) and Difficulty: Normal
               Any of the following:
                   Ingclaw Vapor Damage ≥ 360
                   Morph Ball and Boost Ball and Ingclaw Vapor Damage ≥ 260
-                  Space Jump Boots and Screw Attack and Ingclaw Vapor Damage ≥ 240
+                  All of the following:
+                      Ingclaw Vapor Damage ≥ 240
+                      Use Screw Attack (Space Jump)
   > Plain of Dark Worship/Portal to Temple Assembly Site
       Any of the following:
           Ingclaw Vapor Damage ≥ 1500
           All of the following:
-              Difficulty: Normal
+              Difficult Movement (Normal) and Difficulty: Normal
               Any of the following:
                   Ingclaw Vapor Damage ≥ 360
                   Morph Ball and Boost Ball and Ingclaw Vapor Damage ≥ 260
-                  Space Jump Boots and Screw Attack and Ingclaw Vapor Damage ≥ 240
+                  All of the following:
+                      Ingclaw Vapor Damage ≥ 240
+                      Use Screw Attack (Space Jump)
 
 ----------------
 Defiled Shrine
@@ -1340,13 +1384,13 @@ Asset id: 383850164
           Dark Visor
           Any of the following:
               Space Jump Boots
-              Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
 
 > Pickup (Sky Temple Key 8); Heals? True
   > Defiled Shrine/Door to Shrine Access
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
 
 ----------------
 Gateway Access
@@ -1401,7 +1445,11 @@ Asset id: 3455003633
                   Charge Beam
                   Dark Ammo and Light Ammo
   > Ing Windchamber/Event - Ing Windchamber Puzzle
-      Morph Ball and Boost Ball and Morph Ball Bomb and Seeker Launcher and Missile ≥ 4
+      All of the following:
+          Morph Ball and Boost Ball and Seeker Launcher and Missile ≥ 4
+          Any of the following:
+              Morph Ball Bomb
+              Power Bomb ≥ 8 and Knowledge (Trivial) and Difficulty: Trivial
 
 > Event - Ing Windchamber Puzzle; Heals? True
   > Ing Windchamber/Portal to Grand Windchamber
@@ -1416,8 +1464,13 @@ Asset id: 1667141025
   > Communication Area/Door to Storage Cavern A
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Hard
-          Screw Attack and Difficulty: Normal
+          All of the following:
+              Standable Terrain (Normal)
+              Any of the following:
+                  Morph Ball and Morph Ball Bomb and Bomb Jump (Hard) and Difficulty: Hard
+                  All of the following:
+                      Screw Attack without Space Jump (Normal) and Difficulty: Normal
+                      Use Screw Attack (No Space Jump)
   > Communication Area/Door to Trooper Security Station
       Trivial
   > Communication Area/Pickup (Missile)
@@ -1425,9 +1478,9 @@ Asset id: 1667141025
           Morph Ball
           Any of the following:
               Morph Ball Bomb and Space Jump Boots
-              Morph Ball Bomb and Difficulty: Trivial
+              Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
               Space Jump Boots and Power Bomb
-              Power Bomb and Difficulty: Normal
+              Power Bomb and Standable Terrain (Normal) and Difficulty: Normal
 
 > Door to Storage Cavern A; Heals? True
   > Storage Cavern A/Door to Communication Area
@@ -1451,8 +1504,13 @@ Asset id: 1667141025
   > Communication Area/Door to Storage Cavern A
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficulty: Hard
-          Screw Attack and Difficulty: Normal
+          All of the following:
+              Standable Terrain (Normal)
+              Any of the following:
+                  Morph Ball and Morph Ball Bomb and Bomb Jump (Hard) and Difficulty: Hard
+                  All of the following:
+                      Screw Attack without Space Jump (Normal) and Difficulty: Normal
+                      Use Screw Attack (No Space Jump)
 
 ----------------
 Lake Access
@@ -1511,7 +1569,9 @@ Asset id: 1467316949
   > GFMC Compound/Door to Windchamber Tunnel
       Morph Ball
   > GFMC Compound/Pickup 2 (Missile On Ship)
-      Morph Ball and Screw Attack and After Jump Guardian and Screw Attack without Space Jump (Hard) and Difficulty: Hard
+      All of the following:
+          Morph Ball and After Jump Guardian and Screw Attack without Space Jump (Hard) and Difficulty: Hard
+          Use Screw Attack (No Space Jump)
   > GFMC Compound/Room Center
       Trivial
 
@@ -1564,7 +1624,11 @@ Asset id: 1467316949
               Morph Ball
               Boost Ball or Morph Ball Bomb or Power Bomb
   > GFMC Compound/Pickup 2 (Missile On Ship)
-      Space Jump Boots and After Jump Guardian
+      All of the following:
+          After Jump Guardian
+          Any of the following:
+              Space Jump Boots
+              Scan Visor and Extended Dash (Hypermode)
   > GFMC Compound/Event - GFMC Compound Trooper Cutscene
       Trivial
   > GFMC Compound/Translator Gate
@@ -1600,7 +1664,9 @@ Asset id: 1441689027
           After Trooper Security Station Gate
           Any of the following:
               Morph Ball and Power Bomb
-              Space Jump Boots and Screw Attack and Difficulty: Trivial
+              All of the following:
+                  Knowledge (Trivial) and Difficulty: Trivial
+                  Use Screw Attack (Space Jump)
   > Trooper Security Station/Event - Trooper Security Station Gate
       Trivial
 
@@ -1612,7 +1678,9 @@ Asset id: 1441689027
           After Trooper Security Station Gate
           Any of the following:
               Morph Ball and Power Bomb
-              Space Jump Boots and Screw Attack and Difficulty: Trivial
+              All of the following:
+                  Knowledge (Trivial) and Difficulty: Trivial
+                  Use Screw Attack (Space Jump)
   > Trooper Security Station/Event - Trooper Security Station Gate
       Scan Visor and Morph Ball and Before Trooper Security Station Gate
 
@@ -1622,7 +1690,9 @@ Asset id: 1441689027
   > Trooper Security Station/Door to Communication Area
       Any of the following:
           Morph Ball and Power Bomb
-          Space Jump Boots and Screw Attack and Difficulty: Trivial
+          All of the following:
+              Knowledge (Trivial) and Difficulty: Trivial
+              Use Screw Attack (Space Jump)
 
 ----------------
 Accursed Lake
@@ -1691,7 +1761,7 @@ Asset id: 3132939042
   > Sacred Bridge/Door to Sacred Path
       Any of the following:
           Scan Visor and Morph Ball
-          Space Jump Boots and Difficulty: Normal
+          Space Jump Boots and Standable Terrain (Normal) and Difficulty: Normal
 
 > Door to Sacred Path; Heals? False
   > Sacred Path/Door to Sacred Bridge
@@ -1741,8 +1811,10 @@ Asset id: 3258777533
           Space Jump Boots
           Scan Visor and Morph Ball and Missile
           Scan Visor and Combat/Scan Dash (Hard) and Slope Jump (Hard) and Difficulty: Hard
-          Morph Ball and Morph Ball Bomb and Difficulty: Trivial
-          Screw Attack and Screw Attack without Space Jump (Trivial) and Difficulty: Normal
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
+          All of the following:
+              Screw Attack without Space Jump (Normal) and Difficulty: Normal
+              Use Screw Attack (No Space Jump)
 
 > Door to Temple Transport A; Heals? True
   > Temple Transport A/Door to Sacred Path
@@ -1752,7 +1824,9 @@ Asset id: 3258777533
           Space Jump Boots
           Scan Visor and Morph Ball and Missile and Combat/Scan Dash (Hard) and Difficulty: Hard
           Morph Ball and Morph Ball Bomb and Difficulty: Normal
-          Screw Attack and Screw Attack without Space Jump (Trivial) and Difficulty: Normal
+          All of the following:
+              Screw Attack without Space Jump (Trivial) and Difficulty: Trivial
+              Use Screw Attack (No Space Jump)
   > Sacred Path/Door to Sacred Bridge
       Trivial
 
@@ -1778,14 +1852,16 @@ Asset id: 1692811478
   > Phazon Pit/Door to Profane Path
       Trivial
   > Profane Path/Portal to Sacred Path
-      Space Jump Boots or Difficulty: Normal
-  > Profane Path/Pickup (Dark Ammo)
-      All of the following:
-          Annihilator Beam and Echo Visor
-          Space Jump Boots or Difficulty: Normal
-          Any of the following:
-              Charge Beam
-              Dark Ammo ≥ 4 and Light Ammo ≥ 4
+      Any of the following:
+          Space Jump Boots
+          Standable Terrain (Normal) and Difficulty: Normal
+  > Profane Path/Front of Echo Gate
+      Any of the following:
+          Space Jump Boots
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Difficulty: Trivial
+          All of the following:
+              Screw Attack without Space Jump (Normal) and Difficulty: Normal
+              Use Screw Attack (No Space Jump)
 
 > Portal to Sacred Path; Heals? True
   > Sacred Path/Portal to Profane Path
@@ -1800,18 +1876,30 @@ Asset id: 1692811478
                   Dark Ammo and Light Ammo
   > Profane Path/Door to Phazon Pit
       Trivial
+  > Profane Path/Front of Echo Gate
+      Trivial
+
+> Pickup (Dark Ammo); Heals? True
+  > Profane Path/Front of Echo Gate
+      Trivial
+
+> Front of Echo Gate; Heals? True
+  > Profane Path/Door to Phazon Pit
+      Trivial
+  > Profane Path/Portal to Sacred Path
+      Any of the following:
+          Space Jump Boots
+          All of the following:
+              Screw Attack without Space Jump (Trivial) and Difficulty: Trivial
+              Use Screw Attack (No Space Jump)
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Normal) and Difficulty: Normal
+          Scan Visor and Morph Ball and Combat/Scan Dash (Hard) and Difficulty: Hard
   > Profane Path/Pickup (Dark Ammo)
       All of the following:
           Annihilator Beam and Echo Visor
           Any of the following:
               Charge Beam
               Dark Ammo ≥ 4 and Light Ammo ≥ 4
-
-> Pickup (Dark Ammo); Heals? True
-  > Profane Path/Door to Phazon Pit
-      Trivial
-  > Profane Path/Portal to Sacred Path
-      Space Jump Boots or Difficulty: Normal
 
 ----------------
 Phazon Pit
@@ -1821,18 +1909,20 @@ Asset id: 506667008
       Trivial
   > Phazon Pit/Door to Phazon Grounds
       Any of the following:
-          Morph Ball and Boost Ball and Roll Jump (Veteran) and Dark World Damage ≥ 60 and Difficulty: Veteran
+          Morph Ball and Boost Ball and Boost Jump (Veteran) and Dark World Damage ≥ 60 and Difficulty: Veteran
           Morph Ball and Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Normal) and Normal Damage ≥ 15 and Dark World Damage ≥ 75 and Difficulty: Normal
           Morph Ball and Space Jump Boots and Roll Jump (Normal) and Dark World Damage ≥ 50 and Difficulty: Normal
           Grapple Beam and Dark World Damage ≥ 50
-          Space Jump Boots and Screw Attack and Dark World Damage ≥ 25
+          All of the following:
+              Dark World Damage ≥ 25
+              Use Screw Attack (Space Jump)
 
 > Door to Phazon Grounds; Heals? False
   > Phazon Grounds/Door to Phazon Pit
       Trivial
   > Phazon Pit/Door to Profane Path
       Any of the following:
-          Morph Ball and Morph Ball Bomb and Dark World Damage ≥ 100 and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Dark World Damage ≥ 100 and Difficulty: Trivial
           Grapple Beam and Dark World Damage ≥ 50
           Space Jump Boots and Dark World Damage ≥ 50
 
@@ -1847,10 +1937,13 @@ Asset id: 1683944003
   > Phazon Grounds/Pickup (Missile)
       Any of the following:
           Dark Visor and Space Jump Boots and Dark World Damage ≥ 90
-          Space Jump Boots and Screw Attack and Dark World Damage ≥ 30
+          All of the following:
+              Dark World Damage ≥ 30
+              Use Screw Attack (Space Jump)
           Space Jump Boots and Invisible Objects (Normal) and Dark World Damage ≥ 90 and Difficulty: Normal
           All of the following:
-              Screw Attack and Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 120 and Difficulty: Hard
+              Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 120 and Difficulty: Hard
+              Use Screw Attack (No Space Jump)
               Dark Visor or Invisible Objects (Hard)
           Invisible Objects (Hypermode) and Dark World Damage ≥ 200 and Difficulty: Hypermode
 
@@ -1865,16 +1958,19 @@ Asset id: 1683944003
           Space Jump Boots and Screw Attack and Missile ≥ 2 and Difficulty: Hypermode
   > Phazon Grounds/Door to Phazon Pit
       Any of the following:
-          Morph Ball and Morph Ball Bomb and Dark World Damage ≥ 55 and Difficulty: Trivial
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Trivial) and Dark World Damage ≥ 55 and Difficulty: Trivial
           Space Jump Boots and Dark World Damage ≥ 45
           Slope Jump (Normal) and Dark World Damage ≥ 70 and Difficulty: Normal
   > Phazon Grounds/Pickup (Missile)
       Any of the following:
           Dark Visor and Space Jump Boots and Dark World Damage ≥ 100
-          Space Jump Boots and Screw Attack and Dark World Damage ≥ 50
+          All of the following:
+              Dark World Damage ≥ 50
+              Use Screw Attack (Space Jump)
           Space Jump Boots and Invisible Objects (Normal) and Dark World Damage ≥ 100 and Difficulty: Normal
           All of the following:
-              Screw Attack and Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 120 and Difficulty: Hard
+              Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 120 and Difficulty: Hard
+              Use Screw Attack (No Space Jump)
               Dark Visor or Invisible Objects (Hard)
           Invisible Objects (Hypermode) and Dark World Damage ≥ 200 and Difficulty: Hypermode
 
@@ -1882,19 +1978,25 @@ Asset id: 1683944003
   > Phazon Grounds/Door to Phazon Pit
       Any of the following:
           Dark Visor and Space Jump Boots and Dark World Damage ≥ 90
-          Space Jump Boots and Screw Attack and Dark World Damage ≥ 50
+          All of the following:
+              Dark World Damage ≥ 50
+              Use Screw Attack (Space Jump)
           Space Jump Boots and Invisible Objects (Normal) and Dark World Damage ≥ 90 and Difficulty: Normal
           All of the following:
-              Screw Attack and Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 110 and Difficulty: Hard
+              Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 110 and Difficulty: Hard
+              Use Screw Attack (No Space Jump)
               Dark Visor or Invisible Objects (Hard)
           Invisible Objects (Hypermode) and Dark World Damage ≥ 110 and Difficulty: Hypermode
   > Phazon Grounds/Door to Reliquary Access
       Any of the following:
           Dark Visor and Space Jump Boots and Dark World Damage ≥ 140
-          Space Jump Boots and Screw Attack and Dark World Damage ≥ 80
+          All of the following:
+              Dark World Damage ≥ 80
+              Use Screw Attack (Space Jump)
           Space Jump Boots and Invisible Objects (Normal) and Dark World Damage ≥ 140 and Difficulty: Normal
           All of the following:
-              Screw Attack and Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 150 and Difficulty: Hard
+              Screw Attack without Space Jump (Hard) and Dark World Damage ≥ 150 and Difficulty: Hard
+              Use Screw Attack (No Space Jump)
               Dark Visor or Invisible Objects (Hard)
           Invisible Objects (Hypermode) and Dark World Damage ≥ 150 and Difficulty: Hypermode
 
@@ -1912,11 +2014,13 @@ Asset id: 2235615956
       Any of the following:
           Ingstorm Damage ≥ 1500
           All of the following:
-              Difficulty: Hard
+              Difficult Movement (Hard) and Difficulty: Hard
               Any of the following:
                   Ingstorm Damage ≥ 240
                   Morph Ball and Boost Ball and Ingstorm Damage ≥ 160
-                  Space Jump Boots and Screw Attack and Ingstorm Damage ≥ 110
+                  All of the following:
+                      Ingstorm Damage ≥ 110
+                      Use Screw Attack (Space Jump)
 
 > Door to Reliquary Grounds; Heals? False
   > Reliquary Grounds/Door to Reliquary Access
@@ -1927,11 +2031,13 @@ Asset id: 2235615956
       Any of the following:
           Ingstorm Damage ≥ 1500
           All of the following:
-              Difficulty: Hard
+              Difficult Movement (Hard) and Difficulty: Hard
               Any of the following:
                   Ingstorm Damage ≥ 190
                   Morph Ball and Boost Ball and Dark World Damage ≥ 130
-                  Screw Attack and Ingstorm Damage ≥ 115
+                  All of the following:
+                      Screw Attack without Space Jump (Hard) and Ingstorm Damage ≥ 115
+                      Use Screw Attack (No Space Jump)
 
 ----------------
 Reliquary Grounds
@@ -1944,11 +2050,17 @@ Asset id: 4237279396
   > Reliquary Grounds/Door to Ing Reliquary
       Any of the following:
           Ingstorm Damage ≥ 1500
-          Morph Ball and Morph Ball Bomb and Screw Attack and Screw Attack without Space Jump (Normal) and Ingstorm Damage ≥ 500 and Difficulty: Normal
-          Morph Ball and Morph Ball Bomb and Ingstorm Damage ≥ 500 and Difficulty: Veteran
-          Space Jump Boots and Screw Attack and Ingstorm Damage ≥ 140 and Difficulty: Hard
-          Space Jump Boots and Ingstorm Damage ≥ 200 and Difficulty: Hard
-          Screw Attack and Screw Attack without Space Jump (Hard) and Ingstorm Damage ≥ 500 and Difficulty: Hard
+          All of the following:
+              Morph Ball and Morph Ball Bomb and Difficult Movement (Normal) and Screw Attack without Space Jump (Normal) and Ingstorm Damage ≥ 500 and Difficulty: Normal
+              Use Screw Attack (No Space Jump)
+          Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Ingstorm Damage ≥ 500 and Difficulty: Veteran
+          All of the following:
+              Difficult Movement (Hard) and Ingstorm Damage ≥ 140 and Difficulty: Hard
+              Use Screw Attack (Space Jump)
+          Space Jump Boots and Difficult Movement (Hard) and Ingstorm Damage ≥ 200 and Difficulty: Hard
+          All of the following:
+              Difficult Movement (Hard) and Screw Attack without Space Jump (Hard) and Ingstorm Damage ≥ 500 and Difficulty: Hard
+              Use Screw Attack (No Space Jump)
 
 > Door to Ing Reliquary; Heals? False
   > Ing Reliquary/Door to Reliquary Grounds
@@ -1957,7 +2069,7 @@ Asset id: 4237279396
       Any of the following:
           Ingstorm Damage ≥ 1500
           All of the following:
-              Difficulty: Hard
+              Difficult Movement (Hard) and Difficulty: Hard
               Any of the following:
                   Ingstorm Damage ≥ 140
                   Morph Ball and Boost Ball and Ingstorm Damage ≥ 110
@@ -1973,14 +2085,14 @@ Asset id: 1956545251
           Dark Visor
           Any of the following:
               Space Jump Boots and Ingstorm Damage ≥ 1500
-              Ingstorm Damage ≥ 80 and Difficulty: Hard
+              Difficult Movement (Hard) and Ingstorm Damage ≥ 80 and Difficulty: Hard
 
 > Pickup (Sky Temple Key 7); Heals? False
   > Ing Reliquary/Door to Reliquary Grounds
       Any of the following:
           Ingstorm Damage ≥ 1500
           All of the following:
-              Difficulty: Hard
+              Difficult Movement (Hard) and Difficulty: Hard
               Any of the following:
                   Ingstorm Damage ≥ 220
                   Space Jump Boots and Ingstorm Damage ≥ 140
@@ -2015,11 +2127,13 @@ Asset id: 3885674414
       Morph Ball
   > Transport A Access/Pickup (Missile)
       Any of the following:
-          Power Beam and Super Missile and Charge Beam and Missile ≥ 5 and NTSC and Difficulty: Trivial
-          Morph Ball and Boost Ball and NTSC and Difficulty: Trivial
+          Power Beam and Super Missile and Charge Beam and Missile ≥ 5 and Knowledge (Trivial) and NTSC and Difficulty: Trivial
+          Morph Ball and Boost Ball and Knowledge (Trivial) and NTSC and Difficulty: Trivial
           Morph Ball and Morph Ball Bomb
           Morph Ball and Power Bomb
-          Space Jump Boots and Screw Attack and NTSC and Difficulty: Trivial
+          All of the following:
+              Knowledge (Trivial) and NTSC and Difficulty: Trivial
+              Use Screw Attack (Space Jump)
 
 > Door to Temple Sanctuary; Heals? True
   > Temple Sanctuary/Door to Transport A Access
@@ -2030,7 +2144,9 @@ Asset id: 3885674414
       Any of the following:
           Space Jump Boots
           Morph Ball and Morph Ball Bomb and Difficulty: Trivial
-          Screw Attack and Slope Jump (Normal) and Difficulty: Normal
+          All of the following:
+              Slope Jump (Normal) and Difficulty: Normal
+              Use Screw Attack (No Space Jump)
 
 > Door to Temple Transport A; Heals? True
   > Temple Transport A/Door to Transport A Access
@@ -2041,11 +2157,13 @@ Asset id: 3885674414
 > Pickup (Missile); Heals? True
   > Transport A Access/Save Station
       Any of the following:
-          Power Beam and Super Missile and Charge Beam and Missile ≥ 5 and NTSC and Difficulty: Trivial
-          Morph Ball and Boost Ball and NTSC and Difficulty: Trivial
+          Power Beam and Super Missile and Charge Beam and Missile ≥ 5 and Knowledge (Trivial) and NTSC and Difficulty: Trivial
+          Morph Ball and Boost Ball and Knowledge (Trivial) and NTSC and Difficulty: Trivial
           Morph Ball and Morph Ball Bomb
           Morph Ball and Power Bomb
-          Space Jump Boots and Screw Attack and NTSC and Difficulty: Trivial
+          All of the following:
+              Knowledge (Trivial) and NTSC and Difficulty: Trivial
+              Use Screw Attack (Space Jump)
 
 ----------------
 Temple Sanctuary
@@ -3940,7 +4058,7 @@ Asset id: 3933819436
           Charge Beam or Light Ammo
   > Battleground/Door to Double Path (Top)
       Any of the following:
-          Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Difficulty: Veteran
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Difficulty: Veteran
           Space Jump Boots and Difficulty: Normal
   > Battleground/Door to Warrior's Walk
       Ingclaw Vapor Damage ≥ 70
@@ -3950,7 +4068,7 @@ Asset id: 3933819436
       All of the following:
           Dark Visor
           Any of the following:
-              Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Bomb Space Jump (Veteran) and Difficulty: Veteran
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Bomb Space Jump (Veteran) and Difficulty: Veteran
               Space Jump Boots and Difficulty: Normal
 
 > Door to Warrior's Walk; Heals? False
@@ -3960,7 +4078,7 @@ Asset id: 3933819436
       All of the following:
           Ingclaw Vapor Damage ≥ 55
           Any of the following:
-              Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Difficulty: Veteran
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Difficulty: Veteran
               Space Jump Boots and Difficulty: Normal
   > Battleground/Door to Double Path (Bottom)
       Ingclaw Vapor Damage ≥ 55
@@ -3970,13 +4088,13 @@ Asset id: 3933819436
       All of the following:
           Dark Visor and Ingclaw Vapor Damage ≥ 55
           Any of the following:
-              Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Bomb Space Jump (Veteran) and Difficulty: Veteran
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Bomb Space Jump (Veteran) and Difficulty: Veteran
               Space Jump Boots and Difficulty: Normal
 
 > Pickup (Dark Agon Key 3); Heals? True
   > Battleground/Door to Double Path (Top)
       Any of the following:
-          Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Difficulty: Veteran
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Difficulty: Veteran
           Space Jump Boots and Difficulty: Normal
   > Battleground/Door to Double Path (Bottom)
       Trivial
@@ -3986,7 +4104,7 @@ Asset id: 3933819436
       All of the following:
           Dark Visor
           Any of the following:
-              Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Bomb Space Jump (Veteran) and Difficulty: Veteran
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Bomb Space Jump (Veteran) and Difficulty: Veteran
               Space Jump Boots and Difficulty: Normal
 
 > Pickup 2 (Sky Temple Key 1); Heals? False
@@ -4788,7 +4906,7 @@ Asset id: 1830176640
           Dark Beam and Charge Beam and Space Jump Boots
           Dark Beam and Space Jump Boots and Dark Ammo
           Morph Ball and Boost Ball and Difficulty: Normal
-          Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Difficulty: Veteran
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Difficulty: Veteran
           Space Jump Boots and Difficulty: Trivial
 
 ----------------
@@ -4844,7 +4962,7 @@ Asset id: 123369195
           Charge Beam or Light Ammo
   > Feeding Pit/Door to Ing Cache 1
       Any of the following:
-          Dark Beam and Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Difficulty: Veteran
+          Dark Beam and Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Difficulty: Veteran
           Dark Beam and Space Jump Boots
           Space Jump Boots and Slope Jump (Normal) and Difficulty: Normal
   > Feeding Pit/Door to Watering Hole
@@ -4877,10 +4995,10 @@ Asset id: 123369195
       Trivial
   > Feeding Pit/Door to Ing Cache 1
       Any of the following:
-          Dark Beam and Morph Ball and Morph Ball Bomb and Difficult Movement (Veteran) and Difficulty: Veteran
+          Dark Beam and Morph Ball and Morph Ball Bomb and Bomb Jump (Veteran) and Difficulty: Veteran
           Dark Beam and Space Jump Boots
           Space Jump Boots and Slope Jump (Normal) and Difficulty: Normal
-          Use Screw Attack
+          Use Screw Attack (Space Jump)
   > Feeding Pit/Pickup (Power Bomb)
       Light Suit
 
@@ -4896,7 +5014,7 @@ Asset id: 123369195
       All of the following:
           Light Suit
           Any of the following:
-              Dark Beam and Morph Ball and Morph Ball Bomb and Gravity Boost and Difficult Movement (Veteran) and Difficulty: Veteran
+              Dark Beam and Morph Ball and Morph Ball Bomb and Gravity Boost and Bomb Jump (Veteran) and Difficulty: Veteran
               Dark Beam and Space Jump Boots
               Space Jump Boots and Slope Jump (Normal) and Difficulty: Normal
   > Feeding Pit/Door to Watering Hole
@@ -6557,7 +6675,7 @@ Asset id: 2208154870
   > Polluted Mire/Door to Dark Falls
       Any of the following:
           Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficult Movement (Hypermode) and Bomb Space Jump (Hypermode) and Difficulty: Hypermode
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Hypermode) and Bomb Space Jump (Hypermode) and Difficulty: Hypermode
 
 ----------------
 Underground Tunnel
@@ -9014,7 +9132,7 @@ Asset id: 1539257167
   > Staging Area/Door to Central Hive West Transport
       Any of the following:
           Echo Visor and Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Difficult Movement (Hard) and Difficulty: Hard
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Hard) and Difficulty: Hard
           Space Jump Boots and Slope Jump (Normal) and Difficulty: Normal
 
 ----------------
