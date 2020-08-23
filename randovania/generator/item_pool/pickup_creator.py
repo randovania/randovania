@@ -110,6 +110,7 @@ def create_major_item(item: MajorItem,
         model_index=item.model_index,
         item_category=item.item_category,
         probability_offset=item.probability_offset,
+        probability_multiplier=item.probability_multiplier,
         convert_resources=convert_resources,
     )
 
