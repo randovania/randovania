@@ -10,6 +10,7 @@ from randovania.game_connection.connection_backend import ConnectionBackend, Con
 from randovania.game_description import default_database
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
 
@@ -23,6 +24,7 @@ def iterate_enum(enum_class: Type[T]) -> Iterator[T]:
 class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     pickups: List[PickupEntry]
     permanent_pickups: List[PickupEntry]
+    _inventory: CurrentResources
 
     def __init__(self):
         super().__init__()
@@ -35,6 +37,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
         self.permanent_pickups = []
         self.pickups = []
+        self._inventory = {}
 
         self.collect_location_combo.setVisible(False)
         self.setup_collect_location_combo_button = QtWidgets.QPushButton(self.window)
@@ -51,6 +54,9 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
     async def display_message(self, message: str):
         self.messages_list.addItem(message)
+
+    async def get_inventory(self) -> CurrentResources:
+        return self._inventory
 
     def send_pickup(self, pickup: PickupEntry):
         self.pickups.append(pickup)
