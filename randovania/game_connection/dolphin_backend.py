@@ -109,6 +109,28 @@ class DolphinBackend(ConnectionBackend):
 
         self.logger.info("_send_message_from_queue: sent a message to the game")
 
+    def _test_still_hooked(self):
+        try:
+            self.dolphin.read_word(self.patches.string_display.cstate_manager_global)
+        except RuntimeError:
+            self.dolphin.un_hook()
+
+    def _update_current_world(self):
+        try:
+            world_asset_id = self.dolphin.follow_pointers(self.patches.string_display.cstate_manager_global + 0x1604,
+                                                          [0x8])
+        except RuntimeError:
+            world_asset_id = None
+
+        if world_asset_id is None:
+            self._world = None
+            self._test_still_hooked()
+        else:
+            try:
+                self._world = self.game.world_list.world_by_asset_id(self.dolphin.read_word(world_asset_id))
+            except KeyError:
+                self._world = None
+
     async def update(self, dt: float):
         if self._ensure_hooked():
             return
@@ -118,24 +140,7 @@ class DolphinBackend(ConnectionBackend):
 
         await self._send_message_from_queue(dt)
 
-        try:
-            world_asset_id = self.dolphin.follow_pointers(self.patches.string_display.cstate_manager_global + 0x1604,
-                                                          [0x8])
-        except RuntimeError:
-            world_asset_id = None
-
-        if world_asset_id is None:
-            self._world = None
-            try:
-                self.dolphin.read_word(self.patches.string_display.cstate_manager_global)
-            except RuntimeError:
-                self.dolphin.un_hook()
-        else:
-            try:
-                self._world = self.game.world_list.world_by_asset_id(self.dolphin.read_word(world_asset_id))
-            except KeyError:
-                self._world = None
-
+        self._update_current_world()
         if self._world is not None:
             await self._check_for_collected_index()
 
@@ -188,11 +193,11 @@ class DolphinBackend(ConnectionBackend):
             self.dolphin.write_word(quantity_address, self.dolphin.read_word(quantity_address) + capacity_delta)
 
             if item == 13:  # Dark Suit
-                dolphin_memory_engine.write_word(player_state_address + 84, 1)
+                self.dolphin.write_word(player_state_address + 84, 1)
             elif item == 14:  # Light Suit
-                dolphin_memory_engine.write_word(player_state_address + 84, 2)
+                self.dolphin.write_word(player_state_address + 84, 2)
             elif item == self.game.resource_database.energy_tank.index:
-                dolphin_memory_engine.write_float(player_state_address + 20, capacity * 100 + 99)
+                self.dolphin.write_float(player_state_address + 20, capacity * 100 + 99)
 
     async def _check_for_collected_index(self):
         player_state_address = await self._get_player_state_address()
