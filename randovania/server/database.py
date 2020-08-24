@@ -8,7 +8,7 @@ import peewee
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 
-db = peewee.SqliteDatabase('test.db', pragmas={'foreign_keys': 1})
+db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
 
 
 class BaseModel(peewee.Model):
@@ -162,9 +162,4 @@ class GameSessionTeamAction(BaseModel):
         primary_key = peewee.CompositeKey('session', 'team', 'provider_row', 'provider_location_index')
 
 
-db.connect(reuse_if_open=True)
-db.create_tables([User, GameSession, GameSessionPreset, GameSessionMembership, GameSessionTeamAction])
-
-# user = db.User.create(name="Zero", discord_id=0)
-# session = db.GameSession.create(name="Race", password=None, num_teams=1)
-# db.GameSessionMembership.create(user=user, session=session, row=0, team=0)
+all_classes = [User, GameSession, GameSessionPreset, GameSessionMembership, GameSessionTeamAction]
