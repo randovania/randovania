@@ -291,7 +291,7 @@ def retcon_playthrough_filler(rng: Random,
 
                 spoiler_entry = f"{action.name} as starting item"
                 if len(player_states) > 1:
-                    spoiler_entry += f" for player {player_to_check}"
+                    spoiler_entry += f" for Player {player_to_check + 1}"
 
                 current_player.reach.advance_to(current_player.reach.state.assign_pickup_to_starting_items(action))
 
