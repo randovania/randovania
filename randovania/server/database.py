@@ -20,6 +20,10 @@ class User(BaseModel):
     discord_id = peewee.IntegerField(index=True, null=True)
     name = peewee.CharField()
 
+    @classmethod
+    def get_by_id(cls, pk) -> "User":
+        return cls.get(cls._meta.primary_key == pk)
+
     @property
     def as_json(self):
         return {

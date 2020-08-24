@@ -2,8 +2,9 @@ from argparse import ArgumentParser
 
 
 def server_command_logic(args):
-    from randovania import server
-    server.sio.run(server.app, host="0.0.0.0")
+    from randovania.server import app
+    server_app = app.create_app()
+    server_app.sio.sio.run(server_app, host="0.0.0.0")
 
 
 def add_server_command(sub_parsers):
