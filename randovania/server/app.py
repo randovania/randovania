@@ -1,7 +1,7 @@
 import flask
 
 import randovania
-from randovania.server import game_session, user_session
+from randovania.server import game_session, user_session, database
 from randovania.server.socket_wrapper import SocketWrapper
 
 
@@ -13,6 +13,10 @@ def create_app():
     app.config["DISCORD_CLIENT_ID"] = configuration["discord_client_id"]
     app.config["DISCORD_CLIENT_SECRET"] = configuration["discord_client_secret"]
     app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"  # Redirect URI.
+
+    database.db.init('test.db')
+    database.db.connect(reuse_if_open=True)
+    database.db.create_tables(database.all_classes)
 
     sio = SocketWrapper(app)
     app.sio = sio
