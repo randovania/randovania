@@ -20,12 +20,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
 
--   Added: Options for configuring usage of Boost Jump, Extended Dash and Bomb Slots without Bombs. 
+-   Added: Options for configuring usage of new tricks:
+    - Boost Jump
+	- Extended Dash
+	- Bomb Slot without Bombs
+	- Bomb Jump (renamed from Difficult Bomb Jump)
+	- Difficult Movement
+	- Standable Terrain
+	- Open Gates from Behind
+	- Screw Attack into Tunnels
+	- Knowledge
 
 -   Changed: The following trick level difficulties were renamed:
-    - Hard -> Veteran
-    - Normal -> Hard
     - Easy -> Normal
+    - Normal -> Hard
+    - Hard -> Veteran
     - Minimal Checking -> Minimal Restrictions
     
 -   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
@@ -33,6 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added: Energy Tanks have doubled weight for the generator.
 
 ### Logic Database changes
+
+-	*Major* - Changed: Every requirement above the No Tricks difficulty now has a corresponding trick for ease of customization and organization.
+
+-	Fixed: Many nodes with missing requirements have been updated/cleaned up.
 
 -   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Hard and above).
 
@@ -79,6 +92,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -	Added: Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
 
 -	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Hard and above).
+
+-	Added: Method of leaving Hall of Honored Dead through the Morph tunnel without Space Jump (Veteran and above).
+
+-	Added: Method of reaching Service Access door in Landing Site with Bombs and Screw Attack (Normal and above).
+
+-	Added: Method of reaching Abandoned Base portal with Space Jump and Screw Attack (Normal and above).
+
+-	Added: Method of completing the puzzle in Ing Windchamber with Power Bombs instead of Bombs (Trivial and above).
+
+-	Fixed: Torvus Lagoon now requires Scan Visor for the terminal.
 
 ## [1.2.2] - 2020-06-06
 
