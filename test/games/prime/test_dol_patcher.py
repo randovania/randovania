@@ -25,13 +25,13 @@ def test_apply_patches(mock_read_binary_version: MagicMock,
     # Setup
     game_root = MagicMock()
     game_patches = MagicMock()
-    cosmetic_patches = MagicMock()
-    version_patches = dol_patcher._ALL_VERSIONS_PATCHES[0]
+    user_preferences = MagicMock()
+    version_patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
     mock_read_binary_version.return_value = version_patches
     dol_file = mock_dol_file_constructor.return_value
 
     # Run
-    dol_patcher.apply_patches(game_root, game_patches, cosmetic_patches)
+    dol_patcher.apply_patches(game_root, game_patches.game_specific, user_preferences)
 
     # Assert
     mock_read_binary_version.assert_called_once_with(dol_file)
@@ -40,7 +40,7 @@ def test_apply_patches(mock_read_binary_version: MagicMock,
     mock_apply_string_display_patch.assert_called_once_with(version_patches.string_display, dol_file)
     mock_apply_game_options_patch.assert_called_once_with(
         version_patches.game_options_constructor_address,
-        cosmetic_patches.user_preferences, dol_file
+        user_preferences, dol_file
     )
     mock_apply_energy_tank_capacity_patch.assert_called_once_with(
         version_patches.health_capacity,
@@ -56,7 +56,7 @@ def test_get_dol_path():
     assert dol_patcher._get_dol_path(Path("foo")) == Path("foo", "sys", "main.dol")
 
 
-@pytest.mark.parametrize("version", dol_patcher._ALL_VERSIONS_PATCHES)
+@pytest.mark.parametrize("version", dol_patcher.ALL_VERSIONS_PATCHES)
 def test_read_binary_version(version):
     dol_file = MagicMock()
     dol_file.read.return_value = version.build_string
@@ -70,7 +70,7 @@ def test_read_binary_version(version):
 
 
 def test_apply_string_display_patch():
-    offsets = dol_patcher.StringDisplayPatchAddresses(0x15, 0, 0, 0, 0)
+    offsets = dol_patcher.StringDisplayPatchAddresses(0x15, 0, 0, 0, 0, 0)
     dol_file = MagicMock()
 
     # Run
