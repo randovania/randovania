@@ -1,19 +1,26 @@
 import functools
 
+import cryptography.fernet
 import flask
 import flask_socketio
 import socketio
+from flask_discord import DiscordOAuth2Session
 
 from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 
 
-class SocketWrapper:
+class ServerApp:
     sio: flask_socketio.SocketIO
+    discord: DiscordOAuth2Session
+    fernet_encrypt: cryptography.fernet.Fernet
 
     def __init__(self, app: flask.Flask):
+        self.app = app
         self.sio = flask_socketio.SocketIO(app)
+        self.discord = DiscordOAuth2Session(app)
+        self.fernet_encrypt = cryptography.fernet.Fernet(app.config["FERNET_KEY"])
 
     def get_server(self) -> socketio.Server:
         return self.sio.server
@@ -30,27 +37,24 @@ class SocketWrapper:
         except KeyError:
             raise NotLoggedIn()
 
-    def join_session_via_sio(self, membership: GameSessionMembership):
+    def join_session(self, membership: GameSessionMembership):
         flask_socketio.join_room(f"game-session-{membership.session.id}")
         flask_socketio.join_room(f"game-session-{membership.session.id}-{membership.user.id}")
         with self.session() as sio_session:
             sio_session["current_game_session"] = membership.session.id
 
-    def exception_on(self, message, namespace=None):
-        def decorator(handler):
-            @functools.wraps(handler)
-            def _handler(*args):
-                try:
-                    return {
-                        "result": handler(*args),
-                    }
-                except BaseNetworkError as error:
-                    return error.as_json
+    def on(self, message: str, handler, namespace=None):
+        @functools.wraps(handler)
+        def _handler(*args):
+            try:
+                return {
+                    "result": handler(self, *args),
+                }
+            except BaseNetworkError as error:
+                return error.as_json
 
-                except Exception:
-                    logger().exception("Unexpected exception while processing request")
-                    return ServerError().as_json
+            except Exception:
+                logger().exception("Unexpected exception while processing request")
+                return ServerError().as_json
 
-            return self.sio.on(message, namespace)(_handler)
-
-        return decorator
+        return self.sio.on(message, namespace)(_handler)
