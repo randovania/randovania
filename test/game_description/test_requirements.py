@@ -350,3 +350,21 @@ def test_requirement_template(database):
 
     # Assert
     assert as_set == make_single_set(_make_req("A"))
+
+
+def test_requirement_template_nested(database):
+    # Setup
+    use_a = RequirementTemplate(database, "Use A")
+    use_b = RequirementTemplate(database, "Use B")
+
+    database.requirement_template["Use A"] = _req("A")
+    database.requirement_template["Use B"] = RequirementOr([use_a, _req("B")])
+
+    # Run
+    as_set = use_b.as_set
+
+    # Assert
+    assert as_set == RequirementSet([
+        RequirementList([_req("A")]),
+        RequirementList([_req("B")]),
+    ])

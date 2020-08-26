@@ -10,6 +10,7 @@ from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import QUrl, Signal, Qt
 from PySide2.QtGui import QDesktopServices
 from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog, QMenu
+from asyncqt import asyncSlot
 
 from randovania import VERSION
 from randovania.game_description import default_database
@@ -21,7 +22,7 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
@@ -110,6 +111,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
+        self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
 
         self.generate_seed_tab = GenerateSeedTab(self, self, self, options)
         self.generate_seed_tab.setup_ui()
@@ -364,7 +366,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
     # ==========
 
-    def _on_validate_seed_change(self):
+    @asyncSlot()
+    async def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after
         new_value = self.menu_action_validate_seed_after.isChecked()
 
@@ -375,7 +378,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             box.setIcon(QMessageBox.Warning)
             box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
             box.setDefaultButton(QMessageBox.No)
-            user_response = box.exec_()
+            user_response = await async_dialog.execute_dialog(box)
             if user_response != QMessageBox.Yes:
                 self.menu_action_validate_seed_after.setChecked(True)
                 return
@@ -387,6 +390,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         is_checked = self.menu_action_timeout_generation_after_a_time_limit.isChecked()
         with self._options as options:
             options.advanced_timeout_during_generation = is_checked
+
+    def _open_auto_tracker(self):
+        from randovania.gui.auto_tracker_window import AutoTrackerWindow
+        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection())
+        self.auto_tracker_window.show()
 
     def _update_hints_text(self):
         game_description = default_database.default_prime2_game_description()

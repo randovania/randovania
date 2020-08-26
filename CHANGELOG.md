@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: An automatic item tracker based on a Dolphin running on the same computer.
+
 -   Changed: The elevator scan now includes the world of the connected area.
 
 -   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
@@ -27,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Normal -> Hard
     - Easy -> Normal
     - Minimal Checking -> Minimal Restrictions
+    
+-   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
+
+-   Added: Energy Tanks have doubled weight for the generator.
 
 ### Logic Database changes
 
@@ -52,6 +58,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Added: Method of leaving Hive Temple without Spider Ball (Hypermode).
 
+-	Fixed: Sand Processing item now requires Scan Visor.
+
 -	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Veteran and above).
 
 -	Fixed: Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
@@ -62,7 +70,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In Watch Station Access, added methods to cross the pit in either direction using Boost Ball and no Space Jump.
 
--   Changed: Cleaned up Torvus Training Chamber to include tricks originally listed from either Transit Tunnel door to reach Transit Access, to also give access to Room Center, for ease of logic navigation.
+-   Changed: Cleaned up Training Chamber nodes for ease of logic navigation.
+
+-	Fixed: Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
+
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Normal and above).
+
+-	Fixed: Trooper Security Station Event now requires Scan Visor coming from Communication Area.
+
+-	Added: Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
+
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Hard and above).
 
 ## [1.2.2] - 2020-06-06
 

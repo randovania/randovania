@@ -3,6 +3,10 @@ import sys
 
 from randovania import cli
 
+import logging
+logging.basicConfig(level=logging.WARNING)
+# logging.root.setLevel(logging.DEBUG)
+
 
 def main():
     multiprocessing.freeze_support()
