@@ -82,7 +82,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Hard and above).
 
--   Added: Path of Roots missile using only Morph, Bombs and Space Jump
+-   Added: Path of Roots missile using only Morph, Bombs and Space Jump.
+
+-   Fixed: Added Dark Aether Damage requirements for Battleground.
 
 ## [1.2.2] - 2020-06-06
 
