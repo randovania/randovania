@@ -342,6 +342,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Changed: Cleaned up Torvus Training Chamber to include tricks originally listed from either Transit Tunnel door to reach Transit Access, to also give access to Room Center, for ease of logic navigation.
 
+-   Added: Path of Roots missile using only Morph, Bombs and Space Jump
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
