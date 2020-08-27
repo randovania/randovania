@@ -9,7 +9,10 @@ import peewee
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import data_reader
+from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime import patcher_file
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -324,6 +327,11 @@ def _query_for_actions(membership: GameSessionMembership) -> peewee.ModelSelect:
     ).order_by(GameSessionTeamAction.time.asc())
 
 
+def _base64_encode_pickup(pickup: PickupEntry, resource_database: ResourceDatabase) -> str:
+    encoded_pickup = bitpacking.pack_value(BitPackPickupEntry(pickup, resource_database))
+    return base64.b85encode(encoded_pickup).decode("utf-8")
+
+
 def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location: int):
     current_user = sio.get_current_user()
     session: GameSession = database.GameSession.get_by_id(session_id)
@@ -332,7 +340,7 @@ def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location
     player_row: int = membership.row
 
     description = session.layout_description
-    pickup_target = description.all_patches[player_row].pickup_assignment.get(PickupIndex(pickup_location))
+    pickup_target = _get_pickup_target(description, player_row, pickup_location)
 
     if pickup_target is None:
         logger().info(
@@ -340,15 +348,13 @@ def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location
             f"at {pickup_location}. It's an ETM.")
         return
 
-    preset: Preset = description.permalink.get_preset(pickup_target.player)
-    game = data_reader.decode_data(preset.layout_configuration.game_data)
-
     if pickup_target.player == membership.row:
         logger().info(
             f"Session {session_id}, Team {membership.team}, Row {membership.row} found item "
             f"at {pickup_location}. It's a {pickup_target.pickup.name} for themselves.")
-        encoded_pickup = bitpacking.pack_value(BitPackPickupEntry(pickup_target.pickup, game.resource_database))
-        return base64.b85encode(encoded_pickup).decode("utf-8")
+
+        resource_database = _get_resource_database(description, pickup_target.player)
+        return _base64_encode_pickup(pickup_target.pickup, resource_database)
 
     try:
         GameSessionTeamAction.create(
@@ -384,6 +390,16 @@ def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location
         pass
 
 
+def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
+    game_data = description.permalink.get_preset(player).layout_configuration.game_data
+    return data_reader.read_resource_database(game_data["resource_database"])
+
+
+def _get_pickup_target(description: LayoutDescription, provider: int, location: int) -> Optional[PickupTarget]:
+    pickup_assignment = description.all_patches[provider].pickup_assignment
+    return pickup_assignment.get(PickupIndex(location))
+
+
 def game_session_request_pickups(sio: ServerApp, session_id: int):
     current_user = sio.get_current_user()
     your_membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
@@ -400,14 +416,12 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
         for member in GameSessionMembership.members_for_team(session, your_membership.team)
     }
 
-    game = data_reader.decode_data(
-        description.permalink.get_preset(your_membership.row).layout_configuration.game_data)
+    resource_database = _get_resource_database(description, your_membership.row)
 
     result = []
     actions: List[GameSessionTeamAction] = list(_query_for_actions(your_membership))
     for action in actions:
-        pickup_assignment = description.all_patches[action.provider_row].pickup_assignment
-        pickup_target = pickup_assignment.get(PickupIndex(action.provider_location_index))
+        pickup_target = _get_pickup_target(description, action.provider_row, action.provider_location_index)
 
         if pickup_target is None:
             logging.error(f"Action {action} has a location index with nothing.")
@@ -416,8 +430,7 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
             name = row_to_member_name.get(action.provider_row, f"Player {action.provider_row + 1}")
             result.append({
                 "message": f"Received {pickup_target.pickup.name} from {name}",
-                "pickup": base64.b85encode(bitpacking.pack_value(
-                    BitPackPickupEntry(pickup_target.pickup, game.resource_database)))
+                "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
             })
 
     logger().info(f"Session {session_id}, Team {your_membership.team}, Row {your_membership.row} "

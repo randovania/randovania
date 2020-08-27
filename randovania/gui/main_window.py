@@ -163,12 +163,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             layout = LayoutDescription.from_file(json_path)
             self.show_seed_tab(layout)
 
-    def _game_session_active(self) -> bool:
+    async def _game_session_active(self) -> bool:
         if self.game_session_window is None or self.game_session_window.has_closed:
             return False
         else:
-            QMessageBox.critical(
+            await async_dialog.message_box(
                 self,
+                QtWidgets.QMessageBox.Critical,
                 "Game Session in progress",
                 "There's already a game session window open. Please close it first.",
                 QMessageBox.Ok
@@ -176,14 +177,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             self.game_session_window.activateWindow()
             return True
 
-    def _browse_for_game_session(self):
-        if self._game_session_active():
+    @asyncSlot()
+    async def _browse_for_game_session(self):
+        if await self._game_session_active():
             return
 
-        browser = GameSessionBrowserDialog()
-        browser.refresh()
-        if browser.exec_() == browser.Accepted:
-            self.game_session_window = GameSessionWindow(common_qt_lib.get_network_client().current_game_session,
+        network_client = common_qt_lib.get_network_client()
+
+        browser = GameSessionBrowserDialog(network_client)
+        await browser.refresh()
+        if await async_dialog.execute_dialog(browser) == browser.Accepted:
+            self.game_session_window = GameSessionWindow(network_client.current_game_session,
                                                          self.preset_manager,
                                                          self._options)
             self.game_session_window.show()
@@ -198,7 +202,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
     @asyncSlot()
     async def _host_game_session(self):
-        if self._game_session_active():
+        if await self._game_session_active():
             return
 
         dialog = QInputDialog(self)
