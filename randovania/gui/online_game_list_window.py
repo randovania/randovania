@@ -1,23 +1,24 @@
 from typing import List
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit, \
-    QMessageBox
+from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
 from asyncqt import asyncSlot
 
 from randovania.gui.generated.game_session_browser_dialog_ui import Ui_GameSessionBrowserDialog
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.network_client.game_session import GameSessionListEntry
+from randovania.network_client.network_client import NetworkClient
 from randovania.network_common.error import WrongPassword
 
 
 class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
     sessions: List[GameSessionListEntry]
 
-    def __init__(self):
+    def __init__(self, network_client: NetworkClient):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
+        self.network_client = network_client
 
         self.refresh_button = QPushButton("Refresh")
         self.button_box.addButton(self.refresh_button, QDialogButtonBox.ResetRole)
@@ -35,7 +36,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
     async def refresh(self):
         self.refresh_button.setEnabled(False)
         try:
-            self.sessions = await common_qt_lib.get_network_client().get_game_session_list()
+            self.sessions = await self.network_client.get_game_session_list()
             self.update_list()
         finally:
             self.refresh_button.setEnabled(True)
@@ -67,7 +68,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             dialog.setWindowModality(Qt.WindowModal)
             dialog.setTextEchoMode(QLineEdit.Password)
 
-            if dialog.exec_() != dialog.Accepted:
+            if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
                 return
 
             password = dialog.textValue()
@@ -75,13 +76,11 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             password = None
 
         try:
-            await common_qt_lib.get_network_client().join_session(session, password)
+            await self.network_client.join_session(session, password)
             return self.accept()
 
         except WrongPassword:
-            QMessageBox.warning(self,
-                                "Incorrect Password",
-                                "The password entered was incorrect.")
+            await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
 
     def update_list(self):
         self.table_widget.clear()
