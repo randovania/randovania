@@ -5,6 +5,7 @@ import pypresence
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QWidget
 
+import randovania
 from randovania.gui.lib import async_dialog
 from randovania.network_client.game_session import GameSessionEntry
 from randovania.network_client.network_client import NetworkClient, ConnectionState
@@ -23,7 +24,7 @@ class QtNetworkClient(QWidget, NetworkClient):
 
     def __init__(self, user_data_dir: Path):
         super().__init__()
-        NetworkClient.__init__(self, user_data_dir.joinpath("network_client"))
+        NetworkClient.__init__(self, user_data_dir.joinpath("network_client"), randovania.get_configuration())
         from randovania.gui.lib import common_qt_lib
         common_qt_lib.set_default_window_icon(self)
 
