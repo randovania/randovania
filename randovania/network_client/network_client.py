@@ -1,5 +1,6 @@
 import asyncio
 import base64
+import hashlib
 import logging
 from enum import Enum
 from pathlib import Path
@@ -28,6 +29,11 @@ class ConnectionState(Enum):
     UnableToConnect = "Unable to connect"
 
 
+def _hash_address(server_address: str) -> str:
+    return base64.urlsafe_b64encode(hashlib.blake2b(server_address.encode("utf-8"),
+                                                    digest_size=12).digest()).decode("utf-8")
+
+
 class NetworkClient:
     sio: socketio.AsyncClient
     _current_game_session: Optional[GameSessionEntry] = None
@@ -36,7 +42,7 @@ class NetworkClient:
     _was_connected: bool = False
     _call_lock: asyncio.Lock
 
-    def __init__(self, user_data_dir: Path):
+    def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
 
@@ -44,8 +50,8 @@ class NetworkClient:
         self.sio = socketio.AsyncClient()
         self._call_lock = asyncio.Lock()
 
-        self.configuration = randovania.get_configuration()
-        encoded_address = base64.urlsafe_b64encode(self.configuration["server_address"].encode("utf-8")).decode("utf-8")
+        self.configuration = configuration
+        encoded_address = _hash_address(self.configuration["server_address"])
         self.session_data_path = user_data_dir / encoded_address / "session_persistence.bin"
 
         self.sio.on('connect', self.on_connect)
