@@ -22,13 +22,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
 
--   Added: Options for configuring usage of Boost Jump, Extended Dash and Bomb Slots without Bombs. 
+-   Added: Options for configuring usage of new tricks:
+    - Boost Jump
+	- Extended Dash
+	- Bomb Slot without Bombs
+	- Bomb Jump (renamed from Difficult Bomb Jump)
+	- Difficult Movement
+	- Standable Terrain
+	- Open Gates from Behind
+	- Screw Attack into Tunnels
+	- Knowledge
 
 -   Changed: The following trick level difficulties were renamed:
-    - Hard -> Veteran
-    - Normal -> Hard
-    - Easy -> Normal
-    - Minimal Checking -> Minimal Restrictions
+	- Trivial -> Beginner
+    - Easy -> Intermediate
+    - Normal -> Advanced
+    - Hard -> Expert
+    - Minimal Checking -> Minimal Logic
     
 -   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
 
@@ -36,31 +46,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Logic Database changes
 
--   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Hard and above).
+-	*Major* - Changed: Every requirement above the No Tricks difficulty now has a corresponding trick for ease of customization and organization.
+
+-	Fixed: Many nodes with missing requirements have been updated/cleaned up.
+
+-   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Advanced and above).
 
 -   Added: In all Light/Dark Controller Access rooms (Agon, Torvus, Sanctuary), method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
 
 -   Added: In Putrid Alcove, damage requirements have been added for getting the item and leaving, with just Space Jump and just Bombs.
 
--	Added: In Torvus Grove, method of climbing the room without Boost Ball (Veteran and above).
+-	Added: In Torvus Grove, method of climbing the room without Boost Ball (Expert and above).
 
--	Added: Method to open Seeker Missile Locks with Screw Attack in various rooms (Phazon Grounds, Shrine Access, Plain of Dark Worship, Poisoned Bog) (Veteran and above).
+-	Added: Method to open Seeker Missile Locks with Screw Attack in various rooms (Phazon Grounds, Shrine Access, Plain of Dark Worship, Poisoned Bog) (Expert and above).
 
 -	Added: Method to open most Bomb Slots without Bombs (Hypermode).
 
--	Added: Methods to climb Main Hydrochamber and Hydrodynamo Station without Gravity Boost and with Air Underwater (Hard and above), Space Jump, and Screw Attack (Hypermode).
+-	Added: Methods to climb Main Hydrochamber and Hydrodynamo Station without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
--	Added: Method to climb Transport Center with Space Jump and Slope Jump (Hard and above).
+-	Added: Method to climb Transport Center with Space Jump and Slope Jump (Advanced and above).
 
--	Added: Method to climb Doomed Entry with Space Jump and Screw Attack (Trival and above).
+-	Added: Method to climb Doomed Entry with Space Jump and Screw Attack (Beginner and above).
 
--	Added: Method of fighting Quadraxis with Power Bombs instead of Bombs (Trivial and above).
+-	Added: Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
 
 -	Added: Method of leaving Hive Temple without Spider Ball (Hypermode).
 
 -	Fixed: Sand Processing item now requires Scan Visor.
 
--	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Veteran and above).
+-	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Expert and above).
 
 -	Fixed: Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
 
@@ -74,13 +88,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Fixed: Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
--	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Normal and above).
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Intermediate and above).
 
 -	Fixed: Trooper Security Station Event now requires Scan Visor coming from Communication Area.
 
 -	Added: Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
 
--	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Hard and above).
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Advanced and above).
+
+-	Added: Method of leaving Hall of Honored Dead through the Morph tunnel without Space Jump (Expert and above).
+
+-	Added: Method of reaching Service Access door in Landing Site with Bombs and Screw Attack (Intermediate and above).
+
+-	Added: Method of reaching Abandoned Base portal with Space Jump and Screw Attack (Intermediate and above).
+
+-	Added: Method of completing the puzzle in Ing Windchamber with Power Bombs instead of Bombs (Beginner and above).
+
+-	Fixed: Torvus Lagoon now requires Scan Visor for the terminal.
 
 ## [1.2.2] - 2020-06-06
 

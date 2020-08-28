@@ -201,7 +201,7 @@ def test_round_trip_generated_patches(echoes_game_data, preset_manager):
         layout_configuration=dataclasses.replace(
             preset_manager.default_preset.layout_configuration,
             trick_level_configuration=TrickLevelConfiguration(
-                global_level=LayoutTrickLevel.MINIMAL_RESTRICTIONS,
+                global_level=LayoutTrickLevel.MINIMAL_LOGIC,
                 specific_levels={},
             )
         )
