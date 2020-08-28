@@ -50,18 +50,19 @@ _TRICK_LEVEL_DESCRIPTION = {
         "This mode requires no knowledge about the game, nor does it require any abuse "
         "of game mechanics, making it ideal for casual and first time players."
     ],
-    LayoutTrickLevel.TRIVIAL: [
+    LayoutTrickLevel.BEGINNER: [
         "This mode includes strategies that abuses oversights in the game, such as bomb jumping to the item "
-        "in Temple Assembly Site and destroying the gate in Trooper Security Station with Screw Attack."
+        "in Temple Assembly Site and destroying the gate in Trooper Security Station with Screw Attack, as well as "
+		"simple tricks like Bomb Space Jumps."
     ],
-    LayoutTrickLevel.NORMAL: ["This mode assumes you can do simple tricks."],
-    LayoutTrickLevel.HARD: ["This mode expands on the Easy mode, including more difficult to execute tricks."],
-    LayoutTrickLevel.VETERAN: ["This mode expands on Normal with additional tricks, such as Grand Abyss scan dash."],
+    LayoutTrickLevel.INTERMEDIATE: ["This mode expands on Beginner, with more complex tricks added."],
+    LayoutTrickLevel.ADVANCED: ["This mode expands on Intermediate, including more difficult to execute tricks."],
+    LayoutTrickLevel.EXPERT: ["This mode expands on Advanced with additional tricks, such as Grand Abyss scan dash."],
     LayoutTrickLevel.HYPERMODE: [
         "This mode considers every single trick and path known to Randovania as valid, "
         "such as Polluted Mire without Space Jump. No OOB is included."
     ],
-    LayoutTrickLevel.MINIMAL_RESTRICTIONS: [
+    LayoutTrickLevel.MINIMAL_LOGIC: [
         "This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind "
         "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible. "
         "There are no guarantees that a seed will be possible in this case."
@@ -159,7 +160,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
             has_specific_level = trick_level_configuration.has_specific_level_for_trick(trick)
 
-            checkbox.setEnabled(trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS)
+            checkbox.setEnabled(trick_level != LayoutTrickLevel.MINIMAL_LOGIC)
             slider.setEnabled(has_specific_level)
             slider.setValue(trick_level_configuration.level_for_trick(trick).as_number)
             checkbox.setChecked(has_specific_level)
@@ -236,7 +237,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         if self._window_manager is not None:
             for i, trick_level in enumerate(LayoutTrickLevel):
-                if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_RESTRICTIONS}:
+                if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
                     tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
                     tool_button.setText(trick_level.long_name)
                     tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
