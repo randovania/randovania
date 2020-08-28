@@ -264,7 +264,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         base_layout = self.preset_manager.default_preset.layout_configuration
 
         for trick_level in LayoutTrickLevel:
-            if trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+            if trick_level != LayoutTrickLevel.MINIMAL_LOGIC:
                 action = QtWidgets.QAction(self)
                 action.setText(trick_level.long_name)
                 self.menu_map_tracker.addAction(action)
@@ -338,7 +338,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     def _setup_difficulties_menu(self):
         game = default_database.default_prime2_game_description()
         for i, trick_level in enumerate(LayoutTrickLevel):
-            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_RESTRICTIONS}:
+            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
                 difficulty_action = QAction(self)
                 difficulty_action.setText(trick_level.long_name)
                 self.menu_difficulties.addAction(difficulty_action)

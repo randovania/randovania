@@ -29,7 +29,7 @@ _sample_layout_configurations = [
         "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
     }
-    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.VETERAN, LayoutTrickLevel.MINIMAL_RESTRICTIONS]
+    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.EXPERT, LayoutTrickLevel.MINIMAL_LOGIC]
 ]
 
 
@@ -39,7 +39,7 @@ def _initial_layout_configuration_params(request) -> dict:
 
 
 @pytest.mark.parametrize("new_trick_level",
-                         [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.TRIVIAL, LayoutTrickLevel.HYPERMODE])
+                         [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.BEGINNER, LayoutTrickLevel.HYPERMODE])
 def test_edit_layout_trick_level(editor: PresetEditor,
                                  initial_layout_configuration_params: dict,
                                  default_layout_configuration,
