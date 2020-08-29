@@ -100,6 +100,7 @@ setup(
             'pytest-cov',
             'pytest-qt',
             'pytest-asyncio',
+            'pytest-mock',
             'mock>=4.0',
         ]
     },
