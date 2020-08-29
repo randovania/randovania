@@ -153,7 +153,7 @@ class TrickLevelConfiguration(BitPackValue):
             0,   # Scan Dash
             1,   # Bomb Jump
             2,   # Slope Jump
-            3,   # Difficult Movement
+            3,   # Movement
             4,   # BSJ
             5,   # Roll Jump
             6,   # Underwater Dash
