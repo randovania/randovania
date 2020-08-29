@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	- Open Gates from Behind
 	- Screw Attack into Tunnels
 	- Knowledge
+	- Seeker Locks without Seekers
 
 -   Changed: The following trick level difficulties were renamed:
 	- Trivial -> Beginner
