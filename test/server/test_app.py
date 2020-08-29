@@ -13,6 +13,7 @@ def test_create_app(mocker, tmpdir):
     }
     mock_game_session = mocker.patch("randovania.server.game_session.setup_app")
     mock_user_session = mocker.patch("randovania.server.user_session.setup_app")
+    mock_create_sio = mocker.patch("flask_socketio.SocketIO")
 
     # Run
     result = app.create_app()
@@ -20,6 +21,7 @@ def test_create_app(mocker, tmpdir):
     # Assert
     mock_game_session.assert_called_once_with(result.sio)
     mock_user_session.assert_called_once_with(result.sio)
+    mock_create_sio.assert_called_once_with(result)
     assert tmpdir.join("database.db").exists()
 
     with result.test_client() as test_client:

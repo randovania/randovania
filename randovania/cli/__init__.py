@@ -37,7 +37,9 @@ def _run_args(args):
 
 def run_pytest(argv):
     import pytest
-    sys.exit(pytest.main(argv[2:], plugins=["pytest_asyncio"]))
+    import pytest_asyncio.plugin
+    import pytest_mock.plugin
+    sys.exit(pytest.main(argv[2:], plugins=[pytest_asyncio.plugin, pytest_mock.plugin]))
 
 
 def run_cli(argv):
