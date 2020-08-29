@@ -129,6 +129,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Cleaned up Training Chamber nodes for ease of logic navigation.
 
+-	Changed: Crossing lower Double Path without Space Jump is now Beginner difficulty (from Intermediate).
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
