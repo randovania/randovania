@@ -15,7 +15,8 @@ def create_app():
     app.config["DISCORD_CLIENT_ID"] = configuration["discord_client_id"]
     app.config["DISCORD_CLIENT_SECRET"] = configuration["server_config"]["discord_client_secret"]
     app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"  # Redirect URI.
-    app.config["FERNET_KEY"] = base64.b64decode(configuration["server_config"]["fernet_key"])
+    app.config["FERNET_KEY"] = base64.b64decode(configuration["server_config"]["fernet_key"].encode("ascii")
+                                                )
 
     database.db.init(configuration["server_config"]['database_path'])
     database.db.connect(reuse_if_open=True)
