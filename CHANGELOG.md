@@ -49,17 +49,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	*Major* - Changed: Every requirement above the No Tricks difficulty now has a corresponding trick for ease of customization and organization.
 
--	Fixed: Many nodes with missing requirements have been updated/cleaned up.
+#### Added
 
 -   Added: In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Advanced and above).
 
--   Added: In all Light/Dark Controller Access rooms (Agon, Torvus, Sanctuary), method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
+-   Added: In all Light/Dark Controller Access rooms, method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
 
 -   Added: In Putrid Alcove, damage requirements have been added for getting the item and leaving, with just Space Jump and just Bombs.
 
 -	Added: In Torvus Grove, method of climbing the room without Boost Ball (Expert and above).
 
--	Added: Method to open Seeker Missile Locks with Screw Attack in various rooms (Phazon Grounds, Shrine Access, Plain of Dark Worship, Poisoned Bog) (Expert and above).
+-	Added: Method to open Seeker Missile Locks with Screw Attack in various rooms (Expert and above).
 
 -	Added: Method to open most Bomb Slots without Bombs (Hypermode).
 
@@ -73,11 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Added: Method of leaving Hive Temple without Spider Ball (Hypermode).
 
--	Fixed: Sand Processing item now requires Scan Visor.
-
 -	Added: Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Expert and above).
-
--	Fixed: Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
 
 -   Added: Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
 
@@ -85,17 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In Watch Station Access, added methods to cross the pit in either direction using Boost Ball and no Space Jump.
 
--   Changed: Cleaned up Training Chamber nodes for ease of logic navigation.
-
--	Fixed: Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
-
--	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Intermediate and above).
-
--	Fixed: Trooper Security Station Event now requires Scan Visor coming from Communication Area.
-
 -	Added: Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
-
--	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Advanced and above).
 
 -	Added: Method of leaving Hall of Honored Dead through the Morph tunnel without Space Jump (Expert and above).
 
@@ -105,25 +91,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Added: Method of completing the puzzle in Ing Windchamber with Power Bombs instead of Bombs (Beginner and above).
 
--	Fixed: Torvus Lagoon now requires Scan Visor for the terminal.
-
 -   Added: Path of Roots missile using only Morph, Bombs and Space Jump (Beginner and above).
-
--   Fixed: Added Dark Aether Damage requirements for Battleground.
-
--   Fixed: Added Dark Aether Damage requirements for Undertemple (Intermediate and above).
 
 -   Added: Method to make PB Guardian break PB door using bombs (Advanced and above).
 
 -   Added: Undertemple Access item using Screw Attack and Jump Off Enemy (Hypermode).
 
--	Added: Method of reaching the Abandoned Base portal with Space Jump and Screw Attack (Intermediate and above).
-
 -	Added: Method of reaching the item in Windchamber Gateway with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
 
 -	Added: Method of reaching Temple Transport A door from Transport A Access with a Wall Boost (Advanced and above).
 
+#### Fixed
+
+-	Fixed: Sand Processing item now requires Scan Visor.
+
+-	Fixed: Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
+
+-	Fixed: Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
+
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Intermediate and above).
+
+-	Fixed: Trooper Security Station Event now requires Scan Visor coming from Communication Area.
+
+-	Fixed: Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Advanced and above).
+
+-	Fixed: Torvus Lagoon now requires Scan Visor for the terminal.
+
+-   Fixed: Added Dark Aether Damage requirements for Battleground.
+
+-   Fixed: Added Dark Aether Damage requirements for Undertemple (Intermediate and above).
+
 -	Fixed: Staging Area now requires Scan Visor for the terminal (No Tricks and above).
+
+#### Changed
+
+-	Changed: Many nodes with missing requirements have been updated/cleaned up.
+
+-   Changed: Cleaned up Training Chamber nodes for ease of logic navigation.
 
 ## [1.2.2] - 2020-06-06
 
