@@ -106,6 +106,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -	Fixed: Torvus Lagoon now requires Scan Visor for the terminal.
 
+-   Added: Path of Roots missile using only Morph, Bombs and Space Jump (Beginner and above).
+
+-   Fixed: Added Dark Aether Damage requirements for Battleground.
+
+-   Fixed: Added Dark Aether Damage requirements for Undertemple (Intermediate and above).
+
+-   Added: Method to make PB Guardian break PB door using bombs (Advanced and above).
+
+-   Added: Undertemple Access item using Screw Attack and Jump Off Enemy (Hypermode).
+
+-	Added: Method of reaching Temple Transport A door from Transport A Access with a Wall Boost (Advanced and above).
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
