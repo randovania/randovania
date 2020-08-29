@@ -174,4 +174,5 @@ class TrickLevelConfiguration(BitPackValue):
 			32,  # Open Gates from Behind
 			33,  # Screw Attack into Tunnels
 			34,  # Knowledge
+			35,  # Seeker Locks without Seekers
         })
