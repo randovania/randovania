@@ -117,7 +117,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Undertemple Access item using Screw Attack and Jump Off Enemy (Hypermode).
 
+-	Added: Method of reaching the Abandoned Base portal with Space Jump and Screw Attack (Intermediate and above).
+
+-	Added: Method of reaching the item in Windchamber Gateway with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
+
 -	Added: Method of reaching Temple Transport A door from Transport A Access with a Wall Boost (Advanced and above).
+
+-	Fixed: Staging Area now requires Scan Visor for the terminal (No Tricks and above).
 
 ## [1.2.2] - 2020-06-06
 
