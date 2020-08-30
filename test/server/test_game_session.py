@@ -347,6 +347,27 @@ def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMo
 
 
 @patch("randovania.server.game_session._emit_session_update")
+def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMock,
+                                               clean_database, preset_manager):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", in_game=False, num_teams=1)
+    database.GameSessionPreset.create(session=session, row=0, preset="{}")
+    database.GameSessionPreset.create(session=session, row=1, preset="{}")
+    database.GameSessionMembership.create(user=user1, session=session, row=2, team=None, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    game_session.game_session_admin_session(sio, 1, "change_row", (1, preset_manager.default_preset.as_json))
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    new_preset_row = database.GameSessionPreset.get(database.GameSessionPreset.session == session,
+                                                    database.GameSessionPreset.row == 1)
+    assert json.loads(new_preset_row.preset) == preset_manager.default_preset.as_json
+
+
+@patch("randovania.server.game_session._emit_session_update")
 def test_game_session_admin_session_delete_row(mock_emit_session_update: MagicMock,
                                                clean_database, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
@@ -388,3 +409,23 @@ def test_game_session_admin_session_change_layout_description(mock_emit_session_
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).layout_description_json == '"some_json_string"'
+
+
+@patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
+@patch("randovania.server.game_session._emit_session_update")
+def test_game_session_admin_session_start_session(mock_emit_session_update: MagicMock,
+                                                  mock_session_description: PropertyMock,
+                                                  clean_database, preset_manager):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", in_game=False, num_teams=1, layout_description_json="{}")
+    database.GameSessionPreset.create(session=session, row=0, preset="{}")
+    database.GameSessionMembership.create(user=user1, session=session, row=0, team=0, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    game_session.game_session_admin_session(sio, 1, "start_session", None)
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    assert database.GameSession.get_by_id(1).in_game
