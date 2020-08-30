@@ -9,7 +9,7 @@ from randovania.server.server_app import ServerApp
 
 
 @pytest.fixture(name="server_app")
-def server_app_fixture(flask_app):
+def server_app_fixture(flask_app, skip_qtbot):
     flask_app.config['SECRET_KEY'] = "key"
     flask_app.config["DISCORD_CLIENT_ID"] = 1234
     flask_app.config["DISCORD_CLIENT_SECRET"] = 5678
