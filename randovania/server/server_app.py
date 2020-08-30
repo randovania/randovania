@@ -3,10 +3,11 @@ import functools
 import cryptography.fernet
 import flask
 import flask_socketio
+import peewee
 import socketio
 from flask_discord import DiscordOAuth2Session
 
-from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError
+from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 
@@ -36,6 +37,8 @@ class ServerApp:
             return User.get_by_id(self.get_session()["user-id"])
         except KeyError:
             raise NotLoggedIn()
+        except peewee.DoesNotExist:
+            raise InvalidSession()
 
     def join_session(self, membership: GameSessionMembership):
         flask_socketio.join_room(f"game-session-{membership.session.id}")
