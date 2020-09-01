@@ -171,8 +171,8 @@ class TrickLevelConfiguration(BitPackValue):
             29,  # Boost Jump
             30,  # Extended Dash
             31,  # Bomb Slot without Bombs
-			32,  # Open Gates from Behind
-			33,  # Screw Attack into Tunnels
-			34,  # Knowledge
-			35,  # Seeker Locks without Seekers
+            32,  # Open Gates from Behind
+            33,  # Screw Attack into Tunnels
+            34,  # Knowledge
+            35,  # Seeker Locks without Seekers
         })

@@ -6,7 +6,6 @@ from typing import Optional, TypeVar, Callable, Any
 
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
-from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
 
 T = TypeVar("T")
@@ -222,11 +221,11 @@ class Options:
     @output_directory.setter
     def output_directory(self, value: Optional[Path]):
         self._edit_field("output_directory", value)
-        
+
     @property
     def auto_save_spoiler(self) -> bool:
         return _return_with_default(self._auto_save_spoiler, lambda: False)
-    
+
     @auto_save_spoiler.setter
     def auto_save_spoiler(self, value: bool):
         self._edit_field("auto_save_spoiler", value)

@@ -15,7 +15,6 @@ from randovania.resolver.exceptions import InvalidConfiguration
 def _find_ammo_for(ammo_index: Tuple[int, ...],
                    ammo_configuration: AmmoConfiguration,
                    ) -> Tuple[Optional[Ammo], bool]:
-
     for ammo, ammo_state in ammo_configuration.items_state.items():
         if ammo.items == ammo_index:
             return ammo, ammo_state.requires_major_item

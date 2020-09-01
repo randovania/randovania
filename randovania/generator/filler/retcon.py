@@ -317,9 +317,9 @@ def retcon_playthrough_filler(rng: Random,
         current_player.advance_scan_asset_seen_count()
 
     return {
-        index: player_state.reach.state.patches
-        for index, player_state in player_states.items()
-    }, tuple(actions_log)
+               index: player_state.reach.state.patches
+               for index, player_state in player_states.items()
+           }, tuple(actions_log)
 
 
 def _calculate_all_pickup_indices_weight(player_states: Dict[int, PlayerState],
