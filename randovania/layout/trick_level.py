@@ -151,9 +151,9 @@ class TrickLevelConfiguration(BitPackValue):
     def all_possible_tricks(cls) -> FrozenSet[int]:
         return frozenset({
             0,   # Scan Dash
-            1,   # Difficult Bomb Jump
+            1,   # Bomb Jump
             2,   # Slope Jump
-            3,   # R Jump
+            3,   # Movement
             4,   # BSJ
             5,   # Roll Jump
             6,   # Underwater Dash
@@ -171,4 +171,8 @@ class TrickLevelConfiguration(BitPackValue):
             29,  # Boost Jump
             30,  # Extended Dash
             31,  # Bomb Slot without Bombs
+			32,  # Open Gates from Behind
+			33,  # Screw Attack into Tunnels
+			34,  # Knowledge
+			35,  # Seeker Locks without Seekers
         })
