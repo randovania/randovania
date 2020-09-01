@@ -350,6 +350,7 @@ def test_requirement_template(database):
 
     # Assert
     assert as_set == make_single_set(_make_req("A"))
+    assert hash(use_a)
 
 
 def test_requirement_template_nested(database):
@@ -368,3 +369,4 @@ def test_requirement_template_nested(database):
         RequirementList([_req("A")]),
         RequirementList([_req("B")]),
     ])
+    assert hash(use_a) != hash(use_b)
