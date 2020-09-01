@@ -337,14 +337,16 @@ def pretty_print_requirement_array(requirement: Union[RequirementAnd, Requiremen
         yield from pretty_print_requirement(requirement.items[0], level)
         return
 
-    resource_requirements = [item for item in requirement.items
-                             if isinstance(item, ResourceRequirement)]
-    other_requirements = [item for item in requirement.items
-                          if not isinstance(item, ResourceRequirement)]
+    resource_requirements = [item for item in requirement.items if isinstance(item, ResourceRequirement)]
+    template_requirements = [item for item in requirement.items if isinstance(item, RequirementTemplate)]
+    other_requirements = [item for item in requirement.items if isinstance(item, (RequirementAnd, RequirementOr))]
+    assert len(resource_requirements) + len(template_requirements) + len(other_requirements) == len(requirement.items)
+
     pretty_resources = [
         pretty_print_resource_requirement(item)
         for item in sorted(resource_requirements)
     ]
+    sorted_templates = list(sorted(item.template_name for item in template_requirements))
 
     if isinstance(requirement, RequirementOr):
         title = "Any"
@@ -354,11 +356,11 @@ def pretty_print_requirement_array(requirement: Union[RequirementAnd, Requiremen
         combinator = " and "
 
     if len(other_requirements) == 0:
-        yield level, combinator.join(pretty_resources)
+        yield level, combinator.join(pretty_resources + sorted_templates)
     else:
         yield level, f"{title} of the following:"
-        if pretty_resources:
-            yield level + 1, combinator.join(pretty_resources)
+        if pretty_resources or sorted_templates:
+            yield level + 1, combinator.join(pretty_resources + sorted_templates)
         for item in other_requirements:
             yield from pretty_print_requirement(item, level + 1)
 
