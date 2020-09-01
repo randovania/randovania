@@ -62,4 +62,3 @@ class GameConnection(ConnectionBase):
 
     def set_permanent_pickups(self, pickups: List[PickupEntry]):
         return self.backend.set_permanent_pickups(pickups)
-

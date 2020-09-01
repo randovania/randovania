@@ -5,8 +5,6 @@ from pathlib import Path
 from typing import BinaryIO, Optional, Tuple, Iterable
 
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
-from randovania.game_description.game_patches import GamePatches
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 _NUM_TEXT_SECTIONS = 7

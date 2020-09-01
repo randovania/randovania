@@ -1,5 +1,4 @@
 from enum import unique, Enum
-from typing import Optional
 
 
 @unique

@@ -111,6 +111,7 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
         message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
 
+
 @pytest.mark.parametrize("pickup_index_and_guardian", [
     (PickupIndex(43), "&push;&main-color=#FF3333;Amorbis&pop;"),
     (PickupIndex(79), "&push;&main-color=#FF3333;Chykka&pop;"),
@@ -147,6 +148,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     # Assert
     message = f"{guardian} is guarding {item[1]}."
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
+
 
 @pytest.mark.parametrize("item", [
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),

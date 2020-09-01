@@ -1,6 +1,5 @@
 import pytest
 
-from randovania.game_description import data_reader
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import resolver, debug
 
