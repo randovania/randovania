@@ -1,4 +1,5 @@
 import dataclasses
+import datetime
 from typing import List, Dict, Optional
 
 from randovania.layout.preset import Preset
@@ -33,15 +34,32 @@ class PlayerSessionEntry:
 
 
 @dataclasses.dataclass(frozen=True)
+class GameSessionAction:
+    message: str
+    team: int
+    time: datetime.datetime
+
+    @classmethod
+    def from_json(cls, data) -> "GameSessionAction":
+        return GameSessionAction(
+            message=data["message"],
+            team=data["team"],
+            time=datetime.datetime.fromisoformat(data["time"]),
+        )
+
+
+@dataclasses.dataclass(frozen=True)
 class GameSessionEntry:
     id: int
     name: str
     num_teams: int
     presets: List[Preset]
     players: Dict[int, PlayerSessionEntry]
+    actions: List[GameSessionAction]
     seed_hash: Optional[str]
     word_hash: Optional[str]
     spoiler: Optional[bool]
+    in_game: bool
 
     @property
     def num_admins(self) -> int:
@@ -58,9 +76,11 @@ class GameSessionEntry:
                 player_json["id"]: PlayerSessionEntry.from_json(player_json)
                 for player_json in data["players"]
             },
+            actions=[GameSessionAction.from_json(item) for item in data["actions"]],
             seed_hash=data["seed_hash"],
             word_hash=data["word_hash"],
             spoiler=data["spoiler"],
+            in_game=data["in_game"],
         )
 
 
