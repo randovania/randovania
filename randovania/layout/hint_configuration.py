@@ -41,4 +41,3 @@ class HintConfiguration(BitPackDataClass):
             params["item_hints"] = value["item_hints"]
 
         return cls(**params)
-

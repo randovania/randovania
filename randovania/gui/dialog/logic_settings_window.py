@@ -53,7 +53,7 @@ _TRICK_LEVEL_DESCRIPTION = {
     LayoutTrickLevel.BEGINNER: [
         "This mode includes strategies that abuses oversights in the game, such as bomb jumping to the item "
         "in Temple Assembly Site and destroying the gate in Trooper Security Station with Screw Attack, as well as "
-		"simple tricks like Bomb Space Jumps."
+        "simple tricks like Bomb Space Jumps."
     ],
     LayoutTrickLevel.INTERMEDIATE: ["This mode expands on Beginner, with more complex tricks added."],
     LayoutTrickLevel.ADVANCED: ["This mode expands on Intermediate, including more difficult to execute tricks."],
