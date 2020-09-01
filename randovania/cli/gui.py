@@ -1,5 +1,6 @@
 try:
     import PySide2
+
     has_gui = True
 except ModuleNotFoundError as e:
     has_gui = False

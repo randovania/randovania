@@ -8,7 +8,6 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources, add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
-from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
 from randovania.resolver.state import State
@@ -79,10 +78,10 @@ def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
 
 
 def _add_minimal_logic_initial_resources(resources: CurrentResources,
-                                                resource_database: ResourceDatabase,
-                                                progressive_grapple: bool,
-                                                progressive_suit: bool,
-                                                ) -> None:
+                                         resource_database: ResourceDatabase,
+                                         progressive_grapple: bool,
+                                         progressive_suit: bool,
+                                         ) -> None:
     # TODO: this function assumes we're talking about Echoes
     for event in resource_database.event:
         # Ignoring these events:
@@ -173,10 +172,10 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     if configuration.trick_level_configuration.global_level == LayoutTrickLevel.MINIMAL_LOGIC:
         major_items_config = configuration.major_items_configuration
         _add_minimal_logic_initial_resources(starting_state.resources,
-                                                    game.resource_database,
-                                                    major_items_config.progressive_grapple,
-                                                    major_items_config.progressive_suit,
-                                                    )
+                                             game.resource_database,
+                                             major_items_config.progressive_grapple,
+                                             major_items_config.progressive_suit,
+                                             )
 
     difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
                                                                            game.resource_database)

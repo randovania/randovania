@@ -13,10 +13,10 @@ from randovania.game_description.node import Node, DockNode, TeleporterNode, Gen
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world import World
 from randovania.games.prime import default_data
-from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):

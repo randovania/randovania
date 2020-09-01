@@ -2,8 +2,8 @@ from typing import List, TypeVar, Callable, Dict, Tuple, TextIO, Union, Iterator
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, LoreType
 from randovania.game_description.requirements import ResourceRequirement, \

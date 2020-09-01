@@ -45,7 +45,7 @@ def test_items_for_ammo_one_item_non_divisible():
     included_ammo_for_item = {item_a: 0}
     previous_pickup_for_item = {}
 
-    ammo = Ammo("My Ammo", maximum=maximum, items=(item_a,),)
+    ammo = Ammo("My Ammo", maximum=maximum, items=(item_a,), )
     state = AmmoState(0, total_pickup)
     maximum_ammo = {item_a: maximum}
 
@@ -75,7 +75,7 @@ def test_items_for_ammo_two_item(per_pickup: int, total_pickup: int, included: i
     previous_pickup_for_item = {}
 
     maximum = per_pickup * total_pickup + included
-    ammo = Ammo("My Ammo", maximum=maximum, items=(item_a, item_b),)
+    ammo = Ammo("My Ammo", maximum=maximum, items=(item_a, item_b), )
     state = AmmoState(0, total_pickup)
     maximum_ammo = {item_a: maximum, item_b: maximum}
 

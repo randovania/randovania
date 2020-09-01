@@ -7,7 +7,6 @@ from randovania.game_description import data_reader
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import retcon
 from randovania.generator.filler.retcon import FillerConfiguration
-from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.available_locations import RandomizationMode
 from randovania.resolver.bootstrap import logic_bootstrap
 

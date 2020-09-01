@@ -106,4 +106,3 @@ def test_create_node_and_save(mock_prime2_human_readable_path,
     data_writer.write_human_readable_world_list(exported_game, output)
 
     assert mock_prime2_human_readable_path.return_value.read_text("utf-8") == output.getvalue()
-
