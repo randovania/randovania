@@ -5,7 +5,7 @@ import networkx
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, ResourceNode, PickupNode
-from randovania.game_description.requirements import RequirementSet, RequirementList, Requirement, RequirementAnd, \
+from randovania.game_description.requirements import RequirementSet, Requirement, RequirementAnd, \
     ResourceRequirement
 from randovania.resolver.state import State
 

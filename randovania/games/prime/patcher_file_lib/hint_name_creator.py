@@ -35,7 +35,7 @@ class TextColor(Enum):
     LOCATION = "#FF3333"
 
 
-def color_text(color: TextColor, text:str):
+def color_text(color: TextColor, text: str):
     return f"&push;&main-color={color.value};{text}&pop;"
 
 

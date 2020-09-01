@@ -4,17 +4,14 @@ from pathlib import Path
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox, \
-    QAction
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox
 
-from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.generator import base_patches_factory, generator
-from randovania.generator.item_pool import pool_creator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
