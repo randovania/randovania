@@ -49,6 +49,7 @@ class NetworkClient:
         self._connection_state = ConnectionState.Disconnected
         self.sio = socketio.AsyncClient()
         self._call_lock = asyncio.Lock()
+        self._connect_lock = asyncio.Lock()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -86,20 +87,21 @@ class NetworkClient:
             self.logger.info("connect_if_authenticated: no session data")
 
     async def connect_to_server(self):
-        # TODO: failing at the first time means it isn't continuosly retried automatically
-        try:
-            # sio.connect is raising a NotImplementedError, likely due to Windows and/or asyncqt?
-            engineio.asyncio_client.async_signal_handler_set = True
+        # TODO: failing at the first time means it isn't continuously retried automatically
+        async with self._connect_lock:
+            try:
+                # sio.connect is raising a NotImplementedError, likely due to Windows and/or asyncqt?
+                engineio.asyncio_client.async_signal_handler_set = True
 
-            self.connection_state = ConnectionState.Connecting
-            self.logger.info(f"connect_to_server: connecting")
-            await self.sio.connect(self.configuration["server_address"],
-                                   socketio_path=self.configuration["socketio_path"],
-                                   headers={"X-Randovania-Version": randovania.VERSION})
-            self.logger.info(f"connect_to_server: connected")
+                self.connection_state = ConnectionState.Connecting
+                self.logger.info(f"connect_to_server: connecting")
+                await self.sio.connect(self.configuration["server_address"],
+                                       socketio_path=self.configuration["socketio_path"],
+                                       headers={"X-Randovania-Version": randovania.VERSION})
+                self.logger.info(f"connect_to_server: connected")
 
-        except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
-            self.logger.info(f"connect_to_server: failed with {e}")
+            except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
+                self.logger.info(f"connect_to_server: failed with {e}")
 
     async def disconnect_from_server(self):
         await self.sio.disconnect()

@@ -177,9 +177,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             self.game_session_window.activateWindow()
             return True
 
+    async def _ensure_logged_in(self) -> bool:
+        network_client = common_qt_lib.get_network_client()
+        await network_client.connect_to_server()
+        return True
+
     @asyncSlot()
     async def _browse_for_game_session(self):
         if await self._game_session_active():
+            return
+
+        if not await self._ensure_logged_in():
             return
 
         network_client = common_qt_lib.get_network_client()
@@ -203,6 +211,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     @asyncSlot()
     async def _host_game_session(self):
         if await self._game_session_active():
+            return
+
+        if not await self._ensure_logged_in():
             return
 
         dialog = QInputDialog(self)
