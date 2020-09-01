@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import os
 import sys
 from argparse import ArgumentParser
@@ -69,7 +70,9 @@ def load_user_presets(preset_manager: PresetManager) -> bool:
         if user_response == QMessageBox.Yes:
             os.remove(invalid_file.file)
             return load_user_presets(preset_manager)
-        elif user_response == QMessageBox.No:
+
+        logging.error(f"Error loading preset {invalid_file.file}", exc_info=invalid_file.original_exception)
+        if user_response == QMessageBox.No:
             preset_manager.load_user_presets(True)
             return True
         else:
