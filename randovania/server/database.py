@@ -1,3 +1,4 @@
+import collections
 import datetime
 import functools
 import json
@@ -5,6 +6,7 @@ from typing import Iterator, List, Optional
 
 import peewee
 
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 
@@ -77,6 +79,26 @@ class GameSession(BaseModel):
 
     def create_session_entry(self):
         description = self.layout_description
+
+        location_to_name = collections.defaultdict(dict)
+        for membership in self.players:
+            if membership.team is not None:
+                location_to_name[membership.team][membership.row] = membership.effective_name
+
+        def _describe_action(action: GameSessionTeamAction) -> dict:
+            provider: int = action.provider_row
+            receiver: int = action.receiver_row
+            time: datetime.datetime = action.time
+            target = description.all_patches[provider].pickup_assignment[PickupIndex(action.provider_location_index)]
+
+            message = (f"{location_to_name[action.team][provider]} found {target.pickup.name} "
+                       f"for {location_to_name[action.team][receiver]}.")
+            return {
+                "team": action.team,
+                "message": message,
+                "time": time.isoformat(),
+            }
+
         return {
             "id": self.id,
             "name": self.name,
@@ -95,6 +117,11 @@ class GameSession(BaseModel):
             "presets": [
                 json.loads(preset.preset)
                 for preset in sorted(self.presets, key=lambda it: it.row)
+            ],
+            "actions": [
+                _describe_action(action)
+                for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
+                                                                   ).order_by(GameSessionTeamAction.time.asc())
             ],
             "spoiler": description.permalink.spoiler if description is not None else None,
             "word_hash": description.shareable_word_hash if description is not None else None,

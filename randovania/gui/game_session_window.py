@@ -387,6 +387,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         team_name.setMaximumHeight(30)
         self.players_layout.addWidget(team_name, 0, _PRESET_COLUMNS + num_teams * 3, 1, 2)
 
+        self.history_team_combo.addItem(f"Team {num_teams + 1}")
+
         self.teams.append(Team(
             vertical_line=vertical_line,
             title_line=title_line,
@@ -399,6 +401,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         return len(self.teams) - 1
 
     def pop_team(self):
+        self.history_team_combo.removeItem(self.history_team_combo.count() - 1)
         self.teams.pop().delete_widgets()
 
     def append_new_player_widget(self, team: Optional[Team]):
@@ -491,6 +494,15 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     def num_teams(self) -> int:
         return len(self.teams)
 
+    def update_session_actions(self):
+        team_index = self.history_team_combo.currentIndex()
+        team_actions = [action for action in self._game_session.actions if action.team == team_index]
+        self.history_table_widget.horizontalHeader().setVisible(True)
+        self.history_table_widget.setRowCount(len(team_actions))
+        for i, action in enumerate(team_actions):
+            self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
+            self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.strftime("%H:%M")))
+
     def on_game_session_updated(self, game_session: GameSessionEntry):
         self._game_session = game_session
 
@@ -542,6 +554,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self._update_player_widget(observer_widget, game_session, self_is_admin, team_has_slot)
 
         # Game Tab
+        self.session_status_label.setText("Session: {}".format("In-Game" if game_session.in_game else "Not Started"))
         self.generate_game_button.setEnabled(self_is_admin)
         self.generate_without_spoiler_button.setEnabled(self_is_admin and False)
         self.start_session_button.setEnabled(self_is_admin and game_session.seed_hash is not None)
@@ -553,6 +566,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         else:
             self.generate_game_label.setText(f"Seed hash: {game_session.word_hash} ({game_session.seed_hash})")
             self.view_game_details_button.setEnabled(game_session.spoiler and False)
+
+        self.update_session_actions()
 
     @property
     def current_player_membership(self) -> PlayerSessionEntry:

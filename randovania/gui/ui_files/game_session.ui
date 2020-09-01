@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>699</width>
-    <height>411</height>
+    <height>349</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,6 +44,12 @@
     </item>
     <item>
      <widget class="QTabWidget" name="tab_widget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -188,7 +194,27 @@
          <widget class="QComboBox" name="history_team_combo"/>
         </item>
         <item>
-         <widget class="QListWidget" name="history_log_list"/>
+         <widget class="QTableWidget" name="history_table_widget">
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>200</number>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Message</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Time</string>
+           </property>
+          </column>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -221,6 +247,13 @@
         <widget class="QLabel" name="server_connection_label">
          <property name="text">
           <string>Server: Disconnected</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="session_status_label">
+         <property name="text">
+          <string>Session: Not Started</string>
          </property>
         </widget>
        </item>
