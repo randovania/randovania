@@ -1,12 +1,5 @@
-from typing import Tuple, List
-
-from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import add_resources_into_another
-from randovania.generator import base_patches_factory
-from randovania.generator.filler.runner import PlayerPool
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
 from randovania.generator.item_pool.dark_temple_keys import add_dark_temple_keys

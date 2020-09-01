@@ -15,4 +15,3 @@ async def test_execute_execute_dialog(skip_qtbot, status):
     diag = CustomDialog()
     result = await async_dialog.execute_dialog(diag)
     assert result == status
-

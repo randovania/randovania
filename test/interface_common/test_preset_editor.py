@@ -1,20 +1,11 @@
 import dataclasses
-import json
-from pathlib import Path
-
-import json
-from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
 
-import randovania.interface_common.options
-import randovania.interface_common.persisted_options
-from randovania.interface_common.options import Options, DecodeFailedException
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
+from randovania.layout.layout_configuration import LayoutElevators, \
     LayoutSkyTempleKeyMode
-from randovania.layout.starting_location import StartingLocation
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 

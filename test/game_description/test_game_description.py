@@ -5,7 +5,7 @@ import pytest
 from randovania.game_description import game_description
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node
-from randovania.game_description.requirements import RequirementSet, Requirement
+from randovania.game_description.requirements import Requirement
 
 
 @pytest.mark.parametrize(["danger_a", "danger_b", "expected_result"], [
