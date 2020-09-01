@@ -145,7 +145,9 @@ def read_dock_weakness_database(data: Dict,
     return DockWeaknessDatabase(
         door=door_types,
         morph_ball=[
-            DockWeakness(0, "Morph Ball Door", False, Requirement.trivial(), DockType.MORPH_BALL_DOOR)
+            DockWeakness(0, "Morph Ball Door", False,
+                         ResourceRequirement(resource_database.get_item(15), 1, False),
+                         DockType.MORPH_BALL_DOOR)
         ],
         other=[
             DockWeakness(0, "Other Door", False, Requirement.trivial(), DockType.OTHER)
