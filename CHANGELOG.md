@@ -123,6 +123,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Staging Area now requires Scan Visor for the terminal (No Tricks and above).
 
+-   Fixed: Morph Ball Doors now properly requires Morph Ball.
+
 #### Changed
 
 -   Changed: Many nodes with missing requirements have been updated/cleaned up.
