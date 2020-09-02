@@ -378,7 +378,7 @@ class RequirementTemplate(Requirement):
         return isinstance(other, RequirementTemplate) and self.template_name == other.template_name
 
     def __hash__(self) -> int:
-        return hash((self.database, self.template_name))
+        return hash(self.template_name)
 
     def __str__(self) -> str:
         return self.template_name
