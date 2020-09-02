@@ -298,6 +298,7 @@ ConstructGame = Struct(
     dock_weakness_database=Struct(
         door=PrefixedArray(Byte, ConstructDockWeakness),
         portal=PrefixedArray(Byte, ConstructDockWeakness),
+        morph_ball=PrefixedArray(Byte, ConstructDockWeakness),
     ),
     victory_condition=ConstructRequirement,
     starting_location=Struct(

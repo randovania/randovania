@@ -141,12 +141,12 @@ def read_dock_weakness_database(data: Dict,
                                 ) -> DockWeaknessDatabase:
     door_types = read_array(data["door"], lambda item: read_dock_weakness(item, resource_database, DockType.DOOR))
     portal_types = read_array(data["portal"], lambda item: read_dock_weakness(item, resource_database, DockType.PORTAL))
+    morph_ball_types = read_array(data["morph_ball"], lambda item: read_dock_weakness(item, resource_database,
+                                                                                      DockType.MORPH_BALL_DOOR))
 
     return DockWeaknessDatabase(
         door=door_types,
-        morph_ball=[
-            DockWeakness(0, "Morph Ball Door", False, Requirement.trivial(), DockType.MORPH_BALL_DOOR)
-        ],
+        morph_ball=morph_ball_types,
         other=[
             DockWeakness(0, "Other Door", False, Requirement.trivial(), DockType.OTHER)
         ],
