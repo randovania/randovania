@@ -160,6 +160,10 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
             write_dock_weakness(weakness)
             for weakness in database.portal
         ],
+        "morph_ball": [
+            write_dock_weakness(weakness)
+            for weakness in database.morph_ball
+        ],
     }
 
 
