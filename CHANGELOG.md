@@ -45,6 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Energy Tanks have doubled weight for the generator.
 
+-   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
+
 ### Logic Database changes
 
 -   *Major* - Changed: Every requirement above the No Tricks difficulty now has a corresponding trick for ease of customization and organization.
