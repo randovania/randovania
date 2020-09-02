@@ -333,6 +333,58 @@ def test_trivial_requirement_str():
                 ]),
             ]),
     ),
+    (
+        RequirementOr([
+            _req("A"),
+            _req("A"),
+        ]),
+        _req("A"),
+    ),
+    (
+        RequirementAnd([
+            _req("A"),
+            _req("A"),
+        ]),
+        _req("A"),
+    ),
+    (
+        RequirementOr([
+            RequirementAnd([
+                _req("A"),
+                RequirementOr([
+                    _req("A"),
+                    RequirementOr([_req("A")])
+                ])
+            ]),
+            RequirementAnd([
+                _req("A"),
+                RequirementOr([
+                    _req("A"),
+                    RequirementOr([]),
+                ]),
+            ]),
+        ]),
+        _req("A"),
+    ),
+    (
+            RequirementOr([
+                RequirementAnd([
+                    _req("A"),
+                    RequirementOr([
+                        _req("A"),
+                        RequirementOr([_req("A")])
+                    ])
+                ]),
+                RequirementAnd([
+                    _req("A"),
+                    RequirementOr([
+                        _req("A"),
+                        RequirementOr([_req("A")]),
+                    ])
+                ])
+            ]),
+            _req("A"),
+    )
 ])
 def test_simplified_requirement(original, expected):
     simplified = original.simplify()
