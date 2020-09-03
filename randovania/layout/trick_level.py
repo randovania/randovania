@@ -160,7 +160,7 @@ class TrickLevelConfiguration(BitPackValue):
             7,   # Air Underwater
             8,   # Floaty
             9,   # Infinite Speed
-            10,  # SA without SJ
+            10,  # Screw Attack at Z-Axis
             11,  # Wall Boost
             12,  # Jump off Enemy
             # 14,# Controller Reset
