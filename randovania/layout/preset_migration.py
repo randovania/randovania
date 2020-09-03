@@ -48,9 +48,11 @@ def _migrate_v1(preset: dict) -> dict:
 
 def _migrate_v2(preset: dict) -> dict:
     level_renaming = {
-        "easy": "normal",
-        "normal": "hard",
-        "hard": "veteran",
+        "trivial": "beginner",
+        "easy": "intermediate",
+        "normal": "advanced",
+        "hard": "expert",
+        "minimal-restrictions": "minimal-logic",
     }
     trick_level = preset["layout_configuration"]["trick_level"]
     trick_level["global_level"] = level_renaming.get(trick_level["global_level"], trick_level["global_level"])

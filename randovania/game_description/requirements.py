@@ -1,6 +1,6 @@
 from functools import lru_cache
 from math import ceil
-from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple
+from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple, List, Type, Union
 
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
@@ -84,20 +84,9 @@ class RequirementAnd(Requirement):
         )
 
     def simplify(self) -> Requirement:
-        expanded = []
-        for item in self.items:
-            simplified_item = item.simplify()
-            if isinstance(simplified_item, RequirementAnd):
-                expanded.extend(simplified_item.items)
-            else:
-                expanded.append(simplified_item)
-
-        new_items = []
-        for item in expanded:
-            if item == Requirement.impossible():
-                return item
-            elif item != Requirement.trivial():
-                new_items.append(item)
+        new_items = _expand_items(self.items, RequirementAnd, Requirement.trivial())
+        if Requirement.impossible() in new_items:
+            return Requirement.impossible()
 
         if len(new_items) == 1:
             return new_items[0]
@@ -164,20 +153,9 @@ class RequirementOr(Requirement):
         )
 
     def simplify(self) -> Requirement:
-        expanded = []
-        for item in self.items:
-            simplified = item.simplify()
-            if isinstance(simplified, RequirementOr):
-                expanded.extend(simplified.items)
-            else:
-                expanded.append(simplified)
-
-        new_items = []
-        for item in expanded:
-            if item == Requirement.trivial():
-                return item
-            elif item != Requirement.impossible():
-                new_items.append(item)
+        new_items = _expand_items(self.items, RequirementOr, Requirement.impossible())
+        if Requirement.trivial() in new_items:
+            return Requirement.trivial()
 
         num_and_requirements = 0
         common_requirements = None
@@ -248,6 +226,25 @@ class RequirementOr(Requirement):
             return "({})".format(" or ".join(sorted(visual_items)))
         else:
             return "Impossible"
+
+
+def _expand_items(items: Tuple[Requirement, ...],
+                  cls: Type[Union[RequirementAnd, RequirementOr]],
+                  exclude: Requirement) -> List[Requirement]:
+    expanded = []
+
+    def _add(_item):
+        if _item not in expanded and _item != exclude:
+            expanded.append(_item)
+
+    for item in items:
+        simplified = item.simplify()
+        if isinstance(simplified, cls):
+            for new_item in simplified.items:
+                _add(new_item)
+        else:
+            _add(simplified)
+    return expanded
 
 
 class ResourceRequirement(NamedTuple, Requirement):
@@ -378,7 +375,7 @@ class RequirementTemplate(Requirement):
         return isinstance(other, RequirementTemplate) and self.template_name == other.template_name
 
     def __hash__(self) -> int:
-        return hash((self.database, self.template_name))
+        return hash(self.template_name)
 
     def __str__(self) -> str:
         return self.template_name

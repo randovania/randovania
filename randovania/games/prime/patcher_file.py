@@ -1,4 +1,3 @@
-import random
 from random import Random
 from typing import Dict, List, Iterator
 
@@ -228,7 +227,6 @@ class PickupCreatorSolo(PickupCreator):
                            visual_pickup: PickupEntry,
                            model_style: PickupModelStyle,
                            scan_text: str) -> dict:
-
         hud_text = _calculate_hud_text(pickup_target.pickup, visual_pickup, model_style, self.memo_data)
         if hud_text == ["Energy Transfer Module acquired!"] and (
                 self.rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):

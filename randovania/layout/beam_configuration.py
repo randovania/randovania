@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Tuple
 
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDataClass
+from randovania.bitpacking.bitpacking import BitPackDataClass
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration
 from randovania.game_description.resources.resource_database import ResourceDatabase
 

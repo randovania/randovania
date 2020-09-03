@@ -4,7 +4,6 @@ from pathlib import Path
 import pytest
 
 from randovania.gui import tracker_window
-from randovania.layout.layout_configuration import LayoutConfiguration
 
 
 @pytest.fixture(name="layout_config")

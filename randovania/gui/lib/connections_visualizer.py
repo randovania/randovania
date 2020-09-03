@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIntValidator
@@ -155,33 +155,27 @@ class ConnectionsVisualizer:
         self._add_widget_for_requirement_array(requirement)
 
     def _add_widget_for_requirement_array(self, requirement: Requirement):
-        parents = [(self.parent, self.grid_layout)]
         self.grid_layout.setAlignment(Qt.AlignTop)
 
-        next_title = ""
+        parents: List[Tuple[QGroupBox, QVBoxLayout]] = [(self.parent, self.grid_layout)]
 
-        current_depth = 0
         for depth, text in data_writer.pretty_print_requirement(requirement):
-            if depth > current_depth:
-                group_box = QGroupBox(parents[current_depth][0])
-                group_box.setTitle(next_title)
+            if "of the following" in text:
+                parent = parents[depth]
+                group_box = QGroupBox(parent[0])
+                group_box.setTitle(text)
                 self._elements.append(group_box)
                 vertical_layout = QVBoxLayout(group_box)
                 vertical_layout.setAlignment(Qt.AlignTop)
-                parents[current_depth][1].addWidget(group_box)
-                parents.append((group_box, vertical_layout))
-
-            elif depth < current_depth:
-                parents.pop()
-
-            current_depth = depth
-            if "of the following" in text:
-                next_title = text
+                parent[1].addWidget(group_box)
+                if len(parents) <= depth + 1:
+                    parents.append(None)
+                parents[depth + 1] = (group_box, vertical_layout)
             else:
-                label = QLabel(parents[current_depth][0])
+                label = QLabel(parents[depth][0])
                 label.setText(text)
                 self._elements.append(label)
-                parents[current_depth][1].addWidget(label)
+                parents[depth][1].addWidget(label)
 
     def deleteLater(self):
         for element in self._elements:

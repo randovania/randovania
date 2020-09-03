@@ -11,7 +11,6 @@ import randovania.generator.elevator_distributor
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime import claris_randomizer
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 

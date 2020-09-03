@@ -333,6 +333,58 @@ def test_trivial_requirement_str():
                 ]),
             ]),
     ),
+    (
+        RequirementOr([
+            _req("A"),
+            _req("A"),
+        ]),
+        _req("A"),
+    ),
+    (
+        RequirementAnd([
+            _req("A"),
+            _req("A"),
+        ]),
+        _req("A"),
+    ),
+    (
+        RequirementOr([
+            RequirementAnd([
+                _req("A"),
+                RequirementOr([
+                    _req("A"),
+                    RequirementOr([_req("A")])
+                ])
+            ]),
+            RequirementAnd([
+                _req("A"),
+                RequirementOr([
+                    _req("A"),
+                    RequirementOr([]),
+                ]),
+            ]),
+        ]),
+        _req("A"),
+    ),
+    (
+            RequirementOr([
+                RequirementAnd([
+                    _req("A"),
+                    RequirementOr([
+                        _req("A"),
+                        RequirementOr([_req("A")])
+                    ])
+                ]),
+                RequirementAnd([
+                    _req("A"),
+                    RequirementOr([
+                        _req("A"),
+                        RequirementOr([_req("A")]),
+                    ])
+                ])
+            ]),
+            _req("A"),
+    )
 ])
 def test_simplified_requirement(original, expected):
     simplified = original.simplify()
@@ -350,6 +402,7 @@ def test_requirement_template(database):
 
     # Assert
     assert as_set == make_single_set(_make_req("A"))
+    assert hash(use_a)
 
 
 def test_requirement_template_nested(database):
@@ -368,3 +421,4 @@ def test_requirement_template_nested(database):
         RequirementList([_req("A")]),
         RequirementList([_req("B")]),
     ])
+    assert hash(use_a) != hash(use_b)

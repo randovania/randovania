@@ -1,20 +1,11 @@
 import dataclasses
-import json
-from pathlib import Path
-
-import json
-from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
 
-import randovania.interface_common.options
-import randovania.interface_common.persisted_options
-from randovania.interface_common.options import Options, DecodeFailedException
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
+from randovania.layout.layout_configuration import LayoutElevators, \
     LayoutSkyTempleKeyMode
-from randovania.layout.starting_location import StartingLocation
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 
 
@@ -29,7 +20,7 @@ _sample_layout_configurations = [
         "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
     }
-    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.VETERAN, LayoutTrickLevel.MINIMAL_RESTRICTIONS]
+    for trick_level in [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.EXPERT, LayoutTrickLevel.MINIMAL_LOGIC]
 ]
 
 
@@ -39,7 +30,7 @@ def _initial_layout_configuration_params(request) -> dict:
 
 
 @pytest.mark.parametrize("new_trick_level",
-                         [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.TRIVIAL, LayoutTrickLevel.HYPERMODE])
+                         [LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.BEGINNER, LayoutTrickLevel.HYPERMODE])
 def test_edit_layout_trick_level(editor: PresetEditor,
                                  initial_layout_configuration_params: dict,
                                  default_layout_configuration,

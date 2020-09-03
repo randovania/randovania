@@ -40,7 +40,8 @@ def test_simple_round_trip():
         },
         "dock_weakness_database": {
             "door": [],
-            "portal": []
+            "portal": [],
+            "morph_ball": [],
         },
         "worlds": [],
     }

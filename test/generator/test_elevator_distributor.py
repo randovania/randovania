@@ -5,7 +5,6 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.generator import elevator_distributor
 from randovania.generator.elevator_distributor import Elevator
@@ -123,5 +122,3 @@ def test_one_way_elevator_connections_any_target(echoes_game_description):
         4: AreaLocation(0x3BFA3EFF, 0x531079BA),
         5: AreaLocation(0x1BAA96C2, 0x844A690C),
     }
-
-

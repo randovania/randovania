@@ -1,7 +1,6 @@
 from typing import Optional, Tuple, Callable, FrozenSet
 
 from randovania.game_description import data_reader
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, ResourceNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList

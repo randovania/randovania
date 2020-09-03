@@ -10,12 +10,12 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 
 class LayoutTrickLevel(BitPackEnum, Enum):
     NO_TRICKS = "no-tricks"
-    TRIVIAL = "trivial"
-    NORMAL = "normal"
-    HARD = "hard"
-    VETERAN = "veteran"
+    BEGINNER = "beginner"
+    INTERMEDIATE = "intermediate"
+    ADVANCED = "advanced"
+    EXPERT = "expert"
     HYPERMODE = "hypermode"
-    MINIMAL_RESTRICTIONS = "minimal-restrictions"
+    MINIMAL_LOGIC = "minimal-logic"
 
     @classmethod
     def default(cls) -> "LayoutTrickLevel":
@@ -37,12 +37,12 @@ class LayoutTrickLevel(BitPackEnum, Enum):
 _TRICK_LEVEL_ORDER: List[LayoutTrickLevel] = list(LayoutTrickLevel)
 _PRETTY_TRICK_LEVEL_NAME = {
     LayoutTrickLevel.NO_TRICKS: "No Tricks",
-    LayoutTrickLevel.TRIVIAL: "Trivial",
-    LayoutTrickLevel.NORMAL: "Normal",
-    LayoutTrickLevel.HARD: "Hard",
-    LayoutTrickLevel.VETERAN: "Veteran",
+    LayoutTrickLevel.BEGINNER: "Beginner",
+    LayoutTrickLevel.INTERMEDIATE: "Intermediate",
+    LayoutTrickLevel.ADVANCED: "Advanced",
+    LayoutTrickLevel.EXPERT: "Expert",
     LayoutTrickLevel.HYPERMODE: "Hypermode",
-    LayoutTrickLevel.MINIMAL_RESTRICTIONS: "Minimal Restrictions",
+    LayoutTrickLevel.MINIMAL_LOGIC: "Minimal Logic",
 }
 
 
@@ -71,7 +71,7 @@ class TrickLevelConfiguration(BitPackValue):
         yield from self.global_level.bit_pack_encode(metadata)
 
         encodable_levels = list(LayoutTrickLevel)
-        encodable_levels.remove(LayoutTrickLevel.MINIMAL_RESTRICTIONS)
+        encodable_levels.remove(LayoutTrickLevel.MINIMAL_LOGIC)
 
         for trick in sorted(TrickLevelConfiguration.all_possible_tricks()):
             if trick in self.specific_levels:
@@ -85,7 +85,7 @@ class TrickLevelConfiguration(BitPackValue):
         global_level = LayoutTrickLevel.bit_pack_unpack(decoder, metadata)
 
         encodable_levels = list(LayoutTrickLevel)
-        encodable_levels.remove(LayoutTrickLevel.MINIMAL_RESTRICTIONS)
+        encodable_levels.remove(LayoutTrickLevel.MINIMAL_LOGIC)
 
         specific_levels = {}
         for trick in sorted(cls.all_possible_tricks()):
@@ -151,16 +151,16 @@ class TrickLevelConfiguration(BitPackValue):
     def all_possible_tricks(cls) -> FrozenSet[int]:
         return frozenset({
             0,   # Scan Dash
-            1,   # Difficult Bomb Jump
+            1,   # Bomb Jump
             2,   # Slope Jump
-            3,   # R Jump
+            3,   # Movement
             4,   # BSJ
             5,   # Roll Jump
             6,   # Underwater Dash
             7,   # Air Underwater
             8,   # Floaty
             9,   # Infinite Speed
-            10,  # SA without SJ
+            10,  # Screw Attack at Z-Axis
             11,  # Wall Boost
             12,  # Jump off Enemy
             # 14,# Controller Reset
@@ -171,4 +171,8 @@ class TrickLevelConfiguration(BitPackValue):
             29,  # Boost Jump
             30,  # Extended Dash
             31,  # Bomb Slot without Bombs
+            32,  # Open Gates from Behind
+            33,  # Screw Attack into Tunnels
+            34,  # Knowledge
+            35,  # Seeker Locks without Seekers
         })
