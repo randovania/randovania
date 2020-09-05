@@ -1,3 +1,4 @@
+import pypresence
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QDialog
 from asyncqt import asyncSlot
@@ -68,7 +69,14 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     @asyncSlot()
     @handle_network_errors
     async def on_login_with_discord_button(self):
-        await self.network_client.login_with_discord()
+        try:
+            await self.network_client.login_with_discord()
+        except pypresence.exceptions.InvalidPipe:
+            await async_dialog.warning(self, "Discord login",
+                                       "Login failed. Is Discord running?")
+        except pypresence.exceptions.ServerError:
+            await async_dialog.warning(self, "Discord login",
+                                       "Login failed. Did you reject the authorization prompt in Discord?")
 
     def on_ok_button(self):
         self.accept()
