@@ -3,11 +3,12 @@ import os
 import sys
 
 import randovania
-from randovania.cli import echoes, gui
+from randovania.cli import echoes, multiworld, gui
 
 
 def create_subparsers(root_parser):
     echoes.create_subparsers(root_parser)
+    multiworld.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
 
 
@@ -36,7 +37,9 @@ def _run_args(args):
 
 def run_pytest(argv):
     import pytest
-    sys.exit(pytest.main(argv[2:], plugins=["pytest_asyncio"]))
+    import pytest_asyncio.plugin
+    import pytest_mock.plugin
+    sys.exit(pytest.main(argv[2:], plugins=[pytest_asyncio.plugin, pytest_mock.plugin]))
 
 
 def run_cli(argv):
