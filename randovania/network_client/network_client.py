@@ -25,8 +25,10 @@ class ConnectionState(Enum):
     Connected = "Connected"
     ConnectedNotLogged = "Connected, not logged in"
     ConnectedRestoringSession = "Connected, restoring session"
-    Reconnecting = "Connection lost, reconnecting"
-    UnableToConnect = "Unable to connect"
+
+    @property
+    def is_disconnected(self) -> bool:
+        return self in (ConnectionState.Disconnected, ConnectionState.Connecting)
 
 
 def _hash_address(server_address: str) -> str:
@@ -34,13 +36,18 @@ def _hash_address(server_address: str) -> str:
                                                     digest_size=12).digest()).decode("utf-8")
 
 
+class UnableToConnect(Exception):
+    pass
+
+
 class NetworkClient:
     sio: socketio.AsyncClient
     _current_game_session: Optional[GameSessionEntry] = None
     _current_user: Optional[User] = None
     _connection_state: ConnectionState
-    _was_connected: bool = False
     _call_lock: asyncio.Lock
+    _connect_task: Optional[asyncio.Task] = None
+    _restore_session_task: Optional[asyncio.Task] = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -49,7 +56,6 @@ class NetworkClient:
         self._connection_state = ConnectionState.Disconnected
         self.sio = socketio.AsyncClient()
         self._call_lock = asyncio.Lock()
-        self._connect_lock = asyncio.Lock()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -79,36 +85,57 @@ class NetworkClient:
         except FileNotFoundError:
             return None
 
+    def has_previous_session(self) -> bool:
+        return self.session_data_path.is_file()
+
     async def connect_if_authenticated(self):
         if self.session_data_path.is_file():
             self.logger.info("connect_if_authenticated: session data exists")
-            return await self.connect_to_server()
+            try:
+                return await self.connect_to_server()
+            except UnableToConnect:
+                pass
         else:
             self.logger.info("connect_if_authenticated: no session data")
 
-    async def connect_to_server(self):
-        # TODO: failing at the first time means it isn't continuously retried automatically
-        async with self._connect_lock:
-            try:
-                # sio.connect is raising a NotImplementedError, likely due to Windows and/or asyncqt?
-                engineio.asyncio_client.async_signal_handler_set = True
+    async def _internal_connect_to_server(self):
+        if self.sio.connected:
+            return
 
-                self.connection_state = ConnectionState.Connecting
-                self.logger.info(f"connect_to_server: connecting")
-                await self.sio.connect(self.configuration["server_address"],
-                                       socketio_path=self.configuration["socketio_path"],
-                                       headers={"X-Randovania-Version": randovania.VERSION})
-                self.logger.info(f"connect_to_server: connected")
+        try:
+            # sio.connect is raising a NotImplementedError, likely due to Windows and/or asyncqt?
+            engineio.asyncio_client.async_signal_handler_set = True
 
-            except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
-                self.logger.info(f"connect_to_server: failed with {e}")
+            self.connection_state = ConnectionState.Connecting
+            # self.logger.info(f"connect_to_server: sleeping")
+            # await asyncio.sleep(1)
+            # self.logger.info(f"connect_to_server: sleep over")
+
+            self.logger.info(f"connect_to_server: connecting")
+            await self.sio.connect(self.configuration["server_address"],
+                                   socketio_path=self.configuration["socketio_path"],
+                                   headers={"X-Randovania-Version": randovania.VERSION})
+            if self._restore_session_task is not None:
+                self.logger.info(f"connect_to_server: waiting for restore session")
+                await asyncio.wait_for(self._restore_session_task, timeout=30)
+            self.logger.info(f"connect_to_server: connected! -- {self._restore_session_task}")
+
+        except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
+            self.logger.info(f"connect_to_server: failed with {e} - {type(e)}")
+            await self.on_connect_error(f"{e} - {type(e)}")
+            raise UnableToConnect()
+
+    def connect_to_server(self) -> asyncio.Task:
+        if self._connect_task is None:
+            self._connect_task = asyncio.create_task(self._internal_connect_to_server())
+            self._connect_task.add_done_callback(lambda _: setattr(self, "_connect_task", None))
+
+        return self._connect_task
 
     async def disconnect_from_server(self):
         await self.sio.disconnect()
-        self._was_connected = False
 
-    async def on_connect(self):
-        self._was_connected = True
+    async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
         if persisted_session is not None:
             if self._current_game_session is not None:
@@ -129,23 +156,31 @@ class NetworkClient:
             self.logger.info(f"on_connect: no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
 
+    async def on_connect(self):
+        self._restore_session_task = asyncio.create_task(self._restore_session())
+        self._restore_session_task.add_done_callback(lambda _: setattr(self, "_restore_session_task", None))
+        await self._restore_session_task
+
     async def on_connect_error(self, error_message: str):
         self.logger.info(f"on_connect_error: {error_message}")
-        if self._was_connected:
-            self.connection_state = ConnectionState.Reconnecting
-        else:
-            self.connection_state = ConnectionState.UnableToConnect
+        self.connection_state = ConnectionState.Disconnected
+        if self._restore_session_task is not None:
+            self._restore_session_task.cancel()
 
     async def on_disconnect(self):
         self.logger.info(f"on_disconnect")
         self.connection_state = ConnectionState.Disconnected
+        if self._restore_session_task is not None:
+            self._restore_session_task.cancel()
 
     async def on_new_session(self, new_session: dict):
         self._current_user = User.from_json(new_session["user"])
+        if self.connection_state in (ConnectionState.ConnectedRestoringSession, ConnectionState.ConnectedNotLogged):
+            self.connection_state = ConnectionState.Connected
+
+        self.logger.info(f"on_new_session: {self._current_user.name}, state: {self.connection_state}")
+
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
-
-        self.logger.info(f"on_new_session: {self._current_user.name}")
-
         self.session_data_path.parent.mkdir(exist_ok=True, parents=True)
         async with aiofiles.open(self.session_data_path, "wb") as open_file:
             await open_file.write(encoded_session_data)
@@ -157,10 +192,14 @@ class NetworkClient:
         pass
 
     async def _emit_with_result(self, event, data=None, namespace=None):
+        if self.connection_state.is_disconnected:
+            self.logger.debug(f"_emit_with_result: {event}, urgent connect start")
+            await self.connect_to_server()
+            self.logger.debug(f"_emit_with_result: {event}, urgent connect finished")
+
+        self.logger.debug(f"_emit_with_result: {event}, getting lock")
         async with self._call_lock:
-            if self.connection_state == ConnectionState.Disconnected:
-                await self.connect_to_server()
-            self.logger.debug(f"_emit_with_result: {event}")
+            self.logger.debug(f"_emit_with_result: {event}, will call")
             result = await self.sio.call(event, data, namespace=namespace, timeout=30)
 
         if result is None:
@@ -202,6 +241,7 @@ class NetworkClient:
         self._current_game_session = GameSessionEntry.from_json(result)
 
     async def leave_session(self, permanent: bool):
+        # FIXME: not implemented in server
         await self._emit_with_result("leave_game_session", (self._current_game_session.id, permanent))
         self._current_game_session = None
 

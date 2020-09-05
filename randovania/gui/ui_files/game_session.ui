@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>699</width>
-    <height>349</height>
+    <height>318</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,27 +80,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="3">
-         <widget class="QLabel" name="generate_game_label">
-          <property name="text">
-           <string>&lt;Game not generated&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QPushButton" name="start_session_button">
-          <property name="text">
-           <string>Start session</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QPushButton" name="save_iso_button">
-          <property name="text">
-           <string>Save ISO</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QPushButton" name="generate_game_button">
           <property name="text">
@@ -108,10 +87,10 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0" colspan="5">
-         <widget class="Line" name="line_generate">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+        <item row="1" column="4">
+         <widget class="QPushButton" name="save_iso_button">
+          <property name="text">
+           <string>Save ISO</string>
           </property>
          </widget>
         </item>
@@ -126,34 +105,6 @@
          <widget class="QPushButton" name="view_game_details_button">
           <property name="text">
            <string>View Spoiler</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="4">
-         <widget class="QPushButton" name="stop_background_process_button">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Stop</string>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-          <property name="flat">
-           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -176,10 +127,46 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QLabel" name="generate_game_label">
+          <property name="text">
+           <string>&lt;Game not generated&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="5">
+         <widget class="Line" name="line_generate">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="1" colspan="2">
          <widget class="QPushButton" name="generate_without_spoiler_button">
           <property name="text">
            <string>Generate without spoiler</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="4">
+         <widget class="QPushButton" name="stop_background_process_button">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Stop</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -223,9 +210,18 @@
     <item>
      <widget class="QGroupBox" name="connection_group">
       <property name="title">
-       <string>Connection</string>
+       <string/>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
       <layout class="QHBoxLayout" name="connection_layout">
+       <property name="topMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>4</number>
+       </property>
        <item>
         <widget class="QToolButton" name="game_connection_tool">
          <property name="text">
@@ -244,9 +240,58 @@
         </widget>
        </item>
        <item>
+        <widget class="Line" name="connection_line_1">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="server_connection_button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Connect</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="server_connection_label">
          <property name="text">
           <string>Server: Disconnected</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="connection_line_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="session_status_tool">
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Start</string>
+         </property>
+         <property name="popupMode">
+          <enum>QToolButton::MenuButtonPopup</enum>
          </property>
         </widget>
        </item>

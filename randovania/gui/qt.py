@@ -166,7 +166,7 @@ def run(args):
 
     with loop:
         loop.create_task(app.game_connection.start())
-        loop.create_task(app.network_client.connect_if_authenticated())
+        # loop.create_task(app.network_client.connect_if_authenticated())
         sys.exit(loop.run_forever())
 
 

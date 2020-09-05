@@ -6,15 +6,16 @@ from asyncqt import asyncSlot
 
 from randovania.gui.generated.game_session_browser_dialog_ui import Ui_GameSessionBrowserDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.network_client.game_session import GameSessionListEntry
-from randovania.network_client.network_client import NetworkClient
+from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.error import WrongPassword
 
 
 class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
     sessions: List[GameSessionListEntry]
 
-    def __init__(self, network_client: NetworkClient):
+    def __init__(self, network_client: QtNetworkClient):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -32,7 +33,11 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
         self.table_widget.itemSelectionChanged.connect(self.on_selection_changed)
         self.table_widget.itemDoubleClicked.connect(self.on_double_click)
 
+        self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
+        self.on_server_connection_state_updated(self.network_client.connection_state)
+
     @asyncSlot()
+    @handle_network_errors
     async def refresh(self):
         self.refresh_button.setEnabled(False)
         try:
@@ -54,6 +59,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
         await self.attempt_join()
 
     @asyncSlot()
+    @handle_network_errors
     async def attempt_join(self):
         if not self.sessions:
             return
@@ -101,3 +107,6 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             self.table_widget.setItem(i, 4, players_item)
 
         self.status_label.setText(f"{len(self.sessions)} sessions found")
+
+    def on_server_connection_state_updated(self, state: ConnectionState):
+        self.server_connection_label.setText(f"Server: {state.value}")

@@ -13,6 +13,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
 
@@ -91,6 +92,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.LocationCollected.emit(self.collect_location_combo.currentData())
 
     @asyncSlot()
+    @handle_network_errors
     async def _setup_locations_combo(self):
         network_client = common_qt_lib.get_network_client()
         game_session = network_client.current_game_session
