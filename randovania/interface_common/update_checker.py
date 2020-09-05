@@ -15,13 +15,17 @@ class VersionDescription(NamedTuple):
         return StrictVersion(self.tag_name[1:])
 
 
-def strict_current_version() -> StrictVersion:
+def strict_version_for_version_string(version_name: str) -> StrictVersion:
     try:
-        return StrictVersion(VERSION)
+        return StrictVersion(version_name)
     except ValueError:
-        if ".dev" not in VERSION:
+        if ".dev" not in version_name:
             raise
-        return StrictVersion(VERSION.split(".dev")[0])
+        return StrictVersion(version_name.split(".dev")[0])
+
+
+def strict_current_version() -> StrictVersion:
+    return strict_version_for_version_string(VERSION)
 
 
 def get_version_for_release(release: dict) -> VersionDescription:
