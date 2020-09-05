@@ -25,7 +25,6 @@ async def test_on_login_as_guest_button(prompt, mocker):
     prompt.network_client.login_as_guest.assert_awaited_once_with(mock_dialog.textValue.return_value)
 
 
-
 @pytest.mark.asyncio
 async def test_on_login_with_discord_button(prompt):
     # Setup

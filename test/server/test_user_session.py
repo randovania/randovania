@@ -1,3 +1,4 @@
+import datetime
 import json
 from unittest.mock import MagicMock, patch, ANY
 
@@ -79,6 +80,48 @@ def test_restore_user_session_with_discord(mock_create_session: MagicMock,
     sio.get_server.return_value.save_session.assert_called_once_with(7890, session)
     mock_create_session.assert_called_once_with(sio, user)
     assert result is mock_create_session.return_value
+
+
+def test_login_with_guest(flask_app, clean_database, mocker):
+    # Setup
+    mocker.patch("randovania.server.user_session._get_now", return_value=datetime.datetime(year=2020, month=9, day=4))
+    mock_create_session = mocker.patch("randovania.server.user_session._create_client_side_session", autospec=True)
+    enc_request = b"encrypted stuff"
+
+    sio = MagicMock()
+    sio.guest_encrypt.decrypt.return_value = json.dumps({
+        "name": "Someone",
+        "date": '2020-09-05T17:12:09.941661',
+    }).encode("utf-8")
+
+    with flask_app.test_request_context():
+        flask.request.sid = 7890
+        result = user_session.login_with_guest(sio, enc_request)
+
+    # Assert
+    sio.guest_encrypt.decrypt.assert_called_once_with(enc_request)
+    user: User = User.get_by_id(1)
+    assert user.name == "Guest: Someone"
+
+    mock_create_session.assert_called_once_with(sio, user)
+    assert result is mock_create_session.return_value
+
+
+def test_logout(flask_app):
+    session = {
+        "user-id": 1234,
+        "discord-access-token": "access_token",
+    }
+    sio = MagicMock()
+    sio.session.return_value.__enter__.return_value = session
+
+    # Run
+    with flask_app.test_request_context():
+        user_session.logout(sio)
+
+    # Assert
+    assert session == {}
+    sio.leave_session.assert_called_once_with()
 
 
 def test_restore_user_session_invalid_key(flask_app, fernet):

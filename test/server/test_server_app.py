@@ -91,6 +91,41 @@ def test_join_session(mocker, server_app):
     }
 
 
+def test_leave_session_with_session(mocker, server_app):
+    # Setup
+    mock_leave_room = mocker.patch("flask_socketio.leave_room")
+    user = MagicMock()
+    user.id = "user_id"
+    server_app.get_current_user = lambda: user
+
+    session = {"current_game_session": "session_id"}
+    server_app.session = MagicMock()
+    server_app.session.return_value.__enter__.return_value = session
+
+    # Run
+    server_app.leave_session()
+
+    # Assert
+    mock_leave_room.assert_has_calls([
+        call("game-session-session_id"),
+        call("game-session-session_id-user_id"),
+    ])
+    assert session == {}
+
+
+def test_leave_session_without_session(mocker, server_app):
+    # Setup
+    mock_leave_room: MagicMock = mocker.patch("flask_socketio.leave_room")
+    server_app.session = MagicMock()
+    server_app.session.return_value.__enter__.return_value = {}
+
+    # Run
+    server_app.leave_session()
+
+    # Assert
+    mock_leave_room.assert_not_called()
+
+
 def test_on_success_ok(server_app):
     # Setup
     custom = MagicMock()
