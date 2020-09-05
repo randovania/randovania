@@ -1,12 +1,14 @@
 import base64
+import datetime
 import json
 from typing import Optional
 
+import cryptography.fernet
 import flask
 import peewee
 from requests_oauthlib import OAuth2Session
 
-from randovania.network_common.error import InvalidSession
+from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
@@ -60,8 +62,26 @@ def login_with_discord(sio: ServerApp, code: str):
     return _create_client_side_session(sio, user)
 
 
-def login_with_guest(sio: ServerApp):
-    user: User = User.create(name="Guest")
+def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
+    if sio.guest_encrypt is None:
+        raise NotAuthorizedForAction()
+
+    try:
+        login_request_bytes = sio.guest_encrypt.decrypt(encrypted_login_request)
+    except cryptography.fernet.InvalidToken:
+        raise NotAuthorizedForAction()
+
+    try:
+        login_request = json.loads(login_request_bytes.decode("utf-8"))
+        name = login_request["name"]
+        date = datetime.datetime.fromisoformat(login_request["date"])
+    except (UnicodeDecodeError, json.JSONDecodeError, KeyError, ValueError) as e:
+        raise InvalidAction(str(e))
+
+    if datetime.datetime.now() - date > datetime.timedelta(days=1):
+        raise NotAuthorizedForAction()
+
+    user: User = User.create(name=f"Guest: {name}")
 
     with sio.session() as session:
         session["user-id"] = user.id
@@ -94,7 +114,16 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: O
         raise InvalidSession()
 
 
+def logout(sio: ServerApp):
+    sio.leave_session()
+    flask.session.pop("DISCORD_OAUTH2_TOKEN", None)
+    with sio.session() as session:
+        session.pop("discord-access-token", None)
+        session.pop("user-id", None)
+
+
 def setup_app(sio: ServerApp):
     sio.on("login_with_discord", login_with_discord)
     sio.on("login_with_guest", login_with_guest)
     sio.on("restore_user_session", restore_user_session)
+    sio.on("logout", logout)

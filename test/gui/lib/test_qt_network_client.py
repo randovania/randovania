@@ -63,7 +63,7 @@ async def test_login_to_discord(client):
     client.on_new_session = AsyncMock()
 
     # Run
-    await client.login_to_discord()
+    await client.login_with_discord()
 
     # Assert
     client.discord.start.assert_awaited_once_with()

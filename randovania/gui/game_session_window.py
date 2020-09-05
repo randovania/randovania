@@ -17,6 +17,7 @@ from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
@@ -145,17 +146,34 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
         self.generate_game_button.clicked.connect(functools.partial(self.generate_game, True))
         self.generate_without_spoiler_button.clicked.connect(functools.partial(self.generate_game, False))
-        self.start_session_button.clicked.connect(self.start_session)
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
+        self.session_status_tool.clicked.connect(self._session_status_button_clicked)
         self.save_iso_button.clicked.connect(self.save_iso)
         self.on_generated_layout_signal.connect(self._upload_layout_description)
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
+        # Game Connection
         self.game_connection_menu = QtWidgets.QMenu(self.game_connection_tool)
-        setup_connection_action = QtWidgets.QAction(self.game_connection_menu)
-        setup_connection_action.setText("Setup game connection")
+        setup_connection_action = QtWidgets.QAction("Setup game connection", self.game_connection_menu)
         self.game_connection_menu.addAction(setup_connection_action)
         self.game_connection_tool.setMenu(self.game_connection_menu)
+        self.game_connection_tool.setVisible(False)
+
+        # Server Status
+        self.server_connection_button.clicked.connect(self._connect_to_server)
+
+        # Session status
+        self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
+        self.start_session_action = QtWidgets.QAction("Start session", self.session_status_menu)
+        self.start_session_action.triggered.connect(self.start_session)
+        self.session_status_menu.addAction(self.start_session_action)
+        self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
+        self.finish_session_action.setEnabled(False)
+        self.session_status_menu.addAction(self.finish_session_action)
+        self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
+        self.reset_session_action.setEnabled(False)
+        self.session_status_menu.addAction(self.reset_session_action)
+        self.session_status_tool.setMenu(self.session_status_menu)
 
         self.players_box = QtWidgets.QGroupBox(parent)
         self.players_box.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,
@@ -208,11 +226,14 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             event.ignore()
             return
 
-        await self.network_client.leave_session(user_response == QMessageBox.Yes)
         await self.multiworld_client.stop()
-
         self.network_client.GameSessionUpdated.disconnect(self.on_game_session_updated)
-        super().closeEvent(event)
+
+        try:
+            if user_response == QMessageBox.Yes or not self.network_client.connection_state.is_disconnected:
+                await self.network_client.leave_session(user_response == QMessageBox.Yes)
+        finally:
+            super().closeEvent(event)
         self.has_closed = True
 
     def _show_failed_generation_exception(self, exception: GenerationFailure):
@@ -300,6 +321,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         message_box.exec_()
 
     @asyncSlot()
+    @handle_network_errors
     async def _row_customize_preset(self, row: RowWidget):
         if self._logic_settings_window is not None:
             if self._logic_settings_window._game_session_row == row:
@@ -332,6 +354,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
                 (row_index, editor.create_custom_preset_with().as_json))
 
     @asyncSlot()
+    @handle_network_errors
     async def _row_import_preset(self, row: RowWidget, preset: Preset):
         row_index = self.rows.index(row)
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
@@ -358,6 +381,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self._preset_manager.add_new_preset(preset)
 
     @asyncSlot()
+    @handle_network_errors
     async def _row_delete(self, row: RowWidget):
         row_index = self.rows.index(row)
         if row != self.rows[-1]:
@@ -557,7 +581,10 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.session_status_label.setText("Session: {}".format("In-Game" if game_session.in_game else "Not Started"))
         self.generate_game_button.setEnabled(self_is_admin)
         self.generate_without_spoiler_button.setEnabled(self_is_admin and False)
-        self.start_session_button.setEnabled(self_is_admin and game_session.seed_hash is not None)
+        self.session_status_tool.setEnabled(self_is_admin and game_session.seed_hash is not None)
+        self.session_status_tool.setEnabled(self.session_status_tool.isEnabled())
+        self.session_status_tool.setText("Finish" if game_session.in_game else "Start")
+
         self.save_iso_button.setEnabled(game_session.seed_hash is not None
                                         and self.current_player_membership.team is not None)
         if game_session.seed_hash is None:
@@ -622,6 +649,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             action.setEnabled(admin_or_you and team_has_slot[i] and (i != player.team))
 
     @asyncSlot()
+    @handle_network_errors
     async def _admin_global_action_slot(self, action: SessionAdminGlobalAction, arg):
         return await self._admin_global_action(action, arg)
 
@@ -633,6 +661,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.setEnabled(True)
 
     @asyncSlot()
+    @handle_network_errors
     async def _admin_player_action_slot(self, player: PlayerWidget, action: SessionAdminUserAction, arg):
         if player.player is None:
             raise RuntimeError("Admin action attempted on empty slot")
@@ -674,6 +703,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, layout.as_json))
 
     @asyncSlot()
+    @handle_network_errors
     async def start_session(self):
         if len(self._game_session.players) != self._game_session.num_teams * len(self._game_session.presets):
             await async_dialog.message_box(self,
@@ -687,6 +717,14 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
 
     @asyncSlot()
+    async def _session_status_button_clicked(self):
+        if self._game_session.in_game:
+            await async_dialog.warning(self, "NYI", "Finish session not implemented.")
+        else:
+            await self.start_session()
+
+    @asyncSlot()
+    @handle_network_errors
     async def save_iso(self):
         membership = self.current_player_membership
         team = membership.team
@@ -778,7 +816,13 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
                 options.cosmetic_patches = dialog.cosmetic_patches
 
     def on_server_connection_state_updated(self, state: ConnectionState):
+        self.server_connection_button.setEnabled(state == ConnectionState.Disconnected)
         self.server_connection_label.setText(f"Server: {state.value}")
 
     def on_game_connection_status_updated(self, status: ConnectionStatus):
         self.game_connection_label.setText(self.game_connection.pretty_current_status)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _connect_to_server(self):
+        await self.network_client.connect_to_server()
