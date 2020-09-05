@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from mock import AsyncMock, MagicMock
 
-from randovania.gui.lib.qt_network_client import QtNetworkClient
+from randovania.gui.lib import qt_network_client
 from randovania.network_common.error import InvalidAction, ServerError, NotAuthorizedForAction
 
 
@@ -14,22 +14,22 @@ def network_client_fixture(skip_qtbot, mocker, tmpdir):
         "socketio_path": "/path",
         "discord_client_id": 1234,
     })
-    return QtNetworkClient(Path(tmpdir))
+    return qt_network_client.QtNetworkClient(Path(tmpdir))
 
 
 @pytest.mark.asyncio
-async def test_emit_with_result_success(client, mocker):
-    mock_super = mocker.patch("randovania.network_client.network_client.NetworkClient._emit_with_result",
-                              new_callable=AsyncMock)
-    mock_super.return_value = MagicMock()
+async def test_handle_network_errors_success(skip_qtbot, qapp):
+    callee = AsyncMock()
+    callee.return_value = MagicMock()
     data = MagicMock()
 
     # Run
-    result = await client._emit_with_result("foo", data)
+    wrapped = qt_network_client.handle_network_errors(callee)
+    result = await wrapped(qapp, "foo", data)
 
     # Assert
-    mock_super.assert_awaited_once_with("foo", data, None)
-    assert result is mock_super.return_value
+    callee.assert_awaited_once_with(qapp, "foo", data)
+    assert result is callee.return_value
 
 
 @pytest.mark.parametrize(["exception", "title", "message"], [
@@ -38,20 +38,20 @@ async def test_emit_with_result_success(client, mocker):
     (NotAuthorizedForAction(), "Unauthorized", "You're not authorized to perform that action."),
 ])
 @pytest.mark.asyncio
-async def test_emit_with_result_exception(client, mocker, exception, title, message):
+async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, exception, title, message):
     mock_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_super = mocker.patch("randovania.network_client.network_client.NetworkClient._emit_with_result",
-                              new_callable=AsyncMock)
-    mock_super.side_effect = exception
+    callee = AsyncMock()
+    callee.side_effect = exception
     data = MagicMock()
 
     # Run
-    result = await client._emit_with_result("foo", data)
+    wrapped = qt_network_client.handle_network_errors(callee)
+    result = await wrapped(qapp, "foo", data)
 
     # Assert
-    mock_super.assert_awaited_once_with("foo", data, None)
+    callee.assert_awaited_once_with(qapp, "foo", data)
     assert result is None
-    mock_dialog.assert_awaited_once_with(client, title, message)
+    mock_dialog.assert_awaited_once_with(qapp, title, message)
 
 
 @pytest.mark.asyncio

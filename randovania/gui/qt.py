@@ -96,7 +96,7 @@ def show_main_window(app: QApplication, is_preview: bool):
         raise SystemExit(2)
 
     from randovania.gui.main_window import MainWindow
-    main_window = MainWindow(options, preset_manager, is_preview)
+    main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
     app.main_window = main_window
     main_window.show()
     main_window.request_new_data()

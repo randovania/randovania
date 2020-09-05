@@ -26,7 +26,7 @@ from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.qt_network_client import handle_network_errors
+from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.online_game_list_window import GameSessionBrowserDialog
@@ -80,7 +80,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     def is_preview_mode(self) -> bool:
         return self._is_preview_mode
 
-    def __init__(self, options: Options, preset_manager: PresetManager, preview: bool):
+    def __init__(self, options: Options, preset_manager: PresetManager,
+                 network_client: QtNetworkClient, preview: bool):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
@@ -91,6 +92,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
         self._preset_manager = preset_manager
+        self.network_client = network_client
 
         if preview:
             debug.set_level(2)
@@ -180,7 +182,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             return True
 
     async def _ensure_logged_in(self) -> bool:
-        network_client = common_qt_lib.get_network_client()
+        network_client = self.network_client
         if network_client.connection_state == ConnectionState.Connected:
             return True
 
@@ -211,8 +213,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         if not await self._ensure_logged_in():
             return
 
-        network_client = common_qt_lib.get_network_client()
-
+        network_client = self.network_client
         browser = GameSessionBrowserDialog(network_client)
         await browser.refresh()
         if await async_dialog.execute_dialog(browser) == browser.Accepted:
@@ -227,7 +228,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         if self._login_window is not None:
             return self._login_window.show()
 
-        self._login_window = LoginPromptDialog(common_qt_lib.get_network_client())
+        self._login_window = LoginPromptDialog(self.network_client)
         try:
             await async_dialog.execute_dialog(self._login_window)
         finally:
@@ -249,7 +250,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
             return
 
-        new_session = await common_qt_lib.get_network_client().create_new_session(dialog.textValue())
+        new_session = await self.network_client.create_new_session(dialog.textValue())
         self.game_session_window = GameSessionWindow(new_session, self.preset_manager, self._options)
         self.game_session_window.show()
 
@@ -262,8 +263,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
     # Releases info
     def request_new_data(self):
-        asyncio.get_event_loop().create_task(github_releases_data.get_releases()).add_done_callback(
-            self._on_releases_data)
+        asyncio.create_task(github_releases_data.get_releases()).add_done_callback(self._on_releases_data)
 
     def _on_releases_data(self, task: asyncio.Task):
         releases = task.result()

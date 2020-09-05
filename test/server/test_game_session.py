@@ -48,9 +48,10 @@ def test_create_game_session(clean_database, preset_manager):
         'num_teams': 1,
         'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0, 'team': 0}],
         'presets': [preset_manager.default_preset.as_json],
+        'actions': [],
         'seed_hash': None,
         'spoiler': None,
-        'word_hash': None
+        'word_hash': None,
     }
 
 
@@ -81,6 +82,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
             {'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0, 'team': 0},
             {'admin': False, 'id': 1234, 'name': 'The Name', 'row': 0, 'team': None},
         ],
+        'actions': [],
         'presets': [{}],
         'seed_hash': None,
         'spoiler': None,

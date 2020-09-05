@@ -4,10 +4,11 @@ from randovania.server import app
 def test_create_app(mocker, tmpdir):
     mocker.patch("randovania.get_configuration").return_value = {
         "discord_client_id": 1234,
+        "guest_key": "s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         "server_config": {
             "secret_key": "key",
             "discord_client_secret": 5678,
-            "fernet_key": 'czJELXBqQklYcUVxa2JlUnZrYXBlRG44Mk1nWlhMTFFHWkxUZ3FxWi0tQT0=',
+            "fernet_key": 's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=',
             "database_path": str(tmpdir.join("database.db")),
         }
     }

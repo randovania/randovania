@@ -15,6 +15,7 @@ def server_app_fixture(flask_app, skip_qtbot):
     flask_app.config["DISCORD_CLIENT_SECRET"] = 5678
     flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
     flask_app.config["FERNET_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
+    flask_app.config["GUEST_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
     return ServerApp(flask_app)
 
 

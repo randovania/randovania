@@ -62,6 +62,7 @@ async def test_connect_to_server(tmpdir):
                                           "socketio_path": "/path"})
     client.sio = MagicMock()
     client.sio.connect = AsyncMock()
+    client.sio.connected = False
 
     # Run
     await client.connect_to_server()

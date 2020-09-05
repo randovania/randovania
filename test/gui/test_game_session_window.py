@@ -1,8 +1,10 @@
+import datetime
+
 import pytest
 from mock import MagicMock, patch
 
 from randovania.gui.game_session_window import GameSessionWindow
-from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User
+from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
 
 
 @pytest.mark.asyncio
@@ -23,9 +25,11 @@ def test_on_game_session_updated(mock_get_game_connection: MagicMock,
         players={
             12: PlayerSessionEntry(12, "Player A", 0, 0, True),
         },
+        actions=[],
         seed_hash=None,
         word_hash=None,
         spoiler=None,
+        in_game=False,
     )
     second_session = GameSessionEntry(
         id=1234,
@@ -36,9 +40,13 @@ def test_on_game_session_updated(mock_get_game_connection: MagicMock,
             12: PlayerSessionEntry(12, "Player A", 0, 0, True),
             24: PlayerSessionEntry(24, "Player B", 0, None, False),
         },
+        actions=[
+            GameSessionAction("Hello", 0, datetime.datetime(year=2020, month=1, day=5))
+        ],
         seed_hash="AB12",
         word_hash="Chykka Required",
         spoiler=True,
+        in_game=True,
     )
     window = GameSessionWindow(initial_session, preset_manager, MagicMock())
 
