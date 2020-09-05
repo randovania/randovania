@@ -8,6 +8,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              pathex=[],
              binaries=[],
              datas=[
+                 ("randovania/data/configuration-release.json", "data/configuration.json"),
                  ("randovania/data/icons", "data/icons"),
                  ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
                  ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
@@ -21,7 +22,6 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                 "mock",
                 "unittest.mock",
                 "pkg_resources.py2_warn",
-                "pytest_asyncio",
              ],
              hookspath=[
                  # https://github.com/pyinstaller/pyinstaller/issues/4040
