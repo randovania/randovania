@@ -62,6 +62,11 @@ def login_with_discord(sio: ServerApp, code: str):
     return _create_client_side_session(sio, user)
 
 
+def _get_now():
+    # For mocking in tests
+    return datetime.datetime.now()
+
+
 def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     if sio.guest_encrypt is None:
         raise NotAuthorizedForAction()
@@ -78,7 +83,7 @@ def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     except (UnicodeDecodeError, json.JSONDecodeError, KeyError, ValueError) as e:
         raise InvalidAction(str(e))
 
-    if datetime.datetime.now() - date > datetime.timedelta(days=1):
+    if _get_now() - date > datetime.timedelta(days=1):
         raise NotAuthorizedForAction()
 
     user: User = User.create(name=f"Guest: {name}")
