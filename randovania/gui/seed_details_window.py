@@ -1,7 +1,7 @@
 from functools import partial
-from typing import List, Dict
+from typing import List, Dict, Optional
 
-from PySide2 import QtCore
+from PySide2 import QtCore, QtWidgets
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QApplication, QDialog, QAction, QMenu
 
@@ -13,6 +13,7 @@ from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib import preset_describer
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher, status_update_lib
@@ -48,23 +49,22 @@ def _hide_pickup_spoiler(button):
 
 
 # TODO: this should not be a Window class
-class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
+class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton]
     pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
     _options: Options
-    _window_manager: WindowManager
+    _window_manager: Optional[WindowManager]
     _player_names: Dict[int, str]
 
-    def __init__(self, background_processor: BackgroundTaskMixin, window_manager: WindowManager, options: Options):
+    def __init__(self, window_manager: Optional[WindowManager], options: Options):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
         self._history_items = []
         self.pickup_spoiler_buttons = []
-        self.background_processor = background_processor
         self._options = options
         self._window_manager = window_manager
 
@@ -74,6 +74,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         self._action_open_tracker = QAction(self)
         self._action_open_tracker.setText("Open map tracker")
+        self._action_open_tracker.setEnabled(self._window_manager is not None)
         self._tool_button_menu.addAction(self._action_open_tracker)
 
         self._action_copy_permalink = QAction(self)
@@ -91,6 +92,12 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
         self.player_index_combo.activated.connect(self._update_current_player)
+        self.CloseEvent.connect(self.stop_background_process)
+
+        # Progress
+        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.progress_update_signal.connect(self.update_progress)
+        self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
         # Cosmetic
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
@@ -127,6 +134,13 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         result = dialog.exec_()
 
         if result != QDialog.Accepted:
+            return
+
+        if simplified_patcher.export_busy:
+            QtWidgets.QMessageBox.critical(self, "Can't save ISO",
+                                           "Error: Unable to save multiple ISOs at the same time,"
+                                           "another window is saving an ISO right now.",
+                                           QtWidgets.QMessageBox.Ok)
             return
 
         input_file = dialog.input_file
@@ -168,7 +182,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
             progress_update(f"Finished!", 1)
 
-        self.background_processor.run_in_background_thread(work, "Exporting...")
+        self.run_in_background_thread(work, "Exporting...")
 
     def _open_map_tracker(self):
         current_preset = self.layout_description.permalink.presets[self.current_player_index]
@@ -240,6 +254,7 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_description = description
         self.layout_info_tab.show()
 
+        self.setWindowTitle(f"Game Details: {description.shareable_word_hash}")
         self.export_log_button.setEnabled(description.permalink.spoiler)
 
         self._player_names = {
@@ -260,9 +275,9 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         current_player = self.current_player_index
         preset = description.permalink.get_preset(current_player)
 
+        self.permalink_edit.setText(description.permalink.as_str)
         title_text = """
         <p>
-            Permalink: <span style='font-weight:600;'>{description.permalink.as_str}</span><br/>
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
             Preset Name: {preset.name}
         </p>
@@ -363,3 +378,18 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         if result == QDialog.Accepted:
             with self._options as options:
                 options.cosmetic_patches = dialog.cosmetic_patches
+
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setEnabled(not value)
+        self.export_iso_button.setEnabled(value)
+        simplified_patcher.export_busy = not value
+
+    def update_progress(self, message: str, percentage: int):
+        self.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.progress_bar.setRange(0, 100)
+            self.progress_bar.setValue(percentage)
+        else:
+            self.progress_bar.setRange(0, 0)

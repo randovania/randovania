@@ -38,6 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
+-   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
+
+-   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't 
+    stretch with long permalinks. 
+
 -   Changed: The elevator scan now includes the world of the connected area.
 
 -   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
