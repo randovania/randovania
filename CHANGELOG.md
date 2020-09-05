@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   *Major* - Added: Multiworld support yay TODO actual description
+
 -   Added: An automatic item tracker based on a Dolphin running on the same computer.
 
 -   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
