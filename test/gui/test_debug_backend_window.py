@@ -1,5 +1,6 @@
 import pytest
 from PySide2.QtCore import Qt
+from mock import patch, MagicMock, AsyncMock
 
 from randovania.game_connection.connection_backend import ConnectionStatus
 from randovania.game_description.item.item_category import ItemCategory
@@ -55,8 +56,23 @@ def test_set_permanent_pickups(backend, pickup):
 
 
 @pytest.mark.asyncio
-async def test_setup_locations_combo(backend):
+@patch("randovania.gui.lib.common_qt_lib.get_network_client", autospec=True)
+async def test_setup_locations_combo(mock_get_network_client: MagicMock,
+                                     backend):
+    # Setup
+    patcher_data = {
+        "pickups": [
+            {"pickup_index": i, "hud_text": f"Item {i}"}
+            for i in range(110)
+        ]
+    }
+    mock_get_network_client.return_value.session_admin_player = AsyncMock(return_value=patcher_data)
+
+    # Run
     await backend._setup_locations_combo()
+
+    # Assert
+    mock_get_network_client.assert_called_once_with()
     assert backend.collect_location_combo.count() > 100
 
 
