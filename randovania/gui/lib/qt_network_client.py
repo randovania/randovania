@@ -64,21 +64,15 @@ class QtNetworkClient(QWidget, NetworkClient):
         await super().on_game_session_updated(data)
         self.GameSessionUpdated.emit(self._current_game_session)
 
-    async def login_with_discord(self) -> bool:
+    async def login_with_discord(self):
         if self.discord is None:
             raise RuntimeError("Missing Discord configuration for Randovania")
 
         await self.discord.start()
-        try:
-            authorize = await self.discord.authorize(self.configuration["discord_client_id"], ['identify'])
-        except pypresence.exceptions.ServerError as e:
-            if "access_denied" in e:
-                return False
-            raise
+        authorize = await self.discord.authorize(self.configuration["discord_client_id"], ['identify'])
 
         new_session = await self._emit_with_result("login_with_discord", authorize["data"]["code"])
         await self.on_new_session(new_session)
-        return True
 
     async def login_as_guest(self, name: str = "Unknown"):
         if "guest_secret" not in self.configuration:
