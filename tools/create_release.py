@@ -1,4 +1,5 @@
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -34,6 +35,14 @@ def main():
         json_data = json.load(json_data_file)
     prime_database.export_as_binary(json_data,
                                     _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", "prime2.bin"))
+
+    configuration = {
+        "discord_client_id": 618134325921316864,
+        "server_address": "https://fi.gemignani.org/randovania",
+        "socketio_path": "/randovania/socket.io",
+    }
+    with _ROOT_FOLDER.joinpath("randovania", "data", "configuration-release.json").open("w") as config_release:
+        json.dump(configuration, config_release)
 
     subprocess.run([sys.executable, "-m", "PyInstaller",
                     "randovania.spec"],
