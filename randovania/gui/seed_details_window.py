@@ -2,16 +2,18 @@ from functools import partial
 from typing import List, Dict, Optional
 
 from PySide2 import QtCore, QtWidgets
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
+from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QApplication, QDialog, QAction, QMenu
+from asyncqt import asyncSlot
 
+from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
 from randovania.games.prime import patcher_file
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
-from randovania.gui.lib import preset_describer
+from randovania.gui.lib import preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
@@ -48,7 +50,6 @@ def _hide_pickup_spoiler(button):
     button.item_is_hidden = True
 
 
-# TODO: this should not be a Window class
 class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton]
@@ -120,28 +121,24 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
 
-    def _export_iso(self):
+    @asyncSlot()
+    async def _export_iso(self):
         layout = self.layout_description
         has_spoiler = layout.permalink.spoiler
         options = self._options
 
-        dialog = GameInputDialog(options,
-                                 "Echoes Randomizer - {}.iso".format(
-                                     layout.shareable_word_hash
-                                 ),
-                                 has_spoiler,
-                                 )
-        result = dialog.exec_()
+        dialog = GameInputDialog(options, "Echoes Randomizer - {}.iso".format(layout.shareable_word_hash), has_spoiler)
+        result = await async_dialog.execute_dialog(dialog)
 
         if result != QDialog.Accepted:
             return
 
         if simplified_patcher.export_busy:
-            QtWidgets.QMessageBox.critical(self, "Can't save ISO",
-                                           "Error: Unable to save multiple ISOs at the same time,"
-                                           "another window is saving an ISO right now.",
-                                           QtWidgets.QMessageBox.Ok)
-            return
+            return await async_dialog.message_box(
+                self, QtWidgets.QMessageBox.Critical,
+                "Can't save ISO",
+                "Error: Unable to save multiple ISOs at the same time,"
+                "another window is saving an ISO right now.")
 
         input_file = dialog.input_file
         output_file = dialog.output_file
@@ -298,7 +295,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                 pickup.pickup.name
                 for pickup in patches.pickup_assignment.values()
             }
-            game_description = default_prime2_game_description()
+            game_description = data_reader.decode_data(preset.layout_configuration.game_data)
             starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 
             extra_items = patcher_file.additional_starting_items(preset.layout_configuration,
