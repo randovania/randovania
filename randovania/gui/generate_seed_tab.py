@@ -32,8 +32,7 @@ def persist_layout(data_dir: Path, description: LayoutDescription):
     description.save_to_file(file_path)
 
 
-class GenerateSeedTab(QWidget):
-    _current_lock_state: bool = True
+class GenerateSeedTab(QWidget, BackgroundTaskMixin):
     _logic_settings_window = None
     _current_preset: Preset = None
     _tool_button_menu: QMenu
@@ -41,22 +40,21 @@ class GenerateSeedTab(QWidget):
 
     failed_to_generate_signal = Signal(GenerationFailure)
 
-    def __init__(self, background_processor: BackgroundTaskMixin, window: Ui_MainWindow,
-                 window_manager: WindowManager, options: Options):
+    def __init__(self, window: Ui_MainWindow, window_manager: WindowManager, options: Options):
         super().__init__()
 
-        self.background_processor = background_processor
         self.window = window
         self._window_manager = window_manager
         self._options = options
-
-        self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
     def setup_ui(self):
         window = self.window
 
         # Progress
-        self.background_processor.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.progress_update_signal.connect(self.update_progress)
+        self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
+        self.window.stop_background_process_button.clicked.connect(self.stop_background_process)
 
         for preset in self._window_manager.preset_manager.all_presets:
             self._create_button_for_preset(preset)
@@ -99,8 +97,9 @@ class GenerateSeedTab(QWidget):
         return self._window_manager.preset_manager.preset_for_name(self.window.create_preset_combo.currentData())
 
     def enable_buttons_with_background_tasks(self, value: bool):
-        self._current_lock_state = value
-        self.window.welcome_tab.setEnabled(value)
+        self.window.stop_background_process_button.setEnabled(not value)
+        self.window.create_generate_button.setEnabled(value)
+        self.window.create_generate_race_button.setEnabled(value)
 
     def _create_button_for_preset(self, preset: Preset):
         create_preset_combo = self.window.create_preset_combo
@@ -200,7 +199,7 @@ class GenerateSeedTab(QWidget):
                 self.failed_to_generate_signal.emit(generate_exception)
                 progress_update("Generation Failure: {}".format(generate_exception), -1)
 
-        self.background_processor.run_in_background_thread(work, "Creating a seed...")
+        self.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):
         if self._current_preset is None:
@@ -230,3 +229,13 @@ class GenerateSeedTab(QWidget):
 
         self.window.create_describe_left_label.setText(preset_describer.merge_categories(left_categories))
         self.window.create_describe_right_label.setText(preset_describer.merge_categories(right_categories))
+
+    def update_progress(self, message: str, percentage: int):
+        self.window.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.window.progress_bar.setRange(0, 100)
+            self.window.progress_bar.setValue(percentage)
+        else:
+            self.window.progress_bar.setRange(0, 0)
