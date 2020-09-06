@@ -72,21 +72,36 @@ setup(
         'bitstruct',
         'construct<2.10',
         'tenacity',
-        'slugify',
         'python-slugify',
+        'python-socketio[asyncio_client]',
+        'aiohttp[speedups]',
     ],
     extras_require={
         "gui": [
-            'PySide2>=5.12',
+            'PySide2>=5.12,<5.15',
             'aiofiles',
             'appdirs',
             'asyncqt',
+            'dolphin-memory-engine>=1.0.2',
+            'markdown',
+            'pypresence',
             'requests',
+        ],
+        "server": [
+            "cryptography",
+            "eventlet",
+            "flask-discord",
+            "flask-socketio",
+            "peewee",
+            "requests-oauthlib",
         ],
         "test": [
             'pytest',
             'pytest-cov',
             'pytest-qt',
+            'pytest-asyncio',
+            'pytest-mock',
+            'mock>=4.0',
         ]
     },
     entry_points={

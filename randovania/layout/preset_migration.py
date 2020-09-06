@@ -1,4 +1,4 @@
-CURRENT_PRESET_VERSION = 2
+CURRENT_PRESET_VERSION = 3
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -46,8 +46,25 @@ def _migrate_v1(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v2(preset: dict) -> dict:
+    level_renaming = {
+        "trivial": "beginner",
+        "easy": "intermediate",
+        "normal": "advanced",
+        "hard": "expert",
+        "minimal-restrictions": "minimal-logic",
+    }
+    trick_level = preset["layout_configuration"]["trick_level"]
+    trick_level["global_level"] = level_renaming.get(trick_level["global_level"], trick_level["global_level"])
+    for specific, value in trick_level["specific_levels"].items():
+        trick_level["specific_levels"][specific] = level_renaming.get(value, value)
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
+    2: _migrate_v2,
 }
 
 

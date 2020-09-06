@@ -1,4 +1,3 @@
-import copy
 from typing import List, Iterable, Tuple, Dict
 
 from randovania.game_description import data_reader

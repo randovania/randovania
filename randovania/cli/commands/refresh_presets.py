@@ -6,7 +6,6 @@ from randovania.layout.preset import read_preset_file, save_preset_file
 
 
 def refresh_presets_command_logic(args):
-
     base_path = get_data_path().joinpath("presets")
 
     with base_path.joinpath("presets.json").open() as presets_file:

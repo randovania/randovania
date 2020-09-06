@@ -8,12 +8,11 @@ from randovania.game_description.resources.resource_info import CurrentResources
     add_resource_gain_to_current_resources, add_resources_into_another
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
-from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
 from randovania.resolver.state import State
 
-_items_to_not_add_in_minimal_restrictions = {
+_items_to_not_add_in_minimal_logic = {
     # Dark Visor
     10,
 
@@ -35,7 +34,7 @@ _items_to_not_add_in_minimal_restrictions = {
     29, 30, 31, 101, 102, 103, 104, 105, 106
 }
 
-_minimal_restrictions_custom_item_count = {
+_minimal_logic_custom_item_count = {
     # Energy Tank
     42: 14,
     # Power Bomb
@@ -78,11 +77,11 @@ def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
     return configuration.global_level.as_number, static_resources
 
 
-def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
-                                                resource_database: ResourceDatabase,
-                                                progressive_grapple: bool,
-                                                progressive_suit: bool,
-                                                ) -> None:
+def _add_minimal_logic_initial_resources(resources: CurrentResources,
+                                         resource_database: ResourceDatabase,
+                                         progressive_grapple: bool,
+                                         progressive_suit: bool,
+                                         ) -> None:
     # TODO: this function assumes we're talking about Echoes
     for event in resource_database.event:
         # Ignoring these events:
@@ -91,7 +90,7 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
         if event.index not in {28, 93}:
             resources[event] = 1
 
-    items_to_skip = copy.copy(_items_to_not_add_in_minimal_restrictions)
+    items_to_skip = copy.copy(_items_to_not_add_in_minimal_logic)
     if not progressive_grapple:
         items_to_skip.remove(23)
     if not progressive_suit:
@@ -99,7 +98,7 @@ def _add_minimal_restrictions_initial_resources(resources: CurrentResources,
 
     for item in resource_database.item:
         if item.index not in items_to_skip:
-            resources[item] = _minimal_restrictions_custom_item_count.get(item.index, 1)
+            resources[item] = _minimal_logic_custom_item_count.get(item.index, 1)
 
 
 def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "State":
@@ -170,13 +169,13 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     game = copy.deepcopy(game)
     starting_state = calculate_starting_state(game, patches)
 
-    if configuration.trick_level_configuration.global_level == LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+    if configuration.trick_level_configuration.global_level == LayoutTrickLevel.MINIMAL_LOGIC:
         major_items_config = configuration.major_items_configuration
-        _add_minimal_restrictions_initial_resources(starting_state.resources,
-                                                    game.resource_database,
-                                                    major_items_config.progressive_grapple,
-                                                    major_items_config.progressive_suit,
-                                                    )
+        _add_minimal_logic_initial_resources(starting_state.resources,
+                                             game.resource_database,
+                                             major_items_config.progressive_grapple,
+                                             major_items_config.progressive_suit,
+                                             )
 
     difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
                                                                            game.resource_database)
