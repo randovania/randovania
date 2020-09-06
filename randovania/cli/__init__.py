@@ -25,9 +25,6 @@ def _create_parser():
     parser.add_argument("--version", action="store_const",
                         const=_print_version, dest="func")
 
-    parser.set_defaults(func=(gui.open_gui if gui.has_gui
-                              else lambda args: parser.print_help()))
-
     return parser
 
 
@@ -46,4 +43,7 @@ def run_cli(argv):
     if len(argv) > 1 and argv[1] == "--pytest":
         run_pytest(argv)
     else:
-        _run_args(_create_parser().parse_args(argv[1:]))
+        args = argv[1:]
+        if gui.has_gui and not args:
+            args = ["gui", "main"]
+        _run_args(_create_parser().parse_args(args))
