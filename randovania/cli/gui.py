@@ -10,8 +10,3 @@ def create_subparsers(sub_parsers):
     if has_gui:
         from randovania.gui import qt
         return qt.create_subparsers(sub_parsers)
-
-
-def open_gui(args):
-    from randovania.gui import qt
-    qt.run(args)
