@@ -1,6 +1,6 @@
 import copy
 import re
-from typing import List, Dict, Iterator, Tuple, FrozenSet, Iterable
+from typing import List, Dict, Iterator, Tuple, Iterable
 
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -8,7 +8,7 @@ from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, DockNode, TeleporterNode
 from randovania.game_description.requirements import Requirement
-from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world import World
 
 
@@ -26,8 +26,10 @@ class WorldList:
 
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
-        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(worlds)
+        self.refresh_node_cache()
 
+    def refresh_node_cache(self):
+        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
 
     def _iterate_over_nodes(self) -> Iterator[Node]:

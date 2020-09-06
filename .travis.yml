@@ -20,7 +20,7 @@ matrix:
 
 deploy:
   - provider: script
-    script: python3 -m twine upload dist/*
+    script: twine-venv/bin/python -m twine upload dist/*
     skip_cleanup: true
     on:
       tags: true
@@ -40,14 +40,19 @@ deploy:
 
 before_install:
 - python --version
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -q update && sudo apt-get -y install libdbus-1-3 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0; fi
 
 install:
 - python3 -m pip install --upgrade -r requirements-setuptools.txt
 - python3 -m pip install -r requirements.txt
-# Installing pytest-xvfb breaks the tests on macOS, so let's install it only on linux for now
-# TODO: investigate this
+
+# Qt libraries
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -q update && sudo apt-get -y install libdbus-1-3 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0; fi
+# xvfb is only needed on linux
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then python3 -m pip install -r requirements-xvfb.txt; fi
-- python3 -m pip install -e .
+# twine is only used for publishing
+- if [[ "$INCLUDE_SDIST" == "true" ]]; then python3 -m venv twine-venv && twine-venv/bin/python -m pip install -r requirements-twine.txt; fi
+- python3 -m pip install -e . -e ".[gui]" -e ".[server]" -e ".[test]"
 - python3 -m pip install codecov
 - python3 -m pip uninstall -y randovania
 

@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 from randovania.bitpacking import bitpacking
@@ -7,10 +9,10 @@ from randovania.layout.trick_level import TrickLevelConfiguration
 
 @pytest.fixture(
     params=[
-        {"encoded": b'`\x00\x00', "json": {"global_level": "normal", "specific_levels": {}}},
-        {"encoded": b'\xc0\x00\x00', "json": {"global_level": "minimal-restrictions", "specific_levels": {}}},
-        {"encoded": b'P\x00\x00', "json": {"global_level": "easy", "specific_levels": {0: "no-tricks"}}},
-        {"encoded": b'{\xbb\xbb\xbb\xbb\xbb\xa0', "json": {"global_level": "normal", "specific_levels": {
+        {"encoded": b'`\x00\x00', "json": {"global_level": "advanced", "specific_levels": {}}},
+        {"encoded": b'\xc0\x00\x00', "json": {"global_level": "minimal-logic", "specific_levels": {}}},
+        {"encoded": b'P\x00\x00', "json": {"global_level": "intermediate", "specific_levels": {0: "no-tricks"}}},
+        {"encoded": b'{\xbb\xbb\xbb\xbb\xbb\xa0', "json": {"global_level": "advanced", "specific_levels": {
             i: "hypermode"
             for i in range(12)
         }}},
@@ -20,7 +22,8 @@ def _configuration_with_data(request):
     return request.param["encoded"], TrickLevelConfiguration.from_json(request.param["json"])
 
 
-def test_decode(configuration_with_data):
+@patch("randovania.layout.trick_level.TrickLevelConfiguration.all_possible_tricks", return_value=set(range(14)))
+def test_decode(mock_possible_tricks, configuration_with_data):
     # Setup
     data, expected = configuration_with_data
 
@@ -32,7 +35,8 @@ def test_decode(configuration_with_data):
     assert result == expected
 
 
-def test_encode(configuration_with_data):
+@patch("randovania.layout.trick_level.TrickLevelConfiguration.all_possible_tricks", return_value=set(range(14)))
+def test_encode(mock_possible_tricks, configuration_with_data):
     # Setup
     expected, value = configuration_with_data
 

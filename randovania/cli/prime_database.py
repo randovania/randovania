@@ -6,7 +6,7 @@ from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
+from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, MissingResource
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.games.prime import binary_data, default_data
 from randovania.resolver import debug
@@ -279,7 +279,7 @@ def list_paths_with_resource_logic(args):
         try:
             resource = find_resource_info_with_long_name(resource_type, args.resource)
             break
-        except ValueError:
+        except MissingResource:
             continue
 
     if resource is None:

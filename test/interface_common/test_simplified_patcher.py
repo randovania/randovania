@@ -1,13 +1,10 @@
 from pathlib import Path
-from unittest.mock import patch, MagicMock, PropertyMock
+from unittest.mock import patch, MagicMock
 
 import pytest
 
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
-from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
 
 
@@ -110,5 +107,32 @@ def test_apply_layout(mock_patch_game_name_and_id: MagicMock,
         cosmetic_patches=options.cosmetic_patches,
         game_root=options.game_files_path,
         backup_files_path=options.backup_files_path,
+        progress_update=progress_update,
+    )
+
+
+@patch("randovania.interface_common.simplified_patcher.patch_game_name_and_id", autospec=True)
+@patch("randovania.games.prime.claris_randomizer.apply_patcher_file", autospec=True)
+def test_apply_patcher_file(mock_apply_patcher_file: MagicMock,
+                            mock_patch_game_name_and_id: MagicMock,
+                            ):
+    # Setup
+    patcher_data = MagicMock()
+    game_specific = MagicMock()
+    progress_update = MagicMock()
+    options: Options = MagicMock()
+    shareable_hash = "Some Magical Hash"
+
+    # Run
+    simplified_patcher.apply_patcher_file(patcher_data, game_specific, shareable_hash, options, progress_update)
+
+    # Assert
+    mock_patch_game_name_and_id.assert_called_once_with(options.game_files_path,
+                                                        f"Metroid Prime 2: Randomizer - {shareable_hash}")
+    mock_apply_patcher_file.assert_called_once_with(
+        game_root=options.game_files_path,
+        backup_files_path=options.backup_files_path,
+        patcher_data=patcher_data,
+        game_specific=game_specific,
         progress_update=progress_update,
     )

@@ -6,8 +6,9 @@ from randovania.layout.preset import Preset, read_preset_list, read_preset_file,
 
 
 class InvalidPreset(Exception):
-    def __init__(self, file: Path):
+    def __init__(self, file: Path, original_exception: Exception):
         self.file = file
+        self.original_exception = original_exception
 
 
 class PresetManager:
@@ -31,11 +32,11 @@ class PresetManager:
                 if self._included_preset_with_name(preset.name) is not None:
                     raise ValueError("A default preset with name '{}' already exists.".format(preset.name))
 
-            except (ValueError, KeyError):
+            except (ValueError, KeyError) as e:
                 if ignore_invalid:
                     continue
                 else:
-                    raise InvalidPreset(preset_file)
+                    raise InvalidPreset(preset_file, e)
 
             if preset.name in self.custom_presets:
                 continue

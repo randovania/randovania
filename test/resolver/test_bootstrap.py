@@ -2,7 +2,6 @@ import pytest
 
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.layout_configuration import LayoutElevators
-from randovania.layout.translator_configuration import TranslatorConfiguration
 from randovania.resolver import bootstrap
 
 

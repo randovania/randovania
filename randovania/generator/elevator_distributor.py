@@ -92,7 +92,6 @@ def two_way_elevator_connections(rng: Random,
                                  elevator_database: Tuple[Elevator, ...],
                                  between_areas: bool
                                  ) -> Dict[int, AreaLocation]:
-
     if between_areas:
         elevator_database = try_randomize_elevators(rng, elevator_database)
     else:
@@ -113,7 +112,6 @@ def one_way_elevator_connections(rng: Random,
                                  world_list: WorldList,
                                  elevator_target: bool
                                  ) -> Dict[int, AreaLocation]:
-
     if elevator_target:
         target_locations = [elevator.area_location for elevator in elevator_database]
     else:

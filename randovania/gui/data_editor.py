@@ -13,10 +13,10 @@ from randovania.game_description.node import Node, DockNode, TeleporterNode, Gen
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world import World
 from randovania.games.prime import default_data
-from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
@@ -290,10 +290,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                                 "A node named '{}' already exists.".format(node_name))
             return
 
+        self._do_create_node(node_name)
+
+    def _do_create_node(self, node_name: str):
         self.generic_index += 1
         new_node = GenericNode(node_name, True, self.generic_index)
         self.current_area.nodes.append(new_node)
         self.current_area.connections[new_node] = {}
+        self.game_description.world_list.refresh_node_cache()
 
         self.on_select_area()
 
@@ -319,6 +323,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             other_nodes.pop(current_node, None)
 
         self.current_area.nodes.remove(current_node)
+        self.game_description.world_list.refresh_node_cache()
         self.on_select_area()
 
     def update_edit_mode(self):

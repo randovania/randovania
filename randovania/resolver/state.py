@@ -183,4 +183,6 @@ def state_with_pickup(state: State,
     new_state = state.copy()
     new_state.previous_state = state
     add_pickup_to_state(new_state, pickup)
+    if new_state.maximum_energy > state.maximum_energy:
+        new_state.energy = new_state.maximum_energy
     return new_state

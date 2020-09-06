@@ -1,4 +1,3 @@
-import collections
 from typing import Dict
 
 from randovania.game_description.game_description import GameDescription
