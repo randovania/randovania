@@ -10,7 +10,7 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.layout.major_item_state import MajorItemState
 
 _INVALID_MODELS = {
-    0, 1, 9, 10, 16,
+    0, 9, 16,
 }
 
 

@@ -25,12 +25,10 @@ from randovania.gui.game_session_window import GameSessionWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.online_game_list_window import GameSessionBrowserDialog
-from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
@@ -49,7 +47,7 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin):
+class MainWindow(WindowManager, Ui_MainWindow):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
@@ -58,11 +56,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     _current_version_url: Optional[str] = None
     _options: Options
     _data_visualizer: Optional[DataEditorWindow] = None
-    _details_window: SeedDetailsWindow
     _map_tracker: TrackerWindow
     _preset_manager: PresetManager
     game_session_window: Optional[GameSessionWindow] = None
     _login_window: Optional[QDialog] = None
+    ShowSeedSignal = Signal(LayoutDescription)
 
     @property
     def _tab_widget(self):
@@ -99,10 +97,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         # Signals
         self.newer_version_signal.connect(self.display_new_version)
-        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
-        self.progress_update_signal.connect(self.update_progress)
-        self.stop_background_process_button.clicked.connect(self.stop_background_process)
         self.options_changed_signal.connect(self.on_options_changed)
+        self.ShowSeedSignal.connect(self._show_seed_tab)
 
         self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_play))
         self.open_faq_button.clicked.connect(self._open_faq)
@@ -125,10 +121,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.action_login_window.triggered.connect(self._action_login_window)
 
-        self.generate_seed_tab = GenerateSeedTab(self, self, self, options)
+        self.generate_seed_tab = GenerateSeedTab(self, self, options)
         self.generate_seed_tab.setup_ui()
-        self._details_window = SeedDetailsWindow(self, self, options)
-        self._details_window.added_to_tab = False
 
         # Needs the GenerateSeedTab
         self._create_open_map_tracker_actions()
@@ -146,7 +140,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self._update_hints_text()
 
     def closeEvent(self, event):
-        self.stop_background_process()
+        self.generate_seed_tab.stop_background_process()
         super().closeEvent(event)
 
     # Generate Seed
@@ -255,11 +249,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self.game_session_window.show()
 
     def show_seed_tab(self, layout: LayoutDescription):
-        self._details_window.update_layout_description(layout)
-        if not self._details_window.added_to_tab:
-            self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
-            self._details_window.added_to_tab = True
-        self.welcome_tab_widget.setCurrentWidget(self._details_window.centralWidget)
+        self.ShowSeedSignal.emit(layout)
+
+    def _show_seed_tab(self, layout: LayoutDescription):
+        from randovania.gui.seed_details_window import SeedDetailsWindow
+        details_window = SeedDetailsWindow(self, self._options)
+        details_window.update_layout_description(layout)
+        details_window.show()
+        self.track_window(details_window)
 
     # Releases info
     def request_new_data(self):
@@ -536,18 +533,3 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         for hint_type in used_hint_types:
             self.hint_tree_widget.headerItem().setText(number_for_hint_type[hint_type], hint_type.long_name)
-
-    # Background Process
-
-    def enable_buttons_with_background_tasks(self, value: bool):
-        self.stop_background_process_button.setEnabled(not value)
-
-    def update_progress(self, message: str, percentage: int):
-        self.progress_label.setText(message)
-        if "Aborted" in message:
-            percentage = 0
-        if percentage >= 0:
-            self.progress_bar.setRange(0, 100)
-            self.progress_bar.setValue(percentage)
-        else:
-            self.progress_bar.setRange(0, 0)

@@ -11,6 +11,8 @@ from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 
+export_busy = False
+
 
 def delete_files_location(options: Options, ):
     """
