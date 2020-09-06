@@ -1,8 +1,8 @@
-import base64
-
 import flask
+from flask_socketio import ConnectionRefusedError
 
 import randovania
+from randovania.interface_common.update_checker import strict_version_for_version_string, strict_current_version
 from randovania.server import game_session, user_session, database
 from randovania.server.server_app import ServerApp
 
@@ -30,5 +30,20 @@ def create_app():
     @app.route("/")
     def index():
         return "ok"
+
+    server_version = strict_current_version()
+
+    @sio.sio.server.on("connect")
+    def connect(sid, environ):
+        if "HTTP_X_RANDOVANIA_VERSION" not in environ:
+            raise ConnectionRefusedError("unknown client version")
+
+        try:
+            client_app_version = strict_version_for_version_string(environ["HTTP_X_RANDOVANIA_VERSION"])
+        except ValueError:
+            raise ConnectionRefusedError("unknown client version")
+
+        app.logger.info(f"Client at {environ['REMOTE_ADDR']} / {environ['HTTP_X_FORWARDED_FOR']} with "
+                        f"version {client_app_version} connected, while server is {server_version}")
 
     return app
