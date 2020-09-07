@@ -1,8 +1,11 @@
 import json
 import sys
 from pathlib import Path
+from typing import Optional
 
 from randovania.version import version
+
+CONFIGURATION_FILE_PATH: Optional[Path] = None
 
 
 def is_frozen() -> bool:
@@ -19,7 +22,10 @@ def get_data_path() -> Path:
 
 def get_configuration() -> dict:
     try:
-        with get_data_path().joinpath("configuration.json").open() as file:
+        if CONFIGURATION_FILE_PATH is None:
+            raise FileNotFoundError()
+
+        with CONFIGURATION_FILE_PATH.open() as file:
             return json.load(file)
     except FileNotFoundError:
         return {
