@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+from pathlib import Path
 
 import randovania
 from randovania.cli import echoes, multiworld, gui
@@ -24,11 +25,15 @@ def _create_parser():
     create_subparsers(parser.add_subparsers(dest="game"))
     parser.add_argument("--version", action="store_const",
                         const=_print_version, dest="func")
+    parser.add_argument("--configuration", type=Path,
+                        help="Use the given configuration path instead of the included one.")
 
     return parser
 
 
 def _run_args(args):
+    if args.configuration is not None:
+        randovania.CONFIGURATION_FILE_PATH = args.configuration
     args.func(args)
 
 
@@ -40,6 +45,7 @@ def run_pytest(argv):
 
 
 def run_cli(argv):
+    randovania.CONFIGURATION_FILE_PATH = randovania.get_data_path().joinpath("configuration.json")
     if len(argv) > 1 and argv[1] == "--pytest":
         run_pytest(argv)
     else:
