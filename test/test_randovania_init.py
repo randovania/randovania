@@ -1,13 +1,14 @@
 from pathlib import Path
-from unittest.mock import patch
+
+import pytest
 
 import randovania
 
 
-@patch("randovania.get_data_path", autospec=True)
-def test_get_configuration_default(mock_get_data_path, tmpdir):
+@pytest.mark.parametrize("missing", [False, True])
+def test_get_configuration_default(tmpdir, missing):
     # Setup
-    mock_get_data_path.return_value = Path(tmpdir)
+    randovania.CONFIGURATION_FILE_PATH = None if missing else Path(tmpdir).joinpath("configuration.json")
 
     # Run
     config = randovania.get_configuration()
@@ -19,11 +20,10 @@ def test_get_configuration_default(mock_get_data_path, tmpdir):
     }
 
 
-@patch("randovania.get_data_path", autospec=True)
-def test_get_configuration_file(mock_get_data_path, tmpdir):
+def test_get_configuration_file(tmpdir):
     # Setup
-    mock_get_data_path.return_value = Path(tmpdir)
     Path(tmpdir).joinpath("configuration.json").write_text('{"foo": 5}')
+    randovania.CONFIGURATION_FILE_PATH = Path(tmpdir).joinpath("configuration.json")
 
     # Run
     config = randovania.get_configuration()
