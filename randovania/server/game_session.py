@@ -386,6 +386,7 @@ def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location
                 "row": pickup_target.player,
             },
             room=f"game-session-{receiver_membership.session.id}-{receiver_membership.user.id}")
+        _emit_session_update(session)
     except peewee.DoesNotExist:
         pass
 
