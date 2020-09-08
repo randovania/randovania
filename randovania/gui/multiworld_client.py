@@ -60,7 +60,7 @@ class MultiworldClient(QObject):
     async def on_location_collected(self, location: int):
         # TODO: handle network failure
         self.logger.info(f"on_location_collected: {location}")
-        await self.network_client.game_session_collect_pickup(PickupIndex(location))
+        await self.network_client.game_session_collect_locations((location,))
 
     async def refresh_received_pickups(self):
         self.logger.info(f"refresh_received_pickups: start")
