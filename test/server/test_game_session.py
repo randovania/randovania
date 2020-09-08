@@ -181,7 +181,7 @@ def test_game_session_collect_pickup_for_self(mock_session_description: Property
         result = game_session.game_session_collect_pickup(sio, 1, 0)
 
     # Assert
-    assert result == "0pth(AO"
+    assert result is None
     mock_emit.assert_not_called()
     mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 0, 0)
     with pytest.raises(peewee.DoesNotExist):

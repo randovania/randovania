@@ -44,16 +44,10 @@ async def test_stop(skip_qtbot):
     game_connection.set_permanent_pickups.assert_called_once_with([])
 
 
-@pytest.mark.parametrize("is_local", [False, True])
 @pytest.mark.asyncio
-async def test_on_location_collected(skip_qtbot, is_local):
-    if is_local:
-        pickup_bytes = b"asdf"
-    else:
-        pickup_bytes = None
-
+async def test_on_location_collected(skip_qtbot):
     network_client = MagicMock()
-    network_client.game_session_collect_pickup = AsyncMock(return_value=pickup_bytes)
+    network_client.game_session_collect_pickup = AsyncMock()
     game_connection = MagicMock()
 
     client = MultiworldClient(network_client, game_connection)
@@ -64,12 +58,6 @@ async def test_on_location_collected(skip_qtbot, is_local):
 
     # Assert
     network_client.game_session_collect_pickup.assert_awaited_once_with(PickupIndex(15))
-    if is_local:
-        client._decode_pickup.assert_called_once_with(pickup_bytes)
-        game_connection.send_pickup.assert_called_once_with(client._decode_pickup.return_value)
-    else:
-        client._decode_pickup.assert_not_called()
-        game_connection.send_pickup.assert_not_called()
 
 
 @pytest.mark.asyncio
