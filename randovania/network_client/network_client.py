@@ -211,9 +211,9 @@ class NetworkClient:
         else:
             raise possible_error
 
-    async def game_session_collect_pickup(self, location: PickupIndex):
-        await self._emit_with_result("game_session_collect_pickup",
-                                     (self._current_game_session.id, location.index))
+    async def game_session_collect_locations(self, locations: Tuple[int, ...]):
+        await self._emit_with_result("game_session_collect_locations",
+                                     (self._current_game_session.id, locations))
 
     async def game_session_request_pickups(self) -> List[Tuple[str, bytes]]:
         data = await self._emit_with_result("game_session_request_pickups", self._current_game_session.id)
