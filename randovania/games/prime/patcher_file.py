@@ -256,9 +256,10 @@ class PickupCreatorSolo(PickupCreator):
 
 
 class PickupCreatorMulti(PickupCreator):
-    def __init__(self, rng: Random, player_names: Dict[int, str]):
+    def __init__(self, rng: Random, memo_data: Dict[str, str], players_config: PlayersConfiguration):
         super().__init__(rng)
-        self.player_names = player_names
+        self.solo_creator = PickupCreatorSolo(rng, memo_data)
+        self.players_config = players_config
 
     def create_pickup_data(self,
                            original_index: PickupIndex,
@@ -266,25 +267,29 @@ class PickupCreatorMulti(PickupCreator):
                            visual_pickup: PickupEntry,
                            model_style: PickupModelStyle,
                            scan_text: str) -> dict:
-        resources = [
-            {
-                "index": 74,
-                "amount": original_index.index + 1,
-            },
-        ]
-        resources.extend(
-            entry
-            for entry in _create_pickup_resources_for(pickup_target.pickup.resources[0].resources)
-            if entry["index"] == 47
-        )
+        if pickup_target.player == self.players_config.player_index:
+            result = self.solo_creator.create_pickup_data(original_index, pickup_target, visual_pickup,
+                                                          model_style, scan_text)
+        else:
+            other_name = self.players_config.player_names[pickup_target.player]
+            result: dict = {
+                "resources": [],
+                "conditional_resources": [],
+                "convert": [],
+                "hud_text": [f"Sent {pickup_target.pickup.name} to {other_name}!"],
+                "scan": f"{other_name}'s {scan_text}",
+            }
 
-        return {
-            "resources": resources,
-            "conditional_resources": [],
-            "convert": [],
-            "hud_text": [f"{self.player_names[pickup_target.player]} acquired {pickup_target.pickup.name}!"],
-            "scan": f"{self.player_names[pickup_target.player]}'s {scan_text}",
+        magic_resource = {
+            "index": 74,
+            "amount": original_index.index + 1,
         }
+
+        result["resources"].append(magic_resource)
+        for conditional in result["conditional_resources"]:
+            conditional["resources"].append(magic_resource)
+
+        return result
 
 
 def _get_visual_model(original_index: int,
@@ -628,14 +633,15 @@ def create_patcher_file(description: LayoutDescription,
     result["starting_popup"] = _create_starting_popup(layout, game.resource_database, patches.starting_items)
 
     # Add the pickups
+    if cosmetic_patches.disable_hud_popup:
+        memo_data = _simplified_memo_data()
+    else:
+        memo_data = default_prime2_memo_data()
+
     if description.permalink.player_count == 1:
-        if cosmetic_patches.disable_hud_popup:
-            memo_data = _simplified_memo_data()
-        else:
-            memo_data = default_prime2_memo_data()
         creator = PickupCreatorSolo(rng, memo_data)
     else:
-        creator = PickupCreatorMulti(rng, players_config.player_names)
+        creator = PickupCreatorMulti(rng, memo_data, players_config)
 
     result["pickups"] = _create_pickup_list(patches,
                                             useless_target, _TOTAL_PICKUP_COUNT,
