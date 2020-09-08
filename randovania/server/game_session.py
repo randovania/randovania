@@ -352,9 +352,7 @@ def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location
         logger().info(
             f"Session {session_id}, Team {membership.team}, Row {membership.row} found item "
             f"at {pickup_location}. It's a {pickup_target.pickup.name} for themselves.")
-
-        resource_database = _get_resource_database(description, pickup_target.player)
-        return _base64_encode_pickup(pickup_target.pickup, resource_database)
+        return
 
     try:
         GameSessionTeamAction.create(

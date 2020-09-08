@@ -211,11 +211,9 @@ class NetworkClient:
         else:
             raise possible_error
 
-    async def game_session_collect_pickup(self, location: PickupIndex) -> Optional[bytes]:
-        maybe_pickup = await self._emit_with_result("game_session_collect_pickup",
-                                                    (self._current_game_session.id, location.index))
-        if maybe_pickup is not None:
-            return base64.b85decode(maybe_pickup)
+    async def game_session_collect_pickup(self, location: PickupIndex):
+        await self._emit_with_result("game_session_collect_pickup",
+                                     (self._current_game_session.id, location.index))
 
     async def game_session_request_pickups(self) -> List[Tuple[str, bytes]]:
         data = await self._emit_with_result("game_session_request_pickups", self._current_game_session.id)
