@@ -111,6 +111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Putrid Alcove, method of getting the item and leaving without any items (Expert and above).
 
 -   Sacrificial Chamber, method of crossing gap to Sacrificial Chamber Tunnel with Extended Dash (Expert and above).
+
 -   Torvus Grove, method of climbing the room without Boost Ball (Expert and above).
 
 -   Torvus Plaza:
