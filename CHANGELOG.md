@@ -108,6 +108,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Morph Ball, Bombs and Space Jump (Intermediate and above).
     - Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
+-   Putrid Alcove, method of getting the item and leaving without any items (Expert and above).
+
 -   Torvus Grove, method of climbing the room without Boost Ball (Expert and above).
 
 -   Torvus Plaza:
@@ -143,7 +145,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Dark Aether Damage Requirements:
     - Battleground
-    - Putrid Alcove: Space Jump or Bombs, Multiple trips
+    - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
     - Undertemple (Intermediate and above)
 
 -   Invisible Objects and Dark Visor Requirements:
