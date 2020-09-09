@@ -41,7 +41,7 @@ def main():
         "server_address": "https://fi.gemignani.org/randovania",
         "socketio_path": "/randovania/socket.io",
     }
-    with _ROOT_FOLDER.joinpath("randovania", "data", "configuration-release.json").open("w") as config_release:
+    with _ROOT_FOLDER.joinpath("randovania", "data", "configuration.json").open("w") as config_release:
         json.dump(configuration, config_release)
 
     subprocess.run([sys.executable, "-m", "PyInstaller",
