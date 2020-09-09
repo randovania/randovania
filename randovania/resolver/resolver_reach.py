@@ -93,8 +93,7 @@ class ResolverReach:
                                                                                   energy)
 
                 if satisfied:
-                    nodes_to_check[target_node] = energy - requirement.damage(initial_state.resources,
-                                                                              energy)
+                    nodes_to_check[target_node] = energy - requirement.damage(initial_state.resources)
                     path_to_node[target_node] = path_to_node[node] + (node,)
 
                 elif target_node:
