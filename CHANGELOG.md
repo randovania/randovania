@@ -98,6 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Gathering Hall: 
     - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
     - Method to reach Transit Tunnel South from Transit Tunnel West with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+    - Method to reach the Spider Ball tracks with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
 -   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
@@ -138,20 +139,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Trooper Security Station Event coming from Communication Area
     - Sand Processing item
     - Torvus Lagoon terminal
-    - Staging Area terminal (No Tricks and above).
+    - Staging Area terminal
 
 -   Dark Aether Damage Requirements:
     - Battleground
     - Putrid Alcove: Space Jump or Bombs, Multiple trips
     - Undertemple (Intermediate and above)
 
+-   Invisible Objects and Dark Visor Requirements:
+    - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
+    - Screw Attack without Space Jump in Phazon Grounds (Advanced and above)
+
 -   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
 
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
-
--   Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Intermediate and above).
-
--   Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Advanced and above).
 
 -   Morph Ball Doors now properly requires Morph Ball.
 
