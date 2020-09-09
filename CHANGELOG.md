@@ -93,7 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
 
--   Forgotten Bridge, method to reach Abandoned Worksite door from the bridge before rotating and with an Extended Dash (Expert and above).
+-   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
 -   Gathering Hall: 
     - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
