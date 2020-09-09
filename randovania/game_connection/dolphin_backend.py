@@ -157,7 +157,7 @@ class DolphinBackend(ConnectionBackend):
             return ConnectionStatus.WrongGame
 
         if self._world is None:
-            return ConnectionStatus.NotInGame
+            return ConnectionStatus.TitleScreen
         else:
             return ConnectionStatus.InGame
 
