@@ -36,7 +36,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         common_qt_lib.set_default_window_icon(self.window)
 
         for status in iterate_enum(ConnectionStatus):
-            self.current_status_combo.addItem(status.value, status)
+            self.current_status_combo.addItem(status.pretty_text, status)
 
         self.permanent_pickups = []
         self.pickups = []

@@ -45,7 +45,7 @@ class GameConnection(ConnectionBase):
 
     @property
     def pretty_current_status(self) -> str:
-        return f"{self.backend.name}: {self.backend.current_status.value}"
+        return f"{self.backend.name}: {self.backend.current_status.pretty_text}"
 
     @property
     def current_status(self) -> ConnectionStatus:

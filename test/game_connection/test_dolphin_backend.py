@@ -232,7 +232,7 @@ def test_current_status_wrong_game(backend):
 def test_current_status_not_in_game(backend):
     backend.dolphin.is_hooked.return_value = True
     backend.patches = True
-    assert backend.current_status == ConnectionStatus.NotInGame
+    assert backend.current_status == ConnectionStatus.TitleScreen
 
 
 def test_current_status_in_game(backend):
