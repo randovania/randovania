@@ -623,6 +623,84 @@ def test_run_validated_hud_text():
     assert data['hud_text'] == ['Run validated!']
 
 
+@pytest.fixture(name="pickup_for_create_pickup_data")
+def _create_pickup_data():
+    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
+    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+    return PickupEntry("Cake", 1, ItemCategory.TEMPLE_KEY,
+                       (
+                           ConditionalResources("Sugar", None, ((resource_a, 1),)),
+                           ConditionalResources("Salt", resource_a, ((resource_b, 1),)),
+                       ))
+
+
+def test_solo_create_pickup_data(pickup_for_create_pickup_data):
+    # Setup
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._SimplifiedMemo())
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
+                                      pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data == {
+        'conditional_resources': [
+            {'item': 1, 'resources': [{'amount': 1, 'index': 2}]}
+        ],
+        'convert': [],
+        'hud_text': ['Sugar acquired!', 'Salt acquired!'],
+        'resources': [{'amount': 1, 'index': 1}],
+        'scan': 'Scan Text',
+    }
+
+
+def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
+    # Setup
+    creator = patcher_file.PickupCreatorMulti(MagicMock(), patcher_file._SimplifiedMemo(),
+                                              PlayersConfiguration(0, {0: "You",
+                                                                       1: "Someone"}))
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
+                                      pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data == {
+        'conditional_resources': [
+            {'item': 1, 'resources': [{'amount': 1, 'index': 2},
+                                      {'amount': 11, 'index': 74},
+                                      ]}
+        ],
+        'convert': [],
+        'hud_text': ['Sugar acquired!', 'Salt acquired!'],
+        'resources': [{'amount': 1, 'index': 1}, {'amount': 11, 'index': 74}, ],
+        'scan': 'Scan Text',
+    }
+
+
+def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
+    # Setup
+    creator = patcher_file.PickupCreatorMulti(MagicMock(), patcher_file._SimplifiedMemo(),
+                                              PlayersConfiguration(0, {0: "You",
+                                                                       1: "Someone"}))
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 1),
+                                      pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data == {
+        'conditional_resources': [],
+        'convert': [],
+        'hud_text': ['Sent Cake to Someone!'],
+        'resources': [{'amount': 11, 'index': 74}, ],
+        'scan': "Someone's Scan Text",
+    }
+
+
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
 @patch("randovania.games.prime.patcher_file._logbook_title_string_patches", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.item_hints.create_hints", autospec=True)
