@@ -11,7 +11,7 @@ MAX_DAMAGE = 9999999
 
 
 class Requirement:
-    def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
+    def damage(self, current_resources: CurrentResources) -> int:
         raise NotImplementedError()
 
     def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
@@ -65,11 +65,14 @@ class RequirementAnd(Requirement):
     def __init__(self, items: Iterable[Requirement]):
         self.items = tuple(items)
 
-    def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
-        return sum(
-            item.damage(current_resources, current_energy)
-            for item in self.items
-        )
+    def damage(self, current_resources: CurrentResources) -> int:
+        result = 0
+        for item in self.items:
+            if item.satisfied(current_resources, MAX_DAMAGE):
+                result += item.damage(current_resources)
+            else:
+                return MAX_DAMAGE
+        return result
 
     def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         return all(
@@ -130,12 +133,12 @@ class RequirementOr(Requirement):
     def __init__(self, items: Iterable[Requirement]):
         self.items = tuple(items)
 
-    def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
+    def damage(self, current_resources: CurrentResources) -> int:
         try:
             return min(
-                item.damage(current_resources, current_energy)
+                item.damage(current_resources)
                 for item in self.items
-                if item.satisfied(current_resources, current_energy)
+                if item.satisfied(current_resources, MAX_DAMAGE)
             )
         except ValueError:
             return MAX_DAMAGE
@@ -268,7 +271,7 @@ class ResourceRequirement(NamedTuple, Requirement):
     def is_damage(self) -> bool:
         return self.resource.resource_type == ResourceType.DAMAGE
 
-    def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
+    def damage(self, current_resources: CurrentResources) -> int:
         if self.resource.resource_type == ResourceType.DAMAGE:
             return ceil(self.resource.damage_reduction(current_resources) * self.amount)
         else:
@@ -280,7 +283,7 @@ class ResourceRequirement(NamedTuple, Requirement):
         if self.is_damage:
             assert not self.negate, "Damage requirements shouldn't have the negate flag"
 
-            return current_energy > self.damage(current_resources, current_energy)
+            return current_energy > self.damage(current_resources)
 
         has_amount = current_resources.get(self.resource, 0) >= self.amount
         if self.negate:
@@ -354,8 +357,8 @@ class RequirementTemplate(Requirement):
     def template_requirement(self) -> Requirement:
         return self.database.requirement_template[self.template_name]
 
-    def damage(self, current_resources: CurrentResources, current_energy: int) -> int:
-        return self.template_requirement.damage(current_resources, current_energy)
+    def damage(self, current_resources: CurrentResources) -> int:
+        return self.template_requirement.damage(current_resources)
 
     def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         return self.template_requirement.satisfied(current_resources, current_energy)
@@ -425,7 +428,7 @@ class RequirementList:
         for requirement in self.values():
             if requirement.satisfied(current_resources, current_energy):
                 if requirement.resource.resource_type == ResourceType.DAMAGE:
-                    energy -= requirement.damage(current_resources, current_energy)
+                    energy -= requirement.damage(current_resources)
             else:
                 return False
         return True
