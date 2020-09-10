@@ -21,12 +21,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Bomb Jump (renamed from Difficult Bomb Jump)
     - Difficult Movement
     - Standable Terrain
+    - Respawn Abuse
     - Open Gates from Behind
     - Screw Attack into Tunnels
     - Knowledge
     - Seeker Locks without Seekers
     
 -   Added: Energy Tanks have doubled weight for the generator.
+
+-   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
 
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
@@ -40,8 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
 
--   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't 
-    stretch with long permalinks. 
+-   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
 
 -   Changed: The elevator scan now includes the world of the connected area.
 
@@ -62,77 +64,100 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
--   In Torvus Plaza, method of getting the item without Boost Ball and/or Spider Ball (Advanced and above).
+-   General:
+    - Method to open Seeker Missile Locks with Screw Attack in various rooms (Expert and above).
+    - Method to activate most Bomb Slots without Bombs (Hypermode).
+    - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
 
--   In all Light/Dark Controller Access rooms, method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
+-   All Light/Dark Controller Access rooms, method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
 
--   In Putrid Alcove, damage requirements have been added for getting the item and leaving, with just Space Jump and just Bombs.
+-   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
 
--   In Torvus Grove, method of climbing the room without Boost Ball (Expert and above).
+-   Hall of Honored Dead, method of leaving through the Morph tunnel without Space Jump (Expert and above).
 
--   Method to open Seeker Missile Locks with Screw Attack in various rooms (Expert and above).
+-   Ing Windchamber, method of completing the puzzle with Power Bombs instead of Bombs (Beginner and above).
 
--   Method to open most Bomb Slots without Bombs (Hypermode).
+-   Landing Site, method of reaching Service Access door with Bombs and Screw Attack (Intermediate and above).
 
--   Methods to climb Main Hydrochamber and Hydrodynamo Station without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
+-   Windchamber Gateway, method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
 
--   Method to climb Transport Center with Space Jump and Slope Jump (Advanced and above).
+-   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
 
--   Method to climb Doomed Entry with Space Jump and Screw Attack (Beginner and above).
+-   Bioenergy Production, method to reach Storage C door or item from top level with Extended Dash (Expert and above).
 
--   Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
+-   Central Station Access/Warrior's Walk, method of climbing the ledge with an Instant Unmorph Jump (Hypermode).
 
--   Method of leaving Hive Temple without Spider Ball (Hypermode).
+-   Doomed Entry, method to climb room with Space Jump and Screw Attack (Beginner and above).
 
--   Methods of crossing Grand Abyss with Boost Jump and Extended Dash (Expert and above).
+-   Feeding Pit, method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
 
--   Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
+-   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
 
--   In Putrid Alcove, added harder damage requirements using multiple trips.
+-   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
--   In Watch Station Access, added methods to cross the pit in either direction using Boost Ball and no Space Jump.
+-   Gathering Hall: 
+    - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
+    - Method to reach Transit Tunnel South from Transit Tunnel West with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+    - Method to reach the Spider Ball tracks with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
--   Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
+-   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
--   Method of leaving Hall of Honored Dead through the Morph tunnel without Space Jump (Expert and above).
+-   Meditation Vista, methods of reaching the item with a Boost Jump or Roll Jump (Expert and above).
 
--   Method of reaching Service Access door in Landing Site with Bombs and Screw Attack (Intermediate and above).
+-   Path of Roots, method of reaching the item using:
+    - Morph Ball, Bombs and Space Jump (Intermediate and above).
+    - Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
--   Method of reaching Abandoned Base portal with Space Jump and Screw Attack (Intermediate and above).
+-   Putrid Alcove, method of getting the item and leaving without any items (Expert and above).
 
--   Method of completing the puzzle in Ing Windchamber with Power Bombs instead of Bombs (Beginner and above).
+-   Sacrificial Chamber, method of crossing gap to Sacrificial Chamber Tunnel with Extended Dash (Expert and above).
 
--   Path of Roots missile using only Morph, Bombs and Space Jump (Beginner and above).
+-   Torvus Grove, method of climbing the room without Boost Ball (Expert and above).
 
--   Method to make PB Guardian break PB door using bombs (Advanced and above).
+-   Torvus Plaza:
+    - Method of getting the item without Boost Ball and/or Spider Ball (Advanced and above).
+    - Method of leaving the room with Space Jump and Bombs (Advanced and above).
 
--   Undertemple Access item using Screw Attack and Jump Off Enemy (Hypermode).
+-   Training Chamber:
+    - Method to exit the spinner with Power Bombs instead of Bombs (Beginner and above).
+    - Method to climb to the top of the statue with Gravity Boost and Bombs (Intermediate and above).
+    - Method to climb to the top of the statue with Space Jump, Scan Dash, and Underwater Dash (Expert and above).
 
--   Method of reaching the item in Windchamber Gateway with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
+-   Underground Tunnel, method to access Torvus Temple from Torvus Grove with Screw Attack (Expert and above).
 
--   Method of reaching Temple Transport A door from Transport A Access with a Wall Boost (Advanced and above).
+-   Undertemple, method to have PB Guardian break PB door using bombs (Advanced and above).
+
+-   Undertemple Access, method of reaching the item using Screw Attack and Jump Off Enemy (Hypermode).
+
+-   Grand Abyss, methods of crossing the gap with Boost Jump or Extended Dash (Expert and above).
+
+-   Hive Temple:
+    - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
+    - Method of leaving the room without Spider Ball after Quadraxis (Hypermode).
+
+-   Watch Station Access, methods to cross the pit in either direction using Boost Ball and no Space Jump.
 
 #### Fixed
 
--   Sand Processing item now requires Scan Visor.
+-   Scan Visor Requirements: 
+    - Trooper Security Station Event coming from Communication Area
+    - Sand Processing item
+    - Torvus Lagoon terminal
+    - Staging Area terminal
+
+-   Dark Aether Damage Requirements:
+    - Battleground
+    - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
+    - Undertemple Access (Updated)
+    - Undertemple (Intermediate and above)
+
+-   Invisible Objects and Dark Visor Requirements:
+    - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
+    - Screw Attack without Space Jump in Phazon Grounds (Advanced and above)
 
 -   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
 
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
-
--   Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Unseen Way (Intermediate and above).
-
--   Trooper Security Station Event now requires Scan Visor coming from Communication Area.
-
--   Added Invisible Objects and Dark Visor Requirements for Screw Attack without Space Jump in Phazon Grounds (Advanced and above).
-
--   Torvus Lagoon now requires Scan Visor for the terminal.
-
--   Added Dark Aether Damage requirements for Battleground.
-
--   Added Dark Aether Damage requirements for Undertemple (Intermediate and above).
-
--   Staging Area now requires Scan Visor for the terminal (No Tricks and above).
 
 -   Morph Ball Doors now properly requires Morph Ball.
 
@@ -140,9 +165,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Many nodes with missing requirements have been updated/cleaned up.
 
--   Cleaned up Training Chamber nodes for ease of logic navigation.
+-   Simplified nodes in many rooms for ease of logic navigation.
 
 -   Crossing lower Double Path without Space Jump is now Beginner difficulty (from Intermediate).
+
+-   Reaching Transit Station door in Mining Station B after unlocking the portal with Space Jump and Screw Attack is now Advanced difficulty (from Expert).
+
+-   Reaching the portal in Catacombs with Morph Ball and Reverse Air Underwater is now Advanced difficulty (from Expert).
+
+-   Reaching Transit Tunnel South/West Doors from top door in Gathering Hall with Morph Ball and Roll Jump is now Expert difficulty (from Advanced).
 
 ## [1.2.2] - 2020-06-06
 
