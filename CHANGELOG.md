@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
 
+-   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
+
 -   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
