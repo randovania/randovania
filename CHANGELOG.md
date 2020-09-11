@@ -93,6 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Feeding Pit, method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
 
+-   Dark Transit Station, method to reach the ledge from Duelling Range with a Bomb Jump (Beginner and above).
+
 -   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
 
 -   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
@@ -149,6 +151,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Dark Aether Damage Requirements:
     - Battleground
+    - Judgment Pit
     - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
     - Undertemple Access (Updated)
     - Undertemple (Intermediate and above)
