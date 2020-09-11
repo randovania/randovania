@@ -135,6 +135,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Undertemple Access, method of reaching the item using Screw Attack and Jump Off Enemy (Hypermode).
 
+-   Aerie, method of collecting the item without entering the Dark World (Expert and above).
+
 -   Grand Abyss, methods of crossing the gap with Boost Jump or Extended Dash (Expert and above).
 
 -   Hive Temple:
