@@ -2,7 +2,7 @@ import base64
 import collections
 import json
 import logging
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 import flask_socketio
 import peewee
@@ -104,6 +104,11 @@ def _get_preset(preset_json: dict) -> Preset:
 
 def _emit_session_update(session: GameSession):
     flask_socketio.emit("game_session_update", session.create_session_entry(), room=f"game-session-{session.id}")
+
+
+def game_session_request_update(sio: ServerApp, session_id):
+    session: database.GameSession = database.GameSession.get_by_id(session_id)
+    return session.create_session_entry()
 
 
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
@@ -332,27 +337,31 @@ def _base64_encode_pickup(pickup: PickupEntry, resource_database: ResourceDataba
     return base64.b85encode(encoded_pickup).decode("utf-8")
 
 
-def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location: int):
-    current_user = sio.get_current_user()
-    session: GameSession = database.GameSession.get_by_id(session_id)
-    membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
-
+def _collect_location(session: GameSession, membership: GameSessionMembership,
+                      description: LayoutDescription,
+                      pickup_location: int) -> Optional[int]:
+    """
+    Collects the pickup in the given location. Returns
+    :param session:
+    :param membership:
+    :param description:
+    :param pickup_location:
+    :return: The rewarded player if some player must be updated of the fact.
+    """
     player_row: int = membership.row
-
-    description = session.layout_description
     pickup_target = _get_pickup_target(description, player_row, pickup_location)
 
     if pickup_target is None:
         logger().info(
-            f"Session {session_id}, Team {membership.team}, Row {membership.row} found item "
+            f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
             f"at {pickup_location}. It's an ETM.")
-        return
+        return None
 
     if pickup_target.player == membership.row:
         logger().info(
-            f"Session {session_id}, Team {membership.team}, Row {membership.row} found item "
+            f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
             f"at {pickup_location}. It's a {pickup_target.pickup.name} for themselves.")
-        return
+        return None
 
     try:
         GameSessionTeamAction.create(
@@ -365,28 +374,50 @@ def game_session_collect_pickup(sio: ServerApp, session_id: int, pickup_location
     except peewee.IntegrityError:
         # Already exists and it's for another player, no inventory update needed
         logger().info(
-            f"Session {session_id}, Team {membership.team}, Row {membership.row} found item "
+            f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
             f"at {pickup_location}. It's a {pickup_target.pickup.name} for {pickup_target.player}, "
             f"but it was already collected.")
+        return None
+
+    logger().info(f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
+                  f"at {pickup_location}. It's a {pickup_target.pickup.name} for {pickup_target.player}.")
+    return pickup_target.player
+
+
+def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locations: Tuple[int, ...]):
+    current_user = sio.get_current_user()
+    session: GameSession = database.GameSession.get_by_id(session_id)
+    membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
+
+    if not session.in_game:
+        raise InvalidAction("Unable to collect locations of sessions that haven't been started")
+
+    description = session.layout_description
+
+    receiver_players = set()
+    for location in pickup_locations:
+        receiver_player = _collect_location(session, membership, description, location)
+        if receiver_player is not None:
+            receiver_players.add(receiver_player)
+
+    if not receiver_players:
         return
 
-    logger().info(f"Session {session_id}, Team {membership.team}, Row {membership.row} found item "
-                  f"at {pickup_location}. It's a {pickup_target.pickup.name} for {pickup_target.player}.")
-
-    try:
-        receiver_membership = GameSessionMembership.get_by_session_position(
-            session, team=membership.team, row=pickup_target.player)
-        flask_socketio.emit(
-            "game_has_update",
-            {
-                "session": session_id,
-                "team": membership.team,
-                "row": pickup_target.player,
-            },
-            room=f"game-session-{receiver_membership.session.id}-{receiver_membership.user.id}")
-        _emit_session_update(session)
-    except peewee.DoesNotExist:
-        pass
+    for receiver_player in receiver_players:
+        try:
+            receiver_membership = GameSessionMembership.get_by_session_position(
+                session, team=membership.team, row=receiver_player)
+            flask_socketio.emit(
+                "game_has_update",
+                {
+                    "session": session_id,
+                    "team": membership.team,
+                    "row": receiver_player,
+                },
+                room=f"game-session-{receiver_membership.session.id}-{receiver_membership.user.id}")
+        except peewee.DoesNotExist:
+            pass
+    _emit_session_update(session)
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
@@ -442,7 +473,8 @@ def setup_app(sio: ServerApp):
     sio.on("list_game_sessions", list_game_sessions)
     sio.on("create_game_session", create_game_session)
     sio.on("join_game_session", join_game_session)
+    sio.on("game_session_request_update", game_session_request_update)
     sio.on("game_session_admin_session", game_session_admin_session)
     sio.on("game_session_admin_player", game_session_admin_player)
-    sio.on("game_session_collect_pickup", game_session_collect_pickup)
+    sio.on("game_session_collect_locations", game_session_collect_locations)
     sio.on("game_session_request_pickups", game_session_request_pickups)

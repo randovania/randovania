@@ -211,7 +211,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         browser = GameSessionBrowserDialog(network_client)
         await browser.refresh()
         if await async_dialog.execute_dialog(browser) == browser.Accepted:
-            self.game_session_window = GameSessionWindow(network_client.current_game_session,
+            self.game_session_window = GameSessionWindow(network_client,
+                                                         common_qt_lib.get_game_connection(),
                                                          self.preset_manager,
                                                          self._options)
             self.game_session_window.show()
@@ -244,8 +245,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
         if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
             return
 
-        new_session = await self.network_client.create_new_session(dialog.textValue())
-        self.game_session_window = GameSessionWindow(new_session, self.preset_manager, self._options)
+        await self.network_client.create_new_session(dialog.textValue())
+        self.game_session_window = GameSessionWindow(self.network_client, common_qt_lib.get_game_connection(),
+                                                     self.preset_manager, self._options)
         self.game_session_window.show()
 
     def show_seed_tab(self, layout: LayoutDescription):
