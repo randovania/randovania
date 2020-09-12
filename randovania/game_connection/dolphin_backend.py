@@ -161,7 +161,7 @@ class DolphinBackend(ConnectionBackend):
         else:
             return ConnectionStatus.InGame
 
-    async def display_message(self, message: str):
+    def display_message(self, message: str):
         self.message_queue.append(message)
 
     async def _get_player_state_address(self) -> Optional[int]:

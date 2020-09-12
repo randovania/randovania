@@ -35,7 +35,7 @@ class ConnectionBase(QObject):
     def current_status(self) -> ConnectionStatus:
         raise NotImplementedError()
 
-    async def display_message(self, message: str):
+    def display_message(self, message: str):
         raise NotImplementedError()
 
     async def get_inventory(self) -> CurrentResources:

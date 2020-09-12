@@ -1,4 +1,5 @@
 from unittest.mock import MagicMock, call, patch, ANY
+from unittest.mock import MagicMock, call, patch, ANY
 
 import pytest
 from mock import AsyncMock
@@ -53,7 +54,7 @@ async def test_send_message(backend):
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
     # Run
-    await backend.display_message("Magoo")
+    backend.display_message("Magoo")
     await backend._send_message_from_queue(1)
 
     # Assert
@@ -76,7 +77,7 @@ async def test_send_message_has_pending_message(backend):
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
     # Run
-    await backend.display_message("Magoo")
+    backend.display_message("Magoo")
     await backend._send_message_from_queue(1)
 
     # Assert
@@ -93,7 +94,7 @@ async def test_send_message_on_cooldown(backend):
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
     # Run
-    await backend.display_message("Magoo")
+    backend.display_message("Magoo")
     await backend._send_message_from_queue(1)
 
     # Assert
