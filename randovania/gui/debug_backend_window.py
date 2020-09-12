@@ -88,8 +88,9 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     def show(self):
         self.window.show()
 
-    def _emit_collection(self):
-        self.LocationCollected.emit(self.collect_location_combo.currentData())
+    @asyncSlot()
+    async def _emit_collection(self):
+        await self._emit_location_collected(self.collect_location_combo.currentData())
 
     @asyncSlot()
     @handle_network_errors
@@ -98,10 +99,6 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         game_session = network_client.current_game_session
         user = network_client.current_user
 
-        patcher_data = await network_client.session_admin_player(game_session.id, user.id,
-                                                                 SessionAdminUserAction.CREATE_PATCHER_FILE,
-                                                                 CosmeticPatches().as_json)
-
         game = default_database.default_prime2_game_description()
         index_to_name = {
             node.pickup_index.index: game.world_list.area_name(area, distinguish_dark_aether=True, separator=" - ")
@@ -109,10 +106,17 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
             if isinstance(node, PickupNode)
         }
 
-        names = {}
-        for pickup in patcher_data["pickups"]:
-            names[pickup["pickup_index"]] = "{}: {}".format(index_to_name[pickup["pickup_index"]],
-                                                            pickup["hud_text"][0])
+        if game_session is None:
+            names = index_to_name
+        else:
+            patcher_data = await network_client.session_admin_player(game_session.id, user.id,
+                                                                     SessionAdminUserAction.CREATE_PATCHER_FILE,
+                                                                     CosmeticPatches().as_json)
+            names = {
+                pickup["pickup_index"]: "{}: {}".format(index_to_name[pickup["pickup_index"]],
+                                                        pickup["hud_text"][0])
+                for pickup in patcher_data["pickups"]
+            }
 
         self.collect_location_combo.clear()
         for index, name in sorted(names.items()):

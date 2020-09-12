@@ -7,26 +7,27 @@ from randovania.game_connection.connection_backend import ConnectionBackend, Con
 from randovania.game_connection.game_connection import GameConnection
 
 
-def test_set_backend(skip_qtbot):
+@pytest.mark.asyncio
+async def test_set_backend(skip_qtbot):
     # Setup
     game_connection = GameConnection()
     backend1 = ConnectionBackend()
     backend2 = ConnectionBackend()
 
-    listener = MagicMock()
-    game_connection.LocationCollected.connect(listener)
+    listener = AsyncMock()
+    game_connection.set_location_collected_listener(listener)
 
     # Run
     game_connection.set_backend(backend1)
-    backend1.LocationCollected.emit(5)
-    backend2.LocationCollected.emit(6)
+    await backend1._emit_location_collected(5)
+    await backend2._emit_location_collected(6)
 
     game_connection.set_backend(backend2)
-    backend1.LocationCollected.emit(7)
-    backend2.LocationCollected.emit(8)
+    await backend1._emit_location_collected(7)
+    await backend2._emit_location_collected(8)
 
     # Assert
-    listener.assert_has_calls([call(5), call(8)])
+    listener.assert_has_awaits([call(5), call(8)])
 
 
 @pytest.mark.asyncio
