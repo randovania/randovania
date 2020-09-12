@@ -25,7 +25,7 @@ async def test_start(skip_qtbot, tmpdir):
 
     # Assert
     client.refresh_received_pickups.assert_awaited_once_with()
-    game_connection.LocationCollected.connect.assert_called_once_with(client.on_location_collected)
+    game_connection.set_location_collected_listener.assert_called_once_with(client.on_location_collected)
     network_client.GameUpdateNotification.connect.assert_called_once_with(client.on_game_updated)
     game_connection.set_permanent_pickups.assert_called_once_with(["Pickup"])
 
@@ -40,7 +40,7 @@ async def test_stop(skip_qtbot):
     await client.stop()
 
     # Assert
-    game_connection.LocationCollected.disconnect.assert_called_once_with(client.on_location_collected)
+    game_connection.set_location_collected_listener.assert_called_once_with(None)
     network_client.GameUpdateNotification.disconnect.assert_called_once_with(client.on_game_updated)
     game_connection.set_permanent_pickups.assert_called_once_with([])
 

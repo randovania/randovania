@@ -77,7 +77,7 @@ class MultiworldClient(QObject):
 
         self._data = Data(persist_path)
 
-        self.game_connection.LocationCollected.connect(self.on_location_collected)
+        self.game_connection.set_location_collected_listener(self.on_location_collected)
         self.network_client.GameUpdateNotification.connect(self.on_game_updated)
 
         await self.refresh_received_pickups()
@@ -95,8 +95,8 @@ class MultiworldClient(QObject):
 
         self._data = None
 
+        self.game_connection.set_location_collected_listener(None)
         try:
-            self.game_connection.LocationCollected.disconnect(self.on_location_collected)
             self.network_client.GameUpdateNotification.disconnect(self.on_game_updated)
         except RuntimeError:
             pass
@@ -131,7 +131,6 @@ class MultiworldClient(QObject):
 
         self._notify_task = asyncio.create_task(self._notify_collect_locations())
 
-    @asyncSlot(int)
     async def on_location_collected(self, location: int):
         if location in self._data.collected_locations:
             self.logger.info(f"on_location_collected: {location}, but location was already collected")

@@ -125,7 +125,7 @@ async def test_check_for_collected_index_location_collected(backend):
     # Setup
     backend._get_player_state_address = AsyncMock(return_value=0)
     backend.dolphin.read_word.return_value = 10
-    backend.LocationCollected = MagicMock()
+    backend._emit_location_collected = AsyncMock()
 
     # Run
     await backend._check_for_collected_index()
@@ -139,7 +139,7 @@ async def test_check_for_collected_index_location_collected(backend):
         call(980, 0),
         call(984, 0),
     ])
-    backend.LocationCollected.emit.assert_called_once_with(9)
+    backend._emit_location_collected.assert_awaited_once_with(9)
 
 
 @pytest.mark.asyncio
