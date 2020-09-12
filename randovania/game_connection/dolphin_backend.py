@@ -213,7 +213,7 @@ class DolphinBackend(ConnectionBackend):
 
             self.dolphin.write_word(quantity_address, 0)
             self.dolphin.write_word(capacity_address, magic_capacity)
-            self.LocationCollected.emit(magic_quantity - 1)
+            await self._emit_location_collected(magic_quantity - 1)
 
         if self._pickups_to_give or magic_capacity < len(self._permanent_pickups):
             self.logger.info(f"_check_for_collected_index: {len(self._pickups_to_give)} pickups to give, "
