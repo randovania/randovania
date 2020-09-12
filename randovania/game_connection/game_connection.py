@@ -51,8 +51,8 @@ class GameConnection(ConnectionBase):
     def current_status(self) -> ConnectionStatus:
         return self.backend.current_status
 
-    async def display_message(self, message: str):
-        return await self.backend.display_message(message)
+    def display_message(self, message: str):
+        return self.backend.display_message(message)
 
     async def get_inventory(self) -> CurrentResources:
         return await self.backend.get_inventory()

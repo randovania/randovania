@@ -106,6 +106,11 @@ def _emit_session_update(session: GameSession):
     flask_socketio.emit("game_session_update", session.create_session_entry(), room=f"game-session-{session.id}")
 
 
+def game_session_request_update(sio: ServerApp, session_id):
+    session: database.GameSession = database.GameSession.get_by_id(session_id)
+    return session.create_session_entry()
+
+
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
     _verify_has_admin(sio, session_id, None)
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
@@ -384,6 +389,9 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
     session: GameSession = database.GameSession.get_by_id(session_id)
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
+    if not session.in_game:
+        raise InvalidAction("Unable to collect locations of sessions that haven't been started")
+
     description = session.layout_description
 
     receiver_players = set()
@@ -465,6 +473,7 @@ def setup_app(sio: ServerApp):
     sio.on("list_game_sessions", list_game_sessions)
     sio.on("create_game_session", create_game_session)
     sio.on("join_game_session", join_game_session)
+    sio.on("game_session_request_update", game_session_request_update)
     sio.on("game_session_admin_session", game_session_admin_session)
     sio.on("game_session_admin_player", game_session_admin_player)
     sio.on("game_session_collect_locations", game_session_collect_locations)

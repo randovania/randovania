@@ -13,7 +13,6 @@ import socketio
 import socketio.exceptions
 
 import randovania
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import decode_error, InvalidSession
@@ -59,12 +58,12 @@ class NetworkClient:
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
-        self.session_data_path = user_data_dir / encoded_address / "session_persistence.bin"
+        self.server_data_path = user_data_dir / encoded_address
+        self.session_data_path = self.server_data_path / "session_persistence.bin"
 
         self.sio.on('connect', self.on_connect)
         self.sio.on('connect_error', self.on_connect_error)
         self.sio.on('disconnect', self.on_disconnect)
-        self.sio.on('new_session', self.on_new_session)
         self.sio.on('game_session_update', self.on_game_session_updated)
         self.sio.on('game_has_update', self.on_game_update_notification)
 
@@ -144,6 +143,7 @@ class NetworkClient:
                 session_id = None
             try:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
+                self.logger.info(f"on_connect: session restoring session, with id {session_id}")
                 await self.on_new_session(await self._emit_with_result("restore_user_session",
                                                                        (persisted_session, session_id)))
                 self.logger.info(f"on_connect: session restored successful")
@@ -181,12 +181,18 @@ class NetworkClient:
         self.logger.info(f"on_new_session: {self._current_user.name}, state: {self.connection_state}")
 
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
-        self.session_data_path.parent.mkdir(exist_ok=True, parents=True)
+        self.server_data_path.mkdir(exist_ok=True, parents=True)
         async with aiofiles.open(self.session_data_path, "wb") as open_file:
             await open_file.write(encoded_session_data)
 
+        if self._current_game_session is not None:
+            await self.on_game_session_updated(
+                await self._emit_with_result("game_session_request_update", self._current_game_session.id))
+            await self.on_game_update_notification({})
+
     async def on_game_session_updated(self, data):
         self._current_game_session = GameSessionEntry.from_json(data)
+        self.logger.info(f"on_game_session_updated - {self._current_game_session.id}")
 
     async def on_game_update_notification(self, details):
         pass
