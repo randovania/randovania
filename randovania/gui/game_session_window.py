@@ -10,6 +10,7 @@ from PySide2.QtWidgets import QMainWindow, QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
 from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
@@ -17,7 +18,7 @@ from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.qt_network_client import handle_network_errors
+from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
@@ -127,13 +128,14 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     on_generated_layout_signal = Signal(LayoutDescription)
     failed_to_generate_signal = Signal(GenerationFailure)
 
-    def __init__(self, game_session: GameSessionEntry, preset_manager: PresetManager, options: Options):
+    def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection,
+                 preset_manager: PresetManager, options: Options):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
 
-        self.network_client = common_qt_lib.get_network_client()
-        self.game_connection = common_qt_lib.get_game_connection()
+        self.network_client = network_client
+        self.game_connection = game_connection
         self.multiworld_client = MultiworldClient(self.network_client, self.game_connection)
 
         self._preset_manager = preset_manager
@@ -202,13 +204,12 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.main_layout.insertSpacerItem(2, spacer_item)
 
         self.network_client.GameSessionUpdated.connect(self.on_game_session_updated)
-        self.on_game_session_updated(game_session)
+        self.on_game_session_updated(self.network_client.current_game_session)
 
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self.on_server_connection_state_updated(self.network_client.connection_state)
         self.game_connection.StatusUpdated.connect(self.on_game_connection_status_updated)
         self.on_game_connection_status_updated(self.game_connection.current_status)
-        asyncio.get_event_loop().create_task(self.multiworld_client.start())
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
@@ -581,8 +582,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.session_status_label.setText("Session: {}".format("In-Game" if game_session.in_game else "Not Started"))
         self.generate_game_button.setEnabled(self_is_admin)
         self.generate_without_spoiler_button.setEnabled(self_is_admin and False)
-        self.session_status_tool.setEnabled(self_is_admin and game_session.seed_hash is not None)
-        self.session_status_tool.setEnabled(self.session_status_tool.isEnabled())
+        self.session_status_tool.setEnabled(self_is_admin)
         self.session_status_tool.setText("Finish" if game_session.in_game else "Start")
 
         self.save_iso_button.setEnabled(game_session.seed_hash is not None
@@ -595,6 +595,18 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.view_game_details_button.setEnabled(game_session.spoiler and False)
 
         self.update_session_actions()
+        if self._game_session.in_game != self.multiworld_client.is_active:
+            self.sync_multiworld_client_status()
+
+    def sync_multiworld_client_status(self):
+        if self._game_session.in_game:
+            you = self._game_session.players[self.network_client.current_user.id]
+            persist_path = self.network_client.server_data_path.joinpath(
+                f"game_session_{self._game_session.id}_{you.team}_{you.row}.json")
+            new_task = self.multiworld_client.start(persist_path)
+        else:
+            new_task = self.multiworld_client.stop()
+        asyncio.create_task(new_task)
 
     @property
     def current_player_membership(self) -> PlayerSessionEntry:

@@ -1,5 +1,5 @@
 import json
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import MagicMock, PropertyMock, patch, call
 
 import peewee
 import pytest
@@ -178,7 +178,7 @@ def test_game_session_collect_pickup_for_self(mock_session_description: Property
 
     # Run
     with flask_app.test_request_context():
-        result = game_session.game_session_collect_pickup(sio, 1, 0)
+        result = game_session.game_session_collect_locations(sio, 1, (0,))
 
     # Assert
     assert result is None
@@ -203,7 +203,7 @@ def test_game_session_collect_pickup_etm(mock_session_description: PropertyMock,
 
     # Run
     with flask_app.test_request_context():
-        result = game_session.game_session_collect_pickup(sio, 1, 0)
+        result = game_session.game_session_collect_locations(sio, 1, (0,))
 
     # Assert
     assert result is None
@@ -214,9 +214,15 @@ def test_game_session_collect_pickup_etm(mock_session_description: PropertyMock,
                                            provider_location_index=0)
 
 
-@pytest.mark.parametrize("already_exists", [False, True])
+@pytest.mark.parametrize(("locations_to_collect", "exists"), [
+    ((0,), ()),
+    ((0,), (0,)),
+    ((0, 1), ()),
+    ((0, 1), (0,)),
+    ((0, 1), (0, 1)),
+])
 def test_game_session_collect_pickup_other(flask_app, two_player_session, echoes_resource_database,
-                                           already_exists, mocker):
+                                           locations_to_collect, exists, mocker):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit", autospec=True)
     mock_get_pickup_target: MagicMock = mocker.patch("randovania.server.game_session._get_pickup_target", autospec=True)
     mock_session_description: PropertyMock = mocker.patch("randovania.server.database.GameSession.layout_description",
@@ -228,20 +234,24 @@ def test_game_session_collect_pickup_other(flask_app, two_player_session, echoes
     sio.get_current_user.return_value = database.User.get_by_id(1234)
     mock_get_pickup_target.return_value = PickupTarget(MagicMock(), 1)
 
-    if already_exists:
+    for existing_id in exists:
         database.GameSessionTeamAction.create(session=two_player_session, team=0, provider_row=0,
-                                              provider_location_index=0, receiver_row=0)
+                                              provider_location_index=existing_id, receiver_row=0)
 
     # Run
     with flask_app.test_request_context():
-        result = game_session.game_session_collect_pickup(sio, 1, 0)
+        result = game_session.game_session_collect_locations(sio, 1, locations_to_collect)
 
     # Assert
     assert result is None
-    mock_get_pickup_target.assert_called_once_with(mock_session_description.return_value, 0, 0)
-    database.GameSessionTeamAction.get(session=two_player_session, team=0, provider_row=0,
-                                       provider_location_index=0)
-    if already_exists:
+    mock_get_pickup_target.assert_has_calls([
+        call(mock_session_description.return_value, 0, location)
+        for location in locations_to_collect
+    ])
+    for location in locations_to_collect:
+        database.GameSessionTeamAction.get(session=two_player_session, team=0, provider_row=0,
+                                           provider_location_index=location)
+    if exists == locations_to_collect:
         mock_emit.assert_not_called()
         mock_emit_session_update.assert_not_called()
     else:

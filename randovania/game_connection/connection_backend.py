@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 from PySide2.QtCore import Signal, QObject
 from _nod import Enum
@@ -8,10 +8,24 @@ from randovania.game_description.resources.resource_info import CurrentResources
 
 
 class ConnectionStatus(Enum):
-    Disconnected = "Disconnected"
-    WrongGame = "Wrong Game"
-    NotInGame = "Not In-Game"
-    InGame = "In-Game"
+    Disconnected = "disconnected"
+    WrongGame = "wrong-game"
+    WrongHash = "wrong-hash"
+    TitleScreen = "title-screen"
+    InGame = "in-game"
+
+    @property
+    def pretty_text(self) -> str:
+        return _pretty_connection_status[self]
+
+
+_pretty_connection_status: Dict[ConnectionStatus, str] = {
+    ConnectionStatus.Disconnected: "Disconnected",
+    ConnectionStatus.WrongGame: "Wrong Game",
+    ConnectionStatus.WrongHash: "Correct Game, Wrong Seed Hash",
+    ConnectionStatus.TitleScreen: "Title Screen",
+    ConnectionStatus.InGame: "In-Game",
+}
 
 
 class ConnectionBase(QObject):
@@ -21,7 +35,7 @@ class ConnectionBase(QObject):
     def current_status(self) -> ConnectionStatus:
         raise NotImplementedError()
 
-    async def display_message(self, message: str):
+    def display_message(self, message: str):
         raise NotImplementedError()
 
     async def get_inventory(self) -> CurrentResources:

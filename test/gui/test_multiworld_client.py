@@ -1,14 +1,16 @@
+import json
+from pathlib import Path
+
 import pytest
 from mock import MagicMock, AsyncMock, call
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.gui.multiworld_client import MultiworldClient
+from randovania.gui.multiworld_client import MultiworldClient, Data
 
 
 @pytest.mark.asyncio
-async def test_start(skip_qtbot):
+async def test_start(skip_qtbot, tmpdir):
     network_client = MagicMock()
     network_client.game_session_request_pickups = AsyncMock(return_value=[])
 
@@ -19,13 +21,12 @@ async def test_start(skip_qtbot):
     client._received_pickups = ["Pickup"]
 
     # Run
-    await client.start()
+    await client.start(Path(tmpdir).joinpath("missing_file.json"))
 
     # Assert
     client.refresh_received_pickups.assert_awaited_once_with()
     game_connection.LocationCollected.connect.assert_called_once_with(client.on_location_collected)
     network_client.GameUpdateNotification.connect.assert_called_once_with(client.on_game_updated)
-    assert client.latest_message_displayed == 1
     game_connection.set_permanent_pickups.assert_called_once_with(["Pickup"])
 
 
@@ -44,20 +45,27 @@ async def test_stop(skip_qtbot):
     game_connection.set_permanent_pickups.assert_called_once_with([])
 
 
+@pytest.mark.parametrize("exists", [False, True])
 @pytest.mark.asyncio
-async def test_on_location_collected(skip_qtbot):
+async def test_on_location_collected(skip_qtbot, tmpdir, exists):
     network_client = MagicMock()
-    network_client.game_session_collect_pickup = AsyncMock()
     game_connection = MagicMock()
 
     client = MultiworldClient(network_client, game_connection)
-    client._decode_pickup = MagicMock()
+    client._data = Data(Path(tmpdir).joinpath("data.json"))
+    client._data.collected_locations = {10, 15} if exists else {10}
+    client.start_notify_collect_locations_task = MagicMock()
 
     # Run
     await client.on_location_collected(15)
 
     # Assert
-    network_client.game_session_collect_pickup.assert_awaited_once_with(PickupIndex(15))
+    assert client._data.collected_locations == {10, 15}
+
+    if exists:
+        client.start_notify_collect_locations_task.assert_not_called()
+    else:
+        client.start_notify_collect_locations_task.assert_called_once_with()
 
 
 @pytest.mark.asyncio
@@ -86,25 +94,25 @@ async def test_refresh_received_pickups(skip_qtbot):
 
 
 @pytest.mark.asyncio
-async def test_on_game_updated(skip_qtbot):
+async def test_on_game_updated(skip_qtbot, tmpdir):
     network_client = MagicMock()
-
     game_connection = MagicMock()
-    game_connection.display_message = AsyncMock()
 
     client = MultiworldClient(network_client, game_connection)
     client.refresh_received_pickups = AsyncMock()
     client._received_messages = ["Message A", "Message B", "Message C"]
     client._received_pickups = [MagicMock(), MagicMock(), MagicMock()]
-    client.latest_message_displayed = 1
+
+    client._data = Data(Path(tmpdir).joinpath("data.json"))
+    client._data.latest_message_displayed = 1
 
     # Run
     await client.on_game_updated()
 
     # Assert
-    game_connection.display_message.assert_has_awaits([call("Message B"), call("Message C")])
+    game_connection.display_message.assert_has_calls([call("Message B"), call("Message C")])
     game_connection.set_permanent_pickups.assert_called_once_with(client._received_pickups)
-    assert client.latest_message_displayed == 3
+    assert client._data.latest_message_displayed == 3
 
 
 def test_decode_pickup(skip_qtbot):
@@ -124,3 +132,29 @@ def test_decode_pickup(skip_qtbot):
 
     # Assert
     assert pickup == expected_pickup
+
+
+@pytest.mark.asyncio
+async def test_notify_collect_locations(skip_qtbot, tmpdir):
+    data_path = Path(tmpdir).joinpath("data.json")
+    network_client = MagicMock()
+    network_client.game_session_collect_locations = AsyncMock(side_effect=[
+        RuntimeError("connection issue!"),
+        None,
+    ])
+    game_connection = MagicMock()
+
+    client = MultiworldClient(network_client, game_connection)
+    data_path.write_text(json.dumps({
+        "collected_locations": [10, 15],
+        "uploaded_locations": [15],
+        "latest_message_displayed": 0,
+    }))
+    client._data = Data(data_path)
+
+    # Run
+    await client._notify_collect_locations()
+
+    # Assert
+    network_client.game_session_collect_locations.assert_has_awaits([call((10,)), call((10,))])
+    assert set(json.loads(data_path.read_text())["uploaded_locations"]) == {10, 15}

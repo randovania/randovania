@@ -36,7 +36,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         common_qt_lib.set_default_window_icon(self.window)
 
         for status in iterate_enum(ConnectionStatus):
-            self.current_status_combo.addItem(status.value, status)
+            self.current_status_combo.addItem(status.pretty_text, status)
 
         self.permanent_pickups = []
         self.pickups = []
@@ -55,7 +55,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     def current_status(self) -> ConnectionStatus:
         return self.current_status_combo.currentData()
 
-    async def display_message(self, message: str):
+    def display_message(self, message: str):
         self.messages_list.addItem(message)
 
     async def get_inventory(self) -> CurrentResources:
