@@ -163,6 +163,7 @@ class PlayerState:
         self.scan_asset_initial_pickups = {}
         self.num_random_starting_items_placed = 0
         self.num_assigned_pickups = 0
+        self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
 
     def advance_pickup_index_seen_count(self):
@@ -183,7 +184,7 @@ class PlayerState:
         current_uncollected = UncollectedState.from_reach(self.reach)
         progression_pickups = _calculate_progression_pickups(self.pickups_left, self.reach)
 
-        print_retcon_loop_start(current_uncollected, self.game, self.pickups_left, self.reach)
+        print_retcon_loop_start(current_uncollected, self.game, self.pickups_left, self.reach, self.index)
 
         return _calculate_potential_actions(self.reach,
                                             progression_pickups,
@@ -203,25 +204,39 @@ class PlayerState:
 
 
 def _get_next_player(rng: Random,
-                     players_to_check: List[PlayerState],
                      player_states: Dict[int, PlayerState]) -> Optional[PlayerState]:
     """
     Gets the next player a pickup should be placed for.
     :param rng:
-    :param players_to_check:
     :param player_states:
     :return:
     """
-    if not players_to_check:
-        players_to_check.extend(player_state for player_state in player_states.values()
-                                if not player_state.victory_condition_satisfied())
-        if not players_to_check:
-            debug.debug_print("Finished because we can win")
-            return None
+    all_uncollected: Dict[PlayerState, UncollectedState] = {
+        player_state: UncollectedState.from_reach(player_state.reach)
+        for player_state in player_states.values()
+    }
 
-        rng.shuffle(players_to_check)
+    max_actions = max(player_state.num_actions for player_state in player_states.values())
+    max_uncollected = max(len(uncollected.indices) for uncollected in all_uncollected.values())
 
-    return players_to_check.pop()
+    def _calculate_weight(player: PlayerState) -> float:
+        return 1 + (max_actions - player.num_actions) * (max_uncollected - len(all_uncollected[player].indices))
+
+    weighted_players = {
+        player_state: _calculate_weight(player_state)
+        for player_state in player_states.values()
+        if not player_state.victory_condition_satisfied()
+    }
+    if weighted_players:
+        if debug.debug_level() > 1:
+            print(">>>>> Player Weights")
+            for player, weight in weighted_players.items():
+                print(f"* {player.index}: {weight}")
+
+        return select_element_with_weight(weighted_players, rng)
+    else:
+        debug.debug_print("Finished because we can win")
+        return None
 
 
 def retcon_playthrough_filler(rng: Random,
@@ -257,11 +272,10 @@ def retcon_playthrough_filler(rng: Random,
         player_state.advance_pickup_index_seen_count()
         player_state.advance_scan_asset_seen_count()
 
-    players_to_check = []
     actions_log = []
 
     while True:
-        current_player = _get_next_player(rng, players_to_check, player_states)
+        current_player = _get_next_player(rng, player_states)
         if current_player is None:
             break
 
@@ -282,6 +296,7 @@ def retcon_playthrough_filler(rng: Random,
 
             # TODO: this item is potentially dangerous and we should remove the invalidated paths
             current_player.pickups_left.remove(action)
+            current_player.num_actions += 1
 
             count_pickups_left = sum(len(player_state.pickups_left) for player_state in player_states.values())
             last_message = "{} items left.".format(count_pickups_left)
@@ -508,6 +523,7 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
                             game: GameDescription,
                             pickups_left: Iterator[PickupEntry],
                             reach: GeneratorReach,
+                            player_index: int,
                             ):
     if debug.debug_level() > 0:
         if debug.debug_level() > 1:
@@ -516,7 +532,8 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
             extra = ""
 
         print("\n\n===============================")
-        print("\n>>> From {}, {} open pickup indices, {} open resources{}".format(
+        print("\n>>> Player {}: From {}, {} open pickup indices, {} open resources{}".format(
+            player_index,
             game.world_list.node_name(reach.state.node, with_world=True),
             len(current_uncollected.indices),
             len(current_uncollected.resources),
