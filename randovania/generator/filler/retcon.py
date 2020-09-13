@@ -1,6 +1,7 @@
 import collections
 import dataclasses
 import itertools
+import math
 import pprint
 from random import Random
 from typing import Tuple, Iterator, NamedTuple, Set, AbstractSet, Union, Dict, \
@@ -104,11 +105,12 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
     result = {}
 
     for indices in indices_groups:
-        weight_from_collected_indices = len(indices) / ((1 + len(assigned_indices & indices)) ** 2)
+        weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
         for index in uncollected_indices & indices:
             weight_from_seen_count = min(10, seen_counts[index]) ** -2
             result[index] = weight_from_collected_indices * weight_from_seen_count
+            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_seen_count}")
 
     return result
 
@@ -141,6 +143,7 @@ class PlayerState:
     scan_asset_seen_count: DefaultDict[LogbookAsset, int]
     scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]
     num_random_starting_items_placed: int
+    num_assigned_pickups: int
 
     def __init__(self,
                  index: int,
@@ -159,6 +162,7 @@ class PlayerState:
         self.scan_asset_seen_count = collections.defaultdict(int)
         self.scan_asset_initial_pickups = {}
         self.num_random_starting_items_placed = 0
+        self.num_assigned_pickups = 0
         self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
 
     def advance_pickup_index_seen_count(self):
@@ -190,6 +194,12 @@ class PlayerState:
 
     def victory_condition_satisfied(self):
         return self.game.victory_condition.satisfied(self.reach.state.resources, self.reach.state.energy)
+
+    def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget):
+        self.num_assigned_pickups += 1
+        self.reach.state.patches = self.reach.state.patches.assign_new_pickups([
+            (pickup_index, target),
+        ])
 
 
 def _get_next_player(rng: Random,
@@ -314,10 +324,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
                                    >= current_player.configuration.minimum_random_starting_items):
 
         index_owner_state, pickup_index = select_element_with_weight(all_locations_weighted, rng)
-
-        index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_new_pickups([
-            (pickup_index, PickupTarget(action, current_player.index)),
-        ])
+        index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
 
         # Place a hint for the new item
         hint_location = _calculate_hint_location_for_action(
@@ -356,7 +363,15 @@ def _calculate_all_pickup_indices_weight(player_states: Dict[int, PlayerState],
                                          ) -> Dict[Tuple[PlayerState, PickupIndex], float]:
     all_weights = {}
 
+    total_assigned_pickups = sum(player_state.num_assigned_pickups for player_state in player_states.values())
+
+    # print("================ WEIGHTS! ==================")
     for player_state in player_states.values():
+        delta = (total_assigned_pickups - player_state.num_assigned_pickups)
+        player_weight = 1 + delta
+
+        # print(f"** Player {player_state.index} -- {player_weight}")
+
         pickup_index_weights = _calculate_uncollected_index_weights(
             player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
             set(player_state.reach.state.patches.pickup_assignment),
@@ -364,7 +379,11 @@ def _calculate_all_pickup_indices_weight(player_states: Dict[int, PlayerState],
             player_state.indices_groups,
         )
         for pickup_index, weight in pickup_index_weights.items():
-            all_weights[(player_state, pickup_index)] = weight
+            all_weights[(player_state, pickup_index)] = weight * player_weight
+
+    # for (player_state, pickup_index), weight in all_weights.items():
+    #     print(f"> {player_state.index} - {pickup_index}: {weight}")
+    # print("============================================")
 
     return all_weights
 
