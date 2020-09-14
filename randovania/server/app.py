@@ -1,3 +1,5 @@
+from logging.config import dictConfig
+
 import flask
 from flask_socketio import ConnectionRefusedError
 
@@ -9,6 +11,22 @@ from randovania.server.server_app import ServerApp
 
 def create_app():
     configuration = randovania.get_configuration()
+
+    dictConfig({
+        'version': 1,
+        'formatters': {'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+        'handlers': {'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }},
+        'root': {
+            'level': 'INFO',
+            'handlers': ['wsgi']
+        }
+    })
 
     app = flask.Flask(__name__)
     app.config['SECRET_KEY'] = configuration["server_config"]["secret_key"]
