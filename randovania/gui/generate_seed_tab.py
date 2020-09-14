@@ -59,7 +59,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         for preset in self._window_manager.preset_manager.all_presets:
             self._create_button_for_preset(preset)
 
-        self.window.num_players_spin_box.setVisible(self._window_manager.is_preview_mode and False)
+        self.window.num_players_spin_box.setVisible(self._window_manager.is_preview_mode)
 
         # Menu
         self._tool_button_menu = QMenu(window.preset_tool_button)
