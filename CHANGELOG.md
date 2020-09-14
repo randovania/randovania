@@ -139,11 +139,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Aerie, method of collecting the item without entering the Dark World (Expert and above).
 
--   Grand Abyss, methods of crossing the gap with Boost Jump or Extended Dash (Expert and above).
+-   Dynamo Works, method of collecting the item with a Roll Jump and Instant Morph (Expert and above).
+
+-   Grand Abyss, methods of crossing the gap with Boost Jump (Advanced and above) or Extended Dash (Expert and above).
+
+-   Hall of Combat Mastery, methods of collecting the item with a Wall Boost (Expert and above) or with a Power Bomb and unmorphing (Beginner and above).
+
+-   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Intermediate and above).
 
 -   Hive Temple:
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
-    - Method of leaving the room without Spider Ball after Quadraxis (Hypermode).
+    - Methods of leaving the room without Spider Ball after Quadraxis with Boost Ball or Space Jump (Hypermode).
+
+-   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
 -   Watch Station Access, methods to cross the pit in either direction using Boost Ball and no Space Jump.
 
