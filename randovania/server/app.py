@@ -43,7 +43,7 @@ def create_app():
         except ValueError:
             raise ConnectionRefusedError("unknown client version")
 
-        app.logger.info(f"Client at {environ['REMOTE_ADDR']} / {environ['HTTP_X_FORWARDED_FOR']} with "
+        app.logger.info(f"Client at {environ['REMOTE_ADDR']} with "
                         f"version {client_app_version} connected, while server is {server_version}")
 
     return app
