@@ -99,6 +99,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
+-   Dark Forgotten Bridge, method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
+
 -   Gathering Hall: 
     - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
     - Method to reach Transit Tunnel South from Transit Tunnel West with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
@@ -109,7 +111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Meditation Vista, methods of reaching the item with a Boost Jump or Roll Jump (Expert and above).
 
 -   Path of Roots, method of reaching the item using:
-    - Morph Ball, Bombs and Space Jump (Intermediate and above).
+    - Morph Ball, Bombs and Space Jump (Advanced and above).
     - Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
 -   Putrid Alcove, method of getting the item and leaving without any items (Expert and above).
@@ -133,13 +135,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Undertemple Access, method of reaching the item using Screw Attack and Jump Off Enemy (Hypermode).
 
--   Grand Abyss, methods of crossing the gap with Boost Jump or Extended Dash (Expert and above).
+-   Aerial Training Site, methods to cross the room from various nodes with Dashes, Roll Jumps, and Extended Dashes (Intermediate/Expert and above).
+
+-   Aerie, method of collecting the item without entering the Dark World (Expert and above).
+
+-   Dynamo Works, method of collecting the item with a Roll Jump and Instant Morph (Expert and above).
+
+-   Grand Abyss, methods of crossing the gap with Boost Jump (Advanced and above) or Extended Dash (Expert and above).
+
+-   Hall of Combat Mastery, methods of collecting the item with a Wall Boost (Expert and above) or with a Power Bomb and unmorphing (Beginner and above).
+
+-   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Intermediate and above).
 
 -   Hive Temple:
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
-    - Method of leaving the room without Spider Ball after Quadraxis (Hypermode).
+    - Methods of leaving the room without Spider Ball after Quadraxis with Boost Ball or Space Jump (Hypermode).
 
--   Watch Station Access, methods to cross the pit in either direction using Boost Ball and no Space Jump.
+-   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
+
+-   Watch Station Access, methods to cross the pit in either direction using:
+    - Boost Ball and Boost Jump (Advanced and above).
+    - Space Jump, Scan Visor, and Scan Dash (Advanced and above).
+
+-   Workers Path, method of crossing the room from Sanctuary Temple with a Boost Jump (Advanced and above).
 
 #### Fixed
 
