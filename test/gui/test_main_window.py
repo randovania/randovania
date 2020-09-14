@@ -36,6 +36,7 @@ async def test_browse_for_game_session(mock_game_session_window: MagicMock,
                                        mock_execute_dialog: AsyncMock,
                                        skip_qtbot, default_main_window, mocker):
     # Setup
+    mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
     mocker.patch("randovania.gui.main_window.MainWindow._ensure_logged_in", new_callable=AsyncMock,
                  return_value=True)
     mock_execute_dialog.return_value = mock_game_session_browser.return_value.Accepted
@@ -49,7 +50,8 @@ async def test_browse_for_game_session(mock_game_session_window: MagicMock,
     mock_game_session_browser.return_value.refresh.assert_awaited_once_with()
     mock_execute_dialog.assert_awaited_once_with(mock_game_session_browser.return_value)
     mock_game_session_window.assert_called_once_with(
-        default_main_window.network_client.current_game_session,
+        default_main_window.network_client,
+        mock_get_game_connection.return_value,
         default_main_window.preset_manager,
         default_main_window._options,
     )
@@ -63,6 +65,7 @@ async def test_host_game_session(mock_game_session_window: MagicMock,
                                  mock_execute_dialog: AsyncMock,
                                  skip_qtbot, default_main_window, mocker):
     # Setup
+    mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
     mocker.patch("randovania.gui.main_window.MainWindow._ensure_logged_in", new_callable=AsyncMock,
                  return_value=True)
     mock_execute_dialog.return_value = QDialog.Accepted
@@ -75,7 +78,8 @@ async def test_host_game_session(mock_game_session_window: MagicMock,
     mock_execute_dialog.assert_awaited_once()
     default_main_window.network_client.create_new_session.assert_awaited_once_with("")
     mock_game_session_window.assert_called_once_with(
-        default_main_window.network_client.create_new_session.return_value,
+        default_main_window.network_client,
+        mock_get_game_connection.return_value,
         default_main_window.preset_manager,
         default_main_window._options,
     )

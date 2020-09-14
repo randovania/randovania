@@ -1,6 +1,6 @@
 from typing import List
 
-from PySide2.QtCore import QTimer, Signal
+from PySide2.QtCore import QTimer, Signal, QObject
 from asyncqt import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, ConnectionBase, ConnectionStatus
@@ -8,7 +8,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 
 
-class GameConnection(ConnectionBase):
+class GameConnection(QObject, ConnectionBase):
     StatusUpdated = Signal(ConnectionStatus)
 
     _dt: float = 1.0
@@ -24,10 +24,10 @@ class GameConnection(ConnectionBase):
 
     def set_backend(self, backend: ConnectionBackend):
         if self.backend is not None:
-            self.backend.LocationCollected.disconnect(self.LocationCollected.emit)
+            self.backend.set_location_collected_listener(None)
 
         self.backend = backend
-        self.backend.LocationCollected.connect(self.LocationCollected.emit)
+        self.backend.set_location_collected_listener(self._emit_location_collected)
 
     async def start(self):
         self._timer.start()
@@ -45,14 +45,14 @@ class GameConnection(ConnectionBase):
 
     @property
     def pretty_current_status(self) -> str:
-        return f"{self.backend.name}: {self.backend.current_status.value}"
+        return f"{self.backend.name}: {self.backend.current_status.pretty_text}"
 
     @property
     def current_status(self) -> ConnectionStatus:
         return self.backend.current_status
 
-    async def display_message(self, message: str):
-        return await self.backend.display_message(message)
+    def display_message(self, message: str):
+        return self.backend.display_message(message)
 
     async def get_inventory(self) -> CurrentResources:
         return await self.backend.get_inventory()
@@ -62,3 +62,9 @@ class GameConnection(ConnectionBase):
 
     def set_permanent_pickups(self, pickups: List[PickupEntry]):
         return self.backend.set_permanent_pickups(pickups)
+
+    async def _emit_location_collected(self, location: int):
+        if self._location_collected_listener is not None:
+            await self._location_collected_listener(location)
+        else:
+            self.backend.display_message("Pickup not sent, Randovania is not connected to a session.")
