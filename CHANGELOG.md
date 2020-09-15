@@ -75,6 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
 
+-   Accursed Lake, method of collecting the item and leaving with Morph Ball, Light Suit, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+
 -   Hall of Honored Dead, method of leaving through the Morph tunnel without Space Jump (Expert and above).
 
 -   Ing Windchamber, method of completing the puzzle with Power Bombs instead of Bombs (Beginner and above).
