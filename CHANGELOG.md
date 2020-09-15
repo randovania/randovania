@@ -162,10 +162,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Fixed
 
 -   Scan Visor Requirements: 
-    - Trooper Security Station Event coming from Communication Area
+    - Dash Requirements in many rooms
+    - Grand Abyss Bridge terminal
     - Sand Processing item
-    - Torvus Lagoon terminal
     - Staging Area terminal
+    - Torvus Lagoon terminal
+    - Trooper Security Station Event coming from Communication Area
 
 -   Dark Aether Damage Requirements:
     - Battleground
