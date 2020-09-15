@@ -67,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Added
 
 -   General:
-    - Method to open Seeker Missile Locks with Screw Attack in various rooms (Expert and above).
+    - Methods to open all Seeker Missile Doors with Screw Attack (Expert and above).
     - Method to activate most Bomb Slots without Bombs (Hypermode).
     - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
 
@@ -185,6 +185,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
 -   Morph Ball Doors now properly requires Morph Ball.
+
+-   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
 
 #### Changed
 
