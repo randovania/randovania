@@ -159,6 +159,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Boost Ball and Boost Jump (Advanced and above).
     - Space Jump, Scan Visor, and Scan Dash (Advanced and above).
 
+-   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
 -   Workers Path, method of crossing the room from Sanctuary Temple with a Boost Jump (Advanced and above).
 
 #### Fixed
@@ -177,6 +179,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
     - Undertemple Access (Updated)
     - Undertemple (Intermediate and above)
+    - Vault Attack Portal
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
