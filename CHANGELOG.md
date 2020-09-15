@@ -151,6 +151,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
     - Methods of leaving the room without Spider Ball after Quadraxis with Boost Ball or Space Jump (Hypermode).
 
+-   Reactor Core, method of reaching the item with only Space Jump (Expert and above).
+
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
 -   Watch Station Access, methods to cross the pit in either direction using:
