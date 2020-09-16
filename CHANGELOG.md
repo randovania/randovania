@@ -176,10 +176,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Trooper Security Station Event coming from Communication Area
 
 -   Dark Aether Damage Requirements:
-    - Abandoned Base
-    - Base Access
-    - Defiled Shrine
-    - Plain of Dark Worship
+    - Sky Temple Grounds
     - Battleground
     - Judgment Pit
     - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
