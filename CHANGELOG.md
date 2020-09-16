@@ -179,6 +179,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Abandoned Base
     - Base Access
     - Defiled Shrine
+    - Plain of Dark Worship
     - Battleground
     - Judgment Pit
     - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
