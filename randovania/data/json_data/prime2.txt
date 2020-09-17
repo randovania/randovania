@@ -55,6 +55,9 @@ Templates
               Shoot Sunburst
               Shoot Sonic Boom
 
+* Activate Safe Zone:
+      Power Beam or Shoot Annihilator Beam or Shoot Light Beam
+
 ====================
 Temple Grounds
 ----------------
@@ -2470,41 +2473,103 @@ Asset id: 2373615500
 ----------------
 Duelling Range
 Asset id: 1063051065
-> Door to Junction Site; Heals? True
+> Door to Junction Site; Heals? False
   > Junction Site/Door to Duelling Range
       Trivial
   > Duelling Range/Door to Save Station 2
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 60
+          Morph Ball and Dark World Damage ≥ 52
   > Duelling Range/Door to Ing Cache 4
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 95
+          Morph Ball and Dark World Damage ≥ 70
+  > Duelling Range/Safe Zone Before Upper Door
+      Dark World Damage and Activate Safe Zone
 
-> Door to Dark Transit Station; Heals? True
+> Door to Dark Transit Station; Heals? False
   > Dark Transit Station/Door to Duelling Range
       Trivial
   > Duelling Range/Portal to Mining Plaza
-      Trivial
+      Dark World Damage ≥ 4
 
-> Door to Save Station 2; Heals? True
+> Door to Save Station 2; Heals? False
   > Save Station 2/Door to Duelling Range
       Trivial
-  > Duelling Range/Door to Junction Site
-      Trivial
   > Duelling Range/Door to Ing Cache 4
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 70
+          Morph Ball and Dark World Damage ≥ 60
+  > Duelling Range/Safe Zone Under Bridge
+      Dark World Damage and Activate Safe Zone
 
-> Door to Ing Cache 4; Heals? True
+> Door to Ing Cache 4; Heals? False
   > Ing Cache 4/Door to Duelling Range
       Shoot Dark Beam
   > Duelling Range/Door to Junction Site
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 125
+          Morph Ball and Dark World Damage ≥ 120
   > Duelling Range/Door to Save Station 2
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 85
+          Morph Ball and Dark World Damage ≥ 70
+  > Duelling Range/Safe Zone Before Dark Door
+      Dark World Damage ≥ 6
 
 > Portal to Mining Plaza; Heals? True
   > Mining Plaza/Portal from Duelling Range
       Shoot Annihilator Beam or Shoot Light Beam
   > Duelling Range/Door to Dark Transit Station
       Trivial
+
+> Safe Zone Before Dark Door; Heals? True
+  > Duelling Range/Door to Ing Cache 4
+      Dark World Damage ≥ 3
+  > Duelling Range/Safe Zone Outside Portal Wall
+      Dark World Damage ≥ 30
+  > Duelling Range/Safe Zone Under Bridge
+      Dark World Damage ≥ 26 and Activate Safe Zone
+
+> Safe Zone Outside Portal Wall; Heals? True
+  > Duelling Range/Safe Zone Before Dark Door
+      Any of the following:
+          Dark World Damage ≥ 35
+          Morph Ball and Dark World Damage ≥ 18
+  > Duelling Range/Safe Zone Before Bridge
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 15
+              Morph Ball and Dark World Damage ≥ 10
+
+> Safe Zone Under Bridge; Heals? True
+  > Duelling Range/Door to Save Station 2
+      Trivial
+  > Duelling Range/Safe Zone Before Dark Door
+      Dark World Damage ≥ 25
+
+> Safe Zone Before Upper Door; Heals? True
+  > Duelling Range/Door to Junction Site
+      Trivial
+  > Duelling Range/Safe Zone Under Bridge
+      Dark World Damage ≥ 20 and Activate Safe Zone
+  > Duelling Range/Safe Zone Before Bridge
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 35
+              Morph Ball and Dark World Damage ≥ 28
+
+> Safe Zone Before Bridge; Heals? True
+  > Duelling Range/Safe Zone Before Dark Door
+      Dark World Damage ≥ 16
+  > Duelling Range/Safe Zone Before Upper Door
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 36
+              Morph Ball and Dark World Damage ≥ 25
 
 ----------------
 Mining Station B
@@ -2766,56 +2831,92 @@ Asset id: 3820941951
 ----------------
 Dark Transit Station
 Asset id: 3611217256
-> Door to Duelling Range; Heals? True
+> Door to Duelling Range; Heals? False
   > Duelling Range/Door to Dark Transit Station
       Trivial
-  > Dark Transit Station/Door to Trial Grounds
+  > Dark Transit Station/Ledge
       All of the following:
           Morph Ball
           Any of the following:
-              Space Jump Boots
-              Standable Terrain (Intermediate) and Difficulty: Intermediate
-              Morph Ball Bomb and Bomb Jump (Beginner)
+              Space Jump Boots and Dark World Damage ≥ 40
+              Standable Terrain (Intermediate) and Dark World Damage ≥ 45
+              Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 60
 
-> Door to Trial Grounds; Heals? True
+> Door to Trial Grounds; Heals? False
   > Trial Grounds/Door to Dark Transit Station
       Trivial
   > Dark Transit Station/Door to Duelling Range
-      Morph Ball
+      Morph Ball and Dark World Damage ≥ 80
+  > Dark Transit Station/Safe Zone Before Tunnel
+      Dark World Damage ≥ 2
+
+> Safe Zone Before Tunnel; Heals? True
+  > Dark Transit Station/Door to Trial Grounds
+      Trivial
+
+> Safe Zone Before Ledge; Heals? True
+  > Dark Transit Station/Safe Zone Before Tunnel
+      Morph Ball and Dark World Damage ≥ 5
+
+> Ledge; Heals? False
+  > Dark Transit Station/Door to Trial Grounds
+      Morph Ball and Dark World Damage ≥ 30
+  > Dark Transit Station/Safe Zone in Tunnel on Ledge
+      Morph Ball and Dark World Damage ≥ 3
+
+> Safe Zone in Tunnel on Ledge; Heals? True
+  > Dark Transit Station/Ledge
+      Morph Ball and Dark World Damage
 
 ----------------
 Save Station 2
 Asset id: 2887798667
 > Save Station; Heals? True
   > Save Station 2/Door to Duelling Range
-      Trivial
+      Dark World Damage ≥ 10
   > Save Station 2/Door to Crossroads
-      Trivial
+      Dark World Damage ≥ 34
+  > Save Station 2/Safe Zone from Save
+      Dark World Damage ≥ 7
 
-> Door to Duelling Range; Heals? True
+> Door to Duelling Range; Heals? False
   > Duelling Range/Door to Save Station 2
       Trivial
   > Save Station 2/Save Station
-      Trivial
+      Dark World Damage ≥ 10
 
 > Door to Crossroads; Heals? True
   > Crossroads/Door to Save Station 2
       Missile
   > Save Station 2/Save Station
-      Trivial
+      Dark World Damage ≥ 34
+  > Save Station 2/Safe Zone from Door
+      Dark World Damage ≥ 5
+
+> Safe Zone from Door; Heals? True
+  > Save Station 2/Door to Crossroads
+      Dark World Damage ≥ 5
+  > Save Station 2/Safe Zone from Save
+      Dark World Damage ≥ 6
+
+> Safe Zone from Save; Heals? True
+  > Save Station 2/Save Station
+      Dark World Damage ≥ 7
+  > Save Station 2/Safe Zone from Door
+      Dark World Damage ≥ 6
 
 ----------------
 Ing Cache 4
 Asset id: 3318204883
-> Door to Duelling Range; Heals? True
+> Door to Duelling Range; Heals? False
   > Duelling Range/Door to Ing Cache 4
       Shoot Dark Beam
   > Ing Cache 4/Pickup (Missile)
-      Trivial
+      Morph Ball and Dark World Damage ≥ 10
 
 > Pickup (Missile); Heals? True
   > Ing Cache 4/Door to Duelling Range
-      Trivial
+      Dark World Damage ≥ 6
 
 ----------------
 Junction Site
@@ -3280,7 +3381,7 @@ Asset id: 1979488942
 ----------------
 Trial Tunnel
 Asset id: 1222921974
-> Door to Dark Agon Temple; Heals? True
+> Door to Dark Agon Temple; Heals? False
   > Dark Agon Temple/Door to Trial Tunnel
       Trivial
   > Trial Tunnel/Pickup (Dark Agon Key 1)
@@ -3482,13 +3583,13 @@ Save Station 1
 Asset id: 1511345710
 > Save Station; Heals? True
   > Save Station 1/Door to Judgment Pit
-      Trivial
+      Dark World Damage ≥ 3
 
 > Door to Judgment Pit; Heals? True
   > Judgment Pit/Door to Save Station 1
       Shoot Dark Beam
   > Save Station 1/Save Station
-      Trivial
+      Dark World Damage ≥ 3
 
 ----------------
 Portal Access
@@ -4122,9 +4223,9 @@ Asset id: 3436835742
               All of the following:
                   Space Jump Boots and Standable Terrain (Intermediate)
                   Any of the following:
-                      Combat/Scan Dash (Expert)
                       Morph Ball Bomb and Bomb Space Jump (Intermediate)
                       Slope Jump (Advanced) and Roll Jump (Advanced)
+                      Scan Visor and Combat/Scan Dash (Expert)
   > Main Reactor/Room Bottom
       After Dark Samus 1
 
@@ -4154,9 +4255,11 @@ Asset id: 3436835742
 
 > Room Bottom; Heals? True
   > Main Reactor/Door to Ventilation Area A
-      Any of the following:
-          Morph Ball and Spider Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
-          Morph Ball Bomb and Bomb Space Jump (Expert) and Difficulty: Expert and Use Screw Attack (Space Jump)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
+              Morph Ball Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
   > Main Reactor/Door to Storage D
       After Dark Samus 1
   > Main Reactor/Door to Security Station B
@@ -4499,6 +4602,12 @@ Asset id: 3761619109
           Light Ammo ≥ 2 and Shoot Light Beam
           Knowledge (Beginner) and Difficulty: Beginner and Use Screw Attack (No Space Jump)
 
+> Spawn Point; Heals? True
+  > Feeding Pit Access/Door to Feeding Pit
+      Trivial
+  > Feeding Pit Access/Door to Doomed Entry
+      Trivial
+
 ----------------
 Oasis Access
 Asset id: 4073505822
@@ -4553,7 +4662,7 @@ Asset id: 1830176640
       Trivial
   > Hall of Stairs/Door to Save Station 3
       Any of the following:
-          Combat/Scan Dash (Expert) and Difficulty: Expert and Shoot Dark Beam and Shoot Light Beam
+          Scan Visor and Combat/Scan Dash (Expert) and Difficulty: Expert and Shoot Dark Beam and Shoot Light Beam
           Space Jump Boots and Shoot Dark Beam
           All of the following:
               Morph Ball
@@ -4565,9 +4674,15 @@ Asset id: 1830176640
 ----------------
 Ing Cache 3
 Asset id: 3122914805
-> Door to Dark Oasis; Heals? True
+> Door to Dark Oasis; Heals? False
   > Dark Oasis/Door to Ing Cache 3
       Shoot Light Beam
+  > Ing Cache 3/Ammo Station
+      Dark World Damage ≥ 4
+
+> Ammo Station; Heals? True
+  > Ing Cache 3/Door to Dark Oasis
+      Trivial
 
 ----------------
 Security Station A
@@ -4633,8 +4748,6 @@ Asset id: 123369195
       Shoot Dark Beam
   > Feeding Pit/Door to Feeding Pit Access
       Trivial
-  > Feeding Pit/Pickup (Power Bomb)
-      Light Suit
 
 > Door to Watering Hole; Heals? True
   > Watering Hole/Door to Feeding Pit
@@ -4643,8 +4756,6 @@ Asset id: 123369195
       Trivial
   > Feeding Pit/Door to Ing Cache 1
       Use Screw Attack (Space Jump)
-  > Feeding Pit/Pickup (Power Bomb)
-      Light Suit
 
 > Pickup (Power Bomb); Heals? False
   > Feeding Pit/Door to Feeding Pit Access
@@ -4675,21 +4786,21 @@ Save Station 3
 Asset id: 41547759
 > Save Station; Heals? True
   > Save Station 3/Door to Bitter Well
-      Trivial
+      Dark World Damage ≥ 3
   > Save Station 3/Door to Hall of Stairs
-      Trivial
+      Dark World Damage ≥ 3
 
-> Door to Bitter Well; Heals? True
+> Door to Bitter Well; Heals? False
   > Bitter Well/Door to Save Station 3
       Trivial
   > Save Station 3/Save Station
-      Trivial
+      Dark World Damage ≥ 3
 
-> Door to Hall of Stairs; Heals? True
+> Door to Hall of Stairs; Heals? False
   > Hall of Stairs/Door to Save Station 3
       Missile
   > Save Station 3/Save Station
-      Trivial
+      Dark World Damage ≥ 3
 
 ----------------
 Bioenergy Production
@@ -4837,19 +4948,19 @@ Asset id: 2603303494
 ----------------
 Ing Cache 1
 Asset id: 1385574326
-> Door to Feeding Pit; Heals? True
+> Door to Feeding Pit; Heals? False
   > Feeding Pit/Door to Ing Cache 1
       Shoot Light Beam
   > Ing Cache 1/Event - Agon Wastes Ing Cache 1 Pickup
-      Trivial
+      Dark World Damage ≥ 7
 
-> Event - Agon Wastes Ing Cache 1 Pickup; Heals? True
+> Event - Agon Wastes Ing Cache 1 Pickup; Heals? False
   > Ing Cache 1/Pickup (Light Beam)
       Trivial
 
 > Pickup (Light Beam); Heals? True
   > Ing Cache 1/Door to Feeding Pit
-      Trivial
+      Dark World Damage ≥ 4
 
 ----------------
 Bitter Well
@@ -4928,15 +5039,15 @@ Asset id: 537851367
 ----------------
 Ing Cache 2
 Asset id: 2467885174
-> Door to Phazon Site; Heals? True
+> Door to Phazon Site; Heals? False
   > Phazon Site/Door to Ing Cache 2
       Shoot Annihilator Beam
   > Ing Cache 2/Pickup (Sonic Boom)
-      Trivial
+      Dark World Damage ≥ 4
 
 > Pickup (Sonic Boom); Heals? True
   > Ing Cache 2/Door to Phazon Site
-      Trivial
+      Dark World Damage ≥ 7
 
 ====================
 Torvus Bog
