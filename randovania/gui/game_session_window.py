@@ -717,7 +717,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     @handle_network_errors
     async def start_session(self):
-        if len(self._game_session.players) != self._game_session.num_teams * len(self._game_session.presets):
+        num_players = sum(1 for player in self._game_session.players.values() if player.team is not None)
+        if num_players != self._game_session.num_teams * len(self._game_session.presets):
             await async_dialog.message_box(self,
                                            QMessageBox.Critical,
                                            "Missing players",
