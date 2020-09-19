@@ -82,7 +82,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             password = None
 
         try:
-            await self.network_client.join_session(session, password)
+            await self.network_client.join_game_session(session, password)
             return self.accept()
 
         except WrongPassword:

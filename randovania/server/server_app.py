@@ -44,13 +44,13 @@ class ServerApp:
         except peewee.DoesNotExist:
             raise InvalidSession()
 
-    def join_session(self, membership: GameSessionMembership):
+    def join_game_session(self, membership: GameSessionMembership):
         flask_socketio.join_room(f"game-session-{membership.session.id}")
         flask_socketio.join_room(f"game-session-{membership.session.id}-{membership.user.id}")
         with self.session() as sio_session:
             sio_session["current_game_session"] = membership.session.id
 
-    def leave_session(self):
+    def leave_game_session(self):
         with self.session() as sio_session:
             if "current_game_session" not in sio_session:
                 return

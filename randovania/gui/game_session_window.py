@@ -5,7 +5,7 @@ import random
 from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import Qt, Signal
+from PySide2.QtCore import Qt, Signal, QTimer
 from PySide2.QtWidgets import QMainWindow, QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
@@ -204,15 +204,20 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.main_layout.insertSpacerItem(2, spacer_item)
 
         self.network_client.GameSessionUpdated.connect(self.on_game_session_updated)
-        self.on_game_session_updated(self.network_client.current_game_session)
-
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
-        self.on_server_connection_state_updated(self.network_client.connection_state)
         self.game_connection.StatusUpdated.connect(self.on_game_connection_status_updated)
+
+        self.on_game_session_updated(self.network_client.current_game_session)
+        self.on_server_connection_state_updated(self.network_client.connection_state)
         self.on_game_connection_status_updated(self.game_connection.current_status)
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
+        if self.network_client.current_user.id not in self._game_session.players:
+            super().closeEvent(event)
+            self.has_closed = True
+            return
+
         user_response = await async_dialog.warning(
             self,
             "Leaving Game Session",
@@ -232,7 +237,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         try:
             if user_response == QMessageBox.Yes or not self.network_client.connection_state.is_disconnected:
-                await self.network_client.leave_session(user_response == QMessageBox.Yes)
+                await self.network_client.leave_game_session(user_response == QMessageBox.Yes)
         finally:
             super().closeEvent(event)
         self.has_closed = True
@@ -528,8 +533,16 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.strftime("%H:%M")))
 
-    def on_game_session_updated(self, game_session: GameSessionEntry):
+    @asyncSlot(GameSessionEntry)
+    async def on_game_session_updated(self, game_session: GameSessionEntry):
         self._game_session = game_session
+
+        if self.network_client.current_user.id not in game_session.players:
+            await asyncio.gather(
+                async_dialog.warning(self, "Kicked", "You have been kicked out of the session."),
+                self.network_client.leave_game_session(False),
+            )
+            return QTimer.singleShot(0, self.close)
 
         self_is_admin = game_session.players[self.network_client.current_user.id].admin
 
@@ -596,17 +609,16 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         self.update_session_actions()
         if self._game_session.in_game != self.multiworld_client.is_active:
-            self.sync_multiworld_client_status()
+            await self.update_multiworld_client_status()
 
-    def sync_multiworld_client_status(self):
+    async def update_multiworld_client_status(self):
         if self._game_session.in_game:
             you = self._game_session.players[self.network_client.current_user.id]
             persist_path = self.network_client.server_data_path.joinpath(
                 f"game_session_{self._game_session.id}_{you.team}_{you.row}.json")
-            new_task = self.multiworld_client.start(persist_path)
+            await self.multiworld_client.start(persist_path)
         else:
-            new_task = self.multiworld_client.stop()
-        asyncio.create_task(new_task)
+            await self.multiworld_client.stop()
 
     @property
     def current_player_membership(self) -> PlayerSessionEntry:
