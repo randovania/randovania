@@ -50,7 +50,7 @@ def create_game_session(sio: ServerApp, session_name: str):
             user=sio.get_current_user(), session=new_session,
             row=0, team=0, admin=True)
 
-    sio.join_session(membership)
+    sio.join_game_session(membership)
     return new_session.create_session_entry()
 
 
@@ -63,9 +63,13 @@ def join_game_session(sio: ServerApp, session_id: str, password: Optional[str]):
                                                      defaults={"row": 0, "team": None, "admin": False})[0]
 
     _emit_session_update(session)
-    sio.join_session(membership)
+    sio.join_game_session(membership)
 
     return session.create_session_entry()
+
+
+def disconnect_game_session(sio: ServerApp):
+    sio.leave_game_session()
 
 
 def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: Optional[int],
@@ -196,7 +200,8 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     _emit_session_update(session)
 
 
-def _switch_team(session: GameSession, membership: GameSessionMembership, new_team: Optional[int]):
+def _switch_team(session: GameSession, membership: GameSessionMembership, new_team: Optional[int], *,
+                 delete_instead: bool = False):
     other_membership: Optional[GameSessionMembership]
 
     if new_team is None:
@@ -235,9 +240,12 @@ def _switch_team(session: GameSession, membership: GameSessionMembership, new_te
     with database.db.atomic():
         session.num_teams = new_num_teams
         session.save()
-        membership.row = expected_row
-        membership.team = new_team
-        membership.save()
+        if delete_instead:
+            membership.delete_instance()
+        else:
+            membership.row = expected_row
+            membership.team = new_team
+            membership.save()
 
 
 def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg):
@@ -248,9 +256,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
     membership = GameSessionMembership.get_by_ids(user_id, session_id)
 
     if action == SessionAdminUserAction.KICK:
-        target_player: int = arg
-        # FIXME
-        raise InvalidAction("Kick is NYI")
+        _switch_team(session, membership, None, delete_instead=True)
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg

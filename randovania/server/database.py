@@ -80,7 +80,10 @@ class GameSession(BaseModel):
     def create_session_entry(self):
         description = self.layout_description
 
-        location_to_name = collections.defaultdict(dict)
+        location_to_name = {
+            team: {row: f"Player {row + 1}" for row in range(self.num_rows)}
+            for team in range(self.num_teams)
+        }
         for membership in self.players:
             if membership.team is not None:
                 location_to_name[membership.team][membership.row] = membership.effective_name
