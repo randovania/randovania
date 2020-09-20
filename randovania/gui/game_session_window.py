@@ -108,9 +108,10 @@ class RowWidget:
         for widget in self.widgets:
             widget.deleteLater()
 
-    def set_is_admin(self, is_admin: bool):
-        for widget in (self.customize, self.import_menu, self.delete):
-            widget.setEnabled(is_admin)
+    def set_is_admin(self, is_admin: bool, is_your_row: bool):
+        for widget in (self.customize, self.import_menu):
+            widget.setEnabled(is_admin or is_your_row)
+        self.delete.setEnabled(is_admin)
 
     def set_preset(self, preset: Preset):
         self.name.setText(preset.name)
@@ -549,7 +550,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             )
             return QTimer.singleShot(0, self.close)
 
-        self_is_admin = game_session.players[self.network_client.current_user.id].admin
+        self_player = game_session.players[self.network_client.current_user.id]
+        self_is_admin = self_player.admin
 
         self.session_name_edit.setText(game_session.name)
 
@@ -565,9 +567,10 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         while len(self.rows) < len(game_session.presets):
             self.add_row()
 
-        for row, preset in zip(self.rows, game_session.presets):
+        for i, (row, preset) in enumerate(zip(self.rows, game_session.presets)):
             row.set_preset(preset)
-            row.set_is_admin(self_is_admin)
+            row.set_is_admin(self_is_admin,
+                             is_your_row=self_player.row == i and game_session.num_teams == 1)
 
         teams = [{} for _ in range(game_session.num_teams)]
         observers = []

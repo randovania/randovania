@@ -117,16 +117,11 @@ def game_session_request_update(sio: ServerApp, session_id):
 
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
-    extra_admin = None
-    if action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
-        # DOWNLOAD_LAYOUT_DESCRIPTION does not require admin permissions, but must be a member
-        extra_admin = sio.get_current_user().id
-    _verify_has_admin(sio, session_id, extra_admin)
-
     session: database.GameSession = database.GameSession.get_by_id(session_id)
 
     if action == SessionAdminGlobalAction.CREATE_ROW:
         preset_json: dict = arg
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
         preset = _get_preset(preset_json)
 
@@ -141,6 +136,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
             raise InvalidAction("Missing arguments.")
 
         row_id, preset_json = arg
+        _verify_has_admin(sio, session_id, sio.get_current_user().id if session.num_teams == 1 else None)
         _verify_not_in_game(session)
         preset = _get_preset(preset_json)
 
@@ -157,6 +153,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.DELETE_ROW:
         row_id: int = arg
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
 
         if session.num_rows < 1:
@@ -176,6 +173,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
         description_json: dict = arg
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
         description = LayoutDescription.from_json_dict(description_json)
 
@@ -187,6 +185,12 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
         session.save()
 
     elif action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
+        try:
+            # You must be a session member to do get the spoiler
+            GameSessionMembership.get_by_ids(sio.get_current_user().id, session_id)
+        except peewee.DoesNotExist:
+            raise NotAuthorizedForAction()
+
         if session.layout_description_json is None:
             raise InvalidAction("Session does not contain a game")
 
@@ -196,6 +200,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
         return session.layout_description_json
 
     elif action == SessionAdminGlobalAction.START_SESSION:
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
         if session.layout_description is None:
             raise InvalidAction("Unable to start session, no game is available.")
