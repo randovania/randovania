@@ -7,6 +7,7 @@ import peewee
 import socketio
 from cryptography.fernet import Fernet
 from flask_discord import DiscordOAuth2Session
+from prometheus_flask_exporter import PrometheusMetrics
 
 from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession
 from randovania.server.database import User, GameSessionMembership
@@ -16,6 +17,7 @@ from randovania.server.lib import logger
 class ServerApp:
     sio: flask_socketio.SocketIO
     discord: DiscordOAuth2Session
+    metrics: PrometheusMetrics
     fernet_encrypt: Fernet
     guest_encrypt: Optional[Fernet] = None
 
@@ -23,6 +25,7 @@ class ServerApp:
         self.app = app
         self.sio = flask_socketio.SocketIO(app)
         self.discord = DiscordOAuth2Session(app)
+        self.metrics = PrometheusMetrics(app)
         self.fernet_encrypt = Fernet(app.config["FERNET_KEY"])
         if app.config["GUEST_KEY"] is not None:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
@@ -74,4 +77,6 @@ class ServerApp:
                 logger().exception("Unexpected exception while processing request")
                 return ServerError().as_json
 
-        return self.sio.on(message, namespace)(_handler)
+        metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
+
+        return self.sio.on(message, namespace)(metric_wrapper(_handler))
