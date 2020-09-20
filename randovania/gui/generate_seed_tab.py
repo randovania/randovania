@@ -193,7 +193,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
                                                             options=self._options)
                 progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
                 persist_layout(self._options.data_dir, layout)
-                self._window_manager.show_seed_tab(layout)
+                self._window_manager.open_game_details(layout)
 
             except GenerationFailure as generate_exception:
                 self.failed_to_generate_signal.emit(generate_exception)
