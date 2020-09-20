@@ -1,6 +1,7 @@
 import asyncio
 import dataclasses
 import functools
+import json
 import random
 from typing import List, Optional
 
@@ -19,6 +20,7 @@ from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
@@ -124,12 +126,13 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     _game_session: GameSessionEntry
     has_closed = False
     _logic_settings_window: Optional[LogicSettingsWindow] = None
+    _window_manager: WindowManager
 
     on_generated_layout_signal = Signal(LayoutDescription)
     failed_to_generate_signal = Signal(GenerationFailure)
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection,
-                 preset_manager: PresetManager, options: Options):
+                 preset_manager: PresetManager, window_manager: WindowManager, options: Options):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -139,6 +142,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.multiworld_client = MultiworldClient(self.network_client, self.game_connection)
 
         self._preset_manager = preset_manager
+        self._window_manager = window_manager
         self._options = options
 
         parent = self.central_widget
@@ -151,6 +155,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
         self.session_status_tool.clicked.connect(self._session_status_button_clicked)
         self.save_iso_button.clicked.connect(self.save_iso)
+        self.view_game_details_button.clicked.connect(self.view_game_details)
         self.on_generated_layout_signal.connect(self._upload_layout_description)
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
@@ -605,7 +610,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.view_game_details_button.setEnabled(False)
         else:
             self.generate_game_label.setText(f"Seed hash: {game_session.word_hash} ({game_session.seed_hash})")
-            self.view_game_details_button.setEnabled(game_session.spoiler and False)
+            self.view_game_details_button.setEnabled(game_session.spoiler)
 
         self.update_session_actions()
         if self._game_session.in_game != self.multiworld_client.is_active:
@@ -819,6 +824,21 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             progress_update(f"Finished!", 1)
 
         self.run_in_background_thread(work, "Exporting...")
+
+    @asyncSlot()
+    @handle_network_errors
+    async def view_game_details(self):
+        if self._game_session.seed_hash is None:
+            return await async_dialog.warning(self, "No Spoiler Available",
+                                              "Unable to view game spoilers, no game available.")
+
+        if not self._game_session.spoiler:
+            return await async_dialog.warning(self, "No Spoiler Available",
+                                              "Unable to view game spoilers, game was generated without spoiler.")
+
+        description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
+        description = LayoutDescription.from_json_dict(json.loads(description_json))
+        self._window_manager.open_game_details(description)
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setEnabled(not value)

@@ -48,7 +48,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     )
     network_client.current_game_session = initial_session
 
-    window = GameSessionWindow(network_client, game_connection, preset_manager, MagicMock())
+    window = GameSessionWindow(network_client, game_connection, preset_manager, MagicMock(), MagicMock())
     window.update_multiworld_client_status = AsyncMock()
 
     # Run
@@ -65,7 +65,7 @@ async def test_update_multiworld_client_status(skip_qtbot, mocker, in_game):
     game_connection.pretty_current_status = "Maybe Connected"
     mocker.patch("randovania.gui.game_session_window.GameSessionWindow.on_game_session_updated")
 
-    window = GameSessionWindow(network_client, game_connection, MagicMock(), MagicMock())
+    window = GameSessionWindow(network_client, game_connection, MagicMock(), MagicMock(), MagicMock())
     window._game_session = MagicMock()
     window._game_session.in_game = in_game
     window.multiworld_client.start = AsyncMock()

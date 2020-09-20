@@ -116,8 +116,12 @@ def game_session_request_update(sio: ServerApp, session_id):
 
 
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
-    _verify_has_admin(sio, session_id, None)
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
+    extra_admin = None
+    if action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
+        # DOWNLOAD_LAYOUT_DESCRIPTION does not require admin permissions, but must be a member
+        extra_admin = sio.get_current_user().id
+    _verify_has_admin(sio, session_id, extra_admin)
 
     session: database.GameSession = database.GameSession.get_by_id(session_id)
 
@@ -181,6 +185,15 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
         session.layout_description = description
         session.save()
+
+    elif action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
+        if session.layout_description_json is None:
+            raise InvalidAction("Session does not contain a game")
+
+        if not session.layout_description.permalink.spoiler:
+            raise InvalidAction("Session does not contain a spoiler")
+
+        return session.layout_description_json
 
     elif action == SessionAdminGlobalAction.START_SESSION:
         _verify_not_in_game(session)
