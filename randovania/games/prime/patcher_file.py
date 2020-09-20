@@ -9,7 +9,7 @@ from randovania.game_description.default_database import default_prime2_memo_dat
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import TeleporterNode
+from randovania.game_description.node import TeleporterNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -28,7 +28,6 @@ from randovania.layout.patcher_configuration import PickupModelStyle, PickupMode
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
-_TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
     # Great Temple
     408633584: "Temple Transport Emerald",
@@ -618,6 +617,7 @@ def create_patcher_file(description: LayoutDescription,
     rng = Random(description.permalink.as_str)
 
     game = data_reader.decode_data(layout.game_data)
+    pickup_count = sum(1 for node in game.world_list.all_nodes if isinstance(node, PickupNode))
     useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
                                   players_config.player_index)
 
@@ -644,7 +644,7 @@ def create_patcher_file(description: LayoutDescription,
         creator = PickupCreatorMulti(rng, memo_data, players_config)
 
     result["pickups"] = _create_pickup_list(patches,
-                                            useless_target, _TOTAL_PICKUP_COUNT,
+                                            useless_target, pickup_count,
                                             rng,
                                             patcher_config.pickup_model_style,
                                             patcher_config.pickup_model_data_source,
