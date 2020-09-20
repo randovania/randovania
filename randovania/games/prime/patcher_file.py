@@ -269,6 +269,7 @@ class PickupCreatorMulti(PickupCreator):
         if pickup_target.player == self.players_config.player_index:
             result = self.solo_creator.create_pickup_data(original_index, pickup_target, visual_pickup,
                                                           model_style, scan_text)
+            result["scan"] = f"Your {result['scan']}"
         else:
             other_name = self.players_config.player_names[pickup_target.player]
             result: dict = {
