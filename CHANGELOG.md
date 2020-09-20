@@ -43,6 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
+-   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
+
 -   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
 
 -   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
