@@ -92,6 +92,7 @@ setup(
             "eventlet",
             "flask-discord",
             "flask-socketio",
+            "prometheus-flask-exporter",
             "peewee",
             "requests-oauthlib",
         ],

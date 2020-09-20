@@ -133,7 +133,9 @@ class NetworkClient:
         return self._connect_task
 
     async def disconnect_from_server(self):
+        self.logger.info(f"will disconnect")
         await self.sio.disconnect()
+        self.logger.info(f"disconnected")
 
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()

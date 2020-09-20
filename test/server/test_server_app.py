@@ -16,7 +16,10 @@ def server_app_fixture(flask_app, skip_qtbot):
     flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
     flask_app.config["FERNET_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
     flask_app.config["GUEST_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
-    return ServerApp(flask_app)
+    server = ServerApp(flask_app)
+    server.metrics.summary = MagicMock()
+    server.metrics.summary.return_value.side_effect = lambda x: x
+    return server
 
 
 def test_session(server_app):
