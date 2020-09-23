@@ -127,7 +127,7 @@ def fill_unassigned_hints(patches: GamePatches,
 
     # Get interesting items to place hints for
     possible_indices = set(patches.pickup_assignment.keys())
-    possible_indices -= {hint.target for hint in patches.hints.values()}
+    possible_indices -= {hint.target for hint in patches.hints.values() if hint.target is not None}
     possible_indices -= {index for index in possible_indices
                          if not should_have_hint(patches.pickup_assignment[index].pickup.item_category)}
 
