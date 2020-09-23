@@ -9,6 +9,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.network_common.error import InvalidAction
 from randovania.server import game_session, database
 
 
@@ -422,6 +423,49 @@ def test_game_session_admin_session_change_layout_description(mock_emit_session_
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).layout_description_json == '"some_json_string"'
+
+
+@patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
+@patch("randovania.server.game_session._emit_session_update", autospec=True)
+def test_game_session_admin_session_download_layout_description(mock_emit_session_update: MagicMock,
+                                                                mock_layout_description: PropertyMock,
+                                                                clean_database, ):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", in_game=False, num_teams=1,
+                                          layout_description_json="layout_description_json")
+    database.GameSessionMembership.create(user=user1, session=session, row=2, team=None, admin=False)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    result = game_session.game_session_admin_session(sio, 1, "download_layout_description", None)
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    mock_layout_description.assert_called_once()
+    assert result == database.GameSession.get_by_id(1).layout_description_json
+
+
+@patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
+@patch("randovania.server.game_session._emit_session_update", autospec=True)
+def test_game_session_admin_session_download_layout_description_no_spoiler(mock_emit_session_update: MagicMock,
+                                                                           mock_layout_description: PropertyMock,
+                                                                           clean_database, ):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", in_game=False, num_teams=1,
+                                          layout_description_json="layout_description_json")
+    database.GameSessionMembership.create(user=user1, session=session, row=2, team=None, admin=False)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+    mock_layout_description.return_value.permalink.spoiler = False
+
+    # Run
+    with pytest.raises(InvalidAction):
+        game_session.game_session_admin_session(sio, 1, "download_layout_description", None)
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    mock_layout_description.assert_called_once()
 
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)

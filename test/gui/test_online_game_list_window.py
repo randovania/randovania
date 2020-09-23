@@ -12,7 +12,7 @@ async def test_attempt_join(mock_execute_dialog: AsyncMock,
     # Setup
     mock_execute_dialog.return_value = QDialog.Accepted
     network_client = MagicMock()
-    network_client.join_session = AsyncMock()
+    network_client.join_game_session = AsyncMock()
     session = MagicMock()
 
     dialog = GameSessionBrowserDialog(network_client)
@@ -25,4 +25,4 @@ async def test_attempt_join(mock_execute_dialog: AsyncMock,
 
     # Assert
     mock_execute_dialog.assert_awaited_once()
-    network_client.join_session.assert_awaited_once_with(session, "")
+    network_client.join_game_session.assert_awaited_once_with(session, "")
