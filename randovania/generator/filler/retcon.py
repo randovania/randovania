@@ -142,6 +142,7 @@ class PlayerState:
     pickup_index_seen_count: DefaultDict[PickupIndex, int]
     scan_asset_seen_count: DefaultDict[LogbookAsset, int]
     scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]
+    potential_actions: List[Action]
     num_random_starting_items_placed: int
     num_assigned_pickups: int
 
@@ -166,13 +167,18 @@ class PlayerState:
         self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
 
-    def advance_pickup_index_seen_count(self):
+    def update_for_new_state(self):
+        self._advance_pickup_index_seen_count()
+        self._advance_scan_asset_seen_count()
+        self._calculate_potential_actions()
+
+    def _advance_pickup_index_seen_count(self):
         for pickup_index in self.reach.state.collected_pickup_indices:
             self.pickup_index_seen_count[pickup_index] += 1
 
         print_new_resources(self.game, self.reach, self.pickup_index_seen_count, "Pickup Index")
 
-    def advance_scan_asset_seen_count(self):
+    def _advance_scan_asset_seen_count(self):
         for scan_asset in self.reach.state.collected_scan_assets:
             self.scan_asset_seen_count[scan_asset] += 1
             if self.scan_asset_seen_count[scan_asset] == 1:
@@ -180,18 +186,64 @@ class PlayerState:
 
         print_new_resources(self.game, self.reach, self.scan_asset_seen_count, "Scan Asset")
 
-    def calculate_potential_actions(self, status_update: Callable[[str], None]):
+    def _calculate_potential_actions(self):
         current_uncollected = UncollectedState.from_reach(self.reach)
         progression_pickups = _calculate_progression_pickups(self.pickups_left, self.reach)
 
         print_retcon_loop_start(current_uncollected, self.game, self.pickups_left, self.reach, self.index)
 
-        return _calculate_potential_actions(self.reach,
-                                            progression_pickups,
-                                            current_uncollected,
-                                            (self.configuration.maximum_random_starting_items
-                                             - self.num_random_starting_items_placed),
-                                            status_update)
+        free_starting_items_spots = (self.configuration.maximum_random_starting_items
+                                     - self.num_random_starting_items_placed)
+
+        uncollected_resource_nodes = get_collectable_resource_nodes_of_reach(self.reach)
+        result: List[Action] = [
+            progression
+            for progression in progression_pickups
+            if _items_for_pickup(progression) <= len(current_uncollected.indices) or (
+                    not uncollected_resource_nodes and _items_for_pickup(progression) <= free_starting_items_spots)
+        ]
+        result.extend(uncollected_resource_nodes)
+        self.potential_actions = result
+
+    def weighted_potential_actions(self, status_update: Callable[[str], None],
+                                   ) -> Dict[Action, float]:
+        """
+        Weights all potential actions based on current criteria.
+        :param status_update:
+        :return:
+        """
+        actions_weights: Dict[Action, float] = {}
+        current_uncollected = UncollectedState.from_reach(self.reach)
+
+        total_options = len(self.potential_actions)
+        options_considered = 0
+
+        def update_for_option():
+            nonlocal options_considered
+            options_considered += 1
+            status_update("Checked {} of {} options.".format(options_considered, total_options))
+
+        for action in self.potential_actions:
+            if isinstance(action, PickupEntry):
+                base_weight = _calculate_weights_for(_calculate_reach_for_progression(self.reach, action),
+                                                     current_uncollected,
+                                                     action.name)
+                weight = base_weight * action.probability_multiplier + action.probability_offset
+
+            else:
+                weight = _calculate_weights_for(
+                    advance_to_with_reach_copy(self.reach, self.reach.state.act_on_node(action)),
+                    current_uncollected,
+                    action.name)
+
+            actions_weights[action] = weight
+            update_for_option()
+
+        if debug.debug_level() > 1:
+            for action, weight in actions_weights.items():
+                print("{} - {}".format(action.name, weight))
+
+        return actions_weights
 
     def victory_condition_satisfied(self):
         return self.game.victory_condition.satisfied(self.reach.state.resources, self.reach.state.energy)
@@ -225,13 +277,11 @@ def _get_next_player(rng: Random,
     weighted_players = {
         player_state: _calculate_weight(player_state)
         for player_state in player_states.values()
-        if not player_state.victory_condition_satisfied()
+        if not player_state.victory_condition_satisfied() and player_state.potential_actions
     }
     if weighted_players:
         if debug.debug_level() > 1:
-            print(">>>>> Player Weights")
-            for player, weight in weighted_players.items():
-                print(f"* {player.index}: {weight}")
+            print(f">>>>> Player Weights: {weighted_players}")
 
         return select_element_with_weight(weighted_players, rng)
     else:
@@ -269,8 +319,7 @@ def retcon_playthrough_filler(rng: Random,
         status_update("{} {}".format(last_message, message))
 
     for player_state in player_states.values():
-        player_state.advance_pickup_index_seen_count()
-        player_state.advance_scan_asset_seen_count()
+        player_state.update_for_new_state()
 
     actions_log = []
 
@@ -279,7 +328,7 @@ def retcon_playthrough_filler(rng: Random,
         if current_player is None:
             break
 
-        weighted_actions = current_player.calculate_potential_actions(action_report)
+        weighted_actions = current_player.weighted_potential_actions(action_report)
         try:
             action = select_element_with_weight(weighted_actions, rng=rng)
         except StopIteration:
@@ -287,7 +336,8 @@ def retcon_playthrough_filler(rng: Random,
                 # All actions had weight 0. Select one randomly instead.
                 action = rng.choice(list(weighted_actions.keys()))
             else:
-                raise UnableToGenerate(f"No possible actions after {len(actions_log)} actions.")
+                raise UnableToGenerate(
+                    f"No possible actions after {current_player.num_actions} actions (all players: {len(actions_log)}).")
 
         if isinstance(action, PickupEntry):
             log_entry = _assign_pickup_somewhere(action, current_player, player_states, rng)
@@ -311,8 +361,7 @@ def retcon_playthrough_filler(rng: Random,
             current_player.reach.act_on(action)
 
         current_player.reach = advance_reach_with_possible_unsafe_resources(current_player.reach)
-        current_player.advance_pickup_index_seen_count()
-        current_player.advance_scan_asset_seen_count()
+        current_player.update_for_new_state()
 
     all_patches = {player_state.index: player_state.reach.state.patches
                    for player_state in player_states.values()}
@@ -355,6 +404,9 @@ def _assign_pickup_somewhere(action: PickupEntry,
 
         if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
+        else:
+            # FIXME: isn't that condition always true?
+            pass
 
         spoiler_entry = pickup_placement_spoiler_entry(current_player.index, action, index_owner_state.game,
                                                        pickup_index, hint_location, index_owner_state.index,
@@ -467,51 +519,6 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 
 def _items_for_pickup(pickup: PickupEntry) -> int:
     return 1
-
-
-def _calculate_potential_actions(reach: GeneratorReach,
-                                 progression_pickups: Tuple[PickupEntry, ...],
-                                 current_uncollected: UncollectedState,
-                                 free_starting_items_spots: int,
-                                 status_update: Callable[[str], None]):
-    actions_weights: Dict[Action, float] = {}
-    uncollected_resource_nodes = get_collectable_resource_nodes_of_reach(reach)
-    total_options = len(uncollected_resource_nodes)
-    options_considered = 0
-
-    def update_for_option():
-        nonlocal options_considered
-        options_considered += 1
-        status_update("Checked {} of {} options.".format(options_considered, total_options))
-
-    usable_progression_pickups = [
-        progression
-        for progression in progression_pickups
-        if _items_for_pickup(progression) <= len(current_uncollected.indices) or (
-                not uncollected_resource_nodes and _items_for_pickup(progression) <= free_starting_items_spots)
-    ]
-
-    total_options += len(usable_progression_pickups)
-
-    for progression in usable_progression_pickups:
-        base_weight = _calculate_weights_for(_calculate_reach_for_progression(reach, progression),
-                                             current_uncollected,
-                                             progression.name)
-        actions_weights[progression] = base_weight * progression.probability_multiplier + progression.probability_offset
-        update_for_option()
-
-    for resource in uncollected_resource_nodes:
-        actions_weights[resource] = _calculate_weights_for(
-            advance_to_with_reach_copy(reach, reach.state.act_on_node(resource)),
-            current_uncollected,
-            resource.name)
-        update_for_option()
-
-    if debug.debug_level() > 1:
-        for action, weight in actions_weights.items():
-            print("{} - {}".format(action.name, weight))
-
-    return actions_weights
 
 
 def debug_print_collect_event(action, game):
