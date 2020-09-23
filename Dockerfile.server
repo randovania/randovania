@@ -1,0 +1,13 @@
+FROM python:3.7
+
+WORKDIR /usr/src/app
+
+COPY requirements-setuptools.txt ./
+RUN pip install --no-cache-dir -r requirements-setuptools.txt
+
+COPY . .
+RUN pip install --no-cache-dir -e .[server] -c requirements.txt
+
+VOLUME ["/data"]
+ENTRYPOINT ["python", "-m", "randovania"]
+CMD ["--configuration", "/data/configuration.json", "multiworld", "server"]

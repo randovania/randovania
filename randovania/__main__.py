@@ -7,9 +7,6 @@ from randovania import cli
 logging.basicConfig(level=logging.WARNING)
 
 
-# logging.root.setLevel(logging.DEBUG)
-
-
 def main():
     multiprocessing.freeze_support()
     cli.run_cli(sys.argv)

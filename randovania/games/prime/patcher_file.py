@@ -9,7 +9,7 @@ from randovania.game_description.default_database import default_prime2_memo_dat
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import TeleporterNode
+from randovania.game_description.node import TeleporterNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -28,7 +28,6 @@ from randovania.layout.patcher_configuration import PickupModelStyle, PickupMode
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
-_TOTAL_PICKUP_COUNT = 119
 _CUSTOM_NAMES_FOR_ELEVATORS = {
     # Great Temple
     408633584: "Temple Transport Emerald",
@@ -256,9 +255,10 @@ class PickupCreatorSolo(PickupCreator):
 
 
 class PickupCreatorMulti(PickupCreator):
-    def __init__(self, rng: Random, player_names: Dict[int, str]):
+    def __init__(self, rng: Random, memo_data: Dict[str, str], players_config: PlayersConfiguration):
         super().__init__(rng)
-        self.player_names = player_names
+        self.solo_creator = PickupCreatorSolo(rng, memo_data)
+        self.players_config = players_config
 
     def create_pickup_data(self,
                            original_index: PickupIndex,
@@ -266,25 +266,30 @@ class PickupCreatorMulti(PickupCreator):
                            visual_pickup: PickupEntry,
                            model_style: PickupModelStyle,
                            scan_text: str) -> dict:
-        resources = [
-            {
-                "index": 74,
-                "amount": original_index.index + 1,
-            },
-        ]
-        resources.extend(
-            entry
-            for entry in _create_pickup_resources_for(pickup_target.pickup.resources[0].resources)
-            if entry["index"] == 47
-        )
+        if pickup_target.player == self.players_config.player_index:
+            result = self.solo_creator.create_pickup_data(original_index, pickup_target, visual_pickup,
+                                                          model_style, scan_text)
+            result["scan"] = f"Your {result['scan']}"
+        else:
+            other_name = self.players_config.player_names[pickup_target.player]
+            result: dict = {
+                "resources": [],
+                "conditional_resources": [],
+                "convert": [],
+                "hud_text": [f"Sent {pickup_target.pickup.name} to {other_name}!"],
+                "scan": f"{other_name}'s {scan_text}",
+            }
 
-        return {
-            "resources": resources,
-            "conditional_resources": [],
-            "convert": [],
-            "hud_text": [f"{self.player_names[pickup_target.player]} acquired {pickup_target.pickup.name}!"],
-            "scan": f"{self.player_names[pickup_target.player]}'s {scan_text}",
+        magic_resource = {
+            "index": 74,
+            "amount": original_index.index + 1,
         }
+
+        result["resources"].append(magic_resource)
+        for conditional in result["conditional_resources"]:
+            conditional["resources"].append(magic_resource)
+
+        return result
 
 
 def _get_visual_model(original_index: int,
@@ -613,6 +618,7 @@ def create_patcher_file(description: LayoutDescription,
     rng = Random(description.permalink.as_str)
 
     game = data_reader.decode_data(layout.game_data)
+    pickup_count = sum(1 for node in game.world_list.all_nodes if isinstance(node, PickupNode))
     useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
                                   players_config.player_index)
 
@@ -628,17 +634,18 @@ def create_patcher_file(description: LayoutDescription,
     result["starting_popup"] = _create_starting_popup(layout, game.resource_database, patches.starting_items)
 
     # Add the pickups
+    if cosmetic_patches.disable_hud_popup:
+        memo_data = _simplified_memo_data()
+    else:
+        memo_data = default_prime2_memo_data()
+
     if description.permalink.player_count == 1:
-        if cosmetic_patches.disable_hud_popup:
-            memo_data = _simplified_memo_data()
-        else:
-            memo_data = default_prime2_memo_data()
         creator = PickupCreatorSolo(rng, memo_data)
     else:
-        creator = PickupCreatorMulti(rng, players_config.player_names)
+        creator = PickupCreatorMulti(rng, memo_data, players_config)
 
     result["pickups"] = _create_pickup_list(patches,
-                                            useless_target, _TOTAL_PICKUP_COUNT,
+                                            useless_target, pickup_count,
                                             rng,
                                             patcher_config.pickup_model_style,
                                             patcher_config.pickup_model_data_source,

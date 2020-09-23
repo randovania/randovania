@@ -1,15 +1,17 @@
 import asyncio
 import dataclasses
 import functools
+import json
 import random
 from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import Qt, Signal
+from PySide2.QtCore import Qt, Signal, QTimer
 from PySide2.QtWidgets import QMainWindow, QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
 from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
@@ -17,7 +19,8 @@ from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.qt_network_client import handle_network_errors
+from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
@@ -105,9 +108,10 @@ class RowWidget:
         for widget in self.widgets:
             widget.deleteLater()
 
-    def set_is_admin(self, is_admin: bool):
-        for widget in (self.customize, self.import_menu, self.delete):
-            widget.setEnabled(is_admin)
+    def set_is_admin(self, is_admin: bool, is_your_row: bool):
+        for widget in (self.customize, self.import_menu):
+            widget.setEnabled(is_admin or is_your_row)
+        self.delete.setEnabled(is_admin)
 
     def set_preset(self, preset: Preset):
         self.name.setText(preset.name)
@@ -123,20 +127,23 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     _game_session: GameSessionEntry
     has_closed = False
     _logic_settings_window: Optional[LogicSettingsWindow] = None
+    _window_manager: WindowManager
 
     on_generated_layout_signal = Signal(LayoutDescription)
     failed_to_generate_signal = Signal(GenerationFailure)
 
-    def __init__(self, game_session: GameSessionEntry, preset_manager: PresetManager, options: Options):
+    def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection,
+                 preset_manager: PresetManager, window_manager: WindowManager, options: Options):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
 
-        self.network_client = common_qt_lib.get_network_client()
-        self.game_connection = common_qt_lib.get_game_connection()
+        self.network_client = network_client
+        self.game_connection = game_connection
         self.multiworld_client = MultiworldClient(self.network_client, self.game_connection)
 
         self._preset_manager = preset_manager
+        self._window_manager = window_manager
         self._options = options
 
         parent = self.central_widget
@@ -149,6 +156,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
         self.session_status_tool.clicked.connect(self._session_status_button_clicked)
         self.save_iso_button.clicked.connect(self.save_iso)
+        self.view_game_details_button.clicked.connect(self.view_game_details)
         self.on_generated_layout_signal.connect(self._upload_layout_description)
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
@@ -202,16 +210,20 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.main_layout.insertSpacerItem(2, spacer_item)
 
         self.network_client.GameSessionUpdated.connect(self.on_game_session_updated)
-        self.on_game_session_updated(game_session)
-
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
-        self.on_server_connection_state_updated(self.network_client.connection_state)
         self.game_connection.StatusUpdated.connect(self.on_game_connection_status_updated)
+
+        self.on_game_session_updated(self.network_client.current_game_session)
+        self.on_server_connection_state_updated(self.network_client.connection_state)
         self.on_game_connection_status_updated(self.game_connection.current_status)
-        asyncio.get_event_loop().create_task(self.multiworld_client.start())
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
+        if self.network_client.current_user.id not in self._game_session.players:
+            super().closeEvent(event)
+            self.has_closed = True
+            return
+
         user_response = await async_dialog.warning(
             self,
             "Leaving Game Session",
@@ -231,7 +243,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         try:
             if user_response == QMessageBox.Yes or not self.network_client.connection_state.is_disconnected:
-                await self.network_client.leave_session(user_response == QMessageBox.Yes)
+                await self.network_client.leave_game_session(user_response == QMessageBox.Yes)
         finally:
             super().closeEvent(event)
         self.has_closed = True
@@ -527,10 +539,19 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.strftime("%H:%M")))
 
-    def on_game_session_updated(self, game_session: GameSessionEntry):
+    @asyncSlot(GameSessionEntry)
+    async def on_game_session_updated(self, game_session: GameSessionEntry):
         self._game_session = game_session
 
-        self_is_admin = game_session.players[self.network_client.current_user.id].admin
+        if self.network_client.current_user.id not in game_session.players:
+            await asyncio.gather(
+                async_dialog.warning(self, "Kicked", "You have been kicked out of the session."),
+                self.network_client.leave_game_session(False),
+            )
+            return QTimer.singleShot(0, self.close)
+
+        self_player = game_session.players[self.network_client.current_user.id]
+        self_is_admin = self_player.admin
 
         self.session_name_edit.setText(game_session.name)
 
@@ -546,9 +567,10 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         while len(self.rows) < len(game_session.presets):
             self.add_row()
 
-        for row, preset in zip(self.rows, game_session.presets):
+        for i, (row, preset) in enumerate(zip(self.rows, game_session.presets)):
             row.set_preset(preset)
-            row.set_is_admin(self_is_admin)
+            row.set_is_admin(self_is_admin,
+                             is_your_row=self_player.row == i and game_session.num_teams == 1)
 
         teams = [{} for _ in range(game_session.num_teams)]
         observers = []
@@ -581,8 +603,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.session_status_label.setText("Session: {}".format("In-Game" if game_session.in_game else "Not Started"))
         self.generate_game_button.setEnabled(self_is_admin)
         self.generate_without_spoiler_button.setEnabled(self_is_admin and False)
-        self.session_status_tool.setEnabled(self_is_admin and game_session.seed_hash is not None)
-        self.session_status_tool.setEnabled(self.session_status_tool.isEnabled())
+        self.session_status_tool.setEnabled(self_is_admin)
         self.session_status_tool.setText("Finish" if game_session.in_game else "Start")
 
         self.save_iso_button.setEnabled(game_session.seed_hash is not None
@@ -592,9 +613,20 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.view_game_details_button.setEnabled(False)
         else:
             self.generate_game_label.setText(f"Seed hash: {game_session.word_hash} ({game_session.seed_hash})")
-            self.view_game_details_button.setEnabled(game_session.spoiler and False)
+            self.view_game_details_button.setEnabled(game_session.spoiler)
 
         self.update_session_actions()
+        if self._game_session.in_game != self.multiworld_client.is_active:
+            await self.update_multiworld_client_status()
+
+    async def update_multiworld_client_status(self):
+        if self._game_session.in_game:
+            you = self._game_session.players[self.network_client.current_user.id]
+            persist_path = self.network_client.server_data_path.joinpath(
+                f"game_session_{self._game_session.id}_{you.team}_{you.row}.json")
+            await self.multiworld_client.start(persist_path)
+        else:
+            await self.multiworld_client.stop()
 
     @property
     def current_player_membership(self) -> PlayerSessionEntry:
@@ -705,7 +737,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     @handle_network_errors
     async def start_session(self):
-        if len(self._game_session.players) != self._game_session.num_teams * len(self._game_session.presets):
+        num_players = sum(1 for player in self._game_session.players.values() if player.team is not None)
+        if num_players != self._game_session.num_teams * len(self._game_session.presets):
             await async_dialog.message_box(self,
                                            QMessageBox.Critical,
                                            "Missing players",
@@ -794,6 +827,21 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             progress_update(f"Finished!", 1)
 
         self.run_in_background_thread(work, "Exporting...")
+
+    @asyncSlot()
+    @handle_network_errors
+    async def view_game_details(self):
+        if self._game_session.seed_hash is None:
+            return await async_dialog.warning(self, "No Spoiler Available",
+                                              "Unable to view game spoilers, no game available.")
+
+        if not self._game_session.spoiler:
+            return await async_dialog.warning(self, "No Spoiler Available",
+                                              "Unable to view game spoilers, game was generated without spoiler.")
+
+        description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
+        description = LayoutDescription.from_json_dict(json.loads(description_json))
+        self._window_manager.open_game_details(description)
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setEnabled(not value)
