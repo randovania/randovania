@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 from random import Random
-from typing import List, Tuple, Callable, TypeVar, Set, Dict
+from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -10,6 +10,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
@@ -112,6 +113,7 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
 def fill_unassigned_hints(patches: GamePatches,
                           world_list: WorldList,
                           rng: Random,
+                          scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]],
                           ) -> GamePatches:
     new_hints = copy.copy(patches.hints)
 
@@ -133,6 +135,12 @@ def fill_unassigned_hints(patches: GamePatches,
 
     debug.debug_print("fill_unassigned_hints had {} decent indices for {} hint locations".format(
         len(possible_indices), len(potential_hint_locations)))
+
+    if debug.debug_level() > 1:
+        print(f"> Num pickups per asset:")
+        for asset, pickups in scan_asset_initial_pickups.items():
+            print(f"* {asset}: {len(pickups)} pickups")
+        print("> Done.")
 
     # But if we don't have enough hints, just pick randomly from everything
     if len(possible_indices) < len(potential_hint_locations):
@@ -220,12 +228,9 @@ def run_filler(rng: Random,
     for player_state, patches in filler_result.items():
         game = player_state.game
 
-        print(f">>>>>>>>>>>>>> initial pickups for each lore! {player_state.index}")
-        for asset, pickups in player_state.scan_asset_initial_pickups.items():
-            print(asset, pickups)
-
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
-        full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng)
+        full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng,
+                                                   player_state.scan_asset_initial_pickups)
 
         if player_pools[player_state.index].configuration.hints.item_hints:
             result = add_hints_precision(full_hints_patches, rng)
