@@ -111,7 +111,7 @@ class NetworkClient:
             # await asyncio.sleep(1)
             # self.logger.info(f"connect_to_server: sleep over")
 
-            self.logger.info(f"connect_to_server: connecting")
+            self.logger.info(f"connect_to_server: connecting to {self.configuration['server_address']}")
             await self.sio.connect(self.configuration["server_address"],
                                    socketio_path=self.configuration["socketio_path"],
                                    headers={"X-Randovania-Version": randovania.VERSION})
