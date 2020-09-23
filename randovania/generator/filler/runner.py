@@ -188,9 +188,10 @@ def run_filler(rng: Random,
     """
 
     player_states = {}
-    player_expansions = {}
+    player_expansions: Dict[int, List[PickupEntry]] = {}
 
     for index, pool in player_pools.items():
+        status_update(f"Creating state for player {index + 1}")
         major_items, player_expansions[index] = _split_expansions(pool.pickups)
         rng.shuffle(major_items)
         rng.shuffle(player_expansions[index])
@@ -200,6 +201,7 @@ def run_filler(rng: Random,
 
         major_configuration = pool.configuration.major_items_configuration
         player_states[index] = PlayerState(
+            index=index,
             game=new_game,
             initial_state=state,
             pickups_left=major_items,

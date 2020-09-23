@@ -33,10 +33,9 @@ def test_current_status(backend, expected_status):
     assert backend.current_status == expected_status
 
 
-@pytest.mark.asyncio
-async def test_display_message(backend):
+def test_display_message(backend):
     message = "Foo"
-    await backend.display_message(message)
+    backend.display_message(message)
     assert backend.messages_list.findItems(message, Qt.MatchFlag.MatchExactly)
 
 

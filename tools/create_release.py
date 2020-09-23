@@ -38,7 +38,7 @@ def main():
 
     configuration = {
         "discord_client_id": 618134325921316864,
-        "server_address": "https://fi.gemignani.org/randovania",
+        "server_address": "https://randovania.metroidprime.run/randovania",
         "socketio_path": "/randovania/socket.io",
     }
     with _ROOT_FOLDER.joinpath("randovania", "data", "configuration.json").open("w") as config_release:
