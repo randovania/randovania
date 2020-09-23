@@ -107,7 +107,9 @@ def test_login_with_guest(flask_app, clean_database, mocker):
     assert result is mock_create_session.return_value
 
 
-def test_logout(flask_app):
+def test_logout(flask_app, mocker):
+    mock_emit_user_session_update: MagicMock = mocker.patch("randovania.server.user_session._emit_user_session_update",
+                                                            autospec=True)
     session = {
         "user-id": 1234,
         "discord-access-token": "access_token",
@@ -121,7 +123,8 @@ def test_logout(flask_app):
 
     # Assert
     assert session == {}
-    sio.leave_session.assert_called_once_with()
+    sio.leave_game_session.assert_called_once_with()
+    mock_emit_user_session_update.assert_called_once_with(sio)
 
 
 def test_restore_user_session_invalid_key(flask_app, fernet):

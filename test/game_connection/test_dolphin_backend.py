@@ -1,4 +1,5 @@
 from unittest.mock import MagicMock, call, patch, ANY
+from unittest.mock import MagicMock, call, patch, ANY
 
 import pytest
 from mock import AsyncMock
@@ -53,7 +54,7 @@ async def test_send_message(backend):
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
     # Run
-    await backend.display_message("Magoo")
+    backend.display_message("Magoo")
     await backend._send_message_from_queue(1)
 
     # Assert
@@ -76,7 +77,7 @@ async def test_send_message_has_pending_message(backend):
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
     # Run
-    await backend.display_message("Magoo")
+    backend.display_message("Magoo")
     await backend._send_message_from_queue(1)
 
     # Assert
@@ -93,7 +94,7 @@ async def test_send_message_on_cooldown(backend):
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
 
     # Run
-    await backend.display_message("Magoo")
+    backend.display_message("Magoo")
     await backend._send_message_from_queue(1)
 
     # Assert
@@ -124,7 +125,7 @@ async def test_check_for_collected_index_location_collected(backend):
     # Setup
     backend._get_player_state_address = AsyncMock(return_value=0)
     backend.dolphin.read_word.return_value = 10
-    backend.LocationCollected = MagicMock()
+    backend._emit_location_collected = AsyncMock()
 
     # Run
     await backend._check_for_collected_index()
@@ -138,7 +139,7 @@ async def test_check_for_collected_index_location_collected(backend):
         call(980, 0),
         call(984, 0),
     ])
-    backend.LocationCollected.emit.assert_called_once_with(9)
+    backend._emit_location_collected.assert_awaited_once_with(9)
 
 
 @pytest.mark.asyncio
@@ -232,7 +233,7 @@ def test_current_status_wrong_game(backend):
 def test_current_status_not_in_game(backend):
     backend.dolphin.is_hooked.return_value = True
     backend.patches = True
-    assert backend.current_status == ConnectionStatus.NotInGame
+    assert backend.current_status == ConnectionStatus.TitleScreen
 
 
 def test_current_status_in_game(backend):

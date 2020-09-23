@@ -676,7 +676,7 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
         'convert': [],
         'hud_text': ['Sugar acquired!', 'Salt acquired!'],
         'resources': [{'amount': 1, 'index': 1}, {'amount': 11, 'index': 74}, ],
-        'scan': 'Scan Text',
+        'scan': 'Your Scan Text',
     }
 
 

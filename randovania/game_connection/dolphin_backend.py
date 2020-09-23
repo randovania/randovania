@@ -8,6 +8,7 @@ from randovania.game_connection.connection_backend import ConnectionBackend, Con
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world import World
 from randovania.games.prime import dol_patcher
 from randovania.games.prime.dol_patcher import PatchesForVersion
@@ -34,6 +35,7 @@ class DolphinBackend(ConnectionBackend):
     _world: Optional[World] = None
     _last_message_size: int = 0
     _multiworld_magic_item: int = 74
+    _percentage_item: SimpleResourceInfo
     _pickups_to_give: List[PickupEntry]
     _permanent_pickups: List[PickupEntry]
 
@@ -44,6 +46,7 @@ class DolphinBackend(ConnectionBackend):
 
         self.dolphin = dolphin_memory_engine
         self.game = default_prime2_game_description()
+        self._percentage_item = self.game.resource_database.item_percentage
 
         self.message_queue = []
         self._pickups_to_give = []
@@ -157,11 +160,11 @@ class DolphinBackend(ConnectionBackend):
             return ConnectionStatus.WrongGame
 
         if self._world is None:
-            return ConnectionStatus.NotInGame
+            return ConnectionStatus.TitleScreen
         else:
             return ConnectionStatus.InGame
 
-    async def display_message(self, message: str):
+    def display_message(self, message: str):
         self.message_queue.append(message)
 
     async def _get_player_state_address(self) -> Optional[int]:
@@ -213,7 +216,7 @@ class DolphinBackend(ConnectionBackend):
 
             self.dolphin.write_word(quantity_address, 0)
             self.dolphin.write_word(capacity_address, magic_capacity)
-            self.LocationCollected.emit(magic_quantity - 1)
+            await self._emit_location_collected(magic_quantity - 1)
 
         if self._pickups_to_give or magic_capacity < len(self._permanent_pickups):
             self.logger.info(f"_check_for_collected_index: {len(self._pickups_to_give)} pickups to give, "
@@ -228,7 +231,8 @@ class DolphinBackend(ConnectionBackend):
                 inventory = _add_pickup_to_resources(pickup, inventory)
 
             for item, capacity in inventory.items():
-                await self._raw_set_item_capacity(item.index, capacity, player_state_address)
+                if item != self._percentage_item:
+                    await self._raw_set_item_capacity(item.index, capacity, player_state_address)
 
             self.dolphin.write_word(capacity_address, len(self._permanent_pickups))
 

@@ -1,21 +1,19 @@
 import datetime
 
 import pytest
-from mock import MagicMock, patch
+from mock import MagicMock, AsyncMock
 
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
 
 
 @pytest.mark.asyncio
-@patch("randovania.gui.lib.common_qt_lib.get_network_client", autospec=True)
-@patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
-def test_on_game_session_updated(mock_get_game_connection: MagicMock,
-                                 mock_get_network_client: MagicMock,
-                                 preset_manager, skip_qtbot):
+async def test_on_game_session_updated(preset_manager, skip_qtbot):
     # Setup
-    mock_get_network_client.return_value.current_user = User(id=12, name="Player A")
-    mock_get_game_connection.return_value.pretty_current_status = "Maybe Connected"
+    network_client = MagicMock()
+    network_client.current_user = User(id=12, name="Player A")
+    game_connection = MagicMock()
+    game_connection.pretty_current_status = "Maybe Connected"
 
     initial_session = GameSessionEntry(
         id=1234,
@@ -48,7 +46,38 @@ def test_on_game_session_updated(mock_get_game_connection: MagicMock,
         spoiler=True,
         in_game=True,
     )
-    window = GameSessionWindow(initial_session, preset_manager, MagicMock())
+    network_client.current_game_session = initial_session
+
+    window = GameSessionWindow(network_client, game_connection, preset_manager, MagicMock(), MagicMock())
+    window.update_multiworld_client_status = AsyncMock()
 
     # Run
-    window.on_game_session_updated(second_session)
+    await window.on_game_session_updated(second_session)
+    window.update_multiworld_client_status.assert_awaited_once_with()
+
+
+@pytest.mark.parametrize("in_game", [False, True])
+@pytest.mark.asyncio
+async def test_update_multiworld_client_status(skip_qtbot, mocker, in_game):
+    # Setup
+    network_client = MagicMock()
+    game_connection = MagicMock()
+    game_connection.pretty_current_status = "Maybe Connected"
+    mocker.patch("randovania.gui.game_session_window.GameSessionWindow.on_game_session_updated")
+
+    window = GameSessionWindow(network_client, game_connection, MagicMock(), MagicMock(), MagicMock())
+    window._game_session = MagicMock()
+    window._game_session.in_game = in_game
+    window.multiworld_client.start = AsyncMock()
+    window.multiworld_client.stop = AsyncMock()
+
+    # Run
+    await window.update_multiworld_client_status()
+
+    # Assert
+    if in_game:
+        called, not_called = window.multiworld_client.start, window.multiworld_client.stop
+    else:
+        called, not_called = window.multiworld_client.stop, window.multiworld_client.start
+    called.assert_awaited_once()
+    not_called.assert_not_awaited()
