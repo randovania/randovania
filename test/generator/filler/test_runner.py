@@ -61,7 +61,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
     # Run
     result = runner.fill_unassigned_hints(base_patches,
                                           echoes_game_description.world_list,
-                                          rng)
+                                          rng, {})
 
     # Assert
     assert len(result.hints) == expected_logbooks
