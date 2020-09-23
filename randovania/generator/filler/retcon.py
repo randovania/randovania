@@ -284,8 +284,12 @@ def _get_next_player(rng: Random, player_states: List[PlayerState]) -> Optional[
 
         return select_element_with_weight(weighted_players, rng)
     else:
-        debug.debug_print("Finished because we can win")
-        return None
+        if all(player_state.victory_condition_satisfied() for player_state in player_states):
+            debug.debug_print("Finished because we can win")
+            return None
+        else:
+            total_actions = sum(player_state.num_actions for player_state in player_states)
+            raise UnableToGenerate(f"No players with possible actions after {total_actions} total actions.")
 
 
 def retcon_playthrough_filler(rng: Random,
@@ -331,12 +335,9 @@ def retcon_playthrough_filler(rng: Random,
         try:
             action = select_element_with_weight(weighted_actions, rng=rng)
         except StopIteration:
-            if weighted_actions:
-                # All actions had weight 0. Select one randomly instead.
-                action = rng.choice(list(weighted_actions.keys()))
-            else:
-                raise UnableToGenerate(
-                    f"No possible actions after {current_player.num_actions} actions (all players: {len(actions_log)}).")
+            # All actions had weight 0. Select one randomly instead.
+            # No need to check if potential_actions is empty, _get_next_player only return players with actions
+            action = rng.choice(current_player.potential_actions)
 
         if isinstance(action, PickupEntry):
             log_entry = _assign_pickup_somewhere(action, current_player, player_states, rng)
