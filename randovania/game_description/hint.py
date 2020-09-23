@@ -15,6 +15,9 @@ class HintType(Enum):
     # Vanilla Light Suit location
     LIGHT_SUIT_LOCATION = "light-suit-location"
 
+    # Joke
+    JOKE = "joke"
+
     # All other hints
     LOCATION = "location"
 
@@ -67,7 +70,6 @@ class PrecisionPair(NamedTuple):
             (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY): 1,
 
             (HintLocationPrecision.DETAILED, HintItemPrecision.WRONG_GAME): 1,
-            (HintLocationPrecision.WRONG_GAME, HintItemPrecision.WRONG_GAME): 1,
         }
 
         hints = []
@@ -85,7 +87,12 @@ class PrecisionPair(NamedTuple):
 class Hint:
     hint_type: HintType
     precision: Optional[PrecisionPair]
-    target: PickupIndex
+    target: Optional[PickupIndex]
+
+    def __post_init__(self):
+        if self.target is None:
+            if self.hint_type != HintType.JOKE or (self.precision is not None and not self.precision.is_joke):
+                raise ValueError(f"Hint with None target, but not properly a joke.")
 
     @property
     def location_precision(self) -> HintLocationPrecision:
@@ -101,7 +108,7 @@ class Hint:
             "hint_type": self.hint_type.value,
             "location_precision": self.precision.location.value,
             "item_precision": self.precision.item.value,
-            "target": self.target.index,
+            "target": self.target.index if self.target is not None else None,
         }
 
     @classmethod
@@ -112,5 +119,5 @@ class Hint:
                 location=HintLocationPrecision(value["location_precision"]),
                 item=HintItemPrecision(value["item_precision"]),
             ),
-            target=PickupIndex(value["target"]),
+            target=PickupIndex(value["target"]) if value["target"] is not None else None,
         )

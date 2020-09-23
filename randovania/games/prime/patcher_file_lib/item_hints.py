@@ -143,9 +143,12 @@ def create_hints(patches: GamePatches,
             # Determine location name
             if hint.hint_type is HintType.GUARDIAN:
                 node_name = color_text(TextColor.GUARDIAN, _GUARDIAN_NAMES[hint.target])
+
             elif hint.location_precision == HintLocationPrecision.WRONG_GAME:
-                node_name = color_text(TextColor.JOKE, "{} (?)".format(joke_locations.pop())
-                if joke_locations else "an unknown location")
+                node_name = color_text(
+                    TextColor.JOKE, "{} (?)".format(joke_locations.pop())
+                    if joke_locations else "an unknown location"
+                )
             else:
                 node_name = color_text(TextColor.LOCATION, hint_name_creator.index_node_name(
                     hint.target,

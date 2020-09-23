@@ -59,7 +59,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         for preset in self._window_manager.preset_manager.all_presets:
             self._create_button_for_preset(preset)
 
-        self.window.num_players_spin_box.setVisible(self._window_manager.is_preview_mode and False)
+        self.window.num_players_spin_box.setVisible(self._window_manager.is_preview_mode)
 
         # Menu
         self._tool_button_menu = QMenu(window.preset_tool_button)
@@ -193,7 +193,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
                                                             options=self._options)
                 progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
                 persist_layout(self._options.data_dir, layout)
-                self._window_manager.show_seed_tab(layout)
+                self._window_manager.open_game_details(layout)
 
             except GenerationFailure as generate_exception:
                 self.failed_to_generate_signal.emit(generate_exception)
