@@ -4985,17 +4985,41 @@ Asset id: 323423656
 ----------------
 Watering Hole
 Asset id: 2603303494
-> Door to Phazon Site; Heals? True
+> Door to Phazon Site; Heals? False
   > Phazon Site/Door to Watering Hole
       Trivial
-  > Watering Hole/Door to Feeding Pit
-      Trivial
+  > Watering Hole/Safe Zone (Phazon Site Side)
+      Dark World Damage ≥ 3
 
-> Door to Feeding Pit; Heals? True
+> Door to Feeding Pit; Heals? False
   > Feeding Pit/Door to Watering Hole
       Missile
+  > Watering Hole/Safe Zone (Feeding Pit Side)
+      Dark World Damage ≥ 2
+
+> Safe Zone (Feeding Pit Side); Heals? True
+  > Watering Hole/Door to Feeding Pit
+      Trivial
+  > Watering Hole/Safe Zone (Phazon Site Side)
+      Any of the following:
+          Dark World Damage ≥ 20
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Dark World Damage ≥ 12
+                  Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 8
+
+> Safe Zone (Phazon Site Side); Heals? True
   > Watering Hole/Door to Phazon Site
       Trivial
+  > Watering Hole/Safe Zone (Feeding Pit Side)
+      Any of the following:
+          Dark World Damage ≥ 16
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Dark World Damage ≥ 12
+                  Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 8
 
 ----------------
 Ing Cache 1
