@@ -29,8 +29,12 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
         logbook_nodes[0].resource(), Hint(HintType.LOCATION, None, PickupIndex(0))
     )
     action_log = (MagicMock(), MagicMock())
+    player_state = MagicMock()
+    player_state.index = 0
+    player_state.game = player_pools[0].game
+    player_state.pickups_left = runner._split_expansions(player_pools[0].pickups)[0]
 
-    mock_retcon_playthrough_filler.return_value = {0: patches}, action_log
+    mock_retcon_playthrough_filler.return_value = {player_state: patches}, action_log
 
     # Run
     filler_result = runner.run_filler(rng, player_pools, status_update)
@@ -57,7 +61,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
     # Run
     result = runner.fill_unassigned_hints(base_patches,
                                           echoes_game_description.world_list,
-                                          rng)
+                                          rng, {})
 
     # Assert
     assert len(result.hints) == expected_logbooks

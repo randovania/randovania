@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 from random import Random
-from typing import List, Tuple, Callable, TypeVar, Set, Dict
+from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -10,6 +10,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
@@ -98,7 +99,7 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
     """
 
     hints_to_replace = {
-        asset: dataclasses.replace(hint, precision=PrecisionPair.joke())
+        asset: dataclasses.replace(hint, precision=PrecisionPair.joke(), hint_type=HintType.JOKE)
         for asset, hint in patches.hints.items()
         if hint.precision
     }
@@ -112,6 +113,7 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
 def fill_unassigned_hints(patches: GamePatches,
                           world_list: WorldList,
                           rng: Random,
+                          scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]],
                           ) -> GamePatches:
     new_hints = copy.copy(patches.hints)
 
@@ -133,6 +135,12 @@ def fill_unassigned_hints(patches: GamePatches,
 
     debug.debug_print("fill_unassigned_hints had {} decent indices for {} hint locations".format(
         len(possible_indices), len(potential_hint_locations)))
+
+    if debug.debug_level() > 1:
+        print(f"> Num pickups per asset:")
+        for asset, pickups in scan_asset_initial_pickups.items():
+            print(f"* {asset}: {len(pickups)} pickups")
+        print("> Done.")
 
     # But if we don't have enough hints, just pick randomly from everything
     if len(possible_indices) < len(potential_hint_locations):
@@ -187,7 +195,7 @@ def run_filler(rng: Random,
     :return:
     """
 
-    player_states = {}
+    player_states = []
     player_expansions: Dict[int, List[PickupEntry]] = {}
 
     for index, pool in player_pools.items():
@@ -200,7 +208,7 @@ def run_filler(rng: Random,
         new_game.patch_requirements(state.resources, pool.configuration.damage_strictness.value)
 
         major_configuration = pool.configuration.major_items_configuration
-        player_states[index] = PlayerState(
+        player_states.append(PlayerState(
             index=index,
             game=new_game,
             initial_state=state,
@@ -211,27 +219,28 @@ def run_filler(rng: Random,
                 maximum_random_starting_items=major_configuration.maximum_random_starting_items,
                 indices_to_exclude=pool.configuration.available_locations.excluded_indices,
             ),
-        )
+        ))
 
     filler_result, actions_log = retcon_playthrough_filler(rng, player_states, status_update=status_update)
 
     results = {}
 
-    for index, patches in filler_result.items():
-        game = player_pools[index].game
+    for player_state, patches in filler_result.items():
+        game = player_state.game
 
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
-        full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng)
+        full_hints_patches = fill_unassigned_hints(patches, game.world_list, rng,
+                                                   player_state.scan_asset_initial_pickups)
 
-        if player_pools[index].configuration.hints.item_hints:
+        if player_pools[player_state.index].configuration.hints.item_hints:
             result = add_hints_precision(full_hints_patches, rng)
         else:
             result = replace_hints_without_precision_with_jokes(full_hints_patches)
 
-        results[index] = FillerPlayerResult(
+        results[player_state.index] = FillerPlayerResult(
             game=game,
             patches=result,
-            unassigned_pickups=player_states[index].pickups_left + player_expansions[index],
+            unassigned_pickups=player_state.pickups_left + player_expansions[player_state.index],
         )
 
     return FillerResults(results, actions_log)
