@@ -55,6 +55,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Changed: Better error messages when there are references to unknown resources in the database.
 
+-   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
+
 -   Changed: The following trick level difficulties were renamed:
     - Trivial -> Beginner
     - Easy -> Intermediate
