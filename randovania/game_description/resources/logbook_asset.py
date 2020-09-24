@@ -10,7 +10,7 @@ class LogbookAsset:
 
     @property
     def long_name(self) -> str:
-        return "LogbookAsset {}".format(self._string_asset_id)
+        return "LogbookAsset 0x{:08X}".format(self._string_asset_id)
 
     def __init__(self, asset_id: int):
         self._string_asset_id = asset_id
