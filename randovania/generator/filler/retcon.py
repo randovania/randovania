@@ -255,8 +255,7 @@ class PlayerState:
         ])
 
 
-def _get_next_player(rng: Random,
-                     player_states: Dict[int, PlayerState]) -> Optional[PlayerState]:
+def _get_next_player(rng: Random, player_states: List[PlayerState]) -> Optional[PlayerState]:
     """
     Gets the next player a pickup should be placed for.
     :param rng:
@@ -265,10 +264,10 @@ def _get_next_player(rng: Random,
     """
     all_uncollected: Dict[PlayerState, UncollectedState] = {
         player_state: UncollectedState.from_reach(player_state.reach)
-        for player_state in player_states.values()
+        for player_state in player_states
     }
 
-    max_actions = max(player_state.num_actions for player_state in player_states.values())
+    max_actions = max(player_state.num_actions for player_state in player_states)
     max_uncollected = max(len(uncollected.indices) for uncollected in all_uncollected.values())
 
     def _calculate_weight(player: PlayerState) -> float:
@@ -276,7 +275,7 @@ def _get_next_player(rng: Random,
 
     weighted_players = {
         player_state: _calculate_weight(player_state)
-        for player_state in player_states.values()
+        for player_state in player_states
         if not player_state.victory_condition_satisfied() and player_state.potential_actions
     }
     if weighted_players:
@@ -285,14 +284,18 @@ def _get_next_player(rng: Random,
 
         return select_element_with_weight(weighted_players, rng)
     else:
-        debug.debug_print("Finished because we can win")
-        return None
+        if all(player_state.victory_condition_satisfied() for player_state in player_states):
+            debug.debug_print("Finished because we can win")
+            return None
+        else:
+            total_actions = sum(player_state.num_actions for player_state in player_states)
+            raise UnableToGenerate(f"No players with possible actions after {total_actions} total actions.")
 
 
 def retcon_playthrough_filler(rng: Random,
-                              player_states: Dict[int, PlayerState],
+                              player_states: List[PlayerState],
                               status_update: Callable[[str], None],
-                              ) -> Tuple[Dict[int, GamePatches], Tuple[str, ...]]:
+                              ) -> Tuple[Dict[PlayerState, GamePatches], Tuple[str, ...]]:
     """
     Runs the retcon logic.
     :param rng:
@@ -310,7 +313,7 @@ def retcon_playthrough_filler(rng: Random,
                     for item in sorted(set(player_state.pickups_left), key=lambda item: item.name)
                 })
             )
-            for player_state in player_states.values()
+            for player_state in player_states
         )
     ))
     last_message = "Starting."
@@ -318,7 +321,7 @@ def retcon_playthrough_filler(rng: Random,
     def action_report(message: str):
         status_update("{} {}".format(last_message, message))
 
-    for player_state in player_states.values():
+    for player_state in player_states:
         player_state.update_for_new_state()
 
     actions_log = []
@@ -332,12 +335,9 @@ def retcon_playthrough_filler(rng: Random,
         try:
             action = select_element_with_weight(weighted_actions, rng=rng)
         except StopIteration:
-            if weighted_actions:
-                # All actions had weight 0. Select one randomly instead.
-                action = rng.choice(list(weighted_actions.keys()))
-            else:
-                raise UnableToGenerate(
-                    f"No possible actions after {current_player.num_actions} actions (all players: {len(actions_log)}).")
+            # All actions had weight 0. Select one randomly instead.
+            # No need to check if potential_actions is empty, _get_next_player only return players with actions
+            action = rng.choice(current_player.potential_actions)
 
         if isinstance(action, PickupEntry):
             log_entry = _assign_pickup_somewhere(action, current_player, player_states, rng)
@@ -348,7 +348,7 @@ def retcon_playthrough_filler(rng: Random,
             current_player.pickups_left.remove(action)
             current_player.num_actions += 1
 
-            count_pickups_left = sum(len(player_state.pickups_left) for player_state in player_states.values())
+            count_pickups_left = sum(len(player_state.pickups_left) for player_state in player_states)
             last_message = "{} items left.".format(count_pickups_left)
             status_update(last_message)
 
@@ -363,14 +363,13 @@ def retcon_playthrough_filler(rng: Random,
         current_player.reach = advance_reach_with_possible_unsafe_resources(current_player.reach)
         current_player.update_for_new_state()
 
-    all_patches = {player_state.index: player_state.reach.state.patches
-                   for player_state in player_states.values()}
+    all_patches = {player_state: player_state.reach.state.patches for player_state in player_states}
     return all_patches, tuple(actions_log)
 
 
 def _assign_pickup_somewhere(action: PickupEntry,
                              current_player: PlayerState,
-                             player_states: Dict[int, PlayerState],
+                             player_states: List[PlayerState],
                              rng: Random,
                              ) -> str:
     """
@@ -426,14 +425,14 @@ def _assign_pickup_somewhere(action: PickupEntry,
     return spoiler_entry
 
 
-def _calculate_all_pickup_indices_weight(player_states: Dict[int, PlayerState],
+def _calculate_all_pickup_indices_weight(player_states: List[PlayerState],
                                          ) -> Dict[Tuple[PlayerState, PickupIndex], float]:
     all_weights = {}
 
-    total_assigned_pickups = sum(player_state.num_assigned_pickups for player_state in player_states.values())
+    total_assigned_pickups = sum(player_state.num_assigned_pickups for player_state in player_states)
 
     # print("================ WEIGHTS! ==================")
-    for player_state in player_states.values():
+    for player_state in player_states:
         delta = (total_assigned_pickups - player_state.num_assigned_pickups)
         player_weight = 1 + delta
 
