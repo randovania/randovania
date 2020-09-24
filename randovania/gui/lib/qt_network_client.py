@@ -56,8 +56,8 @@ class QtNetworkClient(QWidget, NetworkClient):
         await super().on_disconnect()
         self.Disconnect.emit()
 
-    async def on_new_session(self, new_session: dict):
-        await super().on_new_session(new_session)
+    async def on_user_session_updated(self, new_session: dict):
+        await super().on_user_session_updated(new_session)
         self.UserChanged.emit(self.current_user)
 
     async def on_game_session_updated(self, data):
@@ -72,7 +72,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         authorize = await self.discord.authorize(self.configuration["discord_client_id"], ['identify'])
 
         new_session = await self._emit_with_result("login_with_discord", authorize["data"]["code"])
-        await self.on_new_session(new_session)
+        await self.on_user_session_updated(new_session)
 
     async def login_as_guest(self, name: str = "Unknown"):
         if "guest_secret" not in self.configuration:
@@ -85,7 +85,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         }).encode("utf-8"))
 
         new_session = await self._emit_with_result("login_with_guest", login_request)
-        await self.on_new_session(new_session)
+        await self.on_user_session_updated(new_session)
 
     async def logout(self):
         self.session_data_path.unlink()

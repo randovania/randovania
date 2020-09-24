@@ -43,6 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
+-   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
+
 -   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
 
 -   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
@@ -52,6 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
 
 -   Changed: Better error messages when there are references to unknown resources in the database.
+
+-   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
 
 -   Changed: The following trick level difficulties were renamed:
     - Trivial -> Beginner
@@ -67,13 +71,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Added
 
 -   General:
-    - Method to open Seeker Missile Locks with Screw Attack in various rooms (Expert and above).
-    - Method to activate most Bomb Slots without Bombs (Hypermode).
+    - Methods to open all Seeker Missile Doors with Screw Attack (Expert and above).
+    - Method to activate most Bomb Slots without Bombs (Advanced and above).
     - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
 
--   All Light/Dark Controller Access rooms, method of reaching the Energy Controllers and returning to the Temples without Bombs (Hypermode).
-
 -   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
+
+-   Accursed Lake, method of collecting the item and leaving with Morph Ball, Light Suit, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
 -   Hall of Honored Dead, method of leaving through the Morph tunnel without Space Jump (Expert and above).
 
@@ -151,28 +155,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
     - Methods of leaving the room without Spider Ball after Quadraxis with Boost Ball or Space Jump (Hypermode).
 
+-   Reactor Core, method of reaching the item with only Space Jump (Expert and above).
+
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
 -   Watch Station Access, methods to cross the pit in either direction using:
     - Boost Ball and Boost Jump (Advanced and above).
     - Space Jump, Scan Visor, and Scan Dash (Advanced and above).
 
+-   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
 -   Workers Path, method of crossing the room from Sanctuary Temple with a Boost Jump (Advanced and above).
 
 #### Fixed
 
 -   Scan Visor Requirements: 
-    - Trooper Security Station Event coming from Communication Area
+    - Dash Requirements in many rooms
+    - Grand Abyss Bridge terminal
     - Sand Processing item
-    - Torvus Lagoon terminal
     - Staging Area terminal
+    - Torvus Lagoon terminal
+    - Trooper Security Station Event coming from Communication Area
 
 -   Dark Aether Damage Requirements:
+    - Sky Temple Grounds
     - Battleground
     - Judgment Pit
     - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
     - Undertemple Access (Updated)
     - Undertemple (Intermediate and above)
+    - Vault Attack Portal
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
@@ -183,6 +195,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
 -   Morph Ball Doors now properly requires Morph Ball.
+
+-   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
 
 #### Changed
 

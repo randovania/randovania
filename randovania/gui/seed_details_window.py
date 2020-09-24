@@ -259,6 +259,14 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             for i in range(description.permalink.player_count)
         }
 
+        self.export_iso_button.setEnabled(description.permalink.player_count == 1)
+        if description.permalink.player_count > 1:
+            self.export_iso_button.setToolTip("Multiworld games can only be exported from a game session")
+        else:
+            self.export_iso_button.setToolTip("")
+
+        self.customize_user_preferences_button.setVisible(description.permalink.player_count == 1)
+
         self.player_index_combo.clear()
         for i in range(description.permalink.player_count):
             self.player_index_combo.addItem(self._player_names[i], i)

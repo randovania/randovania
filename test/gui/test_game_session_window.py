@@ -7,7 +7,8 @@ from randovania.gui.game_session_window import GameSessionWindow
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
 
 
-def test_on_game_session_updated(preset_manager, skip_qtbot):
+@pytest.mark.asyncio
+async def test_on_game_session_updated(preset_manager, skip_qtbot):
     # Setup
     network_client = MagicMock()
     network_client.current_user = User(id=12, name="Player A")
@@ -47,29 +48,36 @@ def test_on_game_session_updated(preset_manager, skip_qtbot):
     )
     network_client.current_game_session = initial_session
 
-    window = GameSessionWindow(network_client, game_connection, preset_manager, MagicMock())
-    window.sync_multiworld_client_status = MagicMock()
+    window = GameSessionWindow(network_client, game_connection, preset_manager, MagicMock(), MagicMock())
+    window.update_multiworld_client_status = AsyncMock()
 
     # Run
-    window.on_game_session_updated(second_session)
-    window.sync_multiworld_client_status.assert_called_once_with()
+    await window.on_game_session_updated(second_session)
+    window.update_multiworld_client_status.assert_awaited_once_with()
 
 
 @pytest.mark.parametrize("in_game", [False, True])
-def test_sync_multiworld_client_status(skip_qtbot, mocker, in_game):
+@pytest.mark.asyncio
+async def test_update_multiworld_client_status(skip_qtbot, mocker, in_game):
     # Setup
     network_client = MagicMock()
     game_connection = MagicMock()
     game_connection.pretty_current_status = "Maybe Connected"
-    mock_create_task: MagicMock = mocker.patch("asyncio.create_task")
     mocker.patch("randovania.gui.game_session_window.GameSessionWindow.on_game_session_updated")
 
-    window = GameSessionWindow(network_client, game_connection, MagicMock(), MagicMock())
+    window = GameSessionWindow(network_client, game_connection, MagicMock(), MagicMock(), MagicMock())
     window._game_session = MagicMock()
     window._game_session.in_game = in_game
+    window.multiworld_client.start = AsyncMock()
+    window.multiworld_client.stop = AsyncMock()
 
     # Run
-    window.sync_multiworld_client_status()
+    await window.update_multiworld_client_status()
 
     # Assert
-    mock_create_task.assert_called_once()
+    if in_game:
+        called, not_called = window.multiworld_client.start, window.multiworld_client.stop
+    else:
+        called, not_called = window.multiworld_client.stop, window.multiworld_client.start
+    called.assert_awaited_once()
+    not_called.assert_not_awaited()

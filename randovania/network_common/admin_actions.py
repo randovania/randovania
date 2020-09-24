@@ -7,6 +7,7 @@ class SessionAdminGlobalAction(Enum):
     CHANGE_ROW = "change_row"
     DELETE_ROW = "delete_row"
     CHANGE_LAYOUT_DESCRIPTION = "change_layout_description"
+    DOWNLOAD_LAYOUT_DESCRIPTION = "download_layout_description"
     START_SESSION = "start_session"
 
 

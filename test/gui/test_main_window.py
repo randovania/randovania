@@ -53,6 +53,7 @@ async def test_browse_for_game_session(mock_game_session_window: MagicMock,
         default_main_window.network_client,
         mock_get_game_connection.return_value,
         default_main_window.preset_manager,
+        default_main_window,
         default_main_window._options,
     )
     mock_game_session_window.return_value.show.assert_called_once_with()
@@ -81,6 +82,7 @@ async def test_host_game_session(mock_game_session_window: MagicMock,
         default_main_window.network_client,
         mock_get_game_connection.return_value,
         default_main_window.preset_manager,
+        default_main_window,
         default_main_window._options,
     )
     mock_game_session_window.return_value.show.assert_called_once_with()

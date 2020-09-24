@@ -16,7 +16,10 @@ def server_app_fixture(flask_app, skip_qtbot):
     flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
     flask_app.config["FERNET_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
     flask_app.config["GUEST_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
-    return ServerApp(flask_app)
+    server = ServerApp(flask_app)
+    server.metrics.summary = MagicMock()
+    server.metrics.summary.return_value.side_effect = lambda x: x
+    return server
 
 
 def test_session(server_app):
@@ -68,7 +71,7 @@ def test_get_current_user_unknown_user(server_app, clean_database):
         server_app.get_current_user()
 
 
-def test_join_session(mocker, server_app):
+def test_join_game_session(mocker, server_app):
     mock_join_room = mocker.patch("flask_socketio.join_room")
     membership = MagicMock()
     membership.session.id = "session_id"
@@ -79,7 +82,7 @@ def test_join_session(mocker, server_app):
     server_app.session.return_value.__enter__.return_value = session
 
     # Run
-    server_app.join_session(membership)
+    server_app.join_game_session(membership)
 
     # Assert
     mock_join_room.assert_has_calls([
@@ -91,7 +94,7 @@ def test_join_session(mocker, server_app):
     }
 
 
-def test_leave_session_with_session(mocker, server_app):
+def test_leave_game_session_with_session(mocker, server_app):
     # Setup
     mock_leave_room = mocker.patch("flask_socketio.leave_room")
     user = MagicMock()
@@ -103,7 +106,7 @@ def test_leave_session_with_session(mocker, server_app):
     server_app.session.return_value.__enter__.return_value = session
 
     # Run
-    server_app.leave_session()
+    server_app.leave_game_session()
 
     # Assert
     mock_leave_room.assert_has_calls([
@@ -113,14 +116,14 @@ def test_leave_session_with_session(mocker, server_app):
     assert session == {}
 
 
-def test_leave_session_without_session(mocker, server_app):
+def test_leave_game_session_without_session(mocker, server_app):
     # Setup
     mock_leave_room: MagicMock = mocker.patch("flask_socketio.leave_room")
     server_app.session = MagicMock()
     server_app.session.return_value.__enter__.return_value = {}
 
     # Run
-    server_app.leave_session()
+    server_app.leave_game_session()
 
     # Assert
     mock_leave_room.assert_not_called()
