@@ -168,10 +168,15 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
         LogbookAsset(4115881194): _guardian_hint(43),
         LogbookAsset(1948976790): _guardian_hint(79),
         LogbookAsset(3212301619): _guardian_hint(115),
+
+        # Jokes
+        LogbookAsset(67497535): Hint(HintType.JOKE, PrecisionPair.joke(), None),
+        LogbookAsset(4072633400): Hint(HintType.JOKE, PrecisionPair.joke(), None),
     }
 
     # Run
-    result = base_patches_factory.add_default_hints_to_patches(rng, empty_patches, echoes_game_description.world_list)
+    result = base_patches_factory.add_default_hints_to_patches(rng, empty_patches, echoes_game_description.world_list,
+                                                               num_joke=2)
 
     # Assert
     rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
@@ -218,6 +223,6 @@ def test_create_base_patches(mock_add_game_specific_from_config: MagicMock,
     patches[3].assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
     # Hints
-    mock_add_default_hints_to_patches.assert_called_once_with(rng, patches[4], game.world_list)
+    mock_add_default_hints_to_patches.assert_called_once_with(rng, patches[4], game.world_list, num_joke=2)
 
     assert result is mock_add_default_hints_to_patches.return_value
