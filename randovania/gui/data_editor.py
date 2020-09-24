@@ -27,10 +27,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _previous_selected_node: Optional[Node] = None
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
 
-    def __init__(self, data: dict, edit_mode: bool):
+    def __init__(self, data: Optional[dict], edit_mode: bool):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
+
+        self._is_internal = data is None
+        if self._is_internal:
+            default_data.decode_default_prime2.cache_clear()
+            data = default_data.decode_default_prime2()
 
         self.edit_mode = edit_mode
         self.radio_button_to_node = {}
@@ -41,9 +46,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
 
-        self.save_database_button.setEnabled(default_data.prime2_json_path().is_file())
-        self.save_database_button.clicked.connect(self._save_as_internal_database)
-        self.menu_export_database.triggered.connect(self._prompt_save_database)
+        if self._is_internal:
+            self.save_database_button.setEnabled(default_data.prime2_json_path().is_file())
+            self.save_database_button.clicked.connect(self._save_as_internal_database)
+        else:
+            self.save_database_button.clicked.connect(self._prompt_save_database)
+
         self.new_node_button.clicked.connect(self._create_new_node)
         self.delete_node_button.clicked.connect(self._remove_node)
         self.verticalLayout.setAlignment(Qt.AlignTop)
@@ -328,7 +336,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.on_select_area()
 
     def update_edit_mode(self):
-        self.menu_bar.setVisible(self.edit_mode)
         self.delete_node_button.setVisible(self.edit_mode)
         self.new_node_button.setVisible(self.edit_mode)
         self.save_database_button.setVisible(self.edit_mode)
