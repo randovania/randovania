@@ -331,7 +331,10 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
 
     resource_database = read_resource_database(data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
-    game_specific = read_game_specific(data["game_specific"], resource_database)
+    if game == 2:
+        game_specific = read_game_specific(data["game_specific"], resource_database)
+    else:
+        game_specific = None
 
     world_reader = WorldReader(resource_database, dock_weakness_database)
     world_list = world_reader.read_world_list(data["worlds"])
