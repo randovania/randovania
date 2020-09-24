@@ -60,7 +60,7 @@ async def test_login_to_discord(client):
     client.discord.start = AsyncMock()
     client.discord.authorize = AsyncMock(return_value={"data": {"code": "the-code"}})
     client._emit_with_result = AsyncMock()
-    client.on_new_session = AsyncMock()
+    client.on_user_session_updated = AsyncMock()
 
     # Run
     await client.login_with_discord()
@@ -69,4 +69,4 @@ async def test_login_to_discord(client):
     client.discord.start.assert_awaited_once_with()
     client.discord.authorize.assert_awaited_once_with(1234, ['identify'])
     client._emit_with_result.assert_awaited_once_with("login_with_discord", "the-code")
-    client.on_new_session.assert_awaited_once_with(client._emit_with_result.return_value)
+    client.on_user_session_updated.assert_awaited_once_with(client._emit_with_result.return_value)

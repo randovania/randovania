@@ -60,7 +60,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
     _preset_manager: PresetManager
     game_session_window: Optional[GameSessionWindow] = None
     _login_window: Optional[QDialog] = None
-    ShowSeedSignal = Signal(LayoutDescription)
+    GameDetailsSignal = Signal(LayoutDescription)
 
     @property
     def _tab_widget(self):
@@ -98,7 +98,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         # Signals
         self.newer_version_signal.connect(self.display_new_version)
         self.options_changed_signal.connect(self.on_options_changed)
-        self.ShowSeedSignal.connect(self._show_seed_tab)
+        self.GameDetailsSignal.connect(self._open_game_details)
 
         self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_play))
         self.open_faq_button.clicked.connect(self._open_faq)
@@ -159,7 +159,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         json_path = common_qt_lib.prompt_user_for_input_game_log(self)
         if json_path is not None:
             layout = LayoutDescription.from_file(json_path)
-            self.show_seed_tab(layout)
+            self.open_game_details(layout)
 
     async def _game_session_active(self) -> bool:
         if self.game_session_window is None or self.game_session_window.has_closed:
@@ -214,6 +214,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.game_session_window = GameSessionWindow(network_client,
                                                          common_qt_lib.get_game_connection(),
                                                          self.preset_manager,
+                                                         self,
                                                          self._options)
             self.game_session_window.show()
 
@@ -247,13 +248,13 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         await self.network_client.create_new_session(dialog.textValue())
         self.game_session_window = GameSessionWindow(self.network_client, common_qt_lib.get_game_connection(),
-                                                     self.preset_manager, self._options)
+                                                     self.preset_manager, self, self._options)
         self.game_session_window.show()
 
-    def show_seed_tab(self, layout: LayoutDescription):
-        self.ShowSeedSignal.emit(layout)
+    def open_game_details(self, layout: LayoutDescription):
+        self.GameDetailsSignal.emit(layout)
 
-    def _show_seed_tab(self, layout: LayoutDescription):
+    def _open_game_details(self, layout: LayoutDescription):
         from randovania.gui.seed_details_window import SeedDetailsWindow
         details_window = SeedDetailsWindow(self, self._options)
         details_window.update_layout_description(layout)

@@ -144,12 +144,14 @@ def starting_location_for_configuration(configuration: LayoutConfiguration,
 def add_default_hints_to_patches(rng: Random,
                                  patches: GamePatches,
                                  world_list: WorldList,
+                                 num_joke: int,
                                  ) -> GamePatches:
     """
-    Adds hints for the locations
+    Adds hints that are present on all games.
     :param rng:
     :param patches:
     :param world_list:
+    :param num_joke
     :return:
     """
 
@@ -183,6 +185,11 @@ def add_default_hints_to_patches(rng: Random,
 
         logbook_asset = all_logbook_assets.pop()
         patches = patches.assign_hint(logbook_asset, Hint(hint_type, PrecisionPair.detailed(), index))
+
+    while num_joke > 0 and all_logbook_assets:
+        logbook_asset = all_logbook_assets.pop()
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, PrecisionPair.joke(), None))
+        num_joke -= 1
 
     return patches
 
@@ -226,6 +233,6 @@ def create_base_patches(configuration: LayoutConfiguration,
 
     # Hints
     if rng is not None:
-        patches = add_default_hints_to_patches(rng, patches, game.world_list)
+        patches = add_default_hints_to_patches(rng, patches, game.world_list, num_joke=2)
 
     return patches

@@ -45,6 +45,9 @@ def create_app():
     game_session.setup_app(sio)
     user_session.setup_app(sio)
 
+    connected_clients = sio.metrics.info("connected_clients", "How many clients are connected right now.")
+    connected_clients.set(0)
+
     @app.route("/")
     def index():
         return "ok"
@@ -61,7 +64,17 @@ def create_app():
         except ValueError:
             raise ConnectionRefusedError("unknown client version")
 
+        connected_clients.set(len(sio.get_server().environ))
         app.logger.info(f"Client at {environ['REMOTE_ADDR']} with "
                         f"version {client_app_version} connected, while server is {server_version}")
+
+    @sio.sio.server.on("disconnect")
+    def disconnect(sid):
+        sio_environ = sio.get_server().environ
+        num_clients = len(sio_environ)
+        if sid in sio_environ:
+            num_clients -= 1
+        connected_clients.set(num_clients)
+        app.logger.info(f"Client at {sio_environ[sid]['REMOTE_ADDR']} disconnected.")
 
     return app
