@@ -19,6 +19,7 @@ def clean_database():
     finally:
         database.db = old_db
 
+
 @pytest.fixture()
 def flask_app():
     app = flask.Flask("test_app")

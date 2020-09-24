@@ -9,4 +9,5 @@ COPY . .
 RUN pip install --no-cache-dir -e .[server] -c requirements.txt
 
 VOLUME ["/data"]
-CMD ["python", "-m", "randovania", "multiworld", "server"]
+ENTRYPOINT ["python", "-m", "randovania"]
+CMD ["--configuration", "/data/configuration.json", "multiworld", "server"]
