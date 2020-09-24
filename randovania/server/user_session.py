@@ -5,6 +5,7 @@ from typing import Optional
 
 import cryptography.fernet
 import flask
+import flask_socketio
 import peewee
 from requests_oauthlib import OAuth2Session
 
@@ -107,7 +108,7 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: O
         sio.get_server().save_session(flask.request.sid, session)
 
         if session_id is not None:
-            sio.join_session(GameSessionMembership.get_by_ids(user.id, session_id))
+            sio.join_game_session(GameSessionMembership.get_by_ids(user.id, session_id))
 
         return _create_client_side_session(sio, user)
 
@@ -119,12 +120,23 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: O
         raise InvalidSession()
 
 
+def _emit_user_session_update(sio: ServerApp):
+    flask_socketio.emit("user_session_update", _create_client_side_session(sio, None), room=None)
+
+
 def logout(sio: ServerApp):
-    sio.leave_session()
+    sio.leave_game_session()
     flask.session.pop("DISCORD_OAUTH2_TOKEN", None)
     with sio.session() as session:
         session.pop("discord-access-token", None)
         session.pop("user-id", None)
+
+    _emit_user_session_update(sio)
+
+
+def disconnect_game_session(sio: ServerApp):
+    sio.leave_game_session()
+    _emit_user_session_update(sio)
 
 
 def setup_app(sio: ServerApp):
@@ -132,3 +144,4 @@ def setup_app(sio: ServerApp):
     sio.on("login_with_guest", login_with_guest)
     sio.on("restore_user_session", restore_user_session)
     sio.on("logout", logout)
+    sio.on("disconnect_game_session", disconnect_game_session)

@@ -192,10 +192,11 @@ def _retryable_create_patches(rng: Random,
     :param status_update:
     :return:
     """
-    player_pools: Dict[int, PlayerPool] = {
-        player_index: create_player_pool(rng, player_preset.layout_configuration, player_index)
-        for player_index, player_preset in presets.items()
-    }
+    player_pools: Dict[int, PlayerPool] = {}
+
+    for player_index, player_preset in presets.items():
+        status_update(f"Creating item pool for player {player_index + 1}")
+        player_pools[player_index] = create_player_pool(rng, player_preset.layout_configuration, player_index)
 
     for player_pool in player_pools.values():
         _validate_item_pool_size(player_pool.pickups, player_pool.game)

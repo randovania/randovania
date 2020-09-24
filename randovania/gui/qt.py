@@ -1,4 +1,5 @@
 import asyncio
+import logging.config
 import os
 import sys
 from argparse import ArgumentParser
@@ -95,6 +96,39 @@ def create_backend(debug_game_backend: bool):
 def run(args):
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
+    data_dir = args.custom_network_storage
+    if data_dir is None:
+        from randovania.interface_common import persistence
+        data_dir = persistence.user_data_dir()
+
+    logging.config.dictConfig({
+        'version': 1,
+        'formatters': {
+            'default': {
+                'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+            }
+        },
+        'handlers': {
+            'default': {
+                'level': 'INFO',
+                'formatter': 'default',
+                'class': 'logging.StreamHandler',
+                'stream': 'ext://sys.stdout',  # Default is stderr
+            },
+            'local_app_data': {
+                'level': 'INFO',
+                'formatter': 'default',
+                'class': 'logging.FileHandler',
+                'filename': data_dir.joinpath("app.log"),
+                'encoding': 'utf-8',
+            }
+        },
+        'root': {
+            'level': 'WARNING',
+            'handlers': ['default', 'local_app_data'],
+        }
+    })
+
     app = QApplication(sys.argv)
 
     os.environ['QT_API'] = "PySide2"
@@ -103,11 +137,6 @@ def run(args):
     asyncio.set_event_loop(loop)
 
     sys.excepthook = catch_exceptions
-
-    data_dir = args.custom_network_storage
-    if data_dir is None:
-        from randovania.interface_common import persistence
-        data_dir = persistence.user_data_dir()
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.game_connection.game_connection import GameConnection

@@ -25,7 +25,7 @@ class WindowManager(QMainWindow):
     def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str]):
         raise NotImplemented()
 
-    def show_seed_tab(self, layout: LayoutDescription):
+    def open_game_details(self, layout: LayoutDescription):
         raise NotImplemented()
 
     @property

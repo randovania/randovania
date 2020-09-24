@@ -50,7 +50,7 @@ def create_game_session(sio: ServerApp, session_name: str):
             user=sio.get_current_user(), session=new_session,
             row=0, team=0, admin=True)
 
-    sio.join_session(membership)
+    sio.join_game_session(membership)
     return new_session.create_session_entry()
 
 
@@ -63,9 +63,13 @@ def join_game_session(sio: ServerApp, session_id: str, password: Optional[str]):
                                                      defaults={"row": 0, "team": None, "admin": False})[0]
 
     _emit_session_update(session)
-    sio.join_session(membership)
+    sio.join_game_session(membership)
 
     return session.create_session_entry()
+
+
+def disconnect_game_session(sio: ServerApp):
+    sio.leave_game_session()
 
 
 def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: Optional[int],
@@ -112,13 +116,12 @@ def game_session_request_update(sio: ServerApp, session_id):
 
 
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
-    _verify_has_admin(sio, session_id, None)
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
-
     session: database.GameSession = database.GameSession.get_by_id(session_id)
 
     if action == SessionAdminGlobalAction.CREATE_ROW:
         preset_json: dict = arg
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
         preset = _get_preset(preset_json)
 
@@ -133,6 +136,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
             raise InvalidAction("Missing arguments.")
 
         row_id, preset_json = arg
+        _verify_has_admin(sio, session_id, sio.get_current_user().id if session.num_teams == 1 else None)
         _verify_not_in_game(session)
         preset = _get_preset(preset_json)
 
@@ -149,6 +153,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.DELETE_ROW:
         row_id: int = arg
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
 
         if session.num_rows < 1:
@@ -168,6 +173,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
         description_json: dict = arg
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
         description = LayoutDescription.from_json_dict(description_json)
 
@@ -178,7 +184,23 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
         session.layout_description = description
         session.save()
 
+    elif action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
+        try:
+            # You must be a session member to do get the spoiler
+            GameSessionMembership.get_by_ids(sio.get_current_user().id, session_id)
+        except peewee.DoesNotExist:
+            raise NotAuthorizedForAction()
+
+        if session.layout_description_json is None:
+            raise InvalidAction("Session does not contain a game")
+
+        if not session.layout_description.permalink.spoiler:
+            raise InvalidAction("Session does not contain a spoiler")
+
+        return session.layout_description_json
+
     elif action == SessionAdminGlobalAction.START_SESSION:
+        _verify_has_admin(sio, session_id, None)
         _verify_not_in_game(session)
         if session.layout_description is None:
             raise InvalidAction("Unable to start session, no game is available.")
@@ -196,7 +218,8 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     _emit_session_update(session)
 
 
-def _switch_team(session: GameSession, membership: GameSessionMembership, new_team: Optional[int]):
+def _switch_team(session: GameSession, membership: GameSessionMembership, new_team: Optional[int], *,
+                 delete_instead: bool = False):
     other_membership: Optional[GameSessionMembership]
 
     if new_team is None:
@@ -235,9 +258,12 @@ def _switch_team(session: GameSession, membership: GameSessionMembership, new_te
     with database.db.atomic():
         session.num_teams = new_num_teams
         session.save()
-        membership.row = expected_row
-        membership.team = new_team
-        membership.save()
+        if delete_instead:
+            membership.delete_instance()
+        else:
+            membership.row = expected_row
+            membership.team = new_team
+            membership.save()
 
 
 def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg):
@@ -248,9 +274,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
     membership = GameSessionMembership.get_by_ids(user_id, session_id)
 
     if action == SessionAdminUserAction.KICK:
-        target_player: int = arg
-        # FIXME
-        raise InvalidAction("Kick is NYI")
+        _switch_team(session, membership, None, delete_instead=True)
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg
