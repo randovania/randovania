@@ -124,8 +124,8 @@ def handle_network_errors(fn):
             await async_dialog.warning(self, "Unauthorized",
                                        "You're not authorized to perform that action.")
 
-        except UnableToConnect:
+        except UnableToConnect as e:
             await async_dialog.warning(self, "Connection Error",
-                                       "An error occurred while attempting to connect to the server.")
+                                       f"An error occurred while attempting to connect to the server:\n{e.reason}")
 
     return wrapper
