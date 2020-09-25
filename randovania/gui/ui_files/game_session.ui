@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>699</width>
-    <height>318</height>
+    <height>396</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,7 +58,56 @@
         <string>Game</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="3" column="0">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="generate_game_button">
+          <property name="text">
+           <string>Generate Game</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QPushButton" name="view_game_details_button">
+          <property name="text">
+           <string>View Spoiler</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QPushButton" name="customize_user_preferences_button">
+          <property name="text">
+           <string>Customize in-game settings</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QLabel" name="generate_game_label">
+          <property name="text">
+           <string>&lt;Game not generated&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="6">
+         <widget class="Line" name="line_generate">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" colspan="2">
+         <widget class="QPushButton" name="generate_without_spoiler_button">
+          <property name="text">
+           <string>Generate without spoiler</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="save_iso_button">
+          <property name="text">
+           <string>Save ISO</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="5">
          <widget class="QProgressBar" name="progress_bar">
           <property name="minimumSize">
            <size>
@@ -80,35 +129,7 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="generate_game_button">
-          <property name="text">
-           <string>Generate Game</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QPushButton" name="save_iso_button">
-          <property name="text">
-           <string>Save ISO</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QPushButton" name="customize_user_preferences_button">
-          <property name="text">
-           <string>Customize in-game settings</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QPushButton" name="view_game_details_button">
-          <property name="text">
-           <string>View Spoiler</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1" colspan="3">
+        <item row="3" column="1" colspan="4">
          <widget class="QLabel" name="progress_label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -127,32 +148,8 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="3">
-         <widget class="QLabel" name="generate_game_label">
-          <property name="text">
-           <string>&lt;Game not generated&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="5">
-         <widget class="Line" name="line_generate">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1" colspan="2">
-         <widget class="QPushButton" name="generate_without_spoiler_button">
-          <property name="text">
-           <string>Generate without spoiler</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="4">
-         <widget class="QPushButton" name="stop_background_process_button">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
+        <item row="3" column="0">
+         <widget class="QToolButton" name="background_process_button">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -165,8 +162,8 @@
           <property name="checkable">
            <bool>false</bool>
           </property>
-          <property name="flat">
-           <bool>false</bool>
+          <property name="popupMode">
+           <enum>QToolButton::MenuButtonPopup</enum>
           </property>
          </widget>
         </item>
