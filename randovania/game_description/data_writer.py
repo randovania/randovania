@@ -315,7 +315,7 @@ def write_game_description(game: GameDescription) -> dict:
         "game_name": game.game_name,
         "resource_database": write_resource_database(game.resource_database),
 
-        "game_specific": write_game_specific(game.game_specific),
+        "game_specific": write_game_specific(game.game_specific) if game.game == 2 else {},
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
         "victory_condition": write_requirement(game.victory_condition),

@@ -33,7 +33,7 @@ def _create_parser():
 
 def _run_args(args):
     if args.configuration is not None:
-        randovania.CONFIGURATION_FILE_PATH = args.configuration
+        randovania.CONFIGURATION_FILE_PATH = args.configuration.absolute()
     args.func(args)
 
 
@@ -45,7 +45,6 @@ def run_pytest(argv):
 
 
 def run_cli(argv):
-    randovania.CONFIGURATION_FILE_PATH = randovania.get_data_path().joinpath("configuration.json")
     if len(argv) > 1 and argv[1] == "--pytest":
         run_pytest(argv)
     else:

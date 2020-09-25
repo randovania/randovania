@@ -335,7 +335,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
                                 world_name: Optional[str],
                                 area_name: Optional[str],
                                 ):
-        self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2(), False)
+        self._data_visualizer = DataEditorWindow(None, False)
 
         if world_name is not None:
             self._data_visualizer.focus_on_world(world_name)
@@ -346,7 +346,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self._data_visualizer.show()
 
     def _open_data_editor_default(self):
-        self._data_editor = DataEditorWindow(default_data.decode_default_prime2(), True)
+        self._data_editor = DataEditorWindow(None, True)
         self._data_editor.show()
 
     def _open_data_editor_prompt(self):
