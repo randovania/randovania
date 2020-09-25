@@ -93,6 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Central Station Access/Warrior's Walk, method of climbing the ledge with an Instant Unmorph Jump (Hypermode).
 
+-   Crossroads, method to reach the item from the half pipe with just Screw Attack (Advanced and above).
+
 -   Doomed Entry, method to climb room with Space Jump and Screw Attack (Beginner and above).
 
 -   Feeding Pit, method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
