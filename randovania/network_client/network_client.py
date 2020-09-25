@@ -127,7 +127,11 @@ class NetworkClient:
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
             self.logger.info(f"connect_to_server: failed with {e} - {type(e)}")
             if self._connect_error is None:
-                await self.on_connect_error(f"{e} - {type(e)}")
+                if isinstance(e, aiohttp.client_exceptions.ContentTypeError):
+                    message = e.message
+                else:
+                    message = str(e)
+                await self.on_connect_error(message)
             raise UnableToConnect(self._connect_error)
 
     def connect_to_server(self) -> asyncio.Task:
