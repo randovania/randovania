@@ -126,6 +126,6 @@ def handle_network_errors(fn):
 
         except UnableToConnect as e:
             await async_dialog.warning(self, "Connection Error",
-                                       f"An error occurred while attempting to connect to the server:\n{e.reason}")
+                                       f"<b>Unable to connect to the server:</b><br /><br />{e.reason}")
 
     return wrapper
