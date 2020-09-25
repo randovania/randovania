@@ -3491,13 +3491,13 @@ Asset id: 4121352562
 ----------------
 Dark Agon Temple Access
 Asset id: 553896110
-> Door to Judgment Pit; Heals? True
+> Door to Judgment Pit; Heals? False
   > Judgment Pit/Door to Dark Agon Temple Access
       Missile
   > Dark Agon Temple Access/Central Safe Zone
       Dark World Damage ≥ 3 and Activate Safe Zone
 
-> Door to Dark Agon Temple; Heals? True
+> Door to Dark Agon Temple; Heals? False
   > Dark Agon Temple/Door to Dark Agon Temple Access
       Trivial
   > Dark Agon Temple Access/Central Safe Zone
@@ -4604,17 +4604,27 @@ Asset id: 3761619109
 ----------------
 Oasis Access
 Asset id: 4073505822
-> Door to Dark Oasis; Heals? True
+> Door to Dark Oasis; Heals? False
   > Dark Oasis/Door to Oasis Access
       Trivial
-  > Oasis Access/Door to Doomed Entry
-      Trivial
+  > Oasis Access/Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 6
+          Morph Ball and Dark World Damage ≥ 6
 
-> Door to Doomed Entry; Heals? True
+> Door to Doomed Entry; Heals? False
   > Doomed Entry/Door to Oasis Access
       Shoot Dark Beam
+  > Oasis Access/Central Safe Zone
+      Dark World Damage ≥ 3
+
+> Central Safe Zone; Heals? True
   > Oasis Access/Door to Dark Oasis
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 11
+          Morph Ball and Dark World Damage ≥ 6
+  > Oasis Access/Door to Doomed Entry
+      Dark World Damage ≥ 2
 
 ----------------
 Save Station C
