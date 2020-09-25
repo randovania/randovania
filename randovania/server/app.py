@@ -52,17 +52,17 @@ def create_app():
     def index():
         return "ok"
 
-    server_version = strict_current_version()
+    server_version = randovania.VERSION
 
     @sio.sio.server.on("connect")
     def connect(sid, environ):
         if "HTTP_X_RANDOVANIA_VERSION" not in environ:
             raise ConnectionRefusedError("unknown client version")
 
-        try:
-            client_app_version = strict_version_for_version_string(environ["HTTP_X_RANDOVANIA_VERSION"])
-        except ValueError:
-            raise ConnectionRefusedError("unknown client version")
+        client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
+        if server_version != client_app_version:
+            raise ConnectionRefusedError(f"Incompatible client version '{client_app_version}', "
+                                         f"expected '{server_version}'")
 
         connected_clients.set(len(sio.get_server().environ))
         app.logger.info(f"Client at {environ['REMOTE_ADDR']} with "
