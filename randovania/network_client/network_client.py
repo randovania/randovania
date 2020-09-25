@@ -36,7 +36,9 @@ def _hash_address(server_address: str) -> str:
 
 
 class UnableToConnect(Exception):
-    pass
+    def __init__(self, reason: str):
+        super().__init__(reason)
+        self.reason = reason
 
 
 class NetworkClient:
@@ -47,6 +49,7 @@ class NetworkClient:
     _call_lock: asyncio.Lock
     _connect_task: Optional[asyncio.Task] = None
     _restore_session_task: Optional[asyncio.Task] = None
+    _connect_error: Optional[str] = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -111,7 +114,8 @@ class NetworkClient:
             # await asyncio.sleep(1)
             # self.logger.info(f"connect_to_server: sleep over")
 
-            self.logger.info(f"connect_to_server: connecting")
+            self.logger.info(f"connect_to_server: connecting to {self.configuration['server_address']}")
+            self._connect_error = None
             await self.sio.connect(self.configuration["server_address"],
                                    socketio_path=self.configuration["socketio_path"],
                                    headers={"X-Randovania-Version": randovania.VERSION})
@@ -122,8 +126,13 @@ class NetworkClient:
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
             self.logger.info(f"connect_to_server: failed with {e} - {type(e)}")
-            await self.on_connect_error(f"{e} - {type(e)}")
-            raise UnableToConnect()
+            if self._connect_error is None:
+                if isinstance(e, aiohttp.client_exceptions.ContentTypeError):
+                    message = e.message
+                else:
+                    message = str(e)
+                await self.on_connect_error(message)
+            raise UnableToConnect(self._connect_error)
 
     def connect_to_server(self) -> asyncio.Task:
         if self._connect_task is None:
@@ -171,6 +180,7 @@ class NetworkClient:
         await self._restore_session_task
 
     async def on_connect_error(self, error_message: str):
+        self._connect_error = error_message
         self.logger.info(f"on_connect_error: {error_message}")
         self.connection_state = ConnectionState.Disconnected
         if self._restore_session_task is not None:

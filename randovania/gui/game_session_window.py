@@ -150,7 +150,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.progress_update_signal.connect(self.update_progress)
-        self.stop_background_process_button.clicked.connect(self.stop_background_process)
+        self.background_process_button.clicked.connect(self.background_process_button_clicked)
         self.generate_game_button.clicked.connect(functools.partial(self.generate_game, True))
         self.generate_without_spoiler_button.clicked.connect(functools.partial(self.generate_game, False))
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
@@ -721,7 +721,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
                 layout = simplified_patcher.generate_layout(progress_update=progress_update,
                                                             permalink=permalink,
                                                             options=self._options)
-                progress_update(f"Success! Uploading...", 1)
+                progress_update(f"Finished generating, uploading...", 1)
                 self.on_generated_layout_signal.emit(layout)
 
             except GenerationFailure as generate_exception:
@@ -730,9 +730,16 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         self.run_in_background_thread(work, "Creating a seed...")
 
-    def _upload_layout_description(self, layout: LayoutDescription):
-        self._upload_task = asyncio.create_task(
-            self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, layout.as_json))
+    @asyncSlot(LayoutDescription)
+    @handle_network_errors
+    async def _upload_layout_description(self, layout: LayoutDescription):
+        try:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
+                                            layout.as_json)
+            self.progress_update_signal.emit("Uploaded!", 100)
+        except Exception:
+            self.progress_update_signal.emit("Failed to upload.", 0)
+            raise
 
     @asyncSlot()
     @handle_network_errors
@@ -843,8 +850,11 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         description = LayoutDescription.from_json_dict(json.loads(description_json))
         self._window_manager.open_game_details(description)
 
+    def background_process_button_clicked(self):
+        self.stop_background_process()
+
     def enable_buttons_with_background_tasks(self, value: bool):
-        self.stop_background_process_button.setEnabled(not value)
+        self.background_process_button.setEnabled(not value)
 
     def update_progress(self, message: str, percentage: int):
         self.progress_label.setText(message)
