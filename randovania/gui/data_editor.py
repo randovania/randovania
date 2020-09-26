@@ -70,7 +70,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.world_list = self.game_description.world_list
 
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
-            self.world_selector_box.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
+            name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
+            self.world_selector_box.addItem(name, userData=world)
 
         self.update_edit_mode()
 
