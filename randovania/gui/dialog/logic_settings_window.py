@@ -190,8 +190,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._during_batch_check_update = True
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
-                is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
-                self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
+                if area.valid_starting_location:
+                    is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
+                    self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
         self._during_batch_check_update = False
 
         # Location Pool
