@@ -34,12 +34,6 @@ def _area_uses_trick(area: Area,
             for individual in requirements.as_set.all_individual:
                 if individual.resource == trick and individual.amount == level.as_number:
                     return True
-
-        else:
-            for alternative in requirements.as_set.alternatives:
-                if alternative.difficulty_level == level.as_number and not _has_trick(alternative):
-                    return True
-
     return False
 
 

@@ -454,13 +454,6 @@ class RequirementList:
             if individual.negate:
                 yield individual.resource
 
-    @property
-    def difficulty_level(self) -> int:
-        for individual in self.values():
-            if individual.resource.resource_type == ResourceType.DIFFICULTY:
-                return individual.amount
-        return 0
-
     def values(self) -> FrozenSet[ResourceRequirement]:
         return self.items
 

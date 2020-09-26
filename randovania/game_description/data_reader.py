@@ -311,7 +311,6 @@ def read_resource_database(data: Dict) -> ResourceDatabase:
         damage=read_damage_resource_info_array(data["damage"], item),
         version=read_resource_info_array(data["versions"], ResourceType.VERSION),
         misc=read_resource_info_array(data["misc"], ResourceType.MISC),
-        difficulty=read_resource_info_array(data["difficulty"], ResourceType.DIFFICULTY),
         requirement_template={},
     )
     db.requirement_template.update(read_requirement_templates(data["requirement_template"], db))
