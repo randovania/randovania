@@ -4,7 +4,7 @@ from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence
+    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Int64ub
 
 from randovania.game_description.node import LoreType
 
@@ -139,6 +139,22 @@ ConstructResourceInfo = Struct(
     short_name=CString("utf8"),
 )
 
+ConstructItemResourceInfo = Struct(
+    index=Int64ub,
+    long_name=CString("utf8"),
+    short_name=CString("utf8"),
+    max_capacity=Int32ub,
+    _has_memory_offset=Rebuild(Flag, lambda this: this.custom_memory_offset is not None),
+    custom_memory_offset=If(lambda this: this._has_memory_offset, Int32ub),
+)
+
+ConstructTrickResourceInfo = Struct(
+    index=Byte,
+    long_name=CString("utf8"),
+    short_name=CString("utf8"),
+    description=CString("utf8"),
+)
+
 ConstructResourceRequirement = Struct(
     type=Byte,
     index=Byte,
@@ -166,9 +182,9 @@ ConstructDockWeakness = Struct(
 )
 
 ConstructResourceDatabase = Struct(
-    items=PrefixedArray(Byte, ConstructResourceInfo),
+    items=PrefixedArray(Byte, ConstructItemResourceInfo),
     events=PrefixedArray(Byte, ConstructResourceInfo),
-    tricks=PrefixedArray(Byte, ConstructResourceInfo),
+    tricks=PrefixedArray(Byte, ConstructTrickResourceInfo),
     damage=PrefixedArray(Byte, Struct(
         Embedded(ConstructResourceInfo),
         reductions=PrefixedArray(Byte, Struct(

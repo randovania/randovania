@@ -6,6 +6,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockConnection
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import ResourceRequirement, Requirement, RequirementAnd
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
@@ -131,7 +132,7 @@ class EventNode(ResourceNode):
 @dataclasses.dataclass(frozen=True)
 class TranslatorGateNode(ResourceNode):
     gate: TranslatorGate
-    scan_visor: SimpleResourceInfo
+    scan_visor: ItemResourceInfo
 
     def __repr__(self):
         return "TranslatorGateNode({!r} -> {})".format(self.name, self.gate.index)
@@ -187,9 +188,9 @@ _LORE_TYPE_LONG_NAME = {
 @dataclasses.dataclass(frozen=True)
 class LogbookNode(ResourceNode):
     string_asset_id: int
-    scan_visor: SimpleResourceInfo
+    scan_visor: ItemResourceInfo
     lore_type: LoreType
-    required_translator: Optional[SimpleResourceInfo]
+    required_translator: Optional[ItemResourceInfo]
     hint_index: Optional[int]
 
     def __repr__(self):

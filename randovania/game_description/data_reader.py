@@ -10,6 +10,7 @@ from randovania.game_description.node import GenericNode, DockNode, TeleporterNo
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase, \
     find_resource_info_with_long_name, MissingResource
@@ -17,6 +18,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -33,28 +35,38 @@ def read_resource_info(data: Dict, resource_type: ResourceType) -> SimpleResourc
                               data["short_name"], resource_type)
 
 
+def read_item_resource_info(data: Dict) -> ItemResourceInfo:
+    return ItemResourceInfo(data["index"], data["long_name"],
+                            data["short_name"], data["max_capacity"], data.get("custom_memory_offset"))
+
+
+def read_trick_resource_info(data: Dict) -> TrickResourceInfo:
+    return TrickResourceInfo(data["index"], data["long_name"],
+                             data["short_name"], data["description"])
+
+
 def read_resource_info_array(data: List[Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
     return read_array(data, lambda info: read_resource_info(info, resource_type=resource_type))
 
 
 # Damage
 
-def read_damage_reduction(data: Dict, items: List[SimpleResourceInfo]) -> DamageReduction:
+def read_damage_reduction(data: Dict, items: List[ItemResourceInfo]) -> DamageReduction:
     return DamageReduction(find_resource_info_with_id(items, data["index"], ResourceType.ITEM),
                            data["multiplier"])
 
 
-def read_damage_reductions(data: List[Dict], items: List[SimpleResourceInfo]) -> Tuple[DamageReduction, ...]:
+def read_damage_reductions(data: List[Dict], items: List[ItemResourceInfo]) -> Tuple[DamageReduction, ...]:
     return tuple(read_array(data, lambda info: read_damage_reduction(info, items)))
 
 
-def read_damage_resource_info(data: Dict, items: List[SimpleResourceInfo]) -> DamageResourceInfo:
+def read_damage_resource_info(data: Dict, items: List[ItemResourceInfo]) -> DamageResourceInfo:
     return DamageResourceInfo(data["index"], data["long_name"],
                               data["short_name"],
                               read_damage_reductions(data["reductions"], items))
 
 
-def read_damage_resource_info_array(data: List[Dict], items: List[SimpleResourceInfo]) -> List[DamageResourceInfo]:
+def read_damage_resource_info_array(data: List[Dict], items: List[ItemResourceInfo]) -> List[DamageResourceInfo]:
     return read_array(data, lambda info: read_damage_resource_info(info, items))
 
 
@@ -190,7 +202,7 @@ class WorldReader:
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
 
-    def _get_scan_visor(self) -> SimpleResourceInfo:
+    def _get_scan_visor(self) -> ItemResourceInfo:
         return find_resource_info_with_long_name(
             self.resource_database.item,
             "Scan Visor"
@@ -303,11 +315,11 @@ def read_requirement_templates(data: Dict, database: ResourceDatabase) -> Dict[s
 
 
 def read_resource_database(data: Dict) -> ResourceDatabase:
-    item = read_resource_info_array(data["items"], ResourceType.ITEM)
+    item = read_array(data["items"], read_item_resource_info)
     db = ResourceDatabase(
         item=item,
         event=read_resource_info_array(data["events"], ResourceType.EVENT),
-        trick=read_resource_info_array(data["tricks"], ResourceType.TRICK),
+        trick=read_array(data["tricks"], read_trick_resource_info),
         damage=read_damage_resource_info_array(data["damage"], item),
         version=read_resource_info_array(data["versions"], ResourceType.VERSION),
         misc=read_resource_info_array(data["misc"], ResourceType.MISC),
