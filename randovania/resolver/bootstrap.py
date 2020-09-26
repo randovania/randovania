@@ -69,9 +69,9 @@ def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
     for trick in resource_database.trick:
         static_resources[trick] = configuration.level_for_trick(trick).as_number
 
-    # Exclude from Room Rando
-    exclude_from_room_rando = find_resource_info_with_long_name(resource_database.trick, "Exclude from Room Randomizer")
-    static_resources[exclude_from_room_rando] = 5
+    # Room Rando
+    room_rando = find_resource_info_with_long_name(resource_database.misc, "Room Randomizer")
+    static_resources[room_rando] = 0
 
     return configuration.global_level.as_number, static_resources
 
