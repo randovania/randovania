@@ -465,6 +465,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         for world in game_description.world_list.worlds:
             for area in sorted(world.areas, key=lambda a: a.name):
+                if not area.valid_starting_location:
+                    continue
                 group_box = world_to_group[world.correct_name(area.in_dark_aether)]
                 check = QtWidgets.QCheckBox(group_box)
                 check.setText(area.name)
