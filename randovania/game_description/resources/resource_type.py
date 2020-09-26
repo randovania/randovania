@@ -9,7 +9,6 @@ class ResourceType(Enum):
     DAMAGE = 3
     VERSION = 4
     MISC = 5
-    DIFFICULTY = 6
     PICKUP_INDEX = 7
     GATE_INDEX = 8
     LOGBOOK_INDEX = 9

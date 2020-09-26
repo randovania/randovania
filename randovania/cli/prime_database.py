@@ -248,29 +248,6 @@ def list_paths_with_dangerous_command(sub_parsers):
     parser.set_defaults(func=list_paths_with_dangerous_logic)
 
 
-def list_paths_with_difficulty_logic(args):
-    gd = load_game_description(args)
-    _list_paths_with_resource(
-        gd,
-        args.print_only_area,
-        gd.resource_database.difficulty_resource,
-        args.difficulty
-    )
-
-
-def list_paths_with_difficulty_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "list-difficulty-usage",
-        help="List all connections that needs the difficulty.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )
-    add_data_file_argument(parser)
-    parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
-                        action="store_true")
-    parser.add_argument("difficulty", type=int)
-    parser.set_defaults(func=list_paths_with_difficulty_logic)
-
-
 def list_paths_with_resource_logic(args):
     gd = load_game_description(args)
 
@@ -318,7 +295,6 @@ def create_subparsers(sub_parsers):
     view_area_command(sub_parsers)
     export_areas_command(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
-    list_paths_with_difficulty_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
 
     def check_command(args):
