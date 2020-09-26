@@ -9,10 +9,12 @@ from randovania.game_description.node import Node, GenericNode, DockNode, Pickup
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.layout.trick_level import LayoutTrickLevel
@@ -94,7 +96,26 @@ def write_simple_resource(resource: SimpleResourceInfo) -> dict:
     return {
         "index": resource.index,
         "long_name": resource.long_name,
-        "short_name": resource.short_name
+        "short_name": resource.short_name,
+    }
+
+
+def write_item_resource(resource: ItemResourceInfo) -> dict:
+    return {
+        "index": resource.index,
+        "long_name": resource.long_name,
+        "short_name": resource.short_name,
+        "max_capacity": resource.max_capacity,
+        "custom_memory_offset": resource.custom_memory_offset,
+    }
+
+
+def write_trick_resource(resource: TrickResourceInfo) -> dict:
+    return {
+        "index": resource.index,
+        "long_name": resource.long_name,
+        "short_name": resource.short_name,
+        "description": resource.description,
     }
 
 
@@ -125,9 +146,9 @@ def write_array(array: List[X], writer: Callable[[X], dict]) -> list:
 
 def write_resource_database(resource_database: ResourceDatabase):
     return {
-        "items": write_array(resource_database.item, write_simple_resource),
+        "items": write_array(resource_database.item, write_item_resource),
         "events": write_array(resource_database.event, write_simple_resource),
-        "tricks": write_array(resource_database.trick, write_simple_resource),
+        "tricks": write_array(resource_database.trick, write_trick_resource),
         "damage": write_array(resource_database.damage, write_damage_resource),
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
@@ -276,6 +297,7 @@ def write_area(area: Area) -> dict:
         "in_dark_aether": area.in_dark_aether,
         "asset_id": area.area_asset_id,
         "default_node_index": area.default_node_index,
+        "valid_starting_location": area.valid_starting_location,
         "nodes": nodes
     }
 

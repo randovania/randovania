@@ -1,11 +1,12 @@
 import copy
 import logging
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import dolphin_memory_engine
 
 from randovania.game_connection.connection_backend import ConnectionBackend, ConnectionStatus
 from randovania.game_description.default_database import default_prime2_game_description
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -35,7 +36,7 @@ class DolphinBackend(ConnectionBackend):
     _world: Optional[World] = None
     _last_message_size: int = 0
     _multiworld_magic_item: int = 74
-    _percentage_item: SimpleResourceInfo
+    _percentage_item: ItemResourceInfo
     _pickups_to_give: List[PickupEntry]
     _permanent_pickups: List[PickupEntry]
 
@@ -236,7 +237,7 @@ class DolphinBackend(ConnectionBackend):
 
             self.dolphin.write_word(capacity_address, len(self._permanent_pickups))
 
-    async def get_inventory(self) -> CurrentResources:
+    async def get_inventory(self) -> Dict[ItemResourceInfo, int]:
         player_state_address = await self._get_player_state_address()
 
         inventory = {}

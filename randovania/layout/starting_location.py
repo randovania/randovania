@@ -20,6 +20,7 @@ def _areas_list():
         AreaLocation(world.world_asset_id, area.area_asset_id)
         for world in world_list.worlds
         for area in world.areas
+        if area.valid_starting_location
     ]
     return list(sorted(areas))
 
@@ -59,25 +60,10 @@ class StartingLocation(BitPackValue):
             world_name, area_name = location.split("/")
             world = world_list.world_with_name(world_name)
             area = world.area_by_name(area_name)
-            elements.append(AreaLocation(world.world_asset_id, area.area_asset_id))
+            if area.valid_starting_location:
+                elements.append(AreaLocation(world.world_asset_id, area.area_asset_id))
 
         return cls.with_elements(elements)
-
-    # @property
-    # def locations(self) -> List[AreaLocation]:
-    #     game = default_database.default_prime2_game_description()
-    #
-    #     if self.configuration == StartingLocationConfiguration.SHIP:
-    #         return [game.starting_location]
-    #
-    #     elif self.configuration == StartingLocationConfiguration.CUSTOM:
-    #         return [self.custom_location]
-    #
-    #     elif self.configuration == StartingLocationConfiguration.RANDOM_SAVE_STATION:
-    #         return [game.world_list.node_to_area_location(node)
-    #                 for node in game.world_list.all_nodes if node.name == "Save Station"]
-    #     else:
-    #         raise ValueError("Invalid configuration for StartLocation {}".format(self))
 
     def ensure_has_location(self, area_location: AreaLocation, enabled: bool) -> "StartingLocation":
         new_locations = set(self.locations)
