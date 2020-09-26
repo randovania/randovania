@@ -21,6 +21,14 @@ def catch_exceptions(t, val, tb):
 old_hook = sys.excepthook
 
 
+def catch_exceptions_async(loop, context):
+    if 'future' in context:
+        future: asyncio.Future = context['future']
+        logging.exception(context["message"], exc_info=future.exception())
+    else:
+        logging.critical(str(context))
+
+
 def show_main_window(app: QApplication, is_preview: bool):
     from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools
@@ -101,6 +109,7 @@ def run(args):
         from randovania.interface_common import persistence
         data_dir = persistence.user_data_dir()
 
+    is_preview = args.preview
     logging.config.dictConfig({
         'version': 1,
         'formatters': {
@@ -110,7 +119,7 @@ def run(args):
         },
         'handlers': {
             'default': {
-                'level': 'INFO',
+                'level': 'DEBUG' if is_preview else 'INFO',
                 'formatter': 'default',
                 'class': 'logging.StreamHandler',
                 'stream': 'ext://sys.stdout',  # Default is stderr
@@ -133,10 +142,11 @@ def run(args):
 
     os.environ['QT_API'] = "PySide2"
     import asyncqt
-    loop = asyncqt.QEventLoop(app)
+    loop: asyncio.AbstractEventLoop = asyncqt.QEventLoop(app)
     asyncio.set_event_loop(loop)
 
     sys.excepthook = catch_exceptions
+    loop.set_exception_handler(catch_exceptions_async)
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.game_connection.game_connection import GameConnection
