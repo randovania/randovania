@@ -257,7 +257,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._checkbox_for_trick = {}
         self._slider_for_trick = {}
 
-        configurable_tricks = TrickLevelConfiguration.all_possible_tricks()
         tricks_in_use = used_tricks(self.world_list)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
@@ -266,7 +265,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         row = 2
         for trick in sorted(self.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick.index not in configurable_tricks or trick not in tricks_in_use:
+            if trick not in tricks_in_use:
                 continue
 
             if row > 1:
