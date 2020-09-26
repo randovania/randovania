@@ -442,11 +442,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
                 self.menu_difficulties.addAction(difficulty_action)
                 difficulty_action.triggered.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
 
-        configurable_tricks = TrickLevelConfiguration.all_possible_tricks()
         tricks_in_use = used_tricks(game.world_list)
 
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick.index not in configurable_tricks or trick not in tricks_in_use:
+            if trick not in tricks_in_use:
                 continue
 
             trick_menu = QMenu(self)

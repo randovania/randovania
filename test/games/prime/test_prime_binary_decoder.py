@@ -19,7 +19,6 @@ def test_simple_round_trip():
             "damage": [],
             "versions": [],
             "misc": [],
-            "difficulty": [],
             "requirement_template": {},
         },
         "game_specific": {
@@ -187,7 +186,6 @@ def test_encode_resource_database():
         "damage": [],
         "versions": [],
         "misc": [],
-        "difficulty": [],
         "requirement_template": {
             "Foo": {
                 "type": "or",
@@ -201,4 +199,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00'

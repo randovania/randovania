@@ -31,7 +31,7 @@ def test_invalid_node_type():
 
 def test_area_with_invalid_connections():
     # Setup
-    db = ResourceDatabase([], [], [], [], [], [], [], {})
+    db = ResourceDatabase([], [], [], [], [], [], {})
     reader = WorldReader(db, None)
 
     with pytest.raises(MissingResource) as e:

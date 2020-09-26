@@ -26,9 +26,6 @@ def _database() -> ResourceDatabase:
             SimpleResourceInfo(0, "Trivial", "Trivial", ""),
             SimpleResourceInfo(1, "Impossible", "Impossible", ""),
         ],
-        difficulty=[
-            SimpleResourceInfo(0, "Difficulty", "Difficulty", ""),
-        ],
         requirement_template={},
     )
 

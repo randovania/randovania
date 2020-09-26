@@ -10,9 +10,9 @@ def test_create_vanilla_translator_resources(echoes_resource_database,
                                              elevators: LayoutElevators,
                                              ):
     # Setup
-    gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.TRICK, 16)
-    torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.TRICK, 17)
-    great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.TRICK, 18)
+    gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 16)
+    torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 17)
+    great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, 18)
 
     # Run
     result = bootstrap._create_vanilla_translator_resources(echoes_resource_database, elevators)

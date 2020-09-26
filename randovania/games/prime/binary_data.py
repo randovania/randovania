@@ -1,6 +1,4 @@
 import copy
-import functools
-import operator
 from pathlib import Path
 from typing import TypeVar, BinaryIO, Dict, Any
 
@@ -14,20 +12,6 @@ X = TypeVar('X')
 current_format_version = 7
 
 _IMPOSSIBLE_SET = {"type": "or", "data": []}
-
-# Requirement
-
-sort_individual_requirement = operator.itemgetter("requirement_type", "requirement_index", "amount", "negate")
-
-
-def sort_requirement_list(item: list):
-    return functools.reduce(
-        operator.add,
-        [
-            sort_individual_requirement(individual)
-            for individual in item
-        ],
-        tuple())
 
 
 def _convert_to_raw_python(value) -> Any:
@@ -78,8 +62,6 @@ def decode(binary_io: BinaryIO) -> Dict:
 
                     if connection != _IMPOSSIBLE_SET:
                         node["connections"][area["nodes"][j]["name"]] = connection
-                        # node["connections"][area["nodes"][j]["name"]] = list(sorted(connection,
-                        #                                                             key=sort_requirement_list))
                     j += 1
 
     fields = [
@@ -196,7 +178,6 @@ ConstructResourceDatabase = Struct(
     )),
     versions=PrefixedArray(Byte, ConstructResourceInfo),
     misc=PrefixedArray(Byte, ConstructResourceInfo),
-    difficulty=PrefixedArray(Byte, ConstructResourceInfo),
     requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement))
 )
 

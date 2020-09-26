@@ -303,8 +303,8 @@ class ResourceRequirement(NamedTuple, Requirement):
     @property
     def pretty_text(self):
         if self.amount == 1:
-            negated_prefix = "No " if self.resource.resource_type is ResourceType.ITEM else "Before "
-            non_negated_prefix = "After " if self.resource.resource_type is ResourceType.EVENT else ""
+            negated_prefix = self.resource.resource_type.negated_prefix
+            non_negated_prefix = self.resource.resource_type.non_negated_prefix
             return "{}{}".format(negated_prefix if self.negate else non_negated_prefix, self.resource)
         else:
             return str(self)
@@ -453,13 +453,6 @@ class RequirementList:
         for individual in self.values():
             if individual.negate:
                 yield individual.resource
-
-    @property
-    def difficulty_level(self) -> int:
-        for individual in self.values():
-            if individual.resource.resource_type == ResourceType.DIFFICULTY:
-                return individual.amount
-        return 0
 
     def values(self) -> FrozenSet[ResourceRequirement]:
         return self.items
