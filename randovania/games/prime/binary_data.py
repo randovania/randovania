@@ -271,6 +271,7 @@ ConstructArea = Struct(
     asset_id=Int32ub,
     _node_count=Rebuild(Byte, lambda this: len(this.nodes)),
     default_node_index=Byte,
+    valid_starting_location=Flag,
     nodes=Array(lambda this: this._node_count, ConstructNode),
     connections=Array(
         lambda this: this._node_count,

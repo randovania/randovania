@@ -33,7 +33,7 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
 
     world_list = WorldList([
         World("World", "Dark World", 5000, [
-            Area("Area", False, 10000, 0, [logbook_node, pickup_node], {}),
+            Area("Area", False, 10000, 0, True, [logbook_node, pickup_node], {}),
         ]),
     ])
 

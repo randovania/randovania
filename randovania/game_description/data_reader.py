@@ -294,6 +294,7 @@ class WorldReader:
                     connections[origin][nodes_by_name[target_name]] = the_set
 
         return Area(data["name"], data["in_dark_aether"], data["asset_id"], data["default_node_index"],
+                    data["valid_starting_location"],
                     nodes, connections)
 
     def read_area_list(self, data: List[Dict]) -> List[Area]:
