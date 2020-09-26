@@ -14,6 +14,7 @@ from randovania.game_description.area import Area
 from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world import World
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
@@ -32,16 +33,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
     _node_edit_popup: Optional[NodeDetailsPopup] = None
 
-    def __init__(self, data: Optional[dict], edit_mode: bool):
+    def __init__(self, data: dict, data_path: Optional[Path], is_internal: bool, edit_mode: bool):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
-        self._is_internal = data is None
-        if self._is_internal:
-            default_data.decode_default_prime2.cache_clear()
-            data = default_data.decode_default_prime2()
-
+        self._is_internal = is_internal
+        self._data_path = data_path
         self.edit_mode = edit_mode
         self.radio_button_to_node = {}
 
@@ -52,8 +50,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
 
+        self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
-            self.save_database_button.setEnabled(default_data.prime2_json_path().is_file())
             self.save_database_button.clicked.connect(self._save_as_internal_database)
         else:
             self.save_database_button.clicked.connect(self._prompt_save_database)
@@ -74,6 +72,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.world_selector_box.addItem(name, userData=world)
 
         self.update_edit_mode()
+
+    @classmethod
+    def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
+        default_data.read_json_then_binary.cache_clear()
+        path, data = default_data.read_json_then_binary(game)
+        if path.suffix == ".bin":
+            path = None
+        return DataEditorWindow(data, path, True, edit_mode)
 
     def closeEvent(self, event: QtGui.QCloseEvent):
         if self._node_edit_popup is not None:
@@ -331,8 +337,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             json.dump(data, open_file, indent=4)
 
     def _save_as_internal_database(self):
-        self._save_database(default_data.prime2_json_path())
-        with default_data.prime2_human_readable_path().open("w", encoding="utf-8") as output:
+        self._save_database(self._data_path)
+        with self._data_path.with_suffix(".txt").open("w", encoding="utf-8") as output:
             data_writer.write_human_readable_world_list(self.game_description, output)
 
     def _create_new_node(self):
