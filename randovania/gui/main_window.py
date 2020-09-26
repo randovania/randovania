@@ -16,6 +16,7 @@ from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.prime import default_data
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
@@ -415,7 +416,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()
 
-    def _open_trick_details_popup(self, trick: SimpleResourceInfo, level: LayoutTrickLevel):
+    def _open_trick_details_popup(self, trick: TrickResourceInfo, level: LayoutTrickLevel):
         self._exec_trick_details(TrickDetailsPopup(
             self,
             self,

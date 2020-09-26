@@ -1,18 +1,30 @@
+import itertools
+
 import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.game_description.area_location import AreaLocation
 from randovania.layout.starting_location import StartingLocation
 
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x00\x00', "json": []},
-        {"encoded": b'\x00a@', "json": ["Temple Grounds/Landing Site"]},
-        {"encoded": b'\x00\xa3R(', "json": ["Agon Wastes/Save Station 1", "Agon Wastes/Save Station 2"]},
+        {"encoded": b'\x00', "json": []},
+        {"encoded": b'\x0c\x00', "json": ["Temple Grounds/Landing Site"]},
+        {"encoded": b'\x14\x84', "json": ["Temple Grounds/Hall of Honored Dead", "Temple Grounds/Path of Eyes"]},
     ],
     name="location_with_data")
-def _location_with_data(request):
+def _location_with_data(request, mocker, echoes_game_description):
+    world_list = echoes_game_description.world_list
+    areas = list(itertools.islice(
+        (AreaLocation(world.world_asset_id, area.area_asset_id)
+         for world in world_list.worlds
+         for area in world.areas
+         if area.valid_starting_location), 15))
+
+    mocker.patch("randovania.layout.starting_location._areas_list",
+                 return_value=list(sorted(areas)))
     return request.param["encoded"], StartingLocation.from_json(request.param["json"])
 
 

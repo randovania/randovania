@@ -118,7 +118,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 
     world_list = WorldList([
         World("Test World", "Test Dark World", 1, [
-            Area("Test Area A", False, 10, 0, [node_a, node_b, node_c, translator_node],
+            Area("Test Area A", False, 10, 0, True, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: Requirement.trivial(),
@@ -135,7 +135,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                          node_c: Requirement.trivial(),
                      },
                  }
-                 )
+            )
         ])
     ])
     game_specific = EchoesGameSpecific(energy_per_tank=100, beam_configurations=())

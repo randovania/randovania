@@ -6,22 +6,30 @@
       {
         "index": 2,
         "long_name": "Light Beam",
-        "short_name": "Light"
+        "short_name": "Light",
+        "max_capacity": 1,
+        "custom_memory_offset": null
       },
       {
         "index": 24,
         "long_name": "Space Jump Boots",
-        "short_name": "SpaceJump"
+        "short_name": "SpaceJump",
+        "max_capacity": 1,
+        "custom_memory_offset": null
       },
       {
         "index": 30,
         "long_name": "Scan Visor",
-        "short_name": "ScanVisor"
+        "short_name": "ScanVisor",
+        "max_capacity": 1,
+        "custom_memory_offset": null
       },
       {
         "index": 46,
         "long_name": "Light Ammo",
-        "short_name": "LightAmmo"
+        "short_name": "LightAmmo",
+        "max_capacity": 1,
+        "custom_memory_offset": null
       }
     ],
     "events": [
@@ -38,18 +46,18 @@
     "requirement_template": {}
   },
   "game_specific": {
-      "energy_per_tank": 100.0,
-      "beam_configurations": [
-          {
-              "item_index": 2,
-              "ammo_a": 46,
-              "ammo_b": null,
-              "uncharged_cost": 1,
-              "charged_cost": 5,
-              "combo_missile_cost": 5,
-              "combo_ammo_cost": 30
-          }
-      ]
+    "energy_per_tank": 100.0,
+    "beam_configurations": [
+      {
+        "item_index": 2,
+        "ammo_a": 46,
+        "ammo_b": null,
+        "uncharged_cost": 1,
+        "charged_cost": 5,
+        "combo_missile_cost": 5,
+        "combo_ammo_cost": 30
+      }
+    ]
   },
   "starting_location": {
     "world_asset_id": 1234125,
@@ -150,6 +158,7 @@
           "in_dark_aether": false,
           "asset_id": 1655756413,
           "default_node_index": 0,
+          "valid_starting_location": true,
           "nodes": [
             {
               "name": "Save Station",
@@ -214,6 +223,7 @@
           "in_dark_aether": false,
           "asset_id": 2679590972,
           "default_node_index": 0,
+          "valid_starting_location": true,
           "nodes": [
             {
               "name": "Door to Landing Site",
