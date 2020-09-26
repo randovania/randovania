@@ -12,6 +12,7 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
@@ -31,7 +32,7 @@ from randovania.layout.layout_configuration import LayoutElevators, LayoutSkyTem
 from randovania.layout.preset import Preset
 from randovania.layout.starting_location import StartingLocation
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
+from randovania.layout.trick_level import LayoutTrickLevel
 
 
 def _update_options_when_true(options: Options, field_name: str, new_value, checked: bool):
@@ -88,10 +89,10 @@ def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
 
 class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
-    _checkbox_for_trick: Dict[SimpleResourceInfo, QtWidgets.QCheckBox]
+    _checkbox_for_trick: Dict[TrickResourceInfo, QtWidgets.QCheckBox]
     _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
-    _slider_for_trick: Dict[SimpleResourceInfo, QtWidgets.QSlider]
+    _slider_for_trick: Dict[TrickResourceInfo, QtWidgets.QSlider]
     _editor: PresetEditor
     world_list: WorldList
     _during_batch_check_update: bool = False

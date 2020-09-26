@@ -1,11 +1,11 @@
 from typing import NamedTuple, Tuple
 
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
 class DamageReduction(NamedTuple):
-    inventory_item: SimpleResourceInfo
+    inventory_item: ItemResourceInfo
     damage_multiplier: float
 
 

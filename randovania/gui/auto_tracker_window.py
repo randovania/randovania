@@ -12,6 +12,7 @@ from randovania import get_data_path
 from randovania.game_connection.connection_backend import ConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import CurrentResources
@@ -36,10 +37,9 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         common_qt_lib.set_default_window_icon(self)
 
         self.game_data = data_reader.decode_data(default_data.decode_default_prime2())
-        self._placeholder_item = self.game_data.resource_database.get_by_type_and_index(ResourceType.ITEM, 74)
         self._energy_tank_item = find_resource_info_with_long_name(self.game_data.resource_database.item, "Energy Tank")
 
-        self._item_to_label: Dict[SimpleResourceInfo, ClickableLabel] = {}
+        self._item_to_label: Dict[ItemResourceInfo, ClickableLabel] = {}
         self._labels_for_keys = []
         self.create_tracker()
 

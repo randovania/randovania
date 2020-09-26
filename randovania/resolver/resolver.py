@@ -4,6 +4,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, ResourceNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import debug, event_pickup
@@ -15,7 +16,7 @@ from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,
-                               dangerous_resources: FrozenSet[SimpleResourceInfo],
+                               dangerous_resources: FrozenSet[ResourceInfo],
                                ) -> Optional[RequirementList]:
     items = []
     for item in self.values():
@@ -34,7 +35,7 @@ def _simplify_requirement_list(self: RequirementList, state: State,
 
 def _simplify_additional_requirement_set(requirements: RequirementSet,
                                          state: State,
-                                         dangerous_resources: FrozenSet[SimpleResourceInfo],
+                                         dangerous_resources: FrozenSet[ResourceInfo],
                                          ) -> RequirementSet:
     new_alternatives = [
         _simplify_requirement_list(alternative, state, dangerous_resources)
@@ -49,7 +50,7 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
 
 def _should_check_if_action_is_safe(state: State,
                                     action: ResourceNode,
-                                    dangerous_resources: FrozenSet[SimpleResourceInfo]) -> bool:
+                                    dangerous_resources: FrozenSet[ResourceInfo]) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
