@@ -45,6 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
+-   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.  
+
 -   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
 
 -   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
