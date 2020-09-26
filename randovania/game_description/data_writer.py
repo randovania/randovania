@@ -297,6 +297,7 @@ def write_area(area: Area) -> dict:
         "in_dark_aether": area.in_dark_aether,
         "asset_id": area.area_asset_id,
         "default_node_index": area.default_node_index,
+        "valid_starting_location": area.valid_starting_location,
         "nodes": nodes
     }
 
