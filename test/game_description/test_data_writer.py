@@ -35,7 +35,7 @@ def test_commited_human_readable_description(echoes_game_description):
     buffer = io.StringIO()
     data_writer.write_human_readable_world_list(echoes_game_description, buffer)
 
-    assert default_data.prime2_human_readable_path().read_text("utf-8") == buffer.getvalue()
+    assert randovania.get_data_path().joinpath("json_data", "prime2.txt").read_text("utf-8") == buffer.getvalue()
 
 
 @patch("randovania.game_description.data_writer.pretty_print_requirement")
