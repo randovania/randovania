@@ -32,7 +32,6 @@ class ResourceDatabase(NamedTuple):
     damage: List[DamageResourceInfo]
     version: List[SimpleResourceInfo]
     misc: List[SimpleResourceInfo]
-    difficulty: List[SimpleResourceInfo]
     requirement_template: Dict[str, "Requirement"]
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
@@ -48,8 +47,6 @@ class ResourceDatabase(NamedTuple):
             return self.version
         elif resource_type == ResourceType.MISC:
             return self.misc
-        elif resource_type == ResourceType.DIFFICULTY:
-            return self.difficulty
         else:
             raise ValueError(
                 "Invalid resource_type: {}".format(resource_type))
@@ -61,19 +58,9 @@ class ResourceDatabase(NamedTuple):
     def get_item(self, index: int) -> SimpleResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, index)
 
-    def trivial_resource(self) -> ResourceInfo:
-        return self.get_by_type_and_index(ResourceType.MISC, 0)
-
-    def impossible_resource(self) -> ResourceInfo:
-        return self.get_by_type_and_index(ResourceType.MISC, 1)
-
     @property
     def item_percentage(self) -> ResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
-
-    @property
-    def difficulty_resource(self) -> ResourceInfo:
-        return self.get_by_type_and_index(ResourceType.DIFFICULTY, 0)
 
     @property
     def energy_tank(self):

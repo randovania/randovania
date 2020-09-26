@@ -131,7 +131,6 @@ def write_resource_database(resource_database: ResourceDatabase):
         "damage": write_array(resource_database.damage, write_damage_resource),
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
-        "difficulty": write_array(resource_database.difficulty, write_simple_resource),
         "requirement_template": {
             name: write_requirement(requirement)
             for name, requirement in resource_database.requirement_template.items()
@@ -328,9 +327,6 @@ def write_game_description(game: GameDescription) -> dict:
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
     if requirement.resource.resource_type == ResourceType.TRICK:
         return f"{requirement.resource} ({LayoutTrickLevel.from_number(requirement.amount).long_name})"
-    elif requirement.resource.resource_type == ResourceType.DIFFICULTY:
-        trick_level = LayoutTrickLevel.from_number(requirement.amount)
-        return f"Difficulty: {trick_level.long_name}"
     else:
         return requirement.pretty_text
 

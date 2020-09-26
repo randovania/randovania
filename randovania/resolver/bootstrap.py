@@ -6,7 +6,6 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase, find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
@@ -57,24 +56,23 @@ _events_for_vanilla_item_loss_from_ship = {
 
 def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
                                       resource_database: ResourceDatabase,
-                                      ) -> Tuple[int, CurrentResources]:
+                                      ) -> CurrentResources:
     """
     :param configuration:
     :param resource_database:
     :return:
     """
 
-    all_used_tricks = TrickLevelConfiguration.all_possible_tricks()
     static_resources = {}
 
     for trick in resource_database.trick:
-        if trick.index in all_used_tricks:
-            static_resources[trick] = configuration.level_for_trick(trick).as_number
+        static_resources[trick] = configuration.level_for_trick(trick).as_number
 
-    # Exclude from Room Rando
-    static_resources[resource_database.get_by_type_and_index(ResourceType.TRICK, 18)] = 5
+    # Room Rando
+    room_rando = find_resource_info_with_long_name(resource_database.misc, "Room Randomizer")
+    static_resources[room_rando] = 0
 
-    return configuration.global_level.as_number, static_resources
+    return static_resources
 
 
 def _add_minimal_logic_initial_resources(resources: CurrentResources,
@@ -107,7 +105,6 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
 
     starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
     initial_resources = copy.copy(patches.starting_items)
-    initial_resources[game.resource_database.trivial_resource()] = 1
 
     if initial_game_state is not None:
         add_resource_gain_to_current_resources(initial_game_state, initial_resources)
@@ -146,7 +143,7 @@ def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
     ]
 
     return {
-        find_resource_info_with_long_name(resource_database.trick, name): 1 if active else 0
+        find_resource_info_with_long_name(resource_database.misc, name): 1 if active else 0
         for name, active in events
     }
 
@@ -177,13 +174,13 @@ def logic_bootstrap(configuration: LayoutConfiguration,
                                              major_items_config.progressive_suit,
                                              )
 
-    difficulty_level, static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
-                                                                           game.resource_database)
+    static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
+                                                         game.resource_database)
+
     add_resources_into_another(starting_state.resources, static_resources)
     add_resources_into_another(starting_state.resources,
                                _create_vanilla_translator_resources(game.resource_database,
                                                                     configuration.elevators))
-    starting_state.resources[game.resource_database.difficulty_resource] = difficulty_level
 
     # All version differences are patched out from the game
     starting_state.resources[find_resource_info_with_long_name(game.resource_database.version,
