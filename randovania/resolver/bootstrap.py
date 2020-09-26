@@ -106,7 +106,6 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
 
     starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
     initial_resources = copy.copy(patches.starting_items)
-    initial_resources[game.resource_database.trivial_resource()] = 1
 
     if initial_game_state is not None:
         add_resource_gain_to_current_resources(initial_game_state, initial_resources)
