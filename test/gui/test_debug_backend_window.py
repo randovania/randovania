@@ -5,7 +5,8 @@ from mock import patch, MagicMock, AsyncMock
 from randovania.game_connection.connection_backend import ConnectionStatus
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
-from randovania.gui.debug_backend_window import DebugBackendWindow, iterate_enum
+from randovania.gui.debug_backend_window import DebugBackendWindow
+from randovania.gui.lib.enum_lib import iterate_enum
 
 
 @pytest.fixture(name="backend")
