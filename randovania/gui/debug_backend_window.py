@@ -1,6 +1,6 @@
 import collections
 import itertools
-from typing import List, TypeVar, Type, Iterator
+from typing import List
 
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
@@ -12,16 +12,10 @@ from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, enum_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
-
-T = TypeVar("T")
-
-
-def iterate_enum(enum_class: Type[T]) -> Iterator[T]:
-    yield from enum_class
 
 
 class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
@@ -35,7 +29,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.setupUi(self.window)
         common_qt_lib.set_default_window_icon(self.window)
 
-        for status in iterate_enum(ConnectionStatus):
+        for status in enum_lib.iterate_enum(ConnectionStatus):
             self.current_status_combo.addItem(status.pretty_text, status)
 
         self.permanent_pickups = []
