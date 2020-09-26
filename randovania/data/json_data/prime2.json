@@ -22011,7 +22011,7 @@
                     "nodes": [
                         {
                             "name": "Door to Crossroads",
-                            "heal": true,
+                            "heal": false,
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 2384714559,
@@ -22028,7 +22028,7 @@
                                         "negate": true
                                     }
                                 },
-                                "Front of Bomb Slot": {
+                                "Safe Zone (Bomb Slot)": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -22094,6 +22094,15 @@
                                                     }
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 10,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -22101,7 +22110,7 @@
                         },
                         {
                             "name": "Door to Portal Access",
-                            "heal": true,
+                            "heal": false,
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 2312259325,
@@ -22118,14 +22127,28 @@
                                         "negate": true
                                     }
                                 },
-                                "Front of Bomb Slot": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 81,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Safe Zone (Bomb Slot)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 13,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 7,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -22148,28 +22171,75 @@
                                         "negate": true
                                     }
                                 },
-                                "Front of Bomb Slot": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 81,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Safe Zone (Bomb Slot)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 81,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Activate Safe Zone"
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 2,
+                                                                "amount": 6,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 2,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
                         {
                             "name": "Event - Portal Site Gate",
-                            "heal": true,
+                            "heal": false,
                             "node_type": "event",
                             "event_index": 13,
                             "connections": {
-                                "Door to Crossroads": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Front of Bomb Slot": {
+                                "Safe Zone (Bomb Slot)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -22177,22 +22247,18 @@
                         },
                         {
                             "name": "Event - Portal Site Cutscene",
-                            "heal": true,
+                            "heal": false,
                             "node_type": "event",
                             "event_index": 81,
                             "connections": {
-                                "Portal to Portal Terminal": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Front of Bomb Slot": {
+                                "Safe Zone (Bomb Slot)": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Front of Bomb Slot",
+                            "name": "Safe Zone (Bomb Slot)",
                             "heal": true,
                             "node_type": "generic",
                             "connections": {
@@ -22216,6 +22282,48 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 2,
+                                                                "amount": 8,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 3,
+                                                                "index": 2,
+                                                                "amount": 4,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -22276,6 +22384,19 @@
                                                     }
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 8,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Activate Safe Zone"
                                         }
                                     ]
                                 },
@@ -22377,6 +22498,19 @@
                                                     }
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 3,
+                                                "index": 2,
+                                                "amount": 6,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Activate Safe Zone"
                                         }
                                     ]
                                 },

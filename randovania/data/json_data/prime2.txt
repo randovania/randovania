@@ -3340,58 +3340,62 @@ Asset id: 1222921974
 ----------------
 Portal Site
 Asset id: 3212793644
-> Door to Crossroads; Heals? True
+> Door to Crossroads; Heals? False
   > Crossroads/Door to Portal Site
       Trivial
   > Portal Site/Event - Portal Site Cutscene
       Before Portal Site Cutscene
-  > Portal Site/Front of Bomb Slot
+  > Portal Site/Safe Zone (Bomb Slot)
       All of the following:
-          After Portal Site Cutscene and Movement (Intermediate)
+          After Portal Site Cutscene and Movement (Intermediate) and Dark World Damage ≥ 10
           Any of the following:
               Space Jump Boots
               Morph Ball and Morph Ball Bomb and Bomb Jump (Intermediate)
 
-> Door to Portal Access; Heals? True
+> Door to Portal Access; Heals? False
   > Portal Access/Door to Portal Site
       Trivial
   > Portal Site/Event - Portal Site Cutscene
       Before Portal Site Cutscene
-  > Portal Site/Front of Bomb Slot
-      After Portal Site Cutscene
+  > Portal Site/Safe Zone (Bomb Slot)
+      After Portal Site Gate and Dark World Damage ≥ 7
 
 > Portal to Portal Terminal; Heals? True
   > Portal Terminal/Portal to Portal Site
       Scan Visor
   > Portal Site/Event - Portal Site Cutscene
       Before Portal Site Cutscene
-  > Portal Site/Front of Bomb Slot
-      After Portal Site Cutscene
+  > Portal Site/Safe Zone (Bomb Slot)
+      All of the following:
+          After Portal Site Cutscene and Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 6
+              Morph Ball and Dark World Damage ≥ 3
 
-> Event - Portal Site Gate; Heals? True
+> Event - Portal Site Gate; Heals? False
+  > Portal Site/Safe Zone (Bomb Slot)
+      Trivial
+
+> Event - Portal Site Cutscene; Heals? False
+  > Portal Site/Safe Zone (Bomb Slot)
+      Trivial
+
+> Safe Zone (Bomb Slot); Heals? True
   > Portal Site/Door to Crossroads
-      Trivial
-  > Portal Site/Front of Bomb Slot
-      Trivial
-
-> Event - Portal Site Cutscene; Heals? True
-  > Portal Site/Portal to Portal Terminal
-      Trivial
-  > Portal Site/Front of Bomb Slot
-      Trivial
-
-> Front of Bomb Slot; Heals? True
-  > Portal Site/Door to Crossroads
-      After Portal Site Gate and After Portal Site Cutscene
+      All of the following:
+          After Portal Site Gate and After Portal Site Cutscene
+          Any of the following:
+              Dark World Damage ≥ 8
+              Morph Ball and Dark World Damage ≥ 4
   > Portal Site/Door to Portal Access
       All of the following:
-          After Portal Site Cutscene
+          After Portal Site Cutscene and Dark World Damage ≥ 8 and Activate Safe Zone
           Any of the following:
               Space Jump Boots
               Morph Ball and Morph Ball Bomb and Bomb Jump (Intermediate)
   > Portal Site/Portal to Portal Terminal
       All of the following:
-          After Portal Site Cutscene
+          After Portal Site Cutscene and Dark World Damage ≥ 6 and Activate Safe Zone
           Any of the following:
               Space Jump Boots
               Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner)
