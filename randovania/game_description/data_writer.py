@@ -221,7 +221,8 @@ def write_node(node: Node) -> dict:
 
     data = {
         "name": node.name,
-        "heal": node.heal
+        "heal": node.heal,
+        "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
     }
 
     if isinstance(node, GenericNode):
