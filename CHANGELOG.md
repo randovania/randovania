@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
 
+-   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
+
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
