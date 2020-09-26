@@ -64,12 +64,10 @@ def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
     :return:
     """
 
-    all_used_tricks = TrickLevelConfiguration.all_possible_tricks()
     static_resources = {}
 
     for trick in resource_database.trick:
-        if trick.index in all_used_tricks:
-            static_resources[trick] = configuration.level_for_trick(trick).as_number
+        static_resources[trick] = configuration.level_for_trick(trick).as_number
 
     # Exclude from Room Rando
     exclude_from_room_rando = find_resource_info_with_long_name(resource_database.trick, "Exclude from Room Randomizer")
@@ -147,7 +145,7 @@ def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
     ]
 
     return {
-        find_resource_info_with_long_name(resource_database.trick, name): 1 if active else 0
+        find_resource_info_with_long_name(resource_database.misc, name): 1 if active else 0
         for name, active in events
     }
 
