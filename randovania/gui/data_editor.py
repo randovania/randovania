@@ -40,6 +40,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self._is_internal = is_internal
         self._data_path = data_path
+        self._last_data = data
         self.edit_mode = edit_mode
         self.radio_button_to_node = {}
 
@@ -86,6 +87,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self._node_edit_popup.raise_()
             event.ignore()
         else:
+            data = data_writer.write_game_description(self.game_description)
+            if data != self._last_data:
+                user_response = QMessageBox.warning(self, "Unsaved changes",
+                                                    "You have unsaved changes. Do you want to close and discard?",
+                                                    QMessageBox.Yes | QMessageBox.No,
+                                                    QMessageBox.No)
+                if user_response == QMessageBox.No:
+                    return event.ignore()
             super().closeEvent(event)
 
     def on_select_world(self):
@@ -335,6 +344,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         data = data_writer.write_game_description(self.game_description)
         with path.open("w") as open_file:
             json.dump(data, open_file, indent=4)
+        self._last_data = data
 
     def _save_as_internal_database(self):
         self._save_database(self._data_path)
@@ -356,7 +366,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _do_create_node(self, node_name: str):
         self.generic_index += 1
-        new_node = GenericNode(node_name, True, None, self.generic_index)
+        new_node = GenericNode(node_name, False, None, self.generic_index)
         self.current_area.nodes.append(new_node)
         self.current_area.connections[new_node] = {}
         self.game_description.world_list.refresh_node_cache()
