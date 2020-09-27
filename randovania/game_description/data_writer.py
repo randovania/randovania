@@ -411,7 +411,10 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function(area.name)
     print_function("Asset id: {}".format(area.area_asset_id))
     for node in area.nodes:
-        print_function(f"> {node.name}; Heals? {node.heal}")
+        location = ""
+        if node.location is not None:
+            location = f"; Coordinates: x = {node.location.x:.2f}, y = {node.location.y:.2f}, z = {node.location.z:.2f}"
+        print_function(f"> {node.name}; Heals? {node.heal}{location}")
         for target_node, requirement in game.world_list.potential_nodes_from(node, game.create_game_patches()):
             if target_node is None:
                 print_function("  > None?")
