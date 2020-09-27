@@ -18,10 +18,9 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     initial_session = GameSessionEntry(
         id=1234,
         name="The Session",
-        num_teams=2,
         presets=[preset_manager.default_preset, preset_manager.default_preset],
         players={
-            12: PlayerSessionEntry(12, "Player A", 0, 0, True),
+            12: PlayerSessionEntry(12, "Player A", 0, False, True),
         },
         actions=[],
         seed_hash=None,
@@ -32,14 +31,13 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     second_session = GameSessionEntry(
         id=1234,
         name="The Session",
-        num_teams=1,
         presets=[preset_manager.default_preset],
         players={
-            12: PlayerSessionEntry(12, "Player A", 0, 0, True),
-            24: PlayerSessionEntry(24, "Player B", 0, None, False),
+            12: PlayerSessionEntry(12, "Player A", 0, False, True),
+            24: PlayerSessionEntry(24, "Player B", 0, True, False),
         },
         actions=[
-            GameSessionAction("Hello", 0, datetime.datetime(year=2020, month=1, day=5))
+            GameSessionAction("Hello", datetime.datetime(year=2020, month=1, day=5))
         ],
         seed_hash="AB12",
         word_hash="Chykka Required",
