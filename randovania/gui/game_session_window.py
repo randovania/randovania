@@ -33,6 +33,7 @@ from randovania.layout.preset import Preset
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
+from randovania.network_common.session_state import GameSessionState
 from randovania.resolver.exceptions import GenerationFailure
 
 
@@ -46,10 +47,7 @@ class PlayerWidget:
     abandon: QtWidgets.QAction
     move_up: QtWidgets.QAction
     move_down: QtWidgets.QAction
-    move_team_menu: QtWidgets.QMenu
-    move_actions: List[QtWidgets.QAction]
-    new_team_action: QtWidgets.QAction
-    move_to_observer: QtWidgets.QAction
+    switch_observer_action: QtWidgets.QAction
     player: Optional[PlayerSessionEntry] = None
 
     @property
@@ -69,7 +67,7 @@ class PlayerWidget:
         if player is not None:
             self.set_visible(True)
             for action in (self.move_up, self.move_down, self.abandon, self.open_tracker):
-                action.setVisible(player.team is not None)
+                action.setVisible(not player.is_observer)
         else:
             self.set_visible(False)
 
@@ -121,7 +119,7 @@ _PRESET_COLUMNS = 3
 
 
 class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
-    teams: List[Team]
+    team: Team
     observers: List[PlayerWidget]
     rows: List[RowWidget]
     _game_session: GameSessionEntry
@@ -174,12 +172,17 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
         self.start_session_action = QtWidgets.QAction("Start session", self.session_status_menu)
         self.start_session_action.triggered.connect(self.start_session)
-        self.session_status_menu.addAction(self.start_session_action)
+
         self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
+        self.finish_session_action.triggered.connect(self.finish_session)
         self.finish_session_action.setEnabled(False)
-        self.session_status_menu.addAction(self.finish_session_action)
+
         self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
+        self.reset_session_action.triggered.connect(self.reset_session)
         self.reset_session_action.setEnabled(False)
+
+        self.session_status_menu.addAction(self.start_session_action)
+        self.session_status_menu.addAction(self.finish_session_action)
         self.session_status_menu.addAction(self.reset_session_action)
         self.session_status_tool.setMenu(self.session_status_menu)
 
@@ -200,9 +203,9 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.presets_line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.players_layout.addWidget(self.presets_line, 1, 0, 1, 2)
 
-        self.teams = []
         self.rows = []
         self.observers = []
+        self.setup_team()
 
         self.main_layout.insertWidget(1, self.players_box)
 
@@ -312,14 +315,12 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         row.delete.triggered.connect(functools.partial(self._row_delete, row))
         tool_button_menu.addAction(row.delete)
 
-        for team in self.teams:
-            self.append_new_player_widget(team)
+        self.append_new_player_widget(self.team)
 
     def pop_row(self):
         self.rows.pop().delete_widgets()
-        for team in self.teams:
-            while len(team.players) > len(self.rows):
-                team.players.pop().delete_widgets()
+        while len(self.team.players) > len(self.rows):
+            self.team.players.pop().delete_widgets()
 
     def _row_show_preset_summary(self, row: RowWidget):
         row_index = self.rows.index(row)
@@ -406,8 +407,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             await self._admin_global_action(SessionAdminGlobalAction.DELETE_ROW, row_index)
 
     # Team Functions
-    def add_team(self) -> int:
-        num_teams = len(self.teams)
+    def setup_team(self) -> int:
+        num_teams = 1
         vertical_line = QtWidgets.QFrame(self.players_box)
         vertical_line.setFrameShape(QtWidgets.QFrame.VLine)
         vertical_line.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -419,26 +420,18 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.players_layout.addWidget(title_line, 1, _PRESET_COLUMNS + num_teams * 3, 1, 2)
 
         team_name = QtWidgets.QLabel(self.players_box)
-        team_name.setText(f"Team {num_teams + 1}")
+        team_name.setText(f"Players")
         team_name.setMaximumHeight(30)
         self.players_layout.addWidget(team_name, 0, _PRESET_COLUMNS + num_teams * 3, 1, 2)
 
-        self.history_team_combo.addItem(f"Team {num_teams + 1}")
-
-        self.teams.append(Team(
+        self.team = Team(
             vertical_line=vertical_line,
             title_line=title_line,
             title_label=team_name,
             players=[],
-        ))
+        )
         for _ in self.rows:
-            self.append_new_player_widget(self.teams[-1])
-
-        return len(self.teams) - 1
-
-    def pop_team(self):
-        self.history_team_combo.removeItem(self.history_team_combo.count() - 1)
-        self.teams.pop().delete_widgets()
+            self.append_new_player_widget(self.team)
 
     def append_new_player_widget(self, team: Optional[Team]):
         if team is None:
@@ -448,7 +441,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             row_id = observer_index // 3
         else:
             parent_layout = self.players_layout
-            team_id = self.teams.index(team)
+            team_id = 1
             row_id = len(team.players)
 
         player_label = QtWidgets.QLabel(self.players_box)
@@ -463,7 +456,6 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         tool_button_menu = QtWidgets.QMenu(tool_button)
         tool_button.setMenu(tool_button_menu)
-        move_team_menu = QtWidgets.QMenu(tool_button_menu)
 
         widget = PlayerWidget(
             name=player_label,
@@ -474,10 +466,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             abandon=QtWidgets.QAction(tool_button_menu),
             move_up=QtWidgets.QAction(tool_button_menu),
             move_down=QtWidgets.QAction(tool_button_menu),
-            move_team_menu=move_team_menu,
-            move_actions=[],
-            new_team_action=QtWidgets.QAction(move_team_menu),
-            move_to_observer=QtWidgets.QAction(move_team_menu),
+            switch_observer_action=QtWidgets.QAction(tool_button_menu),
         )
 
         widget.kick.setText("Kick Player")
@@ -490,10 +479,10 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self._admin_player_action_slot, widget, SessionAdminUserAction.SWITCH_ADMIN, None))
         tool_button_menu.addAction(widget.promote)
 
-        widget.open_tracker.setText("Open Tracker")
+        widget.open_tracker.setText("Open Tracker (NYI)")
         tool_button_menu.addAction(widget.open_tracker)
 
-        widget.abandon.setText("Abandon")
+        widget.abandon.setText("Abandon (NYI)")
         widget.abandon.triggered.connect(functools.partial(
             self._admin_player_action_slot, widget, SessionAdminUserAction.ABANDON, None))
         tool_button_menu.addAction(widget.abandon)
@@ -508,18 +497,9 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self._admin_player_action_slot, widget, SessionAdminUserAction.MOVE, 1))
         tool_button_menu.addAction(widget.move_down)
 
-        move_team_menu.setTitle("Move to team")
-        tool_button_menu.addMenu(move_team_menu)
-
-        widget.new_team_action.setText("New Team")
-        widget.new_team_action.triggered.connect(functools.partial(
-            self._admin_player_action_slot, widget, SessionAdminUserAction.SWITCH_TO_NEW_TEAM, None))
-        move_team_menu.addAction(widget.new_team_action)
-
-        widget.move_to_observer.setText("Observer")
-        widget.move_to_observer.triggered.connect(functools.partial(
-            self._admin_player_action_slot, widget, SessionAdminUserAction.SWITCH_TEAM, None))
-        move_team_menu.addAction(widget.move_to_observer)
+        widget.switch_observer_action.setText("Move to Observer")
+        widget.switch_observer_action.triggered.connect(functools.partial(self._switch_observer_action, widget))
+        tool_button_menu.addAction(widget.switch_observer_action)
 
         if team is None:
             self.observers.append(widget)
@@ -528,14 +508,12 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
     @property
     def num_teams(self) -> int:
-        return len(self.teams)
+        return 1
 
     def update_session_actions(self):
-        team_index = self.history_team_combo.currentIndex()
-        team_actions = [action for action in self._game_session.actions if action.team == team_index]
         self.history_table_widget.horizontalHeader().setVisible(True)
-        self.history_table_widget.setRowCount(len(team_actions))
-        for i, action in enumerate(team_actions):
+        self.history_table_widget.setRowCount(len(self._game_session.actions))
+        for i, action in enumerate(self._game_session.actions):
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.strftime("%H:%M")))
 
@@ -553,41 +531,29 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self_player = game_session.players[self.network_client.current_user.id]
         self_is_admin = self_player.admin
 
-        self.session_name_edit.setText(game_session.name)
+        self.session_name_label.setText(game_session.name)
 
         while len(self.rows) > len(game_session.presets):
             self.pop_row()
-
-        while self.num_teams < game_session.num_teams:
-            self.add_team()
-
-        while self.num_teams > game_session.num_teams:
-            self.pop_team()
 
         while len(self.rows) < len(game_session.presets):
             self.add_row()
 
         for i, (row, preset) in enumerate(zip(self.rows, game_session.presets)):
             row.set_preset(preset)
-            row.set_is_admin(self_is_admin,
-                             is_your_row=self_player.row == i and game_session.num_teams == 1)
+            row.set_is_admin(self_is_admin, is_your_row=self_player.row == i)
 
-        teams = [{} for _ in range(game_session.num_teams)]
+        session_team = {}
         observers = []
         for player in game_session.players.values():
-            if player.team is not None:
-                teams[player.team][player.row] = player
-            else:
+            if player.is_observer:
                 observers.append(player)
+            else:
+                session_team[player.row] = player
 
-        team_has_slot = [
-            len(team) < len(self.rows)
-            for i, team in enumerate(teams)
-        ]
-        for team_id, team in enumerate(self.teams):
-            for row_id, player in enumerate(team.players):
-                player.set_player(teams[team_id].get(row_id))
-                self._update_player_widget(player, game_session, self_is_admin, team_has_slot)
+        for row_id, player in enumerate(self.team.players):
+            player.set_player(session_team.get(row_id))
+            self._update_player_widget(player, game_session, self_is_admin)
 
         while len(self.observers) > len(observers):
             self.observers.pop().delete_widgets()
@@ -597,17 +563,17 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         for observer, observer_widget in zip(observers, self.observers):
             observer_widget.set_player(observer)
-            self._update_player_widget(observer_widget, game_session, self_is_admin, team_has_slot)
+            self._update_player_widget(observer_widget, game_session, self_is_admin)
 
         # Game Tab
-        self.session_status_label.setText("Session: {}".format("In-Game" if game_session.in_game else "Not Started"))
+        self.session_status_label.setText(f"Session: {game_session.state.user_friendly_name}")
         self.generate_game_button.setEnabled(self_is_admin)
         self.generate_without_spoiler_button.setEnabled(self_is_admin and False)
         self.session_status_tool.setEnabled(self_is_admin)
-        self.session_status_tool.setText("Finish" if game_session.in_game else "Start")
+        self.session_status_tool.setText("Start" if game_session.state == GameSessionState.SETUP else "Finish")
 
         self.save_iso_button.setEnabled(game_session.seed_hash is not None
-                                        and self.current_player_membership.team is not None)
+                                        and not self.current_player_membership.is_observer)
         if game_session.seed_hash is None:
             self.generate_game_label.setText("<Game not generated>")
             self.view_game_details_button.setEnabled(False)
@@ -616,14 +582,14 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.view_game_details_button.setEnabled(game_session.spoiler)
 
         self.update_session_actions()
-        if self._game_session.in_game != self.multiworld_client.is_active:
+        if (self._game_session.state == GameSessionState.IN_PROGRESS) != self.multiworld_client.is_active:
             await self.update_multiworld_client_status()
 
     async def update_multiworld_client_status(self):
-        if self._game_session.in_game:
+        if self._game_session.state == GameSessionState.IN_PROGRESS:
             you = self._game_session.players[self.network_client.current_user.id]
             persist_path = self.network_client.server_data_path.joinpath(
-                f"game_session_{self._game_session.id}_{you.team}_{you.row}.json")
+                f"game_session_{self._game_session.id}_{you.row}.json")
             await self.multiworld_client.start(persist_path)
         else:
             await self.multiworld_client.stop()
@@ -636,7 +602,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     def _update_player_widget(self,
                               player_widget: PlayerWidget,
                               game_session: GameSessionEntry,
-                              self_is_admin, team_has_slot):
+                              self_is_admin):
 
         player = player_widget.player
         if player is None:
@@ -648,14 +614,6 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             admin_or_you = True
         else:
             admin_or_you = self_is_admin
-
-        for i in range(len(player_widget.move_actions), self.num_teams):
-            action = QtWidgets.QAction(player_widget.move_team_menu)
-            action.setText(f"Team {i + 1}")
-            action.triggered.connect(functools.partial(
-                self._admin_player_action_slot, player_widget, SessionAdminUserAction.SWITCH_TEAM, i))
-            player_widget.move_team_menu.insertAction(player_widget.new_team_action, action)
-            player_widget.move_actions.append(action)
 
         player_is_admin = game_session.players[player_widget.player.id].admin
         if player_is_admin:
@@ -672,13 +630,9 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         player_widget.move_up.setEnabled(admin_or_you and player.row > 0)
         player_widget.move_down.setEnabled(admin_or_you and player.row + 1 < self.num_players)
         player_widget.abandon.setEnabled(admin_or_you)
-        player_widget.move_to_observer.setEnabled(admin_or_you and player.team is not None)
-
-        while len(player_widget.move_actions) > self.num_teams:
-            player_widget.move_actions.pop().deleteLater()
-
-        for i, action in enumerate(player_widget.move_actions):
-            action.setEnabled(admin_or_you and team_has_slot[i] and (i != player.team))
+        player_widget.switch_observer_action.setText(
+            "Include in session" if player.is_observer else "Move to observers")
+        player_widget.switch_observer_action.setEnabled(admin_or_you)
 
     @asyncSlot()
     @handle_network_errors
@@ -705,6 +659,19 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             return await self.network_client.session_admin_player(self._game_session.id, player.id, action, arg)
         finally:
             self.setEnabled(True)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _switch_observer_action(self, widget: PlayerWidget):
+        if widget.player.is_observer:
+            if any(row.player is None for row in self.team.players):
+                return await self._admin_player_action(widget.player, SessionAdminUserAction.SWITCH_IS_OBSERVER, 0)
+            else:
+                return await async_dialog.warning(self, "No free slot",
+                                                  "There are no free slots for players in this session.\n\n"
+                                                  "Press 'New Row' to add more if needed.")
+        else:
+            return await self._admin_player_action(widget.player, SessionAdminUserAction.SWITCH_IS_OBSERVER, None)
 
     def generate_game(self, spoiler: bool):
         permalink = Permalink(
@@ -744,8 +711,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     @handle_network_errors
     async def start_session(self):
-        num_players = sum(1 for player in self._game_session.players.values() if player.team is not None)
-        if num_players != self._game_session.num_teams * len(self._game_session.presets):
+        num_players = sum(1 for player in self._game_session.players.values() if not player.is_observer)
+        if num_players != self._game_session.num_rows:
             await async_dialog.message_box(self,
                                            QMessageBox.Critical,
                                            "Missing players",
@@ -757,26 +724,40 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
 
     @asyncSlot()
+    @handle_network_errors
+    async def finish_session(self):
+        await async_dialog.warning(self, "NYI", "Finish session is not implemented.")
+
+    @asyncSlot()
+    @handle_network_errors
+    async def reset_session(self):
+        await async_dialog.warning(self, "NYI", "Reset session is not implemented.")
+
+    @asyncSlot()
     async def _session_status_button_clicked(self):
-        if self._game_session.in_game:
-            await async_dialog.warning(self, "NYI", "Finish session not implemented.")
-        else:
+        state = self._game_session.state
+        if state == GameSessionState.SETUP:
             await self.start_session()
+        elif state == GameSessionState.IN_PROGRESS:
+            await self.finish_session()
+        elif state == GameSessionState.FINISHED:
+            await self.reset_session()
+        else:
+            raise RuntimeError(f"Unknown session state: {state}")
 
     @asyncSlot()
     @handle_network_errors
     async def save_iso(self):
         membership = self.current_player_membership
-        team = membership.team
-        if team is None:
+        if membership.is_observer:
             return await async_dialog.message_box(self, QtWidgets.QMessageBox.Critical,
                                                   "Invalid action", "Observers can't generate an ISO.", QMessageBox.Ok)
 
-        if any(player.player is None for player in self.teams[team].players):
+        if any(player.player is None for player in self.team.players):
             user_response = await async_dialog.warning(
                 self,
-                "Incomplete Team",
-                ("Your team is currently missing a member.\n"
+                "Incomplete Session",
+                ("This session is currently missing a player.\n"
                  "If you create an ISO right now, all references to that player will use a generic name instead.\n\n"
                  "Do you want to proceed?"),
                 QMessageBox.Yes | QMessageBox.No,

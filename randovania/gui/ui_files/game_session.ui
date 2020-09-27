@@ -22,12 +22,16 @@
    </property>
    <layout class="QVBoxLayout" name="main_layout">
     <item>
-     <widget class="QLineEdit" name="session_name_edit">
-      <property name="readOnly">
-       <bool>true</bool>
+     <widget class="QLabel" name="session_name_label">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
-      <property name="placeholderText">
-       <string>Session name</string>
+      <property name="text">
+       <string>Session name!</string>
       </property>
      </widget>
     </item>
@@ -171,12 +175,9 @@
       </widget>
       <widget class="QWidget" name="tab_history">
        <attribute name="title">
-        <string>Team History</string>
+        <string>History</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QComboBox" name="history_team_combo"/>
-        </item>
         <item>
          <widget class="QTableWidget" name="history_table_widget">
           <attribute name="horizontalHeaderVisible">
