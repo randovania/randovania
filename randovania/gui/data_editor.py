@@ -356,7 +356,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _do_create_node(self, node_name: str):
         self.generic_index += 1
-        new_node = GenericNode(node_name, True, self.generic_index)
+        new_node = GenericNode(node_name, True, None, self.generic_index)
         self.current_area.nodes.append(new_node)
         self.current_area.connections[new_node] = {}
         self.game_description.world_list.refresh_node_cache()
