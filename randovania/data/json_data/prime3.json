@@ -1417,6 +1417,15 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
+                        },
+                        {
+                            "name": "Pickup (Phazon Enhancement Device)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 0,
+                            "major_location": true,
+                            "connections": {}
                         }
                     ]
                 },
@@ -1499,6 +1508,15 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
+                        },
+                        {
+                            "name": "Pickup (Energy Tank)",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 1,
+                            "major_location": true,
+                            "connections": {}
                         }
                     ]
                 },
@@ -1551,11 +1569,11 @@
                     "valid_starting_location": true,
                     "nodes": [
                         {
-                            "name": "Dock to Repair Bay A",
+                            "name": "Door to Repair Bay A",
                             "heal": false,
                             "coordinates": {
                                 "x": 0.0,
-                                "y": 12.47887897491455,
+                                "y": 12.48,
                                 "z": 0.0
                             },
                             "node_type": "dock",
@@ -1564,7 +1582,26 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Pickup (Missile Launcher)": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Missile Launcher)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 2,
+                            "major_location": true,
+                            "connections": {
+                                "Door to Repair Bay A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
