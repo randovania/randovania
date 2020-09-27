@@ -245,7 +245,7 @@ class NetworkClient:
 
     async def get_game_session_list(self) -> List[GameSessionListEntry]:
         return [
-            GameSessionListEntry(**item)
+            GameSessionListEntry.from_json(item)
             for item in await self._emit_with_result("list_game_sessions")
         ]
 
