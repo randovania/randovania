@@ -109,16 +109,16 @@ def test_calculate_reach_with_all_pickups(test_data):
 @pytest.mark.parametrize("has_translator", [False, True])
 def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database):
     # Setup
-    scan_visor = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 10)
+    scan_visor = echoes_resource_database.get_item(10)
 
-    node_a = GenericNode("Node A", True, 0)
-    node_b = GenericNode("Node B", True, 1)
-    node_c = GenericNode("Node C", True, 2)
-    translator_node = TranslatorGateNode("Translator Gate", True, 3, TranslatorGate(1), scan_visor)
+    node_a = GenericNode("Node A", True, None, 0)
+    node_b = GenericNode("Node B", True, None, 1)
+    node_c = GenericNode("Node C", True, None, 2)
+    translator_node = TranslatorGateNode("Translator Gate", True, None, 3, TranslatorGate(1), scan_visor)
 
     world_list = WorldList([
         World("Test World", "Test Dark World", 1, [
-            Area("Test Area A", False, 10, 0, [node_a, node_b, node_c, translator_node],
+            Area("Test Area A", False, 10, 0, True, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: Requirement.trivial(),
@@ -135,7 +135,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                          node_c: Requirement.trivial(),
                      },
                  }
-                 )
+            )
         ])
     ])
     game_specific = EchoesGameSpecific(energy_per_tank=100, beam_configurations=())

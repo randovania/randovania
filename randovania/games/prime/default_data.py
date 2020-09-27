@@ -1,28 +1,26 @@
 import functools
 import json
 from pathlib import Path
+from typing import Tuple
 
 from randovania import get_data_path
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime.binary_data import decode_file_path
 
 
-def prime2_json_path() -> Path:
-    return get_data_path().joinpath("json_data", "prime2.json")
-
-
-def prime2_human_readable_path() -> Path:
-    return prime2_json_path().with_suffix(".txt")
-
-
 @functools.lru_cache()
+def read_json_then_binary(game: RandovaniaGame) -> Tuple[Path, dict]:
+    json_path = get_data_path().joinpath("json_data", f"{game.value}.json")
+    if json_path.exists():
+        with json_path.open("r") as open_file:
+            return json_path, json.load(open_file)
+
+    binary_path = get_data_path().joinpath("binary_data", f"{game.value}.bin")
+    return binary_path, decode_file_path(binary_path)
+
+
 def decode_default_prime2() -> dict:
-    json_database = prime2_json_path()
-
-    if json_database.exists():
-        with json_database.open("r") as open_file:
-            return json.load(open_file)
-
-    return decode_file_path(get_data_path().joinpath("binary_data", "prime2.bin"))
+    return read_json_then_binary(RandovaniaGame.PRIME2)[1]
 
 
 @functools.lru_cache()

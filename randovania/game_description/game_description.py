@@ -16,13 +16,13 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.world_list import WorldList
 
 
-def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[SimpleResourceInfo]:
+def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[ResourceInfo]:
     for list_by_type in db:
         for dock_weakness in list_by_type:
             yield from dock_weakness.requirement.as_set.dangerous_resources
 
 
-def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
+def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[ResourceInfo]:
     for area in areas:
         for node in area.nodes:
             for requirement in area.connections[node].values():

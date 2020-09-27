@@ -6,10 +6,11 @@ from randovania.game_description.dock import DockWeakness, DockType, DockWeaknes
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    TranslatorGateNode, LogbookNode, LoreType
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_id, ResourceDatabase, \
     find_resource_info_with_long_name, MissingResource
@@ -17,6 +18,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 
@@ -33,28 +35,38 @@ def read_resource_info(data: Dict, resource_type: ResourceType) -> SimpleResourc
                               data["short_name"], resource_type)
 
 
+def read_item_resource_info(data: Dict) -> ItemResourceInfo:
+    return ItemResourceInfo(data["index"], data["long_name"],
+                            data["short_name"], data["max_capacity"], data.get("custom_memory_offset"))
+
+
+def read_trick_resource_info(data: Dict) -> TrickResourceInfo:
+    return TrickResourceInfo(data["index"], data["long_name"],
+                             data["short_name"], data["description"])
+
+
 def read_resource_info_array(data: List[Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
     return read_array(data, lambda info: read_resource_info(info, resource_type=resource_type))
 
 
 # Damage
 
-def read_damage_reduction(data: Dict, items: List[SimpleResourceInfo]) -> DamageReduction:
+def read_damage_reduction(data: Dict, items: List[ItemResourceInfo]) -> DamageReduction:
     return DamageReduction(find_resource_info_with_id(items, data["index"], ResourceType.ITEM),
                            data["multiplier"])
 
 
-def read_damage_reductions(data: List[Dict], items: List[SimpleResourceInfo]) -> Tuple[DamageReduction, ...]:
+def read_damage_reductions(data: List[Dict], items: List[ItemResourceInfo]) -> Tuple[DamageReduction, ...]:
     return tuple(read_array(data, lambda info: read_damage_reduction(info, items)))
 
 
-def read_damage_resource_info(data: Dict, items: List[SimpleResourceInfo]) -> DamageResourceInfo:
+def read_damage_resource_info(data: Dict, items: List[ItemResourceInfo]) -> DamageResourceInfo:
     return DamageResourceInfo(data["index"], data["long_name"],
                               data["short_name"],
                               read_damage_reductions(data["reductions"], items))
 
 
-def read_damage_resource_info_array(data: List[Dict], items: List[SimpleResourceInfo]) -> List[DamageResourceInfo]:
+def read_damage_resource_info_array(data: List[Dict], items: List[ItemResourceInfo]) -> List[DamageResourceInfo]:
     return read_array(data, lambda info: read_damage_resource_info(info, items))
 
 
@@ -177,6 +189,10 @@ def read_game_specific(data: Dict, resource_database: ResourceDatabase,
     )
 
 
+def location_from_json(location: Dict[str, float]) -> NodeLocation:
+    return NodeLocation(location["x"], location["y"], location["z"])
+
+
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
@@ -190,7 +206,7 @@ class WorldReader:
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
 
-    def _get_scan_visor(self) -> SimpleResourceInfo:
+    def _get_scan_visor(self) -> ItemResourceInfo:
         return find_resource_info_with_long_name(
             self.resource_database.item,
             "Scan Visor"
@@ -202,18 +218,21 @@ class WorldReader:
         try:
             heal: bool = data["heal"]
             node_type: int = data["node_type"]
+            location = None
+            if data["coordinates"] is not None:
+                location = location_from_json(data["coordinates"])
 
             if node_type == "generic":
-                return GenericNode(name, heal, self.generic_index)
+                return GenericNode(name, heal, location, self.generic_index)
 
             elif node_type == "dock":
-                return DockNode(name, heal, self.generic_index, data["dock_index"],
+                return DockNode(name, heal, location, self.generic_index, data["dock_index"],
                                 DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
                                 self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
                                                                                   data["dock_weakness_index"]))
 
             elif node_type == "pickup":
-                return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]),
+                return PickupNode(name, heal, location, self.generic_index, PickupIndex(data["pickup_index"]),
                                   data["major_location"])
 
             elif node_type == "teleporter":
@@ -222,7 +241,7 @@ class WorldReader:
                 destination_world_asset_id = data["destination_world_asset_id"]
                 destination_area_asset_id = data["destination_area_asset_id"]
 
-                return TeleporterNode(name, heal, self.generic_index, instance_id,
+                return TeleporterNode(name, heal, location, self.generic_index, instance_id,
                                       AreaLocation(destination_world_asset_id, destination_area_asset_id),
                                       data["scan_asset_id"],
                                       data["keep_name_when_vanilla"],
@@ -230,11 +249,11 @@ class WorldReader:
                                       )
 
             elif node_type == "event":
-                return EventNode(name, heal, self.generic_index,
+                return EventNode(name, heal, location, self.generic_index,
                                  self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
 
             elif node_type == "translator_gate":
-                return TranslatorGateNode(name, heal, self.generic_index,
+                return TranslatorGateNode(name, heal, location, self.generic_index,
                                           TranslatorGate(data["gate_index"]),
                                           self._get_scan_visor())
 
@@ -251,7 +270,7 @@ class WorldReader:
                 else:
                     hint_index = None
 
-                return LogbookNode(name, heal, self.generic_index, data["string_asset_id"],
+                return LogbookNode(name, heal, location, self.generic_index, data["string_asset_id"],
                                    self._get_scan_visor(),
                                    lore_type,
                                    required_translator,
@@ -282,6 +301,7 @@ class WorldReader:
                     connections[origin][nodes_by_name[target_name]] = the_set
 
         return Area(data["name"], data["in_dark_aether"], data["asset_id"], data["default_node_index"],
+                    data["valid_starting_location"],
                     nodes, connections)
 
     def read_area_list(self, data: List[Dict]) -> List[Area]:
@@ -303,11 +323,11 @@ def read_requirement_templates(data: Dict, database: ResourceDatabase) -> Dict[s
 
 
 def read_resource_database(data: Dict) -> ResourceDatabase:
-    item = read_resource_info_array(data["items"], ResourceType.ITEM)
+    item = read_array(data["items"], read_item_resource_info)
     db = ResourceDatabase(
         item=item,
         event=read_resource_info_array(data["events"], ResourceType.EVENT),
-        trick=read_resource_info_array(data["tricks"], ResourceType.TRICK),
+        trick=read_array(data["tricks"], read_trick_resource_info),
         damage=read_damage_resource_info_array(data["damage"], item),
         version=read_resource_info_array(data["versions"], ResourceType.VERSION),
         misc=read_resource_info_array(data["misc"], ResourceType.MISC),

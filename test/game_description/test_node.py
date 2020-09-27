@@ -1,6 +1,7 @@
 import pytest
 
 from randovania.game_description.node import LogbookNode, LoreType
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -11,10 +12,10 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
     name="logbook_node")
 def _logbook_node(request):
     has_translator = request.param
-    scan_visor = SimpleResourceInfo(1, "Scan", "S", ResourceType.ITEM)
-    translator = SimpleResourceInfo(2, "Translator", "T", ResourceType.ITEM)
+    scan_visor = ItemResourceInfo(1, "Scan", "S", 1, None)
+    translator = ItemResourceInfo(2, "Translator", "T", 1, None)
 
-    node = LogbookNode("Logbook", False, 0,
+    node = LogbookNode("Logbook", False, None, 0,
                        1000, scan_visor, LoreType.LUMINOTH_LORE,
                        translator if has_translator else None, None)
 

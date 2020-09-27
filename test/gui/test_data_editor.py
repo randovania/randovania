@@ -15,7 +15,7 @@ def test_apply_edit_connections_change(echoes_game_data,
                                        skip_qtbot,
                                        ):
     # Setup
-    window = DataEditorWindow(echoes_game_data, True)
+    window = DataEditorWindow(echoes_game_data, None, False, True)
     skip_qtbot.addWidget(window)
     game = window.game_description
 
@@ -36,7 +36,7 @@ def test_select_area_by_name(echoes_game_data,
                              skip_qtbot,
                              ):
     # Setup
-    window = DataEditorWindow(echoes_game_data, True)
+    window = DataEditorWindow(echoes_game_data, None, False, True)
     skip_qtbot.addWidget(window)
 
     # Run
@@ -59,7 +59,7 @@ def test_open_edit_connection(mock_apply_edit_connections,
                               skip_qtbot,
                               ):
     # Setup
-    window = DataEditorWindow(echoes_game_data, True)
+    window = DataEditorWindow(echoes_game_data, None, False, True)
     skip_qtbot.addWidget(window)
 
     editor = mock_connections_editor.return_value
@@ -79,18 +79,13 @@ def test_open_edit_connection(mock_apply_edit_connections,
         mock_apply_edit_connections.assert_not_called()
 
 
-@patch("randovania.gui.data_editor.default_data.prime2_json_path", autospec=True)
-@patch("randovania.gui.data_editor.default_data.prime2_human_readable_path", autospec=True)
-def test_create_node_and_save(mock_prime2_human_readable_path,
-                              mock_prime2_json_path,
-                              tmpdir,
+def test_create_node_and_save(tmpdir,
                               echoes_game_data,
                               skip_qtbot):
     # Setup
-    mock_prime2_human_readable_path.return_value = Path(tmpdir).joinpath("human")
-    mock_prime2_json_path.return_value = Path(tmpdir).joinpath("database")
+    db_path = Path(tmpdir.join("game.json"))
 
-    window = DataEditorWindow(echoes_game_data, True)
+    window = DataEditorWindow(echoes_game_data, db_path, True, True)
     skip_qtbot.addWidget(window)
 
     # Run
@@ -98,11 +93,11 @@ def test_create_node_and_save(mock_prime2_human_readable_path,
     window._save_as_internal_database()
 
     # Assert
-    with mock_prime2_json_path.return_value.open() as data_file:
+    with db_path.open() as data_file:
         exported_data = json.load(data_file)
     exported_game = data_reader.decode_data(exported_data)
 
     output = io.StringIO()
     data_writer.write_human_readable_world_list(exported_game, output)
 
-    assert mock_prime2_human_readable_path.return_value.read_text("utf-8") == output.getvalue()
+    assert Path(tmpdir.join("game.txt")).read_text("utf-8") == output.getvalue()
