@@ -10,6 +10,7 @@ from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetwor
 from randovania.network_client.game_session import GameSessionListEntry
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.error import WrongPassword
+from randovania.network_common.session_state import GameSessionState
 
 
 class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
@@ -29,6 +30,17 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
         self.button_box.accepted.connect(self.attempt_join)
         self.button_box.rejected.connect(self.reject)
         self.refresh_button.clicked.connect(self.refresh)
+
+        checks = (
+            self.has_password_yes_check,
+            self.has_password_no_check,
+            self.state_setup_check,
+            self.state_inprogress_check,
+            self.state_finished_check,
+        )
+        for check in checks:
+            check.stateChanged.connect(self.update_list)
+        self.filter_name_edit.textEdited.connect(self.update_list)
 
         self.table_widget.itemSelectionChanged.connect(self.on_selection_changed)
         self.table_widget.itemDoubleClicked.connect(self.on_double_click)
@@ -92,21 +104,44 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
         self.table_widget.clear()
         self.table_widget.setHorizontalHeaderLabels(["Name", "Password?", "In-Game", "Type", "Players"])
 
-        self.table_widget.setRowCount(len(self.sessions))
-        for i, session in enumerate(self.sessions):
+        name_filter = self.filter_name_edit.text().strip()
+
+        displayed_has_password = set()
+        if self.has_password_yes_check.isChecked():
+            displayed_has_password.add(True)
+        if self.has_password_no_check.isChecked():
+            displayed_has_password.add(False)
+
+        displayed_states = set()
+        for (check, state) in ((self.state_setup_check, GameSessionState.SETUP),
+                               (self.state_inprogress_check, GameSessionState.IN_PROGRESS),
+                               (self.state_finished_check, GameSessionState.FINISHED)):
+            if check.isChecked():
+                displayed_states.add(state)
+
+        visible_sessions = [
+            session
+            for session in self.sessions
+            if (session.has_password in displayed_has_password
+                and session.state in displayed_states
+                and name_filter in session.name)
+        ]
+
+        self.table_widget.setRowCount(len(visible_sessions))
+        for i, session in enumerate(visible_sessions):
             name = QTableWidgetItem(session.name)
-            has_password = QTableWidgetItem("Yes" if session.has_password else "No")
-            in_game = QTableWidgetItem("Yes" if session.in_game else "No")
-            type_item = QTableWidgetItem("Race")
+            state = QTableWidgetItem(session.state.user_friendly_name)
             players_item = QTableWidgetItem(str(session.num_players))
+            has_password = QTableWidgetItem("Yes" if session.has_password else "No")
+            creator = QTableWidgetItem(session.creator)
 
             self.table_widget.setItem(i, 0, name)
-            self.table_widget.setItem(i, 1, has_password)
-            self.table_widget.setItem(i, 2, in_game)
-            self.table_widget.setItem(i, 3, type_item)
-            self.table_widget.setItem(i, 4, players_item)
+            self.table_widget.setItem(i, 1, state)
+            self.table_widget.setItem(i, 2, players_item)
+            self.table_widget.setItem(i, 3, has_password)
+            self.table_widget.setItem(i, 4, creator)
 
-        self.status_label.setText(f"{len(self.sessions)} sessions found")
+        self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
 
     def on_server_connection_state_updated(self, state: ConnectionState):
         self.server_connection_label.setText(f"Server: {state.value}")

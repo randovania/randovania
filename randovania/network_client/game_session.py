@@ -3,6 +3,7 @@ import datetime
 from typing import List, Dict, Optional
 
 from randovania.layout.preset import Preset
+from randovania.network_common.session_state import GameSessionState
 
 
 @dataclasses.dataclass(frozen=True)
@@ -10,8 +11,14 @@ class GameSessionListEntry:
     id: int
     name: str
     has_password: bool
-    in_game: bool
+    state: GameSessionState
     num_players: int
+    creator: str
+
+    @classmethod
+    def from_json(cls, data: dict) -> "GameSessionListEntry":
+        data["state"] = GameSessionState(data["state"])
+        return GameSessionListEntry(**data)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -56,7 +63,7 @@ class GameSessionEntry:
     seed_hash: Optional[str]
     word_hash: Optional[str]
     spoiler: Optional[bool]
-    in_game: bool
+    state: GameSessionState
 
     @property
     def num_admins(self) -> int:
@@ -84,7 +91,7 @@ class GameSessionEntry:
             seed_hash=data["seed_hash"],
             word_hash=data["word_hash"],
             spoiler=data["spoiler"],
-            in_game=data["in_game"],
+            state=GameSessionState(data["state"]),
         )
 
 
