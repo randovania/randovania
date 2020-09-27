@@ -1,6 +1,6 @@
 import dataclasses
 from enum import Enum
-from typing import Optional
+from typing import Optional, NamedTuple
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeakness, DockConnection
@@ -10,14 +10,20 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain, CurrentResources
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
+
+
+class NodeLocation(NamedTuple):
+    x: float
+    y: float
+    z: float
 
 
 @dataclasses.dataclass(frozen=True)
 class Node:
     name: str
     heal: bool
+    location: Optional[NodeLocation]
     index: int
 
     def __lt__(self, other):

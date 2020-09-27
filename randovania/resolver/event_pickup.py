@@ -64,6 +64,7 @@ def replace_with_event_pickups(game: GameDescription):
             combined_node = EventPickupNode(
                 "EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
                 event_node.heal or next_node.heal,
+                next_node.location,
                 event_node.index,
                 event_node, next_node)
 

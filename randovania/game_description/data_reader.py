@@ -6,7 +6,7 @@ from randovania.game_description.dock import DockWeakness, DockType, DockWeaknes
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    TranslatorGateNode, LogbookNode, LoreType
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
@@ -189,6 +189,10 @@ def read_game_specific(data: Dict, resource_database: ResourceDatabase,
     )
 
 
+def location_from_json(location: Dict[str, float]) -> NodeLocation:
+    return NodeLocation(location["x"], location["y"], location["z"])
+
+
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
@@ -214,18 +218,21 @@ class WorldReader:
         try:
             heal: bool = data["heal"]
             node_type: int = data["node_type"]
+            location = None
+            if data["coordinates"] is not None:
+                location = location_from_json(data["coordinates"])
 
             if node_type == "generic":
-                return GenericNode(name, heal, self.generic_index)
+                return GenericNode(name, heal, location, self.generic_index)
 
             elif node_type == "dock":
-                return DockNode(name, heal, self.generic_index, data["dock_index"],
+                return DockNode(name, heal, location, self.generic_index, data["dock_index"],
                                 DockConnection(data["connected_area_asset_id"], data["connected_dock_index"]),
                                 self.dock_weakness_database.get_by_type_and_index(DockType(data["dock_type"]),
                                                                                   data["dock_weakness_index"]))
 
             elif node_type == "pickup":
-                return PickupNode(name, heal, self.generic_index, PickupIndex(data["pickup_index"]),
+                return PickupNode(name, heal, location, self.generic_index, PickupIndex(data["pickup_index"]),
                                   data["major_location"])
 
             elif node_type == "teleporter":
@@ -234,7 +241,7 @@ class WorldReader:
                 destination_world_asset_id = data["destination_world_asset_id"]
                 destination_area_asset_id = data["destination_area_asset_id"]
 
-                return TeleporterNode(name, heal, self.generic_index, instance_id,
+                return TeleporterNode(name, heal, location, self.generic_index, instance_id,
                                       AreaLocation(destination_world_asset_id, destination_area_asset_id),
                                       data["scan_asset_id"],
                                       data["keep_name_when_vanilla"],
@@ -242,11 +249,11 @@ class WorldReader:
                                       )
 
             elif node_type == "event":
-                return EventNode(name, heal, self.generic_index,
+                return EventNode(name, heal, location, self.generic_index,
                                  self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_index"]))
 
             elif node_type == "translator_gate":
-                return TranslatorGateNode(name, heal, self.generic_index,
+                return TranslatorGateNode(name, heal, location, self.generic_index,
                                           TranslatorGate(data["gate_index"]),
                                           self._get_scan_visor())
 
@@ -263,7 +270,7 @@ class WorldReader:
                 else:
                     hint_index = None
 
-                return LogbookNode(name, heal, self.generic_index, data["string_asset_id"],
+                return LogbookNode(name, heal, location, self.generic_index, data["string_asset_id"],
                                    self._get_scan_visor(),
                                    lore_type,
                                    required_translator,
