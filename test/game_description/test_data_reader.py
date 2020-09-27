@@ -23,6 +23,7 @@ def test_invalid_node_type():
         reader.read_node({
             "name": "Broken Node",
             "heal": True,
+            "coordinates": None,
             "node_type": "something that doesn't exist"
         })
 
@@ -38,8 +39,8 @@ def test_area_with_invalid_connections():
         reader.read_area({
             "name": "Broken Area",
             "nodes": [
-                {"name": "A", "heal": True, "node_type": "generic", "connections": {}},
-                {"name": "Broken", "heal": True, "node_type": "generic", "connections": {
+                {"name": "A", "heal": True, "coordinates": None, "node_type": "generic", "connections": {}},
+                {"name": "Broken", "heal": True, "coordinates": None, "node_type": "generic", "connections": {
                     "A": {
                         "type": "resource",
                         "data": {
