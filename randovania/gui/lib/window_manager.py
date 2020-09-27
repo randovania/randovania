@@ -2,6 +2,7 @@ from typing import Optional, List
 
 from PySide2.QtWidgets import QWidget, QMainWindow
 
+from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -22,7 +23,8 @@ class WindowManager(QMainWindow):
     def open_map_tracker(self, configuration: LayoutConfiguration):
         raise NotImplemented()
 
-    def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str]):
+    def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str],
+                                game: RandovaniaGame = RandovaniaGame.PRIME2):
         raise NotImplemented()
 
     def open_game_details(self, layout: LayoutDescription):

@@ -749,8 +749,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>342</height>
+                 <width>88</width>
+                 <height>370</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="hint_scroll_layout">
@@ -809,8 +809,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>531</height>
+                 <width>84</width>
+                 <height>629</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="tracker_scroll_area_layout">
@@ -915,7 +915,15 @@ p, li { white-space: pre-wrap; }
      </widget>
      <addaction name="menu_difficulties"/>
     </widget>
-    <addaction name="menu_action_data_visualizer"/>
+    <widget class="QMenu" name="menu_data_visualizer">
+     <property name="title">
+      <string>Data Visualizer</string>
+     </property>
+     <addaction name="menu_action_visualize_prime_1"/>
+     <addaction name="menu_action_visualize_prime_2"/>
+     <addaction name="menu_action_visualize_prime_3"/>
+    </widget>
+    <addaction name="menu_data_visualizer"/>
     <addaction name="menu_trick_details"/>
     <addaction name="menu_map_tracker"/>
     <addaction name="menu_action_item_tracker"/>
@@ -929,7 +937,15 @@ p, li { white-space: pre-wrap; }
      <property name="title">
       <string>Database</string>
      </property>
-     <addaction name="menu_action_edit_new_database"/>
+     <widget class="QMenu" name="menu_internal">
+      <property name="title">
+       <string>Internal</string>
+      </property>
+      <addaction name="menu_action_edit_prime_1"/>
+      <addaction name="menu_action_edit_prime_2"/>
+      <addaction name="menu_action_edit_prime_3"/>
+     </widget>
+     <addaction name="menu_internal"/>
      <addaction name="menu_action_edit_existing_database"/>
     </widget>
     <addaction name="menu_database"/>
@@ -947,19 +963,9 @@ p, li { white-space: pre-wrap; }
    <addaction name="menu_edit"/>
    <addaction name="menu_advanced"/>
   </widget>
-  <action name="menu_action_data_visualizer">
-   <property name="text">
-    <string>Data Visualizer</string>
-   </property>
-  </action>
   <action name="menu_action_existing_seed_details">
    <property name="text">
     <string>Existing Seed Details</string>
-   </property>
-  </action>
-  <action name="menu_action_edit_new_database">
-   <property name="text">
-    <string>Internal copy</string>
    </property>
   </action>
   <action name="menu_action_edit_existing_database">
@@ -1025,6 +1031,36 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Logged in as {}</string>
+   </property>
+  </action>
+  <action name="menu_action_edit_prime_1">
+   <property name="text">
+    <string>Prime 1</string>
+   </property>
+  </action>
+  <action name="menu_action_edit_prime_2">
+   <property name="text">
+    <string>Prime 2</string>
+   </property>
+  </action>
+  <action name="menu_action_edit_prime_3">
+   <property name="text">
+    <string>Prime 3</string>
+   </property>
+  </action>
+  <action name="menu_action_visualize_prime_1">
+   <property name="text">
+    <string>Prime 1</string>
+   </property>
+  </action>
+  <action name="menu_action_visualize_prime_2">
+   <property name="text">
+    <string>Prime 2</string>
+   </property>
+  </action>
+  <action name="menu_action_visualize_prime_3">
+   <property name="text">
+    <string>Prime 3</string>
    </property>
   </action>
  </widget>

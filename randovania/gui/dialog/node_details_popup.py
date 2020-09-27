@@ -5,7 +5,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockType, DockConnection
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
@@ -76,6 +76,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         # Values
         self.name_edit.setText(node.name)
         self.heals_check.setChecked(node.heal)
+        self.location_group.setChecked(node.location is not None)
+        if node.location is not None:
+            self.location_x_spin.setValue(node.location.x)
+            self.location_y_spin.setValue(node.location.y)
+            self.location_z_spin.setValue(node.location.z)
 
         visible_tab = self._fill_for_type(node)
         self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
@@ -214,14 +219,19 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         node_type = self.node_type_combo.currentData()
         name = self.name_edit.text()
         heal = self.heals_check.isChecked()
+        location = None
+        if self.location_group.isChecked():
+            location = NodeLocation(self.location_x_spin.value(),
+                                    self.location_y_spin.value(),
+                                    self.location_z_spin.value())
         index = self.node.index
 
         if node_type == GenericNode:
-            return GenericNode(name, heal, index)
+            return GenericNode(name, heal, location, index)
 
         elif node_type == DockNode:
             return DockNode(
-                name, heal, index,
+                name, heal, location, index,
                 self.dock_index_spin.value(),
                 DockConnection(self.dock_connection_area_combo.currentData().area_asset_id,
                                self.dock_connection_node_combo.currentData()),
@@ -230,7 +240,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == PickupNode:
             return PickupNode(
-                name, heal, index,
+                name, heal, location, index,
                 PickupIndex(self.pickup_index_spin.value()),
                 self.major_location_check.isChecked(),
             )
@@ -239,7 +249,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             scan_asset_id = self.teleporter_scan_asset_id_edit.text()
 
             return TeleporterNode(
-                name, heal, index,
+                name, heal, location, index,
                 int(self.teleporter_instance_id_edit.text()),
                 AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
                              self.teleporter_destination_area_combo.currentData().area_asset_id),
@@ -250,13 +260,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == EventNode:
             return EventNode(
-                name, heal, index,
+                name, heal, location, index,
                 self.event_resource_combo.currentData(),
             )
 
         elif node_type == TranslatorGateNode:
             return TranslatorGateNode(
-                name, heal, index,
+                name, heal, location, index,
                 TranslatorGate(self.translator_gate_spin.value()),
                 self._get_scan_visor()
             )
@@ -274,7 +284,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 hint_index = None
 
             return LogbookNode(
-                name, heal, index,
+                name, heal, location, index,
                 int(self.logbook_string_asset_id_edit.text()),
                 self._get_scan_visor(),
                 lore_type,
