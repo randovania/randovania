@@ -3102,9 +3102,10 @@ Asset id: 4268351683
           All of the following:
               Morph Ball
               Any of the following:
-                  Bomb Space Jump (Hypermode) or Wall Boost (Hypermode)
+                  Bomb Space Jump (Hypermode)
                   Morph Ball Bomb and Bomb Jump (Beginner)
                   Screw Attack and Slope Jump (Expert) and Movement (Expert)
+                  Boost Ball and Wall Boost (Hypermode)
 
 ----------------
 Sand Cache
@@ -3518,34 +3519,52 @@ Asset id: 553896110
 ----------------
 Warrior's Walk
 Asset id: 872074261
-> Door to Judgment Pit; Heals? True
+> Door to Judgment Pit; Heals? False
   > Judgment Pit/Door to Warrior's Walk
       Power Beam and Super Missile and Charge Beam and Missile ≥ 5
-  > Warrior's Walk/Door to Battleground
-      Trivial
+  > Warrior's Walk/Safe Zone (Judgment Pit Side)
+      Dark World Damage ≥ 2
 
-> Door to Battleground; Heals? True
+> Door to Battleground; Heals? False
   > Battleground/Door to Warrior's Walk
       Power Beam and Super Missile and Charge Beam and Missile ≥ 5
-  > Warrior's Walk/Door to Judgment Pit
-      Any of the following:
-          Space Jump Boots
-          All of the following:
-              Morph Ball
-              Any of the following:
-                  Bomb Space Jump (Hypermode) or Wall Boost (Hypermode)
-                  Morph Ball Bomb and Bomb Jump (Beginner)
-                  Screw Attack and Slope Jump (Expert) and Movement (Expert)
-  > Warrior's Walk/Pickup (Missile)
-      All of the following:
-          Morph Ball
-          Morph Ball Bomb or Power Bomb
+  > Warrior's Walk/Safe Zone (Battleground Side)
+      Dark World Damage ≥ 10
 
-> Pickup (Missile); Heals? False
+> Pickup (Missile); Heals? True
+  > Warrior's Walk/Safe Zone (Battleground Side)
+      Any of the following:
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner) and Normal Damage ≥ 55
+          Space Jump Boots and Dark World Damage ≥ 30
+          Slope Jump (Intermediate) and Normal Damage ≥ 35
+
+> Safe Zone (Judgment Pit Side); Heals? True
+  > Warrior's Walk/Door to Judgment Pit
+      Trivial
+  > Warrior's Walk/Safe Zone (Battleground Side)
+      Dark World Damage ≥ 7 and Activate Safe Zone
+
+> Safe Zone (Battleground Side); Heals? True
   > Warrior's Walk/Door to Battleground
       Any of the following:
-          Space Jump Boots or Slope Jump (Intermediate)
-          Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner)
+          Dark World Damage ≥ 10
+          Morph Ball and Dark World Damage ≥ 5
+  > Warrior's Walk/Pickup (Missile)
+      All of the following:
+          Morph Ball and Normal Damage ≥ 30
+          Morph Ball Bomb or Power Bomb
+  > Warrior's Walk/Safe Zone (Judgment Pit Side)
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 8
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 25
+                      Screw Attack and Slope Jump (Expert) and Movement (Expert) and Dark World Damage ≥ 20
+                      Boost Ball and Wall Boost (Hypermode) and Dark World Damage ≥ 30
+                      Bomb Space Jump (Hypermode) and Dark World Damage ≥ 40
 
 ----------------
 Save Station 1
