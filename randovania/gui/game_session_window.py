@@ -659,13 +659,13 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     async def _switch_observer_action(self, widget: PlayerWidget):
         if widget.player.is_observer:
             if any(row.player is None for row in self.team.players):
-                return await self._admin_player_action(widget.player, SessionAdminUserAction.SWITCH_TEAM, 0)
+                return await self._admin_player_action(widget.player, SessionAdminUserAction.SWITCH_IS_OBSERVER, 0)
             else:
                 return await async_dialog.warning(self, "No free slot",
                                                   "There are no free slots for players in this session.\n\n"
                                                   "Press 'New Row' to add more if needed.")
         else:
-            return await self._admin_player_action(widget.player, SessionAdminUserAction.SWITCH_TEAM, None)
+            return await self._admin_player_action(widget.player, SessionAdminUserAction.SWITCH_IS_OBSERVER, None)
 
     def generate_game(self, spoiler: bool):
         permalink = Permalink(

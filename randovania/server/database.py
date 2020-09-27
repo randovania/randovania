@@ -42,7 +42,6 @@ def _decode_layout_description(s):
 class GameSession(BaseModel):
     name = peewee.CharField()
     password = peewee.CharField(null=True)
-    num_teams = peewee.IntegerField()
     in_game = peewee.BooleanField(default=False)
     layout_description_json = peewee.TextField(null=True)
     seed_hash = peewee.CharField(null=True)
@@ -81,12 +80,11 @@ class GameSession(BaseModel):
         description = self.layout_description
 
         location_to_name = {
-            team: {row: f"Player {row + 1}" for row in range(self.num_rows)}
-            for team in range(self.num_teams)
+            row: f"Player {row + 1}" for row in range(self.num_rows)
         }
         for membership in self.players:
-            if membership.team is not None:
-                location_to_name[membership.team][membership.row] = membership.effective_name
+            if not membership.is_observer:
+                location_to_name[membership.row] = membership.effective_name
 
         def _describe_action(action: GameSessionTeamAction) -> dict:
             provider: int = action.provider_row
@@ -94,10 +92,9 @@ class GameSession(BaseModel):
             time: datetime.datetime = action.time
             target = description.all_patches[provider].pickup_assignment[PickupIndex(action.provider_location_index)]
 
-            message = (f"{location_to_name[action.team][provider]} found {target.pickup.name} "
-                       f"for {location_to_name[action.team][receiver]}.")
+            message = (f"{location_to_name[provider]} found {target.pickup.name} "
+                       f"for {location_to_name[receiver]}.")
             return {
-                "team": action.team,
                 "message": message,
                 "time": time.isoformat(),
             }
@@ -105,14 +102,13 @@ class GameSession(BaseModel):
         return {
             "id": self.id,
             "name": self.name,
-            "num_teams": self.num_teams,
             "in_game": self.in_game,
             "players": [
                 {
                     "id": membership.user.id,
                     "name": membership.user.name,
                     "row": membership.row,
-                    "team": membership.team,
+                    "is_observer": membership.is_observer,
                     "admin": membership.admin,
                 }
                 for membership in self.players
@@ -146,7 +142,7 @@ class GameSessionMembership(BaseModel):
     user = peewee.ForeignKeyField(User, backref="games")
     session = peewee.ForeignKeyField(GameSession, backref="players")
     row = peewee.IntegerField()
-    team = peewee.IntegerField(null=True)
+    is_observer = peewee.BooleanField()
     admin = peewee.BooleanField()
     inventory = peewee.TextField(null=True)
 
@@ -162,17 +158,17 @@ class GameSessionMembership(BaseModel):
         )
 
     @classmethod
-    def get_by_session_position(cls, session: GameSession, row: int, team: int) -> "GameSessionMembership":
+    def get_by_session_position(cls, session: GameSession, row: int) -> "GameSessionMembership":
         return GameSessionMembership.get(
             GameSessionMembership.session == session,
             GameSessionMembership.row == row,
-            GameSessionMembership.team == team,
+            GameSessionMembership.is_observer == False,
         )
 
     @classmethod
-    def members_for_team(cls, session: GameSession, team: int) -> Iterator["GameSessionMembership"]:
+    def non_observer_members(cls, session: GameSession) -> Iterator["GameSessionMembership"]:
         yield from GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                        GameSessionMembership.team == team
+                                                        GameSessionMembership.is_observer == False,
                                                         )
 
     class Meta:
@@ -181,7 +177,6 @@ class GameSessionMembership(BaseModel):
 
 class GameSessionTeamAction(BaseModel):
     session = peewee.ForeignKeyField(GameSession)
-    team = peewee.IntegerField()
     provider_row = peewee.IntegerField()
     provider_location_index = peewee.IntegerField()
     receiver_row = peewee.IntegerField()
@@ -189,7 +184,7 @@ class GameSessionTeamAction(BaseModel):
     time = peewee.DateTimeField(default=datetime.datetime.now)
 
     class Meta:
-        primary_key = peewee.CompositeKey('session', 'team', 'provider_row', 'provider_location_index')
+        primary_key = peewee.CompositeKey('session', 'provider_row', 'provider_location_index')
 
 
 all_classes = [User, GameSession, GameSessionPreset, GameSessionMembership, GameSessionTeamAction]
