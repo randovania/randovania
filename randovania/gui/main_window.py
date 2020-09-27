@@ -15,8 +15,8 @@ from asyncqt import asyncSlot
 from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.games.prime import default_data
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
@@ -102,7 +102,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_play))
         self.open_faq_button.clicked.connect(self._open_faq)
-        self.open_database_viewer_button.clicked.connect(self._open_data_visualizer)
+        self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
+                                                                 RandovaniaGame.PRIME2))
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
@@ -112,9 +113,17 @@ class MainWindow(WindowManager, Ui_MainWindow):
             lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
 
         # Menu Bar
-        self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
+        for action, game in ((self.menu_action_visualize_prime_1, RandovaniaGame.PRIME1),
+                             (self.menu_action_visualize_prime_2, RandovaniaGame.PRIME2),
+                             (self.menu_action_visualize_prime_3, RandovaniaGame.PRIME3)):
+            action.triggered.connect(partial(self._open_data_visualizer_for_game, game))
+
+        for action, game in ((self.menu_action_edit_prime_1, RandovaniaGame.PRIME1),
+                             (self.menu_action_edit_prime_2, RandovaniaGame.PRIME2),
+                             (self.menu_action_edit_prime_3, RandovaniaGame.PRIME3)):
+            action.triggered.connect(partial(self._open_data_editor_for_game, game))
+
         self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
-        self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
@@ -328,14 +337,15 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.generate_seed_tab.on_options_changed(self._options)
 
     # Menu Actions
-    def _open_data_visualizer(self):
-        self.open_data_visualizer_at(None, None)
+    def _open_data_visualizer_for_game(self, game: RandovaniaGame):
+        self.open_data_visualizer_at(None, None, game)
 
     def open_data_visualizer_at(self,
                                 world_name: Optional[str],
                                 area_name: Optional[str],
+                                game: RandovaniaGame = RandovaniaGame.PRIME2,
                                 ):
-        self._data_visualizer = DataEditorWindow(None, False)
+        self._data_visualizer = DataEditorWindow.open_internal_data(game, False)
 
         if world_name is not None:
             self._data_visualizer.focus_on_world(world_name)
@@ -345,8 +355,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         self._data_visualizer.show()
 
-    def _open_data_editor_default(self):
-        self._data_editor = DataEditorWindow(None, True)
+    def _open_data_editor_for_game(self, game: RandovaniaGame):
+        self._data_editor = DataEditorWindow.open_internal_data(game, True)
         self._data_editor.show()
 
     def _open_data_editor_prompt(self):
@@ -355,7 +365,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             return
 
         with database_path.open("r") as database_file:
-            self._data_editor = DataEditorWindow(json.load(database_file), True)
+            self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
     def _create_open_map_tracker_actions(self):
@@ -415,7 +425,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()
 
-    def _open_trick_details_popup(self, trick: SimpleResourceInfo, level: LayoutTrickLevel):
+    def _open_trick_details_popup(self, trick: TrickResourceInfo, level: LayoutTrickLevel):
         self._exec_trick_details(TrickDetailsPopup(
             self,
             self,

@@ -445,7 +445,7 @@ class RequirementList:
         return None
 
     @property
-    def dangerous_resources(self) -> Iterator[SimpleResourceInfo]:
+    def dangerous_resources(self) -> Iterator[ResourceInfo]:
         """
         Return an iterator of all SimpleResourceInfo in this list that have the negate flag
         :return:
@@ -547,7 +547,7 @@ class RequirementSet:
         return RequirementSet(self.alternatives | other.alternatives)
 
     @property
-    def dangerous_resources(self) -> Iterator[SimpleResourceInfo]:
+    def dangerous_resources(self) -> Iterator[ResourceInfo]:
         """
         Return an iterator of all SimpleResourceInfo in all alternatives that have the negate flag
         :return:

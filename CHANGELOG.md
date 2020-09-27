@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
 
+-   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
+
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
@@ -45,7 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
--   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.  
+-   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.
+
+-   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
 
 -   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
 

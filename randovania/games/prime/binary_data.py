@@ -4,7 +4,7 @@ from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence
+    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Int64ub
 
 from randovania.game_description.node import LoreType
 
@@ -109,6 +109,7 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
                 area["nodes"][i] = {
                     "name": node.pop("name"),
                     "heal": node.pop("heal"),
+                    "coordinates": node.pop("coordinates"),
                     "node_type": node.pop("node_type"),
                     "data": node,
                 }
@@ -139,6 +140,22 @@ ConstructResourceInfo = Struct(
     short_name=CString("utf8"),
 )
 
+ConstructItemResourceInfo = Struct(
+    index=Int64ub,
+    long_name=CString("utf8"),
+    short_name=CString("utf8"),
+    max_capacity=Int32ub,
+    _has_memory_offset=Rebuild(Flag, lambda this: this.custom_memory_offset is not None),
+    custom_memory_offset=If(lambda this: this._has_memory_offset, Int32ub),
+)
+
+ConstructTrickResourceInfo = Struct(
+    index=Byte,
+    long_name=CString("utf8"),
+    short_name=CString("utf8"),
+    description=CString("utf8"),
+)
+
 ConstructResourceRequirement = Struct(
     type=Byte,
     index=Byte,
@@ -166,9 +183,9 @@ ConstructDockWeakness = Struct(
 )
 
 ConstructResourceDatabase = Struct(
-    items=PrefixedArray(Byte, ConstructResourceInfo),
+    items=PrefixedArray(Byte, ConstructItemResourceInfo),
     events=PrefixedArray(Byte, ConstructResourceInfo),
-    tricks=PrefixedArray(Byte, ConstructResourceInfo),
+    tricks=PrefixedArray(Byte, ConstructTrickResourceInfo),
     damage=PrefixedArray(Byte, Struct(
         Embedded(ConstructResourceInfo),
         reductions=PrefixedArray(Byte, Struct(
@@ -206,9 +223,13 @@ ConstructResourceGain = Struct(
 
 ConstructLoreType = construct.Enum(Byte, **{lore_type.value: i for i, lore_type in enumerate(LoreType)})
 
+ConstructNodeCoordinates = Array(3, Float32b)
+
 ConstructNode = Struct(
     name=CString("utf8"),
     heal=Flag,
+    _has_coordinates=Rebuild(Flag, lambda this: this.coordinates is not None),
+    coordinates=If(lambda this: this._has_coordinates, ConstructNodeCoordinates),
     node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5, logbook=6),
     data=Switch(
         lambda this: this.node_type,
@@ -255,6 +276,7 @@ ConstructArea = Struct(
     asset_id=Int32ub,
     _node_count=Rebuild(Byte, lambda this: len(this.nodes)),
     default_node_index=Byte,
+    valid_starting_location=Flag,
     nodes=Array(lambda this: this._node_count, ConstructNode),
     connections=Array(
         lambda this: this._node_count,
