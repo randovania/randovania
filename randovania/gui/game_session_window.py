@@ -33,6 +33,7 @@ from randovania.layout.preset import Preset
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
+from randovania.network_common.session_state import GameSessionState
 from randovania.resolver.exceptions import GenerationFailure
 
 
@@ -171,12 +172,17 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
         self.start_session_action = QtWidgets.QAction("Start session", self.session_status_menu)
         self.start_session_action.triggered.connect(self.start_session)
-        self.session_status_menu.addAction(self.start_session_action)
+
         self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
+        self.finish_session_action.triggered.connect(self.finish_session)
         self.finish_session_action.setEnabled(False)
-        self.session_status_menu.addAction(self.finish_session_action)
+
         self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
+        self.reset_session_action.triggered.connect(self.reset_session)
         self.reset_session_action.setEnabled(False)
+
+        self.session_status_menu.addAction(self.start_session_action)
+        self.session_status_menu.addAction(self.finish_session_action)
         self.session_status_menu.addAction(self.reset_session_action)
         self.session_status_tool.setMenu(self.session_status_menu)
 
@@ -525,7 +531,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self_player = game_session.players[self.network_client.current_user.id]
         self_is_admin = self_player.admin
 
-        self.session_name_edit.setText(game_session.name)
+        self.session_name_label.setText(game_session.name)
 
         while len(self.rows) > len(game_session.presets):
             self.pop_row()
@@ -560,11 +566,11 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self._update_player_widget(observer_widget, game_session, self_is_admin)
 
         # Game Tab
-        self.session_status_label.setText("Session: {}".format("In-Game" if game_session.in_game else "Not Started"))
+        self.session_status_label.setText(f"Session: {game_session.state.user_friendly_name}")
         self.generate_game_button.setEnabled(self_is_admin)
         self.generate_without_spoiler_button.setEnabled(self_is_admin and False)
         self.session_status_tool.setEnabled(self_is_admin)
-        self.session_status_tool.setText("Finish" if game_session.in_game else "Start")
+        self.session_status_tool.setText("Start" if game_session.state == GameSessionState.SETUP else "Finish")
 
         self.save_iso_button.setEnabled(game_session.seed_hash is not None
                                         and not self.current_player_membership.is_observer)
@@ -576,11 +582,11 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             self.view_game_details_button.setEnabled(game_session.spoiler)
 
         self.update_session_actions()
-        if self._game_session.in_game != self.multiworld_client.is_active:
+        if (self._game_session.state == GameSessionState.IN_PROGRESS) != self.multiworld_client.is_active:
             await self.update_multiworld_client_status()
 
     async def update_multiworld_client_status(self):
-        if self._game_session.in_game:
+        if self._game_session.state == GameSessionState.IN_PROGRESS:
             you = self._game_session.players[self.network_client.current_user.id]
             persist_path = self.network_client.server_data_path.joinpath(
                 f"game_session_{self._game_session.id}_{you.row}.json")
@@ -718,11 +724,26 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
 
     @asyncSlot()
+    @handle_network_errors
+    async def finish_session(self):
+        await async_dialog.warning(self, "NYI", "Finish session is not implemented.")
+
+    @asyncSlot()
+    @handle_network_errors
+    async def reset_session(self):
+        await async_dialog.warning(self, "NYI", "Reset session is not implemented.")
+
+    @asyncSlot()
     async def _session_status_button_clicked(self):
-        if self._game_session.in_game:
-            await async_dialog.warning(self, "NYI", "Finish session not implemented.")
-        else:
+        state = self._game_session.state
+        if state == GameSessionState.SETUP:
             await self.start_session()
+        elif state == GameSessionState.IN_PROGRESS:
+            await self.finish_session()
+        elif state == GameSessionState.FINISHED:
+            await self.reset_session()
+        else:
+            raise RuntimeError(f"Unknown session state: {state}")
 
     @asyncSlot()
     @handle_network_errors

@@ -5,6 +5,7 @@ from mock import MagicMock, AsyncMock
 
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
+from randovania.network_common.session_state import GameSessionState
 
 
 @pytest.mark.asyncio
@@ -26,7 +27,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash=None,
         word_hash=None,
         spoiler=None,
-        in_game=False,
+        state=GameSessionState.SETUP,
     )
     second_session = GameSessionEntry(
         id=1234,
@@ -42,7 +43,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash="AB12",
         word_hash="Chykka Required",
         spoiler=True,
-        in_game=True,
+        state=GameSessionState.IN_PROGRESS,
     )
     network_client.current_game_session = initial_session
 
@@ -65,7 +66,7 @@ async def test_update_multiworld_client_status(skip_qtbot, mocker, in_game):
 
     window = GameSessionWindow(network_client, game_connection, MagicMock(), MagicMock(), MagicMock())
     window._game_session = MagicMock()
-    window._game_session.in_game = in_game
+    window._game_session.state = GameSessionState.IN_PROGRESS if in_game else GameSessionState.SETUP
     window.multiworld_client.start = AsyncMock()
     window.multiworld_client.stop = AsyncMock()
 

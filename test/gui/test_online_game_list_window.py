@@ -3,6 +3,8 @@ from PySide2.QtWidgets import QDialog
 from mock import patch, AsyncMock, MagicMock
 
 from randovania.gui.online_game_list_window import GameSessionBrowserDialog
+from randovania.network_client.game_session import GameSessionListEntry
+from randovania.network_common.session_state import GameSessionState
 
 
 @pytest.mark.asyncio
@@ -13,7 +15,14 @@ async def test_attempt_join(mock_execute_dialog: AsyncMock,
     mock_execute_dialog.return_value = QDialog.Accepted
     network_client = MagicMock()
     network_client.join_game_session = AsyncMock()
-    session = MagicMock()
+    session = GameSessionListEntry(
+        id=1,
+        name="A Game",
+        has_password=True,
+        state=GameSessionState.IN_PROGRESS,
+        num_players=1,
+        creator="You",
+    )
 
     dialog = GameSessionBrowserDialog(network_client)
     dialog.sessions = [session]

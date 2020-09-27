@@ -22,6 +22,7 @@ from randovania.layout.preset import Preset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import WrongPassword, \
     NotAuthorizedForAction, InvalidAction
+from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
 from randovania.server.database import GameSession, GameSessionMembership, GameSessionTeamAction, \
     GameSessionPreset
@@ -37,11 +38,13 @@ def list_game_sessions(sio: ServerApp):
 
 
 def create_game_session(sio: ServerApp, session_name: str):
+    current_user = sio.get_current_user()
+
     with database.db.atomic():
         new_session = GameSession.create(
             name=session_name,
             password=None,
-            num_teams=1,
+            creator=current_user,
         )
         GameSessionPreset.create(session=new_session, row=0,
                                  preset=json.dumps(PresetManager(None).default_preset.as_json))
@@ -93,9 +96,9 @@ def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: Optional[i
         raise NotAuthorizedForAction()
 
 
-def _verify_not_in_game(session: GameSession):
-    if session.in_game:
-        raise InvalidAction("Session is in-game")
+def _verify_in_setup(session: GameSession):
+    if session.state != GameSessionState.SETUP:
+        raise InvalidAction("Session is not in setup")
 
 
 def _get_preset(preset_json: dict) -> Preset:
@@ -121,7 +124,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     if action == SessionAdminGlobalAction.CREATE_ROW:
         preset_json: dict = arg
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
         preset = _get_preset(preset_json)
 
         new_row_id = session.num_rows
@@ -136,7 +139,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
         row_id, preset_json = arg
         _verify_has_admin(sio, session_id, sio.get_current_user().id)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
         preset = _get_preset(preset_json)
 
         try:
@@ -153,7 +156,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     elif action == SessionAdminGlobalAction.DELETE_ROW:
         row_id: int = arg
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
 
         if session.num_rows < 1:
             raise InvalidAction("Can't delete row when there's only one")
@@ -173,7 +176,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     elif action == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
         description_json: dict = arg
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
         description = LayoutDescription.from_json_dict(description_json)
 
         permalink = description.permalink
@@ -200,7 +203,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.START_SESSION:
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
         if session.layout_description is None:
             raise InvalidAction("Unable to start session, no game is available.")
 
@@ -211,8 +214,11 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
             raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
                                 f"({session.num_rows} x {session.num_teams}).")
 
-        session.in_game = True
+        session.state = GameSessionState.IN_PROGRESS
         session.save()
+
+    elif action == SessionAdminGlobalAction.RESET_SESSION:
+        raise InvalidAction("Restart session is not yet implemented.")
 
     _emit_session_update(session)
 
@@ -372,8 +378,8 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
     session: GameSession = database.GameSession.get_by_id(session_id)
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
-    if not session.in_game:
-        raise InvalidAction("Unable to collect locations of sessions that haven't been started")
+    if session.state != GameSessionState.IN_PROGRESS:
+        raise InvalidAction("Unable to collect locations of sessions that aren't in progress")
 
     if membership.is_observer:
         raise InvalidAction("Observers can't collect locations")
@@ -419,9 +425,9 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
     your_membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
     session: GameSession = your_membership.session
 
-    if not session.in_game:
+    if session.state == GameSessionState.SETUP:
         logger().info(f"Session {session_id}, Row {your_membership.row} "
-                      f"requested pickups, but session is not in-game.")
+                      f"requested pickups, but session is setup.")
         return []
 
     description = session.layout_description

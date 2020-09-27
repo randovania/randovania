@@ -9,6 +9,7 @@ class SessionAdminGlobalAction(Enum):
     CHANGE_LAYOUT_DESCRIPTION = "change_layout_description"
     DOWNLOAD_LAYOUT_DESCRIPTION = "download_layout_description"
     START_SESSION = "start_session"
+    RESET_SESSION = "reset_session"
 
 
 class SessionAdminUserAction(Enum):
