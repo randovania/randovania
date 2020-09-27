@@ -219,8 +219,8 @@ class WorldReader:
             heal: bool = data["heal"]
             node_type: int = data["node_type"]
             location = None
-            if data.get("coordinates") is not None:
-                location = location_from_json(data.get("coordinates"))
+            if data["coordinates"] is not None:
+                location = location_from_json(data["coordinates"])
 
             if node_type == "generic":
                 return GenericNode(name, heal, location, self.generic_index)

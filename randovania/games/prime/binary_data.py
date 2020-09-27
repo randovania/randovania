@@ -109,6 +109,7 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
                 area["nodes"][i] = {
                     "name": node.pop("name"),
                     "heal": node.pop("heal"),
+                    "coordinates": node.pop("coordinates"),
                     "node_type": node.pop("node_type"),
                     "data": node,
                 }
@@ -222,9 +223,13 @@ ConstructResourceGain = Struct(
 
 ConstructLoreType = construct.Enum(Byte, **{lore_type.value: i for i, lore_type in enumerate(LoreType)})
 
+ConstructNodeCoordinates = Array(3, Float32b)
+
 ConstructNode = Struct(
     name=CString("utf8"),
     heal=Flag,
+    _has_coordinates=Rebuild(Flag, lambda this: this.coordinates is not None),
+    coordinates=If(lambda this: this._has_coordinates, ConstructNodeCoordinates),
     node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5, logbook=6),
     data=Switch(
         lambda this: this.node_type,
