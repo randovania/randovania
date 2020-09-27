@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
 
+-   Added: The logic database now tracks the location of all docks (Doors and Portals).
+
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
