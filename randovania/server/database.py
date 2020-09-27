@@ -1,14 +1,14 @@
-import collections
 import datetime
 import functools
 import json
-from typing import Iterator, List, Optional
+from typing import Iterator, List, Optional, Callable, Any
 
 import peewee
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
+from randovania.network_common.session_state import GameSessionState
 
 db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
 
@@ -16,6 +16,23 @@ db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
 class BaseModel(peewee.Model):
     class Meta:
         database = db
+
+
+class EnumField(peewee.CharField):
+    """
+    This class enable an Enum like field for Peewee
+    """
+
+    def __init__(self, choices: Callable, *args: Any, **kwargs: Any) -> None:
+        super(peewee.CharField, self).__init__(*args, **kwargs)
+        self.choices = choices
+        self.max_length = 255
+
+    def db_value(self, value: Any) -> Any:
+        return value.value
+
+    def python_value(self, value: Any) -> Any:
+        return self.choices(type(list(self.choices)[0].value)(value))
 
 
 class User(BaseModel):
@@ -42,11 +59,12 @@ def _decode_layout_description(s):
 class GameSession(BaseModel):
     name = peewee.CharField()
     password = peewee.CharField(null=True)
-    num_teams = peewee.IntegerField()
-    in_game = peewee.BooleanField(default=False)
+    state = EnumField(choices=GameSessionState, default=GameSessionState.SETUP)
     layout_description_json = peewee.TextField(null=True)
     seed_hash = peewee.CharField(null=True)
+    creator = peewee.ForeignKeyField(User)
     creation_date = peewee.DateTimeField(default=datetime.datetime.now)
+    generation_in_progress = peewee.ForeignKeyField(User, null=True)
 
     @property
     def all_presets(self) -> List[Preset]:
@@ -73,20 +91,20 @@ class GameSession(BaseModel):
             "id": self.id,
             "name": self.name,
             "has_password": self.password is not None,
-            "in_game": self.in_game,
-            "num_players": len(self.players)
+            "state": self.state.value,
+            "num_players": len(self.players),
+            "creator": self.creator.name,
         }
 
     def create_session_entry(self):
         description = self.layout_description
 
         location_to_name = {
-            team: {row: f"Player {row + 1}" for row in range(self.num_rows)}
-            for team in range(self.num_teams)
+            row: f"Player {row + 1}" for row in range(self.num_rows)
         }
         for membership in self.players:
-            if membership.team is not None:
-                location_to_name[membership.team][membership.row] = membership.effective_name
+            if not membership.is_observer:
+                location_to_name[membership.row] = membership.effective_name
 
         def _describe_action(action: GameSessionTeamAction) -> dict:
             provider: int = action.provider_row
@@ -94,10 +112,9 @@ class GameSession(BaseModel):
             time: datetime.datetime = action.time
             target = description.all_patches[provider].pickup_assignment[PickupIndex(action.provider_location_index)]
 
-            message = (f"{location_to_name[action.team][provider]} found {target.pickup.name} "
-                       f"for {location_to_name[action.team][receiver]}.")
+            message = (f"{location_to_name[provider]} found {target.pickup.name} "
+                       f"for {location_to_name[receiver]}.")
             return {
-                "team": action.team,
                 "message": message,
                 "time": time.isoformat(),
             }
@@ -105,14 +122,13 @@ class GameSession(BaseModel):
         return {
             "id": self.id,
             "name": self.name,
-            "num_teams": self.num_teams,
-            "in_game": self.in_game,
+            "state": self.state.value,
             "players": [
                 {
                     "id": membership.user.id,
                     "name": membership.user.name,
                     "row": membership.row,
-                    "team": membership.team,
+                    "is_observer": membership.is_observer,
                     "admin": membership.admin,
                 }
                 for membership in self.players
@@ -129,6 +145,8 @@ class GameSession(BaseModel):
             "spoiler": description.permalink.spoiler if description is not None else None,
             "word_hash": description.shareable_word_hash if description is not None else None,
             "seed_hash": description.shareable_hash if description is not None else None,
+            "generation_in_progress": (self.generation_in_progress.name
+                                       if self.generation_in_progress is not None else None),
         }
 
     def reset_layout_description(self):
@@ -146,8 +164,9 @@ class GameSessionMembership(BaseModel):
     user = peewee.ForeignKeyField(User, backref="games")
     session = peewee.ForeignKeyField(GameSession, backref="players")
     row = peewee.IntegerField()
-    team = peewee.IntegerField(null=True)
+    is_observer = peewee.BooleanField()
     admin = peewee.BooleanField()
+    join_date = peewee.DateTimeField(default=datetime.datetime.now)
     inventory = peewee.TextField(null=True)
 
     @property
@@ -162,17 +181,17 @@ class GameSessionMembership(BaseModel):
         )
 
     @classmethod
-    def get_by_session_position(cls, session: GameSession, row: int, team: int) -> "GameSessionMembership":
+    def get_by_session_position(cls, session: GameSession, row: int) -> "GameSessionMembership":
         return GameSessionMembership.get(
             GameSessionMembership.session == session,
             GameSessionMembership.row == row,
-            GameSessionMembership.team == team,
+            GameSessionMembership.is_observer == False,
         )
 
     @classmethod
-    def members_for_team(cls, session: GameSession, team: int) -> Iterator["GameSessionMembership"]:
+    def non_observer_members(cls, session: GameSession) -> Iterator["GameSessionMembership"]:
         yield from GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                        GameSessionMembership.team == team
+                                                        GameSessionMembership.is_observer == False,
                                                         )
 
     class Meta:
@@ -181,7 +200,6 @@ class GameSessionMembership(BaseModel):
 
 class GameSessionTeamAction(BaseModel):
     session = peewee.ForeignKeyField(GameSession)
-    team = peewee.IntegerField()
     provider_row = peewee.IntegerField()
     provider_location_index = peewee.IntegerField()
     receiver_row = peewee.IntegerField()
@@ -189,7 +207,7 @@ class GameSessionTeamAction(BaseModel):
     time = peewee.DateTimeField(default=datetime.datetime.now)
 
     class Meta:
-        primary_key = peewee.CompositeKey('session', 'team', 'provider_row', 'provider_location_index')
+        primary_key = peewee.CompositeKey('session', 'provider_row', 'provider_location_index')
 
 
 all_classes = [User, GameSession, GameSessionPreset, GameSessionMembership, GameSessionTeamAction]
