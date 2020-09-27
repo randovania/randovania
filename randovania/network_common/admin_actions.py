@@ -9,14 +9,14 @@ class SessionAdminGlobalAction(Enum):
     CHANGE_LAYOUT_DESCRIPTION = "change_layout_description"
     DOWNLOAD_LAYOUT_DESCRIPTION = "download_layout_description"
     START_SESSION = "start_session"
+    RESET_SESSION = "reset_session"
 
 
 class SessionAdminUserAction(Enum):
     """Actions that operate on top of an user"""
     KICK = "kick"
     MOVE = "move"
-    SWITCH_TEAM = "switch_team"
-    SWITCH_TO_NEW_TEAM = "switch_to_new_team"
+    SWITCH_IS_OBSERVER = "switch_is_observer"
     SWITCH_ADMIN = "switch_admin"
     CREATE_PATCHER_FILE = "create_patcher_file"
     ABANDON = "abandon"

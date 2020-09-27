@@ -1,5 +1,4 @@
 import base64
-import collections
 import json
 import logging
 from typing import Optional, List, Tuple
@@ -23,6 +22,7 @@ from randovania.layout.preset import Preset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import WrongPassword, \
     NotAuthorizedForAction, InvalidAction
+from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
 from randovania.server.database import GameSession, GameSessionMembership, GameSessionTeamAction, \
     GameSessionPreset
@@ -38,29 +38,31 @@ def list_game_sessions(sio: ServerApp):
 
 
 def create_game_session(sio: ServerApp, session_name: str):
+    current_user = sio.get_current_user()
+
     with database.db.atomic():
         new_session = GameSession.create(
             name=session_name,
             password=None,
-            num_teams=1,
+            creator=current_user,
         )
         GameSessionPreset.create(session=new_session, row=0,
                                  preset=json.dumps(PresetManager(None).default_preset.as_json))
         membership = GameSessionMembership.create(
             user=sio.get_current_user(), session=new_session,
-            row=0, team=0, admin=True)
+            row=0, is_observer=False, admin=True)
 
     sio.join_game_session(membership)
     return new_session.create_session_entry()
 
 
-def join_game_session(sio: ServerApp, session_id: str, password: Optional[str]):
+def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
     session = GameSession.get_by_id(session_id)
     if password != session.password:
         raise WrongPassword()
 
     membership = GameSessionMembership.get_or_create(user=sio.get_current_user(), session=session,
-                                                     defaults={"row": 0, "team": None, "admin": False})[0]
+                                                     defaults={"row": 0, "is_observer": True, "admin": False})[0]
 
     _emit_session_update(session)
     sio.join_game_session(membership)
@@ -94,9 +96,9 @@ def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: Optional[i
         raise NotAuthorizedForAction()
 
 
-def _verify_not_in_game(session: GameSession):
-    if session.in_game:
-        raise InvalidAction("Session is in-game")
+def _verify_in_setup(session: GameSession):
+    if session.state != GameSessionState.SETUP:
+        raise InvalidAction("Session is not in setup")
 
 
 def _get_preset(preset_json: dict) -> Preset:
@@ -122,7 +124,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     if action == SessionAdminGlobalAction.CREATE_ROW:
         preset_json: dict = arg
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
         preset = _get_preset(preset_json)
 
         new_row_id = session.num_rows
@@ -136,8 +138,8 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
             raise InvalidAction("Missing arguments.")
 
         row_id, preset_json = arg
-        _verify_has_admin(sio, session_id, sio.get_current_user().id if session.num_teams == 1 else None)
-        _verify_not_in_game(session)
+        _verify_has_admin(sio, session_id, sio.get_current_user().id)
+        _verify_in_setup(session)
         preset = _get_preset(preset_json)
 
         try:
@@ -154,7 +156,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     elif action == SessionAdminGlobalAction.DELETE_ROW:
         row_id: int = arg
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
 
         if session.num_rows < 1:
             raise InvalidAction("Can't delete row when there's only one")
@@ -165,7 +167,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
         with database.db.atomic():
             GameSessionPreset.delete().where(GameSessionPreset.session == session,
                                              GameSessionPreset.row == row_id).execute()
-            GameSessionMembership.update(team=None).where(
+            GameSessionMembership.update(is_observer=True).where(
                 GameSessionMembership.session == session.id,
                 GameSessionMembership.row == row_id,
             ).execute()
@@ -174,7 +176,7 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     elif action == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
         description_json: dict = arg
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
         description = LayoutDescription.from_json_dict(description_json)
 
         permalink = description.permalink
@@ -201,69 +203,37 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.START_SESSION:
         _verify_has_admin(sio, session_id, None)
-        _verify_not_in_game(session)
+        _verify_in_setup(session)
         if session.layout_description is None:
             raise InvalidAction("Unable to start session, no game is available.")
 
         num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                           GameSessionMembership.team != None).count()
-        expected_players = session.num_rows * session.num_teams
+                                                           GameSessionMembership.is_observer == False).count()
+        expected_players = session.num_rows
         if num_players != expected_players:
             raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
                                 f"({session.num_rows} x {session.num_teams}).")
 
-        session.in_game = True
+        session.state = GameSessionState.IN_PROGRESS
         session.save()
+
+    elif action == SessionAdminGlobalAction.RESET_SESSION:
+        raise InvalidAction("Restart session is not yet implemented.")
 
     _emit_session_update(session)
 
 
-def _switch_team(session: GameSession, membership: GameSessionMembership, new_team: Optional[int], *,
-                 delete_instead: bool = False):
-    other_membership: Optional[GameSessionMembership]
-
-    if new_team is None:
-        expected_row = 0
-    else:
-        if not (0 <= new_team < session.num_teams):
-            raise InvalidAction("New team does not exist")
-
-        expected_row = 0
-        for possible_slot in GameSessionMembership.members_for_team(session, new_team):
-            if expected_row != possible_slot.row:
-                break
-            else:
-                expected_row += 1
-
-        if expected_row >= session.num_rows:
-            raise InvalidAction("Team is full")
-
-    # Delete empty teams
-    all_members: List[GameSessionMembership] = list(GameSessionMembership.select().where(
-        GameSessionMembership.session == session))
-
-    member_count_per_team = collections.defaultdict(int)
-    for member in all_members:
-        if member.team is not None:
-            member_count_per_team[member.team] += 1
-
-    member_count_per_team[membership.team] -= 1
-    if new_team is not None:
-        member_count_per_team[new_team] += 1
-
-    new_num_teams = session.num_teams
-    while new_num_teams > 1 and member_count_per_team[new_num_teams - 1] == 0:
-        new_num_teams -= 1
-
-    with database.db.atomic():
-        session.num_teams = new_num_teams
-        session.save()
-        if delete_instead:
-            membership.delete_instance()
+def _find_empty_row(session: GameSession) -> int:
+    empty_row = 0
+    for possible_slot in GameSessionMembership.non_observer_members(session):
+        if empty_row != possible_slot.row:
+            break
         else:
-            membership.row = expected_row
-            membership.team = new_team
-            membership.save()
+            empty_row += 1
+
+    if empty_row >= session.num_rows:
+        raise InvalidAction("Session is full")
+    return empty_row
 
 
 def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg):
@@ -274,7 +244,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
     membership = GameSessionMembership.get_by_ids(user_id, session_id)
 
     if action == SessionAdminUserAction.KICK:
-        _switch_team(session, membership, None, delete_instead=True)
+        membership.delete_instance()
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg
@@ -284,11 +254,11 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             raise InvalidAction("New position is negative")
         if new_row >= session.num_rows:
             raise InvalidAction("New position is beyond num of rows")
-        if membership.team is None:
-            raise InvalidAction("Player has no team")
+        if membership.is_observer is None:
+            raise InvalidAction("Player is an observer")
 
         team_members = [None] * session.num_rows
-        for member in GameSessionMembership.members_for_team(session, team=membership.team):
+        for member in GameSessionMembership.non_observer_members(session):
             team_members[member.row] = member
 
         while (0 <= new_row < session.num_rows) and team_members[new_row] is not None:
@@ -301,17 +271,14 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             membership.row = new_row
             membership.save()
 
-    elif action == SessionAdminUserAction.SWITCH_TO_NEW_TEAM:
-        with database.db.atomic():
+    elif action == SessionAdminUserAction.SWITCH_IS_OBSERVER:
+        if membership.is_observer:
+            membership.row = _find_empty_row(session)
+            membership.is_observer = False
+        else:
             membership.row = 0
-            membership.team = session.num_teams
-            session.num_teams += 1
-
-            session.save()
-            membership.save()
-
-    elif action == SessionAdminUserAction.SWITCH_TEAM:
-        _switch_team(session, membership, arg)
+            membership.is_observer = True
+        membership.save()
 
     elif action == SessionAdminUserAction.SWITCH_ADMIN:
         # Must be admin for this
@@ -329,7 +296,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         cosmetic_patches = CosmeticPatches.from_json_dict(arg)
         player_names = {i: f"Player {i + 1}" for i in range(session.num_rows)}
 
-        for member in GameSessionMembership.members_for_team(session, membership.team):
+        for member in GameSessionMembership.non_observer_members(session):
             player_names[member.row] = member.effective_name
 
         players_config = PlayersConfiguration(
@@ -351,7 +318,6 @@ def _query_for_actions(membership: GameSessionMembership) -> peewee.ModelSelect:
     return GameSessionTeamAction.select().where(
         GameSessionTeamAction.provider_row != membership.row,
         GameSessionTeamAction.session == membership.session,
-        GameSessionTeamAction.team == membership.team,
         GameSessionTeamAction.receiver_row == membership.row,
     ).order_by(GameSessionTeamAction.time.asc())
 
@@ -377,20 +343,19 @@ def _collect_location(session: GameSession, membership: GameSessionMembership,
 
     if pickup_target is None:
         logger().info(
-            f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
+            f"Session {session.id}, Row {membership.row} found item "
             f"at {pickup_location}. It's an ETM.")
         return None
 
     if pickup_target.player == membership.row:
         logger().info(
-            f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
+            f"Session {session.id}, Row {membership.row} found item "
             f"at {pickup_location}. It's a {pickup_target.pickup.name} for themselves.")
         return None
 
     try:
         GameSessionTeamAction.create(
             session=session,
-            team=membership.team,
             provider_row=membership.row,
             provider_location_index=pickup_location,
             receiver_row=pickup_target.player,
@@ -398,12 +363,12 @@ def _collect_location(session: GameSession, membership: GameSessionMembership,
     except peewee.IntegrityError:
         # Already exists and it's for another player, no inventory update needed
         logger().info(
-            f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
+            f"Session {session.id}, Row {membership.row} found item "
             f"at {pickup_location}. It's a {pickup_target.pickup.name} for {pickup_target.player}, "
             f"but it was already collected.")
         return None
 
-    logger().info(f"Session {session.id}, Team {membership.team}, Row {membership.row} found item "
+    logger().info(f"Session {session.id}, Row {membership.row} found item "
                   f"at {pickup_location}. It's a {pickup_target.pickup.name} for {pickup_target.player}.")
     return pickup_target.player
 
@@ -413,8 +378,11 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
     session: GameSession = database.GameSession.get_by_id(session_id)
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
 
-    if not session.in_game:
-        raise InvalidAction("Unable to collect locations of sessions that haven't been started")
+    if session.state != GameSessionState.IN_PROGRESS:
+        raise InvalidAction("Unable to collect locations of sessions that aren't in progress")
+
+    if membership.is_observer:
+        raise InvalidAction("Observers can't collect locations")
 
     description = session.layout_description
 
@@ -429,13 +397,11 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
 
     for receiver_player in receiver_players:
         try:
-            receiver_membership = GameSessionMembership.get_by_session_position(
-                session, team=membership.team, row=receiver_player)
+            receiver_membership = GameSessionMembership.get_by_session_position(session, row=receiver_player)
             flask_socketio.emit(
                 "game_has_update",
                 {
                     "session": session_id,
-                    "team": membership.team,
                     "row": receiver_player,
                 },
                 room=f"game-session-{receiver_membership.session.id}-{receiver_membership.user.id}")
@@ -459,15 +425,15 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
     your_membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
     session: GameSession = your_membership.session
 
-    if not session.in_game:
-        logger().info(f"Session {session_id}, Team {your_membership.team}, Row {your_membership.row} "
-                      f"requested pickups, but session is not in-game.")
+    if session.state == GameSessionState.SETUP:
+        logger().info(f"Session {session_id}, Row {your_membership.row} "
+                      f"requested pickups, but session is setup.")
         return []
 
     description = session.layout_description
     row_to_member_name = {
         member.row: member.effective_name
-        for member in GameSessionMembership.members_for_team(session, your_membership.team)
+        for member in GameSessionMembership.non_observer_members(session)
     }
 
     resource_database = _get_resource_database(description, your_membership.row)
@@ -487,7 +453,7 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
                 "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
             })
 
-    logger().info(f"Session {session_id}, Team {your_membership.team}, Row {your_membership.row} "
+    logger().info(f"Session {session_id}, Row {your_membership.row} "
                   f"requested pickups, returning {len(result)} elements.")
 
     return result
