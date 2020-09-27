@@ -28,7 +28,7 @@ class PlayerSessionEntry:
             id=data["id"],
             name=data["name"],
             row=data["row"],
-            is_observer=data["team"] is None,
+            is_observer=data["is_observer"],
             admin=data["admin"],
         )
 
