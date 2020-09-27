@@ -28,8 +28,8 @@ def _pickup() -> PickupEntry:
 
 
 def _create_world_list(asset_id: int, pickup_index: PickupIndex):
-    logbook_node = LogbookNode("Logbook A", True, 0, asset_id, None, None, None, None)
-    pickup_node = PickupNode("Pickup Node", True, 1, pickup_index, True)
+    logbook_node = LogbookNode("Logbook A", True, None, 0, asset_id, None, None, None, None)
+    pickup_node = PickupNode("Pickup Node", True, None, 1, pickup_index, True)
 
     world_list = WorldList([
         World("World", "Dark World", 5000, [
