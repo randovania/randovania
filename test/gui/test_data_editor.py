@@ -49,15 +49,16 @@ def test_select_area_by_name(echoes_game_data,
     assert window.current_area.name == "Forgotten Bridge"
 
 
+@pytest.mark.asyncio
 @pytest.mark.parametrize("accept", [False, True])
 @patch("randovania.gui.data_editor.ConnectionsEditor")
 @patch("randovania.gui.data_editor.DataEditorWindow._apply_edit_connections", autospec=True)
-def test_open_edit_connection(mock_apply_edit_connections,
-                              mock_connections_editor,
-                              accept: bool,
-                              echoes_game_data,
-                              skip_qtbot,
-                              ):
+async def test_open_edit_connection(mock_apply_edit_connections,
+                                    mock_connections_editor,
+                                    accept: bool,
+                                    echoes_game_data,
+                                    skip_qtbot,
+                                    ):
     # Setup
     window = DataEditorWindow(echoes_game_data, None, False, True)
     skip_qtbot.addWidget(window)
@@ -66,7 +67,7 @@ def test_open_edit_connection(mock_apply_edit_connections,
     editor.exec_.return_value = QDialog.Accepted if accept else QDialog.Rejected
 
     # Run
-    window._open_edit_connection()
+    await window._open_edit_connection()
 
     # Assert
     mock_connections_editor.assert_called_once_with(window, window.resource_database, ANY)
