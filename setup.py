@@ -1,6 +1,10 @@
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
-from pyqt_distutils.build_ui import build_ui
+
+try:
+    from pyqt_distutils.build_ui import build_ui
+except ModuleNotFoundError:
+    build_ui = None
 
 
 class custom_build_py(build_py):
@@ -63,20 +67,44 @@ setup(
         "pyqt-distutils",
     ],
     install_requires=[
-        'PySide2>=5.12',
-        'aiofiles',
-        'appdirs',
-        'asyncqt',
         'nod>=1.1',
-        'requests',
         'networkx',
         'bitstruct',
-        'construct',
+        'construct<2.10',
         'tenacity',
-        'pytest',
-        'pytest-cov',
-        'pytest-qt',
+        'python-slugify',
+        'python-socketio[asyncio_client]',
+        'aiohttp[speedups]',
     ],
+    extras_require={
+        "gui": [
+            'PySide2>=5.12,<5.15',
+            'aiofiles',
+            'appdirs',
+            'asyncqt',
+            'dolphin-memory-engine>=1.0.2',
+            'markdown',
+            'pypresence',
+            'requests',
+        ],
+        "server": [
+            "cryptography",
+            "eventlet",
+            "flask-discord",
+            "flask-socketio",
+            "prometheus-flask-exporter",
+            "peewee",
+            "requests-oauthlib",
+        ],
+        "test": [
+            'pytest',
+            'pytest-cov',
+            'pytest-qt',
+            'pytest-asyncio',
+            'pytest-mock',
+            'mock>=4.0',
+        ]
+    },
     entry_points={
         'console_scripts': [
             "randovania = randovania.__main__:main"

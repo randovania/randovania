@@ -5,14 +5,15 @@ import networkx
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, ResourceNode, PickupNode
-from randovania.game_description.requirements import RequirementSet, RequirementList
+from randovania.game_description.requirements import RequirementSet, Requirement, RequirementAnd, \
+    ResourceRequirement
 from randovania.resolver.state import State
 
 
 class GraphPath(NamedTuple):
     previous_node: Optional[Node]
     node: Node
-    requirements: RequirementSet
+    requirement: Requirement
 
     def is_in_graph(self, digraph: networkx.DiGraph):
         if self.previous_node is None:
@@ -23,7 +24,7 @@ class GraphPath(NamedTuple):
     def add_to_graph(self, digraph: networkx.DiGraph):
         digraph.add_node(self.node.index)
         if self.previous_node is not None:
-            digraph.add_edge(self.previous_node.index, self.node.index, requirements=self.requirements)
+            digraph.add_edge(self.previous_node.index, self.node.index, requirement=self.requirement)
 
 
 def filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
@@ -65,7 +66,7 @@ class GeneratorReach:
     _reachable_paths: Optional[Dict[int, List[Node]]]
     _reachable_costs: Optional[Dict[int, int]]
     _node_reachable_cache: Dict[int, bool]
-    _unreachable_paths: Dict[Tuple[Node, Node], RequirementSet]
+    _unreachable_paths: Dict[Tuple[Node, Node], Requirement]
     _safe_nodes: Optional[Set[Node]]
     _is_node_safe_cache: Dict[Node, bool]
 
@@ -105,25 +106,25 @@ class GeneratorReach:
                          ) -> "GeneratorReach":
 
         reach = cls(game, initial_state, networkx.DiGraph())
-        reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
+        reach._expand_graph([GraphPath(None, initial_state.node, Requirement.trivial())])
         return reach
 
-    def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet, bool]]:
+    def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, Requirement, bool]]:
         extra_requirement = _extra_requirement_for_node(self._game, node)
-        requirement_to_leave = node.requirements_to_leave(self._state.patches, self._state.resources)
+        requirement_to_leave = node.requirement_to_leave(self._state.patches, self._state.resources)
 
-        for target_node, requirements in self._game.world_list.potential_nodes_from(node, self.state.patches):
+        for target_node, requirement in self._game.world_list.potential_nodes_from(node, self.state.patches):
             if target_node is None:
                 continue
 
-            if requirement_to_leave != RequirementSet.trivial():
-                requirements = requirements.union(requirement_to_leave)
+            if requirement_to_leave != Requirement.trivial():
+                requirement = RequirementAnd([requirement, requirement_to_leave])
 
             if extra_requirement is not None:
-                requirements = requirements.union(extra_requirement)
+                requirement = RequirementAnd([requirement, extra_requirement])
 
-            satisfied = requirements.satisfied(self._state.resources, self._state.energy)
-            yield target_node, requirements, satisfied
+            satisfied = requirement.satisfied(self._state.resources, self._state.energy)
+            yield target_node, requirement, satisfied
 
     def _expand_graph(self, paths_to_check: List[GraphPath]):
         # print("!! _expand_graph", len(paths_to_check))
@@ -136,11 +137,11 @@ class GeneratorReach:
 
             path.add_to_graph(self._digraph)
 
-            for target_node, requirements, satisfied in self._potential_nodes_from(path.node):
+            for target_node, requirement, satisfied in self._potential_nodes_from(path.node):
                 if satisfied:
-                    paths_to_check.append(GraphPath(path.node, target_node, requirements))
+                    paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
-                    self._unreachable_paths[path.node, target_node] = requirements
+                    self._unreachable_paths[path.node, target_node] = requirement
 
         self._safe_nodes = None
 
@@ -272,10 +273,10 @@ class GeneratorReach:
         edges_to_remove = []
         # Check if we can expand the corners of our graph
         # TODO: check if expensive. We filter by only nodes that depends on a new resource
-        for edge, requirements in self._unreachable_paths.items():
-            if requirements.satisfied(self._state.resources, self._state.energy):
+        for edge, requirement in self._unreachable_paths.items():
+            if requirement.satisfied(self._state.resources, self._state.energy):
                 from_node, to_node = edge
-                paths_to_check.append(GraphPath(from_node, to_node, requirements))
+                paths_to_check.append(GraphPath(from_node, to_node, requirement))
                 edges_to_remove.append(edge)
 
         for edge in edges_to_remove:
@@ -294,10 +295,10 @@ class GeneratorReach:
         if new_dangerous_resources:
             edges_to_remove = []
             for source, target, attributes in self._digraph.edges.data():
-                requirements: RequirementSet = attributes["requirements"]
-                dangerous = requirements.dangerous_resources
+                requirement: Requirement = attributes["requirement"]
+                dangerous = requirement.as_set.dangerous_resources
                 if dangerous and new_dangerous_resources.intersection(dangerous):
-                    if not requirements.satisfied(new_state.resources, new_state.energy):
+                    if not requirement.satisfied(new_state.resources, new_state.energy):
                         edges_to_remove.append((source, target))
 
             for edge in edges_to_remove:
@@ -313,18 +314,18 @@ class GeneratorReach:
 
     def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
         results = {}
-        for (_, node), requirements in self._unreachable_paths.items():
+        for (_, node), requirement in self._unreachable_paths.items():
             if self.is_reachable_node(node):
                 continue
-            requirements = requirements.patch_requirements(self.state.resources, 1)
+            requirements = requirement.patch_requirements(self.state.resources, 1).simplify().as_set
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
-                results[node] = requirements
+                results[node] = requirement.as_set
         return results
 
 
-def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[RequirementSet]:
+def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[Requirement]:
     extra_requirement = None
 
     if node.is_resource_node:
@@ -332,7 +333,7 @@ def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[R
 
         node_resource = resource_node.resource()
         if node_resource in game.dangerous_resources:
-            extra_requirement = RequirementSet([RequirementList.with_single_resource(node_resource)])
+            extra_requirement = ResourceRequirement(node_resource, 1, False)
 
     return extra_requirement
 

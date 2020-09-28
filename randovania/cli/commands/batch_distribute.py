@@ -19,7 +19,7 @@ def batch_distribute_helper(base_permalink: Permalink,
     permalink = Permalink(
         seed_number=seed_number,
         spoiler=True,
-        preset=base_permalink.preset,
+        presets=base_permalink.presets,
     )
 
     start_time = time.perf_counter()

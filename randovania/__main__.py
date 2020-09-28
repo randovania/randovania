@@ -1,7 +1,10 @@
+import logging
 import multiprocessing
 import sys
 
 from randovania import cli
+
+logging.basicConfig(level=logging.WARNING)
 
 
 def main():

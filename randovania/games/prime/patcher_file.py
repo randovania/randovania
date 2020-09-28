@@ -4,12 +4,12 @@ from typing import Dict, List, Iterator
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.assignment import GateAssignment
+from randovania.game_description.assignment import GateAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import TeleporterNode
+from randovania.game_description.node import TeleporterNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -20,12 +20,14 @@ from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import sky_temple_key_hint, item_hints
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.patcher_configuration import PickupModelStyle, PickupModelDataSource
 
-_TOTAL_PICKUP_COUNT = 119
+_EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
+_EASTER_EGG_SHINY_MISSILE = 8192
 _CUSTOM_NAMES_FOR_ELEVATORS = {
     # Great Temple
     408633584: "Temple Transport Emerald",
@@ -172,53 +174,132 @@ def _calculate_hud_text(pickup: PickupEntry,
         return _get_all_hud_text(pickup, memo_data)
 
 
-def _create_pickup(original_index: PickupIndex,
-                   pickup: PickupEntry,
-                   visual_pickup: PickupEntry,
-                   model_style: PickupModelStyle,
-                   memo_data: Dict[str, str],
-                   ) -> dict:
-    model_pickup = pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
+class PickupCreator:
+    def __init__(self, rng: Random):
+        self.rng = rng
 
-    result = {
-        "pickup_index": original_index.index,
-        "resources": _create_pickup_resources_for(pickup.resources[0].resources),
-        "conditional_resources": [
-            {
-                "item": conditional.item.index,
-                "resources": _create_pickup_resources_for(conditional.resources),
+    def create_pickup_data(self,
+                           original_index: PickupIndex,
+                           pickup_target: PickupTarget,
+                           visual_pickup: PickupEntry,
+                           model_style: PickupModelStyle,
+                           scan_text: str) -> dict:
+        raise NotImplementedError()
+
+    def create_pickup(self,
+                      original_index: PickupIndex,
+                      pickup_target: PickupTarget,
+                      visual_pickup: PickupEntry,
+                      model_style: PickupModelStyle,
+                      ) -> dict:
+        model_pickup = pickup_target.pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
+
+        if model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}:
+            scan_text = _pickup_scan(pickup_target.pickup)
+        else:
+            scan_text = visual_pickup.name
+
+        # TODO: less improvised, really
+        model_index = model_pickup.model_index
+        if model_index == 22 and self.rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
+            # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
+            model_index = 23
+
+        result = {
+            "pickup_index": original_index.index,
+            **self.create_pickup_data(original_index, pickup_target, visual_pickup, model_style, scan_text),
+            "model_index": model_index,
+            "sound_index": 1 if model_pickup.item_category.is_key else 0,
+            "jingle_index": _get_jingle_index_for(model_pickup.item_category),
+        }
+        return result
+
+
+class PickupCreatorSolo(PickupCreator):
+    def __init__(self, rng: Random, memo_data: Dict[str, str]):
+        super().__init__(rng)
+        self.memo_data = memo_data
+
+    def create_pickup_data(self,
+                           original_index: PickupIndex,
+                           pickup_target: PickupTarget,
+                           visual_pickup: PickupEntry,
+                           model_style: PickupModelStyle,
+                           scan_text: str) -> dict:
+        hud_text = _calculate_hud_text(pickup_target.pickup, visual_pickup, model_style, self.memo_data)
+        if hud_text == ["Energy Transfer Module acquired!"] and (
+                self.rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
+            hud_text = ["Run validated!"]
+
+        return {
+            "resources": _create_pickup_resources_for(pickup_target.pickup.resources[0].resources),
+            "conditional_resources": [
+                {
+                    "item": conditional.item.index,
+                    "resources": _create_pickup_resources_for(conditional.resources),
+                }
+                for conditional in pickup_target.pickup.resources[1:]
+            ],
+            "convert": [
+                {
+                    "from_item": conversion.source.index,
+                    "to_item": conversion.target.index,
+                    "clear_source": conversion.clear_source,
+                    "overwrite_target": conversion.overwrite_target,
+                }
+                for conversion in pickup_target.pickup.convert_resources
+            ],
+            "hud_text": hud_text,
+            "scan": scan_text,
+        }
+
+
+class PickupCreatorMulti(PickupCreator):
+    def __init__(self, rng: Random, memo_data: Dict[str, str], players_config: PlayersConfiguration):
+        super().__init__(rng)
+        self.solo_creator = PickupCreatorSolo(rng, memo_data)
+        self.players_config = players_config
+
+    def create_pickup_data(self,
+                           original_index: PickupIndex,
+                           pickup_target: PickupTarget,
+                           visual_pickup: PickupEntry,
+                           model_style: PickupModelStyle,
+                           scan_text: str) -> dict:
+        if pickup_target.player == self.players_config.player_index:
+            result = self.solo_creator.create_pickup_data(original_index, pickup_target, visual_pickup,
+                                                          model_style, scan_text)
+            result["scan"] = f"Your {result['scan']}"
+        else:
+            other_name = self.players_config.player_names[pickup_target.player]
+            result: dict = {
+                "resources": [],
+                "conditional_resources": [],
+                "convert": [],
+                "hud_text": [f"Sent {pickup_target.pickup.name} to {other_name}!"],
+                "scan": f"{other_name}'s {scan_text}",
             }
-            for conditional in pickup.resources[1:]
-        ],
-        "convert": [
-            {
-                "from_item": conversion.source.index,
-                "to_item": conversion.target.index,
-                "clear_source": conversion.clear_source,
-                "overwrite_target": conversion.overwrite_target,
-            }
-            for conversion in pickup.convert_resources
-        ],
 
-        "hud_text": _calculate_hud_text(pickup, visual_pickup, model_style, memo_data),
+        magic_resource = {
+            "index": 74,
+            "amount": original_index.index + 1,
+        }
 
-        "scan": _pickup_scan(pickup) if model_style in {PickupModelStyle.ALL_VISIBLE,
-                                                        PickupModelStyle.HIDE_MODEL} else visual_pickup.name,
-        "model_index": model_pickup.model_index,
-        "sound_index": 1 if model_pickup.item_category.is_key else 0,
-        "jingle_index": _get_jingle_index_for(model_pickup.item_category),
-    }
-    return result
+        result["resources"].append(magic_resource)
+        for conditional in result["conditional_resources"]:
+            conditional["resources"].append(magic_resource)
+
+        return result
 
 
 def _get_visual_model(original_index: int,
-                      pickup_list: List[PickupEntry],
+                      pickup_list: List[PickupTarget],
                       data_source: PickupModelDataSource,
                       ) -> PickupEntry:
     if data_source == PickupModelDataSource.ETM:
         return pickup_creator.create_visual_etm()
     elif data_source == PickupModelDataSource.RANDOM:
-        return pickup_list[original_index % len(pickup_list)]
+        return pickup_list[original_index % len(pickup_list)].pickup
     elif data_source == PickupModelDataSource.LOCATION:
         raise NotImplementedError()
     else:
@@ -226,21 +307,22 @@ def _get_visual_model(original_index: int,
 
 
 def _create_pickup_list(patches: GamePatches,
-                        useless_pickup: PickupEntry,
+                        useless_target: PickupTarget,
                         pickup_count: int,
                         rng: Random,
                         model_style: PickupModelStyle,
                         data_source: PickupModelDataSource,
-                        memo_data: Dict[str, str],
+                        creator: PickupCreator,
                         ) -> list:
     """
     Creates the patcher data for all pickups in the game
     :param patches:
-    :param useless_pickup:
+    :param useless_target:
     :param pickup_count:
     :param rng:
     :param model_style:
     :param data_source:
+    :param creator:
     :return:
     """
     pickup_assignment = patches.pickup_assignment
@@ -249,12 +331,11 @@ def _create_pickup_list(patches: GamePatches,
     rng.shuffle(pickup_list)
 
     pickups = [
-        _create_pickup(PickupIndex(i),
-                       pickup_assignment.get(PickupIndex(i), useless_pickup),
-                       _get_visual_model(i, pickup_list, data_source),
-                       model_style,
-                       memo_data,
-                       )
+        creator.create_pickup(PickupIndex(i),
+                              pickup_assignment.get(PickupIndex(i), useless_target),
+                              _get_visual_model(i, pickup_list, data_source),
+                              model_style,
+                              )
         for i in range(pickup_count)
     ]
 
@@ -263,6 +344,7 @@ def _create_pickup_list(patches: GamePatches,
 
 def _elevator_area_name(world_list: WorldList,
                         area_location: AreaLocation,
+                        include_world_name: bool,
                         ) -> str:
     if area_location.area_asset_id in _CUSTOM_NAMES_FOR_ELEVATORS:
         return _CUSTOM_NAMES_FOR_ELEVATORS[area_location.area_asset_id]
@@ -270,7 +352,10 @@ def _elevator_area_name(world_list: WorldList,
     else:
         world = world_list.world_by_area_location(area_location)
         area = world.area_by_asset_id(area_location.area_asset_id)
-        return area.name
+        if include_world_name:
+            return world_list.area_name(area, distinguish_dark_aether=True, separator=" - ")
+        else:
+            return area.name
 
 
 def _pretty_name_for_elevator(world_list: WorldList,
@@ -288,7 +373,7 @@ def _pretty_name_for_elevator(world_list: WorldList,
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
-    return "Transport to {}".format(_elevator_area_name(world_list, connection))
+    return "Transport to {}".format(_elevator_area_name(world_list, connection, False))
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
@@ -366,16 +451,85 @@ def _create_elevator_scan_port_patches(world_list: WorldList, elevator_connectio
         if node.scan_asset_id is None:
             continue
 
-        target_area_name = _elevator_area_name(world_list, elevator_connection[teleporter_id])
+        target_area_name = _elevator_area_name(world_list, elevator_connection[teleporter_id], True)
         yield {
             "asset_id": node.scan_asset_id,
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
         }
 
 
+def _logbook_title_string_patches():
+    return [
+        {
+            "asset_id": 3271034066,
+            "strings": [
+                'Hints', 'Violet', 'Cobalt', 'Technology', 'Keys 1, 2, 3', 'Keys 7, 8, 9', 'Regular Hints',
+                'Emerald', 'Amber', '&line-spacing=75;Flying Ing\nCache Hints', 'Keys 4, 5, 6', 'Keys 1, 2, 3',
+                '&line-spacing=75;Torvus Energy\nController', 'Underground Tunnel', 'Training Chamber',
+                'Catacombs', 'Gathering Hall', '&line-spacing=75;Fortress\nTransport\nAccess',
+                '&line-spacing=75;Hall of Combat\nMastery', 'Main Gyro Chamber',
+                '&line-spacing=75;Sanctuary\nEnergy\nController', 'Main Research', 'Watch Station',
+                'Sanctuary Entrance', '&line-spacing=75;Transport to\nAgon Wastes', 'Mining Plaza',
+                '&line-spacing=75;Agon Energy\nController', 'Portal Terminal', 'Mining Station B',
+                'Mining Station A', 'Meeting Grounds', 'Path of Eyes', 'Path of Roots',
+                '&line-spacing=75;Main Energy\nController', "A-Kul's Testament",
+                '&line-spacing=75;Central\nMining\nStation', 'Main Reactor', 'Torvus Lagoon', 'Catacombs',
+                'Sanctuary Entrance', "Dynamo Works", 'Storage Cavern A', 'Landing Site', 'Industrial Site',
+                '&line-spacing=75;Sky Temple\nKey Hints', 'Keys 7, 8, 9', 'Keys 4, 5, 6', 'Sky Temple Key 1',
+                'Sky Temple Key 2', 'Sky Temple Key 3', 'Sky Temple Key 4', 'Sky Temple Key 5',
+                'Sky Temple Key 6', 'Sky Temple Key 7', 'Sky Temple Key 8', 'Sky Temple Key 9'
+            ],
+        }, {
+            "asset_id": 2301408881,
+            "strings": [
+                'Research', 'Mechanisms', 'Luminoth Technology', 'Biology', 'GF Security', 'Vehicles',
+                'Aether Studies', 'Aether', 'Dark Aether', 'Phazon', 'Sandgrass', 'Blueroot Tree',
+                'Ing Webtrap',
+                'Webling', 'U-Mos', 'Bladepod', 'Ing Storage', 'Flying Ing Cache', 'Torvus Bearerpod',
+                'Agon Bearerpod', 'Ingworm Cache', 'Ingsphere Cache', 'Plantforms', 'Darklings',
+                'GF Gate Mk VI',
+                'GF Gate Mk VII', 'GF Lock Mk V', 'GF Defense Shield', 'Kinetic Orb Cannon', 'GF Bridge',
+                "Samus's Gunship", 'GFS Tyr', 'Pirate Skiff', 'Visors', 'Weapon Systems', 'Armor',
+                'Morph Ball Systems', 'Movement Systems', 'Beam Weapons', 'Scan Visor', 'Combat Visor',
+                'Dark Visor',
+                'Echo Visor', 'Morph Ball', 'Boost Ball', 'Spider Ball', 'Morph Ball Bomb', 'Power Bomb',
+                'Dark Bomb', 'Light Bomb', 'Annihilator Bomb', 'Space Jump Boots', 'Screw Attack',
+                'Gravity Boost',
+                'Grapple Beam', 'Varia Suit', 'Dark Suit', 'Light Suit', 'Power Beam', 'Dark Beam',
+                'Light Beam',
+                'Annihilator Beam', 'Missile Launcher', 'Seeker Missile Launcher', 'Super Missile',
+                'Sonic Boom',
+                'Darkburst', 'Sunburst', 'Charge Beam', 'Missile Systems', 'Charge Combos', 'Morph Balls',
+                'Bomb Systems', 'Miscellaneous', 'Dark Temple Keys', 'Bloatsac', 'Luminoth Technology',
+                'Light Beacons', 'Light Crystals', 'Lift Crystals', 'Utility Crystals', 'Light Crystal',
+                'Energized Crystal', 'Nullified Crystal', 'Super Crystal', 'Light Beacon', 'Energized Beacon',
+                'Nullified Beacon', 'Super Beacon', 'Inactive Beacon', 'Dark Lift Crystal',
+                'Light Lift Crystal',
+                'Liftvine Crystal', 'Torvus Hanging Pod', 'Sentinel Crystal', 'Dark Sentinel Crystal',
+                'Systems',
+                'Bomb Slot', 'Spinner', 'Grapple Point', 'Spider Ball Track', 'Energy Tank',
+                'Beam Ammo Expansion',
+                'Missile Expansion', 'Dark Agon Keys', 'Dark Torvus Keys', 'Ing Hive Keys', 'Sky Temple Keys',
+                'Temple Grounds', 'Sanctuary Fortress', 'Torvus Bog', 'Agon Wastes', 'Dark Agon Temple Key 1',
+                'Dark Agon Temple Key 2', 'Dark Agon Temple Key 3', 'Dark Torvus Temple Key 1',
+                'Dark Torvus Temple Key 2', 'Dark Torvus Temple Key 3', 'Ing Hive Temple Key 1',
+                'Ing Hive Temple Key 2', 'Ing Hive Temple Key 3', 'Sky Temple Key 1', 'Sky Temple Key 2',
+                'Sky Temple Key 3', 'Sky Temple Key 4', 'Sky Temple Key 5', 'Sky Temple Key 6',
+                'Sky Temple Key 7',
+                'Sky Temple Key 8', 'Sky Temple Key 9', 'Suit Expansions', 'Charge Combo', 'Ingclaw',
+                'Dormant Ingclaw', 'Power Bomb Expansion', 'Energy Transfer Module', 'Cocoons',
+                'Splinter Cocoon',
+                'War Wasp Hive', 'Metroid Cocoon', 'Dark Aether', 'Aether', 'Dark Portal', 'Light Portal',
+                'Energy Controller', 'Wall Jump Surface',
+            ]
+        },
+    ]
+
+
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
-                           patches: GamePatches,
+                           all_patches: Dict[int, GamePatches],
+                           players_config: PlayersConfiguration,
                            rng: Random,
                            ) -> list:
     """
@@ -385,6 +539,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     :param patches:
     :return:
     """
+    patches = all_patches[players_config.player_index]
     string_patches = []
 
     # Location Hints
@@ -397,26 +552,33 @@ def _create_string_patches(hint_config: HintConfiguration,
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
         string_patches.extend(sky_temple_key_hint.hide_hints())
     else:
-        string_patches.extend(sky_temple_key_hint.create_hints(patches, game.world_list,
+        string_patches.extend(sky_temple_key_hint.create_hints(all_patches, players_config, game.world_list,
                                                                stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
 
     # Elevator Scans
     string_patches.extend(_create_elevator_scan_port_patches(game.world_list, patches.elevator_connection))
 
+    string_patches.extend(_logbook_title_string_patches())
+
     return string_patches
 
 
-def _create_starting_popup(layout_configuration: LayoutConfiguration,
-                           resource_database: ResourceDatabase,
-                           starting_items: CurrentResources) -> list:
+def additional_starting_items(layout_configuration: LayoutConfiguration,
+                              resource_database: ResourceDatabase,
+                              starting_items: CurrentResources) -> List[str]:
     initial_items = pool_creator.calculate_pool_results(layout_configuration, resource_database)[2]
 
-    extra_items = [
+    return [
         "{}{}".format("{} ".format(quantity) if quantity > 1 else "", _resource_user_friendly_name(item))
         for item, quantity in starting_items.items()
         if 0 < quantity != initial_items.get(item, 0)
     ]
 
+
+def _create_starting_popup(layout_configuration: LayoutConfiguration,
+                           resource_database: ResourceDatabase,
+                           starting_items: CurrentResources) -> list:
+    extra_items = additional_starting_items(layout_configuration, resource_database, starting_items)
     if extra_items:
         return [
             "Extra starting items:",
@@ -439,24 +601,32 @@ def _simplified_memo_data() -> Dict[str, str]:
 
 
 def create_patcher_file(description: LayoutDescription,
+                        players_config: PlayersConfiguration,
                         cosmetic_patches: CosmeticPatches,
                         ) -> dict:
     """
 
     :param description:
+    :param players_config:
     :param cosmetic_patches:
     :return:
     """
-    patcher_config = description.permalink.patcher_configuration
-    layout = description.permalink.layout_configuration
-    patches = description.patches
+    preset = description.permalink.get_preset(players_config.player_index)
+    patcher_config = preset.patcher_configuration
+    layout = preset.layout_configuration
+    patches = description.all_patches[players_config.player_index]
     rng = Random(description.permalink.as_str)
 
     game = data_reader.decode_data(layout.game_data)
-    useless_pickup = pickup_creator.create_useless_pickup(game.resource_database)
+    pickup_count = sum(1 for node in game.world_list.all_nodes if isinstance(node, PickupNode))
+    useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
+                                  players_config.player_index)
 
     result = {}
     _add_header_data_to_result(description, result)
+
+    result["menu_mod"] = patcher_config.menu_mod
+    result["user_preferences"] = cosmetic_patches.user_preferences.as_json
 
     # Add Spawn Point
     result["spawn_point"] = _create_spawn_point_field(patches, game.resource_database)
@@ -469,11 +639,17 @@ def create_patcher_file(description: LayoutDescription,
     else:
         memo_data = default_prime2_memo_data()
 
-    result["pickups"] = _create_pickup_list(patches, useless_pickup, _TOTAL_PICKUP_COUNT,
+    if description.permalink.player_count == 1:
+        creator = PickupCreatorSolo(rng, memo_data)
+    else:
+        creator = PickupCreatorMulti(rng, memo_data, players_config)
+
+    result["pickups"] = _create_pickup_list(patches,
+                                            useless_target, pickup_count,
                                             rng,
                                             patcher_config.pickup_model_style,
                                             patcher_config.pickup_model_data_source,
-                                            memo_data,
+                                            creator=creator,
                                             )
 
     # Add the elevators
@@ -483,9 +659,9 @@ def create_patcher_file(description: LayoutDescription,
     result["translator_gates"] = _create_translator_gates_field(patches.translator_gates)
 
     # Scan hints
-    result["string_patches"] = _create_string_patches(layout.hints, game, patches, rng)
+    result["string_patches"] = _create_string_patches(layout.hints, game, description.all_patches, players_config, rng)
 
-    # TODO: if we're starting at ship, needs to collect 8 sky temple keys and want item loss,
+    # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
     # we should disable hive_chamber_b_post_state
     result["specific_patches"] = {
         "hive_chamber_b_post_state": True,
@@ -498,6 +674,29 @@ def create_patcher_file(description: LayoutDescription,
         "dark_world_varia_suit_damage": patcher_config.varia_suit_damage,
         "dark_world_dark_suit_damage": patcher_config.dark_suit_damage,
     }
+
+    result["logbook_patches"] = [
+        {"asset_id": 25, "connections": [81, 166, 195], },
+        {"asset_id": 38, "connections": [4, 33, 120, 251, 364], },
+        {"asset_id": 60, "connections": [38, 74, 154, 196], },
+        {"asset_id": 74, "connections": [59, 75, 82, 102, 260], },
+        {"asset_id": 81, "connections": [148, 151, 156], },
+        {"asset_id": 119, "connections": [60, 254, 326], },
+        {"asset_id": 124, "connections": [35, 152, 355], },
+        {"asset_id": 129, "connections": [29, 118, 367], },
+        {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342], },
+        {"asset_id": 166, "connections": [45, 303, 317], },
+        {"asset_id": 194, "connections": [1, 6], },
+        {"asset_id": 195, "connections": [159, 221, 231], },
+        {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379], },
+        {"asset_id": 233, "connections": [58, 191, 373], },
+        {"asset_id": 241, "connections": [223, 284], },
+        {"asset_id": 254, "connections": [129, 233, 319], },
+        {"asset_id": 318, "connections": [119, 216, 277, 343], },
+        {"asset_id": 319, "connections": [52, 289, 329], },
+        {"asset_id": 326, "connections": [124, 194, 241, 327], },
+        {"asset_id": 327, "connections": [46, 275], },
+    ]
 
     _apply_translator_gate_patches(result["specific_patches"], layout.elevators)
 

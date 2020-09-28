@@ -7,7 +7,7 @@ You could find the Light Beam right off the start, or the Bombs deep inside Sanc
 
 ### Windows
 
-In the [releases page](https://github.com/henriquegemignani/randovania/releases), we have zip files
+In the [releases page](https://github.com/randovania/randovania/releases), we have zip files
 with everything ready to use. Just extract and run!
 
 ## Community
@@ -17,12 +17,11 @@ Join the Metroid Prime Randomizer Discord: <https://discord.gg/gymstUz>
 ## Credits
 Game patching written by [Claris](https://www.twitch.tv/claris).
 
-GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with some
-contributions by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook).
+GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with contributions 
+by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook) and [gollop](https://github.com/gollop).
 
-Many thanks to [Claris](https://www.twitch.tv/claris) for
-making the Echoes Randomizer and both collecting and providing this
-incredible set of data which powers Randovania.
+Many thanks to Claris for making the original Echoes Randomizer and both collecting and providing this
+incredible initial set of data which powers Randovania.
 
 Claris also made the included [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z),
 a tool for practicing Echoes. For more information, see the
@@ -39,11 +38,19 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 ### Setup
 
-1.  Clone the git repository: `git clone https://github.com/randovania/randovania/`
-2.  With a terminal in the repository root:
-    1. Install pip/setuptools: `python -m pip install --upgrade -r requirements-setuptools.txt`
-    2. Install requirements:   `python -m pip install --upgrade -r requirements.txt`
-    3. Install Randovania as editable: `python -m pip install -e .`
-3.  Run with `python -m randovania`
+1. Clone this repository
+2. Open a terminal in the repository root
+3. Create a virtual environment: `py -3.7 -m venv venv`
+4. Activate the virtual environment `venv\scripts\activate`
+5. Install pip/setuptools: `python -m pip install --upgrade -r requirements-setuptools.txt`
+6. Install requirements: `python -m pip install --upgrade -r requirements.txt`
+7. Generate the UI files: `python setup.py build_ui`
+7. Install Randovania as editable: `python -m pip install -e .`
+8. Run with `python -m randovania`
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
+
+### Third Party packages
+
+Our requirements.txt is kept up to do date with help from PyUp.io, which automatically opens
+pull requests to update when new releases are made.

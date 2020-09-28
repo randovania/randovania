@@ -1,8 +1,8 @@
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Dict
 
-from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
 from randovania.generator.item_pool import PoolResults
@@ -15,7 +15,6 @@ from randovania.resolver.exceptions import InvalidConfiguration
 def _find_ammo_for(ammo_index: Tuple[int, ...],
                    ammo_configuration: AmmoConfiguration,
                    ) -> Tuple[Optional[Ammo], bool]:
-
     for ammo, ammo_state in ammo_configuration.items_state.items():
         if ammo.items == ammo_index:
             return ammo, ammo_state.requires_major_item
@@ -36,7 +35,7 @@ def add_major_items(resource_database: ResourceDatabase,
     """
 
     item_pool: List[PickupEntry] = []
-    new_assignment: PickupAssignment = {}
+    new_assignment: Dict[PickupIndex, PickupEntry] = {}
     initial_resources: CurrentResources = {}
 
     for item, state in major_items_configuration.items_state.items():
@@ -64,4 +63,4 @@ def add_major_items(resource_database: ResourceDatabase,
                 initial_resources
             )
 
-    return item_pool, new_assignment, initial_resources
+    return PoolResults(item_pool, new_assignment, initial_resources)

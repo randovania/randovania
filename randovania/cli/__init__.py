@@ -1,17 +1,16 @@
 import argparse
 import os
 import sys
-
-import pytest
+from pathlib import Path
 
 import randovania
-from randovania.cli import echoes
-from randovania.gui import qt
+from randovania.cli import echoes, multiworld, gui
 
 
 def create_subparsers(root_parser):
     echoes.create_subparsers(root_parser)
-    qt.create_subparsers(root_parser)
+    multiworld.create_subparsers(root_parser)
+    gui.create_subparsers(root_parser)
 
 
 def _print_version(args):
@@ -22,24 +21,34 @@ def _print_version(args):
 
 def _create_parser():
     parser = argparse.ArgumentParser()
+
     create_subparsers(parser.add_subparsers(dest="game"))
     parser.add_argument("--version", action="store_const",
                         const=_print_version, dest="func")
+    parser.add_argument("--configuration", type=Path,
+                        help="Use the given configuration path instead of the included one.")
+
     return parser
 
 
 def _run_args(args):
-    if getattr(args, "func", None) is None:
-        args.func = qt.run
+    if args.configuration is not None:
+        randovania.CONFIGURATION_FILE_PATH = args.configuration.absolute()
     args.func(args)
 
 
 def run_pytest(argv):
-    sys.exit(pytest.main(argv[2:], plugins=[]))
+    import pytest
+    import pytest_asyncio.plugin
+    import pytest_mock.plugin
+    sys.exit(pytest.main(argv[2:], plugins=[pytest_asyncio.plugin, pytest_mock.plugin]))
 
 
 def run_cli(argv):
     if len(argv) > 1 and argv[1] == "--pytest":
         run_pytest(argv)
     else:
-        _run_args(_create_parser().parse_args(argv[1:]))
+        args = argv[1:]
+        if gui.has_gui and not args:
+            args = ["gui", "main"]
+        _run_args(_create_parser().parse_args(args))

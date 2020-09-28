@@ -1,5 +1,6 @@
 import base64
 import collections
+import dataclasses
 import re
 from typing import Dict, List, Iterator, Tuple, DefaultDict
 
@@ -7,7 +8,7 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, BitPackFloat
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.assignment import PickupAssignment
+from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint
 from randovania.game_description.item.item_category import ItemCategory
@@ -29,6 +30,12 @@ _PROBABILITY_OFFSET_META = {
     "precision": 2.0,
     "if_different": 0.0,
 }
+_PROBABILITY_MULTIPLIER_META = {
+    "min": 0,
+    "max": 8,
+    "precision": 2.0,
+    "if_different": 1.0,
+}
 
 
 class BitPackPickupEntry:
@@ -45,6 +52,7 @@ class BitPackPickupEntry:
 
         yield self.value.model_index, 255
         yield from BitPackFloat(self.value.probability_offset).bit_pack_encode(_PROBABILITY_OFFSET_META)
+        yield from BitPackFloat(self.value.probability_multiplier).bit_pack_encode(_PROBABILITY_MULTIPLIER_META)
         yield from self.value.item_category.bit_pack_encode({})
         yield from bitpacking.encode_bool(has_name)
         yield len(self.value.resources) - 1, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES
@@ -70,6 +78,7 @@ class BitPackPickupEntry:
     def bit_pack_unpack(cls, decoder: BitPackDecoder, name: str, database: ResourceDatabase) -> PickupEntry:
         model_index = decoder.decode_single(255)
         probability_offset = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_OFFSET_META)
+        probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
         item_category = ItemCategory.bit_pack_unpack(decoder, {})
         has_name = bitpacking.decode_bool(decoder)
         num_conditional = decoder.decode_single(MAXIMUM_PICKUP_CONDITIONAL_RESOURCES) + 1
@@ -114,39 +123,45 @@ class BitPackPickupEntry:
             resources=tuple(conditional_resources),
             convert_resources=tuple(convert_resources),
             probability_offset=probability_offset,
+            probability_multiplier=probability_multiplier,
         )
 
 
 class BitPackPickupEntryList(BitPackValue):
-    value: List[Tuple[PickupIndex, PickupEntry]]
+    value: List[Tuple[PickupIndex, PickupTarget]]
+    num_players: int
     database: ResourceDatabase
 
-    def __init__(self, value: List[Tuple[PickupIndex, PickupEntry]], database: ResourceDatabase):
+    def __init__(self, value: List[Tuple[PickupIndex, PickupTarget]], num_players: int, database: ResourceDatabase):
         self.value = value
+        self.num_players = num_players
         self.database = database
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         for index, entry in self.value:
             yield index.index, 255
-            yield from BitPackPickupEntry(entry, self.database).bit_pack_encode({})
+            yield from bitpacking.encode_int_with_limits(entry.player, (self.num_players,))
+            yield from BitPackPickupEntry(entry.pickup, self.database).bit_pack_encode({})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "BitPackPickupEntryList":
         result = []
         index_mapping = metadata["index_mapping"]
+        num_players = metadata["num_players"]
 
         for _ in range(len(index_mapping)):
             index = PickupIndex(decoder.decode_single(255))
+            target_player = bitpacking.decode_int_with_limits(decoder, (num_players,))
             pickup = BitPackPickupEntry.bit_pack_unpack(decoder, index_mapping[index], metadata["database"])
-            result.append((index, pickup))
+            result.append((index, PickupTarget(pickup, target_player)))
 
-        return BitPackPickupEntryList(result, metadata["database"])
+        return BitPackPickupEntryList(result, num_players, metadata["database"])
 
 
 def _pickup_assignment_to_item_locations(world_list: WorldList,
                                          pickup_assignment: PickupAssignment,
+                                         num_players: int,
                                          ) -> Dict[str, Dict[str, str]]:
-
     items_locations: DefaultDict[str, Dict[str, str]] = collections.defaultdict(dict)
 
     for world, area, node in world_list.all_worlds_areas_nodes:
@@ -154,8 +169,11 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
             continue
 
         if node.pickup_index in pickup_assignment:
-            pickup = pickup_assignment[node.pickup_index]
-            item_name = pickup.name
+            target = pickup_assignment[node.pickup_index]
+            if num_players > 1:
+                item_name = f"{target.pickup.name} for Player {target.player}"
+            else:
+                item_name = f"{target.pickup.name}"
         else:
             item_name = _ETM_NAME
 
@@ -211,9 +229,11 @@ def _find_gate_with_name(gate_name: str) -> TranslatorGate:
     raise ValueError("Unknown gate name: {}".format(gate_name))
 
 
-def serialize(patches: GamePatches, game_data: dict) -> dict:
+def serialize_single(player_index: int, num_players: int, patches: GamePatches, game_data: dict) -> dict:
     """
     Encodes a given GamePatches into a JSON-serializable dict.
+    :param player_index:
+    :param num_players:
     :param patches:
     :param game_data:
     :return:
@@ -241,7 +261,8 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
         "locations": {
             key: value
             for key, value in _pickup_assignment_to_item_locations(world_list,
-                                                                   patches.pickup_assignment).items()
+                                                                   patches.pickup_assignment,
+                                                                   num_players).items()
         },
         "hints": {
             str(asset.asset_id): hint.as_json
@@ -249,7 +270,9 @@ def serialize(patches: GamePatches, game_data: dict) -> dict:
         }
     }
 
-    b = bitpacking.pack_value(BitPackPickupEntryList(list(patches.pickup_assignment.items()), game.resource_database))
+    b = bitpacking.pack_value(BitPackPickupEntryList(list(patches.pickup_assignment.items()),
+                                                     num_players,
+                                                     game.resource_database))
     result["_locations_internal"] = base64.b64encode(b).decode("utf-8")
 
     return result
@@ -262,14 +285,22 @@ def _area_name_to_area_location(world_list: WorldList, area_name: str) -> AreaLo
     return AreaLocation(starting_world.world_asset_id, starting_area.area_asset_id)
 
 
-def decode(game_modifications: dict, configuration: LayoutConfiguration) -> GamePatches:
+def decode_single(player_index: int, num_players: int, game_modifications: dict,
+                  configuration: LayoutConfiguration) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
     :param game_modifications:
+    :param player_index:
+    :param num_players:
     :param configuration:
     :return:
     """
     game = data_reader.decode_data(configuration.game_data)
+    game_specific = dataclasses.replace(
+        game.game_specific,
+        energy_per_tank=configuration.energy_per_tank,
+        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
+
     world_list = game.world_list
 
     # Starting Location
@@ -303,11 +334,19 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
     }
 
     # Pickups
+    target_name_re = re.compile(r"(.*) for Player \d+")
+
     index_to_pickup_name = {}
     for world_name, world_data in game_modifications["locations"].items():
-        for area_node_name, pickup_name in world_data.items():
-            if pickup_name == _ETM_NAME:
+        for area_node_name, target_name in world_data.items():
+            if target_name == _ETM_NAME:
                 continue
+
+            pickup_name_match = target_name_re.match(target_name)
+            if pickup_name_match is not None:
+                pickup_name = pickup_name_match.group(1)
+            else:
+                pickup_name = target_name
 
             node = world_list.node_from_name(f"{world_name}/{area_node_name}")
             assert isinstance(node, PickupNode)
@@ -316,6 +355,7 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
     decoder = BitPackDecoder(base64.b64decode(game_modifications["_locations_internal"].encode("utf-8"), validate=True))
     pickup_assignment = dict(BitPackPickupEntryList.bit_pack_unpack(decoder, {
         "index_mapping": index_to_pickup_name,
+        "num_players": num_players,
         "database": game.resource_database,
     }).value)
 
@@ -325,6 +365,7 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         hints[LogbookAsset(int(asset_id))] = Hint.from_json(hint)
 
     return GamePatches(
+        player_index=player_index,
         pickup_assignment=pickup_assignment,  # PickupAssignment
         elevator_connection=elevator_connection,  # Dict[int, AreaLocation]
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
@@ -333,4 +374,21 @@ def decode(game_modifications: dict, configuration: LayoutConfiguration) -> Game
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaLocation
         hints=hints,
+        game_specific=game_specific,
     )
+
+
+def decode(game_modifications: List[dict],
+           layout_configurations: Dict[int, LayoutConfiguration],
+           ) -> Dict[int, GamePatches]:
+    return {
+        index: decode_single(index, len(game_modifications), modifications, layout_configurations[index])
+        for index, modifications in enumerate(game_modifications)
+    }
+
+
+def serialize(all_patches: Dict[int, GamePatches], all_game_data: Dict[int, dict]) -> List[dict]:
+    return [
+        serialize_single(index, len(all_patches), patches, all_game_data[index])
+        for index, patches in all_patches.items()
+    ]

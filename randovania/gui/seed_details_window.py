@@ -1,20 +1,26 @@
 from functools import partial
-from typing import List
+from typing import List, Dict, Optional
 
-from PySide2 import QtCore
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
+from PySide2 import QtCore, QtWidgets
+from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QApplication, QDialog, QAction, QMenu
+from asyncqt import asyncSlot
 
+from randovania.game_description import data_reader
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
+from randovania.games.prime import patcher_file
+from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
-from randovania.gui.lib import preset_describer
+from randovania.gui.lib import preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher, status_update_lib
 from randovania.interface_common.options import Options
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
@@ -30,7 +36,12 @@ def _unique(iterable):
 
 
 def _show_pickup_spoiler(button):
-    button.setText(button.item_name)
+    target_player = getattr(button, "target_player", None)
+    if target_player is not None:
+        label = f"{button.item_name} for {button.player_names[target_player]}"
+    else:
+        label = button.item_name
+    button.setText(label)
     button.item_is_hidden = False
 
 
@@ -39,23 +50,22 @@ def _hide_pickup_spoiler(button):
     button.item_is_hidden = True
 
 
-# TODO: this should not be a Window class
-class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
+class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton]
     pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
     _options: Options
-    _window_manager: WindowManager
+    _window_manager: Optional[WindowManager]
+    _player_names: Dict[int, str]
 
-    def __init__(self, background_processor: BackgroundTaskMixin, window_manager: WindowManager, options: Options):
+    def __init__(self, window_manager: Optional[WindowManager], options: Options):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
         self._history_items = []
         self.pickup_spoiler_buttons = []
-        self.background_processor = background_processor
         self._options = options
         self._window_manager = window_manager
 
@@ -65,26 +75,40 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
         self._action_open_tracker = QAction(self)
         self._action_open_tracker.setText("Open map tracker")
+        self._action_open_tracker.setEnabled(self._window_manager is not None)
         self._tool_button_menu.addAction(self._action_open_tracker)
 
         self._action_copy_permalink = QAction(self)
         self._action_copy_permalink.setText("Copy Permalink")
         self._tool_button_menu.addAction(self._action_copy_permalink)
 
+        self._action_open_dolphin = QAction(self)
+        self._action_open_dolphin.setText("Open Dolphin Hook")
+        self._tool_button_menu.addAction(self._action_open_dolphin)
+        self._action_open_dolphin.setVisible(False)
+
         # Signals
         self.export_log_button.clicked.connect(self._export_log)
         self.export_iso_button.clicked.connect(self._export_iso)
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
+        self.player_index_combo.activated.connect(self._update_current_player)
+        self.CloseEvent.connect(self.stop_background_process)
+
+        # Progress
+        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
+        self.progress_update_signal.connect(self.update_progress)
+        self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
         # Cosmetic
-        self.remove_hud_popup_check.stateChanged.connect(self._persist_option_then_notify("hud_memo_popup_removal"))
-        self.faster_credits_check.stateChanged.connect(self._persist_option_then_notify("speed_up_credits"))
-        self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
-        self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
+        self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
 
         # Keep the Layout Description visualizer ready, but invisible.
         self._create_pickup_spoilers()
+
+    @property
+    def current_player_index(self) -> int:
+        return self.player_index_combo.currentData()
 
     # Operations
     def _copy_permalink(self):
@@ -97,24 +121,34 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
 
-    def _export_iso(self):
+    @asyncSlot()
+    async def _export_iso(self):
         layout = self.layout_description
+        has_spoiler = layout.permalink.spoiler
         options = self._options
 
-        dialog = GameInputDialog(options,
-                                 "Echoes Randomizer - {}.iso".format(
-                                     layout.shareable_word_hash
-                                 ))
-        result = dialog.exec_()
+        dialog = GameInputDialog(options, "Echoes Randomizer - {}.iso".format(layout.shareable_word_hash), has_spoiler)
+        result = await async_dialog.execute_dialog(dialog)
 
         if result != QDialog.Accepted:
             return
 
+        if simplified_patcher.export_busy:
+            return await async_dialog.message_box(
+                self, QtWidgets.QMessageBox.Critical,
+                "Can't save ISO",
+                "Error: Unable to save multiple ISOs at the same time,"
+                "another window is saving an ISO right now.")
+
         input_file = dialog.input_file
         output_file = dialog.output_file
+        auto_save_spoiler = dialog.auto_save_spoiler
+        player_index = self.current_player_index
+        player_names = self._player_names
 
         with options:
             options.output_directory = output_file.parent
+            options.auto_save_spoiler = auto_save_spoiler
 
         def work(progress_update: ProgressUpdateCallable):
             num_updaters = 2
@@ -129,6 +163,10 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
 
             # Apply Layout
             simplified_patcher.apply_layout(layout=layout,
+                                            players_config=PlayersConfiguration(
+                                                player_index=player_index,
+                                                player_names=player_names,
+                                            ),
                                             options=options,
                                             progress_update=updaters[-2])
 
@@ -136,13 +174,16 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             simplified_patcher.pack_iso(output_iso=output_file,
                                         options=options,
                                         progress_update=updaters[-1])
+            if has_spoiler and auto_save_spoiler:
+                layout.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
 
             progress_update(f"Finished!", 1)
 
-        self.background_processor.run_in_background_thread(work, "Exporting...")
+        self.run_in_background_thread(work, "Exporting...")
 
     def _open_map_tracker(self):
-        self._window_manager.open_map_tracker(self.layout_description.permalink.layout_configuration)
+        current_preset = self.layout_description.permalink.presets[self.current_player_index]
+        self._window_manager.open_map_tracker(current_preset.layout_configuration)
 
     # Layout Visualization
     def _create_pickup_spoiler_combobox(self):
@@ -210,33 +251,78 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
         self.layout_description = description
         self.layout_info_tab.show()
 
+        self.setWindowTitle(f"Game Details: {description.shareable_word_hash}")
         self.export_log_button.setEnabled(description.permalink.spoiler)
 
+        self._player_names = {
+            i: f"Player {i + 1}"
+            for i in range(description.permalink.player_count)
+        }
+
+        self.export_iso_button.setEnabled(description.permalink.player_count == 1)
+        if description.permalink.player_count > 1:
+            self.export_iso_button.setToolTip("Multiworld games can only be exported from a game session")
+        else:
+            self.export_iso_button.setToolTip("")
+
+        self.customize_user_preferences_button.setVisible(description.permalink.player_count == 1)
+
+        self.player_index_combo.clear()
+        for i in range(description.permalink.player_count):
+            self.player_index_combo.addItem(self._player_names[i], i)
+        self.player_index_combo.setCurrentIndex(0)
+        self.player_index_combo.setVisible(description.permalink.player_count > 1)
+
+        self._update_current_player()
+
+    def _update_current_player(self):
+        description = self.layout_description
+        current_player = self.current_player_index
+        preset = description.permalink.get_preset(current_player)
+
+        self.permalink_edit.setText(description.permalink.as_str)
         title_text = """
         <p>
-            Permalink: <span style='font-weight:600;'>{description.permalink.as_str}</span><br/>
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
-            Preset Name: {description.permalink.preset.name}
+            Preset Name: {preset.name}
         </p>
-        """.format(description=description)
+        """.format(description=description, preset=preset)
         self.layout_title_label.setText(title_text)
 
-        categories = list(preset_describer.describe(description.permalink.preset))
+        categories = list(preset_describer.describe(preset))
         self.layout_description_left_label.setText(preset_describer.merge_categories(categories[::2]))
         self.layout_description_right_label.setText(preset_describer.merge_categories(categories[1::2]))
 
         # Game Spoiler
         has_spoiler = description.permalink.spoiler
         self.pickup_tab.setEnabled(has_spoiler)
+        patches = description.all_patches[current_player]
 
         if has_spoiler:
             pickup_names = {
-                pickup.name
-                for pickup in description.patches.pickup_assignment.values()
+                pickup.pickup.name
+                for pickup in patches.pickup_assignment.values()
             }
+            game_description = data_reader.decode_data(preset.layout_configuration.game_data)
+            starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
+
+            extra_items = patcher_file.additional_starting_items(preset.layout_configuration,
+                                                                 game_description.resource_database,
+                                                                 patches.starting_items)
+
+            self.spoiler_starting_location_label.setText("Starting Location: {}".format(
+                game_description.world_list.area_name(starting_area, distinguish_dark_aether=True, separator=" - ")
+            ))
+            self.spoiler_starting_items_label.setText("Random Starting Items: {}".format(
+                ", ".join(extra_items)
+                if extra_items else "None"
+            ))
+
         else:
             pickup_names = {}
             self.layout_info_tab.removeTab(self.layout_info_tab.indexOf(self.pickup_tab))
+            self.spoiler_starting_location_label.setText("Starting Location")
+            self.spoiler_starting_items_label.setText("Random Starting Items")
 
         self.pickup_spoiler_pickup_combobox.clear()
         self.pickup_spoiler_pickup_combobox.addItem("None")
@@ -244,9 +330,14 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
 
         for pickup_button in self.pickup_spoiler_buttons:
-            pickup = description.patches.pickup_assignment.get(pickup_button.pickup_index)
-            if pickup is not None:
-                pickup_button.item_name = pickup.name if has_spoiler else "????"
+            pickup_target = patches.pickup_assignment.get(pickup_button.pickup_index)
+
+            pickup_button.target_player = None
+            if pickup_target is not None:
+                pickup_button.item_name = pickup_target.pickup.name if has_spoiler else "????"
+                if has_spoiler and description.permalink.player_count > 1:
+                    pickup_button.target_player = pickup_target.player
+                    pickup_button.player_names = self._player_names
             else:
                 pickup_button.item_name = "Nothing"
 
@@ -286,15 +377,24 @@ class SeedDetailsWindow(QMainWindow, Ui_SeedDetailsWindow):
             button.setVisible(visible)
             button.row.label.setVisible(visible)
 
-    def _persist_option_then_notify(self, attribute_name: str):
-        def persist(value: int):
+    def _open_user_preferences_dialog(self):
+        dialog = EchoesUserPreferencesDialog(self, self._options.cosmetic_patches)
+        result = dialog.exec_()
+        if result == QDialog.Accepted:
             with self._options as options:
-                setattr(options, attribute_name, bool(value))
+                options.cosmetic_patches = dialog.cosmetic_patches
 
-        return persist
+    def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setEnabled(not value)
+        self.export_iso_button.setEnabled(value)
+        simplified_patcher.export_busy = not value
 
-    def on_options_changed(self, options: Options):
-        self.remove_hud_popup_check.setChecked(options.hud_memo_popup_removal)
-        self.faster_credits_check.setChecked(options.speed_up_credits)
-        self.open_map_check.setChecked(options.open_map)
-        self.pickup_markers_check.setChecked(options.pickup_markers)
+    def update_progress(self, message: str, percentage: int):
+        self.progress_label.setText(message)
+        if "Aborted" in message:
+            percentage = 0
+        if percentage >= 0:
+            self.progress_bar.setRange(0, 100)
+            self.progress_bar.setValue(percentage)
+        else:
+            self.progress_bar.setRange(0, 0)

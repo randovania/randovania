@@ -4,19 +4,17 @@ from pathlib import Path
 
 from randovania.cli import echoes_lib
 from randovania.generator import generator
-from randovania.interface_common import simplified_patcher
-from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.layout.permalink import Permalink
 from randovania.resolver import debug
 
 
 def distribute_command_logic(args):
-    debug.set_level(args.debug)
-
     def status_update(s):
         pass
 
     permalink = Permalink.from_str(args.permalink)
+    if permalink.spoiler:
+        debug.set_level(args.debug)
 
     before = time.perf_counter()
     layout_description = generator.generate_description(permalink=permalink, status_update=status_update,
@@ -25,11 +23,6 @@ def distribute_command_logic(args):
     print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
 
     layout_description.save_to_file(args.output_file)
-    simplified_patcher.write_patcher_file_to_disk(
-        args.output_file.with_suffix(".patcher-json"),
-        layout_description,
-        CosmeticPatches.default(),
-    )
 
 
 def add_distribute_command(sub_parsers):

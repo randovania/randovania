@@ -8,10 +8,13 @@ from pathlib import Path
 from typing import Callable, List, Union, Optional
 
 from randovania import get_data_path
-from randovania.games.prime import patcher_file
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.games.prime import patcher_file, dol_patcher
 from randovania.interface_common import status_update_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 from randovania.interface_common.game_workdir import validate_game_files_path
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 
@@ -113,6 +116,7 @@ def _base_args(game_root: Path,
     return [
         _get_randomizer_path(),
         game_root,
+        # "-test",
     ]
 
 
@@ -179,6 +183,7 @@ def _add_menu_mod_to_files(
 
 
 def apply_layout(description: LayoutDescription,
+                 players_config: PlayersConfiguration,
                  cosmetic_patches: CosmeticPatches,
                  backup_files_path: Optional[Path],
                  progress_update: ProgressUpdateCallable,
@@ -186,53 +191,52 @@ def apply_layout(description: LayoutDescription,
                  ):
     """
     Applies the modifications listed in the given LayoutDescription to the game in game_root.
-    :param use_modern_api:
-    :param cosmetic_patches:
     :param description:
+    :param players_config:
+    :param cosmetic_patches:
     :param game_root:
     :param backup_files_path: Path to use as pak backup, to remove/add menu mod.
     :param progress_update:
     :return:
     """
+    description.save_to_file(game_root.joinpath("files", f"randovania.{description.file_extension()}"))
 
-    patcher_configuration = description.permalink.patcher_configuration
+    apply_patcher_file(game_root, backup_files_path,
+                       patcher_file.create_patcher_file(description, players_config, cosmetic_patches),
+                       description.all_patches[players_config.player_index].game_specific,
+                       progress_update)
+
+
+def apply_patcher_file(game_root: Path,
+                       backup_files_path: Optional[Path],
+                       patcher_data: dict,
+                       game_specific: EchoesGameSpecific,
+                       progress_update: ProgressUpdateCallable,
+                       ):
+    """
+    Applies the modifications listed in the given patcher_data to the game in game_root.
+    :param game_root:
+    :param backup_files_path:
+    :param patcher_data:
+    :param game_specific:
+    :param progress_update:
+    :return:
+    """
+    menu_mod = patcher_data["menu_mod"]
+    user_preferences = EchoesUserPreferences.from_json_dict(patcher_data["user_preferences"])
 
     status_update = status_update_lib.create_progress_update_from_successive_messages(
-        progress_update, 400 if patcher_configuration.menu_mod else 100)
+        progress_update, 400 if menu_mod else 100)
 
     _ensure_no_menu_mod(game_root, backup_files_path, status_update)
     if backup_files_path is not None:
         _create_pak_backups(game_root, backup_files_path, status_update)
-    description.save_to_file(game_root.joinpath("files", f"randovania.{description.file_extension()}"))
-
-    _modern_api(game_root, status_update, description, cosmetic_patches)
-
-    if patcher_configuration.menu_mod:
-        _add_menu_mod_to_files(game_root, status_update)
-
-
-def _modern_api(game_root: Path,
-                status_update: Callable[[str], None],
-                description: LayoutDescription,
-                cosmetic_patches: CosmeticPatches,
-                ):
-    """
-
-    :param game_root:
-    :param status_update:
-    :param description:
-    :param cosmetic_patches:
-    :return:
-    """
-    patcher_data = patcher_file.create_patcher_file(description, cosmetic_patches)
-
-    if description.permalink.spoiler:
-        with game_root.joinpath("files", "patcher_data.json").open("w") as patcher_data_file:
-            json.dump(patcher_data, patcher_data_file)
 
     _run_with_args(_base_args(game_root),
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
+    dol_patcher.apply_patches(game_root, game_specific, user_preferences)
 
-
+    if menu_mod:
+        _add_menu_mod_to_files(game_root, status_update)

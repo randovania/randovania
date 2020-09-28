@@ -4,7 +4,8 @@ from typing import Dict, Set, Iterator, Tuple, FrozenSet
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.node import ResourceNode, Node
-from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements
+from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements, \
+    RequirementAnd, Requirement
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -71,9 +72,9 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes[node] = energy
 
-            requirement_to_leave = node.requirements_to_leave(initial_state.patches, initial_state.resources)
+            requirement_to_leave = node.requirement_to_leave(initial_state.patches, initial_state.resources)
 
-            for target_node, requirements in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
+            for target_node, requirement in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
                 if target_node is None:
                     continue
 
@@ -81,25 +82,24 @@ class ResolverReach:
                                                                                             math.inf) <= energy:
                     continue
 
-                if requirement_to_leave != RequirementSet.trivial():
-                    requirements = requirements.union(requirement_to_leave)
+                if requirement_to_leave != Requirement.trivial():
+                    requirement = RequirementAnd([requirement, requirement_to_leave])
 
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = requirements.satisfied(initial_state.resources, energy)
+                satisfied = requirement.satisfied(initial_state.resources, energy)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
                     satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources,
                                                                                   energy)
 
                 if satisfied:
-                    nodes_to_check[target_node] = energy - requirements.minimum_damage(initial_state.resources,
-                                                                                       energy)
+                    nodes_to_check[target_node] = energy - requirement.damage(initial_state.resources)
                     path_to_node[target_node] = path_to_node[node] + (node,)
 
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    requirements_by_node[target_node].update(requirements.alternatives)
+                    requirements_by_node[target_node].update(requirement.as_set.alternatives)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node in set(reach_nodes.keys()).intersection(requirements_by_node.keys()):
@@ -129,12 +129,12 @@ class ResolverReach:
 
     def satisfiable_actions(self,
                             state: State,
-                            victory_condition: RequirementSet,
+                            victory_condition: Requirement,
                             ) -> Iterator[Tuple[ResourceNode, int]]:
 
         # print(" > interesting_resources from {} satisfiable_requirements".format(len(satisfiable_requirements)))
         interesting_resources = calculate_interesting_resources(
-            self._satisfiable_requirements.union(victory_condition.alternatives),
+            self._satisfiable_requirements.union(victory_condition.as_set.alternatives),
             state.resources,
             state.energy,
             state.resource_database)

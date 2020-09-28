@@ -4,7 +4,7 @@ from typing import Tuple, List
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import EventNode, PickupNode, ResourceNode
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
+from randovania.game_description.requirements import ResourceRequirement, Requirement
 from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources, ResourceInfo
 
 
@@ -27,12 +27,8 @@ class EventPickupNode(ResourceNode):
     def resource(self) -> ResourceInfo:
         return self.pickup_node.pickup_index
 
-    def requirements_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> RequirementSet:
-        return RequirementSet([
-            RequirementList(0, [
-                IndividualRequirement(self.pickup_node.pickup_index, 1, False),
-            ])
-        ])
+    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+        return ResourceRequirement(self.pickup_node.pickup_index, 1, False)
 
     def can_collect(self, patches, current_resources: CurrentResources) -> bool:
         event_collect = self.event_node.can_collect(patches, current_resources)
@@ -59,12 +55,16 @@ def replace_with_event_pickups(game: GameDescription):
             if not isinstance(next_node, PickupNode):
                 continue
 
+            if sum(1 for connections in area.connections.values() if next_node in connections) > 1:
+                continue
+
             nodes_to_replace.append((event_node, next_node))
 
         for event_node, next_node in nodes_to_replace:
             combined_node = EventPickupNode(
                 "EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
                 event_node.heal or next_node.heal,
+                next_node.location,
                 event_node.index,
                 event_node, next_node)
 

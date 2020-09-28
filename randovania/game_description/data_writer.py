@@ -1,40 +1,79 @@
-from typing import List, TypeVar, Callable, Dict, Tuple
+from typing import List, TypeVar, Callable, Dict, Tuple, TextIO, Union, Iterator
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
+from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
     TranslatorGateNode, LogbookNode, LoreType
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
+from randovania.game_description.requirements import ResourceRequirement, \
+    RequirementOr, RequirementAnd, Requirement, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.layout.trick_level import LayoutTrickLevel
 
 
-def write_individual_requirement(individual: IndividualRequirement) -> dict:
+def write_resource_requirement(requirement: ResourceRequirement) -> dict:
     return {
-        "requirement_type": individual.resource.resource_type.value,
-        "requirement_index": individual.resource.index,
-        "amount": individual.amount,
-        "negate": individual.negate
+        "type": "resource",
+        "data": {
+            "type": requirement.resource.resource_type.value,
+            "index": requirement.resource.index,
+            "amount": requirement.amount,
+            "negate": requirement.negate,
+        }
     }
 
 
-def write_requirement_list(requirement_list: RequirementList) -> list:
-    return [
-        write_individual_requirement(individual)
-        for individual in sorted(requirement_list.values())
-    ]
+def write_requirement_and(requirement: RequirementAnd) -> dict:
+    return {
+        "type": "and",
+        "data": [
+            write_requirement(item)
+            for item in requirement.items
+        ]
+    }
 
 
-def write_requirement_set(requirement_set: RequirementSet) -> list:
-    return [
-        write_requirement_list(l)
-        for l in sorted(requirement_set.alternatives, key=lambda x: x.sorted)
-    ]
+def write_requirement_or(requirement: RequirementOr) -> dict:
+    return {
+        "type": "or",
+        "data": [
+            write_requirement(item)
+            for item in requirement.items
+        ]
+    }
+
+
+def write_requirement_template(requirement: RequirementTemplate) -> dict:
+    return {
+        "type": "template",
+        "data": requirement.template_name
+    }
+
+
+def write_requirement(requirement: Requirement) -> dict:
+    if isinstance(requirement, ResourceRequirement):
+        return write_resource_requirement(requirement)
+
+    elif isinstance(requirement, RequirementOr):
+        return write_requirement_or(requirement)
+
+    elif isinstance(requirement, RequirementAnd):
+        return write_requirement_and(requirement)
+
+    elif isinstance(requirement, RequirementTemplate):
+        return write_requirement_template(requirement)
+
+    else:
+        raise ValueError(f"Unknown requirement type: {type(requirement)}")
 
 
 # Resource
@@ -57,7 +96,26 @@ def write_simple_resource(resource: SimpleResourceInfo) -> dict:
     return {
         "index": resource.index,
         "long_name": resource.long_name,
-        "short_name": resource.short_name
+        "short_name": resource.short_name,
+    }
+
+
+def write_item_resource(resource: ItemResourceInfo) -> dict:
+    return {
+        "index": resource.index,
+        "long_name": resource.long_name,
+        "short_name": resource.short_name,
+        "max_capacity": resource.max_capacity,
+        "custom_memory_offset": resource.custom_memory_offset,
+    }
+
+
+def write_trick_resource(resource: TrickResourceInfo) -> dict:
+    return {
+        "index": resource.index,
+        "long_name": resource.long_name,
+        "short_name": resource.short_name,
+        "description": resource.description,
     }
 
 
@@ -88,13 +146,16 @@ def write_array(array: List[X], writer: Callable[[X], dict]) -> list:
 
 def write_resource_database(resource_database: ResourceDatabase):
     return {
-        "items": write_array(resource_database.item, write_simple_resource),
+        "items": write_array(resource_database.item, write_item_resource),
         "events": write_array(resource_database.event, write_simple_resource),
-        "tricks": write_array(resource_database.trick, write_simple_resource),
+        "tricks": write_array(resource_database.trick, write_trick_resource),
         "damage": write_array(resource_database.damage, write_damage_resource),
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
-        "difficulty": write_array(resource_database.difficulty, write_simple_resource),
+        "requirement_template": {
+            name: write_requirement(requirement)
+            for name, requirement in resource_database.requirement_template.items()
+        }
     }
 
 
@@ -105,7 +166,7 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "index": dock_weakness.index,
         "name": dock_weakness.name,
         "is_blast_door": dock_weakness.is_blast_shield,
-        "requirement_set": write_requirement_set(dock_weakness.requirements)
+        "requirement": write_requirement(dock_weakness.requirement)
     }
 
 
@@ -119,6 +180,34 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
             write_dock_weakness(weakness)
             for weakness in database.portal
         ],
+        "morph_ball": [
+            write_dock_weakness(weakness)
+            for weakness in database.morph_ball
+        ],
+    }
+
+
+# Game Specific
+
+def write_echoes_beam_configuration(beam_config: EchoesBeamConfiguration) -> dict:
+    return {
+        "item_index": beam_config.item.index,
+        "ammo_a": beam_config.ammo_a.index if beam_config.ammo_a is not None else None,
+        "ammo_b": beam_config.ammo_b.index if beam_config.ammo_b is not None else None,
+        "uncharged_cost": beam_config.uncharged_cost,
+        "charged_cost": beam_config.charged_cost,
+        "combo_missile_cost": beam_config.combo_missile_cost,
+        "combo_ammo_cost": beam_config.combo_ammo_cost,
+    }
+
+
+def write_game_specific(game_specific: EchoesGameSpecific) -> dict:
+    return {
+        "energy_per_tank": game_specific.energy_per_tank,
+        "beam_configurations": [
+            write_echoes_beam_configuration(beam)
+            for beam in game_specific.beam_configurations
+        ]
     }
 
 
@@ -132,14 +221,15 @@ def write_node(node: Node) -> dict:
 
     data = {
         "name": node.name,
-        "heal": node.heal
+        "heal": node.heal,
+        "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
     }
 
     if isinstance(node, GenericNode):
-        data["node_type"] = 0
+        data["node_type"] = "generic"
 
     elif isinstance(node, DockNode):
-        data["node_type"] = 1
+        data["node_type"] = "dock"
         data["dock_index"] = node.dock_index
         data["connected_area_asset_id"] = node.default_connection.area_asset_id
         data["connected_dock_index"] = node.default_connection.dock_index
@@ -147,12 +237,12 @@ def write_node(node: Node) -> dict:
         data["dock_weakness_index"] = node.default_dock_weakness.index
 
     elif isinstance(node, PickupNode):
-        data["node_type"] = 2
+        data["node_type"] = "pickup"
         data["pickup_index"] = node.pickup_index.index
         data["major_location"] = node.major_location
 
     elif isinstance(node, TeleporterNode):
-        data["node_type"] = 3
+        data["node_type"] = "teleporter"
         data["destination_world_asset_id"] = node.default_connection.world_asset_id
         data["destination_area_asset_id"] = node.default_connection.area_asset_id
         data["teleporter_instance_id"] = node.teleporter_instance_id
@@ -161,17 +251,17 @@ def write_node(node: Node) -> dict:
         data["editable"] = node.editable
 
     elif isinstance(node, EventNode):
-        data["node_type"] = 4
+        data["node_type"] = "event"
         data["event_index"] = node.resource().index
 
     elif isinstance(node, TranslatorGateNode):
-        data["node_type"] = 5
+        data["node_type"] = "translator_gate"
         data["gate_index"] = node.gate.index
 
     elif isinstance(node, LogbookNode):
-        data["node_type"] = 6
+        data["node_type"] = "logbook"
         data["string_asset_id"] = node.string_asset_id
-        data["lore_type"] = list(LoreType).index(node.lore_type)
+        data["lore_type"] = node.lore_type.value
 
         if node.lore_type == LoreType.LUMINOTH_LORE:
             data["extra"] = node.required_translator.index
@@ -197,7 +287,7 @@ def write_area(area: Area) -> dict:
     for node in area.nodes:
         data = write_node(node)
         data["connections"] = {
-            target_node.name: write_requirement_set(area.connections[node][target_node])
+            target_node.name: write_requirement(area.connections[node][target_node])
             for target_node in area.nodes
             if target_node in area.connections[node]
         }
@@ -208,6 +298,7 @@ def write_area(area: Area) -> dict:
         "in_dark_aether": area.in_dark_aether,
         "asset_id": area.area_asset_id,
         "default_node_index": area.default_node_index,
+        "valid_starting_location": area.valid_starting_location,
         "nodes": nodes
     }
 
@@ -246,10 +337,104 @@ def write_game_description(game: GameDescription) -> dict:
         "game_name": game.game_name,
         "resource_database": write_resource_database(game.resource_database),
 
+        "game_specific": write_game_specific(game.game_specific) if game.game == 2 else {},
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
-        "victory_condition": write_requirement_set(game.victory_condition),
+        "victory_condition": write_requirement(game.victory_condition),
 
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "worlds": write_world_list(game.world_list),
     }
+
+
+def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
+    if requirement.resource.resource_type == ResourceType.TRICK:
+        return f"{requirement.resource} ({LayoutTrickLevel.from_number(requirement.amount).long_name})"
+    else:
+        return requirement.pretty_text
+
+
+def pretty_print_requirement_array(requirement: Union[RequirementAnd, RequirementOr],
+                                   level: int) -> Iterator[Tuple[int, str]]:
+    if len(requirement.items) == 1:
+        yield from pretty_print_requirement(requirement.items[0], level)
+        return
+
+    resource_requirements = [item for item in requirement.items if isinstance(item, ResourceRequirement)]
+    template_requirements = [item for item in requirement.items if isinstance(item, RequirementTemplate)]
+    other_requirements = [item for item in requirement.items if isinstance(item, (RequirementAnd, RequirementOr))]
+    assert len(resource_requirements) + len(template_requirements) + len(other_requirements) == len(requirement.items)
+
+    pretty_resources = [
+        pretty_print_resource_requirement(item)
+        for item in sorted(resource_requirements)
+    ]
+    sorted_templates = list(sorted(item.template_name for item in template_requirements))
+
+    if isinstance(requirement, RequirementOr):
+        title = "Any"
+        combinator = " or "
+    else:
+        title = "All"
+        combinator = " and "
+
+    if len(other_requirements) == 0:
+        yield level, combinator.join(pretty_resources + sorted_templates)
+    else:
+        yield level, f"{title} of the following:"
+        if pretty_resources or sorted_templates:
+            yield level + 1, combinator.join(pretty_resources + sorted_templates)
+        for item in other_requirements:
+            yield from pretty_print_requirement(item, level + 1)
+
+
+def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterator[Tuple[int, str]]:
+    if requirement == Requirement.impossible():
+        yield level, "Impossible"
+
+    elif requirement == Requirement.trivial():
+        yield level, "Trivial"
+
+    elif isinstance(requirement, (RequirementAnd, RequirementOr)):
+        yield from pretty_print_requirement_array(requirement, level)
+
+    elif isinstance(requirement, ResourceRequirement):
+        yield level, pretty_print_resource_requirement(requirement)
+
+    elif isinstance(requirement, RequirementTemplate):
+        yield level, requirement.template_name
+    else:
+        raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
+
+
+def pretty_print_area(game: GameDescription, area: Area, print_function=print):
+    print_function(area.name)
+    print_function("Asset id: {}".format(area.area_asset_id))
+    for node in area.nodes:
+        print_function(f"> {node.name}; Heals? {node.heal}")
+        for target_node, requirement in game.world_list.potential_nodes_from(node, game.create_game_patches()):
+            if target_node is None:
+                print_function("  > None?")
+            else:
+                print_function("  > {}".format(game.world_list.node_name(target_node)))
+                for level, text in pretty_print_requirement(requirement.simplify()):
+                    print_function("      {}{}".format("    " * level, text))
+        print_function()
+
+
+def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:
+    def print_to_file(*args):
+        output.write("\t".join(str(arg) for arg in args) + "\n")
+
+    output.write("====================\nTemplates\n")
+    for template_name, template in game.resource_database.requirement_template.items():
+        output.write(f"\n* {template_name}:\n")
+        for level, text in pretty_print_requirement(template):
+            output.write("      {}{}\n".format("    " * level, text))
+
+    output.write("\n")
+    for world in game.world_list.worlds:
+        output.write("====================\n{}\n".format(world.name))
+        for area in world.areas:
+            output.write("----------------\n")
+            pretty_print_area(game, area, print_function=print_to_file)

@@ -40,3 +40,9 @@ def iterate_with_weights(items: Iterator[T],
         weights.pop(index)
 
         yield pickup_node
+
+
+def select_element_with_weight(weighted_items: Dict[T, float], rng: Random) -> T:
+    return next(iterate_with_weights(items=list(weighted_items.keys()),
+                                     item_weights=weighted_items,
+                                     rng=rng))

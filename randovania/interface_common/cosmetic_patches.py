@@ -1,12 +1,15 @@
-from dataclasses import dataclass
+import dataclasses
+
+from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class CosmeticPatches:
     disable_hud_popup: bool = True
     speed_up_credits: bool = True
     open_map: bool = True
     pickup_markers: bool = True
+    user_preferences: EchoesUserPreferences = dataclasses.field(default_factory=EchoesUserPreferences)
 
     @property
     def as_json(self) -> dict:
@@ -15,6 +18,7 @@ class CosmeticPatches:
             "speed_up_credits": self.speed_up_credits,
             "open_map": self.open_map,
             "pickup_markers": self.pickup_markers,
+            "user_preferences": self.user_preferences.as_json,
         }
 
     @classmethod
@@ -24,6 +28,8 @@ class CosmeticPatches:
             speed_up_credits=json_dict["speed_up_credits"],
             open_map=json_dict["open_map"],
             pickup_markers=json_dict["pickup_markers"],
+            user_preferences=(EchoesUserPreferences.from_json_dict(json_dict["user_preferences"])
+                              if "user_preferences" in json_dict else EchoesUserPreferences())
         )
 
     @classmethod

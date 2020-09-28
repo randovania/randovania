@@ -4,7 +4,7 @@ from typing import Optional, Callable
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators, \
-    LayoutSkyTempleKeyMode, RandomizationMode, LayoutDamageStrictness
+    LayoutSkyTempleKeyMode, LayoutDamageStrictness
 from randovania.layout.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.preset import Preset
@@ -164,6 +164,14 @@ class PresetEditor:
     @ammo_configuration.setter
     def ammo_configuration(self, value: AmmoConfiguration):
         self.set_layout_configuration_field("ammo_configuration", value)
+
+    @property
+    def skip_final_bosses(self) -> bool:
+        return self.layout_configuration.skip_final_bosses
+
+    @skip_final_bosses.setter
+    def skip_final_bosses(self, value: bool):
+        self.set_layout_configuration_field("skip_final_bosses", value)
 
     def set_layout_configuration_field(self, field_name: str, value):
         self._edit_field(

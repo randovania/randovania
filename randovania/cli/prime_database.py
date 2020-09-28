@@ -1,5 +1,4 @@
 import argparse
-import csv
 import json
 from argparse import ArgumentParser
 from pathlib import Path
@@ -7,8 +6,7 @@ from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import RequirementSet, RequirementList, IndividualRequirement
-from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
+from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, MissingResource
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.games.prime import binary_data, default_data
 from randovania.resolver import debug
@@ -29,8 +27,7 @@ def decode_data_file(args) -> Dict:
     if data_file_path is None:
         return default_data.decode_default_prime2()
     else:
-        extra_path = data_file_path.parent.joinpath(data_file_path.stem + "_extra.json")
-        return binary_data.decode_file_path(data_file_path, extra_path)
+        return binary_data.decode_file_path(data_file_path)
 
 
 def add_data_file_argument(parser: ArgumentParser):
@@ -49,10 +46,7 @@ def add_data_file_argument(parser: ArgumentParser):
 
 def export_as_binary(data: dict, output_binary: Path):
     with output_binary.open("wb") as x:  # type: BinaryIO
-        extra_data = binary_data.encode(data, x)
-
-    with output_binary.parent.joinpath(output_binary.stem + "_extra.json").open("w") as x:  # type: TextIO
-        json.dump(extra_data, x, indent=4)
+        binary_data.encode(data, x)
 
 
 def convert_database_command_logic(args):
@@ -104,7 +98,8 @@ def create_convert_database_command(sub_parsers):
 
 
 def view_area_command_logic(args):
-    world_list = load_game_description(args).world_list
+    game = load_game_description(args)
+    world_list = game.world_list
 
     try:
         world = world_list.world_with_name(args.world)
@@ -122,7 +117,7 @@ def view_area_command_logic(args):
         print(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
         raise SystemExit(1)
 
-    debug.pretty_print_area(area)
+    data_writer.pretty_print_area(game, area)
 
 
 def load_game_description(args) -> GameDescription:
@@ -161,63 +156,21 @@ def view_area_command(sub_parsers):
 
 def export_areas_command_logic(args):
     gd = load_game_description(args)
+    output_file: Path = args.output_file
 
-    with args.output_file.open("w", newline='') as output:
-        writer = csv.writer(output)
-        writer.writerow(("World", "Area", "Node", "Can go back in bounds",
-                         "Interact while OOB and go back in bounds",
-                         "Interact while OOB and stay out of bounds",
-                         "Requirements for going OOB"))
-
-        for world, area, node in gd.world_list.all_worlds_areas_nodes:
-            writer.writerow((world.name, area.name, node.name, False, False, False))
+    with output_file.open("w", encoding="utf-8") as output:
+        data_writer.write_human_readable_world_list(gd, output)
 
 
 def export_areas_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "export-areas",
-        help="Export a CSV with the areas of the game.",
+        help="Export a text file with all areas and their requirements",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
     add_data_file_argument(parser)
     parser.add_argument("output_file", type=Path)
     parser.set_defaults(func=export_areas_command_logic)
-
-
-def _modify_resources(game: GameDescription,
-                      resource: ResourceInfo,
-                      ):
-    """
-    This change all occurrences of the given resource to have difficulty 4
-    :param game:
-    :param resource:
-    :return:
-    """
-    new_difficulty = 4
-    database = game.resource_database
-
-    def _replace(alternative: RequirementList) -> RequirementList:
-        if alternative.get(resource) is not None:
-            return RequirementList.without_misc_resources(
-                database=database,
-                items=[
-                    (individual if individual.resource != database.difficulty_resource
-                     else IndividualRequirement(database.difficulty_resource, new_difficulty, False))
-                    for individual in alternative.values()
-                ]
-            )
-        else:
-            return alternative
-
-    for area in game.world_list.all_areas:
-        for source, connection in area.connections.items():
-            connection.update({
-                target: RequirementSet(
-                    _replace(alternative)
-                    for alternative in requirements.alternatives
-                )
-                for target, requirements in connection.items()
-            })
 
 
 def _list_paths_with_resource(game: GameDescription,
@@ -230,8 +183,8 @@ def _list_paths_with_resource(game: GameDescription,
         area_had_resource = False
 
         for source, connection in area.connections.items():
-            for target, requirements in connection.items():
-                for alternative in requirements.alternatives:
+            for target, requirement in connection.items():
+                for alternative in requirement.as_set.alternatives:
                     individual = alternative.get(resource)
                     if individual is None:
                         continue
@@ -263,8 +216,8 @@ def list_paths_with_dangerous_logic(args):
         area_had_resource = False
 
         for source, connection in area.connections.items():
-            for target, requirements in connection.items():
-                for alternative in requirements.alternatives:
+            for target, requirement in connection.items():
+                for alternative in requirement.as_set.alternatives:
                     for individual in alternative.values():
                         if individual.negate:
                             area_had_resource = True
@@ -284,38 +237,15 @@ def list_paths_with_dangerous_logic(args):
 
 
 def list_paths_with_dangerous_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "list-dangerous-usage",
         help="List all connections that needs a resource to be missing.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
                         action="store_true")
     parser.set_defaults(func=list_paths_with_dangerous_logic)
-
-
-def list_paths_with_difficulty_logic(args):
-    gd = load_game_description(args)
-    _list_paths_with_resource(
-        gd,
-        args.print_only_area,
-        gd.resource_database.difficulty_resource,
-        args.difficulty
-    )
-
-
-def list_paths_with_difficulty_command(sub_parsers):
-    parser = sub_parsers.add_parser(
-        "list-difficulty-usage",
-        help="List all connections that needs the difficulty.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
-    add_data_file_argument(parser)
-    parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
-                        action="store_true")
-    parser.add_argument("difficulty", type=int)
-    parser.set_defaults(func=list_paths_with_difficulty_logic)
 
 
 def list_paths_with_resource_logic(args):
@@ -326,7 +256,7 @@ def list_paths_with_resource_logic(args):
         try:
             resource = find_resource_info_with_long_name(resource_type, args.resource)
             break
-        except ValueError:
+        except MissingResource:
             continue
 
     if resource is None:
@@ -342,11 +272,11 @@ def list_paths_with_resource_logic(args):
 
 
 def list_paths_with_resource_command(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "list-resource-usage",
         help="List all connections that needs the resource.",
         formatter_class=argparse.MetavarTypeHelpFormatter
-    )  # type: ArgumentParser
+    )
     add_data_file_argument(parser)
     parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
                         action="store_true")
@@ -355,17 +285,16 @@ def list_paths_with_resource_command(sub_parsers):
 
 
 def create_subparsers(sub_parsers):
-    parser = sub_parsers.add_parser(
+    parser: ArgumentParser = sub_parsers.add_parser(
         "database",
         help="Actions for database manipulation"
-    )  # type: ArgumentParser
+    )
 
     sub_parsers = parser.add_subparsers(dest="database_command")
     create_convert_database_command(sub_parsers)
     view_area_command(sub_parsers)
     export_areas_command(sub_parsers)
     list_paths_with_dangerous_command(sub_parsers)
-    list_paths_with_difficulty_command(sub_parsers)
     list_paths_with_resource_command(sub_parsers)
 
     def check_command(args):

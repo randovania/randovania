@@ -2,6 +2,8 @@ import dataclasses
 from random import Random
 from unittest.mock import MagicMock, patch, call, ANY
 
+import pytest
+
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
@@ -14,33 +16,43 @@ from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
 
+@pytest.mark.parametrize("skip_final_bosses", [False, True])
 def test_add_elevator_connections_to_patches_vanilla(echoes_game_data,
+                                                     skip_final_bosses: bool,
                                                      default_layout_configuration):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
+    expected = dataclasses.replace(game.create_game_patches())
+    if skip_final_bosses:
+        expected.elevator_connection[136970379] = AreaLocation(1006255871, 1393588666)
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(default_layout_configuration,
-                                                                      Random(0),
-                                                                      game.create_game_patches())
+    result = base_patches_factory.add_elevator_connections_to_patches(
+        dataclasses.replace(default_layout_configuration, skip_final_bosses=skip_final_bosses),
+        Random(0),
+        game.create_game_patches())
 
     # Assert
-    assert result == game.create_game_patches()
+    assert result == expected
 
 
+@pytest.mark.parametrize("skip_final_bosses", [False, True])
 def test_add_elevator_connections_to_patches_random(echoes_game_data,
+                                                    skip_final_bosses: bool,
                                                     default_layout_configuration):
     # Setup
     game = data_reader.decode_data(echoes_game_data)
     layout_configuration = dataclasses.replace(default_layout_configuration,
-                                               elevators=LayoutElevators.TWO_WAY_RANDOMIZED)
+                                               elevators=LayoutElevators.TWO_WAY_RANDOMIZED,
+                                               skip_final_bosses=skip_final_bosses)
     expected = dataclasses.replace(game.create_game_patches(),
                                    elevator_connection={
                                        589851: AreaLocation(1039999561, 1868895730),
                                        1572998: AreaLocation(1039999561, 3479543630),
                                        1966093: AreaLocation(2252328306, 408633584),
                                        2097251: AreaLocation(1119434212, 3331021649),
-                                       136970379: AreaLocation(2252328306, 2068511343),
+                                       136970379: (AreaLocation(1006255871, 1393588666)
+                                                   if skip_final_bosses else AreaLocation(2252328306, 2068511343)),
                                        3342446: AreaLocation(1039999561, 3205424168),
                                        3538975: AreaLocation(1119434212, 2806956034),
                                        152: AreaLocation(1006255871, 2889020216),
@@ -156,10 +168,15 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
         LogbookAsset(4115881194): _guardian_hint(43),
         LogbookAsset(1948976790): _guardian_hint(79),
         LogbookAsset(3212301619): _guardian_hint(115),
+
+        # Jokes
+        LogbookAsset(67497535): Hint(HintType.JOKE, PrecisionPair.joke(), None),
+        LogbookAsset(4072633400): Hint(HintType.JOKE, PrecisionPair.joke(), None),
     }
 
     # Run
-    result = base_patches_factory.add_default_hints_to_patches(rng, empty_patches, echoes_game_description.world_list)
+    result = base_patches_factory.add_default_hints_to_patches(rng, empty_patches, echoes_game_description.world_list,
+                                                               num_joke=2)
 
     # Assert
     rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
@@ -170,7 +187,9 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
 @patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
-def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock,
+@patch("randovania.generator.base_patches_factory.add_game_specific_from_config", autospec=True)
+def test_create_base_patches(mock_add_game_specific_from_config: MagicMock,
+                             mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
                              mock_add_default_hints_to_patches: MagicMock,
@@ -180,27 +199,30 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     game = MagicMock()
     layout_configuration = MagicMock()
 
-    first_patches = game.create_game_patches.return_value
-    second_patches = mock_add_elevator_connections_to_patches.return_value
-    third_patches = second_patches.assign_gate_assignment.return_value
-    fourth_patches = third_patches.assign_starting_location.return_value
+    patches = [
+        game.create_game_patches.return_value,
+        mock_add_game_specific_from_config.return_value,
+        mock_add_elevator_connections_to_patches.return_value,
+    ]
+    patches.append(patches[-1].assign_gate_assignment.return_value)
+    patches.append(patches[-1].assign_starting_location.return_value)
 
     # Run
     result = base_patches_factory.create_base_patches(layout_configuration, rng, game)
 
     # Assert
     game.create_game_patches.assert_called_once_with()
-    mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, first_patches)
+    mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, patches[1])
 
     # Gate Assignment
     mock_gate_assignment_for_configuration.assert_called_once_with(layout_configuration, game.resource_database, rng)
-    second_patches.assign_gate_assignment.assert_called_once_with(mock_gate_assignment_for_configuration.return_value)
+    patches[2].assign_gate_assignment.assert_called_once_with(mock_gate_assignment_for_configuration.return_value)
 
     # Starting Location
     mock_starting_location_for_config.assert_called_once_with(layout_configuration, game, rng)
-    third_patches.assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
+    patches[3].assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
     # Hints
-    mock_add_default_hints_to_patches.assert_called_once_with(rng, fourth_patches, game.world_list)
+    mock_add_default_hints_to_patches.assert_called_once_with(rng, patches[4], game.world_list, num_joke=2)
 
     assert result is mock_add_default_hints_to_patches.return_value

@@ -6,17 +6,30 @@
       {
         "index": 2,
         "long_name": "Light Beam",
-        "short_name": "Light"
+        "short_name": "Light",
+        "max_capacity": 1,
+        "custom_memory_offset": null
       },
       {
         "index": 24,
         "long_name": "Space Jump Boots",
-        "short_name": "SpaceJump"
+        "short_name": "SpaceJump",
+        "max_capacity": 1,
+        "custom_memory_offset": null
       },
       {
         "index": 30,
         "long_name": "Scan Visor",
-        "short_name": "ScanVisor"
+        "short_name": "ScanVisor",
+        "max_capacity": 1,
+        "custom_memory_offset": null
+      },
+      {
+        "index": 46,
+        "long_name": "Light Ammo",
+        "short_name": "LightAmmo",
+        "max_capacity": 1,
+        "custom_memory_offset": null
       }
     ],
     "events": [
@@ -26,29 +39,23 @@
         "short_name": "Event1"
       }
     ],
-    "tricks": [
-    ],
-    "damage": [
-    ],
-    "versions": [
-    ],
-    "misc": [
+    "tricks": [],
+    "damage": [],
+    "versions": [],
+    "misc": [],
+    "requirement_template": {}
+  },
+  "game_specific": {
+    "energy_per_tank": 100.0,
+    "beam_configurations": [
       {
-        "index": 0,
-        "long_name": "No Requirements",
-        "short_name": "None"
-      },
-      {
-        "index": 1,
-        "long_name": "Impossible",
-        "short_name": "Impossible"
-      }
-    ],
-    "difficulty": [
-      {
-        "index": 0,
-        "long_name": "Difficulty Level",
-        "short_name": "Difficulty"
+        "item_index": 2,
+        "ammo_a": 46,
+        "ammo_b": null,
+        "uncharged_cost": 1,
+        "charged_cost": 5,
+        "combo_missile_cost": 5,
+        "combo_ammo_cost": 30
       }
     ]
   },
@@ -77,21 +84,49 @@
       }
     ]
   },
+  "victory_condition": {
+    "type": "or",
+    "data": [
+      {
+        "type": "and",
+        "data": [
+          {
+            "type": "resource",
+            "data": {
+              "type": 1,
+              "index": 1,
+              "amount": 3,
+              "negate": false
+            }
+          }
+        ]
+      }
+    ]
+  },
   "dock_weakness_database": {
     "door": [
       {
         "index": 0,
         "name": "Normal Door",
         "is_blast_door": false,
-        "requirement_set": [
-          []
-        ]
+        "requirement": {
+          "type": "or",
+          "data": [
+            {
+              "type": "and",
+              "data": []
+            }
+          ]
+        }
       },
       {
         "index": 8,
         "name": "Permanently Locked",
         "is_blast_door": false,
-        "requirement_set": []
+        "requirement": {
+          "type": "or",
+          "data": []
+        }
       }
     ],
     "portal": [
@@ -99,22 +134,19 @@
         "index": 0,
         "name": "Scan Portal",
         "is_blast_door": false,
-        "requirement_set": [
-          []
-        ]
+        "requirement": {
+          "type": "or",
+          "data": [
+            {
+              "type": "and",
+              "data": []
+            }
+          ]
+        }
       }
-    ]
+    ],
+    "morph_ball": []
   },
-  "victory_condition": [
-    [
-      {
-        "requirement_type": 1,
-        "requirement_index": 1,
-        "amount": 3,
-        "negate": false
-      }
-    ]
-  ],
   "worlds": [
     {
       "name": "Temple Grounds",
@@ -126,43 +158,64 @@
           "in_dark_aether": false,
           "asset_id": 1655756413,
           "default_node_index": 0,
+          "valid_starting_location": true,
           "nodes": [
             {
               "name": "Save Station",
               "heal": true,
-              "node_type": 0,
+              "coordinates": null,
+              "node_type": "generic",
               "connections": {
-                "Door to Service Access": [
-                  [
+                "Door to Service Access": {
+                  "type": "or",
+                  "data": [
                     {
-                      "requirement_type": 0,
-                      "requirement_index": 2,
-                      "amount": 1,
-                      "negate": false
-                    },
-                    {
-                      "requirement_type": 0,
-                      "requirement_index": 24,
-                      "amount": 1,
-                      "negate": false
+                      "type": "and",
+                      "data": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": 0,
+                            "index": 2,
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": 0,
+                            "index": 24,
+                            "amount": 1,
+                            "negate": false
+                          }
+                        }
+                      ]
                     }
                   ]
-                ]
+                }
               }
             },
             {
               "name": "Door to Service Access",
               "heal": true,
-              "node_type": 1,
+              "coordinates": null,
+              "node_type": "dock",
               "dock_index": 0,
               "connected_area_asset_id": 2679590972,
               "connected_dock_index": 0,
               "dock_type": 0,
               "dock_weakness_index": 0,
               "connections": {
-                "Save Station": [
-                  []
-                ]
+                "Save Station": {
+                  "type": "or",
+                  "data": [
+                    {
+                      "type": "and",
+                      "data": []
+                    }
+                  ]
+                }
               }
             }
           ]
@@ -172,11 +225,13 @@
           "in_dark_aether": false,
           "asset_id": 2679590972,
           "default_node_index": 0,
+          "valid_starting_location": true,
           "nodes": [
             {
               "name": "Door to Landing Site",
               "heal": true,
-              "node_type": 1,
+              "coordinates": null,
+              "node_type": "dock",
               "dock_index": 0,
               "connected_area_asset_id": 1655756413,
               "connected_dock_index": 0,
@@ -187,27 +242,30 @@
             {
               "name": "Luminoth Lore",
               "heal": true,
-              "node_type": 6,
+              "coordinates": null,
+              "node_type": "logbook",
               "string_asset_id": 1000,
-              "lore_type": 0,
+              "lore_type": "luminoth-lore",
               "extra": 2,
               "connections": {}
             },
             {
               "name": "Luminoth Warrior",
               "heal": true,
-              "node_type": 6,
+              "coordinates": null,
+              "node_type": "logbook",
               "string_asset_id": 2000,
-              "lore_type": 1,
+              "lore_type": "luminoth-warrior",
               "extra": 2,
               "connections": {}
             },
             {
               "name": "Pirate Lore",
               "heal": true,
-              "node_type": 6,
+              "coordinates": null,
+              "node_type": "logbook",
               "string_asset_id": 3000,
-              "lore_type": 2,
+              "lore_type": "pirate-lore",
               "extra": 0,
               "connections": {}
             }

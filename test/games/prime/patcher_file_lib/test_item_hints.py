@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.area import Area
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
@@ -27,12 +28,12 @@ def _pickup() -> PickupEntry:
 
 
 def _create_world_list(asset_id: int, pickup_index: PickupIndex):
-    logbook_node = LogbookNode("Logbook A", True, 0, asset_id, None, None, None, None)
-    pickup_node = PickupNode("Pickup Node", True, 1, pickup_index, True)
+    logbook_node = LogbookNode("Logbook A", True, None, 0, asset_id, None, None, None, None)
+    pickup_node = PickupNode("Pickup Node", True, None, 1, pickup_index, True)
 
     world_list = WorldList([
         World("World", "Dark World", 5000, [
-            Area("Area", False, 10000, 0, [logbook_node, pickup_node], {}),
+            Area("Area", False, 10000, 0, True, [logbook_node, pickup_node], {}),
         ]),
     ])
 
@@ -88,7 +89,7 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: pickup,
+            pickup_index: PickupTarget(pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(hint_type,
@@ -109,6 +110,7 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     elif hint_type == HintType.KEYBEARER:
         message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
+
 
 @pytest.mark.parametrize("pickup_index_and_guardian", [
     (PickupIndex(43), "&push;&main-color=#FF3333;Amorbis&pop;"),
@@ -131,7 +133,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: pickup,
+            pickup_index: PickupTarget(pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(HintType.GUARDIAN,
@@ -146,6 +148,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     # Assert
     message = f"{guardian} is guarding {item[1]}."
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
+
 
 @pytest.mark.parametrize("item", [
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
@@ -168,7 +171,7 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item, location)
     patches = dataclasses.replace(
         empty_patches,
         pickup_assignment={
-            pickup_index: pickup,
+            pickup_index: PickupTarget(pickup, 0),
         },
         hints={
             logbook_node.resource(): Hint(HintType.LIGHT_SUIT_LOCATION,

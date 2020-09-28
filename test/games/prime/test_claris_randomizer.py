@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 from typing import Union
@@ -9,10 +10,9 @@ import randovania
 import randovania.generator.elevator_distributor
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime import claris_randomizer
+from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.patcher_configuration import PatcherConfiguration
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -262,51 +262,37 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
 
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 @pytest.mark.parametrize("has_backup_path", [False, True])
-@patch("randovania.layout.layout_description.LayoutDescription.save_to_file", autospec=True)
 @patch("randovania.interface_common.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._modern_api", autospec=True)
+@patch("randovania.games.prime.dol_patcher.apply_patches", autospec=True)
+@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._add_menu_mod_to_files", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._create_pak_backups", autospec=True)
 @patch("randovania.games.prime.claris_randomizer._ensure_no_menu_mod", autospec=True)
-def test_apply_layout(
+def test_apply_patcher_file(
         mock_ensure_no_menu_mod: MagicMock,
         mock_create_pak_backups: MagicMock,
         mock_add_menu_mod_to_files: MagicMock,
-        mock_modern_api: MagicMock,
+        mock_run_with_args: MagicMock,
+        mock_apply_patches: MagicMock,
         mock_create_progress_update_from_successive_messages: MagicMock,
-        mock_save_to_file: MagicMock,
         include_menu_mod: bool,
         has_backup_path: bool,
 ):
     # Setup
-    cosmetic_patches = MagicMock()
-    description = LayoutDescription(
-        version=randovania.VERSION,
-        permalink=Permalink(
-            seed_number=1,
-            spoiler=False,
-            preset=Preset(
-                name="Name",
-                description="Desc",
-                base_preset_name=None,
-                patcher_configuration=PatcherConfiguration(
-                    menu_mod=include_menu_mod,
-                    warp_to_start=MagicMock(),
-                ),
-                layout_configuration=MagicMock()
-            ),
-        ),
-        patches=MagicMock(),
-        solver_path=(),
-    )
-
     game_root = MagicMock(spec=Path())
     backup_files_path = MagicMock() if has_backup_path else None
+    game_specific = MagicMock()
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
 
+    patcher_data = {
+        "menu_mod": include_menu_mod,
+        "user_preferences": EchoesUserPreferences().as_json,
+    }
+
     # Run
-    claris_randomizer.apply_layout(description, cosmetic_patches, backup_files_path, progress_update, game_root)
+    claris_randomizer.apply_patcher_file(game_root, backup_files_path,
+                                         patcher_data, game_specific, progress_update)
 
     # Assert
     mock_create_progress_update_from_successive_messages.assert_called_once_with(
@@ -318,10 +304,9 @@ def test_apply_layout(
         mock_create_pak_backups.assert_called_once_with(game_root, backup_files_path, status_update)
     else:
         mock_create_pak_backups.assert_not_called()
-    game_root.joinpath.assert_called_once_with("files", "randovania.{}".format(LayoutDescription.file_extension()))
-    mock_save_to_file.assert_called_once_with(description, game_root.joinpath.return_value)
-
-    mock_modern_api.assert_called_once_with(game_root, status_update, description, cosmetic_patches)
+    mock_run_with_args.assert_called_once_with(claris_randomizer._base_args(game_root),
+                                               json.dumps(patcher_data), "Randomized!", status_update)
+    mock_apply_patches.assert_called_once_with(game_root, game_specific, EchoesUserPreferences())
 
     if include_menu_mod:
         mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
@@ -330,28 +315,33 @@ def test_apply_layout(
 
 
 @patch("randovania.games.prime.patcher_file.create_patcher_file", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._base_args", autospec=True)
-@patch("randovania.games.prime.claris_randomizer._run_with_args", autospec=True)
-def test_modern_api(mock_run_with_args: MagicMock,
-                    mock_base_args: MagicMock,
-                    mock_create_patcher_file: MagicMock,
-                    ):
+@patch("randovania.games.prime.claris_randomizer.apply_patcher_file", autospec=True)
+def test_apply_layout(mock_apply_patcher_file: MagicMock,
+                      mock_create_patcher_file: MagicMock,
+                      ):
     # Setup
-    game_root = MagicMock(spec=Path())
-    status_update = MagicMock()
     description = MagicMock()
+    description.file_extension.return_value = "foobar"
+    player_config = MagicMock()
     cosmetic_patches = MagicMock()
-
-    mock_base_args.return_value = []
-    mock_create_patcher_file.return_value = {"some_data": 123}
+    backup_files_path = MagicMock()
+    progress_update = MagicMock()
+    game_root = MagicMock(spec=Path())
 
     # Run
-    claris_randomizer._modern_api(game_root, status_update, description, cosmetic_patches)
+    claris_randomizer.apply_layout(
+        description, player_config, cosmetic_patches,
+        backup_files_path, progress_update, game_root
+    )
 
     # Assert
-    mock_base_args.assert_called_once_with(game_root)
-    mock_create_patcher_file.assert_called_once_with(description, cosmetic_patches)
-    mock_run_with_args.assert_called_once_with([], '{"some_data": 123}', "Randomized!", status_update)
+    game_root.joinpath.assert_called_once_with("files", "randovania.foobar")
+    description.save_to_file.assert_called_once_with(game_root.joinpath.return_value)
+    mock_create_patcher_file.assert_called_once_with(description, player_config, cosmetic_patches)
+    mock_apply_patcher_file.assert_called_once_with(game_root, backup_files_path,
+                                                    mock_create_patcher_file.return_value,
+                                                    description.all_patches[player_config.player_index].game_specific,
+                                                    progress_update)
 
 
 def test_process_command_no_thread(echo_tool):

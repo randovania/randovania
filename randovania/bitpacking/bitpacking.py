@@ -40,6 +40,8 @@ class BitPackDecoder:
         return self.decode(value)[0]
 
     def decode_element(self, array: List[T]) -> T:
+        if len(array) == 1:
+            return array[0]
         return array[self.decode_single(len(array))]
 
     def peek(self, *args) -> Tuple[int, ...]:
@@ -99,6 +101,34 @@ class BitPackFloat(BitPackValue):
         return float((decoded / (10 ** metadata["precision"])) + metadata["min"])
 
 
+class BitPackInt(BitPackValue):
+    value: int
+
+    def __init__(self, value: int):
+        self.value = value
+
+    def bit_pack_encode(self, metadata: dict) -> Iterator[Tuple[int, int]]:
+        if "if_different" in metadata:
+            same = self.value == metadata["if_different"]
+            yield from encode_bool(same)
+            if same:
+                return
+
+        value_range = metadata["max"] - metadata["min"]
+        yield self.value - metadata["min"], value_range
+
+    @classmethod
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> float:
+        if "if_different" in metadata:
+            same = decode_bool(decoder)
+            if same:
+                return metadata["if_different"]
+
+        value_range = (metadata["max"] - metadata["min"])
+        decoded = decoder.decode_single(value_range)
+        return decoded + metadata["min"]
+
+
 class BitPackEnum(BitPackValue):
     def __reduce__(self):
         return None
@@ -116,6 +146,7 @@ class BitPackEnum(BitPackValue):
 
 _default_bit_pack_classes = {
     bool: BitPackBool,
+    int: BitPackInt,
     float: BitPackFloat,
 }
 
@@ -179,7 +210,11 @@ class BitPackDataClass(BitPackValue):
 
 
 def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
-    yield array.index(element), len(array)
+    if len(array) > 1:
+        yield array.index(element), len(array)
+    else:
+        if element not in array:
+            raise ValueError("given element is not in array")
 
 
 def _is_sorted(array: List[T]) -> bool:

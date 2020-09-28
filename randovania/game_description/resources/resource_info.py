@@ -1,27 +1,32 @@
 from typing import Union, Tuple, Iterator, Dict
 
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
-ResourceInfo = Union[SimpleResourceInfo, DamageResourceInfo, PickupIndex, TranslatorGate, LogbookAsset]
+ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo,
+                     DamageResourceInfo, PickupIndex, TranslatorGate, LogbookAsset]
 ResourceQuantity = Tuple[ResourceInfo, int]
 ResourceGainTuple = Tuple[ResourceQuantity, ...]
 ResourceGain = Iterator[ResourceQuantity]
 CurrentResources = Dict[ResourceInfo, int]
 
 
-def add_resource_gain_to_current_resources(resource_gain: ResourceGain, resources: CurrentResources):
+def add_resource_gain_to_current_resources(resource_gain: ResourceGain,
+                                           resources: CurrentResources) -> CurrentResources:
     """
     Adds all resources from the given gain to the given CurrentResources
     :param resource_gain:
     :param resources:
-    :return:
+    :return: resources
     """
     for resource, quantity in resource_gain:
         resources[resource] = resources.get(resource, 0) + quantity
+    return resources
 
 
 def add_resources_into_another(target: CurrentResources, source: CurrentResources) -> None:

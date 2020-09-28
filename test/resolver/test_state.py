@@ -1,7 +1,10 @@
+import dataclasses
 from unittest.mock import Mock
 
 import pytest
 
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -17,14 +20,22 @@ def _database() -> ResourceDatabase:
                 item_percentage=SimpleResourceInfo(47, "Item Percentage", "Percentage", ResourceType.ITEM))
 
 
-def test_collected_pickup_indices(database):
+@pytest.fixture(name="patches")
+def _patches(empty_patches) -> GamePatches:
+    return dataclasses.replace(
+        empty_patches,
+        game_specific=EchoesGameSpecific(energy_per_tank=100, beam_configurations=())
+    )
+
+
+def test_collected_pickup_indices(database, patches):
     # Setup
     resources = {
         SimpleResourceInfo(1, "A", "A", ResourceType.ITEM): 5,
         PickupIndex(1): 1,
         PickupIndex(15): 1
     }
-    s = state.State(resources, (), 99, None, None, None, database)
+    s = state.State(resources, (), 99, None, patches, None, database)
 
     # Run
     indices = list(s.collected_pickup_indices)
@@ -33,9 +44,9 @@ def test_collected_pickup_indices(database):
     assert indices == [PickupIndex(1), PickupIndex(15)]
 
 
-def test_add_pickup_to_state(database):
+def test_add_pickup_to_state(database, patches):
     # Starting State
-    s = state.State({}, (), 99, None, None, None, database)
+    s = state.State({}, (), 99, None, patches, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
@@ -56,36 +67,10 @@ def test_add_pickup_to_state(database):
     }
 
 
-@pytest.mark.parametrize("collected", [False, True])
-def test_assign_pickup_to_index(collected: bool, empty_patches, database):
-    # Setup
-    starting_resources = {}
-    index = PickupIndex(1)
-    if collected:
-        starting_resources[index] = 1
-    starting = state.State(starting_resources, (), 99, None, empty_patches, None, database)
-
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    p = PickupEntry("A", 2, ItemCategory.SUIT,
-                    (
-                        ConditionalResources(None, None, ((resource_a, 1),)),
-                    ))
-
-    # Run
-    final = starting.assign_pickup_to_index(p, index)
-
-    # Assert
-    assert final.patches.pickup_assignment == {index: p}
-    if collected:
-        assert final.resources == {index: 1, resource_a: 1}
-    else:
-        assert final.resources == {}
-
-
-def test_assign_pickup_to_starting_items(empty_patches, database):
+def test_assign_pickup_to_starting_items(patches, database):
     # Setup
 
-    starting = state.State({}, (), 99, None, empty_patches, None, database)
+    starting = state.State({}, (), 99, None, patches, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
@@ -108,9 +93,9 @@ def test_assign_pickup_to_starting_items(empty_patches, database):
     assert final.resources == {resource_a: 5, resource_b: 0}
 
 
-def test_state_with_pickup(database):
+def test_state_with_pickup(database, patches):
     # Setup
-    starting = state.State({}, (), 99, None, None, None, database)
+    starting = state.State({}, (), 99, None, patches, None, database)
 
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
     p = PickupEntry("A", 2, ItemCategory.SUIT,

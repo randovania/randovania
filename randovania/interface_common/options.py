@@ -25,6 +25,7 @@ _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
+    "auto_save_spoiler": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
     "selected_preset_name": Serializer(identity, str),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
@@ -57,6 +58,7 @@ class Options:
     _last_changelog_displayed: str
     _advanced_validate_seed_after: Optional[bool] = None
     _advanced_timeout_during_generation: Optional[bool] = None
+    _auto_save_spoiler: Optional[bool] = None
     _output_directory: Optional[Path] = None
     _selected_preset_name: Optional[str] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
@@ -181,6 +183,7 @@ class Options:
         self._check_editable_and_mark_dirty()
         self._advanced_validate_seed_after = None
         self._advanced_timeout_during_generation = None
+        self._auto_save_spoiler = None
         self._cosmetic_patches = None
 
     # Files paths
@@ -220,6 +223,14 @@ class Options:
         self._edit_field("output_directory", value)
 
     @property
+    def auto_save_spoiler(self) -> bool:
+        return _return_with_default(self._auto_save_spoiler, lambda: False)
+
+    @auto_save_spoiler.setter
+    def auto_save_spoiler(self, value: bool):
+        self._edit_field("auto_save_spoiler", value)
+
+    @property
     def selected_preset_name(self) -> Optional[str]:
         return self._selected_preset_name
 
@@ -230,6 +241,10 @@ class Options:
     @property
     def cosmetic_patches(self) -> CosmeticPatches:
         return _return_with_default(self._cosmetic_patches, CosmeticPatches.default)
+
+    @cosmetic_patches.setter
+    def cosmetic_patches(self, value: CosmeticPatches):
+        self._edit_field("cosmetic_patches", value)
 
     # Advanced
 
@@ -250,43 +265,6 @@ class Options:
     def advanced_timeout_during_generation(self, value: bool):
         self._check_editable_and_mark_dirty()
         self._advanced_timeout_during_generation = value
-
-    # Access to fields inside CosmeticPatches
-    @property
-    def hud_memo_popup_removal(self) -> bool:
-        return self.cosmetic_patches.disable_hud_popup
-
-    @hud_memo_popup_removal.setter
-    def hud_memo_popup_removal(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, disable_hud_popup=value))
-
-    @property
-    def speed_up_credits(self) -> bool:
-        return self.cosmetic_patches.speed_up_credits
-
-    @speed_up_credits.setter
-    def speed_up_credits(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, speed_up_credits=value))
-
-    @property
-    def open_map(self) -> bool:
-        return self.cosmetic_patches.open_map
-
-    @open_map.setter
-    def open_map(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, open_map=value))
-
-    @property
-    def pickup_markers(self) -> bool:
-        return self.cosmetic_patches.pickup_markers
-
-    @pickup_markers.setter
-    def pickup_markers(self, value: bool):
-        self._edit_field("cosmetic_patches",
-                         dataclasses.replace(self.cosmetic_patches, pickup_markers=value))
 
     ######
 

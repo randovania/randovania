@@ -55,6 +55,8 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
     :param patches:
     :return:
     """
+    elevator_connection = copy.copy(patches.elevator_connection)
+
     if layout_configuration.elevators != LayoutElevators.VANILLA:
         if rng is None:
             raise MissingRng("Elevator")
@@ -83,11 +85,12 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
                 elevator_target=layout_configuration.elevators == LayoutElevators.ONE_WAY_ELEVATOR
             )
 
-        elevator_connection = copy.copy(patches.elevator_connection)
         elevator_connection.update(connections)
-        return dataclasses.replace(patches, elevator_connection=elevator_connection)
-    else:
-        return patches
+
+    if layout_configuration.skip_final_bosses:
+        elevator_connection[136970379] = AreaLocation(1006255871, 1393588666)
+
+    return dataclasses.replace(patches, elevator_connection=elevator_connection)
 
 
 def gate_assignment_for_configuration(configuration: LayoutConfiguration,
@@ -101,15 +104,20 @@ def gate_assignment_for_configuration(configuration: LayoutConfiguration,
     :return:
     """
 
-    choices = list(LayoutTranslatorRequirement)
-    choices.remove(LayoutTranslatorRequirement.RANDOM)
+    all_choices = list(LayoutTranslatorRequirement)
+    all_choices.remove(LayoutTranslatorRequirement.RANDOM)
+    all_choices.remove(LayoutTranslatorRequirement.RANDOM_WITH_REMOVED)
+    without_removed = copy.copy(all_choices)
+    without_removed.remove(LayoutTranslatorRequirement.REMOVED)
+    random_requirements = {LayoutTranslatorRequirement.RANDOM, LayoutTranslatorRequirement.RANDOM_WITH_REMOVED}
 
     result = {}
     for gate, requirement in configuration.translator_configuration.translator_requirement.items():
-        if requirement == LayoutTranslatorRequirement.RANDOM:
+        if requirement in random_requirements:
             if rng is None:
                 raise MissingRng("Translator")
-            requirement = rng.choice(choices)
+            requirement = rng.choice(all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
+                                     else without_removed)
 
         result[gate] = resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_index)
 
@@ -136,12 +144,14 @@ def starting_location_for_configuration(configuration: LayoutConfiguration,
 def add_default_hints_to_patches(rng: Random,
                                  patches: GamePatches,
                                  world_list: WorldList,
+                                 num_joke: int,
                                  ) -> GamePatches:
     """
-    Adds hints for the locations
+    Adds hints that are present on all games.
     :param rng:
     :param patches:
     :param world_list:
+    :param num_joke
     :return:
     """
 
@@ -176,7 +186,24 @@ def add_default_hints_to_patches(rng: Random,
         logbook_asset = all_logbook_assets.pop()
         patches = patches.assign_hint(logbook_asset, Hint(hint_type, PrecisionPair.detailed(), index))
 
+    while num_joke > 0 and all_logbook_assets:
+        logbook_asset = all_logbook_assets.pop()
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, PrecisionPair.joke(), None))
+        num_joke -= 1
+
     return patches
+
+
+def add_game_specific_from_config(patches: GamePatches, configuration: LayoutConfiguration, game: GameDescription,
+                                  ) -> GamePatches:
+    return dataclasses.replace(
+        patches,
+        game_specific=dataclasses.replace(
+            patches.game_specific,
+            energy_per_tank=configuration.energy_per_tank,
+            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database)
+        )
+    )
 
 
 def create_base_patches(configuration: LayoutConfiguration,
@@ -190,10 +217,10 @@ def create_base_patches(configuration: LayoutConfiguration,
     :param game:
     :return:
     """
-
-    # TODO: we shouldn't need the seed_number!
-
     patches = game.create_game_patches()
+
+    patches = add_game_specific_from_config(patches, configuration, game)
+
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates
@@ -206,6 +233,6 @@ def create_base_patches(configuration: LayoutConfiguration,
 
     # Hints
     if rng is not None:
-        patches = add_default_hints_to_patches(rng, patches, game.world_list)
+        patches = add_default_hints_to_patches(rng, patches, game.world_list, num_joke=2)
 
     return patches

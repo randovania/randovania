@@ -7,7 +7,7 @@ from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementList
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
@@ -19,7 +19,7 @@ def _has_trick(alternative: RequirementList) -> bool:
 
 
 def _area_uses_trick(area: Area,
-                     trick: Optional[SimpleResourceInfo],
+                     trick: Optional[TrickResourceInfo],
                      level: LayoutTrickLevel,
                      ) -> bool:
     """
@@ -31,15 +31,9 @@ def _area_uses_trick(area: Area,
     """
     for _, _, requirements in area.all_connections:
         if trick is not None:
-            for individual in requirements.all_individual:
+            for individual in requirements.as_set.all_individual:
                 if individual.resource == trick and individual.amount == level.as_number:
                     return True
-
-        else:
-            for alternative in requirements.alternatives:
-                if alternative.difficulty_level == level.as_number and not _has_trick(alternative):
-                    return True
-
     return False
 
 
@@ -48,7 +42,7 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
                  parent: QWidget,
                  window_manager: WindowManager,
                  game_description: GameDescription,
-                 trick: Optional[SimpleResourceInfo],
+                 trick: Optional[TrickResourceInfo],
                  level: LayoutTrickLevel,
                  ):
         super().__init__(parent)

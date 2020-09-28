@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Iterator
 
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, ResourceQuantity
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
@@ -9,14 +10,14 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 @dataclass(frozen=True)
 class ConditionalResources:
     name: Optional[str]
-    item: Optional[SimpleResourceInfo]
+    item: Optional[ItemResourceInfo]
     resources: ResourceGainTuple
 
 
 @dataclass(frozen=True)
 class ResourceConversion:
-    source: SimpleResourceInfo
-    target: SimpleResourceInfo
+    source: ItemResourceInfo
+    target: ItemResourceInfo
     clear_source: bool = True
     overwrite_target: bool = False
 
@@ -34,6 +35,7 @@ class PickupEntry:
     resources: Tuple[ConditionalResources, ...]
     convert_resources: Tuple[ResourceConversion, ...] = tuple()
     probability_offset: float = 0
+    probability_multiplier: float = 1
 
     def __post_init__(self):
         if not isinstance(self.resources, tuple):

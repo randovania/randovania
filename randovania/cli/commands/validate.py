@@ -3,23 +3,23 @@ from pathlib import Path
 
 from randovania.cli import prime_database
 from randovania.cli.echoes_lib import add_debug_argument
-from randovania.game_description import data_reader
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
 
 
 def validate_command_logic(args):
     debug.set_level(args.debug)
-    data = prime_database.decode_data_file(args)
-    game = data_reader.decode_data(data)
 
     description = LayoutDescription.from_file(args.layout_file)
-    configuration = description.permalink.layout_configuration
-    patches = description.patches
+
+    if description.permalink.player_count != 1:
+        raise ValueError(f"Validator does not support layouts with more than 1 player.")
+
+    configuration = description.permalink.presets[0].layout_configuration
+    patches = description.all_patches[0]
 
     final_state_by_resolve = resolver.resolve(
         configuration=configuration,
-        game=game,
         patches=patches
     )
     print(final_state_by_resolve)

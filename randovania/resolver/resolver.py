@@ -1,9 +1,10 @@
 from typing import Optional, Tuple, Callable, FrozenSet
 
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, ResourceNode, EventNode
 from randovania.game_description.requirements import RequirementSet, RequirementList
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.resolver import debug, event_pickup
@@ -15,7 +16,7 @@ from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,
-                               dangerous_resources: FrozenSet[SimpleResourceInfo],
+                               dangerous_resources: FrozenSet[ResourceInfo],
                                ) -> Optional[RequirementList]:
     items = []
     for item in self.values():
@@ -29,12 +30,12 @@ def _simplify_requirement_list(self: RequirementList, state: State,
             # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
             items.append(item)
 
-    return RequirementList(self.difficulty_level, items)
+    return RequirementList(items)
 
 
 def _simplify_additional_requirement_set(requirements: RequirementSet,
                                          state: State,
-                                         dangerous_resources: FrozenSet[SimpleResourceInfo],
+                                         dangerous_resources: FrozenSet[ResourceInfo],
                                          ) -> RequirementSet:
     new_alternatives = [
         _simplify_requirement_list(alternative, state, dangerous_resources)
@@ -49,7 +50,7 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
 
 def _should_check_if_action_is_safe(state: State,
                                     action: ResourceNode,
-                                    dangerous_resources: FrozenSet[SimpleResourceInfo]) -> bool:
+                                    dangerous_resources: FrozenSet[ResourceInfo]) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
@@ -69,8 +70,8 @@ def _should_check_if_action_is_safe(state: State,
         pickup_node = action
 
     if isinstance(pickup_node, PickupNode):
-        pickup = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        if pickup is not None and (pickup.item_category.is_major_category or pickup.item_category.is_key):
+        target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
+        if target is not None and (target.pickup.item_category.is_major_category or target.pickup.item_category.is_key):
             return True
 
     return False
@@ -158,13 +159,13 @@ def _quiet_print(s):
 
 
 def resolve(configuration: LayoutConfiguration,
-            game: GameDescription,
             patches: GamePatches,
             status_update: Optional[Callable[[str], None]] = None
             ) -> Optional[State]:
     if status_update is None:
         status_update = _quiet_print
 
+    game = data_reader.decode_data(configuration.game_data)
     event_pickup.replace_with_event_pickups(game)
 
     new_game, starting_state = logic_bootstrap(configuration, game, patches)

@@ -8,18 +8,296 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   *Major* - Added: Multiworld support yay TODO actual description
+
+-   Added: An automatic item tracker based on a Dolphin running on the same computer.
+
+-   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
+
+-   Added: Options for configuring usage of new tricks:
+    - Boost Jump
+    - Extended Dash
+    - Bomb Slot without Bombs
+    - Bomb Jump (renamed from Difficult Bomb Jump)
+    - Difficult Movement
+    - Standable Terrain
+    - Respawn Abuse
+    - Open Gates from Behind
+    - Screw Attack into Tunnels
+    - Knowledge
+    - Seeker Locks without Seekers
+    
+-   Added: Energy Tanks have doubled weight for the generator.
+
+-   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
+
+-   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
+
+-   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
+
+-   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
+
+-   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
+
+-   Fixed: The Data Editor no longer errors when saving after creating a new node.
+
+-   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
+
+-   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
+
+-   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
+
+-   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
+
+-   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.
+
+-   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
+
+-   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
+
+-   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
+
+-   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
+
+-   Changed: The elevator scan now includes the world of the connected area.
+
+-   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
+
+-   Changed: Better error messages when there are references to unknown resources in the database.
+
+-   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
+
+-   Changed: The following trick level difficulties were renamed:
+    - Trivial -> Beginner
+    - Easy -> Intermediate
+    - Normal -> Advanced
+    - Hard -> Expert
+    - Minimal Checking -> Minimal Logic
+
+### Logic Database changes
+
+-   *Major* - Changed: Every requirement above the No Tricks difficulty now has a corresponding trick for ease of customization and organization.
+
+#### Added
+
+-   General:
+    - Methods to open all Seeker Missile Doors with Screw Attack (Expert and above).
+    - Method to activate most Bomb Slots without Bombs (Advanced and above).
+    - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
+
+-   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
+
+-   Accursed Lake, method of collecting the item and leaving with Morph Ball, Light Suit, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+
+-   Hall of Honored Dead, method of leaving through the Morph tunnel without Space Jump (Expert and above).
+
+-   Ing Windchamber, method of completing the puzzle with Power Bombs instead of Bombs (Beginner and above).
+
+-   Landing Site, method of reaching Service Access door with Bombs and Screw Attack (Intermediate and above).
+
+-   Windchamber Gateway, method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
+
+-   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
+
+-   Bioenergy Production, method to reach Storage C door or item from top level with Extended Dash (Expert and above).
+
+-   Central Station Access/Warrior's Walk, method of climbing the ledge with an Instant Unmorph Jump (Hypermode).
+
+-   Crossroads, method to reach the item from the half pipe with just Screw Attack (Advanced and above).
+
+-   Doomed Entry, method to climb room with Space Jump and Screw Attack (Beginner and above).
+
+-   Feeding Pit, method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
+
+-   Dark Transit Station, method to reach the ledge from Duelling Range with a Bomb Jump (Intermediate and above).
+
+-   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
+
+-   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
+
+-   Dark Forgotten Bridge, method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
+
+-   Gathering Hall: 
+    - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
+    - Method to reach Transit Tunnel South from Transit Tunnel West with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+    - Method to reach the Spider Ball tracks with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+
+-   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
+
+-   Meditation Vista, methods of reaching the item with a Boost Jump or Roll Jump (Expert and above).
+
+-   Path of Roots, method of reaching the item using:
+    - Morph Ball, Bombs and Space Jump (Advanced and above).
+    - Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+
+-   Putrid Alcove, method of getting the item and leaving without any items (Expert and above).
+
+-   Sacrificial Chamber, method of crossing gap to Sacrificial Chamber Tunnel with Extended Dash (Expert and above).
+
+-   Torvus Grove, method of climbing the room without Boost Ball (Expert and above).
+
+-   Torvus Plaza:
+    - Method of getting the item without Boost Ball and/or Spider Ball (Advanced and above).
+    - Method of leaving the room with Space Jump and Bombs (Advanced and above).
+
+-   Training Chamber:
+    - Method to exit the spinner with Power Bombs instead of Bombs (Beginner and above).
+    - Method to climb to the top of the statue with Gravity Boost and Bombs (Intermediate and above).
+    - Method to climb to the top of the statue with Space Jump, Scan Dash, and Underwater Dash (Expert and above).
+
+-   Underground Tunnel, method to access Torvus Temple from Torvus Grove with Screw Attack (Expert and above).
+
+-   Undertemple, method to have PB Guardian break PB door using bombs (Advanced and above).
+
+-   Undertemple Access, method of reaching the item using Screw Attack and Jump Off Enemy (Hypermode).
+
+-   Aerial Training Site, methods to cross the room from various nodes with Dashes, Roll Jumps, and Extended Dashes (Intermediate/Expert and above).
+
+-   Aerie, method of collecting the item without entering the Dark World (Expert and above).
+
+-   Dynamo Works, method of collecting the item with a Roll Jump and Instant Morph (Expert and above).
+
+-   Grand Abyss, methods of crossing the gap with Boost Jump (Advanced and above) or Extended Dash (Expert and above).
+
+-   Hall of Combat Mastery, methods of collecting the item with a Wall Boost (Expert and above) or with a Power Bomb and unmorphing (Beginner and above).
+
+-   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Intermediate and above).
+
+-   Hive Temple:
+    - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
+    - Methods of leaving the room without Spider Ball after Quadraxis with Boost Ball or Space Jump (Hypermode).
+
+-   Reactor Core, method of reaching the item with only Space Jump (Expert and above).
+
+-   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
+
+-   Watch Station Access, methods to cross the pit in either direction using:
+    - Boost Ball and Boost Jump (Advanced and above).
+    - Space Jump, Scan Visor, and Scan Dash (Advanced and above).
+
+-   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
+-   Workers Path, method of crossing the room from Sanctuary Temple with a Boost Jump (Advanced and above).
+
+#### Fixed
+
+-   Scan Visor Requirements: 
+    - Dash Requirements in many rooms
+    - Grand Abyss Bridge terminal
+    - Sand Processing item
+    - Staging Area terminal
+    - Torvus Lagoon terminal
+    - Trooper Security Station Event coming from Communication Area
+
+-   Dark Aether Damage Requirements:
+    - Sky Temple Grounds
+    - Battleground
+    - Judgment Pit
+    - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
+    - Undertemple Access (Updated)
+    - Undertemple (Intermediate and above)
+    - Vault Attack Portal
+
+-   Invisible Objects and Dark Visor Requirements:
+    - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
+    - Screw Attack without Space Jump in Phazon Grounds (Advanced and above)
+
+-   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
+
+-   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
+
+-   Morph Ball Doors now properly requires Morph Ball.
+
+-   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
+
+#### Changed
+
+-   Many nodes with missing requirements have been updated/cleaned up.
+
+-   Simplified nodes in many rooms for ease of logic navigation.
+
+-   Crossing lower Double Path without Space Jump is now Beginner difficulty (from Intermediate).
+
+-   Reaching Transit Station door in Mining Station B after unlocking the portal with Space Jump and Screw Attack is now Advanced difficulty (from Expert).
+
+-   Reaching the portal in Catacombs with Morph Ball and Reverse Air Underwater is now Advanced difficulty (from Expert).
+
+-   Reaching Transit Tunnel South/West Doors from top door in Gathering Hall with Morph Ball and Roll Jump is now Expert difficulty (from Advanced).
+
+## [1.2.2] - 2020-06-06
+
+-   Changed: Re-organized the tabs in the preset customization window
+
+-   Changed: The reset map tracker menu action is now visible on non-windows platforms.
+
+-   Fixed: Exporting ISOs with Menu Mod should now work on macOS.
+
+## [1.2.1] - 2020-05-30
+
+-   Added: Randovania releases now includes a packages for macOS.
+
+## [1.2.0] - 2020-05-25
+
 -   *Major* - Added: The text of the scan that unlocks an elevator now includes the
     elevators destination.
+    
+-   *Major* - Added: Translator gates can be configured as Unlocked: the hologram will be invisible and can be scanned
+    without any translator.
+
+-   *Major* - Added: The default in-game options can now be configured from Randovania.
+
+-   *Major* - Added: How much ammo each beam uses to shoot uncharged, charged and charge combos is now configurable,
+    along with the ammo it uses.
+
+-   *Major* - Changed: The database now uses a new format which allows for any combination of "Or"/"And" statements.
+    The Data Visualizer and Editor were both updated to take advantage of this.
+
+-   Added: An option to connect Sky Temple Gateway directly to the credits, skipping the final bosses.
+
+-   Added: How much energy you get for each Energy Tank is now configurable.
+
+-   Added: The in-game Hint System has been removed. The option for it remains, but does nothing.
+
+-   Changed: The spoiler log now lists the order in which items where placed, with their location and hints,
+    instead of a detailed playthrough for completion.
+
+-   Changed: The logbook entries that contains hints are now named after the room they're in, with the categories
+    being about which kind of hint they are.
+    KNOWN ISSUE: While scanning something, the categories that show up are incorrect.
 
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
     Trick Level tab when customizing a preset. 
     
 -   Added: Play -> Import game file, to load spoiler logs.
 
+-   Added: The "Heals?" checkbox in the database editor now works.
+
+-   Added: The permalink import dialog now shows an error message for invalid permalinks.
+
+-   Changed: One-way elevators now have a chance of warping to credits.
+
 -   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
     must be collected for the appropriate events to be triggered. 
+    
+-   Changed: In Menu Mod, the list of rooms to warp to is now sorted.
+
+-   Changed: The export-areas command line option now outputs details about requirements for each area.
+
+-   Internal: A human-readable copy of the database is now kept next to the database file, for easier diffs.
+
+-   Fixed: Debug logs can no longer be enabled for non-spoiler permalinks.
+
+-   Added: Missile Expansions have a 1/8192 chance of using Dark Missile Trooper model.
+
+-   Fixed: Progress bar no longer goes to an indefinite status when generation fails.
+
+-   Added: Checkbox for automatically exporting a spoiler log next to the ISO.
+
+-   Fixed: Only the last digit of the game id is changed, instead of the full game id.
 
 ### Logic Database changes
+
+-   Fixed: Staging Area is now correctly considered a dark world room.
 
 -   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs. 
 
@@ -67,7 +345,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: In GFMC Compound, a method of reaching the ship item with Screw Attack (Normal and above).
 
--   Added: In Main Gyro Chamber, a method of reaching the bottom of the gyro area from the middle of the room with Screw Attack (Easy and aboive).
+-   Added: In Main Gyro Chamber, a method of reaching the bottom of the gyro area from the middle of the room with Screw Attack (Easy and above).
 
 -   Changed: In Workers Path, Morph Ball Bomb is no longer required.
 
@@ -492,7 +770,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Changed: Average ammo provided per expansion is now shown with more precision.
 
 -   Added: `randovania echoes database list-dangerous-usage` command to list all
-	paths that require a resource to not be collected.
+    paths that require a resource to not be collected.
 
 -   Added: Methods to get to Sunburst location by reaching the platform with the cannon
     with a scan dash (Normal and above) or with just Space Jump Boots (Easy and above).

@@ -4,17 +4,14 @@ from pathlib import Path
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox, \
-    QAction
+from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox
 
-from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
-from randovania.generator import base_patches_factory
-from randovania.generator.item_pool import pool_creator
+from randovania.generator import base_patches_factory, generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.custom_spin_box import CustomSpinBox
@@ -73,10 +70,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.setupUi(self)
         set_default_window_icon(self)
 
-        self.menu_reset_action = QAction("Reset", self)
-        self.menu_reset_action.triggered.connect(self._confirm_reset)
-        self.menu_bar.addAction(self.menu_reset_action)
-
         self._collected_pickups = {}
         self._widget_for_pickup = {}
         self._actions = []
@@ -84,26 +77,23 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._node_to_item = {}
         self.layout_configuration = layout_configuration
         self.persistence_path = persistence_path
-        self.game_description = data_reader.decode_data(layout_configuration.game_data)
 
+        player_index = 0  # FIXME
         try:
-            base_patches = base_patches_factory.create_base_patches(self.layout_configuration, None,
-                                                                    self.game_description)
+            player_pool = generator.create_player_pool(None, self.layout_configuration, player_index)
         except base_patches_factory.MissingRng as e:
             raise InvalidLayoutForTracker("Layout is configured to have random {}, "
                                           "but that isn't supported by the tracker.".format(e))
 
-        pool_patches, item_pool = pool_creator.calculate_item_pool(self.layout_configuration,
-                                                                   self.game_description.resource_database,
-                                                                   base_patches)
-
+        pool_patches = player_pool.patches
         self.game_description, self._initial_state = logic_bootstrap(layout_configuration,
-                                                                     self.game_description,
+                                                                     player_pool.game,
                                                                      pool_patches)
         self.logic = Logic(self.game_description, layout_configuration)
 
         self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 
+        self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
@@ -116,7 +106,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             )
         ))
 
-        self.setup_pickups_box(item_pool)
+        self.setup_pickups_box(player_pool.pickups)
         self.setup_possible_locations_tree()
 
         self._starting_nodes = {

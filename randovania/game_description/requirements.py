@@ -1,14 +1,256 @@
 from functools import lru_cache
 from math import ceil
-from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple
+from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple, List, Type, Union
 
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
+MAX_DAMAGE = 9999999
 
-class IndividualRequirement(NamedTuple):
+
+class Requirement:
+    def damage(self, current_resources: CurrentResources) -> int:
+        raise NotImplementedError()
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+        raise NotImplementedError()
+
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           ) -> "Requirement":
+        """
+        Creates a new Requirement that does not contain reference to resources in static_resources.
+        For those that contains a reference, they're replaced with Trivial when satisfied and Impossible otherwise.
+        :param static_resources:
+        :param damage_multiplier: All damage requirements have their value multiplied by this.
+        """
+        raise NotImplementedError()
+
+    def simplify(self) -> "Requirement":
+        """
+        Creates a new Requirement without some redundant complexities, like:
+        - RequirementAnd/RequirementOr of exactly one item
+        - RequirementAnd/RequirementOr of others of the same type.
+        - RequirementAnd with impossible among the items
+        - RequirementOr with trivial among the items
+        :return:
+        """
+        raise NotImplementedError()
+
+    @property
+    def as_set(self) -> "RequirementSet":
+        raise NotImplementedError()
+
+    @classmethod
+    @lru_cache()
+    def trivial(cls) -> "Requirement":
+        # empty RequirementAnd.satisfied is True
+        return RequirementAnd([])
+
+    @classmethod
+    @lru_cache()
+    def impossible(cls) -> "Requirement":
+        # empty RequirementOr.satisfied is False
+        return RequirementOr([])
+
+    def __lt__(self, other: "Requirement"):
+        return str(self) < str(other)
+
+
+class RequirementAnd(Requirement):
+    items: Tuple[Requirement, ...]
+    _cached_hash = None
+
+    def __init__(self, items: Iterable[Requirement]):
+        self.items = tuple(items)
+
+    def damage(self, current_resources: CurrentResources) -> int:
+        result = 0
+        for item in self.items:
+            if item.satisfied(current_resources, MAX_DAMAGE):
+                result += item.damage(current_resources)
+            else:
+                return MAX_DAMAGE
+        return result
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+        return all(
+            item.satisfied(current_resources, current_energy)
+            for item in self.items
+        )
+
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           ) -> Requirement:
+        return RequirementAnd(
+            item.patch_requirements(static_resources, damage_multiplier) for item in self.items
+        )
+
+    def simplify(self) -> Requirement:
+        new_items = _expand_items(self.items, RequirementAnd, Requirement.trivial())
+        if Requirement.impossible() in new_items:
+            return Requirement.impossible()
+
+        if len(new_items) == 1:
+            return new_items[0]
+
+        return RequirementAnd(new_items)
+
+    @property
+    def as_set(self) -> "RequirementSet":
+        result = RequirementSet.trivial()
+        for item in self.items:
+            result = result.union(item.as_set)
+        return result
+
+    @property
+    def sorted(self) -> Tuple[Requirement]:
+        return tuple(sorted(self.items))
+
+    def __eq__(self, other):
+        return isinstance(other, RequirementAnd) and self.items == other.items
+
+    def __hash__(self) -> int:
+        if self._cached_hash is None:
+            self._cached_hash = hash(self.items)
+        return self._cached_hash
+
+    def __repr__(self):
+        return repr(self.items)
+
+    def __str__(self) -> str:
+        if self.items:
+            visual_items = [str(item) for item in self.items]
+            return "({})".format(" and ".join(sorted(visual_items)))
+        else:
+            return "Trivial"
+
+
+class RequirementOr(Requirement):
+    items: Tuple[Requirement, ...]
+    _cached_hash = None
+
+    def __init__(self, items: Iterable[Requirement]):
+        self.items = tuple(items)
+
+    def damage(self, current_resources: CurrentResources) -> int:
+        try:
+            return min(
+                item.damage(current_resources)
+                for item in self.items
+                if item.satisfied(current_resources, MAX_DAMAGE)
+            )
+        except ValueError:
+            return MAX_DAMAGE
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+        return any(
+            item.satisfied(current_resources, current_energy)
+            for item in self.items
+        )
+
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           ) -> Requirement:
+        return RequirementOr(
+            item.patch_requirements(static_resources, damage_multiplier) for item in self.items
+        )
+
+    def simplify(self) -> Requirement:
+        new_items = _expand_items(self.items, RequirementOr, Requirement.impossible())
+        if Requirement.trivial() in new_items:
+            return Requirement.trivial()
+
+        num_and_requirements = 0
+        common_requirements = None
+        for item in new_items:
+            if isinstance(item, RequirementAnd):
+                num_and_requirements += 1
+                if common_requirements is None:
+                    common_requirements = item.items
+                else:
+                    common_requirements = [
+                        common
+                        for common in common_requirements
+                        if common in item.items
+                    ]
+
+        # Only extract the common requirements if there's more than 1 requirement
+        if num_and_requirements >= 2 and common_requirements:
+            simplified_items = []
+            common_new_or = []
+
+            for item in new_items:
+                if isinstance(item, RequirementAnd):
+                    assert set(common_requirements) <= set(item.items)
+                    simplified_condition = [it for it in item.items if it not in common_requirements]
+                    if simplified_condition:
+                        common_new_or.append(RequirementAnd(simplified_condition) if len(simplified_condition) > 1
+                                             else simplified_condition[0])
+                else:
+                    simplified_items.append(item)
+
+            common_requirements.append(RequirementOr(common_new_or))
+            simplified_items.append(RequirementAnd(common_requirements))
+            final_items = simplified_items
+
+        else:
+            final_items = new_items
+
+        if len(final_items) == 1:
+            return final_items[0]
+
+        return RequirementOr(final_items)
+
+    @property
+    def as_set(self) -> "RequirementSet":
+        alternatives = set()
+        for item in self.items:
+            alternatives |= item.as_set.alternatives
+        return RequirementSet(alternatives)
+
+    @property
+    def sorted(self) -> Tuple[Requirement]:
+        return tuple(sorted(self.items))
+
+    def __eq__(self, other):
+        return isinstance(other, RequirementOr) and self.items == other.items
+
+    def __hash__(self) -> int:
+        if self._cached_hash is None:
+            self._cached_hash = hash(self.items)
+        return self._cached_hash
+
+    def __repr__(self):
+        return repr(self.items)
+
+    def __str__(self) -> str:
+        if self.items:
+            visual_items = [str(item) for item in self.items]
+            return "({})".format(" or ".join(sorted(visual_items)))
+        else:
+            return "Impossible"
+
+
+def _expand_items(items: Tuple[Requirement, ...],
+                  cls: Type[Union[RequirementAnd, RequirementOr]],
+                  exclude: Requirement) -> List[Requirement]:
+    expanded = []
+
+    def _add(_item):
+        if _item not in expanded and _item != exclude:
+            expanded.append(_item)
+
+    for item in items:
+        simplified = item.simplify()
+        if isinstance(simplified, cls):
+            for new_item in simplified.items:
+                _add(new_item)
+        else:
+            _add(simplified)
+    return expanded
+
+
+class ResourceRequirement(NamedTuple, Requirement):
     resource: ResourceInfo
     amount: int
     negate: bool
@@ -19,7 +261,7 @@ class IndividualRequirement(NamedTuple):
                   resource_type: ResourceType,
                   requirement_index: int,
                   amount: int,
-                  negate: bool) -> "IndividualRequirement":
+                  negate: bool) -> "ResourceRequirement":
         return cls(
             database.get_by_type_and_index(resource_type, requirement_index),
             amount,
@@ -49,6 +291,9 @@ class IndividualRequirement(NamedTuple):
         else:
             return has_amount
 
+    def simplify(self) -> Requirement:
+        return self
+
     def __repr__(self):
         return "{} {} {}".format(
             self.resource,
@@ -58,8 +303,8 @@ class IndividualRequirement(NamedTuple):
     @property
     def pretty_text(self):
         if self.amount == 1:
-            negated_prefix = "No " if self.resource.resource_type is ResourceType.ITEM else "Before "
-            non_negated_prefix = "After " if self.resource.resource_type is ResourceType.EVENT else ""
+            negated_prefix = self.resource.resource_type.negated_prefix
+            non_negated_prefix = self.resource.resource_type.non_negated_prefix
             return "{}{}".format(negated_prefix if self.negate else non_negated_prefix, self.resource)
         else:
             return str(self)
@@ -68,55 +313,86 @@ class IndividualRequirement(NamedTuple):
     def _as_comparison_tuple(self):
         return self.resource.resource_type, self.resource.index, self.amount, self.negate
 
-    def __lt__(self, other: "IndividualRequirement") -> bool:
+    def __lt__(self, other: "ResourceRequirement") -> bool:
         return self._as_comparison_tuple < other._as_comparison_tuple
 
-    def multiply_amount(self, multiplier: float) -> "IndividualRequirement":
-        return IndividualRequirement(
+    def multiply_amount(self, multiplier: float) -> "ResourceRequirement":
+        return ResourceRequirement(
             self.resource,
             self.amount * multiplier,
             self.negate,
         )
 
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           ) -> Requirement:
+        if static_resources.get(self.resource) is not None:
+            if self.satisfied(static_resources, 0):
+                return Requirement.trivial()
+            else:
+                return Requirement.impossible()
+        else:
+            if self.is_damage:
+                return self.multiply_amount(damage_multiplier)
+            else:
+                return self
+
+    @property
+    def as_set(self) -> "RequirementSet":
+        return RequirementSet([
+            RequirementList([
+                self
+            ])
+        ])
+
+
+class RequirementTemplate(Requirement):
+    database: ResourceDatabase
+    template_name: str
+
+    def __init__(self, database: ResourceDatabase, template_name: str):
+        self.database = database
+        self.template_name = template_name
+
+    @property
+    def template_requirement(self) -> Requirement:
+        return self.database.requirement_template[self.template_name]
+
+    def damage(self, current_resources: CurrentResources) -> int:
+        return self.template_requirement.damage(current_resources)
+
+    def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
+        return self.template_requirement.satisfied(current_resources, current_energy)
+
+    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+                           ) -> Requirement:
+        return self.template_requirement.patch_requirements(static_resources, damage_multiplier)
+
+    def simplify(self) -> Requirement:
+        return self
+
+    @property
+    def as_set(self) -> "RequirementSet":
+        return self.template_requirement.as_set
+
+    def __eq__(self, other):
+        return isinstance(other, RequirementTemplate) and self.template_name == other.template_name
+
+    def __hash__(self) -> int:
+        return hash(self.template_name)
+
+    def __str__(self) -> str:
+        return self.template_name
+
 
 class RequirementList:
-    difficulty_level: int
-    items: FrozenSet[IndividualRequirement]
+    items: FrozenSet[ResourceRequirement]
     _cached_hash: Optional[int] = None
 
     def __deepcopy__(self, memodict):
         return self
 
-    def __init__(self, difficulty_level: int, items: Iterable[IndividualRequirement]):
-        self.difficulty_level = difficulty_level
+    def __init__(self, items: Iterable[ResourceRequirement]):
         self.items = frozenset(items)
-
-    @classmethod
-    def with_single_resource(cls, resource: ResourceInfo) -> "RequirementList":
-        return cls(0, [IndividualRequirement(resource, 1, False)])
-
-    @classmethod
-    def without_misc_resources(cls,
-                               items: Iterable[IndividualRequirement],
-                               database: ResourceDatabase, ) -> Optional["RequirementList"]:
-
-        difficulty = 0
-
-        to_add = []
-        for individual in items:
-            if individual.resource == database.impossible_resource():
-                raise Exception("Impossible resource found in a RequirementList")
-
-            elif individual.resource == database.trivial_resource():
-                raise Exception("Trivial resource found in a RequirementList")
-
-            if individual.resource == database.difficulty_resource:
-                assert not individual.negate, "We shouldn't have a negate requirement for difficulty"
-                difficulty = individual.amount
-
-            to_add.append(individual)
-
-        return cls(difficulty, to_add)
 
     def __eq__(self, other):
         return isinstance(
@@ -139,13 +415,6 @@ class RequirementList:
         else:
             return "Trivial"
 
-    def amount_unsatisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
-        return sum(not requirement.satisfied(current_resources, current_energy)
-                   for requirement in self.values())
-
-    def damage(self, current_resources: CurrentResources) -> int:
-        return sum(requirement.damage(current_resources) for requirement in self.values())
-
     def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         """
         A list is considered satisfied if each IndividualRequirement that belongs to it is satisfied.
@@ -164,32 +433,7 @@ class RequirementList:
                 return False
         return True
 
-    def patch_requirements(self,
-                           static_resources: CurrentResources,
-                           damage_multiplier: float) -> Optional["RequirementList"]:
-        """
-        Creates a new RequirementList that does not contain reference to resources in static_resources
-        :param static_resources:
-        :param damage_multiplier:
-        :return: None if this RequirementList is impossible to satisfy, otherwise the patched RequirementList.
-        """
-        items = []
-        for item in self.values():
-            if static_resources.get(item.resource) is not None:
-                # If the resource is a static resource, we either remove it from the list or
-                # consider this list impossible
-                if not item.satisfied(static_resources, 0):
-                    return None
-            else:
-                # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
-                if item.is_damage:
-                    items.append(item.multiply_amount(damage_multiplier))
-                else:
-                    items.append(item)
-
-        return RequirementList(self.difficulty_level, items)
-
-    def get(self, resource: ResourceInfo) -> Optional[IndividualRequirement]:
+    def get(self, resource: ResourceInfo) -> Optional[ResourceRequirement]:
         """
         Gets an IndividualRequirement that uses the given resource
         :param resource:
@@ -201,7 +445,7 @@ class RequirementList:
         return None
 
     @property
-    def dangerous_resources(self) -> Iterator[SimpleResourceInfo]:
+    def dangerous_resources(self) -> Iterator[ResourceInfo]:
         """
         Return an iterator of all SimpleResourceInfo in this list that have the negate flag
         :return:
@@ -210,25 +454,11 @@ class RequirementList:
             if individual.negate:
                 yield individual.resource
 
-    def replace(self, individual: IndividualRequirement, replacement: "RequirementList") -> "RequirementList":
-        items = []
-        for item in self.values():
-            if item == individual:
-                items.extend(replacement)
-            else:
-                items.append(item)
-        return RequirementList(self.difficulty_level, items)
-
-    def values(self) -> FrozenSet[IndividualRequirement]:
+    def values(self) -> FrozenSet[ResourceRequirement]:
         return self.items
 
     def union(self, other: "RequirementList") -> "RequirementList":
-        return RequirementList(max(self.difficulty_level, other.difficulty_level),
-                               self.items | other.items)
-
-    @property
-    def sorted(self) -> Tuple[IndividualRequirement]:
-        return tuple(sorted(self.items))
+        return RequirementList(self.items | other.items)
 
 
 class RequirementSet:
@@ -267,7 +497,7 @@ class RequirementSet:
     def __repr__(self):
         return repr(self.alternatives)
 
-    def pretty_print(self, indent=""):
+    def pretty_print(self, indent="", print_function=print):
         to_print = []
         if self == RequirementSet.impossible():
             to_print.append("Impossible")
@@ -279,26 +509,19 @@ class RequirementSet:
                 for alternative in self.alternatives
             )
         for line in sorted(to_print):
-            print(indent + line)
+            print_function(indent + line)
 
     @classmethod
     @lru_cache()
     def trivial(cls) -> "RequirementSet":
         # empty RequirementList.satisfied is True
-        return cls([RequirementList(0, [])])
+        return cls([RequirementList([])])
 
     @classmethod
     @lru_cache()
     def impossible(cls) -> "RequirementSet":
         # No alternatives makes satisfied always return False
         return cls([])
-
-    def minimum_damage(self, current_resources: CurrentResources, current_energy: int) -> int:
-        damage = 1499
-        for requirement_list in self.alternatives:
-            if requirement_list.satisfied(current_resources, current_energy):
-                damage = min(damage, requirement_list.damage(current_resources))
-        return damage
 
     def satisfied(self, current_resources: CurrentResources, current_energy: int) -> bool:
         """
@@ -312,50 +535,6 @@ class RequirementSet:
             requirement_list.satisfied(current_resources, current_energy)
             for requirement_list in self.alternatives)
 
-    def minimum_satisfied_difficulty(self,
-                                     current_resources: CurrentResources,
-                                     current_energy: int,
-                                     ) -> Optional[int]:
-        """
-        Gets the minimum difficulty that is currently satisfied
-        :param current_resources:
-        :param current_energy:
-        :return:
-        """
-        difficulties = [
-            requirement_list.difficulty_level
-            for requirement_list in self.alternatives
-            if requirement_list.satisfied(current_resources, current_energy)
-        ]
-        if difficulties:
-            return min(difficulties)
-        else:
-            return None
-
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float) -> "RequirementSet":
-        """"""
-        new_alternatives = [
-            alternative.patch_requirements(static_resources, damage_multiplier)
-            for alternative in self.alternatives
-        ]
-        return RequirementSet(alternative
-                              for alternative in new_alternatives
-
-                              # RequirementList.simplify may return None
-                              if alternative is not None)
-
-    def replace(self, individual: IndividualRequirement, replacements: "RequirementSet") -> "RequirementSet":
-        result = []
-
-        for alternative in self.alternatives:
-            if replacements.alternatives:
-                for other in replacements.alternatives:
-                    result.append(alternative.replace(individual, other))
-            elif individual not in alternative.values():
-                result.append(alternative)
-
-        return RequirementSet(result)
-
     def union(self, other: "RequirementSet") -> "RequirementSet":
         """Create a new RequirementSet that is only satisfied when both are satisfied"""
         return RequirementSet(
@@ -368,7 +547,7 @@ class RequirementSet:
         return RequirementSet(self.alternatives | other.alternatives)
 
     @property
-    def dangerous_resources(self) -> Iterator[SimpleResourceInfo]:
+    def dangerous_resources(self) -> Iterator[ResourceInfo]:
         """
         Return an iterator of all SimpleResourceInfo in all alternatives that have the negate flag
         :return:
@@ -377,15 +556,7 @@ class RequirementSet:
             yield from alternative.dangerous_resources
 
     @property
-    def progression_resources(self) -> FrozenSet[SimpleResourceInfo]:
-        return frozenset(
-            individual.resource
-            for individual in self.all_individual
-            if isinstance(individual.resource, SimpleResourceInfo) and not individual.negate
-        )
-
-    @property
-    def all_individual(self) -> Iterator[IndividualRequirement]:
+    def all_individual(self) -> Iterator[ResourceRequirement]:
         """
         Iterates over all individual requirements involved in this set
         :return:

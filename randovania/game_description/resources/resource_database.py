@@ -1,35 +1,43 @@
-from typing import List, NamedTuple
+from typing import List, NamedTuple, Dict, TypeVar
 
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 
-def find_resource_info_with_id(info_list: List[ResourceInfo], index: int):
+class MissingResource(ValueError):
+    pass
+
+
+T = TypeVar("T")
+
+
+def find_resource_info_with_id(info_list: List[T], index: int, resource_type: ResourceType) -> T:
     for info in info_list:
         if info.index == index:
             return info
-    raise ValueError(
-        "Resource with index {} not found in {}".format(index, info_list))
+    indices = [info.index for info in info_list]
+    raise MissingResource(f"{resource_type} Resource with index {index} not found in {indices}")
 
 
-def find_resource_info_with_long_name(info_list: List[ResourceInfo], long_name: str):
+def find_resource_info_with_long_name(info_list: List[T], long_name: str) -> T:
     for info in info_list:
         if info.long_name == long_name:
             return info
-    raise ValueError(
-        "Resource with long_name '{}' not found in {} resources".format(long_name, len(info_list)))
+    raise MissingResource(f"Resource with long_name '{long_name}' not found in {len(info_list)} resources")
 
 
 class ResourceDatabase(NamedTuple):
-    item: List[SimpleResourceInfo]
+    item: List[ItemResourceInfo]
     event: List[SimpleResourceInfo]
-    trick: List[SimpleResourceInfo]
+    trick: List[TrickResourceInfo]
     damage: List[DamageResourceInfo]
     version: List[SimpleResourceInfo]
     misc: List[SimpleResourceInfo]
-    difficulty: List[SimpleResourceInfo]
+    requirement_template: Dict[str, "Requirement"]
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
@@ -44,34 +52,21 @@ class ResourceDatabase(NamedTuple):
             return self.version
         elif resource_type == ResourceType.MISC:
             return self.misc
-        elif resource_type == ResourceType.DIFFICULTY:
-            return self.difficulty
         else:
             raise ValueError(
                 "Invalid resource_type: {}".format(resource_type))
 
     def get_by_type_and_index(self, resource_type: ResourceType,
                               index: int) -> ResourceInfo:
-        return find_resource_info_with_id(
-            self.get_by_type(resource_type), index)
+        return find_resource_info_with_id(self.get_by_type(resource_type), index, resource_type)
 
-    def get_item(self, index: int) -> SimpleResourceInfo:
+    def get_item(self, index: int) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, index)
 
-    def trivial_resource(self) -> ResourceInfo:
-        return self.get_by_type_and_index(ResourceType.MISC, 0)
-
-    def impossible_resource(self) -> ResourceInfo:
-        return self.get_by_type_and_index(ResourceType.MISC, 1)
-
     @property
-    def item_percentage(self) -> ResourceInfo:
+    def item_percentage(self) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
 
     @property
-    def difficulty_resource(self) -> ResourceInfo:
-        return self.get_by_type_and_index(ResourceType.DIFFICULTY, 0)
-
-    @property
-    def energy_tank(self):
+    def energy_tank(self) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 42)

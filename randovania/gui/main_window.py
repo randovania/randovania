@@ -9,23 +9,26 @@ import markdown
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import QUrl, Signal, Qt
 from PySide2.QtGui import QDesktopServices
-from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog, QMenu
+from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog, QMenu, QInputDialog
+from asyncqt import asyncSlot
 
 from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.node import LogbookNode, LoreType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.games.prime import default_data
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow
+from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
+from randovania.gui.game_session_window import GameSessionWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.seed_details_window import SeedDetailsWindow
+from randovania.gui.online_game_list_window import GameSessionBrowserDialog
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
 from randovania.interface_common.options import Options
@@ -33,6 +36,7 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLevel
+from randovania.network_client.network_client import ConnectionState
 from randovania.resolver import debug
 
 _DISABLE_VALIDATION_WARNING = """
@@ -43,18 +47,20 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin):
+class MainWindow(WindowManager, Ui_MainWindow):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
-    is_preview_mode: bool = False
+    _is_preview_mode: bool = False
 
     menu_new_version: Optional[QAction] = None
     _current_version_url: Optional[str] = None
     _options: Options
     _data_visualizer: Optional[DataEditorWindow] = None
-    _details_window: SeedDetailsWindow
     _map_tracker: TrackerWindow
     _preset_manager: PresetManager
+    game_session_window: Optional[GameSessionWindow] = None
+    _login_window: Optional[QDialog] = None
+    GameDetailsSignal = Signal(LayoutDescription)
 
     @property
     def _tab_widget(self):
@@ -68,49 +74,64 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     def main_window(self) -> QMainWindow:
         return self
 
-    def __init__(self, options: Options, preset_manager: PresetManager, preview: bool):
+    @property
+    def is_preview_mode(self) -> bool:
+        return self._is_preview_mode
+
+    def __init__(self, options: Options, preset_manager: PresetManager,
+                 network_client: QtNetworkClient, preview: bool):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
-        self.is_preview_mode = preview
+        self._is_preview_mode = preview
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
 
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
         self._preset_manager = preset_manager
+        self.network_client = network_client
 
         if preview:
             debug.set_level(2)
 
         # Signals
         self.newer_version_signal.connect(self.display_new_version)
-        self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
-        self.progress_update_signal.connect(self.update_progress)
-        self.stop_background_process_button.clicked.connect(self.stop_background_process)
         self.options_changed_signal.connect(self.on_options_changed)
+        self.GameDetailsSignal.connect(self._open_game_details)
 
         self.intro_play_now_button.clicked.connect(lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_play))
         self.open_faq_button.clicked.connect(self._open_faq)
-        self.open_database_viewer_button.clicked.connect(self._open_data_visualizer)
+        self.open_database_viewer_button.clicked.connect(partial(self._open_data_visualizer_for_game,
+                                                                 RandovaniaGame.PRIME2))
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
+        self.browse_sessions_button.clicked.connect(self._browse_for_game_session)
+        self.host_new_game_button.clicked.connect(self._host_game_session)
         self.create_new_seed_button.clicked.connect(
             lambda: self.welcome_tab_widget.setCurrentWidget(self.tab_create_seed))
 
         # Menu Bar
-        self.menu_action_data_visualizer.triggered.connect(self._open_data_visualizer)
+        for action, game in ((self.menu_action_visualize_prime_1, RandovaniaGame.PRIME1),
+                             (self.menu_action_visualize_prime_2, RandovaniaGame.PRIME2),
+                             (self.menu_action_visualize_prime_3, RandovaniaGame.PRIME3)):
+            action.triggered.connect(partial(self._open_data_visualizer_for_game, game))
+
+        for action, game in ((self.menu_action_edit_prime_1, RandovaniaGame.PRIME1),
+                             (self.menu_action_edit_prime_2, RandovaniaGame.PRIME2),
+                             (self.menu_action_edit_prime_3, RandovaniaGame.PRIME3)):
+            action.triggered.connect(partial(self._open_data_editor_for_game, game))
+
         self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
-        self.menu_action_edit_new_database.triggered.connect(self._open_data_editor_default)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
+        self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
+        self.action_login_window.triggered.connect(self._action_login_window)
 
-        self.generate_seed_tab = GenerateSeedTab(self, self, self, options)
+        self.generate_seed_tab = GenerateSeedTab(self, self, options)
         self.generate_seed_tab.setup_ui()
-        self._details_window = SeedDetailsWindow(self, self, options)
-        self._details_window.added_to_tab = False
 
         # Needs the GenerateSeedTab
         self._create_open_map_tracker_actions()
@@ -128,7 +149,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self._update_hints_text()
 
     def closeEvent(self, event):
-        self.stop_background_process()
+        self.generate_seed_tab.stop_background_process()
         super().closeEvent(event)
 
     # Generate Seed
@@ -147,19 +168,111 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         json_path = common_qt_lib.prompt_user_for_input_game_log(self)
         if json_path is not None:
             layout = LayoutDescription.from_file(json_path)
-            self.show_seed_tab(layout)
+            self.open_game_details(layout)
 
-    def show_seed_tab(self, layout: LayoutDescription):
-        self._details_window.update_layout_description(layout)
-        if not self._details_window.added_to_tab:
-            self.welcome_tab_widget.addTab(self._details_window.centralWidget, "Game Details")
-            self._details_window.added_to_tab = True
-        self.welcome_tab_widget.setCurrentWidget(self._details_window.centralWidget)
+    async def _game_session_active(self) -> bool:
+        if self.game_session_window is None or self.game_session_window.has_closed:
+            return False
+        else:
+            await async_dialog.message_box(
+                self,
+                QtWidgets.QMessageBox.Critical,
+                "Game Session in progress",
+                "There's already a game session window open. Please close it first.",
+                QMessageBox.Ok
+            )
+            self.game_session_window.activateWindow()
+            return True
+
+    async def _ensure_logged_in(self) -> bool:
+        network_client = self.network_client
+        if network_client.connection_state == ConnectionState.Connected:
+            return True
+
+        if network_client.connection_state.is_disconnected:
+            message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, "Connecting",
+                                                "Connecting to server...", QtWidgets.QMessageBox.Cancel,
+                                                self)
+
+            connecting = network_client.connect_to_server()
+            message_box.rejected.connect(connecting.cancel)
+            message_box.show()
+            try:
+                await connecting
+            finally:
+                message_box.close()
+
+        if network_client.current_user is None:
+            await async_dialog.execute_dialog(LoginPromptDialog(network_client))
+
+        return network_client.current_user is not None
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _browse_for_game_session(self):
+        if await self._game_session_active():
+            return
+
+        if not await self._ensure_logged_in():
+            return
+
+        network_client = self.network_client
+        browser = GameSessionBrowserDialog(network_client)
+        await browser.refresh()
+        if await async_dialog.execute_dialog(browser) == browser.Accepted:
+            self.game_session_window = GameSessionWindow(network_client,
+                                                         common_qt_lib.get_game_connection(),
+                                                         self.preset_manager,
+                                                         self,
+                                                         self._options)
+            self.game_session_window.show()
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _action_login_window(self):
+        if self._login_window is not None:
+            return self._login_window.show()
+
+        self._login_window = LoginPromptDialog(self.network_client)
+        try:
+            await async_dialog.execute_dialog(self._login_window)
+        finally:
+            self._login_window = None
+
+    @asyncSlot()
+    @handle_network_errors
+    async def _host_game_session(self):
+        if await self._game_session_active():
+            return
+
+        if not await self._ensure_logged_in():
+            return
+
+        dialog = QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter session name")
+        dialog.setLabelText("Select a name for the session:")
+        if await async_dialog.execute_dialog(dialog) != dialog.Accepted:
+            return
+
+        await self.network_client.create_new_session(dialog.textValue())
+        self.game_session_window = GameSessionWindow(self.network_client, common_qt_lib.get_game_connection(),
+                                                     self.preset_manager, self, self._options)
+        self.game_session_window.show()
+
+    def open_game_details(self, layout: LayoutDescription):
+        self.GameDetailsSignal.emit(layout)
+
+    def _open_game_details(self, layout: LayoutDescription):
+        from randovania.gui.seed_details_window import SeedDetailsWindow
+        details_window = SeedDetailsWindow(self, self._options)
+        details_window.update_layout_description(layout)
+        details_window.show()
+        self.track_window(details_window)
 
     # Releases info
     def request_new_data(self):
-        asyncio.get_event_loop().create_task(github_releases_data.get_releases()).add_done_callback(
-            self._on_releases_data)
+        asyncio.create_task(github_releases_data.get_releases()).add_done_callback(self._on_releases_data)
 
     def _on_releases_data(self, task: asyncio.Task):
         releases = task.result()
@@ -176,6 +289,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             changelog_tab = QtWidgets.QWidget()
             changelog_tab.setObjectName("changelog_tab")
             changelog_tab_layout = QtWidgets.QVBoxLayout(changelog_tab)
+            changelog_tab_layout.setContentsMargins(0, 0, 0, 0)
             changelog_tab_layout.setObjectName("changelog_tab_layout")
             changelog_scroll_area = QtWidgets.QScrollArea(changelog_tab)
             changelog_scroll_area.setWidgetResizable(True)
@@ -188,6 +302,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
             changelog_label.setObjectName("changelog_label")
             changelog_label.setText(markdown.markdown("\n".join(all_change_logs)))
+            changelog_label.setWordWrap(True)
             changelog_scroll_layout.addWidget(changelog_label)
             changelog_scroll_area.setWidget(changelog_scroll_contents)
             changelog_tab_layout.addWidget(changelog_scroll_area)
@@ -220,17 +335,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             self._options.advanced_timeout_during_generation)
 
         self.generate_seed_tab.on_options_changed(self._options)
-        self._details_window.on_options_changed(self._options)
 
     # Menu Actions
-    def _open_data_visualizer(self):
-        self.open_data_visualizer_at(None, None)
+    def _open_data_visualizer_for_game(self, game: RandovaniaGame):
+        self.open_data_visualizer_at(None, None, game)
 
     def open_data_visualizer_at(self,
                                 world_name: Optional[str],
                                 area_name: Optional[str],
+                                game: RandovaniaGame = RandovaniaGame.PRIME2,
                                 ):
-        self._data_visualizer = DataEditorWindow(default_data.decode_default_prime2(), False)
+        self._data_visualizer = DataEditorWindow.open_internal_data(game, False)
 
         if world_name is not None:
             self._data_visualizer.focus_on_world(world_name)
@@ -240,8 +355,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         self._data_visualizer.show()
 
-    def _open_data_editor_default(self):
-        self._data_editor = DataEditorWindow(default_data.decode_default_prime2(), True)
+    def _open_data_editor_for_game(self, game: RandovaniaGame):
+        self._data_editor = DataEditorWindow.open_internal_data(game, True)
         self._data_editor.show()
 
     def _open_data_editor_prompt(self):
@@ -250,14 +365,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             return
 
         with database_path.open("r") as database_file:
-            self._data_editor = DataEditorWindow(json.load(database_file), True)
+            self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
     def _create_open_map_tracker_actions(self):
         base_layout = self.preset_manager.default_preset.layout_configuration
 
         for trick_level in LayoutTrickLevel:
-            if trick_level != LayoutTrickLevel.MINIMAL_RESTRICTIONS:
+            if trick_level != LayoutTrickLevel.MINIMAL_LOGIC:
                 action = QtWidgets.QAction(self)
                 action.setText(trick_level.long_name)
                 self.menu_map_tracker.addAction(action)
@@ -310,7 +425,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()
 
-    def _open_trick_details_popup(self, trick: SimpleResourceInfo, level: LayoutTrickLevel):
+    def _open_trick_details_popup(self, trick: TrickResourceInfo, level: LayoutTrickLevel):
         self._exec_trick_details(TrickDetailsPopup(
             self,
             self,
@@ -331,17 +446,16 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
     def _setup_difficulties_menu(self):
         game = default_database.default_prime2_game_description()
         for i, trick_level in enumerate(LayoutTrickLevel):
-            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_RESTRICTIONS}:
+            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
                 difficulty_action = QAction(self)
                 difficulty_action.setText(trick_level.long_name)
                 self.menu_difficulties.addAction(difficulty_action)
                 difficulty_action.triggered.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
 
-        configurable_tricks = TrickLevelConfiguration.all_possible_tricks()
         tricks_in_use = used_tricks(game.world_list)
 
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick.index not in configurable_tricks or trick not in tricks_in_use:
+            if trick not in tricks_in_use:
                 continue
 
             trick_menu = QMenu(self)
@@ -359,7 +473,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
     # ==========
 
-    def _on_validate_seed_change(self):
+    @asyncSlot()
+    async def _on_validate_seed_change(self):
         old_value = self._options.advanced_validate_seed_after
         new_value = self.menu_action_validate_seed_after.isChecked()
 
@@ -370,7 +485,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
             box.setIcon(QMessageBox.Warning)
             box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
             box.setDefaultButton(QMessageBox.No)
-            user_response = box.exec_()
+            user_response = await async_dialog.execute_dialog(box)
             if user_response != QMessageBox.Yes:
                 self.menu_action_validate_seed_after.setChecked(True)
                 return
@@ -382,6 +497,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
         is_checked = self.menu_action_timeout_generation_after_a_time_limit.isChecked()
         with self._options as options:
             options.advanced_timeout_during_generation = is_checked
+
+    def _open_auto_tracker(self):
+        from randovania.gui.auto_tracker_window import AutoTrackerWindow
+        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection())
+        self.auto_tracker_window.show()
 
     def _update_hints_text(self):
         game_description = default_database.default_prime2_game_description()
@@ -425,18 +545,3 @@ class MainWindow(QMainWindow, Ui_MainWindow, WindowManager, BackgroundTaskMixin)
 
         for hint_type in used_hint_types:
             self.hint_tree_widget.headerItem().setText(number_for_hint_type[hint_type], hint_type.long_name)
-
-    # Background Process
-
-    def enable_buttons_with_background_tasks(self, value: bool):
-        self.stop_background_process_button.setEnabled(not value)
-
-    def update_progress(self, message: str, percentage: int):
-        self.progress_label.setText(message)
-        if "Aborted" in message:
-            percentage = 0
-        if percentage >= 0:
-            self.progress_bar.setRange(0, 100)
-            self.progress_bar.setValue(percentage)
-        else:
-            self.progress_bar.setRange(0, 0)

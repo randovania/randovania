@@ -1,9 +1,7 @@
 import time
 from typing import Set
 
-from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import Node, PickupNode
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -20,22 +18,6 @@ _last_printed_additional = None
 
 def n(node: Node, with_world=False) -> str:
     return _gd.world_list.node_name(node, with_world) if node is not None else "None"
-
-
-def pretty_print_area(area: Area):
-    world_list = _gd.world_list
-
-    print(area.name)
-    print("Asset id: {}".format(area.area_asset_id))
-    for node in area.nodes:
-        print(">", node.name, type(node))
-        for target_node, requirements in world_list.potential_nodes_from(node, _gd.create_game_patches()):
-            if target_node is None:
-                print("  > None?")
-            else:
-                print("  >", n(target_node))
-                requirements.pretty_print("      ")
-        print()
 
 
 def sorted_requirementset_print(new_requirements: Set[RequirementList]):
@@ -63,6 +45,11 @@ def log_resolve_start():
 
 
 def log_new_advance(state: "State", reach: "ResolverReach"):
+    from randovania.resolver.state import State
+    from randovania.resolver.resolver_reach import ResolverReach
+    state: State
+    reach: ResolverReach
+
     global _current_indent
     increment_attempts()
     _current_indent += 1
@@ -71,6 +58,8 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
             resource = state.node.resource()
             if isinstance(resource, PickupIndex):
                 resource = state.patches.pickup_assignment.get(resource)
+                if resource is not None:
+                    resource = resource.pickup
         else:
             resource = None
 
@@ -135,14 +124,6 @@ def print_distribute_fill_pickup_index(pickup_index: PickupIndex, action: Pickup
         print("Placed {} at {}".format(
             action,
             n(target_node, with_world=True)))
-
-
-def print_distribute_place_item(pickup_node, item: PickupEntry, logic):
-    if _DEBUG_LEVEL > 1:
-        print("Placed {} at {} after {} sightings".format(
-            item.name,
-            n(pickup_node, with_world=True),
-            logic.node_sightings[pickup_node]))
 
 
 def print_actions_of_reach(reach: GeneratorReach):

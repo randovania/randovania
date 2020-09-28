@@ -10,6 +10,7 @@ import pytest
 import randovania
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry, ResourceConversion
@@ -20,6 +21,7 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.games.prime import patcher_file, default_data
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.layout_description import LayoutDescription
@@ -341,18 +343,21 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                                      ConditionalResources(None, None, ((useless_resource, 1),)),
                                  ))
     patches = empty_patches.assign_pickup_assignment({
-        PickupIndex(0): pickup_a,
-        PickupIndex(2): pickup_b,
-        PickupIndex(3): pickup_a,
-        PickupIndex(4): pickup_c,
+        PickupIndex(0): PickupTarget(pickup_a, 0),
+        PickupIndex(2): PickupTarget(pickup_b, 0),
+        PickupIndex(3): PickupTarget(pickup_a, 0),
+        PickupIndex(4): PickupTarget(pickup_c, 0),
     })
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._SimplifiedMemo())
 
     # Run
-    result = patcher_file._create_pickup_list(patches, useless_pickup, 5,
+    result = patcher_file._create_pickup_list(patches,
+                                              PickupTarget(useless_pickup, 0),
+                                              5,
                                               rng,
                                               model_style,
                                               PickupModelDataSource.ETM,
-                                              patcher_file._SimplifiedMemo(),
+                                              creator,
                                               )
 
     # Assert
@@ -477,10 +482,10 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM, resources)
 
     patches = empty_patches.assign_pickup_assignment({
-        PickupIndex(0): pickup_a,
-        PickupIndex(2): pickup_b,
-        PickupIndex(3): pickup_a,
-        PickupIndex(4): pickup_c,
+        PickupIndex(0): PickupTarget(pickup_a, 0),
+        PickupIndex(2): PickupTarget(pickup_b, 0),
+        PickupIndex(3): PickupTarget(pickup_a, 0),
+        PickupIndex(4): PickupTarget(pickup_c, 0),
     })
 
     if has_memo_data:
@@ -496,12 +501,16 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
             for name in ("A", "B", "C", "Useless")
         }
 
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
+
     # Run
-    result = patcher_file._create_pickup_list(patches, useless_pickup, 5,
+    result = patcher_file._create_pickup_list(patches,
+                                              PickupTarget(useless_pickup, 0),
+                                              5,
                                               rng,
                                               PickupModelStyle.HIDE_ALL,
                                               PickupModelDataSource.RANDOM,
-                                              memo_data,
+                                              creator,
                                               )
 
     # Assert
@@ -583,43 +592,148 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
                                      disable_hud_popup: bool
                                      ):
     item_pool = pool_creator.calculate_pool_results(default_layout_configuration,
-                                                    echoes_resource_database)[0]
+                                                    echoes_resource_database)
     index = PickupIndex(0)
     if disable_hud_popup:
         memo_data = patcher_file._SimplifiedMemo()
     else:
         memo_data = default_prime2_memo_data()
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), memo_data)
 
-    for item in item_pool:
-        patcher_file._create_pickup(index, item, item, PickupModelStyle.ALL_VISIBLE, memo_data)
+    for item in item_pool.pickups:
+        creator.create_pickup(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
+
+
+def test_run_validated_hud_text():
+    # Setup
+    rng = MagicMock()
+    rng.randint.return_value = 0
+    creator = patcher_file.PickupCreatorSolo(rng, patcher_file._SimplifiedMemo())
+    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
+    pickup = PickupEntry("Energy Transfer Module", 1, ItemCategory.TEMPLE_KEY,
+                         (
+                             ConditionalResources("Energy Transfer Module", None, ((resource_a, 1),)),
+                         ))
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data['hud_text'] == ['Run validated!']
+
+
+@pytest.fixture(name="pickup_for_create_pickup_data")
+def _create_pickup_data():
+    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
+    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+    return PickupEntry("Cake", 1, ItemCategory.TEMPLE_KEY,
+                       (
+                           ConditionalResources("Sugar", None, ((resource_a, 1),)),
+                           ConditionalResources("Salt", resource_a, ((resource_b, 1),)),
+                       ))
+
+
+def test_solo_create_pickup_data(pickup_for_create_pickup_data):
+    # Setup
+    creator = patcher_file.PickupCreatorSolo(MagicMock(), patcher_file._SimplifiedMemo())
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
+                                      pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data == {
+        'conditional_resources': [
+            {'item': 1, 'resources': [{'amount': 1, 'index': 2}]}
+        ],
+        'convert': [],
+        'hud_text': ['Sugar acquired!', 'Salt acquired!'],
+        'resources': [{'amount': 1, 'index': 1}],
+        'scan': 'Scan Text',
+    }
+
+
+def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
+    # Setup
+    creator = patcher_file.PickupCreatorMulti(MagicMock(), patcher_file._SimplifiedMemo(),
+                                              PlayersConfiguration(0, {0: "You",
+                                                                       1: "Someone"}))
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
+                                      pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data == {
+        'conditional_resources': [
+            {'item': 1, 'resources': [{'amount': 1, 'index': 2},
+                                      {'amount': 11, 'index': 74},
+                                      ]}
+        ],
+        'convert': [],
+        'hud_text': ['Sugar acquired!', 'Salt acquired!'],
+        'resources': [{'amount': 1, 'index': 1}, {'amount': 11, 'index': 74}, ],
+        'scan': 'Your Scan Text',
+    }
+
+
+def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
+    # Setup
+    creator = patcher_file.PickupCreatorMulti(MagicMock(), patcher_file._SimplifiedMemo(),
+                                              PlayersConfiguration(0, {0: "You",
+                                                                       1: "Someone"}))
+
+    # Run
+    data = creator.create_pickup_data(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 1),
+                                      pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
+                                      "Scan Text")
+
+    # Assert
+    assert data == {
+        'conditional_resources': [],
+        'convert': [],
+        'hud_text': ['Sent Cake to Someone!'],
+        'resources': [{'amount': 11, 'index': 74}, ],
+        'scan': "Someone's Scan Text",
+    }
 
 
 @pytest.mark.parametrize("stk_mode", SkyTempleKeyHintMode)
+@patch("randovania.games.prime.patcher_file._logbook_title_string_patches", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.item_hints.create_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.hide_hints", autospec=True)
 @patch("randovania.games.prime.patcher_file_lib.sky_temple_key_hint.create_hints", autospec=True)
 def test_create_string_patches(mock_stk_create_hints: MagicMock,
                                mock_stk_hide_hints: MagicMock,
                                mock_item_create_hints: MagicMock,
+                               mock_logbook_title_string_patches: MagicMock,
                                stk_mode: SkyTempleKeyHintMode,
                                ):
     # Setup
     game = MagicMock()
-    patches = MagicMock()
+    all_patches = MagicMock()
     rng = MagicMock()
     mock_item_create_hints.return_value = ["item", "hints"]
     mock_stk_create_hints.return_value = ["show", "hints"]
     mock_stk_hide_hints.return_value = ["hide", "hints"]
+    player_config = PlayersConfiguration(0, {0: "you"})
+    mock_logbook_title_string_patches.return_values = []
 
     # Run
     result = patcher_file._create_string_patches(HintConfiguration(sky_temple_keys=stk_mode),
                                                  game,
-                                                 patches,
-                                                 rng)
+                                                 all_patches,
+                                                 player_config,
+                                                 rng,
+                                                 )
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(patches, game.world_list, rng)
+    mock_item_create_hints.assert_called_once_with(all_patches[player_config.player_index], game.world_list, rng)
+    mock_logbook_title_string_patches.assert_called_once_with()
 
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
         mock_stk_hide_hints.assert_called_once_with()
@@ -627,7 +741,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
         expected_result.extend(["hide", "hints"])
 
     else:
-        mock_stk_create_hints.assert_called_once_with(patches, game.world_list,
+        mock_stk_create_hints.assert_called_once_with(all_patches, player_config, game.world_list,
                                                       stk_mode == SkyTempleKeyHintMode.HIDE_AREA)
         mock_stk_hide_hints.assert_not_called()
         expected_result.extend(["show", "hints"])
@@ -638,10 +752,13 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
 def test_create_patcher_file(test_files_dir):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.json"))
+    player_index = 0
+    preset = description.permalink.get_preset(player_index)
     cosmetic_patches = CosmeticPatches()
 
     # Run
-    result = patcher_file.create_patcher_file(description, cosmetic_patches)
+    result = patcher_file.create_patcher_file(description, PlayersConfiguration(player_index, {0: "you"}),
+                                              cosmetic_patches)
 
     # Assert
     assert isinstance(result["spawn_point"], dict)
@@ -656,18 +773,18 @@ def test_create_patcher_file(test_files_dir):
     assert len(result["translator_gates"]) == 17
 
     assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 58
+    assert len(result["string_patches"]) == 60
 
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
         "intro_in_post_state": True,
-        "warp_to_start": description.permalink.patcher_configuration.warp_to_start,
+        "warp_to_start": preset.patcher_configuration.warp_to_start,
         "speed_up_credits": cosmetic_patches.speed_up_credits,
         "disable_hud_popup": cosmetic_patches.disable_hud_popup,
         "pickup_map_icons": cosmetic_patches.pickup_markers,
         "full_map_at_start": cosmetic_patches.open_map,
-        "dark_world_varia_suit_damage": description.permalink.patcher_configuration.varia_suit_damage,
-        "dark_world_dark_suit_damage": description.permalink.patcher_configuration.dark_suit_damage,
+        "dark_world_varia_suit_damage": preset.patcher_configuration.varia_suit_damage,
+        "dark_world_dark_suit_damage": preset.patcher_configuration.dark_suit_damage,
         "always_up_gfmc_compound": True,
         "always_up_torvus_temple": True,
         "always_up_great_temple": False,

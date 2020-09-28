@@ -5,9 +5,10 @@ from typing import Iterator, FrozenSet, Dict
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockWeaknessDatabase
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import TeleporterNode
-from randovania.game_description.requirements import RequirementSet, SatisfiableRequirements
+from randovania.game_description.requirements import SatisfiableRequirements, Requirement
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
@@ -15,17 +16,17 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.world_list import WorldList
 
 
-def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[SimpleResourceInfo]:
+def _calculate_dangerous_resources_in_db(db: DockWeaknessDatabase) -> Iterator[ResourceInfo]:
     for list_by_type in db:
         for dock_weakness in list_by_type:
-            yield from dock_weakness.requirements.dangerous_resources
+            yield from dock_weakness.requirement.as_set.dangerous_resources
 
 
-def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[SimpleResourceInfo]:
+def _calculate_dangerous_resources_in_areas(areas: Iterator[Area]) -> Iterator[ResourceInfo]:
     for area in areas:
         for node in area.nodes:
-            for connection in area.connections[node].values():
-                yield from connection.dangerous_resources
+            for requirement in area.connections[node].values():
+                yield from requirement.as_set.dangerous_resources
 
 
 class GameDescription:
@@ -34,7 +35,8 @@ class GameDescription:
     dock_weakness_database: DockWeaknessDatabase
 
     resource_database: ResourceDatabase
-    victory_condition: RequirementSet
+    game_specific: EchoesGameSpecific
+    victory_condition: Requirement
     starting_location: AreaLocation
     initial_states: Dict[str, ResourceGainTuple]
     dangerous_resources: FrozenSet[SimpleResourceInfo]
@@ -45,6 +47,7 @@ class GameDescription:
             game=self.game,
             game_name=self.game_name,
             resource_database=self.resource_database,
+            game_specific=self.game_specific,
             dock_weakness_database=self.dock_weakness_database,
             world_list=copy.deepcopy(self.world_list, memodict),
             victory_condition=self.victory_condition,
@@ -58,7 +61,8 @@ class GameDescription:
                  dock_weakness_database: DockWeaknessDatabase,
 
                  resource_database: ResourceDatabase,
-                 victory_condition: RequirementSet,
+                 game_specific: EchoesGameSpecific,
+                 victory_condition: Requirement,
                  starting_location: AreaLocation,
                  initial_states: Dict[str, ResourceGainTuple],
                  world_list: WorldList,
@@ -68,6 +72,7 @@ class GameDescription:
         self.dock_weakness_database = dock_weakness_database
 
         self.resource_database = resource_database
+        self.game_specific = game_specific
         self.victory_condition = victory_condition
         self.starting_location = starting_location
         self.initial_states = initial_states
@@ -89,7 +94,8 @@ class GameDescription:
             if isinstance(node, TeleporterNode) and node.editable
         }
 
-        return GamePatches({}, elevator_connection, {}, {}, {}, {}, self.starting_location, {})
+        return GamePatches(None, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {},
+                           game_specific=self.game_specific)
 
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:

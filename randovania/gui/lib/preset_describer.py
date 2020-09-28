@@ -1,4 +1,3 @@
-import copy
 from typing import List, Iterable, Tuple, Dict
 
 from randovania.game_description import data_reader
@@ -32,6 +31,7 @@ _TEMPLATE_STRINGS = {
         "Missiles needs Launcher: {missile_launcher_required}",
         "Power Bombs needs Main PBs: {main_pb_required}",
         "Warp to Start: {warp_to_start}",
+        "Final bosses included? {include_final_bosses}",
         "Menu Mod included? {menu_mod}",
         # "Quality of Life Improvements: {generic_patches}",
     ],
@@ -209,6 +209,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     format_params["warp_to_start"] = _bool_to_str(patcher.warp_to_start)
     format_params["generic_patches"] = "Some"
     format_params["menu_mod"] = _bool_to_str(patcher.menu_mod)
+    format_params["include_final_bosses"] = _bool_to_str(not configuration.skip_final_bosses)
 
     # Sky Temple Keys
     if configuration.sky_temple_keys.num_keys == LayoutSkyTempleKeyMode.ALL_BOSSES:

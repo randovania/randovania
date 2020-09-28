@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from typing import Dict, Tuple, Iterator
 
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.assignment import PickupAssignment, GateAssignment
+from randovania.game_description.assignment import PickupAssignment, GateAssignment, PickupTarget
 from randovania.game_description.dock import DockWeakness, DockConnection
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.hint import Hint
 from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
@@ -20,7 +20,7 @@ class GamePatches:
     Currently we support:
     * Swapping pickup locations
     """
-
+    player_index: int
     pickup_assignment: PickupAssignment
     elevator_connection: Dict[int, AreaLocation]
     dock_connection: Dict[Tuple[int, int], DockConnection]
@@ -29,20 +29,9 @@ class GamePatches:
     starting_items: CurrentResources
     starting_location: AreaLocation
     hints: Dict[LogbookAsset, Hint]
+    game_specific: EchoesGameSpecific
 
-    @classmethod
-    def with_game(cls, game: "GameDescription") -> "GamePatches":
-        from randovania.game_description.node import TeleporterNode
-        elevator_connection = {
-            node.teleporter_instance_id: node.default_connection
-
-            for node in game.world_list.all_nodes
-            if isinstance(node, TeleporterNode) and node.editable
-        }
-
-        return GamePatches({}, elevator_connection, {}, {}, {}, {}, game.starting_location, {})
-
-    def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupEntry]]) -> "GamePatches":
+    def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupTarget]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
 
         for index, pickup in assignments:
@@ -52,7 +41,7 @@ class GamePatches:
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
 
     def assign_pickup_assignment(self, assignment: PickupAssignment) -> "GamePatches":
-        items: Iterator[Tuple[PickupIndex, PickupEntry]] = assignment.items()
+        items: Iterator[Tuple[PickupIndex, PickupTarget]] = assignment.items()
         return self.assign_new_pickups(items)
 
     def assign_gate_assignment(self, assignment: GateAssignment) -> "GamePatches":
