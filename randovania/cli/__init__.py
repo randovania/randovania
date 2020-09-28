@@ -4,11 +4,12 @@ import sys
 from pathlib import Path
 
 import randovania
-from randovania.cli import echoes, multiworld, gui
+from randovania.cli import echoes, multiworld, gui, prime_database
 
 
 def create_subparsers(root_parser):
     echoes.create_subparsers(root_parser)
+    prime_database.create_subparsers(root_parser)
     multiworld.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
 
