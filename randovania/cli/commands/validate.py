@@ -1,7 +1,6 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
-from randovania.cli import prime_database
 from randovania.cli.echoes_lib import add_debug_argument
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
@@ -31,7 +30,6 @@ def add_validate_command(sub_parsers):
         help="Validate a pickup distribution."
     )
 
-    prime_database.add_data_file_argument(parser)
     add_debug_argument(parser)
     parser.add_argument(
         "layout_file",
