@@ -5121,47 +5121,65 @@ Asset id: 1576704079
 ----------------
 Phazon Site
 Asset id: 537851367
-> Door to Watering Hole; Heals? True
+> Door to Watering Hole; Heals? False
   > Watering Hole/Door to Phazon Site
       Trivial
-  > Phazon Site/Room Center
-      After Phazon Site Barrier
+  > Phazon Site/Safe Zone (Watering Hole Side)
+      After Phazon Site Barrier and Dark World Damage ≥ 4
 
-> Door to Bitter Well; Heals? True
+> Door to Bitter Well; Heals? False
   > Bitter Well/Door to Phazon Site
       Trivial
-  > Phazon Site/Room Center
-      Trivial
+  > Phazon Site/Safe Zone (On Elevator)
+      Dark World Damage ≥ 5
 
 > Door to Ing Cache 2; Heals? False
   > Ing Cache 2/Door to Phazon Site
       Shoot Annihilator Beam
-  > Phazon Site/Room Center
-      Trivial
+  > Phazon Site/Safe Zone (On Elevator)
+      Dark World Damage ≥ 15 and Activate Safe Zone
 
-> Event - Phazon Site Barrier; Heals? True
-  > Phazon Site/Room Center
-      Trivial
+> Event - Phazon Site Barrier; Heals? False
+  > Phazon Site/Safe Zone (Watering Hole Side)
+      Dark World Damage ≥ 2
 
-> Room Center; Heals? True
-  > Phazon Site/Door to Watering Hole
-      After Phazon Site Barrier
+> Safe Zone (On Elevator); Heals? True
   > Phazon Site/Door to Bitter Well
       Any of the following:
-          Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner)
-          Movement (Intermediate) and Use Screw Attack (No Space Jump)
-          Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+          All of the following:
+              Dark World Damage ≥ 5
+              Any of the following:
+                  Space Jump Boots
+                  Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner)
+                  Movement (Intermediate) and Use Screw Attack (No Space Jump)
+          Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced) and Dark World Damage ≥ 45 and Activate Safe Zone
   > Phazon Site/Door to Ing Cache 2
-      Any of the following:
-          Use Screw Attack (Space Jump)
-          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+      Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
   > Phazon Site/Event - Phazon Site Barrier
       All of the following:
-          Scan Visor
+          Scan Visor and Activate Safe Zone
           Any of the following:
-              Space Jump Boots or Combat/Scan Dash (Advanced)
-              Movement (Intermediate) and Use Screw Attack (No Space Jump)
+              Space Jump Boots and Dark World Damage ≥ 12
+              Movement (Intermediate) and Dark World Damage ≥ 7 and Use Screw Attack (No Space Jump)
+              Combat/Scan Dash (Advanced) and Dark World Damage ≥ 25
+  > Phazon Site/Safe Zone (Watering Hole Side)
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 25
+              Morph Ball and Dark World Damage ≥ 15
+
+> Safe Zone (Watering Hole Side); Heals? True
+  > Phazon Site/Door to Watering Hole
+      After Phazon Site Barrier and Dark World Damage ≥ 2
+  > Phazon Site/Door to Ing Cache 2
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 15 and Use Screw Attack (Space Jump)
+              Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced) and Dark World Damage ≥ 30
+  > Phazon Site/Safe Zone (On Elevator)
+      Dark World Damage ≥ 16 and Activate Safe Zone
 
 ----------------
 Ing Cache 2
