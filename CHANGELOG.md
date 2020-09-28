@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Added: An automatic item tracker based on a Dolphin running on the same computer.
 
+-   Added: A dark theme has been added. It can be toggled in the Advanced menu.
+
 -   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
 
 -   Added: Options for configuring usage of new tricks:
