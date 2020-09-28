@@ -31,7 +31,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _area_with_displayed_connections: Optional[Area] = None
     _previous_selected_node: Optional[Node] = None
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
-    _node_edit_popup: Optional[NodeDetailsPopup] = None
+    _edit_popup: Optional[QDialog] = None
 
     def __init__(self, data: dict, data_path: Optional[Path], is_internal: bool, edit_mode: bool):
         super().__init__()
@@ -83,8 +83,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         return DataEditorWindow(data, path, True, edit_mode)
 
     def closeEvent(self, event: QtGui.QCloseEvent):
-        if self._node_edit_popup is not None:
-            self._node_edit_popup.raise_()
+        if self._check_for_edit_dialog():
             event.ignore()
         else:
             data = data_writer.write_game_description(self.game_description)
@@ -193,25 +192,40 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.radio_button_to_node[radio] = new_node
             self.update_selected_node()
 
+    def _check_for_edit_dialog(self) -> bool:
+        """
+        If an edit popup exists, raises it and returns True.
+        Otherwise, just return False.
+        :return:
+        """
+        if self._edit_popup is not None:
+            self._edit_popup.raise_()
+            return True
+        else:
+            return False
+
+    async def _execute_edit_dialog(self, dialog: QDialog):
+        self._edit_popup = dialog
+        try:
+            result = await async_dialog.execute_dialog(self._edit_popup)
+            return result == QDialog.Accepted
+        finally:
+            self._edit_popup = None
+
     @asyncSlot()
     async def on_node_edit_button(self):
-        if self._node_edit_popup is not None:
-            self._node_edit_popup.raise_()
+        if self._check_for_edit_dialog():
             return
 
         area = self.current_area
-        self._node_edit_popup = NodeDetailsPopup(self.game_description, self.current_node)
-        try:
-            result = await async_dialog.execute_dialog(self._node_edit_popup)
-            if result == QDialog.Accepted:
-                try:
-                    new_node = self._node_edit_popup.create_new_node()
-                except ValueError as e:
-                    await async_dialog.warning(self, "Error in new node", str(e))
-                    return
-                self.replace_node_with(area, self._node_edit_popup.node, new_node)
-        finally:
-            self._node_edit_popup = None
+        node_edit_popup = NodeDetailsPopup(self.game_description, self.current_node)
+        if await self._execute_edit_dialog(node_edit_popup):
+            try:
+                new_node = node_edit_popup.create_new_node()
+            except ValueError as e:
+                await async_dialog.warning(self, "Error in new node", str(e))
+                return
+            self.replace_node_with(area, node_edit_popup.node, new_node)
 
     def update_selected_node(self):
         node = self.current_node
@@ -305,18 +319,19 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             False
         )
 
-    def _open_edit_connection(self):
+    @asyncSlot()
+    async def _open_edit_connection(self):
+        if self._check_for_edit_dialog():
+            return
+
         from_node = self.current_node
         target_node = self.current_connection_node
-
         assert from_node is not None
         assert target_node is not None
 
         requirement = self.current_area.connections[from_node].get(target_node, Requirement.impossible())
         editor = ConnectionsEditor(self, self.resource_database, requirement)
-        result = editor.exec_()
-
-        if result == QDialog.Accepted:
+        if await self._execute_edit_dialog(editor):
             self._apply_edit_connections(from_node, target_node, editor.final_requirement)
 
     def _apply_edit_connections(self, from_node: Node, target_node: Node,
@@ -374,8 +389,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.on_select_area()
 
     def _remove_node(self):
-        if self._node_edit_popup is not None:
-            self._node_edit_popup.raise_()
+        if self._check_for_edit_dialog():
             return
 
         current_node = self.current_node
