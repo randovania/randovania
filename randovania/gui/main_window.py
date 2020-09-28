@@ -24,7 +24,7 @@ from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
@@ -127,6 +127,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
+        self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.action_login_window.triggered.connect(self._action_login_window)
 
@@ -333,8 +334,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
+        self.menu_action_dark_mode.setChecked(self._options.dark_mode)
 
         self.generate_seed_tab.on_options_changed(self._options)
+        theme.set_dark_theme(self._options.dark_mode)
 
     # Menu Actions
     def _open_data_visualizer_for_game(self, game: RandovaniaGame):
@@ -497,6 +500,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
         is_checked = self.menu_action_timeout_generation_after_a_time_limit.isChecked()
         with self._options as options:
             options.advanced_timeout_during_generation = is_checked
+
+    def _on_menu_action_dark_mode(self):
+        with self._options as options:
+            options.dark_mode = self.menu_action_dark_mode.isChecked()
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow

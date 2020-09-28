@@ -9,6 +9,8 @@ from PySide2 import QtCore
 from PySide2.QtWidgets import QApplication, QMessageBox
 from asyncqt import asyncClose
 
+from randovania.gui.lib import theme
+
 
 def catch_exceptions(t, val, tb):
     if not isinstance(val, KeyboardInterrupt):
@@ -29,18 +31,8 @@ def catch_exceptions_async(loop, context):
         logging.critical(str(context))
 
 
-def show_main_window(app: QApplication, is_preview: bool):
-    from randovania.interface_common.options import Options
+def show_main_window(app: QApplication, options, is_preview: bool):
     from randovania.gui.lib import startup_tools
-    from randovania.layout.preset import Preset
-
-    options = Options.with_default_data_dir()
-
-    for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
-        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{Preset.file_extension()}"))
-
-    if not startup_tools.load_options_from_disk(options):
-        raise SystemExit(1)
 
     from randovania.interface_common.preset_manager import PresetManager
     preset_manager = PresetManager(options.data_dir)
@@ -62,15 +54,9 @@ def show_tracker(app: QApplication):
     app.tracker.show()
 
 
-def show_game_details(app: QApplication, game: Path):
+def show_game_details(app: QApplication, options, game: Path):
     from randovania.layout.layout_description import LayoutDescription
     from randovania.gui.seed_details_window import SeedDetailsWindow
-    from randovania.interface_common.options import Options
-    from randovania.gui.lib import startup_tools
-
-    options = Options.with_default_data_dir()
-    if not startup_tools.load_options_from_disk(options):
-        raise SystemExit(1)
 
     layout = LayoutDescription.from_file(game)
     details_window = SeedDetailsWindow(None, options)
@@ -79,13 +65,13 @@ def show_game_details(app: QApplication, game: Path):
     app.details_window = details_window
 
 
-def display_window_for(app, command: str, args):
+def display_window_for(app, options, command: str, args):
     if command == "tracker":
         show_tracker(app)
     elif command == "main":
-        show_main_window(app, args.preview)
+        show_main_window(app, options, args.preview)
     elif command == "game":
-        show_game_details(app, args.rdvgame)
+        show_game_details(app, options, args.rdvgame)
     else:
         raise RuntimeError(f"Unknown command: {command}")
 
@@ -99,6 +85,23 @@ def create_backend(debug_game_backend: bool):
         from randovania.game_connection.dolphin_backend import DolphinBackend
         backend = DolphinBackend()
     return backend
+
+
+def _load_options():
+    from randovania.interface_common.options import Options
+    from randovania.gui.lib import startup_tools
+
+    options = Options.with_default_data_dir()
+    if not startup_tools.load_options_from_disk(options):
+        raise SystemExit(1)
+
+    theme.set_dark_theme(options.dark_mode)
+
+    from randovania.layout.preset import Preset
+    for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
+        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{Preset.file_extension()}"))
+
+    return options
 
 
 def run(args):
@@ -164,7 +167,8 @@ def run(args):
 
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
 
-    display_window_for(app, args.command, args)
+    options = _load_options()
+    display_window_for(app, options, args.command, args)
 
     with loop:
         loop.create_task(app.game_connection.start())

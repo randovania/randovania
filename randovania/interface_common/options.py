@@ -26,6 +26,7 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
+    "dark_mode": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
     "selected_preset_name": Serializer(identity, str),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
@@ -59,6 +60,7 @@ class Options:
     _advanced_validate_seed_after: Optional[bool] = None
     _advanced_timeout_during_generation: Optional[bool] = None
     _auto_save_spoiler: Optional[bool] = None
+    _dark_mode: Optional[bool] = None
     _output_directory: Optional[Path] = None
     _selected_preset_name: Optional[str] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
@@ -229,6 +231,14 @@ class Options:
     @auto_save_spoiler.setter
     def auto_save_spoiler(self, value: bool):
         self._edit_field("auto_save_spoiler", value)
+
+    @property
+    def dark_mode(self) -> bool:
+        return _return_with_default(self._dark_mode, lambda: False)
+
+    @dark_mode.setter
+    def dark_mode(self, value: bool):
+        self._edit_field("dark_mode", value)
 
     @property
     def selected_preset_name(self) -> Optional[str]:
