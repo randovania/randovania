@@ -195,8 +195,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Dark Aether Damage Requirements:
     - Sky Temple Grounds
-    - Battleground
-    - Judgment Pit
+    - Dark Agon Wastes
     - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
     - Undertemple Access (Updated)
     - Undertemple (Intermediate and above)
