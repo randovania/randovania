@@ -1,5 +1,6 @@
 from typing import Optional, List, Union
 
+from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIntValidator
 from PySide2.QtWidgets import QDialog
@@ -145,8 +146,10 @@ class ArrayRequirementEditor:
         self._array_type = type(requirement)
 
         self.group_box = QGroupBox(parent)
+        self.group_box.setStyleSheet("QGroupBox { margin-top: 2px; }")
         parent_layout.addWidget(self.group_box)
         self.item_layout = QVBoxLayout(self.group_box)
+        self.item_layout.setContentsMargins(8, 2, 2, 6)
         self.item_layout.setAlignment(Qt.AlignTop)
 
         self.new_item_button = QPushButton(self.group_box)
@@ -239,7 +242,7 @@ class RequirementEditor:
         self.parent_layout.addLayout(self.line_layout)
 
         if on_remove is not None:
-            self.remove_button = QPushButton(parent)
+            self.remove_button = QtWidgets.QToolButton(parent)
             self.remove_button.setText("X")
             self.remove_button.setMaximumWidth(20)
             self.remove_button.clicked.connect(on_remove)

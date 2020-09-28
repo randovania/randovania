@@ -11,6 +11,20 @@ def set_dark_theme(active: bool):
     if active:
         import qdarkstyle
         style = qdarkstyle.load_stylesheet(qt_api='pyside2')
+        style += """
+        QGroupBox {
+            padding: 0px;
+        }
+        QGroupBox::title {
+          padding-bottom: 12px;
+        }
+        QComboBox {
+            padding-right: 10px;
+        }
+        QPushButton {
+            min-width: 40px;
+        }
+            """
     else:
         style = ""
 
