@@ -4634,27 +4634,47 @@ Asset id: 2156489961
 ----------------
 Feeding Pit Access
 Asset id: 3761619109
-> Door to Feeding Pit; Heals? True
+> Door to Feeding Pit; Heals? False
   > Feeding Pit/Door to Feeding Pit Access
       Shoot Light Beam
-  > Feeding Pit Access/Door to Doomed Entry
-      Any of the following:
-          Light Ammo ≥ 2 and Shoot Light Beam
-          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Feeding Pit Access/Safe Zone (Feeding Pit Side)
+      Dark World Damage ≥ 5
 
-> Door to Doomed Entry; Heals? True
+> Door to Doomed Entry; Heals? False
   > Doomed Entry/Door to Feeding Pit Access
       Shoot Light Beam
-  > Feeding Pit Access/Door to Feeding Pit
-      Any of the following:
-          Light Ammo ≥ 2 and Shoot Light Beam
-          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Feeding Pit Access/Safe Zone (Doomed Entry Side)
+      Dark World Damage ≥ 5
 
-> Spawn Point; Heals? True
-  > Feeding Pit Access/Door to Feeding Pit
-      Trivial
+> Spawn Point; Heals? False
   > Feeding Pit Access/Door to Doomed Entry
-      Trivial
+      Dark World Damage ≥ 2
+  > Feeding Pit Access/Safe Zone (Feeding Pit Side)
+      Any of the following:
+          Dark World Damage ≥ 20
+          Morph Ball and Dark World Damage ≥ 10
+
+> Safe Zone (Feeding Pit Side); Heals? True
+  > Feeding Pit Access/Door to Feeding Pit
+      Dark World Damage ≥ 2
+  > Feeding Pit Access/Safe Zone (Doomed Entry Side)
+      All of the following:
+          Dark World Damage ≥ 20
+          Any of the following:
+              Light Ammo ≥ 2 and Shoot Light Beam
+              Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+
+> Safe Zone (Doomed Entry Side); Heals? True
+  > Feeding Pit Access/Door to Doomed Entry
+      Dark World Damage ≥ 2
+  > Feeding Pit Access/Safe Zone (Feeding Pit Side)
+      Any of the following:
+          All of the following:
+              Light Ammo ≥ 2 and Shoot Light Beam
+              Any of the following:
+                  Dark World Damage ≥ 20
+                  Morph Ball and Dark World Damage ≥ 10
+          Knowledge (Beginner) and Dark World Damage ≥ 25 and Use Screw Attack (No Space Jump)
 
 ----------------
 Oasis Access
