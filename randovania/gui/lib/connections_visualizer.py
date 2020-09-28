@@ -163,6 +163,7 @@ class ConnectionsVisualizer:
             if "of the following" in text:
                 parent = parents[depth]
                 group_box = QGroupBox(parent[0])
+                group_box.setContentsMargins(8, 0, 2, 6)
                 group_box.setTitle(text)
                 self._elements.append(group_box)
                 vertical_layout = QVBoxLayout(group_box)
