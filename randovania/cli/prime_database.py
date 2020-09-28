@@ -8,7 +8,9 @@ from randovania.game_description import data_reader, data_writer
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, MissingResource
 from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import binary_data, default_data
+from randovania.interface_common.enum_lib import iterate_enum
 from randovania.resolver import debug
 
 
@@ -22,26 +24,8 @@ def decode_data_file(args) -> Dict:
     if json_database is not None:
         with json_database.open() as data_file:
             return json.load(data_file)
-
-    data_file_path: Optional[Path] = args.binary_database
-    if data_file_path is None:
-        return default_data.decode_default_prime2()
     else:
-        return binary_data.decode_file_path(data_file_path)
-
-
-def add_data_file_argument(parser: ArgumentParser):
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument(
-        "--binary-database",
-        type=Path,
-        help="Path to the binary encoded database.",
-    )
-    group.add_argument(
-        "--json-database",
-        type=Path,
-        help="Path to the JSON encoded database.",
-    )
+        return default_data.read_json_then_binary(RandovaniaGame(args.game))[1]
 
 
 def export_as_binary(data: dict, output_binary: Path):
@@ -74,7 +58,6 @@ def create_convert_database_command(sub_parsers):
         help="Converts a database file between JSON and binary encoded formats. Input defaults to embedded database.",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
-    add_data_file_argument(parser)
     parser.add_argument(
         "--decode-to-game-description",
         action="store_true",
@@ -134,7 +117,6 @@ def view_area_command(sub_parsers):
         help="View information about an area.",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
-    add_data_file_argument(parser)
     parser.add_argument(
         "--simplify",
         action="store_true",
@@ -164,11 +146,10 @@ def export_areas_command_logic(args):
 
 def export_areas_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "export-areas",
+        "export-human-readable",
         help="Export a text file with all areas and their requirements",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
-    add_data_file_argument(parser)
     parser.add_argument("output_file", type=Path)
     parser.set_defaults(func=export_areas_command_logic)
 
@@ -242,7 +223,6 @@ def list_paths_with_dangerous_command(sub_parsers):
         help="List all connections that needs a resource to be missing.",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
-    add_data_file_argument(parser)
     parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
                         action="store_true")
     parser.set_defaults(func=list_paths_with_dangerous_logic)
@@ -277,7 +257,6 @@ def list_paths_with_resource_command(sub_parsers):
         help="List all connections that needs the resource.",
         formatter_class=argparse.MetavarTypeHelpFormatter
     )
-    add_data_file_argument(parser)
     parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
                         action="store_true")
     parser.add_argument("resource", type=str)
@@ -288,6 +267,20 @@ def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "database",
         help="Actions for database manipulation"
+    )
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "--game",
+        type=str,
+        choices=[game.value for game in iterate_enum(RandovaniaGame)],
+        default=RandovaniaGame.PRIME2.value,
+        help="Use the included database for the given game.",
+    )
+    group.add_argument(
+        "--json-database",
+        type=Path,
+        help="Path to the JSON encoded database.",
     )
 
     sub_parsers = parser.add_subparsers(dest="database_command")
