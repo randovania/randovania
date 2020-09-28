@@ -12,7 +12,8 @@ from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
-from randovania.gui.lib import common_qt_lib, enum_lib
+from randovania.gui.lib import common_qt_lib
+from randovania.interface_common import enum_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
