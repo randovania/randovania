@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 
-from randovania.cli import prime_database
 from randovania.cli.commands.batch_distribute import add_batch_distribute_command
 from randovania.cli.commands.distribute import add_distribute_command
 from randovania.cli.commands.randomize_command import add_randomize_command
@@ -21,7 +20,6 @@ def create_subparsers(sub_parsers):
     add_randomize_command(sub_parsers)
     add_batch_distribute_command(sub_parsers)
     add_refresh_presets_command(sub_parsers)
-    prime_database.create_subparsers(sub_parsers)
 
     def check_command(args):
         if args.command is None:

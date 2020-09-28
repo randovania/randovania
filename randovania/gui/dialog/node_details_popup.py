@@ -11,7 +11,8 @@ from randovania.game_description.resources.resource_database import find_resourc
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
-from randovania.gui.lib import common_qt_lib, enum_lib
+from randovania.gui.lib import common_qt_lib
+from randovania.interface_common import enum_lib
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):
