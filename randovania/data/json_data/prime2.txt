@@ -796,31 +796,37 @@ Asset id: 3592880139
 ----------------
 War Ritual Grounds
 Asset id: 2859985581
-> Door to Shrine Access; Heals? True
+> Door to Shrine Access; Heals? False
   > Shrine Access/Door to War Ritual Grounds
       Trivial
-  > War Ritual Grounds/Safe Zone Before Pickup
-      Dark World Damage ≥ 30
+  > War Ritual Grounds/Safe Zone (Before Pickup)
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 15
+              Morph Ball and Dark World Damage ≥ 10
 
-> Door to Base Access; Heals? True
+> Door to Base Access; Heals? False
   > Base Access/Door to War Ritual Grounds
       Power Beam and Super Missile and Charge Beam and Missile ≥ 5
-  > War Ritual Grounds/Safe Zone Before Pickup
-      Any of the following:
-          Dark World Damage ≥ 75
-          Morph Ball and Dark World Damage ≥ 50
+  > War Ritual Grounds/Safe Zone (Before Pickup)
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 80
+              Morph Ball and Dark World Damage ≥ 60
 
-> Pickup (Missile); Heals? True
-  > War Ritual Grounds/Safe Zone Before Pickup
-      Dark World Damage ≥ 10
+> Pickup (Missile); Heals? False
+  > War Ritual Grounds/Safe Zone (Before Pickup)
+      Dark World Damage ≥ 13 and Activate Safe Zone
 
-> Safe Zone Before Pickup; Heals? True
+> Safe Zone (Before Pickup); Heals? True
   > War Ritual Grounds/Door to Shrine Access
       Dark World Damage ≥ 30
   > War Ritual Grounds/Door to Base Access
       Any of the following:
           Dark World Damage ≥ 75
-          Morph Ball and Dark World Damage ≥ 50
+          Morph Ball and Dark World Damage ≥ 55
   > War Ritual Grounds/Pickup (Missile)
       Dark Visor and Seeker Launcher and Missile ≥ 5 and Dark World Damage ≥ 10
 
@@ -853,13 +859,13 @@ Asset id: 3337937090
 ----------------
 Windchamber Gateway
 Asset id: 1966181726
-> Door to Path of Eyes; Heals? True
+> Door to Path of Eyes; Heals? False
   > Path of Eyes/Door to Windchamber Gateway
       Power Beam and Super Missile and Charge Beam and Missile ≥ 5
   > Windchamber Gateway/Door to Grand Windchamber
       Morph Ball or Use Screw Attack (Space Jump)
 
-> Door to Grand Windchamber; Heals? True
+> Door to Grand Windchamber; Heals? False
   > Grand Windchamber/Door to Windchamber Gateway
       Morph Ball and Power Bomb
   > Windchamber Gateway/Door to Path of Eyes
@@ -875,7 +881,7 @@ Asset id: 1966181726
                   Morph Ball and Roll Jump (Intermediate)
           Morph Ball and Boost Ball and Boost Jump (Advanced)
 
-> Pickup (Energy Tank); Heals? True
+> Pickup (Energy Tank); Heals? False
   > Windchamber Gateway/Door to Grand Windchamber
       Any of the following:
           Grapple Beam or Use Screw Attack (Space Jump)
@@ -904,7 +910,7 @@ Asset id: 2822315693
 ----------------
 Transport to Agon Wastes
 Asset id: 1660916974
-> Door to Agon Transport Access; Heals? True
+> Door to Agon Transport Access; Heals? False
   > Agon Transport Access/Door to Transport to Agon Wastes
       Trivial
   > Transport to Agon Wastes/Pickup (Missile)
@@ -914,64 +920,64 @@ Asset id: 1660916974
   > Transport to Agon Wastes/Lore Scan
       Trivial
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   > Transport to Agon Wastes/Door to Agon Transport Access
       Trivial
 
-> Elevator to Agon Wastes - Transport to Temple Grounds; Heals? True
+> Elevator to Agon Wastes - Transport to Temple Grounds; Heals? False
   > Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Agon Wastes
       Trivial
   > Transport to Agon Wastes/Door to Agon Transport Access
       Trivial
 
-> Lore Scan; Heals? True
+> Lore Scan; Heals? False
   > Transport to Agon Wastes/Door to Agon Transport Access
       Trivial
 
 ----------------
 Temple Assembly Site
 Asset id: 1263425809
-> Door to Storage Cavern B; Heals? True
+> Door to Storage Cavern B; Heals? False
   > Storage Cavern B/Door to Temple Assembly Site
       Missile
   > Temple Assembly Site/Room Center
       Trivial
 
-> Portal to Plain of Dark Worship; Heals? True
+> Portal to Plain of Dark Worship; Heals? False
   > Plain of Dark Worship/Portal to Temple Assembly Site
       Shoot Annihilator Beam or Shoot Dark Beam
   > Temple Assembly Site/Room Center
       After Temple Assembly Site Light Block
 
-> Door to Temple Transport B; Heals? True
+> Door to Temple Transport B; Heals? False
   > Temple Transport B/Door to Temple Assembly Site
       Trivial
   > Temple Assembly Site/Translator Gate
       Trivial
 
-> Door to Dynamo Chamber; Heals? True
+> Door to Dynamo Chamber; Heals? False
   > Dynamo Chamber/Door to Temple Assembly Site
       Trivial
   > Temple Assembly Site/Room Center
       Trivial
 
-> Door to Collapsed Tunnel; Heals? True
+> Door to Collapsed Tunnel; Heals? False
   > Collapsed Tunnel/Door to Temple Assembly Site
       Trivial
   > Temple Assembly Site/Room Center
       Trivial
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   > Temple Assembly Site/Room Center
       Morph Ball
 
-> Event - Temple Assembly Site Light Block; Heals? True
+> Event - Temple Assembly Site Light Block; Heals? False
   > Temple Assembly Site/Portal to Plain of Dark Worship
       Trivial
   > Temple Assembly Site/Room Center
       Trivial
 
-> Room Center; Heals? True
+> Room Center; Heals? False
   > Temple Assembly Site/Door to Storage Cavern B
       Trivial
   > Temple Assembly Site/Portal to Plain of Dark Worship
@@ -996,7 +1002,7 @@ Asset id: 1263425809
   > Temple Assembly Site/Translator Gate
       Trivial
 
-> Translator Gate; Heals? True
+> Translator Gate; Heals? False
   > Temple Assembly Site/Door to Temple Transport B
       Trivial
   > Temple Assembly Site/Room Center
@@ -2243,7 +2249,7 @@ Asset id: 2068511343
       Dark World Damage ≥ 25
 
 > Teleport to Temple Grounds - Sky Temple Gateway; Heals? False
-  > Sky Temple Gateway/Door to Gateway Access
+  > Sky Temple Gateway/Spawn Point/Front of Teleporter
       Trivial
   > Sky Temple Energy Controller/Save Station
       Any of the following:
