@@ -112,6 +112,9 @@ def run(args):
         from randovania.interface_common import persistence
         data_dir = persistence.user_data_dir()
 
+    # Ensure the log dir exists early on
+    data_dir.mkdir(parents=True, exist_ok=True)
+
     is_preview = args.preview
     logging.config.dictConfig({
         'version': 1,
