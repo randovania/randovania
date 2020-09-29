@@ -300,9 +300,13 @@ class WorldReader:
                 if the_set != Requirement.impossible():
                     connections[origin][nodes_by_name[target_name]] = the_set
 
-        return Area(data["name"], data["in_dark_aether"], data["asset_id"], data["default_node_index"],
-                    data["valid_starting_location"],
-                    nodes, connections)
+        area_name = data["name"]
+        try:
+            return Area(area_name, data["in_dark_aether"], data["asset_id"], data["default_node_index"],
+                        data["valid_starting_location"],
+                        nodes, connections)
+        except KeyError as e:
+            raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
     def read_area_list(self, data: List[Dict]) -> List[Area]:
         return read_array(data, self.read_area)
