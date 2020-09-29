@@ -145,7 +145,7 @@ class GameSession(BaseModel):
             "spoiler": description.permalink.spoiler if description is not None else None,
             "word_hash": description.shareable_word_hash if description is not None else None,
             "seed_hash": description.shareable_hash if description is not None else None,
-            "generation_in_progress": (self.generation_in_progress.name
+            "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
         }
 

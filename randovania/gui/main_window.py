@@ -221,11 +221,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
         browser = GameSessionBrowserDialog(network_client)
         await browser.refresh()
         if await async_dialog.execute_dialog(browser) == browser.Accepted:
-            self.game_session_window = GameSessionWindow(network_client,
-                                                         common_qt_lib.get_game_connection(),
-                                                         self.preset_manager,
-                                                         self,
-                                                         self._options)
+            self.game_session_window = await GameSessionWindow.create_and_update(
+                network_client, common_qt_lib.get_game_connection(), self.preset_manager,
+                self, self._options)
             self.game_session_window.show()
 
     @asyncSlot()
@@ -257,8 +255,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
             return
 
         await self.network_client.create_new_session(dialog.textValue())
-        self.game_session_window = GameSessionWindow(self.network_client, common_qt_lib.get_game_connection(),
-                                                     self.preset_manager, self, self._options)
+        self.game_session_window = await GameSessionWindow.create_and_update(self.network_client,
+                                                                             common_qt_lib.get_game_connection(),
+                                                                             self.preset_manager, self, self._options)
         self.game_session_window.show()
 
     def open_game_details(self, layout: LayoutDescription):
