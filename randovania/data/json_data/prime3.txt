@@ -1,6 +1,12 @@
 ====================
 Templates
 
+* Use Screw Attack (Space Jump):
+      Morph Ball and Space Jump Boots and Screw Attack
+
+* Use Screw Attack (No Space Jump):
+      Morph Ball and Screw Attack
+
 ====================
 Dock Weaknesses
 
@@ -8,15 +14,30 @@ Dock Weaknesses
   * (0) Normal Door; Blast Shield? False
       Trivial
 
-  * (4) Missile Blast Shield; Blast Shield? True
+  * (1) Plasma Door; Blast Shield? False
+      Plasma Beam
+
+  * (2) Nova Door; Blast Shield? False
+      Nova Beam
+
+  * (3) Missile Blast Shield; Blast Shield? True
       Missile
+
+  * (4) Ice Missile Blast Shield; Blast Shield? True
+      Ice Missile and Missile
+
+  * (5) Seeler Missiles Blast Shield; Blast Shield? True
+      Missile ≥ 5 and Seeker Missile
+
+  * (6) Grapple Lasso Blast Shield; Blast Shield? True
+      Grapple Lasso
 
   * (8) Permanently Locked; Blast Shield? False
       Impossible
 
 > DockType.MORPH_BALL_DOOR
   * (0) Morph Ball Door; Blast Shield? False
-      MorphBall
+      Morph Ball
 
 > DockType.OTHER
   * (0) Other Door; Blast Shield? False
@@ -187,6 +208,9 @@ Asset id: 975168564662458837
 > Dock to Gunnery Station; Heals? False
   * Normal Door to Gunnery Station/Dock to MedLab Delta
 
+> Pickup (Phazon Enhancement Device); Heals? False
+  * Pickup 0
+
 ----------------
 Disposal Chamber
 Asset id: 659263668515774583
@@ -205,6 +229,9 @@ Asset id: 9908630587780032110
 > Dock to Disposal Chamber; Heals? False
   * Normal Door to Disposal Chamber/Dock to Ventilation Shaft
 
+> Pickup (Energy Tank); Heals? True
+  * Pickup 1
+
 ----------------
 Docking Bay Access
 Asset id: 10500207601768265995
@@ -217,8 +244,15 @@ Asset id: 10500207601768265995
 ----------------
 Munitions Storage
 Asset id: 7486162873388959747
-> Dock to Repair Bay A; Heals? False
+> Door to Repair Bay A; Heals? False
   * Normal Door to Repair Bay A/Dock to Munitions Storage
+  > Pickup (Missile Launcher)
+      Trivial
+
+> Pickup (Missile Launcher); Heals? False
+  * Pickup 2
+  > Door to Repair Bay A
+      Trivial
 
 ----------------
 Gunship
@@ -236,7 +270,7 @@ Asset id: 16233775155696881050
   * Normal Door to Repair Bay Shaft/Dock to Repair Bay A
 
 > Dock to Munitions Storage; Heals? False
-  * Normal Door to Munitions Storage/Dock to Repair Bay A
+  * Normal Door to Munitions Storage/Door to Repair Bay A
 
 > Dock to Disposal Chamber; Heals? False
   * Normal Door to Disposal Chamber/Dock to Repair Bay A
@@ -279,8 +313,28 @@ Norion
 ----------------
 Docking Hub Alpha
 Asset id: 1594033074927626820
-> Dock to Hub Access; Heals? False
+> Door to Hub Access; Heals? False
   * Normal Door to Hub Access/Dock to Docking Hub Alpha
+  > Samus Ship
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 3
+  > Samus Ship
+      Use Screw Attack (Space Jump)
+
+> Pickup (Grapple Lasso); Heals? False
+  * Pickup 4
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Door to Hub Access
+      Trivial
+  > Pickup (Missile Expansion)
+      Use Screw Attack (Space Jump)
+  > Pickup (Grapple Lasso)
+      Trivial
 
 ----------------
 Generator A Access
@@ -331,10 +385,14 @@ Asset id: 2833670306022051974
 Hub Access
 Asset id: 2999231136728408916
 > Dock to Docking Hub Alpha; Heals? False
-  * Normal Door to Docking Hub Alpha/Dock to Hub Access
+  * Normal Door to Docking Hub Alpha/Door to Hub Access
+  > Dock to Cargo Hub
+      Trivial
 
 > Dock to Cargo Hub; Heals? False
-  * Normal Door to Cargo Hub/Dock to Hub Access
+  * Grapple Lasso Blast Shield to Cargo Hub/Dock to Hub Access
+  > Dock to Docking Hub Alpha
+      Trivial
 
 ----------------
 Conduit A
