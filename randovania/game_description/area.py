@@ -9,7 +9,7 @@ class Area(NamedTuple):
     name: str
     in_dark_aether: bool
     area_asset_id: int
-    default_node_index: int
+    default_node_index: Optional[int]
     valid_starting_location: bool
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, Requirement]]
