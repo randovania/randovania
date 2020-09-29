@@ -24,6 +24,9 @@ def set_dark_theme(active: bool):
         QPushButton {
             min-width: 40px;
         }
+        QToolButton {
+            border: 1px solid #32414B;
+        }
             """
     else:
         style = ""

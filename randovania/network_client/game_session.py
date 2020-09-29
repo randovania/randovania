@@ -64,6 +64,7 @@ class GameSessionEntry:
     word_hash: Optional[str]
     spoiler: Optional[bool]
     state: GameSessionState
+    generation_in_progress: Optional[int]
 
     @property
     def num_admins(self) -> int:
@@ -92,6 +93,7 @@ class GameSessionEntry:
             word_hash=data["word_hash"],
             spoiler=data["spoiler"],
             state=GameSessionState(data["state"]),
+            generation_in_progress=data["generation_in_progress"],
         )
 
 
