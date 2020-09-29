@@ -4,7 +4,7 @@ from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Int64ub
+    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Int64ub, Float64b
 
 from randovania.game_description.node import LoreType
 
@@ -223,7 +223,11 @@ ConstructResourceGain = Struct(
 
 ConstructLoreType = construct.Enum(Byte, **{lore_type.value: i for i, lore_type in enumerate(LoreType)})
 
-ConstructNodeCoordinates = Array(3, Float32b)
+ConstructNodeCoordinates = Struct(
+    x=Float64b,
+    y=Float64b,
+    z=Float64b,
+)
 
 ConstructNode = Struct(
     name=CString("utf8"),
