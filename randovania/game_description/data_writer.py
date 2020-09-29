@@ -1,7 +1,7 @@
 from typing import List, TypeVar, Callable, Dict, Tuple, TextIO, Union, Iterator
 
 from randovania.game_description.area import Area
-from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
+from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness, DockType
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
@@ -17,6 +17,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.interface_common.enum_lib import iterate_enum
 from randovania.layout.trick_level import LayoutTrickLevel
 
 
@@ -407,18 +408,56 @@ def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterat
         raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
 
 
+def pretty_print_node_type(node: Node, world_list: WorldList):
+    if isinstance(node, DockNode):
+        try:
+            other = world_list.resolve_dock_connection(world_list.nodes_to_world(node), node.default_connection)
+            other_name = world_list.node_name(other)
+        except IndexError as e:
+            other_name = (f"(Asset {node.default_connection.area_asset_id:x}, "
+                          f"index {node.default_connection.dock_index}) [{e}]")
+
+        return f"{node.default_dock_weakness.name} to {other_name}"
+
+    elif isinstance(node, TeleporterNode):
+        other = world_list.area_by_area_location(node.default_connection)
+        return f"Teleporter to {world_list.area_name(other, distinguish_dark_aether=True)}"
+
+    elif isinstance(node, PickupNode):
+        return f"Pickup {node.pickup_index.index}"
+
+    elif isinstance(node, EventNode):
+        return f"Event {node.event.long_name}"
+
+    elif isinstance(node, TranslatorGateNode):
+        return f"Translator Gate ({node.gate})"
+
+    elif isinstance(node, LogbookNode):
+        message = ""
+        if node.lore_type == LoreType.LUMINOTH_LORE:
+            message = f" ({node.required_translator.long_name})"
+        return f"Logbook {node.lore_type.long_name}{message} for {node.string_asset_id:x}"
+
+    return ""
+
+
 def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function(area.name)
     print_function("Asset id: {}".format(area.area_asset_id))
-    for node in area.nodes:
-        print_function(f"> {node.name}; Heals? {node.heal}")
-        for target_node, requirement in game.world_list.potential_nodes_from(node, game.create_game_patches()):
-            if target_node is None:
-                print_function("  > None?")
-            else:
-                print_function("  > {}".format(game.world_list.node_name(target_node)))
-                for level, text in pretty_print_requirement(requirement.simplify()):
-                    print_function("      {}{}".format("    " * level, text))
+    for i, node in enumerate(area.nodes):
+        message = f"> {node.name}; Heals? {node.heal}"
+        if area.default_node_index == i:
+            message += "; Spawn Point"
+        print_function(message)
+
+        description_line = pretty_print_node_type(node, game.world_list)
+        if description_line:
+            print_function(f"  * {description_line}")
+
+        for target_node, requirement in game.world_list.area_connections_from(node):
+            print_function("  > {}".format(target_node.name))
+            for level, text in pretty_print_requirement(requirement.simplify()):
+                print_function("      {}{}".format("    " * level, text))
         print_function()
 
 
@@ -431,6 +470,14 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
         output.write(f"\n* {template_name}:\n")
         for level, text in pretty_print_requirement(template):
             output.write("      {}{}\n".format("    " * level, text))
+
+    output.write("\n====================\nDock Weaknesses\n")
+    for dock_type in iterate_enum(DockType):
+        output.write(f"\n> {dock_type}")
+        for weakness in game.dock_weakness_database.get_by_type(dock_type):
+            output.write(f"\n  * ({weakness.index}) {weakness.name}; Blast Shield? {weakness.is_blast_shield}\n")
+            for level, text in pretty_print_requirement(weakness.requirement):
+                output.write("      {}{}\n".format("    " * level, text))
 
     output.write("\n")
     for world in game.world_list.worlds:
