@@ -1,8 +1,10 @@
 name: Run pytest
 on: [pull_request]
 
+
 jobs:
   linux:
+    if: "false"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,6 +50,11 @@ jobs:
         run: source venv/bin/activate && codecov
 
   windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        py_ver: ["3.7.6", "3.7.7", "3.7.8"]
+
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -58,7 +65,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.7.5'
+          python-version: ${{ matrix.py_ver }}
       
       - name: Set up cache
         uses: actions/cache@v2
