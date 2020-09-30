@@ -130,7 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
--   Meditation Vista, methods of reaching the item with a Boost Jump or Roll Jump (Expert and above).
+-   Meditation Vista, methods of reaching the item with a Boost Jump, Roll Jump (Expert and above), or Extended Dash (Hypermode).
 
 -   Path of Roots, method of reaching the item using:
     - Morph Ball, Bombs and Space Jump (Advanced and above).
@@ -165,7 +165,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Grand Abyss, methods of crossing the gap with Boost Jump (Advanced and above) or Extended Dash (Expert and above).
 
--   Hall of Combat Mastery, methods of collecting the item with a Wall Boost (Expert and above) or with a Power Bomb and unmorphing (Beginner and above).
+-   Hall of Combat Mastery, method of collecting the item with a Wall Boost (Expert and above).
 
 -   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Intermediate and above).
 
