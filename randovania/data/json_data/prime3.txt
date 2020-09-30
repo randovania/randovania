@@ -207,9 +207,13 @@ MedLab Delta
 Asset id: 975168564662458837
 > Dock to Gunnery Station; Heals? False
   * Normal Door to Gunnery Station/Dock to MedLab Delta
+  > Pickup (Phazon Enhancement Device)
+      Trivial
 
 > Pickup (Phazon Enhancement Device); Heals? False
   * Pickup 0
+  > Dock to Gunnery Station
+      Trivial
 
 ----------------
 Disposal Chamber
@@ -235,6 +239,8 @@ Asset id: 9908630587780032110
 
 > Pickup (Energy Tank); Heals? True
   * Pickup 1
+  > Dock to Disposal Chamber
+      Trivial
 
 ----------------
 Docking Bay Access
@@ -319,17 +325,13 @@ Docking Hub Alpha
 Asset id: 1594033074927626820
 > Door to Hub Access; Heals? False
   * Normal Door to Hub Access/Dock to Docking Hub Alpha
-  > Pickup (Missile Expansion)
-      Grapple Swing or Use Screw Attack (Space Jump)
-  > Pickup (Grapple Lasso)
-      Trivial
   > Samus Ship
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 3
   > Samus Ship
-      Use Screw Attack (Space Jump)
+      Grapple Swing or Use Screw Attack (Space Jump)
 
 > Pickup (Grapple Lasso); Heals? False
   * Pickup 4
@@ -358,16 +360,20 @@ Maintenance Station
 Asset id: 10152623521318090708
 > Dock to Cargo Hub; Heals? False
   * Normal Door to Cargo Hub/Dock to Maintenance Station
+  > Dock to Conduit C
+      Trivial
   > Pickup (Missile Expansion)
       Ice Missile
 
 > Dock to Conduit C; Heals? False
   * Normal Door to Conduit C/Dock to Maintenance Station
-  > Pickup (Missile Expansion)
-      Ice Missile
+  > Dock to Cargo Hub
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 5
+  > Dock to Cargo Hub
+      Trivial
 
 ----------------
 Generator B Access
@@ -402,6 +408,10 @@ Asset id: 2833670306022051974
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 6
+  > Dock to Conduit A
+      Trivial
+  > Dock to Cargo Hub
+      Trivial
 
 ----------------
 Hub Access
@@ -433,16 +443,20 @@ Substation West
 Asset id: 14723609494777816936
 > Dock to Conduit B; Heals? False
   * Normal Door to Conduit B/Dock to Substation West
-  > Pickup (Missile Expansion)
+  > Dock to Cargo Hub
       Trivial
 
 > Dock to Cargo Hub; Heals? False
   * Normal Door to Cargo Hub/Dock to Substation West
+  > Dock to Conduit B
+      Trivial
   > Pickup (Missile Expansion)
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 7
+  > Dock to Cargo Hub
+      Trivial
 
 ----------------
 Conduit B
@@ -467,16 +481,26 @@ Cargo Dock A
 Asset id: 6692819360230093549
 > Dock to Conduit A; Heals? False
   * Normal Door to Conduit A/Dock to Cargo Dock A
-  > Pickup (Missile Expansion)
-      Spider Ball
+  > Samus Ship
+      Trivial
 
 > Dock to Generator A Access; Heals? False
   * Normal Door to Generator A Access/Dock to Cargo Dock A
-  > Pickup (Missile Expansion)
-      Spider Ball
+  > Samus Ship
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 8
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? False
+  > Dock to Conduit A
+      Trivial
+  > Dock to Generator A Access
+      Trivial
+  > Pickup (Missile Expansion)
+      Spider Ball
 
 ----------------
 Conduit C
@@ -497,6 +521,8 @@ Asset id: 12849086301409571765
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 9
+  > Dock to Generator B Access
+      Trivial
 
 ----------------
 Cargo Dock B
@@ -512,25 +538,53 @@ Cargo Hub
 Asset id: 3044064450317642212
 > Dock to Substation East; Heals? False
   * Normal Door to Substation East/Dock to Cargo Hub
+  > East Branch
+      Trivial
 
 > Dock to Substation West; Heals? False
   * Normal Door to Substation West/Dock to Cargo Hub
+  > Center Area
+      Trivial
 
 > Dock to Hub Access; Heals? False
   * Normal Door to Hub Access/Dock to Cargo Hub
-  > Pickup (Missile Expansion)
-      Grapple Lasso
+  > Center Area
+      Trivial
 
 > Dock to Maintenance Station; Heals? False
   * Normal Door to Maintenance Station/Dock to Cargo Hub
+  > Center Area
+      Trivial
 
 > Dock to Tower Elevator; Heals? False
   * Normal Door to Tower Elevator/Dock to Cargo Hub
-  > Pickup (Missile Expansion)
-      Grapple Lasso
+  > East Branch
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 10
+  > Center Area
+      Trivial
+
+> East Branch; Heals? False
+  > Dock to Substation East
+      Trivial
+  > Dock to Tower Elevator
+      Trivial
+  > Center Area
+      Grapple Lasso
+
+> Center Area; Heals? False
+  > Dock to Substation West
+      Plasma Beam
+  > Dock to Hub Access
+      Trivial
+  > Dock to Maintenance Station
+      Trivial
+  > Pickup (Missile Expansion)
+      Grapple Lasso
+  > East Branch
+      Grapple Lasso
 
 ----------------
 Generator C
@@ -590,11 +644,19 @@ Docking Bay 5
 Asset id: 15622764306970326849
 > Dock to Hangar A Access; Heals? False
   * Normal Door to Hangar A Access/Dock to Docking Bay 5
-  > Pickup (Energy Cell)
+  > Samus Ship
       Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 11
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? False
+  > Dock to Hangar A Access
+      Energy Cells Total
+  > Pickup (Energy Cell)
+      Trivial
 
 ----------------
 Hangar A Access
@@ -632,8 +694,8 @@ Asset id: 7652878551953536007
 ----------------
 Security Access
 Asset id: 2123213449889105147
-> Dock to MedLab Alpha; Heals? False
-  * Normal Door to MedLab Alpha/Dock to Security Access
+> Dock to MedLab Alpha (Tunnel); Heals? False
+  * Normal Door to MedLab Alpha/Dock to Security Access (Tunnel)
 
 > Dock to Security Station; Heals? False
   * Normal Door to Security Station/Dock to Security Access
@@ -641,8 +703,8 @@ Asset id: 2123213449889105147
 > Dock to Auxiliary Lift; Heals? False
   * Normal Door to Auxiliary Lift/Dock to Security Access
 
-> Dock to MedLab Alpha; Heals? False
-  * Normal Door to MedLab Alpha/Dock to Security Access
+> Dock to MedLab Alpha (Door); Heals? False
+  * Normal Door to MedLab Alpha/Dock to Security Access (Door)
 
 ----------------
 Aurora Chamber
@@ -672,6 +734,8 @@ Asset id: 13634659891990625058
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 12
+  > Dock to Stairwell
+      Trivial
 
 ----------------
 Munitions Locker
@@ -683,6 +747,8 @@ Asset id: 7265233133801437908
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 13
+  > Dock to Junction A
+      Trivial
 
 ----------------
 Xenoresearch Lab
@@ -705,22 +771,28 @@ Asset id: 2774000464172079912
 ----------------
 MedLab Alpha
 Asset id: 4052690289582601366
-> Dock to Security Access; Heals? False
-  * Normal Door to Security Access/Dock to MedLab Alpha
-
-> Dock to Security Access; Heals? False
-  * Normal Door to Security Access/Dock to MedLab Alpha
-
-> Dock to Ventilation Shaft; Heals? False
-  * Normal Door to Ventilation Shaft/Dock to MedLab Alpha
+> Dock to Security Access (Door); Heals? False
+  * Normal Door to Security Access/Dock to MedLab Alpha (Door)
   > Pickup (Missile Expansion)
       Grapple Lasso
 
+> Dock to Security Access (Tunnel); Heals? False
+  * Morph Ball Door to Security Access/Dock to MedLab Alpha (Tunnel)
+
+> Dock to Ventilation Shaft; Heals? False
+  * Morph Ball Door to Ventilation Shaft/Dock to MedLab Alpha
+  > Pickup (Ship Missile Expansion)
+      Trivial
+
 > Pickup (Missile Expansion); Heals? False
   * Pickup 14
+  > Dock to Security Access (Door)
+      Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 15
+  > Dock to Security Access (Tunnel)
+      Trivial
 
 ----------------
 Security Station
@@ -736,16 +808,20 @@ Auxiliary Lift
 Asset id: 17479488334200413695
 > Dock to Port Observation Deck; Heals? False
   * Normal Door to Port Observation Deck/Dock to Auxiliary Lift
+  > Dock to Security Access
+      Trivial
   > Pickup (Missile Expansion)
       Trivial
 
 > Dock to Security Access; Heals? False
   * Normal Door to Security Access/Dock to Auxiliary Lift
-  > Pickup (Missile Expansion)
-      Grapple Lasso
+  > Dock to Port Observation Deck
+      Grapple Lasso and Energy Cells Total
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 16
+  > Dock to Port Observation Deck
+      Trivial
 
 ----------------
 Aurora Access
@@ -808,9 +884,13 @@ Crash Site
 Asset id: 15814834557214288722
 > Dock to G.F.S. Theseus (Door); Heals? False
   * Normal Door to G.F.S. Theseus/Dock to Crash Site (Door)
+  > Dock to Gateway
+      Grapple Swing or Use Screw Attack (Space Jump)
 
 > Dock to Gateway; Heals? False
   * Normal Door to Gateway/Dock to Crash Site
+  > Dock to G.F.S. Theseus (Door)
+      Grapple Swing or Use Screw Attack (Space Jump)
 
 > Dock to G.F.S. Theseus (Tunnel); Heals? False
   * Morph Ball Door to G.F.S. Theseus/Dock to Crash Site (Tunnel)
@@ -819,6 +899,12 @@ Asset id: 15814834557214288722
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 24
+  > Dock to G.F.S. Theseus (Door)
+      Trivial
+  > Dock to Gateway
+      Trivial
+  > Dock to G.F.S. Theseus (Tunnel)
+      Trivial
 
 ----------------
 Gateway Hall
@@ -834,14 +920,20 @@ Grand Court Path
 Asset id: 8468936149308094087
 > Dock to Gateway; Heals? False
   * Normal Door to Gateway/Dock to Grand Court Path
+  > Dock to Grand Court
+      Trivial
   > Pickup (Missile Expansion)
       Trivial
 
 > Dock to Grand Court; Heals? False
   * Normal Door to Grand Court/Dock to Grand Court Path
+  > Dock to Gateway
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 25
+  > Dock to Gateway
+      Trivial
 
 ----------------
 Reliquary I
@@ -853,56 +945,60 @@ Asset id: 928678633548581232
 
 > Pickup (Grapple Swing); Heals? False
   * Pickup 26
+  > Dock to Hillside Vista
+      Trivial
 
 ----------------
 Falls of Fire
 Asset id: 8374398449894515797
 > Dock to G.F.S. Theseus; Heals? False
   * Normal Door to G.F.S. Theseus/Dock to Falls of Fire
-  > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+  > Dock to Hidden Court
+      Ice Missile or Use Screw Attack (Space Jump)
 
 > Dock to Hidden Court; Heals? False
   * Normal Door to Hidden Court/Dock to Falls of Fire
+  > Dock to G.F.S. Theseus
+      Ice Missile or Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
       Use Screw Attack (Space Jump)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 27
+  > Dock to Hidden Court
+      Trivial
 
 ----------------
 Hillside Vista
 Asset id: 13902157786380317936
 > Dock to Grand Court; Heals? False
   * Normal Door to Grand Court/Dock to Hillside Vista
+  > Dock to Reliquary I
+      Trivial
   > Pickup (Missile Expansion)
       Trivial
 
 > Dock to Reliquary I; Heals? False
   * Normal Door to Reliquary I/Dock to Hillside Vista
-  > Pickup (Missile Expansion)
+  > Dock to Grand Court
       Grapple Swing or Use Screw Attack (Space Jump)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 28
+  > Dock to Reliquary I
+      Trivial
 
 ----------------
 Gateway
 Asset id: 3467893814575167461
 > Dock to Crash Site; Heals? False
   * Normal Door to Crash Site/Dock to Gateway
-  > Pickup (Missile Expansion)
-      Grapple Lasso and Plasma Beam
 
 > Dock to Grand Court Path; Heals? False
   * Normal Door to Grand Court Path/Dock to Gateway
-  > Pickup (Missile Expansion)
-      Grapple Lasso and Plasma Beam
 
 > Dock to Gateway Hall; Heals? False
   * Normal Door to Gateway Hall/Dock to Gateway
-  > Pickup (Missile Expansion)
-      Grapple Lasso and Plasma Beam
 
 > Dock to Reliquary II; Heals? False
   * Normal Door to Reliquary II/Dock to Gateway
@@ -911,6 +1007,8 @@ Asset id: 3467893814575167461
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 29
+  > Dock to Gateway Hall
+      Trivial
 
 ----------------
 Grand Court
@@ -936,63 +1034,111 @@ Asset id: 7492844587871276588
 
 > Pickup (Missile Expansion - Ledge); Heals? False
   * Pickup 30
+  > Dock to Hidden Court Hall
+      Trivial
 
 > Pickup (Missile Expansion - Bottom); Heals? False
   * Pickup 31
+  > Dock to Hidden Court Hall
+      Suit Type ≥ 4
 
 ----------------
 Jungle Generator
 Asset id: 6613311822671481119
 > Dock to Generator Hall North; Heals? False
   * Normal Door to Generator Hall North/Dock to Jungle Generator
-  > Pickup (Missile Expansion)
+  > Room Center
       Trivial
 
 > Dock to Field Access; Heals? False
   * Normal Door to Field Access/Dock to Jungle Generator
-  > Pickup (Missile Expansion)
+  > Room Center
       Trivial
 
 > Dock to Generator Hall South; Heals? False
   * Normal Door to Generator Hall South/Dock to Jungle Generator
-  > Pickup (Missile Expansion)
+  > Room Center
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 32
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Generator Hall North
+      Trivial
+  > Dock to Field Access
+      Trivial
+  > Dock to Generator Hall South
+      Trivial
+  > Pickup (Missile Expansion)
+      Trivial
 
 ----------------
 Hidden Court
 Asset id: 14006603351279167667
 > Dock to Hidden Court Hall; Heals? False
   * Normal Door to Hidden Court Hall/Dock to Hidden Court
-  > Pickup (Missile Expansion)
-      Boost Ball and Use Screw Attack (Space Jump)
+  > Bottom Floor
+      Trivial
+  > Bottom of Halfpipe
+      Trivial
 
 > Dock to Ruined Shrine; Heals? False
   * Normal Door to Ruined Shrine/Dock to Hidden Court
-  > Pickup (Missile Expansion)
-      Boost Ball and Use Screw Attack (Space Jump)
+  > Bottom Floor
+      Trivial
 
 > Dock to Burrow; Heals? False
   * Normal Door to Burrow/Dock to Hidden Court
-  > Pickup (Missile Expansion)
-      All of the following:
-          Boost Ball
-          Grapple Swing or Use Screw Attack (Space Jump)
+  > Bottom Floor
+      Trivial
+  > Bottom of Halfpipe
+      Grapple Swing or Use Screw Attack (Space Jump)
 
 > Dock to Falls of Fire; Heals? False
   * Normal Door to Falls of Fire/Dock to Hidden Court
-  > Pickup (Missile Expansion)
-      Boost Ball and Use Screw Attack (Space Jump)
+  > Bottom Floor
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 33
-  > Pickup (Energy Cell)
-      Ship Grapple
+  > Top of Halfpipe
+      Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 34
+  > Top of Halfpipe
+      Trivial
+
+> Top of Halfpipe; Heals? False
+  > Dock to Falls of Fire
+      Trivial
+  > Pickup (Missile Expansion)
+      Trivial
+  > Pickup (Energy Cell)
+      Ship Grapple
+  > Bottom Floor
+      Trivial
+
+> Bottom Floor; Heals? False
+  > Dock to Hidden Court Hall
+      Trivial
+  > Dock to Ruined Shrine
+      Trivial
+  > Dock to Falls of Fire
+      Use Screw Attack (Space Jump)
+  > Bottom of Halfpipe
+      Use Screw Attack (Space Jump)
+
+> Bottom of Halfpipe; Heals? False
+  > Dock to Falls of Fire
+      Use Screw Attack (Space Jump)
+  > Top of Halfpipe
+      Boost Ball
+  > Bottom Floor
+      Trivial
 
 ----------------
 Hidden Court Hall
@@ -1013,6 +1159,8 @@ Asset id: 3252687480004049274
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 35
+  > Dock to Gateway
+      Trivial
 
 ----------------
 Hangar Bay Hall
@@ -1049,17 +1197,23 @@ Ancient Courtyard
 Asset id: 15861154386655212106
 > Dock to Overgrown Ruins (Door); Heals? False
   * Normal Door to Overgrown Ruins/Dock to Ancient Courtyard
-  > Pickup (Missile Expansion)
-      Grapple Lasso and Ship Missile and Boost Ball
+  > Dock to Enlightened Walkway
+      Grapple Lasso and Ship Missile
 
 > Dock to Overgrown Ruins (Tunnel); Heals? False
   * Morph Ball Door to Overgrown Ruins/Dock to Ancient Courtyard
 
 > Dock to Enlightened Walkway; Heals? False
   * Normal Door to Enlightened Walkway/Dock to Ancient Courtyard
+  > Dock to Overgrown Ruins (Door)
+      Trivial
+  > Pickup (Missile Expansion)
+      Boost Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 36
+  > Dock to Enlightened Walkway
+      Trivial
 
 ----------------
 Overgrown Ruins
@@ -1081,31 +1235,39 @@ Ruined Shrine
 Asset id: 18426339925276965129
 > Dock to Hidden Court; Heals? False
   * Normal Door to Hidden Court/Dock to Ruined Shrine
+  > Dock to Hangar Bay
+      Grapple Swing or Use Screw Attack (Space Jump)
   > Pickup (Energy Tank)
       Trivial
 
 > Dock to Hangar Bay; Heals? False
   * Normal Door to Hangar Bay/Dock to Ruined Shrine
-  > Pickup (Energy Tank)
+  > Dock to Hidden Court
       Trivial
 
 > Pickup (Energy Tank); Heals? False
+  > Dock to Hidden Court
+      Trivial
 
 ----------------
 Burrow
 Asset id: 17937850293030639051
 > Dock to Hidden Court; Heals? False
   * Normal Door to Hidden Court/Dock to Burrow
-  > Pickup (Missile Expansion)
+  > Dock to Hall of the Golems
       Trivial
 
 > Dock to Hall of the Golems; Heals? False
   * Normal Door to Hall of the Golems/Dock to Burrow
+  > Dock to Hidden Court
+      Trivial
   > Pickup (Missile Expansion)
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 38
+  > Dock to Hall of the Golems
+      Trivial
 
 ----------------
 Jousting Field
@@ -1121,16 +1283,22 @@ Machineworks Bridge
 Asset id: 17945996104959776291
 > Dock to North Jungle Court; Heals? False
   * Normal Door to North Jungle Court/Dock to Machineworks Bridge
-  > Pickup (Energy Tank)
-      Boost Ball and Use Screw Attack (Space Jump)
+  > Room Center
+      Boost Ball
 
 > Dock to Colossus Vista; Heals? False
   * Normal Door to Colossus Vista/Dock to Machineworks Bridge
-  > Pickup (Energy Tank)
-      Boost Ball and Use Screw Attack (Space Jump)
+  > Room Center
+      Boost Ball
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 39
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Pickup (Energy Tank)
+      Use Screw Attack (Space Jump)
 
 ----------------
 North Jungle Court
@@ -1157,6 +1325,10 @@ Asset id: 655768186680006563
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 40
+  > Dock to Jungle Generator
+      Trivial
+  > Dock to North Jungle Court
+      Trivial
 
 ----------------
 North Jungle Hall
@@ -1195,6 +1367,8 @@ Asset id: 12685212997342829632
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 41
+  > Dock to Overgrown Ruins
+      Trivial
 
 ----------------
 Save Station B
@@ -1207,56 +1381,82 @@ Hangar Bay
 Asset id: 12448241480574438186
 > Dock to Hangar Bay Hall; Heals? False
   * Normal Door to Hangar Bay Hall/Dock to Hangar Bay
+  > Dock to Ruined Shrine
+      Trivial
 
 > Dock to Ruined Shrine; Heals? False
   * Normal Door to Ruined Shrine/Dock to Hangar Bay
+  > Dock to Hangar Bay Hall
+      Trivial
   > Pickup (Energy Cell)
       Grapple Lasso or Use Screw Attack (Space Jump)
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 42
+  > Dock to Ruined Shrine
+      Trivial
   > Pickup (Main Ship Missiles)
       Trivial
 
 > Pickup (Main Ship Missiles); Heals? False
   * Pickup 43
+  > Dock to Ruined Shrine
+      Trivial
 
 ----------------
 Colossus Vista
 Asset id: 8112010450000786492
 > Dock to Hall of the Golems; Heals? False
   * Normal Door to Hall of the Golems/Dock to Colossus Vista
+  > Dock to Machineworks Bridge
+      Trivial
   > Pickup (Ship Missile Expansion)
       Ship Grapple
 
 > Dock to Machineworks Bridge; Heals? False
   * Normal Door to Machineworks Bridge/Dock to Colossus Vista
+  > Dock to Hall of the Golems
+      Trivial
   > Pickup (Ship Missile Expansion)
       Ship Grapple
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 44
+  > Dock to Hall of the Golems
+      Trivial
+  > Dock to Machineworks Bridge
+      Trivial
 
 ----------------
 Hall of the Golems
 Asset id: 2580753232084104741
 > Dock to Burrow; Heals? False
   * Normal Door to Burrow/Dock to Hall of the Golems
-  > Pickup (Missile Expansion)
-      Grapple Voltage and Spider Ball and Boost Ball
+  > Room Center
+      Trivial
 
 > Dock to Hangar Bay Hall; Heals? False
   * Normal Door to Hangar Bay Hall/Dock to Hall of the Golems
-  > Pickup (Missile Expansion)
-      Grapple Voltage and Spider Ball and Boost Ball
+  > Room Center
+      Trivial
 
 > Dock to Colossus Vista; Heals? False
   * Normal Door to Colossus Vista/Dock to Hall of the Golems
-  > Pickup (Missile Expansion)
-      Grapple Voltage and Spider Ball and Boost Ball
+  > Room Center
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 45
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Hangar Bay Hall
+      Trivial
+  > Dock to Colossus Vista
+      Plasma Beam
+  > Pickup (Missile Expansion)
+      Grapple Voltage and Spider Ball and Boost Ball
 
 ----------------
 South Jungle Court
@@ -1278,16 +1478,26 @@ Auxiliary Dynamo
 Asset id: 9706081627986864375
 > Dock to South Jungle Hall; Heals? False
   * Normal Door to South Jungle Hall/Dock to Auxiliary Dynamo
-  > Pickup (Ship Missile Expansion)
-      Grapple Lasso
+  > Hall Center
+      Trivial
 
 > Dock to North Jungle Hall; Heals? False
   * Normal Door to North Jungle Hall/Dock to Auxiliary Dynamo
-  > Pickup (Ship Missile Expansion)
-      Grapple Lasso
+  > Hall Center
+      Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 46
+  > Hall Center
+      Trivial
+
+> Hall Center; Heals? False
+  > Dock to South Jungle Hall
+      Trivial
+  > Dock to North Jungle Hall
+      Trivial
+  > Pickup (Ship Missile Expansion)
+      Grapple Lasso
 
 ----------------
 Reliquary III
@@ -1299,6 +1509,8 @@ Asset id: 2046879235130061967
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 47
+  > Dock to Grand Court
+      Trivial
 
 ====================
 Bryyo - Fire
@@ -1313,41 +1525,71 @@ Main Lift
 Asset id: 9934831212540578712
 > Dock to Warp Site Alpha; Heals? False
   * Normal Door to Warp Site Alpha/Dock to Main Lift
-  > Pickup (Missile Expansion)
+  > Upper Area
       Plasma Beam
 
 > Dock to Corrupted Pool; Heals? False
   * Normal Door to Corrupted Pool/Dock to Main Lift
-  > Pickup (Missile Expansion)
+  > Upper Area
       Grapple Lasso
 
 > Dock to Gel Refinery Site; Heals? False
   * Normal Door to Gel Refinery Site/Dock to Main Lift
   > Pickup (Missile Expansion)
       Trivial
+  > Upper Area
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 17
+  > Dock to Gel Refinery Site
+      Trivial
+
+> Upper Area; Heals? False
+  > Dock to Warp Site Alpha
+      Plasma Beam
+  > Dock to Corrupted Pool
+      Grapple Lasso
+  > Dock to Gel Refinery Site
+      Trivial
 
 ----------------
 Imperial Hall
 Asset id: 4215957264467390882
 > Dock to Gel Refinery Site; Heals? False
   * Normal Door to Gel Refinery Site/Dock to Imperial Hall
+  > Dock to Fiery Airdock
+      Trivial
 
 > Dock to Refinery Access; Heals? False
   * Normal Door to Refinery Access/Dock to Imperial Hall
+  > Dock to Gel Refinery Site
+      Trivial
+  > Dock to Fiery Airdock
+      Trivial
   > Pickup (Missile Expansion)
       Grapple Lasso or Use Screw Attack (Space Jump)
 
 > Dock to Fiery Airdock; Heals? False
   * Normal Door to Fiery Airdock/Dock to Imperial Hall
+  > Dock to Gel Refinery Site
+      Trivial
 
 > Dock to Gel Cavern; Heals? False
   * Normal Door to Gel Cavern/Dock to Imperial Hall
+  > Dock to Gel Refinery Site
+      Trivial
+  > Dock to Fiery Airdock
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 18
+  > Dock to Gel Refinery Site
+      Trivial
+  > Dock to Refinery Access
+      Grapple Lasso and Use Screw Attack (Space Jump)
+  > Dock to Fiery Airdock
+      Trivial
 
 ----------------
 Refinery Access
@@ -1363,20 +1605,40 @@ Gel Refinery Site
 Asset id: 691790544662692104
 > Dock to Imperial Hall; Heals? False
   * Normal Door to Imperial Hall/Dock to Gel Refinery Site
+  > Room Center
+      Trivial
 
 > Dock to Refinery Access; Heals? False
   * Normal Door to Refinery Access/Dock to Gel Refinery Site
+  > Room Center
+      Trivial
 
 > Dock to Gel Purification Site; Heals? False
   * Normal Door to Gel Purification Site/Dock to Gel Refinery Site
   > Pickup (Missile Expansion)
       Grapple Lasso or Use Screw Attack (Space Jump)
+  > Room Center
+      Trivial
 
 > Dock to Main Lift; Heals? False
   * Normal Door to Main Lift/Dock to Gel Refinery Site
+  > Room Center
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 19
+  > Dock to Gel Purification Site
+      Grapple Lasso or Use Screw Attack (Space Jump)
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Imperial Hall
+      Trivial
+  > Dock to Refinery Access
+      Plasma Beam
+  > Dock to Main Lift
+      Trivial
 
 ----------------
 Gel Purification Site
@@ -1392,36 +1654,44 @@ Gel Hall
 Asset id: 15732414849243282895
 > Dock to Gel Purification Site; Heals? False
   * Normal Door to Gel Purification Site/Dock to Gel Hall
-  > Pickup (Missile Expansion - Ledge)
-      Any of the following:
-          Ice Missile
-          Suit Type ≥ 4 and Use Screw Attack (Space Jump)
-  > Pickup (Missile Expansion - Falling Platform)
+  > Room Center
       Ice Missile or Suit Type ≥ 4 or Use Screw Attack (Space Jump)
 
 > Dock to Gel Processing Site; Heals? False
   * Normal Door to Gel Processing Site/Dock to Gel Hall
-  > Pickup (Missile Expansion - Ledge)
-      Any of the following:
-          Ice Missile
-          Suit Type ≥ 4 and Use Screw Attack (Space Jump)
-  > Pickup (Missile Expansion - Falling Platform)
+  > Room Center
       Trivial
 
 > Dock to Save Station A; Heals? False
   * Normal Door to Save Station A/Dock to Gel Hall
+  > Room Center
+      Trivial
+
+> Pickup (Missile Expansion - Ledge); Heals? False
+  * Pickup 20
+  > Room Center
+      Any of the following:
+          Ice Missile
+          Suit Type ≥ 4 and Use Screw Attack (Space Jump)
+
+> Pickup (Missile Expansion - Falling Platform); Heals? False
+  * Pickup 21
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Gel Purification Site
+      Ice Missile or Suit Type ≥ 4 or Use Screw Attack (Space Jump)
+  > Dock to Gel Processing Site
+      Trivial
+  > Dock to Save Station A
+      Trivial
   > Pickup (Missile Expansion - Ledge)
       Any of the following:
           Ice Missile
           Suit Type ≥ 4 and Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion - Falling Platform)
       Trivial
-
-> Pickup (Missile Expansion - Ledge); Heals? False
-  * Pickup 20
-
-> Pickup (Missile Expansion - Falling Platform); Heals? False
-  * Pickup 21
 
 ----------------
 Corrupted Pool
@@ -1437,19 +1707,37 @@ Temple of Bryyo
 Asset id: 13296637487518400273
 > Dock to Temple Access; Heals? False
   * Normal Door to Temple Access/Dock to Temple of Bryyo
+  > Above Ground
+      Trivial
+
+> Dock to Temple Reservoir; Heals? False
+  * Normal Door to Temple Reservoir/Dock to Temple of Bryyo
+  > Below Ground
+      Trivial
+
+> Pickup (Ice Missiles); Heals? False
+  * Pickup 23
+  > Above Ground
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 22
+  > Above Ground
+      Suit Type ≥ 4
+
+> Above Ground; Heals? False
+  > Dock to Temple Access
+      Trivial
   > Pickup (Ice Missiles)
       Grapple Lasso
   > Pickup (Missile Expansion)
       Nova Beam and X-Ray Visor and Suit Type ≥ 4
+  > Below Ground
+      Grapple Lasso and Ship Missile
 
-> Dock to Temple Reservoir; Heals? False
-  * Normal Door to Temple Reservoir/Dock to Temple of Bryyo
-
-> Pickup (Ice Missiles); Heals? False
-  * Pickup 23
-
-> Pickup (Missile Expansion); Heals? False
-  * Pickup 22
+> Below Ground; Heals? False
+  > Dock to Temple Reservoir
+      Trivial
 
 ----------------
 Temple Hall
@@ -1542,8 +1830,6 @@ Hall of Remembrance
 Asset id: 6915612318130423578
 > Dock to Imperial Crypt (Upper); Heals? False
   * Normal Door to Imperial Crypt/Dock to Hall of Remembrance (Upper)
-  > Pickup (Screw Attack)
-      Trivial
   > Pickup (Ship Missile Expansion)
       Use Screw Attack (Space Jump)
 
@@ -1554,8 +1840,6 @@ Asset id: 6915612318130423578
 
 > Dock to Tower (Upper); Heals? False
   * Normal Door to Tower/Dock to Hall of Remembrance (Upper)
-  > Pickup (Screw Attack)
-      Use Screw Attack (Space Jump)
   > Pickup (Ship Missile Expansion)
       Use Screw Attack (Space Jump)
 
@@ -1566,9 +1850,19 @@ Asset id: 6915612318130423578
 
 > Pickup (Screw Attack); Heals? False
   * Pickup 48
+  > Dock to Imperial Crypt (Lower)
+      Trivial
+  > Dock to Tower (Lower)
+      Use Screw Attack (Space Jump)
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 49
+  > Dock to Imperial Crypt (Upper)
+      Use Screw Attack (Space Jump)
+  > Dock to Tower (Upper)
+      Use Screw Attack (Space Jump)
+  > Pickup (Screw Attack)
+      Trivial
 
 ----------------
 Imperial Crypt
@@ -1587,16 +1881,20 @@ Tower
 Asset id: 10429003070780375168
 > Dock to Hall of Remembrance (Upper); Heals? False
   * Normal Door to Hall of Remembrance/Dock to Tower (Upper)
-  > Pickup (Energy Tank)
-      Spider Ball and Boost Ball
 
 > Dock to Hall of Remembrance (Lower); Heals? False
   * Normal Door to Hall of Remembrance/Dock to Tower (Lower)
+  > Dock to Hall of Remembrance (Upper)
+      Use Screw Attack (Space Jump)
   > Pickup (Energy Tank)
       Spider Ball and Boost Ball
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 50
+  > Dock to Hall of Remembrance (Upper)
+      Trivial
+  > Dock to Hall of Remembrance (Lower)
+      Trivial
 
 ----------------
 Imperial Caverns
@@ -1637,6 +1935,8 @@ Asset id: 9708827741160794862
 
 > Pickup (Hyper Ball); Heals? False
   * Pickup 98
+  > Dock to Core Access
+      Hyper Ball
 
 ----------------
 !!00_seed_outofseed_dead_bryyo
@@ -1651,16 +1951,26 @@ Main Docking Bay
 Asset id: 4133901881028310574
 > Dock to Main Docking Access; Heals? False
   * Normal Door to Main Docking Access/Dock to Main Docking Bay
-  > Pickup (Plasma Beam)
+  > Pickup (Missile Expansion)
+      Plasma Beam
+  > Samus Ship (Catch.)
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 51
+  > Dock to Main Docking Access
+      Trivial
 
 > Pickup (Plasma Beam); Heals? False
   * Pickup 52
-  > Pickup (Missile Expansion)
-      Plasma Beam
+  > Samus Ship (Catch.)
+      Trivial
+
+> Samus Ship (Catch.); Heals? False
+  > Dock to Main Docking Access
+      Trivial
+  > Pickup (Plasma Beam)
+      Trivial
 
 ----------------
 Zipline Station Alpha
@@ -1676,32 +1986,50 @@ Arrival Station
 Asset id: 14742980547553882067
 > Dock to Zipline Station Alpha; Heals? False
   * Normal Door to Zipline Station Alpha/Dock to Arrival Station
-  > Pickup (Energy Tank)
-      Boost Ball
+  > Room Center
+      Trivial
 
 > Dock to Hub Access; Heals? False
   * Normal Door to Hub Access/Dock to Arrival Station
-  > Pickup (Energy Tank)
-      Boost Ball
+  > Room Center
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 53
+  > Floating Island
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Zipline Station Alpha
+      Trivial
+  > Dock to Hub Access
+      Trivial
+  > Floating Island
+      Boost Ball
+
+> Floating Island; Heals? False
+  > Room Center
+      Boost Ball
 
 ----------------
 Barracks Access
 Asset id: 4910606911885883821
 > Dock to Transit Hub; Heals? False
   * Normal Door to Transit Hub/Dock to Barracks Access
+  > Dock to Steambot Barracks
+      Trivial
   > Pickup (Missile Expansion)
       Trivial
 
 > Dock to Steambot Barracks; Heals? False
   * Normal Door to Steambot Barracks/Dock to Barracks Access
-  > Pickup (Missile Expansion)
+  > Dock to Transit Hub
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 54
+  > Dock to Transit Hub
+      Trivial
 
 ----------------
 Hub Access
@@ -1750,30 +2078,52 @@ Hoverplat Docking Site
 Asset id: 10164050604229640228
 > Dock to Barracks Lift; Heals? False
   * Normal Door to Barracks Lift/Dock to Hoverplat Docking Site
-  > Pickup (Ship Missile Expansion)
-      Spider Ball and Boost Ball and Use Screw Attack (Space Jump)
+  > Room Center
+      Use Screw Attack (Space Jump)
 
 > Dock to Junction; Heals? False
   * Normal Door to Junction/Dock to Hoverplat Docking Site
-  > Pickup (Ship Missile Expansion)
-      Spider Ball and Boost Ball and Use Screw Attack (Space Jump)
+  > Room Center
+      Use Screw Attack (Space Jump)
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 55
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Barracks Lift
+      Use Screw Attack (Space Jump)
+  > Dock to Junction
+      Use Screw Attack (Space Jump)
+  > Pickup (Ship Missile Expansion)
+      Spider Ball and Boost Ball
 
 ----------------
 Skybridge Hera
 Asset id: 10733512082794532665
 > Dock to Junction; Heals? False
   * Normal Door to Junction/Dock to Skybridge Hera
-  > Pickup (Missile Expansion)
+  > Room Center
       Grapple Lasso
 
 > Dock to Maintenance Shaft GP; Heals? False
   * Normal Door to Maintenance Shaft GP/Dock to Skybridge Hera
+  > Room Center
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 56
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Junction
+      Trivial
+  > Dock to Maintenance Shaft GP
+      Trivial
+  > Pickup (Missile Expansion)
+      Trivial
 
 ----------------
 Zipline Station Charlie
@@ -1785,11 +2135,31 @@ Asset id: 17641492364836789457
 
 > Dock to Junction; Heals? False
   * Normal Door to Junction/Dock to Spire Dock
-  > Pickup (Energy Tank)
-      Grapple Swing and Grapple Voltage and Spider Ball and Boost Ball and Use Screw Attack (Space Jump)
+  > Floating Platform (Junction)
+      Use Screw Attack (Space Jump)
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 57
+  > Floating Platform (Junction)
+      Spider Ball and Boost Ball
+  > Floating Platform (Powerworks Access)
+      Spider Ball and Boost Ball
+
+> Floating Platform (Junction); Heals? False
+  > Dock to Junction
+      Use Screw Attack (Space Jump)
+  > Pickup (Energy Tank)
+      Spider Ball and Boost Ball
+  > Floating Platform (Powerworks Access)
+      Spider Ball and Boost Ball
+
+> Floating Platform (Powerworks Access); Heals? False
+  > Dock to Powerworks Access
+      Use Screw Attack (Space Jump)
+  > Pickup (Energy Tank)
+      Spider Ball and Boost Ball
+  > Floating Platform (Junction)
+      Spider Ball and Boost Ball
 
 ----------------
 Powerworks Access
@@ -1868,16 +2238,32 @@ Construction Bay
 Asset id: 2667502259855056433
 > Dock to Ballista Lift; Heals? False
   * Normal Door to Ballista Lift/Dock to Construction Bay
-  > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+  > Top Level
+      Trivial
 
 > Dock to Maintenance Shaft GP; Heals? False
   * Normal Door to Maintenance Shaft GP/Dock to Construction Bay
-  > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+  > Bottom Level
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 58
+  > Top Level
+      Use Screw Attack (Space Jump)
+
+> Top Level; Heals? False
+  > Dock to Ballista Lift
+      Trivial
+  > Pickup (Missile Expansion)
+      Use Screw Attack (Space Jump)
+  > Bottom Level
+      Trivial
+
+> Bottom Level; Heals? False
+  > Dock to Maintenance Shaft GP
+      Trivial
+  > Top Level
+      Grapple Swing or Grapple Voltage or Use Screw Attack (Space Jump)
 
 ----------------
 Main Docking Access
@@ -1893,31 +2279,45 @@ Security Station
 Asset id: 8195940946934839837
 > Dock to Security Tube; Heals? False
   * Normal Door to Security Tube/Dock to Security Station
-  > Pickup (Ship Missile Expansion)
+  > Spire Side
       Trivial
 
 > Dock to Spire Dock; Heals? False
   * Normal Door to Spire Dock/Dock to Security Station
-  > Pickup (Ship Missile Expansion)
+  > Spire Side
       Trivial
 
 > Dock to Spire Dock; Heals? False
   * Normal Door to Spire Dock/Dock to Security Station
-  > Pickup (Ship Missile Expansion)
+  > Spire Side
       Trivial
 
 > Dock to Landing Site A; Heals? False
   * Normal Door to Landing Site A/Dock to Security Station
+  > Dock to Escape Pod Bay Access
+      Trivial
   > Pickup (Ship Missile Expansion)
+      Trivial
+  > Spire Side
       Trivial
 
 > Dock to Escape Pod Bay Access; Heals? False
   * Normal Door to Escape Pod Bay Access/Dock to Security Station
-  > Pickup (Ship Missile Expansion)
+  > Dock to Landing Site A
       Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 59
+  > Spire Side
+      Trivial
+
+> Spire Side; Heals? False
+  > Dock to Security Tube
+      Trivial
+  > Dock to Spire Dock
+      Trivial
+  > Dock to Landing Site A
+      Trivial
 
 ----------------
 Steambot Barracks
@@ -1935,14 +2335,16 @@ Asset id: 12622074872595627812
       Trivial
   > Pickup (Missile Expansion)
       Spider Ball
-  > Pickup (Energy Tank)
-      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 60
+  > Dock to Barracks Lift
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 61
+  > Dock to Barracks Lift
+      Trivial
 
 ----------------
 Ballista Storage
@@ -1974,12 +2376,14 @@ Asset id: 265878788849725085
 
 > Pickup (Spider Ball); Heals? False
   * Pickup 64
+  > Dock to Powerworks Access
+      Spider Ball and Boost Ball
   > Pickup (Missile Expansion)
       Spider Ball and Boost Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 65
-  > Dock to Powerworks Access
+  > Pickup (Spider Ball)
       Spider Ball and Boost Ball
 
 ----------------
@@ -2047,21 +2451,27 @@ Transit Hub
 Asset id: 13389753286679728417
 > Dock to Hub Access; Heals? False
   * Normal Door to Hub Access/Dock to Transit Hub
-  > Pickup (Missile Expansion)
+  > Dock to Zipline Station Bravo
       Trivial
 
 > Dock to Barracks Access; Heals? False
   * Normal Door to Barracks Access/Dock to Transit Hub
-  > Pickup (Missile Expansion)
+  > Dock to Zipline Station Bravo
       Grapple Swing
 
 > Dock to Zipline Station Bravo; Heals? False
   * Normal Door to Zipline Station Bravo/Dock to Transit Hub
+  > Dock to Hub Access
+      Trivial
+  > Dock to Barracks Access
+      Grapple Swing
   > Pickup (Missile Expansion)
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 66
+  > Dock to Zipline Station Bravo
+      Trivial
 
 ----------------
 Zipline Station Bravo
@@ -2112,21 +2522,61 @@ Concourse
 Asset id: 1701256524990864906
 > Dock to Concourse Ventilation; Heals? False
   * Normal Door to Concourse Ventilation/Dock to Concourse
+  > 2nd Floor
+      Trivial
 
 > Dock to Piston Hall; Heals? False
   * Normal Door to Piston Hall/Dock to Concourse
+  > Basement
+      Trivial
 
 > Dock to Concourse Access A; Heals? False
   * Normal Door to Concourse Access A/Dock to Concourse
+  > 1st Floor
+      Trivial
 
 > Dock to Concourse Access B; Heals? False
   * Normal Door to Concourse Access B/Dock to Concourse
+  > Top Floor
+      Trivial
 
 > Dock to Maintenance Shaft CC; Heals? False
   * Normal Door to Maintenance Shaft CC/Dock to Concourse
+  > Basement
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 67
+  > Top Floor
+      Trivial
+
+> 1st Floor; Heals? False
+  > Dock to Concourse Access A
+      Trivial
+  > 2nd Floor
+      Trivial
+  > Basement
+      Plasma Beam
+
+> 2nd Floor; Heals? False
+  > Dock to Concourse Ventilation
+      Trivial
+  > 1st Floor
+      Trivial
+
+> Top Floor; Heals? False
+  > Dock to Concourse Access B
+      Trivial
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Basement; Heals? False
+  > Dock to Piston Hall
+      Trivial
+  > Dock to Maintenance Shaft CC
+      Trivial
+  > 1st Floor
+      Plasma Beam
 
 ----------------
 Maintenance Shaft CC
@@ -2214,16 +2664,20 @@ Xenoresearch A Lift
 Asset id: 9772683067190669679
 > Dock to Research Pod Lift; Heals? False
   * Normal Door to Research Pod Lift/Dock to Xenoresearch A Lift
-  > Pickup (Energy Tank)
-      Missile
+  > Dock to Xenoresearch A
+      Trivial
 
 > Dock to Xenoresearch A; Heals? False
   * Normal Door to Xenoresearch A/Dock to Xenoresearch A Lift
+  > Dock to Research Pod Lift
+      Trivial
   > Pickup (Energy Tank)
       Missile
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 68
+  > Dock to Xenoresearch A
+      Trivial
 
 ----------------
 Xenoresearch A
@@ -2258,6 +2712,8 @@ Asset id: 17636479515754825573
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 70
+  > Dock to Xenoresearch B Lift
+      Seeker Missile
   > Pickup (Seeker Missiles)
       Missile
 
@@ -2266,16 +2722,20 @@ Concourse Ventilation
 Asset id: 8316677848927658449
 > Dock to Concourse; Heals? False
   * Normal Door to Concourse/Dock to Concourse Ventilation
-  > Pickup (Missile Expansion)
-      Spider Ball and Boost Ball
+  > Dock to Maintenance Shaft OB
+      Trivial
 
 > Dock to Maintenance Shaft OB; Heals? False
   * Normal Door to Maintenance Shaft OB/Dock to Concourse Ventilation
+  > Dock to Concourse
+      Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
       Spider Ball and Boost Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 71
+  > Dock to Maintenance Shaft OB
+      Trivial
 
 ----------------
 Turbine Access
@@ -2330,16 +2790,24 @@ Gearworks
 Asset id: 6708692299270885612
 > Dock to Observatory Lift; Heals? False
   * Normal Door to Observatory Lift/Dock to Gearworks
+  > Dock to Broken Lift
+      Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
       Use Screw Attack (Space Jump)
 
 > Dock to Broken Lift; Heals? False
   * Normal Door to Broken Lift/Dock to Gearworks
+  > Dock to Observatory Lift
+      Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
       Use Screw Attack (Space Jump)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 72
+  > Dock to Observatory Lift
+      Use Screw Attack (Space Jump)
+  > Dock to Broken Lift
+      Use Screw Attack (Space Jump)
 
 ----------------
 Maintenance Shaft OB
@@ -2399,27 +2867,47 @@ Asset id: 18200553231954089224
 
 > Pickup (Ship Grapple); Heals? False
   * Pickup 73
+  > Dock to Landing Access
+      Trivial
 
 ----------------
 Botanica
 Asset id: 8254796686876375149
 > Dock to Chozo Observatory; Heals? False
   * Normal Door to Chozo Observatory/Dock to Botanica
-  > Pickup (Missile Expansion)
-      Grapple Lasso and Use Screw Attack (Space Jump)
+  > Bottom Level
+      Trivial
 
 > Dock to Broken Lift; Heals? False
   * Normal Door to Broken Lift/Dock to Botanica
-  > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+  > Top Level
+      Trivial
 
 > Dock to Save Station B; Heals? False
   * Normal Door to Save Station B/Dock to Botanica
-  > Pickup (Missile Expansion)
-      Grapple Lasso and Use Screw Attack (Space Jump)
+  > Bottom Level
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 74
+  > Top Level
+      Use Screw Attack (Space Jump)
+
+> Top Level; Heals? False
+  > Dock to Broken Lift
+      Use Screw Attack (Space Jump)
+  > Pickup (Missile Expansion)
+      Use Screw Attack (Space Jump)
+  > Bottom Level
+      Trivial
+
+> Bottom Level; Heals? False
+  > Dock to Chozo Observatory
+      Trivial
+  > Dock to Save Station B
+      Trivial
+  > Top Level
+      Grapple Lasso
 
 ----------------
 Save Station B
@@ -2457,6 +2945,8 @@ Asset id: 17766988414710659705
 
 > Pickup (Hyper Missile); Heals? False
   * Pickup 97
+  > Dock to Core Access
+      Hyper Missile
 
 ----------------
 !!00_seed_outofseed_dead_skytown
@@ -2489,23 +2979,41 @@ Craneyard
 Asset id: 7063455547734255887
 > Dock to Airshaft; Heals? False
   * Normal Door to Airshaft/Dock to Craneyard
-  > Pickup (Missile Expansion)
-      Spider Ball and Boost Ball
+  > Indoor Room
+      Trivial
 
 > Dock to Proving Grounds Lift; Heals? False
   * Normal Door to Proving Grounds Lift/Dock to Craneyard
-  > Pickup (Missile Expansion)
-      Spider Ball and Boost Ball
-  > Pickup (Hazard Shield)
-      Spider Ball and Boost Ball
+  > Indoor Room
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 75
-  > Pickup (Hazard Shield)
-      Spider Ball and Boost Ball
+  > Spinner Room
+      Trivial
 
 > Pickup (Hazard Shield); Heals? False
   * Pickup 76
+  > Outdoor
+      Suit Type ≥ 4
+
+> Spinner Room; Heals? False
+  > Pickup (Missile Expansion)
+      Boost Ball
+  > Pickup (Hazard Shield)
+      Spider Ball and Boost Ball
+
+> Outdoor; Heals? False
+  > Indoor Room
+      Suit Type ≥ 4
+
+> Indoor Room; Heals? False
+  > Dock to Airshaft
+      Trivial
+  > Dock to Proving Grounds Lift
+      Trivial
+  > Spinner Room
+      Spider Ball
 
 ----------------
 Creche Transit
@@ -2514,53 +3022,99 @@ Asset id: 1760181228684086770
   * Normal Door to Metroid Creche/Dock to Creche Transit
   > Pickup (Missile Expansion)
       Boost Ball and Suit Type
+  > Outside
+      Suit Type ≥ 4
 
 > Dock to Metroid Processing; Heals? False
   * Normal Door to Metroid Processing/Dock to Creche Transit
   > Pickup (Missile Expansion)
       Boost Ball
+  > Outside
+      Suit Type ≥ 4
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 77
+  > Dock to Metroid Processing
+      Boost Ball
+
+> Outside; Heals? False
+  > Dock to Metroid Creche
+      Suit Type ≥ 4
+  > Dock to Metroid Processing
+      Hyper Missile and Suit Type ≥ 4
 
 ----------------
 Proving Grounds
 Asset id: 3594029436312475339
 > Dock to Transit Station 1-B; Heals? False
   * Normal Door to Transit Station 1-B/Dock to Proving Grounds
+  > Elevator
+      Trivial
 
 > Dock to Proving Grounds Lift; Heals? False
   * Normal Door to Proving Grounds Lift/Dock to Proving Grounds
-  > Pickup (Grapple Voltage)
-      X-Ray Visor and Grapple Lasso
+  > Elevator
+      Trivial
 
 > Pickup (Grapple Voltage); Heals? False
   * Pickup 79
+  > Elevator
+      Trivial
+
+> Elevator; Heals? False
+  > Dock to Transit Station 1-B
+      Grapple Voltage
+  > Dock to Proving Grounds Lift
+      Trivial
+  > Pickup (Grapple Voltage)
+      X-Ray Visor and Grapple Lasso
 
 ----------------
 Metroid Processing
 Asset id: 16389095850931092901
 > Dock to Processing Access; Heals? False
   * Normal Door to Processing Access/Dock to Metroid Processing
-  > Pickup (Energy Cell)
-      X-Ray Visor
+  > First Floor
+      Trivial
 
 > Dock to Airshaft; Heals? False
   * Normal Door to Airshaft/Dock to Metroid Processing
-  > Dock to Processing Access
+  > Top Floor
       Trivial
 
 > Dock to Creche Transit; Heals? False
   * Normal Door to Creche Transit/Dock to Metroid Processing
-  > Dock to Processing Access
+  > Top Floor
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 80
+  > First Floor
+      Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 81
-  > Pickup (Missile Expansion)
+  > Basement
+      Trivial
+
+> Top Floor; Heals? False
+  > Dock to Airshaft
+      Trivial
+  > Dock to Creche Transit
+      Trivial
+  > First Floor
+      Trivial
+
+> First Floor; Heals? False
+  > Dock to Processing Access
+      Trivial
+  > Top Floor
+      Spider Ball
+  > Basement
+      X-Ray Visor
+
+> Basement; Heals? False
+  > Pickup (Energy Cell)
       Trivial
 
 ----------------
@@ -2577,16 +3131,26 @@ Processing Access
 Asset id: 11685491285383767107
 > Dock to Scrapvault; Heals? False
   * Normal Door to Scrapvault/Dock to Processing Access
-  > Pickup (Ship Missile Expansion)
-      Nova Beam and X-Ray Visor and Missile and Use Screw Attack (Space Jump)
+  > Room Center
+      Trivial
 
 > Dock to Metroid Processing; Heals? False
   * Normal Door to Metroid Processing/Dock to Processing Access
-  > Pickup (Ship Missile Expansion)
-      Nova Beam and X-Ray Visor and Missile and Use Screw Attack (Space Jump)
+  > Room Center
+      Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 82
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Scrapvault
+      Trivial
+  > Dock to Metroid Processing
+      Trivial
+  > Pickup (Ship Missile Expansion)
+      Nova Beam and X-Ray Visor and Missile and Use Screw Attack (Space Jump)
 
 ----------------
 Proving Grounds Lift
@@ -2614,13 +3178,13 @@ Scrapvault
 Asset id: 11846340785047609812
 > Dock to Scrapvault Lift; Heals? False
   * Normal Door to Scrapvault Lift/Dock to Scrapvault
-  > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+  > Room Center
+      Trivial
 
 > Dock to Processing Access; Heals? False
   * Normal Door to Processing Access/Dock to Scrapvault
-  > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+  > Room Center
+      Trivial
 
 > Dock to Scrapworks; Heals? False
   * Normal Door to Scrapworks/Dock to Scrapvault
@@ -2639,12 +3203,25 @@ Asset id: 11846340785047609812
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 83
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Scrapvault Lift
+      Trivial
+  > Dock to Processing Access
+      Trivial
+  > Pickup (Missile Expansion)
+      Use Screw Attack (Space Jump)
 
 ----------------
 Metroid Creche
 Asset id: 17400901133416718911
 > Dock to Creche Transit; Heals? False
   * Normal Door to Creche Transit/Dock to Metroid Creche
+  > Dock to Transit Station 3-A
+Leads to Command Center
+      Use Screw Attack (Space Jump)
   > Pickup (Energy Tank)
       Spider Ball and Boost Ball
 
@@ -2652,41 +3229,47 @@ Asset id: 17400901133416718911
 Leads to Command Center; Heals? False
   * Normal Door to Transit Station 3-A
 Leads to Command Center/Dock to Metroid Creche
-  > Pickup (Energy Tank)
-      Spider Ball and Boost Ball
+  > Dock to Creche Transit
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 78
+  > Dock to Creche Transit
+      Trivial
 
 ----------------
 Scrapworks
 Asset id: 15178552083233342671
 > Dock to Scrapvault; Heals? False
-  * Normal Door to Scrapvault/Dock to Scrapworks
-  > Pickup (Energy Tank)
-      Trivial
-  > Pickup (Ship Missile Expansion)
-      Spider Ball and Boost Ball
+  * Morph Ball Door to Scrapvault/Dock to Scrapworks
 
 > Dock to Scrapvault; Heals? False
-  * Normal Door to Scrapvault/Dock to Scrapworks
-  > Pickup (Energy Tank)
-      Trivial
-  > Pickup (Ship Missile Expansion)
-      Spider Ball and Boost Ball
+  * Morph Ball Door to Scrapvault/Dock to Scrapworks
 
 > Dock to Scrapvault; Heals? False
-  * Normal Door to Scrapvault/Dock to Scrapworks
-  > Pickup (Energy Tank)
-      Trivial
-  > Pickup (Ship Missile Expansion)
-      Spider Ball and Boost Ball
+  * Morph Ball Door to Scrapvault/Dock to Scrapworks
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 84
+  > E-Tank Segment
+      Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 85
+  > Halfpipe Segment
+      Trivial
+
+> E-Tank Segment; Heals? False
+  > Pickup (Energy Tank)
+      Trivial
+  > Halfpipe Segment
+      Trivial
+
+> Halfpipe Segment; Heals? False
+  > Pickup (Ship Missile Expansion)
+      Spider Ball and Boost Ball
+  > E-Tank Segment
+      Spider Ball
 
 ----------------
 Transit Station 3-A
@@ -2721,58 +3304,90 @@ Security Air Lock
 Asset id: 5682718801820042955
 > Dock to Lift Hub; Heals? False
   * Normal Door to Lift Hub/Dock to Security Air Lock
-  > Pickup (Missile Expansion)
+  > Dock to Defense Access
       X-Ray Visor
 
 > Dock to Defense Access; Heals? False
   * Normal Door to Defense Access/Dock to Security Air Lock
+  > Dock to Lift Hub
+      X-Ray Visor
   > Pickup (Missile Expansion)
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 86
+  > Dock to Defense Access
+      Trivial
 
 ----------------
 Command Vault
 Asset id: 1808913861159744919
 > Dock to Command Station; Heals? False
   * Normal Door to Command Station/Dock to Command Vault
-  > Pickup (X-Ray Visor)
-      Seeker Missile
+  > Room Center
+      Trivial
 
 > Dock to Defense Access; Heals? False
   * Normal Door to Defense Access/Dock to Command Vault
-  > Pickup (X-Ray Visor)
-      Seeker Missile
 
 > Pickup (X-Ray Visor); Heals? False
   * Pickup 87
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  > Dock to Command Station
+      Spider Ball
+  > Dock to Defense Access
+      X-Ray Visor
+  > Pickup (X-Ray Visor)
+      Seeker Missile
 
 ----------------
 Command Courtyard
 Asset id: 18221971457754325372
 > Dock to Courtyard Passage; Heals? False
   * Normal Door to Courtyard Passage/Dock to Command Courtyard
+  > Bottom Floor
+      Trivial
 
 > Dock to Lift Hub; Heals? False
   * Normal Door to Lift Hub/Dock to Command Courtyard
-  > Pickup (Missile Expansion)
-      Trivial
-  > Pickup (Energy Cell)
+  > Top Floor
       Trivial
 
 > Dock to Flux Control; Heals? False
   * Normal Door to Flux Control/Dock to Command Courtyard
-  > Pickup (Missile Expansion)
-      Trivial
-  > Pickup (Energy Cell)
+  > Bottom Floor
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 88
+  > Top Floor
+      Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 89
+  > Top Floor
+      Trivial
+
+> Bottom Floor; Heals? False
+  > Dock to Courtyard Passage
+      Grapple Voltage and Suit Type ≥ 4
+  > Dock to Lift Hub
+      Trivial
+  > Dock to Flux Control
+      Trivial
+  > Top Floor
+      Trivial
+
+> Top Floor; Heals? False
+  > Pickup (Missile Expansion)
+      Trivial
+  > Pickup (Energy Cell)
+      Trivial
+  > Bottom Floor
+      Trivial
 
 ----------------
 Command Station
@@ -2784,7 +3399,7 @@ Asset id: 13589229454537797972
 
 > Dock to Flux Control; Heals? False
   * Normal Door to Flux Control/Dock to Command Station
-  > Pickup (Missile Expansion)
+  > Morph Ball Tunnels
       Trivial
 
 > Dock to Defense Access; Heals? False
@@ -2794,7 +3409,7 @@ Asset id: 13589229454537797972
 
 > Dock to Command Vault; Heals? False
   * Normal Door to Command Vault/Dock to Command Station
-  > Pickup (Missile Expansion)
+  > Morph Ball Tunnels
       Trivial
 
 > Dock to Defense Access; Heals? False
@@ -2804,6 +3419,20 @@ Asset id: 13589229454537797972
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 90
+  > Morph Ball Tunnels
+      Trivial
+
+> Morph Ball Tunnels; Heals? False
+  > Dock to Flux Control
+      Trivial
+  > Dock to Command Vault
+      Trivial
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Main Room; Heals? False
+  > Morph Ball Tunnels
+      Grapple Voltage
 
 ----------------
 Transit Station 1104
@@ -2891,8 +3520,8 @@ Flux Control
 Asset id: 5194668821114474017
 > Dock to Command Courtyard; Heals? False
   * Normal Door to Command Courtyard/Dock to Flux Control
-  > Pickup (Missile Expansion)
-      Spider Ball and Grapple Lasso
+  > Dock to Command Station
+      Trivial
 
 > Dock to Command Station; Heals? False
   * Normal Door to Command Station/Dock to Flux Control
@@ -2901,6 +3530,10 @@ Asset id: 5194668821114474017
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 91
+  > Dock to Command Courtyard
+      Spider Ball
+  > Dock to Command Station
+      Trivial
 
 ----------------
 Transit Tunnel P70
@@ -2928,28 +3561,36 @@ Lift Hub
 Asset id: 2807909054514352708
 > Dock to Lift Hub Access; Heals? False
   * Normal Door to Lift Hub Access/Dock to Lift Hub
-  > Pickup (Missile Expansion)
-      Grapple Voltage
+  > Bottom Floor
+      Trivial
 
 > Dock to Command Courtyard; Heals? False
   * Normal Door to Command Courtyard/Dock to Lift Hub
-  > Pickup (Missile Expansion)
-      Grapple Voltage
 
 > Dock to Transit Station 3-B
 Leads to Research Facility; Heals? False
   * Normal Door to Transit Station 3-B
 Leads to Research Facility/Dock to Lift Hub
-  > Pickup (Missile Expansion)
-      Grapple Voltage
 
 > Dock to Security Air Lock; Heals? False
   * Normal Door to Security Air Lock/Dock to Lift Hub
-  > Pickup (Missile Expansion)
-      Grapple Voltage
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 92
+  > Bottom Floor
+      Trivial
+
+> Bottom Floor; Heals? False
+  > Dock to Lift Hub Access
+      Trivial
+  > Pickup (Missile Expansion)
+      Grapple Voltage
+  > Map
+      X-Ray Visor
+
+> Map; Heals? False
+  > Bottom Floor
+      Trivial
 
 ----------------
 Courtyard Passage
@@ -3039,28 +3680,36 @@ Phazon Quarry
 Asset id: 1516173575710242674
 > Dock to Mine Lift; Heals? False
   * Normal Door to Mine Lift/Dock to Phazon Quarry
-  > Pickup (Missile Expansion)
+  > Ground Floor
       Trivial
 
 > Dock to Drill Shaft 2; Heals? False
   * Normal Door to Drill Shaft 2/Dock to Phazon Quarry
   > Pickup (Energy Cell)
       Trivial
-  > Pickup (Missile Expansion)
+  > Ground Floor
       Trivial
 
 > Dock to Transit Station 4-B
 Leads to Command Center; Heals? False
   * Normal Door to Transit Station 4-B
 Leads to Command Center/Dock to Phazon Quarry
-  > Pickup (Missile Expansion)
+  > Ground Floor
       Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 93
+  > Dock to Drill Shaft 2
+      Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 94
+  > Ground Floor
+      Trivial
+
+> Ground Floor; Heals? False
+  > Dock to Mine Lift
+      Boost Ball
 
 ----------------
 Drill Shaft 2
@@ -3109,19 +3758,33 @@ Main Cavern
 Asset id: 3558406334082684652
 > Dock to Drill Shaft 1; Heals? False
   * Normal Door to Drill Shaft 1/Dock to Main Cavern
-  > Pickup (Nova Beam)
+  > Main Hall
       Trivial
 
 > Dock to Drill Shaft 2; Heals? False
   * Normal Door to Drill Shaft 2/Dock to Main Cavern
+  > Main Hall
+      Trivial
 
 > Dock to Phazon Mine Entry; Heals? False
   * Normal Door to Phazon Mine Entry/Dock to Main Cavern
-  > Pickup (Nova Beam)
+  > Main Hall
       Trivial
 
 > Pickup (Nova Beam); Heals? False
   * Pickup 95
+  > Main Hall
+      Nova Beam and X-Ray Visor
+
+> Main Hall; Heals? False
+  > Dock to Drill Shaft 1
+      Trivial
+  > Dock to Drill Shaft 2
+      Nova Beam and X-Ray Visor
+  > Dock to Phazon Mine Entry
+      Trivial
+  > Pickup (Nova Beam)
+      Trivial
 
 ----------------
 Save Station
@@ -3136,16 +3799,20 @@ Phazon Mine Entry
 Asset id: 6948986767748104139
 > Dock to Landing Site Charlie; Heals? False
   * Normal Door to Landing Site Charlie/Dock to Phazon Mine Entry
-  > Pickup (Missile Expansion)
-      Nova Beam and X-Ray Visor
+  > Dock to Main Cavern
+      Trivial
 
 > Dock to Main Cavern; Heals? False
   * Normal Door to Main Cavern/Dock to Phazon Mine Entry
+  > Dock to Landing Site Charlie
+      Trivial
   > Pickup (Missile Expansion)
       Nova Beam and X-Ray Visor
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 96
+  > Dock to Main Cavern
+      Trivial
 
 ====================
 Pirate Homeworld - Seed
@@ -3177,6 +3844,8 @@ Asset id: 4585599704880367469
 
 > Pickup (Hyper Grapple); Heals? False
   * Pickup 99
+  > Dock to Core Access
+      Hyper Grapple
 
 ----------------
 !!00_seed_outofseed_dead_pirate
