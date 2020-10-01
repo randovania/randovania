@@ -102,7 +102,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
 
     def update_list(self):
         self.table_widget.clear()
-        self.table_widget.setHorizontalHeaderLabels(["Name", "Password?", "In-Game", "Type", "Players"])
+        self.table_widget.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator"])
 
         name_filter = self.filter_name_edit.text().strip()
 

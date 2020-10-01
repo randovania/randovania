@@ -30,8 +30,8 @@ def test_drop_random_event(default_main_window: MainWindow,
 @pytest.mark.asyncio
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
 @patch("randovania.gui.main_window.GameSessionBrowserDialog", autospec=True)
-@patch("randovania.gui.main_window.GameSessionWindow", autospec=True)
-async def test_browse_for_game_session(mock_game_session_window: MagicMock,
+@patch("randovania.gui.main_window.GameSessionWindow.create_and_update", new_callable=AsyncMock)
+async def test_browse_for_game_session(mock_game_session_window: AsyncMock,
                                        mock_game_session_browser: MagicMock,
                                        mock_execute_dialog: AsyncMock,
                                        skip_qtbot, default_main_window, mocker):
@@ -49,7 +49,7 @@ async def test_browse_for_game_session(mock_game_session_window: MagicMock,
     mock_game_session_browser.assert_called_once_with(default_main_window.network_client)
     mock_game_session_browser.return_value.refresh.assert_awaited_once_with()
     mock_execute_dialog.assert_awaited_once_with(mock_game_session_browser.return_value)
-    mock_game_session_window.assert_called_once_with(
+    mock_game_session_window.assert_awaited_once_with(
         default_main_window.network_client,
         mock_get_game_connection.return_value,
         default_main_window.preset_manager,
@@ -61,7 +61,7 @@ async def test_browse_for_game_session(mock_game_session_window: MagicMock,
 
 @pytest.mark.asyncio
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-@patch("randovania.gui.main_window.GameSessionWindow", autospec=True)
+@patch("randovania.gui.main_window.GameSessionWindow.create_and_update", new_callable=AsyncMock)
 async def test_host_game_session(mock_game_session_window: MagicMock,
                                  mock_execute_dialog: AsyncMock,
                                  skip_qtbot, default_main_window, mocker):
@@ -78,7 +78,7 @@ async def test_host_game_session(mock_game_session_window: MagicMock,
     # Assert
     mock_execute_dialog.assert_awaited_once()
     default_main_window.network_client.create_new_session.assert_awaited_once_with("")
-    mock_game_session_window.assert_called_once_with(
+    mock_game_session_window.assert_awaited_once_with(
         default_main_window.network_client,
         mock_get_game_connection.return_value,
         default_main_window.preset_manager,

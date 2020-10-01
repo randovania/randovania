@@ -1,4 +1,6 @@
 import asyncio
+import asyncio.futures
+import concurrent.futures
 import threading
 import traceback
 from typing import Optional
@@ -14,10 +16,7 @@ class BackgroundTaskMixin:
     abort_background_task_requested: bool = False
     _background_thread: Optional[threading.Thread] = None
 
-    def run_in_background_thread(self,
-                                 target,
-                                 starting_message: str,
-                                 kwargs=None):
+    def run_in_background_thread(self, target, starting_message: str):
 
         last_progress = 0
 
@@ -43,8 +42,8 @@ class BackgroundTaskMixin:
                 traceback.print_exc()
                 progress_update("Error: {}".format(e), None)
             finally:
-                self.background_tasks_button_lock_signal.emit(True)
                 self._background_thread = None
+                self.background_tasks_button_lock_signal.emit(True)
 
         if self._background_thread:
             raise RuntimeError("Trying to start a new background thread while one exists already.")
@@ -52,14 +51,33 @@ class BackgroundTaskMixin:
         self.abort_background_task_requested = False
         progress_update(starting_message, 0)
 
+        claris_randomizer.IO_LOOP = asyncio.get_event_loop()
+        self._background_thread = threading.Thread(target=thread)
+        self._background_thread.start()
+
         self.background_tasks_button_lock_signal.emit(False)
 
-        claris_randomizer.IO_LOOP = asyncio.get_event_loop()
-        self._background_thread = threading.Thread(target=thread, kwargs=kwargs)
-        self._background_thread.start()
+    async def run_in_background_async(self, target, starting_message: str):
+        fut = concurrent.futures.Future()
+
+        def work(**_kwargs):
+            try:
+                fut.set_result(target(**_kwargs))
+            except AbortBackgroundTask:
+                fut.cancel()
+            except Exception as e:
+                fut.set_exception(e)
+
+        self.run_in_background_thread(work, starting_message)
+
+        return await asyncio.futures.wrap_future(fut)
 
     def stop_background_process(self):
         self.abort_background_task_requested = True
+
+    @property
+    def has_background_process(self) -> bool:
+        return self._background_thread is not None
 
 
 class AbortBackgroundTask(Exception):
