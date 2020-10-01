@@ -1,10 +1,12 @@
 import datetime
 
 import pytest
+from PySide2 import QtWidgets
 from mock import MagicMock, AsyncMock
 
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
+from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -187,3 +189,21 @@ async def test_update_logic_settings_window(skip_qtbot, mocker, has_game):
         window._logic_settings_window.setEnabled.assert_called_once()
         execute_dialog.assert_not_awaited()
 
+
+@pytest.mark.asyncio
+async def test_change_password(skip_qtbot, mocker):
+    def set_text_value(dialog: QtWidgets.QInputDialog):
+        dialog.setTextValue("magoo")
+        return QtWidgets.QDialog.Accepted
+
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
+                                  side_effect=set_text_value)
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._admin_global_action = AsyncMock()
+
+    # Run
+    await window.change_password()
+
+    # Assert
+    execute_dialog.assert_awaited_once()
+    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.CHANGE_PASSWORD, "magoo")

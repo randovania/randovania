@@ -620,6 +620,22 @@ def test_game_session_admin_session_reset_session(clean_database):
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.RESET_SESSION.value, None)
 
 
+def test_game_session_admin_session_change_password(clean_database, mock_emit_session_update):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+    expected_password = 'da92cfbc5e318c64e33dc1b0501e5db214cea0e2a5cecabf90269f32f8eaa15f'
+
+    # Run
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_PASSWORD.value, "the_password")
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    assert database.GameSession.get_by_id(1).password == expected_password
+
+
 def test_change_row_missing_arguments():
     with pytest.raises(InvalidAction):
         game_session._change_row(MagicMock(), MagicMock(), (5,))
