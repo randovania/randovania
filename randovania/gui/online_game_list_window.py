@@ -80,7 +80,6 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
 
         if session.has_password:
             dialog = QInputDialog(self)
-            # dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint)
             dialog.setWindowTitle("Enter password")
             dialog.setLabelText("This session requires a password:")
             dialog.setWindowModality(Qt.WindowModal)

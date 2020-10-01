@@ -12,6 +12,7 @@ class SessionAdminGlobalAction(Enum):
     START_SESSION = "start_session"
     FINISH_SESSION = "finish_session"
     RESET_SESSION = "reset_session"
+    CHANGE_PASSWORD = "change_password"
 
 
 class SessionAdminUserAction(Enum):

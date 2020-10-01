@@ -1,4 +1,5 @@
 import base64
+import hashlib
 import json
 import logging
 from typing import Optional, List, Tuple
@@ -58,7 +59,11 @@ def create_game_session(sio: ServerApp, session_name: str):
 
 def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
     session = GameSession.get_by_id(session_id)
-    if password != session.password:
+
+    if session.password is not None:
+        if password is None or _hash_password(password) != session.password:
+            raise WrongPassword()
+    elif password is not None:
         raise WrongPassword()
 
     membership = GameSessionMembership.get_or_create(user=sio.get_current_user(), session=session,
@@ -254,6 +259,17 @@ def _reset_session(sio: ServerApp, session: GameSession):
     raise InvalidAction("Restart session is not yet implemented.")
 
 
+def _hash_password(password: str) -> str:
+    return hashlib.blake2s(password.encode("utf-8")).hexdigest()
+
+
+def _change_password(sio: ServerApp, session: GameSession, password: str):
+    _verify_has_admin(sio, session.id, None)
+
+    session.password = _hash_password(password)
+    session.save()
+
+
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
     session: database.GameSession = database.GameSession.get_by_id(session_id)
@@ -284,6 +300,9 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.RESET_SESSION:
         _reset_session(sio, session)
+
+    elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
+        _change_password(sio, session, arg)
 
     _emit_session_update(session)
 

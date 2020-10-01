@@ -168,13 +168,16 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
         self.rename_session_action = QtWidgets.QAction("Change title", self.advanced_options_menu)
         self.change_password_action = QtWidgets.QAction("Change password", self.advanced_options_menu)
+        self.delete_session_action = QtWidgets.QAction("Delete session", self.advanced_options_menu)
 
         self.advanced_options_menu.addAction(self.rename_session_action)
         self.advanced_options_menu.addAction(self.change_password_action)
+        self.advanced_options_menu.addAction(self.delete_session_action)
         self.advanced_options_tool.setMenu(self.advanced_options_menu)
 
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
+        self.delete_session_action.triggered.connect(self.delete_session)
 
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
@@ -693,8 +696,19 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     @handle_network_errors
     async def change_password(self):
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter password")
+        dialog.setLabelText("Enter the new password for the session:")
+        dialog.setTextEchoMode(QtWidgets.QLineEdit.Password)
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, dialog.textValue())
+
+    @asyncSlot()
+    @handle_network_errors
+    async def delete_session(self):
         await async_dialog.warning(self, "Not yet implemented",
-                                   "Changing password isn't implemented yet.")
+                                   "Deleting session isn't implemented yet.")
 
     async def generate_game(self, spoiler: bool):
         permalink = Permalink(
