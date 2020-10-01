@@ -1,0 +1,176 @@
+name: Run pytest
+on: [pull_request]
+
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      
+      - name: Set up cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: venv
+          key: venv-${{ runner.os }}-${{ hashFiles('requirements*') }}
+
+      - name: Apt
+        run: sudo apt-get -q update && sudo apt-get -y install libdbus-1-3 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
+      
+      - name: Prepare Venv
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade -r requirements-setuptools.txt
+          python -m pip install -r requirements.txt
+          python -m pip install -r requirements-xvfb.txt
+          python -m pip install codecov
+          python -m pip install -e . -e ".[gui]" -e ".[server]" -e ".[test]"
+      
+      - name: build py
+        run: |          
+          source venv/bin/activate
+          python setup.py build_py
+      
+      - name: run pytest
+        run: source venv/bin/activate && python -m pytest --cov randovania
+      
+      - name: codecov
+        run: source venv/bin/activate && codecov
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      
+      - name: Set up cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: venv
+          key: venv-${{ runner.os }}-${{ hashFiles('requirements*') }}
+
+      - name: Prepare Venv
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade -r requirements-setuptools.txt
+          python -m pip install -r requirements.txt
+          python -m pip install codecov
+          python -m pip install -e . -e ".[gui]" -e ".[server]" -e ".[test]"
+      
+      - name: build py
+        run: |          
+          source venv/bin/activate
+          python setup.py build_py
+      
+      - name: run pytest
+        run: source venv/bin/activate && python -m pytest --cov randovania
+      
+      - name: codecov
+        run: source venv/bin/activate && codecov
+
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      
+      - name: Set up cache
+        uses: actions/cache@v2
+        with:
+          path: venv
+          key: venv-${{ runner.os }}-${{ hashFiles('requirements*') }}
+      
+      - name: Prepare Venv
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python -m venv venv
+          venv/Scripts/activate.ps1
+          python -m pip install --upgrade -r requirements-setuptools.txt
+          python -m pip install -r requirements.txt
+          python -m pip install codecov
+          python -m pip install -e . -e ".[gui]" -e ".[server]" -e ".[test]"
+      
+      - name: build py
+        run: |          
+          venv/Scripts/activate.ps1
+          python setup.py build_py
+      
+      - name: run pytest
+        run: |
+          venv/Scripts/activate.ps1
+          python -m pytest --cov randovania
+      
+      - name: codecov
+        run: |
+          venv/Scripts/activate.ps1
+          codecov
+
+  windows-executable:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7.7'  # 3.7.8 and forward causes the pyinstaller pytest to error
+      
+      - name: Set up cache
+        uses: actions/cache@v2
+        with:
+          path: venv
+          key: venv-${{ runner.os }}-${{ hashFiles('requirements*') }}
+      
+      - name: Prepare Venv
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python -m venv venv
+          venv/Scripts/activate.ps1
+          python -m pip install --upgrade -r requirements-setuptools.txt
+          python -m pip install -r requirements.txt
+          python -m pip install codecov
+          python -m pip install -e . -e ".[gui]" -e ".[server]" -e ".[test]"
+      
+      - name: create executable
+        run: |
+          venv/Scripts/activate.ps1
+          python setup.py build_py
+          python tools/create_release.py
+
+      - name: executable check
+        run: dist/randovania/randovania.exe --version
+
+      - name: executable test
+        run: dist/randovania/randovania.exe --pytest --skip-gui-tests --skip-echo-tool
