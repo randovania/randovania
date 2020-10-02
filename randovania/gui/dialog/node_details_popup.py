@@ -56,12 +56,15 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         for event in game.resource_database.event:
             self.event_resource_combo.addItem(event.long_name, event)
+        if self.event_resource_combo.count() == 0:
+            self.event_resource_combo.addItem("No events in database", None)
+            self.event_resource_combo.setEnabled(False)
 
         for i, enum in enumerate(enum_lib.iterate_enum(LoreType)):
             self.lore_type_combo.setItemData(i, enum)
 
         # Signals
-        self.button_box.accepted.connect(self.accept)
+        self.button_box.accepted.connect(self.try_accept)
         self.button_box.rejected.connect(self.reject)
         self.node_type_combo.currentIndexChanged.connect(self.on_node_type_combo)
         self.dock_connection_area_combo.currentIndexChanged.connect(self.on_dock_connection_area_combo)
@@ -261,9 +264,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == EventNode:
+            event = self.event_resource_combo.currentData()
+            if event is None:
+                raise RuntimeError("There are no events in the database, unable to create EventNode.")
             return EventNode(
                 name, heal, location, index,
-                self.event_resource_combo.currentData(),
+                event,
             )
 
         elif node_type == TranslatorGateNode:
@@ -302,3 +308,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.game.resource_database.item,
             "Scan Visor"
         )
+
+    def try_accept(self):
+        try:
+            self.create_new_node()
+            self.accept()
+        except Exception as e:
+            QtWidgets.QMessageBox.warning(self, "Invalid configuration",
+                                          f"Unable to save node: {e}")
