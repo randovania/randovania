@@ -335,14 +335,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         tool_button_menu.addAction(row.customize)
 
         row.import_menu.setTitle("Import preset")
-        for included_preset in self._preset_manager.all_presets:
-            action = QtWidgets.QAction(row.import_menu)
-            action.setText(included_preset.name)
-            action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
-            row.import_actions.append(action)
-            row.import_menu.addAction(action)
-
         tool_button_menu.addMenu(row.import_menu)
+        self._create_actions_for_import_menu(row)
 
         row.save_copy.setText("Save copy of preset")
         row.save_copy.triggered.connect(functools.partial(self._row_save_preset, row))
@@ -358,6 +352,19 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.rows.pop().delete_widgets()
         while len(self.team_players) > len(self.rows):
             self.team_players.pop().delete_widgets()
+
+    def _create_actions_for_import_menu(self, row: RowWidget):
+        for included_preset in self._preset_manager.all_presets:
+            action = QtWidgets.QAction(row.import_menu)
+            action.setText(included_preset.name)
+            action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
+            row.import_actions.append(action)
+            row.import_menu.addAction(action)
+
+    def refresh_row_import_preset_actions(self):
+        for row in self.rows:
+            row.import_menu.clear()
+            self._create_actions_for_import_menu(row)
 
     @asyncSlot()
     async def _row_show_preset_summary(self, row: RowWidget):
@@ -398,9 +405,11 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self._logic_settings_window = None
 
         if result == QtWidgets.QDialog.Accepted:
-            await self._admin_global_action(
-                SessionAdminGlobalAction.CHANGE_ROW,
-                (row_index, VersionedPreset.with_preset(editor.create_custom_preset_with()).as_json))
+            new_preset = VersionedPreset.with_preset(editor.create_custom_preset_with())
+            if self._preset_manager.add_new_preset(new_preset):
+                self.refresh_row_import_preset_actions()
+
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, new_preset.as_json))
 
     @asyncSlot()
     @handle_network_errors
@@ -427,7 +436,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             if user_response == QMessageBox.No:
                 return
 
-        self._preset_manager.add_new_preset(preset)
+        if self._preset_manager.add_new_preset(preset):
+            self.refresh_row_import_preset_actions()
 
     @asyncSlot()
     @handle_network_errors
