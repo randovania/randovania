@@ -89,7 +89,7 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
         return f"Teleporter to {world_list.area_name(other, distinguish_dark_aether=True, separator=' - ')}"
 
     elif isinstance(node, PickupNode):
-        return f"Pickup {node.pickup_index.index}"
+        return f"Pickup {node.pickup_index.index}; Major Location? {node.major_location}"
 
     elif isinstance(node, EventNode):
         return f"Event {node.event.long_name}"
