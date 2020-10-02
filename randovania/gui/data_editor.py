@@ -147,11 +147,21 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
 
     def _on_click_link_to_other_node(self, link: str):
+        world_name, area_name, node_name = None, None, None
+
         info = re.match(r"^node://([^/]+)/([^/]+)/(.+)$", link)
         if info:
             world_name, area_name, node_name = info.group(1, 2, 3)
+        else:
+            info = re.match(r"^area://([^/]+)/([^/]+)$", link)
+            world_name, area_name = info.group(1, 2)
+
+        if world_name is not None and area_name is not None:
             self.focus_on_world(world_name)
             self.focus_on_area(area_name)
+            if node_name is None and self.current_area.default_node_index is not None:
+                node_name = self.current_area.nodes[self.current_area.default_node_index].name
+            
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
                     radio_button.setChecked(True)
@@ -233,22 +243,23 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.node_heals_check.setChecked(node.heal)
 
+        msg = pretty_print.pretty_print_node_type(node, self.world_list)
         if isinstance(node, DockNode):
-            other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
-            msg = "{} to <a href=\"node://{}\">{}</a>".format(
-                node.default_dock_weakness.name,
-                self.world_list.node_name(other, with_world=True),
-                self.world_list.node_name(other)
-            )
-
-        elif node.is_resource_node:
-            msg = str(node)
+            try:
+                other = self.world_list.resolve_dock_connection(self.current_world, node.default_connection)
+                msg = "{} to <a href=\"node://{}\">{}</a>".format(
+                    node.default_dock_weakness.name,
+                    self.world_list.node_name(other, with_world=True),
+                    self.world_list.node_name(other)
+                )
+            except IndexError:
+                pass
 
         elif isinstance(node, TeleporterNode):
-            other = self.world_list.resolve_teleporter_connection(node.default_connection)
-            msg = "Connects to <a href=\"node://{0}\">{0}</a>".format(self.world_list.node_name(other, with_world=True))
-        else:
-            msg = ""
+            other = self.world_list.area_by_area_location(node.default_connection)
+            name = self.world_list.area_name(other, separator="/")
+            pretty_name = msg.replace("Teleporter to ", "")
+            msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
