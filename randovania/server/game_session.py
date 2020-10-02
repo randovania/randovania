@@ -1,4 +1,5 @@
 import base64
+import hashlib
 import json
 import logging
 from typing import Optional, List, Tuple
@@ -58,7 +59,11 @@ def create_game_session(sio: ServerApp, session_name: str):
 
 def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
     session = GameSession.get_by_id(session_id)
-    if password != session.password:
+
+    if session.password is not None:
+        if password is None or _hash_password(password) != session.password:
+            raise WrongPassword()
+    elif password is not None:
         raise WrongPassword()
 
     membership = GameSessionMembership.get_or_create(user=sio.get_current_user(), session=session,
@@ -101,6 +106,11 @@ def _verify_in_setup(session: GameSession):
         raise InvalidAction("Session is not in setup")
 
 
+def _verify_no_layout_description(session: GameSession):
+    if session.layout_description_json is not None:
+        raise InvalidAction("Session has a generated game")
+
+
 def _get_preset(preset_json: dict) -> Preset:
     try:
         return Preset.from_json_dict(preset_json)
@@ -117,108 +127,182 @@ def game_session_request_update(sio: ServerApp, session_id):
     return session.create_session_entry()
 
 
+def _create_row(sio: ServerApp, session: GameSession, preset_json: dict):
+    _verify_has_admin(sio, session.id, None)
+    _verify_in_setup(session)
+    _verify_no_layout_description(session)
+    preset = _get_preset(preset_json)
+
+    new_row_id = session.num_rows
+    with database.db.atomic():
+        GameSessionPreset.create(session=session, row=new_row_id,
+                                 preset=json.dumps(preset.as_json))
+
+
+def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
+    if len(arg) != 2:
+        raise InvalidAction("Missing arguments.")
+    row_id, preset_json = arg
+    _verify_has_admin(sio, session.id, sio.get_current_user().id)
+    _verify_in_setup(session)
+    _verify_no_layout_description(session)
+    preset = _get_preset(preset_json)
+
+    try:
+        with database.db.atomic():
+            preset_row = GameSessionPreset.get(GameSessionPreset.session == session,
+                                               GameSessionPreset.row == row_id)
+            preset_row.preset = json.dumps(preset.as_json)
+            preset_row.save()
+
+    except peewee.DoesNotExist:
+        raise InvalidAction(f"invalid row: {row_id}")
+
+
+def _delete_row(sio: ServerApp, session: GameSession, row_id: int):
+    _verify_has_admin(sio, session.id, None)
+    _verify_in_setup(session)
+    _verify_no_layout_description(session)
+
+    if session.num_rows < 2:
+        raise InvalidAction("Can't delete row when there's only one")
+
+    if row_id != session.num_rows - 1:
+        raise InvalidAction(f"Can only delete the last row")
+
+    with database.db.atomic():
+        GameSessionPreset.delete().where(GameSessionPreset.session == session,
+                                         GameSessionPreset.row == row_id).execute()
+        GameSessionMembership.update(is_observer=True).where(
+            GameSessionMembership.session == session.id,
+            GameSessionMembership.row == row_id,
+        ).execute()
+
+
+def _update_layout_generation(sio: ServerApp, session: GameSession, active: bool):
+    _verify_has_admin(sio, session.id, None)
+    _verify_in_setup(session)
+
+    if active:
+        if session.generation_in_progress is None:
+            session.generation_in_progress = sio.get_current_user()
+        else:
+            raise InvalidAction(f"Generation already in progress by {session.generation_in_progress.name}.")
+    else:
+        session.generation_in_progress = None
+
+    session.save()
+
+
+def _change_layout_description(sio: ServerApp, session: GameSession, description_json: Optional[dict]):
+    _verify_has_admin(sio, session.id, None)
+    _verify_in_setup(session)
+
+    if description_json is None:
+        description = None
+    else:
+        if session.generation_in_progress != sio.get_current_user():
+            if session.generation_in_progress is None:
+                raise InvalidAction(f"Not waiting for a layout.")
+            else:
+                raise InvalidAction(f"Waiting for a layout from {session.generation_in_progress.name}.")
+
+        _verify_no_layout_description(session)
+        description = LayoutDescription.from_json_dict(description_json)
+        permalink = description.permalink
+        if list(permalink.presets.values()) != session.all_presets:
+            raise InvalidAction("Description presets doesn't match the session presets")
+
+    session.generation_in_progress = None
+    session.layout_description = description
+    session.save()
+
+
+def _download_layout_description(sio: ServerApp, session: GameSession):
+    try:
+        # You must be a session member to do get the spoiler
+        GameSessionMembership.get_by_ids(sio.get_current_user().id, session.id)
+    except peewee.DoesNotExist:
+        raise NotAuthorizedForAction()
+
+    if session.layout_description_json is None:
+        raise InvalidAction("Session does not contain a game")
+
+    if not session.layout_description.permalink.spoiler:
+        raise InvalidAction("Session does not contain a spoiler")
+
+    return session.layout_description_json
+
+
+def _start_session(sio: ServerApp, session: GameSession):
+    _verify_has_admin(sio, session.id, None)
+    _verify_in_setup(session)
+    if session.layout_description_json is None:
+        raise InvalidAction("Unable to start session, no game is available.")
+
+    num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
+                                                       GameSessionMembership.is_observer == False).count()
+    expected_players = session.num_rows
+    if num_players != expected_players:
+        raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
+                            f"({session.num_rows} x {session.num_teams}).")
+
+    session.state = GameSessionState.IN_PROGRESS
+    session.save()
+
+
+def _finish_session(sio: ServerApp, session: GameSession):
+    raise InvalidAction("Finish session is not yet implemented.")
+
+
+def _reset_session(sio: ServerApp, session: GameSession):
+    raise InvalidAction("Restart session is not yet implemented.")
+
+
+def _hash_password(password: str) -> str:
+    return hashlib.blake2s(password.encode("utf-8")).hexdigest()
+
+
+def _change_password(sio: ServerApp, session: GameSession, password: str):
+    _verify_has_admin(sio, session.id, None)
+
+    session.password = _hash_password(password)
+    session.save()
+
+
 def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg):
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
     session: database.GameSession = database.GameSession.get_by_id(session_id)
 
     if action == SessionAdminGlobalAction.CREATE_ROW:
-        preset_json: dict = arg
-        _verify_has_admin(sio, session_id, None)
-        _verify_in_setup(session)
-        preset = _get_preset(preset_json)
-
-        new_row_id = session.num_rows
-        with database.db.atomic():
-            GameSessionPreset.create(session=session, row=new_row_id,
-                                     preset=json.dumps(preset.as_json))
-            session.reset_layout_description()
+        _create_row(sio, session, arg)
 
     elif action == SessionAdminGlobalAction.CHANGE_ROW:
-        if len(arg) != 2:
-            raise InvalidAction("Missing arguments.")
-
-        row_id, preset_json = arg
-        _verify_has_admin(sio, session_id, sio.get_current_user().id)
-        _verify_in_setup(session)
-        preset = _get_preset(preset_json)
-
-        try:
-            with database.db.atomic():
-                preset_row = GameSessionPreset.get(GameSessionPreset.session == session,
-                                                   GameSessionPreset.row == row_id)
-                preset_row.preset = json.dumps(preset.as_json)
-                preset_row.save()
-                session.reset_layout_description()
-
-        except peewee.DoesNotExist:
-            raise InvalidAction(f"invalid row: {row_id}")
+        _change_row(sio, session, arg)
 
     elif action == SessionAdminGlobalAction.DELETE_ROW:
-        row_id: int = arg
-        _verify_has_admin(sio, session_id, None)
-        _verify_in_setup(session)
+        _delete_row(sio, session, arg)
 
-        if session.num_rows < 1:
-            raise InvalidAction("Can't delete row when there's only one")
-
-        if row_id != session.num_rows - 1:
-            raise InvalidAction(f"Can only delete the last row")
-
-        with database.db.atomic():
-            GameSessionPreset.delete().where(GameSessionPreset.session == session,
-                                             GameSessionPreset.row == row_id).execute()
-            GameSessionMembership.update(is_observer=True).where(
-                GameSessionMembership.session == session.id,
-                GameSessionMembership.row == row_id,
-            ).execute()
-            session.reset_layout_description()
+    elif action == SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION:
+        _update_layout_generation(sio, session, arg)
 
     elif action == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
-        description_json: dict = arg
-        _verify_has_admin(sio, session_id, None)
-        _verify_in_setup(session)
-        description = LayoutDescription.from_json_dict(description_json)
-
-        permalink = description.permalink
-        if list(permalink.presets.values()) != session.all_presets:
-            raise InvalidAction("Description presets doesn't match the session presets")
-
-        session.layout_description = description
-        session.save()
+        _change_layout_description(sio, session, arg)
 
     elif action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
-        try:
-            # You must be a session member to do get the spoiler
-            GameSessionMembership.get_by_ids(sio.get_current_user().id, session_id)
-        except peewee.DoesNotExist:
-            raise NotAuthorizedForAction()
-
-        if session.layout_description_json is None:
-            raise InvalidAction("Session does not contain a game")
-
-        if not session.layout_description.permalink.spoiler:
-            raise InvalidAction("Session does not contain a spoiler")
-
-        return session.layout_description_json
+        return _download_layout_description(sio, session)
 
     elif action == SessionAdminGlobalAction.START_SESSION:
-        _verify_has_admin(sio, session_id, None)
-        _verify_in_setup(session)
-        if session.layout_description is None:
-            raise InvalidAction("Unable to start session, no game is available.")
+        _start_session(sio, session)
 
-        num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                           GameSessionMembership.is_observer == False).count()
-        expected_players = session.num_rows
-        if num_players != expected_players:
-            raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
-                                f"({session.num_rows} x {session.num_teams}).")
-
-        session.state = GameSessionState.IN_PROGRESS
-        session.save()
+    elif action == SessionAdminGlobalAction.FINISH_SESSION:
+        _finish_session(sio, session)
 
     elif action == SessionAdminGlobalAction.RESET_SESSION:
-        raise InvalidAction("Restart session is not yet implemented.")
+        _reset_session(sio, session)
+
+    elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
+        _change_password(sio, session, arg)
 
     _emit_session_update(session)
 

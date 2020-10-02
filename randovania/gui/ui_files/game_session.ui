@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>699</width>
-    <height>396</height>
+    <height>489</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,21 +22,97 @@
    </property>
    <layout class="QVBoxLayout" name="main_layout">
     <item>
-     <widget class="QLabel" name="session_name_label">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
+     <layout class="QHBoxLayout" name="title_layout">
+      <item>
+       <widget class="QLabel" name="session_name_label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Session name!</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="advanced_options_tool">
+        <property name="text">
+         <string>Advanced options...</string>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="players_box">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
-      <property name="text">
-       <string>Session name!</string>
+      <property name="title">
+       <string/>
       </property>
+      <layout class="QGridLayout" name="players_layout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QPushButton" name="new_row_button">
+         <property name="text">
+          <string>New Row</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" rowspan="2">
+        <widget class="Line" name="players_vertical_line">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="Line" name="presets_line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" colspan="2">
+        <widget class="Line" name="team_line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3" colspan="2">
+        <widget class="QLabel" name="team_name_label">
+         <property name="text">
+          <string>Players</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
      <widget class="QGroupBox" name="observer_group">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These users won't participate on the match, but they can be admins and follow trackers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
@@ -49,7 +125,7 @@
     <item>
      <widget class="QTabWidget" name="tab_widget">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -58,49 +134,20 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="tab_generate">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <attribute name="title">
         <string>Game</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QPushButton" name="generate_game_button">
-          <property name="text">
-           <string>Generate Game</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
+        <item row="1" column="4">
          <widget class="QPushButton" name="view_game_details_button">
           <property name="text">
            <string>View Spoiler</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QPushButton" name="customize_user_preferences_button">
-          <property name="text">
-           <string>Customize in-game settings</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="3">
-         <widget class="QLabel" name="generate_game_label">
-          <property name="text">
-           <string>&lt;Game not generated&gt;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="6">
-         <widget class="Line" name="line_generate">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1" colspan="2">
-         <widget class="QPushButton" name="generate_without_spoiler_button">
-          <property name="text">
-           <string>Generate without spoiler</string>
           </property>
          </widget>
         </item>
@@ -111,29 +158,14 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="5">
-         <widget class="QProgressBar" name="progress_bar">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>200</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="value">
-           <number>0</number>
-          </property>
-          <property name="invertedAppearance">
-           <bool>false</bool>
+        <item row="1" column="0" colspan="3">
+         <widget class="QLabel" name="generate_game_label">
+          <property name="text">
+           <string>&lt;Game not generated&gt;</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1" colspan="4">
+        <item row="4" column="1" colspan="4">
          <widget class="QLabel" name="progress_label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -152,32 +184,74 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item row="4" column="0">
          <widget class="QToolButton" name="background_process_button">
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>140</width>
             <height>0</height>
            </size>
           </property>
           <property name="text">
            <string>Stop</string>
           </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
           <property name="popupMode">
            <enum>QToolButton::MenuButtonPopup</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="QPushButton" name="customize_user_preferences_button">
+          <property name="text">
+           <string>Customize in-game settings</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="7">
+         <widget class="Line" name="line_generate">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="5" colspan="2">
+         <widget class="QProgressBar" name="progress_bar">
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="invertedAppearance">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_history">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <attribute name="title">
         <string>History</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="history_layout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMaximumSize</enum>
+        </property>
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>4</number>
+        </property>
         <item>
          <widget class="QTableWidget" name="history_table_widget">
           <attribute name="horizontalHeaderVisible">
