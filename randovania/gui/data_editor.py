@@ -9,7 +9,7 @@ from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from asyncqt import asyncSlot
 
-from randovania.game_description import data_reader, data_writer
+from randovania.game_description import data_reader, data_writer, pretty_print
 from randovania.game_description.area import Area
 from randovania.game_description.node import Node, DockNode, TeleporterNode, GenericNode
 from randovania.game_description.requirements import Requirement
@@ -364,7 +364,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _save_as_internal_database(self):
         self._save_database(self._data_path)
         with self._data_path.with_suffix(".txt").open("w", encoding="utf-8") as output:
-            data_writer.write_human_readable_world_list(self.game_description, output)
+            pretty_print.write_human_readable_world_list(self.game_description, output)
 
     def _create_new_node(self):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
