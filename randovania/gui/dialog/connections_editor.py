@@ -254,7 +254,8 @@ class RequirementEditor:
         self.requirement_type_combo.addItem("Resource", ResourceRequirement)
         self.requirement_type_combo.addItem("Or", RequirementOr)
         self.requirement_type_combo.addItem("And", RequirementAnd)
-        self.requirement_type_combo.addItem("Template", RequirementTemplate)
+        if resource_database.requirement_template:
+            self.requirement_type_combo.addItem("Template", RequirementTemplate)
         self.requirement_type_combo.setMaximumWidth(75)
         self.requirement_type_combo.activated.connect(self._on_change_requirement_type)
         self.line_layout.addWidget(self.requirement_type_combo)
