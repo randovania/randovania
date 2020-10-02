@@ -1,3 +1,4 @@
+import contextlib
 import json
 from unittest.mock import MagicMock, PropertyMock, patch, call
 
@@ -9,10 +10,15 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.network_common.admin_actions import SessionAdminUserAction
+from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import InvalidAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import game_session, database
+
+
+@pytest.fixture(name="mock_emit_session_update")
+def _mock_emit_session_update(mocker) -> MagicMock:
+    return mocker.patch("randovania.server.game_session._emit_session_update", autospec=True)
 
 
 def test_setup_app():
@@ -62,7 +68,6 @@ def test_create_game_session(clean_database, preset_manager):
     }
 
 
-@patch("randovania.server.game_session._emit_session_update", autospec=True)
 def test_join_game_session(mock_emit_session_update: MagicMock,
                            clean_database):
     # Setup
@@ -228,13 +233,11 @@ def test_game_session_collect_pickup_etm(mock_session_description: PropertyMock,
     ((0, 1), (0, 1)),
 ])
 def test_game_session_collect_pickup_other(flask_app, two_player_session, echoes_resource_database,
-                                           locations_to_collect, exists, mocker):
+                                           locations_to_collect, exists, mock_emit_session_update, mocker):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit", autospec=True)
     mock_get_pickup_target: MagicMock = mocker.patch("randovania.server.game_session._get_pickup_target", autospec=True)
     mock_session_description: PropertyMock = mocker.patch("randovania.server.database.GameSession.layout_description",
                                                           new_callable=PropertyMock)
-    mock_emit_session_update: MagicMock = mocker.patch("randovania.server.game_session._emit_session_update",
-                                                       autospec=True)
 
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
@@ -267,9 +270,7 @@ def test_game_session_collect_pickup_other(flask_app, two_player_session, echoes
 
 
 @pytest.mark.parametrize("is_observer", [False, True])
-def test_game_session_admin_player_switch_is_observer(clean_database, flask_app, mocker, is_observer):
-    mock_emit_session_update: MagicMock = mocker.patch("randovania.server.game_session._emit_session_update",
-                                                       autospec=True)
+def test_game_session_admin_player_switch_is_observer(clean_database, flask_app, mock_emit_session_update, is_observer):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
@@ -288,9 +289,7 @@ def test_game_session_admin_player_switch_is_observer(clean_database, flask_app,
 
 
 @pytest.mark.parametrize("offset", [-1, 1])
-def test_game_session_admin_player_move(clean_database, flask_app, mocker, offset: int):
-    mock_emit_session_update: MagicMock = mocker.patch("randovania.server.game_session._emit_session_update",
-                                                       autospec=True)
+def test_game_session_admin_player_move(clean_database, flask_app, mock_emit_session_update, offset: int):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
@@ -344,7 +343,6 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     assert result is mock_create_patcher_file.return_value
 
 
-@patch("randovania.server.game_session._emit_session_update")
 def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMock,
                                                clean_database, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
@@ -361,7 +359,6 @@ def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMo
     assert database.GameSession.get_by_id(1).num_rows == 1
 
 
-@patch("randovania.server.game_session._emit_session_update")
 def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMock,
                                                clean_database, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
@@ -373,7 +370,8 @@ def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMo
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, "change_row", (1, preset_manager.default_preset.as_json))
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_ROW.value,
+                                            (1, preset_manager.default_preset.as_json))
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -382,7 +380,6 @@ def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMo
     assert json.loads(new_preset_row.preset) == preset_manager.default_preset.as_json
 
 
-@patch("randovania.server.game_session._emit_session_update")
 def test_game_session_admin_session_delete_row(mock_emit_session_update: MagicMock,
                                                clean_database, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
@@ -394,21 +391,85 @@ def test_game_session_admin_session_delete_row(mock_emit_session_update: MagicMo
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, "delete_row", 1)
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_ROW.value, 1)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).num_rows == 1
 
 
-@patch("randovania.layout.layout_description.LayoutDescription.from_json_dict")
-@patch("randovania.server.game_session._emit_session_update", autospec=True)
-def test_game_session_admin_session_change_layout_description(mock_emit_session_update: MagicMock,
-                                                              mock_from_json_dict: MagicMock,
-                                                              clean_database, preset_manager):
-    preset_as_json = json.dumps(preset_manager.default_preset.as_json)
+@pytest.mark.parametrize("not_last_row", [False, True])
+def test_game_session_admin_session_delete_row_invalid(mock_emit_session_update,
+                                                       clean_database, preset_manager, not_last_row):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionPreset.create(session=session, row=0, preset="{}")
+    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+    if not_last_row:
+        database.GameSessionPreset.create(session=session, row=1, preset="{}")
+        expected_message = "Can only delete the last row"
+        expected_num_rows = 2
+    else:
+        expected_message = "Can't delete row when there's only one"
+        expected_num_rows = 1
+
+    # Run
+    with pytest.raises(InvalidAction) as e:
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_ROW.value, 0)
+
+    # Assert
+    assert e.value.message == expected_message
+    mock_emit_session_update.assert_not_called()
+    assert database.GameSession.get_by_id(1).num_rows == expected_num_rows
+
+
+@pytest.mark.parametrize("case", ["to_false", "to_true_free", "to_true_busy"])
+def test_game_session_admin_session_update_layout_generation(mock_emit_session_update: MagicMock,
+                                                             clean_database, case):
+    user1 = database.User.create(id=1234, name="The Name")
+    user2 = database.User.create(id=1235, name="Other")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
+                                          generation_in_progress=user2 if case == "to_true_busy" else None)
+    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    if case == "to_true_busy":
+        expectation = pytest.raises(InvalidAction, match="Generation already in progress by Other.")
+        expected_user = user2
+    else:
+        expectation = contextlib.nullcontext()
+        if case == "to_false":
+            expected_user = None
+        else:
+            expected_user = user1
+
+    # Run
+    with expectation:
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value,
+                                                case != "to_false")
+
+    # Assert
+    if case == "to_true_busy":
+        mock_emit_session_update.assert_not_called()
+    else:
+        mock_emit_session_update.assert_called_once_with(session)
+    assert database.GameSession.get_by_id(1).generation_in_progress == expected_user
+
+
+def test_game_session_admin_session_change_layout_description(clean_database, preset_manager, mock_emit_session_update,
+                                                              mocker):
+    mock_verify_no_layout_description = mocker.patch("randovania.server.game_session._verify_no_layout_description",
+                                                     autospec=True)
+    mock_from_json_dict: MagicMock = mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.from_json_dict")
+
+    preset_as_json = json.dumps(preset_manager.default_preset.as_json)
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
+                                          generation_in_progress=user1)
     database.GameSessionPreset.create(session=session, row=0, preset=preset_as_json)
     database.GameSessionPreset.create(session=session, row=1, preset=preset_as_json)
     database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
@@ -419,18 +480,64 @@ def test_game_session_admin_session_change_layout_description(mock_emit_session_
     layout_description.permalink.presets = {i: preset_manager.default_preset for i in (0, 1)}
 
     # Run
-    game_session.game_session_admin_session(sio, 1, "change_layout_description", "layout_description_json")
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
+                                            "layout_description_json")
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
+    mock_verify_no_layout_description.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).layout_description_json == '"some_json_string"'
+    assert database.GameSession.get_by_id(1).generation_in_progress is None
+
+
+def test_game_session_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
+                                          generation_in_progress=user1,
+                                          layout_description_json="layout_description_json")
+    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
+                                            None)
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    assert database.GameSession.get_by_id(1).layout_description_json is None
+    assert database.GameSession.get_by_id(1).generation_in_progress is None
+
+
+@pytest.mark.parametrize("other_user", [False, True])
+def test_game_session_admin_session_change_layout_description_invalid(mock_emit_session_update: MagicMock,
+                                                                      clean_database, other_user):
+    user1 = database.User.create(id=1234, name="The Name")
+    user2 = database.User.create(id=1235, name="Other")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
+                                          generation_in_progress=user2 if other_user else None)
+    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    if other_user:
+        expected_message = "Waiting for a layout from Other."
+    else:
+        expected_message = "Not waiting for a layout."
+
+    # Run
+    with pytest.raises(InvalidAction, match=expected_message):
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
+                                                "layout_description_json")
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    assert database.GameSession.get_by_id(1).layout_description_json is None
 
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
-@patch("randovania.server.game_session._emit_session_update", autospec=True)
-def test_game_session_admin_session_download_layout_description(mock_emit_session_update: MagicMock,
-                                                                mock_layout_description: PropertyMock,
-                                                                clean_database, ):
+def test_game_session_admin_session_download_layout_description(mock_layout_description: PropertyMock,
+                                                                clean_database, mock_emit_session_update):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="layout_description_json")
@@ -439,7 +546,8 @@ def test_game_session_admin_session_download_layout_description(mock_emit_sessio
     sio.get_current_user.return_value = user1
 
     # Run
-    result = game_session.game_session_admin_session(sio, 1, "download_layout_description", None)
+    result = game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
+                                                     None)
 
     # Assert
     mock_emit_session_update.assert_not_called()
@@ -448,10 +556,8 @@ def test_game_session_admin_session_download_layout_description(mock_emit_sessio
 
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
-@patch("randovania.server.game_session._emit_session_update", autospec=True)
-def test_game_session_admin_session_download_layout_description_no_spoiler(mock_emit_session_update: MagicMock,
-                                                                           mock_layout_description: PropertyMock,
-                                                                           clean_database, ):
+def test_game_session_admin_session_download_layout_description_no_spoiler(mock_layout_description: PropertyMock,
+                                                                           clean_database, mock_emit_session_update):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="layout_description_json")
@@ -462,7 +568,8 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
 
     # Run
     with pytest.raises(InvalidAction):
-        game_session.game_session_admin_session(sio, 1, "download_layout_description", None)
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
+                                                None)
 
     # Assert
     mock_emit_session_update.assert_not_called()
@@ -470,9 +577,8 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
 
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
-@patch("randovania.server.game_session._emit_session_update")
-def test_game_session_admin_session_start_session(mock_emit_session_update: MagicMock,
-                                                  mock_session_description: PropertyMock,
+def test_game_session_admin_session_start_session(mock_session_description: PropertyMock,
+                                                  mock_emit_session_update,
                                                   clean_database, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
@@ -483,8 +589,71 @@ def test_game_session_admin_session_start_session(mock_emit_session_update: Magi
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, "start_session", None)
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.START_SESSION.value, None)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).state == GameSessionState.IN_PROGRESS
+
+
+def test_game_session_admin_session_finish_session(clean_database):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with pytest.raises(InvalidAction):
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.FINISH_SESSION.value, None)
+
+
+def test_game_session_admin_session_reset_session(clean_database):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with pytest.raises(InvalidAction):
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.RESET_SESSION.value, None)
+
+
+def test_game_session_admin_session_change_password(clean_database, mock_emit_session_update):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+    expected_password = 'da92cfbc5e318c64e33dc1b0501e5db214cea0e2a5cecabf90269f32f8eaa15f'
+
+    # Run
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_PASSWORD.value, "the_password")
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    assert database.GameSession.get_by_id(1).password == expected_password
+
+
+def test_change_row_missing_arguments():
+    with pytest.raises(InvalidAction):
+        game_session._change_row(MagicMock(), MagicMock(), (5,))
+
+
+def test_verify_in_setup(clean_database):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1,
+                                          layout_description_json="{}")
+
+    with pytest.raises(InvalidAction):
+        game_session._verify_in_setup(session)
+
+
+def test_verify_no_layout_description(clean_database):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1,
+                                          layout_description_json="{}")
+
+    with pytest.raises(InvalidAction):
+        game_session._verify_in_setup(session)
