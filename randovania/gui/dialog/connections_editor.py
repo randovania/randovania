@@ -14,6 +14,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.interface_common.enum_lib import iterate_enum
 
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,
@@ -39,7 +40,8 @@ def _create_resource_name_combo(resource_database: ResourceDatabase,
     return resource_name_combo
 
 
-def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWidget) -> QComboBox:
+def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWidget,
+                                resource_database: ResourceDatabase) -> QComboBox:
     """
 
     :param current_resource_type:
@@ -48,8 +50,13 @@ def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWi
     """
     resource_type_combo = QComboBox(parent)
 
-    for resource_type in ResourceType:
-        if not resource_type.is_usable_for_requirement:
+    for resource_type in iterate_enum(ResourceType):
+        try:
+            count_elements = len(resource_database.get_by_type(resource_type))
+        except ValueError:
+            count_elements = 0
+
+        if count_elements == 0:
             continue
 
         resource_type_combo.addItem(resource_type.name, resource_type)
@@ -84,7 +91,7 @@ class ResourceRequirementEditor:
         self.layout = layout
         self.resource_database = resource_database
 
-        self.resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent)
+        self.resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent, resource_database)
         self.resource_type_combo.setMinimumWidth(75)
         self.resource_type_combo.setMaximumWidth(75)
 
