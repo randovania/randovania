@@ -47,12 +47,14 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         for area in world.areas:
             self.dock_connection_area_combo.addItem(area.name, area)
+        refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
 
         for i, enum in enumerate(enum_lib.iterate_enum(DockType)):
             self.dock_type_combo.setItemData(i, enum)
 
         for world in sorted(game.world_list.worlds, key=lambda x: x.name):
             self.teleporter_destination_world_combo.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
+        refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
 
         for event in game.resource_database.event:
             self.event_resource_combo.addItem(event.long_name, event)
@@ -62,6 +64,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         for i, enum in enumerate(enum_lib.iterate_enum(LoreType)):
             self.lore_type_combo.setItemData(i, enum)
+        refresh_if_needed(self.lore_type_combo, self.on_lore_type_combo)
 
         # Signals
         self.button_box.accepted.connect(self.try_accept)
@@ -142,11 +145,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         world = self.game.world_list.world_by_asset_id(node.default_connection.world_asset_id)
         area = world.area_by_asset_id(node.default_connection.area_asset_id)
 
-        self.teleporter_instance_id_edit.setText(str(node.teleporter_instance_id))
+        self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id))
         self.teleporter_destination_world_combo.setCurrentIndex(self.teleporter_destination_world_combo.findData(world))
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
         self.teleporter_destination_area_combo.setCurrentIndex(self.teleporter_destination_area_combo.findData(area))
-        self.teleporter_scan_asset_id_edit.setText(str(node.scan_asset_id) if node.scan_asset_id is not None else "")
+        self.teleporter_scan_asset_id_edit.setText(hex(node.scan_asset_id) if node.scan_asset_id is not None else "")
         self.teleporter_editable_check.setChecked(node.editable)
         self.teleporter_vanilla_name_edit.setChecked(node.keep_name_when_vanilla)
 
@@ -157,7 +160,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.translator_gate_spin.setValue(node.gate.index)
 
     def fill_for_logbook_node(self, node: LogbookNode):
-        self.logbook_string_asset_id_edit.setText(str(node.string_asset_id))
+        self.logbook_string_asset_id_edit.setText(hex(node.string_asset_id).upper())
         self.lore_type_combo.setCurrentIndex(self.lore_type_combo.findData(node.lore_type))
         refresh_if_needed(self.lore_type_combo, self.on_lore_type_combo)
 
@@ -255,10 +258,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
             return TeleporterNode(
                 name, heal, location, index,
-                int(self.teleporter_instance_id_edit.text()),
+                int(self.teleporter_instance_id_edit.text(), 0),
                 AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
                              self.teleporter_destination_area_combo.currentData().area_asset_id),
-                int(scan_asset_id) if scan_asset_id != "" else None,
+                int(scan_asset_id, 0) if scan_asset_id != "" else None,
                 self.teleporter_vanilla_name_edit.isChecked(),
                 self.teleporter_editable_check.isChecked(),
             )
@@ -266,7 +269,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         elif node_type == EventNode:
             event = self.event_resource_combo.currentData()
             if event is None:
-                raise RuntimeError("There are no events in the database, unable to create EventNode.")
+                raise ValueError("There are no events in the database, unable to create EventNode.")
             return EventNode(
                 name, heal, location, index,
                 event,
@@ -283,6 +286,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             lore_type: LoreType = self.lore_type_combo.currentData()
             if lore_type == LoreType.LUMINOTH_LORE:
                 required_translator = self.logbook_extra_combo.currentData()
+                if required_translator is None:
+                    raise ValueError("Missing required translator.")
             else:
                 required_translator = None
 
@@ -293,7 +298,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
             return LogbookNode(
                 name, heal, location, index,
-                int(self.logbook_string_asset_id_edit.text()),
+                int(self.logbook_string_asset_id_edit.text(), 0),
                 self._get_scan_visor(),
                 lore_type,
                 required_translator,
