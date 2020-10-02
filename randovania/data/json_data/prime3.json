@@ -417,7 +417,103 @@
                 "custom_memory_offset": 69
             }
         ],
-        "events": [],
+        "events": [
+            {
+                "index": 1,
+                "long_name": "Berserker Lord (Olympus)",
+                "short_name": "Event1"
+            },
+            {
+                "index": 2,
+                "long_name": "Meta Ridley",
+                "short_name": "Event2"
+            },
+            {
+                "index": 3,
+                "long_name": "Rundas",
+                "short_name": "Event3"
+            },
+            {
+                "index": 4,
+                "long_name": "Korakk",
+                "short_name": "Event4"
+            },
+            {
+                "index": 5,
+                "long_name": "Mogenar",
+                "short_name": "Event5"
+            },
+            {
+                "index": 6,
+                "long_name": "Steamlord (Steambot Barracks)",
+                "short_name": "Event6"
+            },
+            {
+                "index": 7,
+                "long_name": "Defense Drone",
+                "short_name": "Event7"
+            },
+            {
+                "index": 8,
+                "long_name": "Ghor",
+                "short_name": "Event8"
+            },
+            {
+                "index": 9,
+                "long_name": "Berserker Lord (Elysia)",
+                "short_name": "Event9"
+            },
+            {
+                "index": 10,
+                "long_name": "Helios",
+                "short_name": "Event10"
+            },
+            {
+                "index": 11,
+                "long_name": "Gandrayda",
+                "short_name": "Event11"
+            },
+            {
+                "index": 12,
+                "long_name": "Pirate Commander",
+                "short_name": "Event12"
+            },
+            {
+                "index": 13,
+                "long_name": "Omega Ridey",
+                "short_name": "Event13"
+            },
+            {
+                "index": 14,
+                "long_name": "Steamlord (Ballista Storage)",
+                "short_name": "Event14"
+            },
+            {
+                "index": 15,
+                "long_name": "Metroid Hatcher (Pirate Homeworld)",
+                "short_name": "Event15"
+            },
+            {
+                "index": 16,
+                "long_name": "Metroid Hatcher (Norion)",
+                "short_name": "Event16"
+            },
+            {
+                "index": 17,
+                "long_name": "Metroid Hatcher (Valhalla)",
+                "short_name": "Event17"
+            },
+            {
+                "index": 18,
+                "long_name": "Dark Samus",
+                "short_name": "Event18"
+            },
+            {
+                "index": 19,
+                "long_name": "Aurora Unit 313",
+                "short_name": "Event19"
+            }
+        ],
         "tricks": [],
         "damage": [
             {
@@ -1862,6 +1958,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
+                        },
+                        {
+                            "name": "Event - Berserker Lord",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 1,
+                            "connections": {}
                         }
                     ]
                 },
@@ -2765,6 +2869,15 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Pickup (Energy Cell)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 16,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Event - Metroid Hatcher": {
                                     "type": "or",
                                     "data": [
@@ -2803,9 +2916,10 @@
                             "name": "Event - Metroid Hatcher",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 16,
                             "connections": {
-                                "Pickup (Energy Cell)": {
+                                "Dock to Generator B Access": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3097,6 +3211,14 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
+                            "connections": {}
+                        },
+                        {
+                            "name": "Event - Meta Ridley",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 2,
                             "connections": {}
                         }
                     ]
@@ -3760,9 +3882,10 @@
                             "name": "Event - Metroid Hatcher",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 17,
                             "connections": {
-                                "Dock to Control Room Access": {
+                                "Event - Lower Bridge": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3774,6 +3897,10 @@
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
+                                "Dock to Aurora Access": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Event - Metroid Hatcher": {
                                     "type": "or",
                                     "data": [
@@ -6421,9 +6548,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Dock to Enlightened Walkway": {
-                                    "type": "and",
-                                    "data": []
+                                "Event - Korakk": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1906007133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -6443,8 +6575,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Event - Korakk": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1906007133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -6452,9 +6589,14 @@
                             "name": "Event - Korakk",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 4,
                             "connections": {
                                 "Dock to Field Access": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Enlightened Walkway": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -8386,7 +8528,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Below Ground": {
+                                "Above Ground": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -8435,6 +8577,47 @@
                                     "type": "and",
                                     "data": []
                                 },
+                                "Dock to Temple Reservoir": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2174833663,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1906007133,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Pickup (Ice Missiles)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 3,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": [
@@ -8453,29 +8636,6 @@
                                         }
                                     ]
                                 },
-                                "Below Ground": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1906007133,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2174833663,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
                                 "Event - Rundas": {
                                     "type": "resource",
                                     "data": {
@@ -8488,28 +8648,13 @@
                             }
                         },
                         {
-                            "name": "Below Ground",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Temple Reservoir": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Above Ground": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
                             "name": "Event - Rundas",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 3,
                             "connections": {
-                                "Pickup (Ice Missiles)": {
+                                "Above Ground": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -9583,7 +9728,8 @@
                             "name": "Event - Mogenar",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 5,
                             "connections": {
                                 "Pickup (Hyper Ball)": {
                                     "type": "and",
@@ -9648,15 +9794,42 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Pickup (Missile Expansion)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2477616633,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 8,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Pickup (Plasma Beam)": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
+                                        "type": 1,
+                                        "index": 8,
                                         "amount": 1,
                                         "negate": false
                                     }
                                 },
                                 "Samus Ship (Catch.)": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Ghor": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -9684,9 +9857,14 @@
                             "pickup_index": 52,
                             "major_location": true,
                             "connections": {
-                                "Samus Ship (Catch.)": {
-                                    "type": "and",
-                                    "data": []
+                                "Dock to Main Docking Access": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2477616633,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -9706,8 +9884,18 @@
                             "name": "Event - Ghor",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 8,
                             "connections": {
+                                "Dock to Main Docking Access": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2477616633,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Pickup (Plasma Beam)": {
                                     "type": "and",
                                     "data": []
@@ -11493,11 +11681,11 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Dock to Barracks Access": {
+                                "Bottom Floor": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 2988161223,
+                                        "type": 1,
+                                        "index": 6,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -11528,7 +11716,7 @@
                                         "negate": false
                                     }
                                 },
-                                "Event - Steamlord": {
+                                "Bottom Floor": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -11542,7 +11730,7 @@
                             "pickup_index": 60,
                             "major_location": false,
                             "connections": {
-                                "Event - Steamlord": {
+                                "Bottom Floor": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -11556,7 +11744,7 @@
                             "pickup_index": 61,
                             "major_location": false,
                             "connections": {
-                                "Dock to Barracks Lift": {
+                                "Bottom Floor": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -11566,13 +11754,63 @@
                             "name": "Event - Steamlord",
                             "heal": false,
                             "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 6,
+                            "connections": {
+                                "Bottom Floor": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Bottom Floor",
+                            "heal": false,
+                            "coordinates": null,
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Barracks Lift": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 6,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Barracks Access": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Pickup (Energy Tank)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 6,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Steamlord": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -11610,6 +11848,29 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Event - Steamlord": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 536233745,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -11648,10 +11909,6 @@
                                         "amount": 1,
                                         "negate": false
                                     }
-                                },
-                                "Event - Steamlord": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
@@ -11659,7 +11916,8 @@
                             "name": "Event - Defense Drone",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 7,
                             "connections": {
                                 "Pickup (Boost Ball)": {
                                     "type": "and",
@@ -11671,7 +11929,8 @@
                             "name": "Event - Steamlord",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 14,
                             "connections": {
                                 "Pickup (Energy Cell)": {
                                     "type": "resource",
@@ -13510,6 +13769,38 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Dock to Turbine Access": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1470237978,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 9,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
                                 "Event - Berserker Lord": {
                                     "type": "and",
                                     "data": []
@@ -13536,30 +13827,12 @@
                             "name": "Event - Berserker Lord",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 9,
                             "connections": {
-                                "Dock to Turbine Access": {
+                                "Dock to Broken Lift (Top)": {
                                     "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2988161223,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1470237978,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "data": []
                                 }
                             }
                         }
@@ -14488,7 +14761,8 @@
                             "name": "Event - Helios",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 10,
                             "connections": {
                                 "Pickup (Hyper Missile)": {
                                     "type": "and",
@@ -15008,8 +15282,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Elevator Unlocked": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 11,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -15050,6 +15329,15 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Elevator Unlocked": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 11,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -15061,7 +15349,7 @@
                             "pickup_index": 79,
                             "major_location": true,
                             "connections": {
-                                "Elevator Unlocked": {
+                                "Dock to Proving Grounds Lift": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -15748,30 +16036,12 @@
                             "name": "Event - Metroid Hatcher",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 15,
                             "connections": {
-                                "Pickup (Energy Tank)": {
+                                "Bottom Floor": {
                                     "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1296127826,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2988161223,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "data": []
                                 }
                             }
                         },
@@ -15788,6 +16058,38 @@
                                 "Dock to Transit Station 3-A\nLeads to Command Center": {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
+                                },
+                                "Pickup (Energy Tank)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1296127826,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Event - Metroid Hatcher": {
                                     "type": "and",
@@ -17286,7 +17588,8 @@
                             "name": "Event - Pirate Commander",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 12,
                             "connections": {}
                         }
                     ]
@@ -18744,7 +19047,8 @@
                             "name": "Event - Omega Ridley",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 13,
                             "connections": {
                                 "Pickup (Hyper Grapple)": {
                                     "type": "and",
@@ -18832,7 +19136,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Samus Ship": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to !!00_phaaze_warpin",
@@ -18849,6 +19158,18 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
+                        },
+                        {
+                            "name": "Samus Ship",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Entry Canyon": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -18873,7 +19194,17 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Entry Canyon": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1364547232,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Entry Canyon",
@@ -18889,7 +19220,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Cavern Beta Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -18930,7 +19266,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Hatcher Shaft": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -18955,7 +19296,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Genesis Chamber": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Genesis Chamber",
@@ -19012,7 +19358,31 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Sanctum": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1906007133,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1714103130,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     ]
                 },
@@ -19037,7 +19407,17 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Cavern Beta": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2353547179,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Cavern Beta",
@@ -19078,7 +19458,17 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Metroid Cavern": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2353547179,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Metroid Cavern",
@@ -19119,7 +19509,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Hatcher Tunnel": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Hatcher Tunnel",
@@ -19160,7 +19555,17 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Event - Dark Samus": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1714103130,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Sanctum",
@@ -19176,6 +19581,32 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
+                            "connections": {}
+                        },
+                        {
+                            "name": "Event - Dark Samus",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 18,
+                            "connections": {
+                                "Event - Aurora Unit 313": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1906007133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Aurora Unit 313",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 19,
                             "connections": {}
                         }
                     ]
@@ -19201,7 +19632,17 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Cavern Alpha": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2270562373,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Cavern Alpha",
@@ -19242,7 +19683,17 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Drop Shaft": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1364547232,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Drop Shaft",
@@ -19258,7 +19709,17 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Cavern Beta Access": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1364547232,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         }
                     ]
                 },
