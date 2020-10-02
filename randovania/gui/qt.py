@@ -1,4 +1,5 @@
 import asyncio
+import locale
 import logging.config
 import os
 import sys
@@ -105,6 +106,7 @@ def _load_options():
 
 
 def run(args):
+    locale.setlocale(locale.LC_ALL, "")  # use system's default locale
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
     data_dir = args.custom_network_storage
