@@ -147,6 +147,7 @@ async def test_check_for_collected_index_receive_items(backend):
     # Setup
     pickup = MagicMock()
     resource = MagicMock()
+    resource.max_capacity = 8
     inventory = {resource: 10}
 
     backend._get_player_state_address = AsyncMock(return_value=0)
@@ -167,7 +168,7 @@ async def test_check_for_collected_index_receive_items(backend):
     ])
     backend.dolphin.write_word.assert_called_once_with(984, 1)
     backend.get_inventory.assert_called_once_with()
-    backend._raw_set_item_capacity.assert_awaited_once_with(resource.index, 10, 0)
+    backend._raw_set_item_capacity.assert_awaited_once_with(resource.index, 8, 0)
     mock_add_pickup.assert_called_once_with(pickup, inventory)
 
 
