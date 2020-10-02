@@ -14,10 +14,6 @@ class ResourceType(Enum):
     LOGBOOK_INDEX = 9
 
     @property
-    def is_usable_for_requirement(self) -> bool:
-        return self not in _TYPES_NO_FOR_REQUIREMENT
-
-    @property
     def negated_prefix(self) -> str:
         if self is ResourceType.EVENT:
             return "Before "
@@ -37,10 +33,3 @@ class ResourceType(Enum):
 
     def __lt__(self, other):
         return self.value < other.value
-
-
-_TYPES_NO_FOR_REQUIREMENT = {
-    ResourceType.PICKUP_INDEX,
-    ResourceType.GATE_INDEX,
-    ResourceType.LOGBOOK_INDEX,
-}

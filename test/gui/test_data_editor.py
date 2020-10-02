@@ -6,6 +6,7 @@ import pytest
 from PySide2.QtWidgets import QDialog
 from mock import AsyncMock, patch, ANY
 
+import randovania.game_description.pretty_print
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.requirements import Requirement
 from randovania.gui.data_editor import DataEditorWindow
@@ -101,6 +102,6 @@ def test_create_node_and_save(tmpdir,
     exported_game = data_reader.decode_data(exported_data)
 
     output = io.StringIO()
-    data_writer.write_human_readable_world_list(exported_game, output)
+    randovania.game_description.pretty_print.write_human_readable_world_list(exported_game, output)
 
     assert Path(tmpdir.join("game.txt")).read_text("utf-8") == output.getvalue()
