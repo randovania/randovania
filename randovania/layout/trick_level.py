@@ -61,11 +61,7 @@ class TrickLevelConfiguration(BitPackValue):
         if not isinstance(self.global_level, LayoutTrickLevel):
             raise ValueError(f"Invalid global_level `{self.global_level}`, expected a LayoutTrickLevel")
 
-        all_possible_tricks = _all_trick_indices()
         for trick, level in self.specific_levels.items():
-            if trick not in all_possible_tricks:
-                raise ValueError(f"Trick `{trick}` not a possible trick.")
-
             if not isinstance(level, LayoutTrickLevel):
                 raise ValueError(f"Invalid level `{level}` for trick {trick}, expected a LayoutTrickLevel")
 
