@@ -1,4 +1,5 @@
 import asyncio
+import locale
 import logging.config
 import os
 import sys
@@ -31,20 +32,17 @@ def catch_exceptions_async(loop, context):
         logging.critical(str(context))
 
 
-def show_main_window(app: QApplication, options, is_preview: bool):
-    from randovania.gui.lib import startup_tools
-
+async def show_main_window(app: QApplication, options, is_preview: bool):
     from randovania.interface_common.preset_manager import PresetManager
     preset_manager = PresetManager(options.data_dir)
 
-    if not startup_tools.load_user_presets(preset_manager):
-        raise SystemExit(2)
+    await preset_manager.load_user_presets()
 
     from randovania.gui.main_window import MainWindow
     main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
     app.main_window = main_window
     main_window.show()
-    main_window.request_new_data()
+    await main_window.request_new_data()
 
 
 def show_tracker(app: QApplication):
@@ -65,11 +63,11 @@ def show_game_details(app: QApplication, options, game: Path):
     app.details_window = details_window
 
 
-def display_window_for(app, options, command: str, args):
+async def display_window_for(app, options, command: str, args):
     if command == "tracker":
         show_tracker(app)
     elif command == "main":
-        show_main_window(app, options, args.preview)
+        await show_main_window(app, options, args.preview)
     elif command == "game":
         show_game_details(app, options, args.rdvgame)
     else:
@@ -97,14 +95,15 @@ def _load_options():
 
     theme.set_dark_theme(options.dark_mode)
 
-    from randovania.layout.preset import Preset
+    from randovania.layout.preset_migration import VersionedPreset
     for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
-        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{Preset.file_extension()}"))
+        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{VersionedPreset.file_extension()}"))
 
     return options
 
 
 def run(args):
+    locale.setlocale(locale.LC_ALL, "")  # use system's default locale
     QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
     data_dir = args.custom_network_storage
@@ -171,10 +170,10 @@ def run(args):
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
 
     options = _load_options()
-    display_window_for(app, options, args.command, args)
 
     with loop:
         loop.create_task(app.game_connection.start())
+        loop.create_task(display_window_for(app, options, args.command, args))
         # loop.create_task(app.network_client.connect_if_authenticated())
         sys.exit(loop.run_forever())
 

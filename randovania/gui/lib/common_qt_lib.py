@@ -9,7 +9,7 @@ from randovania import get_data_path
 from randovania.game_connection.game_connection import GameConnection
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 
 
 def map_set_checked(iterable: Iterator[QCheckBox], new_status: bool):
@@ -107,7 +107,7 @@ def prompt_user_for_preset_file(window: QMainWindow, new_file: bool) -> Optional
     :return: A path if the user selected a file, None otherwise
     """
     return _prompt_user_for_file(window, caption="Select a Randovania Preset file.",
-                                 filter=f"Randovania Preset, *.{Preset.file_extension()};;"
+                                 filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;"
                                         f"All Files (*.*)",
                                  new_file=new_file)
 

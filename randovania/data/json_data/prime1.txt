@@ -1,6 +1,9 @@
 ====================
 Templates
 
+* Shoot Super Missile:
+      Power Beam and Missile ≥ 5 and Charge Beam and Super Missile
+
 ====================
 Dock Weaknesses
 
@@ -38,7 +41,14 @@ Impact Crater
 Crater Entry Point
 Asset id: 2472970646
 > Dock to Crater Tunnel A; Heals? False
-  * Normal Door to Crater Tunnel A/Dock to Crater Entry Point
+  * Plasma Door to Crater Tunnel A/Dock to Crater Entry Point
+  > Teleport to Artifact Temple
+      Trivial
+
+> Teleport to Artifact Temple; Heals? False; Spawn Point
+  * Teleporter to Tallon Overworld - Artifact Temple
+  > Dock to Crater Tunnel A
+      Trivial
 
 ----------------
 Crater Tunnel A
@@ -1080,9 +1090,20 @@ Transport to Tallon Overworld West
 Asset id: 1279075404
 > Dock to Twin Fires Tunnel; Heals? False
   * Normal Door to Twin Fires Tunnel/Dock to Transport to Tallon Overworld West
+  > Dock to Transport Tunnel B
+      Trivial
 
 > Dock to Transport Tunnel B; Heals? False
   * Normal Door to Transport Tunnel B/Dock to Transport to Tallon Overworld West
+  > Dock to Twin Fires Tunnel
+      Trivial
+  > Elevator to Tallon Overworld - Transport to Magmoor Caverns East
+      Trivial
+
+> Elevator to Tallon Overworld - Transport to Magmoor Caverns East; Heals? False; Spawn Point
+  * Teleporter to Tallon Overworld - Transport to Magmoor Caverns East
+  > Dock to Transport Tunnel B
+      Trivial
 
 ----------------
 Twin Fires Tunnel
@@ -1195,7 +1216,14 @@ Phazon Mines
 Transport to Tallon Overworld South
 Asset id: 1125030300
 > Dock to Quarry Access; Heals? False
-  * Normal Door to Quarry Access/Dock to Transport to Tallon Overworld South
+  * Wave Door to Quarry Access/Dock to Transport to Tallon Overworld South
+  > Elevator to Tallon Overworld - Transport to Phazon Mines East
+      Scan Visor
+
+> Elevator to Tallon Overworld - Transport to Phazon Mines East; Heals? False; Spawn Point
+  * Teleporter to Tallon Overworld - Transport to Phazon Mines East
+  > Dock to Quarry Access
+      Trivial
 
 ----------------
 Quarry Access
@@ -1582,396 +1610,778 @@ Landing Site
 Asset id: 2993688902
 > Dock to Gully; Heals? False
   * Normal Door to Gully/Dock to Landing Site
+  > Dock to Alcove
+      Trivial
+  > Save Station
+      Trivial
 
 > Dock to Canyon Cavern; Heals? False
   * Normal Door to Canyon Cavern/Dock to Landing Site
+  > Save Station
+      Trivial
 
 > Dock to Temple Hall; Heals? False
   * Normal Door to Temple Hall/Dock to Landing Site
+  > Save Station
+      Trivial
 
 > Dock to Alcove; Heals? False
   * Normal Door to Alcove/Dock to Landing Site
+  > Dock to Gully
+      Trivial
+  > Save Station
+      Trivial
 
 > Dock to Waterfall Cavern; Heals? False
   * Normal Door to Waterfall Cavern/Dock to Landing Site
+  > Save Station
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 58; Major Location? False
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point
+  > Dock to Gully
+      Space Jump Boots
+  > Dock to Canyon Cavern
+      Trivial
+  > Dock to Temple Hall
+      Trivial
+  > Dock to Waterfall Cavern
+      Trivial
+  > Pickup (Missile Expansion)
+      Morph Ball
 
 ----------------
 Gully
 Asset id: 2064921753
-> Dock to Tallon Canyon; Heals? False
+> Dock to Tallon Canyon; Heals? False; Spawn Point
   * Normal Door to Tallon Canyon/Dock to Gully
+  > Dock to Landing Site
+      Morph Ball Bomb and Morph Ball
 
 > Dock to Landing Site; Heals? False
   * Normal Door to Landing Site/Dock to Gully
+  > Dock to Tallon Canyon
+      Morph Ball Bomb and Space Jump Boots and Morph Ball
 
 ----------------
 Canyon Cavern
 Asset id: 3995112776
-> Dock to Tallon Canyon; Heals? False
+> Dock to Tallon Canyon; Heals? False; Spawn Point
   * Normal Door to Tallon Canyon/Dock to Canyon Cavern
+  > Dock to Landing Site
+      Trivial
 
 > Dock to Landing Site; Heals? False
   * Normal Door to Landing Site/Dock to Canyon Cavern
+  > Dock to Tallon Canyon
+      Trivial
 
 ----------------
 Temple Hall
 Asset id: 1531853045
-> Dock to Temple Security Station; Heals? False
+> Dock to Temple Security Station; Heals? False; Spawn Point
   * Normal Door to Temple Security Station/Dock to Temple Hall
+  > Dock to Landing Site
+      Trivial
 
 > Dock to Landing Site; Heals? False
   * Normal Door to Landing Site/Dock to Temple Hall
+  > Dock to Temple Security Station
+      Trivial
 
 ----------------
 Alcove
 Asset id: 3293477383
-> Dock to Landing Site; Heals? False
+> Dock to Landing Site; Heals? False; Spawn Point
   * Normal Door to Landing Site/Dock to Alcove
+  > Pickup (Space Jump Boots)
+      Trivial
+
+> Pickup (Space Jump Boots); Heals? False
+  * Pickup 59; Major Location? True
+  > Dock to Landing Site
+      Space Jump Boots
 
 ----------------
 Waterfall Cavern
 Asset id: 3882538769
-> Dock to Landing Site; Heals? False
+> Dock to Landing Site; Heals? False; Spawn Point
   * Normal Door to Landing Site/Dock to Waterfall Cavern
+  > Dock to Frigate Crash Site
+      Morph Ball
 
 > Dock to Frigate Crash Site; Heals? False
-  * Normal Door to Frigate Crash Site/Dock to Waterfall Cavern
+  * Missile Blast Shield to Frigate Crash Site/Dock to Waterfall Cavern
+  > Dock to Landing Site
+      Morph Ball
 
 ----------------
 Tallon Canyon
 Asset id: 541313390
-> Dock to Canyon Cavern; Heals? False
+> Dock to Canyon Cavern; Heals? False; Spawn Point
   * Normal Door to Canyon Cavern/Dock to Tallon Canyon
+  > Half Pipe
+      Trivial
 
 > Dock to Transport Tunnel A; Heals? False
   * Normal Door to Transport Tunnel A/Dock to Tallon Canyon
+  > Half Pipe
+      Trivial
 
 > Dock to Gully; Heals? False
   * Normal Door to Gully/Dock to Tallon Canyon
+  > Half Pipe
+      Morph Ball Bomb and Space Jump Boots and Morph Ball
 
 > Dock to Root Tunnel; Heals? False
   * Normal Door to Root Tunnel/Dock to Tallon Canyon
+  > Half Pipe
+      Trivial
+
+> Half Pipe; Heals? False
+  > Dock to Canyon Cavern
+      Trivial
+  > Dock to Transport Tunnel A
+      Trivial
+  > Dock to Gully
+      Morph Ball Bomb and Morph Ball and Boost Ball
+  > Dock to Root Tunnel
+      Trivial
 
 ----------------
 Temple Security Station
 Asset id: 3182558380
-> Dock to Temple Hall; Heals? False
+> Dock to Temple Hall; Heals? False; Spawn Point
   * Normal Door to Temple Hall/Dock to Temple Security Station
+  > Dock to Temple Lobby
+      Trivial
 
 > Dock to Temple Lobby; Heals? False
-  * Normal Door to Temple Lobby/Dock to Temple Security Station
+  * Missile Blast Shield to Temple Lobby/Dock to Temple Security Station
+  > Dock to Temple Hall
+      Trivial
 
 ----------------
 Frigate Crash Site
 Asset id: 3115044182
-> Dock to Waterfall Cavern; Heals? False
-  * Normal Door to Waterfall Cavern/Dock to Frigate Crash Site
+> Dock to Waterfall Cavern; Heals? False; Spawn Point
+  * Missile Blast Shield to Waterfall Cavern/Dock to Frigate Crash Site
+  > Dock to Frigate Access Tunnel
+      Space Jump Boots
+  > Pickup (Missile Expansion)
+      Space Jump Boots and Gravity Suit
 
 > Dock to Frigate Access Tunnel; Heals? False
-  * Normal Door to Frigate Access Tunnel/Dock to Frigate Crash Site
+  * Ice Door to Frigate Access Tunnel/Dock to Frigate Crash Site
+  > Dock to Waterfall Cavern
+      Trivial
 
 > Dock to Overgrown Cavern; Heals? False
-  * Normal Door to Overgrown Cavern/Dock to Frigate Crash Site
+  * Ice Door to Overgrown Cavern/Dock to Frigate Crash Site
+  > Dock to Waterfall Cavern
+      Trivial
+  > Dock to Frigate Access Tunnel
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 60; Major Location? False
+  > Dock to Waterfall Cavern
+      Trivial
 
 ----------------
 Transport Tunnel A
 Asset id: 333016381
-> Dock to Transport to Chozo Ruins West; Heals? False
+> Dock to Transport to Chozo Ruins West; Heals? False; Spawn Point
   * Normal Door to Transport to Chozo Ruins West/Dock to Transport Tunnel A
+  > Dock to Tallon Canyon
+      Trivial
 
 > Dock to Tallon Canyon; Heals? False
   * Normal Door to Tallon Canyon/Dock to Transport Tunnel A
+  > Dock to Transport to Chozo Ruins West
+      Trivial
 
 ----------------
 Root Tunnel
 Asset id: 1078461657
-> Dock to Root Cave; Heals? False
-  * Normal Door to Root Cave/Dock to Root Tunnel
+> Dock to Root Cave; Heals? False; Spawn Point
+  * Missile Blast Shield to Root Cave/Dock to Root Tunnel
+  > Dock to Tallon Canyon
+      Trivial
 
 > Dock to Tallon Canyon; Heals? False
   * Normal Door to Tallon Canyon/Dock to Root Tunnel
+  > Dock to Root Cave
+      Trivial
 
 ----------------
 Temple Lobby
 Asset id: 591880894
-> Dock to Artifact Temple; Heals? False
+> Dock to Artifact Temple; Heals? False; Spawn Point
   * Normal Door to Artifact Temple/Dock to Temple Lobby
+  > Dock to Temple Security Station
+      Trivial
 
 > Dock to Temple Security Station; Heals? False
-  * Normal Door to Temple Security Station/Dock to Temple Lobby
+  * Missile Blast Shield to Temple Security Station/Dock to Temple Lobby
+  > Dock to Artifact Temple
+      Trivial
 
 ----------------
 Frigate Access Tunnel
 Asset id: 3138751614
-> Dock to Main Ventilation Shaft Section C; Heals? False
+> Dock to Main Ventilation Shaft Section C; Heals? False; Spawn Point
   * Normal Door to Main Ventilation Shaft Section C/Dock to Frigate Access Tunnel
+  > Dock to Frigate Crash Site
+      Trivial
 
 > Dock to Frigate Crash Site; Heals? False
-  * Normal Door to Frigate Crash Site/Dock to Frigate Access Tunnel
+  * Ice Door to Frigate Crash Site/Dock to Frigate Access Tunnel
+  > Dock to Main Ventilation Shaft Section C
+      Trivial
 
 ----------------
 Overgrown Cavern
 Asset id: 3466748899
-> Dock to Frigate Crash Site; Heals? False
-  * Normal Door to Frigate Crash Site/Dock to Overgrown Cavern
+> Dock to Frigate Crash Site; Heals? False; Spawn Point
+  * Ice Door to Frigate Crash Site/Dock to Overgrown Cavern
+  > Dock to Transport Tunnel C
+      Morph Ball
 
 > Dock to Transport Tunnel C; Heals? False
-  * Normal Door to Transport Tunnel C/Dock to Overgrown Cavern
+  * Ice Door to Transport Tunnel C/Dock to Overgrown Cavern
+  > Dock to Frigate Crash Site
+      Morph Ball
+  > Pickup (Missile Expansion)
+      Morph Ball
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 61; Major Location? False
+  > Dock to Transport Tunnel C
+      Morph Ball
 
 ----------------
 Transport to Chozo Ruins West
 Asset id: 295707720
 > Dock to Transport Tunnel A; Heals? False
   * Normal Door to Transport Tunnel A/Dock to Transport to Chozo Ruins West
+  > Elevator to Chozo Ruins - Transport to Tallon Overworld North
+      Scan Visor
+
+> Elevator to Chozo Ruins - Transport to Tallon Overworld North; Heals? False; Spawn Point
+  * Teleporter to Chozo Ruins - Transport to Tallon Overworld North
+  > Dock to Transport Tunnel A
+      Trivial
 
 ----------------
 Root Cave
 Asset id: 3180103205
-> Dock to Transport Tunnel B; Heals? False
+> Dock to Transport Tunnel B; Heals? False; Spawn Point
   * Normal Door to Transport Tunnel B/Dock to Root Cave
+  > Dock to Root Tunnel
+      Trivial
 
 > Dock to Root Tunnel; Heals? False
-  * Normal Door to Root Tunnel/Dock to Root Cave
+  * Missile Blast Shield to Root Tunnel/Dock to Root Cave
+  > Dock to Transport Tunnel B
+      Trivial
+  > Dock to Arbor Chamber
+      Grapple Beam and X-Ray Visor and Space Jump Boots
+  > Pickup (Missile Expansion)
+      Grapple Beam and X-Ray Visor and Space Jump Boots
 
 > Dock to Arbor Chamber; Heals? False
-  * Normal Door to Arbor Chamber/Dock to Root Cave
+  * Plasma Door to Arbor Chamber/Dock to Root Cave
+  > Dock to Transport Tunnel B
+      Trivial
+  > Dock to Root Tunnel
+      Trivial
+  > Pickup (Missile Expansion)
+      X-Ray Visor and Space Jump Boots
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 62; Major Location? False
+  > Dock to Transport Tunnel B
+      Trivial
+  > Dock to Root Tunnel
+      Trivial
+  > Dock to Arbor Chamber
+      X-Ray Visor and Space Jump Boots
 
 ----------------
 Artifact Temple
 Asset id: 597223686
 > Dock to Temple Lobby; Heals? False
   * Normal Door to Temple Lobby/Dock to Artifact Temple
+  > Pickup (Artifact of Truth)
+      Trivial
+  > Event - Meta Ridley
+      Artifact of Truth and Artifact of Strength and Artifact of Elder and Artifact of Wild and Artifact of Lifegiver and Artifact of Warrior and Artifact of Chozo and Artifact of Nature and Artifact of Sun and Artifact of World and Artifact of Spirit and Artifact of Newborn
+  > Teleport to Impact Crater - Crater Impact Point
+      After Meta Ridley
+
+> Pickup (Artifact of Truth); Heals? False
+  * Pickup 63; Major Location? False
+  > Dock to Temple Lobby
+      Trivial
+
+> Event - Meta Ridley; Heals? False
+  > Dock to Temple Lobby
+      Trivial
+
+> Teleport to Impact Crater - Crater Impact Point; Heals? False; Spawn Point
+  * Teleporter to Impact Crater - Crater Entry Point
+  > Dock to Temple Lobby
+      Trivial
 
 ----------------
 Main Ventilation Shaft Section C
 Asset id: 1578034578
-> Dock to Main Ventilation Shaft Section B; Heals? False
+> Dock to Main Ventilation Shaft Section B; Heals? False; Spawn Point
   * Normal Door to Main Ventilation Shaft Section B/Dock to Main Ventilation Shaft Section C
+  > Dock to Frigate Access Tunnel
+      Space Jump Boots and Morph Ball
 
 > Dock to Frigate Access Tunnel; Heals? False
   * Normal Door to Frigate Access Tunnel/Dock to Main Ventilation Shaft Section C
+  > Dock to Main Ventilation Shaft Section B
+      Morph Ball
 
 ----------------
 Transport Tunnel C
 Asset id: 2244610219
-> Dock to Overgrown Cavern; Heals? False
-  * Normal Door to Overgrown Cavern/Dock to Transport Tunnel C
+> Dock to Overgrown Cavern; Heals? False; Spawn Point
+  * Ice Door to Overgrown Cavern/Dock to Transport Tunnel C
+  > Dock to Transport to Chozo Ruins East
+      Morph Ball
 
 > Dock to Transport to Chozo Ruins East; Heals? False
-  * Normal Door to Transport to Chozo Ruins East/Dock to Transport Tunnel C
+  * Ice Door to Transport to Chozo Ruins East/Dock to Transport Tunnel C
+  > Dock to Overgrown Cavern
+      Morph Ball
 
 ----------------
 Transport Tunnel B
 Asset id: 3353878970
-> Dock to Transport to Magmoor Caverns East; Heals? False
+> Dock to Transport to Magmoor Caverns East; Heals? False; Spawn Point
   * Normal Door to Transport to Magmoor Caverns East/Dock to Transport Tunnel B
+  > Dock to Root Cave
+      Trivial
 
 > Dock to Root Cave; Heals? False
   * Normal Door to Root Cave/Dock to Transport Tunnel B
+  > Dock to Transport to Magmoor Caverns East
+      Trivial
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 64; Major Location? False
+  > Dock to Root Cave
+      Trivial
 
 ----------------
 Arbor Chamber
 Asset id: 620277747
-> Dock to Root Cave; Heals? False
+> Dock to Root Cave; Heals? False; Spawn Point
   * Normal Door to Root Cave/Dock to Arbor Chamber
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 65; Major Location? False
+  > Dock to Root Cave
+      Trivial
 
 ----------------
 Main Ventilation Shaft Section B
 Asset id: 2949963832
-> Dock to Main Ventilation Shaft Section A; Heals? False
+> Dock to Main Ventilation Shaft Section A; Heals? False; Spawn Point
   * Normal Door to Main Ventilation Shaft Section A/Dock to Main Ventilation Shaft Section B
+  > Dock to Main Ventilation Shaft Section C
+      Trivial
 
 > Dock to Main Ventilation Shaft Section C; Heals? False
   * Normal Door to Main Ventilation Shaft Section C/Dock to Main Ventilation Shaft Section B
+  > Dock to Main Ventilation Shaft Section A
+      Wave Beam and Thermal Visor
 
 ----------------
 Transport to Chozo Ruins East
 Asset id: 2318493278
 > Dock to Transport Tunnel C; Heals? False
-  * Normal Door to Transport Tunnel C/Dock to Transport to Chozo Ruins East
+  * Ice Door to Transport Tunnel C/Dock to Transport to Chozo Ruins East
+  > Elevator to Chozo Ruins - Transport to Tallon Overworld East
+      Scan Visor
+
+> Elevator to Chozo Ruins - Transport to Tallon Overworld East; Heals? False; Spawn Point
+  * Teleporter to Chozo Ruins - Transport to Tallon Overworld East
+  > Dock to Transport Tunnel C
+      Trivial
 
 ----------------
 Transport to Magmoor Caverns East
 Asset id: 366411659
 > Dock to Transport Tunnel B; Heals? False
   * Normal Door to Transport Tunnel B/Dock to Transport to Magmoor Caverns East
+  > Elevator to Magmoor Caverns - Transport to Tallon Overworld West
+      Scan Visor
+
+> Elevator to Magmoor Caverns - Transport to Tallon Overworld West; Heals? False; Spawn Point
+  * Teleporter to Magmoor Caverns - Transport to Tallon Overworld West
+  > Dock to Transport Tunnel B
+      Trivial
 
 ----------------
 Main Ventilation Shaft Section A
 Asset id: 1724639367
-> Dock to Main Ventilation Shaft Section B; Heals? False
+> Dock to Main Ventilation Shaft Section B; Heals? False; Spawn Point
   * Normal Door to Main Ventilation Shaft Section B/Dock to Main Ventilation Shaft Section A
+  > Dock to Reactor Core
+      Trivial
 
 > Dock to Reactor Core; Heals? False
   * Normal Door to Reactor Core/Dock to Main Ventilation Shaft Section A
+  > Dock to Main Ventilation Shaft Section B
+      Trivial
 
 ----------------
 Reactor Core
 Asset id: 3993592474
-> Dock to Reactor Access; Heals? False
+> Dock to Reactor Access; Heals? False; Spawn Point
   * Normal Door to Reactor Access/Dock to Reactor Core
+  > Dock to Main Ventilation Shaft Section A
+      Space Jump Boots
 
 > Dock to Main Ventilation Shaft Section A; Heals? False
   * Normal Door to Main Ventilation Shaft Section A/Dock to Reactor Core
+  > Dock to Reactor Access
+      Wave Beam and Thermal Visor and Space Jump Boots
 
 ----------------
 Reactor Access
 Asset id: 4215436672
-> Dock to Cargo Freight Lift to Deck Gamma; Heals? False
+> Dock to Cargo Freight Lift to Deck Gamma; Heals? False; Spawn Point
   * Normal Door to Cargo Freight Lift to Deck Gamma/Dock to Reactor Access
+  > Dock to Reactor Core
+      Trivial
+  > Dock to Savestation
+      Trivial
 
 > Dock to Reactor Core; Heals? False
   * Normal Door to Reactor Core/Dock to Reactor Access
+  > Dock to Cargo Freight Lift to Deck Gamma
+      Wave Beam and Thermal Visor
+  > Dock to Savestation
+      Trivial
 
 > Dock to Savestation; Heals? False
   * Normal Door to Savestation/Dock to Reactor Access
+  > Dock to Reactor Core
+      Trivial
 
 ----------------
 Cargo Freight Lift to Deck Gamma
 Asset id: 934522854
-> Dock to Reactor Access; Heals? False
+> Dock to Reactor Access; Heals? False; Spawn Point
   * Normal Door to Reactor Access/Dock to Cargo Freight Lift to Deck Gamma
+  > Dock to Deck Beta Transit Hall
+      Wave Beam and Thermal Visor and Space Jump Boots and Gravity Suit
+  > Pickup (Energy Tank)
+      Missile
 
 > Dock to Deck Beta Transit Hall; Heals? False
   * Normal Door to Deck Beta Transit Hall/Dock to Cargo Freight Lift to Deck Gamma
+  > Dock to Reactor Access
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 66; Major Location? False
+  > Dock to Deck Beta Transit Hall
+      Missile
 
 ----------------
 Savestation
 Asset id: 4032384109
 > Dock to Reactor Access; Heals? False
   * Normal Door to Reactor Access/Dock to Savestation
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point
+  > Dock to Reactor Access
+      Trivial
 
 ----------------
 Deck Beta Transit Hall
 Asset id: 1251344478
-> Dock to Cargo Freight Lift to Deck Gamma; Heals? False
+> Dock to Cargo Freight Lift to Deck Gamma; Heals? False; Spawn Point
   * Normal Door to Cargo Freight Lift to Deck Gamma/Dock to Deck Beta Transit Hall
+  > Dock to Biohazard Containment
+      Trivial
 
 > Dock to Biohazard Containment; Heals? False
   * Normal Door to Biohazard Containment/Dock to Deck Beta Transit Hall
+  > Dock to Cargo Freight Lift to Deck Gamma
+      Trivial
 
 ----------------
 Biohazard Containment
 Asset id: 2888587518
-> Dock to Deck Beta Transit Hall; Heals? False
+> Dock to Deck Beta Transit Hall; Heals? False; Spawn Point
   * Normal Door to Deck Beta Transit Hall/Dock to Biohazard Containment
+  > Dock to Deck Beta Security Hall
+      Wave Beam and Thermal Visor
 
 > Dock to Deck Beta Security Hall; Heals? False
   * Normal Door to Deck Beta Security Hall/Dock to Biohazard Containment
+  > Dock to Deck Beta Transit Hall
+      Space Jump Boots and Gravity Suit
+  > Pickup (Missile Expansion)
+      Shoot Super Missile
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 67; Major Location? False
+  > Dock to Deck Beta Security Hall
+      Trivial
 
 ----------------
 Deck Beta Security Hall
 Asset id: 1995891542
-> Dock to Biohazard Containment; Heals? False
+> Dock to Biohazard Containment; Heals? False; Spawn Point
   * Normal Door to Biohazard Containment/Dock to Deck Beta Security Hall
+  > Dock to Biotech Research Area 1
+      Trivial
 
 > Dock to Biotech Research Area 1; Heals? False
   * Normal Door to Biotech Research Area 1/Dock to Deck Beta Security Hall
+  > Dock to Biohazard Containment
+      Trivial
 
 ----------------
 Biotech Research Area 1
 Asset id: 1596897206
-> Dock to Deck Beta Security Hall; Heals? False
+> Dock to Deck Beta Security Hall; Heals? False; Spawn Point
   * Normal Door to Deck Beta Security Hall/Dock to Biotech Research Area 1
+  > Dock to Deck Beta Conduit Hall
+      Wave Beam and Thermal Visor and Space Jump Boots and Gravity Suit
 
 > Dock to Deck Beta Conduit Hall; Heals? False
   * Normal Door to Deck Beta Conduit Hall/Dock to Biotech Research Area 1
+  > Dock to Deck Beta Security Hall
+      Space Jump Boots and Gravity Suit
 
 ----------------
 Deck Beta Conduit Hall
 Asset id: 3285469806
-> Dock to Connection Elevator to Deck Beta; Heals? False
+> Dock to Connection Elevator to Deck Beta; Heals? False; Spawn Point
   * Normal Door to Connection Elevator to Deck Beta/Dock to Deck Beta Conduit Hall
+  > Dock to Biotech Research Area 1
+      Trivial
 
 > Dock to Biotech Research Area 1; Heals? False
   * Normal Door to Biotech Research Area 1/Dock to Deck Beta Conduit Hall
+  > Dock to Connection Elevator to Deck Beta
+      Trivial
 
 ----------------
 Connection Elevator to Deck Beta
 Asset id: 3832686831
-> Dock to Deck Beta Conduit Hall; Heals? False
+> Dock to Deck Beta Conduit Hall; Heals? False; Spawn Point
   * Normal Door to Deck Beta Conduit Hall/Dock to Connection Elevator to Deck Beta
+  > Dock to Hydro Access Tunnel
+      Space Jump Boots and Gravity Suit
 
 > Dock to Hydro Access Tunnel; Heals? False
   * Normal Door to Hydro Access Tunnel/Dock to Connection Elevator to Deck Beta
+  > Dock to Deck Beta Conduit Hall
+      Space Jump Boots and Gravity Suit
 
 ----------------
 Hydro Access Tunnel
 Asset id: 4290029926
-> Dock to Great Tree Hall; Heals? False
+> Dock to Great Tree Hall; Heals? False; Spawn Point
   * Normal Door to Great Tree Hall/Dock to Hydro Access Tunnel
+  > Dock to Connection Elevator to Deck Beta
+      Morph Ball Bomb and Morph Ball and Gravity Suit
 
 > Dock to Connection Elevator to Deck Beta; Heals? False
   * Normal Door to Connection Elevator to Deck Beta/Dock to Hydro Access Tunnel
+  > Dock to Great Tree Hall
+      Morph Ball Bomb and Morph Ball and Gravity Suit
+  > Pickup (Energy Tank)
+      Morph Ball Bomb and Morph Ball and Gravity Suit
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 68; Major Location? False
+  > Dock to Connection Elevator to Deck Beta
+      Morph Ball Bomb and Morph Ball and Gravity Suit
 
 ----------------
 Great Tree Hall
 Asset id: 4101881435
-> Dock to Hydro Access Tunnel; Heals? False
+> Dock to Hydro Access Tunnel; Heals? False; Spawn Point
   * Normal Door to Hydro Access Tunnel/Dock to Great Tree Hall
+  > Dock to Transport Tunnel E
+      Space Jump Boots
 
 > Dock to Great Tree Chamber; Heals? False
   * Normal Door to Great Tree Chamber/Dock to Great Tree Hall
+  > Dock to Transport Tunnel D
+      Trivial
 
 > Dock to Transport Tunnel D; Heals? False
-  * Normal Door to Transport Tunnel D/Dock to Great Tree Hall
+  * Ice Door to Transport Tunnel D/Dock to Great Tree Hall
+  > Dock to Great Tree Chamber
+      X-Ray Visor and Space Jump Boots
+  > Dock to Life Grove Tunnel
+      Space Jump Boots and Morph Ball and Spider Ball
+  > In front of the Gate
+      After Great Tree Hall Bars Gate
 
 > Dock to Life Grove Tunnel; Heals? False
-  * Normal Door to Life Grove Tunnel/Dock to Great Tree Hall
+  * Ice Door to Life Grove Tunnel/Dock to Great Tree Hall
+  > Dock to Transport Tunnel D
+      Trivial
 
 > Dock to Transport Tunnel E; Heals? False
-  * Normal Door to Transport Tunnel E/Dock to Great Tree Hall
+  * Ice Door to Transport Tunnel E/Dock to Great Tree Hall
+  > Dock to Hydro Access Tunnel
+      Trivial
+  > In front of the Gate
+      Space Jump Boots
+
+> Event - Open Gate; Heals? False
+  * Event Great Tree Hall Bars Gate
+  > In front of the Gate
+      Trivial
+
+> In front of the Gate; Heals? False
+  > Dock to Transport Tunnel D
+      After Great Tree Hall Bars Gate
+  > Dock to Transport Tunnel E
+      Trivial
+  > Event - Open Gate
+      Morph Ball and Boost Ball
 
 ----------------
 Great Tree Chamber
 Asset id: 3319178647
-> Dock to Great Tree Hall; Heals? False
+> Dock to Great Tree Hall; Heals? False; Spawn Point
   * Normal Door to Great Tree Hall/Dock to Great Tree Chamber
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 69; Major Location? False
+  > Dock to Great Tree Hall
+      Trivial
 
 ----------------
 Transport Tunnel D
 Asset id: 445853540
-> Dock to Transport to Chozo Ruins South; Heals? False
-  * Normal Door to Transport to Chozo Ruins South/Dock to Transport Tunnel D
+> Dock to Transport to Chozo Ruins South; Heals? False; Spawn Point
+  * Ice Door to Transport to Chozo Ruins South/Dock to Transport Tunnel D
+  > Dock to Great Tree Hall
+      Trivial
 
 > Dock to Great Tree Hall; Heals? False
-  * Normal Door to Great Tree Hall/Dock to Transport Tunnel D
+  * Ice Door to Great Tree Hall/Dock to Transport Tunnel D
+  > Dock to Transport to Chozo Ruins South
+      Trivial
 
 ----------------
 Life Grove Tunnel
 Asset id: 3036397301
-> Dock to Great Tree Hall; Heals? False
+> Dock to Great Tree Hall; Heals? False; Spawn Point
   * Normal Door to Great Tree Hall/Dock to Life Grove Tunnel
+  > Dock to Life Grove
+      Morph Ball Bomb and Power Bomb and Morph Ball and Boost Ball
+  > Pickup (Missile Expansion)
+      Morph Ball Bomb and Power Bomb and Morph Ball and Boost Ball
 
 > Dock to Life Grove; Heals? False
   * Normal Door to Life Grove/Dock to Life Grove Tunnel
+  > Dock to Great Tree Hall
+      Morph Ball Bomb and Power Bomb and Morph Ball and Boost Ball
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 70; Major Location? False
+  > Dock to Great Tree Hall
+      Morph Ball Bomb and Power Bomb and Morph Ball and Boost Ball
+  > Dock to Life Grove
+      Morph Ball Bomb and Morph Ball and Boost Ball
 
 ----------------
 Transport Tunnel E
 Asset id: 2637367815
-> Dock to Transport to Phazon Mines East; Heals? False
-  * Normal Door to Transport to Phazon Mines East/Dock to Transport Tunnel E
+> Dock to Transport to Phazon Mines East; Heals? False; Spawn Point
+  * Ice Door to Transport to Phazon Mines East/Dock to Transport Tunnel E
+  > Dock to Great Tree Hall
+      Trivial
 
 > Dock to Great Tree Hall; Heals? False
-  * Normal Door to Great Tree Hall/Dock to Transport Tunnel E
+  * Ice Door to Great Tree Hall/Dock to Transport Tunnel E
+  > Dock to Transport to Phazon Mines East
+      Trivial
 
 ----------------
 Transport to Chozo Ruins South
 Asset id: 212145392
 > Dock to Transport Tunnel D; Heals? False
-  * Normal Door to Transport Tunnel D/Dock to Transport to Chozo Ruins South
+  * Ice Door to Transport Tunnel D/Dock to Transport to Chozo Ruins South
+  > Elevator to Chozo Ruins - Transport to Tallon Overworld South
+      Scan Visor
+
+> Elevator to Chozo Ruins - Transport to Tallon Overworld South; Heals? False; Spawn Point
+  * Teleporter to Chozo Ruins - Transport to Tallon Overworld South
+  > Dock to Transport Tunnel D
+      Trivial
 
 ----------------
 Life Grove
 Asset id: 2263559682
-> Dock to Life Grove Tunnel; Heals? False
+> Dock to Life Grove Tunnel; Heals? False; Spawn Point
   * Normal Door to Life Grove Tunnel/Dock to Life Grove
+  > Pickup (X-Ray Visor)
+      Trivial
+
+> Pickup (X-Ray Visor); Heals? False
+  * Pickup 71; Major Location? True
+  > Behind PB wall
+      Power Bomb and X-Ray Visor and Morph Ball
+
+> Pickup (Artifact of Chozo); Heals? False
+  * Pickup 72; Major Location? True
+  > Dock to Life Grove Tunnel
+      Power Beam and Morph Ball Bomb and Space Jump Boots and Morph Ball
+  > Behind PB wall
+      Trivial
+
+> Behind PB wall; Heals? False
+  > Dock to Life Grove Tunnel
+      Power Beam and X-Ray Visor and Space Jump Boots
+  > Pickup (X-Ray Visor)
+      Power Bomb and X-Ray Visor and Morph Ball
+  > Pickup (Artifact of Chozo)
+      Morph Ball Bomb and Morph Ball and Boost Ball
 
 ----------------
 Transport to Phazon Mines East
 Asset id: 2098226800
 > Dock to Transport Tunnel E; Heals? False
-  * Normal Door to Transport Tunnel E/Dock to Transport to Phazon Mines East
+  * Ice Door to Transport Tunnel E/Dock to Transport to Phazon Mines East
+  > Elevator to Phazon Mines - Transport to Tallon Overworld South
+      Scan Visor
+
+> Elevator to Phazon Mines - Transport to Tallon Overworld South; Heals? False; Spawn Point
+  * Teleporter to Phazon Mines - Transport to Tallon Overworld South
+  > Dock to Transport Tunnel E
+      Trivial
 
 ====================
 Chozo Ruins
@@ -1980,6 +2390,13 @@ Transport to Tallon Overworld North
 Asset id: 1047210935
 > Dock to Ruins Entrance; Heals? False
   * Normal Door to Ruins Entrance/Dock to Transport to Tallon Overworld North
+  > Elevator to Tallon Overworld - Transport to Chozo Ruins West
+      Scan Visor
+
+> Elevator to Tallon Overworld - Transport to Chozo Ruins West; Heals? False; Spawn Point
+  * Teleporter to Tallon Overworld - Transport to Chozo Ruins West
+  > Dock to Ruins Entrance
+      Trivial
 
 ----------------
 Ruins Entrance
@@ -2568,10 +2985,24 @@ Transport to Tallon Overworld East
 Asset id: 2784651681
 > Dock to Save Station 3; Heals? False
   * Normal Door to Save Station 3/Dock to Transport to Tallon Overworld East
+  > Elevator to Tallon Overworld - Transport to Chozo Ruins East
+      Scan Visor
+
+> Elevator to Tallon Overworld - Transport to Chozo Ruins East; Heals? False; Spawn Point
+  * Teleporter to Tallon Overworld - Transport to Chozo Ruins East
+  > Dock to Save Station 3
+      Trivial
 
 ----------------
 Transport to Tallon Overworld South
 Asset id: 594418447
 > Dock to Transport Access South; Heals? False
   * Normal Door to Transport Access South/Dock to Transport to Tallon Overworld South
+  > Elevator to Tallon Overworld - Transport to Chozo Ruins South
+      Scan Visor
+
+> Elevator to Tallon Overworld - Transport to Chozo Ruins South; Heals? False; Spawn Point
+  * Teleporter to Tallon Overworld - Transport to Chozo Ruins South
+  > Dock to Transport Access South
+      Trivial
 

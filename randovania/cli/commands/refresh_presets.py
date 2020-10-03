@@ -2,7 +2,7 @@ import json
 from argparse import ArgumentParser
 
 from randovania import get_data_path
-from randovania.layout.preset import read_preset_file, save_preset_file
+from randovania.layout.preset_migration import VersionedPreset
 
 
 def refresh_presets_command_logic(args):
@@ -13,10 +13,9 @@ def refresh_presets_command_logic(args):
 
     for preset_relative_path in preset_list:
         preset_path = base_path.joinpath(preset_relative_path["path"])
-        save_preset_file(
-            read_preset_file(preset_path),
-            preset_path
-        )
+        preset = VersionedPreset.from_file_sync(preset_path)
+        preset.ensure_converted()
+        preset.save_to_file(preset_path)
 
 
 def add_refresh_presets_command(sub_parsers):

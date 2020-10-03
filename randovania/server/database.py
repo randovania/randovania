@@ -8,6 +8,7 @@ import peewee
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
 db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
@@ -56,6 +57,10 @@ def _decode_layout_description(s):
     return LayoutDescription.from_json_dict(json.loads(s))
 
 
+def _datetime_now():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
 class GameSession(BaseModel):
     name = peewee.CharField()
     password = peewee.CharField(null=True)
@@ -63,13 +68,13 @@ class GameSession(BaseModel):
     layout_description_json = peewee.TextField(null=True)
     seed_hash = peewee.CharField(null=True)
     creator = peewee.ForeignKeyField(User)
-    creation_date = peewee.DateTimeField(default=datetime.datetime.now)
+    creation_date = peewee.DateTimeField(default=_datetime_now)
     generation_in_progress = peewee.ForeignKeyField(User, null=True)
 
     @property
     def all_presets(self) -> List[Preset]:
         return [
-            Preset.from_json_dict(json.loads(preset.preset))
+            VersionedPreset(json.loads(preset.preset)).get_preset()
             for preset in sorted(self.presets, key=lambda it: it.row)
         ]
 
@@ -109,14 +114,14 @@ class GameSession(BaseModel):
         def _describe_action(action: GameSessionTeamAction) -> dict:
             provider: int = action.provider_row
             receiver: int = action.receiver_row
-            time: datetime.datetime = action.time
+            time = datetime.datetime.fromisoformat(action.time)
             target = description.all_patches[provider].pickup_assignment[PickupIndex(action.provider_location_index)]
 
             message = (f"{location_to_name[provider]} found {target.pickup.name} "
                        f"for {location_to_name[receiver]}.")
             return {
                 "message": message,
-                "time": time.isoformat(),
+                "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 
         return {
@@ -166,7 +171,7 @@ class GameSessionMembership(BaseModel):
     row = peewee.IntegerField()
     is_observer = peewee.BooleanField()
     admin = peewee.BooleanField()
-    join_date = peewee.DateTimeField(default=datetime.datetime.now)
+    join_date = peewee.DateTimeField(default=_datetime_now)
     inventory = peewee.TextField(null=True)
 
     @property
@@ -204,7 +209,7 @@ class GameSessionTeamAction(BaseModel):
     provider_location_index = peewee.IntegerField()
     receiver_row = peewee.IntegerField()
 
-    time = peewee.DateTimeField(default=datetime.datetime.now)
+    time = peewee.DateTimeField(default=_datetime_now)
 
     class Meta:
         primary_key = peewee.CompositeKey('session', 'provider_row', 'provider_location_index')
