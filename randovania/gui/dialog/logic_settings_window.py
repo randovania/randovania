@@ -447,7 +447,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     # Starting Area
     def setup_starting_area_elements(self):
-        game_description = default_prime2_game_description()
+        game_description = self.game_description
         world_to_group = {}
         self._starting_location_for_area = {}
 
