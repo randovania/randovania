@@ -119,6 +119,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
 
+-   Abandoned Worksite, method of reaching the item with a Bomb Space Jump without Space Jump (Advanced and above).
+
 -   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
 -   Dark Forgotten Bridge, method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
