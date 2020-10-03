@@ -724,7 +724,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
             presets={
-                i: preset
+                i: preset.get_preset()
                 for i, preset in enumerate(self._game_session.presets)
             },
         )
