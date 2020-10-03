@@ -2,9 +2,9 @@ from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-def test_on_preset_changed(skip_qtbot, preset_manager):
+def test_on_preset_changed(skip_qtbot, default_preset):
     # Setup
-    editor = PresetEditor(preset_manager.default_preset)
+    editor = PresetEditor(default_preset)
     window = LogicSettingsWindow(None, editor)
 
     # Run

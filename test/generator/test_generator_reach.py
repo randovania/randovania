@@ -36,13 +36,13 @@ def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 
 @pytest.fixture(name="test_data")
-def _test_data(preset_manager):
+def _test_data(default_preset):
     data = default_data.decode_default_prime2()
     game = data_reader.decode_data(data)
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
-        presets={0: preset_manager.default_preset},
+        presets={0: default_preset},
     )
     configuration = permalink.get_preset(0).layout_configuration
     patches = game.create_game_patches()
