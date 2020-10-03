@@ -9,9 +9,9 @@ def difficulties_for_trick(world_list: WorldList, trick: SimpleResourceInfo):
 
     for area in world_list.all_areas:
         for _, _, requirement in area.all_connections:
-            for individual in requirement.as_set.all_individual:
-                if individual.resource == trick:
-                    result.add(LayoutTrickLevel.from_number(individual.amount))
+            for resource_requirement in requirement.iterate_resource_requirements():
+                if resource_requirement.resource == trick:
+                    result.add(LayoutTrickLevel.from_number(resource_requirement.amount))
 
     return result
 
@@ -21,8 +21,8 @@ def used_tricks(world_list: WorldList):
 
     for area in world_list.all_areas:
         for _, _, requirement in area.all_connections:
-            for individual in requirement.as_set.all_individual:
-                if individual.resource.resource_type == ResourceType.TRICK:
-                    result.add(individual.resource)
+            for resource_requirement in requirement.iterate_resource_requirements():
+                if resource_requirement.resource.resource_type == ResourceType.TRICK:
+                    result.add(resource_requirement.resource)
 
     return result
