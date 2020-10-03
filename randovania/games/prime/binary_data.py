@@ -4,12 +4,12 @@ from typing import TypeVar, BinaryIO, Dict, Any
 
 import construct
 from construct import Struct, Int32ub, Const, CString, Byte, Rebuild, Embedded, Float32b, Flag, \
-    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Int64ub, Float64b
+    Short, PrefixedArray, Array, Switch, If, VarInt, Sequence, Float64b, Pass
 
 from randovania.game_description.node import LoreType
 
 X = TypeVar('X')
-current_format_version = 7
+current_format_version = 8
 
 _IMPOSSIBLE_SET = {"type": "or", "data": []}
 
@@ -134,23 +134,30 @@ def encode(original_data: Dict, x: BinaryIO) -> None:
         raise ValueError(f"Unexpected fields remaining in data: {list(data.keys())}")
 
 
+def OptionalValue(subcon):
+    return construct.FocusedSeq(
+        "value",
+        present=Rebuild(Flag, construct.this.value != None),
+        value=If(construct.this.present, subcon),
+    )
+
+
 ConstructResourceInfo = Struct(
-    index=Byte,
+    index=VarInt,
     long_name=CString("utf8"),
     short_name=CString("utf8"),
 )
 
 ConstructItemResourceInfo = Struct(
-    index=Int64ub,
+    index=VarInt,
     long_name=CString("utf8"),
     short_name=CString("utf8"),
     max_capacity=Int32ub,
-    _has_memory_offset=Rebuild(Flag, lambda this: this.custom_memory_offset is not None),
-    custom_memory_offset=If(lambda this: this._has_memory_offset, Int32ub),
+    custom_memory_offset=OptionalValue(Int32ub),
 )
 
 ConstructTrickResourceInfo = Struct(
-    index=Byte,
+    index=VarInt,
     long_name=CString("utf8"),
     short_name=CString("utf8"),
     description=CString("utf8"),
@@ -158,7 +165,7 @@ ConstructTrickResourceInfo = Struct(
 
 ConstructResourceRequirement = Struct(
     type=Byte,
-    index=Byte,
+    index=VarInt,
     amount=Short,
     negate=Flag,
 )
@@ -172,38 +179,36 @@ ConstructRequirement = Struct(
     type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3),
     data=Switch(lambda this: this.type, requirement_type_map)
 )
-requirement_type_map["and"] = PrefixedArray(Byte, ConstructRequirement)
-requirement_type_map["or"] = PrefixedArray(Byte, ConstructRequirement)
+requirement_type_map["and"] = PrefixedArray(VarInt, ConstructRequirement)
+requirement_type_map["or"] = PrefixedArray(VarInt, ConstructRequirement)
 
 ConstructDockWeakness = Struct(
-    index=Byte,
+    index=VarInt,
     name=CString("utf8"),
     is_blast_door=Flag,
     requirement=ConstructRequirement,
 )
 
 ConstructResourceDatabase = Struct(
-    items=PrefixedArray(Byte, ConstructItemResourceInfo),
-    events=PrefixedArray(Byte, ConstructResourceInfo),
-    tricks=PrefixedArray(Byte, ConstructTrickResourceInfo),
-    damage=PrefixedArray(Byte, Struct(
+    items=PrefixedArray(VarInt, ConstructItemResourceInfo),
+    events=PrefixedArray(VarInt, ConstructResourceInfo),
+    tricks=PrefixedArray(VarInt, ConstructTrickResourceInfo),
+    damage=PrefixedArray(VarInt, Struct(
         Embedded(ConstructResourceInfo),
-        reductions=PrefixedArray(Byte, Struct(
-            index=Byte,
+        reductions=PrefixedArray(VarInt, Struct(
+            index=VarInt,
             multiplier=Float32b,
         )),
     )),
-    versions=PrefixedArray(Byte, ConstructResourceInfo),
-    misc=PrefixedArray(Byte, ConstructResourceInfo),
+    versions=PrefixedArray(VarInt, ConstructResourceInfo),
+    misc=PrefixedArray(VarInt, ConstructResourceInfo),
     requirement_template=PrefixedArray(VarInt, Sequence(CString("utf8"), ConstructRequirement))
 )
 
 ConstructEchoesBeamConfiguration = Struct(
-    item_index=Byte,
-    _has_ammo_a=Rebuild(Flag, lambda this: this.ammo_a is not None),
-    ammo_a=If(lambda this: this._has_ammo_a, Byte),
-    _has_ammo_b=Rebuild(Flag, lambda this: this.ammo_b is not None),
-    ammo_b=If(lambda this: this._has_ammo_b, Byte),
+    item_index=VarInt,
+    ammo_a=OptionalValue(Byte),
+    ammo_b=OptionalValue(Byte),
     uncharged_cost=Byte,
     charged_cost=Byte,
     combo_missile_cost=Byte,
@@ -212,13 +217,13 @@ ConstructEchoesBeamConfiguration = Struct(
 
 ConstructEchoesGameSpecific = Struct(
     energy_per_tank=Float32b,
-    beam_configurations=PrefixedArray(Byte, ConstructEchoesBeamConfiguration),
+    beam_configurations=PrefixedArray(VarInt, ConstructEchoesBeamConfiguration),
 )
 
 ConstructResourceGain = Struct(
     resource_type=Byte,
-    resource_index=Byte,
-    amount=Short,
+    resource_index=VarInt,
+    amount=VarInt,
 )
 
 ConstructLoreType = construct.Enum(Byte, **{lore_type.value: i for i, lore_type in enumerate(LoreType)})
@@ -232,43 +237,41 @@ ConstructNodeCoordinates = Struct(
 ConstructNode = Struct(
     name=CString("utf8"),
     heal=Flag,
-    _has_coordinates=Rebuild(Flag, lambda this: this.coordinates is not None),
-    coordinates=If(lambda this: this._has_coordinates, ConstructNodeCoordinates),
+    coordinates=OptionalValue(ConstructNodeCoordinates),
     node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5, logbook=6),
     data=Switch(
         lambda this: this.node_type,
         {
             "dock": Struct(
                 dock_index=Byte,
-                connected_area_asset_id=Int32ub,
+                connected_area_asset_id=VarInt,
                 connected_dock_index=Byte,
                 dock_type=Byte,
-                dock_weakness_index=Byte,
+                dock_weakness_index=VarInt,
                 _=Const(b"\x00\x00\x00"),
             ),
             "pickup": Struct(
-                pickup_index=Byte,
+                pickup_index=VarInt,
                 major_location=Flag,
             ),
             "teleporter": Struct(
-                destination_world_asset_id=Int32ub,
-                destination_area_asset_id=Int32ub,
-                teleporter_instance_id=Int32ub,
-                _has_scan_asset_id=Rebuild(Flag, lambda this: this.scan_asset_id is not None),
-                scan_asset_id=If(lambda this: this._has_scan_asset_id, Int32ub),
+                destination_world_asset_id=VarInt,
+                destination_area_asset_id=VarInt,
+                teleporter_instance_id=VarInt,
+                scan_asset_id=OptionalValue(VarInt),
                 keep_name_when_vanilla=Flag,
                 editable=Flag,
             ),
             "event": Struct(
-                event_index=Byte,
+                event_index=VarInt,
             ),
             "translator_gate": Struct(
-                gate_index=Byte,
+                gate_index=VarInt,
             ),
             "logbook": Struct(
-                string_asset_id=Int32ub,
+                string_asset_id=VarInt,
                 lore_type=ConstructLoreType,
-                extra=Byte,
+                extra=VarInt,
             )
         }
     )
@@ -277,9 +280,9 @@ ConstructNode = Struct(
 ConstructArea = Struct(
     name=CString("utf8"),
     in_dark_aether=Flag,
-    asset_id=Int32ub,
-    _node_count=Rebuild(Byte, lambda this: len(this.nodes)),
-    default_node_index=Byte,
+    asset_id=VarInt,
+    _node_count=Rebuild(VarInt, construct.len_(construct.this.nodes)),
+    default_node_index=OptionalValue(VarInt),
     valid_starting_location=Flag,
     nodes=Array(lambda this: this._node_count, ConstructNode),
     connections=Array(
@@ -291,9 +294,15 @@ ConstructArea = Struct(
 ConstructWorld = Struct(
     name=CString("utf8"),
     dark_name=CString("utf8"),
-    asset_id=Int32ub,
-    areas=PrefixedArray(Byte, ConstructArea),
+    asset_id=VarInt,
+    areas=PrefixedArray(VarInt, ConstructArea),
 )
+
+game_specific_map = {
+    1: Struct(),
+    2: ConstructEchoesGameSpecific,
+    3: Struct(),
+}
 
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
@@ -301,17 +310,18 @@ ConstructGame = Struct(
     game=Byte,
     game_name=CString("utf8"),
     resource_database=ConstructResourceDatabase,
-    game_specific=ConstructEchoesGameSpecific,
+    game_specific=Switch(lambda this: this.game, game_specific_map),
     dock_weakness_database=Struct(
-        door=PrefixedArray(Byte, ConstructDockWeakness),
-        portal=PrefixedArray(Byte, ConstructDockWeakness),
-        morph_ball=PrefixedArray(Byte, ConstructDockWeakness),
+        door=PrefixedArray(VarInt, ConstructDockWeakness),
+        portal=PrefixedArray(VarInt, ConstructDockWeakness),
+        morph_ball=PrefixedArray(VarInt, ConstructDockWeakness),
     ),
     victory_condition=ConstructRequirement,
     starting_location=Struct(
-        world_asset_id=Int32ub,
-        area_asset_id=Int32ub,
+        world_asset_id=VarInt,
+        area_asset_id=VarInt,
     ),
-    initial_states=PrefixedArray(Byte, construct.Sequence(CString("utf8"), PrefixedArray(Byte, ConstructResourceGain))),
-    worlds=PrefixedArray(Byte, ConstructWorld),
+    initial_states=PrefixedArray(VarInt, construct.Sequence(CString("utf8"),
+                                                            PrefixedArray(VarInt, ConstructResourceGain))),
+    worlds=PrefixedArray(VarInt, ConstructWorld),
 )
