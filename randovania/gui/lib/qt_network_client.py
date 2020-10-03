@@ -81,7 +81,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         fernet = Fernet(self.configuration["guest_secret"].encode("ascii"))
         login_request = fernet.encrypt(json.dumps({
             "name": name,
-            "date": datetime.datetime.now().isoformat(),
+            "date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         }).encode("utf-8"))
 
         new_session = await self._emit_with_result("login_with_guest", login_request)

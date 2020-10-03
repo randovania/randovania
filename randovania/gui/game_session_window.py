@@ -620,7 +620,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.history_table_widget.setRowCount(len(self._game_session.actions))
         for i, action in enumerate(self._game_session.actions):
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
-            self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.strftime("%H:%M")))
+            self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
 
     async def update_multiworld_client_status(self):
         game_session_in_progress = self._game_session.state == GameSessionState.IN_PROGRESS
@@ -628,8 +628,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         if game_session_in_progress:
             if not self.multiworld_client.is_active:
                 you = self._game_session.players[self.network_client.current_user.id]
-                persist_path = self.network_client.server_data_path.joinpath(
-                    f"game_session_{self._game_session.id}_{you.row}.json")
+                session_id = f"{self._game_session.id}_{self._game_session.seed_hash}_{you.row}"
+                persist_path = self.network_client.server_data_path.joinpath(f"game_session_{session_id}.json")
                 await self.multiworld_client.start(persist_path)
         elif self.multiworld_client.is_active:
             await self.multiworld_client.stop()

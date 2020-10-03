@@ -4,7 +4,8 @@ from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
 
-from randovania.game_description import data_reader, data_writer
+import randovania.game_description.pretty_print
+from randovania.game_description import data_reader, data_writer, pretty_print
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name, MissingResource
 from randovania.game_description.resources.resource_info import ResourceInfo
@@ -100,7 +101,7 @@ def view_area_command_logic(args):
         print(f"Unknown area named '{args.area}' in world {world}. Options:\n{options}")
         raise SystemExit(1)
 
-    data_writer.pretty_print_area(game, area)
+    randovania.game_description.pretty_print.pretty_print_area(game, area)
 
 
 def load_game_description(args) -> GameDescription:
@@ -141,7 +142,7 @@ def export_areas_command_logic(args):
     output_file: Path = args.output_file
 
     with output_file.open("w", encoding="utf-8") as output:
-        data_writer.write_human_readable_world_list(gd, output)
+        pretty_print.write_human_readable_world_list(gd, output)
 
 
 def export_areas_command(sub_parsers):

@@ -22,11 +22,12 @@ def set_dark_theme(active: bool):
             padding-right: 10px;
         }
         QPushButton {
-            min-width: 40px;
+            min-width: 60px;
         }
         QToolButton {
             border: 1px solid #32414B;
         }
+
             """
     else:
         style = ""

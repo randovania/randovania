@@ -61,7 +61,7 @@ _TRICK_LEVEL_DESCRIPTION = {
     LayoutTrickLevel.EXPERT: ["This mode expands on Advanced with additional tricks, such as Grand Abyss scan dash."],
     LayoutTrickLevel.HYPERMODE: [
         "This mode considers every single trick and path known to Randovania as valid, "
-        "such as Polluted Mire without Space Jump. No OOB is included."
+        "such as Polluted Mire without Space Jump. Out of Bounds is currently not included."
     ],
     LayoutTrickLevel.MINIMAL_LOGIC: [
         "This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind "
