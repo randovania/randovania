@@ -2,7 +2,7 @@ import copy
 import dataclasses
 from random import Random
 
-from randovania.game_description import default_database
+from randovania.game_description import default_database, data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.game_description import GameDescription
@@ -61,7 +61,7 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
         if rng is None:
             raise MissingRng("Elevator")
 
-        world_list = default_database.default_prime2_game_description().world_list
+        world_list = data_reader.decode_data(layout_configuration.game_data).world_list
         areas_to_not_change = {
             2278776548,  # Sky Temple Gateway
             2068511343,  # Sky Temple Energy Controller

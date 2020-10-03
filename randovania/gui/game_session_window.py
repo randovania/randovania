@@ -30,6 +30,7 @@ from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
@@ -361,7 +362,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     async def _row_show_preset_summary(self, row: RowWidget):
         row_index = self.rows.index(row)
-        preset = self._game_session.presets[row_index]
+        preset = self._game_session.presets[row_index].get_preset()
         description = preset_describer.merge_categories(preset_describer.describe(preset))
 
         message_box = QtWidgets.QMessageBox(self)
@@ -386,9 +387,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
             return
 
         row_index = self.rows.index(row)
-        preset = self._game_session.presets[row_index]
-
-        editor = PresetEditor(preset)
+        editor = PresetEditor(self._game_session.presets[row_index].get_preset())
         self._logic_settings_window = LogicSettingsWindow(None, editor)
         self._logic_settings_window._game_session_row = row
 
@@ -401,7 +400,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         if result == QtWidgets.QDialog.Accepted:
             await self._admin_global_action(
                 SessionAdminGlobalAction.CHANGE_ROW,
-                (row_index, editor.create_custom_preset_with().as_json))
+                (row_index, VersionedPreset.with_preset(editor.create_custom_preset_with()).as_json))
 
     @asyncSlot()
     @handle_network_errors
