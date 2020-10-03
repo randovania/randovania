@@ -1,4 +1,5 @@
 import contextlib
+import datetime
 import json
 from unittest.mock import MagicMock, PropertyMock, patch, call
 
@@ -477,7 +478,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
     layout_description.as_json = "some_json_string"
-    layout_description.permalink.presets = {i: preset_manager.default_preset for i in (0, 1)}
+    layout_description.permalink.presets = {i: preset_manager.default_preset.get_preset() for i in (0, 1)}
 
     # Run
     game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
@@ -657,3 +658,58 @@ def test_verify_no_layout_description(clean_database):
 
     with pytest.raises(InvalidAction):
         game_session._verify_in_setup(session)
+
+
+def test_game_session_request_update(clean_database, mocker):
+    mock_layout = mocker.patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
+    target = mock_layout.return_value.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
+    target.pickup.name = "The Pickup"
+    mock_layout.return_value.shareable_word_hash = "Words of O-Lir"
+    mock_layout.return_value.shareable_hash = "ABCDEFG"
+    mock_layout.return_value.permalink.spoiler = True
+
+    user1 = database.User.create(id=1234, name="The Name")
+    user2 = database.User.create(id=1235, name="Other")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1,
+                                          layout_description_json="{}")
+    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    database.GameSessionMembership.create(user=user2, session=session, row=1, is_observer=False, admin=False)
+    database.GameSessionTeamAction.create(session=session, provider_row=1, provider_location_index=0, receiver_row=0,
+                                          time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
+
+    # Run
+    result = game_session.game_session_request_update(MagicMock(), 1)
+
+    # Assert
+    assert result == {
+        "id": 1,
+        "name": "Debug",
+        "state": GameSessionState.IN_PROGRESS.value,
+        "players": [
+            {
+                "id": 1234,
+                "name": "The Name",
+                "row": 0,
+                "is_observer": False,
+                "admin": True,
+            },
+            {
+                "id": 1235,
+                "name": "Other",
+                "row": 1,
+                "is_observer": False,
+                "admin": False,
+            },
+        ],
+        "presets": [],
+        "actions": [
+            {
+                "message": "Other found The Pickup for The Name.",
+                "time": "2020-05-02T10:20:00+00:00",
+            }
+        ],
+        "spoiler": True,
+        "word_hash": "Words of O-Lir",
+        "seed_hash": "ABCDEFG",
+        "generation_in_progress": None,
+    }

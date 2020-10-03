@@ -3,7 +3,7 @@ import dataclasses
 import functools
 import json
 from functools import partial
-from typing import Optional
+from typing import Optional, List
 
 import markdown
 from PySide2 import QtCore, QtWidgets
@@ -271,11 +271,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.track_window(details_window)
 
     # Releases info
-    def request_new_data(self):
-        asyncio.create_task(github_releases_data.get_releases()).add_done_callback(self._on_releases_data)
+    async def request_new_data(self):
+        self._on_releases_data(await github_releases_data.get_releases())
 
-    def _on_releases_data(self, task: asyncio.Task):
-        releases = task.result()
+    def _on_releases_data(self, releases: Optional[List[dict]]):
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
@@ -371,7 +370,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self._data_editor.show()
 
     def _create_open_map_tracker_actions(self):
-        base_layout = self.preset_manager.default_preset.layout_configuration
+        base_layout = self.preset_manager.default_preset.get_preset().layout_configuration
 
         for trick_level in LayoutTrickLevel:
             if trick_level != LayoutTrickLevel.MINIMAL_LOGIC:

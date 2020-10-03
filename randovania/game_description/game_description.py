@@ -1,6 +1,6 @@
 """Classes that describes the raw data of a game world."""
 import copy
-from typing import Iterator, FrozenSet, Dict
+from typing import Iterator, FrozenSet, Dict, Optional
 
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
@@ -12,7 +12,6 @@ from randovania.game_description.requirements import SatisfiableRequirements, Re
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world_list import WorldList
 
 
@@ -39,11 +38,11 @@ class GameDescription:
     victory_condition: Requirement
     starting_location: AreaLocation
     initial_states: Dict[str, ResourceGainTuple]
-    dangerous_resources: FrozenSet[SimpleResourceInfo]
+    _dangerous_resources: Optional[FrozenSet[ResourceInfo]] = None
     world_list: WorldList
 
     def __deepcopy__(self, memodict):
-        return GameDescription(
+        new_game = GameDescription(
             game=self.game,
             game_name=self.game_name,
             resource_database=self.resource_database,
@@ -54,6 +53,8 @@ class GameDescription:
             starting_location=self.starting_location,
             initial_states=copy.copy(self.initial_states),
         )
+        new_game._dangerous_resources = self._dangerous_resources
+        return new_game
 
     def __init__(self,
                  game: int,
@@ -78,13 +79,9 @@ class GameDescription:
         self.initial_states = initial_states
         self.world_list = world_list
 
-        # TODO: refresh dangerous_resources during simplify_connections
-        self.dangerous_resources = frozenset(
-            _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
-            _calculate_dangerous_resources_in_db(self.dock_weakness_database))
-
     def patch_requirements(self, resources, damage_multiplier: float):
         self.world_list.patch_requirements(resources, damage_multiplier)
+        self._dangerous_resources = None
 
     def create_game_patches(self) -> GamePatches:
         elevator_connection = {
@@ -96,6 +93,14 @@ class GameDescription:
 
         return GamePatches(None, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {},
                            game_specific=self.game_specific)
+
+    @property
+    def dangerous_resources(self) -> FrozenSet[ResourceInfo]:
+        if self._dangerous_resources is None:
+            self._dangerous_resources = frozenset(
+                _calculate_dangerous_resources_in_areas(self.world_list.all_areas)) | frozenset(
+                _calculate_dangerous_resources_in_db(self.dock_weakness_database))
+        return self._dangerous_resources
 
 
 def _resources_for_damage(resource: DamageResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:

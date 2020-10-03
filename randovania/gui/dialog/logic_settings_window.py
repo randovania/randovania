@@ -61,7 +61,7 @@ _TRICK_LEVEL_DESCRIPTION = {
     LayoutTrickLevel.EXPERT: ["This mode expands on Advanced with additional tricks, such as Grand Abyss scan dash."],
     LayoutTrickLevel.HYPERMODE: [
         "This mode considers every single trick and path known to Randovania as valid, "
-        "such as Polluted Mire without Space Jump. No OOB is included."
+        "such as Polluted Mire without Space Jump. Out of Bounds is currently not included."
     ],
     LayoutTrickLevel.MINIMAL_LOGIC: [
         "This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind "
@@ -447,7 +447,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
     # Starting Area
     def setup_starting_area_elements(self):
-        game_description = default_prime2_game_description()
+        game_description = self.game_description
         world_to_group = {}
         self._starting_location_for_area = {}
 

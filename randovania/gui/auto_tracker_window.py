@@ -109,10 +109,10 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
             self._item_to_label[find_resource(item_name)] = label
 
-        add_item(0, 0, "Missile Launcher")
-        add_item(1, 0, "Super Missile")
-        add_item(2, 0, "Seeker Launcher")
-        add_item(3, 0, "Energy Transfer Module")
+        add_item(0, 0, "Charge Beam")
+        add_item(1, 0, "Missile Launcher")
+        add_item(2, 0, "Super Missile")
+        add_item(3, 0, "Seeker Launcher")
 
         add_item(0, 1, "Dark Beam")
         add_item(0, 2, "Light Beam")
@@ -121,8 +121,9 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         add_item(1, 2, "Sunburst")
         add_item(1, 3, "Sonic Boom")
 
-        add_item(2, 2, "Dark Visor")
-        add_item(2, 3, "Echo Visor")
+        add_item(2, 2, "Scan Visor")
+        add_item(2, 3, "Dark Visor")
+        add_item(2, 4, "Echo Visor")
 
         add_item(3, 1, "Space Jump Boots")
         add_item(3, 2, "Gravity Boost")
@@ -141,49 +142,51 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         add_item(1, 6, "Amber Translator")
         add_item(2, 6, "Emerald Translator")
         add_item(3, 6, "Cobalt Translator")
+        
+        add_item(2, 1, "Energy Transfer Module")
 
-        self.inventory_layout.addWidget(create_item("energy_tank", True), 5, 0)
+        self.inventory_layout.addWidget(create_item("energy_tank", True), 5, 1)
         energy_tank_label = QLabel(self.inventory_group)
         energy_tank_label.setText("x 0/14")
         energy_tank_label.setAlignment(Qt.AlignCenter)
-        self.inventory_layout.addWidget(energy_tank_label, 6, 0)
+        self.inventory_layout.addWidget(energy_tank_label, 6, 1)
         self._energy_tank_label = energy_tank_label
 
-        self.inventory_layout.addWidget(create_item("dark_agon_key-recolored", True), 5, 1)
+        self.inventory_layout.addWidget(create_item("dark_agon_key-recolored", True), 5, 2)
         dark_agon_key_label = QLabel(self.inventory_group)
         dark_agon_key_label.setText("x 0/3")
         dark_agon_key_label.setAlignment(Qt.AlignCenter)
-        self.inventory_layout.addWidget(dark_agon_key_label, 6, 1)
+        self.inventory_layout.addWidget(dark_agon_key_label, 6, 2)
         self._labels_for_keys.append((
             dark_agon_key_label,
             (find_resource("Dark Agon Key 1"), find_resource("Dark Agon Key 2"), find_resource("Dark Agon Key 3"))
         ))
 
-        self.inventory_layout.addWidget(create_item("dark_torvus_key-recolored", True), 5, 2)
+        self.inventory_layout.addWidget(create_item("dark_torvus_key-recolored", True), 5, 3)
         dark_torvus_key_label = QLabel(self.inventory_group)
         dark_torvus_key_label.setText("x 0/3")
         dark_torvus_key_label.setAlignment(Qt.AlignCenter)
-        self.inventory_layout.addWidget(dark_torvus_key_label, 6, 2)
+        self.inventory_layout.addWidget(dark_torvus_key_label, 6, 3)
         self._labels_for_keys.append((
             dark_torvus_key_label,
             (find_resource("Dark Torvus Key 1"), find_resource("Dark Torvus Key 2"), find_resource("Dark Torvus Key 3"))
         ))
 
-        self.inventory_layout.addWidget(create_item("ing_hive_key-recolored", True), 5, 3)
+        self.inventory_layout.addWidget(create_item("ing_hive_key-recolored", True), 5, 4)
         ing_hive_key_label = QLabel(self.inventory_group)
         ing_hive_key_label.setText("x 0/3")
         ing_hive_key_label.setAlignment(Qt.AlignCenter)
-        self.inventory_layout.addWidget(ing_hive_key_label, 6, 3)
+        self.inventory_layout.addWidget(ing_hive_key_label, 6, 4)
         self._labels_for_keys.append((
             ing_hive_key_label,
             (find_resource("Ing Hive Key 1"), find_resource("Ing Hive Key 2"), find_resource("Ing Hive Key 3"))
         ))
 
-        self.inventory_layout.addWidget(create_item("sky_temple_key", True), 5, 4)
+        self.inventory_layout.addWidget(create_item("sky_temple_key", True), 5, 5)
         sky_temple_key_label = QLabel(self.inventory_group)
         sky_temple_key_label.setText("x 0/9")
         sky_temple_key_label.setAlignment(Qt.AlignCenter)
-        self.inventory_layout.addWidget(sky_temple_key_label, 6, 4)
+        self.inventory_layout.addWidget(sky_temple_key_label, 6, 5)
         self._labels_for_keys.append((
             sky_temple_key_label,
             (find_resource("Sky Temple Key 1"), find_resource("Sky Temple Key 2"), find_resource("Sky Temple Key 3"),

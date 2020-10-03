@@ -194,12 +194,12 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     assert pickup == decoded
 
 
-def test_round_trip_generated_patches(echoes_game_data, preset_manager):
+def test_round_trip_generated_patches(echoes_game_data, default_preset):
     # Setup
     preset = dataclasses.replace(
-        preset_manager.default_preset,
+        default_preset,
         layout_configuration=dataclasses.replace(
-            preset_manager.default_preset.layout_configuration,
+            default_preset.layout_configuration,
             trick_level_configuration=TrickLevelConfiguration(
                 global_level=LayoutTrickLevel.MINIMAL_LOGIC,
                 specific_levels={},

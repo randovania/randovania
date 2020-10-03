@@ -65,7 +65,7 @@ def login_with_discord(sio: ServerApp, code: str):
 
 def _get_now():
     # For mocking in tests
-    return datetime.datetime.now()
+    return datetime.datetime.now(datetime.timezone.utc)
 
 
 def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):

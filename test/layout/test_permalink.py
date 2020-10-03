@@ -10,20 +10,20 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
-def test_encode(mock_dictionary_byte_hash: MagicMock, preset_manager):
+def test_encode(mock_dictionary_byte_hash: MagicMock, default_preset):
     # Setup
     mock_dictionary_byte_hash.return_value = 120
     link = Permalink(
         seed_number=1000,
         spoiler=True,
-        presets={0: preset_manager.default_preset},
+        presets={0: default_preset},
     )
 
     # Run
     encoded = link.as_str
 
     # Assert
-    mock_dictionary_byte_hash.assert_called_once_with(preset_manager.default_preset.layout_configuration.game_data)
+    mock_dictionary_byte_hash.assert_called_once_with(default_preset.layout_configuration.game_data)
     assert encoded == "oAAAfRQeABo="
 
 
@@ -59,14 +59,14 @@ def test_decode_invalid(invalid: str):
 def test_round_trip(spoiler: bool,
                     patcher: dict,
                     layout: dict,
-                    preset_manager):
+                    default_preset):
     # Setup
     preset = Preset(
-        name="{} Custom".format(preset_manager.default_preset.name),
+        name="{} Custom".format(default_preset.name),
         description="A customized preset.",
-        base_preset_name=preset_manager.default_preset.name,
-        patcher_configuration=dataclasses.replace(preset_manager.default_preset.patcher_configuration, **patcher),
-        layout_configuration=dataclasses.replace(preset_manager.default_preset.layout_configuration, **layout),
+        base_preset_name=default_preset.name,
+        patcher_configuration=dataclasses.replace(default_preset.patcher_configuration, **patcher),
+        layout_configuration=dataclasses.replace(default_preset.layout_configuration, **layout),
     )
 
     link = Permalink(
@@ -95,7 +95,7 @@ def test_decode_old_version(permalink: str, version: int):
 
 
 @patch("randovania.layout.permalink._dictionary_byte_hash", autospec=True)
-def test_decode(mock_dictionary_byte_hash: MagicMock, preset_manager):
+def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
     mock_dictionary_byte_hash.return_value = 120
     # We're mocking the database hash to avoid breaking tests every single time we change the database
 
@@ -106,7 +106,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, preset_manager):
     expected = Permalink(
         seed_number=1000,
         spoiler=True,
-        presets={0: preset_manager.default_preset},
+        presets={0: default_preset},
     )
 
     # Uncomment this line to quickly get the new encoded permalink
@@ -129,16 +129,16 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, preset_manager):
 @patch("randovania.layout.patcher_configuration.PatcherConfiguration.bit_pack_unpack")
 def test_decode_mock_other(mock_packer_unpack: MagicMock,
                            mock_layout_unpack: MagicMock,
-                           preset_manager,
+                           default_preset,
                            encoded,
                            num_players,
                            ):
     patcher_configuration = mock_packer_unpack.return_value
     layout_configuration = mock_layout_unpack.return_value
     preset = Preset(
-        name="{} Custom".format(preset_manager.default_preset.name),
+        name="{} Custom".format(default_preset.name),
         description="A customized preset.",
-        base_preset_name=preset_manager.default_preset.name,
+        base_preset_name=default_preset.name,
         patcher_configuration=patcher_configuration,
         layout_configuration=layout_configuration,
     )
@@ -166,20 +166,20 @@ def test_decode_mock_other(mock_packer_unpack: MagicMock,
     mock_packer_unpack.assert_called_once()
     mock_layout_unpack.assert_called_once()
     patcher_configuration.bit_pack_encode.assert_called_once_with(
-        {"reference": preset_manager.default_preset.patcher_configuration})
+        {"reference": default_preset.patcher_configuration})
     layout_configuration.bit_pack_encode.assert_called_once_with(
-        {"reference": preset_manager.default_preset.layout_configuration})
+        {"reference": default_preset.layout_configuration})
 
 
 @patch("randovania.layout.permalink.Permalink.bit_pack_encode", autospec=True)
 def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
-                                 preset_manager):
+                                 default_preset):
     # Setup
     mock_bit_pack_encode.return_value = []
     link = Permalink(
         seed_number=1000,
         spoiler=True,
-        presets={0: preset_manager.default_preset},
+        presets={0: default_preset},
     )
 
     # Run
