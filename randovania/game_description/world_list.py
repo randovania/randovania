@@ -141,7 +141,7 @@ class WorldList:
 
     def resolve_teleporter_connection(self, connection: AreaLocation) -> Node:
         area = self.area_by_area_location(connection)
-        if area.default_node_index == 255:
+        if area.default_node_index is None:
             raise IndexError("Area '{}' does not have a default_node_index".format(area.name))
         return area.nodes[area.default_node_index]
 
