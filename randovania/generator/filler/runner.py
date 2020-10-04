@@ -69,7 +69,7 @@ def add_hints_precision(patches: GamePatches,
     hints_to_replace = {
         asset: hint
         for asset, hint in patches.hints.items()
-        if hint.precision is None
+        if hint.precision is None and hint.hint_type == HintType.LOCATION
     }
 
     asset_ids = list(hints_to_replace.keys())
@@ -99,9 +99,9 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
     """
 
     hints_to_replace = {
-        asset: dataclasses.replace(hint, precision=PrecisionPair.joke(), hint_type=HintType.JOKE)
+        asset: dataclasses.replace(hint, hint_type=HintType.JOKE)
         for asset, hint in patches.hints.items()
-        if hint.precision
+        if hint.precision is None and hint.hint_type == HintType.LOCATION
     }
 
     return dataclasses.replace(patches, hints={

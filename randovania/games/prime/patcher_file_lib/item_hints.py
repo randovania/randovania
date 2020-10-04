@@ -1,5 +1,5 @@
 from random import Random
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple
 
 from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.game_patches import GamePatches
@@ -56,28 +56,6 @@ _PRIME_3_ITEMS = [
     "Hyper Grapple",
 ]
 
-_PRIME_1_LOCATIONS = [
-    "Hive Totem",
-    "Ruined Shrine",
-    "Burn Dome",
-    "Sunchamber",
-    "Quarantine Cave",
-    "Gravity Chamber",
-    "Elite Research",
-    "Life Grove",
-    "Phendrana Shorelines",
-    "Plasma Processing",
-    "Elite Quarters",
-]
-
-_PRIME_3_LOCATIONS = [
-    "Docking Hub Alpha",
-    "Command Vault",
-    "Proving Grounds",
-    "Temple of Bryyo",
-    "Tower",
-]
-
 _DET_AN = [
     "Annihilator Beam",
     "Amber Translator",
@@ -100,11 +78,26 @@ _GUARDIAN_NAMES = {
 }
 
 _HINT_MESSAGE_TEMPLATES = {
-    HintType.KEYBEARER: "The Flying Ing Cache in {node} contains {determiner}{pickup}.",
-    HintType.GUARDIAN: "{node} is guarding {determiner}{pickup}.",
-    HintType.LIGHT_SUIT_LOCATION: "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.",
-    HintType.LOCATION: "{determiner}{pickup} can be found in {node}.",
+    HintLocationPrecision.KEYBEARER: "The Flying Ing Cache in {node} contains {determiner}{pickup}.",
+    HintLocationPrecision.GUARDIAN: "{node} is guarding {determiner}{pickup}.",
+    HintLocationPrecision.LIGHT_SUIT_LOCATION: "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.",
+    HintLocationPrecision.DETAILED: "{determiner.title}{pickup} can be found in {node}.",
+    HintLocationPrecision.WORLD_ONLY: "{determiner.title}{pickup} can be found in {node}.",
 }
+
+
+class Determiner:
+    s: str
+
+    def __init__(self, s):
+        self.s = s
+
+    def __format__(self, format_spec):
+        return self.s.__format__(format_spec)
+
+    @property
+    def title(self):
+        return self.s.title()
 
 
 def create_hints(patches: GamePatches,
@@ -120,18 +113,13 @@ def create_hints(patches: GamePatches,
     """
 
     hint_name_creator = LocationHintCreator(world_list)
-    joke_items = sorted(set(_PRIME_1_ITEMS) | set(_PRIME_3_ITEMS))
-    joke_locations = sorted(set(_PRIME_1_LOCATIONS) | set(_PRIME_3_LOCATIONS))
     joke_hints = sorted(_JOKE_HINTS)
-
-    rng.shuffle(joke_items)
-    rng.shuffle(joke_locations)
     rng.shuffle(joke_hints)
 
     hints_for_asset: Dict[int, str] = {}
 
     for asset, hint in patches.hints.items():
-        if hint.precision.is_joke:
+        if hint.hint_type == HintType.JOKE:
             if not joke_hints:
                 joke_hints = sorted(_JOKE_HINTS)
                 rng.shuffle(joke_hints)
@@ -141,40 +129,31 @@ def create_hints(patches: GamePatches,
             target = patches.pickup_assignment.get(hint.target)
 
             # Determine location name
-            if hint.hint_type is HintType.GUARDIAN:
+            if hint.precision.location == HintLocationPrecision.GUARDIAN:
                 node_name = color_text(TextColor.GUARDIAN, _GUARDIAN_NAMES[hint.target])
 
-            elif hint.location_precision == HintLocationPrecision.WRONG_GAME:
-                node_name = color_text(
-                    TextColor.JOKE, "{} (?)".format(joke_locations.pop())
-                    if joke_locations else "an unknown location"
-                )
             else:
                 node_name = color_text(TextColor.LOCATION, hint_name_creator.index_node_name(
                     hint.target,
-                    hint.location_precision != HintLocationPrecision.DETAILED
+                    hint.precision.location == HintLocationPrecision.WORLD_ONLY
                 ))
 
             # Determine pickup name
             if target is not None:
                 is_joke, determiner, pickup_name = _calculate_pickup_hint(
-                    hint.item_precision,
+                    hint.precision.item,
                     _calculate_determiner(patches.pickup_assignment, target.pickup),
                     target.pickup,
-                    joke_items,
                 )
             else:
                 is_joke = False
                 determiner = "the " if len(patches.pickup_assignment) == 118 else "an "
                 pickup_name = "Energy Transfer Module"
 
-            if hint.hint_type is HintType.LOCATION:
-                determiner = determiner.title()
-
             pickup_name = color_text(TextColor.JOKE if is_joke else TextColor.ITEM, pickup_name)
-            message = _HINT_MESSAGE_TEMPLATES[hint.hint_type].format(determiner=determiner,
-                                                                     pickup=pickup_name,
-                                                                     node=node_name)
+            message = _HINT_MESSAGE_TEMPLATES[hint.precision.location].format(determiner=Determiner(determiner),
+                                                                              pickup=pickup_name,
+                                                                              node=node_name)
         hints_for_asset[asset.asset_id] = message
 
     return [
@@ -190,12 +169,8 @@ def create_hints(patches: GamePatches,
 def _calculate_pickup_hint(precision: HintItemPrecision,
                            determiner: str,
                            pickup: PickupEntry,
-                           joke_items: List[str],
                            ) -> Tuple[bool, str, str]:
-    if precision is HintItemPrecision.WRONG_GAME:
-        return True, "the ", joke_items.pop() + " (?)"
-
-    elif precision is HintItemPrecision.GENERAL_CATEGORY:
+    if precision is HintItemPrecision.GENERAL_CATEGORY:
         if pickup.item_category.is_major_category:
             return False, "a ", "major upgrade"
         elif pickup.item_category.is_key:

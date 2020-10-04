@@ -51,7 +51,7 @@ def test_create_hints_nothing(empty_patches):
         empty_patches,
         hints={
             logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair.detailed(),
+                                          PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -67,17 +67,15 @@ def test_create_hints_nothing(empty_patches):
     ]
 
 
-@pytest.mark.parametrize("hint_type", [HintType.LOCATION, HintType.KEYBEARER])
+@pytest.mark.parametrize("hint_type", [HintType.LOCATION, HintType.JOKE])
 @pytest.mark.parametrize("item", [
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
-    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;X-Ray Visor (?)&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;World - Area&pop;"),
     (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#FF3333;World&pop;"),
-    (HintLocationPrecision.WRONG_GAME, "&push;&main-color=#45F731;Tower (?)&pop;"),
 ])
 def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, location):
     # Setup
@@ -102,13 +100,12 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
-    if location[0] == HintLocationPrecision.WRONG_GAME and item[0] == HintItemPrecision.WRONG_GAME:
-        message = "&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!" \
-                  " Energized Safe Zones don't last forever!&pop;"
-    elif hint_type == HintType.LOCATION:
+    if hint_type == HintType.JOKE:
+        message = ("&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!"
+                   " Energized Safe Zones don't last forever!&pop;")
+    else:
         message = "{} can be found in {}.".format(item[1][0].upper() + item[1][1:], location[1])
-    elif hint_type == HintType.KEYBEARER:
-        message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
+    # message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
 
 
@@ -121,7 +118,6 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
-    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;X-Ray Visor (?)&pop;"),
 ])
 def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item):
     # Setup
@@ -136,8 +132,8 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
             pickup_index: PickupTarget(pickup, 0),
         },
         hints={
-            logbook_node.resource(): Hint(HintType.GUARDIAN,
-                                          PrecisionPair(PrecisionPair.detailed(), item[0]),
+            logbook_node.resource(): Hint(HintType.LOCATION,
+                                          PrecisionPair(HintLocationPrecision.GUARDIAN, item[0]),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -154,14 +150,8 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
-    (HintItemPrecision.WRONG_GAME, "the &push;&main-color=#45F731;X-Ray Visor (?)&pop;"),
 ])
-@pytest.mark.parametrize("location", [
-    HintLocationPrecision.DETAILED,
-    HintLocationPrecision.WORLD_ONLY,
-    HintLocationPrecision.WRONG_GAME,
-])
-def test_create_hints_light_suit_location(empty_patches, pickup, item, location):
+def test_create_hints_light_suit_location(empty_patches, pickup, item):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
@@ -174,8 +164,8 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item, location)
             pickup_index: PickupTarget(pickup, 0),
         },
         hints={
-            logbook_node.resource(): Hint(HintType.LIGHT_SUIT_LOCATION,
-                                          PrecisionPair(location, item[0]),
+            logbook_node.resource(): Hint(HintType.LOCATION,
+                                          PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0]),
                                           pickup_index)
         })
     rng = MagicMock()
@@ -184,9 +174,5 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item, location)
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
-    if location is HintLocationPrecision.WRONG_GAME and item[0] is HintItemPrecision.WRONG_GAME:
-        message = "&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!" \
-                  " Energized Safe Zones don't last forever!&pop;"
-    else:
-        message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
+    message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]

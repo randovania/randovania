@@ -32,8 +32,8 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": ['BQ7pCYAawGA=', "Screw Attack"]},
-        {"hint": [1000, {"hint_type": "location", "location_precision": "detailed",
-                         "item_precision": "detailed", "target": 50}]},
+        {"hint": [1000, {"hint_type": "location", "precision": {"location": "detailed", "item": "detailed"},
+                         "target": 50}]},
     ],
     name="patches_with_data")
 def _patches_with_data(request, echoes_game_data, echoes_item_database):
