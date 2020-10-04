@@ -3683,7 +3683,7 @@ Asset id: 1970603146
 > Event - Amorbis; Heals? True
   * Event Amorbis
   > Pickup (Dark Suit)
-      Normal Damage ≥ 15 and Dark World Damage ≥ 15 and Activate Safe Zone
+      Normal Damage ≥ 20 and Dark World Damage ≥ 15 and Activate Safe Zone
 
 > Safe Zone (Dark Agon Temple Access Side); Heals? False
   > Door to Dark Agon Temple Access
@@ -6802,10 +6802,8 @@ Asset id: 3000230508
 
 > Door to Save Station 2; Heals? True
   * Missile Blast Shield to Save Station 2/Door to Undertemple Shaft
-  > Door to Undertemple Access
-      Trivial
   > Spawn Point
-      Trivial
+      Dark World Damage ≥ 5 and Activate Safe Zone
 
 > Door to Sacrificial Chamber Tunnel; Heals? False
   * Normal Door to Sacrificial Chamber Tunnel/Door to Undertemple Shaft
@@ -6971,12 +6969,18 @@ Asset id: 1709535693
 > Door to Sacrificial Chamber; Heals? False
   * Normal Door to Sacrificial Chamber/Door to Sacrificial Chamber Tunnel
   > Door to Undertemple Shaft
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 95
+          Morph Ball and Dark World Damage ≥ 85
+          Dark World Damage ≥ 45 and Enabled Drops Refill Health
 
 > Door to Undertemple Shaft; Heals? False; Spawn Point
   * Normal Door to Undertemple Shaft/Door to Sacrificial Chamber Tunnel
   > Door to Sacrificial Chamber
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 110
+          Morph Ball and Dark World Damage ≥ 100
+          Dark World Damage ≥ 70 and Enabled Drops Refill Health
 
 ----------------
 Save Station 2
@@ -7519,74 +7523,79 @@ Asset id: 3366472600
 ----------------
 Sacrificial Chamber
 Asset id: 1654100212
-> Door to Undertransit Two; Heals? True
+> Door to Undertransit Two; Heals? False
   * Dark Door to Undertransit Two/Door to Sacrificial Chamber
-  > Room Center
+  > Front of Broken Statue
       Any of the following:
-          Before Grapple Guardian
-          Morph Ball and Power Bomb
+          Before Grapple Guardian and Dark World Damage ≥ 7
+          Morph Ball and Power Bomb and Dark World Damage ≥ 20
 
-> Door to Sacrificial Chamber Tunnel; Heals? True; Spawn Point
+> Door to Sacrificial Chamber Tunnel; Heals? False; Spawn Point
   * Normal Door to Sacrificial Chamber Tunnel/Door to Sacrificial Chamber
   > Event - Grapple Guardian
-      Scan Visor
-  > Room Center
-      Any of the following:
-          After Grapple Guardian
-          Morph Ball and Power Bomb
+      Scan Visor and Dark World Damage ≥ 6
+  > Front of Broken Statue
+      After Grapple Guardian and Dark World Damage ≥ 15
 
-> Door to Undertransit One; Heals? True
+> Door to Undertransit One; Heals? False
   * Light Door to Undertransit One/Door to Sacrificial Chamber
-  > Room Center
+  > Front of Broken Statue
       Any of the following:
-          Before Grapple Guardian
-          Morph Ball and Power Bomb
+          Before Grapple Guardian and Dark World Damage ≥ 7
+          Morph Ball and Power Bomb and Dark World Damage ≥ 20
 
-> Pickup (Grapple Beam); Heals? True
+> Pickup (Grapple Beam); Heals? False
   * Pickup 86; Major Location? True
-  > Room Center
-      Trivial
+  > Front of Broken Statue
+      Dark World Damage ≥ 5
 
 > Event - Grapple Guardian; Heals? True
   * Event Grapple Guardian
   > Pickup (Grapple Beam)
-      Trivial
+      Dark World Damage ≥ 10
 
-> Room Center; Heals? True
+> Front of Broken Statue; Heals? True
   > Door to Undertransit Two
-      Any of the following:
-          Before Grapple Guardian
-          Morph Ball and Power Bomb
-  > Door to Sacrificial Chamber Tunnel
       All of the following:
-          Morph Ball and Power Bomb and Before Grapple Guardian
+          Dark World Damage ≥ 10
           Any of the following:
-              Movement (Intermediate) and Use Screw Attack (Space Jump)
-              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate)
-  > Door to Undertransit One
+              Before Grapple Guardian
+              Morph Ball and Power Bomb
+  > Door to Sacrificial Chamber Tunnel
       Any of the following:
-          Before Grapple Guardian
-          Morph Ball and Power Bomb
+          Grapple Beam and Movement (Intermediate) and Dark World Damage ≥ 35
+          All of the following:
+              Morph Ball and Power Bomb and Before Grapple Guardian
+              Any of the following:
+                  Movement (Intermediate) and Dark World Damage ≥ 20 and Use Screw Attack (Space Jump)
+                  Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate) and Dark World Damage ≥ 30
+  > Door to Undertransit One
+      All of the following:
+          Dark World Damage ≥ 10
+          Any of the following:
+              Before Grapple Guardian
+              Morph Ball and Power Bomb
   > Top of Broken Statue
       Any of the following:
-          Space Jump Boots or Slope Jump (Intermediate)
-          Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner)
-          Screw Attack and Movement (Intermediate)
+          Space Jump Boots and Dark World Damage ≥ 25
+          Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 50
+          Slope Jump (Intermediate) and Dark World Damage ≥ 30
 
-> Top of Broken Statue; Heals? True
+> Top of Broken Statue; Heals? False
   > Door to Sacrificial Chamber Tunnel
       All of the following:
           After Grapple Guardian
           Any of the following:
-              Grapple Beam or Use Screw Attack (Space Jump)
+              Grapple Beam and Dark World Damage ≥ 30
+              Dark World Damage ≥ 20 and Use Screw Attack (Space Jump)
               All of the following:
-                  Space Jump Boots
+                  Space Jump Boots and Dark World Damage ≥ 40
                   Any of the following:
                       Scan Visor and Combat/Scan Dash (Intermediate)
                       Morph Ball and Roll Jump (Intermediate)
-              Scan Visor and Extended Dash (Expert)
-  > Room Center
-      Trivial
+              Scan Visor and Extended Dash (Expert) and Dark World Damage ≥ 40
+  > Front of Broken Statue
+      After Grapple Guardian and Dark World Damage ≥ 13
 
 ----------------
 Undertemple
