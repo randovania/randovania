@@ -8,7 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   *Major* - Added: Multiworld support yay TODO actual description
+## [2.0.0] - 2020-10-??
+
+This version is dedicated to SpaghettiToastBook, a great member of our community who sadly lost her life this year.
+
+Her contributions to Randovania were invaluable and she'll be missed.
+
+--- 
+
+-   **Major** - New game mode: Multiworld. In this co-op multiplayer mode, there's one different world for each player which is filled with items for specific players.
+
+-   **Major** - Tricks are more organized and can be customized more precisely to a player's desire.
 
 -   Added: An automatic item tracker based on a Dolphin running on the same computer.
 
@@ -79,8 +89,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Minimal Checking -> Minimal Logic
 
 ### Logic Database changes
-
--   *Major* - Changed: Every requirement above the No Tricks difficulty now has a corresponding trick for ease of customization and organization.
 
 #### Added
 
