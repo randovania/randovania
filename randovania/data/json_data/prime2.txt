@@ -6504,12 +6504,14 @@ Asset id: 2504558791
 > Portal to Meditation Vista; Heals? True
   * Scan Portal to Meditation Vista/Portal to Gloom Vista
   > Door to Polluted Mire
-      Trivial
+      Dark World Damage ≥ 8
 
 > Door to Polluted Mire; Heals? False; Spawn Point
   * Normal Door to Polluted Mire/Door to Gloom Vista
   > Portal to Meditation Vista
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 7
+          Morph Ball and Dark World Damage ≥ 3
 
 ----------------
 Ammo Station
@@ -7813,26 +7815,32 @@ Asset id: 2527519102
 ----------------
 Undertransit One
 Asset id: 1557447417
-> Door to Crypt; Heals? True
+> Door to Crypt; Heals? False
   * Normal Door to Crypt/Door to Undertransit One
-  > Door to Sacrificial Chamber
-      Morph Ball and Morph Ball Bomb
-  > Pickup (Missile)
-      All of the following:
-          Morph Ball and Morph Ball Bomb
-          Any of the following:
-              Enabled Room Randomizer
-              Power Bomb and Disabled Room Randomizer
+  > Central Safe Zone
+      Morph Ball and Morph Ball Bomb and Dark World Damage ≥ 15
 
-> Door to Sacrificial Chamber; Heals? True; Spawn Point
+> Door to Sacrificial Chamber; Heals? False; Spawn Point
   * Light Door to Sacrificial Chamber/Door to Undertransit One
-  > Door to Crypt
-      Morph Ball and Morph Ball Bomb
+  > Central Safe Zone
+      Morph Ball and Morph Ball Bomb and Dark World Damage ≥ 15
 
 > Pickup (Missile); Heals? True
   * Pickup 93; Major Location? False
+  > Central Safe Zone
+      Trivial
+
+> Central Safe Zone; Heals? True
   > Door to Crypt
-      Morph Ball and Morph Ball Bomb
+      Morph Ball and Morph Ball Bomb and Dark World Damage ≥ 32
+  > Door to Sacrificial Chamber
+      All of the following:
+          Morph Ball and Morph Ball Bomb and Dark World Damage ≥ 32
+          Any of the following:
+              Enabled Room Randomizer
+              Power Bomb and Disabled Room Randomizer
+  > Pickup (Missile)
+      Morph Ball and Morph Ball Bomb and Dark World Damage ≥ 12
 
 ----------------
 Undertransit Two
@@ -7843,14 +7851,14 @@ Asset id: 1274848825
       All of the following:
           Morph Ball
           Any of the following:
-              Morph Ball Bomb
-              Boost Ball and Wall Boost (Intermediate)
+              Morph Ball Bomb and Dark World Damage ≥ 30
+              Boost Ball and Wall Boost (Intermediate) and Dark World Damage ≥ 25
 
 > Door to Dungeon; Heals? True
   * Normal Door to Dungeon/Door to Undertransit Two
   > Door to Sacrificial Chamber
       All of the following:
-          Morph Ball
+          Morph Ball and Dark World Damage ≥ 35
           Any of the following:
               Morph Ball Bomb
               Boost Ball and Wall Boost (Intermediate)
