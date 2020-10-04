@@ -722,6 +722,131 @@
                 "index": 61,
                 "long_name": "Hall of Remembrance Unlock Door",
                 "short_name": "Event61"
+            },
+            {
+                "index": 70,
+                "long_name": "Main Docking Access Phazon Vines",
+                "short_name": "Event70"
+            },
+            {
+                "index": 71,
+                "long_name": "Transit Hub Bomb Part 3",
+                "short_name": "Event71"
+            },
+            {
+                "index": 72,
+                "long_name": "Aurora Chamber Skytown Vaccine",
+                "short_name": "Event72"
+            },
+            {
+                "index": 73,
+                "long_name": "Aurora Chamber Skytown Circuits",
+                "short_name": "Event73"
+            },
+            {
+                "index": 74,
+                "long_name": "Skybridge Hera Destroy Bridge",
+                "short_name": "Event74"
+            },
+            {
+                "index": 75,
+                "long_name": "Zipline Station Charlie Zipline",
+                "short_name": "Event75"
+            },
+            {
+                "index": 76,
+                "long_name": "Security Tube Phazon Vines",
+                "short_name": "Event76"
+            },
+            {
+                "index": 77,
+                "long_name": "Spire Prep Bomb",
+                "short_name": "Event77"
+            },
+            {
+                "index": 78,
+                "long_name": "Spire Bomb Leviathan Shield",
+                "short_name": "Event78"
+            },
+            {
+                "index": 79,
+                "long_name": "Concourse Bomb Part 2",
+                "short_name": "Event79"
+            },
+            {
+                "index": 80,
+                "long_name": "Concourse Basement Elevator",
+                "short_name": "Event80"
+            },
+            {
+                "index": 81,
+                "long_name": "Concourse Top Elevator",
+                "short_name": "Event81"
+            },
+            {
+                "index": 82,
+                "long_name": "Concourse Ventilation Floors",
+                "short_name": "Event82"
+            },
+            {
+                "index": 83,
+                "long_name": "Chozo Observatory Elevator",
+                "short_name": "Event83"
+            },
+            {
+                "index": 84,
+                "long_name": "Chozo Observatory Pillar",
+                "short_name": "Event84"
+            },
+            {
+                "index": 85,
+                "long_name": "Chozo Observatory Map Data",
+                "short_name": "Event85"
+            },
+            {
+                "index": 86,
+                "long_name": "Observatory Lift Fix Elevator",
+                "short_name": "Event86"
+            },
+            {
+                "index": 87,
+                "long_name": "Gearworks Gears Destroyed",
+                "short_name": "Event87"
+            },
+            {
+                "index": 88,
+                "long_name": "Turbine Chamber Bomb Part 1",
+                "short_name": "Event88"
+            },
+            {
+                "index": 89,
+                "long_name": "Research Pod Lift Seeker Door",
+                "short_name": "Event89"
+            },
+            {
+                "index": 90,
+                "long_name": "Xenoresearch A Seeker Gate",
+                "short_name": "Event90"
+            },
+            {
+                "index": 91,
+                "long_name": "Xenoresearch B Seeker Gate",
+                "short_name": "Event91"
+            },
+            {
+                "index": 92,
+                "long_name": "Xenoresearch Energy Cell Room Seeker Gate",
+                "short_name": "Event92"
+            },
+            {
+                "index": 93,
+                "long_name": "Xenoresearch Power Outage",
+                "short_name": "Event93"
+            },
+            {
+                "index": 94,
+                "long_name": "Steambot Barracks Gate",
+                "short_name": "Event94"
             }
         ],
         "tricks": [],
@@ -11398,8 +11523,13 @@
                                     "data": []
                                 },
                                 "Event - Ghor": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 72,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -11443,8 +11573,27 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Main Docking Access": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2477616633,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 72,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -11627,6 +11776,10 @@
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
+                                "Pickup (Energy Tank)": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Room Center": {
                                     "type": "resource",
                                     "data": {
@@ -11958,6 +12111,89 @@
                                 "Dock to Maintenance Shaft AU": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Inside Aurora Chamber": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2988161223,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Inside Aurora Chamber",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Aurora Lift": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Aurora Vaccine": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Aurora Circuits": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2477616633,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 8,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 72,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Aurora Vaccine",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 72,
+                            "connections": {
+                                "Inside Aurora Chamber": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Aurora Circuits",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 73,
+                            "connections": {
+                                "Inside Aurora Chamber": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -12098,7 +12334,7 @@
                                         "negate": false
                                     }
                                 },
-                                "Room Center": {
+                                "Pillar Platform": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -12132,6 +12368,10 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Pillar Platform": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
                                 }
                             }
                         },
@@ -12143,14 +12383,14 @@
                             "pickup_index": 56,
                             "major_location": false,
                             "connections": {
-                                "Room Center": {
+                                "Pillar Platform": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Room Center",
+                            "name": "Pillar Platform",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "generic",
@@ -12160,10 +12400,27 @@
                                     "data": []
                                 },
                                 "Dock to Maintenance Shaft GP": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                },
+                                "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": []
                                 },
-                                "Pickup (Missile Expansion)": {
+                                "Event - Destroy Bridge": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Destroy Bridge",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 74,
+                            "connections": {
+                                "Dock to Maintenance Shaft GP": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -12240,6 +12497,29 @@
                                 "Floating Platform (Junction)": {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
+                                },
+                                "Event - Zipline": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 522801372,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 536233745,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -12251,29 +12531,6 @@
                             "pickup_index": 57,
                             "major_location": false,
                             "connections": {
-                                "Floating Platform (Junction)": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1296127826,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2988161223,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
                                 "Floating Platform (Powerworks Access)": {
                                     "type": "and",
                                     "data": [
@@ -12308,29 +12565,6 @@
                                 "Dock to Junction": {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
-                                },
-                                "Pickup (Energy Tank)": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2988161223,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1296127826,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
                                 },
                                 "Floating Platform (Powerworks Access)": {
                                     "type": "and",
@@ -12412,6 +12646,18 @@
                                             }
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Zipline",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Floating Platform (Powerworks Access)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -12563,8 +12809,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Security Station": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 76,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -12584,6 +12835,15 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Skytram West": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 76,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Phazon Vines": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -12605,6 +12865,19 @@
                                             }
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Phazon Vines",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 76,
+                            "connections": {
+                                "Dock to Security Station": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -12992,20 +13265,34 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Main Docking Bay": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 522801372,
+                                                "type": 1,
+                                                "index": 70,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 522801372,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -13032,17 +13319,8 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 1432926409,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2353547179,
+                                                "type": 1,
+                                                "index": 70,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -13066,6 +13344,42 @@
                                             ]
                                         }
                                     ]
+                                },
+                                "Event - Phazon Vines": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1432926409,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2353547179,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Phazon Vines",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 70,
+                            "connections": {
+                                "Dock to Main Docking Bay": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -13253,7 +13567,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": 1,
-                                        "index": 6,
+                                        "index": 94,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -13341,7 +13655,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": 1,
-                                        "index": 6,
+                                        "index": 94,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -13379,6 +13693,42 @@
                                     }
                                 },
                                 "Event - Steamlord": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Gate": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 6,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1906007133,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 94,
+                            "connections": {
+                                "Bottom Floor": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -14066,6 +14416,50 @@
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Event - Bomb Part 3": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1470237978,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 79,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Bomb Part 3",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Bomb Part Platform": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -14471,8 +14865,8 @@
                                 "Basement": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
+                                        "type": 1,
+                                        "index": 80,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -14492,6 +14886,15 @@
                                 "1st Floor": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Top Floor": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 81,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -14508,6 +14911,51 @@
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "2nd Floor": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Bomb Part 2": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1470237978,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 88,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Top Elevator": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3086280557,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -14528,11 +14976,59 @@
                                 "1st Floor": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 80,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Basement Elevator": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
                                         "index": 2477616633,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Bomb Part 2",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 79,
+                            "connections": {
+                                "Top Floor": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Basement Elevator",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 80,
+                            "connections": {
+                                "Basement": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Top Elevator",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 81,
+                            "connections": {
+                                "Top Floor": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -14651,7 +15147,12 @@
                             "connected_dock_index": 3,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Zipline Station Delta": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Zipline Station Delta",
@@ -14667,7 +15168,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Concourse": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14692,7 +15198,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Transit Tube A": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Concourse Access B",
@@ -14708,7 +15219,21 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Maintenance Shaft CC": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Transit Tube B": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Transit Tube A",
@@ -14724,7 +15249,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Maintenance Shaft CC": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Transit Tube B",
@@ -14740,7 +15270,21 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Concourse Access B": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Transit Tube A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14765,7 +15309,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Zipline Station Delta": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Zipline Station Delta",
@@ -14781,7 +15330,12 @@
                             "connected_dock_index": 3,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Research Pod Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14806,7 +15360,12 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Save Station C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Zipline Station Delta",
@@ -14822,7 +15381,12 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Save Station C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Save Station C",
@@ -14838,7 +15402,16 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Research Pod Lift": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Zipline Station Delta": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14863,7 +15436,30 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Transit Tube B": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 89,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Transit Tube A": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Seeker Elevator": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3086280557,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Transit Tube B",
@@ -14879,7 +15475,17 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Xenoresearch A Lift": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 89,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Transit Tube A",
@@ -14895,7 +15501,25 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Xenoresearch A Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Seeker Elevator",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 89,
+                            "connections": {
+                                "Dock to Xenoresearch A Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14972,13 +15596,27 @@
                                     "data": []
                                 },
                                 "Pickup (Energy Tank)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2452465320,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 93,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -15019,7 +15657,54 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Xenoresearch B Lift": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2988161223,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 93,
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 90,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Seeker Gate": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3086280557,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Xenoresearch B Lift",
@@ -15035,7 +15720,67 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Xenoresearch A Lift": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2988161223,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 93,
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 90,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Seeker Gate": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3086280557,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Seeker Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 90,
+                            "connections": {
+                                "Dock to Xenoresearch A Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -15060,7 +15805,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Xenoresearch A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Xenoresearch A",
@@ -15076,7 +15826,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Xenoresearch B": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -15102,7 +15857,16 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Energy Cell)": {
+                                "Event - Seeker Gate": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3086280557,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Central Hallways": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -15116,14 +15880,9 @@
                             "pickup_index": 69,
                             "major_location": true,
                             "connections": {
-                                "Dock to Xenoresearch B Lift": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Energy Cell Room": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -15135,20 +15894,180 @@
                             "pickup_index": 70,
                             "major_location": false,
                             "connections": {
-                                "Dock to Xenoresearch B Lift": {
+                                "Event - Xenoresearch Power Outage": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Energy Cell Room",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Pickup (Seeker Missiles)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 93,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Pickup (Energy Cell)": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
-                                        "index": 3086280557,
+                                        "index": 1906007133,
                                         "amount": 1,
                                         "negate": false
                                     }
                                 },
-                                "Pickup (Seeker Missiles)": {
+                                "Event - Energy Cell Seeker Gate": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 93,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Central Hallways": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 93,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 92,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Xenoresearch Power Outage",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 93,
+                            "connections": {
+                                "Energy Cell Room": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Seeker Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 91,
+                            "connections": {
+                                "Dock to Xenoresearch B Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Energy Cell Seeker Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 92,
+                            "connections": {
+                                "Energy Cell Room": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Central Hallways",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Xenoresearch B Lift": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 91,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Energy Cell Room": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 93,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 92,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Seeker Gate": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
-                                        "index": 2452465320,
+                                        "index": 3086280557,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -15180,6 +16099,15 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Maintenance Shaft OB": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 82,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - SA Floors": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -15201,8 +16129,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Concourse": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 82,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        }
+                                    ]
                                 },
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
@@ -15238,6 +16180,19 @@
                             "major_location": false,
                             "connections": {
                                 "Dock to Maintenance Shaft OB": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - SA Floors",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 82,
+                            "connections": {
+                                "Dock to Concourse": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -15382,12 +16337,30 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 1470237978,
+                                                "type": 1,
+                                                "index": 9,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 88,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Berserker Lord": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Bomb Part 1": {
+                                    "type": "and",
+                                    "data": [
                                         {
                                             "type": "resource",
                                             "data": {
@@ -15400,17 +16373,13 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 9,
+                                                "type": 0,
+                                                "index": 1470237978,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         }
                                     ]
-                                },
-                                "Event - Berserker Lord": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
@@ -15436,6 +16405,19 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 9,
+                            "connections": {
+                                "Dock to Broken Lift (Top)": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Bomb Part 1",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 88,
                             "connections": {
                                 "Dock to Broken Lift (Top)": {
                                     "type": "and",
@@ -15663,6 +16645,14 @@
                                     "data": "Use Screw Attack (Space Jump)"
                                 }
                             }
+                        },
+                        {
+                            "name": "Event - Gears Destroyed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 87,
+                            "connections": {}
                         }
                     ]
                 },
@@ -15770,8 +16760,8 @@
                                 "Dock to Chozo Observatory": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
+                                        "type": 1,
+                                        "index": 86,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -15796,11 +16786,32 @@
                                 "Dock to Gearworks": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 86,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Fix Elevator": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
                                         "index": 2477616633,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Fix Elevator",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Chozo Observatory": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -15829,10 +16840,28 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Observatory Lift": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 83,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Botanica": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 84,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Scan Elevator": {
                                     "type": "and",
                                     "data": []
                                 },
-                                "Dock to Botanica": {
+                                "Event - Raise Pillar": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -15854,6 +16883,24 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Event - Map Data": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 84,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Phazite (X-Ray and Nova)"
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -15873,8 +16920,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Maintenance Shaft OB": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 83,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -15892,6 +16944,45 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
+                            "connections": {
+                                "Dock to Maintenance Shaft OB": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Scan Elevator",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 83,
+                            "connections": {
+                                "Dock to Maintenance Shaft OB": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Raise Pillar",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 84,
+                            "connections": {
+                                "Dock to Maintenance Shaft OB": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Map Data",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 85,
                             "connections": {
                                 "Dock to Maintenance Shaft OB": {
                                     "type": "and",
