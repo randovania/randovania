@@ -163,13 +163,28 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.main_tab_widget.setCurrentWidget(self.help_tab)
         self.help_tab_widget.setCurrentWidget(self.tab_faq)
 
+    async def generate_seed_from_permalink(self, permalink):
+        from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+        from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
+
+        def work(progress_update: ProgressUpdateCallable):
+            from randovania.interface_common import simplified_patcher
+            layout = simplified_patcher.generate_layout(progress_update=progress_update,
+                                                        permalink=permalink,
+                                                        options=self._options)
+            progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
+            return layout
+
+        new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+        self.open_game_details(new_layout)
+
     @asyncSlot()
     async def _import_permalink(self):
         dialog = PermalinkDialog()
         result = await async_dialog.execute_dialog(dialog)
         if result == QDialog.Accepted:
             permalink = dialog.get_permalink_from_field()
-            self.generate_seed_tab.generate_seed_from_permalink(permalink)
+            await self.generate_seed_from_permalink(permalink)
 
     def _import_spoiler_log(self):
         json_path = common_qt_lib.prompt_user_for_input_game_log(self)
@@ -185,8 +200,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             return
         result = await async_dialog.execute_dialog(dialog)
         if result == QDialog.Accepted:
-            permalink = dialog.permalink
-            self.generate_seed_tab.generate_seed_from_permalink(permalink)
+            await self.generate_seed_from_permalink(dialog.permalink)
 
     async def _game_session_active(self) -> bool:
         if self.game_session_window is None or self.game_session_window.has_closed:

@@ -117,7 +117,7 @@ async def test_browse_racetime(default_main_window, mocker):
                                        return_value=QDialog.Accepted)
     dialog = mock_new_dialog.return_value
     dialog.refresh = AsyncMock(return_value=True)
-    default_main_window.generate_seed_tab = MagicMock()
+    default_main_window.generate_seed_from_permalink = AsyncMock()
 
     # Run
     await default_main_window._browse_racetime()
@@ -126,4 +126,4 @@ async def test_browse_racetime(default_main_window, mocker):
     mock_new_dialog.assert_called_once_with()
     dialog.refresh.assert_awaited_once_with()
     mock_execute_dialog.assert_awaited_once_with(dialog)
-    default_main_window.generate_seed_tab.generate_seed_from_permalink.assert_called_once_with(dialog.permalink)
+    default_main_window.generate_seed_from_permalink.assert_awaited_once_with(dialog.permalink)
