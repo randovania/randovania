@@ -112,7 +112,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
 
         if self._window_manager.preset_manager.add_new_preset(preset):
             self._create_button_for_preset(preset)
-        self.on_preset_changed(preset)
+        self.on_preset_changed(preset.get_preset())
 
     def _on_customize_button(self):
         editor = PresetEditor(self._current_preset_data.get_preset())
