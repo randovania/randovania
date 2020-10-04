@@ -272,9 +272,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     # Releases info
     async def request_new_data(self):
-        self._on_releases_data(await github_releases_data.get_releases())
+        await self._on_releases_data(await github_releases_data.get_releases())
 
-    def _on_releases_data(self, releases: Optional[List[dict]]):
+    async def _on_releases_data(self, releases: Optional[List[dict]]):
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
@@ -308,7 +308,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.help_tab_widget.addTab(changelog_tab, "Change Log")
 
         if new_change_logs:
-            QMessageBox.information(self, "What's new", markdown.markdown("\n".join(new_change_logs)))
+            await async_dialog.message_box(self, QtWidgets.QMessageBox.Information,
+                                           "What's new", markdown.markdown("\n".join(new_change_logs)))
             with self._options as options:
                 options.last_changelog_displayed = current_version
 
