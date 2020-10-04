@@ -3,7 +3,7 @@ from typing import Union
 
 import pytest
 from PySide2.QtWidgets import QDialog
-from mock import AsyncMock, MagicMock, patch
+from mock import AsyncMock, MagicMock, patch, ANY
 
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
@@ -127,3 +127,20 @@ async def test_browse_racetime(default_main_window, mocker):
     dialog.refresh.assert_awaited_once_with()
     mock_execute_dialog.assert_awaited_once_with(dialog)
     default_main_window.generate_seed_from_permalink.assert_awaited_once_with(dialog.permalink)
+
+
+@pytest.mark.asyncio
+async def test_generate_seed_from_permalink(default_main_window, mocker):
+    permalink = MagicMock()
+    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout",
+                                                   autospec=True)
+    default_main_window.open_game_details = MagicMock()
+
+    # Run
+    await default_main_window.generate_seed_from_permalink(permalink)
+
+    # Assert
+    mock_generate_layout.assert_called_once_with(progress_update=ANY,
+                                                 permalink=permalink,
+                                                 options=default_main_window._options)
+    default_main_window.open_game_details.assert_called_once_with(mock_generate_layout.return_value)
