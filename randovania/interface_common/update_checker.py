@@ -58,7 +58,7 @@ def versions_to_display_for_releases(current_version: StrictVersion,
                 if "*Major*" in log:
                     first_non_major = re.search(r"\n\s*-\s+[^*]+\n", log)
                     if first_non_major is not None:
-                        log = log[:first_non_major.start()] + "\n\nFor more details, check the Change Log tab."
+                        log = log[:first_non_major.start()] + "\n\n---\nFor more details, check the Change Log tab."
                 new_change_logs.append(log)
 
     return all_change_logs, new_change_logs, version_to_display
