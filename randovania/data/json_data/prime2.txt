@@ -5124,7 +5124,7 @@ Asset id: 668125336
 ----------------
 Torvus Lagoon
 Asset id: 2114709145
-> Door to Temple Transport Access; Heals? True; Spawn Point
+> Door to Temple Transport Access; Heals? False; Spawn Point
   * Normal Door to Temple Transport Access/Door to Torvus Lagoon
   > Door to Save Station A
       Space Jump Boots or Standable Terrain (Intermediate)
@@ -5143,12 +5143,12 @@ Asset id: 2114709145
   > Keybearer Corpse (S-Dly)
       Trivial
 
-> Door to Save Station A; Heals? True
+> Door to Save Station A; Heals? False
   * Missile Blast Shield to Save Station A/Door to Torvus Lagoon
   > Door to Temple Transport Access
       Trivial
 
-> Door to Portal Chamber; Heals? True
+> Door to Portal Chamber; Heals? False
   * Normal Door to Portal Chamber/Door to Torvus Lagoon
   > Door to Temple Transport Access
       After Torvus Lagoon Gates
@@ -5157,35 +5157,27 @@ Asset id: 2114709145
   > Event - Torvus Lagoon Gates
       Scan Visor
 
-> Door to Path of Roots; Heals? True
+> Door to Path of Roots; Heals? False
   * Dark Door to Path of Roots/Door to Torvus Lagoon
   > Door to Temple Transport Access
       Trivial
 
-> Door to Ruined Alcove; Heals? True
+> Door to Ruined Alcove; Heals? False
   * Light Door to Ruined Alcove/Door to Torvus Lagoon
   > Door to Portal Chamber
       After Torvus Lagoon Gates
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 60; Major Location? False
   > Door to Temple Transport Access
       Trivial
 
-> Event - Torvus Lagoon Gates; Heals? True
+> Event - Torvus Lagoon Gates; Heals? False
   * Event Torvus Lagoon Gates
-  > Door to Temple Transport Access
-      Trivial
-  > Door to Save Station A
-      Space Jump Boots or Standable Terrain (Intermediate)
   > Door to Portal Chamber
       Trivial
-  > Door to Path of Roots
-      Trivial
-  > Door to Ruined Alcove
-      Trivial
 
-> Keybearer Corpse (S-Dly); Heals? True
+> Keybearer Corpse (S-Dly); Heals? False
   * Logbook Keybearer Corpse for 58c62cb3
   > Door to Temple Transport Access
       Trivial
@@ -5206,12 +5198,12 @@ Asset id: 3548128276
 ----------------
 Portal Chamber
 Asset id: 4092483679
-> Portal to Portal Chamber; Heals? True
+> Portal to Portal Chamber; Heals? False
   * Dark Portal to Portal Chamber/Portal to Portal Chamber
   > Pickup (Missile)
       Trivial
 
-> Door to Torvus Lagoon; Heals? True
+> Door to Torvus Lagoon; Heals? False
   * Normal Door to Torvus Lagoon/Door to Portal Chamber
   > Door to Great Bridge
       All of the following:
@@ -5220,7 +5212,7 @@ Asset id: 4092483679
               Morph Ball Bomb
               Boost Ball and Wall Boost (Advanced)
 
-> Door to Great Bridge; Heals? True; Spawn Point
+> Door to Great Bridge; Heals? False; Spawn Point
   * Normal Door to Great Bridge/Door to Portal Chamber
   > Door to Torvus Lagoon
       All of the following:
@@ -5229,7 +5221,7 @@ Asset id: 4092483679
               Morph Ball Bomb
               Boost Ball and Wall Boost (Advanced)
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 61; Major Location? False
   > Portal to Portal Chamber
       Trivial
@@ -5237,12 +5229,12 @@ Asset id: 4092483679
 ----------------
 Path of Roots
 Asset id: 1950913308
-> Door to Torvus Lagoon; Heals? True; Spawn Point
+> Door to Torvus Lagoon; Heals? False; Spawn Point
   * Dark Door to Torvus Lagoon/Door to Path of Roots
   > Under Lore Scan
       Morph Ball
 
-> Door to Great Bridge; Heals? True
+> Door to Great Bridge; Heals? False
   * Normal Door to Great Bridge/Door to Path of Roots
   > Door to Torvus Lagoon
       Morph Ball
@@ -5253,12 +5245,12 @@ Asset id: 1950913308
   > Lore Scan
       Trivial
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 62; Major Location? False
   > Next to Pickup
       Trivial
 
-> Next to Pickup; Heals? True
+> Next to Pickup; Heals? False
   > Door to Torvus Lagoon
       Trivial
   > Door to Great Bridge
@@ -5266,7 +5258,7 @@ Asset id: 1950913308
   > Pickup (Missile)
       Trivial
 
-> Under Lore Scan; Heals? True
+> Under Lore Scan; Heals? False
   > Door to Great Bridge
       Any of the following:
           Grapple Beam or Space Jump Boots or Gravity Boost
@@ -5281,7 +5273,7 @@ Asset id: 1950913308
                   Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
                   Gravity Boost and Air Underwater (Advanced)
 
-> Lore Scan; Heals? True
+> Lore Scan; Heals? False
   * Logbook Luminoth Lore (Emerald Translator) for 45c31c0b
   > Door to Great Bridge
       Trivial
@@ -5315,8 +5307,11 @@ Asset id: 165596961
           After Forgotten Bridge Gate
           Any of the following:
               Space Jump Boots
-              Morph Ball and Morph Ball Bomb and Bomb Jump (Advanced)
-              Movement (Intermediate) and Use Screw Attack (No Space Jump)
+              All of the following:
+                  Morph Ball and Morph Ball Bomb
+                  Any of the following:
+                      Bomb Jump (Beginner) and Movement (Beginner) and Use Screw Attack (No Space Jump)
+                      Before Dark Forgotten Bridge Rotated and Bomb Jump (Intermediate)
   > Bridge Center
       Before Dark Forgotten Bridge Rotated
 
@@ -5335,7 +5330,7 @@ Asset id: 165596961
   * Dark Door to Grove Access/Door to Forgotten Bridge
   > Door to Plaza Access
       Trivial
-  > Door to Ruined Alcove
+  > Portal to Dark Forgotten Bridge
       After Forgotten Bridge Gate
   > Event - Forgotten Bridge Gate
       Morph Ball and Boost Ball
@@ -5428,14 +5423,14 @@ Asset id: 2921206585
 ----------------
 Great Bridge
 Asset id: 3822429534
-> Door to Torvus Map Station; Heals? True
+> Door to Torvus Map Station; Heals? False
   * Normal Door to Torvus Map Station/Door to Great Bridge
   > Front of Translator Gate
       Space Jump Boots and Slope Jump (Advanced)
   > Translator Gate
       Trivial
 
-> Door to Temple Access (Top); Heals? True
+> Door to Temple Access (Top); Heals? False
   * Dark Door to Temple Access/Door to Great Bridge (Top)
   > Door to Torvus Map Station
       All of the following:
@@ -5448,7 +5443,7 @@ Asset id: 3822429534
   > Pickup (Power Bomb)
       Morph Ball and Power Bomb
 
-> Door to Abandoned Worksite; Heals? True
+> Door to Abandoned Worksite; Heals? False
   * Light Door to Abandoned Worksite/Door to Great Bridge
   > Door to Temple Access (Top)
       All of the following:
@@ -5461,7 +5456,7 @@ Asset id: 3822429534
   > Event - Great Bridge Cannon
       Scan Visor
 
-> Door to Path of Roots; Heals? True; Spawn Point
+> Door to Path of Roots; Heals? False; Spawn Point
   * Normal Door to Path of Roots/Door to Great Bridge
   > Door to Temple Access (Bottom)
       Any of the following:
@@ -5472,12 +5467,12 @@ Asset id: 3822429534
                   Boost Ball and Wall Boost (Intermediate)
                   Morph Ball Bomb and Bomb Jump (Beginner)
 
-> Door to Portal Chamber; Heals? True
+> Door to Portal Chamber; Heals? False
   * Missile Blast Shield to Portal Chamber/Door to Great Bridge
   > Door to Temple Access (Bottom)
       Trivial
 
-> Door to Temple Access (Bottom); Heals? True
+> Door to Temple Access (Bottom); Heals? False
   * Normal Door to Temple Access/Door to Great Bridge (Bottom)
   > Door to Torvus Map Station
       Space Jump Boots and Combat/Scan Dash (Advanced) and Slope Jump (Advanced)
@@ -5499,19 +5494,19 @@ Asset id: 3822429534
           Space Jump Boots
           Morph Ball and Morph Ball Bomb and Bomb Space Jump (Expert)
 
-> Pickup (Power Bomb); Heals? True
+> Pickup (Power Bomb); Heals? False
   * Pickup 64; Major Location? False
   > Door to Temple Access (Top)
       Morph Ball and Power Bomb
   > Door to Abandoned Worksite
       Morph Ball and Power Bomb
 
-> Event - Great Bridge Cannon; Heals? True
+> Event - Great Bridge Cannon; Heals? False
   * Event Great Bridge Cannon
   > Door to Abandoned Worksite
       Trivial
 
-> Front of Translator Gate; Heals? True
+> Front of Translator Gate; Heals? False
   > Door to Torvus Map Station
       Morph Ball and Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate)
   > Door to Temple Access (Top)
@@ -5521,7 +5516,7 @@ Asset id: 3822429534
   > Door to Temple Access (Bottom)
       Trivial
 
-> Translator Gate; Heals? True
+> Translator Gate; Heals? False
   * Translator Gate (TranslatorGate 12)
   > Door to Torvus Map Station
       Trivial
@@ -5544,14 +5539,12 @@ Asset id: 212528838
 ----------------
 Plaza Access
 Asset id: 3250751238
-> Door to Torvus Plaza; Heals? True
+> Door to Torvus Plaza; Heals? False
   * Normal Door to Torvus Plaza/Door to Plaza Access
   > Door to Forgotten Bridge
       After Torvus Plaza Access Puzzle
-  > Pickup (Missile)
-      Morph Ball and Boost Ball and Morph Ball Bomb and After Torvus Plaza Access Puzzle
 
-> Door to Forgotten Bridge; Heals? True; Spawn Point
+> Door to Forgotten Bridge; Heals? False; Spawn Point
   * Normal Door to Forgotten Bridge/Door to Plaza Access
   > Door to Torvus Plaza
       After Torvus Plaza Access Puzzle
@@ -5560,23 +5553,15 @@ Asset id: 3250751238
   > Event - Torvus Plaza Access Puzzle
       Morph Ball and Morph Ball Bomb
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 66; Major Location? False
-  > Door to Torvus Plaza
-      After Torvus Plaza Access Puzzle
   > Door to Forgotten Bridge
       After Torvus Plaza Access Puzzle
-  > Event - Torvus Plaza Access Puzzle
-      Morph Ball and Morph Ball Bomb
 
-> Event - Torvus Plaza Access Puzzle; Heals? True
+> Event - Torvus Plaza Access Puzzle; Heals? False
   * Event Torvus Plaza Access Puzzle
-  > Door to Torvus Plaza
-      Morph Ball and Morph Ball Bomb
   > Door to Forgotten Bridge
       Morph Ball and Morph Ball Bomb
-  > Pickup (Missile)
-      Morph Ball and Boost Ball and Morph Ball Bomb
 
 ----------------
 Abandoned Worksite
@@ -5652,41 +5637,62 @@ Asset id: 39024685
 > Door to Brooding Ground; Heals? True
   * Super Missile Blast Shield to Brooding Ground/Door to Dark Forgotten Bridge
   > Door to Putrid Alcove
-      Trivial
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 30
+              Before Grapple Guardian and Dark World Damage ≥ 5
   > Bridge Center
-      After Dark Forgotten Bridge Rotated
+      All of the following:
+          After Dark Forgotten Bridge Rotated and Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 8
+              Morph Ball and Dark World Damage ≥ 4
 
-> Door to Dark Falls; Heals? True
+> Door to Dark Falls; Heals? False
   * Normal Door to Dark Falls/Door to Dark Forgotten Bridge
-  > Door to Putrid Alcove
-      After Forgotten Bridge Gate
   > Door to Dark Arena Tunnel
-      Trivial
+      All of the following:
+          Normal Damage ≥ 10
+          Any of the following:
+              Dark World Damage ≥ 40
+              Morph Ball and Dark World Damage ≥ 25
   > Portal to Forgotten Bridge
-      Any of the following:
-          After Forgotten Bridge Gate
-          Morph Ball and Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+      After Forgotten Bridge Gate and Dark World Damage ≥ 35
   > Bridge Center
-      Any of the following:
-          Scan Visor and After Forgotten Bridge Gate and Combat/Scan Dash (Intermediate)
-          Morph Ball and Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+      Scan Visor and After Forgotten Bridge Gate and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 30 and Activate Safe Zone
 
 > Door to Putrid Alcove; Heals? False; Spawn Point
   * Power Bomb Blast Shield to Putrid Alcove/Door to Dark Forgotten Bridge
   > Portal to Forgotten Bridge
-      Any of the following:
-          Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner)
-          Slope Jump (Advanced) and Use Screw Attack (No Space Jump)
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 20
+              Before Grapple Guardian and Activate Safe Zone
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 55
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 70
+              Movement (Intermediate) and Dark World Damage ≥ 50 and Use Screw Attack (No Space Jump)
   > Bridge Center
-      Any of the following:
-          Space Jump Boots
-          Morph Ball and Morph Ball Bomb and Bomb Jump (Advanced)
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 30
+              Before Grapple Guardian and Dark World Damage ≥ 10
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 5
+              Morph Ball and Morph Ball Bomb and Bomb Jump (Expert) and Dark World Damage ≥ 40
 
-> Door to Dark Arena Tunnel; Heals? True
+> Door to Dark Arena Tunnel; Heals? False
   * Light Door to Dark Arena Tunnel/Door to Dark Forgotten Bridge
   > Door to Dark Falls
-      Trivial
+      All of the following:
+          Normal Damage ≥ 10
+          Any of the following:
+              Dark World Damage ≥ 75
+              Morph Ball and Dark World Damage ≥ 55
+  > Bridge Center
+      Morph Ball and Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced) and Dark World Damage ≥ 70 and Activate Safe Zone
 
 > Portal to Forgotten Bridge; Heals? True
   * Light Portal to Forgotten Bridge/Portal to Dark Forgotten Bridge
@@ -5694,54 +5700,81 @@ Asset id: 39024685
       All of the following:
           After Forgotten Bridge Gate
           Any of the following:
-              Space Jump Boots
-              Morph Ball and Morph Ball Bomb and Bomb Jump (Advanced)
-              Movement (Intermediate) and Use Screw Attack (No Space Jump)
+              Space Jump Boots and Dark World Damage ≥ 35
+              All of the following:
+                  Morph Ball and Morph Ball Bomb
+                  Any of the following:
+                      Bomb Jump (Beginner) and Movement (Beginner) and Dark World Damage ≥ 55 and Use Screw Attack (No Space Jump)
+                      After Dark Forgotten Bridge Rotated and Bomb Jump (Intermediate) and Dark World Damage ≥ 70
   > Door to Putrid Alcove
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 60
+          Before Grapple Guardian and Dark World Damage ≥ 35 and Activate Safe Zone
   > Bridge Center
-      Before Dark Forgotten Bridge Rotated
+      All of the following:
+          Before Dark Forgotten Bridge Rotated and Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 15
+              Morph Ball and Dark World Damage ≥ 7
 
 > Event - Dark Forgotten Bridge Rotated; Heals? True
   * Event Dark Forgotten Bridge Rotated
-  > Door to Putrid Alcove
-      Trivial
   > Bridge Center
-      Trivial
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 25
+              Before Grapple Guardian and Dark World Damage ≥ 10
 
 > Bridge Center; Heals? True
   > Door to Brooding Ground
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              All of the following:
+                  After Dark Forgotten Bridge Rotated
+                  Any of the following:
+                      Dark World Damage ≥ 8
+                      Morph Ball and Dark World Damage ≥ 4
+              Scan Visor and Extended Dash (Expert) and Dark World Damage ≥ 5
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      Dark World Damage ≥ 2 and Use Screw Attack (Space Jump)
+                      Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 5
+                      Morph Ball and Before Dark Forgotten Bridge Rotated and Roll Jump (Intermediate) and Dark World Damage ≥ 5
+  > Door to Putrid Alcove
       Any of the following:
-          After Dark Forgotten Bridge Rotated
-          Scan Visor and Extended Dash (Expert)
-          All of the following:
-              Space Jump Boots
-              Any of the following:
-                  Use Screw Attack (Space Jump)
-                  Scan Visor and Combat/Scan Dash (Intermediate)
-                  Morph Ball and Before Dark Forgotten Bridge Rotated and Roll Jump (Intermediate)
-  > Door to Dark Falls
+          Dark World Damage ≥ 35
+          Before Grapple Guardian and Dark World Damage ≥ 8 and Activate Safe Zone
+  > Door to Dark Arena Tunnel
       All of the following:
           Space Jump Boots
           Any of the following:
-              After Forgotten Bridge Gate
-              Morph Ball and Morph Ball Bomb and Bomb Space Jump (Expert)
-              Space Jump Boots and Movement (Hypermode) and Standable Terrain (Intermediate)
-  > Door to Putrid Alcove
-      Trivial
+              Morph Ball and Morph Ball Bomb and Bomb Space Jump (Expert) and Dark World Damage ≥ 75
+              Space Jump Boots and Movement (Hypermode) and Standable Terrain (Intermediate) and Dark World Damage ≥ 70
   > Portal to Forgotten Bridge
       Any of the following:
-          Before Dark Forgotten Bridge Rotated
+          All of the following:
+              Before Dark Forgotten Bridge Rotated
+              Any of the following:
+                  Dark World Damage ≥ 15
+                  Morph Ball and Dark World Damage ≥ 10
           All of the following:
               Space Jump Boots
               Any of the following:
-                  After Dark Forgotten Bridge Rotated or Use Screw Attack (Space Jump)
-                  Scan Visor and Combat/Scan Dash (Intermediate)
-                  Morph Ball and Roll Jump (Intermediate)
+                  After Dark Forgotten Bridge Rotated and Dark World Damage ≥ 15
+                  Dark World Damage ≥ 3 and Use Screw Attack (Space Jump)
+                  Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 7
+                  Morph Ball and Roll Jump (Intermediate) and Dark World Damage ≥ 10
   > Event - Dark Forgotten Bridge Rotated
-      Any of the following:
-          Morph Ball and Morph Ball Bomb
-          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (No Space Jump)
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 40
+              Before Grapple Guardian and Dark World Damage ≥ 10
+          Any of the following:
+              Morph Ball and Morph Ball Bomb
+              Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (No Space Jump)
 
 ----------------
 Grove Access
@@ -5886,48 +5919,44 @@ Asset id: 2240736467
 ----------------
 Temple Access
 Asset id: 121681107
-> Door to Great Bridge (Top); Heals? True; Spawn Point
+> Door to Great Bridge (Top); Heals? False; Spawn Point
   * Dark Door to Great Bridge/Door to Temple Access (Top)
+  > Above Pickup
+      Trivial
+
+> Door to Great Bridge (Bottom); Heals? False
+  * Normal Door to Great Bridge/Door to Temple Access (Bottom)
+  > Below Pickup
+      Morph Ball
+
+> Door to Torvus Temple (Bottom); Heals? False
+  * Super Missile Blast Shield to Torvus Temple/Door to Temple Access (Bottom)
+  > Below Pickup
+      Morph Ball
+
+> Door to Torvus Temple (Top); Heals? False
+  * Dark Door to Torvus Temple/Door to Temple Access (Top)
+  > Above Pickup
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 70; Major Location? True
+  > Below Pickup
+      Trivial
+
+> Above Pickup; Heals? False
+  > Door to Great Bridge (Top)
+      Trivial
   > Door to Torvus Temple (Top)
       Trivial
   > Pickup (Energy Tank)
-      Any of the following:
-          All of the following:
-              Morph Ball
-              Morph Ball Bomb or Power Bomb
-          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
-
-> Door to Great Bridge (Bottom); Heals? True
-  * Normal Door to Great Bridge/Door to Temple Access (Bottom)
-  > Door to Torvus Temple (Bottom)
       All of the following:
           Morph Ball
           Any of the following:
-              Morph Ball Bomb
-              Boost Ball and Wall Boost (Expert)
-
-> Door to Torvus Temple (Bottom); Heals? True
-  * Super Missile Blast Shield to Torvus Temple/Door to Temple Access (Bottom)
-  > Door to Great Bridge (Bottom)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Morph Ball Bomb
-              Boost Ball and Wall Boost (Expert)
-
-> Door to Torvus Temple (Top); Heals? True
-  * Dark Door to Torvus Temple/Door to Temple Access (Top)
-  > Door to Great Bridge (Top)
-      Trivial
-  > Pickup (Energy Tank)
-      Any of the following:
-          All of the following:
-              Morph Ball
               Morph Ball Bomb or Power Bomb
-          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+              Screw Attack and Knowledge (Beginner)
 
-> Pickup (Energy Tank); Heals? True
-  * Pickup 70; Major Location? True
+> Below Pickup; Heals? False
   > Door to Great Bridge (Bottom)
       All of the following:
           Morph Ball
@@ -5950,7 +5979,7 @@ Asset id: 673929343
 ----------------
 Torvus Plaza
 Asset id: 1978751231
-> Door to Plaza Access; Heals? True; Spawn Point
+> Door to Plaza Access; Heals? False; Spawn Point
   * Normal Door to Plaza Access/Door to Torvus Plaza
   > Pickup (Energy Tank)
       Any of the following:
@@ -5963,7 +5992,7 @@ Asset id: 1978751231
                   Movement (Expert)
                   Spider Ball and Morph Ball Bomb
 
-> Pickup (Energy Tank); Heals? True
+> Pickup (Energy Tank); Heals? False
   * Pickup 71; Major Location? True
   > Door to Plaza Access
       All of the following:
@@ -6110,53 +6139,31 @@ Asset id: 774215801
 ----------------
 Torvus Grove
 Asset id: 3896048152
-> Door to Grove Access; Heals? True
+> Door to Grove Access; Heals? False
   * Dark Door to Grove Access/Door to Torvus Grove
   > Door to Underground Tunnel
       Trivial
-  > Door to Meditation Vista
-      Trivial
-  > Pickup (Missile)
-      Morph Ball and Power Bomb
 
-> Door to Underground Tunnel; Heals? True; Spawn Point
+> Door to Underground Tunnel; Heals? False; Spawn Point
   * Light Door to Underground Tunnel/Door to Torvus Grove
   > Door to Grove Access
-      All of the following:
-          Morph Ball and Space Jump Boots
-          Any of the following:
-              Boost Ball
-              Morph Ball Bomb and Screw Attack and Power Bomb and Bomb Space Jump (Expert)
+      Morph Ball and Boost Ball and Space Jump Boots
   > Door to Meditation Vista
       Trivial
-  > Pickup (Missile)
-      Morph Ball and Power Bomb
 
-> Door to Meditation Vista; Heals? True
+> Door to Meditation Vista; Heals? False
   * Normal Door to Meditation Vista/Door to Torvus Grove
   > Door to Grove Access
-      All of the following:
-          Morph Ball and Space Jump Boots
-          Any of the following:
-              Boost Ball
-              Morph Ball Bomb and Screw Attack and Power Bomb and Bomb Space Jump (Expert)
+      Morph Ball Bomb and Power Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
   > Door to Underground Tunnel
       Trivial
   > Pickup (Missile)
       Morph Ball and Power Bomb
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 73; Major Location? False
-  > Door to Grove Access
-      All of the following:
-          Morph Ball and Space Jump Boots and Power Bomb
-          Any of the following:
-              Boost Ball
-              Morph Ball Bomb and Screw Attack and Bomb Space Jump (Expert)
-  > Door to Underground Tunnel
-      Morph Ball and Power Bomb
   > Door to Meditation Vista
-      Morph Ball and Power Bomb
+      Trivial
 
 ----------------
 Dark Torvus Temple Access
@@ -6186,7 +6193,7 @@ Asset id: 2591519810
   > Door to Venomous Pond
       Trivial
 
-> Door to Venomous Pond; Heals? True
+> Door to Venomous Pond; Heals? False
   * Normal Door to Venomous Pond/Door to Save Station 1
   > Save Station
       Trivial
@@ -6194,21 +6201,21 @@ Asset id: 2591519810
 ----------------
 Torvus Temple
 Asset id: 3863006870
-> Door to Controller Access; Heals? True
+> Door to Controller Access; Heals? False
   * Super Missile Blast Shield to Controller Access/Door to Torvus Temple
   > Door to Temple Access (Top)
       After Torvus Temple Pirates
   > Event - Torvus Temple Pirates
       Trivial
 
-> Door to Underground Tunnel; Heals? True
+> Door to Underground Tunnel; Heals? False
   * Normal Door to Underground Tunnel/Door to Torvus Temple
   > Bottom Room Center
       Before Torvus Temple Pirates and Enabled Vanilla Torvus Temple Translator Gate
   > Translator Gate
       Trivial
 
-> Door to Temple Access (Top); Heals? True; Spawn Point
+> Door to Temple Access (Top); Heals? False; Spawn Point
   * Dark Door to Temple Access/Door to Torvus Temple (Top)
   > Pickup (Super Missile)
       After Torvus Temple Pirates
@@ -6219,37 +6226,37 @@ Asset id: 3863006870
   > Elevator Translator Scan
       After Torvus Temple Pirates and After Torvus Energy Controller Pickup
 
-> Door to Transport to Agon Wastes; Heals? True
+> Door to Transport to Agon Wastes; Heals? False
   * Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode) to Transport to Agon Wastes/Door to Torvus Temple
   > Bottom Room Center
       Morph Ball
 
-> Door to Temple Access (Bottom); Heals? True
+> Door to Temple Access (Bottom); Heals? False
   * Super Missile Blast Shield to Temple Access/Door to Torvus Temple (Bottom)
   > Bottom Room Center
       Trivial
 
-> Door to Underground Transport; Heals? True
+> Door to Underground Transport; Heals? False
   * Super Missile Blast Shield to Underground Transport/Door to Torvus Temple
   > Bottom Room Center
       Morph Ball and After Torvus Temple Pirates
 
-> Pickup (Super Missile); Heals? True
+> Pickup (Super Missile); Heals? False
   * Pickup 74; Major Location? True
   > Door to Controller Access
       Trivial
 
-> Event - Torvus Temple Pirates; Heals? True
+> Event - Torvus Temple Pirates; Heals? False
   * Event Torvus Temple Pirates
   > Door to Temple Access (Top)
       Trivial
 
-> Event - Torvus Temple Elevator; Heals? True
+> Event - Torvus Temple Elevator; Heals? False
   * Event Torvus Temple Elevator
   > Door to Temple Access (Top)
       Trivial
 
-> Bottom Room Center; Heals? True
+> Bottom Room Center; Heals? False
   > Door to Underground Tunnel
       Before Torvus Temple Pirates and Enabled Vanilla Torvus Temple Translator Gate
   > Door to Temple Access (Top)
@@ -6263,14 +6270,14 @@ Asset id: 3863006870
   > Translator Gate
       Trivial
 
-> Translator Gate; Heals? True
+> Translator Gate; Heals? False
   * Translator Gate (TranslatorGate 13)
   > Door to Underground Tunnel
       Trivial
   > Bottom Room Center
       Trivial
 
-> Elevator Translator Scan; Heals? True
+> Elevator Translator Scan; Heals? False
   * Translator Gate (TranslatorGate 14)
   > Event - Torvus Temple Elevator
       Trivial
@@ -6339,14 +6346,14 @@ Asset id: 2208154870
 ----------------
 Underground Tunnel
 Asset id: 2162589584
-> Door to Torvus Temple; Heals? True; Spawn Point
+> Door to Torvus Temple; Heals? False; Spawn Point
   * Normal Door to Torvus Temple/Door to Underground Tunnel
   > Door to Torvus Grove
       Morph Ball
   > Pickup (Missile)
       Morph Ball
 
-> Door to Torvus Grove; Heals? True
+> Door to Torvus Grove; Heals? False
   * Light Door to Torvus Grove/Door to Underground Tunnel
   > Door to Torvus Temple
       All of the following:
@@ -6358,12 +6365,12 @@ Asset id: 2162589584
   > Lore Scan
       Trivial
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 77; Major Location? False
   > Door to Torvus Temple
       Morph Ball
 
-> Lore Scan; Heals? True
+> Lore Scan; Heals? False
   * Logbook Luminoth Lore (Emerald Translator) for 54c87f8c
   > Door to Torvus Grove
       Trivial
@@ -6385,14 +6392,17 @@ Asset id: 1576678107
           Space Jump Boots
           Any of the following:
               Use Screw Attack (Space Jump)
-              Boost Ball and Boost Jump (Expert)
-              Morph Ball and Roll Jump (Expert) and Standable Terrain (Intermediate)
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Boost Ball and Boost Jump (Advanced)
+                      Roll Jump (Expert) and Standable Terrain (Intermediate)
               Scan Visor and Extended Dash (Hypermode)
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 78; Major Location? True
   > Door to Torvus Grove
-      Trivial
+      Normal Damage ≥ 10
 
 ----------------
 Dark Torvus Temple
@@ -6469,7 +6479,7 @@ Asset id: 2455297154
 > Door to Hydrodynamo Station; Heals? False
   * Normal Door to Hydrodynamo Station/Door to Underground Transport
   > Door to Torvus Temple
-      Scan Visor
+      Scan Visor and After Torvus Temple Pirates
 
 ----------------
 Controller Access
@@ -6496,7 +6506,7 @@ Asset id: 2504558791
   > Door to Polluted Mire
       Trivial
 
-> Door to Polluted Mire; Heals? True; Spawn Point
+> Door to Polluted Mire; Heals? False; Spawn Point
   * Normal Door to Polluted Mire/Door to Gloom Vista
   > Portal to Meditation Vista
       Trivial
@@ -6552,7 +6562,7 @@ Asset id: 298078827
 ----------------
 Hydrodynamo Station
 Asset id: 3585454182
-> Door to Underground Transport; Heals? True; Spawn Point
+> Door to Underground Transport; Heals? False; Spawn Point
   * Normal Door to Underground Transport/Door to Hydrodynamo Station
   > Door to Gathering Access
       All of the following:
@@ -6579,7 +6589,7 @@ Asset id: 3585454182
   > Room Middle
       Trivial
 
-> Door to Save Station B; Heals? True
+> Door to Save Station B; Heals? False
   * Missile Blast Shield to Save Station B/Door to Hydrodynamo Station
   > Door to Underground Transport
       Trivial
@@ -6593,7 +6603,7 @@ Asset id: 3585454182
                   Movement (Beginner)
                   Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer
 
-> Door to Gathering Access; Heals? True
+> Door to Gathering Access; Heals? False
   * Light Door to Gathering Access/Door to Hydrodynamo Station
   > Event - Hydrodynamo Station Lock (by Light Door)
       Scan Visor
@@ -6602,7 +6612,7 @@ Asset id: 3585454182
   > Room Bottom
       Trivial
 
-> Door to Hydrodynamo Shaft; Heals? True
+> Door to Hydrodynamo Shaft; Heals? False
   * Normal Door to Hydrodynamo Shaft/Door to Hydrodynamo Station
   > Room Bottom
       All of the following:
@@ -6611,7 +6621,7 @@ Asset id: 3585454182
               Gravity Boost
               Movement (Hypermode) and Air Underwater (Advanced) and Use Screw Attack (Space Jump)
 
-> Door to Catacombs Access; Heals? True
+> Door to Catacombs Access; Heals? False
   * Dark Door to Catacombs Access/Door to Hydrodynamo Station
   > Event - Hydrodynamo Station Lock (by Dark Door)
       Scan Visor
@@ -6620,7 +6630,7 @@ Asset id: 3585454182
   > Room Bottom
       Trivial
 
-> Door to Training Access; Heals? True
+> Door to Training Access; Heals? False
   * Seeker Launcher Blast Shield (underwater; destructible by Screw Attack; Expert) to Training Access/Door to Hydrodynamo Station
   > Pickup (Missile)
       Trivial
@@ -6629,27 +6639,27 @@ Asset id: 3585454182
   > Room Bottom
       Trivial
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 81; Major Location? False
   > Door to Training Access
       Trivial
 
-> Event - Hydrodynamo Station Lock (below Seeker Door); Heals? True
+> Event - Hydrodynamo Station Lock (below Seeker Door); Heals? False
   * Event Hydrodynamo Station Lock (below Seeker Door)
   > Room Bottom
       Trivial
 
-> Event - Hydrodynamo Station Lock (by Dark Door); Heals? True
+> Event - Hydrodynamo Station Lock (by Dark Door); Heals? False
   * Event Hydrodynamo Station Lock (by Dark Door)
   > Door to Catacombs Access
       Trivial
 
-> Event - Hydrodynamo Station Lock (by Light Door); Heals? True
+> Event - Hydrodynamo Station Lock (by Light Door); Heals? False
   * Event Hydrodynamo Station Lock (by Light Door)
   > Door to Gathering Access
       Trivial
 
-> Room Top; Heals? True
+> Room Top; Heals? False
   > Door to Underground Transport
       Trivial
   > Door to Save Station B
@@ -6662,7 +6672,7 @@ Asset id: 3585454182
                   Movement (Beginner)
                   Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer
 
-> Room Middle; Heals? True
+> Room Middle; Heals? False
   > Door to Underground Transport
       Gravity Boost
   > Door to Gathering Access
@@ -6692,7 +6702,7 @@ Asset id: 3585454182
   > Room Bottom
       Trivial
 
-> Room Bottom; Heals? True
+> Room Bottom; Heals? False
   > Door to Hydrodynamo Shaft
       After Hydrodynamo Station Lock (below Seeker Door) and After Hydrodynamo Station Lock (by Dark Door) and After Hydrodynamo Station Lock (by Light Door)
   > Event - Hydrodynamo Station Lock (below Seeker Door)
@@ -6711,7 +6721,7 @@ Asset id: 3585454182
 ----------------
 Torvus Energy Controller
 Asset id: 322696632
-> Door to Controller Access; Heals? True; Spawn Point
+> Door to Controller Access; Heals? False; Spawn Point
   * Normal Door to Controller Access/Door to Torvus Energy Controller
   > Teleport to Great Temple - Main Energy Controller
       After Main Energy Controller Pickup
@@ -6726,37 +6736,37 @@ Asset id: 322696632
   > Lore Scan
       Trivial
 
-> Pickup (Emerald Translator); Heals? True
+> Pickup (Emerald Translator); Heals? False
   * Pickup 82; Major Location? True
   > Door to Controller Access
       Trivial
 
-> Teleport to Great Temple - Main Energy Controller; Heals? True
+> Teleport to Great Temple - Main Energy Controller; Heals? False
   * Teleporter to Great Temple - Main Energy Controller
   > Door to Controller Access
       Trivial
 
-> Teleport to Sanctuary Fortress - Sanctuary Energy Controller; Heals? True
+> Teleport to Sanctuary Fortress - Sanctuary Energy Controller; Heals? False
   * Teleporter to Sanctuary Fortress - Sanctuary Energy Controller
   > Door to Controller Access
       Trivial
 
-> Teleport to Agon Wastes - Agon Energy Controller; Heals? True
+> Teleport to Agon Wastes - Agon Energy Controller; Heals? False
   * Teleporter to Agon Wastes - Agon Energy Controller
   > Door to Controller Access
       Trivial
 
-> Event - Torvus Energy Returned; Heals? True
+> Event - Torvus Energy Returned; Heals? False
   * Event Torvus Energy Returned
   > Door to Controller Access
       Trivial
 
-> Event - Torvus Energy Controller Pickup; Heals? True
+> Event - Torvus Energy Controller Pickup; Heals? False
   * Event Torvus Energy Controller Pickup
   > Pickup (Emerald Translator)
       Trivial
 
-> Lore Scan; Heals? True
+> Lore Scan; Heals? False
   * Logbook Luminoth Lore (Emerald Translator) for d25c0d22
   > Door to Controller Access
       Trivial
@@ -6915,16 +6925,12 @@ Asset id: 3407240152
 ----------------
 Hydrodynamo Shaft
 Asset id: 813912549
-> Portal to Undertemple Access; Heals? True
+> Portal to Undertemple Access; Heals? False
   * Dark Portal to Undertemple Access/Portal to Hydrodynamo Shaft
-  > Door to Hydrodynamo Station
-      Any of the following:
-          Gravity Boost
-          Morph Ball and Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
   > Door to Main Hydrochamber
       Trivial
 
-> Door to Hydrodynamo Station; Heals? True; Spawn Point
+> Door to Hydrodynamo Station; Heals? False; Spawn Point
   * Normal Door to Hydrodynamo Station/Door to Hydrodynamo Shaft
   > Portal to Undertemple Access
       Any of the following:
@@ -6933,7 +6939,7 @@ Asset id: 813912549
   > Door to Main Hydrochamber
       Trivial
 
-> Door to Main Hydrochamber; Heals? True
+> Door to Main Hydrochamber; Heals? False
   * Normal Door to Main Hydrochamber/Door to Hydrodynamo Shaft
   > Portal to Undertemple Access
       Gravity Boost
@@ -6979,7 +6985,7 @@ Asset id: 321212102
   > Door to Undertemple Shaft
       Trivial
 
-> Door to Undertemple Shaft; Heals? True
+> Door to Undertemple Shaft; Heals? False
   * Normal Door to Undertemple Shaft/Door to Save Station 2
   > Save Station
       Trivial
@@ -7030,7 +7036,7 @@ Asset id: 700027128
 ----------------
 Gathering Hall
 Asset id: 889276218
-> Door to Transit Tunnel West; Heals? True; Spawn Point
+> Door to Transit Tunnel West; Heals? False; Spawn Point
   * Normal Door to Transit Tunnel West/Door to Gathering Hall
   > Door to Transit Tunnel South
       Morph Ball and Gravity Boost and Air Underwater (Advanced)
@@ -7042,12 +7048,12 @@ Asset id: 889276218
           Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
           Morph Ball and Gravity Boost and Air Underwater (Advanced)
 
-> Portal to Crypt; Heals? True
+> Portal to Crypt; Heals? False
   * Dark Portal to Crypt/Portal to Gathering Hall
   > Room Bottom
       After Gathering Hall Portal Gate
 
-> Door to Transit Tunnel South; Heals? True
+> Door to Transit Tunnel South; Heals? False
   * Annihilator Door to Transit Tunnel South/Door to Gathering Hall
   > Event - Gathering Hall Portal Gate
       Any of the following:
@@ -7064,7 +7070,7 @@ Asset id: 889276218
                   Use Screw Attack (Space Jump)
                   Scan Visor and Combat/Scan Dash (Advanced)
 
-> Door to Gathering Access; Heals? True
+> Door to Gathering Access; Heals? False
   * Light Door to Gathering Access/Door to Gathering Hall
   > Door to Transit Tunnel West
       Morph Ball and Before Gathering Hall Water Drained and Roll Jump (Expert) and Normal Damage ≥ 20
@@ -7075,7 +7081,7 @@ Asset id: 889276218
   > Room Bottom
       Trivial
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 84; Major Location? False
   > Door to Transit Tunnel South
       Any of the following:
@@ -7087,19 +7093,19 @@ Asset id: 889276218
   > Door to Gathering Access
       Trivial
 
-> Event - Gathering Hall Water Drained; Heals? True
+> Event - Gathering Hall Water Drained; Heals? False
   * Event Gathering Hall Water Drained
   > Room Bottom
       Any of the following:
           Morph Ball and Boost Ball
           Grapple Beam and Space Jump Boots and Slope Jump (Intermediate)
 
-> Event - Gathering Hall Portal Gate; Heals? True
+> Event - Gathering Hall Portal Gate; Heals? False
   * Event Gathering Hall Portal Gate
   > Door to Transit Tunnel South
       Trivial
 
-> Before Pickup; Heals? True
+> Before Pickup; Heals? False
   > Pickup (Missile)
       All of the following:
           Morph Ball
@@ -7120,7 +7126,7 @@ Asset id: 889276218
                       Morph Ball Bomb and After Crypt Laser and Bomb Jump (Beginner) and Movement (Advanced)
                       Gravity Boost and Air Underwater (Advanced) and Instant Morph (Advanced)
 
-> Room Bottom; Heals? True
+> Room Bottom; Heals? False
   > Door to Transit Tunnel West
       Any of the following:
           Space Jump Boots or Gravity Boost or After Gathering Hall Water Drained
@@ -7160,7 +7166,7 @@ Asset id: 889276218
   > Lore Scan
       Trivial
 
-> Kinetic Orb Cannon; Heals? True
+> Kinetic Orb Cannon; Heals? False
   > Door to Transit Tunnel West
       Any of the following:
           Grapple Beam
@@ -7176,7 +7182,7 @@ Asset id: 889276218
   > Door to Gathering Access
       Morph Ball
 
-> Lore Scan; Heals? True
+> Lore Scan; Heals? False
   * Logbook Luminoth Lore (Emerald Translator) for 49cd4f34
   > Room Bottom
       Trivial
@@ -7184,7 +7190,7 @@ Asset id: 889276218
 ----------------
 Training Chamber
 Asset id: 1270197856
-> Door to Transit Tunnel East; Heals? True
+> Door to Transit Tunnel East; Heals? False
   * Dark Door to Transit Tunnel East/Door to Training Chamber
   > Door to Training Access
       Morph Ball and Morph Ball Bomb and Space Jump Boots and Screw Attack and Bomb Space Jump (Expert) and Air Underwater (Expert)
@@ -7199,7 +7205,7 @@ Asset id: 1270197856
   > Lore Scan
       Trivial
 
-> Door to Training Access; Heals? True; Spawn Point
+> Door to Training Access; Heals? False; Spawn Point
   * Normal Door to Training Access/Door to Training Chamber
   > Door to Transit Tunnel East
       Space Jump Boots and Combat/Scan Dash (Intermediate)
@@ -7214,7 +7220,7 @@ Asset id: 1270197856
   > Top of Statue
       Movement (Beginner) and Use Screw Attack (Space Jump)
 
-> Door to Fortress Transport Access; Heals? True
+> Door to Fortress Transport Access; Heals? False
   * Power Bomb Blast Shield to Fortress Transport Access/Door to Training Chamber
   > Room Center
       Any of the following:
@@ -7223,7 +7229,7 @@ Asset id: 1270197856
   > Top of Statue
       Space Jump Boots and After Training Chamber Statue and Standable Terrain (Intermediate)
 
-> Door to Transit Tunnel West; Heals? True
+> Door to Transit Tunnel West; Heals? False
   * Light Door to Transit Tunnel West/Door to Training Chamber
   > Door to Transit Tunnel East
       Morph Ball and Morph Ball Bomb and Space Jump Boots and Screw Attack and Bomb Space Jump (Expert) and Air Underwater (Expert)
@@ -7238,17 +7244,17 @@ Asset id: 1270197856
           Gravity Boost
           Morph Ball and Morph Ball Bomb and Space Jump Boots and Screw Attack and Bomb Space Jump (Expert) and Air Underwater (Expert)
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 85; Major Location? False
   > Room Center
       Trivial
 
-> Event - Training Chamber Statue; Heals? True
+> Event - Training Chamber Statue; Heals? False
   * Event Training Chamber Statue
   > Top of Statue
       Trivial
 
-> Room Center; Heals? True
+> Room Center; Heals? False
   > Door to Transit Tunnel East
       Any of the following:
           Gravity Boost
@@ -7303,7 +7309,7 @@ Asset id: 1270197856
                   Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced) and Movement (Expert) and Underwater Dash (Advanced) and Standable Terrain (Intermediate)
           Space Jump Boots and Gravity Boost and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
 
-> Top of Statue; Heals? True
+> Top of Statue; Heals? False
   > Door to Transit Tunnel East
       Space Jump Boots or After Training Chamber Statue
   > Door to Fortress Transport Access
@@ -7319,7 +7325,7 @@ Asset id: 1270197856
   > Room Center
       Trivial
 
-> Lore Scan; Heals? True
+> Lore Scan; Heals? False
   * Logbook Luminoth Lore (Emerald Translator) for 9f94ac29
   > Door to Transit Tunnel East
       Trivial
@@ -7399,7 +7405,7 @@ Asset id: 4217540043
 ----------------
 Main Hydrochamber
 Asset id: 3468345533
-> Door to Hydrochamber Storage; Heals? True; Spawn Point
+> Door to Hydrochamber Storage; Heals? False; Spawn Point
   * Normal Door to Hydrochamber Storage/Door to Main Hydrochamber
   > Portal to Undertemple
       All of the following:
@@ -7426,12 +7432,12 @@ Asset id: 3468345533
                           Morph Ball and Roll Jump (Expert)
                   Before Hydrochamber Storage Item and Movement (Intermediate)
 
-> Portal to Undertemple; Heals? True
+> Portal to Undertemple; Heals? False
   * Dark Portal to Undertemple/Portal to Main Hydrochamber
   > Door to Hydrochamber Storage
       Trivial
 
-> Door to Hydrodynamo Shaft; Heals? True
+> Door to Hydrodynamo Shaft; Heals? False
   * Normal Door to Hydrodynamo Shaft/Door to Main Hydrochamber
   > Door to Hydrochamber Storage
       Trivial
@@ -7646,7 +7652,7 @@ Asset id: 2242084895
 ----------------
 Transit Tunnel South
 Asset id: 3072694950
-> Door to Catacombs; Heals? True; Spawn Point
+> Door to Catacombs; Heals? False; Spawn Point
   * Annihilator Door to Catacombs/Door to Transit Tunnel South
   > Door to Gathering Hall
       All of the following:
@@ -7657,33 +7663,25 @@ Asset id: 3072694950
   > Pickup (Missile)
       Morph Ball and Morph Ball Bomb and Gravity Boost
 
-> Door to Gathering Hall; Heals? True
+> Door to Gathering Hall; Heals? False
   * Annihilator Door to Gathering Hall/Door to Transit Tunnel South
   > Door to Catacombs
       Morph Ball and Morph Ball Bomb
-  > Pickup (Missile)
-      Morph Ball and Morph Ball Bomb and Gravity Boost
 
-> Pickup (Missile); Heals? True
+> Pickup (Missile); Heals? False
   * Pickup 89; Major Location? False
   > Door to Catacombs
       Morph Ball and Morph Ball Bomb
-  > Door to Gathering Hall
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Morph Ball Bomb
-              Boost Ball and Gravity Boost and Wall Boost (Expert)
 
 ----------------
 Transit Tunnel West
 Asset id: 3780180813
-> Door to Training Chamber; Heals? True
+> Door to Training Chamber; Heals? False
   * Light Door to Training Chamber/Door to Transit Tunnel West
   > Door to Gathering Hall
       Morph Ball and Morph Ball Bomb
 
-> Door to Gathering Hall; Heals? True; Spawn Point
+> Door to Gathering Hall; Heals? False; Spawn Point
   * Normal Door to Gathering Hall/Door to Transit Tunnel West
   > Door to Training Chamber
       Morph Ball and Morph Ball Bomb
@@ -7691,7 +7689,7 @@ Asset id: 3780180813
 ----------------
 Transit Tunnel East
 Asset id: 1727410190
-> Door to Training Chamber; Heals? True; Spawn Point
+> Door to Training Chamber; Heals? False; Spawn Point
   * Dark Door to Training Chamber/Door to Transit Tunnel East
   > Door to Catacombs
       Any of the following:
@@ -7704,7 +7702,7 @@ Asset id: 1727410190
   > Pickup (Energy Tank)
       Morph Ball and Morph Ball Bomb and Gravity Boost
 
-> Door to Catacombs; Heals? True
+> Door to Catacombs; Heals? False
   * Normal Door to Catacombs/Door to Transit Tunnel East
   > Door to Training Chamber
       All of the following:
@@ -7712,31 +7710,23 @@ Asset id: 1727410190
           Any of the following:
               Morph Ball Bomb
               Boost Ball and Wall Boost (Intermediate)
-  > Pickup (Energy Tank)
-      Morph Ball and Morph Ball Bomb and Gravity Boost
 
-> Pickup (Energy Tank); Heals? True
+> Pickup (Energy Tank); Heals? False
   * Pickup 90; Major Location? True
   > Door to Training Chamber
       Trivial
-  > Door to Catacombs
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Morph Ball Bomb
-              Boost Ball and Wall Boost (Expert)
 
 ----------------
 Fortress Transport Access
 Asset id: 1662585441
-> Door to Training Chamber; Heals? True; Spawn Point
+> Door to Training Chamber; Heals? False; Spawn Point
   * Power Bomb Blast Shield to Training Chamber/Door to Fortress Transport Access
   > Door to Transport to Sanctuary Fortress
       Any of the following:
           Space Jump Boots or Movement (Expert)
           Movement (Beginner) and Use Screw Attack (No Space Jump)
 
-> Door to Transport to Sanctuary Fortress; Heals? True
+> Door to Transport to Sanctuary Fortress; Heals? False
   * Normal Door to Transport to Sanctuary Fortress/Door to Fortress Transport Access
   > Door to Training Chamber
       Trivial
@@ -7782,17 +7772,17 @@ Asset id: 3152327598
 ----------------
 Hydrochamber Storage
 Asset id: 2527519102
-> Door to Main Hydrochamber; Heals? True; Spawn Point
+> Door to Main Hydrochamber; Heals? False; Spawn Point
   * Normal Door to Main Hydrochamber/Door to Hydrochamber Storage
   > Event - Hydrochamber Storage Item
       Trivial
 
-> Pickup (Gravity Boost); Heals? True
+> Pickup (Gravity Boost); Heals? False
   * Pickup 92; Major Location? True
   > Door to Main Hydrochamber
       Trivial
 
-> Event - Hydrochamber Storage Item; Heals? True
+> Event - Hydrochamber Storage Item; Heals? False
   * Event Hydrochamber Storage Item
   > Pickup (Gravity Boost)
       Trivial
