@@ -6,15 +6,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 class HintType(Enum):
-    # Keybearer corpses
-    KEYBEARER = "keybearer"
-
-    # Amorbis, Chykka, and Quadraxis
-    GUARDIAN = "guardian"
-
-    # Vanilla Light Suit location
-    LIGHT_SUIT_LOCATION = "light-suit-location"
-
     # Joke
     JOKE = "joke"
 
@@ -32,9 +23,6 @@ class HintItemPrecision(Enum):
     # major item, key, expansion
     GENERAL_CATEGORY = "general-category"
 
-    # Something from another game entirely
-    WRONG_GAME = "wrong-game"
-
 
 class HintLocationPrecision(Enum):
     # The exact location
@@ -43,21 +31,19 @@ class HintLocationPrecision(Enum):
     # Includes only the world of the location
     WORLD_ONLY = "world-only"
 
-    # Something from another game entirely
-    WRONG_GAME = "wrong-game"
+    # Keybearer corpses
+    KEYBEARER = "keybearer"
+
+    # Amorbis, Chykka, and Quadraxis
+    GUARDIAN = "guardian"
+
+    # Vanilla Light Suit location
+    LIGHT_SUIT_LOCATION = "light-suit-location"
 
 
 class PrecisionPair(NamedTuple):
     location: HintLocationPrecision
     item: HintItemPrecision
-
-    @classmethod
-    def detailed(cls) -> "PrecisionPair":
-        return PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED)
-
-    @classmethod
-    def joke(cls) -> "PrecisionPair":
-        return PrecisionPair(HintLocationPrecision.WRONG_GAME, HintItemPrecision.WRONG_GAME)
 
     @classmethod
     def weighted_list(cls) -> List["PrecisionPair"]:
@@ -68,8 +54,6 @@ class PrecisionPair(NamedTuple):
 
             (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED): 2,
             (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY): 1,
-
-            (HintLocationPrecision.DETAILED, HintItemPrecision.WRONG_GAME): 1,
         }
 
         hints = []
@@ -79,8 +63,20 @@ class PrecisionPair(NamedTuple):
         return hints
 
     @property
-    def is_joke(self) -> bool:
-        return self == PrecisionPair.joke()
+    def as_json(self):
+        return {
+            "location": self.location.value,
+            "item": self.item.value,
+        }
+
+    @classmethod
+    def from_json(cls, param) -> Optional["PrecisionPair"]:
+        if param is None:
+            return None
+        return PrecisionPair(
+            location=HintLocationPrecision(param["location"]),
+            item=HintItemPrecision(param["item"]),
+        )
 
 
 @dataclass(frozen=True)
@@ -90,13 +86,8 @@ class Hint:
     target: Optional[PickupIndex]
 
     def __post_init__(self):
-        if self.target is None:
-            if self.hint_type != HintType.JOKE or (self.precision is not None and not self.precision.is_joke):
-                raise ValueError(f"Hint with None target, but not properly a joke.")
-
-    @property
-    def location_precision(self) -> HintLocationPrecision:
-        return self.precision.location
+        if self.target is None and self.hint_type != HintType.JOKE:
+            raise ValueError(f"Hint with None target, but not properly a joke.")
 
     @property
     def item_precision(self) -> HintItemPrecision:
@@ -106,8 +97,7 @@ class Hint:
     def as_json(self):
         return {
             "hint_type": self.hint_type.value,
-            "location_precision": self.precision.location.value,
-            "item_precision": self.precision.item.value,
+            "precision": self.precision.as_json if self.precision is not None else None,
             "target": self.target.index if self.target is not None else None,
         }
 
@@ -115,9 +105,6 @@ class Hint:
     def from_json(cls, value) -> "Hint":
         return Hint(
             hint_type=HintType(value["hint_type"]),
-            precision=PrecisionPair(
-                location=HintLocationPrecision(value["location_precision"]),
-                item=HintItemPrecision(value["item_precision"]),
-            ),
+            precision=PrecisionPair.from_json(value["precision"]),
             target=PickupIndex(value["target"]) if value["target"] is not None else None,
         )
