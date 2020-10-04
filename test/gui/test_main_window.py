@@ -3,7 +3,7 @@ from typing import Union
 
 import pytest
 from PySide2.QtWidgets import QDialog
-from mock import AsyncMock, MagicMock, patch
+from mock import AsyncMock, MagicMock, patch, ANY
 
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
@@ -94,6 +94,7 @@ async def test_ensure_logged_in(default_main_window, mocker):
     mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
 
     async def true(): return True
+
     connect_task = asyncio.create_task(true())
 
     network_client = default_main_window.network_client
@@ -107,3 +108,39 @@ async def test_ensure_logged_in(default_main_window, mocker):
     # Assert
     mock_message_box.assert_called_once()
     assert result
+
+
+@pytest.mark.asyncio
+async def test_browse_racetime(default_main_window, mocker):
+    mock_new_dialog = mocker.patch("randovania.gui.dialog.racetime_browser_dialog.RacetimeBrowserDialog")
+    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
+                                       return_value=QDialog.Accepted)
+    dialog = mock_new_dialog.return_value
+    dialog.refresh = AsyncMock(return_value=True)
+    default_main_window.generate_seed_from_permalink = AsyncMock()
+
+    # Run
+    await default_main_window._browse_racetime()
+
+    # Assert
+    mock_new_dialog.assert_called_once_with()
+    dialog.refresh.assert_awaited_once_with()
+    mock_execute_dialog.assert_awaited_once_with(dialog)
+    default_main_window.generate_seed_from_permalink.assert_awaited_once_with(dialog.permalink)
+
+
+@pytest.mark.asyncio
+async def test_generate_seed_from_permalink(default_main_window, mocker):
+    permalink = MagicMock()
+    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout",
+                                                   autospec=True)
+    default_main_window.open_game_details = MagicMock()
+
+    # Run
+    await default_main_window.generate_seed_from_permalink(permalink)
+
+    # Assert
+    mock_generate_layout.assert_called_once_with(progress_update=ANY,
+                                                 permalink=permalink,
+                                                 options=default_main_window._options)
+    default_main_window.open_game_details.assert_called_once_with(mock_generate_layout.return_value)
