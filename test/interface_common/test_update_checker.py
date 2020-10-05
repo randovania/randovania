@@ -12,7 +12,7 @@ _CUSTOM_CHANGE_LOGS = {
     6: "\n- Bar\n",
 }
 _CUSTOM_EXPECTED_LOG = copy.copy(_CUSTOM_CHANGE_LOGS)
-_CUSTOM_EXPECTED_LOG[5] = "\n- *Major* - Foo\n\nFor more details, check the Change Log tab."
+_CUSTOM_EXPECTED_LOG[5] = "\n- *Major* - Foo\n\n---\nFor more details, check the Change Log tab."
 
 
 @pytest.mark.parametrize(["current_version", "last_changelog_version", "expected_display"], [

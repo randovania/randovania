@@ -478,7 +478,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
     layout_description.as_json = "some_json_string"
-    layout_description.permalink.presets = {i: preset_manager.default_preset for i in (0, 1)}
+    layout_description.permalink.presets = {i: preset_manager.default_preset.get_preset() for i in (0, 1)}
 
     # Run
     game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,

@@ -3,6 +3,7 @@ import datetime
 from typing import List, Dict, Optional
 
 from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -57,7 +58,7 @@ class GameSessionAction:
 class GameSessionEntry:
     id: int
     name: str
-    presets: List[Preset]
+    presets: List[VersionedPreset]
     players: Dict[int, PlayerSessionEntry]
     actions: List[GameSessionAction]
     seed_hash: Optional[str]
@@ -83,7 +84,7 @@ class GameSessionEntry:
         return GameSessionEntry(
             id=data["id"],
             name=data["name"],
-            presets=[Preset.from_json_dict(preset_json) for preset_json in data["presets"]],
+            presets=[VersionedPreset(preset_json) for preset_json in data["presets"]],
             players={
                 player_entry.id: player_entry
                 for player_entry in player_entries

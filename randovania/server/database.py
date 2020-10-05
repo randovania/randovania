@@ -8,6 +8,7 @@ import peewee
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
 db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
@@ -73,7 +74,7 @@ class GameSession(BaseModel):
     @property
     def all_presets(self) -> List[Preset]:
         return [
-            Preset.from_json_dict(json.loads(preset.preset))
+            VersionedPreset(json.loads(preset.preset)).get_preset()
             for preset in sorted(self.presets, key=lambda it: it.row)
         ]
 

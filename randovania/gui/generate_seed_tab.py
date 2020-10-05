@@ -18,7 +18,8 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset, save_preset_file, read_preset_file
+from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
 from randovania.resolver.exceptions import GenerationFailure
 
 
@@ -34,7 +35,7 @@ def persist_layout(data_dir: Path, description: LayoutDescription):
 
 class GenerateSeedTab(QWidget, BackgroundTaskMixin):
     _logic_settings_window = None
-    _current_preset: Preset = None
+    _has_preset: bool = False
     _tool_button_menu: QMenu
     _action_delete: QAction
 
@@ -93,7 +94,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
                              "{}\n\nSome errors are expected to occur, please try again.".format(exception))
 
     @property
-    def _current_preset_data(self) -> Optional[Preset]:
+    def _current_preset_data(self) -> Optional[VersionedPreset]:
         return self._window_manager.preset_manager.preset_for_name(self.window.create_preset_combo.currentData())
 
     def enable_buttons_with_background_tasks(self, value: bool):
@@ -101,20 +102,20 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self.window.create_generate_button.setEnabled(value)
         self.window.create_generate_race_button.setEnabled(value)
 
-    def _create_button_for_preset(self, preset: Preset):
+    def _create_button_for_preset(self, preset: VersionedPreset):
         create_preset_combo = self.window.create_preset_combo
         create_preset_combo.addItem(preset.name, preset.name)
 
-    def _add_new_preset(self, preset: Preset):
+    def _add_new_preset(self, preset: VersionedPreset):
         with self._options as options:
             options.selected_preset_name = preset.name
 
         if self._window_manager.preset_manager.add_new_preset(preset):
             self._create_button_for_preset(preset)
-        self.on_preset_changed(preset)
+        self.on_preset_changed(preset.get_preset())
 
     def _on_customize_button(self):
-        editor = PresetEditor(self._current_preset_data)
+        editor = PresetEditor(self._current_preset_data.get_preset())
         self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
 
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
@@ -124,7 +125,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self._logic_settings_window = None
 
         if result == QDialog.Accepted:
-            self._add_new_preset(editor.create_custom_preset_with())
+            self._add_new_preset(VersionedPreset.with_preset(editor.create_custom_preset_with()))
 
     def _on_delete_preset(self):
         self._window_manager.preset_manager.delete_preset(self._current_preset_data)
@@ -134,15 +135,16 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
     def _on_export_preset(self):
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True)
         if path is not None:
-            save_preset_file(self._current_preset_data, path)
+            self._current_preset_data.save_to_file(path)
 
     def _on_import_preset(self):
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
         if path is None:
             return
 
+        preset = VersionedPreset.from_file_sync(path)
         try:
-            preset = read_preset_file(path)
+            preset.get_preset()
         except (ValueError, KeyError):
             QMessageBox.critical(
                 self._window_manager,
@@ -166,7 +168,18 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
 
     def _on_select_preset(self):
         preset_data = self._current_preset_data
-        self.on_preset_changed(preset_data)
+        try:
+            self.on_preset_changed(preset_data.get_preset())
+        except InvalidPreset as e:
+            QMessageBox.warning(
+                self._window_manager,
+                "Incompatible Preset",
+                f"Preset {preset_data.name} can't be used as it contains the following error:\n{e.original_exception}"
+            )
+            self.window.create_preset_combo.setCurrentIndex(0)
+            self.on_preset_changed(self._window_manager.preset_manager.default_preset.get_preset())
+            return
+
         with self._options as options:
             options.selected_preset_name = preset_data.name
 
@@ -180,7 +193,7 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
             presets={
-                i: preset
+                i: preset.get_preset()
                 for i in range(num_players)
             },
         ))
@@ -202,20 +215,23 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
         self.run_in_background_thread(work, "Creating a seed...")
 
     def on_options_changed(self, options: Options):
-        if self._current_preset is None:
+        if not self._has_preset:
             preset_name = options.selected_preset_name
             if preset_name is not None:
                 index = self.window.create_preset_combo.findText(preset_name)
                 if index != -1:
                     self.window.create_preset_combo.setCurrentIndex(index)
-                    self.on_preset_changed(self._current_preset_data)
-                    return
+                    try:
+                        self.on_preset_changed(self._current_preset_data.get_preset())
+                        return
+                    except InvalidPreset:
+                        pass
 
             self.window.create_preset_combo.setCurrentIndex(0)
-            self.on_preset_changed(self._window_manager.preset_manager.default_preset)
+            self.on_preset_changed(self._window_manager.preset_manager.default_preset.get_preset())
 
     def on_preset_changed(self, preset: Preset):
-        self._current_preset = preset
+        self._has_preset = True
 
         self.window.create_preset_description.setText(preset.description)
         self._action_delete.setEnabled(preset.base_preset_name is not None)
