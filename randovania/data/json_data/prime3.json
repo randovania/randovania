@@ -847,6 +847,171 @@
                 "index": 94,
                 "long_name": "Steambot Barracks Gate",
                 "short_name": "Event94"
+            },
+            {
+                "index": 95,
+                "long_name": "Powerworks Access Barrier",
+                "short_name": "Event95"
+            },
+            {
+                "index": 100,
+                "long_name": "Pirate Homeworld Map",
+                "short_name": "Event100"
+            },
+            {
+                "index": 101,
+                "long_name": "Security Air Lock Gate",
+                "short_name": "Event101"
+            },
+            {
+                "index": 102,
+                "long_name": "Defense Access Phazite Wall",
+                "short_name": "Event102"
+            },
+            {
+                "index": 103,
+                "long_name": "Defense Access X-Ray Terminal",
+                "short_name": "Event103"
+            },
+            {
+                "index": 104,
+                "long_name": "Defense Access Voltage Barrier",
+                "short_name": "Event104"
+            },
+            {
+                "index": 105,
+                "long_name": "Command Station Morph Ball Barrier",
+                "short_name": "Event105"
+            },
+            {
+                "index": 106,
+                "long_name": "Command Station Phazon Blob",
+                "short_name": "Event106"
+            },
+            {
+                "index": 107,
+                "long_name": "Command Station Disable Defense",
+                "short_name": "Event107"
+            },
+            {
+                "index": 108,
+                "long_name": "Skyway Access Tunnel",
+                "short_name": "Event108"
+            },
+            {
+                "index": 109,
+                "long_name": "Skyway Access Wall",
+                "short_name": "Event109"
+            },
+            {
+                "index": 110,
+                "long_name": "Transit Station 1104 Voltage Barrier",
+                "short_name": "Event110"
+            },
+            {
+                "index": 111,
+                "long_name": "Transit Station Leviathan Door",
+                "short_name": "Event111"
+            },
+            {
+                "index": 112,
+                "long_name": "Control Leviathan Battleship",
+                "short_name": "Event112"
+            },
+            {
+                "index": 113,
+                "long_name": "Landing Site Alpha Barrier",
+                "short_name": "Event113"
+            },
+            {
+                "index": 114,
+                "long_name": "Scrapvault Wall",
+                "short_name": "Event114"
+            },
+            {
+                "index": 115,
+                "long_name": "Metroid Processing Disable Barrier",
+                "short_name": "Event115"
+            },
+            {
+                "index": 116,
+                "long_name": "Metroid Processing Ball Lift",
+                "short_name": "Event116"
+            },
+            {
+                "index": 117,
+                "long_name": "Craneyard Windows Broken",
+                "short_name": "Event117"
+            },
+            {
+                "index": 118,
+                "long_name": "Proving Grounds Bottom Barrier",
+                "short_name": "Event118"
+            },
+            {
+                "index": 119,
+                "long_name": "Phazon Quarry Drill Wall",
+                "short_name": "Event119"
+            },
+            {
+                "index": 120,
+                "long_name": "Phazon Quarry Drill Halfpipe",
+                "short_name": "Event120"
+            },
+            {
+                "index": 121,
+                "long_name": "Phazon Quarry Balcony Barrier",
+                "short_name": "Event121"
+            },
+            {
+                "index": 122,
+                "long_name": "Mine Lift Open Floors",
+                "short_name": "Event122"
+            },
+            {
+                "index": 123,
+                "long_name": "Main Cavern Phazite Wall",
+                "short_name": "Event123"
+            },
+            {
+                "index": 124,
+                "long_name": "Drill Shaft 2 Destroy Drill",
+                "short_name": "Event124"
+            },
+            {
+                "index": 125,
+                "long_name": "Landing Site Charlie Cleanup",
+                "short_name": "Event125"
+            },
+            {
+                "index": 126,
+                "long_name": "Docking Bay 5 Gate",
+                "short_name": "Event126"
+            },
+            {
+                "index": 127,
+                "long_name": "Stairwell Ramps",
+                "short_name": "Event127"
+            },
+            {
+                "index": 128,
+                "long_name": "Auxiliary Lift Elevator",
+                "short_name": "Event128"
+            },
+            {
+                "index": 129,
+                "long_name": "Port Observation Deck Door Lock",
+                "short_name": "Event129"
+            },
+            {
+                "index": 130,
+                "long_name": "Port Observation Deck Seeker Wall",
+                "short_name": "Event130"
+            },
+            {
+                "index": 131,
+                "long_name": "Valhalla Levithan Code",
+                "short_name": "Event131"
             }
         ],
         "tricks": [],
@@ -3780,8 +3945,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Samus Ship": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 126,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -3808,13 +3978,35 @@
                                 "Dock to Hangar A Access": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 2881244206,
+                                        "type": 1,
+                                        "index": 126,
                                         "amount": 1,
                                         "negate": false
                                     }
                                 },
                                 "Pickup (Energy Cell)": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Docking Bay 5 Gate": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2881244206,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Docking Bay 5 Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 126,
+                            "connections": {
+                                "Samus Ship": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -4167,7 +4359,16 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Event - Lower Bridge": {
+                                "Dock to Control Room Access": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 17,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Metroid Hatcher": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -4184,9 +4385,27 @@
                                             "data": {
                                                 "type": 0,
                                                 "index": 2881244206,
-                                                "amount": 2,
+                                                "amount": 5,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 1906007133,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -4220,39 +4439,9 @@
                             "node_type": "event",
                             "event_index": 17,
                             "connections": {
-                                "Event - Lower Bridge": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Lower Bridge",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
                                 "Dock to Aurora Access": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Event - Metroid Hatcher": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1906007133,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Shoot Phazite (X-Ray and Nova)"
-                                        }
-                                    ]
                                 }
                             }
                         }
@@ -4302,6 +4491,15 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Weapons Cache": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 127,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Stairwell Ramps": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -4318,13 +4516,21 @@
                                             "data": {
                                                 "type": 0,
                                                 "index": 2881244206,
-                                                "amount": 2,
+                                                "amount": 3,
                                                 "negate": false
                                             }
                                         }
                                     ]
                                 }
                             }
+                        },
+                        {
+                            "name": "Event - Stairwell Ramps",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 127,
+                            "connections": {}
                         }
                     ]
                 },
@@ -4715,8 +4921,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Security Access": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 128,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
@@ -4740,6 +4951,15 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Port Observation Deck": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 128,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Elevator": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -4756,7 +4976,7 @@
                                             "data": {
                                                 "type": 0,
                                                 "index": 2881244206,
-                                                "amount": 1,
+                                                "amount": 2,
                                                 "negate": false
                                             }
                                         }
@@ -4777,6 +4997,14 @@
                                     "data": []
                                 }
                             }
+                        },
+                        {
+                            "name": "Event - Elevator",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 127,
+                            "connections": {}
                         }
                     ]
                 },
@@ -4852,7 +5080,43 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Event - Valhalla Leviathan Code": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 536233745,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1714103130,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Valhalla Leviathan Code",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Control Room Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -4879,8 +5143,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Auxiliary Lift": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 130,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -4923,8 +5192,8 @@
                                 "Dock to Xenoresearch Lab": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
+                                        "type": 1,
+                                        "index": 130,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -4932,13 +5201,47 @@
                                 "Dock to Junction A": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 129,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Energy Cell Door Lock": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
                                         "index": 2881244206,
+                                        "amount": 3,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Seeker Wall": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3086280557,
                                         "amount": 1,
                                         "negate": false
                                     }
                                 }
                             }
+                        },
+                        {
+                            "name": "Event - Energy Cell Door Lock",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 129,
+                            "connections": {}
+                        },
+                        {
+                            "name": "Event - Seeker Wall",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 130,
+                            "connections": {}
                         }
                     ]
                 },
@@ -12684,7 +12987,26 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Powerworks": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 95,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Barrier": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 536233745,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Powerworks",
@@ -12700,7 +13022,30 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Zipline Station Charlie": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 95,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Barrier",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 95,
+                            "connections": {
+                                "Dock to Zipline Station Charlie": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -13886,13 +14231,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Pickup (Spider Ball)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1906007133,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1906007133,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -17548,6 +17907,15 @@
                                 "Samus Ship": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 113,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Barrier": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
                                         "index": 536233745,
                                         "amount": 1,
@@ -17569,11 +17937,24 @@
                                 "Dock to Transit Station 1-A": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 536233745,
+                                        "type": 1,
+                                        "index": 113,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Barrier",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 113,
+                            "connections": {
+                                "Dock to Transit Station 1-A": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -17766,6 +18147,15 @@
                                         "amount": 4,
                                         "negate": false
                                     }
+                                },
+                                "Event - Broken Windows": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3492481752,
+                                        "amount": 4,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -17791,6 +18181,28 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Outdoor": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 117,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Broken Windows",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 117,
+                            "connections": {
+                                "Outdoor": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -17979,11 +18391,20 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Elevator Unlocked": {
+                                "Dock to Proving Grounds Lift": {
                                     "type": "resource",
                                     "data": {
                                         "type": 1,
-                                        "index": 11,
+                                        "index": 118,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Barrier": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 536233745,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -18005,6 +18426,15 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Dock to Transit Station 1-B": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 118,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Event - Gandrayda": {
                                     "type": "and",
                                     "data": [
@@ -18028,14 +18458,28 @@
                                         }
                                     ]
                                 },
-                                "Elevator Unlocked": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 11,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Event - Barrier": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 11,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 536233745,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -18057,7 +18501,8 @@
                             "name": "Event - Gandrayda",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 11,
                             "connections": {
                                 "Pickup (Grapple Voltage)": {
                                     "type": "and",
@@ -18066,20 +18511,12 @@
                             }
                         },
                         {
-                            "name": "Elevator Unlocked",
+                            "name": "Event - Barrier",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 118,
                             "connections": {
-                                "Dock to Transit Station 1-B": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 536233745,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
                                 "Dock to Proving Grounds Lift": {
                                     "type": "and",
                                     "data": []
@@ -18180,7 +18617,7 @@
                             "pickup_index": 81,
                             "major_location": false,
                             "connections": {
-                                "Basement": {
+                                "Event - Metroid Barrier": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -18216,14 +18653,51 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Top Floor": {
+                                "Pickup (Missile Expansion)": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 1296127826,
+                                        "type": 1,
+                                        "index": 115,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Top Floor": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 1296127826,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2988161223,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 116,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Basement": {
                                     "type": "resource",
@@ -18245,8 +18719,42 @@
                                 "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "First Floor": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Ball Lift": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2477616633,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
+                        },
+                        {
+                            "name": "Event - Metroid Barrier",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 115,
+                            "connections": {
+                                "Basement": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Ball Lift",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 116,
+                            "connections": {}
                         }
                     ]
                 },
@@ -18656,14 +19164,27 @@
                                     "data": []
                                 },
                                 "Dock to Processing Access": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 114,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Pickup (Missile Expansion)": {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
                                 }
                             }
+                        },
+                        {
+                            "name": "Event - Open Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 114,
+                            "connections": {}
                         }
                     ]
                 },
@@ -19099,11 +19620,15 @@
                                 "Dock to Defense Access": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 1714103130,
+                                        "type": 1,
+                                        "index": 101,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -19125,15 +19650,20 @@
                                 "Dock to Lift Hub": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 101,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Gate": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
                                         "index": 1714103130,
                                         "amount": 1,
                                         "negate": false
                                     }
-                                },
-                                "Pickup (Missile Expansion)": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
@@ -19144,6 +19674,19 @@
                             "node_type": "pickup",
                             "pickup_index": 86,
                             "major_location": false,
+                            "connections": {
+                                "Dock to Lift Hub": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 101,
                             "connections": {
                                 "Dock to Defense Access": {
                                     "type": "and",
@@ -19433,37 +19976,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Missile Expansion)": {
+                                "Main Room": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 536233745,
+                                        "type": 1,
+                                        "index": 106,
                                         "amount": 1,
                                         "negate": false
                                     }
-                                },
-                                "Main Room": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2270562373,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1432926409,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
                                 }
                             }
                         },
@@ -19544,17 +20064,7 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {
-                                "Pickup (Missile Expansion)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 536233745,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
+                            "connections": {}
                         },
                         {
                             "name": "Pickup (Missile Expansion)",
@@ -19567,6 +20077,15 @@
                                 "Morph Ball Tunnels": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Main Room": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 105,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -19597,6 +20116,37 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Transit Station 2-A": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 106,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Defense Access (Base)": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 105,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Morph Ball Barrier": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 536233745,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Phazon Blob": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -19619,18 +20169,48 @@
                                         }
                                     ]
                                 },
-                                "Dock to Defense Access (Base)": {
+                                "Event - Disable Defense": {
+                                    "type": "template",
+                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Morph Ball Barrier",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 105,
+                            "connections": {
+                                "Main Room": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Morph Ball Tunnels": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 536233745,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Phazon Blob",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 106,
+                            "connections": {
+                                "Main Room": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Disable Defense",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 107,
+                            "connections": {
+                                "Main Room": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -19661,8 +20241,8 @@
                                 "Dock to Skyway Access": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 536233745,
+                                        "type": 1,
+                                        "index": 110,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -19687,11 +20267,33 @@
                                 "Dock to Transit Station 0203": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 110,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Grapple Voltage Wall": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
                                         "index": 536233745,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Grapple Voltage Wall",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 110,
+                            "connections": {
+                                "Dock to Skyway Access": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -20279,6 +20881,29 @@
                                 "Event - Pirate Commander": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Samus Ship": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 12,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -20288,7 +20913,51 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 12,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Transit Tunnel P70": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Destroy Door",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 111,
+                            "connections": {
+                                "Samus Ship": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Samus Ship",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Transit Tunnel P70": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3492481752,
+                                        "amount": 4,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Destroy Door": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2174833663,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         }
                     ]
                 },
@@ -20313,7 +20982,30 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Event - Control Leviathan Battleship": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 131,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Control Leviathan Battleship",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 112,
+                            "connections": {
+                                "Dock to Leviathan Access Portal": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -20463,7 +21155,7 @@
                                         "negate": false
                                     }
                                 },
-                                "Map": {
+                                "Event - Pirate Homeworld Map": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -20475,10 +21167,11 @@
                             }
                         },
                         {
-                            "name": "Map",
+                            "name": "Event - Pirate Homeworld Map",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 100,
                             "connections": {
                                 "Elevator": {
                                     "type": "and",
@@ -20571,11 +21264,34 @@
                                     }
                                 },
                                 "Dock to Transit Station 1104": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 109,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Open Wall": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 3492481752,
-                                        "amount": 4,
+                                        "type": 1,
+                                        "index": 107,
+                                        "amount": 1,
                                         "negate": false
                                     }
                                 }
@@ -20595,17 +21311,7 @@
                             "connected_dock_index": 5,
                             "dock_type": 1,
                             "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to Courtyard Passage": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3492481752,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
-                                }
-                            }
+                            "connections": {}
                         },
                         {
                             "name": "Dock to Transit Station 1104",
@@ -20630,6 +21336,19 @@
                                         "amount": 4,
                                         "negate": false
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Open Wall",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 109,
+                            "connections": {
+                                "Dock to Courtyard Passage": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -20729,8 +21448,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Hall Center": {
-                                    "type": "template",
-                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 102,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -20750,8 +21474,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Hall Center": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 103,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -20825,14 +21554,19 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Command Station (Base)": {
-                                    "type": "template",
-                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 102,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Dock to Command Station (Balcony)": {
                                     "type": "resource",
                                     "data": {
-                                        "type": 0,
-                                        "index": 1714103130,
+                                        "type": 1,
+                                        "index": 103,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -20844,8 +21578,21 @@
                                 "Spider Track Tower": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 104,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Phazite Wall": {
+                                    "type": "template",
+                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                },
+                                "Event - X-Ray Terminal": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
-                                        "index": 536233745,
+                                        "index": 1714103130,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -20870,11 +21617,59 @@
                                 "Hall Center": {
                                     "type": "resource",
                                     "data": {
+                                        "type": 1,
+                                        "index": 104,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Voltage Barrier": {
+                                    "type": "resource",
+                                    "data": {
                                         "type": 0,
                                         "index": 536233745,
                                         "amount": 1,
                                         "negate": false
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Phazite Wall",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 102,
+                            "connections": {
+                                "Hall Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - X-Ray Terminal",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 103,
+                            "connections": {
+                                "Hall Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Voltage Barrier",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 104,
+                            "connections": {
+                                "Spider Track Tower": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -21001,9 +21796,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Ground Floor": {
-                                    "type": "and",
-                                    "data": []
+                                "Dock to Transit Station 4-B\nLeads to Command Center": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 120,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21022,11 +21822,30 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Energy Cell)": {
+                                "Dock to Transit Station 4-B\nLeads to Command Center": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 119,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 121,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
-                                "Ground Floor": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -21047,7 +21866,66 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Ground Floor": {
+                                "Dock to Mine Lift": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 120,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Dock to Drill Shaft 2": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 121,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 119,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 119,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Drill Halfpipe": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Drill Wall": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -21061,7 +21939,7 @@
                             "pickup_index": 93,
                             "major_location": false,
                             "connections": {
-                                "Dock to Drill Shaft 2": {
+                                "Event - Balcony Barrier": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -21074,27 +21952,44 @@
                             "node_type": "pickup",
                             "pickup_index": 94,
                             "major_location": false,
+                            "connections": {}
+                        },
+                        {
+                            "name": "Event - Drill Halfpipe",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 120,
                             "connections": {
-                                "Ground Floor": {
+                                "Dock to Transit Station 4-B\nLeads to Command Center": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Ground Floor",
+                            "name": "Event - Balcony Barrier",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 121,
                             "connections": {
-                                "Dock to Mine Lift": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2988161223,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Dock to Drill Shaft 2": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Drill Wall",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 119,
+                            "connections": {
+                                "Dock to Transit Station 4-B\nLeads to Command Center": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -21123,8 +22018,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Main Cavern": {
-                                    "type": "template",
-                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 124,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21144,8 +22044,30 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Phazon Quarry": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 124,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Destroy Drill": {
                                     "type": "template",
                                     "data": "Shoot Phazite (X-Ray and Nova)"
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Destroy Drill",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 124,
+                            "connections": {
+                                "Dock to Main Cavern": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -21172,7 +22094,58 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Phazon Harvesting": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 122,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Open Shaft": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1906007133,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1296127826,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Phazon Harvesting",
@@ -21188,7 +22161,39 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Phazon Quarry": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 122,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Open Shaft",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 122,
+                            "connections": {
+                                "Dock to Phazon Quarry": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -21325,7 +22330,30 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Event - Clean Landing Site": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2477616633,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Clean Landing Site",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 125,
+                            "connections": {
+                                "Dock to Phazon Mine Entry": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -21351,7 +22379,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Main Hall": {
+                                "Dock to Phazon Mine Entry": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -21372,9 +22400,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Main Hall": {
-                                    "type": "and",
-                                    "data": []
+                                "Dock to Phazon Mine Entry": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 123,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21393,9 +22426,26 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Main Hall": {
+                                "Dock to Drill Shaft 1": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Dock to Drill Shaft 2": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 123,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Pickup (Nova Beam)": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Phazite Wall": {
+                                    "type": "template",
+                                    "data": "Shoot Phazite (X-Ray and Nova)"
                                 }
                             }
                         },
@@ -21407,43 +22457,20 @@
                             "pickup_index": 95,
                             "major_location": true,
                             "connections": {
-                                "Main Hall": {
-                                    "type": "template",
-                                    "data": "Shoot Phazite (X-Ray and Nova)"
-                                }
-                            }
-                        },
-                        {
-                            "name": "Main Hall",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Drill Shaft 1": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Dock to Drill Shaft 2": {
-                                    "type": "template",
-                                    "data": "Shoot Phazite (X-Ray and Nova)"
-                                },
                                 "Dock to Phazon Mine Entry": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Event - Mining Laser": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "template",
+                                    "data": "Shoot Phazite (X-Ray and Nova)"
                                 }
                             }
                         },
                         {
-                            "name": "Event - Mining Laser",
+                            "name": "Event - Phazite Wall",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 123,
                             "connections": {
-                                "Pickup (Nova Beam)": {
+                                "Dock to Phazon Mine Entry": {
                                     "type": "and",
                                     "data": []
                                 }
