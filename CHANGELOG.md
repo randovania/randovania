@@ -241,6 +241,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Reaching Portal Chamber door in Poisoned Bog with just Screw Attack is now Advanced (from Intermediate).
 
+-   Scan Dash to upper level in Central Mining Station from Central Station Access is now Expert (from Advanced).
+
 ## [1.2.2] - 2020-06-06
 
 -   Changed: Re-organized the tabs in the preset customization window
