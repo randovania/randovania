@@ -44,12 +44,17 @@ class HintLocationPrecision(Enum):
 class PrecisionPair(NamedTuple):
     location: HintLocationPrecision
     item: HintItemPrecision
+    extra: Optional[int] = None
 
     @property
     def as_json(self):
+        extra = {}
+        if self.extra is not None:
+            extra["extra"] = self.extra
         return {
             "location": self.location.value,
             "item": self.item.value,
+            **extra,
         }
 
     @classmethod
@@ -59,6 +64,7 @@ class PrecisionPair(NamedTuple):
         return PrecisionPair(
             location=HintLocationPrecision(param["location"]),
             item=HintItemPrecision(param["item"]),
+            extra=param.get("extra"),
         )
 
 
