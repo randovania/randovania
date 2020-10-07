@@ -361,7 +361,7 @@ Asset id: 6925347865352032548
       Trivial
 
 > Dock to Generator A; Heals? False
-  * Normal Door to Generator A/Dock to Generator A Access
+  * Grapple Lasso Blast Shield to Generator A/Dock to Generator A Access
   > Dock to Cargo Dock A
       Trivial
 
@@ -405,7 +405,7 @@ Asset id: 1937326665165249525
   * Normal Door to Cargo Dock C/Dock to Generator C Access
 
 > Dock to Generator C; Heals? False
-  * Normal Door to Generator C/Dock to Generator C Access
+  * Grapple Lasso Blast Shield to Generator C/Dock to Generator C Access
 
 ----------------
 Substation East
@@ -456,7 +456,7 @@ Asset id: 8077796705327002140
       Trivial
 
 > Dock to Cargo Dock A; Heals? False
-  * Normal Door to Cargo Dock A/Dock to Conduit A
+  * Missile Blast Shield to Cargo Dock A/Dock to Conduit A
   > Dock to Munitions Storage
       Missile
 
@@ -494,7 +494,7 @@ Asset id: 12525204153859996508
       Trivial
 
 > Dock to Data Storage; Heals? False
-  * Normal Door to Data Storage/Dock to Conduit B
+  * Ice Missile Blast Shield to Data Storage/Dock to Conduit B
   > Dock to Substation West
       Trivial
   > Dock to Cargo Dock B
@@ -524,7 +524,7 @@ Asset id: 6692819360230093549
   > Samus Ship
       Trivial
 
-> Samus Ship; Heals? False
+> Samus Ship; Heals? True
   > Dock to Conduit A
       Trivial
   > Dock to Generator A Access
@@ -570,9 +570,11 @@ Asset id: 12327360187860907075
       Trivial
 
 > Dock to Generator B Access; Heals? False
-  * Normal Door to Generator B Access/Dock to Cargo Dock B
+  * Seeler Missiles Blast Shield to Generator B Access/Dock to Cargo Dock B
   > Dock to Conduit B
       Trivial
+
+> Samus Ship; Heals? True
 
 ----------------
 Cargo Hub
@@ -593,7 +595,7 @@ Asset id: 3044064450317642212
       Trivial
 
 > Dock to Maintenance Station; Heals? False
-  * Normal Door to Maintenance Station/Dock to Cargo Hub
+  * Grapple Lasso Blast Shield to Maintenance Station/Dock to Cargo Hub
   > Center Area
       Trivial
 
@@ -700,7 +702,7 @@ Asset id: 15622764306970326849
   > Samus Ship
       Trivial
 
-> Samus Ship; Heals? False
+> Samus Ship; Heals? True
   > Dock to Hangar A Access
       After Docking Bay 5 Gate
   > Pickup (Energy Cell)
@@ -762,7 +764,7 @@ Asset id: 7652878551953536007
       Trivial
 
 > Dock to Aurora Access; Heals? False
-  * Normal Door to Aurora Access/Dock to Junction A
+  * Nova Door to Aurora Access/Dock to Junction A
 
 ----------------
 Security Access
@@ -947,7 +949,7 @@ Asset id: 17479488334200413695
 Aurora Access
 Asset id: 1129937930833845921
 > Dock to Junction A; Heals? False
-  * Normal Door to Junction A/Dock to Aurora Access
+  * Nova Door to Junction A/Dock to Aurora Access
   > Dock to Aurora Chamber
       Trivial
 
@@ -1018,6 +1020,12 @@ Cliffside Airdock
 Asset id: 2349002151496990705
 > Dock to Gateway Hall; Heals? False
   * Normal Door to Gateway Hall/Dock to Cliffside Airdock
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Dock to Gateway Hall
+      Trivial
 
 ----------------
 G.F.S. Theseus
@@ -1090,13 +1098,7 @@ Asset id: 2768064962148517187
 > Dock to Gateway; Heals? False
   * Normal Door to Gateway/Dock to Gateway Hall
   > Dock to Cliffside Airdock
-      After Gateway Hall Statue
-  > Event - Statue
       Grapple Lasso
-
-> Event - Statue; Heals? False
-  > Dock to Gateway
-      Trivial
 
 ----------------
 Grand Court Path
@@ -1144,12 +1146,18 @@ Asset id: 8374398449894515797
 > Dock to G.F.S. Theseus; Heals? False
   * Normal Door to G.F.S. Theseus/Dock to Falls of Fire
   > Dock to Hidden Court
+      All of the following:
+          After Falls of Fire Wall
+          Ice Missile or Use Screw Attack (Space Jump)
+  > Event - Falls of Fire Wall
       Ice Missile or Use Screw Attack (Space Jump)
 
 > Dock to Hidden Court; Heals? False
-  * Normal Door to Hidden Court/Dock to Falls of Fire
+  * Ice Missile Blast Shield to Hidden Court/Dock to Falls of Fire
   > Dock to G.F.S. Theseus
-      Ice Missile or Use Screw Attack (Space Jump)
+      All of the following:
+          After Falls of Fire Wall
+          Ice Missile or Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
       Use Screw Attack (Space Jump)
 
@@ -1158,37 +1166,38 @@ Asset id: 8374398449894515797
   > Dock to Hidden Court
       Trivial
 
+> Event - Falls of Fire Wall; Heals? False
+  * Event Falls of Fire Wall
+  > Dock to G.F.S. Theseus
+      Trivial
+
 ----------------
 Hillside Vista
 Asset id: 13902157786380317936
 > Dock to Grand Court; Heals? False
   * Normal Door to Grand Court/Dock to Hillside Vista
+  > Dock to Reliquary I
+      Grapple Lasso
   > Pickup (Missile Expansion)
       Trivial
-  > Reliquary Ledge
-      Trivial
-
-> Dock to Reliquary I; Heals? False
-  * Normal Door to Reliquary I/Dock to Hillside Vista
-  > Reliquary Ledge
-      After Hillside Vista Statue
-
-> Pickup (Missile Expansion); Heals? False
-  * Pickup 28; Major Location? False
-  > Reliquary Ledge
-      Trivial
-
-> Reliquary Ledge; Heals? False
-  > Dock to Grand Court
-      Grapple Swing or Use Screw Attack (Space Jump)
-  > Dock to Reliquary I
-      After Hillside Vista Statue
   > Event - Statue
       Grapple Lasso
 
+> Dock to Reliquary I; Heals? False
+  * Normal Door to Reliquary I/Dock to Hillside Vista
+  > Dock to Grand Court
+      All of the following:
+          After Hillside Vista Statue
+          Grapple Swing or Use Screw Attack (Space Jump)
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 28; Major Location? False
+  > Dock to Grand Court
+      Trivial
+
 > Event - Statue; Heals? False
   * Event Hillside Vista Statue
-  > Reliquary Ledge
+  > Dock to Grand Court
       Trivial
 
 ----------------
@@ -1200,7 +1209,7 @@ Asset id: 3467893814575167461
       Trivial
 
 > Dock to Grand Court Path; Heals? False
-  * Normal Door to Grand Court Path/Dock to Gateway
+  * Missile Blast Shield to Grand Court Path/Dock to Gateway
   > Tunnel Room
       Trivial
 
@@ -1245,9 +1254,7 @@ Asset id: 3467893814575167461
   > Event - Orange Lock
       Trivial
   > Event - Blue Lock
-      After Gateway Orange Lock
-  > Event - Crash Site Side Platform
-      Grapple Lasso
+      Grapple Lasso and After Gateway Orange Lock
 
 > Event - Orange Lock; Heals? False
   * Event Gateway Orange Lock
@@ -1262,11 +1269,6 @@ Asset id: 3467893814575167461
 > Event - Tunnel Orb; Heals? False
   * Event Gateway Tunnel Orb
   > Tunnel Room
-      Trivial
-
-> Event - Crash Site Side Platform; Heals? False
-  * Event Gateway Platform near Crash Site
-  > Base Floor
       Trivial
 
 ----------------
@@ -1285,7 +1287,7 @@ Asset id: 18411620122976788705
       Trivial
 
 > Dock to Reliquary III; Heals? False
-  * Normal Door to Reliquary III/Dock to Grand Court
+  * Ice Missile Blast Shield to Reliquary III/Dock to Grand Court
   > Base Floor
       Trivial
 
@@ -1332,9 +1334,9 @@ Asset id: 7492844587871276588
 > Dock to Hidden Court Hall; Heals? False
   * Normal Door to Hidden Court Hall/Dock to Fuel Gel Pool
   > Pickup (Missile Expansion - Ledge)
-      Ice Missile and After Fuel Gel Pool Golem Head
+      Ice Missile
   > Pickup (Missile Expansion - Bottom)
-      Suit Type ≥ 4
+      Suit Type ≥ 4 and After Fuel Gel Pool Golem Head
   > Event - Pickup Golem Head
       Ship Grapple
 
@@ -1385,23 +1387,27 @@ Asset id: 6613311822671481119
       Trivial
   > Pickup (Missile Expansion)
       Trivial
+  > Event - Leviathan Shield
+      Ship Missile and After North Jungle Court Turret
 
 > Event - Leviathan Shield; Heals? False
   * Event Jungle Leviathan Shield Generator
+  > Room Center
+      Trivial
 
 ----------------
 Hidden Court
 Asset id: 14006603351279167667
 > Dock to Hidden Court Hall; Heals? False
-  * Normal Door to Hidden Court Hall/Dock to Hidden Court
+  * Plasma Door to Hidden Court Hall/Dock to Hidden Court
   > Dock to Burrow
-      All of the following:
-          After Hidden Court Burrow Gate
-          Grapple Swing or Use Screw Attack (Space Jump)
+      After Hidden Court Burrow Gate
+  > Top of Halfpipe
+      After Hidden Court Golem and Use Screw Attack (Space Jump)
   > Bottom Floor
       Trivial
   > Bottom of Halfpipe
-      Trivial
+      After Hidden Court Golem
 
 > Dock to Ruined Shrine; Heals? False
   * Normal Door to Ruined Shrine/Dock to Hidden Court
@@ -1410,10 +1416,8 @@ Asset id: 14006603351279167667
 
 > Dock to Burrow; Heals? False
   * Normal Door to Burrow/Dock to Hidden Court
-  > Dock to Hidden Court Hall
-      All of the following:
-          After Hidden Court Burrow Gate
-          Grapple Swing or Use Screw Attack (Space Jump)
+  > Bottom Floor
+      After Hidden Court Burrow Gate
   > Event - Burrow Gate
       Trivial
 
@@ -1435,6 +1439,8 @@ Asset id: 14006603351279167667
       Trivial
 
 > Top of Halfpipe; Heals? False
+  > Dock to Hidden Court Hall
+      Trivial
   > Pickup (Missile Expansion)
       Trivial
   > Pickup (Energy Cell)
@@ -1443,22 +1449,16 @@ Asset id: 14006603351279167667
       Trivial
 
 > Bottom Floor; Heals? False
+  > Dock to Hidden Court Hall
+      Grapple Swing or After Hidden Court Golem or Use Screw Attack (Space Jump)
   > Dock to Ruined Shrine
       After Hidden Court Golem
-  > Dock to Burrow
-      All of the following:
-          After Hidden Court Burrow Gate
-          Grapple Swing or Use Screw Attack (Space Jump)
   > Dock to Falls of Fire
       Trivial
-  > Bottom of Halfpipe
-      After Hidden Court Golem and Use Screw Attack (Space Jump)
   > Event - Golem
       Ice Missile
 
 > Bottom of Halfpipe; Heals? False
-  > Dock to Hidden Court Hall
-      Use Screw Attack (Space Jump)
   > Top of Halfpipe
       Boost Ball
   > Bottom Floor
@@ -1483,7 +1483,7 @@ Asset id: 18145373112260209818
       Trivial
 
 > Dock to Hidden Court; Heals? False
-  * Normal Door to Hidden Court/Dock to Hidden Court Hall
+  * Plasma Door to Hidden Court/Dock to Hidden Court Hall
   > Dock to Fuel Gel Pool
       Trivial
 
@@ -1529,7 +1529,7 @@ Asset id: 8707858871451811842
       Trivial
 
 > Dock to Save Station B; Heals? False
-  * Normal Door to Save Station B/Dock to Field Access
+  * Ice Missile Blast Shield to Save Station B/Dock to Field Access
   > Dock to Jousting Field
       Trivial
 
@@ -1553,8 +1553,6 @@ Asset id: 15861154386655212106
   * Normal Door to Overgrown Ruins/Dock to Ancient Courtyard (Door)
   > Dock to Enlightened Walkway
       After Ancient Courtyard Halfpipe Wall
-  > Pickup (Missile Expansion)
-      Boost Ball and After Ancient Courtyard Halfpipe Wall
   > Event - Halfpipe Wall
       Grapple Lasso and Ship Missile
 
@@ -1568,7 +1566,7 @@ Asset id: 15861154386655212106
   > Dock to Overgrown Ruins (Door)
       After Ancient Courtyard Halfpipe Wall
   > Pickup (Missile Expansion)
-      Boost Ball
+      Boost Ball and After Ancient Courtyard Halfpipe Wall
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 36; Major Location? False
@@ -1610,7 +1608,7 @@ Asset id: 5590909670361746944
       Trivial
 
 > Dock to Vault; Heals? False
-  * Normal Door to Vault/Dock to Overgrown Ruins
+  * Missile Blast Shield to Vault/Dock to Overgrown Ruins
   > Dock to Thorn Jungle Airdock
       Trivial
 
@@ -1719,7 +1717,7 @@ Asset id: 5310258251750100868
 > Dock to Generator Hall North; Heals? False
   * Normal Door to Generator Hall North/Dock to North Jungle Court
   > Dock to North Jungle Hall
-      Trivial
+      After North Jungle Court Turret
 
 > Dock to North Jungle Hall; Heals? False
   * Normal Door to North Jungle Hall/Dock to North Jungle Court
@@ -1836,6 +1834,12 @@ Save Station B
 Asset id: 9372574566266947554
 > Dock to Field Access; Heals? False
   * Normal Door to Field Access/Dock to Save Station B
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  > Dock to Field Access
+      Trivial
 
 ----------------
 Hangar Bay
@@ -1852,9 +1856,11 @@ Asset id: 12448241480574438186
   > Pickup (Energy Cell)
       Trivial
   > Pickup (Main Ship Missiles)
-      After Hangar Bay Ceiling
+      Command Visor and After Hangar Bay Ceiling
   > Event - Hangar Ceiling
-      Grapple Swing or Use Screw Attack (Space Jump)
+      Grapple Lasso or Use Screw Attack (Space Jump)
+  > Samus Ship
+      Command Visor and After Hangar Bay Ceiling
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 42; Major Location? False
@@ -1881,11 +1887,15 @@ Asset id: 12448241480574438186
   > Dock to Ruined Shrine
       Trivial
 
+> Samus Ship; Heals? True
+  > Dock to Ruined Shrine
+      Trivial
+
 ----------------
 Colossus Vista
 Asset id: 8112010450000786492
 > Dock to Hall of the Golems; Heals? False
-  * Normal Door to Hall of the Golems/Dock to Colossus Vista
+  * Plasma Door to Hall of the Golems/Dock to Colossus Vista
   > Dock to Machineworks Bridge
       Trivial
   > Pickup (Ship Missile Expansion)
@@ -1922,9 +1932,9 @@ Asset id: 2580753232084104741
       Trivial
 
 > Dock to Colossus Vista; Heals? False
-  * Normal Door to Colossus Vista/Dock to Hall of the Golems
+  * Plasma Door to Colossus Vista/Dock to Hall of the Golems
   > Room Center
-      After Hall of the Golems - Left Golem
+      After Hall of the Golems - Plasma Beam Golem
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 45; Major Location? False
@@ -1933,32 +1943,32 @@ Asset id: 2580753232084104741
 
 > Room Center; Heals? False
   > Dock to Burrow
-      After Hall of the Golems - Top Golem
+      After Hall of the Golems - Ice Missile Golem
   > Dock to Hangar Bay Hall
       Trivial
   > Dock to Colossus Vista
-      After Hall of the Golems - Left Golem
+      After Hall of the Golems - Plasma Beam Golem
   > Pickup (Missile Expansion)
-      Spider Ball and Boost Ball and After Hall of the Golems - Right Golem
-  > Event - Right Golem
+      Spider Ball and Boost Ball and After Hall of the Golems - Grapple Voltage Golem
+  > Event - Grapple Voltage Golem
       Grapple Voltage
-  > Event - Left Golem
+  > Event - Plasma Beam Golem
       Plasma Beam
-  > Event - Top Golem
+  > Event - Ice Missile Golem
       Ice Missile
 
-> Event - Right Golem; Heals? False
-  * Event Hall of the Golems - Right Golem
+> Event - Grapple Voltage Golem; Heals? False
+  * Event Hall of the Golems - Grapple Voltage Golem
   > Room Center
       Trivial
 
-> Event - Left Golem; Heals? False
-  * Event Hall of the Golems - Left Golem
+> Event - Plasma Beam Golem; Heals? False
+  * Event Hall of the Golems - Plasma Beam Golem
   > Room Center
       Trivial
 
-> Event - Top Golem; Heals? False
-  * Event Hall of the Golems - Top Golem
+> Event - Ice Missile Golem; Heals? False
+  * Event Hall of the Golems - Ice Missile Golem
   > Room Center
       Trivial
 
@@ -1986,6 +1996,12 @@ Thorn Jungle Airdock
 Asset id: 16131448128382991283
 > Dock to Overgrown Ruins; Heals? False
   * Normal Door to Overgrown Ruins/Dock to Thorn Jungle Airdock
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Dock to Overgrown Ruins
+      Trivial
 
 ----------------
 Auxiliary Dynamo
@@ -2027,17 +2043,23 @@ Fiery Airdock
 Asset id: 11708287702197177006
 > Dock to Imperial Hall; Heals? False
   * Normal Door to Imperial Hall/Dock to Fiery Airdock
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Dock to Imperial Hall
+      Trivial
 
 ----------------
 Main Lift
 Asset id: 9934831212540578712
 > Dock to Warp Site Alpha; Heals? False
-  * Normal Door to Warp Site Alpha/Dock to Main Lift
+  * Plasma Door to Warp Site Alpha/Dock to Main Lift
   > Upper Area
       After Main Lift Ice Tunnel
 
 > Dock to Corrupted Pool; Heals? False
-  * Normal Door to Corrupted Pool/Dock to Main Lift
+  * Missile Blast Shield to Corrupted Pool/Dock to Main Lift
   > Upper Area
       Grapple Lasso
 
@@ -2077,7 +2099,7 @@ Asset id: 4215957264467390882
       After Imperial Hall Walls
 
 > Dock to Refinery Access; Heals? False
-  * Normal Door to Refinery Access/Dock to Imperial Hall
+  * Plasma Door to Refinery Access/Dock to Imperial Hall
   > Dock to Fiery Airdock
       Trivial
   > Pickup (Missile Expansion)
@@ -2111,12 +2133,12 @@ Asset id: 4215957264467390882
 Refinery Access
 Asset id: 12195253720064854680
 > Dock to Imperial Hall; Heals? False
-  * Normal Door to Imperial Hall/Dock to Refinery Access
+  * Plasma Door to Imperial Hall/Dock to Refinery Access
   > Dock to Gel Refinery Site
       Trivial
 
 > Dock to Gel Refinery Site; Heals? False
-  * Normal Door to Gel Refinery Site/Dock to Refinery Access
+  * Plasma Door to Gel Refinery Site/Dock to Refinery Access
   > Dock to Imperial Hall
       Trivial
 
@@ -2129,12 +2151,12 @@ Asset id: 691790544662692104
       Trivial
 
 > Dock to Refinery Access; Heals? False
-  * Normal Door to Refinery Access/Dock to Gel Refinery Site
+  * Plasma Door to Refinery Access/Dock to Gel Refinery Site
   > Room Center
-      Trivial
+      Nova Beam or Plasma Beam
 
 > Dock to Gel Purification Site; Heals? False
-  * Normal Door to Gel Purification Site/Dock to Gel Refinery Site
+  * Ice Missile Blast Shield to Gel Purification Site/Dock to Gel Refinery Site
   > Pickup (Missile Expansion)
       After Gel Refinery Site Pipe or Use Screw Attack (Space Jump)
   > Room Center
@@ -2173,52 +2195,52 @@ Asset id: 691790544662692104
 Gel Purification Site
 Asset id: 14145904616390261937
 > Dock to Gel Hall; Heals? False
-  * Normal Door to Gel Hall/Dock to Gel Purification Site
+  * Ice Missile Blast Shield to Gel Hall/Dock to Gel Purification Site
+  > Dock to Gel Refinery Site
+      Grapple Swing or Use Screw Attack (Space Jump)
 
 > Dock to Gel Refinery Site; Heals? False
-  * Normal Door to Gel Refinery Site/Dock to Gel Purification Site
+  * Ice Missile Blast Shield to Gel Refinery Site/Dock to Gel Purification Site
+  > Dock to Gel Hall
+      Grapple Swing or Use Screw Attack (Space Jump)
 
 ----------------
 Gel Hall
 Asset id: 15732414849243282895
 > Dock to Gel Purification Site; Heals? False
-  * Normal Door to Gel Purification Site/Dock to Gel Hall
-  > Room Center
-      Ice Missile or Suit Type ≥ 4 or Use Screw Attack (Space Jump)
+  * Ice Missile Blast Shield to Gel Purification Site/Dock to Gel Hall
+  > Dock to Save Station A
+      Ice Missile or Normal Damage
 
 > Dock to Gel Processing Site; Heals? False
-  * Normal Door to Gel Processing Site/Dock to Gel Hall
-  > Room Center
+  * Ice Missile Blast Shield to Gel Processing Site/Dock to Gel Hall
+  > Falling Platform
       Trivial
 
 > Dock to Save Station A; Heals? False
   * Normal Door to Save Station A/Dock to Gel Hall
-  > Room Center
+  > Falling Platform
       Trivial
 
 > Pickup (Missile Expansion - Ledge); Heals? False
   * Pickup 20; Major Location? False
-  > Room Center
-      Any of the following:
-          Ice Missile
-          Suit Type ≥ 4 and Use Screw Attack (Space Jump)
+  > Falling Platform
+      Ice Missile or Normal Damage
 
 > Pickup (Missile Expansion - Falling Platform); Heals? False
   * Pickup 21; Major Location? False
-  > Room Center
+  > Falling Platform
       Trivial
 
-> Room Center; Heals? False
+> Falling Platform; Heals? False
   > Dock to Gel Purification Site
-      Ice Missile or Suit Type ≥ 4 or Use Screw Attack (Space Jump)
+      Ice Missile or Use Screw Attack (Space Jump)
   > Dock to Gel Processing Site
       Trivial
   > Dock to Save Station A
       Trivial
   > Pickup (Missile Expansion - Ledge)
-      Any of the following:
-          Ice Missile
-          Suit Type ≥ 4 and Use Screw Attack (Space Jump)
+      Ice Missile
   > Pickup (Missile Expansion - Falling Platform)
       Trivial
 
@@ -2328,12 +2350,18 @@ Save Station A
 Asset id: 6190253681364271262
 > Dock to Gel Hall; Heals? False
   * Normal Door to Gel Hall/Dock to Save Station A
-  > Dock to Cavern Entry
+  > Save Station
       Trivial
 
 > Dock to Cavern Entry; Heals? False
   * Normal Door to Cavern Entry/Dock to Save Station A
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
   > Dock to Gel Hall
+      Trivial
+  > Dock to Cavern Entry
       Trivial
 
 ----------------
@@ -2388,12 +2416,12 @@ Asset id: 6515839134538815411
 > Dock to Temple of Bryyo; Heals? False
   * Normal Door to Temple of Bryyo/Dock to Temple Reservoir
   > Dock to Temple Hall
-      Ice Missile or Suit Type ≥ 4 or Use Screw Attack (Space Jump)
+      Ice Missile or Normal Damage ≥ 4
 
 > Dock to Temple Hall; Heals? False
   * Normal Door to Temple Hall/Dock to Temple Reservoir
   > Dock to Temple of Bryyo
-      Ice Missile or Suit Type ≥ 4 or Use Screw Attack (Space Jump)
+      Ice Missile or Normal Damage
 
 ----------------
 Temple Access
@@ -2412,7 +2440,22 @@ Asset id: 17784744952251613582
 Warp Site Alpha
 Asset id: 4474147916478522354
 > Dock to Main Lift; Heals? False
-  * Normal Door to Main Lift/Dock to Warp Site Alpha
+  * Plasma Door to Main Lift/Dock to Warp Site Alpha
+  > Event - Warp Site Alpha Wall
+      All of the following:
+          Boost Ball
+          Nova Beam or Plasma Beam
+  > Teleport to Bryyo Ice - Warp Site Bravo
+      After Warp Site Alpha Wall
+
+> Event - Warp Site Alpha Wall; Heals? False
+  * Event Warp Site Alpha Wall
+  > Dock to Main Lift
+      Trivial
+
+> Teleport to Bryyo Ice - Warp Site Bravo; Heals? False
+  > Dock to Main Lift
+      After Warp Site Alpha Wall
 
 ====================
 Bryyo - Ice
@@ -2448,18 +2491,18 @@ Asset id: 6915612318130423578
       Trivial
   > Pickup (Ship Missile Expansion)
       Use Screw Attack (Space Jump)
-  > Locked Door Ledge
-      Use Screw Attack (Space Jump)
 
 > Pickup (Screw Attack); Heals? False
   * Pickup 48; Major Location? True
-  > Dock to Imperial Crypt (Lower)
+  > Event - Hall of Remembrance Item
       Trivial
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 49; Major Location? False
   > Dock to Tower (Upper)
-      Trivial
+      Use Screw Attack (Space Jump)
+  > Locked Door Ledge
+      Use Screw Attack (Space Jump)
 
 > Event - Unlock Door; Heals? False
   > Locked Door Ledge
@@ -2470,10 +2513,17 @@ Asset id: 6915612318130423578
       After Hall of Remembrance Unlock Door
   > Dock to Imperial Crypt (Lower)
       Trivial
-  > Dock to Tower (Upper)
+  > Pickup (Ship Missile Expansion)
       Use Screw Attack (Space Jump)
   > Event - Unlock Door
       Grapple Lasso
+
+> Event - Hall of Remembrance Item; Heals? False
+  * Event Hall of Remembrance Item
+  > Dock to Imperial Crypt (Lower)
+      Use Screw Attack (Space Jump)
+  > Dock to Tower (Lower)
+      Use Screw Attack (Space Jump)
 
 ----------------
 Imperial Crypt
@@ -2481,11 +2531,7 @@ Asset id: 17976174099400013428
 > Dock to Hall of Remembrance (Upper); Heals? False
   * Normal Door to Hall of Remembrance/Dock to Imperial Crypt (Upper)
   > Dock to Imperial Caverns
-      Any of the following:
-          Use Screw Attack (Space Jump)
-          Boost Ball and After Imperial Crypt Ice Floor
-  > Event - Ice Floor
-      Plasma Beam
+      Use Screw Attack (Space Jump)
 
 > Dock to Imperial Caverns; Heals? False
   * Normal Door to Imperial Caverns/Dock to Imperial Crypt
@@ -2494,7 +2540,7 @@ Asset id: 17976174099400013428
   > Dock to Hall of Remembrance (Lower)
       After Imperial Crypt Ice Floor
   > Event - Ice Floor
-      Plasma Beam
+      Nova Beam or Plasma Beam
 
 > Dock to Hall of Remembrance (Lower); Heals? False
   * Normal Door to Hall of Remembrance/Dock to Imperial Crypt (Lower)
@@ -2513,6 +2559,8 @@ Tower
 Asset id: 10429003070780375168
 > Dock to Hall of Remembrance (Upper); Heals? False
   * Normal Door to Hall of Remembrance/Dock to Tower (Lower)
+  > Dock to Hall of Remembrance (Lower)
+      Trivial
 
 > Dock to Hall of Remembrance (Lower); Heals? False
   * Normal Door to Hall of Remembrance/Dock to Tower (Upper)
@@ -2524,8 +2572,6 @@ Asset id: 10429003070780375168
 > Pickup (Energy Tank); Heals? False
   * Pickup 50; Major Location? False
   > Dock to Hall of Remembrance (Upper)
-      Trivial
-  > Dock to Hall of Remembrance (Lower)
       Trivial
 
 ----------------
@@ -2540,6 +2586,8 @@ Asset id: 10980580650394598183
   * Normal Door to Warp Site Bravo/Dock to Imperial Caverns
   > Dock to Imperial Crypt
       After Imperial Caverns Ice Floors
+  > Event - Ice Floors
+      Nova Beam or Plasma Beam
 
 > Event - Ice Floors; Heals? False
   * Event Imperial Caverns Ice Floors
@@ -2553,6 +2601,12 @@ Landing Site Delta
 Asset id: 12972775391902806082
 > Dock to Core Access; Heals? False
   * Normal Door to Core Access/Dock to Landing Site Delta
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Dock to Core Access
+      Trivial
 
 ----------------
 Core Access
@@ -2620,7 +2674,7 @@ Asset id: 4133901881028310574
   > Dock to Main Docking Access
       Plasma Beam
 
-> Samus Ship (Catch.); Heals? False
+> Samus Ship (Catch.); Heals? True
   > Dock to Main Docking Access
       Plasma Beam or Before Aurora Chamber Skytown Vaccine
 
@@ -2740,7 +2794,7 @@ Asset id: 9894117388493814037
       Trivial
 
 > Dock to Save Station A; Heals? False
-  * Normal Door to Save Station A/Dock to Aurora Lift
+  * Ice Missile Blast Shield to Save Station A/Dock to Aurora Lift
   > Dock to Aurora Chamber
       Trivial
 
@@ -2955,12 +3009,12 @@ Asset id: 2692588651293388340
       Trivial
 
 > Dock to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Dock to Junction
+  * Ice Missile Blast Shield to Spire Dock/Dock to Junction
   > Circle Room
       Trivial
 
 > Dock to Spire Dock; Heals? False
-  * Normal Door to Spire Dock/Dock to Junction
+  * Ice Missile Blast Shield to Spire Dock/Dock to Junction
   > Circle Room
       Trivial
 
@@ -2984,6 +3038,12 @@ Landing Site A
 Asset id: 3381520513235092752
 > Dock to Security Station; Heals? False
   * Normal Door to Security Station/Dock to Spire Dock
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Dock to Security Station
+      Trivial
 
 ----------------
 Maintenance Shaft AU
@@ -3394,7 +3454,7 @@ Asset id: 1701256524990864906
       Trivial
 
 > Dock to Maintenance Shaft CC; Heals? False
-  * Normal Door to Maintenance Shaft CC/Dock to Concourse
+  * Plasma Door to Maintenance Shaft CC/Dock to Concourse
   > Basement
       Trivial
 
@@ -3461,9 +3521,13 @@ Maintenance Shaft CC
 Asset id: 13843289676906838650
 > Dock to Zipline Station Delta; Heals? False
   * Normal Door to Zipline Station Delta/Dock to Maintenance Shaft CC
+  > Dock to Concourse
+      Trivial
 
 > Dock to Concourse; Heals? False
-  * Normal Door to Concourse/Dock to Maintenance Shaft CC
+  * Plasma Door to Concourse/Dock to Maintenance Shaft CC
+  > Dock to Zipline Station Delta
+      Trivial
 
 ----------------
 Piston Hall
@@ -3545,7 +3609,7 @@ Asset id: 15869626092358203793
       Trivial
 
 > Dock to Save Station C; Heals? False
-  * Normal Door to Save Station C/Dock to Transit Tube A
+  * Plasma Door to Save Station C/Dock to Transit Tube A
   > Dock to Research Pod Lift
       Trivial
   > Dock to Zipline Station Delta
@@ -3894,7 +3958,7 @@ Asset id: 2455573103578253675
       After Chozo Observatory Elevator
 
 > Dock to Botanica; Heals? False
-  * Normal Door to Botanica/Dock to Chozo Observatory
+  * Plasma Door to Botanica/Dock to Chozo Observatory
   > Dock to Maintenance Shaft OB
       Trivial
 
@@ -3949,19 +4013,25 @@ Asset id: 18200553231954089224
 
 > Pickup (Ship Grapple); Heals? False
   * Pickup 73; Major Location? True
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
   > Dock to Landing Access
+      Trivial
+  > Pickup (Ship Grapple)
       Trivial
 
 ----------------
 Botanica
 Asset id: 8254796686876375149
 > Dock to Chozo Observatory; Heals? False
-  * Normal Door to Chozo Observatory/Dock to Botanica
+  * Plasma Door to Chozo Observatory/Dock to Botanica
   > Bottom Level
       Trivial
 
 > Dock to Broken Lift; Heals? False
-  * Normal Door to Broken Lift/Dock to Botanica
+  * Ice Missile Blast Shield to Broken Lift/Dock to Botanica
   > Top Level
       Trivial
 
@@ -4004,6 +4074,12 @@ Landing Site C
 Asset id: 15514523555396225844
 > Dock to Core Access; Heals? False
   * Normal Door to Core Access/Dock to Landing Site C
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Dock to Core Access
+      Trivial
 
 ----------------
 Core Access
@@ -4062,7 +4138,7 @@ Asset id: 13146584938063573409
   > Event - Barrier
       Grapple Voltage
 
-> Samus Ship; Heals? False
+> Samus Ship; Heals? True
   > Dock to Scrapvault Lift
       Trivial
   > Dock to Transit Station 1-A
@@ -4207,12 +4283,12 @@ Asset id: 16389095850931092901
       Trivial
 
 > Dock to Airshaft; Heals? False
-  * Normal Door to Airshaft/Dock to Metroid Processing
+  * Plasma Door to Airshaft/Dock to Metroid Processing
   > Top Floor
       Trivial
 
 > Dock to Creche Transit; Heals? False
-  * Normal Door to Creche Transit/Dock to Metroid Processing
+  * Ice Missile Blast Shield to Creche Transit/Dock to Metroid Processing
   > Top Floor
       Trivial
 
@@ -4266,7 +4342,7 @@ Asset id: 16389095850931092901
 Airshaft
 Asset id: 8007962190215742654
 > Dock to Metroid Processing; Heals? False
-  * Normal Door to Metroid Processing/Dock to Airshaft
+  * Plasma Door to Metroid Processing/Dock to Airshaft
   > Dock to Craneyard
       Seeker Missile and Use Screw Attack (Space Jump)
 
@@ -4279,7 +4355,7 @@ Asset id: 8007962190215742654
 Processing Access
 Asset id: 11685491285383767107
 > Dock to Scrapvault; Heals? False
-  * Normal Door to Scrapvault/Dock to Processing Access
+  * Plasma Door to Scrapvault/Dock to Processing Access
   > Room Center
       Trivial
 
@@ -4335,7 +4411,7 @@ Asset id: 11846340785047609812
       Trivial
 
 > Dock to Processing Access; Heals? False
-  * Normal Door to Processing Access/Dock to Scrapvault
+  * Plasma Door to Processing Access/Dock to Scrapvault
   > Room Center
       Trivial
 
@@ -4473,6 +4549,12 @@ Landing Site Bravo
 Asset id: 4408585131827753141
 > Dock to Lift Hub Access; Heals? False
   * Normal Door to Lift Hub Access/Dock to Landing Site Bravo
+  > Samus Ship
+      Trivial
+
+> Samus Ship; Heals? True
+  > Dock to Lift Hub Access
+      Trivial
 
 ----------------
 Security Air Lock
@@ -4529,12 +4611,12 @@ Asset id: 1808913861159744919
 Command Courtyard
 Asset id: 18221971457754325372
 > Dock to Courtyard Passage; Heals? False
-  * Normal Door to Courtyard Passage/Dock to Command Courtyard
+  * Plasma Door to Courtyard Passage/Dock to Command Courtyard
   > Bottom Floor
       Trivial
 
 > Dock to Lift Hub; Heals? False
-  * Normal Door to Lift Hub/Dock to Command Courtyard
+  * Plasma Door to Lift Hub/Dock to Command Courtyard
   > Top Floor
       Trivial
 
@@ -4585,7 +4667,7 @@ Asset id: 13589229454537797972
       Trivial
 
 > Dock to Defense Access (Base); Heals? False
-  * Normal Door to Defense Access/Dock to Command Station (Base)
+  * Nova Door to Defense Access/Dock to Command Station (Base)
   > Main Room
       Trivial
 
@@ -4818,7 +4900,7 @@ Asset id: 9997664456677642630
   > Samus Ship
       Trivial
 
-> Samus Ship; Heals? False
+> Samus Ship; Heals? True
   > Dock to Transit Tunnel P70
       Suit Type ≥ 4
   > Event - Destroy Door
@@ -4846,7 +4928,7 @@ Asset id: 2807909054514352708
       Trivial
 
 > Dock to Command Courtyard; Heals? False
-  * Normal Door to Command Courtyard/Dock to Lift Hub
+  * Plasma Door to Command Courtyard/Dock to Lift Hub
   > Elevator
       Trivial
 
@@ -4950,7 +5032,7 @@ Asset id: 3288365355139345163
       Trivial
 
 > Dock to Command Station (Base); Heals? False
-  * Normal Door to Command Station/Dock to Defense Access (Base)
+  * Nova Door to Command Station/Dock to Defense Access (Base)
   > Hall Center
       After Defense Access Phazite Wall
 
@@ -5051,7 +5133,7 @@ Leads to Command Center
       After Phazon Quarry Drill Halfpipe
 
 > Dock to Drill Shaft 2; Heals? False
-  * Normal Door to Drill Shaft 2/Dock to Phazon Quarry
+  * Nova Door to Drill Shaft 2/Dock to Phazon Quarry
   > Dock to Transit Station 4-B
 Leads to Command Center
       After Phazon Quarry Drill Wall and After Phazon Quarry Balcony Barrier
@@ -5102,7 +5184,7 @@ Leads to Command Center
 Drill Shaft 2
 Asset id: 7923701740032492696
 > Dock to Phazon Quarry; Heals? False
-  * Normal Door to Phazon Quarry/Dock to Drill Shaft 2
+  * Nova Door to Phazon Quarry/Dock to Drill Shaft 2
   > Dock to Main Cavern
       After Drill Shaft 2 Destroy Drill
 
@@ -5171,9 +5253,15 @@ Asset id: 65874966404189819
   * Normal Door to Phazon Mine Entry/Dock to Landing Site Charlie
   > Event - Clean Landing Site
       Plasma Beam
+  > Samus Ship
+      After Landing Site Charlie Cleanup
 
 > Event - Clean Landing Site; Heals? False
   * Event Landing Site Charlie Cleanup
+  > Dock to Phazon Mine Entry
+      Trivial
+
+> Samus Ship; Heals? True
   > Dock to Phazon Mine Entry
       Trivial
 
@@ -5191,7 +5279,7 @@ Asset id: 3558406334082684652
       After Main Cavern Phazite Wall
 
 > Dock to Phazon Mine Entry; Heals? False
-  * Normal Door to Phazon Mine Entry/Dock to Main Cavern
+  * Nova Door to Phazon Mine Entry/Dock to Main Cavern
   > Dock to Drill Shaft 1
       Trivial
   > Dock to Drill Shaft 2
@@ -5228,7 +5316,7 @@ Asset id: 6948986767748104139
       Trivial
 
 > Dock to Main Cavern; Heals? False
-  * Normal Door to Main Cavern/Dock to Phazon Mine Entry
+  * Nova Door to Main Cavern/Dock to Phazon Mine Entry
   > Dock to Landing Site Charlie
       Trivial
   > Pickup (Missile Expansion)
@@ -5249,7 +5337,7 @@ Asset id: 9593588872354674734
   > Samus Ship
       Trivial
 
-> Samus Ship; Heals? False
+> Samus Ship; Heals? True
   > Dock to Core Access
       Use Screw Attack (Space Jump)
 
