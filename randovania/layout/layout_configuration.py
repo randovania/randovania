@@ -2,6 +2,7 @@ import dataclasses
 from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
@@ -76,25 +77,11 @@ class LayoutElevators(BitPackEnum, Enum):
 
 
 @dataclasses.dataclass(frozen=True)
-class LayoutSafeZone(BitPackDataClass):
+class LayoutSafeZone(BitPackDataClass, JsonDataclass):
     fully_heal: bool
     prevents_dark_aether: bool
     heal_per_second: float = dataclasses.field(metadata={"min": 0.0, "max": 100.0,
                                                          "if_different": 1.0, "precision": 1.0})
-
-    @property
-    def as_json(self) -> dict:
-        return {
-            field.name: getattr(self, field.name)
-            for field in dataclasses.fields(self)
-        }
-
-    @classmethod
-    def from_json(cls, json_dict: dict) -> "LayoutSafeZone":
-        return cls(**{
-            field.name: json_dict[field.name]
-            for field in dataclasses.fields(cls)
-        })
 
 
 @dataclasses.dataclass(frozen=True)
