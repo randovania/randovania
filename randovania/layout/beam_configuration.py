@@ -2,12 +2,13 @@ import dataclasses
 from typing import Tuple
 
 from randovania.bitpacking.bitpacking import BitPackDataClass
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration
 from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 @dataclasses.dataclass(frozen=True)
-class BeamAmmoConfiguration(BitPackDataClass):
+class BeamAmmoConfiguration(BitPackDataClass, JsonDataclass):
     item_index: int = dataclasses.field(metadata={"min": 0, "max": 108})
     ammo_a: int = dataclasses.field(metadata={"min": -1, "max": 108})
     ammo_b: int = dataclasses.field(metadata={"min": -1, "max": 108})
@@ -27,43 +28,13 @@ class BeamAmmoConfiguration(BitPackDataClass):
             combo_ammo_cost=self.combo_ammo_cost,
         )
 
-    @property
-    def as_json(self) -> dict:
-        return {
-            field.name: getattr(self, field.name)
-            for field in dataclasses.fields(self)
-        }
-
-    @classmethod
-    def from_json(cls, json_dict: dict) -> "BeamAmmoConfiguration":
-        kwargs = {
-            field.name: json_dict[field.name]
-            for field in dataclasses.fields(cls)
-        }
-        return cls(**kwargs)
-
 
 @dataclasses.dataclass(frozen=True)
-class BeamConfiguration(BitPackDataClass):
+class BeamConfiguration(BitPackDataClass, JsonDataclass):
     power: BeamAmmoConfiguration
     dark: BeamAmmoConfiguration
     light: BeamAmmoConfiguration
     annihilator: BeamAmmoConfiguration
-
-    @property
-    def as_json(self) -> dict:
-        return {
-            field.name: getattr(self, field.name).as_json
-            for field in dataclasses.fields(self)
-        }
-
-    @classmethod
-    def from_json(cls, json_dict: dict) -> "BeamConfiguration":
-        kwargs = {
-            field.name: field.type.from_json(json_dict[field.name])
-            for field in dataclasses.fields(cls)
-        }
-        return cls(**kwargs)
 
     def create_game_specific(self, resource_database: ResourceDatabase) -> Tuple[EchoesBeamConfiguration, ...]:
         return (

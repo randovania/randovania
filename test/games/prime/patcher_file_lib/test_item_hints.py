@@ -60,7 +60,7 @@ def test_create_hints_nothing(empty_patches):
     result = item_hints.create_hints(patches, world_list, rng)
 
     # Assert
-    message = ("An &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
+    message = ("The &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
                "&push;&main-color=#FF3333;World - Area&pop;.")
     assert result == [
         {'asset_id': asset_id, 'strings': [message, '', message]}

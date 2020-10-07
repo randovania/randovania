@@ -1,10 +1,15 @@
+import typing
 from random import Random
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional
 
-from randovania.game_description.assignment import PickupAssignment
+from randovania.game_description import node_search
+from randovania.game_description.area import Area
+from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintType, HintLocationPrecision, HintItemPrecision
-from randovania.game_description.node import LogbookNode
+from randovania.game_description.hint import HintType, HintLocationPrecision, HintItemPrecision, Hint, RelativeDataArea, \
+    HintRelativeAreaName, RelativeDataItem
+from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
@@ -25,37 +30,6 @@ _JOKE_HINTS = [
     "A really important item can be found at - (transmission ends)",
 ]
 
-_PRIME_1_ITEMS = [
-    "Varia Suit",
-    "Wave Beam",
-    "Thermal Visor",
-    "Wavebuster",
-    "Ice Beam",
-    "Gravity Suit",
-    "X-Ray Visor",
-    "Ice Spreader",
-    "Plasma Beam",
-    "Flamethrower",
-    "Phazon Suit",
-]
-
-_PRIME_3_ITEMS = [
-    "Grapple Lasso",
-    "PED Suit",
-    "Grapple Swing",
-    "Ice Missile",
-    "Ship Missile Launcher",
-    "Hyper Ball",
-    "Plasma Beam",
-    "Ship Grapple Beam",
-    "Hyper Missile",
-    "X-Ray Visor",
-    "Grapple Voltage",
-    "Hazard Shield",
-    "Nova Beam",
-    "Hyper Grapple",
-]
-
 _DET_AN = [
     "Annihilator Beam",
     "Amber Translator",
@@ -71,20 +45,6 @@ for i in range(1, 4):
 for i in range(1, 10):
     _DET_NULL.append(f"Sky Temple Key {i}")
 
-_GUARDIAN_NAMES = {
-    PickupIndex(43): "Amorbis",
-    PickupIndex(79): "Chykka",
-    PickupIndex(115): "Quadraxis",
-}
-
-_HINT_MESSAGE_TEMPLATES = {
-    HintLocationPrecision.KEYBEARER: "The Flying Ing Cache in {node} contains {determiner}{pickup}.",
-    HintLocationPrecision.GUARDIAN: "{node} is guarding {determiner}{pickup}.",
-    HintLocationPrecision.LIGHT_SUIT_LOCATION: "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.",
-    HintLocationPrecision.DETAILED: "{determiner.title}{pickup} can be found in {node}.",
-    HintLocationPrecision.WORLD_ONLY: "{determiner.title}{pickup} can be found in {node}.",
-}
-
 
 class Determiner:
     s: str
@@ -98,6 +58,140 @@ class Determiner:
     @property
     def title(self):
         return self.s.title()
+
+
+class LocationFormatter:
+    def format(self, determiner: Determiner, pickup_name: str, hint: Hint) -> str:
+        raise NotImplementedError()
+
+
+class GuardianFormatter(LocationFormatter):
+    _GUARDIAN_NAMES = {
+        PickupIndex(43): "Amorbis",
+        PickupIndex(79): "Chykka",
+        PickupIndex(115): "Quadraxis",
+    }
+
+    def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
+        guardian = color_text(TextColor.GUARDIAN, self._GUARDIAN_NAMES[hint.target])
+        return f"{guardian} is guarding {determiner}{pickup}."
+
+
+class TemplatedFormatter(LocationFormatter):
+    def __init__(self, template: str, hint_name_creator: LocationHintCreator):
+        self.template = template
+        self.hint_name_creator = hint_name_creator
+
+    def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
+        node_name = color_text(TextColor.LOCATION, self.hint_name_creator.index_node_name(
+            hint.target,
+            hint.precision.location == HintLocationPrecision.WORLD_ONLY
+        ))
+        return self.template.format(determiner=Determiner(determiner),
+                                    pickup=pickup,
+                                    node=node_name)
+
+
+class RelativeFormatter(LocationFormatter):
+    def __init__(self, world_list: WorldList, patches: GamePatches):
+        self.world_list = world_list
+        self.patches = patches
+        self._index_to_node = {
+            node.pickup_index: node
+            for node in world_list.all_nodes
+            if isinstance(node, PickupNode)
+        }
+
+    def _calculate_distance(self, source_location: PickupIndex, target: Area) -> int:
+        source = self._index_to_node[source_location]
+        return node_search.distances_to_node(self.world_list, source)[target]
+
+    def relative_format(self, determiner: Determiner, pickup: str, hint: Hint, other_area: Area, other_name: str,
+                        ) -> str:
+        distance = self._calculate_distance(hint.target, other_area)
+        if distance > 1:
+            precise_msg = "" if hint.precision.relative.precise_distance else "up to "
+            distance_msg = f"{precise_msg}{distance} rooms"
+        else:
+            distance_msg = "one room"
+        return f"{determiner.title}{pickup} can be found {distance_msg} away from {other_name}."
+
+
+class RelativeAreaFormatter(RelativeFormatter):
+    def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
+        relative = typing.cast(RelativeDataArea, hint.precision.relative)
+        other_area = self.world_list.area_by_area_location(relative.area_location)
+
+        if relative.precision == HintRelativeAreaName.NAME:
+            other_name = other_area.name
+        elif relative.precision == HintRelativeAreaName.FEATURE:
+            raise NotImplementedError("HintRelativeAreaName.FEATURE not implemented")
+        else:
+            raise ValueError(f"Unknown precision: {relative.precision}")
+
+        return self.relative_format(determiner, pickup, hint, other_area, other_name)
+
+
+class RelativeItemFormatter(RelativeFormatter):
+    def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
+        relative = typing.cast(RelativeDataItem, hint.precision.relative)
+        index = PickupIndex(relative.other_index)
+
+        other_area = self.world_list.nodes_to_area(self._index_to_node[index])
+        other_name = "".join(*_calculate_pickup_hint(self.patches.pickup_assignment, self.world_list,
+                                                     relative.precision,
+                                                     self.patches.pickup_assignment.get(index)))
+
+        return self.relative_format(determiner, pickup, hint, other_area, other_name)
+
+
+def _calculate_pickup_hint(pickup_assignment: PickupAssignment,
+                           world_list: WorldList,
+                           precision: HintItemPrecision,
+                           target: Optional[PickupTarget],
+                           ) -> Tuple[str, str]:
+    """
+
+    :param pickup_assignment:
+    :param world_list:
+    :param precision:
+    :param target:
+    :return:
+    """
+    item_category = ItemCategory.ETM if target is None else target.pickup.item_category
+    if precision is HintItemPrecision.GENERAL_CATEGORY:
+        if item_category.is_major_category:
+            return "a ", "major upgrade"
+        elif item_category.is_key:
+            return "a ", "Dark Temple Key"
+        else:
+            return "an ", "expansion"
+
+    elif precision is HintItemPrecision.PRECISE_CATEGORY:
+        details = item_category.hint_details
+        return details[0], details[1]
+
+    elif target is None:
+        if len(pickup_assignment) == world_list.num_pickup_nodes - 1:
+            determiner = "the "
+        else:
+            determiner = "an "
+        return determiner, "Energy Transfer Module"
+    else:
+        return _calculate_determiner(pickup_assignment, target.pickup), target.pickup.name
+
+
+def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry) -> str:
+    if pickup.name in _DET_NULL:
+        determiner = ""
+    elif tuple(pickup_entry.pickup.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
+        determiner = "the "
+    elif pickup.name in _DET_AN:
+        determiner = "an "
+    else:
+        determiner = "a "
+
+    return determiner
 
 
 def create_hints(patches: GamePatches,
@@ -118,6 +212,20 @@ def create_hints(patches: GamePatches,
 
     hints_for_asset: Dict[int, str] = {}
 
+    _LOCATION_FORMATTERS: Dict[HintLocationPrecision, LocationFormatter] = {
+        HintLocationPrecision.KEYBEARER: TemplatedFormatter(
+            "The Flying Ing Cache in {node} contains {determiner}{pickup}.", hint_name_creator),
+        HintLocationPrecision.GUARDIAN: GuardianFormatter(),
+        HintLocationPrecision.LIGHT_SUIT_LOCATION: TemplatedFormatter(
+            "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.", hint_name_creator),
+        HintLocationPrecision.DETAILED: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
+                                                           hint_name_creator),
+        HintLocationPrecision.WORLD_ONLY: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
+                                                             hint_name_creator),
+        HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches),
+        HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches),
+    }
+
     for asset, hint in patches.hints.items():
         if hint.hint_type == HintType.JOKE:
             if not joke_hints:
@@ -126,34 +234,16 @@ def create_hints(patches: GamePatches,
             message = color_text(TextColor.JOKE, joke_hints.pop())
 
         else:
-            target = patches.pickup_assignment.get(hint.target)
+            determiner, pickup_name = _calculate_pickup_hint(patches.pickup_assignment,
+                                                             world_list,
+                                                             hint.precision.item,
+                                                             patches.pickup_assignment.get(hint.target))
+            message = _LOCATION_FORMATTERS[hint.precision.location].format(
+                determiner,
+                color_text(TextColor.ITEM, pickup_name),
+                hint,
+            )
 
-            # Determine location name
-            if hint.precision.location == HintLocationPrecision.GUARDIAN:
-                node_name = color_text(TextColor.GUARDIAN, _GUARDIAN_NAMES[hint.target])
-
-            else:
-                node_name = color_text(TextColor.LOCATION, hint_name_creator.index_node_name(
-                    hint.target,
-                    hint.precision.location == HintLocationPrecision.WORLD_ONLY
-                ))
-
-            # Determine pickup name
-            if target is not None:
-                is_joke, determiner, pickup_name = _calculate_pickup_hint(
-                    hint.precision.item,
-                    _calculate_determiner(patches.pickup_assignment, target.pickup),
-                    target.pickup,
-                )
-            else:
-                is_joke = False
-                determiner = "the " if len(patches.pickup_assignment) == 118 else "an "
-                pickup_name = "Energy Transfer Module"
-
-            pickup_name = color_text(TextColor.JOKE if is_joke else TextColor.ITEM, pickup_name)
-            message = _HINT_MESSAGE_TEMPLATES[hint.precision.location].format(determiner=Determiner(determiner),
-                                                                              pickup=pickup_name,
-                                                                              node=node_name)
         hints_for_asset[asset.asset_id] = message
 
     return [
@@ -164,39 +254,6 @@ def create_hints(patches: GamePatches,
         for logbook_node in world_list.all_nodes
         if isinstance(logbook_node, LogbookNode)
     ]
-
-
-def _calculate_pickup_hint(precision: HintItemPrecision,
-                           determiner: str,
-                           pickup: PickupEntry,
-                           ) -> Tuple[bool, str, str]:
-    if precision is HintItemPrecision.GENERAL_CATEGORY:
-        if pickup.item_category.is_major_category:
-            return False, "a ", "major upgrade"
-        elif pickup.item_category.is_key:
-            return False, "a ", "Dark Temple Key"
-        else:
-            return False, "an ", "expansion"
-
-    elif precision is HintItemPrecision.PRECISE_CATEGORY:
-        details = pickup.item_category.hint_details
-        return False, details[0], details[1]
-
-    else:
-        return False, determiner, pickup.name
-
-
-def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry) -> str:
-    if pickup.name in _DET_NULL:
-        determiner = ""
-    elif tuple(pickup_entry.pickup.name for pickup_entry in pickup_assignment.values()).count(pickup.name) == 1:
-        determiner = "the "
-    elif pickup.name in _DET_AN:
-        determiner = "an "
-    else:
-        determiner = "a "
-
-    return determiner
 
 
 def hide_hints(world_list: WorldList) -> list:
