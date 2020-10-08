@@ -1168,7 +1168,7 @@ Asset id: 8374398449894515797
 
 > Event - Falls of Fire Wall; Heals? False
   * Event Falls of Fire Wall
-  > Dock to G.F.S. Theseus
+  > Dock to Hidden Court
       Trivial
 
 ----------------
@@ -1177,7 +1177,7 @@ Asset id: 13902157786380317936
 > Dock to Grand Court; Heals? False
   * Normal Door to Grand Court/Dock to Hillside Vista
   > Dock to Reliquary I
-      Grapple Lasso
+      After Hillside Vista Statue
   > Pickup (Missile Expansion)
       Trivial
   > Event - Statue
@@ -1197,7 +1197,7 @@ Asset id: 13902157786380317936
 
 > Event - Statue; Heals? False
   * Event Hillside Vista Statue
-  > Dock to Grand Court
+  > Dock to Reliquary I
       Trivial
 
 ----------------
@@ -1380,18 +1380,24 @@ Asset id: 6613311822671481119
 
 > Room Center; Heals? False
   > Dock to Generator Hall North
-      Trivial
+      After Jungle Generator Ship Missile Attempt
   > Dock to Field Access
       Trivial
   > Dock to Generator Hall South
-      Trivial
+      After Jungle Generator Ship Missile Attempt
   > Pickup (Missile Expansion)
       Trivial
   > Event - Leviathan Shield
-      Ship Missile and After North Jungle Court Turret
+      Ship Missile and After Jungle Generator Ship Missile Attempt and After North Jungle Court Turret
+  > Event - Ship Missile Attempt
+      Ship Missile
 
 > Event - Leviathan Shield; Heals? False
   * Event Jungle Leviathan Shield Generator
+  > Room Center
+      Trivial
+
+> Event - Ship Missile Attempt; Heals? False
   > Room Center
       Trivial
 
@@ -1450,7 +1456,9 @@ Asset id: 14006603351279167667
 
 > Bottom Floor; Heals? False
   > Dock to Hidden Court Hall
-      Grapple Swing or After Hidden Court Golem or Use Screw Attack (Space Jump)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          Grapple Swing and After Hidden Court Golem
   > Dock to Ruined Shrine
       After Hidden Court Golem
   > Dock to Falls of Fire
@@ -1789,17 +1797,10 @@ Asset id: 1872319291341539278
 > Dock to Jungle Generator; Heals? False
   * Normal Door to Jungle Generator/Dock to Generator Hall South
   > Dock to South Jungle Court
-      After Generator Hall South Bridge
-  > Event - Destroy Bridge
       Trivial
 
 > Dock to South Jungle Court; Heals? False
   * Normal Door to South Jungle Court/Dock to Generator Hall South
-  > Dock to Jungle Generator
-      Trivial
-
-> Event - Destroy Bridge; Heals? False
-  * Event Generator Hall South Bridge
   > Dock to Jungle Generator
       Trivial
 
@@ -1847,12 +1848,16 @@ Asset id: 12448241480574438186
 > Dock to Hangar Bay Hall; Heals? False
   * Normal Door to Hangar Bay Hall/Dock to Hangar Bay
   > Dock to Ruined Shrine
-      After Hangar Bay Power
+      All of the following:
+          After Hangar Bay Power
+          Nova Beam or Plasma Beam
 
 > Dock to Ruined Shrine; Heals? False
   * Normal Door to Ruined Shrine/Dock to Hangar Bay
   > Dock to Hangar Bay Hall
-      After Hangar Bay Power
+      All of the following:
+          After Hangar Bay Power
+          Nova Beam or Plasma Beam
   > Pickup (Energy Cell)
       Trivial
   > Pickup (Main Ship Missiles)
@@ -1897,7 +1902,7 @@ Asset id: 8112010450000786492
 > Dock to Hall of the Golems; Heals? False
   * Plasma Door to Hall of the Golems/Dock to Colossus Vista
   > Dock to Machineworks Bridge
-      Trivial
+      After Colossus Vista Golem Head
   > Pickup (Ship Missile Expansion)
       After Colossus Vista Golem Head
   > Event - Place Golem Head
@@ -1906,7 +1911,7 @@ Asset id: 8112010450000786492
 > Dock to Machineworks Bridge; Heals? False
   * Normal Door to Machineworks Bridge/Dock to Colossus Vista
   > Dock to Hall of the Golems
-      Trivial
+      After Colossus Vista Golem Head
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 44; Major Location? False
@@ -2464,6 +2469,12 @@ Warp Site Bravo
 Asset id: 9245834436705857859
 > Dock to Imperial Caverns; Heals? False
   * Normal Door to Imperial Caverns/Dock to Warp Site Bravo
+  > Teleport to Bryyo Fire - Warp Site Alpha
+      Trivial
+
+> Teleport to Bryyo Fire - Warp Site Alpha; Heals? False
+  > Dock to Imperial Caverns
+      Trivial
 
 ----------------
 Hall of Remembrance
