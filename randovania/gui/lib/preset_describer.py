@@ -36,6 +36,8 @@ _TEMPLATE_STRINGS = {
         # "Quality of Life Improvements: {generic_patches}",
     ],
     "Difficulty": [
+        "Energy Tank: {energy_tank}",
+        "Safe Zone: {safe_zone}",
         "Dark Aether Suit Damage: {dark_aether_suit_damage}",
         "Dark Aether Damage Strictness: {dark_aether_damage_strictness}",
         "Pickup Model: {pickup_model}",
@@ -160,12 +162,14 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
 
     # Difficulty
     default_patcher = PatcherConfiguration()
-
     if patcher.varia_suit_damage == default_patcher.varia_suit_damage and (
             patcher.dark_suit_damage == default_patcher.dark_suit_damage):
         dark_aether_suit_damage = "Normal"
     else:
         dark_aether_suit_damage = "Custom"
+
+    format_params["energy_tank"] = f"{configuration.energy_per_tank} energy"
+    format_params["safe_zone"] = f"{configuration.safe_zone.heal_per_second} energy/s"
 
     format_params["dark_aether_suit_damage"] = dark_aether_suit_damage
     format_params["dark_aether_damage_strictness"] = configuration.damage_strictness.long_name
