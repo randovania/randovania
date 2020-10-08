@@ -91,6 +91,8 @@ class LayoutConfiguration(BitPackDataClass):
     skip_final_bosses: bool
     energy_per_tank: float = dataclasses.field(metadata={"min": 1.0, "max": 1000.0,
                                                          "if_different": 100.0, "precision": 1.0})
+    safe_zone_heal_per_second: float = dataclasses.field(metadata={"min": 0.0, "max": 100.0,
+                                                         "if_different": 1.0, "precision": 1.0})
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     split_beam_ammo: bool = True
 
@@ -119,6 +121,7 @@ class LayoutConfiguration(BitPackDataClass):
             "beam_configuration": self.beam_configuration.as_json,
             "skip_final_bosses": self.skip_final_bosses,
             "energy_per_tank": self.energy_per_tank,
+            "safe_zone_heal_per_second": self.safe_zone_heal_per_second,
             "split_beam_ammo": self.split_beam_ammo,
         }
 
@@ -144,5 +147,6 @@ class LayoutConfiguration(BitPackDataClass):
             beam_configuration=BeamConfiguration.from_json(json_dict["beam_configuration"]),
             skip_final_bosses=json_dict["skip_final_bosses"],
             energy_per_tank=json_dict["energy_per_tank"],
+            safe_zone_heal_per_second=json_dict["safe_zone_heal_per_second"],
             split_beam_ammo=json_dict["split_beam_ammo"],
         )

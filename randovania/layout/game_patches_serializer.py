@@ -299,6 +299,7 @@ def decode_single(player_index: int, num_players: int, game_modifications: dict,
     game_specific = dataclasses.replace(
         game.game_specific,
         energy_per_tank=configuration.energy_per_tank,
+        safe_zone_heal_per_second=configuration.safe_zone_heal_per_second,
         beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
 
     world_list = game.world_list

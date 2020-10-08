@@ -7,7 +7,7 @@ import slugify
 
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 3
+CURRENT_PRESET_VERSION = 4
 
 
 class InvalidPreset(Exception):
@@ -76,9 +76,15 @@ def _migrate_v2(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v3(preset: dict) -> dict:
+    preset["layout_configuration"]["safe_zone_heal_per_second"] = 1.0
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
+    3: _migrate_v3,
 }
 
 
