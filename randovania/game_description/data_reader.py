@@ -182,6 +182,7 @@ def read_game_specific(data: Dict, resource_database: ResourceDatabase,
                        ) -> EchoesGameSpecific:
     return EchoesGameSpecific(
         energy_per_tank=data["energy_per_tank"],
+        safe_zone_heal_per_second=data["safe_zone_heal_per_second"],
         beam_configurations=tuple(
             read_beam_configuration(beam, resource_database)
             for beam in data["beam_configurations"]
