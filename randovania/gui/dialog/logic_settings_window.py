@@ -169,6 +169,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         # Damage
         set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
         self.energy_tank_capacity_spin_box.setValue(layout_config.energy_per_tank)
+        self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
+        self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
         self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
         self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
 
@@ -338,7 +340,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                     )
                 )
 
-    def _on_slide_trick_slider(self, trick: SimpleResourceInfo, value: int):
+    def _on_slide_trick_slider(self, trick: TrickResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
             with self._editor as options:
                 options.set_layout_configuration_field(
@@ -400,12 +402,30 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             return persist
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
+        self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
+        self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
         self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
         self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
             editor.set_layout_configuration_field("energy_per_tank", self.energy_tank_capacity_spin_box.value())
+
+    def _persist_safe_zone_regen(self):
+        with self._editor as editor:
+            safe_zone = dataclasses.replace(
+                editor.layout_configuration.safe_zone,
+                heal_per_second=self.safe_zone_regen_spin.value()
+            )
+            editor.set_layout_configuration_field("safe_zone", safe_zone)
+
+    def _persist_safe_zone_logic_heal(self):
+        with self._editor as editor:
+            safe_zone = dataclasses.replace(
+                editor.layout_configuration.safe_zone,
+                fully_heal=self.safe_zone_logic_heal_check.isChecked()
+            )
+            editor.set_layout_configuration_field("safe_zone", safe_zone)
 
     # Elevator
     def setup_elevator_elements(self):

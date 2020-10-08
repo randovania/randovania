@@ -43,6 +43,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
 
+-   Added: The rate of healing for Safe Zones is now configurable.
+
 -   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
 
 -   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.

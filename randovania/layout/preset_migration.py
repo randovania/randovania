@@ -77,7 +77,11 @@ def _migrate_v2(preset: dict) -> dict:
 
 
 def _migrate_v3(preset: dict) -> dict:
-    preset["layout_configuration"]["safe_zone_heal_per_second"] = 1.0
+    preset["layout_configuration"]["safe_zone"] = {
+        "fully_heal": True,
+        "prevents_dark_aether": True,
+        "heal_per_second": 1.0,
+    }
     return preset
 
 
