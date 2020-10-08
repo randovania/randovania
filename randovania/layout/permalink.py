@@ -149,26 +149,6 @@ class Permalink(BitPackValue):
         version = decoder.peek(_PERMALINK_MAX_VERSION)[0]
         cls._raise_if_different_version(version)
 
-    @classmethod
-    def from_json_dict(cls, param: dict) -> "Permalink":
-        return Permalink(
-            seed_number=param["seed"],
-            spoiler=param["spoiler"],
-            presets={
-                index: Preset.from_json_dict(preset)
-                for index, preset in enumerate(param["presets"])
-            },
-        )
-
-    @property
-    def as_json(self) -> dict:
-        return {
-            "link": self.as_str,
-            "seed": self.seed_number,
-            "spoiler": self.spoiler,
-            "presets": [preset.as_json for preset in self.presets.values()],
-        }
-
     @property
     def as_str(self) -> str:
         cached_result = object.__getattribute__(self, "__cached_as_str")
