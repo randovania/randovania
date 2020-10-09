@@ -1,5 +1,6 @@
 from enum import Enum
-from typing import Dict
+from random import Random
+from typing import Dict, List
 
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -8,10 +9,15 @@ from randovania.game_description.world_list import WorldList
 
 class LocationHintCreator:
     world_list: WorldList
+    joke_hints: List[str]
     index_to_node: Dict[PickupIndex, PickupNode]
 
-    def __init__(self, world_list: WorldList):
+    def __init__(self, world_list: WorldList, rng: Random, base_joke_hints: List[str]):
         self.world_list = world_list
+        self.rng = rng
+        self.base_joke_hints = base_joke_hints
+        self.joke_hints = []
+
         self.index_to_node = {
             node.pickup_index: node
             for node in world_list.all_nodes
@@ -26,6 +32,12 @@ class LocationHintCreator:
             return self.world_list.world_name_from_node(pickup_node, True)
         else:
             return self.world_list.area_name(self.world_list.nodes_to_area(pickup_node), True, " - ")
+
+    def create_joke_hint(self) -> str:
+        if not self.joke_hints:
+            self.joke_hints = sorted(self.base_joke_hints)
+            self.rng.shuffle(self.joke_hints)
+        return self.joke_hints.pop()
 
 
 class TextColor(Enum):
