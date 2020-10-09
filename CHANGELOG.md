@@ -177,7 +177,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Hall of Combat Mastery, method of collecting the item with a Wall Boost (Expert and above).
 
--   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Intermediate and above).
+-   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
 
 -   Hive Temple:
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
@@ -187,11 +187,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
+-   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
 -   Watch Station Access, methods to cross the pit in either direction using:
     - Boost Ball and Boost Jump (Advanced and above).
     - Space Jump, Scan Visor, and Scan Dash (Advanced and above).
-
--   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
 
 -   Workers Path, method of crossing the room from Sanctuary Temple with a Boost Jump (Advanced and above).
 
@@ -204,6 +204,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Staging Area terminal
     - Torvus Lagoon terminal
     - Trooper Security Station Event coming from Communication Area
+    - Various Dash Requirements
 
 -   Dark Aether Damage Requirements:
     - Sky Temple Grounds
