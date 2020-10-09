@@ -87,7 +87,7 @@ class TemplatedFormatter(LocationFormatter):
             hint.target,
             hint.precision.location == HintLocationPrecision.WORLD_ONLY
         ))
-        return self.template.format(determiner=Determiner(determiner),
+        return self.template.format(determiner=determiner,
                                     pickup=pickup,
                                     node=node_name)
 
@@ -123,7 +123,7 @@ class RelativeAreaFormatter(RelativeFormatter):
         other_area = self.world_list.area_by_area_location(relative.area_location)
 
         if relative.precision == HintRelativeAreaName.NAME:
-            other_name = other_area.name
+            other_name = self.world_list.area_name(other_area, distinguish_dark_aether=True, separator=" - ")
         elif relative.precision == HintRelativeAreaName.FEATURE:
             raise NotImplementedError("HintRelativeAreaName.FEATURE not implemented")
         else:
@@ -138,9 +138,9 @@ class RelativeItemFormatter(RelativeFormatter):
         index = PickupIndex(relative.other_index)
 
         other_area = self.world_list.nodes_to_area(self._index_to_node[index])
-        other_name = "".join(*_calculate_pickup_hint(self.patches.pickup_assignment, self.world_list,
-                                                     relative.precision,
-                                                     self.patches.pickup_assignment.get(index)))
+        other_name = "".join(_calculate_pickup_hint(self.patches.pickup_assignment, self.world_list,
+                                                    relative.precision,
+                                                    self.patches.pickup_assignment.get(index)))
 
         return self.relative_format(determiner, pickup, hint, other_area, other_name)
 
@@ -194,6 +194,27 @@ def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEnt
     return determiner
 
 
+def create_message_for_hint(hint: Hint,
+                            patches: GamePatches,
+                            hint_name_creator: LocationHintCreator,
+                            location_formatters: Dict[HintLocationPrecision, LocationFormatter],
+                            world_list: WorldList,
+                            ) -> str:
+    if hint.hint_type == HintType.JOKE:
+        return color_text(TextColor.JOKE, hint_name_creator.create_joke_hint())
+
+    else:
+        determiner, pickup_name = _calculate_pickup_hint(patches.pickup_assignment,
+                                                         world_list,
+                                                         hint.precision.item,
+                                                         patches.pickup_assignment.get(hint.target))
+        return location_formatters[hint.precision.location].format(
+            Determiner(determiner),
+            color_text(TextColor.ITEM, pickup_name),
+            hint,
+        )
+
+
 def create_hints(patches: GamePatches,
                  world_list: WorldList,
                  rng: Random,
@@ -206,13 +227,9 @@ def create_hints(patches: GamePatches,
     :return:
     """
 
-    hint_name_creator = LocationHintCreator(world_list)
-    joke_hints = sorted(_JOKE_HINTS)
-    rng.shuffle(joke_hints)
+    hint_name_creator = LocationHintCreator(world_list, rng, _JOKE_HINTS)
 
-    hints_for_asset: Dict[int, str] = {}
-
-    _LOCATION_FORMATTERS: Dict[HintLocationPrecision, LocationFormatter] = {
+    location_formatters: Dict[HintLocationPrecision, LocationFormatter] = {
         HintLocationPrecision.KEYBEARER: TemplatedFormatter(
             "The Flying Ing Cache in {node} contains {determiner}{pickup}.", hint_name_creator),
         HintLocationPrecision.GUARDIAN: GuardianFormatter(),
@@ -226,25 +243,10 @@ def create_hints(patches: GamePatches,
         HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches),
     }
 
+    hints_for_asset: Dict[int, str] = {}
     for asset, hint in patches.hints.items():
-        if hint.hint_type == HintType.JOKE:
-            if not joke_hints:
-                joke_hints = sorted(_JOKE_HINTS)
-                rng.shuffle(joke_hints)
-            message = color_text(TextColor.JOKE, joke_hints.pop())
-
-        else:
-            determiner, pickup_name = _calculate_pickup_hint(patches.pickup_assignment,
-                                                             world_list,
-                                                             hint.precision.item,
-                                                             patches.pickup_assignment.get(hint.target))
-            message = _LOCATION_FORMATTERS[hint.precision.location].format(
-                determiner,
-                color_text(TextColor.ITEM, pickup_name),
-                hint,
-            )
-
-        hints_for_asset[asset.asset_id] = message
+        hints_for_asset[asset.asset_id] = create_message_for_hint(hint, patches, hint_name_creator,
+                                                                  location_formatters, world_list)
 
     return [
         create_simple_logbook_hint(

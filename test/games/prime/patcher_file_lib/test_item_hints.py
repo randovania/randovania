@@ -4,8 +4,10 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.area import Area
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair
+from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair, \
+    RelativeDataItem, RelativeDataArea, HintRelativeAreaName
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
@@ -13,6 +15,8 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime.patcher_file_lib import item_hints
+from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
+from randovania.games.prime.patcher_file_lib.item_hints import RelativeItemFormatter, RelativeAreaFormatter
 
 
 @pytest.fixture(name="pickup")
@@ -176,3 +180,69 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item):
     # Assert
     message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
+
+
+@pytest.mark.parametrize(["reference_precision", "reference_name"], [
+    (HintItemPrecision.DETAILED, "the Reference Pickup"),
+    (HintItemPrecision.PRECISE_CATEGORY, "a movement system"),
+])
+@pytest.mark.parametrize(["distance_precise", "distance_text"], [
+    (False, "found up to"),
+    (True, "found"),
+])
+def test_create_message_for_hint_relative_item(echoes_game_description, pickup,
+                                               distance_precise, distance_text,
+                                               reference_precision, reference_name):
+    world_list = echoes_game_description.world_list
+    patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
+        PickupIndex(5): PickupTarget(pickup, 0),
+        PickupIndex(15): PickupTarget(dataclasses.replace(pickup, name="Reference Pickup"), 0),
+    })
+
+    hint_name_creator = LocationHintCreator(world_list, None, None)
+    location_formatters = {HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches)}
+    hint = Hint(
+        HintType.LOCATION,
+        PrecisionPair(HintLocationPrecision.RELATIVE_TO_INDEX, HintItemPrecision.DETAILED,
+                      RelativeDataItem(distance_precise, 15, reference_precision)),
+        PickupIndex(5)
+    )
+
+    # Run
+    result = item_hints.create_message_for_hint(hint, patches, hint_name_creator, location_formatters,
+                                                world_list)
+
+    # Assert
+    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can '
+                      f'be {distance_text} 7 rooms away from {reference_name}.')
+
+
+@pytest.mark.parametrize(["distance_precise", "distance_text"], [
+    (False, "found up to"),
+    (True, "found"),
+])
+def test_create_message_for_hint_relative_area(echoes_game_description, pickup,
+                                               distance_precise, distance_text):
+    world_list = echoes_game_description.world_list
+    patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
+        PickupIndex(5): PickupTarget(pickup, 0),
+    })
+
+    hint_name_creator = LocationHintCreator(world_list, None, None)
+    location_formatters = {HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches)}
+    hint = Hint(
+        HintType.LOCATION,
+        PrecisionPair(HintLocationPrecision.RELATIVE_TO_AREA, HintItemPrecision.DETAILED,
+                      RelativeDataArea(distance_precise,
+                                       AreaLocation(1039999561, 3822429534),
+                                       HintRelativeAreaName.NAME)),
+        PickupIndex(5)
+    )
+
+    # Run
+    result = item_hints.create_message_for_hint(hint, patches, hint_name_creator, location_formatters,
+                                                world_list)
+
+    # Assert
+    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can '
+                      f'be {distance_text} 10 rooms away from Torvus Bog - Great Bridge.')
