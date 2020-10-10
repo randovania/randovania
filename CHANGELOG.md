@@ -39,6 +39,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Knowledge
     - Seeker Locks without Seekers
     
+-   Added: Some tricks now have a description on the Trick Details popup.
+    
 -   Added: Energy Tanks have doubled weight for the generator.
 
 -   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
