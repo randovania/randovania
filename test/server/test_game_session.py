@@ -1,4 +1,5 @@
 import contextlib
+import dataclasses
 import datetime
 import json
 from unittest.mock import MagicMock, PropertyMock, patch, call
@@ -11,6 +12,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import InvalidAction
 from randovania.network_common.session_state import GameSessionState
@@ -370,6 +372,9 @@ def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMo
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
+    # Make sure the preset is using the latest version
+    preset_manager.default_preset.ensure_converted()
+
     # Run
     game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_ROW.value,
                                             (1, preset_manager.default_preset.as_json))
@@ -474,11 +479,18 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     database.GameSessionPreset.create(session=session, row=0, preset=preset_as_json)
     database.GameSessionPreset.create(session=session, row=1, preset=preset_as_json)
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
+
+    new_preset = preset_manager.default_preset.get_preset()
+    new_preset = dataclasses.replace(new_preset,
+                                     patcher_configuration=dataclasses.replace(new_preset.patcher_configuration,
+                                                                               menu_mod=False))
+
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
     layout_description.as_json = "some_json_string"
-    layout_description.permalink.presets = {i: preset_manager.default_preset.get_preset() for i in (0, 1)}
+    layout_description.permalink.player_count = 2
+    layout_description.permalink.presets = {i: new_preset for i in (0, 1)}
 
     # Run
     game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
@@ -489,6 +501,10 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     mock_verify_no_layout_description.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).layout_description_json == '"some_json_string"'
     assert database.GameSession.get_by_id(1).generation_in_progress is None
+
+    new_session = database.GameSession.get_by_id(1)
+    new_json = json.dumps(VersionedPreset.with_preset(new_preset).as_json)
+    assert [preset.preset for preset in new_session.presets] == [new_json] * 2
 
 
 def test_game_session_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database):
