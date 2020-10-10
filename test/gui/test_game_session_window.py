@@ -2,9 +2,10 @@ import datetime
 
 import pytest
 from PySide2 import QtWidgets
-from mock import MagicMock, AsyncMock
+from mock import MagicMock, AsyncMock, ANY
 
 from randovania.gui.game_session_window import GameSessionWindow
+from randovania.layout.permalink import Permalink
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
@@ -207,3 +208,69 @@ async def test_change_password(skip_qtbot, mocker):
     # Assert
     execute_dialog.assert_awaited_once()
     window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.CHANGE_PASSWORD, "magoo")
+
+
+@pytest.mark.asyncio
+async def test_generate_game(skip_qtbot, mocker, preset_manager):
+    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout")
+    mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
+
+    spoiler = True
+    game_session = MagicMock()
+    game_session.presets = [preset_manager.default_preset, preset_manager.default_preset]
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._game_session = game_session
+    window._upload_layout_description = AsyncMock()
+    window._admin_global_action = AsyncMock()
+
+    # Run
+    await window.generate_game(spoiler)
+
+    # Assert
+    mock_randint.assert_called_once_with(0, 2 ** 31)
+    mock_generate_layout.assert_called_once_with(
+        progress_update=ANY,
+        permalink=Permalink(
+            seed_number=mock_randint.return_value,
+            spoiler=spoiler,
+            presets={
+                0: preset_manager.default_preset.get_preset(),
+                1: preset_manager.default_preset.get_preset(),
+            },
+        ),
+        options=window._options
+    )
+    window._upload_layout_description.assert_awaited_once_with(mock_generate_layout.return_value)
+
+
+@pytest.mark.asyncio
+async def test_check_dangerous_presets(skip_qtbot, mocker):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_warning.return_value = QtWidgets.QMessageBox.No
+
+    game_session = MagicMock()
+    game_session.presets = [MagicMock(), MagicMock(), MagicMock()]
+    game_session.presets[0].name = "Preset A"
+    game_session.presets[0].dangerous_settings.return_value = ["Cake"]
+    game_session.presets[1].name = "Preset B"
+    game_session.presets[1].dangerous_settings.return_value = ["Bomb", "Knife"]
+    game_session.presets[2].dangerous_settings.return_value = []
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._game_session = game_session
+
+    permalink = MagicMock()
+    permalink.presets = {i: preset for i, preset in enumerate(game_session.presets)}
+
+    # Run
+    result = await window._check_dangerous_presets(permalink)
+
+    # Assert
+    message = ("The following presets have settings that can cause an impossible game:\n"
+               "\nRow 0 - Preset A: Cake"
+               "\nRow 1 - Preset B: Bomb, Knife"
+               "\n\nDo you want to continue?")
+    mock_warning.assert_awaited_once_with(window, "Dangerous preset", message,
+                                          QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+    assert not result
