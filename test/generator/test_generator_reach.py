@@ -1,7 +1,7 @@
 import dataclasses
 import pprint
 from random import Random
-from typing import Tuple, List, Iterator
+from typing import Tuple, List
 
 import pytest
 
@@ -10,10 +10,9 @@ from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.node import ResourceNode, Node, PickupNode, GenericNode, TranslatorGateNode
+from randovania.game_description.node import ResourceNode, GenericNode, TranslatorGateNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import add_resources_into_another
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
@@ -27,12 +26,6 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state
-
-
-def _filter_pickups(nodes: Iterator[Node]) -> Iterator[PickupNode]:
-    for node in nodes:
-        if isinstance(node, PickupNode):
-            yield node
 
 
 @pytest.fixture(name="test_data")
@@ -135,7 +128,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                          node_c: Requirement.trivial(),
                      },
                  }
-            )
+                 )
         ])
     ])
     game_specific = EchoesGameSpecific(energy_per_tank=100, safe_zone_heal_per_second=1, beam_configurations=())
