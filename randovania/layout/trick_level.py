@@ -148,3 +148,8 @@ class TrickLevelConfiguration(BitPackValue):
             del new_levels[trick.index]
 
         return dataclasses.replace(self, specific_levels=new_levels)
+
+    def dangerous_settings(self) -> List[str]:
+        if self.global_level == LayoutTrickLevel.MINIMAL_LOGIC:
+            return ["Minimal Logic"]
+        return []

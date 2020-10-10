@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional
+from typing import Optional, List
 
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
@@ -32,3 +32,6 @@ class Preset:
             patcher_configuration=PatcherConfiguration.from_json_dict(value["patcher_configuration"]),
             layout_configuration=LayoutConfiguration.from_json_dict(value["layout_configuration"]),
         )
+
+    def dangerous_settings(self) -> List[str]:
+        return self.layout_configuration.dangerous_settings()
