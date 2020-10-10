@@ -137,3 +137,12 @@ class MajorItemsConfiguration(BitPackValue):
                 result[ammo_index] = result.get(ammo_index, 0) + ammo_count * total_pickups
 
         return result
+
+    def dangerous_settings(self) -> List[str]:
+        result = []
+        for major_item, state in self.items_state.items():
+            if (major_item.warning is not None and "EXPERIMENTAL" in major_item.warning
+                    and state.num_included_in_starting_items == 0):
+                result.append(f"Not starting with {major_item.name}")
+
+        return result

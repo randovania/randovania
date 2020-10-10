@@ -1,5 +1,6 @@
 import dataclasses
 from enum import Enum
+from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -158,3 +159,15 @@ class LayoutConfiguration(BitPackDataClass):
             safe_zone=LayoutSafeZone.from_json(json_dict["safe_zone"]),
             split_beam_ammo=json_dict["split_beam_ammo"],
         )
+
+    def dangerous_settings(self) -> List[str]:
+        result = []
+        for field in dataclasses.fields(self):
+            f = getattr(self, field.name)
+            if hasattr(f, "dangerous_settings"):
+                result.extend(f.dangerous_settings())
+
+        if self.elevators == LayoutElevators.ONE_WAY_ANYTHING:
+            result.append("One-way anywhere elevators")
+
+        return result
