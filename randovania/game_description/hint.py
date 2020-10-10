@@ -67,13 +67,13 @@ class RelativeData:
 
 
 @dataclass(frozen=True)
-class RelativeDataItem(RelativeData, JsonDataclass):
+class RelativeDataItem(JsonDataclass, RelativeData):
     other_index: PickupIndex
     precision: HintItemPrecision
 
 
 @dataclass(frozen=True)
-class RelativeDataArea(RelativeData, JsonDataclass):
+class RelativeDataArea(JsonDataclass, RelativeData):
     area_location: AreaLocation
     precision: HintRelativeAreaName
 
