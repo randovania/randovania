@@ -158,17 +158,17 @@ def add_default_hints_to_patches(rng: Random,
     for node in world_list.all_nodes:
         if isinstance(node, LogbookNode) and node.lore_type == LoreType.LUMINOTH_WARRIOR:
             patches = patches.assign_hint(node.resource(),
-                                          Hint(HintType.KEYBEARER,
-                                               PrecisionPair(HintLocationPrecision.DETAILED,
+                                          Hint(HintType.LOCATION,
+                                               PrecisionPair(HintLocationPrecision.KEYBEARER,
                                                              HintItemPrecision.PRECISE_CATEGORY),
                                                PickupIndex(node.hint_index)))
 
     # TODO: this should be a flag in PickupNode
     indices_with_hint = [
-        (PickupIndex(24), HintType.LIGHT_SUIT_LOCATION),  # Light Suit
-        (PickupIndex(43), HintType.GUARDIAN),  # Dark Suit (Amorbis)
-        (PickupIndex(79), HintType.GUARDIAN),  # Dark Visor (Chykka)
-        (PickupIndex(115), HintType.GUARDIAN),  # Annihilator Beam (Quadraxis)
+        (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
+        (PickupIndex(43), HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
+        (PickupIndex(79), HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
+        (PickupIndex(115), HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
     ]
     all_logbook_assets = [node.resource()
                           for node in world_list.all_nodes
@@ -179,16 +179,18 @@ def add_default_hints_to_patches(rng: Random,
     rng.shuffle(indices_with_hint)
     rng.shuffle(all_logbook_assets)
 
-    for index, hint_type in indices_with_hint:
+    for index, location_type in indices_with_hint:
         if not all_logbook_assets:
             break
 
         logbook_asset = all_logbook_assets.pop()
-        patches = patches.assign_hint(logbook_asset, Hint(hint_type, PrecisionPair.detailed(), index))
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION,
+                                                          PrecisionPair(location_type, HintItemPrecision.DETAILED),
+                                                          index))
 
     while num_joke > 0 and all_logbook_assets:
         logbook_asset = all_logbook_assets.pop()
-        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, PrecisionPair.joke(), None))
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None, None))
         num_joke -= 1
 
     return patches

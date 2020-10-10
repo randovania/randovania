@@ -139,14 +139,16 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     rng = MagicMock()
 
     def _light_suit_location_hint(number: int):
-        return Hint(HintType.LIGHT_SUIT_LOCATION, PrecisionPair.detailed(), PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION,
+                                                     HintItemPrecision.DETAILED), PickupIndex(number))
 
     def _guardian_hint(number: int):
-        return Hint(HintType.GUARDIAN, PrecisionPair.detailed(), PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.GUARDIAN,
+                                                     HintItemPrecision.DETAILED), PickupIndex(number))
 
     def _keybearer_hint(number: int):
-        return Hint(HintType.KEYBEARER, PrecisionPair(HintLocationPrecision.DETAILED,
-                                                      HintItemPrecision.PRECISE_CATEGORY), PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.KEYBEARER,
+                                                     HintItemPrecision.PRECISE_CATEGORY), PickupIndex(number))
 
     expected = {
         # Keybearer
@@ -170,8 +172,8 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
         LogbookAsset(3212301619): _guardian_hint(115),
 
         # Jokes
-        LogbookAsset(67497535): Hint(HintType.JOKE, PrecisionPair.joke(), None),
-        LogbookAsset(4072633400): Hint(HintType.JOKE, PrecisionPair.joke(), None),
+        LogbookAsset(67497535): Hint(HintType.JOKE, None, None),
+        LogbookAsset(4072633400): Hint(HintType.JOKE, None, None),
     }
 
     # Run

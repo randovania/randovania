@@ -1,0 +1,171 @@
+{
+    "schema_version": 3,
+    "name": "Custom",
+    "description": "A preset that was customized.",
+    "base_preset_name": "Custom",
+    "patcher_configuration": {
+        "menu_mod": true,
+        "warp_to_start": true,
+        "varia_suit_damage": 6.0,
+        "dark_suit_damage": 1.2,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm"
+    },
+    "layout_configuration": {
+        "game": "mp2-echoes",
+        "trick_level": {
+            "global_level": "beginner",
+            "specific_levels": {}
+        },
+        "damage_strictness": 1.5,
+        "sky_temple_keys": 9,
+        "elevators": "vanilla",
+        "starting_location": [
+            "Agon Wastes/Save Station 1",
+            "Agon Wastes/Save Station 2",
+            "Agon Wastes/Save Station 3",
+            "Agon Wastes/Save Station A",
+            "Agon Wastes/Save Station C",
+            "Great Temple/Sky Temple Energy Controller",
+            "Great Temple/Transport A Access",
+            "Sanctuary Fortress/Hive Save Station 1",
+            "Sanctuary Fortress/Hive Save Station 2",
+            "Sanctuary Fortress/Save Station A",
+            "Sanctuary Fortress/Save Station B",
+            "Temple Grounds/Hive Save Station",
+            "Temple Grounds/Landing Site",
+            "Torvus Bog/Dark Falls",
+            "Torvus Bog/Save Station 1",
+            "Torvus Bog/Save Station 2",
+            "Torvus Bog/Save Station A",
+            "Torvus Bog/Save Station B"
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "major_items_configuration": {
+            "items_state": {
+                "Dark Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Light Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Progressive Suit": {},
+                "Grapple Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Screw Attack": {
+                    "num_shuffled_pickups": 1
+                },
+                "Progressive Grapple": {}
+            },
+            "progressive_suit": false,
+            "progressive_grapple": false,
+            "minimum_random_starting_items": 0,
+            "maximum_random_starting_items": 4
+        },
+        "ammo_configuration": {
+            "maximum_ammo": {
+                "44": 255,
+                "43": 10,
+                "45": 250,
+                "46": 250
+            },
+            "items_state": {
+                "Missile Expansion": {
+                    "variance": 0,
+                    "pickup_count": 49,
+                    "requires_major_item": true
+                },
+                "Power Bomb Expansion": {
+                    "variance": 0,
+                    "pickup_count": 8,
+                    "requires_major_item": true
+                },
+                "Dark Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 0,
+                    "requires_major_item": true
+                },
+                "Light Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 0,
+                    "requires_major_item": true
+                },
+                "Beam Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 4,
+                    "requires_major_item": true
+                }
+            }
+        },
+        "translator_configuration": {
+            "translator_requirement": {
+                "0": "random",
+                "1": "random",
+                "2": "random",
+                "3": "random",
+                "4": "random",
+                "5": "random",
+                "6": "random",
+                "7": "random",
+                "8": "random",
+                "9": "random",
+                "10": "random",
+                "11": "random",
+                "12": "random",
+                "13": "random",
+                "14": "random",
+                "15": "random",
+                "16": "random"
+            }
+        },
+        "hints": {
+            "item_hints": true,
+            "sky_temple_keys": "precise"
+        },
+        "beam_configuration": {
+            "power": {
+                "item_index": 0,
+                "ammo_a": -1,
+                "ammo_b": -1,
+                "uncharged_cost": 0,
+                "charged_cost": 0,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 0
+            },
+            "dark": {
+                "item_index": 1,
+                "ammo_a": 45,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "light": {
+                "item_index": 2,
+                "ammo_a": 46,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "annihilator": {
+                "item_index": 3,
+                "ammo_a": 46,
+                "ammo_b": 45,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            }
+        },
+        "skip_final_bosses": false,
+        "energy_per_tank": 100,
+        "split_beam_ammo": false
+    }
+}

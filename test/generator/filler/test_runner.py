@@ -1,8 +1,9 @@
 from random import Random
 from unittest.mock import MagicMock, patch
 
-from randovania.game_description.hint import Hint, HintType
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
 from randovania.game_description.node import LogbookNode
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
@@ -65,3 +66,26 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
 
     # Assert
     assert len(result.hints) == expected_logbooks
+
+
+def test_add_hints_precision(empty_patches):
+    hints = [
+        Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
+                                              HintItemPrecision.DETAILED), PickupIndex(1)),
+        Hint(HintType.LOCATION, None, PickupIndex(2)),
+    ]
+
+    initial_patches = empty_patches
+    for i, hint in enumerate(hints):
+        initial_patches = initial_patches.assign_hint(LogbookAsset(i), hint)
+
+    # Run
+    result = runner.add_hints_precision(initial_patches, MagicMock())
+
+    # Assert
+    assert result.hints == {
+        LogbookAsset(0): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
+                                                               HintItemPrecision.DETAILED), PickupIndex(1)),
+        LogbookAsset(1): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
+                                                               HintItemPrecision.PRECISE_CATEGORY), PickupIndex(2)),
+    }
