@@ -42,7 +42,7 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
                  parent: QWidget,
                  window_manager: WindowManager,
                  game_description: GameDescription,
-                 trick: Optional[TrickResourceInfo],
+                 trick: TrickResourceInfo,
                  level: LayoutTrickLevel,
                  ):
         super().__init__(parent)
@@ -52,18 +52,11 @@ class TrickDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         self._window_manager = window_manager
 
         # setup
-        if trick is not None:
-            self.setWindowTitle(f"Trick Details: {trick.long_name} at {level.long_name}")
-            self.title_label.setText(self.title_label.text().format(
-                trick=trick.long_name,
-                level=level.long_name,
-            ))
-        else:
-            self.setWindowTitle(f"Trick-less {level.long_name} details")
-            self.title_label.setText(self.title_label.text().format(
-                trick="Difficulty",
-                level=level.long_name,
-            ))
+        self.setWindowTitle(f"Trick Details: {trick.long_name} at {level.long_name}")
+        self.title_label.setText(self.title_label.text().format(
+            trick=trick,
+            level=level.long_name,
+        ))
         self.area_list_label.linkActivated.connect(self._on_click_link_to_data_editor)
 
         # connect
