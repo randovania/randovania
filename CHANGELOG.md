@@ -51,6 +51,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
 
+-   Added: Relative hints, where an item is described as being some rooms away from another item or room.
+
+-   Removed: Hints with green item names/joke item names have been removed.
+
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.

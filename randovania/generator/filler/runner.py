@@ -2,7 +2,7 @@ import copy
 import dataclasses
 import math
 from random import Random
-from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet, Union
+from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet, Union, Iterator, Optional
 
 from randovania.game_description import node_search
 from randovania.game_description.area import Area
@@ -80,38 +80,51 @@ def precision_pair_weighted_list() -> List[PrecisionPair]:
 _MAX_RELATIVE_DISTANCE = 8
 
 
-def _pickup_count(area: Area) -> int:
-    return sum(1 for _ in area.pickup_indices)
+def _not_empty(it: Iterator) -> bool:
+    return sum(1 for _ in it) > 0
 
 
 def add_relative_hint(world_list: WorldList,
+                      patches: GamePatches,
                       rng: Random,
                       target: PickupIndex,
                       target_precision: HintItemPrecision,
                       relative_type: HintLocationPrecision,
                       precise_distance: bool,
                       precision: Union[HintItemPrecision, HintRelativeAreaName],
-
-                      ) -> Hint:
+                      max_distance: Optional[int] = None,
+                      ) -> Optional[Hint]:
     """
     Creates a relative hint.
-    :return:
+    :return: Might be None, if no hint could be created.
     """
+    if max_distance is None:
+        max_distance = _MAX_RELATIVE_DISTANCE
     target_node = node_search.pickup_index_to_node(world_list, target)
-    distances = node_search.distances_to_node(world_list, target_node, _MAX_RELATIVE_DISTANCE)
+    distances = node_search.distances_to_node(world_list, target_node, patches=patches, cutoff=max_distance)
+
+    def _non_expansions(area: Area) -> Iterator[PickupIndex]:
+        for index in area.pickup_indices:
+            t = patches.pickup_assignment.get(index)
+            # FIXME: None should be ok, but this must be called after junk has been filled
+            if t is not None and t.pickup.item_category != ItemCategory.EXPANSION:
+                yield index
 
     area_choices = {
-        area: math.pow(distance, 0.75)
+        area: 1 / distance
         for area, distance in distances.items()
-        if distance > 1 and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA or _pickup_count(area) > 0)
+        if distance > 1 and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA
+                             or _not_empty(_non_expansions(area)))
     }
+    if not area_choices:
+        return None
     area = random_lib.select_element_with_weight(area_choices, rng)
 
     if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
         relative = RelativeDataArea(precise_distance, world_list.area_to_area_location(area),
                                     precision)
     elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
-        relative = RelativeDataItem(precise_distance, rng.choice(list(area.pickup_indices)), precision)
+        relative = RelativeDataItem(precise_distance, rng.choice(list(_non_expansions(area))), precision)
     else:
         raise ValueError(f"Invalid relative_type: {relative_type}")
 
@@ -122,9 +135,9 @@ def add_relative_hint(world_list: WorldList,
 def _relative(relative_type: HintLocationPrecision,
               precise_distance: bool,
               precision: Union[HintItemPrecision, HintRelativeAreaName],
-              ) -> Callable[[PlayerState, Random, PickupIndex], Hint]:
-    def _wrapper(player_state: PlayerState, rng: Random, target: PickupIndex):
-        return add_relative_hint(player_state.game.world_list, rng, target, HintItemPrecision.DETAILED,
+              ) -> Callable[[PlayerState, GamePatches, Random, PickupIndex], Optional[Hint]]:
+    def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex):
+        return add_relative_hint(player_state.game.world_list, patches, rng, target, HintItemPrecision.DETAILED,
                                  relative_type, precise_distance, precision)
 
     return _wrapper
@@ -161,9 +174,9 @@ def add_hints_precision(player_state: PlayerState,
     rng.shuffle(asset_ids)
 
     while asset_ids and relative_hint_providers:
-        asset_id = asset_ids.pop()
-        hints_to_replace[asset_id] = relative_hint_providers.pop()(player_state, rng,
-                                                                   hints_to_replace[asset_id].target)
+        new_hint = relative_hint_providers.pop()(player_state, patches, rng, hints_to_replace[asset_ids[-1]].target)
+        if new_hint is not None:
+            hints_to_replace[asset_ids.pop()] = new_hint
 
     # Add random precisions
     precisions = []

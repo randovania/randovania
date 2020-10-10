@@ -187,8 +187,8 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item):
     (HintItemPrecision.PRECISE_CATEGORY, "a movement system"),
 ])
 @pytest.mark.parametrize(["distance_precise", "distance_text"], [
-    (False, "found up to"),
-    (True, "found"),
+    (False, "up to"),
+    (True, "exactly"),
 ])
 def test_create_message_for_hint_relative_item(echoes_game_description, pickup,
                                                distance_precise, distance_text,
@@ -213,13 +213,13 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup,
                                                 world_list)
 
     # Assert
-    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can '
-                      f'be {distance_text} 7 rooms away from {reference_name}.')
+    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
+                      f'&push;&main-color=#FF3333;{distance_text} 7 rooms&pop; away from {reference_name}.')
 
 
 @pytest.mark.parametrize(["distance_precise", "distance_text"], [
-    (False, "found up to"),
-    (True, "found"),
+    (False, "up to"),
+    (True, "exactly"),
 ])
 def test_create_message_for_hint_relative_area(echoes_game_description, pickup,
                                                distance_precise, distance_text):
@@ -244,5 +244,5 @@ def test_create_message_for_hint_relative_area(echoes_game_description, pickup,
                                                 world_list)
 
     # Assert
-    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can '
-                      f'be {distance_text} 10 rooms away from Torvus Bog - Great Bridge.')
+    assert result == (f'The &push;&main-color=#FF6705B3;Pickup&pop; can be found '
+                      f'&push;&main-color=#FF3333;{distance_text} 10 rooms&pop; away from Torvus Bog - Great Bridge.')

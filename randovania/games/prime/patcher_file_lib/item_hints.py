@@ -104,17 +104,20 @@ class RelativeFormatter(LocationFormatter):
 
     def _calculate_distance(self, source_location: PickupIndex, target: Area) -> int:
         source = self._index_to_node[source_location]
-        return node_search.distances_to_node(self.world_list, source)[target]
+        return node_search.distances_to_node(self.world_list, source,
+                                             patches=self.patches, ignore_elevators=False)[target]
 
     def relative_format(self, determiner: Determiner, pickup: str, hint: Hint, other_area: Area, other_name: str,
                         ) -> str:
         distance = self._calculate_distance(hint.target, other_area)
         if distance > 1:
-            precise_msg = "" if hint.precision.relative.precise_distance else "up to "
+            precise_msg = "exactly " if hint.precision.relative.precise_distance else "up to "
             distance_msg = f"{precise_msg}{distance} rooms"
         else:
             distance_msg = "one room"
-        return f"{determiner.title}{pickup} can be found {distance_msg} away from {other_name}."
+
+        return (f"{determiner.title}{pickup} can be found "
+                f"{color_text(TextColor.LOCATION, distance_msg)} away from {other_name}.")
 
 
 class RelativeAreaFormatter(RelativeFormatter):
