@@ -219,6 +219,13 @@ class WorldList:
     def world_by_area_location(self, location: AreaLocation) -> World:
         return self.world_by_asset_id(location.world_asset_id)
 
+    def area_to_area_location(self, area: Area) -> AreaLocation:
+        world = next(world for world in self.worlds if area in world.areas)
+        return AreaLocation(
+            world_asset_id=world.world_asset_id,
+            area_asset_id=area.area_asset_id,
+        )
+
     def node_to_area_location(self, node: Node) -> AreaLocation:
         return AreaLocation(
             world_asset_id=self.nodes_to_world(node).world_asset_id,

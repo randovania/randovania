@@ -135,7 +135,7 @@ class RelativeAreaFormatter(RelativeFormatter):
 class RelativeItemFormatter(RelativeFormatter):
     def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
         relative = typing.cast(RelativeDataItem, hint.precision.relative)
-        index = PickupIndex(relative.other_index)
+        index = relative.other_index
 
         other_area = self.world_list.nodes_to_area(self._index_to_node[index])
         other_name = "".join(_calculate_pickup_hint(self.patches.pickup_assignment, self.world_list,

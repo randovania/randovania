@@ -204,7 +204,7 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup,
     hint = Hint(
         HintType.LOCATION,
         PrecisionPair(HintLocationPrecision.RELATIVE_TO_INDEX, HintItemPrecision.DETAILED,
-                      RelativeDataItem(distance_precise, 15, reference_precision)),
+                      RelativeDataItem(distance_precise, PickupIndex(15), reference_precision)),
         PickupIndex(5)
     )
 
