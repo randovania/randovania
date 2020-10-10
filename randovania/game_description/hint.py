@@ -1,20 +1,13 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, NamedTuple, Optional
+from typing import Optional
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 class HintType(Enum):
-    # Keybearer corpses
-    KEYBEARER = "keybearer"
-
-    # Amorbis, Chykka, and Quadraxis
-    GUARDIAN = "guardian"
-
-    # Vanilla Light Suit location
-    LIGHT_SUIT_LOCATION = "light-suit-location"
-
     # Joke
     JOKE = "joke"
 
@@ -32,9 +25,6 @@ class HintItemPrecision(Enum):
     # major item, key, expansion
     GENERAL_CATEGORY = "general-category"
 
-    # Something from another game entirely
-    WRONG_GAME = "wrong-game"
-
 
 class HintLocationPrecision(Enum):
     # The exact location
@@ -43,81 +33,64 @@ class HintLocationPrecision(Enum):
     # Includes only the world of the location
     WORLD_ONLY = "world-only"
 
-    # Something from another game entirely
-    WRONG_GAME = "wrong-game"
+    # Keybearer corpses
+    KEYBEARER = "keybearer"
+
+    # Amorbis, Chykka, and Quadraxis
+    GUARDIAN = "guardian"
+
+    # Vanilla Light Suit location
+    LIGHT_SUIT_LOCATION = "light-suit-location"
+
+    RELATIVE_TO_AREA = "relative-to-area"
+    RELATIVE_TO_INDEX = "relative-to-index"
 
 
-class PrecisionPair(NamedTuple):
-    location: HintLocationPrecision
-    item: HintItemPrecision
+class HintRelativeAreaName(Enum):
+    # The area's name
+    NAME = "name"
 
-    @classmethod
-    def detailed(cls) -> "PrecisionPair":
-        return PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED)
-
-    @classmethod
-    def joke(cls) -> "PrecisionPair":
-        return PrecisionPair(HintLocationPrecision.WRONG_GAME, HintItemPrecision.WRONG_GAME)
-
-    @classmethod
-    def weighted_list(cls) -> List["PrecisionPair"]:
-        tiers = {
-            (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED): 5,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY): 2,
-            (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY): 1,
-
-            (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED): 2,
-            (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY): 1,
-
-            (HintLocationPrecision.DETAILED, HintItemPrecision.WRONG_GAME): 1,
-        }
-
-        hints = []
-        for params, quantity in tiers.items():
-            hints.extend([PrecisionPair(*params)] * quantity)
-
-        return hints
-
-    @property
-    def is_joke(self) -> bool:
-        return self == PrecisionPair.joke()
+    # Some unique feature of the area
+    FEATURE = "feature"
 
 
 @dataclass(frozen=True)
-class Hint:
+class RelativeData:
+    precise_distance: bool
+
+    @classmethod
+    def from_json(cls, param: dict) -> "RelativeData":
+        if "area_location" in param:
+            return RelativeDataArea.from_json(param)
+        else:
+            return RelativeDataItem.from_json(param)
+
+
+@dataclass(frozen=True)
+class RelativeDataItem(RelativeData, JsonDataclass):
+    other_index: int
+    precision: HintItemPrecision
+
+
+@dataclass(frozen=True)
+class RelativeDataArea(RelativeData, JsonDataclass):
+    area_location: AreaLocation
+    precision: HintRelativeAreaName
+
+
+@dataclass(frozen=True)
+class PrecisionPair(JsonDataclass):
+    location: HintLocationPrecision
+    item: HintItemPrecision
+    relative: Optional[RelativeData] = None
+
+
+@dataclass(frozen=True)
+class Hint(JsonDataclass):
     hint_type: HintType
     precision: Optional[PrecisionPair]
     target: Optional[PickupIndex]
 
     def __post_init__(self):
-        if self.target is None:
-            if self.hint_type != HintType.JOKE or (self.precision is not None and not self.precision.is_joke):
-                raise ValueError(f"Hint with None target, but not properly a joke.")
-
-    @property
-    def location_precision(self) -> HintLocationPrecision:
-        return self.precision.location
-
-    @property
-    def item_precision(self) -> HintItemPrecision:
-        return self.precision.item
-
-    @property
-    def as_json(self):
-        return {
-            "hint_type": self.hint_type.value,
-            "location_precision": self.precision.location.value,
-            "item_precision": self.precision.item.value,
-            "target": self.target.index if self.target is not None else None,
-        }
-
-    @classmethod
-    def from_json(cls, value) -> "Hint":
-        return Hint(
-            hint_type=HintType(value["hint_type"]),
-            precision=PrecisionPair(
-                location=HintLocationPrecision(value["location_precision"]),
-                item=HintItemPrecision(value["item_precision"]),
-            ),
-            target=PickupIndex(value["target"]) if value["target"] is not None else None,
-        )
+        if self.target is None and self.hint_type != HintType.JOKE:
+            raise ValueError(f"Hint with None target, but not properly a joke.")
