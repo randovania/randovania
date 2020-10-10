@@ -56,6 +56,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: Relative hints, where an item is described as being some rooms away from another item or room.
 
+-   Added: Randovania can generate a game by importing permalinks directly from a race on racetime.gg.
+
 -   Removed: Hints with green item names/joke item names have been removed.
 
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
@@ -76,7 +78,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
 
--   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
+-   Changed: The Mission Final screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen.
 
 -   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
 
