@@ -26,8 +26,7 @@ class GameSessionListEntry:
 class PlayerSessionEntry:
     id: int
     name: str
-    row: int
-    is_observer: bool
+    row: Optional[int]
     admin: bool
 
     @classmethod
@@ -36,9 +35,12 @@ class PlayerSessionEntry:
             id=data["id"],
             name=data["name"],
             row=data["row"],
-            is_observer=data["is_observer"],
             admin=data["admin"],
         )
+
+    @property
+    def is_observer(self):
+        return self.row is None
 
 
 @dataclasses.dataclass(frozen=True)

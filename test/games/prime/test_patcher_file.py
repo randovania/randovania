@@ -751,7 +751,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
 
 def test_create_patcher_file(test_files_dir):
     # Setup
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.json"))
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
     preset = description.permalink.get_preset(player_index)
     cosmetic_patches = CosmeticPatches()

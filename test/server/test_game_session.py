@@ -59,7 +59,7 @@ def test_create_game_session(clean_database, preset_manager):
         'id': 1,
         'state': GameSessionState.SETUP.value,
         'name': 'My Room',
-        'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0, 'is_observer': False}],
+        'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0}],
         'presets': [preset_manager.default_preset.as_json],
         'actions': [],
         'seed_hash': None,
@@ -79,7 +79,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
 
     session = database.GameSession.create(name="The Session", password=None, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
-    database.GameSessionMembership.create(user=user2, session=session, row=0, is_observer=False, admin=True)
+    database.GameSessionMembership.create(user=user2, session=session, row=0, admin=True)
 
     # Run
     result = game_session.join_game_session(sio, 1, None)
@@ -91,8 +91,8 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'state': GameSessionState.SETUP.value,
         'name': 'The Session',
         'players': [
-            {'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0, 'is_observer': False},
-            {'admin': False, 'id': 1234, 'name': 'The Name', 'row': 0, 'is_observer': True},
+            {'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0},
+            {'admin': False, 'id': 1234, 'name': 'The Name', 'row': None},
         ],
         'actions': [],
         'presets': [{}],
@@ -112,9 +112,7 @@ def test_game_session_request_pickups_not_in_game(flask_app, clean_database):
     # Setup
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
     session = database.GameSession.create(name="Debug", creator=user)
-    database.GameSessionMembership.create(
-        user=user, session=session,
-        row=0, is_observer=False, admin=False)
+    database.GameSessionMembership.create(user=user, session=session, row=0, admin=False)
 
     sio = MagicMock()
     sio.get_current_user.return_value = user
@@ -135,8 +133,8 @@ def two_player_session_fixture(clean_database):
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
     database.GameSessionPreset.create(session=session, row=1, preset="{}")
 
-    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=False)
-    database.GameSessionMembership.create(user=user2, session=session, row=1, is_observer=False, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=False)
+    database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False)
     database.GameSessionTeamAction.create(session=session, provider_row=1, provider_location_index=0, receiver_row=0)
 
     return session
@@ -275,7 +273,7 @@ def test_game_session_admin_player_switch_is_observer(clean_database, flask_app,
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=is_observer, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=None if is_observer else 0, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -284,8 +282,10 @@ def test_game_session_admin_player_switch_is_observer(clean_database, flask_app,
         game_session.game_session_admin_player(sio, 1, 1234, SessionAdminUserAction.SWITCH_IS_OBSERVER.value, None)
 
     # Assert
-    membership = database.GameSessionMembership.get(user=user1, session=session, row=0)
+    membership = database.GameSessionMembership.get(user=user1, session=session)
     assert membership.is_observer != is_observer
+    if is_observer:
+        assert membership.row == 0
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
@@ -296,7 +296,7 @@ def test_game_session_admin_player_move(clean_database, flask_app, mock_emit_ses
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
     database.GameSessionPreset.create(session=session, row=1, preset="{}")
     database.GameSessionPreset.create(session=session, row=2, preset="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=1, is_observer=False, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=1, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -321,8 +321,8 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
     database.GameSessionPreset.create(session=session, row=1, preset="{}")
     database.GameSessionPreset.create(session=session, row=2, preset="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=False, admin=False)
-    database.GameSessionMembership.create(user=user2, session=session, row=1, is_observer=False, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=2, admin=False)
+    database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -348,7 +348,7 @@ def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMo
                                                clean_database, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -366,7 +366,7 @@ def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMo
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
     database.GameSessionPreset.create(session=session, row=1, preset="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -387,7 +387,7 @@ def test_game_session_admin_session_delete_row(mock_emit_session_update: MagicMo
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
     database.GameSessionPreset.create(session=session, row=1, preset="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -405,7 +405,7 @@ def test_game_session_admin_session_delete_row_invalid(mock_emit_session_update,
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     if not_last_row:
@@ -433,7 +433,7 @@ def test_game_session_admin_session_update_layout_generation(mock_emit_session_u
     user2 = database.User.create(id=1235, name="Other")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           generation_in_progress=user2 if case == "to_true_busy" else None)
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -473,7 +473,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
                                           generation_in_progress=user1)
     database.GameSessionPreset.create(session=session, row=0, preset=preset_as_json)
     database.GameSessionPreset.create(session=session, row=1, preset=preset_as_json)
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
@@ -496,7 +496,7 @@ def test_game_session_admin_session_remove_layout_description(mock_emit_session_
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           generation_in_progress=user1,
                                           layout_description_json="layout_description_json")
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -517,7 +517,7 @@ def test_game_session_admin_session_change_layout_description_invalid(mock_emit_
     user2 = database.User.create(id=1235, name="Other")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           generation_in_progress=user2 if other_user else None)
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -542,7 +542,7 @@ def test_game_session_admin_session_download_layout_description(mock_layout_desc
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="layout_description_json")
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -562,7 +562,7 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="layout_description_json")
-    database.GameSessionMembership.create(user=user1, session=session, row=2, is_observer=True, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     mock_layout_description.return_value.permalink.spoiler = False
@@ -585,7 +585,7 @@ def test_game_session_admin_session_start_session(mock_session_description: Prop
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="{}")
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -600,7 +600,7 @@ def test_game_session_admin_session_start_session(mock_session_description: Prop
 def test_game_session_admin_session_finish_session(clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
-    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -612,7 +612,7 @@ def test_game_session_admin_session_finish_session(clean_database):
 def test_game_session_admin_session_reset_session(clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
-    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -624,7 +624,7 @@ def test_game_session_admin_session_reset_session(clean_database):
 def test_game_session_admin_session_change_password(clean_database, mock_emit_session_update):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
-    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     expected_password = 'da92cfbc5e318c64e33dc1b0501e5db214cea0e2a5cecabf90269f32f8eaa15f'
@@ -672,8 +672,8 @@ def test_game_session_request_update(clean_database, mocker):
     user2 = database.User.create(id=1235, name="Other")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1,
                                           layout_description_json="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=0, is_observer=False, admin=True)
-    database.GameSessionMembership.create(user=user2, session=session, row=1, is_observer=False, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
+    database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False)
     database.GameSessionTeamAction.create(session=session, provider_row=1, provider_location_index=0, receiver_row=0,
                                           time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
 
@@ -690,14 +690,12 @@ def test_game_session_request_update(clean_database, mocker):
                 "id": 1234,
                 "name": "The Name",
                 "row": 0,
-                "is_observer": False,
                 "admin": True,
             },
             {
                 "id": 1235,
                 "name": "Other",
                 "row": 1,
-                "is_observer": False,
                 "admin": False,
             },
         ],

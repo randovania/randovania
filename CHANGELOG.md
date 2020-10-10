@@ -40,15 +40,23 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Seeker Locks without Seekers
     - Standable Terrain
     
+-   Added: Some tricks now have a description on the Trick Details popup.
+    
 -   Added: Energy Tanks have doubled weight for the generator.
 
 -   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
+
+-   Added: The rate of healing for Safe Zones is now configurable.
 
 -   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
 
 -   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
 
 -   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
+
+-   Added: Relative hints, where an item is described as being some rooms away from another item or room.
+
+-   Removed: Hints with green item names/joke item names have been removed.
 
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
@@ -65,6 +73,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.
 
 -   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
+
+-   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
 
 -   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
 

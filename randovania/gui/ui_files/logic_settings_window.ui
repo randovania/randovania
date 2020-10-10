@@ -103,8 +103,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>753</width>
-                <height>563</height>
+                <width>757</width>
+                <height>559</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="trick_level_layout">
@@ -479,7 +479,7 @@
                    <x>0</x>
                    <y>0</y>
                    <width>731</width>
-                   <height>368</height>
+                   <height>341</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="excluded_locations_area_layout">
@@ -578,11 +578,11 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="patches_damage_tab">
+         <widget class="QWidget" name="energy_tab">
           <attribute name="title">
-           <string>Damage</string>
+           <string>Energy</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <layout class="QVBoxLayout" name="energy_layout">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -598,7 +598,7 @@
            <item>
             <widget class="QGroupBox" name="energy_tank_box">
              <property name="title">
-              <string>Energy tank capacity</string>
+              <string>Energy tank</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
               <item row="2" column="2">
@@ -651,6 +651,58 @@
             </widget>
            </item>
            <item>
+            <widget class="QGroupBox" name="safe_zone_box">
+             <property name="title">
+              <string>Safe zone</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="safe_zone_regen_spin">
+                <property name="suffix">
+                 <string> energy/s</string>
+                </property>
+                <property name="maximum">
+                 <double>100.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>1.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="safe_zone_regen_label">
+                <property name="text">
+                 <string>Safe Zone healing rate</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QCheckBox" name="safe_zone_logic_heal_check">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Logic considers fully healing at every safe zone. This is currently always on.</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="2">
+               <widget class="QLabel" name="safe_zone_description">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how Dark Aether safe zones operate and how logic uses them.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
             <widget class="QGroupBox" name="dark_aether_box">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -659,7 +711,7 @@
               </sizepolicy>
              </property>
              <property name="title">
-              <string>Dark Aether damage</string>
+              <string>Dark Aether</string>
              </property>
              <layout class="QGridLayout" name="dark_aether_layout_2">
               <item row="2" column="1">
@@ -878,8 +930,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>743</width>
-                <height>427</height>
+                <width>747</width>
+                <height>419</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="starting_locations_layout">
@@ -943,8 +995,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>753</width>
-                <height>555</height>
+                <width>757</width>
+                <height>551</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="translators_layout">
