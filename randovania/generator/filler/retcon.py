@@ -139,6 +139,10 @@ def build_available_indices(world_list: WorldList, configuration: FillerConfigur
 
 
 class PlayerState:
+    index: int
+    game: GameDescription
+    pickups_left: List[PickupEntry]
+    configuration: FillerConfiguration
     pickup_index_seen_count: DefaultDict[PickupIndex, int]
     scan_asset_seen_count: DefaultDict[LogbookAsset, int]
     scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]

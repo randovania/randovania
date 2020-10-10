@@ -68,7 +68,7 @@ class RelativeData:
 
 @dataclass(frozen=True)
 class RelativeDataItem(RelativeData, JsonDataclass):
-    other_index: int
+    other_index: PickupIndex
     precision: HintItemPrecision
 
 
