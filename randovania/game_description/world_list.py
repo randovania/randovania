@@ -6,7 +6,7 @@ from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode
+from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world import World
@@ -68,6 +68,10 @@ class WorldList:
     @property
     def all_nodes(self) -> Tuple[Node, ...]:
         return self._nodes
+
+    @property
+    def num_pickup_nodes(self) -> int:
+        return sum(1 for node in self.all_nodes if isinstance(node, PickupNode))
 
     @property
     def all_worlds_areas_nodes(self) -> Iterable[Tuple[World, Area, Node]]:
@@ -214,6 +218,13 @@ class WorldList:
 
     def world_by_area_location(self, location: AreaLocation) -> World:
         return self.world_by_asset_id(location.world_asset_id)
+
+    def area_to_area_location(self, area: Area) -> AreaLocation:
+        world = next(world for world in self.worlds if area in world.areas)
+        return AreaLocation(
+            world_asset_id=world.world_asset_id,
+            area_asset_id=area.area_asset_id,
+        )
 
     def node_to_area_location(self, node: Node) -> AreaLocation:
         return AreaLocation(

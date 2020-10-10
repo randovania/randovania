@@ -618,7 +618,7 @@ def create_patcher_file(description: LayoutDescription,
     rng = Random(description.permalink.as_str)
 
     game = data_reader.decode_data(layout.game_data)
-    pickup_count = sum(1 for node in game.world_list.all_nodes if isinstance(node, PickupNode))
+    pickup_count = game.world_list.num_pickup_nodes
     useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
                                   players_config.player_index)
 

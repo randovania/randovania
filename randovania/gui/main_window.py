@@ -1,4 +1,3 @@
-import asyncio
 import dataclasses
 import functools
 import json
@@ -6,7 +5,7 @@ from functools import partial
 from typing import Optional, List
 
 import markdown
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import QUrl, Signal, Qt
 from PySide2.QtGui import QDesktopServices
 from PySide2.QtWidgets import QMainWindow, QAction, QMessageBox, QDialog, QMenu, QInputDialog
@@ -87,6 +86,11 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
 
+        # Remove all hardcoded link color
+        about_document: QtGui.QTextDocument = self.about_text_browser.document()
+        about_document.setHtml(about_document.toHtml().replace("color:#0000ff;", ""))
+        self.browse_racetime_label.setText(self.browse_racetime_label.text().replace("color:#0000ff;", ""))
+
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
         self._preset_manager = preset_manager
@@ -107,6 +111,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
+        self.browse_racetime_button.clicked.connect(self._browse_racetime)
         self.browse_sessions_button.clicked.connect(self._browse_for_game_session)
         self.host_new_game_button.clicked.connect(self._host_game_session)
         self.create_new_seed_button.clicked.connect(
@@ -158,18 +163,44 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.main_tab_widget.setCurrentWidget(self.help_tab)
         self.help_tab_widget.setCurrentWidget(self.tab_faq)
 
-    def _import_permalink(self):
+    async def generate_seed_from_permalink(self, permalink):
+        from randovania.interface_common.status_update_lib import ProgressUpdateCallable
+        from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
+
+        def work(progress_update: ProgressUpdateCallable):
+            from randovania.interface_common import simplified_patcher
+            layout = simplified_patcher.generate_layout(progress_update=progress_update,
+                                                        permalink=permalink,
+                                                        options=self._options)
+            progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
+            return layout
+
+        new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+        self.open_game_details(new_layout)
+
+    @asyncSlot()
+    async def _import_permalink(self):
         dialog = PermalinkDialog()
-        result = dialog.exec_()
+        result = await async_dialog.execute_dialog(dialog)
         if result == QDialog.Accepted:
             permalink = dialog.get_permalink_from_field()
-            self.generate_seed_tab.generate_seed_from_permalink(permalink)
+            await self.generate_seed_from_permalink(permalink)
 
     def _import_spoiler_log(self):
         json_path = common_qt_lib.prompt_user_for_input_game_log(self)
         if json_path is not None:
             layout = LayoutDescription.from_file(json_path)
             self.open_game_details(layout)
+
+    @asyncSlot()
+    async def _browse_racetime(self):
+        from randovania.gui.dialog.racetime_browser_dialog import RacetimeBrowserDialog
+        dialog = RacetimeBrowserDialog()
+        if not await dialog.refresh():
+            return
+        result = await async_dialog.execute_dialog(dialog)
+        if result == QDialog.Accepted:
+            await self.generate_seed_from_permalink(dialog.permalink)
 
     async def _game_session_active(self) -> bool:
         if self.game_session_window is None or self.game_session_window.has_closed:
@@ -436,24 +467,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             level,
         ))
 
-    def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
-        self._exec_trick_details(TrickDetailsPopup(
-            self,
-            self,
-            default_database.default_prime2_game_description(),
-            None,
-            difficulty,
-        ))
-
     def _setup_difficulties_menu(self):
         game = default_database.default_prime2_game_description()
-        for i, trick_level in enumerate(LayoutTrickLevel):
-            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
-                difficulty_action = QAction(self)
-                difficulty_action.setText(trick_level.long_name)
-                self.menu_difficulties.addAction(difficulty_action)
-                difficulty_action.triggered.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
-
         tricks_in_use = used_tricks(game.world_list)
 
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):

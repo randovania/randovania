@@ -133,7 +133,6 @@ class GameSession(BaseModel):
                     "id": membership.user.id,
                     "name": membership.user.name,
                     "row": membership.row,
-                    "is_observer": membership.is_observer,
                     "admin": membership.admin,
                 }
                 for membership in self.players
@@ -164,12 +163,14 @@ class GameSessionPreset(BaseModel):
     row = peewee.IntegerField()
     preset = peewee.TextField()
 
+    class Meta:
+        primary_key = peewee.CompositeKey('session', 'row')
+
 
 class GameSessionMembership(BaseModel):
     user = peewee.ForeignKeyField(User, backref="games")
     session = peewee.ForeignKeyField(GameSession, backref="players")
-    row = peewee.IntegerField()
-    is_observer = peewee.BooleanField()
+    row = peewee.IntegerField(null=True)
     admin = peewee.BooleanField()
     join_date = peewee.DateTimeField(default=_datetime_now)
     inventory = peewee.TextField(null=True)
@@ -177,6 +178,10 @@ class GameSessionMembership(BaseModel):
     @property
     def effective_name(self) -> str:
         return self.user.name
+
+    @property
+    def is_observer(self) -> bool:
+        return self.row is None
 
     @classmethod
     def get_by_ids(cls, user_id: int, session_id: int) -> "GameSessionMembership":
@@ -190,17 +195,17 @@ class GameSessionMembership(BaseModel):
         return GameSessionMembership.get(
             GameSessionMembership.session == session,
             GameSessionMembership.row == row,
-            GameSessionMembership.is_observer == False,
         )
 
     @classmethod
     def non_observer_members(cls, session: GameSession) -> Iterator["GameSessionMembership"]:
         yield from GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                        GameSessionMembership.is_observer == False,
+                                                        GameSessionMembership.row != None,
                                                         )
 
     class Meta:
         primary_key = peewee.CompositeKey('user', 'session')
+        constraints = [peewee.SQL('UNIQUE(session_id, row)')]
 
 
 class GameSessionTeamAction(BaseModel):

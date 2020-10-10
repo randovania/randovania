@@ -7,7 +7,7 @@ from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import Qt, Signal, QTimer
-from PySide2.QtWidgets import QMainWindow, QMessageBox
+from PySide2.QtWidgets import QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
 from randovania.game_connection.connection_backend import ConnectionStatus
@@ -101,8 +101,9 @@ class PlayerWidget:
         self.kick.setEnabled(self_player.admin and player.id != self_player.id)
         self.promote.setText(promote_text)
         self.promote.setEnabled(self_player.admin and game_session.num_admins >= num_required)
-        self.move_up.setEnabled(admin_or_you and player.row > 0)
-        self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
+        if not player.is_observer:
+            self.move_up.setEnabled(admin_or_you and player.row > 0)
+            self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
         self.abandon.setEnabled(admin_or_you)
         self.switch_observer_action.setText("Include in session" if player.is_observer else "Move to observers")
         self.switch_observer_action.setEnabled(admin_or_you)
@@ -139,7 +140,7 @@ class RowWidget:
 _PRESET_COLUMNS = 3
 
 
-class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
+class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     team_players: List[PlayerWidget]
     observers: List[PlayerWidget]
     rows: List[RowWidget]
@@ -719,6 +720,27 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         await async_dialog.warning(self, "Not yet implemented",
                                    "Deleting session isn't implemented yet.")
 
+    async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
+        all_dangerous_settings = {}
+        for i, preset in permalink.presets.items():
+            dangerous = preset.dangerous_settings()
+            if dangerous:
+                all_dangerous_settings[i] = dangerous
+
+        if all_dangerous_settings:
+            warnings = "\n".join(
+                f"Row {i} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
+                for i, dangerous in all_dangerous_settings.items()
+            )
+            message = ("The following presets have settings that can cause an impossible game:\n"
+                       f"\n{warnings}\n"
+                       "\nDo you want to continue?")
+            result = await async_dialog.warning(self, "Dangerous preset", message, QMessageBox.Yes | QMessageBox.No)
+            if result == QMessageBox.No:
+                return False
+
+        return True
+
     async def generate_game(self, spoiler: bool):
         permalink = Permalink(
             seed_number=random.randint(0, 2 ** 31),
@@ -728,6 +750,9 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
                 for i, preset in enumerate(self._game_session.presets)
             },
         )
+
+        if not await self._check_dangerous_presets(permalink):
+            return
 
         def generate_layout(progress_update: ProgressUpdateCallable):
             return simplified_patcher.generate_layout(progress_update=progress_update,
