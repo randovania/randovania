@@ -27,17 +27,18 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
 
 -   Added: Options for configuring usage of new tricks:
-    - Boost Jump
-    - Extended Dash
-    - Bomb Slot without Bombs
     - Bomb Jump (renamed from Difficult Bomb Jump)
+    - Bomb Slot without Bombs
+    - Boost Jump
+    - Combat
     - Difficult Movement
-    - Standable Terrain
-    - Respawn Abuse
-    - Open Gates from Behind
-    - Screw Attack into Tunnels
+    - Extended Dash
     - Knowledge
+    - Open Gates from Behind
+    - Respawn Abuse
+    - Screw Attack into Tunnels
     - Seeker Locks without Seekers
+    - Standable Terrain
     
 -   Added: Energy Tanks have doubled weight for the generator.
 
