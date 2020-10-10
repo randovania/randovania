@@ -365,7 +365,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()
 
-    def _open_trick_details_popup(self, trick: SimpleResourceInfo):
+    def _open_trick_details_popup(self, trick: TrickResourceInfo):
         self._exec_trick_details(TrickDetailsPopup(
             self,
             self._window_manager,
