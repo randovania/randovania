@@ -66,6 +66,7 @@ class GameSessionEntry:
     seed_hash: Optional[str]
     word_hash: Optional[str]
     spoiler: Optional[bool]
+    permalink: Optional[str]
     state: GameSessionState
     generation_in_progress: Optional[int]
 
@@ -95,6 +96,7 @@ class GameSessionEntry:
             seed_hash=data["seed_hash"],
             word_hash=data["word_hash"],
             spoiler=data["spoiler"],
+            permalink=data["permalink"],
             state=GameSessionState(data["state"]),
             generation_in_progress=data["generation_in_progress"],
         )

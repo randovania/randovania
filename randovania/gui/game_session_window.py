@@ -182,6 +182,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.change_password_action.triggered.connect(self.change_password)
         self.delete_session_action.triggered.connect(self.delete_session)
 
+        # Save ISO Button
+        self.save_iso_menu = QtWidgets.QMenu(self.save_iso_button)
+        self.copy_permalink_action = QtWidgets.QAction("Copy Permalink", self.save_iso_menu)
+
+        self.save_iso_menu.addAction(self.copy_permalink_action)
+        self.save_iso_button.setMenu(self.save_iso_menu)
+
+        self.copy_permalink_action.triggered.connect(self.copy_permalink)
+
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
         self.generate_game_with_spoiler_action = QtWidgets.QAction("Generate game", self.background_process_menu)
@@ -958,6 +967,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
         description = LayoutDescription.from_json_dict(json.loads(description_json))
         self._window_manager.open_game_details(description)
+
+    @asyncSlot()
+    async def copy_permalink(self):
+        permalink_str = self._game_session.permalink
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Session permalink")
+        dialog.setLabelText("Permalink:")
+        dialog.setTextValue(permalink_str)
+        QtWidgets.QApplication.clipboard().setText(permalink_str)
+        await async_dialog.execute_dialog(dialog)
 
     @asyncSlot()
     @handle_network_errors
