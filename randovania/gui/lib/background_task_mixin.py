@@ -16,6 +16,11 @@ class BackgroundTaskMixin:
     abort_background_task_requested: bool = False
     _background_thread: Optional[threading.Thread] = None
 
+    def _start_thread_for(self, target):
+        claris_randomizer.IO_LOOP = asyncio.get_event_loop()
+        self._background_thread = threading.Thread(target=target)
+        self._background_thread.start()
+
     def run_in_background_thread(self, target, starting_message: str):
 
         last_progress = 0
@@ -51,10 +56,7 @@ class BackgroundTaskMixin:
         self.abort_background_task_requested = False
         progress_update(starting_message, 0)
 
-        claris_randomizer.IO_LOOP = asyncio.get_event_loop()
-        self._background_thread = threading.Thread(target=thread)
-        self._background_thread.start()
-
+        self._start_thread_for(thread)
         self.background_tasks_button_lock_signal.emit(False)
 
     async def run_in_background_async(self, target, starting_message: str):
