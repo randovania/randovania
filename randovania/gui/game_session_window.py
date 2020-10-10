@@ -101,8 +101,9 @@ class PlayerWidget:
         self.kick.setEnabled(self_player.admin and player.id != self_player.id)
         self.promote.setText(promote_text)
         self.promote.setEnabled(self_player.admin and game_session.num_admins >= num_required)
-        self.move_up.setEnabled(admin_or_you and player.row > 0)
-        self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
+        if not player.is_observer:
+            self.move_up.setEnabled(admin_or_you and player.row > 0)
+            self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
         self.abandon.setEnabled(admin_or_you)
         self.switch_observer_action.setText("Include in session" if player.is_observer else "Move to observers")
         self.switch_observer_action.setEnabled(admin_or_you)

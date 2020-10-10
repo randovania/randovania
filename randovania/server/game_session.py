@@ -52,7 +52,7 @@ def create_game_session(sio: ServerApp, session_name: str):
                                  preset=json.dumps(PresetManager(None).default_preset.as_json))
         membership = GameSessionMembership.create(
             user=sio.get_current_user(), session=new_session,
-            row=0, is_observer=False, admin=True)
+            row=0, admin=True)
 
     sio.join_game_session(membership)
     return new_session.create_session_entry()
@@ -68,7 +68,7 @@ def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
         raise WrongPassword()
 
     membership = GameSessionMembership.get_or_create(user=sio.get_current_user(), session=session,
-                                                     defaults={"row": 0, "is_observer": True, "admin": False})[0]
+                                                     defaults={"row": None, "admin": False})[0]
 
     _emit_session_update(session)
     sio.join_game_session(membership)
@@ -176,7 +176,7 @@ def _delete_row(sio: ServerApp, session: GameSession, row_id: int):
     with database.db.atomic():
         GameSessionPreset.delete().where(GameSessionPreset.session == session,
                                          GameSessionPreset.row == row_id).execute()
-        GameSessionMembership.update(is_observer=True).where(
+        GameSessionMembership.update(row=None).where(
             GameSessionMembership.session == session.id,
             GameSessionMembership.row == row_id,
         ).execute()
@@ -244,7 +244,7 @@ def _start_session(sio: ServerApp, session: GameSession):
         raise InvalidAction("Unable to start session, no game is available.")
 
     num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                       GameSessionMembership.is_observer == False).count()
+                                                       GameSessionMembership.row != None).count()
     expected_players = session.num_rows
     if num_players != expected_players:
         raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
@@ -335,14 +335,14 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg
-        new_row = membership.row + offset
+        if membership.is_observer is None:
+            raise InvalidAction("Player is an observer")
 
+        new_row = membership.row + offset
         if new_row < 0:
             raise InvalidAction("New position is negative")
         if new_row >= session.num_rows:
             raise InvalidAction("New position is beyond num of rows")
-        if membership.is_observer is None:
-            raise InvalidAction("Player is an observer")
 
         team_members = [None] * session.num_rows
         for member in GameSessionMembership.non_observer_members(session):
@@ -361,10 +361,8 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
     elif action == SessionAdminUserAction.SWITCH_IS_OBSERVER:
         if membership.is_observer:
             membership.row = _find_empty_row(session)
-            membership.is_observer = False
         else:
-            membership.row = 0
-            membership.is_observer = True
+            membership.row = None
         membership.save()
 
     elif action == SessionAdminUserAction.SWITCH_ADMIN:
