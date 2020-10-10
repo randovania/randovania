@@ -71,6 +71,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
 
+-   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
+
 -   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
 
 -   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
