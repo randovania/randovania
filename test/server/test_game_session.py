@@ -67,6 +67,7 @@ def test_create_game_session(clean_database, preset_manager):
         'seed_hash': None,
         'spoiler': None,
         'word_hash': None,
+        'permalink': None,
         'generation_in_progress': None,
     }
 
@@ -101,6 +102,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'seed_hash': None,
         'spoiler': None,
         'word_hash': None,
+        'permalink': None,
         'generation_in_progress': None,
     }
 
@@ -683,6 +685,7 @@ def test_game_session_request_update(clean_database, mocker):
     mock_layout.return_value.shareable_word_hash = "Words of O-Lir"
     mock_layout.return_value.shareable_hash = "ABCDEFG"
     mock_layout.return_value.permalink.spoiler = True
+    mock_layout.return_value.permalink.as_str = "<permalink>"
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
@@ -725,5 +728,6 @@ def test_game_session_request_update(clean_database, mocker):
         "spoiler": True,
         "word_hash": "Words of O-Lir",
         "seed_hash": "ABCDEFG",
+        "permalink": "<permalink>",
         "generation_in_progress": None,
     }

@@ -30,6 +30,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash=None,
         word_hash=None,
         spoiler=None,
+        permalink=None,
         state=GameSessionState.SETUP,
         generation_in_progress=None,
     )
@@ -47,6 +48,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash="AB12",
         word_hash="Chykka Required",
         spoiler=True,
+        permalink="<permalink>",
         state=GameSessionState.IN_PROGRESS,
         generation_in_progress=None,
     )
@@ -274,3 +276,20 @@ async def test_check_dangerous_presets(skip_qtbot, mocker):
     mock_warning.assert_awaited_once_with(window, "Dangerous preset", message,
                                           QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
     assert not result
+
+
+@pytest.mark.asyncio
+async def test_copy_permalink(skip_qtbot, mocker):
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    game_session = MagicMock()
+    game_session.permalink = "<permalink>"
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._game_session = game_session
+
+    # Run
+    await window.copy_permalink()
+
+    # Assert
+    execute_dialog.assert_awaited_once()
+    assert execute_dialog.call_args.args[0].textValue() == "<permalink>"

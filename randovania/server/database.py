@@ -124,6 +124,21 @@ class GameSession(BaseModel):
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
             }
 
+        if description is not None:
+            game_details = {
+                "spoiler": description.permalink.spoiler,
+                "word_hash": description.shareable_word_hash,
+                "seed_hash": description.shareable_hash,
+                "permalink": description.permalink.as_str,
+            }
+        else:
+            game_details = {
+                "spoiler": None,
+                "word_hash": None,
+                "seed_hash": None,
+                "permalink": None,
+            }
+
         return {
             "id": self.id,
             "name": self.name,
@@ -146,9 +161,7 @@ class GameSession(BaseModel):
                 for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
                                                                    ).order_by(GameSessionTeamAction.time.asc())
             ],
-            "spoiler": description.permalink.spoiler if description is not None else None,
-            "word_hash": description.shareable_word_hash if description is not None else None,
-            "seed_hash": description.shareable_hash if description is not None else None,
+            **game_details,
             "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
         }
