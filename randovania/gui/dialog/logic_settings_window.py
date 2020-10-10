@@ -229,24 +229,23 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
         trick_label.setWordWrap(True)
-        trick_label.setFixedWidth(80)
         trick_label.setText("Difficulty Details")
 
-        self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
+        self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, -1)
 
         slider_layout = QtWidgets.QGridLayout()
         slider_layout.setHorizontalSpacing(0)
         for i in range(12):
             slider_layout.setColumnStretch(i, 1)
-
-        if self._window_manager is not None:
-            for i, trick_level in enumerate(LayoutTrickLevel):
-                if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
-                    tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
-                    tool_button.setText(trick_level.long_name)
-                    tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
-
-                    slider_layout.addWidget(tool_button, 1, 2 * i, 1, 2)
+        #
+        # if self._window_manager is not None:
+        #     for i, trick_level in enumerate(LayoutTrickLevel):
+        #         if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
+        #             tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
+        #             tool_button.setText(trick_level.long_name)
+        #             tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
+        #
+        #             slider_layout.addWidget(tool_button, 1, 2 * i, 1, 2)
 
         self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
@@ -278,7 +277,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                                                                              QtWidgets.QSizePolicy.Expanding))
 
             trick_configurable = QtWidgets.QCheckBox(self.trick_level_scroll_contents)
-            trick_configurable.setFixedWidth(16)
+            trick_configurable.setFixedWidth(20)
             trick_configurable.stateChanged.connect(functools.partial(self._on_check_trick_configurable, trick))
             self._checkbox_for_trick[trick] = trick_configurable
             self.trick_difficulties_layout.addWidget(trick_configurable, row, 0, 1, 1)
@@ -286,7 +285,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
             trick_label.setSizePolicy(size_policy)
             trick_label.setWordWrap(True)
-            trick_label.setFixedWidth(80)
+            trick_label.setFixedWidth(100)
             trick_label.setText(trick.long_name)
 
             self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
@@ -372,15 +371,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self.game_description,
             trick,
             self._editor.layout_configuration.trick_level_configuration.level_for_trick(trick),
-        ))
-
-    def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
-        self._exec_trick_details(TrickDetailsPopup(
-            self,
-            self._window_manager,
-            self.game_description,
-            None,
-            difficulty,
         ))
 
     # Damage strictness
