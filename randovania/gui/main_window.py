@@ -467,24 +467,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             level,
         ))
 
-    def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
-        self._exec_trick_details(TrickDetailsPopup(
-            self,
-            self,
-            default_database.default_prime2_game_description(),
-            None,
-            difficulty,
-        ))
-
     def _setup_difficulties_menu(self):
         game = default_database.default_prime2_game_description()
-        for i, trick_level in enumerate(LayoutTrickLevel):
-            if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
-                difficulty_action = QAction(self)
-                difficulty_action.setText(trick_level.long_name)
-                self.menu_difficulties.addAction(difficulty_action)
-                difficulty_action.triggered.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
-
         tricks_in_use = used_tricks(game.world_list)
 
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
