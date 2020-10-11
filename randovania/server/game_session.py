@@ -267,7 +267,12 @@ def _start_session(sio: ServerApp, session: GameSession):
 
 
 def _finish_session(sio: ServerApp, session: GameSession):
-    raise InvalidAction("Finish session is not yet implemented.")
+    _verify_has_admin(sio, session.id, None)
+    if session.state != GameSessionState.IN_PROGRESS:
+        raise InvalidAction("Session is not in progress")
+
+    session.state = GameSessionState.FINISHED
+    session.save()
 
 
 def _reset_session(sio: ServerApp, session: GameSession):
