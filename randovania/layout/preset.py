@@ -35,3 +35,7 @@ class Preset:
 
     def dangerous_settings(self) -> List[str]:
         return self.layout_configuration.dangerous_settings()
+
+    def is_same_configuration(self, other: "Preset") -> bool:
+        return (self.patcher_configuration == other.patcher_configuration
+                and self.layout_configuration == other.layout_configuration)

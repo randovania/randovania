@@ -16,6 +16,7 @@ from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
+from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -180,6 +181,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
         self.delete_session_action.triggered.connect(self.delete_session)
+
+        # Save ISO Button
+        self.save_iso_menu = QtWidgets.QMenu(self.save_iso_button)
+        self.copy_permalink_action = QtWidgets.QAction("Copy Permalink", self.save_iso_menu)
+
+        self.save_iso_menu.addAction(self.copy_permalink_action)
+        self.save_iso_button.setMenu(self.save_iso_menu)
+
+        self.copy_permalink_action.triggered.connect(self.copy_permalink)
 
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
@@ -750,7 +760,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 for i, preset in enumerate(self._game_session.presets)
             },
         )
+        return await self.generate_game_with_permalink(permalink)
 
+    async def generate_game_with_permalink(self, permalink: Permalink):
         if not await self._check_dangerous_presets(permalink):
             return
 
@@ -803,8 +815,31 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def import_permalink(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Importing permalinks aren't available right now.")
+        dialog = PermalinkDialog()
+        result = await async_dialog.execute_dialog(dialog)
+        if result != QtWidgets.QDialog.Accepted:
+            return
+
+        permalink = dialog.get_permalink_from_field()
+        if permalink.player_count != self._game_session.num_rows:
+            return await async_dialog.warning(
+                self, "Incompatible permalink",
+                f"Given permalink is for {permalink.player_count} players, but "
+                f"this session only have {self._game_session.num_rows} rows.")
+
+        if any(not preset_p.is_same_configuration(preset_s.get_preset())
+               for preset_p, preset_s in zip(permalink.presets.values(), self._game_session.presets)):
+            response = await async_dialog.warning(
+                self, "Different presets",
+                f"Given permalink has different presets compared to the session.\n"
+                f"Do you want to overwrite the session's presets?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No
+            )
+            if response != QMessageBox.Yes:
+                return
+
+        await self.generate_game_with_permalink(permalink)
 
     async def _upload_layout_description(self, layout: LayoutDescription):
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
@@ -932,6 +967,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
         description = LayoutDescription.from_json_dict(json.loads(description_json))
         self._window_manager.open_game_details(description)
+
+    @asyncSlot()
+    async def copy_permalink(self):
+        permalink_str = self._game_session.permalink
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Session permalink")
+        dialog.setLabelText("Permalink:")
+        dialog.setTextValue(permalink_str)
+        QtWidgets.QApplication.clipboard().setText(permalink_str)
+        await async_dialog.execute_dialog(dialog)
 
     @asyncSlot()
     @handle_network_errors
