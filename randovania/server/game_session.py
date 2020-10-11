@@ -319,6 +319,9 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
         _change_password(sio, session, arg)
 
+    elif action == SessionAdminGlobalAction.DELETE_SESSION:
+        session.delete_instance(recursive=True)
+
     _emit_session_update(session)
 
 

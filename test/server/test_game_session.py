@@ -375,6 +375,21 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     assert result is mock_create_patcher_file.return_value
 
 
+def test_game_session_admin_session_delete_session(mock_emit_session_update: MagicMock, clean_database):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_SESSION.value, None)
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    assert list(database.GameSession.select()) == []
+
+
 def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMock,
                                                clean_database, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")

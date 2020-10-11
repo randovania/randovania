@@ -323,3 +323,38 @@ async def test_import_permalink(skip_qtbot, mocker):
     execute_dialog.assert_awaited_once_with(mock_permalink_dialog.return_value)
     mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY, QtWidgets.QMessageBox.No)
     window.generate_game_with_permalink.assert_awaited_once_with(permalink)
+
+
+@pytest.mark.parametrize(["expecting_kick", "already_kicked"], [
+    (False, True),
+    (False, False),
+    (True, False),
+])
+@pytest.mark.asyncio
+async def test_on_kicked(skip_qtbot, mocker, expecting_kick, already_kicked):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window.network_client.leave_game_session = AsyncMock()
+    window._game_session = MagicMock()
+    window._already_kicked = already_kicked
+    window._expecting_kick = expecting_kick
+    window.close = MagicMock(return_value=None)
+
+    # Run
+    await window._on_kicked()
+    if not already_kicked:
+        skip_qtbot.waitUntil(window.close)
+
+    # Assert
+    if already_kicked:
+        window.network_client.leave_game_session.assert_not_awaited()
+        mock_warning.assert_not_awaited()
+        window.close.assert_not_called()
+    else:
+        window.network_client.leave_game_session.assert_awaited_once_with(False)
+        if expecting_kick:
+            mock_warning.assert_not_awaited()
+        else:
+            mock_warning.assert_awaited_once()
+        window.close.assert_called_once_with()
