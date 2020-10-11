@@ -293,6 +293,33 @@ def test_game_session_admin_player_switch_is_observer(clean_database, flask_app,
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
+def test_game_session_admin_kick_last(clean_database, mocker):
+    mock_emit = mocker.patch("flask_socketio.emit")
+
+    user = database.User.create(id=1234, discord_id=5678, name="The Name")
+    sio = MagicMock()
+    sio.get_current_user.return_value = user
+    game_session.create_game_session(sio, "My Room")
+    session = database.GameSession.get_by_id(1)
+    database.GameSessionTeamAction.create(session=session, provider_row=0, provider_location_index=0, receiver_row=0,
+                                          time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
+
+    # Run
+    game_session.game_session_admin_player(sio, 1, 1234, SessionAdminUserAction.KICK.value, None)
+
+    # Assert
+    for table in [database.GameSession, database.GameSessionPreset,
+                  database.GameSessionMembership, database.GameSessionTeamAction]:
+        assert list(table.select()) == []
+    assert database.User.get_by_id(1234) == user
+
+    mock_emit.assert_called_once_with(
+        'game_session_update',
+        {'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [], 'actions': [],
+         'spoiler': None, 'word_hash': None, 'seed_hash': None, 'permalink': None, 'generation_in_progress': None},
+        room='game-session-1')
+
+
 @pytest.mark.parametrize("offset", [-1, 1])
 def test_game_session_admin_player_move(clean_database, flask_app, mock_emit_session_update, offset: int):
     user1 = database.User.create(id=1234, name="The Name")
@@ -346,6 +373,21 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
         cosmetic
     )
     assert result is mock_create_patcher_file.return_value
+
+
+def test_game_session_admin_session_delete_session(mock_emit_session_update: MagicMock, clean_database):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_SESSION.value, None)
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    assert list(database.GameSession.select()) == []
 
 
 def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMock,
