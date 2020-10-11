@@ -260,17 +260,17 @@ class NetworkClient:
 
     async def leave_game_session(self, permanent: bool):
         if permanent:
-            await self._emit_with_result("game_session_admin_player",
-                                         (self._current_game_session.id, self._current_user.id,
-                                          SessionAdminUserAction.KICK.value, None))
+            await self.session_admin_player(self._current_user.id, SessionAdminUserAction.KICK, None)
         await self._emit_with_result("disconnect_game_session")
         self._current_game_session = None
 
-    async def session_admin_global(self, session_id: int, action: SessionAdminGlobalAction, arg):
-        return await self._emit_with_result("game_session_admin_session", (session_id, action.value, arg))
+    async def session_admin_global(self, action: SessionAdminGlobalAction, arg):
+        return await self._emit_with_result("game_session_admin_session",
+                                            (self._current_game_session.id, action.value, arg))
 
-    async def session_admin_player(self, session_id: int, user_id: int, action: SessionAdminUserAction, arg):
-        return await self._emit_with_result("game_session_admin_player", (session_id, user_id, action.value, arg))
+    async def session_admin_player(self, user_id: int, action: SessionAdminUserAction, arg):
+        return await self._emit_with_result("game_session_admin_player",
+                                            (self._current_game_session.id, user_id, action.value, arg))
 
     @property
     def current_user(self) -> Optional[User]:
