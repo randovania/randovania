@@ -657,16 +657,30 @@ def test_game_session_admin_session_start_session(mock_session_description: Prop
     assert database.GameSession.get_by_id(1).state == GameSessionState.IN_PROGRESS
 
 
-def test_game_session_admin_session_finish_session(clean_database):
+@pytest.mark.parametrize("starting_state", [GameSessionState.SETUP, GameSessionState.IN_PROGRESS,
+                                            GameSessionState.FINISHED])
+def test_game_session_admin_session_finish_session(clean_database, mock_emit_session_update, starting_state):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    session = database.GameSession.create(id=1, name="Debug", state=starting_state, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
+    if starting_state != GameSessionState.IN_PROGRESS:
+        expectation = pytest.raises(InvalidAction, match="Invalid Action: Session is not in progress")
+    else:
+        expectation = contextlib.nullcontext()
 
     # Run
-    with pytest.raises(InvalidAction):
+    with expectation:
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.FINISH_SESSION.value, None)
+
+    # Assert
+    if starting_state != GameSessionState.IN_PROGRESS:
+        mock_emit_session_update.assert_not_called()
+        assert database.GameSession.get_by_id(1).state == starting_state
+    else:
+        mock_emit_session_update.assert_called_once_with(session)
+        assert database.GameSession.get_by_id(1).state == GameSessionState.FINISHED
 
 
 def test_game_session_admin_session_reset_session(clean_database):
