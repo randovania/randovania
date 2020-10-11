@@ -104,7 +104,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         if game_session is None:
             names = index_to_name
         else:
-            patcher_data = await network_client.session_admin_player(game_session.id, user.id,
+            patcher_data = await network_client.session_admin_player(user.id,
                                                                      SessionAdminUserAction.CREATE_PATCHER_FILE,
                                                                      CosmeticPatches().as_json)
             names = {

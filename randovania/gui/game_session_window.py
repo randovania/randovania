@@ -676,7 +676,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def _admin_global_action(self, action: SessionAdminGlobalAction, arg):
         self.setEnabled(False)
         try:
-            return await self.network_client.session_admin_global(self._game_session.id, action, arg)
+            return await self.network_client.session_admin_global(action, arg)
         finally:
             self.setEnabled(True)
 
@@ -690,7 +690,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def _admin_player_action(self, player: PlayerSessionEntry, action: SessionAdminUserAction, arg):
         self.setEnabled(False)
         try:
-            return await self.network_client.session_admin_player(self._game_session.id, player.id, action, arg)
+            return await self.network_client.session_admin_player(player.id, action, arg)
         finally:
             self.setEnabled(True)
 

@@ -344,6 +344,8 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
 
     if action == SessionAdminUserAction.KICK:
         membership.delete_instance()
+        if not list(session.players):
+            session.delete_instance(recursive=True)
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg
