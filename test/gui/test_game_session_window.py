@@ -389,3 +389,24 @@ async def test_delete_session(skip_qtbot, mocker, accept, exception):
     else:
         window.network_client.session_admin_global.assert_not_awaited()
         assert not window._expecting_kick
+
+
+@pytest.mark.parametrize("accept", [False, True])
+@pytest.mark.asyncio
+async def test_finish_session(skip_qtbot, accept, mocker):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window.network_client.session_admin_global = AsyncMock()
+
+    # Run
+    await window.finish_session()
+
+    # Assert
+    mock_warning.assert_awaited_once()
+    if accept:
+        window.network_client.session_admin_global.assert_awaited_once_with(SessionAdminGlobalAction.FINISH_SESSION,
+                                                                            None)
+    else:
+        window.network_client.session_admin_global.assert_not_awaited()
