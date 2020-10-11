@@ -150,6 +150,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     _logic_settings_window: Optional[LogicSettingsWindow] = None
     _window_manager: WindowManager
     _generating_game: bool = False
+    _expecting_kick = False
+    _already_kicked = False
 
     failed_to_generate_signal = Signal(GenerationFailure)
 
@@ -554,10 +556,18 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await self.update_logic_settings_window()
 
     async def _on_kicked(self):
-        await asyncio.gather(
-            async_dialog.warning(self, "Kicked", "You have been kicked out of the session."),
-            self.network_client.leave_game_session(False),
-        )
+        if self._already_kicked:
+            return
+        self._already_kicked = True
+        leave_session = self.network_client.leave_game_session(False)
+        if not self._expecting_kick:
+            if self._game_session.players:
+                message = "Kicked", "You have been kicked out of the session."
+            else:
+                message = "Session deleted", "The session has been deleted."
+            await asyncio.gather(async_dialog.warning(self, *message), leave_session)
+        else:
+            await leave_session
         return QTimer.singleShot(0, self.close)
 
     def sync_rows_to_game_session(self):
@@ -676,7 +686,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def _admin_global_action(self, action: SessionAdminGlobalAction, arg):
         self.setEnabled(False)
         try:
-            return await self.network_client.session_admin_global(self._game_session.id, action, arg)
+            return await self.network_client.session_admin_global(action, arg)
         finally:
             self.setEnabled(True)
 
@@ -690,7 +700,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def _admin_player_action(self, player: PlayerSessionEntry, action: SessionAdminUserAction, arg):
         self.setEnabled(False)
         try:
-            return await self.network_client.session_admin_player(self._game_session.id, player.id, action, arg)
+            return await self.network_client.session_admin_player(player.id, action, arg)
         finally:
             self.setEnabled(True)
 
@@ -727,8 +737,17 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def delete_session(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Deleting session isn't implemented yet.")
+        result = await async_dialog.warning(self, "Delete session",
+                                            "Are you sure you want to delete this session?",
+                                            QMessageBox.Yes | QMessageBox.No,
+                                            QMessageBox.No)
+        if result == QMessageBox.Yes:
+            self._expecting_kick = True
+            try:
+                await self._admin_global_action(SessionAdminGlobalAction.DELETE_SESSION, None)
+            except Exception:
+                self._expecting_kick = False
+                raise
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
         all_dangerous_settings = {}
