@@ -235,11 +235,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
         self.finish_session_action.triggered.connect(self.finish_session)
-        self.finish_session_action.setEnabled(False)
 
         self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
         self.reset_session_action.triggered.connect(self.reset_session)
-        self.reset_session_action.setEnabled(False)
 
         self.session_status_menu.addAction(self.start_session_action)
         self.session_status_menu.addAction(self.finish_session_action)
@@ -634,7 +632,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.generate_game_without_spoiler_action.setEnabled(self_is_admin)
         self.import_permalink_action.setEnabled(self_is_admin)
         self.session_status_tool.setEnabled(self_is_admin)
-        self.session_status_tool.setText("Start" if game_session.state == GameSessionState.SETUP else "Finish")
+        _state_to_label = {
+            GameSessionState.SETUP: "Start",
+            GameSessionState.IN_PROGRESS: "Finish",
+            GameSessionState.FINISHED: "Reset",
+        }
+        self.session_status_tool.setText(_state_to_label[game_session.state])
 
         self.save_iso_button.setEnabled(game_session.seed_hash is not None
                                         and not self.current_player_membership.is_observer)
@@ -644,6 +647,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         else:
             self.generate_game_label.setText(f"Seed hash: {game_session.word_hash} ({game_session.seed_hash})")
             self.view_game_details_button.setEnabled(game_session.spoiler)
+
+        self.start_session_action.setEnabled(self_is_admin and game_session.state == GameSessionState.SETUP)
+        self.finish_session_action.setEnabled(self_is_admin and game_session.state == GameSessionState.IN_PROGRESS)
+        self.reset_session_action.setEnabled(self_is_admin and game_session.state != GameSessionState.SETUP)
 
     def update_session_actions(self):
         self.history_table_widget.horizontalHeader().setVisible(True)
@@ -882,7 +889,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def finish_session(self):
-        await async_dialog.warning(self, "NYI", "Finish session is not implemented.")
+        result = await async_dialog.warning(
+            self, "Finish session?",
+            "It's no longer possible to collect items after the session is finished."
+            "\nDo you want to continue?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
+        if result == QMessageBox.Yes:
+            await self._admin_global_action(SessionAdminGlobalAction.FINISH_SESSION, None)
 
     @asyncSlot()
     @handle_network_errors
