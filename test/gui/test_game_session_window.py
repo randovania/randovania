@@ -1,3 +1,4 @@
+import contextlib
 import datetime
 
 import pytest
@@ -358,3 +359,33 @@ async def test_on_kicked(skip_qtbot, mocker, expecting_kick, already_kicked):
         else:
             mock_warning.assert_awaited_once()
         window.close.assert_called_once_with()
+
+
+@pytest.mark.parametrize("exception", [False, True])
+@pytest.mark.parametrize("accept", [False, True])
+@pytest.mark.asyncio
+async def test_delete_session(skip_qtbot, mocker, accept, exception):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window.network_client.session_admin_global = AsyncMock()
+    if exception and accept:
+        window.network_client.session_admin_global.side_effect = RuntimeError("error")
+        expectation = pytest.raises(RuntimeError, match="error")
+    else:
+        expectation = contextlib.nullcontext()
+
+    # Run
+    with expectation:
+        await window.delete_session()
+
+    # Assert
+    mock_warning.assert_awaited_once()
+    if accept:
+        window.network_client.session_admin_global.assert_awaited_once_with(SessionAdminGlobalAction.DELETE_SESSION,
+                                                                            None)
+        assert window._expecting_kick != exception
+    else:
+        window.network_client.session_admin_global.assert_not_awaited()
+        assert not window._expecting_kick

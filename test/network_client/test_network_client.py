@@ -5,7 +5,13 @@ from mock import MagicMock, AsyncMock
 
 import randovania
 from randovania.network_client.network_client import NetworkClient, ConnectionState
+from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSession
+
+
+@pytest.fixture(name="client")
+def _client(tmpdir):
+    return NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
 
 
 @pytest.mark.asyncio
@@ -72,3 +78,17 @@ async def test_connect_to_server(tmpdir):
     client.sio.connect.assert_awaited_once_with("http://localhost:5000",
                                                 socketio_path="/path",
                                                 headers={"X-Randovania-Version": randovania.VERSION})
+
+
+@pytest.mark.asyncio
+async def test_session_admin_global(client):
+    client._emit_with_result = AsyncMock()
+    client._current_game_session = MagicMock()
+    client._current_game_session.id = 1234
+
+    # Run
+    result = await client.session_admin_global(SessionAdminGlobalAction.CHANGE_ROW, 5)
+
+    # Assert
+    assert result == client._emit_with_result.return_value
+    client._emit_with_result.assert_awaited_once_with("game_session_admin_session", (1234, "change_row", 5))
