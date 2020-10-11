@@ -30,6 +30,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash=None,
         word_hash=None,
         spoiler=None,
+        permalink=None,
         state=GameSessionState.SETUP,
         generation_in_progress=None,
     )
@@ -47,6 +48,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash="AB12",
         word_hash="Chykka Required",
         spoiler=True,
+        permalink="<permalink>",
         state=GameSessionState.IN_PROGRESS,
         generation_in_progress=None,
     )
@@ -274,3 +276,50 @@ async def test_check_dangerous_presets(skip_qtbot, mocker):
     mock_warning.assert_awaited_once_with(window, "Dangerous preset", message,
                                           QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
     assert not result
+
+
+@pytest.mark.asyncio
+async def test_copy_permalink(skip_qtbot, mocker):
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    game_session = MagicMock()
+    game_session.permalink = "<permalink>"
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._game_session = game_session
+
+    # Run
+    await window.copy_permalink()
+
+    # Assert
+    execute_dialog.assert_awaited_once()
+    assert execute_dialog.call_args.args[0].textValue() == "<permalink>"
+
+
+@pytest.mark.asyncio
+async def test_import_permalink(skip_qtbot, mocker):
+    mock_permalink_dialog = mocker.patch("randovania.gui.game_session_window.PermalinkDialog")
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    execute_dialog.return_value = QtWidgets.QDialog.Accepted
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_warning.return_value = QtWidgets.QMessageBox.Yes
+
+    permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
+    permalink.player_count = 2
+    permalink.presets = {0: MagicMock(), 1: MagicMock()}
+    permalink.presets[0].is_same_configuration.return_value = False
+
+    game_session = MagicMock()
+    game_session.num_rows = 2
+    game_session.presets = [MagicMock(), MagicMock()]
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._game_session = game_session
+    window.generate_game_with_permalink = AsyncMock()
+
+    # Run
+    await window.import_permalink()
+
+    # Assert
+    execute_dialog.assert_awaited_once_with(mock_permalink_dialog.return_value)
+    mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY, QtWidgets.QMessageBox.No)
+    window.generate_game_with_permalink.assert_awaited_once_with(permalink)
