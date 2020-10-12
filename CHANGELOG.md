@@ -20,7 +20,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   **Major** - Tricks are more organized and can be customized more precisely to a player's desire.
 
-### Tricks
+### General
 
 -   Added: Options for configuring usage of new tricks:
     - Bomb Jump (renamed from Difficult Bomb Jump)
@@ -42,6 +42,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Normal -> Advanced
     - Hard -> Expert
     - Minimal Checking -> Minimal Logic
+
+-   Changed: Replaced Beginner Friendly with Starter Preset, which is now the default preset.
+
+-   Fixed: Energy Tanks can now properly be used as progression.
 
 ### Hints
 
@@ -99,8 +103,6 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
 
--   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
-
 -   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
@@ -109,7 +111,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Changed: Better error messages when there are references to unknown resources in the database.
 
--   Changed: The `database` command is no longer a subcommand of `echoes`. It also has the `--game` argument to choose which database to use. 
+-   Changed: The `database` command is no longer a subcommand of `echoes`. It also has the `--game` argument to choose which database to use.
+
+-   Changed: The `_locations_internal` field is no longer needed for .rdvgame files. 
 
 ### Logic Database changes
 
