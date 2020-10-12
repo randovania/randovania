@@ -20,42 +20,80 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   **Major** - Tricks are more organized and can be customized more precisely to a player's desire.
 
+### Tricks
+
+-   Added: Options for configuring usage of new tricks:
+    - Bomb Jump (renamed from Difficult Bomb Jump)
+    - Bomb Slot without Bombs
+    - Boost Jump
+    - Combat
+    - Difficult Movement
+    - Extended Dash
+    - Knowledge
+    - Open Gates from Behind
+    - Respawn Abuse
+    - Screw Attack into Tunnels
+    - Seeker Locks without Seekers
+    - Standable Terrain
+
+-   Changed: The following trick level difficulties were renamed:
+    - Trivial -> Beginner
+    - Easy -> Intermediate
+    - Normal -> Advanced
+    - Hard -> Expert
+    - Minimal Checking -> Minimal Logic
+
+### Hints
+
+-   Added: Relative hints, where an item is described as being some rooms away from another item or room.
+
+-   Removed: Hints with green item names/joke item names have been removed.
+
+-   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
+
+### GUI
+
 -   Added: An automatic item tracker based on a Dolphin running on the same computer.
 
 -   Added: A dark theme has been added. It can be toggled in the Advanced menu.
 
 -   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
-
--   Added: Options for configuring usage of new tricks:
-    - Boost Jump
-    - Extended Dash
-    - Bomb Slot without Bombs
-    - Bomb Jump (renamed from Difficult Bomb Jump)
-    - Difficult Movement
-    - Standable Terrain
-    - Respawn Abuse
-    - Open Gates from Behind
-    - Screw Attack into Tunnels
-    - Knowledge
-    - Seeker Locks without Seekers
     
--   Added: Some tricks now have a description on the Trick Details popup.
-    
--   Added: Energy Tanks have doubled weight for the generator.
-
--   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
-
--   Added: The rate of healing for Safe Zones is now configurable.
-
 -   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
 
 -   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
 
 -   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
 
--   Added: Relative hints, where an item is described as being some rooms away from another item or room.
+-   Added: Randovania can generate a game by importing permalinks directly from a race on racetime.gg.
+    
+-   Added: Some tricks now have a description on the Trick Details popup.
 
--   Removed: Hints with green item names/joke item names have been removed.
+-   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
+
+-   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
+
+-   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
+
+-   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
+
+-   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
+
+### Quality of Life
+
+-   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
+
+-   Added: The rate of healing for Safe Zones is now configurable.
+
+-   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
+
+-   Changed: The Mission Final screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen.
+
+-   Changed: The elevator scan now includes the world of the connected area.
+
+### Internals/Developer
+
+-   Added: Energy Tanks have doubled weight for the generator.
 
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
@@ -65,38 +103,13 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
 
--   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
-
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
 -   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.
 
--   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
-
--   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
-
--   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
-
--   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
-
--   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
-
--   Changed: The elevator scan now includes the world of the connected area.
-
--   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
-
 -   Changed: Better error messages when there are references to unknown resources in the database.
 
 -   Changed: The `database` command is no longer a subcommand of `echoes`. It also has the `--game` argument to choose which database to use. 
-
--   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
-
--   Changed: The following trick level difficulties were renamed:
-    - Trivial -> Beginner
-    - Easy -> Intermediate
-    - Normal -> Advanced
-    - Hard -> Expert
-    - Minimal Checking -> Minimal Logic
 
 ### Logic Database changes
 
@@ -137,6 +150,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
 
+-   Abandoned Worksite, method of reaching the item with a Bomb Space Jump without Space Jump (Advanced and above).
+
 -   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
 -   Dark Forgotten Bridge, method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
@@ -148,7 +163,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
--   Meditation Vista, methods of reaching the item with a Boost Jump, Roll Jump (Expert and above), or Extended Dash (Hypermode).
+-   Meditation Vista, methods of reaching the item with a Boost Jump (Advanced and above), Roll Jump (Expert and above), or Extended Dash (Hypermode).
 
 -   Path of Roots, method of reaching the item using:
     - Morph Ball, Bombs and Space Jump (Advanced and above).
@@ -185,7 +200,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Hall of Combat Mastery, method of collecting the item with a Wall Boost (Expert and above).
 
--   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Intermediate and above).
+-   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
 
 -   Hive Temple:
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
@@ -195,11 +210,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
+-   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
 -   Watch Station Access, methods to cross the pit in either direction using:
     - Boost Ball and Boost Jump (Advanced and above).
     - Space Jump, Scan Visor, and Scan Dash (Advanced and above).
-
--   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
 
 -   Workers Path, method of crossing the room from Sanctuary Temple with a Boost Jump (Advanced and above).
 
@@ -212,24 +227,22 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Staging Area terminal
     - Torvus Lagoon terminal
     - Trooper Security Station Event coming from Communication Area
+    - Various Dash Requirements
 
 -   Dark Aether Damage Requirements:
     - Sky Temple Grounds
     - Dark Agon Wastes
-    - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
-    - Undertemple Access (Updated)
-    - Undertemple (Intermediate and above)
-    - Vault Attack Portal
+    - Dark Torvus Bog
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
     - Screw Attack without Space Jump in Phazon Grounds (Advanced and above)
 
--   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
+-   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack and Space Jump as well if coming from Mining Plaza.
 
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
--   Morph Ball Doors now properly requires Morph Ball.
+-   Morph Ball Doors now properly require Morph Ball.
 
 -   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
 
@@ -246,6 +259,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Reaching the portal in Catacombs with Morph Ball and Reverse Air Underwater is now Advanced difficulty (from Expert).
 
 -   Reaching Transit Tunnel South/West Doors from top door in Gathering Hall with Morph Ball and Roll Jump is now Expert difficulty (from Advanced).
+
+-   Reaching Portal Chamber door in Poisoned Bog with just Screw Attack is now Advanced (from Intermediate).
+
+-   Scan Dash to upper level in Central Mining Station from Central Station Access is now Expert (from Advanced).
 
 ## [1.2.2] - 2020-06-06
 
