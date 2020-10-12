@@ -257,7 +257,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         elif isinstance(node, TeleporterNode):
             other = self.world_list.area_by_area_location(node.default_connection)
-            name = self.world_list.area_name(other, separator="/")
+            name = self.world_list.area_name(other, separator="/", distinguish_dark_aether=False)
             pretty_name = msg.replace("Teleporter to ", "")
             msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
 

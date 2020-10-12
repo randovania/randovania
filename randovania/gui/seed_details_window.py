@@ -311,7 +311,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                                                                  patches.starting_items)
 
             self.spoiler_starting_location_label.setText("Starting Location: {}".format(
-                game_description.world_list.area_name(starting_area, distinguish_dark_aether=True, separator=" - ")
+                game_description.world_list.area_name(starting_area)
             ))
             self.spoiler_starting_items_label.setText("Random Starting Items: {}".format(
                 ", ".join(extra_items)

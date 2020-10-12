@@ -13,7 +13,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime import default_data
 from randovania.gui.lib.qt_network_client import QtNetworkClient
-from randovania.layout.game_patches_serializer import BitPackPickupEntry
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
 class Data(AsyncContextManager):
