@@ -1,3 +1,4 @@
+import contextlib
 import datetime
 
 import pytest
@@ -30,6 +31,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash=None,
         word_hash=None,
         spoiler=None,
+        permalink=None,
         state=GameSessionState.SETUP,
         generation_in_progress=None,
     )
@@ -47,6 +49,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         seed_hash="AB12",
         word_hash="Chykka Required",
         spoiler=True,
+        permalink="<permalink>",
         state=GameSessionState.IN_PROGRESS,
         generation_in_progress=None,
     )
@@ -274,3 +277,136 @@ async def test_check_dangerous_presets(skip_qtbot, mocker):
     mock_warning.assert_awaited_once_with(window, "Dangerous preset", message,
                                           QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
     assert not result
+
+
+@pytest.mark.asyncio
+async def test_copy_permalink(skip_qtbot, mocker):
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    game_session = MagicMock()
+    game_session.permalink = "<permalink>"
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._game_session = game_session
+
+    # Run
+    await window.copy_permalink()
+
+    # Assert
+    execute_dialog.assert_awaited_once()
+    assert execute_dialog.call_args.args[0].textValue() == "<permalink>"
+
+
+@pytest.mark.asyncio
+async def test_import_permalink(skip_qtbot, mocker):
+    mock_permalink_dialog = mocker.patch("randovania.gui.game_session_window.PermalinkDialog")
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    execute_dialog.return_value = QtWidgets.QDialog.Accepted
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_warning.return_value = QtWidgets.QMessageBox.Yes
+
+    permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
+    permalink.player_count = 2
+    permalink.presets = {0: MagicMock(), 1: MagicMock()}
+    permalink.presets[0].is_same_configuration.return_value = False
+
+    game_session = MagicMock()
+    game_session.num_rows = 2
+    game_session.presets = [MagicMock(), MagicMock()]
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window._game_session = game_session
+    window.generate_game_with_permalink = AsyncMock()
+
+    # Run
+    await window.import_permalink()
+
+    # Assert
+    execute_dialog.assert_awaited_once_with(mock_permalink_dialog.return_value)
+    mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY, QtWidgets.QMessageBox.No)
+    window.generate_game_with_permalink.assert_awaited_once_with(permalink)
+
+
+@pytest.mark.parametrize(["expecting_kick", "already_kicked"], [
+    (False, True),
+    (False, False),
+    (True, False),
+])
+@pytest.mark.asyncio
+async def test_on_kicked(skip_qtbot, mocker, expecting_kick, already_kicked):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window.network_client.leave_game_session = AsyncMock()
+    window._game_session = MagicMock()
+    window._already_kicked = already_kicked
+    window._expecting_kick = expecting_kick
+    window.close = MagicMock(return_value=None)
+
+    # Run
+    await window._on_kicked()
+    if not already_kicked:
+        skip_qtbot.waitUntil(window.close)
+
+    # Assert
+    if already_kicked:
+        window.network_client.leave_game_session.assert_not_awaited()
+        mock_warning.assert_not_awaited()
+        window.close.assert_not_called()
+    else:
+        window.network_client.leave_game_session.assert_awaited_once_with(False)
+        if expecting_kick:
+            mock_warning.assert_not_awaited()
+        else:
+            mock_warning.assert_awaited_once()
+        window.close.assert_called_once_with()
+
+
+@pytest.mark.parametrize("exception", [False, True])
+@pytest.mark.parametrize("accept", [False, True])
+@pytest.mark.asyncio
+async def test_delete_session(skip_qtbot, mocker, accept, exception):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window.network_client.session_admin_global = AsyncMock()
+    if exception and accept:
+        window.network_client.session_admin_global.side_effect = RuntimeError("error")
+        expectation = pytest.raises(RuntimeError, match="error")
+    else:
+        expectation = contextlib.nullcontext()
+
+    # Run
+    with expectation:
+        await window.delete_session()
+
+    # Assert
+    mock_warning.assert_awaited_once()
+    if accept:
+        window.network_client.session_admin_global.assert_awaited_once_with(SessionAdminGlobalAction.DELETE_SESSION,
+                                                                            None)
+        assert window._expecting_kick != exception
+    else:
+        window.network_client.session_admin_global.assert_not_awaited()
+        assert not window._expecting_kick
+
+
+@pytest.mark.parametrize("accept", [False, True])
+@pytest.mark.asyncio
+async def test_finish_session(skip_qtbot, accept, mocker):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
+
+    window = GameSessionWindow(MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock())
+    window.network_client.session_admin_global = AsyncMock()
+
+    # Run
+    await window.finish_session()
+
+    # Assert
+    mock_warning.assert_awaited_once()
+    if accept:
+        window.network_client.session_admin_global.assert_awaited_once_with(SessionAdminGlobalAction.FINISH_SESSION,
+                                                                            None)
+    else:
+        window.network_client.session_admin_global.assert_not_awaited()

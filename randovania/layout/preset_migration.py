@@ -143,6 +143,7 @@ class VersionedPreset:
         if not self._converted:
             try:
                 self._preset = Preset.from_json_dict(convert_to_current_version(self.data))
+                self._converted = True
             except (ValueError, KeyError) as e:
                 self.exception = InvalidPreset(e)
 

@@ -2,6 +2,7 @@ import base64
 import hashlib
 import json
 import logging
+import typing
 from typing import Optional, List, Tuple
 
 import flask_socketio
@@ -19,7 +20,6 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.game_patches_serializer import BitPackPickupEntry
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import WrongPassword, \
@@ -200,6 +200,7 @@ def _update_layout_generation(sio: ServerApp, session: GameSession, active: bool
 def _change_layout_description(sio: ServerApp, session: GameSession, description_json: Optional[dict]):
     _verify_has_admin(sio, session.id, None)
     _verify_in_setup(session)
+    rows_to_update = []
 
     if description_json is None:
         description = None
@@ -213,12 +214,23 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
         _verify_no_layout_description(session)
         description = LayoutDescription.from_json_dict(description_json)
         permalink = description.permalink
-        if list(permalink.presets.values()) != session.all_presets:
-            raise InvalidAction("Description presets doesn't match the session presets")
+        if permalink.player_count != session.num_rows:
+            raise InvalidAction(f"Description is for a {permalink.player_count} players,"
+                                f" while the session is for {session.num_rows}.")
 
-    session.generation_in_progress = None
-    session.layout_description = description
-    session.save()
+        for permalink_preset, preset_row in zip(permalink.presets.values(), session.presets):
+            preset_row = typing.cast(GameSessionPreset, preset_row)
+            if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
+                preset_row.preset = json.dumps(VersionedPreset.with_preset(permalink_preset).as_json)
+                rows_to_update.append(preset_row)
+
+    with database.db.atomic():
+        for preset_row in rows_to_update:
+            preset_row.save()
+
+        session.generation_in_progress = None
+        session.layout_description = description
+        session.save()
 
 
 def _download_layout_description(sio: ServerApp, session: GameSession):
@@ -255,7 +267,12 @@ def _start_session(sio: ServerApp, session: GameSession):
 
 
 def _finish_session(sio: ServerApp, session: GameSession):
-    raise InvalidAction("Finish session is not yet implemented.")
+    _verify_has_admin(sio, session.id, None)
+    if session.state != GameSessionState.IN_PROGRESS:
+        raise InvalidAction("Session is not in progress")
+
+    session.state = GameSessionState.FINISHED
+    session.save()
 
 
 def _reset_session(sio: ServerApp, session: GameSession):
@@ -307,6 +324,9 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
         _change_password(sio, session, arg)
 
+    elif action == SessionAdminGlobalAction.DELETE_SESSION:
+        session.delete_instance(recursive=True)
+
     _emit_session_update(session)
 
 
@@ -332,6 +352,8 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
 
     if action == SessionAdminUserAction.KICK:
         membership.delete_instance()
+        if not list(session.players):
+            session.delete_instance(recursive=True)
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg
