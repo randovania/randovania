@@ -91,7 +91,7 @@ class WorldList:
     def world_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
         return self.world_name_from_area(self.nodes_to_area(node), distinguish_dark_aether)
 
-    def area_name(self, area: Area, distinguish_dark_aether: bool = False, separator: str = "/") -> str:
+    def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
         return "{}{}{}".format(
             self.world_name_from_area(area, distinguish_dark_aether),
             separator,
