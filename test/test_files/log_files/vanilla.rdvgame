@@ -1,18 +1,18 @@
 {
     "schema_version": 1,
     "info": {
-        "version": "1.3.0.dev573+g1edb424a",
-        "permalink": "qI1L29UACCUAoIwQgHAeBkKYBw3A0BQLCEAijlJIOKMOqsvEKKCKKCmCFATH/AnMYECJwKwAoA==",
-        "seed": 1147821790,
+        "version": "1.3.0.dev605+g27d4467c.d20201012",
+        "permalink": "rD15sjWAgAAAAAANAg==",
+        "seed": 1642843537,
         "presets": [
             {
                 "schema_version": 4,
-                "name": "Custom",
+                "name": "Vanilla",
                 "description": "A preset that was customized.",
-                "base_preset_name": "Custom",
+                "base_preset_name": "Fewest Changes",
                 "patcher_configuration": {
-                    "menu_mod": true,
-                    "warp_to_start": true,
+                    "menu_mod": false,
+                    "warp_to_start": false,
                     "varia_suit_damage": 6.0,
                     "dark_suit_damage": 1.2,
                     "pickup_model_style": "all-visible",
@@ -21,31 +21,14 @@
                 "layout_configuration": {
                     "game": "mp2-echoes",
                     "trick_level": {
-                        "global_level": "beginner",
+                        "global_level": "no-tricks",
                         "specific_levels": {}
                     },
                     "damage_strictness": 1.5,
                     "sky_temple_keys": 9,
                     "elevators": "vanilla",
                     "starting_location": [
-                        "Agon Wastes/Save Station 1",
-                        "Agon Wastes/Save Station 2",
-                        "Agon Wastes/Save Station 3",
-                        "Agon Wastes/Save Station A",
-                        "Agon Wastes/Save Station C",
-                        "Great Temple/Sky Temple Energy Controller",
-                        "Great Temple/Transport A Access",
-                        "Sanctuary Fortress/Hive Save Station 1",
-                        "Sanctuary Fortress/Hive Save Station 2",
-                        "Sanctuary Fortress/Save Station A",
-                        "Sanctuary Fortress/Save Station B",
-                        "Temple Grounds/Hive Save Station",
-                        "Temple Grounds/Landing Site",
-                        "Torvus Bog/Dark Falls",
-                        "Torvus Bog/Save Station 1",
-                        "Torvus Bog/Save Station 2",
-                        "Torvus Bog/Save Station A",
-                        "Torvus Bog/Save Station B"
+                        "Temple Grounds/Landing Site"
                     ],
                     "available_locations": {
                         "randomization_mode": "full",
@@ -66,16 +49,12 @@
                             "Screw Attack": {
                                 "num_shuffled_pickups": 1
                             },
-                            "Progressive Grapple": {},
-                            "Energy Tank": {
-                                "num_shuffled_pickups": 14,
-                                "num_included_in_starting_items": 2
-                            }
+                            "Progressive Grapple": {}
                         },
                         "progressive_suit": false,
                         "progressive_grapple": false,
                         "minimum_random_starting_items": 0,
-                        "maximum_random_starting_items": 4
+                        "maximum_random_starting_items": 0
                     },
                     "ammo_configuration": {
                         "maximum_ammo": {
@@ -88,12 +67,12 @@
                             "Missile Expansion": {
                                 "variance": 0,
                                 "pickup_count": 49,
-                                "requires_major_item": true
+                                "requires_major_item": false
                             },
                             "Power Bomb Expansion": {
                                 "variance": 0,
                                 "pickup_count": 8,
-                                "requires_major_item": true
+                                "requires_major_item": false
                             },
                             "Dark Ammo Expansion": {
                                 "variance": 0,
@@ -114,23 +93,23 @@
                     },
                     "translator_configuration": {
                         "translator_requirement": {
-                            "0": "random",
-                            "1": "random",
-                            "2": "random",
-                            "3": "random",
-                            "4": "random",
-                            "5": "random",
-                            "6": "random",
-                            "7": "random",
-                            "8": "random",
-                            "9": "random",
-                            "10": "random",
-                            "11": "random",
-                            "12": "random",
-                            "13": "random",
-                            "14": "random",
-                            "15": "random",
-                            "16": "random"
+                            "0": "violet",
+                            "1": "violet",
+                            "2": "violet",
+                            "3": "violet",
+                            "4": "amber",
+                            "5": "violet",
+                            "6": "violet",
+                            "7": "violet",
+                            "8": "amber",
+                            "9": "emerald",
+                            "10": "amber",
+                            "11": "amber",
+                            "12": "emerald",
+                            "13": "emerald",
+                            "14": "emerald",
+                            "15": "cobalt",
+                            "16": "cobalt"
                         }
                     },
                     "hints": {
@@ -176,7 +155,7 @@
                         }
                     },
                     "skip_final_bosses": false,
-                    "energy_per_tank": 100,
+                    "energy_per_tank": 100.0,
                     "safe_zone": {
                         "fully_heal": true,
                         "prevents_dark_aether": true,
@@ -189,20 +168,14 @@
     },
     "game_modifications": [
         {
-            "starting_location": "Dark Torvus Bog/Dark Falls",
+            "starting_location": "Temple Grounds/Landing Site",
             "starting_items": {
                 "Combat Visor": 1,
                 "Scan Visor": 1,
                 "Varia Suit": 1,
                 "Power Beam": 1,
                 "Charge Beam": 1,
-                "Morph Ball": 1,
-                "Energy Tank": 2,
-                "Light Beam": 1,
-                "Light Ammo": 50,
-                "Boost Ball": 1,
-                "Dark Beam": 1,
-                "Dark Ammo": 50
+                "Morph Ball": 1
             },
             "elevators": {
                 "Temple Grounds/Temple Transport C": "Great Temple/Temple Transport C",
@@ -229,161 +202,161 @@
                 "Sanctuary Fortress/Aerie": "Sanctuary Fortress/Aerie Transport Station"
             },
             "translators": {
-                "Hive Access Tunnel": "Amber Translator",
+                "Hive Access Tunnel": "Violet Translator",
                 "Meeting Grounds": "Violet Translator",
-                "Hive Transport Area": "Amber Translator",
-                "Industrial Site": "Amber Translator",
-                "Path of Eyes": "Violet Translator",
-                "Temple Assembly Site": "Cobalt Translator",
-                "GFMC Compound": "Cobalt Translator",
+                "Hive Transport Area": "Violet Translator",
+                "Industrial Site": "Violet Translator",
+                "Path of Eyes": "Amber Translator",
+                "Temple Assembly Site": "Violet Translator",
+                "GFMC Compound": "Violet Translator",
                 "Temple Sanctuary (to Agon)": "Violet Translator",
-                "Temple Sanctuary (to Torvus)": "Cobalt Translator",
-                "Temple Sanctuary (to Sanctuary)": "Amber Translator",
-                "Mining Plaza": "Emerald Translator",
+                "Temple Sanctuary (to Torvus)": "Amber Translator",
+                "Temple Sanctuary (to Sanctuary)": "Emerald Translator",
+                "Mining Plaza": "Amber Translator",
                 "Mining Station A": "Amber Translator",
-                "Great Bridge": "Violet Translator",
-                "Torvus Temple Gate": "Amber Translator",
+                "Great Bridge": "Emerald Translator",
+                "Torvus Temple Gate": "Emerald Translator",
                 "Torvus Temple Elevator": "Emerald Translator",
-                "Reactor Core": "Amber Translator",
-                "Sanctuary Temple": "Emerald Translator"
+                "Reactor Core": "Cobalt Translator",
+                "Sanctuary Temple": "Cobalt Translator"
             },
             "locations": {
                 "Agon Wastes": {
-                    "Agon Energy Controller/Pickup (Amber Translator)": "Power Bomb Expansion",
-                    "Agon Temple/Pickup (Morph Ball Bomb)": "Missile Expansion",
-                    "Bioenergy Production/Pickup (Energy Tank)": "Missile Expansion",
-                    "Central Mining Station/Pickup (Dark Ammo)": "Missile Expansion",
+                    "Agon Energy Controller/Pickup (Amber Translator)": "Amber Translator",
+                    "Agon Temple/Pickup (Morph Ball Bomb)": "Morph Ball Bomb",
+                    "Bioenergy Production/Pickup (Energy Tank)": "Energy Tank",
+                    "Central Mining Station/Pickup (Dark Ammo)": "Beam Ammo Expansion",
                     "Command Center/Pickup (Missile)": "Missile Expansion",
-                    "Main Reactor/Pickup (Missile)": "Energy Transfer Module",
-                    "Mine Shaft/Pickup (Energy Tank)": "Missile Expansion",
-                    "Mining Plaza/Pickup (Energy Tank)": "Missile Expansion",
-                    "Mining Station A/Pickup (Missile)": "Power Bomb Expansion",
-                    "Mining Station Access/Pickup (Energy Tank)": "Missile Expansion",
-                    "Mining Station B/Pickup (Darkburst)": "Dark Visor",
+                    "Main Reactor/Pickup (Missile)": "Missile Expansion",
+                    "Mine Shaft/Pickup (Energy Tank)": "Energy Tank",
+                    "Mining Plaza/Pickup (Energy Tank)": "Energy Tank",
+                    "Mining Station A/Pickup (Missile)": "Missile Expansion",
+                    "Mining Station Access/Pickup (Energy Tank)": "Energy Tank",
+                    "Mining Station B/Pickup (Darkburst)": "Darkburst",
                     "Portal Access A/Pickup (Missile)": "Missile Expansion",
-                    "Sand Cache/Pickup (Missile)": "Ing Hive Key 1",
-                    "Sand Processing/Pickup (Missile)": "Power Bomb Expansion",
-                    "Sandcanyon/Pickup (Power Bomb)": "Energy Transfer Module",
+                    "Sand Cache/Pickup (Missile)": "Missile Expansion",
+                    "Sand Processing/Pickup (Missile)": "Missile Expansion",
+                    "Sandcanyon/Pickup (Power Bomb)": "Power Bomb Expansion",
                     "Storage A/Pickup (Missile)": "Missile Expansion",
-                    "Storage B/Pickup (Missile)": "Sky Temple Key 2",
+                    "Storage B/Pickup (Missile)": "Missile Expansion",
                     "Storage C/Pickup (Missile)": "Missile Expansion",
-                    "Storage D/Pickup (Dark Beam)": "Missile Expansion",
-                    "Transport Center/Pickup (Missile)": "Sky Temple Key 1",
-                    "Ventilation Area A/Pickup (Missile)": "Energy Tank"
+                    "Storage D/Pickup (Dark Beam)": "Dark Beam",
+                    "Transport Center/Pickup (Missile)": "Missile Expansion",
+                    "Ventilation Area A/Pickup (Missile)": "Missile Expansion"
                 },
                 "Dark Agon Wastes": {
-                    "Battleground/Pickup (Dark Agon Key 3)": "Dark Agon Key 1",
-                    "Battleground/Pickup 2 (Sky Temple Key 1)": "Missile Expansion",
-                    "Crossroads/Pickup (Missile)": "Grapple Beam",
-                    "Dark Agon Temple/Pickup (Dark Suit)": "Violet Translator",
-                    "Dark Oasis/Pickup (Sky Temple Key 2)": "Missile Expansion",
-                    "Doomed Entry/Pickup (Dark Agon Key 2)": "Missile Expansion",
-                    "Feeding Pit/Pickup (Power Bomb)": "Missile Expansion",
-                    "Ing Cache 1/Pickup (Light Beam)": "Emerald Translator",
-                    "Ing Cache 2/Pickup (Sonic Boom)": "Sunburst",
+                    "Battleground/Pickup (Dark Agon Key 3)": "Dark Agon Key 3",
+                    "Battleground/Pickup 2 (Sky Temple Key 1)": "Sky Temple Key 1",
+                    "Crossroads/Pickup (Missile)": "Missile Expansion",
+                    "Dark Agon Temple/Pickup (Dark Suit)": "Dark Suit",
+                    "Dark Oasis/Pickup (Sky Temple Key 2)": "Sky Temple Key 2",
+                    "Doomed Entry/Pickup (Dark Agon Key 2)": "Dark Agon Key 2",
+                    "Feeding Pit/Pickup (Power Bomb)": "Power Bomb Expansion",
+                    "Ing Cache 1/Pickup (Light Beam)": "Light Beam",
+                    "Ing Cache 2/Pickup (Sonic Boom)": "Sonic Boom",
                     "Ing Cache 4/Pickup (Missile)": "Missile Expansion",
-                    "Judgment Pit/Pickup (Space Jump Boots)": "Energy Tank",
+                    "Judgment Pit/Pickup (Space Jump Boots)": "Space Jump Boots",
                     "Junction Site/Pickup (Missile)": "Missile Expansion",
-                    "Trial Tunnel/Pickup (Dark Agon Key 1)": "Energy Tank",
-                    "Warrior's Walk/Pickup (Missile)": "Dark Agon Key 2"
+                    "Trial Tunnel/Pickup (Dark Agon Key 1)": "Dark Agon Key 1",
+                    "Warrior's Walk/Pickup (Missile)": "Missile Expansion"
                 },
                 "Dark Torvus Bog": {
-                    "Cache A/Pickup (Dark Ammo)": "Power Bomb Expansion",
+                    "Cache A/Pickup (Dark Ammo)": "Beam Ammo Expansion",
                     "Cache B/Pickup (Energy Tank)": "Energy Tank",
-                    "Dark Torvus Arena/Pickup (Boost Ball)": "Missile Launcher",
-                    "Dark Torvus Arena/Pickup 2 (Dark Torvus Key 1)": "Morph Ball Bomb",
-                    "Dark Torvus Temple/Pickup (Dark Visor)": "Energy Tank",
-                    "Dungeon/Pickup (Sky Temple Key 4)": "Sonic Boom",
-                    "Poisoned Bog/Pickup (Sky Temple Key 3)": "Power Bomb Expansion",
-                    "Putrid Alcove/Pickup (Power Bomb)": "Missile Expansion",
-                    "Sacrificial Chamber/Pickup (Grapple Beam)": "Missile Expansion",
-                    "Undertemple Access/Pickup (Dark Torvus Key 2)": "Beam Ammo Expansion",
-                    "Undertemple/Pickup (Missile)": "Power Bomb",
-                    "Undertemple/Pickup 2 (Power Bomb)": "Missile Expansion",
-                    "Undertransit One/Pickup (Missile)": "Power Bomb Expansion",
-                    "Venomous Pond/Pickup (Dark Torvus Key 3)": "Missile Expansion"
+                    "Dark Torvus Arena/Pickup (Boost Ball)": "Boost Ball",
+                    "Dark Torvus Arena/Pickup 2 (Dark Torvus Key 1)": "Dark Torvus Key 1",
+                    "Dark Torvus Temple/Pickup (Dark Visor)": "Dark Visor",
+                    "Dungeon/Pickup (Sky Temple Key 4)": "Sky Temple Key 4",
+                    "Poisoned Bog/Pickup (Sky Temple Key 3)": "Sky Temple Key 3",
+                    "Putrid Alcove/Pickup (Power Bomb)": "Power Bomb Expansion",
+                    "Sacrificial Chamber/Pickup (Grapple Beam)": "Grapple Beam",
+                    "Undertemple Access/Pickup (Dark Torvus Key 2)": "Dark Torvus Key 2",
+                    "Undertemple/Pickup (Missile)": "Missile Expansion",
+                    "Undertemple/Pickup 2 (Power Bomb)": "Power Bomb",
+                    "Undertransit One/Pickup (Missile)": "Missile Expansion",
+                    "Venomous Pond/Pickup (Dark Torvus Key 3)": "Dark Torvus Key 3"
                 },
                 "Great Temple": {
-                    "Main Energy Controller/Pickup (Light Suit)": "Darkburst",
-                    "Main Energy Controller/Pickup (Violet Translator)": "Energy Transfer Module",
-                    "Temple Sanctuary/Pickup (Energy Transfer Module)": "Energy Tank",
+                    "Main Energy Controller/Pickup (Light Suit)": "Light Suit",
+                    "Main Energy Controller/Pickup (Violet Translator)": "Violet Translator",
+                    "Temple Sanctuary/Pickup (Energy Transfer Module)": "Energy Transfer Module",
                     "Transport A Access/Pickup (Missile)": "Missile Expansion",
-                    "Transport B Access/Pickup (Missile)": "Annihilator Beam"
+                    "Transport B Access/Pickup (Missile)": "Missile Expansion"
                 },
                 "Ing Hive": {
-                    "Aerial Training Site/Pickup (Ing Hive Key 3)": "Energy Tank",
+                    "Aerial Training Site/Pickup (Ing Hive Key 3)": "Ing Hive Key 3",
                     "Aerial Training Site/Pickup 2 (Missile)": "Missile Expansion",
-                    "Culling Chamber/Pickup (Ing Hive Key 1)": "Seeker Launcher",
-                    "Hazing Cliff/Pickup (Missile)": "Dark Agon Key 3",
-                    "Hive Dynamo Works/Pickup (Sky Temple Key 6)": "Sky Temple Key 8",
-                    "Hive Entrance/Pickup (Sky Temple Key 5)": "Missile Expansion",
-                    "Hive Gyro Chamber/Pickup (Ing Hive Key 2)": "Cobalt Translator",
-                    "Hive Temple/Pickup (Annihilator Beam)": "Missile Expansion"
+                    "Culling Chamber/Pickup (Ing Hive Key 1)": "Ing Hive Key 1",
+                    "Hazing Cliff/Pickup (Missile)": "Missile Expansion",
+                    "Hive Dynamo Works/Pickup (Sky Temple Key 6)": "Sky Temple Key 6",
+                    "Hive Entrance/Pickup (Sky Temple Key 5)": "Sky Temple Key 5",
+                    "Hive Gyro Chamber/Pickup (Ing Hive Key 2)": "Ing Hive Key 2",
+                    "Hive Temple/Pickup (Annihilator Beam)": "Annihilator Beam"
                 },
                 "Sanctuary Fortress": {
-                    "Aerie/Pickup (Echo Visor)": "Ing Hive Key 2",
+                    "Aerie/Pickup (Echo Visor)": "Echo Visor",
                     "Central Area Transport West/Pickup (Missile)": "Missile Expansion",
-                    "Dynamo Works/Pickup (Spider Ball)": "Beam Ammo Expansion",
-                    "Dynamo Works/Pickup 2 (Missile)": "Light Suit",
+                    "Dynamo Works/Pickup (Spider Ball)": "Spider Ball",
+                    "Dynamo Works/Pickup 2 (Missile)": "Missile Expansion",
                     "Hall of Combat Mastery/Pickup (Missile)": "Missile Expansion",
-                    "Main Gyro Chamber/Pickup (Power Bomb)": "Sky Temple Key 5",
-                    "Main Research/Pickup (Missile)": "Power Bomb Expansion",
+                    "Main Gyro Chamber/Pickup (Power Bomb)": "Power Bomb Expansion",
+                    "Main Research/Pickup (Missile)": "Missile Expansion",
                     "Reactor Core/Pickup (Energy Tank)": "Energy Tank",
-                    "Sanctuary Energy Controller/Pickup (Cobalt Translator)": "Missile Expansion",
-                    "Sanctuary Entrance/Pickup (Power Bomb)": "Sky Temple Key 6",
-                    "Sanctuary Map Station/Pickup (Missile)": "Energy Tank",
-                    "Sentinel's Path/Pickup (Missile)": "Energy Tank",
+                    "Sanctuary Energy Controller/Pickup (Cobalt Translator)": "Cobalt Translator",
+                    "Sanctuary Entrance/Pickup (Power Bomb)": "Power Bomb Expansion",
+                    "Sanctuary Map Station/Pickup (Missile)": "Missile Expansion",
+                    "Sentinel's Path/Pickup (Missile)": "Missile Expansion",
                     "Temple Access/Pickup (Missile)": "Missile Expansion",
-                    "Transit Station/Pickup (Power Bomb)": "Beam Ammo Expansion",
-                    "Vault/Pickup (Screw Attack)": "Beam Ammo Expansion",
-                    "Watch Station Access/Pickup (Energy Tank)": "Missile Expansion",
-                    "Watch Station/Pickup (Dark Ammo)": "Dark Torvus Key 2"
+                    "Transit Station/Pickup (Power Bomb)": "Power Bomb Expansion",
+                    "Vault/Pickup (Screw Attack)": "Screw Attack",
+                    "Watch Station Access/Pickup (Energy Tank)": "Energy Tank",
+                    "Watch Station/Pickup (Dark Ammo)": "Beam Ammo Expansion"
                 },
                 "Sky Temple Grounds": {
-                    "Accursed Lake/Pickup (Sky Temple Key 9)": "Sky Temple Key 7",
-                    "Defiled Shrine/Pickup (Sky Temple Key 8)": "Sky Temple Key 9",
-                    "Ing Reliquary/Pickup (Sky Temple Key 7)": "Missile Expansion",
+                    "Accursed Lake/Pickup (Sky Temple Key 9)": "Sky Temple Key 9",
+                    "Defiled Shrine/Pickup (Sky Temple Key 8)": "Sky Temple Key 8",
+                    "Ing Reliquary/Pickup (Sky Temple Key 7)": "Sky Temple Key 7",
                     "Phazon Grounds/Pickup (Missile)": "Missile Expansion",
-                    "Plain of Dark Worship/Pickup (Missile)": "Amber Translator",
-                    "Profane Path/Pickup (Dark Ammo)": "Missile Expansion",
+                    "Plain of Dark Worship/Pickup (Missile)": "Missile Expansion",
+                    "Profane Path/Pickup (Dark Ammo)": "Beam Ammo Expansion",
                     "War Ritual Grounds/Pickup (Missile)": "Missile Expansion"
                 },
                 "Temple Grounds": {
                     "Communication Area/Pickup (Missile)": "Missile Expansion",
-                    "Dynamo Chamber/Pickup (Power Bomb)": "Missile Expansion",
-                    "Fortress Transport Access/Pickup (Energy Tank)": "Missile Expansion",
-                    "GFMC Compound/Pickup (Missile Launcher)": "Missile Expansion",
-                    "GFMC Compound/Pickup 2 (Missile On Ship)": "Energy Tank",
-                    "Grand Windchamber/Pickup (Sunburst)": "Missile Expansion",
-                    "Hall of Honored Dead/Pickup (Seeker Launcher)": "Energy Tank",
-                    "Hive Chamber A/Pickup (Missile)": "Echo Visor",
+                    "Dynamo Chamber/Pickup (Power Bomb)": "Power Bomb Expansion",
+                    "Fortress Transport Access/Pickup (Energy Tank)": "Energy Tank",
+                    "GFMC Compound/Pickup (Missile Launcher)": "Missile Launcher",
+                    "GFMC Compound/Pickup 2 (Missile On Ship)": "Missile Expansion",
+                    "Grand Windchamber/Pickup (Sunburst)": "Sunburst",
+                    "Hall of Honored Dead/Pickup (Seeker Launcher)": "Seeker Launcher",
+                    "Hive Chamber A/Pickup (Missile)": "Missile Expansion",
                     "Hive Chamber B/Pickup (Missile)": "Missile Expansion",
-                    "Storage Cavern B/Pickup (Energy Tank)": "Dark Torvus Key 1",
+                    "Storage Cavern B/Pickup (Energy Tank)": "Energy Tank",
                     "Temple Assembly Site/Pickup (Missile)": "Missile Expansion",
                     "Transport to Agon Wastes/Pickup (Missile)": "Missile Expansion",
-                    "Windchamber Gateway/Pickup (Energy Tank)": "Sky Temple Key 4"
+                    "Windchamber Gateway/Pickup (Energy Tank)": "Energy Tank"
                 },
                 "Torvus Bog": {
-                    "Abandoned Worksite/Pickup (Missile)": "Screw Attack",
+                    "Abandoned Worksite/Pickup (Missile)": "Missile Expansion",
                     "Forgotten Bridge/Pickup (Missile)": "Missile Expansion",
                     "Gathering Hall/Pickup (Missile)": "Missile Expansion",
-                    "Great Bridge/Pickup (Power Bomb)": "Energy Tank",
-                    "Hydrochamber Storage/Pickup (Gravity Boost)": "Energy Transfer Module",
+                    "Great Bridge/Pickup (Power Bomb)": "Power Bomb Expansion",
+                    "Hydrochamber Storage/Pickup (Gravity Boost)": "Gravity Boost",
                     "Hydrodynamo Station/Pickup (Missile)": "Missile Expansion",
-                    "Meditation Vista/Pickup (Energy Tank)": "Dark Suit",
+                    "Meditation Vista/Pickup (Energy Tank)": "Energy Tank",
                     "Path of Roots/Pickup (Missile)": "Missile Expansion",
-                    "Plaza Access/Pickup (Missile)": "Super Missile",
+                    "Plaza Access/Pickup (Missile)": "Missile Expansion",
                     "Portal Chamber/Pickup (Missile)": "Missile Expansion",
-                    "Temple Access/Pickup (Energy Tank)": "Gravity Boost",
-                    "Torvus Energy Controller/Pickup (Emerald Translator)": "Power Bomb Expansion",
-                    "Torvus Grove/Pickup (Missile)": "Energy Tank",
-                    "Torvus Lagoon/Pickup (Missile)": "Spider Ball",
-                    "Torvus Plaza/Pickup (Energy Tank)": "Missile Expansion",
-                    "Torvus Temple/Pickup (Super Missile)": "Sky Temple Key 3",
-                    "Training Chamber/Pickup (Missile)": "Dark Torvus Key 3",
-                    "Transit Tunnel East/Pickup (Energy Tank)": "Missile Expansion",
-                    "Transit Tunnel South/Pickup (Missile)": "Ing Hive Key 3",
-                    "Underground Tunnel/Pickup (Missile)": "Space Jump Boots"
+                    "Temple Access/Pickup (Energy Tank)": "Energy Tank",
+                    "Torvus Energy Controller/Pickup (Emerald Translator)": "Emerald Translator",
+                    "Torvus Grove/Pickup (Missile)": "Missile Expansion",
+                    "Torvus Lagoon/Pickup (Missile)": "Missile Expansion",
+                    "Torvus Plaza/Pickup (Energy Tank)": "Energy Tank",
+                    "Torvus Temple/Pickup (Super Missile)": "Super Missile",
+                    "Training Chamber/Pickup (Missile)": "Missile Expansion",
+                    "Transit Tunnel East/Pickup (Energy Tank)": "Energy Tank",
+                    "Transit Tunnel South/Pickup (Missile)": "Missile Expansion",
+                    "Underground Tunnel/Pickup (Missile)": "Missile Expansion"
                 }
             },
             "hints": {
@@ -468,7 +441,7 @@
                     },
                     "target": 106
                 },
-                "619091749": {
+                "3529248034": {
                     "hint_type": "location",
                     "precision": {
                         "location": "light-suit-location",
@@ -477,25 +450,7 @@
                     },
                     "target": 24
                 },
-                "3529248034": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "guardian",
-                        "item": "detailed",
-                        "relative": null
-                    },
-                    "target": 43
-                },
-                "3212301619": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "guardian",
-                        "item": "detailed",
-                        "relative": null
-                    },
-                    "target": 115
-                },
-                "2677320745": {
+                "2190580881": {
                     "hint_type": "location",
                     "precision": {
                         "location": "guardian",
@@ -504,51 +459,78 @@
                     },
                     "target": 79
                 },
-                "1041207119": {
-                    "hint_type": "joke",
-                    "precision": null,
-                    "target": null
-                },
-                "2558035195": {
-                    "hint_type": "joke",
-                    "precision": null,
-                    "target": null
-                },
                 "1238191924": {
                     "hint_type": "location",
                     "precision": {
-                        "location": "detailed",
-                        "item": "precise-category",
+                        "location": "guardian",
+                        "item": "detailed",
+                        "relative": null
+                    },
+                    "target": 115
+                },
+                "619091749": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "guardian",
+                        "item": "detailed",
                         "relative": null
                     },
                     "target": 43
                 },
-                "2190580881": {
+                "971220893": {
+                    "hint_type": "joke",
+                    "precision": null,
+                    "target": null
+                },
+                "2677320745": {
+                    "hint_type": "joke",
+                    "precision": null,
+                    "target": null
+                },
+                "3277287077": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "detailed",
+                        "item": "detailed",
+                        "relative": null
+                    },
+                    "target": 38
+                },
+                "3478732186": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "world-only",
+                        "item": "detailed",
+                        "relative": null
+                    },
+                    "target": 47
+                },
+                "2392838062": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "world-only",
+                        "item": "detailed",
+                        "relative": null
+                    },
+                    "target": 62
+                },
+                "4021961856": {
                     "hint_type": "location",
                     "precision": {
                         "location": "detailed",
                         "item": "general-category",
                         "relative": null
                     },
-                    "target": 9
+                    "target": 72
                 },
-                "1422425996": {
+                "1394890590": {
                     "hint_type": "location",
                     "precision": {
                         "location": "detailed",
-                        "item": "detailed",
+                        "item": "precise-category",
                         "relative": null
                     },
-                    "target": 0
-                },
-                "2392838062": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "detailed",
-                        "item": "detailed",
-                        "relative": null
-                    },
-                    "target": 118
+                    "target": 69
                 },
                 "1170414603": {
                     "hint_type": "location",
@@ -557,97 +539,72 @@
                         "item": "detailed",
                         "relative": null
                     },
-                    "target": 10
-                },
-                "971220893": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "world-only",
-                        "item": "precise-category",
-                        "relative": null
-                    },
-                    "target": 35
-                },
-                "1394890590": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "world-only",
-                        "item": "detailed",
-                        "relative": null
-                    },
-                    "target": 22
-                },
-                "3277287077": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "detailed",
-                        "item": "precise-category",
-                        "relative": null
-                    },
-                    "target": 89
-                },
-                "4072633400": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "detailed",
-                        "item": "detailed",
-                        "relative": null
-                    },
-                    "target": 27
-                },
-                "1948976790": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "detailed",
-                        "item": "detailed",
-                        "relative": null
-                    },
-                    "target": 103
-                },
-                "67497535": {
-                    "hint_type": "location",
-                    "precision": {
-                        "location": "world-only",
-                        "item": "detailed",
-                        "relative": null
-                    },
-                    "target": 57
+                    "target": 52
                 },
                 "1764636206": {
                     "hint_type": "location",
                     "precision": {
-                        "location": "detailed",
+                        "location": "world-only",
                         "item": "precise-category",
                         "relative": null
                     },
-                    "target": 34
+                    "target": 77
                 },
-                "2725438859": {
+                "1422425996": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "detailed",
+                        "item": "detailed",
+                        "relative": null
+                    },
+                    "target": 112
+                },
+                "2558035195": {
                     "hint_type": "location",
                     "precision": {
                         "location": "world-only",
                         "item": "detailed",
                         "relative": null
                     },
-                    "target": 66
+                    "target": 1
                 },
-                "3478732186": {
+                "67497535": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "relative-to-index",
+                        "item": "detailed",
+                        "relative": {
+                            "precise_distance": true,
+                            "other_index": 102,
+                            "precision": "precise-category"
+                        }
+                    },
+                    "target": 118
+                },
+                "2725438859": {
                     "hint_type": "location",
                     "precision": {
                         "location": "detailed",
                         "item": "detailed",
                         "relative": null
                     },
-                    "target": 76
+                    "target": 3
                 },
-                "4021961856": {
+                "3212301619": {
                     "hint_type": "location",
                     "precision": {
-                        "location": "detailed",
+                        "location": "relative-to-area",
                         "item": "detailed",
-                        "relative": null
+                        "relative": {
+                            "precise_distance": true,
+                            "area_location": {
+                                "world_asset_id": 1119434212,
+                                "area_asset_id": 369673571
+                            },
+                            "precision": "name"
+                        }
                     },
-                    "target": 77
+                    "target": 45
                 },
                 "4115881194": {
                     "hint_type": "location",
@@ -656,51 +613,41 @@
                         "item": "detailed",
                         "relative": null
                     },
-                    "target": 70
+                    "target": 88
+                },
+                "1041207119": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "detailed",
+                        "item": "detailed",
+                        "relative": null
+                    },
+                    "target": 22
+                },
+                "1948976790": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "detailed",
+                        "item": "precise-category",
+                        "relative": null
+                    },
+                    "target": 104
+                },
+                "4072633400": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "relative-to-index",
+                        "item": "detailed",
+                        "relative": {
+                            "precise_distance": true,
+                            "other_index": 38,
+                            "precision": "detailed"
+                        }
+                    },
+                    "target": 46
                 }
             }
         }
     ],
-    "item_order": [
-        "Light Beam as starting item",
-        "Boost Ball as starting item",
-        "Morph Ball Bomb at Dark Torvus Bog/Dark Torvus Arena/Pickup 2 (Dark Torvus Key 1)",
-        "Dark Beam as starting item",
-        "Space Jump Boots at Torvus Bog/Underground Tunnel/Pickup (Missile)",
-        "Gravity Boost at Torvus Bog/Temple Access/Pickup (Energy Tank)",
-        "Screw Attack at Torvus Bog/Abandoned Worksite/Pickup (Missile)",
-        "Dark Suit at Torvus Bog/Meditation Vista/Pickup (Energy Tank)",
-        "Missile Launcher at Dark Torvus Bog/Dark Torvus Arena/Pickup (Boost Ball)",
-        "Spider Ball at Torvus Bog/Torvus Lagoon/Pickup (Missile)",
-        "Super Missile at Torvus Bog/Plaza Access/Pickup (Missile)",
-        "Dark Torvus Key 3 at Torvus Bog/Training Chamber/Pickup (Missile)",
-        "Power Bomb at Dark Torvus Bog/Undertemple/Pickup (Missile)",
-        "Grapple Beam at Dark Agon Wastes/Crossroads/Pickup (Missile)",
-        "Dark Agon Key 2 at Dark Agon Wastes/Warrior's Walk/Pickup (Missile)",
-        "Emerald Translator at Dark Agon Wastes/Ing Cache 1/Pickup (Light Beam)",
-        "Dark Agon Key 1 at Dark Agon Wastes/Battleground/Pickup (Dark Agon Key 3)",
-        "Dark Torvus Key 2 at Sanctuary Fortress/Watch Station/Pickup (Dark Ammo)",
-        "Dark Agon Key 3 at Ing Hive/Hazing Cliff/Pickup (Missile)",
-        "Violet Translator at Dark Agon Wastes/Dark Agon Temple/Pickup (Dark Suit) with hint at Torvus Bog/Gathering Hall/Lore Scan",
-        "Dark Torvus Key 1 at Temple Grounds/Storage Cavern B/Pickup (Energy Tank) with hint at Torvus Bog/Catacombs/Lore Scan",
-        "Echo Visor at Temple Grounds/Hive Chamber A/Pickup (Missile) with hint at Torvus Bog/Underground Tunnel/Lore Scan",
-        "Ing Hive Key 2 at Sanctuary Fortress/Aerie/Pickup (Echo Visor) with hint at Temple Grounds/Path of Eyes/Lore Scan",
-        "Amber Translator at Sky Temple Grounds/Plain of Dark Worship/Pickup (Missile) with hint at Torvus Bog/Path of Roots/Lore Scan",
-        "Ing Hive Key 1 at Agon Wastes/Sand Cache/Pickup (Missile) with hint at Temple Grounds/Transport to Agon Wastes/Lore Scan",
-        "Cobalt Translator at Ing Hive/Hive Gyro Chamber/Pickup (Ing Hive Key 2)",
-        "Annihilator Beam at Great Temple/Transport B Access/Pickup (Missile) with hint at Agon Wastes/Mining Station A/Lore Scan",
-        "Ing Hive Key 3 at Torvus Bog/Transit Tunnel South/Pickup (Missile) with hint at Great Temple/Main Energy Controller/Lore Scan",
-        "Seeker Launcher at Ing Hive/Culling Chamber/Pickup (Ing Hive Key 1)",
-        "Dark Visor at Agon Wastes/Mining Station B/Pickup (Darkburst) with hint at Sanctuary Fortress/Sanctuary Entrance/Lore Scan",
-        "Sky Temple Key 7 at Sky Temple Grounds/Accursed Lake/Pickup (Sky Temple Key 9)",
-        "Sky Temple Key 8 at Ing Hive/Hive Dynamo Works/Pickup (Sky Temple Key 6)",
-        "Sky Temple Key 5 at Sanctuary Fortress/Main Gyro Chamber/Pickup (Power Bomb)",
-        "Sky Temple Key 9 at Sky Temple Grounds/Defiled Shrine/Pickup (Sky Temple Key 8)",
-        "Sky Temple Key 1 at Agon Wastes/Transport Center/Pickup (Missile)",
-        "Sky Temple Key 2 at Agon Wastes/Storage B/Pickup (Missile)",
-        "Sky Temple Key 3 at Torvus Bog/Torvus Temple/Pickup (Super Missile)",
-        "Sky Temple Key 6 at Sanctuary Fortress/Sanctuary Entrance/Pickup (Power Bomb)",
-        "Sky Temple Key 4 at Temple Grounds/Windchamber Gateway/Pickup (Energy Tank)",
-        "Light Suit at Sanctuary Fortress/Dynamo Works/Pickup 2 (Missile) with hint at Sanctuary Fortress/Watch Station/Lore Scan"
-    ]
+    "item_order": []
 }

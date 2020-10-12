@@ -19,7 +19,7 @@ from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout import game_patches_serializer
-from randovania.layout.game_patches_serializer import BitPackPickupEntry
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.permalink import Permalink
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
@@ -31,7 +31,7 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
-        {"pickup": ['BQ7pCYAawGA=', "Screw Attack"]},
+        {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
                          "precision": {"location": "detailed", "item": "detailed", "relative": None},
                          "target": 50}]},
@@ -69,8 +69,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         },
         "translators": {},
         "locations": {},
-        "hints": {},
-        "_locations_internal": "",
+        "hints": {}
     }
     patches = dataclasses.replace(game.create_game_patches(), player_index=0)
 
@@ -112,7 +111,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         patches = patches.assign_gate_assignment(gates)
 
     if request.param.get("pickup"):
-        data["_locations_internal"], pickup_name = request.param.get("pickup")
+        pickup_name = request.param.get("pickup")
         pickup = pickup_creator.create_major_item(echoes_item_database.major_items[pickup_name],
                                                   MajorItemState(), True, game.resource_database,
                                                   None, False)

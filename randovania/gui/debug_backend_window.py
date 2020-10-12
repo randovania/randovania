@@ -96,7 +96,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
         game = default_database.default_prime2_game_description()
         index_to_name = {
-            node.pickup_index.index: game.world_list.area_name(area, distinguish_dark_aether=True, separator=" - ")
+            node.pickup_index.index: game.world_list.area_name(area)
             for world, area, node in game.world_list.all_worlds_areas_nodes
             if isinstance(node, PickupNode)
         }
