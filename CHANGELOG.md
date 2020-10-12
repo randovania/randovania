@@ -231,11 +231,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
     - Screw Attack without Space Jump in Phazon Grounds (Advanced and above)
 
--   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
+-   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack and Space Jump as well if coming from Mining Plaza.
 
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
--   Morph Ball Doors now properly requires Morph Ball.
+-   Morph Ball Doors now properly require Morph Ball.
 
 -   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
 
