@@ -1,11 +1,11 @@
 {
     "schema_version": 1,
-    "name": "Beginner Friendly",
-    "description": "This preset provides the smoothest transition from a casual player.<br />Softlocks and crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
+    "name": "Fewest Changes",
+    "description": "This preset keeps the game as close as possible to how the original game operates. Only crashes are fixed.",
     "base_preset_name": null,
     "patcher_configuration": {
-        "menu_mod": true,
-        "warp_to_start": true,
+        "menu_mod": false,
+        "warp_to_start": false,
         "varia_suit_damage": 6.0,
         "dark_suit_damage": 1.2,
         "pickup_model_style": "all-visible",
@@ -14,7 +14,7 @@
     "layout_configuration": {
         "game": "mp2-echoes",
         "trick_level": {
-            "global_level": "no-tricks",
+            "global_level": "trivial",
             "specific_levels": {}
         },
         "damage_strictness": 1.5,
@@ -28,22 +28,7 @@
             "excluded_indices": []
         },
         "major_items_configuration": {
-            "items_state": {
-                "Dark Suit": {
-                    "num_shuffled_pickups": 1
-                },
-                "Light Suit": {
-                    "num_shuffled_pickups": 1
-                },
-                "Progressive Suit": {},
-                "Grapple Beam": {
-                    "num_shuffled_pickups": 1
-                },
-                "Screw Attack": {
-                    "num_shuffled_pickups": 1
-                },
-                "Progressive Grapple": {}
-            },
+            "items_state": {},
             "progressive_suit": false,
             "progressive_grapple": false,
             "minimum_random_starting_items": 0,
@@ -60,12 +45,12 @@
                 "Missile Expansion": {
                     "variance": 0,
                     "pickup_count": 49,
-                    "requires_major_item": true
+                    "requires_major_item": false
                 },
                 "Power Bomb Expansion": {
                     "variance": 0,
                     "pickup_count": 8,
-                    "requires_major_item": true
+                    "requires_major_item": false
                 },
                 "Dark Ammo Expansion": {
                     "variance": 0,
@@ -87,12 +72,12 @@
         "translator_configuration": {
             "translator_requirement": {
                 "0": "violet",
-                "1": "amber",
+                "1": "violet",
                 "2": "violet",
                 "3": "violet",
                 "4": "amber",
                 "5": "violet",
-                "6": "emerald",
+                "6": "violet",
                 "7": "violet",
                 "8": "amber",
                 "9": "emerald",
