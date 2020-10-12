@@ -31,7 +31,7 @@ class LocationHintCreator:
         if hide_area:
             return self.world_list.world_name_from_node(pickup_node, True)
         else:
-            return self.world_list.area_name(self.world_list.nodes_to_area(pickup_node), True, " - ")
+            return self.world_list.area_name(self.world_list.nodes_to_area(pickup_node))
 
     def create_joke_hint(self) -> str:
         if not self.joke_hints:
