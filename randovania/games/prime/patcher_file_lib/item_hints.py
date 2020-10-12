@@ -126,7 +126,7 @@ class RelativeAreaFormatter(RelativeFormatter):
         other_area = self.world_list.area_by_area_location(relative.area_location)
 
         if relative.precision == HintRelativeAreaName.NAME:
-            other_name = self.world_list.area_name(other_area, distinguish_dark_aether=True, separator=" - ")
+            other_name = self.world_list.area_name(other_area)
         elif relative.precision == HintRelativeAreaName.FEATURE:
             raise NotImplementedError("HintRelativeAreaName.FEATURE not implemented")
         else:

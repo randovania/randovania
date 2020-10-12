@@ -7,6 +7,7 @@ from typing import Dict, List, Iterator, Tuple, DefaultDict
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue, BitPackFloat
 from randovania.game_description import data_reader
+from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_patches import GamePatches
@@ -207,11 +208,11 @@ def _node_mapping_to_elevator_connection(world_list: WorldList,
     return result
 
 
-def _find_node_with_teleporter(world_list: WorldList, teleporter_id: int) -> Node:
-    for node in world_list.all_nodes:
+def _find_area_with_teleporter(world_list: WorldList, teleporter_id: int) -> Area:
+    for _, area, node in world_list.all_worlds_areas_nodes:
         if isinstance(node, TeleporterNode):
             if node.teleporter_instance_id == teleporter_id:
-                return node
+                return area
     raise ValueError("Unknown teleporter_id: {}".format(teleporter_id))
 
 
@@ -242,16 +243,15 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches, 
     world_list = game.world_list
 
     result = {
-        "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location), True),
+        "starting_location": world_list.area_name(world_list.area_by_area_location(patches.starting_location),
+                                                  separator="/"),
         "starting_items": {
             resource_info.long_name: quantity
             for resource_info, quantity in patches.starting_items.items()
         },
         "elevators": {
-            world_list.area_name(world_list.nodes_to_area(_find_node_with_teleporter(world_list,
-                                                                                     teleporter_id)), True):
-                world_list.area_name(world_list.nodes_to_area(world_list.resolve_teleporter_connection(connection)),
-                                     True)
+            world_list.area_name(_find_area_with_teleporter(world_list, teleporter_id), "/"):
+                world_list.area_name(world_list.area_by_area_location(connection), "/")
             for teleporter_id, connection in patches.elevator_connection.items()
         },
         "translators": {
@@ -303,6 +303,9 @@ def decode_single(player_index: int, num_players: int, game_modifications: dict,
         beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
 
     world_list = game.world_list
+
+    # item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
+    #                                                                                   game.resource_database)
 
     # Starting Location
     starting_location = _area_name_to_area_location(world_list, game_modifications["starting_location"])

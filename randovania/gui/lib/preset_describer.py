@@ -191,7 +191,7 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
 
     if len(starting_locations) == 1:
         area = game_description.world_list.area_by_area_location(next(iter(starting_locations)))
-        format_params["starting_location"] = game_description.world_list.area_name(area, distinguish_dark_aether=True)
+        format_params["starting_location"] = game_description.world_list.area_name(area)
     else:
         format_params["starting_location"] = "{} locations".format(len(starting_locations))
 
