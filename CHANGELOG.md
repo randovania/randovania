@@ -20,11 +20,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   **Major** - Tricks are more organized and can be customized more precisely to a player's desire.
 
--   Added: An automatic item tracker based on a Dolphin running on the same computer.
-
--   Added: A dark theme has been added. It can be toggled in the Advanced menu.
-
--   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
+### Tricks
 
 -   Added: Options for configuring usage of new tricks:
     - Bomb Jump (renamed from Difficult Bomb Jump)
@@ -39,26 +35,65 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Screw Attack into Tunnels
     - Seeker Locks without Seekers
     - Standable Terrain
+
+-   Changed: The following trick level difficulties were renamed:
+    - Trivial -> Beginner
+    - Easy -> Intermediate
+    - Normal -> Advanced
+    - Hard -> Expert
+    - Minimal Checking -> Minimal Logic
+
+### Hints
+
+-   Added: Relative hints, where an item is described as being some rooms away from another item or room.
+
+-   Removed: Hints with green item names/joke item names have been removed.
+
+-   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
+
+### GUI
+
+-   Added: An automatic item tracker based on a Dolphin running on the same computer.
+
+-   Added: A dark theme has been added. It can be toggled in the Advanced menu.
+
+-   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
     
--   Added: Some tricks now have a description on the Trick Details popup.
-    
--   Added: Energy Tanks have doubled weight for the generator.
-
--   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
-
--   Added: The rate of healing for Safe Zones is now configurable.
-
 -   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
 
 -   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
 
 -   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
 
--   Added: Relative hints, where an item is described as being some rooms away from another item or room.
-
 -   Added: Randovania can generate a game by importing permalinks directly from a race on racetime.gg.
+    
+-   Added: Some tricks now have a description on the Trick Details popup.
 
--   Removed: Hints with green item names/joke item names have been removed.
+-   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
+
+-   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
+
+-   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
+
+-   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
+
+-   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
+
+### Quality of Life
+
+-   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
+
+-   Added: The rate of healing for Safe Zones is now configurable.
+
+-   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
+
+-   Changed: The Mission Final screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen.
+
+-   Changed: The elevator scan now includes the world of the connected area.
+
+### Internals/Developer
+
+-   Added: Energy Tanks have doubled weight for the generator.
 
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
@@ -68,38 +103,13 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
 
--   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
-
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
 -   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.
 
--   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
-
--   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
-
--   Changed: The Mission Final screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen.
-
--   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
-
--   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
-
--   Changed: The elevator scan now includes the world of the connected area.
-
--   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
-
 -   Changed: Better error messages when there are references to unknown resources in the database.
 
 -   Changed: The `database` command is no longer a subcommand of `echoes`. It also has the `--game` argument to choose which database to use. 
-
--   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
-
--   Changed: The following trick level difficulties were renamed:
-    - Trivial -> Beginner
-    - Easy -> Intermediate
-    - Normal -> Advanced
-    - Hard -> Expert
-    - Minimal Checking -> Minimal Logic
 
 ### Logic Database changes
 
@@ -222,10 +232,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Dark Aether Damage Requirements:
     - Sky Temple Grounds
     - Dark Agon Wastes
-    - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
-    - Undertemple Access (Updated)
-    - Undertemple (Intermediate and above)
-    - Vault Attack Portal
+    - Dark Torvus Bog
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
