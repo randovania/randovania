@@ -353,7 +353,7 @@ def _elevator_area_name(world_list: WorldList,
         world = world_list.world_by_area_location(area_location)
         area = world.area_by_asset_id(area_location.area_asset_id)
         if include_world_name:
-            return world_list.area_name(area, distinguish_dark_aether=True, separator=" - ")
+            return world_list.area_name(area)
         else:
             return area.name
 
