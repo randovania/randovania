@@ -5339,9 +5339,9 @@ Asset id: 3822429534
 > Door to Abandoned Worksite; Heals? False
   * Light Door to Abandoned Worksite/Door to Great Bridge
   > Door to Temple Access (Top)
-      All of the following:
-          Space Jump Boots
-          Combat/Scan Dash (Intermediate) or Use Screw Attack (Space Jump)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Intermediate)
   > Door to Temple Access (Bottom)
       Trivial
   > Pickup (Power Bomb)
@@ -5390,9 +5390,17 @@ Asset id: 3822429534
 > Pickup (Power Bomb); Heals? False
   * Pickup 64; Major Location? False
   > Door to Temple Access (Top)
-      Morph Ball and Power Bomb
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bomb ≥ 2
+              Charge Beam and Power Bomb
   > Door to Abandoned Worksite
-      Morph Ball and Power Bomb
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bomb ≥ 2
+              Charge Beam and Power Bomb
 
 > Event - Great Bridge Cannon; Heals? False
   * Event Great Bridge Cannon
@@ -5503,8 +5511,8 @@ Asset id: 1423634263
           Any of the following:
               Grapple Beam
               All of the following:
-                  Space Jump Boots
-                  Screw Attack or Combat/Scan Dash (Advanced) or Standable Terrain (Intermediate)
+                  Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+                  Screw Attack or Standable Terrain (Intermediate)
 
 > Tunnel; Heals? False
   > Door to Great Bridge
@@ -8412,60 +8420,90 @@ Asset id: 290586973
 ----------------
 Culling Chamber
 Asset id: 1762359402
-> Door to Hazing Cliff; Heals? True
+> Door to Hazing Cliff; Heals? False
   * Normal Door to Hazing Cliff/Door to Culling Chamber
-  > Door to Unseen Way
-      Trivial
-  > Door to Central Hive East Transport
-      Trivial
   > Portal to Hall of Combat Mastery
-      Trivial
+      Dark World Damage ≥ 25
 
-> Door to Unseen Way; Heals? True
+> Door to Unseen Way; Heals? False
   * Normal Door to Unseen Way/Door to Culling Chamber
-  > Door to Hazing Cliff
-      Trivial
-  > Door to Central Hive East Transport
-      Trivial
-  > Portal to Hall of Combat Mastery
-      Trivial
+  > Safe Zone (Unseen Way Side)
+      Dark World Damage ≥ 25 and Activate Safe Zone
 
 > Door to Central Hive East Transport; Heals? True
   * Dark Door to Central Hive East Transport/Door to Culling Chamber
-  > Door to Hazing Cliff
-      Trivial
-  > Door to Unseen Way
-      Trivial
-  > Portal to Hall of Combat Mastery
-      Trivial
   > Pickup (Ing Hive Key 1)
       All of the following:
-          Morph Ball and Spider Ball and Morph Ball Bomb
+          Morph Ball and Spider Ball and Morph Ball Bomb and Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 60
+              All of the following:
+                  Dark World Damage ≥ 50
+                  Any of the following:
+                      All of the following:
+                          Boost Ball
+                          Movement (Intermediate) or Dark World Damage ≥ 5
+                      After Culling Chamber Blocks and Movement (Advanced)
+  > Safe Zone (Portal Side)
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 25
+              Morph Ball and Dark World Damage ≥ 15
+  > Safe Zone (Unseen Way Side)
+      All of the following:
+          Activate Safe Zone
           Any of the following:
               Dark World Damage ≥ 50
-              All of the following:
-                  Dark World Damage ≥ 47
-                  Boost Ball or Movement (Intermediate)
+              Morph Ball and Dark World Damage ≥ 32
+  > Event - Culling Chamber Blocks
+      Morph Ball and Spider Ball and Morph Ball Bomb and Movement (Advanced) and Dark World Damage ≥ 90 and Activate Safe Zone
 
 > Portal to Hall of Combat Mastery; Heals? True; Spawn Point
   * Scan Portal to Hall of Combat Mastery/Portal to Culling Chamber
   > Door to Hazing Cliff
-      Trivial
-  > Door to Unseen Way
-      Trivial
-  > Door to Central Hive East Transport
-      Trivial
+      Dark World Damage ≥ 20
+  > Safe Zone (Portal Side)
+      Dark World Damage ≥ 23 and Activate Safe Zone
 
 > Pickup (Ing Hive Key 1); Heals? False
   * Pickup 100; Major Location? True
   > Door to Central Hive East Transport
       All of the following:
-          Morph Ball and Spider Ball and Morph Ball Bomb
+          Morph Ball and Spider Ball and Morph Ball Bomb and Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 60
+              All of the following:
+                  Boost Ball and Dark World Damage ≥ 45
+                  Movement (Intermediate) or Dark World Damage ≥ 5
+              After Culling Chamber Blocks and Movement (Advanced) and Dark World Damage ≥ 48
+
+> Safe Zone (Portal Side); Heals? True
+  > Door to Central Hive East Transport
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 25
+              Morph Ball and Dark World Damage ≥ 15
+  > Portal to Hall of Combat Mastery
+      Dark World Damage ≥ 25
+
+> Safe Zone (Unseen Way Side); Heals? True
+  > Door to Unseen Way
+      Any of the following:
+          Dark World Damage ≥ 25
+          Morph Ball and Dark World Damage ≥ 20
+  > Door to Central Hive East Transport
+      All of the following:
+          Activate Safe Zone
           Any of the following:
               Dark World Damage ≥ 50
-              All of the following:
-                  Dark World Damage ≥ 47
-                  Boost Ball or Movement (Intermediate)
+              Morph Ball and Dark World Damage ≥ 32
+
+> Event - Culling Chamber Blocks; Heals? False
+  * Event Culling Chamber Blocks
+  > Door to Central Hive East Transport
+      Activate Safe Zone
 
 ----------------
 Central Area Transport West
