@@ -1,4 +1,3 @@
-import asyncio
 import datetime
 import json
 import logging
@@ -6,7 +5,7 @@ from pathlib import Path
 from typing import Optional, List
 
 import aiofiles
-import requests
+import aiohttp
 
 from randovania.interface_common import persistence
 
@@ -41,11 +40,13 @@ async def _read_from_persisted() -> Optional[List[dict]]:
 
 
 async def _download_from_github() -> Optional[List[dict]]:
-    latest_release = await asyncio.get_event_loop().run_in_executor(None, requests.get, _RELEASES_URL)
-    if latest_release.ok:
-        return latest_release.json()
-    else:
-        return None
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_RELEASES_URL) as response:
+            try:
+                response.raise_for_status()
+                return await response.json()
+            except aiohttp.ClientResponseError:
+                return None
 
 
 async def _persist(data: List[dict]):
