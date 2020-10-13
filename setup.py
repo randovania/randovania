@@ -86,7 +86,6 @@ setup(
             'markdown',
             'pypresence',
             'qdarkstyle',
-            'requests',
         ],
         "server": [
             "cryptography",
