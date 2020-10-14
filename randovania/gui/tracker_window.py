@@ -123,7 +123,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.game_description, self._initial_state = logic_bootstrap(layout_configuration,
                                                                      player_pool.game,
                                                                      pool_patches)
-        self.logic = Logic(self.game_description, layout_configuration)
+        self.logic = Logic(0, self.game_description, layout_configuration)
 
         self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 

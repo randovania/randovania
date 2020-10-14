@@ -9,11 +9,13 @@ from randovania.layout.echoes_configuration import EchoesConfiguration
 class Logic:
     """Extra information that persists even after a backtrack, to prevent irrelevant backtracking."""
 
+    player_index: int
     game: GameDescription
     configuration: EchoesConfiguration
     additional_requirements: Dict[Node, RequirementSet]
 
-    def __init__(self, game: GameDescription, configuration: EchoesConfiguration):
+    def __init__(self, player_index: int, game: GameDescription, configuration: EchoesConfiguration):
+        self.player_index = player_index
         self.game = game
         self.configuration = configuration
         self.additional_requirements = {}

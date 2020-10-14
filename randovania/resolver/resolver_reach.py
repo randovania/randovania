@@ -126,7 +126,7 @@ class ResolverReach:
             if additional_requirements.satisfied(state.resources, self._energy_at_node[node]):
                 yield node, self._energy_at_node[node]
             else:
-                debug.log_skip_action_missing_requirement(node, self._logic.game,
+                debug.log_skip_action_missing_requirement(node, self._logic,
                                                           self._logic.get_additional_requirements(node))
 
     def satisfiable_actions(self,

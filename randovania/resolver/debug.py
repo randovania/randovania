@@ -1,4 +1,5 @@
 import time
+import typing
 from typing import Set
 
 from randovania.game_description.node import Node
@@ -40,31 +41,28 @@ def log_resolve_start():
     _last_printed_additional = {}
 
 
-def log_new_advance(state: "State", reach: "ResolverReach"):
-    from randovania.resolver.state import State
-    from randovania.resolver.resolver_reach import ResolverReach
-    state: State
-    reach: ResolverReach
+def log_new_advance(player: "ResolverPlayer", players_to_check):
+    from randovania.resolver.resolver import ResolverPlayer
+    player = typing.cast(ResolverPlayer, player)
 
     global _current_indent
     increment_attempts()
     _current_indent += 1
     if _DEBUG_LEVEL > 0:
-        world_list = state.world_list
-
-        if hasattr(state.node, "resource"):
-            resource = state.node.resource()
+        if hasattr(player.state.node, "resource"):
+            resource = player.state.node.resource()
             if isinstance(resource, PickupIndex):
-                resource = state.patches.pickup_assignment.get(resource)
+                resource = player.state.patches.pickup_assignment.get(resource)
                 if resource is not None:
                     resource = resource.pickup
         else:
             resource = None
 
-        print("{}> {} for {}".format(_indent(1), n(state.node, world_list=world_list), resource))
+        print("{}> [{}] {} for {}; Check order: {}".format(_indent(1), player.player_index, n(player.state.node),
+                                                           resource, [p.player_index for p in players_to_check]))
         if _DEBUG_LEVEL >= 3:
-            for node in reach.nodes:
-                print("{}: {}".format(_indent(), n(node, world_list=world_list)))
+            for node in player.reach.nodes:
+                print("{}: [{}] {}".format(_indent(), player.player_index, n(node)))
 
 
 def log_checking_satisfiable_actions():
@@ -72,22 +70,21 @@ def log_checking_satisfiable_actions():
         print("{}# Satisfiable Actions".format(_indent()))
 
 
-def log_rollback(state: "State", has_action, possible_action: bool):
+def log_rollback(player: "ResolverPlayer", has_action: typing.Dict[int, bool], possible_action: bool):
     global _current_indent
     if _DEBUG_LEVEL > 1:
-        print("{}* Rollback {}; Had action? {}; Possible Action? {}".format(
-            _indent(),
-            n(state.node, world_list=state.world_list),
-            has_action, possible_action))
+        print("{}* [{}] Rollback {}; Had action? {}; Possible Action? {}".format(_indent(), player.player_index,
+                                                                                 n(player.state.node), has_action,
+                                                                                 possible_action))
     _current_indent -= 1
 
 
-def log_skip_action_missing_requirement(node: Node, game: "GameDescription", requirement_set: RequirementSet):
+def log_skip_action_missing_requirement(node: Node, logic: Logic, requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
         if node in _last_printed_additional and _last_printed_additional[node] == requirement_set:
-            print("{}* Skip {}, same additional".format(_indent(), n(node, world_list=game.world_list)))
+            print("{}* [{}] Skip {}, same additional".format(_indent(), logic.player_index, n(node)))
         else:
-            print("{}* Skip {}, missing additional:".format(_indent(), n(node, world_list=game.world_list)))
+            print("{}* [{}] Skip {}, missing additional:".format(_indent(), logic.player_index, n(node)))
             requirement_set.pretty_print(_indent(-1))
             _last_printed_additional[node] = requirement_set
 

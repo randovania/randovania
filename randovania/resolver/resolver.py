@@ -1,18 +1,36 @@
-from typing import Optional, Tuple, Callable, FrozenSet
+import copy
+from typing import Optional, Tuple, Callable, FrozenSet, Dict, NamedTuple, List
 
 from randovania.game_description import data_reader
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.game_description.requirements import RequirementSet, RequirementList
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.layout.echoes_configuration import EchoesConfiguration
+from randovania.layout.preset import Preset
 from randovania.resolver import debug, event_pickup
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.event_pickup import EventPickupNode
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State
+
+
+class ResolverPlayer(NamedTuple):
+    state: State
+    logic: Logic
+    reach: Optional[ResolverReach] = None
+
+    @property
+    def game(self):
+        return self.logic.game
+
+    @property
+    def player_index(self):
+        return self.logic.player_index
+
+    def __str__(self):
+        return f"ResolverPlayer[{self.player_index}]"
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,
@@ -78,101 +96,145 @@ def _should_check_if_action_is_safe(state: State,
     return False
 
 
-def _inner_advance_depth(state: State,
-                         logic: Logic,
+def _act(action: ResourceNode, player_index: int,
+         reach: ResolverReach, energy: int, players: Dict[int, ResolverPlayer],
+         include_new_reach: bool = False,
+         ) -> Dict[int, ResolverPlayer]:
+    result = copy.copy(players)
+
+    potential_state = players[player_index].state.act_on_node(action, path=reach.path_to_node[action],
+                                                              new_energy=energy)
+    new_reach = None
+    if include_new_reach:
+        new_reach = ResolverReach.calculate_reach(players[player_index].logic, potential_state)
+
+    result[player_index] = ResolverPlayer(potential_state, players[player_index].logic, new_reach)
+
+    # We collected a pickup for someone else. Give them the pickup.
+    pickup_index = action.resource()
+    if isinstance(pickup_index, PickupIndex):
+        target = players[player_index].state.patches.pickup_assignment.get(pickup_index)
+        if target is not None and target.player != player_index:
+            result[target.player] = ResolverPlayer(
+                players[target.player].state.assign_pickup_resources(target.pickup),
+                players[target.player].logic
+            )
+
+    return result
+
+
+def _inner_advance_depth(current_player: int,
+                         players: Dict[int, ResolverPlayer],
                          status_update: Callable[[str], None],
-                         *,
-                         reach: Optional[ResolverReach] = None,
-                         ) -> Tuple[Optional[State], bool]:
+                         ) -> Tuple[Optional[List[State]], bool]:
     """
 
-    :param state:
-    :param logic:
+    :param players:
     :param status_update:
-    :param reach: A precalculated reach for the given state
     :return:
     """
 
-    if logic.game.victory_condition.satisfied(state.resources, state.energy):
-        return state, True
+    players_to_check: List[ResolverPlayer] = sorted(
+        (player for player in players.values()
+         if not player.logic.game.victory_condition.satisfied(player.state.resources, player.state.energy)),
+        key=lambda x: x.player_index
+    )
+    if not players_to_check:
+        return [player.state for player in players.values()], True
 
-    if reach is None:
-        reach = ResolverReach.calculate_reach(logic, state)
+    status_update("Resolving... {} total resources".format(
+        sum(len(player.state.resources) for player in players.values())
+    ))
 
-    debug.log_new_advance(state, reach)
-    status_update("Resolving... {} total resources".format(len(state.resources)))
+    players_reach = {
+        player.player_index: player.reach
+        for player in players_to_check
+    }
 
-    for action, energy in reach.possible_actions(state):
-        if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
-                                           logic.game.world_list.all_nodes):
+    players_to_check = ([p for p in players_to_check if p.player_index >= current_player]
+                        + [p for p in players_to_check if p.player_index < current_player])
 
-            potential_state = state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy)
-            potential_reach = ResolverReach.calculate_reach(logic, potential_state)
+    debug.log_new_advance(players[current_player], players_to_check)
 
-            # If we can go back to where we were, it's a simple safe node
-            if state.node in potential_reach.nodes:
-                new_result = _inner_advance_depth(state=potential_state,
-                                                  logic=logic,
-                                                  status_update=status_update,
-                                                  reach=potential_reach)
+    for player in players_to_check:
+        i = player.player_index
+        if players_reach[i] is None:
+            players_reach[i] = ResolverReach.calculate_reach(player.logic, player.state)
 
-                if not new_result[1]:
-                    debug.log_rollback(state, True, True)
+        for action, energy in players_reach[i].possible_actions(player.state):
+            if _should_check_if_action_is_safe(player.state, action, player.logic.game.dangerous_resources):
 
-                # If a safe node was a dead end, we're certainly a dead end as well
+                new_players = _act(action, i, players_reach[i], energy, players, include_new_reach=True)
+
+                # If we can go back to where we were, it's a simple safe node
+                if player.state.node in new_players[i].reach.nodes:
+                    new_result = _inner_advance_depth(i, new_players,
+                                                      status_update=status_update)
+
+                    if not new_result[1]:
+                        debug.log_rollback(players[current_player], {current_player: True}, True)
+
+                    # If a safe node was a dead end, we're certainly a dead end as well
+                    return new_result
+
+    # debug.log_checking_satisfiable_actions()
+    player_had_action = {player.player_index: False for player in players_to_check}
+
+    for player in players_to_check:
+        i = player.player_index
+        for action, energy in players_reach[i].satisfiable_actions(player.state, player.logic.game.victory_condition):
+            new_result = _inner_advance_depth(
+                i, _act(action, i, players_reach[i], energy, players),
+                status_update=status_update)
+
+            # We got a positive result. Send it back up
+            if new_result[0] is not None:
                 return new_result
+            else:
+                player_had_action[i] = True
 
-    debug.log_checking_satisfiable_actions()
-    has_action = False
-    for action, energy in reach.satisfiable_actions(state, logic.game.victory_condition):
-        new_result = _inner_advance_depth(
-            state=state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy),
-            logic=logic,
-            status_update=status_update)
+    debug.log_rollback(players[current_player], player_had_action, False)
+    for player in players_to_check:
+        additional_requirements = players_reach[player.player_index].satisfiable_as_requirement_set
 
-        # We got a positive result. Send it back up
-        if new_result[0] is not None:
-            return new_result
-        else:
-            has_action = True
+        if player_had_action[player.player_index]:
+            additional = set()
+            for resource_node in players_reach[player.player_index].collectable_resource_nodes(player.state):
+                additional |= player.logic.get_additional_requirements(resource_node).alternatives
 
-    debug.log_rollback(state, has_action, False)
-    additional_requirements = reach.satisfiable_as_requirement_set
+            additional_requirements = additional_requirements.union(RequirementSet(additional))
 
-    if has_action:
-        additional = set()
-        for resource_node in reach.collectable_resource_nodes(state):
-            additional |= logic.get_additional_requirements(resource_node).alternatives
-
-        additional_requirements = additional_requirements.union(RequirementSet(additional))
-
-    logic.additional_requirements[state.node] = _simplify_additional_requirement_set(additional_requirements,
-                                                                                     state,
-                                                                                     logic.game.dangerous_resources)
-    return None, has_action
+        player.logic.additional_requirements[player.state.node] = _simplify_additional_requirement_set(
+            additional_requirements, player.state, player.logic.game.dangerous_resources)
+    return None, any(player_had_action.values())
 
 
-def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Optional[State]:
-    return _inner_advance_depth(state, logic, status_update)[0]
+def advance_depth(players: Dict[int, ResolverPlayer], status_update: Callable[[str], None]) -> Optional[List[State]]:
+    return _inner_advance_depth(0, players, status_update)[0]
 
 
 def _quiet_print(s):
     pass
 
 
-def resolve(configuration: EchoesConfiguration,
-            patches: GamePatches,
+def resolve(presets: Dict[int, Preset],
+            all_patches: Dict[int, GamePatches],
             status_update: Optional[Callable[[str], None]] = None
-            ) -> Optional[State]:
+            ) -> Optional[List[State]]:
     if status_update is None:
         status_update = _quiet_print
 
-    game = data_reader.decode_data(configuration.game_data)
-    event_pickup.replace_with_event_pickups(game)
+    players = {}
+    for i, patches in all_patches.items():
+        configuration = presets[i].layout_configuration
+        game = data_reader.decode_data(configuration.game_data)
+        event_pickup.replace_with_event_pickups(game)
 
-    new_game, starting_state = logic_bootstrap(configuration, game, patches)
-    logic = Logic(new_game, configuration)
-    starting_state.resources["add_self_as_requirement_to_resources"] = 1
+        new_game, starting_state = logic_bootstrap(configuration, game, patches)
+        logic = Logic(i, new_game, configuration)
+        starting_state.resources["add_self_as_requirement_to_resources"] = 1
+        players[i] = ResolverPlayer(starting_state, logic)
+
     debug.log_resolve_start()
 
-    return advance_depth(starting_state, logic, status_update)
+    return advance_depth(players, status_update)

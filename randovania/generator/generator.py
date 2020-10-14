@@ -49,7 +49,7 @@ def generate_description(permalink: Permalink,
     if status_update is None:
         status_update = id
 
-    try:
+        try:
         result = _async_create_description(
             permalink=permalink,
             status_update=status_update,
@@ -59,11 +59,11 @@ def generate_description(permalink: Permalink,
         raise GenerationFailure("Could not generate a game with the given settings",
                                 permalink=permalink, source=e) from e
 
-    if validate_after_generation and permalink.player_count == 1:
+        if validate_after_generation:
         with multiprocessing.dummy.Pool(1) as dummy_pool:
             resolve_params = {
-                "configuration": permalink.presets[0].configuration,
-                "patches": result.all_patches[0],
+                "presets": permalink.presets,
+                "all_patches": result.all_patches,
                 "status_update": status_update,
             }
             final_state_async = dummy_pool.apply_async(func=resolver.resolve,
@@ -165,7 +165,7 @@ def create_player_pool(rng: Random, configuration: EchoesConfiguration,
                        player_index: int, num_players: int) -> PlayerPool:
     game = default_database.game_description_for(configuration.game)
     base_patches = base_patches_factory.create_base_patches(configuration, rng, game, num_players > 1,
-                                                            player_index=player_index)
+                                       player_index=player_index)
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
                                                                                       game.resource_database)
@@ -184,9 +184,9 @@ def create_player_pool(rng: Random, configuration: EchoesConfiguration,
 
 
 def _create_pools_and_fill(rng: Random,
-                           presets: Dict[int, Preset],
-                           status_update: Callable[[str], None],
-                           ) -> FillerResults:
+                              presets: Dict[int, Preset],
+                              status_update: Callable[[str], None],
+                              ) -> FillerResults:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param rng:
