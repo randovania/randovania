@@ -9568,26 +9568,38 @@ Hive Dynamo Access
 Asset id: 4222565163
 > Door to Hive Gyro Chamber; Heals? False
   * Light Door to Hive Gyro Chamber/Door to Hive Dynamo Access
-  > Door to Hive Dynamo Works
-      After Hive Dynamo Access Echo Gate
   > Event - Hive Dynamo Access Echo Gate
       All of the following:
           Echo Visor and Open Gates from Behind (Intermediate)
-          Shoot Darkburst or Shoot Sonic Boom
+          Any of the following:
+              Dark World Damage ≥ 55 and Shoot Darkburst
+              Dark World Damage ≥ 50 and Shoot Sonic Boom
+  > Central Safe Zone
+      After Hive Dynamo Access Echo Gate and Dark World Damage ≥ 25 and Activate Safe Zone
 
-> Door to Hive Dynamo Works; Heals? True; Spawn Point
+> Door to Hive Dynamo Works; Heals? False; Spawn Point
   * Light Door to Hive Dynamo Works/Door to Hive Dynamo Access
+  > Central Safe Zone
+      Dark World Damage ≥ 25 and Activate Safe Zone
+
+> Event - Hive Dynamo Access Echo Gate; Heals? False
+  * Event Hive Dynamo Access Echo Gate
+  > Central Safe Zone
+      Activate Safe Zone
+
+> Central Safe Zone; Heals? True
   > Door to Hive Gyro Chamber
-      After Hive Dynamo Access Echo Gate
+      All of the following:
+          After Hive Dynamo Access Echo Gate
+          Any of the following:
+              Dark World Damage ≥ 22
+              Morph Ball and Dark World Damage ≥ 15
+  > Door to Hive Dynamo Works
+      Any of the following:
+          Dark World Damage ≥ 22
+          Morph Ball and Dark World Damage ≥ 15
   > Event - Hive Dynamo Access Echo Gate
       Echo Visor
-
-> Event - Hive Dynamo Access Echo Gate; Heals? True
-  * Event Hive Dynamo Access Echo Gate
-  > Door to Hive Gyro Chamber
-      Trivial
-  > Door to Hive Dynamo Works
-      Trivial
 
 ----------------
 Hive Save Station 1
