@@ -189,21 +189,21 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
 @patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
-@patch("randovania.generator.base_patches_factory.add_game_specific_from_config", autospec=True)
-def test_create_base_patches(mock_add_game_specific_from_config: MagicMock,
-                             mock_add_elevator_connections_to_patches: MagicMock,
+def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
                              mock_add_default_hints_to_patches: MagicMock,
+                             mocker,
                              ):
     # Setup
     rng = MagicMock()
     game = MagicMock()
     layout_configuration = MagicMock()
+    mock_replace: MagicMock = mocker.patch("dataclasses.replace")
 
     patches = [
         game.create_game_patches.return_value,
-        mock_add_game_specific_from_config.return_value,
+        mock_replace.return_value,
         mock_add_elevator_connections_to_patches.return_value,
     ]
     patches.append(patches[-1].assign_gate_assignment.return_value)
@@ -214,6 +214,7 @@ def test_create_base_patches(mock_add_game_specific_from_config: MagicMock,
 
     # Assert
     game.create_game_patches.assert_called_once_with()
+    mock_replace.assert_called_once_with(game.create_game_patches.return_value, game_specific=ANY)
     mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, patches[1])
 
     # Gate Assignment
