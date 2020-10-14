@@ -10448,15 +10448,17 @@ Asset id: 4057954524
 ----------------
 Hive Energy Controller
 Asset id: 770491160
-> Door to Hive Controller Access; Heals? True; Spawn Point
+> Door to Hive Controller Access; Heals? False; Spawn Point
   * Normal Door to Hive Controller Access/Door to Hive Energy Controller
   > Event - Ing Hive Energy Taken
-      Trivial
+      Dark World Damage ≥ 15
 
 > Event - Ing Hive Energy Taken; Heals? True
   * Event Ing Hive Energy Taken
   > Door to Hive Controller Access
-      Trivial
+      Any of the following:
+          Dark World Damage ≥ 20
+          Morph Ball and Dark World Damage ≥ 10
 
 ----------------
 Aerie
