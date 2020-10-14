@@ -2,9 +2,10 @@ import copy
 import dataclasses
 from random import Random
 
-from randovania.game_description import default_database, data_reader
+from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
@@ -196,15 +197,11 @@ def add_default_hints_to_patches(rng: Random,
     return patches
 
 
-def add_game_specific_from_config(patches: GamePatches, configuration: LayoutConfiguration, game: GameDescription,
-                                  ) -> GamePatches:
-    return dataclasses.replace(
-        patches,
-        game_specific=dataclasses.replace(
-            patches.game_specific,
-            energy_per_tank=configuration.energy_per_tank,
-            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database)
-        )
+def create_game_specific(configuration: LayoutConfiguration, game: GameDescription) -> EchoesGameSpecific:
+    return EchoesGameSpecific(
+        energy_per_tank=configuration.energy_per_tank,
+        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
+        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
     )
 
 
@@ -219,9 +216,8 @@ def create_base_patches(configuration: LayoutConfiguration,
     :param game:
     :return:
     """
-    patches = game.create_game_patches()
-
-    patches = add_game_specific_from_config(patches, configuration, game)
+    patches = dataclasses.replace(game.create_game_patches(),
+                                  game_specific=create_game_specific(configuration, game))
 
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
