@@ -1124,6 +1124,29 @@
                         }
                     }
                 ]
+            },
+            "Melt Objects (Plasma or Nova)": {
+                "type": "or",
+                "data": [
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 2477616633,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 1352706725,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    }
+                ]
             }
         }
     },
@@ -5894,34 +5917,20 @@
                             "dock_weakness_index": 4,
                             "connections": {
                                 "Dock to G.F.S. Theseus": {
-                                    "type": "and",
+                                    "type": "or",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 20,
+                                                "type": 0,
+                                                "index": 2431700692,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "or",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 2431700692,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                }
-                                            ]
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
                                         }
                                     ]
                                 },
@@ -6170,13 +6179,8 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Pickup (Missile Expansion)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 },
                                 "Tunnel Room": {
                                     "type": "resource",
@@ -9642,13 +9646,8 @@
                                     "data": []
                                 },
                                 "Event - Ice Tunnel": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -9932,27 +9931,8 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Room Center": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2477616633,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1352706725,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -11260,27 +11240,8 @@
                                             }
                                         },
                                         {
-                                            "type": "or",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 2477616633,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 1352706725,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
                                         }
                                     ]
                                 },
@@ -11643,27 +11604,8 @@
                                     }
                                 },
                                 "Event - Ice Floor": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2477616633,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1352706725,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -11881,27 +11823,8 @@
                                     }
                                 },
                                 "Event - Ice Floors": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2477616633,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1352706725,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -12161,13 +12084,8 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2477616633,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
                                         },
                                         {
                                             "type": "resource",
@@ -12247,13 +12165,8 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2477616633,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
                                         },
                                         {
                                             "type": "resource",
@@ -13479,7 +13392,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Construction Bay": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Construction Bay",
@@ -14635,6 +14553,15 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -14704,14 +14631,14 @@
                             "pickup_index": 65,
                             "major_location": false,
                             "connections": {
-                                "Pickup (Spider Ball)": {
+                                "Dock to Powerworks Access": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 2988161223,
+                                                "index": 1296127826,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -14720,7 +14647,7 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 1296127826,
+                                                "index": 2988161223,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -15006,7 +14933,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Skytram": {
+                                "Skytram to East Skytown - Skytram East": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -15018,7 +14945,7 @@
                             }
                         },
                         {
-                            "name": "Skytram",
+                            "name": "Skytram to East Skytown - Skytram East",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "generic",
@@ -15190,6 +15117,15 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -15241,13 +15177,27 @@
                                     }
                                 },
                                 "Dock to Transit Hub": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -15395,14 +15345,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Skytram": {
+                                "Skytram to Skytown - Skytram West": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Skytram",
+                            "name": "Skytram to Skytown - Skytram West",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "generic",
