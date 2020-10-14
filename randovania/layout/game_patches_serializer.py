@@ -7,6 +7,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint
 from randovania.game_description.node import PickupNode, TeleporterNode
@@ -16,6 +17,7 @@ from randovania.game_description.resources.resource_database import find_resourc
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
+from randovania.generator import base_patches_factory
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.layout_configuration import LayoutConfiguration
 
@@ -162,11 +164,7 @@ def decode_single(player_index: int, num_players: int, game_modifications: dict,
     :return:
     """
     game = data_reader.decode_data(configuration.game_data)
-    game_specific = dataclasses.replace(
-        game.game_specific,
-        energy_per_tank=configuration.energy_per_tank,
-        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
-        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
+    game_specific = base_patches_factory.create_game_specific(configuration, game)
 
     world_list = game.world_list
 
