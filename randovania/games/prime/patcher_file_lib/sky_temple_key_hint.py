@@ -39,7 +39,7 @@ def create_hints(all_patches: Dict[int, GamePatches],
     :param hide_area: Should the hint include only the world?
     :return:
     """
-    location_hint_creator = LocationHintCreator(world_list)
+    location_hint_creator = LocationHintCreator(world_list, None, None)
     sky_temple_key_hints = {}
 
     for other_player, patches in all_patches.items():

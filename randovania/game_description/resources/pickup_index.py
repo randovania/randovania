@@ -30,3 +30,11 @@ class PickupIndex:
     @property
     def index(self) -> int:
         return self._index
+
+    @property
+    def as_json(self):
+        return self._index
+
+    @classmethod
+    def from_json(cls, value):
+        return cls(value)

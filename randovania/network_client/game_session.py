@@ -26,8 +26,7 @@ class GameSessionListEntry:
 class PlayerSessionEntry:
     id: int
     name: str
-    row: int
-    is_observer: bool
+    row: Optional[int]
     admin: bool
 
     @classmethod
@@ -36,9 +35,12 @@ class PlayerSessionEntry:
             id=data["id"],
             name=data["name"],
             row=data["row"],
-            is_observer=data["is_observer"],
             admin=data["admin"],
         )
+
+    @property
+    def is_observer(self):
+        return self.row is None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -64,6 +66,7 @@ class GameSessionEntry:
     seed_hash: Optional[str]
     word_hash: Optional[str]
     spoiler: Optional[bool]
+    permalink: Optional[str]
     state: GameSessionState
     generation_in_progress: Optional[int]
 
@@ -93,6 +96,7 @@ class GameSessionEntry:
             seed_hash=data["seed_hash"],
             word_hash=data["word_hash"],
             spoiler=data["spoiler"],
+            permalink=data["permalink"],
             state=GameSessionState(data["state"]),
             generation_in_progress=data["generation_in_progress"],
         )

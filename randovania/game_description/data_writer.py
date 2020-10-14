@@ -202,6 +202,7 @@ def write_echoes_beam_configuration(beam_config: EchoesBeamConfiguration) -> dic
 def write_game_specific(game_specific: EchoesGameSpecific) -> dict:
     return {
         "energy_per_tank": game_specific.energy_per_tank,
+        "safe_zone_heal_per_second": game_specific.safe_zone_heal_per_second,
         "beam_configurations": [
             write_echoes_beam_configuration(beam)
             for beam in game_specific.beam_configurations

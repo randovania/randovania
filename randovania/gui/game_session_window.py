@@ -7,7 +7,7 @@ from typing import List, Optional
 
 from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import Qt, Signal, QTimer
-from PySide2.QtWidgets import QMainWindow, QMessageBox
+from PySide2.QtWidgets import QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
 from randovania.game_connection.connection_backend import ConnectionStatus
@@ -16,6 +16,7 @@ from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
+from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -101,8 +102,9 @@ class PlayerWidget:
         self.kick.setEnabled(self_player.admin and player.id != self_player.id)
         self.promote.setText(promote_text)
         self.promote.setEnabled(self_player.admin and game_session.num_admins >= num_required)
-        self.move_up.setEnabled(admin_or_you and player.row > 0)
-        self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
+        if not player.is_observer:
+            self.move_up.setEnabled(admin_or_you and player.row > 0)
+            self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
         self.abandon.setEnabled(admin_or_you)
         self.switch_observer_action.setText("Include in session" if player.is_observer else "Move to observers")
         self.switch_observer_action.setEnabled(admin_or_you)
@@ -139,7 +141,7 @@ class RowWidget:
 _PRESET_COLUMNS = 3
 
 
-class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
+class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     team_players: List[PlayerWidget]
     observers: List[PlayerWidget]
     rows: List[RowWidget]
@@ -148,6 +150,8 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     _logic_settings_window: Optional[LogicSettingsWindow] = None
     _window_manager: WindowManager
     _generating_game: bool = False
+    _expecting_kick = False
+    _already_kicked = False
 
     failed_to_generate_signal = Signal(GenerationFailure)
 
@@ -179,6 +183,15 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
         self.delete_session_action.triggered.connect(self.delete_session)
+
+        # Save ISO Button
+        self.save_iso_menu = QtWidgets.QMenu(self.save_iso_button)
+        self.copy_permalink_action = QtWidgets.QAction("Copy Permalink", self.save_iso_menu)
+
+        self.save_iso_menu.addAction(self.copy_permalink_action)
+        self.save_iso_button.setMenu(self.save_iso_menu)
+
+        self.copy_permalink_action.triggered.connect(self.copy_permalink)
 
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
@@ -222,11 +235,9 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
 
         self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
         self.finish_session_action.triggered.connect(self.finish_session)
-        self.finish_session_action.setEnabled(False)
 
         self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
         self.reset_session_action.triggered.connect(self.reset_session)
-        self.reset_session_action.setEnabled(False)
 
         self.session_status_menu.addAction(self.start_session_action)
         self.session_status_menu.addAction(self.finish_session_action)
@@ -543,10 +554,18 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         await self.update_logic_settings_window()
 
     async def _on_kicked(self):
-        await asyncio.gather(
-            async_dialog.warning(self, "Kicked", "You have been kicked out of the session."),
-            self.network_client.leave_game_session(False),
-        )
+        if self._already_kicked:
+            return
+        self._already_kicked = True
+        leave_session = self.network_client.leave_game_session(False)
+        if not self._expecting_kick:
+            if self._game_session.players:
+                message = "Kicked", "You have been kicked out of the session."
+            else:
+                message = "Session deleted", "The session has been deleted."
+            await asyncio.gather(async_dialog.warning(self, *message), leave_session)
+        else:
+            await leave_session
         return QTimer.singleShot(0, self.close)
 
     def sync_rows_to_game_session(self):
@@ -613,7 +632,12 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         self.generate_game_without_spoiler_action.setEnabled(self_is_admin)
         self.import_permalink_action.setEnabled(self_is_admin)
         self.session_status_tool.setEnabled(self_is_admin)
-        self.session_status_tool.setText("Start" if game_session.state == GameSessionState.SETUP else "Finish")
+        _state_to_label = {
+            GameSessionState.SETUP: "Start",
+            GameSessionState.IN_PROGRESS: "Finish",
+            GameSessionState.FINISHED: "Reset",
+        }
+        self.session_status_tool.setText(_state_to_label[game_session.state])
 
         self.save_iso_button.setEnabled(game_session.seed_hash is not None
                                         and not self.current_player_membership.is_observer)
@@ -623,6 +647,10 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         else:
             self.generate_game_label.setText(f"Seed hash: {game_session.word_hash} ({game_session.seed_hash})")
             self.view_game_details_button.setEnabled(game_session.spoiler)
+
+        self.start_session_action.setEnabled(self_is_admin and game_session.state == GameSessionState.SETUP)
+        self.finish_session_action.setEnabled(self_is_admin and game_session.state == GameSessionState.IN_PROGRESS)
+        self.reset_session_action.setEnabled(self_is_admin and game_session.state != GameSessionState.SETUP)
 
     def update_session_actions(self):
         self.history_table_widget.horizontalHeader().setVisible(True)
@@ -665,7 +693,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     async def _admin_global_action(self, action: SessionAdminGlobalAction, arg):
         self.setEnabled(False)
         try:
-            return await self.network_client.session_admin_global(self._game_session.id, action, arg)
+            return await self.network_client.session_admin_global(action, arg)
         finally:
             self.setEnabled(True)
 
@@ -679,7 +707,7 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     async def _admin_player_action(self, player: PlayerSessionEntry, action: SessionAdminUserAction, arg):
         self.setEnabled(False)
         try:
-            return await self.network_client.session_admin_player(self._game_session.id, player.id, action, arg)
+            return await self.network_client.session_admin_player(player.id, action, arg)
         finally:
             self.setEnabled(True)
 
@@ -716,8 +744,38 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     @handle_network_errors
     async def delete_session(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Deleting session isn't implemented yet.")
+        result = await async_dialog.warning(self, "Delete session",
+                                            "Are you sure you want to delete this session?",
+                                            QMessageBox.Yes | QMessageBox.No,
+                                            QMessageBox.No)
+        if result == QMessageBox.Yes:
+            self._expecting_kick = True
+            try:
+                await self._admin_global_action(SessionAdminGlobalAction.DELETE_SESSION, None)
+            except Exception:
+                self._expecting_kick = False
+                raise
+
+    async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
+        all_dangerous_settings = {}
+        for i, preset in permalink.presets.items():
+            dangerous = preset.dangerous_settings()
+            if dangerous:
+                all_dangerous_settings[i] = dangerous
+
+        if all_dangerous_settings:
+            warnings = "\n".join(
+                f"Row {i} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
+                for i, dangerous in all_dangerous_settings.items()
+            )
+            message = ("The following presets have settings that can cause an impossible game:\n"
+                       f"\n{warnings}\n"
+                       "\nDo you want to continue?")
+            result = await async_dialog.warning(self, "Dangerous preset", message, QMessageBox.Yes | QMessageBox.No)
+            if result == QMessageBox.No:
+                return False
+
+        return True
 
     async def generate_game(self, spoiler: bool):
         permalink = Permalink(
@@ -728,6 +786,11 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
                 for i, preset in enumerate(self._game_session.presets)
             },
         )
+        return await self.generate_game_with_permalink(permalink)
+
+    async def generate_game_with_permalink(self, permalink: Permalink):
+        if not await self._check_dangerous_presets(permalink):
+            return
 
         def generate_layout(progress_update: ProgressUpdateCallable):
             return simplified_patcher.generate_layout(progress_update=progress_update,
@@ -778,8 +841,31 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     @handle_network_errors
     async def import_permalink(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Importing permalinks aren't available right now.")
+        dialog = PermalinkDialog()
+        result = await async_dialog.execute_dialog(dialog)
+        if result != QtWidgets.QDialog.Accepted:
+            return
+
+        permalink = dialog.get_permalink_from_field()
+        if permalink.player_count != self._game_session.num_rows:
+            return await async_dialog.warning(
+                self, "Incompatible permalink",
+                f"Given permalink is for {permalink.player_count} players, but "
+                f"this session only have {self._game_session.num_rows} rows.")
+
+        if any(not preset_p.is_same_configuration(preset_s.get_preset())
+               for preset_p, preset_s in zip(permalink.presets.values(), self._game_session.presets)):
+            response = await async_dialog.warning(
+                self, "Different presets",
+                f"Given permalink has different presets compared to the session.\n"
+                f"Do you want to overwrite the session's presets?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No
+            )
+            if response != QMessageBox.Yes:
+                return
+
+        await self.generate_game_with_permalink(permalink)
 
     async def _upload_layout_description(self, layout: LayoutDescription):
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
@@ -803,7 +889,15 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
     @asyncSlot()
     @handle_network_errors
     async def finish_session(self):
-        await async_dialog.warning(self, "NYI", "Finish session is not implemented.")
+        result = await async_dialog.warning(
+            self, "Finish session?",
+            "It's no longer possible to collect items after the session is finished."
+            "\nDo you want to continue?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
+        if result == QMessageBox.Yes:
+            await self._admin_global_action(SessionAdminGlobalAction.FINISH_SESSION, None)
 
     @asyncSlot()
     @handle_network_errors
@@ -907,6 +1001,17 @@ class GameSessionWindow(QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
         description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
         description = LayoutDescription.from_json_dict(json.loads(description_json))
         self._window_manager.open_game_details(description)
+
+    @asyncSlot()
+    async def copy_permalink(self):
+        permalink_str = self._game_session.permalink
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Session permalink")
+        dialog.setLabelText("Permalink:")
+        dialog.setTextValue(permalink_str)
+        QtWidgets.QApplication.clipboard().setText(permalink_str)
+        await async_dialog.execute_dialog(dialog)
 
     @asyncSlot()
     @handle_network_errors

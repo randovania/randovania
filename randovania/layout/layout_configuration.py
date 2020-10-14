@@ -1,7 +1,9 @@
 import dataclasses
 from enum import Enum
+from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
@@ -76,6 +78,14 @@ class LayoutElevators(BitPackEnum, Enum):
 
 
 @dataclasses.dataclass(frozen=True)
+class LayoutSafeZone(BitPackDataClass, JsonDataclass):
+    fully_heal: bool
+    prevents_dark_aether: bool
+    heal_per_second: float = dataclasses.field(metadata={"min": 0.0, "max": 100.0,
+                                                         "if_different": 1.0, "precision": 1.0})
+
+
+@dataclasses.dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
     trick_level_configuration: TrickLevelConfiguration
     damage_strictness: LayoutDamageStrictness
@@ -91,6 +101,7 @@ class LayoutConfiguration(BitPackDataClass):
     skip_final_bosses: bool
     energy_per_tank: float = dataclasses.field(metadata={"min": 1.0, "max": 1000.0,
                                                          "if_different": 100.0, "precision": 1.0})
+    safe_zone: LayoutSafeZone
     # FIXME: Most of the following should go in MajorItemsConfiguration/AmmoConfiguration
     split_beam_ammo: bool = True
 
@@ -119,6 +130,7 @@ class LayoutConfiguration(BitPackDataClass):
             "beam_configuration": self.beam_configuration.as_json,
             "skip_final_bosses": self.skip_final_bosses,
             "energy_per_tank": self.energy_per_tank,
+            "safe_zone": self.safe_zone.as_json,
             "split_beam_ammo": self.split_beam_ammo,
         }
 
@@ -144,5 +156,18 @@ class LayoutConfiguration(BitPackDataClass):
             beam_configuration=BeamConfiguration.from_json(json_dict["beam_configuration"]),
             skip_final_bosses=json_dict["skip_final_bosses"],
             energy_per_tank=json_dict["energy_per_tank"],
+            safe_zone=LayoutSafeZone.from_json(json_dict["safe_zone"]),
             split_beam_ammo=json_dict["split_beam_ammo"],
         )
+
+    def dangerous_settings(self) -> List[str]:
+        result = []
+        for field in dataclasses.fields(self):
+            f = getattr(self, field.name)
+            if hasattr(f, "dangerous_settings"):
+                result.extend(f.dangerous_settings())
+
+        if self.elevators == LayoutElevators.ONE_WAY_ANYTHING:
+            result.append("One-way anywhere elevators")
+
+        return result

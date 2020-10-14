@@ -6,7 +6,7 @@ from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode
+from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world import World
@@ -70,6 +70,10 @@ class WorldList:
         return self._nodes
 
     @property
+    def num_pickup_nodes(self) -> int:
+        return sum(1 for node in self.all_nodes if isinstance(node, PickupNode))
+
+    @property
     def all_worlds_areas_nodes(self) -> Iterable[Tuple[World, Area, Node]]:
         for world in self.worlds:
             for area in world.areas:
@@ -87,7 +91,7 @@ class WorldList:
     def world_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
         return self.world_name_from_area(self.nodes_to_area(node), distinguish_dark_aether)
 
-    def area_name(self, area: Area, distinguish_dark_aether: bool = False, separator: str = "/") -> str:
+    def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
         return "{}{}{}".format(
             self.world_name_from_area(area, distinguish_dark_aether),
             separator,
@@ -214,6 +218,13 @@ class WorldList:
 
     def world_by_area_location(self, location: AreaLocation) -> World:
         return self.world_by_asset_id(location.world_asset_id)
+
+    def area_to_area_location(self, area: Area) -> AreaLocation:
+        world = next(world for world in self.worlds if area in world.areas)
+        return AreaLocation(
+            world_asset_id=world.world_asset_id,
+            area_asset_id=area.area_asset_id,
+        )
 
     def node_to_area_location(self, node: Node) -> AreaLocation:
         return AreaLocation(

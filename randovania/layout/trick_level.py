@@ -6,7 +6,7 @@ from typing import List, Dict, Iterator, Tuple, Optional
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackValue, BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 
 class LayoutTrickLevel(BitPackEnum, Enum):
@@ -125,13 +125,13 @@ class TrickLevelConfiguration(BitPackValue):
             },
         )
 
-    def has_specific_level_for_trick(self, trick: SimpleResourceInfo) -> bool:
+    def has_specific_level_for_trick(self, trick: TrickResourceInfo) -> bool:
         return trick.index in self.specific_levels
 
-    def level_for_trick(self, trick: SimpleResourceInfo) -> LayoutTrickLevel:
+    def level_for_trick(self, trick: TrickResourceInfo) -> LayoutTrickLevel:
         return self.specific_levels.get(trick.index, self.global_level)
 
-    def set_level_for_trick(self, trick: SimpleResourceInfo,
+    def set_level_for_trick(self, trick: TrickResourceInfo,
                             value: Optional[LayoutTrickLevel],
                             ) -> "TrickLevelConfiguration":
         """
@@ -148,3 +148,8 @@ class TrickLevelConfiguration(BitPackValue):
             del new_levels[trick.index]
 
         return dataclasses.replace(self, specific_levels=new_levels)
+
+    def dangerous_settings(self) -> List[str]:
+        if self.global_level == LayoutTrickLevel.MINIMAL_LOGIC:
+            return ["Minimal Logic"]
+        return []

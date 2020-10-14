@@ -115,14 +115,22 @@ class BeamCostAddresses:
 
 
 @dataclasses.dataclass(frozen=True)
+class SafeZoneAddresses:
+    heal_per_frame_constant: int
+    increment_health_fmr: int
+
+
+@dataclasses.dataclass(frozen=True)
 class PatchesForVersion:
     description: str
     build_string_address: int
     build_string: bytes
+    sda2_base: int
     string_display: StringDisplayPatchAddresses
     health_capacity: HealthCapacityAddresses
     beam_cost_addresses: BeamCostAddresses
     game_options_constructor_address: int
+    safe_zone: SafeZoneAddresses
 
 
 ALL_VERSIONS_PATCHES = [
@@ -130,6 +138,7 @@ ALL_VERSIONS_PATCHES = [
         description="Gamecube NTSC",
         build_string_address=0x803ac3b0,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
+        sda2_base=0x804223c0,
         string_display=StringDisplayPatchAddresses(
             update_hint_state=0x80038020,
             message_receiver_string_ref=0x803a6380,
@@ -150,11 +159,16 @@ ALL_VERSIONS_PATCHES = [
             get_beam_ammo_type_and_costs=0x801cccb0,
         ),
         game_options_constructor_address=0x80161b48,
+        safe_zone=SafeZoneAddresses(
+            heal_per_frame_constant=0x8041a4fc,
+            increment_health_fmr=0x8000c710,
+        ),
     ),
     PatchesForVersion(
         description="Gamecube PAL",
         build_string_address=0x803ad710,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",
+        sda2_base=0x804223c0,
         string_display=StringDisplayPatchAddresses(
             update_hint_state=0x80038194,
             message_receiver_string_ref=0x803a680a,
@@ -175,6 +189,10 @@ ALL_VERSIONS_PATCHES = [
             get_beam_ammo_type_and_costs=0x801ccfe4,
         ),
         game_options_constructor_address=0x80161d9c,
+        safe_zone=SafeZoneAddresses(
+            heal_per_frame_constant=0x8041b7f4,
+            increment_health_fmr=0x8000c754,
+        ),
     ),
 ]
 
@@ -436,6 +454,19 @@ def _apply_beam_cost_patch(patch_addresses: BeamCostAddresses, game_specific: Ec
     dol_file.write(patch_addresses.get_beam_ammo_type_and_costs + ammo_type_patch_offset, ammo_type_patch)
 
 
+def _apply_safe_zone_heal_patch(patch_addresses: SafeZoneAddresses,
+                                sda2_base: int,
+                                game_specific: EchoesGameSpecific,
+                                dol_file: DolFile):
+    heal_per_second = game_specific.safe_zone_heal_per_second
+    offset = patch_addresses.heal_per_frame_constant - sda2_base
+
+    dol_file.write(patch_addresses.heal_per_frame_constant, struct.pack(">f", heal_per_second / 60))
+    dol_file.write(patch_addresses.increment_health_fmr, [
+        0xc0, 0x22, *struct.pack(">h", offset),  # lfs f1, <offset>(r2)
+    ])
+
+
 def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_preferences: EchoesUserPreferences):
     dol_file = DolFile(_get_dol_path(game_root))
 
@@ -448,6 +479,7 @@ def apply_patches(game_root: Path, game_specific: EchoesGameSpecific, user_prefe
                                   user_preferences, dol_file)
         _apply_energy_tank_capacity_patch(version_patches.health_capacity, game_specific, dol_file)
         _apply_beam_cost_patch(version_patches.beam_cost_addresses, game_specific, dol_file)
+        _apply_safe_zone_heal_patch(version_patches.safe_zone, version_patches.sda2_base, game_specific, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:

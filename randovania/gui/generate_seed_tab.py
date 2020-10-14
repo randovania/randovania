@@ -6,10 +6,11 @@ from typing import Optional
 
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QMessageBox, QWidget, QMenu, QAction
+from asyncqt import asyncSlot
 
 from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import preset_describer, common_qt_lib
+from randovania.gui.lib import preset_describer, common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
@@ -34,7 +35,7 @@ def persist_layout(data_dir: Path, description: LayoutDescription):
 
 
 class GenerateSeedTab(QWidget, BackgroundTaskMixin):
-    _logic_settings_window = None
+    _logic_settings_window: Optional[LogicSettingsWindow] = None
     _has_preset: bool = False
     _tool_button_menu: QMenu
     _action_delete: QAction
@@ -114,14 +115,19 @@ class GenerateSeedTab(QWidget, BackgroundTaskMixin):
             self._create_button_for_preset(preset)
         self.on_preset_changed(preset.get_preset())
 
-    def _on_customize_button(self):
+    @asyncSlot()
+    async def _on_customize_button(self):
+        if self._logic_settings_window is not None:
+            self._logic_settings_window.raise_()
+            return
+
         editor = PresetEditor(self._current_preset_data.get_preset())
         self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
 
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
 
-        result = self._logic_settings_window.exec_()
+        result = await async_dialog.execute_dialog(self._logic_settings_window)
         self._logic_settings_window = None
 
         if result == QDialog.Accepted:

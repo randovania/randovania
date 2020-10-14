@@ -2,6 +2,7 @@ import base64
 import hashlib
 import json
 import logging
+import typing
 from typing import Optional, List, Tuple
 
 import flask_socketio
@@ -17,9 +18,8 @@ from randovania.games.prime import patcher_file
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.game_patches_serializer import BitPackPickupEntry
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import WrongPassword, \
@@ -52,7 +52,7 @@ def create_game_session(sio: ServerApp, session_name: str):
                                  preset=json.dumps(PresetManager(None).default_preset.as_json))
         membership = GameSessionMembership.create(
             user=sio.get_current_user(), session=new_session,
-            row=0, is_observer=False, admin=True)
+            row=0, admin=True)
 
     sio.join_game_session(membership)
     return new_session.create_session_entry()
@@ -68,7 +68,7 @@ def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
         raise WrongPassword()
 
     membership = GameSessionMembership.get_or_create(user=sio.get_current_user(), session=session,
-                                                     defaults={"row": 0, "is_observer": True, "admin": False})[0]
+                                                     defaults={"row": None, "admin": False})[0]
 
     _emit_session_update(session)
     sio.join_game_session(membership)
@@ -176,7 +176,7 @@ def _delete_row(sio: ServerApp, session: GameSession, row_id: int):
     with database.db.atomic():
         GameSessionPreset.delete().where(GameSessionPreset.session == session,
                                          GameSessionPreset.row == row_id).execute()
-        GameSessionMembership.update(is_observer=True).where(
+        GameSessionMembership.update(row=None).where(
             GameSessionMembership.session == session.id,
             GameSessionMembership.row == row_id,
         ).execute()
@@ -200,6 +200,7 @@ def _update_layout_generation(sio: ServerApp, session: GameSession, active: bool
 def _change_layout_description(sio: ServerApp, session: GameSession, description_json: Optional[dict]):
     _verify_has_admin(sio, session.id, None)
     _verify_in_setup(session)
+    rows_to_update = []
 
     if description_json is None:
         description = None
@@ -213,12 +214,23 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
         _verify_no_layout_description(session)
         description = LayoutDescription.from_json_dict(description_json)
         permalink = description.permalink
-        if list(permalink.presets.values()) != session.all_presets:
-            raise InvalidAction("Description presets doesn't match the session presets")
+        if permalink.player_count != session.num_rows:
+            raise InvalidAction(f"Description is for a {permalink.player_count} players,"
+                                f" while the session is for {session.num_rows}.")
 
-    session.generation_in_progress = None
-    session.layout_description = description
-    session.save()
+        for permalink_preset, preset_row in zip(permalink.presets.values(), session.presets):
+            preset_row = typing.cast(GameSessionPreset, preset_row)
+            if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
+                preset_row.preset = json.dumps(VersionedPreset.with_preset(permalink_preset).as_json)
+                rows_to_update.append(preset_row)
+
+    with database.db.atomic():
+        for preset_row in rows_to_update:
+            preset_row.save()
+
+        session.generation_in_progress = None
+        session.layout_description = description
+        session.save()
 
 
 def _download_layout_description(sio: ServerApp, session: GameSession):
@@ -244,7 +256,7 @@ def _start_session(sio: ServerApp, session: GameSession):
         raise InvalidAction("Unable to start session, no game is available.")
 
     num_players = GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                       GameSessionMembership.is_observer == False).count()
+                                                       GameSessionMembership.row != None).count()
     expected_players = session.num_rows
     if num_players != expected_players:
         raise InvalidAction(f"Unable to start session, there are {num_players} but expected {expected_players} "
@@ -255,7 +267,12 @@ def _start_session(sio: ServerApp, session: GameSession):
 
 
 def _finish_session(sio: ServerApp, session: GameSession):
-    raise InvalidAction("Finish session is not yet implemented.")
+    _verify_has_admin(sio, session.id, None)
+    if session.state != GameSessionState.IN_PROGRESS:
+        raise InvalidAction("Session is not in progress")
+
+    session.state = GameSessionState.FINISHED
+    session.save()
 
 
 def _reset_session(sio: ServerApp, session: GameSession):
@@ -307,6 +324,9 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
     elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
         _change_password(sio, session, arg)
 
+    elif action == SessionAdminGlobalAction.DELETE_SESSION:
+        session.delete_instance(recursive=True)
+
     _emit_session_update(session)
 
 
@@ -332,17 +352,19 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
 
     if action == SessionAdminUserAction.KICK:
         membership.delete_instance()
+        if not list(session.players):
+            session.delete_instance(recursive=True)
 
     elif action == SessionAdminUserAction.MOVE:
         offset: int = arg
-        new_row = membership.row + offset
+        if membership.is_observer is None:
+            raise InvalidAction("Player is an observer")
 
+        new_row = membership.row + offset
         if new_row < 0:
             raise InvalidAction("New position is negative")
         if new_row >= session.num_rows:
             raise InvalidAction("New position is beyond num of rows")
-        if membership.is_observer is None:
-            raise InvalidAction("Player is an observer")
 
         team_members = [None] * session.num_rows
         for member in GameSessionMembership.non_observer_members(session):
@@ -361,10 +383,8 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
     elif action == SessionAdminUserAction.SWITCH_IS_OBSERVER:
         if membership.is_observer:
             membership.row = _find_empty_row(session)
-            membership.is_observer = False
         else:
-            membership.row = 0
-            membership.is_observer = True
+            membership.row = None
         membership.save()
 
     elif action == SessionAdminUserAction.SWITCH_ADMIN:

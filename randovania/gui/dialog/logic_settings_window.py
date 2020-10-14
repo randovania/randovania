@@ -169,6 +169,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         # Damage
         set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
         self.energy_tank_capacity_spin_box.setValue(layout_config.energy_per_tank)
+        self.safe_zone_logic_heal_check.setChecked(layout_config.safe_zone.fully_heal)
+        self.safe_zone_regen_spin.setValue(layout_config.safe_zone.heal_per_second)
         self.varia_suit_spin_box.setValue(patcher_config.varia_suit_damage)
         self.dark_suit_spin_box.setValue(patcher_config.dark_suit_damage)
 
@@ -227,24 +229,23 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
         trick_label.setWordWrap(True)
-        trick_label.setFixedWidth(80)
         trick_label.setText("Difficulty Details")
 
-        self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
+        self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, -1)
 
         slider_layout = QtWidgets.QGridLayout()
         slider_layout.setHorizontalSpacing(0)
         for i in range(12):
             slider_layout.setColumnStretch(i, 1)
-
-        if self._window_manager is not None:
-            for i, trick_level in enumerate(LayoutTrickLevel):
-                if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
-                    tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
-                    tool_button.setText(trick_level.long_name)
-                    tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
-
-                    slider_layout.addWidget(tool_button, 1, 2 * i, 1, 2)
+        #
+        # if self._window_manager is not None:
+        #     for i, trick_level in enumerate(LayoutTrickLevel):
+        #         if trick_level not in {LayoutTrickLevel.NO_TRICKS, LayoutTrickLevel.MINIMAL_LOGIC}:
+        #             tool_button = QtWidgets.QToolButton(self.trick_level_scroll_contents)
+        #             tool_button.setText(trick_level.long_name)
+        #             tool_button.clicked.connect(functools.partial(self._open_difficulty_details_popup, trick_level))
+        #
+        #             slider_layout.addWidget(tool_button, 1, 2 * i, 1, 2)
 
         self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
@@ -276,7 +277,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                                                                              QtWidgets.QSizePolicy.Expanding))
 
             trick_configurable = QtWidgets.QCheckBox(self.trick_level_scroll_contents)
-            trick_configurable.setFixedWidth(16)
+            trick_configurable.setFixedWidth(20)
             trick_configurable.stateChanged.connect(functools.partial(self._on_check_trick_configurable, trick))
             self._checkbox_for_trick[trick] = trick_configurable
             self.trick_difficulties_layout.addWidget(trick_configurable, row, 0, 1, 1)
@@ -284,7 +285,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
             trick_label.setSizePolicy(size_policy)
             trick_label.setWordWrap(True)
-            trick_label.setFixedWidth(80)
+            trick_label.setFixedWidth(100)
             trick_label.setText(trick.long_name)
 
             self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
@@ -338,7 +339,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                     )
                 )
 
-    def _on_slide_trick_slider(self, trick: SimpleResourceInfo, value: int):
+    def _on_slide_trick_slider(self, trick: TrickResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
             with self._editor as options:
                 options.set_layout_configuration_field(
@@ -363,22 +364,13 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()
 
-    def _open_trick_details_popup(self, trick: SimpleResourceInfo):
+    def _open_trick_details_popup(self, trick: TrickResourceInfo):
         self._exec_trick_details(TrickDetailsPopup(
             self,
             self._window_manager,
             self.game_description,
             trick,
             self._editor.layout_configuration.trick_level_configuration.level_for_trick(trick),
-        ))
-
-    def _open_difficulty_details_popup(self, difficulty: LayoutTrickLevel):
-        self._exec_trick_details(TrickDetailsPopup(
-            self,
-            self._window_manager,
-            self.game_description,
-            None,
-            difficulty,
         ))
 
     # Damage strictness
@@ -400,12 +392,30 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             return persist
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
+        self.safe_zone_logic_heal_check.stateChanged.connect(self._persist_safe_zone_logic_heal)
+        self.safe_zone_regen_spin.valueChanged.connect(self._persist_safe_zone_regen)
         self.varia_suit_spin_box.valueChanged.connect(_persist_float("varia_suit_damage"))
         self.dark_suit_spin_box.valueChanged.connect(_persist_float("dark_suit_damage"))
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
             editor.set_layout_configuration_field("energy_per_tank", self.energy_tank_capacity_spin_box.value())
+
+    def _persist_safe_zone_regen(self):
+        with self._editor as editor:
+            safe_zone = dataclasses.replace(
+                editor.layout_configuration.safe_zone,
+                heal_per_second=self.safe_zone_regen_spin.value()
+            )
+            editor.set_layout_configuration_field("safe_zone", safe_zone)
+
+    def _persist_safe_zone_logic_heal(self):
+        with self._editor as editor:
+            safe_zone = dataclasses.replace(
+                editor.layout_configuration.safe_zone,
+                fully_heal=self.safe_zone_logic_heal_check.isChecked()
+            )
+            editor.set_layout_configuration_field("safe_zone", safe_zone)
 
     # Elevator
     def setup_elevator_elements(self):
