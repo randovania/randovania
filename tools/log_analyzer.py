@@ -19,10 +19,11 @@ def read_json(path: Path) -> dict:
 
 
 _KEY_MATCH = re.compile(r"Key (\d+)")
+_PLAYER_MATCH = re.compile(r" for Player \d+")
 
 
-def _filter_key_number(name: str) -> str:
-    return _KEY_MATCH.sub("Key", name)
+def _filter_item_name(name: str) -> str:
+    return _PLAYER_MATCH.sub("", _KEY_MATCH.sub("Key", name))
 
 
 def accumulate_results(game_modifications: dict,
@@ -36,7 +37,7 @@ def accumulate_results(game_modifications: dict,
                        ):
     for worlds, world_data in game_modifications["locations"].items():
         for area_name, item_name in world_data.items():
-            item_name = _filter_key_number(item_name)
+            item_name = _filter_item_name(item_name)
             items[item_name][area_name] += 1
             locations[area_name][item_name] += 1
 
@@ -52,7 +53,7 @@ def accumulate_results(game_modifications: dict,
             area_name, location_name = index_to_location[hint_data["target"]]
             item_name = game_modifications["locations"][area_name][location_name]
 
-        item_name = _filter_key_number(item_name)
+        item_name = _filter_item_name(item_name)
         location_hints[logbook_asset][item_name] += 1
         item_hints[item_name][logbook_asset] += 1
 
