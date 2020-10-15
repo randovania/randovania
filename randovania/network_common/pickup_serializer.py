@@ -37,6 +37,7 @@ class BitPackPickupEntry:
         yield from BitPackFloat(self.value.probability_offset).bit_pack_encode(_PROBABILITY_OFFSET_META)
         yield from BitPackFloat(self.value.probability_multiplier).bit_pack_encode(_PROBABILITY_MULTIPLIER_META)
         yield from self.value.item_category.bit_pack_encode({})
+        yield from self.value.broad_category.bit_pack_encode({})
         yield from bitpacking.encode_bool(has_name)
         yield len(self.value.resources) - 1, MAXIMUM_PICKUP_CONDITIONAL_RESOURCES
 
@@ -63,6 +64,7 @@ class BitPackPickupEntry:
         probability_offset = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_OFFSET_META)
         probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
         item_category = ItemCategory.bit_pack_unpack(decoder, {})
+        broad_category = ItemCategory.bit_pack_unpack(decoder, {})
         has_name = bitpacking.decode_bool(decoder)
         num_conditional = decoder.decode_single(MAXIMUM_PICKUP_CONDITIONAL_RESOURCES) + 1
 
@@ -103,6 +105,7 @@ class BitPackPickupEntry:
             name=name,
             model_index=model_index,
             item_category=item_category,
+            broad_category=broad_category,
             resources=tuple(conditional_resources),
             convert_resources=tuple(convert_resources),
             probability_offset=probability_offset,
