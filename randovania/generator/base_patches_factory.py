@@ -161,7 +161,7 @@ def add_default_hints_to_patches(rng: Random,
             patches = patches.assign_hint(node.resource(),
                                           Hint(HintType.LOCATION,
                                                PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                             HintItemPrecision.PRECISE_CATEGORY),
+                                                             HintItemPrecision.BROAD_CATEGORY),
                                                PickupIndex(node.hint_index)))
 
     # TODO: this should be a flag in PickupNode
