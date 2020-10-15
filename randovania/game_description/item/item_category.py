@@ -17,6 +17,12 @@ class ItemCategory(BitPackEnum, Enum):
     TEMPLE_KEY = "temple_key"
     SKY_TEMPLE_KEY = "sky_temple_key"
     ETM = "etm"
+    KEY = "key"
+    MISSILE_RELATED = "missile_related"
+    MORPH_BALL_RELATED = "morph_ball_related"
+    BEAM_RELATED = "beam_related"
+    LIFE_SUPPORT = "life_support"
+    HUD = "hud"
     EXPANSION = "expansion"
 
     @property
@@ -61,10 +67,6 @@ LONG_NAMES = {
     ItemCategory.CHARGE_COMBO: "Charge Combos",
     ItemCategory.TRANSLATOR: "Translators",
     ItemCategory.ENERGY_TANK: "Energy Tanks",
-    ItemCategory.TEMPLE_KEY: "Temple Keys",
-    ItemCategory.SKY_TEMPLE_KEY: "Sky Temple Keys",
-    ItemCategory.ETM: "Energy Transfer Module",
-    ItemCategory.EXPANSION: "Expansions",
 }
 
 HINT_DETAILS: Dict[ItemCategory, Tuple[str, str]] = {
@@ -80,5 +82,11 @@ HINT_DETAILS: Dict[ItemCategory, Tuple[str, str]] = {
     ItemCategory.TEMPLE_KEY: ("a ", "red Temple Key"),
     ItemCategory.SKY_TEMPLE_KEY: ("a ", "Sky Temple Key"),
     ItemCategory.ETM: ("an ", "Energy Transfer Module"),
+    ItemCategory.KEY: ("a ", "key"),
+    ItemCategory.MISSILE_RELATED: ("a ", "missile-related upgrade"),
+    ItemCategory.MORPH_BALL_RELATED: ("a ", "morph ball-related upgrade"),
+    ItemCategory.BEAM_RELATED: ("a ", "beam-related upgrade"),
+    ItemCategory.LIFE_SUPPORT: ("a ", "life support system"),
+    ItemCategory.HUD: ("a ", "HUD system"),
     ItemCategory.EXPANSION: ("an ", "expansion"),
 }

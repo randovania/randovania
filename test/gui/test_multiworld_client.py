@@ -115,13 +115,14 @@ async def test_on_game_updated(skip_qtbot, tmpdir):
     assert client._data.latest_message_displayed == 3
 
 
-def test_decode_pickup(skip_qtbot):
-    data = b'\x00\xd0\x00'
+def test_decode_pickup(skip_qtbot, echoes_resource_database):
+    data = b'\x00\xc8@\x00'
     client = MultiworldClient(MagicMock(), MagicMock())
     expected_pickup = PickupEntry(
         name="",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
+        broad_category=ItemCategory.MOVEMENT,
         resources=(
             ConditionalResources(None, None, ()),
         ),

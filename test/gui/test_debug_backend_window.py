@@ -20,6 +20,7 @@ def _pickup() -> PickupEntry:
         name="Pickup",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
+        broad_category=ItemCategory.LIFE_SUPPORT,
         resources=(
             ConditionalResources(None, None, ()),
         ),

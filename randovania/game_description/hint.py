@@ -25,6 +25,9 @@ class HintItemPrecision(Enum):
     # major item, key, expansion
     GENERAL_CATEGORY = "general-category"
 
+    # x-related, life-support, or just the precise category
+    BROAD_CATEGORY = "broad-category"
+
 
 class HintLocationPrecision(Enum):
     # The exact location
