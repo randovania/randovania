@@ -161,27 +161,40 @@ def _calculate_pickup_hint(pickup_assignment: PickupAssignment,
     :param target:
     :return:
     """
-    item_category = ItemCategory.ETM if target is None else target.pickup.item_category
+    if target is None:
+        item_category = ItemCategory.ETM
+        broad_category = ItemCategory.ETM
+    else:
+        item_category = target.pickup.item_category
+        broad_category = target.pickup.broad_category
+
     if precision is HintItemPrecision.GENERAL_CATEGORY:
         if item_category.is_major_category:
             return "a ", "major upgrade"
         elif item_category.is_key:
-            return "a ", "Dark Temple Key"
+            return "a ", "key"
         else:
             return "an ", "expansion"
 
-    elif precision is HintItemPrecision.PRECISE_CATEGORY:
-        details = item_category.hint_details
+    elif precision in (HintItemPrecision.PRECISE_CATEGORY, HintItemPrecision.BROAD_CATEGORY):
+        if precision is HintItemPrecision.PRECISE_CATEGORY:
+            details = item_category.hint_details
+        else:
+            details = broad_category.hint_details
+
         return details[0], details[1]
 
-    elif target is None:
-        if len(pickup_assignment) == world_list.num_pickup_nodes - 1:
-            determiner = "the "
-        else:
-            determiner = "an "
-        return determiner, "Energy Transfer Module"
     else:
-        return _calculate_determiner(pickup_assignment, target.pickup), target.pickup.name
+        assert precision is HintItemPrecision.DETAILED
+
+        if target is None:
+            if len(pickup_assignment) == world_list.num_pickup_nodes - 1:
+                determiner = "the "
+            else:
+                determiner = "an "
+            return determiner, "Energy Transfer Module"
+        else:
+            return _calculate_determiner(pickup_assignment, target.pickup), target.pickup.name
 
 
 def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry) -> str:

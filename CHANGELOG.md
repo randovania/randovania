@@ -55,6 +55,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
 
+-   Changed: Hints from keybearer corpses now uses a broader category, which leaves unclear if it's an expansion or not. 
+
 ### GUI
 
 -   Added: An automatic item tracker based on a Dolphin running on the same computer.

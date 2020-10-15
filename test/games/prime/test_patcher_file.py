@@ -13,6 +13,7 @@ from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
@@ -271,19 +272,19 @@ def test_get_single_hud_text_locked_pbs():
 ])
 def test_calculate_hud_text(order: Tuple[str, str]):
     # Setup
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
+    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
 
-    pickup_x = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY,
+    pickup_x = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
                            (
                                ConditionalResources("A", None, ((resource_a, 1),)),
                            ))
-    pickup_y = PickupEntry("Y", 2, ItemCategory.SUIT,
+    pickup_y = PickupEntry("Y", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
                            (
                                ConditionalResources("B", None, ((resource_b, 1),)),
                                ConditionalResources("A", resource_b, ((resource_a, 5),))
                            ))
-    pickup_z = PickupEntry("Z", 2, ItemCategory.SUIT,
+    pickup_z = PickupEntry("Z", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
                            (
                                ConditionalResources("A", None, ((resource_a, 1),)),
                                ConditionalResources("B", resource_a, ((resource_b, 5),))
@@ -318,19 +319,19 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
     has_scan_text = model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}
     rng = Random(5000)
 
-    useless_resource = SimpleResourceInfo(0, "Useless", "Useless", ResourceType.ITEM)
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    pickup_a = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY,
+    useless_resource = ItemResourceInfo(0, "Useless", "Useless", 10, None)
+    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
+    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    pickup_a = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
                            (
                                ConditionalResources(None, None, ((resource_a, 1),)),
                            ))
-    pickup_b = PickupEntry("B", 2, ItemCategory.SUIT,
+    pickup_b = PickupEntry("B", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
                            (
                                ConditionalResources(None, None, ((resource_b, 1), (resource_a, 1))),
                                ConditionalResources(None, resource_b, ((resource_a, 5),))
                            ))
-    pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION,
+    pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION, ItemCategory.MISSILE_RELATED,
                            resources=(
                                ConditionalResources(None, None, ((resource_b, 2), (resource_a, 1))),
                            ),
@@ -338,7 +339,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches):
                                ResourceConversion(useless_resource, resource_a),
                            ))
 
-    useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM,
+    useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM, ItemCategory.ETM,
                                  (
                                      ConditionalResources(None, None, ((useless_resource, 1),)),
                                  ))
@@ -473,13 +474,14 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     # Setup
     rng = Random(5000)
     resources = (ConditionalResources(None, None, tuple()),)
-    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
 
-    pickup_a = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, resources)
-    pickup_b = PickupEntry("B", 2, ItemCategory.SUIT, (ConditionalResources(None, None, tuple()),
-                                                       ConditionalResources(None, resource_b, tuple()),))
-    pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION, resources)
-    useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM, resources)
+    pickup_a = PickupEntry("A", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY, resources)
+    pickup_b = PickupEntry("B", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
+                           (ConditionalResources(None, None, tuple()),
+                            ConditionalResources(None, resource_b, tuple()),))
+    pickup_c = PickupEntry("C", 2, ItemCategory.EXPANSION, ItemCategory.MISSILE_RELATED, resources)
+    useless_pickup = PickupEntry("Useless", 0, ItemCategory.ETM, ItemCategory.ETM, resources)
 
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): PickupTarget(pickup_a, 0),
@@ -610,7 +612,7 @@ def test_run_validated_hud_text():
     rng.randint.return_value = 0
     creator = patcher_file.PickupCreatorSolo(rng, patcher_file._SimplifiedMemo())
     resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    pickup = PickupEntry("Energy Transfer Module", 1, ItemCategory.TEMPLE_KEY,
+    pickup = PickupEntry("Energy Transfer Module", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
                          (
                              ConditionalResources("Energy Transfer Module", None, ((resource_a, 1),)),
                          ))
@@ -625,9 +627,9 @@ def test_run_validated_hud_text():
 
 @pytest.fixture(name="pickup_for_create_pickup_data")
 def _create_pickup_data():
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    return PickupEntry("Cake", 1, ItemCategory.TEMPLE_KEY,
+    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
+    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    return PickupEntry("Cake", 1, ItemCategory.TEMPLE_KEY, ItemCategory.KEY,
                        (
                            ConditionalResources("Sugar", None, ((resource_a, 1),)),
                            ConditionalResources("Salt", resource_a, ((resource_b, 1),)),

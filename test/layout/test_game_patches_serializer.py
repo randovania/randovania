@@ -167,6 +167,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
         name=name,
         model_index=26,
         item_category=ItemCategory.TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
         resources=(
             ConditionalResources(
                 "Morph Ball", None,

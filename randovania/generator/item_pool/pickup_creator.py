@@ -102,6 +102,7 @@ def create_major_item(item: MajorItem,
         resources=conditional_resources,
         model_index=item.model_index,
         item_category=item.item_category,
+        broad_category=item.broad_category,
         probability_offset=item.probability_offset,
         probability_multiplier=item.probability_multiplier,
         convert_resources=convert_resources,
@@ -144,6 +145,7 @@ def create_ammo_expansion(ammo: Ammo,
         resources=conditional_resources,
         model_index=ammo.models[0],  # TODO: use a random model
         item_category=ItemCategory.EXPANSION,
+        broad_category=ammo.broad_category,
     )
 
 
@@ -168,6 +170,7 @@ def create_dark_temple_key(key_number: int,
         ),
         model_index=DARK_TEMPLE_KEY_MODEL,
         item_category=ItemCategory.TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
         probability_offset=3,
     )
 
@@ -191,6 +194,7 @@ def create_sky_temple_key(key_number: int,
         ),
         model_index=SKY_TEMPLE_KEY_MODEL,
         item_category=ItemCategory.SKY_TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
         probability_offset=3,
     )
 
@@ -210,6 +214,7 @@ def create_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
         ),
         model_index=USELESS_PICKUP_MODEL,
         item_category=ItemCategory.ETM,
+        broad_category=ItemCategory.ETM,
     )
 
 
@@ -225,4 +230,5 @@ def create_visual_etm() -> PickupEntry:
         ),
         model_index=USELESS_PICKUP_MODEL,
         item_category=ItemCategory.ETM,
+        broad_category=ItemCategory.ETM,
     )

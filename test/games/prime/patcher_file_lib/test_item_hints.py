@@ -25,6 +25,7 @@ def _pickup() -> PickupEntry:
         name="Pickup",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
+        broad_category=ItemCategory.LIFE_SUPPORT,
         resources=(
             ConditionalResources(None, None, ()),
         ),
@@ -76,6 +77,7 @@ def test_create_hints_nothing(empty_patches):
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+    (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;World - Area&pop;"),
@@ -122,6 +124,7 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+    (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
 def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item):
     # Setup
@@ -154,6 +157,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+    (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
 def test_create_hints_light_suit_location(empty_patches, pickup, item):
     # Setup
@@ -185,6 +189,7 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item):
 @pytest.mark.parametrize(["reference_precision", "reference_name"], [
     (HintItemPrecision.DETAILED, "the Reference Pickup"),
     (HintItemPrecision.PRECISE_CATEGORY, "a movement system"),
+    (HintItemPrecision.BROAD_CATEGORY, "a life support system"),
 ])
 @pytest.mark.parametrize(["distance_precise", "distance_text"], [
     (False, "up to"),

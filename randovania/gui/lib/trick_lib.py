@@ -1,10 +1,10 @@
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world_list import WorldList
 from randovania.layout.trick_level import LayoutTrickLevel
 
 
-def difficulties_for_trick(world_list: WorldList, trick: SimpleResourceInfo):
+def difficulties_for_trick(world_list: WorldList, trick: TrickResourceInfo):
     result = set()
 
     for area in world_list.all_areas:

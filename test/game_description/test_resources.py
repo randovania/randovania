@@ -1,12 +1,11 @@
 import pytest
 
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources, \
     add_resources_into_another, convert_resource_gain_to_current_resources
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
 @pytest.mark.parametrize(["a", "b", "result"], [
@@ -29,11 +28,11 @@ def test_pickup_index_has():
 
 def test_add_resource_gain_to_current_resources_convert():
     # Setup
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
+    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
+    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
 
     pickup = PickupEntry(
-        name="P1", model_index=1, item_category=ItemCategory.SUIT,
+        name="P1", model_index=1, item_category=ItemCategory.SUIT, broad_category=ItemCategory.LIFE_SUPPORT,
         resources=(ConditionalResources(None, None, ()),),
         convert_resources=(ResourceConversion(resource_a, resource_b),)
     )

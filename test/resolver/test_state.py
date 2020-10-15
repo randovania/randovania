@@ -6,18 +6,17 @@ import pytest
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.resolver import state
 
 
 @pytest.fixture(name="database")
 def _database() -> ResourceDatabase:
-    return Mock(energy_tank=SimpleResourceInfo(42, "Energy Tank", "EnergyTank", ResourceType.ITEM),
-                item_percentage=SimpleResourceInfo(47, "Item Percentage", "Percentage", ResourceType.ITEM))
+    return Mock(energy_tank=ItemResourceInfo(42, "Energy Tank", "EnergyTank", 14, None),
+                item_percentage=ItemResourceInfo(47, "Item Percentage", "Percentage", 255, None))
 
 
 @pytest.fixture(name="patches")
@@ -31,7 +30,7 @@ def _patches(empty_patches) -> GamePatches:
 def test_collected_pickup_indices(database, patches):
     # Setup
     resources = {
-        SimpleResourceInfo(1, "A", "A", ResourceType.ITEM): 5,
+        ItemResourceInfo(1, "A", "A", 50, None): 5,
         PickupIndex(1): 1,
         PickupIndex(15): 1
     }
@@ -48,9 +47,9 @@ def test_add_pickup_to_state(database, patches):
     # Starting State
     s = state.State({}, (), 99, None, patches, None, database)
 
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    p = PickupEntry("B", 2, ItemCategory.SUIT,
+    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
+    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    p = PickupEntry("B", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
                     (
                         ConditionalResources(None, None, ((resource_a, 1),)),
                         ConditionalResources(None, resource_a, ((resource_b, 1),)),
@@ -72,9 +71,9 @@ def test_assign_pickup_to_starting_items(patches, database):
 
     starting = state.State({}, (), 99, None, patches, None, database)
 
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    resource_b = SimpleResourceInfo(2, "B", "B", ResourceType.ITEM)
-    p = PickupEntry("A", 2, ItemCategory.SUIT,
+    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
+    resource_b = ItemResourceInfo(2, "B", "B", 10, None)
+    p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
                     resources=(
                         ConditionalResources(None, None, (
                             (resource_a, 5),
@@ -97,8 +96,8 @@ def test_state_with_pickup(database, patches):
     # Setup
     starting = state.State({}, (), 99, None, patches, None, database)
 
-    resource_a = SimpleResourceInfo(1, "A", "A", ResourceType.ITEM)
-    p = PickupEntry("A", 2, ItemCategory.SUIT,
+    resource_a = ItemResourceInfo(1, "A", "A", 10, None)
+    p = PickupEntry("A", 2, ItemCategory.SUIT, ItemCategory.LIFE_SUPPORT,
                     (
                         ConditionalResources(None, None, ((resource_a, 1),)),
                     ))

@@ -148,7 +148,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
 
     def _keybearer_hint(number: int):
         return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                     HintItemPrecision.PRECISE_CATEGORY), PickupIndex(number))
+                                                     HintItemPrecision.BROAD_CATEGORY), PickupIndex(number))
 
     expected = {
         # Keybearer
