@@ -9168,13 +9168,8 @@
                                     }
                                 },
                                 "Event - Plasma Beam Golem": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 },
                                 "Event - Ice Missile Golem": {
                                     "type": "resource",
@@ -12130,7 +12125,7 @@
                             "pickup_index": 51,
                             "major_location": false,
                             "connections": {
-                                "Dock to Main Docking Access": {
+                                "Samus Ship (Catch.)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -12144,14 +12139,9 @@
                             "pickup_index": 52,
                             "major_location": true,
                             "connections": {
-                                "Dock to Main Docking Access": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Samus Ship (Catch.)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -12188,15 +12178,6 @@
                             "node_type": "event",
                             "event_index": 8,
                             "connections": {
-                                "Dock to Main Docking Access": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
                                 "Pickup (Plasma Beam)": {
                                     "type": "and",
                                     "data": []
@@ -12288,7 +12269,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Room Center": {
+                                "Dock to Hub Access": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -12309,9 +12290,18 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Room Center": {
+                                "Dock to Zipline Station Alpha": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Pickup (Energy Tank)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2988161223,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -12323,55 +12313,9 @@
                             "pickup_index": 53,
                             "major_location": false,
                             "connections": {
-                                "Floating Island": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Room Center",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Zipline Station Alpha": {
-                                    "type": "and",
-                                    "data": []
-                                },
                                 "Dock to Hub Access": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Floating Island": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2988161223,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "Floating Island",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Pickup (Energy Tank)": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Room Center": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2988161223,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
                                 }
                             }
                         }

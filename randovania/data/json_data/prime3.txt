@@ -1959,7 +1959,7 @@ Asset id: 2580753232084104741
   > Event - Grapple Voltage Golem
       Grapple Voltage
   > Event - Plasma Beam Golem
-      Plasma Beam
+      Melt Objects (Plasma or Nova)
   > Event - Ice Missile Golem
       Ice Missile
 
@@ -2676,13 +2676,13 @@ Asset id: 4133901881028310574
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 51; Major Location? False
-  > Dock to Main Docking Access
+  > Samus Ship (Catch.)
       Trivial
 
 > Pickup (Plasma Beam); Heals? False
   * Pickup 52; Major Location? True
-  > Dock to Main Docking Access
-      Plasma Beam
+  > Samus Ship (Catch.)
+      Trivial
 
 > Samus Ship (Catch.); Heals? True
   > Dock to Main Docking Access
@@ -2690,8 +2690,6 @@ Asset id: 4133901881028310574
 
 > Event - Ghor; Heals? False
   * Event Ghor
-  > Dock to Main Docking Access
-      Plasma Beam
   > Pickup (Plasma Beam)
       Trivial
 
@@ -2713,32 +2711,20 @@ Arrival Station
 Asset id: 14742980547553882067
 > Dock to Zipline Station Alpha; Heals? False
   * Normal Door to Zipline Station Alpha/Dock to Arrival Station
-  > Room Center
+  > Dock to Hub Access
       Trivial
 
 > Dock to Hub Access; Heals? False
   * Normal Door to Hub Access/Dock to Arrival Station
-  > Room Center
+  > Dock to Zipline Station Alpha
       Trivial
+  > Pickup (Energy Tank)
+      Boost Ball
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 53; Major Location? False
-  > Floating Island
-      Trivial
-
-> Room Center; Heals? False
-  > Dock to Zipline Station Alpha
-      Trivial
   > Dock to Hub Access
       Trivial
-  > Floating Island
-      Boost Ball
-
-> Floating Island; Heals? False
-  > Pickup (Energy Tank)
-      Trivial
-  > Room Center
-      Boost Ball
 
 ----------------
 Barracks Access
