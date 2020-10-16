@@ -33,6 +33,7 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
+                         "dark_temple": None,
                          "precision": {"location": "detailed", "item": "detailed", "relative": None},
                          "target": 50}]},
     ],
@@ -167,6 +168,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
         name=name,
         model_index=26,
         item_category=ItemCategory.TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
         resources=(
             ConditionalResources(
                 "Morph Ball", None,

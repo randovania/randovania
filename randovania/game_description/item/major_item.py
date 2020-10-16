@@ -9,6 +9,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 class MajorItem:
     name: str
     item_category: ItemCategory
+    broad_category: ItemCategory
     model_index: int
     progression: Tuple[int, ...]
     ammo_index: Tuple[int, ...] = tuple()
@@ -24,6 +25,7 @@ class MajorItem:
         return cls(
             name=name,
             item_category=ItemCategory(value["item_category"]),
+            broad_category=ItemCategory(value["broad_category"]),
             model_index=value["model_index"],
             progression=tuple(value["progression"]),
             ammo_index=tuple(value.get("ammo", [])),
@@ -39,6 +41,7 @@ class MajorItem:
     def as_json(self) -> dict:
         result = {
             "item_category": self.item_category.value,
+            "broad_category": self.broad_category.value,
             "model_index": self.model_index,
             "progression": list(self.progression),
             "ammo": list(self.ammo_index),

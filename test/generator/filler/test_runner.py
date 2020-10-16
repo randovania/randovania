@@ -114,6 +114,7 @@ def _make_pickup(item_category: ItemCategory):
         name="Pickup",
         model_index=0,
         item_category=item_category,
+        broad_category=item_category,
         resources=(
             ConditionalResources(None, None, ()),
         ),
