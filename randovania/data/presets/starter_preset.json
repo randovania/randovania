@@ -1,7 +1,7 @@
 {
-    "schema_version": 1,
-    "name": "Beginner Friendly",
-    "description": "This preset provides the smoothest transition from a casual player.<br />Softlocks and crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
+    "schema_version": 4,
+    "name": "Starter Preset",
+    "description": "This preset balances the item pool with additional beam ammo expansions and progressive suits, while minimizing softlocks as much as possible.<br />Crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
     "base_preset_name": null,
     "patcher_configuration": {
         "menu_mod": true,
@@ -29,13 +29,6 @@
         },
         "major_items_configuration": {
             "items_state": {
-                "Dark Suit": {
-                    "num_shuffled_pickups": 1
-                },
-                "Light Suit": {
-                    "num_shuffled_pickups": 1
-                },
-                "Progressive Suit": {},
                 "Grapple Beam": {
                     "num_shuffled_pickups": 1
                 },
@@ -44,14 +37,14 @@
                 },
                 "Progressive Grapple": {}
             },
-            "progressive_suit": false,
+            "progressive_suit": true,
             "progressive_grapple": false,
             "minimum_random_starting_items": 0,
             "maximum_random_starting_items": 0
         },
         "ammo_configuration": {
             "maximum_ammo": {
-                "44": 255,
+                "44": 175,
                 "43": 10,
                 "45": 250,
                 "46": 250
@@ -59,7 +52,7 @@
             "items_state": {
                 "Missile Expansion": {
                     "variance": 0,
-                    "pickup_count": 49,
+                    "pickup_count": 33,
                     "requires_major_item": true
                 },
                 "Power Bomb Expansion": {
@@ -69,17 +62,17 @@
                 },
                 "Dark Ammo Expansion": {
                     "variance": 0,
-                    "pickup_count": 0,
+                    "pickup_count": 10,
                     "requires_major_item": true
                 },
                 "Light Ammo Expansion": {
                     "variance": 0,
-                    "pickup_count": 0,
+                    "pickup_count": 10,
                     "requires_major_item": true
                 },
                 "Beam Ammo Expansion": {
                     "variance": 0,
-                    "pickup_count": 4,
+                    "pickup_count": 0,
                     "requires_major_item": true
                 }
             }
@@ -109,6 +102,51 @@
             "item_hints": true,
             "sky_temple_keys": "precise"
         },
-        "split_beam_ammo": false
+        "beam_configuration": {
+            "power": {
+                "item_index": 0,
+                "ammo_a": -1,
+                "ammo_b": -1,
+                "uncharged_cost": 0,
+                "charged_cost": 0,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 0
+            },
+            "dark": {
+                "item_index": 1,
+                "ammo_a": 45,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "light": {
+                "item_index": 2,
+                "ammo_a": 46,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "annihilator": {
+                "item_index": 3,
+                "ammo_a": 46,
+                "ammo_b": 45,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            }
+        },
+        "skip_final_bosses": false,
+        "energy_per_tank": 100.0,
+        "safe_zone": {
+            "fully_heal": true,
+            "prevents_dark_aether": true,
+            "heal_per_second": 1.0
+        },
+        "split_beam_ammo": true
     }
 }
