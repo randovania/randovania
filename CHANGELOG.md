@@ -51,11 +51,16 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: Relative hints, where an item is described as being some rooms away from another item or room.
 
+-   Added: Guaranteed hints which tells in which areas (Agon Wastes, Ing Hive, etc) contains the keys for each of your dark temples.
+    These hints are placed purely randomly, similarly to the guaranteed Temple Bosses hints.
+
 -   Removed: Hints with green item names/joke item names have been removed.
+
+-   Removed: Temple Keys are no longer hinted by progression-based Luminoth lore hints.
 
 -   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
 
--   Changed: Hints from keybearer corpses now uses a broader category, which leaves unclear if it's an expansion or not. 
+-   Changed: Hints from keybearer corpses now uses a broader category, which leaves unclear if it's an expansion or not.
 
 ### GUI
 

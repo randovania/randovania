@@ -8,7 +8,8 @@ from randovania.game_description.assignment import GateAssignment
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
+    HintDarkTemple
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -16,6 +17,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.generator import elevator_distributor
+from randovania.interface_common.enum_lib import iterate_enum
 from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
@@ -180,6 +182,7 @@ def add_default_hints_to_patches(rng: Random,
     rng.shuffle(indices_with_hint)
     rng.shuffle(all_logbook_assets)
 
+    # The 4 guaranteed hints
     for index, location_type in indices_with_hint:
         if not all_logbook_assets:
             break
@@ -189,9 +192,17 @@ def add_default_hints_to_patches(rng: Random,
                                                           PrecisionPair(location_type, HintItemPrecision.DETAILED),
                                                           index))
 
+    # Dark Temple hints
+    temple_hints = list(iterate_enum(HintDarkTemple))
+    while all_logbook_assets and temple_hints:
+        logbook_asset = all_logbook_assets.pop()
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.RED_TEMPLE_KEY_SET, None,
+                                                          dark_temple=temple_hints.pop(0)))
+
+    # Jokes
     while num_joke > 0 and all_logbook_assets:
         logbook_asset = all_logbook_assets.pop()
-        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None, None))
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None))
         num_joke -= 1
 
     return patches

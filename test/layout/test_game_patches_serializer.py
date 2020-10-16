@@ -33,6 +33,7 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
+                         "dark_temple": None,
                          "precision": {"location": "detailed", "item": "detailed", "relative": None},
                          "target": 50}]},
     ],

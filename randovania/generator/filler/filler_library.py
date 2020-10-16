@@ -24,4 +24,4 @@ class UnableToGenerate(RuntimeError):
 
 
 def should_have_hint(item_category: ItemCategory) -> bool:
-    return item_category.is_major_category or item_category == ItemCategory.TEMPLE_KEY
+    return item_category.is_major_category

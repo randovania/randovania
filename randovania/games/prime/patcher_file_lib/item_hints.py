@@ -7,19 +7,22 @@ from randovania.game_description.area import Area
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintType, HintLocationPrecision, HintItemPrecision, Hint, RelativeDataArea, \
-    HintRelativeAreaName, RelativeDataItem
+    HintRelativeAreaName, RelativeDataItem, HintDarkTemple
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
+from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator, create_simple_logbook_hint, \
     color_text, TextColor
-
 # Guidelines for joke hints:
 # 1. They should clearly be jokes, and not real hints or the result of a bug.
 # 2. They shouldn't reference real-world people.
 # 3. They should be understandable by as many people as possible.
+from randovania.interface_common.players_configuration import PlayersConfiguration
+
 _JOKE_HINTS = [
     "By this point in your run, you should have consumed at least 200 mL of water to maintain optimum hydration.",
     "Make sure to collect an Energy Transfer Module; otherwise your run won't be valid!",
@@ -210,8 +213,60 @@ def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEnt
     return determiner
 
 
+def create_temple_key_hint(all_patches: Dict[int, GamePatches],
+                           player_index: int,
+                           temple: HintDarkTemple,
+                           world_list: WorldList,
+                           ) -> str:
+    """
+    Creates the text for .
+    :param all_patches:
+    :param player_index:
+    :param temple:
+    :param world_list:
+    :return:
+    """
+    all_world_names = set()
+
+    _TEMPLE_NAMES = ["Dark Agon Temple", "Dark Torvus Temple", "Hive Temple"]
+    temple_index = [HintDarkTemple.AGON_WASTES, HintDarkTemple.TORVUS_BOG,
+                    HintDarkTemple.SANCTUARY_FORTRESS].index(temple)
+    keys = echoes_items.DARK_TEMPLE_KEY_ITEMS[temple_index]
+
+    index_to_node = {
+        node.pickup_index: node
+        for node in world_list.all_nodes
+        if isinstance(node, PickupNode)
+    }
+
+    for patches in all_patches.values():
+        for pickup_index, target in patches.pickup_assignment.items():
+            if target.player != player_index:
+                continue
+
+            resources = resource_info.convert_resource_gain_to_current_resources(target.pickup.resource_gain({}))
+            for resource, quantity in resources.items():
+                if quantity < 1 or resource.index not in keys:
+                    continue
+
+                pickup_node = index_to_node[pickup_index]
+                all_world_names.add(world_list.world_name_from_node(pickup_node, True))
+
+    temple_name = color_text(TextColor.ITEM, _TEMPLE_NAMES[temple_index])
+    names_sorted = [color_text(TextColor.LOCATION, world) for world in sorted(all_world_names)]
+    if len(names_sorted) == 0:
+        return f"The keys to {temple_name} are nowhere to be found."
+    elif len(names_sorted) == 1:
+        return f"The keys to {temple_name} can all be found in {names_sorted[0]}."
+    else:
+        last = names_sorted.pop()
+        front = ", ".join(names_sorted)
+        return f"The keys to {temple_name} can be found in {front} and {last}."
+
+
 def create_message_for_hint(hint: Hint,
-                            patches: GamePatches,
+                            all_patches: Dict[int, GamePatches],
+                            players_config: PlayersConfiguration,
                             hint_name_creator: LocationHintCreator,
                             location_formatters: Dict[HintLocationPrecision, LocationFormatter],
                             world_list: WorldList,
@@ -219,7 +274,12 @@ def create_message_for_hint(hint: Hint,
     if hint.hint_type == HintType.JOKE:
         return color_text(TextColor.JOKE, hint_name_creator.create_joke_hint())
 
+    elif hint.hint_type == HintType.RED_TEMPLE_KEY_SET:
+        return create_temple_key_hint(all_patches, players_config.player_index, hint.dark_temple, world_list)
+
     else:
+        assert hint.hint_type == HintType.LOCATION
+        patches = all_patches[players_config.player_index]
         determiner, pickup_name = _calculate_pickup_hint(patches.pickup_assignment,
                                                          world_list,
                                                          hint.precision.item,
@@ -231,19 +291,22 @@ def create_message_for_hint(hint: Hint,
         )
 
 
-def create_hints(patches: GamePatches,
+def create_hints(all_patches: Dict[int, GamePatches],
+                 players_config: PlayersConfiguration,
                  world_list: WorldList,
                  rng: Random,
                  ) -> list:
     """
     Creates the string patches entries that changes the Lore scans in the game for item pickups
-    :param patches:
+    :param all_patches:
+    :param players_config:
     :param world_list:
     :param rng:
     :return:
     """
 
     hint_name_creator = LocationHintCreator(world_list, rng, _JOKE_HINTS)
+    patches = all_patches[players_config.player_index]
 
     location_formatters: Dict[HintLocationPrecision, LocationFormatter] = {
         HintLocationPrecision.KEYBEARER: TemplatedFormatter(
@@ -261,7 +324,7 @@ def create_hints(patches: GamePatches,
 
     hints_for_asset: Dict[int, str] = {}
     for asset, hint in patches.hints.items():
-        hints_for_asset[asset.asset_id] = create_message_for_hint(hint, patches, hint_name_creator,
+        hints_for_asset[asset.asset_id] = create_message_for_hint(hint, all_patches, players_config, hint_name_creator,
                                                                   location_formatters, world_list)
 
     return [

@@ -734,7 +734,7 @@ def test_create_string_patches(mock_stk_create_hints: MagicMock,
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(all_patches[player_config.player_index], game.world_list, rng)
+    mock_item_create_hints.assert_called_once_with(all_patches, player_config, game.world_list, rng)
     mock_logbook_title_string_patches.assert_called_once_with()
 
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
