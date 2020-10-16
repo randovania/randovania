@@ -202,7 +202,7 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
     """
 
     hints_to_replace = {
-        asset: dataclasses.replace(hint, hint_type=HintType.JOKE)
+        asset: Hint(HintType.JOKE, None)
         for asset, hint in patches.hints.items()
         if hint.precision is None and hint.hint_type == HintType.LOCATION
     }
