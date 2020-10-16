@@ -6,7 +6,8 @@ import pytest
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
+    HintDarkTemple
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
@@ -171,9 +172,15 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
         LogbookAsset(1948976790): _guardian_hint(79),
         LogbookAsset(3212301619): _guardian_hint(115),
 
+        # Dark Temple hints
+        LogbookAsset(67497535): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.AGON_WASTES),
+        LogbookAsset(4072633400): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG),
+        LogbookAsset(0x82919C91): Hint(HintType.RED_TEMPLE_KEY_SET, None,
+                                       dark_temple=HintDarkTemple.SANCTUARY_FORTRESS),
+
         # Jokes
-        LogbookAsset(67497535): Hint(HintType.JOKE, None, None),
-        LogbookAsset(4072633400): Hint(HintType.JOKE, None, None),
+        LogbookAsset(0x49CD4F34): Hint(HintType.JOKE, None),
+        LogbookAsset(0x9F94AC29): Hint(HintType.JOKE, None),
     }
 
     # Run

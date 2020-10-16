@@ -11,8 +11,17 @@ class HintType(Enum):
     # Joke
     JOKE = "joke"
 
+    # Hints for where a set of red temple keys are
+    RED_TEMPLE_KEY_SET = "red-temple-key-set"
+
     # All other hints
     LOCATION = "location"
+
+
+class HintDarkTemple(Enum):
+    AGON_WASTES = "agon-wastes"
+    TORVUS_BOG = "torvus-bog"
+    SANCTUARY_FORTRESS = "sanctuary-fortress"
 
 
 class HintItemPrecision(Enum):
@@ -92,8 +101,16 @@ class PrecisionPair(JsonDataclass):
 class Hint(JsonDataclass):
     hint_type: HintType
     precision: Optional[PrecisionPair]
-    target: Optional[PickupIndex]
+    target: Optional[PickupIndex] = None
+    dark_temple: Optional[HintDarkTemple] = None
 
     def __post_init__(self):
-        if self.target is None and self.hint_type != HintType.JOKE:
-            raise ValueError(f"Hint with None target, but not properly a joke.")
+        if self.hint_type is HintType.JOKE:
+            if self.target is not None or self.dark_temple is not None:
+                raise ValueError(f"Joke Hint, but had a target or dark_temple.")
+        elif self.hint_type is HintType.LOCATION:
+            if self.target is None:
+                raise ValueError(f"Location Hint, but no target set.")
+        elif self.hint_type is HintType.RED_TEMPLE_KEY_SET:
+            if self.dark_temple is None:
+                raise ValueError(f"Dark Temple Hint, but no dark_temple set.")
