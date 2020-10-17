@@ -96,7 +96,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: The rate of healing for Safe Zones is now configurable.
 
--   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
+-   Fixed: Removed Aerie Access and Credits from possible starting locations.
 
 -   Changed: The Mission Final screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen.
 
