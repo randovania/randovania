@@ -23,15 +23,6 @@ class CustomException(Exception):
         raise CustomException("test exception")
 
 
-def _create_description_mock(permalink: Permalink, empty_patches: GamePatches):
-    return MagicMock(spec=LayoutDescription(
-        version=randovania.VERSION,
-        permalink=permalink,
-        patches=empty_patches,
-        solver_path=()
-    ))
-
-
 @pytest.fixture(
     params=[False, True],
     name="mock_is_windows")
