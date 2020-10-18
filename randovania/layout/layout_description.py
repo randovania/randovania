@@ -59,7 +59,7 @@ class LayoutDescription:
         )
 
         return LayoutDescription(
-            version=version,
+            version=json_dict["info"]["version"],
             permalink=permalink,
             all_patches=game_patches_serializer.decode(
                 json_dict["game_modifications"], {
