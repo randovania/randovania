@@ -23,4 +23,8 @@ def test_load_multiworld(test_files_dir):
     result = LayoutDescription.from_json_dict(input_data)
 
     # Assert
-    assert result.as_json == input_data
+    as_json = result.as_json
+    del input_data["info"]["permalink"]
+    del as_json["info"]["permalink"]
+
+    assert as_json == input_data
