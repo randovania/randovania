@@ -96,7 +96,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: The rate of healing for Safe Zones is now configurable.
 
--   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
+-   Fixed: Removed Aerie Access and Credits from possible starting locations.
 
 -   Changed: The Mission Final screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen.
 
@@ -130,6 +130,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Methods to open all Seeker Missile Doors with Screw Attack (Expert and above).
     - Method to activate most Bomb Slots without Bombs (Advanced and above).
     - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
+
+-   Sanctum, method to fight Emperor Ing without Spider Ball (Hypermode).
 
 -   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
 
@@ -240,10 +242,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Trooper Security Station Event coming from Communication Area
     - Various Dash Requirements
 
--   Dark Aether Damage Requirements:
-    - Sky Temple Grounds
-    - Dark Agon Wastes
-    - Dark Torvus Bog
+-   Dark Aether Damage Requirements have been added to every room in the Dark World
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
