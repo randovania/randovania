@@ -143,7 +143,7 @@ class MultiworldClient(QObject):
         self.start_notify_collect_locations_task()
 
     async def refresh_received_pickups(self):
-        self.logger.info(f"refresh_received_pickups: start")
+        self.logger.debug(f"refresh_received_pickups: start")
         async with self._pickups_lock:
             result = await self.network_client.game_session_request_pickups()
 

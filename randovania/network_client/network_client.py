@@ -142,9 +142,9 @@ class NetworkClient:
         return self._connect_task
 
     async def disconnect_from_server(self):
-        self.logger.info(f"will disconnect")
+        self.logger.debug(f"will disconnect")
         await self.sio.disconnect()
-        self.logger.info(f"disconnected")
+        self.logger.debug(f"disconnected")
 
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
@@ -155,7 +155,7 @@ class NetworkClient:
                 session_id = None
             try:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
-                self.logger.info(f"on_connect: session restoring session, with id {session_id}")
+                self.logger.debug(f"on_connect: session restoring session, with id {session_id}")
                 await self.on_user_session_updated(await self._emit_with_result("restore_user_session",
                                                                                 (persisted_session, session_id)))
 
@@ -206,7 +206,7 @@ class NetworkClient:
 
     async def on_game_session_updated(self, data):
         self._current_game_session = GameSessionEntry.from_json(data)
-        self.logger.info(f"on_game_session_updated - {self._current_game_session.id}")
+        self.logger.debug(f"on_game_session_updated - {self._current_game_session.id}")
 
     async def on_game_update_notification(self, details):
         pass
