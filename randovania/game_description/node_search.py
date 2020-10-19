@@ -4,8 +4,9 @@ import networkx
 
 from randovania.game_description.area import Area
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode
+from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, ResourceNode
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.world_list import WorldList
 
 
@@ -54,3 +55,10 @@ def pickup_index_to_node(world_list: WorldList, index: PickupIndex) -> PickupNod
         if isinstance(node, PickupNode) and node.pickup_index == index:
             return node
     raise ValueError(f"PickupNode with {index} not found.")
+
+
+def node_with_resource(world_list: WorldList, resource: ResourceInfo) -> ResourceNode:
+    for node in world_list.all_nodes:
+        if isinstance(node, ResourceNode) and node.resource() == resource:
+            return node
+    raise ValueError(f"ResourceNode with {resource} not found.")
