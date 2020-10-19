@@ -69,8 +69,8 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         for pickup in itertools.chain(self.pickups, self.permanent_pickups):
             inventory[pickup.name] += 1
 
-        self.inventory_label.setText("<br />".join(
-            f"{name} x{quantity}" for name, quantity in sorted(inventory.items())
+        self.inventory_label.setText("\n".join(
+            f"{name} x{quantity}" for name, quantity in inventory.items()
         ))
 
     @property

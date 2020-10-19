@@ -165,6 +165,9 @@ class DolphinBackend(ConnectionBackend):
             return ConnectionStatus.InGame
 
     def display_message(self, message: str):
+        self.logger.info(f"Queueing message '{message}'. "
+                         f"Queue has {len(self.message_queue)} elements and "
+                         f"current cooldown is {self.message_cooldown}")
         self.message_queue.append(message)
 
     async def _get_player_state_address(self) -> Optional[int]:
@@ -185,8 +188,6 @@ class DolphinBackend(ConnectionBackend):
 
         current_capacity = self.dolphin.read_word(capacity_address)
         capacity_delta = capacity - current_capacity
-
-        # FIXME: respect max capacity of each item
 
         if capacity_delta != 0:
             self.logger.debug(f"set capacity for {self._name_for_item(item)} to {capacity}")
