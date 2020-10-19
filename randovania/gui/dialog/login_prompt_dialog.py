@@ -26,6 +26,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
             if self.discord_button.isEnabled() else
             "This Randovania build is not configured to login with Discord."
         )
+        self.privacy_policy_label.setText(self.privacy_policy_label.text().replace("color:#0000ff;", ""))
 
         self.button_box.button(QtWidgets.QDialogButtonBox.Reset).setText("Logout")
 
