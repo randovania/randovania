@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import locale
 import logging.config
 import os
@@ -104,7 +105,10 @@ def _load_options():
 
 def start_logger(data_dir: Path, is_preview: bool):
     # Ensure the log dir exists early on
-    data_dir.mkdir(parents=True, exist_ok=True)
+    log_dir = data_dir.joinpath("logs")
+    log_dir.mkdir(parents=True, exist_ok=True)
+
+    today = datetime.datetime.now().strftime("%Y-%m")
 
     logging.config.dictConfig({
         'version': 1,
@@ -121,10 +125,10 @@ def start_logger(data_dir: Path, is_preview: bool):
                 'stream': 'ext://sys.stdout',  # Default is stderr
             },
             'local_app_data': {
-                'level': 'INFO',
+                'level': 'DEBUG',
                 'formatter': 'default',
                 'class': 'logging.FileHandler',
-                'filename': data_dir.joinpath("app.log"),
+                'filename': log_dir.joinpath(f"{today}.log"),
                 'encoding': 'utf-8',
             }
         },
