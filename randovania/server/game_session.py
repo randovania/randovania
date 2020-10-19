@@ -537,6 +537,10 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
                       f"requested pickups, but session is setup.")
         return []
 
+    if your_membership.is_observer:
+        logger().info(f"Session {session_id}, {current_user.name} requested pickups, but is an observer.")
+        return []
+
     description = session.layout_description
     row_to_member_name = {
         member.row: member.effective_name
