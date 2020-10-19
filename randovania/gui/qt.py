@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import locale
 import logging.config
 import os
@@ -102,19 +103,13 @@ def _load_options():
     return options
 
 
-def run(args):
-    locale.setlocale(locale.LC_ALL, "")  # use system's default locale
-    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-
-    data_dir = args.custom_network_storage
-    if data_dir is None:
-        from randovania.interface_common import persistence
-        data_dir = persistence.user_data_dir()
-
+def start_logger(data_dir: Path, is_preview: bool):
     # Ensure the log dir exists early on
-    data_dir.mkdir(parents=True, exist_ok=True)
+    log_dir = data_dir.joinpath("logs")
+    log_dir.mkdir(parents=True, exist_ok=True)
 
-    is_preview = args.preview
+    today = datetime.datetime.now().strftime("%Y-%m")
+
     logging.config.dictConfig({
         'version': 1,
         'formatters': {
@@ -130,10 +125,10 @@ def run(args):
                 'stream': 'ext://sys.stdout',  # Default is stderr
             },
             'local_app_data': {
-                'level': 'INFO',
+                'level': 'DEBUG',
                 'formatter': 'default',
                 'class': 'logging.FileHandler',
-                'filename': data_dir.joinpath("app.log"),
+                'filename': log_dir.joinpath(f"{today}.log"),
                 'encoding': 'utf-8',
             }
         },
@@ -143,8 +138,8 @@ def run(args):
         }
     })
 
-    app = QApplication(sys.argv)
 
+def create_loop(app: QApplication) -> asyncio.AbstractEventLoop:
     os.environ['QT_API'] = "PySide2"
     import asyncqt
     loop: asyncio.AbstractEventLoop = asyncqt.QEventLoop(app)
@@ -152,7 +147,10 @@ def run(args):
 
     sys.excepthook = catch_exceptions
     loop.set_exception_handler(catch_exceptions_async)
+    return loop
 
+
+async def qt_main(app: QApplication, data_dir: Path, args):
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.game_connection.game_connection import GameConnection
 
@@ -171,11 +169,27 @@ def run(args):
 
     options = _load_options()
 
+    await asyncio.gather(app.game_connection.start(),
+                         display_window_for(app, options, args.command, args))
+
+
+def run(args):
+    locale.setlocale(locale.LC_ALL, "")  # use system's default locale
+    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+
+    data_dir = args.custom_network_storage
+    if data_dir is None:
+        from randovania.interface_common import persistence
+        data_dir = persistence.user_data_dir()
+
+    is_preview = args.preview
+    start_logger(data_dir, is_preview)
+    app = QApplication(sys.argv)
+
+    loop = create_loop(app)
     with loop:
-        loop.create_task(app.game_connection.start())
-        loop.create_task(display_window_for(app, options, args.command, args))
-        # loop.create_task(app.network_client.connect_if_authenticated())
-        sys.exit(loop.run_forever())
+        loop.create_task(qt_main(app, data_dir, args))
+        loop.run_forever()
 
 
 def create_subparsers(sub_parsers):
