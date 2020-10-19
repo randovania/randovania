@@ -224,6 +224,9 @@ def fill_unassigned_hints(patches: GamePatches,
         for node in world_list.all_nodes
         if isinstance(node, LogbookNode)
     }
+    for logbook in potential_hint_locations:
+        if logbook not in scan_asset_initial_pickups:
+            scan_asset_initial_pickups[logbook] = frozenset()
 
     # But remove these that already have hints
     potential_hint_locations -= patches.hints.keys()
@@ -249,13 +252,36 @@ def fill_unassigned_hints(patches: GamePatches,
                             for node in world_list.all_nodes
                             if isinstance(node, PickupNode)}
 
-    # Get an stable order then shuffle
+    # Get an stable order
     possible_indices = list(sorted(possible_indices))
-    rng.shuffle(possible_indices)
 
-    for logbook in sorted(potential_hint_locations):
-        new_hints[logbook] = Hint(HintType.LOCATION, None, possible_indices.pop())
-        debug.debug_print(f"Added hint at {logbook} for item at {new_hints[logbook].target}")
+    num_logbooks: Dict[PickupIndex, int] = {
+        index: sum(1 for indices in scan_asset_initial_pickups.values() if index in indices)
+        for index in possible_indices
+    }
+    max_seen = max(num_logbooks.values())
+    pickup_indices_weight: Dict[PickupIndex, int] = {
+        index: max_seen - num_logbook
+        for index, num_logbook in num_logbooks.items()
+    }
+    # Ensure all indices are present with at least weight 0
+    for index in possible_indices:
+        if index not in pickup_indices_weight:
+            pickup_indices_weight[index] = 0
+
+    for logbook in sorted(potential_hint_locations,
+                          key=lambda r: len(scan_asset_initial_pickups[r]),
+                          reverse=True):
+        try:
+            new_index = random_lib.select_element_with_weight(pickup_indices_weight, rng)
+        except StopIteration:
+            # If everything has weight 0, then just choose randomly.
+            new_index = random_lib.random_key(pickup_indices_weight, rng)
+            
+        del pickup_indices_weight[new_index]
+
+        new_hints[logbook] = Hint(HintType.LOCATION, None, new_index)
+        debug.debug_print(f"Added hint at {logbook} for item at {new_index}")
 
     return dataclasses.replace(patches, hints=new_hints)
 

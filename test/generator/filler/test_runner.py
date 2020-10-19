@@ -41,6 +41,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     player_state.index = 0
     player_state.game = player_pools[0].game
     player_state.pickups_left = runner._split_expansions(player_pools[0].pickups)[0]
+    player_state.scan_asset_initial_pickups = {}
 
     mock_retcon_playthrough_filler.return_value = {player_state: patches}, action_log
 
