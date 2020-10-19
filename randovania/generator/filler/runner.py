@@ -1,6 +1,5 @@
 import copy
 import dataclasses
-import math
 from random import Random
 from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet, Union, Iterator, Optional
 
@@ -77,9 +76,6 @@ def precision_pair_weighted_list() -> List[PrecisionPair]:
     return hints
 
 
-_MAX_RELATIVE_DISTANCE = 8
-
-
 def _not_empty(it: Iterator) -> bool:
     return sum(1 for _ in it) > 0
 
@@ -92,29 +88,30 @@ def add_relative_hint(world_list: WorldList,
                       relative_type: HintLocationPrecision,
                       precise_distance: bool,
                       precision: Union[HintItemPrecision, HintRelativeAreaName],
-                      max_distance: Optional[int] = None,
+                      max_distance: int,
                       ) -> Optional[Hint]:
     """
     Creates a relative hint.
     :return: Might be None, if no hint could be created.
     """
-    if max_distance is None:
-        max_distance = _MAX_RELATIVE_DISTANCE
     target_node = node_search.pickup_index_to_node(world_list, target)
     distances = node_search.distances_to_node(world_list, target_node, patches=patches, cutoff=max_distance)
 
-    def _non_expansions(area: Area) -> Iterator[PickupIndex]:
+    def _major_pickups(area: Area) -> Iterator[PickupIndex]:
         for index in area.pickup_indices:
             t = patches.pickup_assignment.get(index)
             # FIXME: None should be ok, but this must be called after junk has been filled
-            if t is not None and t.pickup.item_category != ItemCategory.EXPANSION:
-                yield index
+            if t is not None:
+                cat = t.pickup.item_category
+                if cat.is_major_category or (cat != ItemCategory.EXPANSION
+                                             and target_precision == HintItemPrecision.DETAILED):
+                    yield index
 
     area_choices = {
-        area: 1 / distance
+        area: 1 / max(distance, 2)
         for area, distance in distances.items()
-        if distance > 1 and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA
-                             or _not_empty(_non_expansions(area)))
+        if distance > 0 and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA
+                             or _not_empty(_major_pickups(area)))
     }
     if not area_choices:
         return None
@@ -124,7 +121,7 @@ def add_relative_hint(world_list: WorldList,
         relative = RelativeDataArea(precise_distance, world_list.area_to_area_location(area),
                                     precision)
     elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
-        relative = RelativeDataItem(precise_distance, rng.choice(list(_non_expansions(area))), precision)
+        relative = RelativeDataItem(precise_distance, rng.choice(list(_major_pickups(area))), precision)
     else:
         raise ValueError(f"Invalid relative_type: {relative_type}")
 
@@ -135,19 +132,20 @@ def add_relative_hint(world_list: WorldList,
 def _relative(relative_type: HintLocationPrecision,
               precise_distance: bool,
               precision: Union[HintItemPrecision, HintRelativeAreaName],
+              max_distance: int,
               ) -> Callable[[PlayerState, GamePatches, Random, PickupIndex], Optional[Hint]]:
     def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex):
         return add_relative_hint(player_state.game.world_list, patches, rng, target, HintItemPrecision.DETAILED,
-                                 relative_type, precise_distance, precision)
+                                 relative_type, precise_distance, precision, max_distance)
 
     return _wrapper
 
 
 def _get_relative_hint_providers():
     return [
-        _relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME),
-        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED),
-        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.PRECISE_CATEGORY),
+        _relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
+        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED, 4),
+        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.PRECISE_CATEGORY, 3),
     ]
 
 
