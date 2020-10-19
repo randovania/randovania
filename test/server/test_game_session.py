@@ -128,6 +128,22 @@ def test_game_session_request_pickups_not_in_game(flask_app, clean_database):
     assert result == []
 
 
+def test_game_session_request_pickups_observer(flask_app, clean_database):
+    # Setup
+    user = database.User.create(id=1234, discord_id=5678, name="The Name")
+    session = database.GameSession.create(name="Debug", creator=user, state=GameSessionState.IN_PROGRESS)
+    database.GameSessionMembership.create(user=user, session=session, row=None, admin=False)
+
+    sio = MagicMock()
+    sio.get_current_user.return_value = user
+
+    # Run
+    result = game_session.game_session_request_pickups(sio, 1)
+
+    # Assert
+    assert result == []
+
+
 @pytest.fixture(name="two_player_session")
 def two_player_session_fixture(clean_database):
     user1 = database.User.create(id=1234, name="The Name")
