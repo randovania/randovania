@@ -54,6 +54,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Added: Guaranteed hints which tells in which areas (Agon Wastes, Ing Hive, etc) contains the keys for each of your dark temples.
     These hints are placed purely randomly, similarly to the guaranteed Temple Bosses hints.
 
+-   Added: Free hint spots after generation now prefer items from late in progression instead of pure random.
+
 -   Removed: Hints with green item names/joke item names have been removed.
 
 -   Removed: Temple Keys are no longer hinted by progression-based Luminoth lore hints.
