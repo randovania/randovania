@@ -24,7 +24,7 @@ from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetwor
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common import simplified_patcher, status_update_lib
-from randovania.interface_common.options import Options
+from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
@@ -778,6 +778,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         return True
 
     async def generate_game(self, spoiler: bool):
+        if not self._options.is_alert_displayed(InfoAlert.MULTI_ENERGY_ALERT):
+            await async_dialog.warning(self, "Multiworld Limitation",
+                                       "Warning: Multiworld games doesn't have proper energy damage logic. "
+                                       "You might be required to do Dark Aether checks with very low energy.")
+            self._options.mark_alert_as_displayed(InfoAlert.MULTI_ENERGY_ALERT)
+
         permalink = Permalink(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
@@ -938,6 +944,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 return
 
         options = self._options
+
+        if not options.is_alert_displayed(InfoAlert.MULTIWORLD_FAQ):
+            await async_dialog.message_box(self, QMessageBox.Icon.Information, "Multiworld FAQ",
+                                           "Have you read the Multiworld FAQ?\n"
+                                           "It can be found in the main Randovania window → Help → Multiworld")
+            options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
+
         dialog = GameInputDialog(options, "Echoes Randomizer - {}.iso".format(self._game_session.word_hash), False)
         result = await async_dialog.execute_dialog(dialog)
 
