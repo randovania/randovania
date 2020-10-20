@@ -72,6 +72,12 @@ Save Station B
 Asset id: 14403796150828511218
 > Dock to Repair Bay Shaft; Heals? False
   * Normal Door to Repair Bay Shaft/Dock to Save Station B
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  > Dock to Repair Bay Shaft
+      Trivial
 
 ----------------
 Flag Bridge
@@ -3258,12 +3264,24 @@ Spire Dock
 Asset id: 3166066018495772067
 > Dock to Maintenance Shaft AU; Heals? False
   * Normal Door to Maintenance Shaft AU/Dock to Spire Dock
+  > Dock to Security Station
+      Trivial
+  > Dock to Junction
+      Trivial
 
 > Dock to Security Station; Heals? False
   * Normal Door to Security Station/Dock to Spire Dock
+  > Dock to Maintenance Shaft AU
+      Trivial
+  > Dock to Junction
+      Trivial
 
 > Dock to Junction; Heals? False
   * Normal Door to Junction/Dock to Spire Dock
+  > Dock to Maintenance Shaft AU
+      Trivial
+  > Dock to Security Station
+      Trivial
 
 ----------------
 Escape Pod Bay
@@ -3273,15 +3291,23 @@ Asset id: 7293006450314500398
 
 > Dock to Spire; Heals? False
   * Normal Door to Spire/Dock to Escape Pod Bay
+  > Dock to Escape Pod Bay Access
+      Trivial
 
 ----------------
 Spire
 Asset id: 6637485379588009329
 > Dock to Podworks; Heals? False
   * Normal Door to Podworks/Dock to Spire
+  > Dock to Spire Dock
+      Trivial
 
 > Dock to Spire Dock; Heals? False
   * Normal Door to Spire Dock/Dock to Spire
+  > Dock to Podworks
+      Trivial
+  > Dock to Escape Pod Bay
+      Trivial
 
 > Dock to Escape Pod Bay; Heals? False
   * Normal Door to Escape Pod Bay/Dock to Spire
@@ -3291,15 +3317,31 @@ Spire Dock
 Asset id: 2782037876215597956
 > Dock to Maintenance Shaft AU; Heals? False
   * Normal Door to Maintenance Shaft AU/Dock to Spire Dock
+  > Center
+      Grapple Swing
 
 > Dock to Security Station; Heals? False
   * Normal Door to Security Station/Dock to Spire Dock
+  > Center
+      Grapple Swing
 
 > Dock to Junction; Heals? False
   * Normal Door to Junction/Dock to Spire Dock
+  > Center
+      Grapple Swing
 
 > Dock to Spire; Heals? False
   * Normal Door to Spire/Dock to Spire Dock
+
+> Center; Heals? False
+  > Dock to Maintenance Shaft AU
+      Grapple Swing
+  > Dock to Security Station
+      Grapple Swing
+  > Dock to Junction
+      Grapple Swing
+  > Dock to Spire
+      After Spire Prep Bomb
 
 ----------------
 Podworks
@@ -3385,15 +3427,25 @@ Escape Pod Bay Access
 Asset id: 10147956754909178375
 > Dock to Escape Pod Bay; Heals? False
   * Normal Door to Escape Pod Bay/Dock to Escape Pod Bay Access
+  > Dock to Security Station
+      Trivial
 
 > Dock to Security Station; Heals? False
   * Normal Door to Security Station/Dock to Landing Site A
+  > Dock to Escape Pod Bay
+      Trivial
 
 ----------------
 Save Station A
 Asset id: 17325277017676572028
 > Dock to Aurora Lift; Heals? False
   * Normal Door to Aurora Lift/Dock to Save Station A
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  > Dock to Aurora Lift
+      Trivial
 
 ====================
 SkyTown, Elysia - Pod
@@ -3639,6 +3691,12 @@ Save Station C
 Asset id: 11329003787389696749
 > Dock to Transit Tube A; Heals? False
   * Normal Door to Transit Tube A/Dock to Save Station C
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  > Dock to Transit Tube A
+      Trivial
 
 ----------------
 Xenoresearch A Lift
@@ -4058,6 +4116,12 @@ Save Station B
 Asset id: 1028106178435366911
 > Dock to Botanica; Heals? False
   * Normal Door to Botanica/Dock to Save Station B
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  > Dock to Botanica
+      Trivial
 
 ====================
 SkyTown, Elysia - Seed
@@ -4533,6 +4597,13 @@ Asset id: 9471059356885924197
 Leads to Command Center; Heals? False
   * Normal Door to Transit Station 3-A
 Leads to Command Center/Dock to Save Station
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  > Dock to Transit Station 3-A
+Leads to Command Center
+      Trivial
 
 ====================
 Pirate Homeworld - Command
@@ -5298,6 +5369,13 @@ Asset id: 7677627888152439345
 Leads to Command Center; Heals? False
   * Normal Door to Transit Station 4-B
 Leads to Command Center/Dock to Save Station
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  > Dock to Transit Station 4-B
+Leads to Command Center
+      Trivial
 
 ----------------
 Phazon Mine Entry
