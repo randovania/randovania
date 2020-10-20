@@ -2864,14 +2864,14 @@ Asset id: 10733512082794532665
 > Dock to Junction; Heals? False
   * Normal Door to Junction/Dock to Skybridge Hera
   > Dock to Maintenance Shaft GP
-      Boost Ball
+      Boost Ball and After Defense Drone
   > Pillar Platform
       Grapple Lasso
 
 > Dock to Maintenance Shaft GP; Heals? False
   * Normal Door to Maintenance Shaft GP/Dock to Skybridge Hera
   > Dock to Junction
-      Boost Ball
+      Boost Ball and After Defense Drone
   > Pillar Platform
       Use Screw Attack (Space Jump)
 
@@ -2958,9 +2958,13 @@ Maintenance Shaft GP
 Asset id: 15917923329011025717
 > Dock to Skybridge Hera; Heals? False
   * Normal Door to Skybridge Hera/Dock to Maintenance Shaft GP
+  > Dock to Construction Bay
+      Trivial
 
 > Dock to Construction Bay; Heals? False
   * Normal Door to Construction Bay/Dock to Maintenance Shaft GP
+  > Dock to Skybridge Hera
+      Trivial
 
 ----------------
 Ballista Lift
@@ -2972,6 +2976,8 @@ Asset id: 17014153014158531645
 
 > Dock to Construction Bay; Heals? False
   * Normal Door to Construction Bay/Dock to Ballista Lift
+  > Dock to Ballista Storage
+      Trivial
 
 ----------------
 Security Tube
@@ -3066,32 +3072,20 @@ Construction Bay
 Asset id: 2667502259855056433
 > Dock to Ballista Lift; Heals? False
   * Normal Door to Ballista Lift/Dock to Construction Bay
-  > Top Level
-      Trivial
-
-> Dock to Maintenance Shaft GP; Heals? False
-  * Normal Door to Maintenance Shaft GP/Dock to Construction Bay
-  > Bottom Level
-      Trivial
-
-> Pickup (Missile Expansion); Heals? False
-  * Pickup 58; Major Location? False
-  > Top Level
-      Use Screw Attack (Space Jump)
-
-> Top Level; Heals? False
-  > Dock to Ballista Lift
+  > Dock to Maintenance Shaft GP
       Trivial
   > Pickup (Missile Expansion)
       Use Screw Attack (Space Jump)
-  > Bottom Level
-      Trivial
 
-> Bottom Level; Heals? False
-  > Dock to Maintenance Shaft GP
-      Trivial
-  > Top Level
+> Dock to Maintenance Shaft GP; Heals? False
+  * Normal Door to Maintenance Shaft GP/Dock to Construction Bay
+  > Dock to Ballista Lift
       Grapple Swing or Grapple Voltage or Use Screw Attack (Space Jump)
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 58; Major Location? False
+  > Dock to Ballista Lift
+      Use Screw Attack (Space Jump)
 
 ----------------
 Main Docking Access
