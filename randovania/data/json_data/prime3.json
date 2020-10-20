@@ -12854,13 +12854,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Maintenance Shaft GP": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2988161223,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Pillar Platform": {
                                     "type": "resource",
@@ -12889,13 +12903,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Junction": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2988161223,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Pillar Platform": {
                                     "type": "template",
@@ -13295,7 +13323,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Construction Bay": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Construction Bay",
@@ -13311,7 +13344,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Skybridge Hera": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -13357,7 +13395,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Ballista Storage": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -13732,9 +13775,13 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Top Level": {
+                                "Dock to Maintenance Shaft GP": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
                                 }
                             }
                         },
@@ -13753,63 +13800,9 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Bottom Level": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Pickup (Missile Expansion)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 58,
-                            "major_location": false,
-                            "connections": {
-                                "Top Level": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                }
-                            }
-                        },
-                        {
-                            "name": "Top Level",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
                                 "Dock to Ballista Lift": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Pickup (Missile Expansion)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                },
-                                "Bottom Level": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Bottom Level",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Maintenance Shaft GP": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Top Level": {
                                     "type": "or",
                                     "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        },
                                         {
                                             "type": "resource",
                                             "data": {
@@ -13827,8 +13820,26 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Missile Expansion)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 58,
+                            "major_location": false,
+                            "connections": {
+                                "Dock to Ballista Lift": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
                                 }
                             }
                         }
