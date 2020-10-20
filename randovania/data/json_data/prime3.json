@@ -1411,7 +1411,24 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Save Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Repair Bay Shaft": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14634,7 +14651,16 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Security Station": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Junction": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Security Station",
@@ -14650,7 +14676,16 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Maintenance Shaft AU": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Junction": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Junction",
@@ -14666,7 +14701,16 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Maintenance Shaft AU": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Security Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14707,7 +14751,12 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Escape Pod Bay Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -14732,7 +14781,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Spire Dock": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Spire Dock",
@@ -14748,7 +14802,16 @@
                             "connected_dock_index": 3,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Podworks": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Escape Pod Bay": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Escape Pod Bay",
@@ -14789,7 +14852,17 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Center": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Security Station",
@@ -14805,7 +14878,17 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Center": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Junction",
@@ -14821,7 +14904,17 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Center": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Spire",
@@ -14838,6 +14931,50 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {}
+                        },
+                        {
+                            "name": "Center",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Maintenance Shaft AU": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Security Station": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Junction": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 522801372,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Spire": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 77,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         }
                     ]
                 },
@@ -15226,7 +15363,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Security Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Security Station",
@@ -15242,7 +15384,12 @@
                             "connected_dock_index": 3,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Escape Pod Bay": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -15267,7 +15414,24 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Save Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Aurora Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 }
@@ -16203,7 +16367,24 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Save Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Transit Tube A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -17965,7 +18146,24 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Save Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Botanica": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 }
@@ -19892,7 +20090,24 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Save Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Transit Station 3-A\nLeads to Command Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 }
@@ -22870,7 +23085,24 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Save Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Transit Station 4-B\nLeads to Command Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
