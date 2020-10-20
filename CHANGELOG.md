@@ -213,7 +213,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Grand Abyss, methods of crossing the gap with Boost Jump (Advanced and above) or Extended Dash (Expert and above).
 
--   Hall of Combat Mastery, method of collecting the item with a Wall Boost (Expert and above).
+-   Hall of Combat Mastery:
+    - Method of collecting the item with a Wall Boost (Expert and above).
+    - Methods of reaching the item, and skipping the Spider Track to and from Central Area Transport East with Screw Attack (Intermediate and above).
 
 -   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
 
@@ -264,17 +266,19 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Simplified nodes in many rooms for ease of logic navigation.
 
--   Crossing lower Double Path without Space Jump is now Beginner difficulty (from Intermediate).
+-   Crossing lower Double Path without Space Jump is now Beginner (from Intermediate).
 
--   Reaching Transit Station door in Mining Station B after unlocking the portal with Space Jump and Screw Attack is now Advanced difficulty (from Expert).
+-   Reaching Transit Station door in Mining Station B after unlocking the portal with Space Jump and Screw Attack is now Advanced (from Expert).
 
--   Reaching the portal in Catacombs with Morph Ball and Reverse Air Underwater is now Advanced difficulty (from Expert).
+-   Reaching the portal in Catacombs with Morph Ball and Reverse Air Underwater is now Advanced (from Expert).
 
--   Reaching Transit Tunnel South/West Doors from top door in Gathering Hall with Morph Ball and Roll Jump is now Expert difficulty (from Advanced).
+-   Reaching Transit Tunnel South/West Doors from top door in Gathering Hall with Morph Ball and Roll Jump is now Expert (from Advanced).
 
 -   Reaching Portal Chamber door in Poisoned Bog with just Screw Attack is now Advanced (from Intermediate).
 
 -   Scan Dash to upper level in Central Mining Station from Central Station Access is now Expert (from Advanced).
+
+-   Instant Morph tricks in Hall of Combat Mastery to the item and Central Area Transport East and back are now Advanced (from Intermediate).
 
 ## [1.2.2] - 2020-06-06
 
