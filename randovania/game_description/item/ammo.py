@@ -1,12 +1,15 @@
 from dataclasses import dataclass
 from typing import Tuple, Optional
 
+from randovania.game_description.item.item_category import ItemCategory
+
 
 @dataclass(frozen=True)
 class Ammo:
     name: str
     maximum: int
     items: Tuple[int, ...]
+    broad_category: ItemCategory
     unlocked_by: Optional[int] = None
     temporaries: Tuple[int, ...] = tuple()
     models: Tuple[int, ...] = tuple()
@@ -29,6 +32,7 @@ class Ammo:
             maximum=value["maximum"],
             models=tuple(value["models"]),
             items=tuple(value["items"]),
+            broad_category=ItemCategory(value["broad_category"]),
             unlocked_by=value.get("unlocked_by"),
             temporaries=tuple(value.get("temporaries", [])),
         )
@@ -39,6 +43,7 @@ class Ammo:
             "maximum": self.maximum,
             "models": list(self.models),
             "items": list(self.items),
+            "broad_category": self.broad_category.value,
             "temporaries": list(self.temporaries),
         }
         if self.unlocked_by is not None:

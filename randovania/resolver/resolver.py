@@ -26,7 +26,7 @@ def _simplify_requirement_list(self: RequirementList, state: State,
         if item.satisfied(state.resources, state.energy):
             continue
 
-        if item.resource.resource_type.is_usable_for_requirement and item.resource not in dangerous_resources:
+        if item.resource not in dangerous_resources:
             # An empty RequirementList is considered satisfied, so we don't have to add the trivial resource
             items.append(item)
 

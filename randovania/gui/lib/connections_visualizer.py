@@ -5,6 +5,7 @@ from PySide2.QtGui import QIntValidator
 from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
     QLineEdit
 
+import randovania.game_description.pretty_print
 from randovania.game_description import data_writer
 from randovania.game_description.requirements import ResourceRequirement, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -159,10 +160,11 @@ class ConnectionsVisualizer:
 
         parents: List[Tuple[QGroupBox, QVBoxLayout]] = [(self.parent, self.grid_layout)]
 
-        for depth, text in data_writer.pretty_print_requirement(requirement):
+        for depth, text in randovania.game_description.pretty_print.pretty_print_requirement(requirement):
             if "of the following" in text:
                 parent = parents[depth]
                 group_box = QGroupBox(parent[0])
+                group_box.setContentsMargins(8, 0, 2, 6)
                 group_box.setTitle(text)
                 self._elements.append(group_box)
                 vertical_layout = QVBoxLayout(group_box)

@@ -1,5 +1,5 @@
 {
-    "schema_version": 1,
+    "schema_version": 4,
     "name": "Darkszero's Deluxe",
     "description": "This preset focus on having every single upgrade you find being valuable, as well as having diverse seeds.<br />Softlocks and crashes are fixed and other changes are made to improve seed variety.",
     "base_preset_name": null,
@@ -14,14 +14,14 @@
     "layout_configuration": {
         "game": "mp2-echoes",
         "trick_level": {
-            "global_level": "trivial",
+            "global_level": "beginner",
             "specific_levels": {}
         },
         "damage_strictness": 1.5,
         "sky_temple_keys": 9,
         "elevators": "vanilla",
         "starting_location": [
-            "Temple Grounds/Landing Site"
+            "Great Temple/Main Energy Controller"
         ],
         "available_locations": {
             "randomization_mode": "full",
@@ -31,8 +31,8 @@
             "items_state": {},
             "progressive_suit": true,
             "progressive_grapple": true,
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "minimum_random_starting_items": 1,
+            "maximum_random_starting_items": 1
         },
         "ammo_configuration": {
             "maximum_ammo": {
@@ -93,6 +93,51 @@
         "hints": {
             "item_hints": true,
             "sky_temple_keys": "precise"
+        },
+        "beam_configuration": {
+            "power": {
+                "item_index": 0,
+                "ammo_a": -1,
+                "ammo_b": -1,
+                "uncharged_cost": 0,
+                "charged_cost": 0,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 0
+            },
+            "dark": {
+                "item_index": 1,
+                "ammo_a": 45,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 10
+            },
+            "light": {
+                "item_index": 2,
+                "ammo_a": 46,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 10
+            },
+            "annihilator": {
+                "item_index": 3,
+                "ammo_a": 46,
+                "ammo_b": 45,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 10
+            }
+        },
+        "skip_final_bosses": true,
+        "energy_per_tank": 100.0,
+        "safe_zone": {
+            "fully_heal": true,
+            "prevents_dark_aether": true,
+            "heal_per_second": 1.0
         },
         "split_beam_ammo": true
     }

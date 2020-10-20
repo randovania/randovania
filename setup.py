@@ -75,17 +75,17 @@ setup(
         'python-slugify',
         'python-socketio[asyncio_client]',
         'aiohttp[speedups]',
+        'aiofiles',
     ],
     extras_require={
         "gui": [
             'PySide2>=5.12,<5.15',
-            'aiofiles',
             'appdirs',
             'asyncqt',
             'dolphin-memory-engine>=1.0.2',
             'markdown',
             'pypresence',
-            'requests',
+            'qdarkstyle',
         ],
         "server": [
             "cryptography",

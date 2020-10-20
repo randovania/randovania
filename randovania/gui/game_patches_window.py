@@ -21,6 +21,8 @@ class GamePatchesWindow(QMainWindow, Ui_GamePatchesWindow):
         for i, value in enumerate(PickupModelDataSource):
             self.pickup_data_source_combo.setItemData(i, value)
 
+        self.include_menu_mod_label.setText(self.include_menu_mod_label.text().replace("color:#0000ff;", ""))
+
         # TODO: implement the LOCATION data source
         self.pickup_data_source_combo.removeItem(self.pickup_data_source_combo.findData(PickupModelDataSource.LOCATION))
 

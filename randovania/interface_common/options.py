@@ -1,8 +1,9 @@
 import dataclasses
 import json
 from distutils.version import StrictVersion
+from enum import Enum
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any
+from typing import Optional, TypeVar, Callable, Any, Set, List
 
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
@@ -15,10 +16,31 @@ def identity(v: T) -> T:
     return v
 
 
+class InfoAlert(Enum):
+    FAQ = "faq"
+    MULTI_ENERGY_ALERT = "multi-energy-alert"
+    MULTIWORLD_FAQ = "multi-faq"
+
+
 @dataclasses.dataclass(frozen=True)
 class Serializer:
     encode: Callable[[Any], Any]
     decode: Callable[[Any], Any]
+
+
+def serialize_alerts(alerts: Set[InfoAlert]) -> List[str]:
+    return sorted(a.value for a in alerts)
+
+
+def decode_alerts(data: List[str]):
+    result = set()
+    for item in data:
+        try:
+            result.add(InfoAlert(item))
+        except ValueError:
+            continue
+
+    return result
 
 
 _SERIALIZER_FOR_FIELD = {
@@ -26,9 +48,11 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
+    "dark_mode": Serializer(identity, bool),
     "output_directory": Serializer(str, Path),
     "selected_preset_name": Serializer(identity, str),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
+    "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
 }
 
 
@@ -59,9 +83,11 @@ class Options:
     _advanced_validate_seed_after: Optional[bool] = None
     _advanced_timeout_during_generation: Optional[bool] = None
     _auto_save_spoiler: Optional[bool] = None
+    _dark_mode: Optional[bool] = None
     _output_directory: Optional[Path] = None
     _selected_preset_name: Optional[str] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
+    _displayed_alerts: Optional[Set[InfoAlert]] = None
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
@@ -185,6 +211,7 @@ class Options:
         self._advanced_timeout_during_generation = None
         self._auto_save_spoiler = None
         self._cosmetic_patches = None
+        self._displayed_alerts = None
 
     # Files paths
     @property
@@ -231,6 +258,14 @@ class Options:
         self._edit_field("auto_save_spoiler", value)
 
     @property
+    def dark_mode(self) -> bool:
+        return _return_with_default(self._dark_mode, lambda: False)
+
+    @dark_mode.setter
+    def dark_mode(self, value: bool):
+        self._edit_field("dark_mode", value)
+
+    @property
     def selected_preset_name(self) -> Optional[str]:
         return self._selected_preset_name
 
@@ -245,6 +280,24 @@ class Options:
     @cosmetic_patches.setter
     def cosmetic_patches(self, value: CosmeticPatches):
         self._edit_field("cosmetic_patches", value)
+
+    @property
+    def displayed_alerts(self):
+        return _return_with_default(self._displayed_alerts, set)
+
+    @displayed_alerts.setter
+    def displayed_alerts(self, value):
+        self._edit_field("displayed_alerts", value)
+
+    def is_alert_displayed(self, value: InfoAlert):
+        return value in self.displayed_alerts
+
+    def mark_alert_as_displayed(self, value: InfoAlert):
+        alerts = self.displayed_alerts
+        if value not in alerts:
+            alerts.add(value)
+            with self:
+                self.displayed_alerts = alerts
 
     # Advanced
 

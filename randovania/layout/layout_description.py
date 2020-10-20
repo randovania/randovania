@@ -11,6 +11,8 @@ from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.layout import game_patches_serializer
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 
 
 @lru_cache(maxsize=1)
@@ -34,21 +36,30 @@ class LayoutDescription:
         return "rdvgame"
 
     @classmethod
+    def schema_version(cls) -> int:
+        return 1
+
+    @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
-        version = json_dict["info"]["version"]
-        # version_as_obj = StrictVersion(version)
-        #
-        # if version_as_obj < StrictVersion("0.26.0"):
-        #     raise RuntimeError("Unsupported log file version '{}'.".format(version))
+        version = json_dict.get("schema_version")
+        if version != cls.schema_version():
+            raise RuntimeError("Unsupported log file version '{}'. Expected {}.".format(version, cls.schema_version()))
 
-        # TODO: add try/catch to throw convert potential errors in "seed from future version broke"
-        permalink = Permalink.from_json_dict(json_dict["info"]["permalink"])
-
-        if not permalink.spoiler:
+        has_spoiler = "game_modifications" in json_dict
+        if not has_spoiler:
             raise ValueError("Unable to read details of seed log with spoiler disabled")
 
+        permalink = Permalink(
+            seed_number=json_dict["info"]["seed"],
+            spoiler=has_spoiler,
+            presets={
+                index: VersionedPreset(preset).get_preset()
+                for index, preset in enumerate(json_dict["info"]["presets"])
+            },
+        )
+
         return LayoutDescription(
-            version=version,
+            version=json_dict["info"]["version"],
             permalink=permalink,
             all_patches=game_patches_serializer.decode(
                 json_dict["game_modifications"], {
@@ -80,9 +91,15 @@ class LayoutDescription:
     @property
     def as_json(self) -> dict:
         result = {
+            "schema_version": self.schema_version(),
             "info": {
                 "version": self.version,
-                "permalink": self.permalink.as_json,
+                "permalink": self.permalink.as_str,
+                "seed": self.permalink.seed_number,
+                "presets": [
+                    VersionedPreset.with_preset(preset).as_json
+                    for preset in self.permalink.presets.values()
+                ],
             }
         }
 

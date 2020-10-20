@@ -1,3 +1,4 @@
+import dataclasses
 from typing import NamedTuple, List, Dict, Optional, Iterator, Tuple
 
 from randovania.game_description.node import Node, DockNode, PickupNode
@@ -5,17 +6,21 @@ from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 
 
-class Area(NamedTuple):
+@dataclasses.dataclass(frozen=True)
+class Area:
     name: str
     in_dark_aether: bool
     area_asset_id: int
-    default_node_index: int
+    default_node_index: Optional[int]
     valid_starting_location: bool
     nodes: List[Node]
     connections: Dict[Node, Dict[Node, Requirement]]
 
     def __repr__(self):
         return "Area[{}]".format(self.name)
+
+    def __hash__(self):
+        return self.area_asset_id
 
     def node_with_dock_index(self, dock_index: int) -> DockNode:
         for node in self.nodes:

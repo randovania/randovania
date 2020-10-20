@@ -1,5 +1,5 @@
 from random import Random
-from typing import Iterator, List, TypeVar, Dict
+from typing import Iterator, List, TypeVar, Dict, Any
 
 T = TypeVar('T')
 
@@ -46,3 +46,7 @@ def select_element_with_weight(weighted_items: Dict[T, float], rng: Random) -> T
     return next(iterate_with_weights(items=list(weighted_items.keys()),
                                      item_weights=weighted_items,
                                      rng=rng))
+
+
+def random_key(d: Dict[T, Any], rng: Random) -> T:
+    return rng.choice(list(d.keys()))

@@ -8,6 +8,7 @@ import peewee
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
 db = peewee.SqliteDatabase(None, pragmas={'foreign_keys': 1})
@@ -56,6 +57,10 @@ def _decode_layout_description(s):
     return LayoutDescription.from_json_dict(json.loads(s))
 
 
+def _datetime_now():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
 class GameSession(BaseModel):
     name = peewee.CharField()
     password = peewee.CharField(null=True)
@@ -63,13 +68,13 @@ class GameSession(BaseModel):
     layout_description_json = peewee.TextField(null=True)
     seed_hash = peewee.CharField(null=True)
     creator = peewee.ForeignKeyField(User)
-    creation_date = peewee.DateTimeField(default=datetime.datetime.now)
+    creation_date = peewee.DateTimeField(default=_datetime_now)
     generation_in_progress = peewee.ForeignKeyField(User, null=True)
 
     @property
     def all_presets(self) -> List[Preset]:
         return [
-            Preset.from_json_dict(json.loads(preset.preset))
+            VersionedPreset(json.loads(preset.preset)).get_preset()
             for preset in sorted(self.presets, key=lambda it: it.row)
         ]
 
@@ -109,14 +114,29 @@ class GameSession(BaseModel):
         def _describe_action(action: GameSessionTeamAction) -> dict:
             provider: int = action.provider_row
             receiver: int = action.receiver_row
-            time: datetime.datetime = action.time
+            time = datetime.datetime.fromisoformat(action.time)
             target = description.all_patches[provider].pickup_assignment[PickupIndex(action.provider_location_index)]
 
             message = (f"{location_to_name[provider]} found {target.pickup.name} "
                        f"for {location_to_name[receiver]}.")
             return {
                 "message": message,
-                "time": time.isoformat(),
+                "time": time.astimezone(datetime.timezone.utc).isoformat(),
+            }
+
+        if description is not None:
+            game_details = {
+                "spoiler": description.permalink.spoiler,
+                "word_hash": description.shareable_word_hash,
+                "seed_hash": description.shareable_hash,
+                "permalink": description.permalink.as_str,
+            }
+        else:
+            game_details = {
+                "spoiler": None,
+                "word_hash": None,
+                "seed_hash": None,
+                "permalink": None,
             }
 
         return {
@@ -128,7 +148,6 @@ class GameSession(BaseModel):
                     "id": membership.user.id,
                     "name": membership.user.name,
                     "row": membership.row,
-                    "is_observer": membership.is_observer,
                     "admin": membership.admin,
                 }
                 for membership in self.players
@@ -142,10 +161,8 @@ class GameSession(BaseModel):
                 for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
                                                                    ).order_by(GameSessionTeamAction.time.asc())
             ],
-            "spoiler": description.permalink.spoiler if description is not None else None,
-            "word_hash": description.shareable_word_hash if description is not None else None,
-            "seed_hash": description.shareable_hash if description is not None else None,
-            "generation_in_progress": (self.generation_in_progress.name
+            **game_details,
+            "generation_in_progress": (self.generation_in_progress.id
                                        if self.generation_in_progress is not None else None),
         }
 
@@ -159,19 +176,25 @@ class GameSessionPreset(BaseModel):
     row = peewee.IntegerField()
     preset = peewee.TextField()
 
+    class Meta:
+        primary_key = peewee.CompositeKey('session', 'row')
+
 
 class GameSessionMembership(BaseModel):
     user = peewee.ForeignKeyField(User, backref="games")
     session = peewee.ForeignKeyField(GameSession, backref="players")
-    row = peewee.IntegerField()
-    is_observer = peewee.BooleanField()
+    row = peewee.IntegerField(null=True)
     admin = peewee.BooleanField()
-    join_date = peewee.DateTimeField(default=datetime.datetime.now)
+    join_date = peewee.DateTimeField(default=_datetime_now)
     inventory = peewee.TextField(null=True)
 
     @property
     def effective_name(self) -> str:
         return self.user.name
+
+    @property
+    def is_observer(self) -> bool:
+        return self.row is None
 
     @classmethod
     def get_by_ids(cls, user_id: int, session_id: int) -> "GameSessionMembership":
@@ -185,17 +208,17 @@ class GameSessionMembership(BaseModel):
         return GameSessionMembership.get(
             GameSessionMembership.session == session,
             GameSessionMembership.row == row,
-            GameSessionMembership.is_observer == False,
         )
 
     @classmethod
     def non_observer_members(cls, session: GameSession) -> Iterator["GameSessionMembership"]:
         yield from GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                        GameSessionMembership.is_observer == False,
+                                                        GameSessionMembership.row != None,
                                                         )
 
     class Meta:
         primary_key = peewee.CompositeKey('user', 'session')
+        constraints = [peewee.SQL('UNIQUE(session_id, row)')]
 
 
 class GameSessionTeamAction(BaseModel):
@@ -204,7 +227,7 @@ class GameSessionTeamAction(BaseModel):
     provider_location_index = peewee.IntegerField()
     receiver_row = peewee.IntegerField()
 
-    time = peewee.DateTimeField(default=datetime.datetime.now)
+    time = peewee.DateTimeField(default=_datetime_now)
 
     class Meta:
         primary_key = peewee.CompositeKey('session', 'provider_row', 'provider_location_index')

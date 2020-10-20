@@ -1,11 +1,12 @@
 import io
 import json
 from pathlib import Path
-from unittest.mock import patch, ANY
 
 import pytest
 from PySide2.QtWidgets import QDialog
+from mock import AsyncMock, patch, ANY
 
+import randovania.game_description.pretty_print
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.requirements import Requirement
 from randovania.gui.data_editor import DataEditorWindow
@@ -49,24 +50,27 @@ def test_select_area_by_name(echoes_game_data,
     assert window.current_area.name == "Forgotten Bridge"
 
 
+@pytest.mark.asyncio
 @pytest.mark.parametrize("accept", [False, True])
 @patch("randovania.gui.data_editor.ConnectionsEditor")
 @patch("randovania.gui.data_editor.DataEditorWindow._apply_edit_connections", autospec=True)
-def test_open_edit_connection(mock_apply_edit_connections,
-                              mock_connections_editor,
-                              accept: bool,
-                              echoes_game_data,
-                              skip_qtbot,
-                              ):
+async def test_open_edit_connection(mock_apply_edit_connections,
+                                    mock_connections_editor,
+                                    accept: bool,
+                                    echoes_game_data,
+                                    skip_qtbot,
+                                    mocker,
+                                    ):
     # Setup
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     window = DataEditorWindow(echoes_game_data, None, False, True)
     skip_qtbot.addWidget(window)
 
     editor = mock_connections_editor.return_value
-    editor.exec_.return_value = QDialog.Accepted if accept else QDialog.Rejected
+    execute_dialog.return_value = QDialog.Accepted if accept else QDialog.Rejected
 
     # Run
-    window._open_edit_connection()
+    await window._open_edit_connection()
 
     # Assert
     mock_connections_editor.assert_called_once_with(window, window.resource_database, ANY)
@@ -98,6 +102,6 @@ def test_create_node_and_save(tmpdir,
     exported_game = data_reader.decode_data(exported_data)
 
     output = io.StringIO()
-    data_writer.write_human_readable_world_list(exported_game, output)
+    randovania.game_description.pretty_print.write_human_readable_world_list(exported_game, output)
 
     assert Path(tmpdir.join("game.txt")).read_text("utf-8") == output.getvalue()

@@ -2,12 +2,14 @@ import copy
 import dataclasses
 from random import Random
 
-from randovania.game_description import default_database
+from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import GateAssignment
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
+    HintDarkTemple
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -15,6 +17,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
 from randovania.generator import elevator_distributor
+from randovania.interface_common.enum_lib import iterate_enum
 from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
 
@@ -61,7 +64,7 @@ def add_elevator_connections_to_patches(layout_configuration: LayoutConfiguratio
         if rng is None:
             raise MissingRng("Elevator")
 
-        world_list = default_database.default_prime2_game_description().world_list
+        world_list = data_reader.decode_data(layout_configuration.game_data).world_list
         areas_to_not_change = {
             2278776548,  # Sky Temple Gateway
             2068511343,  # Sky Temple Energy Controller
@@ -158,17 +161,17 @@ def add_default_hints_to_patches(rng: Random,
     for node in world_list.all_nodes:
         if isinstance(node, LogbookNode) and node.lore_type == LoreType.LUMINOTH_WARRIOR:
             patches = patches.assign_hint(node.resource(),
-                                          Hint(HintType.KEYBEARER,
-                                               PrecisionPair(HintLocationPrecision.DETAILED,
-                                                             HintItemPrecision.PRECISE_CATEGORY),
+                                          Hint(HintType.LOCATION,
+                                               PrecisionPair(HintLocationPrecision.KEYBEARER,
+                                                             HintItemPrecision.BROAD_CATEGORY),
                                                PickupIndex(node.hint_index)))
 
     # TODO: this should be a flag in PickupNode
     indices_with_hint = [
-        (PickupIndex(24), HintType.LIGHT_SUIT_LOCATION),  # Light Suit
-        (PickupIndex(43), HintType.GUARDIAN),  # Dark Suit (Amorbis)
-        (PickupIndex(79), HintType.GUARDIAN),  # Dark Visor (Chykka)
-        (PickupIndex(115), HintType.GUARDIAN),  # Annihilator Beam (Quadraxis)
+        (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
+        (PickupIndex(43), HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
+        (PickupIndex(79), HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
+        (PickupIndex(115), HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
     ]
     all_logbook_assets = [node.resource()
                           for node in world_list.all_nodes
@@ -179,30 +182,37 @@ def add_default_hints_to_patches(rng: Random,
     rng.shuffle(indices_with_hint)
     rng.shuffle(all_logbook_assets)
 
-    for index, hint_type in indices_with_hint:
+    # The 4 guaranteed hints
+    for index, location_type in indices_with_hint:
         if not all_logbook_assets:
             break
 
         logbook_asset = all_logbook_assets.pop()
-        patches = patches.assign_hint(logbook_asset, Hint(hint_type, PrecisionPair.detailed(), index))
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION,
+                                                          PrecisionPair(location_type, HintItemPrecision.DETAILED),
+                                                          index))
 
+    # Dark Temple hints
+    temple_hints = list(iterate_enum(HintDarkTemple))
+    while all_logbook_assets and temple_hints:
+        logbook_asset = all_logbook_assets.pop()
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.RED_TEMPLE_KEY_SET, None,
+                                                          dark_temple=temple_hints.pop(0)))
+
+    # Jokes
     while num_joke > 0 and all_logbook_assets:
         logbook_asset = all_logbook_assets.pop()
-        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, PrecisionPair.joke(), None))
+        patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None))
         num_joke -= 1
 
     return patches
 
 
-def add_game_specific_from_config(patches: GamePatches, configuration: LayoutConfiguration, game: GameDescription,
-                                  ) -> GamePatches:
-    return dataclasses.replace(
-        patches,
-        game_specific=dataclasses.replace(
-            patches.game_specific,
-            energy_per_tank=configuration.energy_per_tank,
-            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database)
-        )
+def create_game_specific(configuration: LayoutConfiguration, game: GameDescription) -> EchoesGameSpecific:
+    return EchoesGameSpecific(
+        energy_per_tank=configuration.energy_per_tank,
+        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
+        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
     )
 
 
@@ -217,9 +227,8 @@ def create_base_patches(configuration: LayoutConfiguration,
     :param game:
     :return:
     """
-    patches = game.create_game_patches()
-
-    patches = add_game_specific_from_config(patches, configuration, game)
+    patches = dataclasses.replace(game.create_game_patches(),
+                                  game_specific=create_game_specific(configuration, game))
 
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 

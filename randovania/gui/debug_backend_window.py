@@ -12,7 +12,8 @@ from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
-from randovania.gui.lib import common_qt_lib, enum_lib
+from randovania.gui.lib import common_qt_lib
+from randovania.interface_common import enum_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
@@ -68,8 +69,8 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         for pickup in itertools.chain(self.pickups, self.permanent_pickups):
             inventory[pickup.name] += 1
 
-        self.inventory_label.setText("<br />".join(
-            f"{name} x{quantity}" for name, quantity in sorted(inventory.items())
+        self.inventory_label.setText("\n".join(
+            f"{name} x{quantity}" for name, quantity in inventory.items()
         ))
 
     @property
@@ -95,7 +96,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
 
         game = default_database.default_prime2_game_description()
         index_to_name = {
-            node.pickup_index.index: game.world_list.area_name(area, distinguish_dark_aether=True, separator=" - ")
+            node.pickup_index.index: game.world_list.area_name(area)
             for world, area, node in game.world_list.all_worlds_areas_nodes
             if isinstance(node, PickupNode)
         }
@@ -103,7 +104,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         if game_session is None:
             names = index_to_name
         else:
-            patcher_data = await network_client.session_admin_player(game_session.id, user.id,
+            patcher_data = await network_client.session_admin_player(user.id,
                                                                      SessionAdminUserAction.CREATE_PATCHER_FILE,
                                                                      CosmeticPatches().as_json)
             names = {

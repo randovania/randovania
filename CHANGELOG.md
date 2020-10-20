@@ -8,64 +8,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--   *Major* - Added: Multiworld support yay TODO actual description
+## [2.0.0] - 2020-10-??
 
--   Added: An automatic item tracker based on a Dolphin running on the same computer.
+This version is dedicated to SpaghettiToastBook, a great member of our community who sadly lost her life this year.
 
--   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
+Her contributions to Randovania were invaluable and she'll be missed.
+
+--- 
+
+-   **Major** - New game mode: Multiworld. In this co-op multiplayer mode, there's one different world for each player which is filled with items for specific players.
+
+-   **Major** - Tricks are more organized and can be customized more precisely to a player's desire.
+
+### General
 
 -   Added: Options for configuring usage of new tricks:
-    - Boost Jump
-    - Extended Dash
-    - Bomb Slot without Bombs
     - Bomb Jump (renamed from Difficult Bomb Jump)
+    - Bomb Slot without Bombs
+    - Boost Jump
+    - Combat
     - Difficult Movement
-    - Standable Terrain
-    - Respawn Abuse
-    - Open Gates from Behind
-    - Screw Attack into Tunnels
+    - Extended Dash
     - Knowledge
+    - Open Gates from Behind
+    - Respawn Abuse
+    - Screw Attack into Tunnels
     - Seeker Locks without Seekers
-    
--   Added: Energy Tanks have doubled weight for the generator.
-
--   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
-
--   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
-
--   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
-
--   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
-
--   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
-
--   Fixed: The Data Editor no longer errors when saving after creating a new node.
-
--   Fixed: Generator wasn't properly healing the player when placing an Energy Tank.
-
--   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
-
--   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
-
--   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
-
--   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.
-
--   Fixed: Removed Aerie, Aerie Access and Credits from possible starting locations.
-
--   Changed: The Mission Results screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen. 
-
--   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
-
--   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
-
--   Changed: The elevator scan now includes the world of the connected area.
-
--   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
-
--   Changed: Better error messages when there are references to unknown resources in the database.
-
--   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
+    - Standable Terrain
 
 -   Changed: The following trick level difficulties were renamed:
     - Trivial -> Beginner
@@ -74,9 +43,88 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Hard -> Expert
     - Minimal Checking -> Minimal Logic
 
-### Logic Database changes
+-   Changed: Replaced Beginner Friendly with Starter Preset, which is now the default preset.
 
--   *Major* - Changed: Every requirement above the No Tricks difficulty now has a corresponding trick for ease of customization and organization.
+-   Fixed: Energy Tanks can now properly be used as progression.
+
+### Hints
+
+-   Added: Relative hints, where an item is described as being some rooms away from another item or room.
+
+-   Added: Guaranteed hints which tells in which areas (Agon Wastes, Ing Hive, etc) contains the keys for each of your dark temples.
+    These hints are placed purely randomly, similarly to the guaranteed Temple Bosses hints.
+
+-   Added: Free hint spots after generation now prefer items from late in progression instead of pure random.
+
+-   Removed: Hints with green item names/joke item names have been removed.
+
+-   Removed: Temple Keys are no longer hinted by progression-based Luminoth lore hints.
+
+-   Changed: All games now have precisely 2 joke hints, which no longer randomly replace a progression hint.
+
+-   Changed: Hints from keybearer corpses now uses a broader category, which leaves unclear if it's an expansion or not.
+
+### GUI
+
+-   Added: An automatic item tracker based on a Dolphin running on the same computer.
+
+-   Added: A dark theme has been added. It can be toggled in the Advanced menu.
+
+-   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
+    
+-   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
+
+-   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
+
+-   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
+
+-   Added: Randovania can generate a game by importing permalinks directly from a race on racetime.gg.
+    
+-   Added: Some tricks now have a description on the Trick Details popup.
+
+-   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
+
+-   Fixed: The Data Visualizer no longer opens behind the Customize Preset window when using the Trick Details popup.
+
+-   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
+
+-   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
+
+-   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
+
+### Quality of Life
+
+-   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
+
+-   Added: The rate of healing for Safe Zones is now configurable.
+
+-   Fixed: Removed Aerie Access and Credits from possible starting locations.
+
+-   Changed: The Mission Final screen now includes the seed hash instead of Permalink, as many permalinks are bigger than the screen.
+
+-   Changed: The elevator scan now includes the world of the connected area.
+
+### Internals/Developer
+
+-   Added: Energy Tanks have doubled weight for the generator.
+
+-   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
+
+-   Fixed: The Data Editor no longer errors when saving after creating a new node.
+
+-   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
+
+-   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
+
+-   Fixed: Exclude from Room Randomizer is now properly set, restoring many logic paths.
+
+-   Changed: Better error messages when there are references to unknown resources in the database.
+
+-   Changed: The `database` command is no longer a subcommand of `echoes`. It also has the `--game` argument to choose which database to use.
+
+-   Changed: The `_locations_internal` field is no longer needed for .rdvgame files. 
+
+### Logic Database changes
 
 #### Added
 
@@ -84,6 +132,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Methods to open all Seeker Missile Doors with Screw Attack (Expert and above).
     - Method to activate most Bomb Slots without Bombs (Advanced and above).
     - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
+
+-   Sanctum, method to fight Emperor Ing without Spider Ball (Hypermode).
 
 -   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
 
@@ -105,13 +155,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Crossroads, method to reach the item from the half pipe with just Screw Attack (Advanced and above).
 
--   Doomed Entry, method to climb room with Space Jump and Screw Attack (Beginner and above).
-
--   Feeding Pit, method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
-
 -   Dark Transit Station, method to reach the ledge from Duelling Range with a Bomb Jump (Intermediate and above).
 
+-   Doomed Entry, method to climb room with Space Jump and Screw Attack (Beginner and above).
+
+-   Feeding Pit:
+    - Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
+    - Method of climbing to Watering Hole door without any items (Expert and above).
+
 -   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
+
+-   Abandoned Worksite, method of reaching the item with a Bomb Space Jump without Space Jump (Advanced and above).
 
 -   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
@@ -124,7 +178,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
--   Meditation Vista, methods of reaching the item with a Boost Jump or Roll Jump (Expert and above).
+-   Meditation Vista, methods of reaching the item with a Boost Jump (Advanced and above), Roll Jump (Expert and above), or Extended Dash (Hypermode).
 
 -   Path of Roots, method of reaching the item using:
     - Morph Ball, Bombs and Space Jump (Advanced and above).
@@ -159,9 +213,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Grand Abyss, methods of crossing the gap with Boost Jump (Advanced and above) or Extended Dash (Expert and above).
 
--   Hall of Combat Mastery, methods of collecting the item with a Wall Boost (Expert and above) or with a Power Bomb and unmorphing (Beginner and above).
+-   Hall of Combat Mastery:
+    - Method of collecting the item with a Wall Boost (Expert and above).
+    - Methods of reaching the item, and skipping the Spider Track to and from Central Area Transport East with Screw Attack (Intermediate and above).
 
--   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Intermediate and above).
+-   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
 
 -   Hive Temple:
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
@@ -171,11 +227,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
+-   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
 -   Watch Station Access, methods to cross the pit in either direction using:
     - Boost Ball and Boost Jump (Advanced and above).
     - Space Jump, Scan Visor, and Scan Dash (Advanced and above).
-
--   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
 
 -   Workers Path, method of crossing the room from Sanctuary Temple with a Boost Jump (Advanced and above).
 
@@ -188,25 +244,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Staging Area terminal
     - Torvus Lagoon terminal
     - Trooper Security Station Event coming from Communication Area
+    - Various Dash Requirements
 
--   Dark Aether Damage Requirements:
-    - Sky Temple Grounds
-    - Battleground
-    - Judgment Pit
-    - Putrid Alcove: With Space Jump, Bombs or Gravity Boost
-    - Undertemple Access (Updated)
-    - Undertemple (Intermediate and above)
-    - Vault Attack Portal
+-   Dark Aether Damage Requirements have been added to every room in the Dark World
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
     - Screw Attack without Space Jump in Phazon Grounds (Advanced and above)
 
--   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack as well if coming from Mining Plaza.
+-   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack and Space Jump as well if coming from Mining Plaza.
 
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
 
--   Morph Ball Doors now properly requires Morph Ball.
+-   Morph Ball Doors now properly require Morph Ball.
 
 -   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
 
@@ -216,13 +266,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Simplified nodes in many rooms for ease of logic navigation.
 
--   Crossing lower Double Path without Space Jump is now Beginner difficulty (from Intermediate).
+-   Crossing lower Double Path without Space Jump is now Beginner (from Intermediate).
 
--   Reaching Transit Station door in Mining Station B after unlocking the portal with Space Jump and Screw Attack is now Advanced difficulty (from Expert).
+-   Reaching Transit Station door in Mining Station B after unlocking the portal with Space Jump and Screw Attack is now Advanced (from Expert).
 
--   Reaching the portal in Catacombs with Morph Ball and Reverse Air Underwater is now Advanced difficulty (from Expert).
+-   Reaching the portal in Catacombs with Morph Ball and Reverse Air Underwater is now Advanced (from Expert).
 
--   Reaching Transit Tunnel South/West Doors from top door in Gathering Hall with Morph Ball and Roll Jump is now Expert difficulty (from Advanced).
+-   Reaching Transit Tunnel South/West Doors from top door in Gathering Hall with Morph Ball and Roll Jump is now Expert (from Advanced).
+
+-   Reaching Portal Chamber door in Poisoned Bog with just Screw Attack is now Advanced (from Intermediate).
+
+-   Scan Dash to upper level in Central Mining Station from Central Station Access is now Expert (from Advanced).
+
+-   Instant Morph tricks in Hall of Combat Mastery to the item and Central Area Transport East and back are now Advanced (from Intermediate).
 
 ## [1.2.2] - 2020-06-06
 

@@ -6,7 +6,7 @@ from randovania.game_connection.connection_backend import ConnectionStatus
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.gui.debug_backend_window import DebugBackendWindow
-from randovania.gui.lib.enum_lib import iterate_enum
+from randovania.interface_common.enum_lib import iterate_enum
 
 
 @pytest.fixture(name="backend")
@@ -20,6 +20,7 @@ def _pickup() -> PickupEntry:
         name="Pickup",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
+        broad_category=ItemCategory.LIFE_SUPPORT,
         resources=(
             ConditionalResources(None, None, ()),
         ),

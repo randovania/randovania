@@ -32,6 +32,7 @@ class PickupEntry:
     name: str
     model_index: int
     item_category: ItemCategory
+    broad_category: ItemCategory
     resources: Tuple[ConditionalResources, ...]
     convert_resources: Tuple[ResourceConversion, ...] = tuple()
     probability_offset: float = 0

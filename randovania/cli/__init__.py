@@ -4,11 +4,12 @@ import sys
 from pathlib import Path
 
 import randovania
-from randovania.cli import echoes, multiworld, gui
+from randovania.cli import echoes, multiworld, gui, prime_database
 
 
 def create_subparsers(root_parser):
     echoes.create_subparsers(root_parser)
+    prime_database.create_subparsers(root_parser)
     multiworld.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
 
@@ -31,9 +32,14 @@ def _create_parser():
     return parser
 
 
-def _run_args(args):
+def _run_args(parser, args):
     if args.configuration is not None:
         randovania.CONFIGURATION_FILE_PATH = args.configuration.absolute()
+
+    if args.func is None:
+        parser.print_help()
+        raise SystemExit(1)
+
     args.func(args)
 
 
@@ -51,4 +57,6 @@ def run_cli(argv):
         args = argv[1:]
         if gui.has_gui and not args:
             args = ["gui", "main"]
-        _run_args(_create_parser().parse_args(args))
+
+        parser = _create_parser()
+        _run_args(parser, parser.parse_args(args))

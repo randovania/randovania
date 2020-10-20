@@ -17,9 +17,9 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.generator import generator
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
-from randovania.layout.game_patches_serializer import BitPackPickupEntry
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.layout.major_item_state import MajorItemState
 from randovania.layout.permalink import Permalink
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
@@ -31,9 +31,11 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"starting_item": "Morph Ball"},
         {"elevator": [1572998, "Temple Grounds/Transport to Agon Wastes"]},
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
-        {"pickup": ['BQ7pCYAawGA=', "Screw Attack"]},
-        {"hint": [1000, {"hint_type": "location", "location_precision": "detailed",
-                         "item_precision": "detailed", "target": 50}]},
+        {"pickup": "Morph Ball Bomb"},
+        {"hint": [1000, {"hint_type": "location",
+                         "dark_temple": None,
+                         "precision": {"location": "detailed", "item": "detailed", "relative": None},
+                         "target": 50}]},
     ],
     name="patches_with_data")
 def _patches_with_data(request, echoes_game_data, echoes_item_database):
@@ -68,8 +70,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         },
         "translators": {},
         "locations": {},
-        "hints": {},
-        "_locations_internal": "",
+        "hints": {}
     }
     patches = dataclasses.replace(game.create_game_patches(), player_index=0)
 
@@ -111,7 +112,7 @@ def _patches_with_data(request, echoes_game_data, echoes_item_database):
         patches = patches.assign_gate_assignment(gates)
 
     if request.param.get("pickup"):
-        data["_locations_internal"], pickup_name = request.param.get("pickup")
+        pickup_name = request.param.get("pickup")
         pickup = pickup_creator.create_major_item(echoes_item_database.major_items[pickup_name],
                                                   MajorItemState(), True, game.resource_database,
                                                   None, False)
@@ -142,8 +143,11 @@ def test_encode(patches_with_data, echoes_game_data):
 def test_decode(patches_with_data, default_layout_configuration):
     encoded, expected = patches_with_data
 
+    game = data_reader.decode_data(default_layout_configuration.game_data)
+    pool = pool_creator.calculate_pool_results(default_layout_configuration, game.resource_database)
+
     # Run
-    decoded = game_patches_serializer.decode_single(0, 1, encoded, default_layout_configuration)
+    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_layout_configuration)
 
     # Assert
     assert decoded == expected
@@ -167,6 +171,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
         name=name,
         model_index=26,
         item_category=ItemCategory.TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
         resources=(
             ConditionalResources(
                 "Morph Ball", None,
@@ -194,12 +199,12 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
     assert pickup == decoded
 
 
-def test_round_trip_generated_patches(echoes_game_data, preset_manager):
+def test_round_trip_generated_patches(echoes_game_data, default_preset):
     # Setup
     preset = dataclasses.replace(
-        preset_manager.default_preset,
+        default_preset,
         layout_configuration=dataclasses.replace(
-            preset_manager.default_preset.layout_configuration,
+            default_preset.layout_configuration,
             trick_level_configuration=TrickLevelConfiguration(
                 global_level=LayoutTrickLevel.MINIMAL_LOGIC,
                 specific_levels={},

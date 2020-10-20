@@ -1,8 +1,16 @@
 from random import Random
 from unittest.mock import MagicMock, patch
 
-from randovania.game_description.hint import Hint, HintType
+import pytest
+
+from randovania.game_description.area_location import AreaLocation
+from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
+    RelativeDataArea, RelativeDataItem
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode
+from randovania.game_description.resources.logbook_asset import LogbookAsset
+from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
@@ -33,6 +41,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     player_state.index = 0
     player_state.game = player_pools[0].game
     player_state.pickups_left = runner._split_expansions(player_pools[0].pickups)[0]
+    player_state.scan_asset_initial_pickups = {}
 
     mock_retcon_playthrough_filler.return_value = {player_state: patches}, action_log
 
@@ -65,3 +74,92 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
 
     # Assert
     assert len(result.hints) == expected_logbooks
+
+
+def test_add_hints_precision(empty_patches, mocker):
+    failed_relative_provider = MagicMock(return_value=None)
+    relative_hint_provider = MagicMock()
+    mocker.patch("randovania.generator.filler.runner._get_relative_hint_providers",
+                 return_value=[failed_relative_provider, relative_hint_provider])
+
+    player_state = MagicMock()
+    rng = MagicMock()
+    hints = [
+        Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
+                                              HintItemPrecision.DETAILED), PickupIndex(1)),
+        Hint(HintType.LOCATION, None, PickupIndex(2)),
+        Hint(HintType.LOCATION, None, PickupIndex(3)),
+    ]
+
+    initial_patches = empty_patches
+    for i, hint in enumerate(hints):
+        initial_patches = initial_patches.assign_hint(LogbookAsset(i), hint)
+
+    # Run
+    result = runner.add_hints_precision(player_state, initial_patches, rng)
+
+    # Assert
+    failed_relative_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(2))
+    relative_hint_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(3))
+    assert result.hints == {
+        LogbookAsset(0): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
+                                                               HintItemPrecision.DETAILED), PickupIndex(1)),
+        LogbookAsset(1): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
+                                                               HintItemPrecision.PRECISE_CATEGORY), PickupIndex(2)),
+        LogbookAsset(2): relative_hint_provider.return_value,
+    }
+
+
+def _make_pickup(item_category: ItemCategory):
+    return PickupEntry(
+        name="Pickup",
+        model_index=0,
+        item_category=item_category,
+        broad_category=item_category,
+        resources=(
+            ConditionalResources(None, None, ()),
+        ),
+    )
+
+
+@pytest.mark.parametrize("location_precision", [HintLocationPrecision.RELATIVE_TO_AREA,
+                                                HintLocationPrecision.RELATIVE_TO_INDEX])
+def test_add_relative_hint(echoes_game_description, empty_patches, location_precision):
+    # Setup
+    rng = Random(5000)
+    target_precision = MagicMock()
+    precise_distance = MagicMock()
+    precision = MagicMock()
+    patches = empty_patches.assign_pickup_assignment({
+        PickupIndex(8): PickupTarget(_make_pickup(ItemCategory.MOVEMENT), 0),
+    })
+
+    if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
+        max_distance = 8
+        data = RelativeDataArea(
+            precise_distance,
+            AreaLocation(0x3BFA3EFF, 0x62B0D67D),
+            precision,
+        )
+    else:
+        max_distance = 20
+        data = RelativeDataItem(
+            precise_distance,
+            PickupIndex(8),
+            precision,
+        )
+
+    # Run
+    result = runner.add_relative_hint(echoes_game_description.world_list,
+                                      patches,
+                                      rng,
+                                      PickupIndex(1),
+                                      target_precision,
+                                      location_precision,
+                                      precise_distance,
+                                      precision,
+                                      max_distance=max_distance)
+
+    # Assert
+    pair = PrecisionPair(location_precision, target_precision, data)
+    assert result == Hint(HintType.LOCATION, pair, PickupIndex(1))

@@ -15,17 +15,13 @@ async def test_attempt_join(mock_execute_dialog: AsyncMock,
     mock_execute_dialog.return_value = QDialog.Accepted
     network_client = MagicMock()
     network_client.join_game_session = AsyncMock()
-    session = GameSessionListEntry(
-        id=1,
-        name="A Game",
-        has_password=True,
-        state=GameSessionState.IN_PROGRESS,
-        num_players=1,
-        creator="You",
-    )
+    session_a = GameSessionListEntry(id=1, name="A Game", has_password=True, state=GameSessionState.FINISHED,
+                                     num_players=1, creator="You")
+    session_b = GameSessionListEntry(id=2, name="B Game", has_password=True, state=GameSessionState.IN_PROGRESS,
+                                     num_players=1, creator="You")
 
     dialog = GameSessionBrowserDialog(network_client)
-    dialog.sessions = [session]
+    dialog.sessions = [session_a, session_b]
     dialog.update_list()
     dialog.table_widget.selectRow(0)
 
@@ -34,4 +30,4 @@ async def test_attempt_join(mock_execute_dialog: AsyncMock,
 
     # Assert
     mock_execute_dialog.assert_awaited_once()
-    network_client.join_game_session.assert_awaited_once_with(session, "")
+    network_client.join_game_session.assert_awaited_once_with(session_b, "")

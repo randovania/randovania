@@ -3,6 +3,7 @@ import datetime
 from typing import List, Dict, Optional
 
 from randovania.layout.preset import Preset
+from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -25,8 +26,7 @@ class GameSessionListEntry:
 class PlayerSessionEntry:
     id: int
     name: str
-    row: int
-    is_observer: bool
+    row: Optional[int]
     admin: bool
 
     @classmethod
@@ -35,9 +35,12 @@ class PlayerSessionEntry:
             id=data["id"],
             name=data["name"],
             row=data["row"],
-            is_observer=data["is_observer"],
             admin=data["admin"],
         )
+
+    @property
+    def is_observer(self):
+        return self.row is None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -57,13 +60,15 @@ class GameSessionAction:
 class GameSessionEntry:
     id: int
     name: str
-    presets: List[Preset]
+    presets: List[VersionedPreset]
     players: Dict[int, PlayerSessionEntry]
     actions: List[GameSessionAction]
     seed_hash: Optional[str]
     word_hash: Optional[str]
     spoiler: Optional[bool]
+    permalink: Optional[str]
     state: GameSessionState
+    generation_in_progress: Optional[int]
 
     @property
     def num_admins(self) -> int:
@@ -82,7 +87,7 @@ class GameSessionEntry:
         return GameSessionEntry(
             id=data["id"],
             name=data["name"],
-            presets=[Preset.from_json_dict(preset_json) for preset_json in data["presets"]],
+            presets=[VersionedPreset(preset_json) for preset_json in data["presets"]],
             players={
                 player_entry.id: player_entry
                 for player_entry in player_entries
@@ -91,7 +96,9 @@ class GameSessionEntry:
             seed_hash=data["seed_hash"],
             word_hash=data["word_hash"],
             spoiler=data["spoiler"],
+            permalink=data["permalink"],
             state=GameSessionState(data["state"]),
+            generation_in_progress=data["generation_in_progress"],
         )
 
 

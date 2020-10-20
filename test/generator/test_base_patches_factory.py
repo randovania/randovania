@@ -6,7 +6,8 @@ import pytest
 
 from randovania.game_description import data_reader
 from randovania.game_description.area_location import AreaLocation
-from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
+    HintDarkTemple
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
@@ -139,14 +140,16 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
     rng = MagicMock()
 
     def _light_suit_location_hint(number: int):
-        return Hint(HintType.LIGHT_SUIT_LOCATION, PrecisionPair.detailed(), PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION,
+                                                     HintItemPrecision.DETAILED), PickupIndex(number))
 
     def _guardian_hint(number: int):
-        return Hint(HintType.GUARDIAN, PrecisionPair.detailed(), PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.GUARDIAN,
+                                                     HintItemPrecision.DETAILED), PickupIndex(number))
 
     def _keybearer_hint(number: int):
-        return Hint(HintType.KEYBEARER, PrecisionPair(HintLocationPrecision.DETAILED,
-                                                      HintItemPrecision.PRECISE_CATEGORY), PickupIndex(number))
+        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.KEYBEARER,
+                                                     HintItemPrecision.BROAD_CATEGORY), PickupIndex(number))
 
     expected = {
         # Keybearer
@@ -169,9 +172,15 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
         LogbookAsset(1948976790): _guardian_hint(79),
         LogbookAsset(3212301619): _guardian_hint(115),
 
+        # Dark Temple hints
+        LogbookAsset(67497535): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.AGON_WASTES),
+        LogbookAsset(4072633400): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG),
+        LogbookAsset(0x82919C91): Hint(HintType.RED_TEMPLE_KEY_SET, None,
+                                       dark_temple=HintDarkTemple.SANCTUARY_FORTRESS),
+
         # Jokes
-        LogbookAsset(67497535): Hint(HintType.JOKE, PrecisionPair.joke(), None),
-        LogbookAsset(4072633400): Hint(HintType.JOKE, PrecisionPair.joke(), None),
+        LogbookAsset(0x49CD4F34): Hint(HintType.JOKE, None),
+        LogbookAsset(0x9F94AC29): Hint(HintType.JOKE, None),
     }
 
     # Run
@@ -187,21 +196,21 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches):
 @patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
 @patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
-@patch("randovania.generator.base_patches_factory.add_game_specific_from_config", autospec=True)
-def test_create_base_patches(mock_add_game_specific_from_config: MagicMock,
-                             mock_add_elevator_connections_to_patches: MagicMock,
+def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
                              mock_add_default_hints_to_patches: MagicMock,
+                             mocker,
                              ):
     # Setup
     rng = MagicMock()
     game = MagicMock()
     layout_configuration = MagicMock()
+    mock_replace: MagicMock = mocker.patch("dataclasses.replace")
 
     patches = [
         game.create_game_patches.return_value,
-        mock_add_game_specific_from_config.return_value,
+        mock_replace.return_value,
         mock_add_elevator_connections_to_patches.return_value,
     ]
     patches.append(patches[-1].assign_gate_assignment.return_value)
@@ -212,6 +221,7 @@ def test_create_base_patches(mock_add_game_specific_from_config: MagicMock,
 
     # Assert
     game.create_game_patches.assert_called_once_with()
+    mock_replace.assert_called_once_with(game.create_game_patches.return_value, game_specific=ANY)
     mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, patches[1])
 
     # Gate Assignment

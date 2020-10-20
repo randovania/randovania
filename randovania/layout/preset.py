@@ -1,12 +1,6 @@
 import dataclasses
-import json
-from pathlib import Path
-from typing import List, Optional
+from typing import Optional, List
 
-import slugify
-
-from randovania import get_data_path
-from randovania.layout import preset_migration
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.patcher_configuration import PatcherConfiguration
 
@@ -18,14 +12,6 @@ class Preset:
     base_preset_name: Optional[str]
     patcher_configuration: PatcherConfiguration
     layout_configuration: LayoutConfiguration
-
-    @classmethod
-    def file_extension(cls) -> str:
-        return "rdvpreset"
-
-    @property
-    def slug_name(self) -> str:
-        return slugify.slugify(self.name)
 
     @property
     def as_json(self) -> dict:
@@ -47,31 +33,9 @@ class Preset:
             layout_configuration=LayoutConfiguration.from_json_dict(value["layout_configuration"]),
         )
 
+    def dangerous_settings(self) -> List[str]:
+        return self.layout_configuration.dangerous_settings()
 
-def read_preset_file(path: Path) -> Preset:
-    with path.open() as preset_file:
-        preset = json.load(preset_file)
-
-    return Preset.from_json_dict(preset_migration.convert_to_current_version(preset))
-
-
-def save_preset_file(preset: Preset, path: Path) -> None:
-    preset_json = {
-        "schema_version": preset_migration.CURRENT_PRESET_VERSION,
-    }
-    preset_json.update(preset.as_json)
-
-    with path.open("w") as preset_file:
-        json.dump(preset_json, preset_file, indent=4)
-
-
-def read_preset_list() -> List[Preset]:
-    base_path = get_data_path().joinpath("presets")
-
-    with base_path.joinpath("presets.json").open() as presets_file:
-        preset_list = json.load(presets_file)["presets"]
-
-    return [
-        read_preset_file(base_path.joinpath(preset["path"]))
-        for preset in preset_list
-    ]
+    def is_same_configuration(self, other: "Preset") -> bool:
+        return (self.patcher_configuration == other.patcher_configuration
+                and self.layout_configuration == other.layout_configuration)

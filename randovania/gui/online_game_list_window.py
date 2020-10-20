@@ -15,6 +15,7 @@ from randovania.network_common.session_state import GameSessionState
 
 class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
     sessions: List[GameSessionListEntry]
+    visible_sessions: List[GameSessionListEntry]
 
     def __init__(self, network_client: QtNetworkClient):
         super().__init__()
@@ -64,7 +65,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
     @property
     def selected_session(self):
         row: int = self.table_widget.selectedIndexes()[0].row()
-        return self.sessions[row]
+        return self.visible_sessions[row]
 
     @asyncSlot(QTableWidgetItem)
     async def on_double_click(self, item: QTableWidgetItem):
@@ -73,14 +74,13 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
     @asyncSlot()
     @handle_network_errors
     async def attempt_join(self):
-        if not self.sessions:
+        if not self.visible_sessions:
             return
 
         session = self.selected_session
 
         if session.has_password:
             dialog = QInputDialog(self)
-            # dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint)
             dialog.setWindowTitle("Enter password")
             dialog.setLabelText("This session requires a password:")
             dialog.setWindowModality(Qt.WindowModal)
@@ -102,7 +102,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
 
     def update_list(self):
         self.table_widget.clear()
-        self.table_widget.setHorizontalHeaderLabels(["Name", "Password?", "In-Game", "Type", "Players"])
+        self.table_widget.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator"])
 
         name_filter = self.filter_name_edit.text().strip()
 
@@ -126,6 +126,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
                 and session.state in displayed_states
                 and name_filter in session.name)
         ]
+        self.visible_sessions = visible_sessions
 
         self.table_widget.setRowCount(len(visible_sessions))
         for i, session in enumerate(visible_sessions):

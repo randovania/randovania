@@ -13,7 +13,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime import default_data
 from randovania.gui.lib.qt_network_client import QtNetworkClient
-from randovania.layout.game_patches_serializer import BitPackPickupEntry
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
 class Data(AsyncContextManager):
@@ -143,7 +143,7 @@ class MultiworldClient(QObject):
         self.start_notify_collect_locations_task()
 
     async def refresh_received_pickups(self):
-        self.logger.info(f"refresh_received_pickups: start")
+        self.logger.debug(f"refresh_received_pickups: start")
         async with self._pickups_lock:
             result = await self.network_client.game_session_request_pickups()
 

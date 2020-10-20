@@ -13,10 +13,12 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.item_pool.ammo import items_for_ammo
 from randovania.gui.dialog.item_configuration_popup import ItemConfigurationPopup
 from randovania.gui.generated.main_rules_ui import Ui_MainRules
+from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.ammo_state import AmmoState
 from randovania.layout.major_item_state import ENERGY_TANK_MAXIMUM_COUNT, MajorItemState, DEFAULT_MAXIMUM_SHUFFLED
@@ -140,8 +142,8 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         previous_pickup_for_item = {}
         resource_database = default_prime2_resource_database()
 
-        item_for_index = {
-            ammo_index: resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_index)
+        item_for_index: Dict[int, ItemResourceInfo] = {
+            ammo_index: resource_database.get_item(ammo_index)
             for ammo_index in ammo_provided.keys()
         }
 
@@ -326,7 +328,7 @@ class MainRulesWindow(QMainWindow, Ui_MainRules):
         self._boxes_for_category = {}
 
         current_row = 0
-        for major_item_category in ItemCategory:
+        for major_item_category in iterate_enum(ItemCategory):
             if not major_item_category.is_major_category and major_item_category != ItemCategory.ENERGY_TANK:
                 continue
 

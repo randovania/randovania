@@ -353,7 +353,7 @@ def _elevator_area_name(world_list: WorldList,
         world = world_list.world_by_area_location(area_location)
         area = world.area_by_asset_id(area_location.area_asset_id)
         if include_world_name:
-            return world_list.area_name(area, distinguish_dark_aether=True, separator=" - ")
+            return world_list.area_name(area)
         else:
             return area.name
 
@@ -544,7 +544,7 @@ def _create_string_patches(hint_config: HintConfiguration,
 
     # Location Hints
     string_patches.extend(
-        item_hints.create_hints(patches, game.world_list, rng)
+        item_hints.create_hints(all_patches, players_config, game.world_list, rng)
     )
 
     # Sky Temple Keys
@@ -618,7 +618,7 @@ def create_patcher_file(description: LayoutDescription,
     rng = Random(description.permalink.as_str)
 
     game = data_reader.decode_data(layout.game_data)
-    pickup_count = sum(1 for node in game.world_list.all_nodes if isinstance(node, PickupNode))
+    pickup_count = game.world_list.num_pickup_nodes
     useless_target = PickupTarget(pickup_creator.create_useless_pickup(game.resource_database),
                                   players_config.player_index)
 

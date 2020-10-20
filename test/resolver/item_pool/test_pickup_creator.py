@@ -6,7 +6,6 @@ from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.major_item_state import MajorItemState
 
 
@@ -14,17 +13,18 @@ from randovania.layout.major_item_state import MajorItemState
 @pytest.mark.parametrize("has_convert", [False, True])
 def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_database):
     # Setup
-    item_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 10)
-    item_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 15)
-    item_c = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 18)
-    ammo_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 40)
-    ammo_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 42)
-    temporary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
-    temporary_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 72)
+    item_a = echoes_resource_database.get_item(10)
+    item_b = echoes_resource_database.get_item(15)
+    item_c = echoes_resource_database.get_item(18)
+    ammo_a = echoes_resource_database.get_item(40)
+    ammo_b = echoes_resource_database.get_item(42)
+    temporary_a = echoes_resource_database.get_item(71)
+    temporary_b = echoes_resource_database.get_item(72)
 
     major_item = MajorItem(
         name="The Item",
         item_category=ItemCategory.MORPH_BALL,
+        broad_category=ItemCategory.MORPH_BALL_RELATED,
         model_index=1337,
         progression=(10, 15, 18),
         ammo_index=(40, 42),
@@ -86,6 +86,7 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
             ResourceConversion(source=temporary_b, target=ammo_b),
         ) if has_convert else (),
         item_category=ItemCategory.MORPH_BALL,
+        broad_category=ItemCategory.MORPH_BALL_RELATED,
         probability_offset=5,
     )
 
@@ -97,9 +98,9 @@ def test_create_pickup_for(percentage: bool, has_convert: bool, echoes_resource_
 ])
 def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoes_resource_database):
     # Setup
-    missile = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 44)
-    missile_launcher = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 73)
-    temporary = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
+    missile = echoes_resource_database.get_item(44)
+    missile_launcher = echoes_resource_database.get_item(73)
+    temporary = echoes_resource_database.get_item(71)
 
     state = MajorItemState(
         include_copy_in_original_location=False,
@@ -136,6 +137,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_item_database, echoe
         ),
         model_index=24,
         item_category=ItemCategory.MISSILE,
+        broad_category=ItemCategory.MISSILE_RELATED,
     )
 
 
@@ -147,10 +149,10 @@ def test_create_seeker_launcher(ammo_quantity: int,
                                 echoes_resource_database,
                                 ):
     # Setup
-    missile = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 44)
-    missile_launcher = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 73)
-    seeker_launcher = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 26)
-    temporary = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
+    missile = echoes_resource_database.get_item(44)
+    missile_launcher = echoes_resource_database.get_item(73)
+    seeker_launcher = echoes_resource_database.get_item(26)
+    temporary = echoes_resource_database.get_item(71)
 
     state = MajorItemState(
         include_copy_in_original_location=False,
@@ -204,22 +206,24 @@ def test_create_seeker_launcher(ammo_quantity: int,
         resources=locked_conditional if ammo_requires_major_item else normal_resources,
         model_index=25,
         item_category=ItemCategory.MISSILE,
+        broad_category=ItemCategory.MISSILE_RELATED,
     )
 
 
 @pytest.mark.parametrize("requires_major_item", [False, True])
 def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_database):
     # Setup
-    primary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 73)
-    ammo_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 40)
-    ammo_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 42)
-    temporary_a = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 71)
-    temporary_b = echoes_resource_database.get_by_type_and_index(ResourceType.ITEM, 72)
+    primary_a = echoes_resource_database.get_item(73)
+    ammo_a = echoes_resource_database.get_item(40)
+    ammo_b = echoes_resource_database.get_item(42)
+    temporary_a = echoes_resource_database.get_item(71)
+    temporary_b = echoes_resource_database.get_item(72)
 
     ammo = Ammo(
         name="The Item",
         maximum=100,
         items=(40, 42),
+        broad_category=ItemCategory.ETM,
         unlocked_by=73,
         temporaries=(71, 72),
         models=(10, 20),
@@ -252,5 +256,6 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_resource_databa
             ConditionalResources(None, None, item_resources),
         ),
         item_category=ItemCategory.EXPANSION,
+        broad_category=ItemCategory.ETM,
         probability_offset=0,
     )

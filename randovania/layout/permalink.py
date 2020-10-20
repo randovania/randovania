@@ -30,12 +30,17 @@ def _encode_preset(preset: Preset, manager: PresetManager):
     # Is this a custom preset?
     is_custom_preset = preset.base_preset_name is not None
     if is_custom_preset:
-        reference_preset = manager.preset_for_name(preset.base_preset_name)
+        reference_versioned = manager.preset_for_name(preset.base_preset_name)
+        if reference_versioned is None:
+            reference_versioned = manager.default_preset
+        reference_preset = reference_versioned.get_preset()
     else:
         reference_preset = preset
 
+    included_presets = [versioned.get_preset() for versioned in manager.included_presets]
+
     yield from bitpacking.encode_bool(is_custom_preset)
-    yield from bitpacking.pack_array_element(reference_preset, manager.included_presets)
+    yield from bitpacking.pack_array_element(reference_preset, included_presets)
     if is_custom_preset:
         yield from preset.patcher_configuration.bit_pack_encode(
             {"reference": reference_preset.patcher_configuration})
@@ -45,8 +50,10 @@ def _encode_preset(preset: Preset, manager: PresetManager):
 
 
 def _decode_preset(decoder: BitPackDecoder, manager: PresetManager) -> Preset:
+    included_presets = [versioned.get_preset() for versioned in manager.included_presets]
+
     is_custom_preset = bitpacking.decode_bool(decoder)
-    reference_preset = decoder.decode_element(manager.included_presets)
+    reference_preset = decoder.decode_element(included_presets)
     if is_custom_preset:
         patcher_configuration = PatcherConfiguration.bit_pack_unpack(
             decoder, {"reference": reference_preset.patcher_configuration})
@@ -141,26 +148,6 @@ class Permalink(BitPackValue):
     def validate_version(cls, decoder: BitPackDecoder):
         version = decoder.peek(_PERMALINK_MAX_VERSION)[0]
         cls._raise_if_different_version(version)
-
-    @classmethod
-    def from_json_dict(cls, param: dict) -> "Permalink":
-        return Permalink(
-            seed_number=param["seed"],
-            spoiler=param["spoiler"],
-            presets={
-                index: Preset.from_json_dict(preset)
-                for index, preset in enumerate(param["presets"])
-            },
-        )
-
-    @property
-    def as_json(self) -> dict:
-        return {
-            "link": self.as_str,
-            "seed": self.seed_number,
-            "spoiler": self.spoiler,
-            "presets": [preset.as_json for preset in self.presets.values()],
-        }
 
     @property
     def as_str(self) -> str:

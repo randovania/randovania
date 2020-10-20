@@ -1,4 +1,6 @@
 import asyncio
+import datetime
+import locale
 import logging.config
 import os
 import sys
@@ -8,6 +10,8 @@ from pathlib import Path
 from PySide2 import QtCore
 from PySide2.QtWidgets import QApplication, QMessageBox
 from asyncqt import asyncClose
+
+from randovania.gui.lib import theme
 
 
 def catch_exceptions(t, val, tb):
@@ -29,30 +33,17 @@ def catch_exceptions_async(loop, context):
         logging.critical(str(context))
 
 
-def show_main_window(app: QApplication, is_preview: bool):
-    from randovania.interface_common.options import Options
-    from randovania.gui.lib import startup_tools
-    from randovania.layout.preset import Preset
-
-    options = Options.with_default_data_dir()
-
-    for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
-        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{Preset.file_extension()}"))
-
-    if not startup_tools.load_options_from_disk(options):
-        raise SystemExit(1)
-
+async def show_main_window(app: QApplication, options, is_preview: bool):
     from randovania.interface_common.preset_manager import PresetManager
     preset_manager = PresetManager(options.data_dir)
 
-    if not startup_tools.load_user_presets(preset_manager):
-        raise SystemExit(2)
+    await preset_manager.load_user_presets()
 
     from randovania.gui.main_window import MainWindow
     main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
     app.main_window = main_window
     main_window.show()
-    main_window.request_new_data()
+    await main_window.request_new_data()
 
 
 def show_tracker(app: QApplication):
@@ -62,15 +53,9 @@ def show_tracker(app: QApplication):
     app.tracker.show()
 
 
-def show_game_details(app: QApplication, game: Path):
+def show_game_details(app: QApplication, options, game: Path):
     from randovania.layout.layout_description import LayoutDescription
     from randovania.gui.seed_details_window import SeedDetailsWindow
-    from randovania.interface_common.options import Options
-    from randovania.gui.lib import startup_tools
-
-    options = Options.with_default_data_dir()
-    if not startup_tools.load_options_from_disk(options):
-        raise SystemExit(1)
 
     layout = LayoutDescription.from_file(game)
     details_window = SeedDetailsWindow(None, options)
@@ -79,13 +64,13 @@ def show_game_details(app: QApplication, game: Path):
     app.details_window = details_window
 
 
-def display_window_for(app, command: str, args):
+async def display_window_for(app, options, command: str, args):
     if command == "tracker":
         show_tracker(app)
     elif command == "main":
-        show_main_window(app, args.preview)
+        await show_main_window(app, options, args.preview)
     elif command == "game":
-        show_game_details(app, args.rdvgame)
+        show_game_details(app, options, args.rdvgame)
     else:
         raise RuntimeError(f"Unknown command: {command}")
 
@@ -101,15 +86,30 @@ def create_backend(debug_game_backend: bool):
     return backend
 
 
-def run(args):
-    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+def _load_options():
+    from randovania.interface_common.options import Options
+    from randovania.gui.lib import startup_tools
 
-    data_dir = args.custom_network_storage
-    if data_dir is None:
-        from randovania.interface_common import persistence
-        data_dir = persistence.user_data_dir()
+    options = Options.with_default_data_dir()
+    if not startup_tools.load_options_from_disk(options):
+        raise SystemExit(1)
 
-    is_preview = args.preview
+    theme.set_dark_theme(options.dark_mode)
+
+    from randovania.layout.preset_migration import VersionedPreset
+    for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
+        old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{VersionedPreset.file_extension()}"))
+
+    return options
+
+
+def start_logger(data_dir: Path, is_preview: bool):
+    # Ensure the log dir exists early on
+    log_dir = data_dir.joinpath("logs")
+    log_dir.mkdir(parents=True, exist_ok=True)
+
+    today = datetime.datetime.now().strftime("%Y-%m")
+
     logging.config.dictConfig({
         'version': 1,
         'formatters': {
@@ -125,10 +125,10 @@ def run(args):
                 'stream': 'ext://sys.stdout',  # Default is stderr
             },
             'local_app_data': {
-                'level': 'INFO',
+                'level': 'DEBUG',
                 'formatter': 'default',
                 'class': 'logging.FileHandler',
-                'filename': data_dir.joinpath("app.log"),
+                'filename': log_dir.joinpath(f"{today}.log"),
                 'encoding': 'utf-8',
             }
         },
@@ -138,8 +138,8 @@ def run(args):
         }
     })
 
-    app = QApplication(sys.argv)
 
+def create_loop(app: QApplication) -> asyncio.AbstractEventLoop:
     os.environ['QT_API'] = "PySide2"
     import asyncqt
     loop: asyncio.AbstractEventLoop = asyncqt.QEventLoop(app)
@@ -147,7 +147,10 @@ def run(args):
 
     sys.excepthook = catch_exceptions
     loop.set_exception_handler(catch_exceptions_async)
+    return loop
 
+
+async def qt_main(app: QApplication, data_dir: Path, args):
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.game_connection.game_connection import GameConnection
 
@@ -164,12 +167,29 @@ def run(args):
 
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
 
-    display_window_for(app, args.command, args)
+    options = _load_options()
 
+    await asyncio.gather(app.game_connection.start(),
+                         display_window_for(app, options, args.command, args))
+
+
+def run(args):
+    locale.setlocale(locale.LC_ALL, "")  # use system's default locale
+    QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+
+    data_dir = args.custom_network_storage
+    if data_dir is None:
+        from randovania.interface_common import persistence
+        data_dir = persistence.user_data_dir()
+
+    is_preview = args.preview
+    start_logger(data_dir, is_preview)
+    app = QApplication(sys.argv)
+
+    loop = create_loop(app)
     with loop:
-        loop.create_task(app.game_connection.start())
-        # loop.create_task(app.network_client.connect_if_authenticated())
-        sys.exit(loop.run_forever())
+        loop.create_task(qt_main(app, data_dir, args))
+        loop.run_forever()
 
 
 def create_subparsers(sub_parsers):

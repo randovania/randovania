@@ -57,6 +57,9 @@ class Requirement:
     def __lt__(self, other: "Requirement"):
         return str(self) < str(other)
 
+    def iterate_resource_requirements(self):
+        raise NotImplementedError()
+
 
 class RequirementAnd(Requirement):
     items: Tuple[Requirement, ...]
@@ -124,6 +127,10 @@ class RequirementAnd(Requirement):
             return "({})".format(" and ".join(sorted(visual_items)))
         else:
             return "Trivial"
+
+    def iterate_resource_requirements(self):
+        for item in self.items:
+            yield from item.iterate_resource_requirements()
 
 
 class RequirementOr(Requirement):
@@ -229,6 +236,10 @@ class RequirementOr(Requirement):
             return "({})".format(" or ".join(sorted(visual_items)))
         else:
             return "Impossible"
+
+    def iterate_resource_requirements(self):
+        for item in self.items:
+            yield from item.iterate_resource_requirements()
 
 
 def _expand_items(items: Tuple[Requirement, ...],
@@ -344,6 +355,9 @@ class ResourceRequirement(NamedTuple, Requirement):
             ])
         ])
 
+    def iterate_resource_requirements(self):
+        yield self
+
 
 class RequirementTemplate(Requirement):
     database: ResourceDatabase
@@ -382,6 +396,9 @@ class RequirementTemplate(Requirement):
 
     def __str__(self) -> str:
         return self.template_name
+
+    def iterate_resource_requirements(self):
+        yield from self.template_requirement.iterate_resource_requirements()
 
 
 class RequirementList:

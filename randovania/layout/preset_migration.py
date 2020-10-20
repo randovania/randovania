@@ -1,4 +1,18 @@
-CURRENT_PRESET_VERSION = 3
+import json
+from pathlib import Path
+from typing import Optional
+
+import aiofiles
+import slugify
+
+from randovania.layout.preset import Preset
+
+CURRENT_PRESET_VERSION = 4
+
+
+class InvalidPreset(Exception):
+    def __init__(self, original_exception: Exception):
+        self.original_exception = original_exception
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -62,9 +76,19 @@ def _migrate_v2(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v3(preset: dict) -> dict:
+    preset["layout_configuration"]["safe_zone"] = {
+        "fully_heal": True,
+        "prevents_dark_aether": True,
+        "heal_per_second": 1.0,
+    }
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
+    3: _migrate_v3,
 }
 
 
@@ -84,3 +108,81 @@ def convert_to_current_version(preset: dict) -> dict:
         return _apply_migration(preset, schema_version)
     else:
         return preset
+
+
+class VersionedPreset:
+    data: dict
+    _converted = False
+    exception: Optional[InvalidPreset] = None
+    _preset: Optional[Preset] = None
+
+    def __init__(self, data):
+        self.data = data
+
+    @classmethod
+    def file_extension(cls) -> str:
+        return "rdvpreset"
+
+    @property
+    def slug_name(self) -> str:
+        return slugify.slugify(self.name)
+
+    @property
+    def name(self) -> str:
+        if self.data is None:
+            return self._preset.name
+        else:
+            return self.data["name"]
+
+    def __eq__(self, other):
+        if isinstance(other, VersionedPreset):
+            return self.get_preset() == other.get_preset()
+        return False
+
+    def ensure_converted(self):
+        if not self._converted:
+            try:
+                self._preset = Preset.from_json_dict(convert_to_current_version(self.data))
+                self._converted = True
+            except (ValueError, KeyError) as e:
+                self.exception = InvalidPreset(e)
+
+    def get_preset(self) -> Preset:
+        self.ensure_converted()
+        if self.exception:
+            raise self.exception
+        else:
+            return self._preset
+
+    @classmethod
+    async def from_file(cls, path: Path) -> "VersionedPreset":
+        async with aiofiles.open(path) as f:
+            return VersionedPreset(json.loads(await f.read()))
+
+    @classmethod
+    def from_file_sync(cls, path: Path) -> "VersionedPreset":
+        with path.open() as f:
+            return VersionedPreset(json.load(f))
+
+    @classmethod
+    def with_preset(cls, preset: Preset) -> "VersionedPreset":
+        result = VersionedPreset(None)
+        result._converted = True
+        result._preset = preset
+        return result
+
+    def save_to_file(self, path: Path):
+        path.parent.mkdir(exist_ok=True, parents=True)
+        with path.open("w") as preset_file:
+            json.dump(self.as_json, preset_file, indent=4)
+
+    @property
+    def as_json(self) -> dict:
+        if self._converted:
+            preset_json = {
+                "schema_version": CURRENT_PRESET_VERSION,
+            }
+            preset_json.update(self._preset.as_json)
+            return preset_json
+        else:
+            return self.data

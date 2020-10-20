@@ -19,7 +19,7 @@ from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher, status_update_lib
-from randovania.interface_common.options import Options
+from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
@@ -126,6 +126,12 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         layout = self.layout_description
         has_spoiler = layout.permalink.spoiler
         options = self._options
+
+        if not options.is_alert_displayed(InfoAlert.FAQ):
+            await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information, "FAQ",
+                                           "Have you read the Randovania FAQ?\n"
+                                           "It can be found in the main Randovania window → Help → FAQ")
+            options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         dialog = GameInputDialog(options, "Echoes Randomizer - {}.iso".format(layout.shareable_word_hash), has_spoiler)
         result = await async_dialog.execute_dialog(dialog)
@@ -311,7 +317,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                                                                  patches.starting_items)
 
             self.spoiler_starting_location_label.setText("Starting Location: {}".format(
-                game_description.world_list.area_name(starting_area, distinguish_dark_aether=True, separator=" - ")
+                game_description.world_list.area_name(starting_area)
             ))
             self.spoiler_starting_items_label.setText("Random Starting Items: {}".format(
                 ", ".join(extra_items)

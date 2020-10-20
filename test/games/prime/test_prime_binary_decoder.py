@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from randovania import get_data_path
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import binary_data
 
 
@@ -23,6 +24,7 @@ def test_simple_round_trip():
         },
         "game_specific": {
             "energy_per_tank": 100.0,
+            "safe_zone_heal_per_second": 1.0,
             "beam_configurations": []
         },
         "starting_location": {
@@ -80,9 +82,10 @@ def test_complex_decode(test_files_dir):
     assert decoded_data == saved_data
 
 
-def test_full_file_round_trip():
+@pytest.mark.parametrize("game", RandovaniaGame)
+def test_full_file_round_trip(game):
     # Setup
-    json_database_path = get_data_path().joinpath("json_data", "prime2.json")
+    json_database_path = get_data_path().joinpath("json_data", f"{game.value}.json")
     if not json_database_path.exists():
         pytest.skip("Missing database")
 

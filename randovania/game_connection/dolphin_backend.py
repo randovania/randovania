@@ -9,7 +9,6 @@ from randovania.game_description.default_database import default_prime2_game_des
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world import World
 from randovania.games.prime import dol_patcher
 from randovania.games.prime.dol_patcher import PatchesForVersion
@@ -166,6 +165,9 @@ class DolphinBackend(ConnectionBackend):
             return ConnectionStatus.InGame
 
     def display_message(self, message: str):
+        self.logger.info(f"Queueing message '{message}'. "
+                         f"Queue has {len(self.message_queue)} elements and "
+                         f"current cooldown is {self.message_cooldown}")
         self.message_queue.append(message)
 
     async def _get_player_state_address(self) -> Optional[int]:
@@ -186,8 +188,6 @@ class DolphinBackend(ConnectionBackend):
 
         current_capacity = self.dolphin.read_word(capacity_address)
         capacity_delta = capacity - current_capacity
-
-        # FIXME: respect max capacity of each item
 
         if capacity_delta != 0:
             self.logger.debug(f"set capacity for {self._name_for_item(item)} to {capacity}")
@@ -233,7 +233,8 @@ class DolphinBackend(ConnectionBackend):
 
             for item, capacity in inventory.items():
                 if item != self._percentage_item:
-                    await self._raw_set_item_capacity(item.index, capacity, player_state_address)
+                    await self._raw_set_item_capacity(item.index, min(capacity, item.max_capacity),
+                                                      player_state_address)
 
             self.dolphin.write_word(capacity_address, len(self._permanent_pickups))
 

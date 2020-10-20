@@ -1,5 +1,6 @@
 from typing import Optional, List, Union
 
+from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIntValidator
 from PySide2.QtWidgets import QDialog
@@ -13,6 +14,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+from randovania.interface_common.enum_lib import iterate_enum
 
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,
@@ -38,7 +40,8 @@ def _create_resource_name_combo(resource_database: ResourceDatabase,
     return resource_name_combo
 
 
-def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWidget) -> QComboBox:
+def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWidget,
+                                resource_database: ResourceDatabase) -> QComboBox:
     """
 
     :param current_resource_type:
@@ -47,8 +50,13 @@ def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWi
     """
     resource_type_combo = QComboBox(parent)
 
-    for resource_type in ResourceType:
-        if not resource_type.is_usable_for_requirement:
+    for resource_type in iterate_enum(ResourceType):
+        try:
+            count_elements = len(resource_database.get_by_type(resource_type))
+        except ValueError:
+            count_elements = 0
+
+        if count_elements == 0:
             continue
 
         resource_type_combo.addItem(resource_type.name, resource_type)
@@ -83,7 +91,7 @@ class ResourceRequirementEditor:
         self.layout = layout
         self.resource_database = resource_database
 
-        self.resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent)
+        self.resource_type_combo = _create_resource_type_combo(item.resource.resource_type, parent, resource_database)
         self.resource_type_combo.setMinimumWidth(75)
         self.resource_type_combo.setMaximumWidth(75)
 
@@ -145,8 +153,10 @@ class ArrayRequirementEditor:
         self._array_type = type(requirement)
 
         self.group_box = QGroupBox(parent)
+        self.group_box.setStyleSheet("QGroupBox { margin-top: 2px; }")
         parent_layout.addWidget(self.group_box)
         self.item_layout = QVBoxLayout(self.group_box)
+        self.item_layout.setContentsMargins(8, 2, 2, 6)
         self.item_layout.setAlignment(Qt.AlignTop)
 
         self.new_item_button = QPushButton(self.group_box)
@@ -239,7 +249,7 @@ class RequirementEditor:
         self.parent_layout.addLayout(self.line_layout)
 
         if on_remove is not None:
-            self.remove_button = QPushButton(parent)
+            self.remove_button = QtWidgets.QToolButton(parent)
             self.remove_button.setText("X")
             self.remove_button.setMaximumWidth(20)
             self.remove_button.clicked.connect(on_remove)
@@ -251,7 +261,8 @@ class RequirementEditor:
         self.requirement_type_combo.addItem("Resource", ResourceRequirement)
         self.requirement_type_combo.addItem("Or", RequirementOr)
         self.requirement_type_combo.addItem("And", RequirementAnd)
-        self.requirement_type_combo.addItem("Template", RequirementTemplate)
+        if resource_database.requirement_template:
+            self.requirement_type_combo.addItem("Template", RequirementTemplate)
         self.requirement_type_combo.setMaximumWidth(75)
         self.requirement_type_combo.activated.connect(self._on_change_requirement_type)
         self.line_layout.addWidget(self.requirement_type_combo)

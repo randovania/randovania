@@ -1,11 +1,14 @@
 import copy
 import dataclasses
 from random import Random
-from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet
+from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet, Union, Iterator, Optional
 
+from randovania.game_description import node_search
+from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintType, PrecisionPair
+from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
+    HintRelativeAreaName, RelativeDataArea, RelativeDataItem
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
@@ -15,7 +18,7 @@ from randovania.game_description.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.retcon import retcon_playthrough_filler, FillerConfiguration, PlayerState
 from randovania.layout.layout_configuration import LayoutConfiguration
-from randovania.resolver import bootstrap, debug
+from randovania.resolver import bootstrap, debug, random_lib
 
 T = TypeVar("T")
 
@@ -56,29 +59,127 @@ def _create_weighted_list(rng: Random,
     return current
 
 
-def add_hints_precision(patches: GamePatches,
+def precision_pair_weighted_list() -> List[PrecisionPair]:
+    tiers = {
+        (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED): 5,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY): 2,
+        (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY): 1,
+
+        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED): 2,
+        (HintLocationPrecision.WORLD_ONLY, HintItemPrecision.PRECISE_CATEGORY): 1,
+    }
+
+    hints = []
+    for params, quantity in tiers.items():
+        hints.extend([PrecisionPair(*params)] * quantity)
+
+    return hints
+
+
+def _not_empty(it: Iterator) -> bool:
+    return sum(1 for _ in it) > 0
+
+
+def add_relative_hint(world_list: WorldList,
+                      patches: GamePatches,
+                      rng: Random,
+                      target: PickupIndex,
+                      target_precision: HintItemPrecision,
+                      relative_type: HintLocationPrecision,
+                      precise_distance: bool,
+                      precision: Union[HintItemPrecision, HintRelativeAreaName],
+                      max_distance: int,
+                      ) -> Optional[Hint]:
+    """
+    Creates a relative hint.
+    :return: Might be None, if no hint could be created.
+    """
+    target_node = node_search.pickup_index_to_node(world_list, target)
+    distances = node_search.distances_to_node(world_list, target_node, patches=patches, cutoff=max_distance)
+
+    def _major_pickups(area: Area) -> Iterator[PickupIndex]:
+        for index in area.pickup_indices:
+            t = patches.pickup_assignment.get(index)
+            # FIXME: None should be ok, but this must be called after junk has been filled
+            if t is not None:
+                cat = t.pickup.item_category
+                if cat.is_major_category or (cat != ItemCategory.EXPANSION
+                                             and target_precision == HintItemPrecision.DETAILED):
+                    yield index
+
+    area_choices = {
+        area: 1 / max(distance, 2)
+        for area, distance in distances.items()
+        if distance > 0 and (relative_type == HintLocationPrecision.RELATIVE_TO_AREA
+                             or _not_empty(_major_pickups(area)))
+    }
+    if not area_choices:
+        return None
+    area = random_lib.select_element_with_weight(area_choices, rng)
+
+    if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
+        relative = RelativeDataArea(precise_distance, world_list.area_to_area_location(area),
+                                    precision)
+    elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
+        relative = RelativeDataItem(precise_distance, rng.choice(list(_major_pickups(area))), precision)
+    else:
+        raise ValueError(f"Invalid relative_type: {relative_type}")
+
+    precision_pair = PrecisionPair(relative_type, target_precision, relative)
+    return Hint(HintType.LOCATION, precision_pair, target)
+
+
+def _relative(relative_type: HintLocationPrecision,
+              precise_distance: bool,
+              precision: Union[HintItemPrecision, HintRelativeAreaName],
+              max_distance: int,
+              ) -> Callable[[PlayerState, GamePatches, Random, PickupIndex], Optional[Hint]]:
+    def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex):
+        return add_relative_hint(player_state.game.world_list, patches, rng, target, HintItemPrecision.DETAILED,
+                                 relative_type, precise_distance, precision, max_distance)
+
+    return _wrapper
+
+
+def _get_relative_hint_providers():
+    return [
+        _relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
+        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED, 4),
+        _relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.PRECISE_CATEGORY, 3),
+    ]
+
+
+def add_hints_precision(player_state: PlayerState,
+                        patches: GamePatches,
                         rng: Random,
                         ) -> GamePatches:
     """
     Adds precision to all hints that are missing one.
+    :param player_state:
     :param patches:
     :param rng:
     :return:
     """
 
-    hints_to_replace = {
+    hints_to_replace: Dict[LogbookAsset, Hint] = {
         asset: hint
         for asset, hint in patches.hints.items()
-        if hint.precision is None
+        if hint.precision is None and hint.hint_type == HintType.LOCATION
     }
 
+    relative_hint_providers = _get_relative_hint_providers()
     asset_ids = list(hints_to_replace.keys())
+    rng.shuffle(asset_ids)
+
+    while asset_ids and relative_hint_providers:
+        new_hint = relative_hint_providers.pop()(player_state, patches, rng, hints_to_replace[asset_ids[-1]].target)
+        if new_hint is not None:
+            hints_to_replace[asset_ids.pop()] = new_hint
 
     # Add random precisions
-    rng.shuffle(asset_ids)
     precisions = []
     for asset_id in asset_ids:
-        precisions = _create_weighted_list(rng, precisions, PrecisionPair.weighted_list)
+        precisions = _create_weighted_list(rng, precisions, precision_pair_weighted_list)
         precision = precisions.pop()
 
         hints_to_replace[asset_id] = dataclasses.replace(hints_to_replace[asset_id], precision=precision)
@@ -99,9 +200,9 @@ def replace_hints_without_precision_with_jokes(patches: GamePatches,
     """
 
     hints_to_replace = {
-        asset: dataclasses.replace(hint, precision=PrecisionPair.joke(), hint_type=HintType.JOKE)
+        asset: Hint(HintType.JOKE, None)
         for asset, hint in patches.hints.items()
-        if hint.precision
+        if hint.precision is None and hint.hint_type == HintType.LOCATION
     }
 
     return dataclasses.replace(patches, hints={
@@ -123,6 +224,9 @@ def fill_unassigned_hints(patches: GamePatches,
         for node in world_list.all_nodes
         if isinstance(node, LogbookNode)
     }
+    for logbook in potential_hint_locations:
+        if logbook not in scan_asset_initial_pickups:
+            scan_asset_initial_pickups[logbook] = frozenset()
 
     # But remove these that already have hints
     potential_hint_locations -= patches.hints.keys()
@@ -148,13 +252,36 @@ def fill_unassigned_hints(patches: GamePatches,
                             for node in world_list.all_nodes
                             if isinstance(node, PickupNode)}
 
-    # Get an stable order then shuffle
+    # Get an stable order
     possible_indices = list(sorted(possible_indices))
-    rng.shuffle(possible_indices)
 
-    for logbook in sorted(potential_hint_locations):
-        new_hints[logbook] = Hint(HintType.LOCATION, None, possible_indices.pop())
-        debug.debug_print(f"Added hint at {logbook} for item at {new_hints[logbook].target}")
+    num_logbooks: Dict[PickupIndex, int] = {
+        index: sum(1 for indices in scan_asset_initial_pickups.values() if index in indices)
+        for index in possible_indices
+    }
+    max_seen = max(num_logbooks.values())
+    pickup_indices_weight: Dict[PickupIndex, int] = {
+        index: max_seen - num_logbook
+        for index, num_logbook in num_logbooks.items()
+    }
+    # Ensure all indices are present with at least weight 0
+    for index in possible_indices:
+        if index not in pickup_indices_weight:
+            pickup_indices_weight[index] = 0
+
+    for logbook in sorted(potential_hint_locations,
+                          key=lambda r: len(scan_asset_initial_pickups[r]),
+                          reverse=True):
+        try:
+            new_index = random_lib.select_element_with_weight(pickup_indices_weight, rng)
+        except StopIteration:
+            # If everything has weight 0, then just choose randomly.
+            new_index = random_lib.random_key(pickup_indices_weight, rng)
+            
+        del pickup_indices_weight[new_index]
+
+        new_hints[logbook] = Hint(HintType.LOCATION, None, new_index)
+        debug.debug_print(f"Added hint at {logbook} for item at {new_index}")
 
     return dataclasses.replace(patches, hints=new_hints)
 
@@ -233,7 +360,7 @@ def run_filler(rng: Random,
                                                    player_state.scan_asset_initial_pickups)
 
         if player_pools[player_state.index].configuration.hints.item_hints:
-            result = add_hints_precision(full_hints_patches, rng)
+            result = add_hints_precision(player_state, full_hints_patches, rng)
         else:
             result = replace_hints_without_precision_with_jokes(full_hints_patches)
 

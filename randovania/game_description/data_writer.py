@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Callable, Dict, Tuple, TextIO, Union, Iterator
+from typing import List, TypeVar, Callable, Dict, Tuple
 
 from randovania.game_description.area import Area
 from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
@@ -12,12 +12,10 @@ from randovania.game_description.resources.damage_resource_info import DamageRes
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
-from randovania.layout.trick_level import LayoutTrickLevel
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
@@ -204,6 +202,7 @@ def write_echoes_beam_configuration(beam_config: EchoesBeamConfiguration) -> dic
 def write_game_specific(game_specific: EchoesGameSpecific) -> dict:
     return {
         "energy_per_tank": game_specific.energy_per_tank,
+        "safe_zone_heal_per_second": game_specific.safe_zone_heal_per_second,
         "beam_configurations": [
             write_echoes_beam_configuration(beam)
             for beam in game_specific.beam_configurations
@@ -345,96 +344,3 @@ def write_game_description(game: GameDescription) -> dict:
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "worlds": write_world_list(game.world_list),
     }
-
-
-def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
-    if requirement.resource.resource_type == ResourceType.TRICK:
-        return f"{requirement.resource} ({LayoutTrickLevel.from_number(requirement.amount).long_name})"
-    else:
-        return requirement.pretty_text
-
-
-def pretty_print_requirement_array(requirement: Union[RequirementAnd, RequirementOr],
-                                   level: int) -> Iterator[Tuple[int, str]]:
-    if len(requirement.items) == 1:
-        yield from pretty_print_requirement(requirement.items[0], level)
-        return
-
-    resource_requirements = [item for item in requirement.items if isinstance(item, ResourceRequirement)]
-    template_requirements = [item for item in requirement.items if isinstance(item, RequirementTemplate)]
-    other_requirements = [item for item in requirement.items if isinstance(item, (RequirementAnd, RequirementOr))]
-    assert len(resource_requirements) + len(template_requirements) + len(other_requirements) == len(requirement.items)
-
-    pretty_resources = [
-        pretty_print_resource_requirement(item)
-        for item in sorted(resource_requirements)
-    ]
-    sorted_templates = list(sorted(item.template_name for item in template_requirements))
-
-    if isinstance(requirement, RequirementOr):
-        title = "Any"
-        combinator = " or "
-    else:
-        title = "All"
-        combinator = " and "
-
-    if len(other_requirements) == 0:
-        yield level, combinator.join(pretty_resources + sorted_templates)
-    else:
-        yield level, f"{title} of the following:"
-        if pretty_resources or sorted_templates:
-            yield level + 1, combinator.join(pretty_resources + sorted_templates)
-        for item in other_requirements:
-            yield from pretty_print_requirement(item, level + 1)
-
-
-def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterator[Tuple[int, str]]:
-    if requirement == Requirement.impossible():
-        yield level, "Impossible"
-
-    elif requirement == Requirement.trivial():
-        yield level, "Trivial"
-
-    elif isinstance(requirement, (RequirementAnd, RequirementOr)):
-        yield from pretty_print_requirement_array(requirement, level)
-
-    elif isinstance(requirement, ResourceRequirement):
-        yield level, pretty_print_resource_requirement(requirement)
-
-    elif isinstance(requirement, RequirementTemplate):
-        yield level, requirement.template_name
-    else:
-        raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
-
-
-def pretty_print_area(game: GameDescription, area: Area, print_function=print):
-    print_function(area.name)
-    print_function("Asset id: {}".format(area.area_asset_id))
-    for node in area.nodes:
-        print_function(f"> {node.name}; Heals? {node.heal}")
-        for target_node, requirement in game.world_list.potential_nodes_from(node, game.create_game_patches()):
-            if target_node is None:
-                print_function("  > None?")
-            else:
-                print_function("  > {}".format(game.world_list.node_name(target_node)))
-                for level, text in pretty_print_requirement(requirement.simplify()):
-                    print_function("      {}{}".format("    " * level, text))
-        print_function()
-
-
-def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:
-    def print_to_file(*args):
-        output.write("\t".join(str(arg) for arg in args) + "\n")
-
-    output.write("====================\nTemplates\n")
-    for template_name, template in game.resource_database.requirement_template.items():
-        output.write(f"\n* {template_name}:\n")
-        for level, text in pretty_print_requirement(template):
-            output.write("      {}{}\n".format("    " * level, text))
-
-    output.write("\n")
-    for world in game.world_list.worlds:
-        output.write("====================\n{}\n".format(world.name))
-        for area in world.areas:
-            output.write("----------------\n")
-            pretty_print_area(game, area, print_function=print_to_file)
