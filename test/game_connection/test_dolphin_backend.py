@@ -237,10 +237,18 @@ def test_current_status_not_in_game(backend):
     assert backend.current_status == ConnectionStatus.TitleScreen
 
 
+def test_current_status_tracker_only(backend):
+    backend.dolphin.is_hooked.return_value = True
+    backend.patches = True
+    backend._world = True
+    assert backend.current_status == ConnectionStatus.TrackerOnly
+
+
 def test_current_status_in_game(backend):
     backend.dolphin.is_hooked.return_value = True
     backend.patches = True
     backend._world = True
+    backend.checking_for_collected_index = True
     assert backend.current_status == ConnectionStatus.InGame
 
 
