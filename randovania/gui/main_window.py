@@ -256,7 +256,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.game_session_window = await GameSessionWindow.create_and_update(
                 network_client, common_qt_lib.get_game_connection(), self.preset_manager,
                 self, self._options)
-            self.game_session_window.show()
+            if self.game_session_window is not None:
+                self.game_session_window.show()
 
     @asyncSlot()
     @handle_network_errors
@@ -290,7 +291,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.game_session_window = await GameSessionWindow.create_and_update(self.network_client,
                                                                              common_qt_lib.get_game_connection(),
                                                                              self.preset_manager, self, self._options)
-        self.game_session_window.show()
+        if self.game_session_window is not None:
+            self.game_session_window.show()
 
     def open_game_details(self, layout: LayoutDescription):
         self.GameDetailsSignal.emit(layout)

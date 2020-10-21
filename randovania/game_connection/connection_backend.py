@@ -1,6 +1,5 @@
 from typing import List, Dict, Callable, Awaitable, Optional
 
-from PySide2.QtCore import Signal, QObject
 from _nod import Enum
 
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -12,6 +11,7 @@ class ConnectionStatus(Enum):
     WrongGame = "wrong-game"
     WrongHash = "wrong-hash"
     TitleScreen = "title-screen"
+    TrackerOnly = "tracker-only"
     InGame = "in-game"
 
     @property
@@ -24,6 +24,7 @@ _pretty_connection_status: Dict[ConnectionStatus, str] = {
     ConnectionStatus.WrongGame: "Wrong Game",
     ConnectionStatus.WrongHash: "Correct Game, Wrong Seed Hash",
     ConnectionStatus.TitleScreen: "Title Screen",
+    ConnectionStatus.TrackerOnly: "Tracker Only",
     ConnectionStatus.InGame: "In-Game",
 }
 
@@ -56,9 +57,23 @@ class ConnectionBase:
 
 
 class ConnectionBackend(ConnectionBase):
+    _checking_for_collected_index: bool = False
+
     @property
     def name(self) -> str:
         raise NotImplementedError()
 
     async def update(self, dt: float):
         raise NotImplementedError()
+
+    @property
+    def lock_identifier(self) -> Optional[str]:
+        raise NotImplementedError()
+
+    @property
+    def checking_for_collected_index(self):
+        return self._checking_for_collected_index
+
+    @checking_for_collected_index.setter
+    def checking_for_collected_index(self, value):
+        self._checking_for_collected_index = value

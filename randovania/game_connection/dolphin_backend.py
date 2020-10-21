@@ -52,6 +52,10 @@ class DolphinBackend(ConnectionBackend):
         self._pickups_to_give = []
         self._permanent_pickups = []
 
+    @property
+    def lock_identifier(self) -> Optional[str]:
+        return "randovania-dolphin-backend"
+
     def _ensure_hooked(self) -> bool:
         if not self.dolphin.is_hooked():
             self.patches = None
@@ -144,7 +148,7 @@ class DolphinBackend(ConnectionBackend):
         await self._send_message_from_queue(dt)
 
         self._update_current_world()
-        if self._world is not None:
+        if self._world is not None and self.checking_for_collected_index:
             await self._check_for_collected_index()
 
     @property
@@ -161,6 +165,8 @@ class DolphinBackend(ConnectionBackend):
 
         if self._world is None:
             return ConnectionStatus.TitleScreen
+        elif not self.checking_for_collected_index:
+            return ConnectionStatus.TrackerOnly
         else:
             return ConnectionStatus.InGame
 

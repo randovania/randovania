@@ -84,6 +84,7 @@ setup(
             'asyncqt',
             'dolphin-memory-engine>=1.0.2',
             'markdown',
+            'pid>=3.0.0',
             'pypresence',
             'qdarkstyle',
         ],
