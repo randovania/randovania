@@ -155,10 +155,9 @@ async def qt_main(app: QApplication, data_dir: Path, args):
     from randovania.game_connection.game_connection import GameConnection
 
     app.network_client = QtNetworkClient(data_dir)
-    app.game_connection = GameConnection()
 
     backend = create_backend(args.debug_game_backend)
-    app.game_connection.set_backend(backend)
+    app.game_connection = GameConnection(backend)
 
     @asyncClose
     async def _on_last_window_closed():

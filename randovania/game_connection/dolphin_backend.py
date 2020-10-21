@@ -144,7 +144,7 @@ class DolphinBackend(ConnectionBackend):
         await self._send_message_from_queue(dt)
 
         self._update_current_world()
-        if self._world is not None:
+        if self._world is not None and self.checking_for_collected_index:
             await self._check_for_collected_index()
 
     @property
