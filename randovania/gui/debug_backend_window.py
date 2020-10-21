@@ -1,6 +1,6 @@
 import collections
 import itertools
-from typing import List
+from typing import List, Optional
 
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
@@ -49,6 +49,10 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     @property
     def current_status(self) -> ConnectionStatus:
         return self.current_status_combo.currentData()
+
+    @property
+    def lock_identifier(self) -> Optional[str]:
+        return None
 
     def display_message(self, message: str):
         self.messages_list.addItem(message)

@@ -15,17 +15,18 @@ class GameConnection(QObject, ConnectionBase):
     _current_status: ConnectionStatus = ConnectionStatus.Disconnected
     backend: ConnectionBackend = None
 
-    def __init__(self):
+    def __init__(self, backend: ConnectionBackend):
         super().__init__()
 
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._update)
         self._timer.setInterval(self._dt * 1000)
 
-    def set_backend(self, backend: ConnectionBackend):
-        if self.backend is not None:
-            self.backend.set_location_collected_listener(None)
+        self.backend = backend
+        self.backend.set_location_collected_listener(self._emit_location_collected)
 
+    def set_backend(self, backend: ConnectionBackend):
+        self.backend.set_location_collected_listener(None)
         self.backend = backend
         self.backend.set_location_collected_listener(self._emit_location_collected)
 
@@ -62,6 +63,10 @@ class GameConnection(QObject, ConnectionBase):
 
     def set_permanent_pickups(self, pickups: List[PickupEntry]):
         return self.backend.set_permanent_pickups(pickups)
+
+    def set_location_collected_listener(self, listener):
+        super().set_location_collected_listener(listener)
+        self.backend.checking_for_collected_index = listener is not None
 
     async def _emit_location_collected(self, location: int):
         if self._location_collected_listener is not None:

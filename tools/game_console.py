@@ -15,8 +15,7 @@ old_hook = sys.excepthook
 
 
 async def worker(app: QCoreApplication):
-    connection = GameConnection()
-    connection.set_backend(DolphinBackend())
+    connection = GameConnection(DolphinBackend())
 
     await connection.start()
     try:

@@ -4,16 +4,22 @@ import logging
 from pathlib import Path
 from typing import List, Set, Optional, AsyncContextManager
 
+import pid
 from PySide2.QtCore import QObject
 from asyncqt import asyncSlot
 
 from randovania.bitpacking import bitpacking
-from randovania.game_connection.connection_backend import ConnectionBase
+from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime import default_data
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
+
+
+class BackendInUse(Exception):
+    def __init__(self, lock_file: Path):
+        self.lock_file = lock_file
 
 
 class Data(AsyncContextManager):
@@ -55,8 +61,9 @@ class MultiworldClient(QObject):
     _received_messages: List[str]
     _received_pickups: List[PickupEntry]
     _notify_task: Optional[asyncio.Task] = None
+    _pid: Optional[pid.PidFile] = None
 
-    def __init__(self, network_client: QtNetworkClient, game_connection: ConnectionBase):
+    def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection):
         super().__init__()
 
         self.logger = logging.getLogger(__name__)
@@ -65,6 +72,15 @@ class MultiworldClient(QObject):
         self.network_client = network_client
         self.game_connection = game_connection
         self._pickups_lock = asyncio.Lock()
+
+        pid_name = game_connection.backend.lock_identifier
+        if pid_name is not None:
+            self._pid = pid.PidFile(pid_name)
+            try:
+                self._pid.create()
+            except pid.PidFileError as e:
+                raise BackendInUse(Path(self._pid.filename)) from e
+            self.logger.info(f"Creating pid file at {self._pid.filename}")
 
         self._game = data_reader.decode_data(default_data.decode_default_prime2())
 
@@ -75,8 +91,10 @@ class MultiworldClient(QObject):
     async def start(self, persist_path: Path):
         self.logger.info("start")
 
-        self._data = Data(persist_path)
+        if self._pid is not None and self._pid.fh is None:
+            self._pid.create()
 
+        self._data = Data(persist_path)
         self.game_connection.set_location_collected_listener(self.on_location_collected)
         self.network_client.GameUpdateNotification.connect(self.on_game_updated)
 
@@ -93,8 +111,6 @@ class MultiworldClient(QObject):
             self._notify_task.cancel()
             self._notify_task = None
 
-        self._data = None
-
         self.game_connection.set_location_collected_listener(None)
         try:
             self.network_client.GameUpdateNotification.disconnect(self.on_game_updated)
@@ -103,6 +119,10 @@ class MultiworldClient(QObject):
 
         async with self._pickups_lock:
             self.game_connection.set_permanent_pickups([])
+
+        self._data = None
+        if self._pid is not None:
+            self._pid.close()
 
     def _decode_pickup(self, data: bytes) -> PickupEntry:
         decoder = bitpacking.BitPackDecoder(data)

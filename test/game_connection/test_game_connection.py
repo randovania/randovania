@@ -10,18 +10,16 @@ from randovania.game_connection.game_connection import GameConnection
 @pytest.mark.asyncio
 async def test_set_backend(skip_qtbot):
     # Setup
-    game_connection = GameConnection()
     backend1 = ConnectionBackend()
     backend2 = ConnectionBackend()
+    game_connection = GameConnection(backend1)
 
     listener = AsyncMock()
     game_connection.set_location_collected_listener(listener)
 
     # Run
-    game_connection.set_backend(backend1)
     await backend1._emit_location_collected(5)
     await backend2._emit_location_collected(6)
-
     game_connection.set_backend(backend2)
     await backend1._emit_location_collected(7)
     await backend2._emit_location_collected(8)
@@ -35,13 +33,13 @@ async def test_update(skip_qtbot, qapp):
     # Setup
     backend_update = AsyncMock()
 
-    game_connection = GameConnection()
+    backend = MagicMock()
+    backend.update = backend_update
+    backend.current_status = ConnectionStatus.InGame
+
+    game_connection = GameConnection(backend)
     game_connection._connection_status = ConnectionStatus.Disconnected
     game_connection.StatusUpdated = MagicMock()
-    #
-    game_connection.backend = MagicMock()
-    game_connection.backend.update = backend_update
-    game_connection.backend.current_status = ConnectionStatus.InGame
 
     # Run
     await game_connection._update()
