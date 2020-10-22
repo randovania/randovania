@@ -320,7 +320,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Path of Eyes, Bomb Jumps to get over Light blocks are now Beginner (from Intermediate).
 
--   Great Bridge, Slope Jumps to reach Map Station from Bottom Level and from Map Station to Upper Level are now Beginner and Intermediate (from Intermediate and Advanced, respectively).
+-   Great Bridge:
+    - Slope Jumps to reach Map Station from Bottom Level and from Map Station to Upper Level are now Beginner and Intermediate (from Intermediate and Advanced, respectively).
+    - Bomb Space Jump with Space Jump to reach the Translator Gate is now Advanced (from Expert).
 
 -   Torvus Lagoon, reaching Portal Chamber from Temple Transport Access is now Intermediate (from Advanced).
 
@@ -329,6 +331,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Central Mining Station, Bomb Space Jump to top door is now Beginner (from Intermediate).
 
 -   Hive Dynamo Works, reaching the upper door with a Bomb Space Jump is now Beginner (from Intermediate).
+
+-   Grand Windchamber, reaching the pickup with Terminal Fall Abuse after solving the Ing Windchamber puzzle is now Beginner (from Intermediate).
 
 ## [1.2.2] - 2020-06-06
 
