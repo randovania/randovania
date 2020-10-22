@@ -229,7 +229,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Dynamo Access, method to cross over the Spider Track with Space Jump and Standable Terrain (Beginner and above).
 
--   Dynamo Works, method of collecting the item with a Roll Jump and Instant Morph (Expert and above).
+-   Dynamo Works:
+    - Method of collecting the item with a Roll Jump and Instant Morph (Expert and above).
+    - Method of reaching the upper door with a Bomb Space Jump (Beginnner and above).
 
 -   Grand Abyss, methods of crossing the gap with Boost Jump (Advanced and above) or Extended Dash (Expert and above).
 
@@ -325,6 +327,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Abandoned Base, Bomb Jump to tram is now Advanced (from Intermediate).
 
 -   Central Mining Station, Bomb Space Jump to top door is now Beginner (from Intermediate).
+
+-   Hive Dynamo Works, reaching the upper door with a Bomb Space Jump is now Beginner (from Intermediate).
 
 ## [1.2.2] - 2020-06-06
 
