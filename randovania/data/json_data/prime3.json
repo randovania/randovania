@@ -854,6 +854,11 @@
                 "short_name": "Event95"
             },
             {
+                "index": 96,
+                "long_name": "Podworks Repair",
+                "short_name": "Event96"
+            },
+            {
                 "index": 100,
                 "long_name": "Pirate Homeworld Map",
                 "short_name": "Event100"
@@ -14999,7 +15004,44 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Podworks Repair": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1906007133,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2477616633,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Podworks Repair",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 96,
+                            "connections": {
+                                "Dock to Spire": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
