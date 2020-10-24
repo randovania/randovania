@@ -159,13 +159,18 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Crossroads, method to reach the item from the half pipe with just Screw Attack (Advanced and above).
 
--   Dark Transit Station, method to reach the ledge from Duelling Range with a Bomb Jump (Intermediate and above).
+-   Dark Transit Station, method to reach the ledge from Duelling Range with a Bomb Jump (Beginner and above).
+
+-   Portal Site, method of reaching portal via cutscene (Beginner and above).
+
+-   Portal Access, method of crossing to Judgement Pit using Screw Attack without Z-Axis (Beginner and above).
 
 -   Doomed Entry, method to climb room with Space Jump and Screw Attack (Beginner and above).
 
 -   Feeding Pit:
     - Method of reaching Ing Cache 1 door with Space Jump and Screw Attack (No Tricks and above).
     - Method of climbing to Watering Hole door without any items (Expert and above).
+    - Method of escaping the pool using Light Suit and a Bomb Space Jump no Space Jump or Gravity Boost (Hypermode)
 
 -   Mining Station B, method to climb to the Seeker door without Morph Ball and with Space Jump (Beginner and above).
 
@@ -286,6 +291,12 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Now requires items to climb the room before draining the sand: Space Jump, with a Bomb Jump (Beginner and above) or with Screw Attack (Intermediate and above)
     - Screw Attacking into the tunnel is now Expert (from Hypermode).
 
+-   Portal Site:
+    - Now does not require the gate open to enter from Portal Access.
+    - Now does not require the gate closed to enter from Crossroads.
+
+-   Service Access now properly includes Wall Boost to Meeting Grounds from Landing Site on Advanced.
+
 #### Changed
 
 -   Many nodes with missing requirements have been updated/cleaned up.
@@ -333,6 +344,31 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Hive Dynamo Works, reaching the upper door with a Bomb Space Jump is now Beginner (from Intermediate).
 
 -   Grand Windchamber, reaching the pickup with Terminal Fall Abuse after solving the Ing Windchamber puzzle is now Beginner (from Intermediate).
+
+-   Service Access crossing upper tunnel without Boost Ball is now Advanced (from Intermediate).
+
+-   Temple Assembly Site Screw Attack without Space Jump method to get the Missile is now Beginner (from Intermediate).
+
+-   Communication Area:
+    - Standable Terrain to reach Missile is now Beginner (from Intermediate).
+    - Screw Attack without Space Jump to reach Storage A is now Beginner (from Intermediate).
+    - Double Bomb Jump up Standable Terrain is now Beginner (from Advanced).
+
+-   Mining Plaza climb to top using Screw Attack without Space Jump is now Beginner (from Intermediate).
+
+-   Transport Center dash from portal to seeker door is now Beginner (from Intermediate).
+
+-   Trial Grounds Standable Terrain and Slope Jump are now Beginner (from Intermediate).
+
+-   Portal Access returning from Judgment Pit without Space Jump is now Beginner (from Intermediate).
+
+-   Command Center Access exiting tunnel without Space Jump is now Beginner (from Intermediate).
+
+-   Battleground climbing to top safe zone via Standable Terrain is now Beginner (from Intermediate).
+
+-   Command Center Dash Jump along top without Space Jump is now Beginner (from Intermediate).
+
+-   Feeding Pit climb to Watering Hole with Screw Attack without Space Jump is now Beginner (from Intermediate).
 
 -   Added: Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
 
