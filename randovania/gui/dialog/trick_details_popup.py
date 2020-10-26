@@ -5,7 +5,8 @@ from PySide2.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.area import Area
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import RequirementList
+from randovania.game_description.node import DockNode
+from randovania.game_description.requirements import RequirementList, Requirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
@@ -19,7 +20,7 @@ def _has_trick(alternative: RequirementList) -> bool:
 
 
 def _area_uses_trick(area: Area,
-                     trick: Optional[TrickResourceInfo],
+                     trick: TrickResourceInfo,
                      level: LayoutTrickLevel,
                      ) -> bool:
     """
@@ -29,11 +30,19 @@ def _area_uses_trick(area: Area,
     :param level:
     :return:
     """
-    for _, _, requirements in area.all_connections:
-        if trick is not None:
-            for individual in requirements.as_set.all_individual:
-                if individual.resource == trick and individual.amount == level.as_number:
-                    return True
+
+    def _uses_trick(requirements: Requirement) -> bool:
+        return any(individual.resource == trick and individual.amount == level.as_number
+                   for individual in requirements.as_set.all_individual)
+
+    for node in area.nodes:
+        if isinstance(node, DockNode):
+            if _uses_trick(node.default_dock_weakness.requirement):
+                return True
+
+        if any(_uses_trick(req) for req in area.connections[node].values()):
+            return True
+
     return False
 
 
