@@ -129,7 +129,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 #### Added
 
 -   General:
-    - Methods to open all Seeker Missile Doors with Screw Attack (Expert and above).
+    - Methods to open all Seeker Missile Doors with Screw Attack (Advanced and above).
     - Method to activate most Bomb Slots without Bombs (Advanced and above).
     - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
 
