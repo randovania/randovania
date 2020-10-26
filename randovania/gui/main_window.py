@@ -472,7 +472,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _setup_difficulties_menu(self):
         game = default_database.default_prime2_game_description()
-        tricks_in_use = used_tricks(game.world_list)
+        tricks_in_use = used_tricks(game)
 
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
             if trick not in tricks_in_use:
@@ -482,7 +482,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             trick_menu.setTitle(trick.long_name)
             self.menu_trick_details.addAction(trick_menu.menuAction())
 
-            used_difficulties = difficulties_for_trick(game.world_list, trick)
+            used_difficulties = difficulties_for_trick(game, trick)
             for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
                 if trick_level in used_difficulties:
                     difficulty_action = QAction(self)

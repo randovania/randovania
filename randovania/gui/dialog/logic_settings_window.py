@@ -261,7 +261,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._checkbox_for_trick = {}
         self._slider_for_trick = {}
 
-        tricks_in_use = used_tricks(self.world_list)
+        tricks_in_use = used_tricks(self.game_description)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 
@@ -306,7 +306,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._slider_for_trick[trick] = horizontal_slider
             slider_layout.addWidget(horizontal_slider, 0, 1, 1, 10)
 
-            used_difficulties = difficulties_for_trick(self.world_list, trick)
+            used_difficulties = difficulties_for_trick(self.game_description, trick)
             for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
                 if trick_level == LayoutTrickLevel.NO_TRICKS or trick_level in used_difficulties:
                     difficulty_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
