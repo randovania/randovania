@@ -108,7 +108,7 @@ def start_logger(data_dir: Path, is_preview: bool):
     log_dir = data_dir.joinpath("logs")
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    today = datetime.datetime.now().strftime("%Y-%m")
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
 
     logging.config.dictConfig({
         'version': 1,
