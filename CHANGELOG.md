@@ -220,7 +220,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Training Chamber:
     - Method to exit the spinner with Power Bombs instead of Bombs (Beginner and above).
     - Method to climb to the top of the statue with Gravity Boost and Bombs (Intermediate and above).
-    - Method to climb to the top of the statue with Space Jump, Scan Dash, and Underwater Dash (Expert and above).
+    - Method to climb to the top of the statue with Space Jump, Scan Dash, and Underwater Dash (Advanced and above).
+    - Method to climb to the top of the statue with Space Jump and Extended Dash (Expert and Above).
 
 -   Underground Tunnel, method to access Torvus Temple from Torvus Grove with Screw Attack (Expert and above).
 
