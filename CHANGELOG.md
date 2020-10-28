@@ -129,7 +129,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 #### Added
 
 -   General:
-    - Methods to open all Seeker Missile Doors with Screw Attack (Expert and above).
+    - Methods to open all Seeker Missile Doors with Screw Attack (Advanced and above).
     - Method to activate most Bomb Slots without Bombs (Advanced and above).
     - Dark/Light/Annihilator doors and Dark/Light portals require either ammo or Charge Beam.
 
@@ -151,7 +151,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Meeting Grounds, method of reaching the tunnel with Space Jump and a Bomb Space Jump (Intermediate and above).
 
--   Windchamber Gateway, method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
+-   Windchamber Gateway:
+    - Method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
+    - Method of reaching Path of Eyes door from Grand Windchamber door with an Extended Dash (Advanced and above).
 
 -   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
 
@@ -306,9 +308,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Abandoned Base, Bomb Jump to tram is now Advanced (from Intermediate).
 
 -   Communication Area:
-    - Standable Terrain to reach Missile is now Beginner (from Intermediate).
-    - Screw Attack without Space Jump to reach Storage A is now Beginner (from Intermediate).
+    - Standable Terrain to reach the item is now Beginner (from Intermediate).
+    - Screw Attack without Space Jump to reach Storage Cavern A is now Beginner (from Intermediate).
     - Double Bomb Jump up Standable Terrain is now Beginner (from Advanced).
+
+-   GFMC Compound, Extended Dash to reach the item on the Ship without Space Jump is now Expert (from Hypermode).
 
 -   Grand Windchamber, reaching the pickup with Terminal Fall Abuse after solving the Ing Windchamber puzzle is now Beginner (from Intermediate).
 
@@ -316,7 +320,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Service Access, crossing upper tunnel without Boost Ball is now Advanced (from Intermediate).
 
--   Temple Assembly Site, method to reach pickup with Screw Attack is now Beginner (from Intermediate).
+-   Temple Assembly Site, method to reach the item with Screw Attack is now Beginner (from Intermediate).
 
 -   Agon Temple, Slope Jumps to skip the fight barriers are now Beginner (from Advanced).
 
