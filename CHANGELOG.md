@@ -306,9 +306,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Abandoned Base, Bomb Jump to tram is now Advanced (from Intermediate).
 
 -   Communication Area:
-    - Standable Terrain to reach Missile is now Beginner (from Intermediate).
-    - Screw Attack without Space Jump to reach Storage A is now Beginner (from Intermediate).
+    - Standable Terrain to reach the item is now Beginner (from Intermediate).
+    - Screw Attack without Space Jump to reach Storage Cavern A is now Beginner (from Intermediate).
     - Double Bomb Jump up Standable Terrain is now Beginner (from Advanced).
+
+-   GFMC Compound, Extended Dash to reach the item on the Ship without Space Jump is now Expert (from Hypermode).
 
 -   Grand Windchamber, reaching the pickup with Terminal Fall Abuse after solving the Ing Windchamber puzzle is now Beginner (from Intermediate).
 
@@ -316,7 +318,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Service Access, crossing upper tunnel without Boost Ball is now Advanced (from Intermediate).
 
--   Temple Assembly Site, method to reach pickup with Screw Attack is now Beginner (from Intermediate).
+-   Temple Assembly Site, method to reach the item with Screw Attack is now Beginner (from Intermediate).
 
 -   Agon Temple, Slope Jumps to skip the fight barriers are now Beginner (from Advanced).
 
