@@ -151,7 +151,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Meeting Grounds, method of reaching the tunnel with Space Jump and a Bomb Space Jump (Intermediate and above).
 
--   Windchamber Gateway, method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
+-   Windchamber Gateway:
+    - Method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
+    - Method of reaching Path of Eyes door from Grand Windchamber door with an Extended Dash (Advanced and above).
 
 -   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
 
