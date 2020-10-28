@@ -23,9 +23,11 @@ def test_update_tracker_from_hook(window):
     window._update_tracker_from_hook(inventory)
 
 
-@pytest.mark.parametrize("is_in_game", [False, True])
+@pytest.mark.parametrize("current_status", [ConnectionStatus.Disconnected,
+                                            ConnectionStatus.TrackerOnly,
+                                            ConnectionStatus.InGame])
 @pytest.mark.asyncio
-async def test_on_timer_update(is_in_game: bool,
+async def test_on_timer_update(current_status: ConnectionStatus,
                                window):
     # Setup
     inventory = {}
@@ -35,13 +37,13 @@ async def test_on_timer_update(is_in_game: bool,
     window._update_tracker_from_hook = MagicMock()
 
     game_connection.get_inventory = AsyncMock(return_value=inventory)
-    game_connection.current_status = ConnectionStatus.InGame if is_in_game else ConnectionStatus.Disconnected
+    game_connection.current_status = current_status
 
     # Run
     await window._on_timer_update()
 
     # Assert
-    if is_in_game:
+    if current_status != ConnectionStatus.Disconnected:
         window._update_tracker_from_hook.assert_called_once_with(inventory)
     else:
         window._update_tracker_from_hook.assert_not_called()
