@@ -34,6 +34,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Respawn Abuse
     - Screw Attack into Tunnels
     - Seeker Locks without Seekers
+    - Single Room Out of Bounds
     - Standable Terrain
 
 -   Changed: The following trick level difficulties were renamed:
@@ -220,7 +221,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Training Chamber:
     - Method to exit the spinner with Power Bombs instead of Bombs (Beginner and above).
     - Method to climb to the top of the statue with Gravity Boost and Bombs (Intermediate and above).
-    - Method to climb to the top of the statue with Space Jump, Scan Dash, and Underwater Dash (Expert and above).
+    - Method to climb to the top of the statue with Space Jump, Scan Dash, and Underwater Dash (Advanced and above).
+    - Method to climb to the top of the statue with Space Jump and Extended Dash (Expert and Above).
 
 -   Underground Tunnel, method to access Torvus Temple from Torvus Grove with Screw Attack (Expert and above).
 
@@ -232,7 +234,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Aerial Training Site, methods to cross the room from various nodes with Dashes, Roll Jumps, and Extended Dashes (Intermediate/Expert and above).
 
--   Aerie, method of collecting the item without entering the Dark World (Expert and above).
+-   Aerie, method of collecting the item:
+    - Without entering the Dark World (Expert and above).
+    - With only Screw Attack (Beginner and above).
 
 -   Dynamo Access, method to cross over the Spider Track with Space Jump and Standable Terrain (Beginner and above).
 
@@ -247,6 +251,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Methods of reaching the item, and skipping the Spider Track to and from Central Area Transport East with Screw Attack (Intermediate and above).
 
 -   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
+
+-   Hive Summit, method of reaching the portal:
+    - With Space Jump and Standable Terrain (Intermediate and above).
+    - With Space Jump, Boost Ball, Boost Jump, and Out of Bounds (Expert and above).
 
 -   Hive Temple:
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
