@@ -207,7 +207,9 @@ class DolphinBackend(ConnectionBackend):
             elif item == 14:  # Light Suit
                 self.dolphin.write_word(player_state_address + 84, 2)
             elif item == self.game.resource_database.energy_tank.index:
-                self.dolphin.write_float(player_state_address + 20, capacity * 100 + 99)
+                base_health_capacity = self.dolphin.read_word(self.patches.health_capacity.base_health_capacity)
+                energy_tank_capacity = self.dolphin.read_word(self.patches.health_capacity.energy_tank_capacity)
+                self.dolphin.write_float(player_state_address + 20, capacity * energy_tank_capacity + base_health_capacity)
 
     async def _check_for_collected_index(self):
         player_state_address = await self._get_player_state_address()
