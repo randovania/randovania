@@ -3,7 +3,6 @@ from typing import Optional, Callable, Awaitable, List, NamedTuple, Dict
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import CurrentResources
 
 
 class ConnectionStatus(Enum):

@@ -1,10 +1,14 @@
+import copy
 import struct
 
 import pytest
 from mock import AsyncMock, call
 
+from randovania.game_connection import connection_backend
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
 from randovania.game_connection.connection_base import InventoryItem
+from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.games.prime import dol_patcher
 
 
@@ -130,3 +134,110 @@ async def test_get_inventory(backend):
         for item in backend.game.resource_database.item
     }
 
+
+@pytest.mark.asyncio
+async def test_check_for_collected_index_nothing(backend):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._inventory = {
+        backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)
+    }
+    backend._update_inventory = AsyncMock()
+
+    # Run
+    await backend._check_for_collected_index()
+
+    # Assert
+    backend._update_inventory.assert_awaited_once_with(backend._inventory)
+
+
+@pytest.mark.asyncio
+async def test_check_for_collected_index_location_collected(backend):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._inventory = {
+        backend.game.resource_database.multiworld_magic_item: InventoryItem(10, 10)
+    }
+    backend._emit_location_collected = AsyncMock()
+    backend._update_inventory = AsyncMock()
+
+    # Run
+    await backend._check_for_collected_index()
+
+    # Assert
+    backend._emit_location_collected.assert_awaited_once_with(9)
+    backend._update_inventory.assert_awaited_once_with({
+        backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)
+    })
+
+
+@pytest.mark.asyncio
+async def test_check_for_collected_index_receive_items(backend):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._update_inventory = AsyncMock()
+
+    resource = backend.game.resource_database.energy_tank
+    pickup = PickupEntry("Pickup", 0, ItemCategory.MISSILE, ItemCategory.MISSILE, (
+        ConditionalResources(None, None,
+                             ((resource, resource.max_capacity),),
+                             ),
+    ))
+    backend._inventory = {
+        backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 0),
+        backend.game.resource_database.energy_tank: InventoryItem(1, 1),
+    }
+    backend._permanent_pickups = [pickup]
+
+    # Run
+    await backend._check_for_collected_index()
+
+    # Assert
+    backend._update_inventory.assert_awaited_once_with({
+        backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 1),
+        backend.game.resource_database.energy_tank: InventoryItem(resource.max_capacity, resource.max_capacity),
+    })
+
+
+@pytest.mark.asyncio
+async def test_update_inventory_no_change(backend):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._perform_memory_operations = AsyncMock()
+    backend._inventory = {
+        item: InventoryItem(0, 0)
+        for item in backend.game.resource_database.item
+    }
+
+    # Run
+    await backend._update_inventory(backend._inventory)
+
+    # Assert
+    backend._perform_memory_operations.assert_not_awaited()
+
+
+@pytest.mark.parametrize("item", [13])
+@pytest.mark.asyncio
+async def test_update_inventory_with_change(backend, item):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._perform_memory_operations = AsyncMock()
+    backend._inventory = {
+        item: InventoryItem(0, 0)
+        for item in backend.game.resource_database.item
+    }
+    new_inventory = copy.copy(backend._inventory)
+    new_inventory[backend.game.resource_database.multiworld_magic_item] = InventoryItem(1, 15)
+
+    # Run
+    await backend._update_inventory(new_inventory)
+
+    # Assert
+    backend._perform_memory_operations.assert_awaited_once_with([
+        MemoryOperation(
+            address=backend._get_player_state_pointer(),
+            write_bytes=struct.pack(">II", 1, 15),
+            read_byte_count=8,
+            offset=connection_backend._powerup_offset(backend.game.resource_database.multiworld_magic_item.index),
+        )
+    ])

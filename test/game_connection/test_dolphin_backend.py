@@ -1,11 +1,10 @@
-from unittest.mock import MagicMock, call, patch, ANY
+from unittest.mock import MagicMock, call
 
 import pytest
 from mock import AsyncMock
 
-from randovania.game_connection.connection_base import ConnectionStatus, InventoryItem
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
-from randovania.games.prime import dol_patcher
 
 
 @pytest.fixture(name="backend")
@@ -13,75 +12,6 @@ def dolphin_backend():
     backend = DolphinBackend()
     backend.dolphin = MagicMock()
     return backend
-
-
-@pytest.mark.asyncio
-async def test_check_for_collected_index_nothing(backend):
-    # Setup
-    backend._get_player_state_address = AsyncMock(return_value=0)
-    backend.dolphin.read_word.return_value = 0
-
-    # Run
-    await backend._check_for_collected_index()
-
-    # Assert
-    backend.dolphin.read_word.assert_has_calls([
-        call(980),
-        call(984),
-    ])
-    backend.dolphin.write_word.assert_not_called()
-
-
-@pytest.mark.asyncio
-async def test_check_for_collected_index_location_collected(backend):
-    # Setup
-    backend._get_player_state_address = AsyncMock(return_value=0)
-    backend.dolphin.read_word.return_value = 10
-    backend._emit_location_collected = AsyncMock()
-
-    # Run
-    await backend._check_for_collected_index()
-
-    # Assert
-    backend.dolphin.read_word.assert_has_calls([
-        call(980),
-        call(984),
-    ])
-    backend.dolphin.write_word.assert_has_calls([
-        call(980, 0),
-        call(984, 0),
-    ])
-    backend._emit_location_collected.assert_awaited_once_with(9)
-
-
-@pytest.mark.asyncio
-async def test_check_for_collected_index_receive_items(backend):
-    # Setup
-    pickup = MagicMock()
-    resource = MagicMock()
-    resource.max_capacity = 8
-    inventory_resources = {resource: 10}
-
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    backend._get_player_state_address = AsyncMock(return_value=0)
-    backend._inventory = {resource: InventoryItem(10, 10)}
-    backend._raw_set_item_capacity = AsyncMock()
-    backend.dolphin.read_word.return_value = 0
-    backend._permanent_pickups = [pickup]
-
-    # Run
-    with patch("randovania.game_connection.dolphin_backend._add_pickup_to_resources",
-               autospec=True, return_value=inventory_resources) as mock_add_pickup:
-        await backend._check_for_collected_index()
-
-    # Assert
-    backend.dolphin.read_word.assert_has_calls([
-        call(980),
-        call(984),
-    ])
-    backend.dolphin.write_word.assert_called_once_with(984, 1)
-    backend._raw_set_item_capacity.assert_awaited_once_with(resource.index, 8, 0)
-    mock_add_pickup.assert_called_once_with(pickup, inventory_resources)
 
 
 @pytest.mark.parametrize("depth", [0, 1, 2])
@@ -143,35 +73,3 @@ def test_current_status_in_game(backend):
     backend._world = True
     backend.checking_for_collected_index = True
     assert backend.current_status == ConnectionStatus.InGame
-
-
-@pytest.mark.asyncio
-async def test_raw_set_item_capacity_no_change(backend):
-    # Setup
-    backend.dolphin.read_word.return_value = 5
-
-    # Run
-    await backend._raw_set_item_capacity(10, 5, 0)
-
-    # Assert
-    backend.dolphin.read_word.assert_called_once()
-    backend.dolphin.write_word.assert_not_called()
-
-
-@pytest.mark.parametrize("item", [13])
-@pytest.mark.asyncio
-async def test_raw_set_item_capacity_positive_change(backend, item):
-    # Setup
-    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
-    backend.dolphin.read_word.return_value = 4
-
-    # Run
-    await backend._raw_set_item_capacity(item, 5, 0)
-
-    # Assert
-    # backend.dolphin.read_word.assert_called_once()
-    backend.dolphin.write_word.assert_has_calls([
-        call(ANY, 5),
-        call(ANY, 5),
-        call(ANY, 1),
-    ])
