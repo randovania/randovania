@@ -6,7 +6,8 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMainWindow
 from asyncqt import asyncSlot
 
-from randovania.game_connection.connection_backend import ConnectionBackend, ConnectionStatus
+from randovania.game_connection.connection_backend import ConnectionBackend
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_description import default_database
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry

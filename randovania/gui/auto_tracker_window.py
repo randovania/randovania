@@ -9,15 +9,13 @@ from PySide2.QtWidgets import QMainWindow, QLabel
 from asyncqt import asyncSlot
 
 from randovania import get_data_path
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import CurrentResources
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime import default_data
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib

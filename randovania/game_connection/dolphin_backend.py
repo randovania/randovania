@@ -4,7 +4,8 @@ from typing import List, Optional, Dict
 
 import dolphin_memory_engine
 
-from randovania.game_connection.connection_backend import ConnectionBackend, ConnectionStatus
+from randovania.game_connection.connection_backend import ConnectionBackend
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry

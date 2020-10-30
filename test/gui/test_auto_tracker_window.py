@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 from mock import AsyncMock
 
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
 
 

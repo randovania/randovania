@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, call, patch, ANY
 import pytest
 from mock import AsyncMock
 
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
 from randovania.games.prime import dol_patcher
 
