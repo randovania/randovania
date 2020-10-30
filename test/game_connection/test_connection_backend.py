@@ -1,3 +1,5 @@
+import struct
+
 import pytest
 from mock import AsyncMock, call
 
@@ -113,14 +115,14 @@ async def test_send_message_on_cooldown(backend):
 @pytest.mark.asyncio
 async def test_get_inventory(backend):
     # Setup
-    backend._get_player_state_address = AsyncMock(return_value=0)
-    backend.dolphin.read_word.side_effect = [
-        item.index
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._perform_memory_operations.return_value = [
+        struct.pack(">II", item.index, item.index)
         for item in backend.game.resource_database.item
     ]
 
     # Run
-    inventory = await backend.get_inventory()
+    inventory = await backend._get_inventory()
 
     # Assert
     assert inventory == {

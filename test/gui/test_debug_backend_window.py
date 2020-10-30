@@ -43,7 +43,7 @@ def test_display_message(backend):
 
 @pytest.mark.asyncio
 async def test_empty_get_inventory(backend):
-    assert await backend.get_inventory() == {}
+    assert await backend.get_current_inventory() == {}
 
 
 def test_send_pickup(backend, pickup):

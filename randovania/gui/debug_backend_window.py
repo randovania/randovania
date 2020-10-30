@@ -58,7 +58,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
     def display_message(self, message: str):
         self.messages_list.addItem(message)
 
-    async def get_inventory(self) -> CurrentResources:
+    async def get_current_inventory(self) -> CurrentResources:
         return self._inventory
 
     def send_pickup(self, pickup: PickupEntry):

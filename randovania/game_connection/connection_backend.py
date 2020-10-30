@@ -39,6 +39,7 @@ def _powerup_offset(item_index: int) -> int:
 class ConnectionBackend(ConnectionBase):
     patches: Optional[PatchesForVersion] = None
     _games: Dict[RandovaniaGame, GameDescription]
+    _inventory: Dict[ItemResourceInfo, InventoryItem]
 
     # Messages
     message_queue: List[str]
@@ -53,6 +54,7 @@ class ConnectionBackend(ConnectionBase):
         self.logger.setLevel(logging.DEBUG)
 
         self._games = {}
+        self._inventory = {}
         self.message_queue = []
 
     @property
@@ -111,7 +113,10 @@ class ConnectionBackend(ConnectionBase):
         cstate_manager = self.patches.string_display.cstate_manager_global
         return cstate_manager + 0x150c
 
-    async def get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
+    def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
+        return self._inventory
+
+    async def _get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         player_state_pointer = self._get_player_state_pointer()
 
         memory_ops = [

@@ -60,12 +60,11 @@ async def test_check_for_collected_index_receive_items(backend):
     pickup = MagicMock()
     resource = MagicMock()
     resource.max_capacity = 8
-    inventory = {resource: InventoryItem(10, 10)}
     inventory_resources = {resource: 10}
 
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
     backend._get_player_state_address = AsyncMock(return_value=0)
-    backend.get_inventory = AsyncMock(return_value=inventory)
+    backend._inventory = {resource: InventoryItem(10, 10)}
     backend._raw_set_item_capacity = AsyncMock()
     backend.dolphin.read_word.return_value = 0
     backend._permanent_pickups = [pickup]
@@ -81,7 +80,6 @@ async def test_check_for_collected_index_receive_items(backend):
         call(984),
     ])
     backend.dolphin.write_word.assert_called_once_with(984, 1)
-    backend.get_inventory.assert_called_once_with()
     backend._raw_set_item_capacity.assert_awaited_once_with(resource.index, 8, 0)
     mock_add_pickup.assert_called_once_with(pickup, inventory_resources)
 

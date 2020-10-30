@@ -44,7 +44,7 @@ class ConnectionBase:
     def display_message(self, message: str):
         raise NotImplementedError()
 
-    async def get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
+    def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         raise NotImplementedError()
 
     def send_pickup(self, pickup: PickupEntry):

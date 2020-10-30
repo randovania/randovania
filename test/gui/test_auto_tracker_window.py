@@ -36,7 +36,7 @@ async def test_on_timer_update(current_status: ConnectionStatus,
     window = AutoTrackerWindow(game_connection)
     window._update_tracker_from_hook = MagicMock()
 
-    game_connection.get_inventory = AsyncMock(return_value=inventory)
+    game_connection.get_current_inventory.return_value = inventory
     game_connection.current_status = current_status
 
     # Run

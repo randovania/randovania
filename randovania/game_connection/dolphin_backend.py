@@ -113,8 +113,10 @@ class DolphinBackend(ConnectionBackend):
         await self._send_message_from_queue(dt)
 
         self._update_current_world()
-        if self._world is not None and self.checking_for_collected_index:
-            await self._check_for_collected_index()
+        if self._world is not None:
+            self._inventory = await self._get_inventory()
+            if self.checking_for_collected_index:
+                await self._check_for_collected_index()
 
     @property
     def name(self) -> str:
@@ -191,7 +193,7 @@ class DolphinBackend(ConnectionBackend):
             self.logger.info(f"_check_for_collected_index: {len(self._pickups_to_give)} pickups to give, "
                              f"{len(self._permanent_pickups)} permanent pickups, magic {magic_capacity}")
 
-            inventory = await self.get_inventory()
+            inventory = self.get_current_inventory()
             inventory_resources: CurrentResources = {
                 item: inv_item.capacity
                 for item, inv_item in inventory.items()
