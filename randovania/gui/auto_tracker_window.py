@@ -9,7 +9,7 @@ from PySide2.QtWidgets import QMainWindow, QLabel
 from asyncqt import asyncSlot
 
 from randovania import get_data_path
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus, InventoryItem
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -59,15 +59,16 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     def _game_status_updated(self, status: ConnectionStatus):
         self.connection_status_label.setText(self.game_connection.pretty_current_status)
 
-    def _update_tracker_from_hook(self, inventory: CurrentResources):
+    def _update_tracker_from_hook(self, inventory: Dict[ItemResourceInfo, InventoryItem]):
         for item, label in self._item_to_label.items():
-            current = inventory.get(item, 0)
-            label.set_checked(current > 0)
+            current = inventory.get(item, InventoryItem(0, 0))
+            label.set_checked(current.capacity > 0)
 
-        self._energy_tank_label.setText("x {}/14".format(inventory.get(self._energy_tank_item, 0)))
+        energy_tank = inventory.get(self._energy_tank_item, InventoryItem(0, 0))
+        self._energy_tank_label.setText("x {}/{}".format(energy_tank.capacity, self._energy_tank_item.max_capacity))
 
         for label, keys in self._labels_for_keys:
-            num_keys = sum(inventory.get(key, 0) for key in keys)
+            num_keys = sum(inventory.get(key, InventoryItem(0, 0)).capacity for key in keys)
             label.setText("x {}/{}".format(num_keys, len(keys)))
 
     @asyncSlot()

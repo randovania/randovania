@@ -1,6 +1,7 @@
 from enum import Enum
-from typing import Optional, Callable, Awaitable, List
+from typing import Optional, Callable, Awaitable, List, NamedTuple, Dict
 
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 
@@ -28,6 +29,11 @@ _pretty_connection_status = {
 }
 
 
+class InventoryItem(NamedTuple):
+    amount: int
+    capacity: int
+
+
 class ConnectionBase:
     _location_collected_listener: Optional[Callable[[int], Awaitable[None]]] = None
 
@@ -38,7 +44,7 @@ class ConnectionBase:
     def display_message(self, message: str):
         raise NotImplementedError()
 
-    async def get_inventory(self) -> CurrentResources:
+    async def get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         raise NotImplementedError()
 
     def send_pickup(self, pickup: PickupEntry):
