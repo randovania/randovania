@@ -10,7 +10,7 @@ from PySide2.QtCore import Qt, Signal, QTimer
 from PySide2.QtWidgets import QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
