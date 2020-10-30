@@ -1,10 +1,11 @@
-from typing import List
+from typing import List, Dict
 
 from PySide2.QtCore import QTimer, Signal, QObject
 from asyncqt import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.connection_base import ConnectionStatus, ConnectionBase
+from randovania.game_connection.connection_base import ConnectionStatus, ConnectionBase, InventoryItem
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources
 
@@ -56,7 +57,7 @@ class GameConnection(QObject, ConnectionBase):
     def display_message(self, message: str):
         return self.backend.display_message(message)
 
-    async def get_inventory(self) -> CurrentResources:
+    async def get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         return await self.backend.get_inventory()
 
     def send_pickup(self, pickup: PickupEntry):
