@@ -1,3 +1,4 @@
+import copy
 import dataclasses
 import logging
 import struct
@@ -7,6 +8,8 @@ from randovania.game_connection.connection_base import ConnectionBase, Inventory
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import dol_patcher, default_data
 from randovania.games.prime.dol_patcher import PatchesForVersion
@@ -36,8 +39,16 @@ def _powerup_offset(item_index: int) -> int:
     return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
 
 
+def _add_pickup_to_resources(pickup: PickupEntry, inventory: CurrentResources) -> CurrentResources:
+    return add_resource_gain_to_current_resources(
+        pickup.resource_gain(inventory),
+        copy.copy(inventory)
+    )
+
+
 class ConnectionBackend(ConnectionBase):
     patches: Optional[PatchesForVersion] = None
+    _checking_for_collected_index: bool = False
     _games: Dict[RandovaniaGame, GameDescription]
     _inventory: Dict[ItemResourceInfo, InventoryItem]
 
@@ -46,7 +57,9 @@ class ConnectionBackend(ConnectionBase):
     message_cooldown: float = 0.0
     _last_message_size: int = 0
 
-    _checking_for_collected_index: bool = False
+    # Multiworld
+    _pickups_to_give: List[PickupEntry]
+    _permanent_pickups: List[PickupEntry]
 
     def __init__(self):
         super().__init__()
@@ -56,6 +69,8 @@ class ConnectionBackend(ConnectionBase):
         self._games = {}
         self._inventory = {}
         self.message_queue = []
+        self._pickups_to_give = []
+        self._permanent_pickups = []
 
     @property
     def name(self) -> str:
@@ -136,8 +151,112 @@ class ConnectionBackend(ConnectionBase):
 
         return inventory
 
-    # Display Message
+    async def _update_inventory(self, new_inventory: Dict[ItemResourceInfo, InventoryItem]):
+        player_state_pointer = self._get_player_state_pointer()
+        current_inventory = self.get_current_inventory()
 
+        changed_items = {item for item in self.game.resource_database.item
+                         if new_inventory[item] != current_inventory[item]}
+        if not changed_items:
+            return
+
+        memory_ops = [
+            MemoryOperation(
+                address=player_state_pointer,
+                write_bytes=struct.pack(">II", *new_inventory[item]),
+                read_byte_count=8,
+                offset=_powerup_offset(item.index),
+            )
+            for item in self.game.resource_database.item
+            if item in changed_items
+        ]
+
+        # Suit Model
+        dark_suit = self.game.resource_database.get_item(13)
+        light_suit = self.game.resource_database.get_item(14)
+        if dark_suit in changed_items or light_suit in changed_items:
+            if new_inventory[light_suit].capacity > 0:
+                new_suit = 2
+            elif new_inventory[dark_suit].capacity > 0:
+                new_suit = 1
+            else:
+                new_suit = 0
+            memory_ops.append(MemoryOperation(
+                address=player_state_pointer,
+                write_bytes=struct.pack(">I", new_suit),
+                offset=84,
+            ))
+
+        energy_tank = self.game.resource_database.energy_tank
+        if energy_tank in changed_items:
+            # FIXME: get the correct values
+            base_health_capacity = 99  # self.dolphin.read_word(self.patches.health_capacity.base_health_capacity)
+            energy_tank_capacity = 100  # self.dolphin.read_word(self.patches.health_capacity.energy_tank_capacity)
+            new_health = new_inventory[energy_tank].amount * energy_tank_capacity + base_health_capacity
+            memory_ops.append(MemoryOperation(
+                address=player_state_pointer,
+                write_bytes=struct.pack(">f", new_health),
+                offset=20,
+            ))
+
+        # FIXME: check if the value read is what we expected, and then re-writes if needed
+        result = await self._perform_memory_operations(memory_ops)
+        self._inventory = new_inventory
+
+    # Multiworld
+    async def _check_for_collected_index(self):
+        multiworld_magic_item = self.game.resource_database.multiworld_magic_item
+        item_percentage = self.game.resource_database.item_percentage
+
+        current_inventory = self.get_current_inventory()
+        new_inventory = copy.copy(current_inventory)
+
+        magic_inv = current_inventory[multiworld_magic_item]
+        magic_capacity = magic_inv.capacity
+
+        if magic_inv.amount > 0:
+            self.logger.info(f"_check_for_collected_index: magic item was at {magic_inv.amount}/{magic_capacity}")
+            magic_capacity -= magic_inv.amount
+            new_inventory[multiworld_magic_item] = InventoryItem(0, magic_inv.capacity - magic_inv.amount)
+            await self._emit_location_collected(magic_inv.amount - 1)
+
+        if self._pickups_to_give or magic_capacity < len(self._permanent_pickups):
+            self.logger.info(f"_check_for_collected_index: {len(self._pickups_to_give)} pickups to give, "
+                             f"{len(self._permanent_pickups)} permanent pickups, magic {magic_capacity}")
+
+            inventory_resources: CurrentResources = {
+                item: inv_item.capacity
+                for item, inv_item in current_inventory.items()
+            }
+
+            while self._pickups_to_give:
+                inventory_resources = _add_pickup_to_resources(self._pickups_to_give.pop(), inventory_resources)
+
+            for pickup in self._permanent_pickups[magic_capacity:]:
+                inventory_resources = _add_pickup_to_resources(pickup, inventory_resources)
+
+            for item, new_capacity in inventory_resources.items():
+                if item == item_percentage:
+                    continue
+                old = new_inventory[item]
+                delta = new_capacity - old.capacity
+                new_amount = old.amount
+                if delta > 0:
+                    new_amount += delta
+                new_inventory[item] = InventoryItem(min(new_amount, new_capacity, item.max_capacity),
+                                                    min(new_capacity, item.max_capacity))
+
+            new_inventory[multiworld_magic_item] = InventoryItem(0, len(self._permanent_pickups))
+
+        await self._update_inventory(new_inventory)
+
+    def send_pickup(self, pickup: PickupEntry):
+        self._pickups_to_give.append(pickup)
+
+    def set_permanent_pickups(self, pickups: List[PickupEntry]):
+        self._permanent_pickups = pickups
+
+    # Display Message
     def display_message(self, message: str):
         self.logger.info(f"Queueing message '{message}'. "
                          f"Queue has {len(self.message_queue)} elements and "

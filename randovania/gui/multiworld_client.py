@@ -98,9 +98,7 @@ class MultiworldClient(QObject):
         self.game_connection.set_location_collected_listener(self.on_location_collected)
         self.network_client.GameUpdateNotification.connect(self.on_game_updated)
 
-        await self.refresh_received_pickups()
-        async with self._pickups_lock:
-            self.game_connection.set_permanent_pickups(self._received_pickups)
+        await self.on_game_updated()
 
         self.start_notify_collect_locations_task()
 
