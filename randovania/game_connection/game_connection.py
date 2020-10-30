@@ -57,8 +57,8 @@ class GameConnection(QObject, ConnectionBase):
     def display_message(self, message: str):
         return self.backend.display_message(message)
 
-    async def get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
-        return await self.backend.get_inventory()
+    def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
+        return self.backend.get_current_inventory()
 
     def send_pickup(self, pickup: PickupEntry):
         return self.backend.send_pickup(pickup)

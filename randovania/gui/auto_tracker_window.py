@@ -76,7 +76,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
         try:
             current_status = self.game_connection.current_status
             if current_status == ConnectionStatus.InGame or current_status == ConnectionStatus.TrackerOnly:
-                inventory = await self.game_connection.get_inventory()
+                inventory = self.game_connection.get_current_inventory()
                 self._update_tracker_from_hook(inventory)
         finally:
             self._update_timer.start()
