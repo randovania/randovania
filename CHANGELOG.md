@@ -194,7 +194,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
--   Dark Forgotten Bridge, method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
+-   Dark Forgotten Bridge:
+    - Method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
+    - Method to reach Bridge Center from Putrid Alcove door with only Scan Visor (Advanced and above).
 
 -   Gathering Hall: 
     - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
@@ -285,7 +287,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Trooper Security Station Event coming from Communication Area
     - Various Dash Requirements
 
--   Dark Aether Damage Requirements have been added to every room in the Dark World
+-   Dark Aether Damage Requirements have been added to every room in the Dark World.
+
+-   Morph Ball requirements added to Morph Ball Doors and various rooms.
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
@@ -294,10 +298,6 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack and Space Jump as well if coming from Mining Plaza.
 
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
-
--   Morph Ball Doors now properly require Morph Ball.
-
--   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
 
 -   Sand Processing:
     - Now requires items to climb the room before draining the sand: Space Jump, with a Bomb Jump (Beginner and above) or with Screw Attack (Intermediate and above)
@@ -315,7 +315,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Simplified nodes in many rooms for ease of logic navigation.
 
--   Abandoned Base, Bomb Jump to tram is now Advanced (from Intermediate).
+-   Various tricks have been changed to more accurately represent the required method.
+
+-   Abandoned Base, Bomb Jump to transport is now Advanced (from Intermediate).
 
 -   Communication Area:
     - Standable Terrain to reach the item is now Beginner (from Intermediate).
@@ -362,7 +364,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Catacombs, reaching the portal with Morph Ball and Reverse Air Underwater is now Advanced (from Expert).
 
--   Gathering Hall, reaching Transit Tunnel South/West Doors from top door with Morph Ball and Roll Jump is now Expert (from Advanced).
+-   Crypt, Bomb Jump to Laser Platfrom from bottom Safe Zone is now Beginner (from Intermediate).
+
+-   Gathering Hall:
+    - Reaching Transit Tunnel South/West Doors from top door with Morph Ball and Roll Jump is now Expert (from Advanced).
+    - Reaching Transit Tunnel East with Spider Ball and Boost Ball is now Beginner (from Intermediate).
 
 -   Great Bridge:
     - Slope Jumps to reach Map Station from Bottom Level and from Map Station to Upper Level are now Beginner and Intermediate (from Intermediate and Advanced, respectively).
@@ -371,6 +377,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Poisoned Bog, reaching Portal Chamber door with just Screw Attack is now Advanced (from Intermediate).
 
 -   Torvus Lagoon, reaching Portal Chamber from Temple Transport Access is now Intermediate (from Advanced).
+
+-   Sacrificial Chamber, Scan Dash with Space Jump to Sacrificial Tunnel is now Beginner (from Intermediate).
+
+-   Training Chamber, Standable Terrain to reach Fortress Transport Access from Top of Statue and back is now Beginner (from Intermediate).
 
 -   Venomous Pond, reaching the key from the Save Station with Screw Attack is now Beginner (from Intermediate).
 
