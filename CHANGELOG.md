@@ -354,6 +354,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Mining Plaza, climbing the room with Screw Attack is now Beginner (from Intermediate).
 
+-   Mining Station A, reaching Front of Lore Scan from Room Center with a Bomb Jump is now Intermediate (from Advanced).
+
 -   Mining Station B, reaching Transit Station door from room center with Screw Attack after opening the portal is now Intermediate (from Hypermode).
 
 -   Portal Access, returning from Judgment Pit without Space Jump is now Beginner (from Intermediate).
