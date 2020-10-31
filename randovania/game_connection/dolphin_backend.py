@@ -203,7 +203,8 @@ class DolphinBackend(ConnectionBackend):
             self.dolphin.write_word(quantity_address, self.dolphin.read_word(quantity_address) + capacity_delta)
 
             if item == 13:  # Dark Suit
-                self.dolphin.write_word(player_state_address + 84, 1)
+                if self.dolphin.read_word(player_state_address + 84) == 0: # doesn't overwrite Light Suit with Dark Suit
+                    self.dolphin.write_word(player_state_address + 84, 1)
             elif item == 14:  # Light Suit
                 self.dolphin.write_word(player_state_address + 84, 2)
             elif item == self.game.resource_database.energy_tank.index:
