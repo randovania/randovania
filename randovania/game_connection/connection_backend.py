@@ -22,6 +22,14 @@ class MemoryOperation:
     read_byte_count: Optional[int] = None
     write_bytes: Optional[bytes] = None
 
+    @property
+    def byte_count(self) -> int:
+        if self.read_byte_count is not None:
+            return self.read_byte_count
+        if self.write_bytes is not None:
+            return len(self.write_bytes)
+        return 0
+
     def validate_byte_sizes(self):
         if self.read_byte_count is not None and self.read_byte_count > 60:
             raise ValueError(f"Attempting to read {self.read_byte_count} bytes, which is more than the allowed 60.")
@@ -95,6 +103,10 @@ class ConnectionBackend(ConnectionBase):
     async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
         raise NotImplementedError()
 
+    async def _perform_single_memory_operations(self, op: MemoryOperation) -> Optional[bytes]:
+        result = await self._perform_memory_operations([op])
+        return result[0]
+
     @property
     def game(self) -> GameDescription:
         game_enum = self.patches.game
@@ -110,10 +122,8 @@ class ConnectionBackend(ConnectionBase):
             try:
                 # We're reading these build strings separately because combining would go above the maximum size allowed
                 # for read operations
-                read_result = await self._perform_memory_operations([
-                    MemoryOperation(version.build_string_address,
-                                    read_byte_count=len(version.build_string))])
-                build_string = read_result[0]
+                operation = MemoryOperation(version.build_string_address, read_byte_count=len(version.build_string))
+                build_string = await self._perform_single_memory_operations(operation)
             except RuntimeError:
                 return False
 
@@ -271,11 +281,10 @@ class ConnectionBackend(ConnectionBase):
         has_message_address = self.patches.string_display.cstate_manager_global + 0x2
 
         # There's already a message pending, stop
-        has_message_result = await self._perform_memory_operations([
-            MemoryOperation(has_message_address, read_byte_count=1),
-        ])
+        has_message = await self._perform_single_memory_operations(MemoryOperation(has_message_address,
+                                                                                   read_byte_count=1))
 
-        if has_message_result[0] != b"\x00":
+        if has_message != b"\x00":
             self.logger.info("_send_message_from_queue: game already has a pending message")
             return
 

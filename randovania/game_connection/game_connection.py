@@ -23,6 +23,7 @@ class GameConnection(QObject, ConnectionBase):
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._update)
         self._timer.setInterval(self._dt * 1000)
+        self._timer.setSingleShot(True)
 
         self.backend = backend
         self.backend.set_location_collected_listener(self._emit_location_collected)
@@ -40,11 +41,14 @@ class GameConnection(QObject, ConnectionBase):
 
     @asyncSlot()
     async def _update(self):
-        await self.backend.update(self._dt)
-        new_status = self.backend.current_status
-        if self._current_status != new_status:
-            self._current_status = new_status
-            self.StatusUpdated.emit(new_status)
+        try:
+            await self.backend.update(self._dt)
+            new_status = self.backend.current_status
+            if self._current_status != new_status:
+                self._current_status = new_status
+                self.StatusUpdated.emit(new_status)
+        finally:
+            self._timer.start()
 
     @property
     def pretty_current_status(self) -> str:
