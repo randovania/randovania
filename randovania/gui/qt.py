@@ -83,6 +83,9 @@ def create_backend(debug_game_backend: bool):
     else:
         from randovania.game_connection.dolphin_backend import DolphinBackend
         backend = DolphinBackend()
+        from randovania.game_connection.nintendont_backend import NintendontBackend
+        if not NintendontBackend:
+            backend = NintendontBackend("localhost")
     return backend
 
 
