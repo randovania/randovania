@@ -13,7 +13,7 @@ from randovania.game_description.resources.resource_info import CurrentResources
 class GameConnection(QObject, ConnectionBase):
     StatusUpdated = Signal(ConnectionStatus)
 
-    _dt: float = 1.0
+    _dt: float = 2.5
     _current_status: ConnectionStatus = ConnectionStatus.Disconnected
     backend: ConnectionBackend = None
 
