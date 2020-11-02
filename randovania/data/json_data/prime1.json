@@ -446,6 +446,47 @@
                         }
                     }
                 ]
+            },
+            "Have all Beams": {
+                "type": "and",
+                "data": [
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 0,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 2,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 1,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 3,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    }
+                ]
             }
         }
     },
@@ -605,6 +646,22 @@
                                 "Dock to Crater Tunnel A": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Save Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Teleport to Artifact Temple": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -621,33 +678,43 @@
                             "name": "Dock to Phazon Core",
                             "heal": false,
                             "coordinates": {
-                                "x": -9.5367431640625e-07,
-                                "y": -35.4996223449707,
-                                "z": 2.4999939005583656
+                                "x": -0.0,
+                                "y": -35.5,
+                                "z": 2.5
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 3180620483,
                             "connected_dock_index": 1,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Crater Entry Point": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Crater Entry Point",
                             "heal": false,
                             "coordinates": {
-                                "x": -15.000001430511475,
-                                "y": 35.50104522705078,
-                                "z": 2.5000060994416344
+                                "x": -15.0,
+                                "y": 35.5,
+                                "z": 2.5
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 2472970646,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Phazon Core": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -662,49 +729,108 @@
                             "name": "Dock to Crater Missile Station",
                             "heal": false,
                             "coordinates": {
-                                "x": -61.2872314453125,
-                                "y": -16.49077534675598,
-                                "z": 38.942996978759766
+                                "x": -61.29,
+                                "y": -16.49,
+                                "z": 38.94
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 1296329791,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Crater Tunnel A": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Dock to Crater Tunnel B": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Crater Tunnel A",
                             "heal": false,
                             "coordinates": {
-                                "x": -4.927982926368713,
-                                "y": 76.91698455810547,
-                                "z": 2.5000124604644043
+                                "x": -4.93,
+                                "y": 76.92,
+                                "z": 2.5
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 1238049635,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Crater Missile Station": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Crater Tunnel B",
                             "heal": false,
                             "coordinates": {
-                                "x": 41.7811393737793,
-                                "y": -54.16459274291992,
-                                "z": 55.42271423339844
+                                "x": 41.78,
+                                "y": -54.16,
+                                "z": 55.42
                             },
                             "node_type": "dock",
                             "dock_index": 2,
                             "connected_area_asset_id": 852861312,
                             "connected_dock_index": 1,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Crater Missile Station": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     ]
                 },
@@ -719,17 +845,34 @@
                             "name": "Dock to Phazon Core",
                             "heal": false,
                             "coordinates": {
-                                "x": -0.03148007392883301,
-                                "y": 18.183027267456055,
-                                "z": 2.5000029305115277
+                                "x": -0.03,
+                                "y": 18.18,
+                                "z": 2.5
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 3180620483,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Missile Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Missile Station",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Phazon Core": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -745,32 +888,108 @@
                             "heal": false,
                             "coordinates": {
                                 "x": -2.5,
-                                "y": -31.998570442199707,
-                                "z": 5.499995589256287
+                                "y": -32.0,
+                                "z": 5.5
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 1729456653,
                             "connected_dock_index": 1,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Phazon Core": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 6,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 19,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Phazon Core",
                             "heal": false,
                             "coordinates": {
-                                "x": 1.761190950870514,
-                                "y": 39.00210189819336,
-                                "z": 5.500005841255188
+                                "x": 1.76,
+                                "y": 39.0,
+                                "z": 5.5
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 3180620483,
                             "connected_dock_index": 2,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Phazon Infusion Chamber": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 19,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 6,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     ]
                 },
@@ -785,15 +1004,15 @@
                             "name": "Dock to Subchamber One",
                             "heal": false,
                             "coordinates": {
-                                "x": -9.5367431640625e-06,
-                                "y": -40.04199981689453,
-                                "z": 22.582989368587732
+                                "x": -0.0,
+                                "y": -40.04,
+                                "z": 22.58
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 3672049347,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
                             "connections": {}
                         },
@@ -801,17 +1020,22 @@
                             "name": "Dock to Crater Tunnel B",
                             "heal": false,
                             "coordinates": {
-                                "x": 0.0016429424285888672,
-                                "y": 57.976844787597656,
-                                "z": 7.581491231918335
+                                "x": 0.0,
+                                "y": 57.98,
+                                "z": 7.58
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 852861312,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
+                            "dock_weakness_index": 3,
+                            "connections": {
+                                "Dock to Subchamber One": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -826,31 +1050,50 @@
                             "name": "Dock to Phazon Infusion Chamber",
                             "heal": false,
                             "coordinates": {
-                                "x": 18.179192781448364,
-                                "y": 35.9820556640625,
-                                "z": 50.53944492340088
+                                "x": 18.18,
+                                "y": 35.98,
+                                "z": 50.54
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 1729456653,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber Two": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Have all Beams"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Subchamber Two",
                             "heal": false,
                             "coordinates": {
-                                "x": -49.320740699768066,
-                                "y": 7.767610549926758,
-                                "z": -15.17508602142334
+                                "x": -49.32,
+                                "y": 7.77,
+                                "z": -15.18
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 122281798,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
                             "connections": {}
                         }
@@ -867,31 +1110,50 @@
                             "name": "Dock to Subchamber One",
                             "heal": false,
                             "coordinates": {
-                                "x": 0.8891029357910156,
-                                "y": -33.77798891067505,
-                                "z": 24.6536922454834
+                                "x": 0.89,
+                                "y": -33.78,
+                                "z": 24.65
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 3672049347,
                             "connected_dock_index": 1,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber Three": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Have all Beams"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Subchamber Three",
                             "heal": false,
                             "coordinates": {
-                                "x": 3.1321678161621094,
-                                "y": 36.332932472229004,
-                                "z": -23.906673431396484
+                                "x": 3.13,
+                                "y": 36.33,
+                                "z": -23.91
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 2050677022,
                             "connected_dock_index": 1,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
                             "connections": {}
                         }
@@ -908,15 +1170,15 @@
                             "name": "Dock to Subchamber Four",
                             "heal": false,
                             "coordinates": {
-                                "x": -5.365344047546387,
-                                "y": 52.954941749572754,
-                                "z": -17.187277793884277
+                                "x": -5.37,
+                                "y": 52.95,
+                                "z": -17.19
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 2813067419,
                             "connected_dock_index": 1,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
                             "connections": {}
                         },
@@ -924,17 +1186,36 @@
                             "name": "Dock to Subchamber Two",
                             "heal": false,
                             "coordinates": {
-                                "x": -3.63116455078125,
-                                "y": -13.509496212005615,
-                                "z": 32.82197570800781
+                                "x": -3.63,
+                                "y": -13.51,
+                                "z": 32.82
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 122281798,
                             "connected_dock_index": 1,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber Four": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Have all Beams"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     ]
                 },
@@ -949,15 +1230,15 @@
                             "name": "Dock to Subchamber Five",
                             "heal": false,
                             "coordinates": {
-                                "x": 33.74989414215088,
-                                "y": -23.983118057250977,
-                                "z": 22.500481825933093
+                                "x": 33.75,
+                                "y": -23.98,
+                                "z": 22.5
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 2003911832,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
                             "connections": {}
                         },
@@ -965,17 +1246,36 @@
                             "name": "Dock to Subchamber Three",
                             "heal": false,
                             "coordinates": {
-                                "x": -33.74998950958252,
-                                "y": 0.7685813903808594,
-                                "z": 43.21452331542969
+                                "x": -33.75,
+                                "y": 0.77,
+                                "z": 43.21
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 2050677022,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Subchamber Five": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Have all Beams"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         }
                     ]
                 },
@@ -990,31 +1290,59 @@
                             "name": "Dock to Subchamber Four",
                             "heal": false,
                             "coordinates": {
-                                "x": 1.5401020050048828,
-                                "y": 31.221696853637695,
-                                "z": 22.50049014063552
+                                "x": 1.54,
+                                "y": 31.22,
+                                "z": 22.5
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 2813067419,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Metroid Prime Lair": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "All Beams"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 23,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Metroid Prime Lair",
                             "heal": false,
                             "coordinates": {
-                                "x": 1.5401020050048828,
-                                "y": -3.9594335556030273,
-                                "z": -103.62984466552734
+                                "x": 1.54,
+                                "y": -3.96,
+                                "z": -103.63
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 442920021,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 2,
                             "dock_weakness_index": 0,
                             "connections": {}
                         }
