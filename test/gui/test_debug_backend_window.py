@@ -2,7 +2,7 @@ import pytest
 from PySide2.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.gui.debug_backend_window import DebugBackendWindow
@@ -15,14 +15,16 @@ def debug_backend_window(skip_qtbot):
 
 
 @pytest.fixture(name="pickup")
-def _pickup() -> PickupEntry:
+def _pickup(echoes_game_description) -> PickupEntry:
+    resource = echoes_game_description.resource_database.energy_tank
+
     return PickupEntry(
         name="Pickup",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
         broad_category=ItemCategory.LIFE_SUPPORT,
         resources=(
-            ConditionalResources(None, None, ()),
+            ConditionalResources(None, None, ((resource, 2),)),
         ),
     )
 
@@ -35,25 +37,35 @@ def test_current_status(backend, expected_status):
     assert backend.current_status == expected_status
 
 
-def test_display_message(backend):
+@pytest.mark.asyncio
+async def test_display_message(backend):
     message = "Foo"
     backend.display_message(message)
+    await backend.update(1)
     assert backend.messages_list.findItems(message, Qt.MatchFlag.MatchExactly)
 
 
 @pytest.mark.asyncio
 async def test_empty_get_inventory(backend):
-    assert await backend.get_inventory() == {}
+    await backend.update(1)
+    assert "Energy Tank x 0/0" in backend.inventory_label.text()
 
 
-def test_send_pickup(backend, pickup):
+@pytest.mark.asyncio
+async def test_send_pickup(backend, pickup):
     backend.send_pickup(pickup)
-    assert backend.inventory_label.text() == "Pickup x1"
+    backend.checking_for_collected_index = True
+    await backend.update(1)
+    assert "Energy Tank x 2/2" in backend.inventory_label.text()
 
 
-def test_set_permanent_pickups(backend, pickup):
-    backend.set_permanent_pickups([pickup])
-    assert backend.inventory_label.text() == "Pickup x1"
+@pytest.mark.asyncio
+async def test_set_permanent_pickups(backend, pickup):
+    backend.set_permanent_pickups([pickup, pickup])
+    backend.checking_for_collected_index = True
+    await backend.update(1)
+    assert "Energy Tank x 4/4" in backend.inventory_label.text()
+    assert "Multiworld Magic Identifier x 0/2" in backend.inventory_label.text()
 
 
 @pytest.mark.asyncio
@@ -68,6 +80,7 @@ async def test_setup_locations_combo(mock_get_network_client: MagicMock,
         ]
     }
     mock_get_network_client.return_value.session_admin_player = AsyncMock(return_value=patcher_data)
+    backend.patches = backend._expected_patches
 
     # Run
     await backend._setup_locations_combo()

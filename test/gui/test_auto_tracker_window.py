@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 from mock import AsyncMock
 
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus, InventoryItem
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
 
 
@@ -15,7 +15,7 @@ def auto_tracker_window(skip_qtbot):
 def test_update_tracker_from_hook(window):
     # Setup
     inventory = {
-        item: item.index % 3
+        item: InventoryItem(item.index % 3, item.index % 3)
         for item in window.game_data.resource_database.item
     }
 
@@ -36,7 +36,7 @@ async def test_on_timer_update(current_status: ConnectionStatus,
     window = AutoTrackerWindow(game_connection)
     window._update_tracker_from_hook = MagicMock()
 
-    game_connection.get_inventory = AsyncMock(return_value=inventory)
+    game_connection.get_current_inventory.return_value = inventory
     game_connection.current_status = current_status
 
     # Run

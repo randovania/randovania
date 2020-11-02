@@ -3,7 +3,8 @@ from unittest.mock import MagicMock, call
 import pytest
 from mock import AsyncMock
 
-from randovania.game_connection.connection_backend import ConnectionBackend, ConnectionStatus
+from randovania.game_connection.connection_backend import ConnectionBackend
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
 
 

@@ -70,3 +70,7 @@ class ResourceDatabase(NamedTuple):
     @property
     def energy_tank(self) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
+
+    @property
+    def multiworld_magic_item(self) -> ItemResourceInfo:
+        return self.get_item(74)
