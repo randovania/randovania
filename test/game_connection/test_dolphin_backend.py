@@ -21,7 +21,7 @@ async def test_update(backend, depth: int):
     backend._ensure_hooked = MagicMock(return_value=depth == 0)
     backend._identify_game = AsyncMock(return_value=depth > 1)
     backend._send_message_from_queue = AsyncMock()
-    backend._update_current_world = MagicMock()
+    backend._update_current_world = AsyncMock()
     backend._check_for_collected_index = AsyncMock()
     backend._world = MagicMock() if depth > 2 else None
 
@@ -33,10 +33,10 @@ async def test_update(backend, depth: int):
     backend._identify_game.assert_has_awaits([call()] if depth > 0 else [])
     if depth > 1:
         backend._send_message_from_queue.assert_awaited_once_with(1)
-        backend._update_current_world.assert_called_once_with()
+        backend._update_current_world.assert_awaited_once_with()
     else:
         backend._send_message_from_queue.assert_not_awaited()
-        backend._update_current_world.assert_not_called()
+        backend._update_current_world.assert_not_awaited()
 
     if depth > 2:
         backend._check_for_collected_index.assert_awaited_once_with()

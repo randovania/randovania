@@ -46,5 +46,5 @@ async def test_update(skip_qtbot, qapp):
     await game_connection._update()
 
     # Assert
-    backend_update.assert_awaited_once_with(1.0)
+    backend_update.assert_awaited_once_with(game_connection._dt)
     game_connection.StatusUpdated.emit.assert_called_once_with(ConnectionStatus.InGame)

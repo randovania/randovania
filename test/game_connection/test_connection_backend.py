@@ -241,3 +241,31 @@ async def test_update_inventory_with_change(backend, item):
             offset=connection_backend._powerup_offset(backend.game.resource_database.multiworld_magic_item.index),
         )
     ])
+
+
+@pytest.mark.parametrize("query_result", [None, b"\x00" * 4])
+@pytest.mark.asyncio
+async def test_update_current_world_invalid(backend, query_result):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._perform_memory_operations = AsyncMock(return_value=[query_result])
+
+    # Run
+    await backend._update_current_world()
+
+    # Assert
+    assert backend._world is None
+
+
+@pytest.mark.asyncio
+async def test_update_current_world_present(backend):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    world = backend.game.world_list.worlds[0]
+    backend._perform_memory_operations = AsyncMock(return_value=[world.world_asset_id.to_bytes(4, "big")])
+
+    # Run
+    await backend._update_current_world()
+
+    # Assert
+    assert backend._world is world

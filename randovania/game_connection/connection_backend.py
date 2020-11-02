@@ -138,6 +138,19 @@ class ConnectionBackend(ConnectionBase):
 
         return False
 
+    async def _update_current_world(self):
+        world_asset_id = await self._perform_single_memory_operations(
+            MemoryOperation(self.patches.game_state_pointer,
+                            offset=4,
+                            read_byte_count=4)
+        )
+        try:
+            if world_asset_id is None:
+                raise KeyError()
+            self._world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
+        except KeyError:
+            self._world = None
+
     def _get_player_state_pointer(self) -> int:
         cstate_manager = self.patches.string_display.cstate_manager_global
         return cstate_manager + 0x150c

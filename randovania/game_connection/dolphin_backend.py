@@ -58,22 +58,6 @@ class DolphinBackend(ConnectionBackend):
         except RuntimeError:
             self.dolphin.un_hook()
 
-    def _update_current_world(self):
-        try:
-            world_asset_id = self.dolphin.follow_pointers(self.patches.string_display.cstate_manager_global + 0x1604,
-                                                          [0x8])
-        except RuntimeError:
-            world_asset_id = None
-
-        if world_asset_id is None:
-            self._world = None
-            self._test_still_hooked()
-        else:
-            try:
-                self._world = self.game.world_list.world_by_asset_id(self.dolphin.read_word(world_asset_id))
-            except KeyError:
-                self._world = None
-
     async def update(self, dt: float):
         if self._ensure_hooked():
             return
@@ -84,7 +68,7 @@ class DolphinBackend(ConnectionBackend):
 
         await self._send_message_from_queue(dt)
 
-        self._update_current_world()
+        await self._update_current_world()
         if self._world is not None:
             self._inventory = await self._get_inventory()
             if self.checking_for_collected_index:
