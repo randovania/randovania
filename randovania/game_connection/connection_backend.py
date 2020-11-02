@@ -4,7 +4,7 @@ import logging
 import struct
 from typing import Optional, List, Dict, NamedTuple
 
-from randovania.game_connection.connection_base import ConnectionBase, InventoryItem
+from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, ConnectionStatus
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -79,6 +79,10 @@ class ConnectionBackend(ConnectionBase):
         self.message_queue = []
         self._pickups_to_give = []
         self._permanent_pickups = []
+
+    @property
+    def current_status(self) -> ConnectionStatus:
+        raise NotImplementedError()
 
     @property
     def name(self) -> str:
@@ -199,10 +203,16 @@ class ConnectionBackend(ConnectionBase):
 
         energy_tank = self.game.resource_database.energy_tank
         if energy_tank in changed_items:
-            # FIXME: get the correct values
-            base_health_capacity = 99  # self.dolphin.read_word(self.patches.health_capacity.base_health_capacity)
-            energy_tank_capacity = 100  # self.dolphin.read_word(self.patches.health_capacity.energy_tank_capacity)
+            health_data = await self._perform_memory_operations([
+                MemoryOperation(player_state_pointer, read_byte_count=4, offset=20),
+                MemoryOperation(self.patches.health_capacity.base_health_capacity, read_byte_count=4),
+                MemoryOperation(self.patches.health_capacity.energy_tank_capacity, read_byte_count=4),
+            ])
+            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fII", b"".join(health_data))
             new_health = new_inventory[energy_tank].amount * energy_tank_capacity + base_health_capacity
+            if new_inventory[energy_tank] < current_inventory[energy_tank]:
+                new_health = min(new_health, current_health)
+
             memory_ops.append(MemoryOperation(
                 address=player_state_pointer,
                 write_bytes=struct.pack(">f", new_health),
