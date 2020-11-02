@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import BinaryIO, Optional, Tuple, Iterable
 
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 _NUM_TEXT_SECTIONS = 7
@@ -122,6 +123,7 @@ class SafeZoneAddresses:
 
 @dataclasses.dataclass(frozen=True)
 class PatchesForVersion:
+    game: RandovaniaGame
     description: str
     build_string_address: int
     build_string: bytes
@@ -135,6 +137,7 @@ class PatchesForVersion:
 
 ALL_VERSIONS_PATCHES = [
     PatchesForVersion(
+        game=RandovaniaGame.PRIME2,
         description="Gamecube NTSC",
         build_string_address=0x803ac3b0,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
@@ -165,6 +168,7 @@ ALL_VERSIONS_PATCHES = [
         ),
     ),
     PatchesForVersion(
+        game=RandovaniaGame.PRIME2,
         description="Gamecube PAL",
         build_string_address=0x803ad710,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",
