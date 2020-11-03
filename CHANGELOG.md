@@ -138,6 +138,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Sanctum, method to fight Emperor Ing without Spider Ball (Hypermode).
 
+-   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
+
 -   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
 
 -   Accursed Lake, method of collecting the item and leaving with Morph Ball, Light Suit, Gravity Boost, and Reverse Air Underwater (Advanced and above).
@@ -154,11 +156,14 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Meeting Grounds, method of reaching the tunnel with Space Jump and a Bomb Space Jump (Intermediate and above).
 
+-   Temple Assembly Site:
+    - Methods of reaching Dynamo Chamber door with a Bomb Jump (Beginner and above), a Dash (Intermediate and above), or a Roll Jump (Advanced and above).
+    - Methods of reaching the portal without moving the light block with Single Room Out of Bounds and either Screw Attack or Space Jump (Expert and above).
+    - Method of leaving from the portal with Single Room Out of Bounds and Screw Attack (Expert and above).
+
 -   Windchamber Gateway:
     - Method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
     - Method of reaching Path of Eyes door from Grand Windchamber door with an Extended Dash (Advanced and above).
-
--   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
 
 -   Bioenergy Production, method to reach Storage C door or item from top level with Extended Dash (Expert and above).
 
@@ -177,7 +182,13 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method of climbing to Watering Hole door without any items (Expert and above).
     - Method of escaping the pool using Light Suit and a Bomb Space Jump no Space Jump or Gravity Boost (Hypermode)
 
--   Mining Station B, method to climb to the Seeker door without Morph Ball and with Space Jump (Beginner and above).
+-   Main Reactor, method of reaching Dark Samus 1 fight from Ventilation Area A door with Space Jump, Bombs, and a Bomb Space Jump (Intermediate and above).
+
+-   Mining Station B:
+    - Method to climb to the Seeker door without Morph Ball and with Space Jump (Beginner and above).
+    - Method to reach the portal without breaking the rock with Single Room Out of Bounds and Screw Attack (Expert and above).
+
+-   Sandcanyon, method to reach the item with Space Jump and Single Room Out of Bounds (Expert and above).
 
 -   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
 
@@ -191,6 +202,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method to reach the portal with Screw Attack (Intermediate and above).
     - Method to reach Transit Tunnel East/South with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
     - Method to reach Transit Tunnel South with Jump Off Enemy (Advanced and above).
+
+-   Dark Arena Tunnel, method of reaching either door with Screw Attack and Single Room Out of Bounds (Advanced and above).
 
 -   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
 
@@ -212,6 +225,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Morph Ball, Bombs and Space Jump (Advanced and above).
     - Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
+-   Plaza Access, method of reaching the doors and the item with Screw Attack and Single Room Out of Bounds (Advanced and above).
+
+-   Portal Chamber (Light World), method of reaching the portal from Torvus Lagoon door with Screw Attack and Single Room Out of Bounds (Advanced and above).
+
 -   Putrid Alcove, method of getting the item and leaving without any items (Expert and above).
 
 -   Sacrificial Chamber, method of crossing gap to Sacrificial Chamber Tunnel with Extended Dash (Expert and above).
@@ -221,6 +238,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Torvus Plaza:
     - Method of getting the item without Boost Ball and/or Spider Ball (Advanced and above).
     - Method of leaving the room with Space Jump and Bombs (Advanced and above).
+
+-   Torvus Temple, method of reaching the pirate fight from the lower level with Screw Attack and Single Room Out of Bounds (Advanced and above).
 
 -   Training Chamber:
     - Method to exit the spinner with Power Bombs instead of Bombs (Beginner and above).
@@ -254,7 +273,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method of collecting the item with a Wall Boost (Expert and above).
     - Methods of reaching the item, and skipping the Spider Track to and from Central Area Transport East with Screw Attack (Intermediate and above).
 
--   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
+-   Hive Entrance, method of reaching the Flying Ing Cache with Screw Attack and Single Room Out of Bounds (Hypermode).
+
+-   Hive Dynamo Works:
+    - Method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
+    - Method of reaching the Flying Ing Cache from portal side and vice versa with Screw Attack and Single Room Out of Bounds (Expert and above).
 
 -   Hive Summit, method of reaching the portal:
     - With Space Jump and Standable Terrain (Intermediate and above).
@@ -263,6 +286,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Hive Temple:
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
     - Methods of leaving the room without Spider Ball after Quadraxis with Boost Ball or Space Jump (Hypermode).
+
+-   Judgment Drop, method of reaching the portal with Space Jump and Single Room Out of Bounds (Expert and above).
 
 -   Reactor Core, method of reaching the item with only Space Jump (Expert and above).
 
@@ -356,7 +381,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Mining Station A, reaching Front of Lore Scan from Room Center with a Bomb Jump is now Intermediate (from Advanced).
 
--   Mining Station B, reaching Transit Station door from room center with Screw Attack after opening the portal is now Intermediate (from Hypermode).
+-   Mining Station B:
+    - Reaching Transit Station door from room center with Screw Attack after opening the portal is now Intermediate (from Hypermode).
+    - Reaching the bomb slot to open the portal with Standable Terrain and Screw Attack is now Intermediate (from Advanced).
+    - Reaching the bomb slot to open the portal with Slope Jump and Space Jump is now Advanced (from Expert).
 
 -   Portal Access, returning from Judgment Pit without Space Jump is now Beginner (from Intermediate).
 
