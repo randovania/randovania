@@ -3140,7 +3140,7 @@ Asset id: 8195940946934839837
   > Dock to Escape Pod Bay Access
       Trivial
   > Pickup (Ship Missile Expansion)
-      Trivial
+      Melt Objects (Plasma or Nova)
   > Spire Side
       Trivial
 
@@ -3399,7 +3399,7 @@ Asset id: 13389753286679728417
   > Dock to Barracks Access
       Grapple Swing
   > Dock to Zipline Station Bravo
-      Plasma Beam
+      Melt Objects (Plasma or Nova)
   > Pickup (Missile Expansion)
       Trivial
   > Event - Bomb Part 3
@@ -3538,9 +3538,9 @@ Asset id: 1701256524990864906
   > 2nd Floor
       Trivial
   > Event - Bomb Part 2
-      Ship Grapple and Seeker Missile and After Turbine Chamber Bomb Part 1
+      Ship Grapple and Missile ≥ 4 and Seeker Missile and After Turbine Chamber Bomb Part 1
   > Event - Top Elevator
-      Seeker Missile
+      Missile ≥ 4 and Seeker Missile
 
 > Basement; Heals? False
   > Dock to Piston Hall
@@ -3550,7 +3550,7 @@ Asset id: 1701256524990864906
   > 1st Floor
       After Concourse Basement Elevator
   > Event - Basement Elevator
-      Plasma Beam
+      Melt Objects (Plasma or Nova)
 
 > Event - Bomb Part 2; Heals? False
   * Event Concourse Bomb Part 2
@@ -3676,7 +3676,7 @@ Asset id: 10215168138186768572
   > Dock to Transit Tube A
       Trivial
   > Event - Seeker Elevator
-      Seeker Missile
+      Missile ≥ 5 and Seeker Missile
 
 > Dock to Transit Tube B; Heals? False
   * Normal Door to Transit Tube B/Dock to Research Pod Lift
@@ -3697,7 +3697,7 @@ Asset id: 10215168138186768572
 Save Station C
 Asset id: 11329003787389696749
 > Dock to Transit Tube A; Heals? False
-  * Normal Door to Transit Tube A/Dock to Save Station C
+  * Plasma Door to Transit Tube A/Dock to Save Station C
   > Save Station
       Trivial
 
@@ -3718,7 +3718,9 @@ Asset id: 9772683067190669679
   > Dock to Research Pod Lift
       Trivial
   > Pickup (Energy Tank)
-      Missile and After Xenoresearch Power Outage
+      All of the following:
+          After Xenoresearch Power Outage
+          Charge Beam or Missile
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 68; Major Location? False
@@ -3735,7 +3737,7 @@ Asset id: 1041714618950868912
           After Xenoresearch A Seeker Gate
           Boost Ball and Before Xenoresearch Power Outage
   > Event - Seeker Gate
-      Seeker Missile
+      Missile ≥ 5 and Seeker Missile
 
 > Dock to Xenoresearch B Lift; Heals? False
   * Normal Door to Xenoresearch B Lift/Dock to Xenoresearch A
@@ -3744,7 +3746,7 @@ Asset id: 1041714618950868912
           After Xenoresearch A Seeker Gate
           Boost Ball and Before Xenoresearch Power Outage
   > Event - Seeker Gate
-      Seeker Missile
+      Missile ≥ 5 and Seeker Missile
 
 > Event - Seeker Gate; Heals? False
   * Event Xenoresearch A Seeker Gate
@@ -3770,7 +3772,7 @@ Asset id: 17636479515754825573
 > Dock to Xenoresearch B Lift; Heals? False
   * Normal Door to Xenoresearch B Lift/Dock to Xenoresearch B
   > Event - Seeker Gate
-      Seeker Missile
+      Missile ≥ 5 and Seeker Missile
   > Central Hallways
       Trivial
 
@@ -3786,11 +3788,13 @@ Asset id: 17636479515754825573
 
 > Energy Cell Room; Heals? False
   > Pickup (Seeker Missiles)
-      Missile and After Xenoresearch Power Outage
+      All of the following:
+          After Xenoresearch Power Outage
+          Charge Beam or Missile
   > Pickup (Energy Cell)
       Grapple Lasso
   > Event - Energy Cell Seeker Gate
-      Seeker Missile and After Xenoresearch Power Outage
+      Missile ≥ 5 and Seeker Missile and After Xenoresearch Power Outage
   > Central Hallways
       After Xenoresearch Energy Cell Room Seeker Gate or Before Xenoresearch Power Outage
 
@@ -3815,7 +3819,7 @@ Asset id: 17636479515754825573
   > Energy Cell Room
       After Xenoresearch Energy Cell Room Seeker Gate or Before Xenoresearch Power Outage
   > Event - Seeker Gate
-      Seeker Missile
+      Missile ≥ 5 and Seeker Missile
 
 ----------------
 Concourse Ventilation
@@ -3942,14 +3946,18 @@ Asset id: 6708692299270885612
   > Dock to Broken Lift
       Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+      After Gearworks Gears Destroyed and Use Screw Attack (Space Jump)
+  > Event - Gears Destroyed
+      After SkyTown Federation Landing Site Item
 
 > Dock to Broken Lift; Heals? False
   * Normal Door to Broken Lift/Dock to Gearworks
   > Dock to Observatory Lift
       Use Screw Attack (Space Jump)
   > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
+      After Gearworks Gears Destroyed and Use Screw Attack (Space Jump)
+  > Event - Gears Destroyed
+      After SkyTown Federation Landing Site Item
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 72; Major Location? False
@@ -3960,6 +3968,8 @@ Asset id: 6708692299270885612
 
 > Event - Gears Destroyed; Heals? False
   * Event Gearworks Gears Destroyed
+  > Dock to Observatory Lift
+      Trivial
 
 ----------------
 Maintenance Shaft OB
@@ -3987,7 +3997,7 @@ Asset id: 17446010042417855180
   > Dock to Gearworks
       After Observatory Lift Fix Elevator
   > Event - Fix Elevator
-      Plasma Beam
+      Melt Objects (Plasma or Nova)
 
 > Event - Fix Elevator; Heals? False
   > Dock to Chozo Observatory
@@ -4005,7 +4015,7 @@ Asset id: 2455573103578253675
   > Event - Scan Elevator
       Trivial
   > Event - Raise Pillar
-      Ship Grapple and Plasma Beam
+      Ship Grapple and Melt Objects (Plasma or Nova)
   > Event - Map Data
       After Chozo Observatory Pillar and Shoot Phazite (X-Ray and Nova)
 
@@ -4065,12 +4075,12 @@ SkyTown Federation Landing Site
 Asset id: 18200553231954089224
 > Dock to Landing Access; Heals? False
   * Normal Door to Landing Access/Dock to SkyTown Federation Landing Site
-  > Pickup (Ship Grapple)
+  > Samus Ship
       Trivial
 
 > Pickup (Ship Grapple); Heals? False
   * Pickup 73; Major Location? True
-  > Samus Ship
+  > Event - Landing Site Item
       Trivial
 
 > Samus Ship; Heals? True
@@ -4079,43 +4089,44 @@ Asset id: 18200553231954089224
   > Pickup (Ship Grapple)
       Trivial
 
+> Event - Landing Site Item; Heals? False
+  * Event SkyTown Federation Landing Site Item
+  > Samus Ship
+      Trivial
+
 ----------------
 Botanica
 Asset id: 8254796686876375149
 > Dock to Chozo Observatory; Heals? False
   * Plasma Door to Chozo Observatory/Dock to Botanica
-  > Bottom Level
+  > Dock to Save Station B
       Trivial
+  > Middle Level
+      Grapple Lasso
 
 > Dock to Broken Lift; Heals? False
   * Ice Missile Blast Shield to Broken Lift/Dock to Botanica
-  > Top Level
+  > Pickup (Missile Expansion)
+      Use Screw Attack (Space Jump)
+  > Middle Level
       Trivial
 
 > Dock to Save Station B; Heals? False
   * Normal Door to Save Station B/Dock to Botanica
-  > Bottom Level
+  > Dock to Chozo Observatory
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 74; Major Location? False
-  > Top Level
-      Use Screw Attack (Space Jump)
-
-> Top Level; Heals? False
   > Dock to Broken Lift
       Use Screw Attack (Space Jump)
-  > Pickup (Missile Expansion)
-      Use Screw Attack (Space Jump)
-  > Bottom Level
+  > Middle Level
       Trivial
 
-> Bottom Level; Heals? False
+> Middle Level; Heals? False
   > Dock to Chozo Observatory
       Trivial
-  > Dock to Save Station B
-      Trivial
-  > Top Level
+  > Dock to Broken Lift
       Grapple Lasso
 
 ----------------
@@ -4149,13 +4160,11 @@ Core Access
 Asset id: 9032724980754539885
 > Dock to Elysian Leviathan Core; Heals? False
   * Normal Door to Elysian Leviathan Core/Dock to Core Access
-  > Dock to Landing Site C
-      Seeker Missile
 
 > Dock to Landing Site C; Heals? False
   * Normal Door to Landing Site C/Dock to Core Access
   > Dock to Elysian Leviathan Core
-      Seeker Missile
+      Missile ≥ 5 and Seeker Missile
 
 ----------------
 Elysian Leviathan Core
@@ -4407,7 +4416,7 @@ Asset id: 8007962190215742654
 > Dock to Metroid Processing; Heals? False
   * Plasma Door to Metroid Processing/Dock to Airshaft
   > Dock to Craneyard
-      Seeker Missile and Use Screw Attack (Space Jump)
+      Missile ≥ 4 and Seeker Missile and Use Screw Attack (Space Jump)
 
 > Dock to Craneyard; Heals? False
   * Normal Door to Craneyard/Dock to Airshaft

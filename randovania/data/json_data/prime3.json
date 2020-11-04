@@ -859,6 +859,11 @@
                 "short_name": "Event96"
             },
             {
+                "index": 97,
+                "long_name": "SkyTown Federation Landing Site Item",
+                "short_name": "Event97"
+            },
+            {
                 "index": 100,
                 "long_name": "Pirate Homeworld Map",
                 "short_name": "Event100"
@@ -14100,8 +14105,8 @@
                                     "data": []
                                 },
                                 "Pickup (Ship Missile Expansion)": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 },
                                 "Spire Side": {
                                     "type": "and",
@@ -15210,13 +15215,8 @@
                                     }
                                 },
                                 "Dock to Zipline Station Bravo": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 },
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
@@ -15800,17 +15800,40 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 },
                                 "Event - Top Elevator": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -15838,13 +15861,8 @@
                                     }
                                 },
                                 "Event - Basement Elevator": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -16316,13 +16334,27 @@
                                     "data": []
                                 },
                                 "Event - Seeker Elevator": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -16399,16 +16431,16 @@
                             "name": "Dock to Transit Tube A",
                             "heal": false,
                             "coordinates": {
-                                "x": -25.327423095703125,
+                                "x": -25.33,
                                 "y": 0.0,
-                                "z": 4.499999761581421
+                                "z": 4.5
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 15869626092358203793,
                             "connected_dock_index": 2,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_weakness_index": 1,
                             "connections": {
                                 "Save Station": {
                                     "type": "and",
@@ -16483,20 +16515,34 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 2452465320,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
                                                 "type": 1,
                                                 "index": 93,
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 893945120,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2452465320,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -16578,13 +16624,27 @@
                                     ]
                                 },
                                 "Event - Seeker Gate": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -16641,13 +16701,27 @@
                                     ]
                                 },
                                 "Event - Seeker Gate": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -16740,13 +16814,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Event - Seeker Gate": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Central Hallways": {
                                     "type": "and",
@@ -16792,13 +16880,27 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2452465320,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2452465320,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 893945120,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         },
                                         {
                                             "type": "resource",
@@ -16838,6 +16940,15 @@
                                                 "type": 0,
                                                 "index": 3086280557,
                                                 "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
                                                 "negate": false
                                             }
                                         }
@@ -16946,13 +17057,27 @@
                                     ]
                                 },
                                 "Event - Seeker Gate": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -17480,8 +17605,31 @@
                                     "data": "Use Screw Attack (Space Jump)"
                                 },
                                 "Pickup (Missile Expansion)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 87,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Gears Destroyed": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 97,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -17505,8 +17653,31 @@
                                     "data": "Use Screw Attack (Space Jump)"
                                 },
                                 "Pickup (Missile Expansion)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 87,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Gears Destroyed": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 97,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -17534,7 +17705,12 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 87,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Observatory Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -17675,13 +17851,8 @@
                                     }
                                 },
                                 "Event - Fix Elevator": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -17756,13 +17927,8 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2477616633,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
                                         }
                                     ]
                                 },
@@ -17998,7 +18164,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Ship Grapple)": {
+                                "Samus Ship": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -18012,7 +18178,7 @@
                             "pickup_index": 73,
                             "major_location": true,
                             "connections": {
-                                "Samus Ship": {
+                                "Event - Landing Site Item": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -18029,6 +18195,19 @@
                                     "data": []
                                 },
                                 "Pickup (Ship Grapple)": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Landing Site Item",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 97,
+                            "connections": {
+                                "Samus Ship": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -18058,9 +18237,18 @@
                             "dock_type": 0,
                             "dock_weakness_index": 1,
                             "connections": {
-                                "Bottom Level": {
+                                "Dock to Save Station B": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Middle Level": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1906007133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -18079,7 +18267,11 @@
                             "dock_type": 0,
                             "dock_weakness_index": 4,
                             "connections": {
-                                "Top Level": {
+                                "Pickup (Missile Expansion)": {
+                                    "type": "template",
+                                    "data": "Use Screw Attack (Space Jump)"
+                                },
+                                "Middle Level": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -18100,7 +18292,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Bottom Level": {
+                                "Dock to Chozo Observatory": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -18114,34 +18306,18 @@
                             "pickup_index": 74,
                             "major_location": false,
                             "connections": {
-                                "Top Level": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                }
-                            }
-                        },
-                        {
-                            "name": "Top Level",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
                                 "Dock to Broken Lift": {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
                                 },
-                                "Pickup (Missile Expansion)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                },
-                                "Bottom Level": {
+                                "Middle Level": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Bottom Level",
+                            "name": "Middle Level",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "generic",
@@ -18150,11 +18326,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Dock to Save Station B": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Top Level": {
+                                "Dock to Broken Lift": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -18279,17 +18451,7 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to Landing Site C": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
+                            "connections": {}
                         },
                         {
                             "name": "Dock to Landing Site C",
@@ -18307,13 +18469,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Elysian Leviathan Core": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -19368,6 +19544,15 @@
                                         {
                                             "type": "template",
                                             "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
