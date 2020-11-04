@@ -4351,8 +4351,14 @@ Metroid Processing
 Asset id: 16389095850931092901
 > Dock to Processing Access; Heals? False
   * Normal Door to Processing Access/Dock to Metroid Processing
-  > First Floor
-      Trivial
+  > Pickup (Missile Expansion)
+      After Metroid Processing Disable Barrier
+  > Top Floor
+      Any of the following:
+          After Metroid Processing Ball Lift
+          Spider Ball and Boost Ball
+  > Basement
+      X-Ray Visor
 
 > Dock to Airshaft; Heals? False
   * Plasma Door to Airshaft/Dock to Metroid Processing
@@ -4366,8 +4372,6 @@ Asset id: 16389095850931092901
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 80; Major Location? False
-  > First Floor
-      Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 81; Major Location? False
@@ -4375,29 +4379,17 @@ Asset id: 16389095850931092901
       Trivial
 
 > Top Floor; Heals? False
+  > Dock to Processing Access
+      Trivial
   > Dock to Airshaft
       Trivial
   > Dock to Creche Transit
       Trivial
-  > First Floor
-      Trivial
-
-> First Floor; Heals? False
-  > Dock to Processing Access
-      Trivial
-  > Pickup (Missile Expansion)
-      After Metroid Processing Disable Barrier
-  > Top Floor
-      Any of the following:
-          After Metroid Processing Ball Lift
-          Spider Ball and Boost Ball
-  > Basement
-      X-Ray Visor
 
 > Basement; Heals? False
-  > Pickup (Energy Cell)
+  > Dock to Processing Access
       Trivial
-  > First Floor
+  > Pickup (Energy Cell)
       Trivial
   > Event - Ball Lift
       Plasma Beam
@@ -4409,6 +4401,8 @@ Asset id: 16389095850931092901
 
 > Event - Ball Lift; Heals? False
   * Event Metroid Processing Ball Lift
+  > Basement
+      Trivial
 
 ----------------
 Airshaft
@@ -4428,26 +4422,20 @@ Processing Access
 Asset id: 11685491285383767107
 > Dock to Scrapvault; Heals? False
   * Plasma Door to Scrapvault/Dock to Processing Access
-  > Room Center
-      Trivial
-
-> Dock to Metroid Processing; Heals? False
-  * Normal Door to Metroid Processing/Dock to Processing Access
-  > Room Center
-      Trivial
-
-> Pickup (Ship Missile Expansion); Heals? False
-  * Pickup 82; Major Location? False
-  > Room Center
-      Trivial
-
-> Room Center; Heals? False
-  > Dock to Scrapvault
-      Trivial
   > Dock to Metroid Processing
       Trivial
   > Pickup (Ship Missile Expansion)
       Missile and Shoot Phazite (X-Ray and Nova) and Use Screw Attack (Space Jump)
+
+> Dock to Metroid Processing; Heals? False
+  * Normal Door to Metroid Processing/Dock to Processing Access
+  > Dock to Scrapvault
+      Trivial
+
+> Pickup (Ship Missile Expansion); Heals? False
+  * Pickup 82; Major Location? False
+  > Dock to Scrapvault
+      Trivial
 
 ----------------
 Proving Grounds Lift
@@ -4785,7 +4773,7 @@ Asset id: 13589229454537797972
   > Event - Phazon Blob
       HyperModeTank and Hyper Grapple
   > Event - Disable Defense
-      Shoot Phazite (X-Ray and Nova)
+      Morph Ball Bombs and Shoot Phazite (X-Ray and Nova)
 
 > Event - Morph Ball Barrier; Heals? False
   * Event Command Station Morph Ball Barrier
@@ -4919,7 +4907,7 @@ Asset id: 13825059228540765135
 > Dock to Transit Station 2-B; Heals? False
   * Normal Door to Transit Station 2-B/Dock to Leviathan Access Portal
   > Dock to Leviathan
-      Grapple Voltage
+      Grapple Voltage and Morph Ball Bombs
 
 > Dock to Leviathan; Heals? False
   * Normal Door to Leviathan/Dock to Leviathan Access Portal
@@ -5129,13 +5117,18 @@ Asset id: 3288365355139345163
 Leads to Mining Site; Heals? False
   * Normal Door to Transit Station 4-A
 Leads to Mining Site/Dock to Defense Access
-  > Spider Track Tower
-      Trivial
+  > Hall Center
+      After Defense Access Voltage Barrier
+  > Event - Voltage Barrier
+      Grapple Voltage
 
 > Dock to Skyway Access; Heals? False
   * Morph Ball Door to Skyway Access/Dock to Defense Access
-  > Spider Track Tower
-      Trivial
+  > Dock to Transit Station 4-A
+Leads to Mining Site
+      Spider Ball
+  > Event - Voltage Barrier
+      Grapple Voltage
 
 > Hall Center; Heals? False
   > Dock to Command Station (Base)
@@ -5144,21 +5137,13 @@ Leads to Mining Site/Dock to Defense Access
       After Defense Access X-Ray Terminal
   > Dock to Security Air Lock
       Trivial
-  > Spider Track Tower
-      After Defense Access Voltage Barrier
+  > Dock to Transit Station 4-A
+Leads to Mining Site
+      Spider Ball and After Defense Access Voltage Barrier
   > Event - Phazite Wall
       Shoot Phazite (X-Ray and Nova)
   > Event - X-Ray Terminal
       X-Ray Visor
-
-> Spider Track Tower; Heals? False
-  > Dock to Transit Station 4-A
-Leads to Mining Site
-      Spider Ball
-  > Hall Center
-      After Defense Access Voltage Barrier
-  > Event - Voltage Barrier
-      Grapple Voltage
 
 > Event - Phazite Wall; Heals? False
   * Event Defense Access Phazite Wall
@@ -5172,7 +5157,7 @@ Leads to Mining Site
 
 > Event - Voltage Barrier; Heals? False
   * Event Defense Access Voltage Barrier
-  > Spider Track Tower
+  > Hall Center
       Trivial
 
 ----------------

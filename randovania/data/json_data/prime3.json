@@ -19296,9 +19296,60 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "First Floor": {
-                                    "type": "and",
-                                    "data": []
+                                "Pickup (Missile Expansion)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 115,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Top Floor": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 116,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2988161223,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 1296127826,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Basement": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1714103130,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -19351,12 +19402,7 @@
                             "node_type": "pickup",
                             "pickup_index": 80,
                             "major_location": false,
-                            "connections": {
-                                "First Floor": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
+                            "connections": {}
                         },
                         {
                             "name": "Pickup (Energy Cell)",
@@ -19378,6 +19424,10 @@
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
+                                "Dock to Processing Access": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Dock to Airshaft": {
                                     "type": "and",
                                     "data": []
@@ -19385,77 +19435,6 @@
                                 "Dock to Creche Transit": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "First Floor": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "First Floor",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Processing Access": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Pickup (Missile Expansion)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 115,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "Top Floor": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "and",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 1296127826,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 2988161223,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 116,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                "Basement": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1714103130,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
                                 }
                             }
                         },
@@ -19465,11 +19444,11 @@
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
-                                "Pickup (Energy Cell)": {
+                                "Dock to Processing Access": {
                                     "type": "and",
                                     "data": []
                                 },
-                                "First Floor": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 },
@@ -19503,7 +19482,12 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 116,
-                            "connections": {}
+                            "connections": {
+                                "Basement": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -19603,9 +19587,31 @@
                             "dock_type": 0,
                             "dock_weakness_index": 1,
                             "connections": {
-                                "Room Center": {
+                                "Dock to Metroid Processing": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Pickup (Ship Missile Expansion)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Phazite (X-Ray and Nova)"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -19624,7 +19630,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Room Center": {
+                                "Dock to Scrapvault": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -19638,47 +19644,9 @@
                             "pickup_index": 82,
                             "major_location": false,
                             "connections": {
-                                "Room Center": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Room Center",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
                                 "Dock to Scrapvault": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Dock to Metroid Processing": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Pickup (Ship Missile Expansion)": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "template",
-                                            "data": "Shoot Phazite (X-Ray and Nova)"
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 2452465320,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        }
-                                    ]
                                 }
                             }
                         }
@@ -20962,8 +20930,22 @@
                                     ]
                                 },
                                 "Event - Disable Defense": {
-                                    "type": "template",
-                                    "data": "Shoot Phazite (X-Ray and Nova)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Phazite (X-Ray and Nova)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3112660177,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -21471,13 +21453,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Leviathan": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 536233745,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 536233745,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3112660177,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -22312,9 +22308,23 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Spider Track Tower": {
-                                    "type": "and",
-                                    "data": []
+                                "Hall Center": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 104,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Voltage Barrier": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 536233745,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -22333,9 +22343,23 @@
                             "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Spider Track Tower": {
-                                    "type": "and",
-                                    "data": []
+                                "Dock to Transit Station 4-A\nLeads to Mining Site": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1296127826,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Voltage Barrier": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 536233745,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -22367,14 +22391,28 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Spider Track Tower": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 104,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Dock to Transit Station 4-A\nLeads to Mining Site": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1296127826,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 104,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Event - Phazite Wall": {
                                     "type": "template",
@@ -22385,41 +22423,6 @@
                                     "data": {
                                         "type": 0,
                                         "index": 1714103130,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "Spider Track Tower",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Transit Station 4-A\nLeads to Mining Site": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1296127826,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "Hall Center": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 104,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "Event - Voltage Barrier": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 536233745,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -22459,7 +22462,7 @@
                             "node_type": "event",
                             "event_index": 104,
                             "connections": {
-                                "Spider Track Tower": {
+                                "Hall Center": {
                                     "type": "and",
                                     "data": []
                                 }
