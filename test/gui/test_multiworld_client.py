@@ -9,13 +9,19 @@ from randovania.game_description.resources.pickup_entry import PickupEntry, Cond
 from randovania.gui.multiworld_client import MultiworldClient, Data
 
 
-@pytest.mark.asyncio
-async def test_start(skip_qtbot, tmpdir):
+@pytest.fixture(name="client")
+def _client(skip_qtbot):
     network_client = MagicMock()
-    network_client.game_session_request_pickups = AsyncMock(return_value=[])
-
     game_connection = MagicMock()
-    client = MultiworldClient(network_client, game_connection)
+    game_connection.backend.lock_identifier = None
+    return MultiworldClient(network_client, game_connection)
+
+
+@pytest.mark.asyncio
+async def test_start(client, tmpdir):
+    game_connection = client.game_connection
+
+    client.network_client.game_session_request_pickups = AsyncMock(return_value=[])
     client.refresh_received_pickups = AsyncMock()
     client._received_messages = ["Foo"]
     client._received_pickups = ["Pickup"]
@@ -26,32 +32,24 @@ async def test_start(skip_qtbot, tmpdir):
     # Assert
     client.refresh_received_pickups.assert_awaited_once_with()
     game_connection.set_location_collected_listener.assert_called_once_with(client.on_location_collected)
-    network_client.GameUpdateNotification.connect.assert_called_once_with(client.on_game_updated)
+    client.network_client.GameUpdateNotification.connect.assert_called_once_with(client.on_game_updated)
     game_connection.set_permanent_pickups.assert_called_once_with(["Pickup"])
 
 
 @pytest.mark.asyncio
-async def test_stop(skip_qtbot):
-    network_client = MagicMock()
-    game_connection = MagicMock()
-    client = MultiworldClient(network_client, game_connection)
-
+async def test_stop(client):
     # Run
     await client.stop()
 
     # Assert
-    game_connection.set_location_collected_listener.assert_called_once_with(None)
-    network_client.GameUpdateNotification.disconnect.assert_called_once_with(client.on_game_updated)
-    game_connection.set_permanent_pickups.assert_called_once_with([])
+    client.game_connection.set_location_collected_listener.assert_called_once_with(None)
+    client.network_client.GameUpdateNotification.disconnect.assert_called_once_with(client.on_game_updated)
+    client.game_connection.set_permanent_pickups.assert_called_once_with([])
 
 
 @pytest.mark.parametrize("exists", [False, True])
 @pytest.mark.asyncio
-async def test_on_location_collected(skip_qtbot, tmpdir, exists):
-    network_client = MagicMock()
-    game_connection = MagicMock()
-
-    client = MultiworldClient(network_client, game_connection)
+async def test_on_location_collected(client, tmpdir, exists):
     client._data = Data(Path(tmpdir).joinpath("data.json"))
     client._data.collected_locations = {10, 15} if exists else {10}
     client.start_notify_collect_locations_task = MagicMock()
@@ -69,19 +67,16 @@ async def test_on_location_collected(skip_qtbot, tmpdir, exists):
 
 
 @pytest.mark.asyncio
-async def test_refresh_received_pickups(skip_qtbot):
+async def test_refresh_received_pickups(client):
     results = [
         ("Message A", b"bytesA"),
         ("Message B", b"bytesB"),
         ("Message C", b"bytesC"),
     ]
 
-    network_client = MagicMock()
-    network_client.game_session_request_pickups = AsyncMock(return_value=results)
-    game_connection = MagicMock()
+    client.network_client.game_session_request_pickups = AsyncMock(return_value=results)
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
-    client = MultiworldClient(network_client, game_connection)
     client._decode_pickup = MagicMock(side_effect=pickups)
 
     # Run
@@ -94,11 +89,7 @@ async def test_refresh_received_pickups(skip_qtbot):
 
 
 @pytest.mark.asyncio
-async def test_on_game_updated(skip_qtbot, tmpdir):
-    network_client = MagicMock()
-    game_connection = MagicMock()
-
-    client = MultiworldClient(network_client, game_connection)
+async def test_on_game_updated(client, tmpdir):
     client.refresh_received_pickups = AsyncMock()
     client._received_messages = ["Message A", "Message B", "Message C"]
     client._received_pickups = [MagicMock(), MagicMock(), MagicMock()]
@@ -110,18 +101,18 @@ async def test_on_game_updated(skip_qtbot, tmpdir):
     await client.on_game_updated()
 
     # Assert
-    game_connection.display_message.assert_has_calls([call("Message B"), call("Message C")])
-    game_connection.set_permanent_pickups.assert_called_once_with(client._received_pickups)
+    client.game_connection.display_message.assert_has_calls([call("Message B"), call("Message C")])
+    client.game_connection.set_permanent_pickups.assert_called_once_with(client._received_pickups)
     assert client._data.latest_message_displayed == 3
 
 
-def test_decode_pickup(skip_qtbot):
-    data = b'\x00\xd0\x00'
-    client = MultiworldClient(MagicMock(), MagicMock())
+def test_decode_pickup(client, echoes_resource_database):
+    data = b'\x00\xc8@\x00'
     expected_pickup = PickupEntry(
         name="",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
+        broad_category=ItemCategory.MOVEMENT,
         resources=(
             ConditionalResources(None, None, ()),
         ),
@@ -135,16 +126,14 @@ def test_decode_pickup(skip_qtbot):
 
 
 @pytest.mark.asyncio
-async def test_notify_collect_locations(skip_qtbot, tmpdir):
+async def test_notify_collect_locations(client, tmpdir):
     data_path = Path(tmpdir).joinpath("data.json")
-    network_client = MagicMock()
+    network_client = client.network_client
     network_client.game_session_collect_locations = AsyncMock(side_effect=[
         RuntimeError("connection issue!"),
         None,
     ])
-    game_connection = MagicMock()
 
-    client = MultiworldClient(network_client, game_connection)
     data_path.write_text(json.dumps({
         "collected_locations": [10, 15],
         "uploaded_locations": [15],
@@ -158,3 +147,20 @@ async def test_notify_collect_locations(skip_qtbot, tmpdir):
     # Assert
     network_client.game_session_collect_locations.assert_has_awaits([call((10,)), call((10,))])
     assert set(json.loads(data_path.read_text())["uploaded_locations"]) == {10, 15}
+
+
+@pytest.mark.asyncio
+async def test_lock_file_on_init(skip_qtbot, tmpdir):
+    # Setup
+    network_client = MagicMock()
+    network_client.game_session_request_pickups = AsyncMock(return_value=[])
+    game_connection = MagicMock()
+    game_connection.backend.lock_identifier = str(tmpdir.join("my-lock"))
+
+    # Run
+    client = MultiworldClient(network_client, game_connection)
+    assert tmpdir.join("my-lock.pid").exists()
+
+    await client.start(Path(tmpdir).joinpath("data.json"))
+    await client.stop()
+    assert not tmpdir.join("my-lock.pid").exists()

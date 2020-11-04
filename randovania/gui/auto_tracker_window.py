@@ -9,15 +9,13 @@ from PySide2.QtWidgets import QMainWindow, QLabel
 from asyncqt import asyncSlot
 
 from randovania import get_data_path
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus, InventoryItem
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.resource_info import CurrentResources
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime import default_data
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
@@ -61,22 +59,24 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     def _game_status_updated(self, status: ConnectionStatus):
         self.connection_status_label.setText(self.game_connection.pretty_current_status)
 
-    def _update_tracker_from_hook(self, inventory: CurrentResources):
+    def _update_tracker_from_hook(self, inventory: Dict[ItemResourceInfo, InventoryItem]):
         for item, label in self._item_to_label.items():
-            current = inventory.get(item, 0)
-            label.set_checked(current > 0)
+            current = inventory.get(item, InventoryItem(0, 0))
+            label.set_checked(current.capacity > 0)
 
-        self._energy_tank_label.setText("x {}/14".format(inventory.get(self._energy_tank_item, 0)))
+        energy_tank = inventory.get(self._energy_tank_item, InventoryItem(0, 0))
+        self._energy_tank_label.setText("x {}/{}".format(energy_tank.capacity, self._energy_tank_item.max_capacity))
 
         for label, keys in self._labels_for_keys:
-            num_keys = sum(inventory.get(key, 0) for key in keys)
+            num_keys = sum(inventory.get(key, InventoryItem(0, 0)).capacity for key in keys)
             label.setText("x {}/{}".format(num_keys, len(keys)))
 
     @asyncSlot()
     async def _on_timer_update(self):
         try:
-            if self.game_connection.current_status == ConnectionStatus.InGame:
-                inventory = await self.game_connection.get_inventory()
+            current_status = self.game_connection.current_status
+            if current_status == ConnectionStatus.InGame or current_status == ConnectionStatus.TrackerOnly:
+                inventory = self.game_connection.get_current_inventory()
                 self._update_tracker_from_hook(inventory)
         finally:
             self._update_timer.start()

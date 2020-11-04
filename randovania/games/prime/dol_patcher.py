@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import BinaryIO, Optional, Tuple, Iterable
 
 from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common.echoes_user_preferences import EchoesUserPreferences
 
 _NUM_TEXT_SECTIONS = 7
@@ -122,10 +123,12 @@ class SafeZoneAddresses:
 
 @dataclasses.dataclass(frozen=True)
 class PatchesForVersion:
+    game: RandovaniaGame
     description: str
     build_string_address: int
     build_string: bytes
     sda2_base: int
+    game_state_pointer: int
     string_display: StringDisplayPatchAddresses
     health_capacity: HealthCapacityAddresses
     beam_cost_addresses: BeamCostAddresses
@@ -135,10 +138,12 @@ class PatchesForVersion:
 
 ALL_VERSIONS_PATCHES = [
     PatchesForVersion(
+        game=RandovaniaGame.PRIME2,
         description="Gamecube NTSC",
         build_string_address=0x803ac3b0,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
         sda2_base=0x804223c0,
+        game_state_pointer=0x80418eb8,
         string_display=StringDisplayPatchAddresses(
             update_hint_state=0x80038020,
             message_receiver_string_ref=0x803a6380,
@@ -165,10 +170,12 @@ ALL_VERSIONS_PATCHES = [
         ),
     ),
     PatchesForVersion(
+        game=RandovaniaGame.PRIME2,
         description="Gamecube PAL",
         build_string_address=0x803ad710,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",
         sda2_base=0x804223c0,
+        game_state_pointer=0x8041A19C,
         string_display=StringDisplayPatchAddresses(
             update_hint_state=0x80038194,
             message_receiver_string_ref=0x803a680a,

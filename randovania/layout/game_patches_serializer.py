@@ -7,6 +7,8 @@ from randovania.game_description import data_reader
 from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
+from randovania.game_description.echoes_game_specific import EchoesGameSpecific
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint
 from randovania.game_description.node import PickupNode, TeleporterNode
@@ -16,7 +18,8 @@ from randovania.game_description.resources.resource_database import find_resourc
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world_list import WorldList
 from randovania.games.prime import default_data
-from randovania.generator.item_pool import pool_creator
+from randovania.generator import base_patches_factory
+from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.layout_configuration import LayoutConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
@@ -151,28 +154,21 @@ def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> Pi
     raise ValueError(f"Unable to find a pickup with name {pickup_name}. Possible values: {sorted(names)}")
 
 
-def decode_single(player_index: int, num_players: int, game_modifications: dict,
-                  configuration: LayoutConfiguration) -> GamePatches:
+def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: GameDescription,
+                  game_modifications: dict, configuration: LayoutConfiguration) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
-    :param game_modifications:
     :param player_index:
-    :param num_players:
+    :param all_pools:
+    :param game:
+    :param game_modifications:
     :param configuration:
     :return:
     """
-    game = data_reader.decode_data(configuration.game_data)
-    game_specific = dataclasses.replace(
-        game.game_specific,
-        energy_per_tank=configuration.energy_per_tank,
-        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
-        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
-
+    game_specific = base_patches_factory.create_game_specific(configuration, game)
     world_list = game.world_list
 
-    r = pool_creator.calculate_pool_results(configuration, game.resource_database)
-    configuration_item_pool = r.pickups
-    initial_pickup_assignment = r.assignment
+    initial_pickup_assignment = all_pools[player_index].assignment
 
     # Starting Location
     starting_location = _area_name_to_area_location(world_list, game_modifications["starting_location"])
@@ -229,6 +225,7 @@ def decode_single(player_index: int, num_players: int, game_modifications: dict,
                     raise ValueError(f"{area_node_name} should be vanilla based on configuration")
 
             elif pickup_name != _ETM_NAME:
+                configuration_item_pool = all_pools[target_player].pickups
                 pickup = _find_pickup_with_name(configuration_item_pool, pickup_name)
                 configuration_item_pool.remove(pickup)
             else:
@@ -259,8 +256,13 @@ def decode_single(player_index: int, num_players: int, game_modifications: dict,
 def decode(game_modifications: List[dict],
            layout_configurations: Dict[int, LayoutConfiguration],
            ) -> Dict[int, GamePatches]:
+
+    all_games = {index: data_reader.decode_data(configuration.game_data)
+                 for index, configuration in layout_configurations.items()}
+    all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index].resource_database)
+                 for index, configuration in layout_configurations.items()}
     return {
-        index: decode_single(index, len(game_modifications), modifications, layout_configurations[index])
+        index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index])
         for index, modifications in enumerate(game_modifications)
     }
 

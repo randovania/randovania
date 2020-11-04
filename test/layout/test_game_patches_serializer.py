@@ -17,7 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.generator import generator
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.layout.major_item_state import MajorItemState
@@ -33,6 +33,7 @@ from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfigurat
         {"translator": [(10, "Mining Plaza", "Cobalt Translator"), (12, "Great Bridge", "Emerald Translator")]},
         {"pickup": "Morph Ball Bomb"},
         {"hint": [1000, {"hint_type": "location",
+                         "dark_temple": None,
                          "precision": {"location": "detailed", "item": "detailed", "relative": None},
                          "target": 50}]},
     ],
@@ -142,8 +143,11 @@ def test_encode(patches_with_data, echoes_game_data):
 def test_decode(patches_with_data, default_layout_configuration):
     encoded, expected = patches_with_data
 
+    game = data_reader.decode_data(default_layout_configuration.game_data)
+    pool = pool_creator.calculate_pool_results(default_layout_configuration, game.resource_database)
+
     # Run
-    decoded = game_patches_serializer.decode_single(0, 1, encoded, default_layout_configuration)
+    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_layout_configuration)
 
     # Assert
     assert decoded == expected
@@ -167,6 +171,7 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database):
         name=name,
         model_index=26,
         item_category=ItemCategory.TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
         resources=(
             ConditionalResources(
                 "Morph Ball", None,

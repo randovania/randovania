@@ -30,6 +30,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.online_game_list_window import GameSessionBrowserDialog
 from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 from randovania.interface_common import github_releases_data, update_checker
+from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -255,7 +256,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.game_session_window = await GameSessionWindow.create_and_update(
                 network_client, common_qt_lib.get_game_connection(), self.preset_manager,
                 self, self._options)
-            self.game_session_window.show()
+            if self.game_session_window is not None:
+                self.game_session_window.show()
 
     @asyncSlot()
     @handle_network_errors
@@ -289,7 +291,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.game_session_window = await GameSessionWindow.create_and_update(self.network_client,
                                                                              common_qt_lib.get_game_connection(),
                                                                              self.preset_manager, self, self._options)
-        self.game_session_window.show()
+        if self.game_session_window is not None:
+            self.game_session_window.show()
 
     def open_game_details(self, layout: LayoutDescription):
         self.GameDetailsSignal.emit(layout)
@@ -404,7 +407,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
     def _create_open_map_tracker_actions(self):
         base_layout = self.preset_manager.default_preset.get_preset().layout_configuration
 
-        for trick_level in LayoutTrickLevel:
+        for trick_level in iterate_enum(LayoutTrickLevel):
             if trick_level != LayoutTrickLevel.MINIMAL_LOGIC:
                 action = QtWidgets.QAction(self)
                 action.setText(trick_level.long_name)
@@ -469,7 +472,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _setup_difficulties_menu(self):
         game = default_database.default_prime2_game_description()
-        tricks_in_use = used_tricks(game.world_list)
+        tricks_in_use = used_tricks(game)
 
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
             if trick not in tricks_in_use:
@@ -479,8 +482,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             trick_menu.setTitle(trick.long_name)
             self.menu_trick_details.addAction(trick_menu.menuAction())
 
-            used_difficulties = difficulties_for_trick(game.world_list, trick)
-            for i, trick_level in enumerate(LayoutTrickLevel):
+            used_difficulties = difficulties_for_trick(game, trick)
+            for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
                 if trick_level in used_difficulties:
                     difficulty_action = QAction(self)
                     difficulty_action.setText(trick_level.long_name)

@@ -23,6 +23,7 @@ from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.lib.trick_lib import difficulties_for_trick, used_tricks
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.main_rules import MainRulesWindow
+from randovania.interface_common.enum_lib import iterate_enum
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.available_locations import RandomizationMode
@@ -260,7 +261,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._checkbox_for_trick = {}
         self._slider_for_trick = {}
 
-        tricks_in_use = used_tricks(self.world_list)
+        tricks_in_use = used_tricks(self.game_description)
 
         size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
 
@@ -305,8 +306,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
             self._slider_for_trick[trick] = horizontal_slider
             slider_layout.addWidget(horizontal_slider, 0, 1, 1, 10)
 
-            used_difficulties = difficulties_for_trick(self.world_list, trick)
-            for i, trick_level in enumerate(LayoutTrickLevel):
+            used_difficulties = difficulties_for_trick(self.game_description, trick)
+            for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
                 if trick_level == LayoutTrickLevel.NO_TRICKS or trick_level in used_difficulties:
                     difficulty_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
                     difficulty_label.setAlignment(QtCore.Qt.AlignHCenter)
@@ -580,7 +581,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
             combo = QComboBox(self.translators_scroll_contents)
             combo.gate = TranslatorGate(gate["Index"])
-            for item in LayoutTranslatorRequirement:
+            for item in iterate_enum(LayoutTranslatorRequirement):
                 combo.addItem(item.long_name, item)
             combo.currentIndexChanged.connect(functools.partial(self._on_gate_combo_box_changed, combo))
 

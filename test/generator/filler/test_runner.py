@@ -41,6 +41,7 @@ def test_run_filler(mock_retcon_playthrough_filler: MagicMock,
     player_state.index = 0
     player_state.game = player_pools[0].game
     player_state.pickups_left = runner._split_expansions(player_pools[0].pickups)[0]
+    player_state.scan_asset_initial_pickups = {}
 
     mock_retcon_playthrough_filler.return_value = {player_state: patches}, action_log
 
@@ -114,6 +115,7 @@ def _make_pickup(item_category: ItemCategory):
         name="Pickup",
         model_index=0,
         item_category=item_category,
+        broad_category=item_category,
         resources=(
             ConditionalResources(None, None, ()),
         ),
@@ -133,10 +135,10 @@ def test_add_relative_hint(echoes_game_description, empty_patches, location_prec
     })
 
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
-        max_distance = None
+        max_distance = 8
         data = RelativeDataArea(
             precise_distance,
-            AreaLocation(0x3BFA3EFF, 0xB1140C24),
+            AreaLocation(0x3BFA3EFF, 0x62B0D67D),
             precision,
         )
     else:

@@ -7,16 +7,18 @@ from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair, \
-    RelativeDataItem, RelativeDataArea, HintRelativeAreaName
+    RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.games.prime import echoes_items
 from randovania.games.prime.patcher_file_lib import item_hints
 from randovania.games.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
 from randovania.games.prime.patcher_file_lib.item_hints import RelativeItemFormatter, RelativeAreaFormatter
+from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 @pytest.fixture(name="pickup")
@@ -25,9 +27,18 @@ def _pickup() -> PickupEntry:
         name="Pickup",
         model_index=0,
         item_category=ItemCategory.MOVEMENT,
+        broad_category=ItemCategory.LIFE_SUPPORT,
         resources=(
             ConditionalResources(None, None, ()),
         ),
+    )
+
+
+@pytest.fixture(name="players_config")
+def _players_configuration() -> PlayersConfiguration:
+    return PlayersConfiguration(
+        player_index=0,
+        player_names={0: "Player 1"},
     )
 
 
@@ -44,7 +55,7 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     return logbook_node, pickup_node, world_list
 
 
-def test_create_hints_nothing(empty_patches):
+def test_create_hints_nothing(empty_patches, players_config):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
@@ -61,7 +72,7 @@ def test_create_hints_nothing(empty_patches):
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints(patches, world_list, rng)
+    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     message = ("The &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
@@ -71,21 +82,95 @@ def test_create_hints_nothing(empty_patches):
     ]
 
 
-@pytest.mark.parametrize("hint_type", [HintType.LOCATION, HintType.JOKE])
+def test_create_hints_item_joke(empty_patches, players_config, pickup):
+    # Setup
+    asset_id = 1000
+    logbook_node, _, world_list = _create_world_list(asset_id, PickupIndex(50))
+
+    patches = dataclasses.replace(
+        empty_patches,
+        hints={
+            logbook_node.resource(): Hint(HintType.JOKE, None)
+        })
+    rng = MagicMock()
+
+    # Run
+    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
+
+    # Assert
+    message = ("&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!"
+               " Energized Safe Zones don't last forever!&pop;")
+    assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
+
+
+@pytest.mark.parametrize(["indices", "expected_message"], [
+    ((0, 1, 2), "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; can "
+                "all be found in &push;&main-color=#FF3333;Temple Grounds&pop;."),
+    ((0, 1, 118), "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; can "
+                  "be found in &push;&main-color=#FF3333;Sanctuary Fortress&pop; "
+                  "and &push;&main-color=#FF3333;Temple Grounds&pop;."),
+    ((0, 41, 118), "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; can "
+                   "be found in &push;&main-color=#FF3333;Dark Agon Wastes&pop;, "
+                   "&push;&main-color=#FF3333;Sanctuary Fortress&pop; and "
+                   "&push;&main-color=#FF3333;Temple Grounds&pop;."),
+])
+def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoes_game_description, pickup,
+                                            indices, expected_message):
+    # Setup
+    db = echoes_game_description.resource_database
+    keys = [
+        (
+            PickupIndex(index),
+            dataclasses.replace(pickup, resources=(
+                ConditionalResources(None, None, ((db.get_item(item), 1),)),
+            ))
+        )
+        for index, item in zip(indices, echoes_items.DARK_TEMPLE_KEY_ITEMS[1])
+    ]
+
+    patches = dataclasses.replace(
+        empty_patches,
+        pickup_assignment={
+            pickup_index: PickupTarget(key, 0)
+            for pickup_index, key in keys
+        })
+
+    hint = Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG)
+
+    # Run
+    result = item_hints.create_message_for_hint(hint, {0: patches}, players_config, None, {},
+                                                echoes_game_description.world_list)
+
+    # Assert
+    assert result == expected_message
+
+
+def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_config, echoes_game_description):
+    # Setup
+    hint = Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG)
+
+    # Run
+    result = item_hints.create_message_for_hint(hint, {0: empty_patches}, players_config, None, {},
+                                                echoes_game_description.world_list)
+
+    # Assert
+    assert result == 'The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; are nowhere to be found.'
+
+
 @pytest.mark.parametrize("item", [
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+    (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
 @pytest.mark.parametrize("location", [
     (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;World - Area&pop;"),
     (HintLocationPrecision.WORLD_ONLY, "&push;&main-color=#FF3333;World&pop;"),
 ])
-def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, location):
+def test_create_hints_item_location(empty_patches, players_config, pickup, item, location):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
-
     logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
 
     patches = dataclasses.replace(
@@ -94,21 +179,17 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
             pickup_index: PickupTarget(pickup, 0),
         },
         hints={
-            logbook_node.resource(): Hint(hint_type,
+            logbook_node.resource(): Hint(HintType.LOCATION,
                                           PrecisionPair(location[0], item[0]),
                                           pickup_index)
         })
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints(patches, world_list, rng)
+    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
-    if hint_type == HintType.JOKE:
-        message = ("&push;&main-color=#45F731;Warning! Dark Aether's atmosphere is dangerous!"
-                   " Energized Safe Zones don't last forever!&pop;")
-    else:
-        message = "{} can be found in {}.".format(item[1][0].upper() + item[1][1:], location[1])
+    message = "{} can be found in {}.".format(item[1][0].upper() + item[1][1:], location[1])
     # message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
 
@@ -122,8 +203,9 @@ def test_create_hints_item_detailed(hint_type, empty_patches, pickup, item, loca
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+    (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
-def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item):
+def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup, item, players_config):
     # Setup
     asset_id = 1000
     pickup_index, guardian = pickup_index_and_guardian
@@ -143,7 +225,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints(patches, world_list, rng)
+    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     message = f"{guardian} is guarding {item[1]}."
@@ -154,8 +236,9 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, pickup
     (HintItemPrecision.DETAILED, "the &push;&main-color=#FF6705B3;Pickup&pop;"),
     (HintItemPrecision.PRECISE_CATEGORY, "a &push;&main-color=#FF6705B3;movement system&pop;"),
     (HintItemPrecision.GENERAL_CATEGORY, "a &push;&main-color=#FF6705B3;major upgrade&pop;"),
+    (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
 ])
-def test_create_hints_light_suit_location(empty_patches, pickup, item):
+def test_create_hints_light_suit_location(empty_patches, players_config, pickup, item):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
@@ -175,7 +258,7 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item):
     rng = MagicMock()
 
     # Run
-    result = item_hints.create_hints(patches, world_list, rng)
+    result = item_hints.create_hints({0: patches}, players_config, world_list, rng)
 
     # Assert
     message = f"U-Mos's reward for returning the Sanctuary energy is {item[1]}."
@@ -185,12 +268,13 @@ def test_create_hints_light_suit_location(empty_patches, pickup, item):
 @pytest.mark.parametrize(["reference_precision", "reference_name"], [
     (HintItemPrecision.DETAILED, "the Reference Pickup"),
     (HintItemPrecision.PRECISE_CATEGORY, "a movement system"),
+    (HintItemPrecision.BROAD_CATEGORY, "a life support system"),
 ])
 @pytest.mark.parametrize(["distance_precise", "distance_text"], [
     (False, "up to"),
     (True, "exactly"),
 ])
-def test_create_message_for_hint_relative_item(echoes_game_description, pickup,
+def test_create_message_for_hint_relative_item(echoes_game_description, pickup, players_config,
                                                distance_precise, distance_text,
                                                reference_precision, reference_name):
     world_list = echoes_game_description.world_list
@@ -209,7 +293,8 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup,
     )
 
     # Run
-    result = item_hints.create_message_for_hint(hint, patches, hint_name_creator, location_formatters,
+    result = item_hints.create_message_for_hint(hint, {0: patches}, players_config, hint_name_creator,
+                                                location_formatters,
                                                 world_list)
 
     # Assert
@@ -221,7 +306,7 @@ def test_create_message_for_hint_relative_item(echoes_game_description, pickup,
     (False, "up to"),
     (True, "exactly"),
 ])
-def test_create_message_for_hint_relative_area(echoes_game_description, pickup,
+def test_create_message_for_hint_relative_area(echoes_game_description, pickup, players_config,
                                                distance_precise, distance_text):
     world_list = echoes_game_description.world_list
     patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
@@ -240,7 +325,8 @@ def test_create_message_for_hint_relative_area(echoes_game_description, pickup,
     )
 
     # Run
-    result = item_hints.create_message_for_hint(hint, patches, hint_name_creator, location_formatters,
+    result = item_hints.create_message_for_hint(hint, {0: patches}, players_config,
+                                                hint_name_creator, location_formatters,
                                                 world_list)
 
     # Assert

@@ -10,7 +10,7 @@ from PySide2.QtCore import Qt, Signal, QTimer
 from PySide2.QtWidgets import QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
-from randovania.game_connection.connection_backend import ConnectionStatus
+from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
@@ -22,9 +22,9 @@ from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.multiworld_client import MultiworldClient
+from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
 from randovania.interface_common import simplified_patcher, status_update_lib
-from randovania.interface_common.options import Options
+from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.interface_common.status_update_lib import ProgressUpdateCallable
@@ -265,12 +265,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @classmethod
     async def create_and_update(cls, network_client: QtNetworkClient, game_connection: GameConnection,
                                 preset_manager: PresetManager, window_manager: WindowManager, options: Options,
-                                ) -> "GameSessionWindow":
-        window = cls(network_client, game_connection, preset_manager, window_manager, options)
-        await window.on_game_session_updated(network_client.current_game_session)
-        window.on_server_connection_state_updated(network_client.connection_state)
-        window.on_game_connection_status_updated(game_connection.current_status)
-        return window
+                                ) -> Optional["GameSessionWindow"]:
+
+        try:
+            window = cls(network_client, game_connection, preset_manager, window_manager, options)
+            await window.on_game_session_updated(network_client.current_game_session)
+            window.on_server_connection_state_updated(network_client.connection_state)
+            window.on_game_connection_status_updated(game_connection.current_status)
+            return window
+
+        except BackendInUse as e:
+            await async_dialog.warning(
+                window_manager, "Existing Connection",
+                "Another instance of Randovania is already connected to an online session.\n"
+                "Please close it before continuing.\n\n"
+                f"If this error continues, please delete the following file:\n{e.lock_file}")
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
@@ -668,6 +677,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 session_id = f"{self._game_session.id}_{self._game_session.seed_hash}_{you.row}"
                 persist_path = self.network_client.server_data_path.joinpath(f"game_session_{session_id}.json")
                 await self.multiworld_client.start(persist_path)
+
         elif self.multiworld_client.is_active:
             await self.multiworld_client.stop()
 
@@ -778,6 +788,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         return True
 
     async def generate_game(self, spoiler: bool):
+        if not self._options.is_alert_displayed(InfoAlert.MULTI_ENERGY_ALERT):
+            await async_dialog.warning(self, "Multiworld Limitation",
+                                       "Warning: Multiworld games doesn't have proper energy damage logic. "
+                                       "You might be required to do Dark Aether checks with very low energy.")
+            self._options.mark_alert_as_displayed(InfoAlert.MULTI_ENERGY_ALERT)
+
         permalink = Permalink(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
@@ -938,6 +954,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 return
 
         options = self._options
+
+        if not options.is_alert_displayed(InfoAlert.MULTIWORLD_FAQ):
+            await async_dialog.message_box(self, QMessageBox.Icon.Information, "Multiworld FAQ",
+                                           "Have you read the Multiworld FAQ?\n"
+                                           "It can be found in the main Randovania window → Help → Multiworld")
+            options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
+
         dialog = GameInputDialog(options, "Echoes Randomizer - {}.iso".format(self._game_session.word_hash), False)
         result = await async_dialog.execute_dialog(dialog)
 
