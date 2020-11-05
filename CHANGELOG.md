@@ -217,6 +217,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method to reach the Spider Ball tracks with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
     - Methods to escape the halfpipe after draining the water with Space Jump and Bomb Space Jump or Space Jump and Screw Attack (Advanced and above).
 
+-   Great Bridge, method of reaching the lower Temple Access door from Path of Roots door with Screw Attack and Slope Jump (Intermediate and above).
+
 -   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
 -   Meditation Vista, methods of reaching the item with a Boost Jump (Advanced and above), Roll Jump (Expert and above), or Extended Dash (Hypermode).
@@ -224,6 +226,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Path of Roots, method of reaching the item using:
     - Morph Ball, Bombs and Space Jump (Advanced and above).
     - Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+    - Morph Ball, Bombs, and Standable Terrain (Hypermode).
 
 -   Plaza Access, method of reaching the doors and the item with Screw Attack and Single Room Out of Bounds (Advanced and above).
 
@@ -294,6 +297,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
 -   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
+-   Watch Station, method of accessing the Spider Ball track to Watch Station Access door and Sentinel's Path door and back with an Instant Morph (Intermediate and above).
 
 -   Watch Station Access, methods to cross the pit in either direction using:
     - Boost Ball and Boost Jump (Advanced and above).
@@ -403,6 +408,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Great Bridge:
     - Slope Jumps to reach Map Station from Bottom Level and from Map Station to Upper Level are now Beginner and Intermediate (from Intermediate and Advanced, respectively).
     - Bomb Space Jump with Space Jump to reach the Translator Gate is now Advanced (from Expert).
+    - Scan Dash from Abandoned Worksite door to upper Temple Access door is now Beginner (from Intermediate).
 
 -   Poisoned Bog, reaching Portal Chamber door with just Screw Attack is now Advanced (from Intermediate).
 
@@ -414,13 +420,34 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Venomous Pond, reaching the key from the Save Station with Screw Attack is now Beginner (from Intermediate).
 
+-   Aerial Training Site, Screw Attack at Z-Axis from Central Hive Area West door to the portal or Temple Security Access door is now Intermediate (from Advanced).
+
 -   Dynamo Access, crossing over the Spider Track with a Slope Jump is now Beginner (from Intermediate).
 
 -   Hall of Combat Mastery, Instant Morph tricks to the item and Central Area Transport East and back are now Advanced (from Intermediate).
 
--   Hive Dynamo Works, reaching the upper door with a Bomb Space Jump is now Beginner (from Intermediate).
+-   Hive Dynamo Access, opening Echo Gate from behind is now Beginner (from Intermediate).
+
+-   Hive Dynamo Works:
+    - Reaching the upper door with a Bomb Space Jump is now Beginner (from Intermediate).
+    - Reaching the Seeker Lock Safe Zone from Hive Dynamo Access door with Terminal Fall Abuse is now Beginner (from Intermediate).
+    - Reaching the Flying Ing Cache from the tunnel with Screw Attack is now Beginner (from Intermediate).
+    - Reaching the Flying Ing Cache from the tunnel and back with Standable Terrain is now Intermediate (from Advanced).
+    - Opening the Seeker Lock from behind is now Beginner (from Intermediate).
+
+-   Hive Summit, Standable Terrain to reach portal inside glass area is now Beginner (from Intermediate).
+
+-   Hive/Temple Access, reaching the upper door with Screw Attack at Z-Axis is now Beginenr (from Intermediate).
 
 -   Transit Station, reaching the top portal with Screw Attack is now Beginner (from Intermediate).
+
+-   Vault:
+    - Terminal Fall abuse to reach Grand Abyss door from bridge portal with Space Jump is now Beginner (from Intermediate).
+    - Reaching the Bomb Slot with Screw Attack from the bridge portal is now Beginner (from Intermediate).
+
+-   Watch Station, Screw Attack at Z-Axis from Watch Station door to Sentinel's Path door is now Beginner (from Intermediate).
+
+-   Watch Station Access, reaching the Watch Station door from the pickup with just Screw Attack is now Beginner (from Intermediate).
 
 ## [1.2.2] - 2020-06-06
 
