@@ -29,13 +29,17 @@ class DolphinBackend(ConnectionBackend):
             try:
                 address = self.dolphin.follow_pointers(address, [op.offset])
             except RuntimeError:
+                self.logger.debug(f"Failed to read a valid pointer from {address:x}")
                 return None
 
         result = None
         if op.read_byte_count is not None:
             result = self.dolphin.read_bytes(address, op.read_byte_count)
+            self.logger.debug(f"Read {result.hex()} bytes from {address:x}")
+
         if op.write_bytes is not None:
             self.dolphin.write_bytes(address, op.write_bytes)
+            self.logger.debug(f"Wrote {op.write_bytes.hex()} bytes to {address:x}")
         return result
 
     async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
