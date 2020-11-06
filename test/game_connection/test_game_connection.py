@@ -17,10 +17,10 @@ def _connection(skip_qtbot):
 @pytest.mark.asyncio
 async def test_set_backend(skip_qtbot):
     # Setup
+    GameConnection._notify_status = MagicMock()
     backend1 = ConnectionBackend()
     backend2 = ConnectionBackend()
     game_connection = GameConnection(backend1)
-    game_connection._notify_status = MagicMock()
 
     listener = AsyncMock()
 
@@ -33,8 +33,8 @@ async def test_set_backend(skip_qtbot):
     await backend2._emit_location_collected(8)
 
     # Assert
-    listener.assert_has_awaits([call(8)])
-    game_connection._notify_status.assert_has_calls([call()])
+    listener.assert_has_awaits([call(5), call(8)])
+    game_connection._notify_status.assert_has_calls([call(), call()])
 
 
 @pytest.mark.asyncio

@@ -24,10 +24,11 @@ class GameConnection(QObject, ConnectionBase):
         self._timer.setInterval(self._dt * 1000)
         self._timer.setSingleShot(True)
 
-        self.backend = backend
+        self.set_backend(backend)
 
     def set_backend(self, backend: Optional[ConnectionBackend]):
-        self.backend.set_location_collected_listener(None)
+        if hasattr(self, "backend"):
+            self.backend.set_location_collected_listener(None)
         self.backend = backend
         self.backend.set_location_collected_listener(self._emit_location_collected)
         self.backend.checking_for_collected_index = self._location_collected_listener is not None
