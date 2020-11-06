@@ -6,6 +6,14 @@ from randovania.game_connection.connection_backend import ConnectionBackend, Mem
 from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_description.world import World
 
+MEM1_START = 0x80000000
+MEM1_END = 0x81800000
+
+
+def _validate_range(address: int, size: int):
+    if address < MEM1_START or address + size > MEM1_END:
+        raise RuntimeError(f"Range {address:x} -> {address + size:x} is outside of the GameCube memory range.")
+
 
 class DolphinBackend(ConnectionBackend):
     _world: Optional[World] = None
@@ -27,6 +35,12 @@ class DolphinBackend(ConnectionBackend):
             if address not in pointers:
                 return None
             address = pointers[address] + op.offset
+
+        try:
+            _validate_range(address, op.byte_count)
+        except RuntimeError as e:
+            self.logger.exception(f"Invalid operation: {e}")
+            return None
 
         result = None
         if op.read_byte_count is not None:
