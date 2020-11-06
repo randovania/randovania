@@ -84,7 +84,7 @@ class DolphinBackend(ConnectionBackend):
             return ConnectionStatus.Disconnected
 
         if self.patches is None:
-            return ConnectionStatus.WrongGame
+            return ConnectionStatus.UnknownGame
 
         if self._world is None:
             return ConnectionStatus.TitleScreen

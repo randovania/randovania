@@ -2,7 +2,7 @@ import copy
 import dataclasses
 import logging
 import struct
-from typing import Optional, List, Dict, NamedTuple
+from typing import Optional, List, Dict
 
 from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, ConnectionStatus
 from randovania.game_description import data_reader
