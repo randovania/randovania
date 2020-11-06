@@ -1,19 +1,19 @@
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 
 from PySide2.QtCore import QTimer, Signal, QObject
 from asyncqt import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.connection_base import ConnectionStatus, ConnectionBase, InventoryItem
+from randovania.game_connection.connection_base import GameConnectionStatus, ConnectionBase, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 class GameConnection(QObject, ConnectionBase):
-    StatusUpdated = Signal(ConnectionStatus)
+    Updated = Signal()
 
     _dt: float = 2.5
-    _last_status: ConnectionStatus = ConnectionStatus.Disconnected
+    _last_status: Any = None
     backend: ConnectionBackend
 
     def __init__(self, backend: ConnectionBackend):
@@ -26,7 +26,7 @@ class GameConnection(QObject, ConnectionBase):
 
         self.set_backend(backend)
 
-    def set_backend(self, backend: Optional[ConnectionBackend]):
+    def set_backend(self, backend: ConnectionBackend):
         if hasattr(self, "backend"):
             self.backend.set_location_collected_listener(None)
         self.backend = backend
@@ -50,16 +50,16 @@ class GameConnection(QObject, ConnectionBase):
 
     def _notify_status(self):
         new_status = self.current_status
-        if self._last_status != new_status:
-            self._last_status = new_status
-            self.StatusUpdated.emit(new_status)
+        if self._last_status != (new_status, self.backend):
+            self._last_status = (new_status, self.backend)
+            self.Updated.emit()
 
     @property
     def pretty_current_status(self) -> str:
         return f"{self.backend.name}: {self.backend.current_status.pretty_text}"
 
     @property
-    def current_status(self) -> ConnectionStatus:
+    def current_status(self) -> GameConnectionStatus:
         return self.backend.current_status
 
     def display_message(self, message: str):

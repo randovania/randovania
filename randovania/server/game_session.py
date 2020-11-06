@@ -18,12 +18,12 @@ from randovania.games.prime import patcher_file
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import WrongPassword, \
     NotAuthorizedForAction, InvalidAction
+from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
 from randovania.server import database
 from randovania.server.database import GameSession, GameSessionMembership, GameSessionTeamAction, \
@@ -52,7 +52,7 @@ def create_game_session(sio: ServerApp, session_name: str):
                                  preset=json.dumps(PresetManager(None).default_preset.as_json))
         membership = GameSessionMembership.create(
             user=sio.get_current_user(), session=new_session,
-            row=0, admin=True)
+            row=0, admin=True, connection_state="Online, Unknown")
 
     sio.join_game_session(membership)
     return new_session.create_session_entry()
@@ -68,7 +68,8 @@ def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
         raise WrongPassword()
 
     membership = GameSessionMembership.get_or_create(user=sio.get_current_user(), session=session,
-                                                     defaults={"row": None, "admin": False})[0]
+                                                     defaults={"row": None, "admin": False,
+                                                               "connection_state": "Online, Unknown"})[0]
 
     _emit_session_update(session)
     sio.join_game_session(membership)
@@ -76,7 +77,15 @@ def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
     return session.create_session_entry()
 
 
-def disconnect_game_session(sio: ServerApp):
+def disconnect_game_session(sio: ServerApp, session_id: int):
+    current_user = sio.get_current_user()
+    try:
+        current_membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
+        current_membership.connection_state = "Offline"
+        current_membership.save()
+        _emit_session_update(current_membership.session)
+    except peewee.DoesNotExist:
+        pass
     sio.leave_game_session()
 
 
@@ -570,12 +579,41 @@ def game_session_request_pickups(sio: ServerApp, session_id: int):
     return result
 
 
+def game_session_self_update(sio: ServerApp, session_id: int, inventory: str, game_connection_state: str):
+    current_user = sio.get_current_user()
+    membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
+
+    membership.connection_state = f"Online, {game_connection_state}"
+    membership.inventory = inventory
+    membership.save()
+    _emit_session_update(membership.session)
+
+
+def report_user_disconnected(sio: ServerApp, user_id: int, log):
+    memberships: List[GameSessionMembership] = list(GameSessionMembership.select().where(
+        GameSessionMembership.user == user_id))
+
+    log.info(f"User {user_id} is disconnected, disconnecting from sessions: {memberships}")
+    sessions_to_update = []
+
+    for membership in memberships:
+        if membership.connection_state != "Offline":
+            membership.connection_state = "Offline"
+            sessions_to_update.append(membership.session)
+            membership.save()
+
+    for session in sessions_to_update:
+        _emit_session_update(session)
+
+
 def setup_app(sio: ServerApp):
     sio.on("list_game_sessions", list_game_sessions)
     sio.on("create_game_session", create_game_session)
     sio.on("join_game_session", join_game_session)
+    sio.on("disconnect_game_session", disconnect_game_session)
     sio.on("game_session_request_update", game_session_request_update)
     sio.on("game_session_admin_session", game_session_admin_session)
     sio.on("game_session_admin_player", game_session_admin_player)
     sio.on("game_session_collect_locations", game_session_collect_locations)
     sio.on("game_session_request_pickups", game_session_request_pickups)
+    sio.on("game_session_self_update", game_session_self_update)

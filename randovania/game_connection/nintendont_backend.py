@@ -4,8 +4,9 @@ import struct
 from asyncio import StreamReader, StreamWriter
 from typing import List, Optional
 
+from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.world import World
 
 
@@ -98,6 +99,10 @@ class NintendontBackend(ConnectionBackend):
     @property
     def lock_identifier(self) -> Optional[str]:
         return None
+
+    @property
+    def backend_choice(self) -> GameBackendChoice:
+        return GameBackendChoice.NINTENDONT
 
     # Game Backend Stuff
     async def _connect(self) -> bool:
@@ -215,16 +220,16 @@ class NintendontBackend(ConnectionBackend):
         return "Nintendont"
 
     @property
-    def current_status(self) -> ConnectionStatus:
+    def current_status(self) -> GameConnectionStatus:
         if self._socket is None:
-            return ConnectionStatus.Disconnected
+            return GameConnectionStatus.Disconnected
 
         if self.patches is None:
-            return ConnectionStatus.UnknownGame
+            return GameConnectionStatus.UnknownGame
 
         if self._world is None:
-            return ConnectionStatus.TitleScreen
+            return GameConnectionStatus.TitleScreen
         elif not self.checking_for_collected_index:
-            return ConnectionStatus.TrackerOnly
+            return GameConnectionStatus.TrackerOnly
         else:
-            return ConnectionStatus.InGame
+            return GameConnectionStatus.InGame

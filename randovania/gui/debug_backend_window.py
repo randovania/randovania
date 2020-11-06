@@ -6,7 +6,7 @@ from PySide2.QtWidgets import QMainWindow
 from asyncqt import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation, _powerup_offset
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime import dol_patcher
@@ -16,6 +16,12 @@ from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.interface_common import enum_lib
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
+
+
+class DebugGameBackendChoice:
+    @property
+    def pretty_text(self):
+        return "Debug"
 
 
 class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
@@ -28,7 +34,7 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self.setupUi(self.window)
         common_qt_lib.set_default_window_icon(self.window)
 
-        for status in enum_lib.iterate_enum(ConnectionStatus):
+        for status in enum_lib.iterate_enum(GameConnectionStatus):
             self.current_status_combo.addItem(status.pretty_text, status)
 
         self.permanent_pickups = []
@@ -64,8 +70,12 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         self._game_memory[address:address + len(data)] = data
 
     @property
-    def current_status(self) -> ConnectionStatus:
+    def current_status(self) -> GameConnectionStatus:
         return self.current_status_combo.currentData()
+
+    @property
+    def backend_choice(self):
+        return DebugGameBackendChoice()
 
     @property
     def lock_identifier(self) -> Optional[str]:

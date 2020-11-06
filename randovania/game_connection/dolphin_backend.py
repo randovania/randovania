@@ -2,8 +2,9 @@ from typing import List, Optional, Dict
 
 import dolphin_memory_engine
 
+from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.world import World
 
 MEM1_START = 0x80000000
@@ -25,6 +26,10 @@ class DolphinBackend(ConnectionBackend):
     @property
     def lock_identifier(self) -> Optional[str]:
         return "randovania-dolphin-backend"
+
+    @property
+    def backend_choice(self) -> GameBackendChoice:
+        return GameBackendChoice.DOLPHIN
 
     # Game Backend Stuff
     def _memory_operation(self, op: MemoryOperation, pointers: Dict[int, Optional[int]]) -> Optional[bytes]:
@@ -110,16 +115,16 @@ class DolphinBackend(ConnectionBackend):
         return "Dolphin"
 
     @property
-    def current_status(self) -> ConnectionStatus:
+    def current_status(self) -> GameConnectionStatus:
         if not self.dolphin.is_hooked():
-            return ConnectionStatus.Disconnected
+            return GameConnectionStatus.Disconnected
 
         if self.patches is None:
-            return ConnectionStatus.UnknownGame
+            return GameConnectionStatus.UnknownGame
 
         if self._world is None:
-            return ConnectionStatus.TitleScreen
+            return GameConnectionStatus.TitleScreen
         elif not self.checking_for_collected_index:
-            return ConnectionStatus.TrackerOnly
+            return GameConnectionStatus.TrackerOnly
         else:
-            return ConnectionStatus.InGame
+            return GameConnectionStatus.InGame
