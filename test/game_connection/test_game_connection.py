@@ -44,18 +44,16 @@ async def test_update(skip_qtbot, qapp):
 
     backend = MagicMock()
     backend.update = backend_update
-    backend.current_status = ConnectionStatus.InGame
 
     game_connection = GameConnection(backend)
-    game_connection._last_status = ConnectionStatus.Disconnected
-    game_connection.StatusUpdated = MagicMock()
+    game_connection._notify_status = MagicMock()
 
     # Run
     await game_connection._update()
 
     # Assert
     backend_update.assert_awaited_once_with(game_connection._dt)
-    game_connection.StatusUpdated.emit.assert_called_once_with(ConnectionStatus.InGame)
+    game_connection._notify_status.assert_called_once_with()
 
 
 def test_pretty_current_status(skip_qtbot):
