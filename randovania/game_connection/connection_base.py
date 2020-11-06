@@ -6,7 +6,6 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 class ConnectionStatus(Enum):
-    NoBackend = "no-backend"
     Disconnected = "disconnected"
     UnknownGame = "unknown-game"
     WrongGame = "wrong-game"
@@ -21,7 +20,6 @@ class ConnectionStatus(Enum):
 
 
 _pretty_connection_status = {
-    ConnectionStatus.NoBackend: "No backend selected",
     ConnectionStatus.Disconnected: "Disconnected",
     ConnectionStatus.UnknownGame: "Unknown game",
     ConnectionStatus.WrongGame: "Wrong game",

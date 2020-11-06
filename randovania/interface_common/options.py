@@ -217,6 +217,7 @@ class Options:
         self._auto_save_spoiler = None
         self._cosmetic_patches = None
         self._displayed_alerts = None
+        self._dark_mode = None
         self._game_backend = None
         self._nintendont_ip = None
 
@@ -330,8 +331,7 @@ class Options:
 
     @advanced_validate_seed_after.setter
     def advanced_validate_seed_after(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._advanced_validate_seed_after = value
+        self._edit_field("advanced_validate_seed_after", value)
 
     @property
     def advanced_timeout_during_generation(self) -> bool:
@@ -339,8 +339,7 @@ class Options:
 
     @advanced_timeout_during_generation.setter
     def advanced_timeout_during_generation(self, value: bool):
-        self._check_editable_and_mark_dirty()
-        self._advanced_timeout_during_generation = value
+        self._edit_field("advanced_timeout_during_generation", value)
 
     ######
 
