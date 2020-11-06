@@ -67,7 +67,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 ### GUI
 
--   Added: An automatic item tracker based on a Dolphin running on the same computer.
+-   Added: An automatic item tracker based on a Dolphin running on the same computer or a special Nintendont build on the same Wifi.
 
 -   Added: A dark theme has been added. It can be toggled in the Advanced menu.
 

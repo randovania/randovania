@@ -16,6 +16,7 @@ from randovania.network_common.session_state import GameSessionState
 def _window(skip_qtbot):
     game_connection = MagicMock()
     game_connection.backend.lock_identifier = None
+    game_connection.pretty_current_status = "Pretty Status"
     window = GameSessionWindow(MagicMock(), game_connection, MagicMock(), MagicMock(), MagicMock())
     return window
 

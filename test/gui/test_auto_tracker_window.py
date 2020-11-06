@@ -1,7 +1,6 @@
-from unittest.mock import MagicMock
+from mock import MagicMock
 
 import pytest
-from mock import AsyncMock
 
 from randovania.game_connection.connection_base import ConnectionStatus, InventoryItem
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
@@ -9,7 +8,9 @@ from randovania.gui.auto_tracker_window import AutoTrackerWindow
 
 @pytest.fixture(name="window")
 def auto_tracker_window(skip_qtbot):
-    return AutoTrackerWindow(MagicMock())
+    connection = MagicMock()
+    connection.pretty_current_status = "Pretty"
+    return AutoTrackerWindow(connection, MagicMock())
 
 
 def test_update_tracker_from_hook(window):
@@ -32,8 +33,9 @@ async def test_on_timer_update(current_status: ConnectionStatus,
     # Setup
     inventory = {}
     game_connection = MagicMock()
+    game_connection.pretty_current_status = "Pretty Status"
 
-    window = AutoTrackerWindow(game_connection)
+    window = AutoTrackerWindow(game_connection, MagicMock())
     window._update_tracker_from_hook = MagicMock()
 
     game_connection.get_current_inventory.return_value = inventory

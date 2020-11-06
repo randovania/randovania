@@ -51,7 +51,7 @@ def test_current_status_disconnected(backend):
 
 def test_current_status_wrong_game(backend):
     backend.dolphin.is_hooked.return_value = True
-    assert backend.current_status == ConnectionStatus.WrongGame
+    assert backend.current_status == ConnectionStatus.UnknownGame
 
 
 def test_current_status_not_in_game(backend):
