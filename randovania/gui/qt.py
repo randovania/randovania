@@ -75,17 +75,20 @@ async def display_window_for(app, options, command: str, args):
         raise RuntimeError(f"Unknown command: {command}")
 
 
-def create_backend(debug_game_backend: bool):
+def create_backend(debug_game_backend: bool, options):
     if debug_game_backend:
         from randovania.gui.debug_backend_window import DebugBackendWindow
         backend = DebugBackendWindow()
         backend.show()
     else:
         from randovania.game_connection.dolphin_backend import DolphinBackend
-        backend = DolphinBackend()
         from randovania.game_connection.nintendont_backend import NintendontBackend
-        if not NintendontBackend:
-            backend = NintendontBackend("localhost")
+        from randovania.game_connection.backend_choice import GameBackendChoice
+
+        if options.game_backend == GameBackendChoice.NINTENDONT and options.nintendont_ip is not None:
+            backend = NintendontBackend(options.nintendont_ip)
+        else:
+            backend = DolphinBackend()
     return backend
 
 
@@ -158,8 +161,9 @@ async def qt_main(app: QApplication, data_dir: Path, args):
     from randovania.game_connection.game_connection import GameConnection
 
     app.network_client = QtNetworkClient(data_dir)
+    options = _load_options()
 
-    backend = create_backend(args.debug_game_backend)
+    backend = create_backend(args.debug_game_backend, options)
     app.game_connection = GameConnection(backend)
 
     @asyncClose
@@ -168,8 +172,6 @@ async def qt_main(app: QApplication, data_dir: Path, args):
         await app.game_connection.stop()
 
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
-
-    options = _load_options()
 
     await asyncio.gather(app.game_connection.start(),
                          display_window_for(app, options, args.command, args))

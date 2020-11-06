@@ -524,7 +524,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
-        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection())
+        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
         self.auto_tracker_window.show()
 
     def _update_hints_text(self):
