@@ -33,8 +33,8 @@ async def test_set_backend(skip_qtbot):
     await backend2._emit_location_collected(8)
 
     # Assert
-    listener.assert_has_awaits([call(5), call(8)])
-    game_connection._notify_status.assert_has_calls([call(), call()])
+    listener.assert_has_awaits([call(8)])
+    game_connection._notify_status.assert_has_calls([call()])
 
 
 @pytest.mark.asyncio
