@@ -28,6 +28,7 @@ class PlayerSessionEntry:
     name: str
     row: Optional[int]
     admin: bool
+    connection_state: str
 
     @classmethod
     def from_json(cls, data) -> "PlayerSessionEntry":
@@ -36,6 +37,7 @@ class PlayerSessionEntry:
             name=data["name"],
             row=data["row"],
             admin=data["admin"],
+            connection_state=data["connection_state"],
         )
 
     @property

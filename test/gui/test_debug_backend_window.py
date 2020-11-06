@@ -2,7 +2,7 @@ import pytest
 from PySide2.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, ConditionalResources
 from randovania.gui.debug_backend_window import DebugBackendWindow
@@ -29,9 +29,9 @@ def _pickup(echoes_game_description) -> PickupEntry:
     )
 
 
-@pytest.mark.parametrize("expected_status", iterate_enum(ConnectionStatus))
+@pytest.mark.parametrize("expected_status", iterate_enum(GameConnectionStatus))
 def test_current_status(backend, expected_status):
-    all_status = list(iterate_enum(ConnectionStatus))
+    all_status = list(iterate_enum(GameConnectionStatus))
 
     backend.current_status_combo.setCurrentIndex(all_status.index(expected_status))
     assert backend.current_status == expected_status

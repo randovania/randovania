@@ -4,7 +4,7 @@ import pytest
 from mock import AsyncMock
 
 from randovania.game_connection.connection_backend import MemoryOperation
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
 
 
@@ -47,25 +47,25 @@ async def test_update(backend, depth: int):
 
 def test_current_status_disconnected(backend):
     backend.dolphin.is_hooked.return_value = False
-    assert backend.current_status == ConnectionStatus.Disconnected
+    assert backend.current_status == GameConnectionStatus.Disconnected
 
 
 def test_current_status_wrong_game(backend):
     backend.dolphin.is_hooked.return_value = True
-    assert backend.current_status == ConnectionStatus.UnknownGame
+    assert backend.current_status == GameConnectionStatus.UnknownGame
 
 
 def test_current_status_not_in_game(backend):
     backend.dolphin.is_hooked.return_value = True
     backend.patches = True
-    assert backend.current_status == ConnectionStatus.TitleScreen
+    assert backend.current_status == GameConnectionStatus.TitleScreen
 
 
 def test_current_status_tracker_only(backend):
     backend.dolphin.is_hooked.return_value = True
     backend.patches = True
     backend._world = True
-    assert backend.current_status == ConnectionStatus.TrackerOnly
+    assert backend.current_status == GameConnectionStatus.TrackerOnly
 
 
 def test_current_status_in_game(backend):
@@ -73,7 +73,7 @@ def test_current_status_in_game(backend):
     backend.patches = True
     backend._world = True
     backend.checking_for_collected_index = True
-    assert backend.current_status == ConnectionStatus.InGame
+    assert backend.current_status == GameConnectionStatus.InGame
 
 
 @pytest.mark.asyncio

@@ -35,7 +35,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         name="The Session",
         presets=[preset_manager.default_preset, preset_manager.default_preset],
         players={
-            12: PlayerSessionEntry(12, "Player A", 0, True),
+            12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
         },
         actions=[],
         seed_hash=None,
@@ -50,8 +50,8 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
         name="The Session",
         presets=[preset_manager.default_preset],
         players={
-            12: PlayerSessionEntry(12, "Player A", 0, True),
-            24: PlayerSessionEntry(24, "Player B", None, False),
+            12: PlayerSessionEntry(12, "Player A", 0, True, "Online"),
+            24: PlayerSessionEntry(24, "Player B", None, False, "Online"),
         },
         actions=[
             GameSessionAction("Hello", datetime.datetime(year=2020, month=1, day=5))

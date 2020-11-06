@@ -5,7 +5,7 @@ import sys
 
 from PySide2.QtCore import QCoreApplication
 
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
 from randovania.game_connection.game_connection import GameConnection
 
@@ -19,7 +19,7 @@ async def worker(app: QCoreApplication):
 
     await connection.start()
     try:
-        while connection.current_status != ConnectionStatus.InGame:
+        while connection.current_status != GameConnectionStatus.InGame:
             await asyncio.sleep(1)
             print(connection.pretty_current_status)
 
