@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import dolphin_memory_engine
 
@@ -14,23 +14,19 @@ class DolphinBackend(ConnectionBackend):
         super().__init__()
         self.dolphin = dolphin_memory_engine
 
-
-
     @property
     def lock_identifier(self) -> Optional[str]:
         return "randovania-dolphin-backend"
 
     # Game Backend Stuff
-    def _memory_operation(self, op: MemoryOperation) -> Optional[bytes]:
+    def _memory_operation(self, op: MemoryOperation, pointers: Dict[int, Optional[int]]) -> Optional[bytes]:
         op.validate_byte_sizes()
 
         address = op.address
         if op.offset is not None:
-            try:
-                address = self.dolphin.follow_pointers(address, [op.offset])
-            except RuntimeError:
-                self.logger.debug(f"Failed to read a valid pointer from {address:x}")
+            if address not in pointers:
                 return None
+            address = pointers[address] + op.offset
 
         result = None
         if op.read_byte_count is not None:
@@ -43,8 +39,20 @@ class DolphinBackend(ConnectionBackend):
         return result
 
     async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
+        pointers_to_read = set()
+        for op in ops:
+            if op.offset is not None:
+                pointers_to_read.add(op.address)
+
+        pointers = {}
+        for pointer in pointers_to_read:
+            try:
+                pointers[pointer] = self.dolphin.follow_pointers(pointer, [0])
+            except RuntimeError:
+                self.logger.debug(f"Failed to read a valid pointer from {pointer:x}")
+
         return [
-            self._memory_operation(op)
+            self._memory_operation(op, pointers)
             for op in ops
         ]
 
@@ -59,7 +67,8 @@ class DolphinBackend(ConnectionBackend):
         try:
             if len(self.dolphin.read_bytes(0x0, 4)) != 4:
                 raise RuntimeError("Dolphin hook didn't read the correct byte count")
-        except RuntimeError:
+        except RuntimeError as e:
+            self.logger.exception(f"Test read for Dolphin hook didn't work: {e}")
             self.dolphin.un_hook()
 
     async def update(self, dt: float):
