@@ -92,6 +92,10 @@ class NintendontBackend(ConnectionBackend):
         self._ip = ip
 
     @property
+    def ip(self):
+        return self._ip
+
+    @property
     def lock_identifier(self) -> Optional[str]:
         return None
 
@@ -153,18 +157,18 @@ class NintendontBackend(ConnectionBackend):
         try:
             for request in requests:
                 data = request.build_request_data()
-                self.logger.info(f"Sending {data} to {self._ip, self._port}.")
+                self.logger.debug(f"Sending {data.hex()} to {self._ip, self._port}.")
                 self._socket.writer.write(data)
                 await self._socket.writer.drain()
                 if request.output_bytes > 0:
                     response = await self._socket.reader.read(1024)
-                    self.logger.info(f"Received {response}.")
+                    self.logger.debug(f"Received {response.hex()}.")
                     all_responses.append(response)
                 else:
                     all_responses.append(b"")
 
         except OSError as e:
-            self.logger.info(f"Unable to connect to {self._ip}:{self._port}: {e}")
+            self.logger.warning(f"Unable to connect to {self._ip}:{self._port}: {e}")
             self._socket = None
             self._socket_error = e
             raise RuntimeError("Unable to connect") from e
@@ -216,7 +220,7 @@ class NintendontBackend(ConnectionBackend):
             return ConnectionStatus.Disconnected
 
         if self.patches is None:
-            return ConnectionStatus.WrongGame
+            return ConnectionStatus.UnknownGame
 
         if self._world is None:
             return ConnectionStatus.TitleScreen

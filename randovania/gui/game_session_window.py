@@ -20,6 +20,7 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, preset_describer, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
@@ -219,11 +220,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
 
         # Game Connection
-        self.game_connection_menu = QtWidgets.QMenu(self.game_connection_tool)
-        setup_connection_action = QtWidgets.QAction("Setup game connection", self.game_connection_menu)
-        self.game_connection_menu.addAction(setup_connection_action)
-        self.game_connection_tool.setMenu(self.game_connection_menu)
-        self.game_connection_tool.setVisible(False)
+        self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.game_connection_label,
+                                                         self.game_connection, self._options)
 
         # Server Status
         self.server_connection_button.clicked.connect(self._connect_to_server)

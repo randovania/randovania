@@ -5,6 +5,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Optional, TypeVar, Callable, Any, Set, List
 
+from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.interface_common import persistence, update_checker
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
 from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
@@ -53,6 +54,8 @@ _SERIALIZER_FOR_FIELD = {
     "selected_preset_name": Serializer(identity, str),
     "cosmetic_patches": Serializer(lambda p: p.as_json, CosmeticPatches.from_json_dict),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
+    "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
+    "nintendont_ip": Serializer(identity, str),
 }
 
 
@@ -88,6 +91,8 @@ class Options:
     _selected_preset_name: Optional[str] = None
     _cosmetic_patches: Optional[CosmeticPatches] = None
     _displayed_alerts: Optional[Set[InfoAlert]] = None
+    _game_backend: Optional[GameBackendChoice] = None
+    _nintendont_ip: Optional[str] = None
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
@@ -212,6 +217,8 @@ class Options:
         self._auto_save_spoiler = None
         self._cosmetic_patches = None
         self._displayed_alerts = None
+        self._game_backend = None
+        self._nintendont_ip = None
 
     # Files paths
     @property
@@ -280,6 +287,22 @@ class Options:
     @cosmetic_patches.setter
     def cosmetic_patches(self, value: CosmeticPatches):
         self._edit_field("cosmetic_patches", value)
+
+    @property
+    def game_backend(self) -> GameBackendChoice:
+        return _return_with_default(self._game_backend, lambda: GameBackendChoice.DOLPHIN)
+
+    @game_backend.setter
+    def game_backend(self, value: GameBackendChoice):
+        self._edit_field("game_backend", value)
+
+    @property
+    def nintendont_ip(self) -> Optional[str]:
+        return self._nintendont_ip
+
+    @nintendont_ip.setter
+    def nintendont_ip(self, value: Optional[str]):
+        self._edit_field("nintendont_ip", value)
 
     @property
     def displayed_alerts(self):

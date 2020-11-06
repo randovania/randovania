@@ -6,7 +6,9 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 class ConnectionStatus(Enum):
+    NoBackend = "no-backend"
     Disconnected = "disconnected"
+    UnknownGame = "unknown-game"
     WrongGame = "wrong-game"
     WrongHash = "wrong-hash"
     TitleScreen = "title-screen"
@@ -19,12 +21,14 @@ class ConnectionStatus(Enum):
 
 
 _pretty_connection_status = {
+    ConnectionStatus.NoBackend: "No backend selected",
     ConnectionStatus.Disconnected: "Disconnected",
-    ConnectionStatus.WrongGame: "Wrong Game",
-    ConnectionStatus.WrongHash: "Correct Game, Wrong Seed Hash",
-    ConnectionStatus.TitleScreen: "Title Screen",
-    ConnectionStatus.TrackerOnly: "Tracker Only",
-    ConnectionStatus.InGame: "In-Game",
+    ConnectionStatus.UnknownGame: "Unknown game",
+    ConnectionStatus.WrongGame: "Wrong game",
+    ConnectionStatus.WrongHash: "Correct game, wrong seed hash",
+    ConnectionStatus.TitleScreen: "Title screen",
+    ConnectionStatus.TrackerOnly: "Tracker only",
+    ConnectionStatus.InGame: "In-game",
 }
 
 
