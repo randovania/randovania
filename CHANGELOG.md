@@ -152,7 +152,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Landing Site, method of reaching Service Access door:
     - With Bombs and Screw Attack (Intermediate and above).
-    - With Space Jump and Bomb Space Jump (Beginner and above).
+    - With Space Jump and Bomb Space Jump (Intermediate and above).
 
 -   Meeting Grounds, method of reaching the tunnel with Space Jump and a Bomb Space Jump (Intermediate and above).
 
@@ -205,11 +205,14 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Dark Arena Tunnel, method of reaching either door with Screw Attack and Single Room Out of Bounds (Advanced and above).
 
--   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
-
 -   Dark Forgotten Bridge:
     - Method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
     - Method to reach Bridge Center from Putrid Alcove door with only Scan Visor (Advanced and above).
+    - Method to reach Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
+
+-   Forgotten Bridge:
+    - Method to reach Abandoned Worksite door from the bridge before rotating and with an Extended Dash (Expert and above).
+    - Method to reach Bridge Center with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
 -   Gathering Hall: 
     - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
@@ -349,10 +352,12 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Abandoned Base, Bomb Jump to transport is now Advanced (from Intermediate).
 
+-   Accursed Lake, Dash to Safe Zone from Flying Ing Cache is now Intermediate (from Beginner).
+
 -   Communication Area:
     - Standable Terrain to reach the item is now Beginner (from Intermediate).
     - Screw Attack without Space Jump to reach Storage Cavern A is now Beginner (from Intermediate).
-    - Double Bomb Jump up Standable Terrain is now Beginner (from Advanced).
+    - Double Bomb Jump up Standable Terrain is now Intermediate (from Advanced).
 
 -   GFMC Compound, Extended Dash to reach the item on the Ship without Space Jump is now Expert (from Hypermode).
 
@@ -368,11 +373,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Battleground, climbing to top safe zone via Standable Terrain is now Beginner (from Intermediate).
 
--   Central Mining Station:
-    - Scan Dash to upper level from Central Station Access is now Expert (from Advanced).
-    - Bomb Space Jump to top door is now Beginner (from Intermediate).
-
--   Command Center, Dash Jump along top without Space Jump is now Beginner (from Intermediate).
+-   Central Mining Station, Scan Dash to upper level from Central Station Access is now Expert (from Advanced).
 
 -   Command Center Access, exiting tunnel without Space Jump is now Beginner (from Intermediate).
 
@@ -393,13 +394,13 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Portal Access, returning from Judgment Pit without Space Jump is now Beginner (from Intermediate).
 
--   Transport Center, dash from portal to Seeker Door is now Beginner (from Intermediate).
-
--   Trial Grounds, Standable Terrain and Slope Jump are now Beginner (from Intermediate).
+-   Trial Grounds, Standable Terrain to reach the door from the portal is now Beginner (from Intermediate).
 
 -   Catacombs, reaching the portal with Morph Ball and Reverse Air Underwater is now Advanced (from Expert).
 
 -   Crypt, Bomb Jump to Laser Platfrom from bottom Safe Zone is now Beginner (from Intermediate).
+
+-   Forgotten Bridge, reaching Bridge Center with Bombs and Screw Attack is now Intermediate (from Advanced).
 
 -   Gathering Hall:
     - Reaching Transit Tunnel South/West Doors from top door with Morph Ball and Roll Jump is now Expert (from Advanced).
@@ -408,13 +409,10 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Great Bridge:
     - Slope Jumps to reach Map Station from Bottom Level and from Map Station to Upper Level are now Beginner and Intermediate (from Intermediate and Advanced, respectively).
     - Bomb Space Jump with Space Jump to reach the Translator Gate is now Advanced (from Expert).
-    - Scan Dash from Abandoned Worksite door to upper Temple Access door is now Beginner (from Intermediate).
 
 -   Poisoned Bog, reaching Portal Chamber door with just Screw Attack is now Advanced (from Intermediate).
 
 -   Torvus Lagoon, reaching Portal Chamber from Temple Transport Access is now Intermediate (from Advanced).
-
--   Sacrificial Chamber, Scan Dash with Space Jump to Sacrificial Tunnel is now Beginner (from Intermediate).
 
 -   Training Chamber, Standable Terrain to reach Fortress Transport Access from Top of Statue and back is now Beginner (from Intermediate).
 
@@ -429,7 +427,6 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Hive Dynamo Access, opening Echo Gate from behind is now Beginner (from Intermediate).
 
 -   Hive Dynamo Works:
-    - Reaching the upper door with a Bomb Space Jump is now Beginner (from Intermediate).
     - Reaching the Seeker Lock Safe Zone from Hive Dynamo Access door with Terminal Fall Abuse is now Beginner (from Intermediate).
     - Reaching the Flying Ing Cache from the tunnel with Screw Attack is now Beginner (from Intermediate).
     - Reaching the Flying Ing Cache from the tunnel and back with Standable Terrain is now Intermediate (from Advanced).
