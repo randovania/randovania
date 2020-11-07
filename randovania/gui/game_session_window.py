@@ -10,7 +10,7 @@ from PySide2.QtCore import Qt, Signal, QTimer
 from PySide2.QtWidgets import QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
@@ -43,6 +43,7 @@ from randovania.resolver.exceptions import GenerationFailure
 @dataclasses.dataclass()
 class PlayerWidget:
     name: QtWidgets.QLabel
+    connection_state: Optional[QtWidgets.QLabel]
     tool: QtWidgets.QToolButton
     kick: QtWidgets.QAction
     promote: QtWidgets.QAction
@@ -54,8 +55,11 @@ class PlayerWidget:
     player: Optional[PlayerSessionEntry] = None
 
     @property
-    def widgets(self):
-        return [self.name, self.tool]
+    def widgets(self) -> List[QtWidgets.QWidget]:
+        result = [self.name, self.tool]
+        if self.connection_state is not None:
+            result.append(self.connection_state)
+        return result
 
     def delete_widgets(self):
         for widget in self.widgets:
@@ -100,6 +104,8 @@ class PlayerWidget:
             num_required = 1
 
         self.name.setText(player_name)
+        if self.connection_state is not None:
+            self.connection_state.setText(player.connection_state)
         self.kick.setEnabled(self_player.admin and player.id != self_player.id)
         self.promote.setText(promote_text)
         self.promote.setEnabled(self_player.admin and game_session.num_admins >= num_required)
@@ -258,7 +264,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         self.network_client.GameSessionUpdated.connect(self.on_game_session_updated)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
-        self.game_connection.StatusUpdated.connect(self.on_game_connection_status_updated)
 
     @classmethod
     async def create_and_update(cls, network_client: QtNetworkClient, game_connection: GameConnection,
@@ -269,7 +274,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             window = cls(network_client, game_connection, preset_manager, window_manager, options)
             await window.on_game_session_updated(network_client.current_game_session)
             window.on_server_connection_state_updated(network_client.connection_state)
-            window.on_game_connection_status_updated(game_connection.current_status)
             return window
 
         except BackendInUse as e:
@@ -485,18 +489,26 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         player_label = QtWidgets.QLabel(self.players_box)
         player_label.setText("")
         player_label.setWordWrap(True)
-        parent_layout.addWidget(player_label, 2 + row_id, _PRESET_COLUMNS + team_id * 3)
+        parent_layout.addWidget(player_label, 2 + row_id, _PRESET_COLUMNS + 1 + team_id * 3)
+
+        connection_state = None
+        if not is_observer:
+            connection_state = QtWidgets.QLabel(self.players_box)
+            connection_state.setText("")
+            connection_state.setWordWrap(True)
+            parent_layout.addWidget(connection_state, 2 + row_id, _PRESET_COLUMNS + 2 + team_id * 3)
 
         tool_button = QtWidgets.QToolButton(self.players_box)
         tool_button.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         tool_button.setText("...")
-        parent_layout.addWidget(tool_button, 2 + row_id, _PRESET_COLUMNS + 1 + team_id * 3)
+        parent_layout.addWidget(tool_button, 2 + row_id, _PRESET_COLUMNS + 3 + team_id * 3)
 
         tool_button_menu = QtWidgets.QMenu(tool_button)
         tool_button.setMenu(tool_button_menu)
 
         widget = PlayerWidget(
             name=player_label,
+            connection_state=connection_state,
             tool=tool_button,
             kick=QtWidgets.QAction(tool_button_menu),
             promote=QtWidgets.QAction(tool_button_menu),
@@ -1085,9 +1097,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     def on_server_connection_state_updated(self, state: ConnectionState):
         self.server_connection_button.setEnabled(state == ConnectionState.Disconnected)
         self.server_connection_label.setText(f"Server: {state.value}")
-
-    def on_game_connection_status_updated(self, status: ConnectionStatus):
-        self.game_connection_label.setText(self.game_connection.pretty_current_status)
 
     @asyncSlot()
     @handle_network_errors

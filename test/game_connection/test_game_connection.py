@@ -4,7 +4,6 @@ import pytest
 from mock import AsyncMock
 
 from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.connection_base import ConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
 from randovania.game_connection.game_connection import GameConnection
 

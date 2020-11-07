@@ -2,7 +2,7 @@ import pytest
 from mock import MagicMock, AsyncMock, call
 
 from randovania.game_connection.connection_backend import MemoryOperation
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.nintendont_backend import NintendontBackend, SocketHolder
 
 
@@ -68,25 +68,25 @@ async def test_connect(backend, mocker):
 
 def test_current_status_disconnected(backend):
     backend._socket = None
-    assert backend.current_status == ConnectionStatus.Disconnected
+    assert backend.current_status == GameConnectionStatus.Disconnected
 
 
 def test_current_status_wrong_game(backend):
     backend._socket = True
-    assert backend.current_status == ConnectionStatus.UnknownGame
+    assert backend.current_status == GameConnectionStatus.UnknownGame
 
 
 def test_current_status_not_in_game(backend):
     backend._socket = True
     backend.patches = True
-    assert backend.current_status == ConnectionStatus.TitleScreen
+    assert backend.current_status == GameConnectionStatus.TitleScreen
 
 
 def test_current_status_tracker_only(backend):
     backend._socket = True
     backend.patches = True
     backend._world = True
-    assert backend.current_status == ConnectionStatus.TrackerOnly
+    assert backend.current_status == GameConnectionStatus.TrackerOnly
 
 
 def test_current_status_in_game(backend):
@@ -94,4 +94,4 @@ def test_current_status_in_game(backend):
     backend.patches = True
     backend._world = True
     backend.checking_for_collected_index = True
-    assert backend.current_status == ConnectionStatus.InGame
+    assert backend.current_status == GameConnectionStatus.InGame

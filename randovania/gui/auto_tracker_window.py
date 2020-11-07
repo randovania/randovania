@@ -9,7 +9,7 @@ from PySide2.QtWidgets import QMainWindow, QLabel
 from asyncqt import asyncSlot
 
 from randovania import get_data_path
-from randovania.game_connection.connection_base import ConnectionStatus, InventoryItem
+from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -74,7 +74,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     async def _on_timer_update(self):
         try:
             current_status = self.game_connection.current_status
-            if current_status == ConnectionStatus.InGame or current_status == ConnectionStatus.TrackerOnly:
+            if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
                 inventory = self.game_connection.get_current_inventory()
                 self._update_tracker_from_hook(inventory)
         finally:

@@ -2,7 +2,7 @@ from PySide2 import QtWidgets
 from asyncqt import asyncSlot
 
 from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_connection.nintendont_backend import NintendontBackend
@@ -19,7 +19,7 @@ class GameConnectionSetup:
         self.game_connection = connection
         self.options = options
 
-        self.game_connection.StatusUpdated.connect(self.on_game_status_updated)
+        self.game_connection.Updated.connect(self.on_game_connection_updated)
         self.tool.setText("Configure backend")
 
         self.game_connection_menu = QtWidgets.QMenu(self.tool)
@@ -42,9 +42,9 @@ class GameConnectionSetup:
         self.tool.setMenu(self.game_connection_menu)
 
         self.refresh_backend()
-        self.on_game_status_updated(self.game_connection.current_status)
+        self.on_game_connection_updated()
 
-    def on_game_status_updated(self, status: ConnectionStatus):
+    def on_game_connection_updated(self):
         self.label.setText(self.game_connection.pretty_current_status)
 
     def refresh_backend(self):
