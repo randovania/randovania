@@ -41,6 +41,15 @@ class ItemCategory(BitPackEnum, Enum):
     def hint_details(self) -> Tuple[str, str]:
         return HINT_DETAILS[self]
 
+    @property
+    def general_details(self) -> Tuple[str, str]:
+        if self.is_major_category:
+            return "a ", "major upgrade"
+        elif self.is_key:
+            return "a ", "key"
+        else:
+            return "an ", "expansion"
+
 
 MAJOR_ITEM_CATEGORIES = {
     ItemCategory.VISOR,
