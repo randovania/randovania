@@ -109,6 +109,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: Energy Tanks have doubled weight for the generator.
 
+-   Added: It's now possible to set the default spawn point of an area.
+
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
