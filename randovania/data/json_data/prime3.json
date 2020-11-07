@@ -1022,6 +1022,31 @@
                 "index": 131,
                 "long_name": "Valhalla Levithan Code",
                 "short_name": "Event131"
+            },
+            {
+                "index": 132,
+                "long_name": "Command Courtyard Grapple Voltage Barrier",
+                "short_name": "Event132"
+            },
+            {
+                "index": 133,
+                "long_name": "Command Courtyard Fans",
+                "short_name": "Event133"
+            },
+            {
+                "index": 134,
+                "long_name": "Creche Transit Hyper Missile Wall",
+                "short_name": "Event134"
+            },
+            {
+                "index": 135,
+                "long_name": "Lift Hub Morph Ball Bomb Gate",
+                "short_name": "Event135"
+            },
+            {
+                "index": 136,
+                "long_name": "Cargo Dock B Unlocked",
+                "short_name": "Event136"
             }
         ],
         "tricks": [],
@@ -2870,7 +2895,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Generator C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Generator C",
@@ -2886,7 +2916,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 6,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Cargo Dock C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -2912,6 +2947,10 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Dock to Cargo Hub": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Pickup (Energy Tank)": {
                                     "type": "and",
                                     "data": []
@@ -2933,6 +2972,10 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Dock to Conduit A": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Pickup (Energy Tank)": {
                                     "type": "and",
                                     "data": []
@@ -3377,7 +3420,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Maintenance Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Maintenance Station",
@@ -3393,7 +3441,12 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Cargo Dock C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -3499,7 +3552,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Dock to Generator B Access": {
+                                "Room Center": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3520,7 +3573,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 5,
                             "connections": {
-                                "Dock to Conduit B": {
+                                "Room Center": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3531,7 +3584,83 @@
                             "heal": true,
                             "coordinates": null,
                             "node_type": "generic",
-                            "connections": {}
+                            "connections": {
+                                "Room Center": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 136,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Cargo Dock B Unlocked",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 136,
+                            "connections": {
+                                "Room Center": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Room Center",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Conduit B": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 136,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Generator B Access": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 136,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Samus Ship": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1943434474,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 136,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Cargo Dock B Unlocked": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -3752,7 +3881,17 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Generator Shaft": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3112660177,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Generator Shaft",
@@ -3768,15 +3907,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
-                        },
-                        {
-                            "name": "Event - Meta Ridley",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 2,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Generator C Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -3801,7 +3937,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Conduit C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Dock to Conduit C",
@@ -3817,7 +3958,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Generator C Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -3892,7 +4038,25 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Event - Meta Ridley": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Meta Ridley",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 2,
+                            "connections": {
+                                "Dock to Generator C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -4701,7 +4865,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Dock to Ventilation Shaft": {
+                                "Morph Ball Door to Ventilation Shaft": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -4736,18 +4900,18 @@
                             }
                         },
                         {
-                            "name": "Dock to Ventilation Shaft",
+                            "name": "Morph Ball Door to Ventilation Shaft",
                             "heal": false,
                             "coordinates": {
-                                "x": -1.2993812561035156e-05,
+                                "x": -0.0,
                                 "y": 27.0,
-                                "z": -11.999999046325684
+                                "z": -12.0
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 2774000464172079912,
                             "connected_dock_index": 1,
-                            "dock_type": 0,
+                            "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {}
                         }
@@ -4761,42 +4925,37 @@
                     "valid_starting_location": true,
                     "nodes": [
                         {
-                            "name": "Dock to MedLab Alpha",
+                            "name": "Morph Ball Door to MedLab Alpha",
                             "heal": false,
                             "coordinates": {
-                                "x": -9.834766387939453e-07,
-                                "y": -72.57157897949219,
-                                "z": -6.627058029174805
+                                "x": -0.0,
+                                "y": -72.57,
+                                "z": -6.63
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 4052690289582601366,
                             "connected_dock_index": 2,
-                            "dock_type": 0,
+                            "dock_type": 1,
                             "dock_weakness_index": 0,
-                            "connections": {
-                                "Dock to Xenoresearch Lab": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
+                            "connections": {}
                         },
                         {
-                            "name": "Dock to Xenoresearch Lab",
+                            "name": "Morph Ball Door to Xenoresearch Lab",
                             "heal": false,
                             "coordinates": {
-                                "x": -9.834766387939453e-07,
-                                "y": -42.57157516479492,
-                                "z": 7.582877159118652
+                                "x": -0.0,
+                                "y": -42.57,
+                                "z": 7.58
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 6078741217337776665,
                             "connected_dock_index": 1,
-                            "dock_type": 0,
+                            "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Dock to MedLab Alpha": {
+                                "Morph Ball Door to MedLab Alpha": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -4812,7 +4971,7 @@
                     "valid_starting_location": true,
                     "nodes": [
                         {
-                            "name": "Dock to Security Access (Tunnel)",
+                            "name": "Morph Ball Door to Security Access",
                             "heal": false,
                             "coordinates": {
                                 "x": 32.0,
@@ -4823,12 +4982,12 @@
                             "dock_index": 0,
                             "connected_area_asset_id": 2123213449889105147,
                             "connected_dock_index": 3,
-                            "dock_type": 0,
+                            "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {}
                         },
                         {
-                            "name": "Dock to Security Access (Door)",
+                            "name": "Dock to Security Access",
                             "heal": false,
                             "coordinates": {
                                 "x": 32.0,
@@ -4843,18 +5002,32 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Pickup (Missile Expansion)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1906007133,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1906007133,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
                         {
-                            "name": "Dock to Ventilation Shaft",
+                            "name": "Morph Ball Door to Ventilation Shaft",
                             "heal": false,
                             "coordinates": {
                                 "x": -10.0,
@@ -4882,7 +5055,7 @@
                             "pickup_index": 14,
                             "major_location": false,
                             "connections": {
-                                "Dock to Security Access (Door)": {
+                                "Dock to Security Access": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -4896,7 +5069,7 @@
                             "pickup_index": 15,
                             "major_location": false,
                             "connections": {
-                                "Dock to Security Access (Tunnel)": {
+                                "Morph Ball Door to Security Access": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -5060,8 +5233,13 @@
                             "heal": false,
                             "coordinates": null,
                             "node_type": "event",
-                            "event_index": 127,
-                            "connections": {}
+                            "event_index": 128,
+                            "connections": {
+                                "Dock to Port Observation Deck": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -5274,13 +5452,27 @@
                                     }
                                 },
                                 "Event - Seeker Wall": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -5290,7 +5482,12 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 129,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Auxiliary Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Event - Seeker Wall",
@@ -5298,7 +5495,12 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 130,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Auxiliary Lift": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -5424,14 +5626,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Dock to Crash Site (Door)": {
+                                "Dock to Crash Site": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Dock to Crash Site (Door)",
+                            "name": "Dock to Crash Site",
                             "heal": false,
                             "coordinates": {
                                 "x": 47.74,
@@ -5461,7 +5663,7 @@
                             }
                         },
                         {
-                            "name": "Dock to Crash Site (Tunnel)",
+                            "name": "Morph Ball Door to Crash Site",
                             "heal": false,
                             "coordinates": {
                                 "x": 72.67,
@@ -5475,7 +5677,7 @@
                             "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Dock to Crash Site (Door)": {
+                                "Dock to Crash Site": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -5488,7 +5690,7 @@
                             "node_type": "event",
                             "event_index": 30,
                             "connections": {
-                                "Dock to Crash Site (Door)": {
+                                "Dock to Crash Site": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -5504,7 +5706,7 @@
                     "valid_starting_location": true,
                     "nodes": [
                         {
-                            "name": "Dock to G.F.S. Theseus (Door)",
+                            "name": "Dock to G.F.S. Theseus",
                             "heal": false,
                             "coordinates": {
                                 "x": -3.08,
@@ -5565,7 +5767,7 @@
                             }
                         },
                         {
-                            "name": "Dock to G.F.S. Theseus (Tunnel)",
+                            "name": "Morph Ball Door to G.F.S. Theseus",
                             "heal": false,
                             "coordinates": {
                                 "x": 21.85,
@@ -5609,7 +5811,7 @@
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
-                                "Dock to G.F.S. Theseus (Door)": {
+                                "Dock to G.F.S. Theseus": {
                                     "type": "resource",
                                     "data": {
                                         "type": 1,
@@ -5636,7 +5838,7 @@
                                         }
                                     ]
                                 },
-                                "Dock to G.F.S. Theseus (Tunnel)": {
+                                "Morph Ball Door to G.F.S. Theseus": {
                                     "type": "and",
                                     "data": []
                                 },
@@ -14038,8 +14240,8 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Spire Side": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -14156,8 +14358,17 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Security Tube": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        }
+                                    ]
                                 },
                                 "Dock to Spire Dock": {
                                     "type": "and",
@@ -17615,21 +17826,12 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 1,
-                                                "index": 87,
+                                                "index": 97,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         }
                                     ]
-                                },
-                                "Event - Gears Destroyed": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 97,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
                                 }
                             }
                         },
@@ -17663,21 +17865,12 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 1,
-                                                "index": 87,
+                                                "index": 97,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         }
                                     ]
-                                },
-                                "Event - Gears Destroyed": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 97,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
                                 }
                             }
                         },
@@ -17690,23 +17883,10 @@
                             "major_location": false,
                             "connections": {
                                 "Dock to Observatory Lift": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": []
                                 },
                                 "Dock to Broken Lift": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Gears Destroyed",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 87,
-                            "connections": {
-                                "Dock to Observatory Lift": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -18553,13 +18733,27 @@
                             "major_location": true,
                             "connections": {
                                 "Dock to Core Access": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1364547232,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1364547232,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -18688,6 +18882,15 @@
                                     "data": {
                                         "type": 1,
                                         "index": 113,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Barrier": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 536233745,
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -18979,14 +19182,14 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Missile Expansion)": {
+                                "Dock to Metroid Processing": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 2988161223,
+                                                "type": 1,
+                                                "index": 134,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -18996,20 +19199,11 @@
                                             "data": {
                                                 "type": 0,
                                                 "index": 3492481752,
-                                                "amount": 1,
+                                                "amount": 4,
                                                 "negate": false
                                             }
                                         }
                                     ]
-                                },
-                                "Outside": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3492481752,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
                                 }
                             }
                         },
@@ -19028,6 +19222,29 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Dock to Metroid Creche": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 134,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
                                 "Pickup (Missile Expansion)": {
                                     "type": "resource",
                                     "data": {
@@ -19037,60 +19254,15 @@
                                         "negate": false
                                     }
                                 },
-                                "Outside": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3492481752,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "Pickup (Missile Expansion)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 77,
-                            "major_location": false,
-                            "connections": {
-                                "Dock to Metroid Processing": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2988161223,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "Outside",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Metroid Creche": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3492481752,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
-                                },
-                                "Dock to Metroid Processing": {
+                                "Event - Hyper Missile Wall": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 3492481752,
-                                                "amount": 4,
+                                                "index": 2452465320,
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         },
@@ -19111,8 +19283,49 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Missile Expansion)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 77,
+                            "major_location": false,
+                            "connections": {
+                                "Dock to Metroid Processing": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Hyper Missile Wall",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 134,
+                            "connections": {
+                                "Dock to Metroid Creche": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3492481752,
+                                        "amount": 4,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -19453,13 +19666,8 @@
                                     "data": []
                                 },
                                 "Event - Ball Lift": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 2477616633,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Melt Objects (Plasma or Nova)"
                                 }
                             }
                         },
@@ -19724,7 +19932,24 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Tram to Research Facility - Transit Station 1-B": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Tram to Research Facility - Transit Station 1-B",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Landing Site Alpha": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -19749,7 +19974,24 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Tram to Research Facility - Transit Station 1-A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Tram to Research Facility - Transit Station 1-A",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Proving Grounds": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -19797,18 +20039,23 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Room Center": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 114,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
                         {
-                            "name": "Dock to Scrapworks",
+                            "name": "Morph Ball Door to Scrapworks (Entry)",
                             "heal": false,
                             "coordinates": {
-                                "x": -22.22742462158203,
-                                "y": 75.82499694824219,
-                                "z": 18.629554748535156
+                                "x": -22.23,
+                                "y": 75.82,
+                                "z": 18.63
                             },
                             "node_type": "dock",
                             "dock_index": 2,
@@ -19816,20 +20063,15 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {
-                                "Pickup (Missile Expansion)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
-                                }
-                            }
+                            "connections": {}
                         },
                         {
-                            "name": "Dock to Scrapworks",
+                            "name": "Morph Ball Door to Scrapworks (X-Ray Terminal)",
                             "heal": false,
                             "coordinates": {
                                 "x": 3.0,
-                                "y": 50.476627349853516,
-                                "z": 19.8780574798584
+                                "y": 50.48,
+                                "z": 19.88
                             },
                             "node_type": "dock",
                             "dock_index": 3,
@@ -19838,19 +20080,33 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Missile Expansion)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                "Event - Open Gate": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 1714103130,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        }
+                                    ]
                                 }
                             }
                         },
                         {
-                            "name": "Dock to Scrapworks",
+                            "name": "Morph Ball Door to Scrapworks (Exit)",
                             "heal": false,
                             "coordinates": {
-                                "x": -6.669240951538086,
-                                "y": 60.31949234008789,
-                                "z": 21.625099182128906
+                                "x": -6.67,
+                                "y": 60.32,
+                                "z": 21.63
                             },
                             "node_type": "dock",
                             "dock_index": 4,
@@ -19859,9 +20115,9 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Pickup (Missile Expansion)": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                "Room Center": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -19898,6 +20154,10 @@
                                         "negate": false
                                     }
                                 },
+                                "Morph Ball Door to Scrapworks (Entry)": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Pickup (Missile Expansion)": {
                                     "type": "template",
                                     "data": "Use Screw Attack (Space Jump)"
@@ -19910,7 +20170,12 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 114,
-                            "connections": {}
+                            "connections": {
+                                "Morph Ball Door to Scrapworks (X-Ray Terminal)": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -20001,8 +20266,31 @@
                                     "data": []
                                 },
                                 "Dock to Transit Station 3-A\nLeads to Command Center": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2988161223,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Pickup (Energy Tank)": {
                                     "type": "and",
@@ -20080,7 +20368,7 @@
                     "valid_starting_location": true,
                     "nodes": [
                         {
-                            "name": "Dock to Scrapvault",
+                            "name": "Morph Ball Door to Scrapvault (X-Ray Terminal)",
                             "heal": false,
                             "coordinates": {
                                 "x": 10.48,
@@ -20093,10 +20381,20 @@
                             "connected_dock_index": 3,
                             "dock_type": 1,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Morph Ball Door to Scrapvault (Exit)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2988161223,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
                         },
                         {
-                            "name": "Dock to Scrapvault",
+                            "name": "Morph Ball Door to Scrapvault (Entry)",
                             "heal": false,
                             "coordinates": {
                                 "x": -14.75,
@@ -20109,10 +20407,28 @@
                             "connected_dock_index": 2,
                             "dock_type": 1,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Morph Ball Door to Scrapvault (X-Ray Terminal)": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Morph Ball Door to Scrapvault (Exit)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1296127826,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Pickup (Energy Tank)": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
-                            "name": "Dock to Scrapvault",
+                            "name": "Morph Ball Door to Scrapvault (Exit)",
                             "heal": false,
                             "coordinates": {
                                 "x": 0.8,
@@ -20125,58 +20441,25 @@
                             "connected_dock_index": 4,
                             "dock_type": 1,
                             "dock_weakness_index": 0,
-                            "connections": {}
-                        },
-                        {
-                            "name": "Pickup (Energy Tank)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 84,
-                            "major_location": false,
                             "connections": {
-                                "E-Tank Segment": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Pickup (Ship Missile Expansion)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 85,
-                            "major_location": false,
-                            "connections": {
-                                "Halfpipe Segment": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "E-Tank Segment",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Pickup (Energy Tank)": {
-                                    "type": "and",
-                                    "data": []
+                                "Morph Ball Door to Scrapvault (X-Ray Terminal)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2988161223,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
-                                "Halfpipe Segment": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Halfpipe Segment",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
+                                "Morph Ball Door to Scrapvault (Entry)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 2988161223,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Pickup (Ship Missile Expansion)": {
                                     "type": "and",
                                     "data": [
@@ -20199,15 +20482,34 @@
                                             }
                                         }
                                     ]
-                                },
-                                "E-Tank Segment": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1296127826,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Energy Tank)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 84,
+                            "major_location": false,
+                            "connections": {
+                                "Morph Ball Door to Scrapvault (Entry)": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Ship Missile Expansion)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 85,
+                            "major_location": false,
+                            "connections": {
+                                "Morph Ball Door to Scrapvault (Exit)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -20257,6 +20559,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Metroid Creche": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Tram to Command Center - Transit Station 3-B": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Tram to Command Center - Transit Station 3-B",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Save Station": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -20385,10 +20703,6 @@
                                         "amount": 1,
                                         "negate": false
                                     }
-                                },
-                                "Pickup (Missile Expansion)": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
@@ -20416,6 +20730,10 @@
                                         "negate": false
                                     }
                                 },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Event - Gate": {
                                     "type": "resource",
                                     "data": {
@@ -20435,7 +20753,7 @@
                             "pickup_index": 86,
                             "major_location": false,
                             "connections": {
-                                "Dock to Lift Hub": {
+                                "Dock to Defense Access": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -20464,18 +20782,18 @@
                     "valid_starting_location": true,
                     "nodes": [
                         {
-                            "name": "Dock to Command Station",
+                            "name": "Morph Ball Door to Command Station",
                             "heal": false,
                             "coordinates": {
-                                "x": 40.83834457397461,
-                                "y": 29.999996185302734,
-                                "z": 9.212517976760864
+                                "x": 40.84,
+                                "y": 30.0,
+                                "z": 9.21
                             },
                             "node_type": "dock",
                             "dock_index": 0,
                             "connected_area_asset_id": 13589229454537797972,
                             "connected_dock_index": 3,
-                            "dock_type": 0,
+                            "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Room Center": {
@@ -20485,18 +20803,18 @@
                             }
                         },
                         {
-                            "name": "Dock to Defense Access",
+                            "name": "Morph Ball Door to Defense Access",
                             "heal": false,
                             "coordinates": {
                                 "x": -21.0,
                                 "y": 35.0,
-                                "z": 1.2125179879367352
+                                "z": 1.21
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 3288365355139345163,
                             "connected_dock_index": 0,
-                            "dock_type": 0,
+                            "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {}
                         },
@@ -20520,7 +20838,7 @@
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
-                                "Dock to Command Station": {
+                                "Morph Ball Door to Command Station": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -20529,7 +20847,7 @@
                                         "negate": false
                                     }
                                 },
-                                "Dock to Defense Access": {
+                                "Morph Ball Door to Defense Access": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -20539,13 +20857,27 @@
                                     }
                                 },
                                 "Pickup (X-Ray Visor)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3086280557,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3086280557,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2452465320,
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -20571,11 +20903,16 @@
                             "connected_area_asset_id": 5574135827721005616,
                             "connected_dock_index": 1,
                             "dock_type": 0,
-                            "dock_weakness_index": 1,
+                            "dock_weakness_index": 0,
                             "connections": {
-                                "Bottom Floor": {
-                                    "type": "and",
-                                    "data": []
+                                "Dock to Lift Hub": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 132,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -20594,68 +20931,29 @@
                             "dock_type": 0,
                             "dock_weakness_index": 1,
                             "connections": {
-                                "Top Floor": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Dock to Flux Control",
-                            "heal": false,
-                            "coordinates": {
-                                "x": 52.89506530761719,
-                                "y": -100.19254302978516,
-                                "z": -16.07200813293457
-                            },
-                            "node_type": "dock",
-                            "dock_index": 2,
-                            "connected_area_asset_id": 5194668821114474017,
-                            "connected_dock_index": 0,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Bottom Floor": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Pickup (Missile Expansion)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 88,
-                            "major_location": false,
-                            "connections": {
-                                "Top Floor": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Pickup (Energy Cell)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 89,
-                            "major_location": false,
-                            "connections": {
-                                "Top Floor": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Bottom Floor",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
                                 "Dock to Courtyard Passage": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 132,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Morph Ball Door to Flux Control": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Pickup (Energy Cell)": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Grapple Voltage Barrier": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -20677,36 +20975,88 @@
                                             }
                                         }
                                     ]
-                                },
+                                }
+                            }
+                        },
+                        {
+                            "name": "Morph Ball Door to Flux Control",
+                            "heal": false,
+                            "coordinates": {
+                                "x": 52.9,
+                                "y": -100.19,
+                                "z": -16.07
+                            },
+                            "node_type": "dock",
+                            "dock_index": 2,
+                            "connected_area_asset_id": 5194668821114474017,
+                            "connected_dock_index": 0,
+                            "dock_type": 1,
+                            "dock_weakness_index": 0,
+                            "connections": {
                                 "Dock to Lift Hub": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Dock to Flux Control": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Top Floor": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 133,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Missile Expansion)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 88,
+                            "major_location": false,
+                            "connections": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Top Floor",
+                            "name": "Pickup (Energy Cell)",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "pickup",
+                            "pickup_index": 89,
+                            "major_location": false,
                             "connections": {
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": []
                                 },
-                                "Pickup (Energy Cell)": {
+                                "Event - Fans": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Bottom Floor": {
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Grapple Voltage Barrier",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 132,
+                            "connections": {
+                                "Dock to Courtyard Passage": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Fans",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 133,
+                            "connections": {
+                                "Dock to Lift Hub": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -20736,7 +21086,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Main Room": {
+                                "Dock to Defense Access (Base)": {
                                     "type": "resource",
                                     "data": {
                                         "type": 1,
@@ -20748,21 +21098,25 @@
                             }
                         },
                         {
-                            "name": "Dock to Flux Control",
+                            "name": "Morph Ball Door to Flux Control",
                             "heal": false,
                             "coordinates": {
-                                "x": 10.288910865783691,
-                                "y": 31.860624313354492,
-                                "z": 17.249995708465576
+                                "x": 10.29,
+                                "y": 31.86,
+                                "z": 17.25
                             },
                             "node_type": "dock",
                             "dock_index": 1,
                             "connected_area_asset_id": 5194668821114474017,
                             "connected_dock_index": 1,
-                            "dock_type": 0,
+                            "dock_type": 1,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Morph Ball Tunnels": {
+                                "Morph Ball Door to Command Vault": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -20783,98 +21137,6 @@
                             "dock_type": 0,
                             "dock_weakness_index": 2,
                             "connections": {
-                                "Main Room": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Dock to Command Vault",
-                            "heal": false,
-                            "coordinates": {
-                                "x": -7.972318887710571,
-                                "y": -37.9999885559082,
-                                "z": 17.2500057220459
-                            },
-                            "node_type": "dock",
-                            "dock_index": 3,
-                            "connected_area_asset_id": 1808913861159744919,
-                            "connected_dock_index": 0,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {
-                                "Morph Ball Tunnels": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Dock to Defense Access (Balcony)",
-                            "heal": false,
-                            "coordinates": {
-                                "x": -29.4,
-                                "y": 35.4,
-                                "z": 20.44
-                            },
-                            "node_type": "dock",
-                            "dock_index": 4,
-                            "connected_area_asset_id": 3288365355139345163,
-                            "connected_dock_index": 2,
-                            "dock_type": 0,
-                            "dock_weakness_index": 0,
-                            "connections": {}
-                        },
-                        {
-                            "name": "Pickup (Missile Expansion)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 90,
-                            "major_location": false,
-                            "connections": {
-                                "Morph Ball Tunnels": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Main Room": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 105,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "Morph Ball Tunnels",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Dock to Flux Control": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Dock to Command Vault": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Pickup (Missile Expansion)": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Main Room",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
                                 "Dock to Transit Station 2-A": {
                                     "type": "resource",
                                     "data": {
@@ -20883,10 +21145,6 @@
                                         "amount": 1,
                                         "negate": false
                                     }
-                                },
-                                "Dock to Defense Access (Base)": {
-                                    "type": "and",
-                                    "data": []
                                 },
                                 "Pickup (Missile Expansion)": {
                                     "type": "resource",
@@ -20933,10 +21191,6 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Phazite (X-Ray and Nova)"
-                                        },
-                                        {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
@@ -20944,8 +21198,72 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Phazite (X-Ray and Nova)"
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Morph Ball Door to Command Vault",
+                            "heal": false,
+                            "coordinates": {
+                                "x": -7.97,
+                                "y": -38.0,
+                                "z": 17.25
+                            },
+                            "node_type": "dock",
+                            "dock_index": 3,
+                            "connected_area_asset_id": 1808913861159744919,
+                            "connected_dock_index": 0,
+                            "dock_type": 1,
+                            "dock_weakness_index": 0,
+                            "connections": {
+                                "Morph Ball Door to Flux Control": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Dock to Defense Access (Balcony)",
+                            "heal": false,
+                            "coordinates": {
+                                "x": -29.4,
+                                "y": 35.4,
+                                "z": 20.44
+                            },
+                            "node_type": "dock",
+                            "dock_index": 4,
+                            "connected_area_asset_id": 3288365355139345163,
+                            "connected_dock_index": 2,
+                            "dock_type": 0,
+                            "dock_weakness_index": 0,
+                            "connections": {}
+                        },
+                        {
+                            "name": "Pickup (Missile Expansion)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 90,
+                            "major_location": false,
+                            "connections": {
+                                "Morph Ball Door to Flux Control": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Dock to Defense Access (Base)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 105,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -20956,7 +21274,7 @@
                             "node_type": "event",
                             "event_index": 105,
                             "connections": {
-                                "Main Room": {
+                                "Dock to Defense Access (Base)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -20969,7 +21287,7 @@
                             "node_type": "event",
                             "event_index": 106,
                             "connections": {
-                                "Main Room": {
+                                "Dock to Defense Access (Base)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -20982,7 +21300,7 @@
                             "node_type": "event",
                             "event_index": 107,
                             "connections": {
-                                "Main Room": {
+                                "Dock to Defense Access (Base)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -21862,13 +22180,50 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Elevator": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3492481752,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 135,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Morph Ball Bomb Gate": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3112660177,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -21922,13 +22277,27 @@
                                     "data": []
                                 },
                                 "Dock to Transit Station 3-B\nLeads to Research Facility": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 3492481752,
-                                        "amount": 4,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3492481752,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 135,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Dock to Security Air Lock": {
                                     "type": "and",
@@ -21964,6 +22333,24 @@
                                 "Elevator": {
                                     "type": "and",
                                     "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Morph Ball Bomb Gate",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 135,
+                            "connections": {
+                                "Elevator": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 3492481752,
+                                        "amount": 4,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -22163,7 +22550,24 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Tram to Research Facility - Transit Station 3-A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Tram to Research Facility - Transit Station 3-A",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Lift Hub": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
