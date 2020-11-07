@@ -48,6 +48,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
+        self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
 
@@ -173,6 +174,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         new_node = dataclasses.replace(old_node, heal=bool(state))
         self.replace_node_with(self.current_area, old_node, new_node)
 
+    def on_area_spawn_check(self, state: int):
+        state = bool(state)
+        if not state:
+            return
+
+        object.__setattr__(self.current_area, "default_node_index", self.current_area.nodes.index(self.current_node))
+        self.area_spawn_check.setEnabled(False)
+
     def replace_node_with(self, area: Area, old_node: Node, new_node: Node):
         if old_node == new_node:
             return
@@ -242,6 +251,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert node is not None
 
         self.node_heals_check.setChecked(node.heal)
+        is_default_spawn = self.current_area.default_node_index == self.current_area.nodes.index(node)
+        self.area_spawn_check.setChecked(is_default_spawn)
+        self.area_spawn_check.setEnabled(self.edit_mode and not is_default_spawn)
 
         msg = pretty_print.pretty_print_node_type(node, self.world_list)
         if isinstance(node, DockNode):
@@ -433,6 +445,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.save_database_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode)
+        self.area_spawn_check.setEnabled(self.edit_mode and self.area_spawn_check.isEnabled())
         self.node_edit_button.setVisible(self.edit_mode)
 
     @property
