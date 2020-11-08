@@ -114,6 +114,8 @@ def _migrate_v4(preset: dict) -> dict:
         35: "SeekerlessLocks",
     }
 
+    preset["layout_configuration"]["game"] = "prime2"
+
     trick_level = preset["layout_configuration"]["trick_level"]
     global_level = trick_level.pop("global_level")
 
