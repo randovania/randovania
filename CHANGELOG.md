@@ -22,6 +22,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 ### General
 
+-   Removed: Presets no longer have a global trick level. Each trick is now configured separately.
+
 -   Added: Options for configuring usage of new tricks:
     - Bomb Jump (renamed from Difficult Bomb Jump)
     - Bomb Slot without Bombs
