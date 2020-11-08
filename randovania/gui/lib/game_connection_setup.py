@@ -1,8 +1,9 @@
+import wiiload
 from PySide2 import QtWidgets
 from asyncqt import asyncSlot
 
+from randovania import get_data_path
 from randovania.game_connection.backend_choice import GameBackendChoice
-from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.dolphin_backend import DolphinBackend
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_connection.nintendont_backend import NintendontBackend
@@ -87,4 +88,21 @@ class GameConnectionSetup:
 
     @asyncSlot()
     async def on_upload_nintendont_action(self):
-        await async_dialog.warning(self.parent, "Not implemented", "This feature hasn't been implemented yet.")
+        nintendont_file = get_data_path().joinpath("nintendont", "boot.dol")
+        if not nintendont_file.is_file():
+            return await async_dialog.warning(self.parent, "Missing Nintendont",
+                                              "Unable to find a Nintendont executable.")
+
+        text = f"Uploading Nintendont to the Wii at {self.options.nintendont_ip}..."
+        box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, "Uploading to Homebrew Channel",
+                                    text, QtWidgets.QMessageBox.Ok, self.parent)
+        box.button(QtWidgets.QMessageBox.Ok).setEnabled(False)
+        box.show()
+
+        try:
+            await wiiload.upload_file(nintendont_file, [], self.options.nintendont_ip)
+            box.setText(f"Upload finished successfully. Check your Wii for more.")
+        except Exception as e:
+            box.setText(f"Error uploading to Wii: {e}")
+        finally:
+            box.button(QtWidgets.QMessageBox.Ok).setEnabled(True)

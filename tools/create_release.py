@@ -1,3 +1,4 @@
+import asyncio
 import json
 import platform
 import shutil
@@ -7,6 +8,7 @@ import tarfile
 import zipfile
 from pathlib import Path
 
+import aiohttp
 import markdown
 
 from randovania import VERSION
@@ -16,6 +18,7 @@ from randovania.games.prime import default_data
 from randovania.interface_common.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
+_NINTENDONT_RELEASES_URL = "https://api.github.com/repos/randovania/Nintendont/releases"
 zip_folder = "randovania-{}".format(VERSION)
 
 
@@ -24,7 +27,40 @@ def open_zip(platform_name: str) -> zipfile.ZipFile:
                            "w", compression=zipfile.ZIP_DEFLATED)
 
 
-def main():
+async def get_nintendont_releases(session: aiohttp.ClientSession):
+    async with session.get(_NINTENDONT_RELEASES_URL) as response:
+        try:
+            response.raise_for_status()
+            return await response.json()
+        except aiohttp.ClientResponseError as e:
+            raise RuntimeError("Unable to get Nintendont releases") from e
+
+
+async def download_nintendont():
+    async with aiohttp.ClientSession() as session:
+        print("Fetching list of Nintendont releases.")
+        releases = await get_nintendont_releases(session)
+        latest_release = releases[0]
+
+        download_urls = [
+            asset["browser_download_url"]
+            for asset in latest_release["assets"]
+            if asset["name"] == "boot.dol"
+        ]
+        if not download_urls:
+            raise RuntimeError("No boot.dol found in latest release")
+
+        print(f"Downloading {download_urls[0]}")
+        async with session.get(download_urls[0]) as download_response:
+            download_response.raise_for_status()
+            dol_bytes = await download_response.read()
+
+        final_dol_path = _ROOT_FOLDER.joinpath("randovania", "data", "nintendont", "boot.dol")
+        print(f"Saving to {final_dol_path}")
+        final_dol_path.write_bytes(dol_bytes)
+
+
+async def main():
     package_folder = Path("dist", "randovania")
     if package_folder.exists():
         shutil.rmtree(package_folder, ignore_errors=False)
@@ -45,6 +81,8 @@ def main():
     }
     with _ROOT_FOLDER.joinpath("randovania", "data", "configuration.json").open("w") as config_release:
         json.dump(configuration, config_release)
+
+    await download_nintendont()
 
     subprocess.run([sys.executable, "-m", "PyInstaller",
                     "randovania.spec"],
@@ -77,4 +115,4 @@ def add_readme_to_zip(release_zip):
 
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
