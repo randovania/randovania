@@ -72,7 +72,7 @@
          </property>
          <widget class="QWidget" name="trick_level_tab">
           <attribute name="title">
-           <string>Trick Level</string>
+           <string>Logic Level</string>
           </attribute>
           <layout class="QVBoxLayout" name="trick_level_top_layout">
            <property name="leftMargin">
@@ -123,7 +123,7 @@
                <item>
                 <widget class="QLabel" name="logic_description_label">
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;There are logic rules in place which prevent you from being locked out of progression and guaranteeing that you’ll be able to finish the game every time regardless of the distribution of items. More advanced trick levels assumes more knowledge of how the game works and ability to abuse game mechanics.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;No matter the level, it is always possible to softlock when you enter a room or area that you're unable to leave. For example, vanilla beam rooms without the necessary beam to escape, Dark World without Light Beam/Anihhilator Beam, Torvus Bog without Super Missile.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;However, it may be &lt;span style=&quot; font-style:italic;&quot;&gt;necessary&lt;/span&gt; to enter Dark World without a way to escape if that item is located in the Dark World.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Randovania has rules in place which guarantees that the game is completable regardless of the modifications made to the game. Here you can also configure which kind of game knowledge or skill it expects you to have, allowing for even more varied games.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;No matter the level, it is always possible to softlock when you enter a room or area that you're unable to leave. For example, vanilla beam rooms without the necessary beam to escape, Dark World without Light Beam/Anihhilator Beam, Torvus Bog without Super Missile.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;However, it may be &lt;span style=&quot; font-style:italic;&quot;&gt;necessary&lt;/span&gt; to enter Dark World without a way to escape if that item is located in the Dark World.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -134,60 +134,23 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="logic_combo_box">
-                 <item>
-                  <property name="text">
-                   <string>No Tricks</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Beginner</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Intermediate</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Advanced</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Expert</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Hypermode</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Minimal Logic</string>
-                  </property>
-                 </item>
+                <widget class="Line" name="trick_level_line_1">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="logic_level_label">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>50</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>50</height>
-                  </size>
-                 </property>
+                <widget class="QCheckBox" name="trick_level_minimal_logic_check">
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;This mode requires no knowledge about the game, nor does it require any abuse of game mechanics, making it ideal for casual and first time players.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>Use minimal logic instead</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="trick_level_minimal_logic_label">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania will only check that Screw Attack, Dark Visor and Light Suit won't all be behind Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible.&lt;/p&gt;&lt;p&gt;There are no guarantees that a seed will be possible in this case.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -198,7 +161,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="Line" name="trick_level_line">
+                <widget class="Line" name="trick_level_line_2">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -207,7 +170,7 @@
                <item>
                 <widget class="QLabel" name="trick_level_help_label">
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you want to control the expected level of a specific trick, select the trick below and then move the slider to the level you want.&lt;/p&gt;&lt;p&gt;You can further customize a difficulty with the sliders to add higher difficulty tricks to logic. They are &lt;span style=&quot; font-weight:600;&quot;&gt;not bound&lt;/span&gt; to the set difficulty.&lt;/p&gt;&lt;p&gt;Press the ? button to see which rooms use that trick on the selected level.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you want to tweak the knowledge or skill needed expected in a game, you can configure the level used for each of the tweaks listed below by moving the slider to the apropriate level.&lt;/p&gt;&lt;p&gt;Press the ? button to see which rooms use that trick on the selected level.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="wordWrap">
                   <bool>true</bool>
@@ -930,8 +893,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>747</width>
-                <height>419</height>
+                <width>76</width>
+                <height>16</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="starting_locations_layout">
@@ -995,8 +958,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>757</width>
-                <height>551</height>
+                <width>256</width>
+                <height>234</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="translators_layout">
