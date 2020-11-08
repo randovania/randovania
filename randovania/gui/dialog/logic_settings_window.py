@@ -10,7 +10,6 @@ from randovania.game_description import default_database
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.node import PickupNode
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world_list import WorldList
@@ -47,30 +46,6 @@ def _update_options_by_value(options: Options, combo: QComboBox, new_index: int)
         setattr(options, combo.options_field_name, combo.currentData())
 
 
-_TRICK_LEVEL_DESCRIPTION = {
-    LayoutTrickLevel.NO_TRICKS: [
-        "This mode requires no knowledge about the game, nor does it require any abuse "
-        "of game mechanics, making it ideal for casual and first time players."
-    ],
-    LayoutTrickLevel.BEGINNER: [
-        "This mode includes strategies that abuses oversights in the game, such as bomb jumping to the item "
-        "in Temple Assembly Site and destroying the gate in Trooper Security Station with Screw Attack, as well as "
-        "simple tricks like Bomb Space Jumps."
-    ],
-    LayoutTrickLevel.INTERMEDIATE: ["This mode expands on Beginner, with more complex tricks added."],
-    LayoutTrickLevel.ADVANCED: ["This mode expands on Intermediate, including more difficult to execute tricks."],
-    LayoutTrickLevel.EXPERT: ["This mode expands on Advanced with additional tricks, such as Grand Abyss scan dash."],
-    LayoutTrickLevel.HYPERMODE: [
-        "This mode considers every single trick and path known to Randovania as valid, "
-        "such as Polluted Mire without Space Jump. Out of Bounds is currently not included."
-    ],
-    LayoutTrickLevel.MINIMAL_LOGIC: [
-        "This mode only checks that Screw Attack, Dark Visor and Light Suit won't all be behind "
-        "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible. "
-        "There are no guarantees that a seed will be possible in this case."
-    ],
-}
-
 _BEAMS = {
     "power": "Power Beam",
     "dark": "Dark Beam",
@@ -79,18 +54,8 @@ _BEAMS = {
 }
 
 
-def _get_trick_level_description(trick_level: LayoutTrickLevel) -> str:
-    return "<html><head/><body>{}</body></html>".format(
-        "".join(
-            '<p align="justify">{}</p>'.format(item)
-            for item in _TRICK_LEVEL_DESCRIPTION[trick_level]
-        )
-    )
-
-
 class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
-    _checkbox_for_trick: Dict[TrickResourceInfo, QtWidgets.QCheckBox]
     _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[TrickResourceInfo, QtWidgets.QSlider]
@@ -152,20 +117,12 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         # Trick Level
         trick_level_configuration = preset.layout_configuration.trick_level_configuration
-        trick_level = trick_level_configuration.global_level
+        self.trick_level_minimal_logic_check.setChecked(trick_level_configuration.minimal_logic)
 
-        set_combo_with_value(self.logic_combo_box, trick_level)
-        self.logic_level_label.setText(_get_trick_level_description(trick_level))
-
-        for (trick, checkbox), slider in zip(self._checkbox_for_trick.items(), self._slider_for_trick.values()):
+        for trick, slider in self._slider_for_trick.items():
             assert self._slider_for_trick[trick] is slider
-
-            has_specific_level = trick_level_configuration.has_specific_level_for_trick(trick)
-
-            checkbox.setEnabled(trick_level != LayoutTrickLevel.MINIMAL_LOGIC)
-            slider.setEnabled(has_specific_level)
             slider.setValue(trick_level_configuration.level_for_trick(trick).as_number)
-            checkbox.setChecked(has_specific_level)
+            slider.setEnabled(not trick_level_configuration.minimal_logic)
 
         # Damage
         set_combo_with_value(self.damage_strictness_combo, layout_config.damage_strictness)
@@ -251,14 +208,9 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self.trick_difficulties_layout.addLayout(slider_layout, row, 2, 1, 1)
 
     def setup_trick_level_elements(self):
-        # logic_combo_box
-        for i, trick_level in enumerate(LayoutTrickLevel):
-            self.logic_combo_box.setItemData(i, trick_level)
-
-        self.logic_combo_box.currentIndexChanged.connect(self._on_trick_level_changed)
+        self.trick_level_minimal_logic_check.stateChanged.connect(self._on_trick_level_minimal_logic_check)
 
         self.trick_difficulties_layout = QtWidgets.QGridLayout()
-        self._checkbox_for_trick = {}
         self._slider_for_trick = {}
 
         tricks_in_use = used_tricks(self.game_description)
@@ -276,12 +228,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 self.trick_difficulties_layout.addItem(QtWidgets.QSpacerItem(20, 40,
                                                                              QtWidgets.QSizePolicy.Minimum,
                                                                              QtWidgets.QSizePolicy.Expanding))
-
-            trick_configurable = QtWidgets.QCheckBox(self.trick_level_scroll_contents)
-            trick_configurable.setFixedWidth(20)
-            trick_configurable.stateChanged.connect(functools.partial(self._on_check_trick_configurable, trick))
-            self._checkbox_for_trick[trick] = trick_configurable
-            self.trick_difficulties_layout.addWidget(trick_configurable, row, 0, 1, 1)
 
             trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
             trick_label.setSizePolicy(size_policy)
@@ -327,19 +273,6 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self.trick_level_layout.addLayout(self.trick_difficulties_layout)
 
-    def _on_check_trick_configurable(self, trick: SimpleResourceInfo, enabled: int):
-        enabled = bool(enabled)
-
-        with self._editor as options:
-            if options.layout_configuration.trick_level_configuration.has_specific_level_for_trick(trick) != enabled:
-                options.set_layout_configuration_field(
-                    "trick_level_configuration",
-                    options.layout_configuration.trick_level_configuration.set_level_for_trick(
-                        trick,
-                        self.logic_combo_box.currentData() if enabled else None
-                    )
-                )
-
     def _on_slide_trick_slider(self, trick: TrickResourceInfo, value: int):
         if self._slider_for_trick[trick].isEnabled():
             with self._editor as options:
@@ -351,13 +284,12 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                     )
                 )
 
-    def _on_trick_level_changed(self):
-        trick_level = self.logic_combo_box.currentData()
+    def _on_trick_level_minimal_logic_check(self, state: int):
         with self._editor as options:
             options.set_layout_configuration_field(
                 "trick_level_configuration",
                 dataclasses.replace(options.layout_configuration.trick_level_configuration,
-                                    global_level=trick_level)
+                                    minimal_logic=bool(state))
             )
 
     def _exec_trick_details(self, popup: TrickDetailsPopup):
