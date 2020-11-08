@@ -153,11 +153,15 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
-def test_reach_size_from_start(echoes_game_description, default_layout_configuration):
+@pytest.mark.parametrize(["trick_level", "nodes", "safe_nodes"], [
+    (LayoutTrickLevel.HYPERMODE, 44, 5),
+    (LayoutTrickLevel.MINIMAL_LOGIC, 1000, 1000),
+])
+def test_reach_size_from_start(echoes_game_description, default_layout_configuration, trick_level, nodes, safe_nodes):
     # Setup
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
-        trick_level_configuration=TrickLevelConfiguration(LayoutTrickLevel.HYPERMODE),
+        trick_level_configuration=TrickLevelConfiguration(trick_level),
     )
     player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0)
 
@@ -167,5 +171,5 @@ def test_reach_size_from_start(echoes_game_description, default_layout_configura
     reach = GeneratorReach.reach_from_state(game, state)
 
     # Assert
-    assert len(list(reach.nodes)) == 44
-    assert len(list(reach.safe_nodes)) == 5
+    assert len(list(reach.nodes)) >= nodes
+    assert len(list(reach.safe_nodes)) >= safe_nodes
