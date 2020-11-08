@@ -82,6 +82,7 @@ setup(
             'PySide2>=5.12,<5.15',
             'appdirs',
             'asyncqt',
+            'async-wiiload',
             'dolphin-memory-engine>=1.0.2',
             'markdown',
             'pid>=3.0.0',

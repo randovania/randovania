@@ -17,6 +17,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  ("randovania/data/icons", "data/icons"),
                  ("randovania/data/item_database", "data/item_database"),
                  ("randovania/data/presets", "data/presets"),
+                 ("randovania/data/nintendont", "data/nintendont"),
              ],
              hiddenimports=[
                 "mock",
