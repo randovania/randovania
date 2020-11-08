@@ -268,6 +268,7 @@ class NetworkClient:
             await self.session_admin_player(self._current_user.id, SessionAdminUserAction.KICK, None)
         await self._emit_with_result("disconnect_game_session", self._current_game_session.id)
         self._current_game_session = None
+        self._last_self_update = None
 
     async def session_admin_global(self, action: SessionAdminGlobalAction, arg):
         return await self._emit_with_result("game_session_admin_session",
