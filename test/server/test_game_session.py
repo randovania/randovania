@@ -28,11 +28,22 @@ def test_setup_app():
     game_session.setup_app(MagicMock())
 
 
-def test_list_game_sessions(clean_database):
-    # Setup
+def test_game_session_defaults_to_now(clean_database):
     someone = database.User.create(name="Someone")
     database.GameSession.create(name="Debug", num_teams=1, creator=someone)
-    database.GameSession.create(name="Other", num_teams=2, creator=someone)
+
+    session: database.GameSession = database.GameSession.get_by_id(1)
+    assert (datetime.datetime.now(datetime.timezone.utc) - session.creation_datetime) < datetime.timedelta(seconds=5)
+
+
+def test_list_game_sessions(clean_database):
+    # Setup
+    utc = datetime.timezone.utc
+    someone = database.User.create(name="Someone")
+    database.GameSession.create(name="Debug", num_teams=1, creator=someone,
+                                creation_date=datetime.datetime(2020, 10, 2, 10, 20, tzinfo=utc))
+    database.GameSession.create(name="Other", num_teams=2, creator=someone,
+                                creation_date=datetime.datetime(2020, 1, 20, 5, 2, tzinfo=utc))
     state = GameSessionState.SETUP.value
 
     # Run
@@ -40,8 +51,10 @@ def test_list_game_sessions(clean_database):
 
     # Assert
     assert result == [
-        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone'},
-        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone'},
+        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone',
+         'creation_date': '2020-10-02T10:20:00+00:00'},
+        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone',
+         'creation_date': '2020-01-20T05:02:00+00:00'},
     ]
 
 

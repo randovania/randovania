@@ -97,6 +97,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 ### Quality of Life
 
+-   Added: A button in the Open menu now opens the folder where previously generated games are placed.
+
 -   Added: Charge Beam and Scan Visor now use their respective models in game instead of Energy Transfer Module.
 
 -   Added: The rate of healing for Safe Zones is now configurable.
