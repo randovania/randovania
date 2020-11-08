@@ -172,20 +172,13 @@ def _calculate_pickup_hint(pickup_assignment: PickupAssignment,
         broad_category = target.pickup.broad_category
 
     if precision is HintItemPrecision.GENERAL_CATEGORY:
-        if item_category.is_major_category:
-            return "a ", "major upgrade"
-        elif item_category.is_key:
-            return "a ", "key"
-        else:
-            return "an ", "expansion"
+        return item_category.general_details
 
     elif precision in (HintItemPrecision.PRECISE_CATEGORY, HintItemPrecision.BROAD_CATEGORY):
         if precision is HintItemPrecision.PRECISE_CATEGORY:
-            details = item_category.hint_details
+            return item_category.hint_details
         else:
-            details = broad_category.hint_details
-
-        return details[0], details[1]
+            return broad_category.hint_details
 
     else:
         assert precision is HintItemPrecision.DETAILED
