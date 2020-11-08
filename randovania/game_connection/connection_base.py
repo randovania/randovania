@@ -5,8 +5,9 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
-class ConnectionStatus(Enum):
+class GameConnectionStatus(Enum):
     Disconnected = "disconnected"
+    UnknownGame = "unknown-game"
     WrongGame = "wrong-game"
     WrongHash = "wrong-hash"
     TitleScreen = "title-screen"
@@ -19,12 +20,13 @@ class ConnectionStatus(Enum):
 
 
 _pretty_connection_status = {
-    ConnectionStatus.Disconnected: "Disconnected",
-    ConnectionStatus.WrongGame: "Wrong Game",
-    ConnectionStatus.WrongHash: "Correct Game, Wrong Seed Hash",
-    ConnectionStatus.TitleScreen: "Title Screen",
-    ConnectionStatus.TrackerOnly: "Tracker Only",
-    ConnectionStatus.InGame: "In-Game",
+    GameConnectionStatus.Disconnected: "Disconnected",
+    GameConnectionStatus.UnknownGame: "Unknown game",
+    GameConnectionStatus.WrongGame: "Wrong game",
+    GameConnectionStatus.WrongHash: "Correct game, wrong seed hash",
+    GameConnectionStatus.TitleScreen: "Title screen",
+    GameConnectionStatus.TrackerOnly: "Tracker only",
+    GameConnectionStatus.InGame: "In-game",
 }
 
 
@@ -37,7 +39,7 @@ class ConnectionBase:
     _location_collected_listener: Optional[Callable[[int], Awaitable[None]]] = None
 
     @property
-    def current_status(self) -> ConnectionStatus:
+    def current_status(self) -> GameConnectionStatus:
         raise NotImplementedError()
 
     def display_message(self, message: str):

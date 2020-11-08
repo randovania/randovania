@@ -134,14 +134,8 @@ def logout(sio: ServerApp):
     _emit_user_session_update(sio)
 
 
-def disconnect_game_session(sio: ServerApp):
-    sio.leave_game_session()
-    _emit_user_session_update(sio)
-
-
 def setup_app(sio: ServerApp):
     sio.on("login_with_discord", login_with_discord)
     sio.on("login_with_guest", login_with_guest)
     sio.on("restore_user_session", restore_user_session)
     sio.on("logout", logout)
-    sio.on("disconnect_game_session", disconnect_game_session)

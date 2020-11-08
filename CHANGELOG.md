@@ -22,6 +22,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 ### General
 
+-   Removed: Presets no longer have a global trick level. Each trick is now configured separately.
+
 -   Added: Options for configuring usage of new tricks:
     - Bomb Jump (renamed from Difficult Bomb Jump)
     - Bomb Slot without Bombs
@@ -67,7 +69,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 ### GUI
 
--   Added: An automatic item tracker based on a Dolphin running on the same computer.
+-   Added: An automatic item tracker based on a Dolphin running on the same computer or a special Nintendont build on the same Wifi.
 
 -   Added: A dark theme has been added. It can be toggled in the Advanced menu.
 
@@ -109,6 +111,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: Energy Tanks have doubled weight for the generator.
 
+-   Added: It's now possible to set the default spawn point of an area.
+
 -   Fixed: Fixed solver when an event only connects to a pickup, but that pickup has connections from other nodes.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
@@ -136,6 +140,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Sanctum, method to fight Emperor Ing without Spider Ball (Hypermode).
 
+-   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
+
 -   Abandoned Base, method of reaching portal with Space Jump and Screw Attack (Intermediate and above).
 
 -   Accursed Lake, method of collecting the item and leaving with Morph Ball, Light Suit, Gravity Boost, and Reverse Air Underwater (Advanced and above).
@@ -148,15 +154,18 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Landing Site, method of reaching Service Access door:
     - With Bombs and Screw Attack (Intermediate and above).
-    - With Space Jump and Bomb Space Jump (Beginner and above).
+    - With Space Jump and Bomb Space Jump (Intermediate and above).
 
 -   Meeting Grounds, method of reaching the tunnel with Space Jump and a Bomb Space Jump (Intermediate and above).
+
+-   Temple Assembly Site:
+    - Methods of reaching Dynamo Chamber door with a Bomb Jump (Beginner and above), a Dash (Intermediate and above), or a Roll Jump (Advanced and above).
+    - Methods of reaching the portal without moving the light block with Single Room Out of Bounds and either Screw Attack or Space Jump (Expert and above).
+    - Method of leaving from the portal with Single Room Out of Bounds and Screw Attack (Expert and above).
 
 -   Windchamber Gateway:
     - Method of reaching the item with a Boost Jump (Advanced and above) and returning with an Extended Dash (Expert and above).
     - Method of reaching Path of Eyes door from Grand Windchamber door with an Extended Dash (Advanced and above).
-
--   Transport A Access, method of reaching Temple Transport A door with a Wall Boost (Advanced and above).
 
 -   Bioenergy Production, method to reach Storage C door or item from top level with Extended Dash (Expert and above).
 
@@ -175,7 +184,13 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method of climbing to Watering Hole door without any items (Expert and above).
     - Method of escaping the pool using Light Suit and a Bomb Space Jump no Space Jump or Gravity Boost (Hypermode)
 
--   Mining Station B, method to climb to the Seeker door without Morph Ball and with Space Jump (Beginner and above).
+-   Main Reactor, method of reaching Dark Samus 1 fight from Ventilation Area A door with Space Jump, Bombs, and a Bomb Space Jump (Intermediate and above).
+
+-   Mining Station B:
+    - Method to climb to the Seeker door without Morph Ball and with Space Jump (Beginner and above).
+    - Method to reach the portal without breaking the rock with Single Room Out of Bounds and Screw Attack (Expert and above).
+
+-   Sandcanyon, method to reach the item with Space Jump and Single Room Out of Bounds (Expert and above).
 
 -   Transport Center/Crossroads, method to climb the halfpipe with Space Jump (Advanced and above).
 
@@ -190,15 +205,24 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method to reach Transit Tunnel East/South with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
     - Method to reach Transit Tunnel South with Jump Off Enemy (Advanced and above).
 
--   Dark/Forgotten Bridge, method to reach Abandoned Worksite/Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
+-   Dark Arena Tunnel, method of reaching either door with Screw Attack and Single Room Out of Bounds (Advanced and above).
 
--   Dark Forgotten Bridge, method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
+-   Dark Forgotten Bridge:
+    - Method to perform the gate clip to Dark Falls/Dark Arena Tunnel with a Ledge Clip Jump (Hypermode).
+    - Method to reach Bridge Center from Putrid Alcove door with only Scan Visor (Advanced and above).
+    - Method to reach Brooding Ground door from the bridge before rotating and with an Extended Dash (Expert and above).
+
+-   Forgotten Bridge:
+    - Method to reach Abandoned Worksite door from the bridge before rotating and with an Extended Dash (Expert and above).
+    - Method to reach Bridge Center with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
 -   Gathering Hall: 
     - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
     - Method to reach Transit Tunnel South from Transit Tunnel West with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
     - Method to reach the Spider Ball tracks with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
     - Methods to escape the halfpipe after draining the water with Space Jump and Bomb Space Jump or Space Jump and Screw Attack (Advanced and above).
+
+-   Great Bridge, method of reaching the lower Temple Access door from Path of Roots door with Screw Attack and Slope Jump (Intermediate and above).
 
 -   Main Hydrochamber/Hydrodynamo Station, methods to climb rooms without Gravity Boost and with Air Underwater (Advanced and above), Space Jump, and Screw Attack (Hypermode).
 
@@ -207,6 +231,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Path of Roots, method of reaching the item using:
     - Morph Ball, Bombs and Space Jump (Advanced and above).
     - Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
+    - Morph Ball, Bombs, and Standable Terrain (Hypermode).
+
+-   Plaza Access, method of reaching the doors and the item with Screw Attack and Single Room Out of Bounds (Advanced and above).
+
+-   Portal Chamber (Light World), method of reaching the portal from Torvus Lagoon door with Screw Attack and Single Room Out of Bounds (Advanced and above).
 
 -   Putrid Alcove, method of getting the item and leaving without any items (Expert and above).
 
@@ -217,6 +246,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Torvus Plaza:
     - Method of getting the item without Boost Ball and/or Spider Ball (Advanced and above).
     - Method of leaving the room with Space Jump and Bombs (Advanced and above).
+
+-   Torvus Temple, method of reaching the pirate fight from the lower level with Screw Attack and Single Room Out of Bounds (Advanced and above).
 
 -   Training Chamber:
     - Method to exit the spinner with Power Bombs instead of Bombs (Beginner and above).
@@ -250,7 +281,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method of collecting the item with a Wall Boost (Expert and above).
     - Methods of reaching the item, and skipping the Spider Track to and from Central Area Transport East with Screw Attack (Intermediate and above).
 
--   Hive Dynamo Works, method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
+-   Hive Entrance, method of reaching the Flying Ing Cache with Screw Attack and Single Room Out of Bounds (Hypermode).
+
+-   Hive Dynamo Works:
+    - Method of collecting the Flying Ing Cache item and leaving with Space Jump and Scan Visor (Advanced and above).
+    - Method of reaching the Flying Ing Cache from portal side and vice versa with Screw Attack and Single Room Out of Bounds (Expert and above).
 
 -   Hive Summit, method of reaching the portal:
     - With Space Jump and Standable Terrain (Intermediate and above).
@@ -260,11 +295,15 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method of fighting Quadraxis with Power Bombs instead of Bombs (Beginner and above).
     - Methods of leaving the room without Spider Ball after Quadraxis with Boost Ball or Space Jump (Hypermode).
 
+-   Judgment Drop, method of reaching the portal with Space Jump and Single Room Out of Bounds (Expert and above).
+
 -   Reactor Core, method of reaching the item with only Space Jump (Expert and above).
 
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
 
 -   Vault Attack Portal, method to cross either direction with just Screw Attack (Expert and above).
+
+-   Watch Station, method of accessing the Spider Ball track to Watch Station Access door and Sentinel's Path door and back with an Instant Morph (Intermediate and above).
 
 -   Watch Station Access, methods to cross the pit in either direction using:
     - Boost Ball and Boost Jump (Advanced and above).
@@ -283,7 +322,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Trooper Security Station Event coming from Communication Area
     - Various Dash Requirements
 
--   Dark Aether Damage Requirements have been added to every room in the Dark World
+-   Dark Aether Damage Requirements have been added to every room in the Dark World.
+
+-   Morph Ball requirements added to Morph Ball Doors and various rooms.
 
 -   Invisible Objects and Dark Visor Requirements:
     - Screw Attack without Space Jump in Unseen Way (Intermediate and above)
@@ -292,10 +333,6 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Entrance to Agon Map Station now requires Bombs, Power Bombs, or Boost Ball if coming from either direction, or Screw Attack and Space Jump as well if coming from Mining Plaza.
 
 -   Added Charge Beam and Beam Ammo Requirements to Profane Path and Sentinel's Path.
-
--   Morph Ball Doors now properly require Morph Ball.
-
--   Torvus Temple now requires Morph Ball from Transport to Agon Wastes and Underground Transport to the bottom of the temple.
 
 -   Sand Processing:
     - Now requires items to climb the room before draining the sand: Space Jump, with a Bomb Jump (Beginner and above) or with Screw Attack (Intermediate and above)
@@ -313,12 +350,16 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Simplified nodes in many rooms for ease of logic navigation.
 
--   Abandoned Base, Bomb Jump to tram is now Advanced (from Intermediate).
+-   Various tricks have been changed to more accurately represent the required method.
+
+-   Abandoned Base, Bomb Jump to transport is now Advanced (from Intermediate).
+
+-   Accursed Lake, Dash to Safe Zone from Flying Ing Cache is now Intermediate (from Beginner).
 
 -   Communication Area:
     - Standable Terrain to reach the item is now Beginner (from Intermediate).
     - Screw Attack without Space Jump to reach Storage Cavern A is now Beginner (from Intermediate).
-    - Double Bomb Jump up Standable Terrain is now Beginner (from Advanced).
+    - Double Bomb Jump up Standable Terrain is now Intermediate (from Advanced).
 
 -   GFMC Compound, Extended Dash to reach the item on the Ship without Space Jump is now Expert (from Hypermode).
 
@@ -334,11 +375,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Battleground, climbing to top safe zone via Standable Terrain is now Beginner (from Intermediate).
 
--   Central Mining Station:
-    - Scan Dash to upper level from Central Station Access is now Expert (from Advanced).
-    - Bomb Space Jump to top door is now Beginner (from Intermediate).
-
--   Command Center, Dash Jump along top without Space Jump is now Beginner (from Intermediate).
+-   Central Mining Station, Scan Dash to upper level from Central Station Access is now Expert (from Advanced).
 
 -   Command Center Access, exiting tunnel without Space Jump is now Beginner (from Intermediate).
 
@@ -350,17 +387,26 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Mining Plaza, climbing the room with Screw Attack is now Beginner (from Intermediate).
 
--   Mining Station B, reaching Transit Station door from room center with Screw Attack after opening the portal is now Intermediate (from Hypermode).
+-   Mining Station A, reaching Front of Lore Scan from Room Center with a Bomb Jump is now Intermediate (from Advanced).
+
+-   Mining Station B:
+    - Reaching Transit Station door from room center with Screw Attack after opening the portal is now Intermediate (from Hypermode).
+    - Reaching the bomb slot to open the portal with Standable Terrain and Screw Attack is now Intermediate (from Advanced).
+    - Reaching the bomb slot to open the portal with Slope Jump and Space Jump is now Advanced (from Expert).
 
 -   Portal Access, returning from Judgment Pit without Space Jump is now Beginner (from Intermediate).
 
--   Transport Center, dash from portal to Seeker Door is now Beginner (from Intermediate).
-
--   Trial Grounds, Standable Terrain and Slope Jump are now Beginner (from Intermediate).
+-   Trial Grounds, Standable Terrain to reach the door from the portal is now Beginner (from Intermediate).
 
 -   Catacombs, reaching the portal with Morph Ball and Reverse Air Underwater is now Advanced (from Expert).
 
--   Gathering Hall, reaching Transit Tunnel South/West Doors from top door with Morph Ball and Roll Jump is now Expert (from Advanced).
+-   Crypt, Bomb Jump to Laser Platfrom from bottom Safe Zone is now Beginner (from Intermediate).
+
+-   Forgotten Bridge, reaching Bridge Center with Bombs and Screw Attack is now Intermediate (from Advanced).
+
+-   Gathering Hall:
+    - Reaching Transit Tunnel South/West Doors from top door with Morph Ball and Roll Jump is now Expert (from Advanced).
+    - Reaching Transit Tunnel East with Spider Ball and Boost Ball is now Beginner (from Intermediate).
 
 -   Great Bridge:
     - Slope Jumps to reach Map Station from Bottom Level and from Map Station to Upper Level are now Beginner and Intermediate (from Intermediate and Advanced, respectively).
@@ -370,15 +416,37 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Torvus Lagoon, reaching Portal Chamber from Temple Transport Access is now Intermediate (from Advanced).
 
+-   Training Chamber, Standable Terrain to reach Fortress Transport Access from Top of Statue and back is now Beginner (from Intermediate).
+
 -   Venomous Pond, reaching the key from the Save Station with Screw Attack is now Beginner (from Intermediate).
+
+-   Aerial Training Site, Screw Attack at Z-Axis from Central Hive Area West door to the portal or Temple Security Access door is now Intermediate (from Advanced).
 
 -   Dynamo Access, crossing over the Spider Track with a Slope Jump is now Beginner (from Intermediate).
 
 -   Hall of Combat Mastery, Instant Morph tricks to the item and Central Area Transport East and back are now Advanced (from Intermediate).
 
--   Hive Dynamo Works, reaching the upper door with a Bomb Space Jump is now Beginner (from Intermediate).
+-   Hive Dynamo Access, opening Echo Gate from behind is now Beginner (from Intermediate).
+
+-   Hive Dynamo Works:
+    - Reaching the Seeker Lock Safe Zone from Hive Dynamo Access door with Terminal Fall Abuse is now Beginner (from Intermediate).
+    - Reaching the Flying Ing Cache from the tunnel with Screw Attack is now Beginner (from Intermediate).
+    - Reaching the Flying Ing Cache from the tunnel and back with Standable Terrain is now Intermediate (from Advanced).
+    - Opening the Seeker Lock from behind is now Beginner (from Intermediate).
+
+-   Hive Summit, Standable Terrain to reach portal inside glass area is now Beginner (from Intermediate).
+
+-   Hive/Temple Access, reaching the upper door with Screw Attack at Z-Axis is now Beginenr (from Intermediate).
 
 -   Transit Station, reaching the top portal with Screw Attack is now Beginner (from Intermediate).
+
+-   Vault:
+    - Terminal Fall abuse to reach Grand Abyss door from bridge portal with Space Jump is now Beginner (from Intermediate).
+    - Reaching the Bomb Slot with Screw Attack from the bridge portal is now Beginner (from Intermediate).
+
+-   Watch Station, Screw Attack at Z-Axis from Watch Station door to Sentinel's Path door is now Beginner (from Intermediate).
+
+-   Watch Station Access, reaching the Watch Station door from the pickup with just Screw Attack is now Beginner (from Intermediate).
 
 ## [1.2.2] - 2020-06-06
 

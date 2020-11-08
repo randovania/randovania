@@ -22,6 +22,7 @@ async def test_start(client, tmpdir):
     game_connection = client.game_connection
 
     client.network_client.game_session_request_pickups = AsyncMock(return_value=[])
+    client.network_client.session_self_update = AsyncMock()
     client.refresh_received_pickups = AsyncMock()
     client._received_messages = ["Foo"]
     client._received_pickups = ["Pickup"]
@@ -32,7 +33,7 @@ async def test_start(client, tmpdir):
     # Assert
     client.refresh_received_pickups.assert_awaited_once_with()
     game_connection.set_location_collected_listener.assert_called_once_with(client.on_location_collected)
-    client.network_client.GameUpdateNotification.connect.assert_called_once_with(client.on_game_updated)
+    client.network_client.GameUpdateNotification.connect.assert_called_once_with(client.on_network_game_updated)
     game_connection.set_permanent_pickups.assert_called_once_with(["Pickup"])
 
 
@@ -43,7 +44,7 @@ async def test_stop(client):
 
     # Assert
     client.game_connection.set_location_collected_listener.assert_called_once_with(None)
-    client.network_client.GameUpdateNotification.disconnect.assert_called_once_with(client.on_game_updated)
+    client.network_client.GameUpdateNotification.disconnect.assert_called_once_with(client.on_network_game_updated)
     client.game_connection.set_permanent_pickups.assert_called_once_with([])
 
 
@@ -98,7 +99,7 @@ async def test_on_game_updated(client, tmpdir):
     client._data.latest_message_displayed = 1
 
     # Run
-    await client.on_game_updated()
+    await client.on_network_game_updated()
 
     # Assert
     client.game_connection.display_message.assert_has_calls([call("Message B"), call("Message C")])
@@ -154,6 +155,7 @@ async def test_lock_file_on_init(skip_qtbot, tmpdir):
     # Setup
     network_client = MagicMock()
     network_client.game_session_request_pickups = AsyncMock(return_value=[])
+    network_client.session_self_update = AsyncMock()
     game_connection = MagicMock()
     game_connection.backend.lock_identifier = str(tmpdir.join("my-lock"))
 

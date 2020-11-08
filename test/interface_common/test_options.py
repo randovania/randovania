@@ -224,3 +224,36 @@ def test_load_from_disk_invalid_json(ignore_decode_errors: bool,
     else:
         with pytest.raises(DecodeFailedException):
             option.load_from_disk(ignore_decode_errors)
+
+
+def test_reset_to_defaults():
+    # Create and test they're equal
+    blank = Options(MagicMock())
+    modified = Options(MagicMock())
+    assert blank._serialize_fields() == modified._serialize_fields()
+
+    # Modify and test they're different
+    with modified:
+        for field in randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys():
+            # This cause weirdness in serializing it
+            if field != "last_changelog_displayed":
+                modified._set_field(field, getattr(modified, field))
+    assert blank._serialize_fields() != modified._serialize_fields()
+
+    # Reset and test they're the same
+    with modified:
+        modified.reset_to_defaults()
+    assert blank._serialize_fields() == modified._serialize_fields()
+
+
+def test_setting_fields_to_self_do_nothing():
+    options = Options(MagicMock())
+    initial_serialize = options._serialize_fields()
+
+    # Modify and test they're different
+    with options:
+        for field in randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys():
+            setattr(options, field, getattr(options, field))
+
+    # Reset and test they're the same
+    assert options._serialize_fields() == initial_serialize
