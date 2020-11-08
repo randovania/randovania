@@ -63,9 +63,8 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(len(self.table_widget.selectedItems()) > 0)
 
     @property
-    def selected_session(self):
-        row: int = self.table_widget.selectedIndexes()[0].row()
-        return self.visible_sessions[row]
+    def selected_session(self) -> GameSessionListEntry:
+        return self.table_widget.selectedItems()[0].data(Qt.UserRole)
 
     @asyncSlot(QTableWidgetItem)
     async def on_double_click(self, item: QTableWidgetItem):
@@ -136,6 +135,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             has_password = QTableWidgetItem("Yes" if session.has_password else "No")
             creator = QTableWidgetItem(session.creator)
 
+            name.setData(Qt.UserRole, session)
             self.table_widget.setItem(i, 0, name)
             self.table_widget.setItem(i, 1, state)
             self.table_widget.setItem(i, 2, players_item)
