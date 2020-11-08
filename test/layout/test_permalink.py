@@ -24,7 +24,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock, default_preset):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(default_preset.layout_configuration.game_data)
-    assert encoded == "oAAAfRQeABo="
+    assert encoded == "sAAAfRQeAA8="
 
 
 @pytest.mark.parametrize("invalid", [
@@ -51,7 +51,7 @@ def test_decode_invalid(invalid: str):
 @pytest.mark.parametrize("layout", [
     {},
     {
-        "trick_level_configuration": TrickLevelConfiguration(LayoutTrickLevel.EXPERT),
+        "trick_level_configuration": TrickLevelConfiguration(specific_levels={"ScanPost": LayoutTrickLevel.EXPERT}),
         "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
     },
@@ -101,7 +101,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "oAAAfRQeABo="
+    encoded = "sAAAfRQeAA8="
 
     expected = Permalink(
         seed_number=1000,
@@ -121,9 +121,9 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_preset):
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
-    ("oAAAfRUggB0=", 1),
-    ("oAAAfRgBIKB2", 2),
-    ("oAAAfRghIL/gbQ==", 10),
+    ("sAAAfRUggMw=", 1),
+    ("sAAAfRgBIKBv", 2),
+    ("sAAAfRghIL/gRg==", 10),
 ])
 @patch("randovania.layout.layout_configuration.LayoutConfiguration.bit_pack_unpack")
 @patch("randovania.layout.patcher_configuration.PatcherConfiguration.bit_pack_unpack")
