@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 from PySide2.QtCore import Qt
@@ -38,10 +39,12 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             self.state_setup_check,
             self.state_inprogress_check,
             self.state_finished_check,
+            self.filter_age_check,
         )
         for check in checks:
             check.stateChanged.connect(self.update_list)
         self.filter_name_edit.textEdited.connect(self.update_list)
+        self.filter_age_spin.valueChanged.connect(self.update_list)
 
         self.table_widget.itemSelectionChanged.connect(self.on_selection_changed)
         self.table_widget.itemDoubleClicked.connect(self.on_double_click)
@@ -101,7 +104,8 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
 
     def update_list(self):
         self.table_widget.clear()
-        self.table_widget.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator"])
+        self.table_widget.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator",
+                                                     "Creation Date"])
 
         name_filter = self.filter_name_edit.text().strip()
 
@@ -118,12 +122,17 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             if check.isChecked():
                 displayed_states.add(state)
 
+        dont_filter_age = not self.filter_age_check.isChecked()
+        now = datetime.datetime.now(tz=datetime.timezone.utc)
+        max_session_age = datetime.timedelta(days=self.filter_age_spin.value())
+
         visible_sessions = [
             session
-            for session in self.sessions
+            for session in reversed(self.sessions)
             if (session.has_password in displayed_has_password
                 and session.state in displayed_states
-                and name_filter in session.name)
+                and name_filter in session.name
+                and (dont_filter_age or (now - session.creation_date) < max_session_age))
         ]
         self.visible_sessions = visible_sessions
 
@@ -134,6 +143,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             players_item = QTableWidgetItem(str(session.num_players))
             has_password = QTableWidgetItem("Yes" if session.has_password else "No")
             creator = QTableWidgetItem(session.creator)
+            creation_date = QTableWidgetItem(session.creation_date.astimezone().strftime("%Y-%m-%d %H:%M"))
 
             name.setData(Qt.UserRole, session)
             self.table_widget.setItem(i, 0, name)
@@ -141,6 +151,10 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             self.table_widget.setItem(i, 2, players_item)
             self.table_widget.setItem(i, 3, has_password)
             self.table_widget.setItem(i, 4, creator)
+            self.table_widget.setItem(i, 5, creation_date)
+
+        for i in range(6):
+            self.table_widget.resizeColumnToContents(i)
 
         self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
 

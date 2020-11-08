@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
-    <height>453</height>
+    <width>694</width>
+    <height>455</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,6 +62,11 @@
        <string>Creator</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Creation Date</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item>
@@ -70,16 +75,33 @@
       <string>Filters</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="filter_name_label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="has_password_yes_check">
         <property name="text">
-         <string>Name</string>
+         <string>Yes</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QCheckBox" name="state_inprogress_check">
+        <property name="text">
+         <string>In-Progress</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QCheckBox" name="has_password_no_check">
+        <property name="text">
+         <string>No</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -106,6 +128,13 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="3">
+       <widget class="QCheckBox" name="state_finished_check">
+        <property name="text">
+         <string>Finished</string>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="1">
        <widget class="QCheckBox" name="state_setup_check">
         <property name="text">
@@ -116,20 +145,16 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QCheckBox" name="state_inprogress_check">
-        <property name="text">
-         <string>In-Progress</string>
+      <item row="0" column="0">
+       <widget class="QLabel" name="filter_name_label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QCheckBox" name="state_finished_check">
         <property name="text">
-         <string>Finished</string>
+         <string>Name</string>
         </property>
        </widget>
       </item>
@@ -140,23 +165,33 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="has_password_yes_check">
+      <item row="4" column="0">
+       <widget class="QLabel" name="filter_age_label">
         <property name="text">
-         <string>Yes</string>
+         <string>Age:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="filter_age_check">
+        <property name="text">
+         <string>Limit to</string>
         </property>
         <property name="checked">
          <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QCheckBox" name="has_password_no_check">
-        <property name="text">
-         <string>No</string>
+      <item row="4" column="2" colspan="2">
+       <widget class="QSpinBox" name="filter_age_spin">
+        <property name="suffix">
+         <string> days</string>
         </property>
-        <property name="checked">
-         <bool>true</bool>
+        <property name="maximum">
+         <number>365</number>
+        </property>
+        <property name="value">
+         <number>14</number>
         </property>
        </widget>
       </item>
