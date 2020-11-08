@@ -91,6 +91,10 @@ class GameSession(BaseModel):
     def layout_description(self, description: Optional[LayoutDescription]):
         self.layout_description_json = json.dumps(description.as_json) if description is not None else None
 
+    @property
+    def creation_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)
+
     def create_list_entry(self):
         return {
             "id": self.id,
@@ -99,6 +103,7 @@ class GameSession(BaseModel):
             "state": self.state.value,
             "num_players": len(self.players),
             "creator": self.creator.name,
+            "creation_date": self.creation_datetime.astimezone(datetime.timezone.utc).isoformat(),
         }
 
     def create_session_entry(self):
@@ -119,6 +124,7 @@ class GameSession(BaseModel):
 
             message = (f"{location_to_name[provider]} found {target.pickup.name} "
                        f"for {location_to_name[receiver]}.")
+
             return {
                 "message": message,
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
