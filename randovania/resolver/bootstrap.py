@@ -66,7 +66,11 @@ def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
     static_resources = {}
 
     for trick in resource_database.trick:
-        static_resources[trick] = configuration.level_for_trick(trick).as_number
+        if configuration.minimal_logic:
+            level = LayoutTrickLevel.MINIMAL_LOGIC
+        else:
+            level = configuration.level_for_trick(trick)
+        static_resources[trick] = level.as_number
 
     # Room Rando
     room_rando = find_resource_info_with_long_name(resource_database.misc, "Room Randomizer")
@@ -166,7 +170,7 @@ def logic_bootstrap(configuration: LayoutConfiguration,
     game = copy.deepcopy(game)
     starting_state = calculate_starting_state(game, patches)
 
-    if configuration.trick_level_configuration.global_level == LayoutTrickLevel.MINIMAL_LOGIC:
+    if configuration.trick_level_configuration.minimal_logic:
         major_items_config = configuration.major_items_configuration
         _add_minimal_logic_initial_resources(starting_state.resources,
                                              game.resource_database,

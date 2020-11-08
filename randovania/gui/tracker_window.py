@@ -99,7 +99,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
         self.configuration_label.setText("Trick Level: {}; Elevators: Vanilla; Starts with:\n{}".format(
-            layout_configuration.trick_level_configuration.global_level.value,
+            layout_configuration.trick_level_configuration.pretty_description,
             ", ".join(
                 resource.short_name
                 for resource in pool_patches.starting_items.keys()
