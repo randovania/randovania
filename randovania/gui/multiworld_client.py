@@ -72,7 +72,6 @@ class MultiworldClient(QObject):
         self.network_client = network_client
         self.game_connection = game_connection
         self._pickups_lock = asyncio.Lock()
-        self._update_status_lock = asyncio.Lock()
 
         pid_name = game_connection.backend.lock_identifier
         if pid_name is not None:
@@ -97,11 +96,9 @@ class MultiworldClient(QObject):
 
         self._data = Data(persist_path)
         self.game_connection.set_location_collected_listener(self.on_location_collected)
-        self.game_connection.Updated.connect(self.on_game_connection_updated)
         self.network_client.GameUpdateNotification.connect(self.on_network_game_updated)
 
         await self.on_network_game_updated()
-        await self.on_game_connection_updated()
 
         self.start_notify_collect_locations_task()
 
@@ -175,13 +172,6 @@ class MultiworldClient(QObject):
             for message, data in result:
                 self._received_messages.append(message)
                 self._received_pickups.append(self._decode_pickup(data))
-
-    @asyncSlot()
-    async def on_game_connection_updated(self):
-        async with self._update_status_lock:
-            await self.network_client.session_self_update(self.game_connection.get_current_inventory(),
-                                                          self.game_connection.current_status,
-                                                          self.game_connection.backend.backend_choice)
 
     @asyncSlot()
     async def on_network_game_updated(self):
