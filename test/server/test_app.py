@@ -10,6 +10,7 @@ def test_create_app(mocker, tmpdir):
             "discord_client_secret": 5678,
             "fernet_key": 's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=',
             "database_path": str(tmpdir.join("database.db")),
+            "strict_client_version": True,
         }
     }
     mock_game_session = mocker.patch("randovania.server.game_session.setup_app")
@@ -33,6 +34,7 @@ def test_create_app(mocker, tmpdir):
     assert result.config["DISCORD_CLIENT_SECRET"] == 5678
     assert result.config["DISCORD_REDIRECT_URI"] == "http://127.0.0.1:5000/callback/"
     assert result.config["FERNET_KEY"] == b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
+    assert result.config["STRICT_CLIENT_VERSION"]
 
     encrpyted_value = b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
     assert result.sio.fernet_encrypt.decrypt(encrpyted_value) == b'banana'
