@@ -226,7 +226,7 @@ class ConnectionBackend(ConnectionBase):
                 MemoryOperation(self.patches.health_capacity.base_health_capacity, read_byte_count=4),
                 MemoryOperation(self.patches.health_capacity.energy_tank_capacity, read_byte_count=4),
             ])
-            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fII", b"".join(health_data))
+            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fff", b"".join(health_data))
             new_health = new_inventory[energy_tank].amount * energy_tank_capacity + base_health_capacity
             if new_inventory[energy_tank] < current_inventory[energy_tank]:
                 new_health = min(new_health, current_health)
