@@ -122,7 +122,7 @@ def _migrate_v4(preset: dict) -> dict:
     trick_level["minimal_logic"] = global_level == "minimal-logic"
     specific_levels = {
         trick_name_mapping[int(index)]: level
-        for index, level in trick_level["specific_levels"]
+        for index, level in trick_level["specific_levels"].items()
     }
     if global_level == "minimal-logic":
         specific_levels = {}
