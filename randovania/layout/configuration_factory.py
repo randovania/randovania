@@ -13,7 +13,7 @@ from randovania.layout.translator_configuration import LayoutTranslatorRequireme
 def get_default_major_items_configurations() -> MajorItemsConfiguration:
     item_database = default_prime2_item_database()
 
-    with get_data_path().joinpath("item_database", "default_state", "major-items.json").open() as open_file:
+    with get_data_path().joinpath("item_database", "prime2", "default_state", "major-items.json").open() as open_file:
         data = json.load(open_file)
 
     return MajorItemsConfiguration(
@@ -27,7 +27,7 @@ def get_default_major_items_configurations() -> MajorItemsConfiguration:
 def get_default_ammo_configurations() -> AmmoConfiguration:
     item_database = default_prime2_item_database()
 
-    with get_data_path().joinpath("item_database", "default_state", "ammo.json").open() as open_file:
+    with get_data_path().joinpath("item_database", "prime2", "default_state", "ammo.json").open() as open_file:
         data = json.load(open_file)
 
     return AmmoConfiguration.from_json(data, item_database)
@@ -41,7 +41,7 @@ def _raw_translator_configurations(data: dict) -> Dict[TranslatorGate, LayoutTra
 
 
 def get_vanilla_actual_translator_configurations() -> Dict[TranslatorGate, LayoutTranslatorRequirement]:
-    with get_data_path().joinpath("item_database", "default_state",
+    with get_data_path().joinpath("item_database", "prime2", "default_state",
                                   "translator_vanilla_actual.json").open() as open_file:
         data = json.load(open_file)
 
@@ -49,7 +49,7 @@ def get_vanilla_actual_translator_configurations() -> Dict[TranslatorGate, Layou
 
 
 def get_vanilla_colors_translator_configurations() -> Dict[TranslatorGate, LayoutTranslatorRequirement]:
-    with get_data_path().joinpath("item_database", "default_state",
+    with get_data_path().joinpath("item_database", "prime2", "default_state",
                                   "translator_vanilla_colors.json").open() as open_file:
         data = json.load(open_file)
 
