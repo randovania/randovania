@@ -49,3 +49,7 @@ class Ammo:
         if self.unlocked_by is not None:
             result["unlocked_by"] = self.unlocked_by
         return result
+
+    @property
+    def model_index(self):
+        return self.models[0]

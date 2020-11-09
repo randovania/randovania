@@ -1,5 +1,6 @@
 import functools
 import json
+from pathlib import Path
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
@@ -19,9 +20,8 @@ def default_prime2_game_description() -> GameDescription:
     return data_reader.decode_data(default_data.decode_default_prime2())
 
 
-@functools.lru_cache()
-def default_prime2_item_database() -> item_database.ItemDatabase:
-    configuration_path = get_data_path().joinpath("item_database", "configuration")
+def _read_database_in_path(path: Path) -> item_database.ItemDatabase:
+    configuration_path = path.joinpath("configuration")
 
     with configuration_path.joinpath("major-items.json").open() as major_items_file:
         major_items_data = json.load(major_items_file)
@@ -33,8 +33,18 @@ def default_prime2_item_database() -> item_database.ItemDatabase:
 
 
 @functools.lru_cache()
+def default_prime2_item_database() -> item_database.ItemDatabase:
+    return _read_database_in_path(get_data_path().joinpath("item_database", "prime2"))
+
+
+@functools.lru_cache()
+def default_prime3_item_database() -> item_database.ItemDatabase:
+    return _read_database_in_path(get_data_path().joinpath("item_database", "prime3"))
+
+
+@functools.lru_cache()
 def default_prime2_memo_data() -> dict:
-    with get_data_path().joinpath("item_database", "memo_data.json").open("r") as memo_data_file:
+    with get_data_path().joinpath("item_database", "prime2", "memo_data.json").open("r") as memo_data_file:
         memo_data = json.load(memo_data_file)
 
     item_database.add_memo_data_keys(memo_data)
