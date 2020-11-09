@@ -184,6 +184,9 @@ class NintendontBackend(ConnectionBackend):
         if self._socket is None:
             raise RuntimeError("Not connected")
 
+        ops_description = '; '.join(str(op) for op in ops)
+        self.logger.debug(f"_perform_memory_operations: {len(ops)} ops for: {ops_description}")
+
         requests = self._prepare_requests_for(ops)
         all_responses = await self._send_requests_to_socket(requests)
 
@@ -207,11 +210,11 @@ class NintendontBackend(ConnectionBackend):
         if not await self._identify_game():
             return
 
-        await self._send_message_from_queue(dt)
-
         await self._update_current_world()
         if self._world is not None:
+            await self._send_message_from_queue(dt)
             self._inventory = await self._get_inventory()
+
             if self.checking_for_collected_index:
                 await self._check_for_collected_index()
 
