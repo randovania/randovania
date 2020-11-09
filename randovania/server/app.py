@@ -34,6 +34,7 @@ def create_app():
     app.config["DISCORD_CLIENT_SECRET"] = configuration["server_config"]["discord_client_secret"]
     app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"  # Redirect URI.
     app.config["FERNET_KEY"] = configuration["server_config"]["fernet_key"].encode("ascii")
+    app.config["STRICT_CLIENT_VERSION"] = configuration["server_config"]["strict_client_version"]
 
     database.db.init(configuration["server_config"]['database_path'])
     database.db.connect(reuse_if_open=True)
@@ -59,7 +60,7 @@ def create_app():
             raise ConnectionRefusedError("unknown client version")
 
         client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
-        if server_version != client_app_version:
+        if app.config["STRICT_CLIENT_VERSION"] and server_version != client_app_version:
             raise ConnectionRefusedError(f"Incompatible client version '{client_app_version}', "
                                          f"expected '{server_version}'")
 
