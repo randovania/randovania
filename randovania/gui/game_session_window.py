@@ -100,14 +100,15 @@ class PlayerWidget:
             player_name = "[Admin] " + player_name
         else:
             promote_text = "Promote to Admin"
-            num_required = 1
+            num_required = 0
 
         self.name.setText(player_name)
         if self.connection_state is not None:
             self.connection_state.setText(player.connection_state)
         self.kick.setEnabled(self_player.admin and player.id != self_player.id)
         self.promote.setText(promote_text)
-        self.promote.setEnabled(self_player.admin and game_session.num_admins >= num_required)
+        self.promote.setEnabled((self_player.admin or game_session.num_admins == 0)
+                                and game_session.num_admins >= num_required)
         if not player.is_observer:
             self.move_up.setEnabled(admin_or_you and player.row > 0)
             self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
