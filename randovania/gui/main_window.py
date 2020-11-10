@@ -1,4 +1,4 @@
-import dataclasses
+import functools
 import functools
 import json
 import os
@@ -38,7 +38,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_configuration import LayoutConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.trick_level import TrickLevelConfiguration, LayoutTrickLevel
+from randovania.layout.trick_level import LayoutTrickLevel
 from randovania.network_client.network_client import ConnectionState
 from randovania.resolver import debug
 
@@ -133,6 +133,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             action.triggered.connect(partial(self._open_data_editor_for_game, game))
 
         self.menu_action_item_tracker.triggered.connect(self._open_item_tracker)
+        self.menu_action_map_tracker.triggered.connect(self._on_menu_action_map_tracker)
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
@@ -146,7 +147,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.generate_seed_tab.setup_ui()
 
         # Needs the GenerateSeedTab
-        self._create_open_map_tracker_actions()
         self._setup_difficulties_menu()
 
         # Setting this event only now, so all options changed trigger only once
@@ -409,20 +409,19 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
-    def _create_open_map_tracker_actions(self):
-        base_layout = self.preset_manager.default_preset.get_preset().layout_configuration
-
-        for trick_level in iterate_enum(LayoutTrickLevel):
-            if trick_level != LayoutTrickLevel.MINIMAL_LOGIC:
-                action = QtWidgets.QAction(self)
-                action.setText(trick_level.long_name)
-                self.menu_map_tracker.addAction(action)
-
-                configuration = dataclasses.replace(
-                    base_layout,
-                    trick_level_configuration=TrickLevelConfiguration(trick_level, {})
-                )
-                action.triggered.connect(partial(self.open_map_tracker, configuration))
+    @asyncSlot()
+    async def _on_menu_action_map_tracker(self):
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setWindowTitle("Map Tracker")
+        dialog.setLabelText("Select preset used for the tracker.")
+        dialog.setComboBoxItems([
+            preset.name
+            for preset in self._preset_manager.all_presets
+        ])
+        result = await async_dialog.execute_dialog(dialog)
+        if result == QtWidgets.QDialog.Accepted:
+            preset = self._preset_manager.preset_for_name(dialog.textValue())
+            self.open_map_tracker(preset.get_preset().layout_configuration)
 
     def open_map_tracker(self, configuration: LayoutConfiguration):
         try:
