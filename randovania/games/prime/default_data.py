@@ -23,6 +23,10 @@ def decode_default_prime2() -> dict:
     return read_json_then_binary(RandovaniaGame.PRIME2)[1]
 
 
+def decode_default_prime3() -> dict:
+    return read_json_then_binary(RandovaniaGame.PRIME3)[1]
+
+
 @functools.lru_cache()
 def decode_randomizer_data() -> dict:
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
