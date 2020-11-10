@@ -87,6 +87,7 @@ def test_calculate_reach_with_all_pickups(test_data):
     for pickup in pool_results.assignment.values():
         add_pickup_to_state(state, pickup)
 
+    state = state.heal()
     first_reach, second_reach = _create_reaches_and_compare(game, state)
     first_actions, second_actions = _compare_actions(first_reach, second_reach)
 
