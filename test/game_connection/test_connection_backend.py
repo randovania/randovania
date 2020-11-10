@@ -50,23 +50,29 @@ async def test_identify_game_already_known(backend):
     assert await backend._identify_game()
 
 
+@pytest.mark.parametrize(["message_original", "message_encoded", "previous_size"], [
+    ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00\x00', 0),
+    ("Magoo2", b'\x00M\x00a\x00g\x00o\x00o\x002\x00\x00\x00\x00', 0),
+    ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00 \x00\x00\x00\x00', 10),
+])
 @pytest.mark.asyncio
-async def test_send_message(backend):
+async def test_send_message(backend, message_original, message_encoded, previous_size):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
     backend._perform_memory_operations.return_value = [b"\x00"]
     string_ref = backend.patches.string_display.message_receiver_string_ref
     has_message_address = backend.patches.string_display.cstate_manager_global + 0x2
+    backend._last_message_size = previous_size
 
     # Run
-    backend.display_message("Magoo")
+    backend.display_message(message_original)
     await backend._send_message_from_queue(1)
 
     # Assert
     backend._perform_memory_operations.assert_has_awaits([
         call([MemoryOperation(has_message_address, read_byte_count=1)]),
         call([
-            MemoryOperation(string_ref, write_bytes=b'\x00M\x00a\x00g\x00o\x00o\x00\x00'),
+            MemoryOperation(string_ref, write_bytes=message_encoded),
             MemoryOperation(has_message_address, write_bytes=b'\x01'),
         ]),
     ])
