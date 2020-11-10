@@ -66,7 +66,6 @@ class DolphinBackend(ConnectionBackend):
         for pointer in pointers_to_read:
             try:
                 pointers[pointer] = self.dolphin.follow_pointers(pointer, [0])
-                self.logger.debug(f"Read {pointers[pointer]:x} from {pointer:x}")
             except RuntimeError:
                 self.logger.debug(f"Failed to read a valid pointer from {pointer:x}")
                 self._test_still_hooked()
@@ -102,11 +101,11 @@ class DolphinBackend(ConnectionBackend):
             self._test_still_hooked()
             return
 
-        await self._send_message_from_queue(dt)
-
         await self._update_current_world()
         if self._world is not None:
+            await self._send_message_from_queue(dt)
             self._inventory = await self._get_inventory()
+
             if self.checking_for_collected_index:
                 await self._check_for_collected_index()
 

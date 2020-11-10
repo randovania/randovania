@@ -40,6 +40,19 @@ class MemoryOperation:
                 and len(self.write_bytes) != self.read_byte_count):
             raise ValueError(f"Attempting to read {self.read_byte_count} bytes while writing {len(self.write_bytes)}.")
 
+    def __str__(self):
+        address_text = f"0x{self.address:08x}"
+        if self.offset is not None:
+            address_text = f"*{address_text} {self.offset:+05x}"
+
+        operation_pretty = []
+        if self.read_byte_count is not None:
+            operation_pretty.append(f"read {self.read_byte_count} bytes")
+        if self.write_bytes is not None:
+            operation_pretty.append(f"write {self.write_bytes.hex()}")
+
+        return f"At {address_text}, {' and '.join(operation_pretty)}"
+
 
 def _powerup_offset(item_index: int) -> int:
     powerups_offset = 0x58
@@ -144,16 +157,17 @@ class ConnectionBackend(ConnectionBase):
         return False
 
     async def _update_current_world(self):
-        world_asset_id = await self._perform_single_memory_operations(
-            MemoryOperation(self.patches.game_state_pointer,
-                            offset=4,
-                            read_byte_count=4)
-        )
         try:
+            world_asset_id = await self._perform_single_memory_operations(
+                MemoryOperation(self.patches.game_state_pointer,
+                                offset=4,
+                                read_byte_count=4)
+            )
             if world_asset_id is None:
                 raise KeyError()
             self._world = self.game.world_list.world_by_asset_id(struct.unpack(">I", world_asset_id)[0])
-        except KeyError:
+
+        except (KeyError, RuntimeError):
             self._world = None
 
     def _get_player_state_pointer(self) -> int:
@@ -192,16 +206,18 @@ class ConnectionBackend(ConnectionBase):
         if not changed_items:
             return
 
-        memory_ops = [
-            MemoryOperation(
-                address=player_state_pointer,
-                write_bytes=struct.pack(">II", *new_inventory[item]),
-                read_byte_count=8,
-                offset=_powerup_offset(item.index),
-            )
-            for item in self.game.resource_database.item
-            if item in changed_items
-        ]
+        memory_ops = []
+        for item in self.game.resource_database.item:
+            if item in changed_items:
+                memory_ops.append(MemoryOperation(
+                    address=player_state_pointer,
+                    write_bytes=struct.pack(">II", *new_inventory[item]),
+                    read_byte_count=8,
+                    offset=_powerup_offset(item.index),
+                ))
+                self.logger.debug(f"Setting {item.long_name} to "
+                                  f"{new_inventory[item].amount}/{new_inventory[item].capacity} "
+                                  f"({memory_ops[-1].write_bytes.hex()})")
 
         # Suit Model
         dark_suit = self.game.resource_database.get_item(13)
@@ -218,6 +234,7 @@ class ConnectionBackend(ConnectionBase):
                 write_bytes=struct.pack(">I", new_suit),
                 offset=84,
             ))
+            self.logger.debug(f"Setting suit to {new_suit}. ({memory_ops[-1].write_bytes.hex()})")
 
         energy_tank = self.game.resource_database.energy_tank
         if energy_tank in changed_items:
@@ -226,7 +243,7 @@ class ConnectionBackend(ConnectionBase):
                 MemoryOperation(self.patches.health_capacity.base_health_capacity, read_byte_count=4),
                 MemoryOperation(self.patches.health_capacity.energy_tank_capacity, read_byte_count=4),
             ])
-            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fII", b"".join(health_data))
+            current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fff", b"".join(health_data))
             new_health = new_inventory[energy_tank].amount * energy_tank_capacity + base_health_capacity
             if new_inventory[energy_tank] < current_inventory[energy_tank]:
                 new_health = min(new_health, current_health)
@@ -236,6 +253,7 @@ class ConnectionBackend(ConnectionBase):
                 write_bytes=struct.pack(">f", new_health),
                 offset=20,
             ))
+            self.logger.debug(f"Setting health to {new_health}. ({memory_ops[-1].write_bytes.hex()})")
 
         # FIXME: check if the value read is what we expected, and then re-writes if needed
         result = await self._perform_memory_operations(memory_ops)
@@ -320,9 +338,11 @@ class ConnectionBackend(ConnectionBase):
 
         # There's a cooldown for next message!
         if self.message_cooldown > 0:
+            self.logger.debug(f"_send_message_from_queue: current cooldown is {self.message_cooldown}")
             return
 
-        encoded_message = self.message_queue.pop(0).encode("utf-16_be")[:self.patches.string_display.max_message_size]
+        message = self.message_queue.pop(0)
+        encoded_message = message.encode("utf-16_be")[:self.patches.string_display.max_message_size]
 
         # The game doesn't handle very well a string at the same address with same size being
         # displayed multiple times
@@ -340,4 +360,5 @@ class ConnectionBackend(ConnectionBase):
         ])
         self.message_cooldown = 4
 
-        self.logger.info("_send_message_from_queue: sent a message to the game")
+        self.logger.info(f"_send_message_from_queue: sent '{message}' to game. "
+                         f"{len(self.message_queue)} messages left.")

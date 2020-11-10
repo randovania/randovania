@@ -10,7 +10,6 @@ from PySide2.QtCore import Qt, Signal, QTimer
 from PySide2.QtWidgets import QMessageBox
 from asyncqt import asyncSlot, asyncClose
 
-from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
@@ -101,14 +100,15 @@ class PlayerWidget:
             player_name = "[Admin] " + player_name
         else:
             promote_text = "Promote to Admin"
-            num_required = 1
+            num_required = 0
 
         self.name.setText(player_name)
         if self.connection_state is not None:
             self.connection_state.setText(player.connection_state)
         self.kick.setEnabled(self_player.admin and player.id != self_player.id)
         self.promote.setText(promote_text)
-        self.promote.setEnabled(self_player.admin and game_session.num_admins >= num_required)
+        self.promote.setEnabled((self_player.admin or game_session.num_admins == 0)
+                                and game_session.num_admins >= num_required)
         if not player.is_observer:
             self.move_up.setEnabled(admin_or_you and player.row > 0)
             self.move_down.setEnabled(admin_or_you and player.row + 1 < game_session.num_rows)
@@ -175,6 +175,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self._preset_manager = preset_manager
         self._window_manager = window_manager
         self._options = options
+        self._update_status_lock = asyncio.Lock()
 
         # Advanced Options
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
@@ -224,6 +225,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.save_iso_button.clicked.connect(self.save_iso)
         self.view_game_details_button.clicked.connect(self.view_game_details)
         self.failed_to_generate_signal.connect(self._show_failed_generation_exception)
+        self.game_connection.Updated.connect(self.on_game_connection_updated)
 
         # Game Connection
         self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.game_connection_label,
@@ -273,6 +275,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         try:
             window = cls(network_client, game_connection, preset_manager, window_manager, options)
             await window.on_game_session_updated(network_client.current_game_session)
+            await window.on_game_connection_updated()
             window.on_server_connection_state_updated(network_client.connection_state)
             return window
 
@@ -1102,3 +1105,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @handle_network_errors
     async def _connect_to_server(self):
         await self.network_client.connect_to_server()
+
+    @asyncSlot()
+    async def on_game_connection_updated(self):
+        async with self._update_status_lock:
+            await self.network_client.session_self_update(self.game_connection.get_current_inventory(),
+                                                          self.game_connection.current_status,
+                                                          self.game_connection.backend.backend_choice)

@@ -139,6 +139,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
+        self.menu_action_layout_editor.triggered.connect(self._on_menu_action_layout_editor)
         self.action_login_window.triggered.connect(self._action_login_window)
 
         self.generate_seed_tab = GenerateSeedTab(self, self, options)
@@ -541,6 +542,11 @@ class MainWindow(WindowManager, Ui_MainWindow):
                                         QtWidgets.QMessageBox.Ok, self)
             box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             box.show()
+
+    def _on_menu_action_layout_editor(self):
+        from randovania.gui.corruption_layout_editor import CorruptionLayoutEditor
+        self.corruption_editor = CorruptionLayoutEditor()
+        self.corruption_editor.show()
 
     def _update_hints_text(self):
         game_description = default_database.default_prime2_game_description()

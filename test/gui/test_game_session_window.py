@@ -26,6 +26,7 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     # Setup
     network_client = MagicMock()
     network_client.current_user = User(id=12, name="Player A")
+    network_client.session_self_update = AsyncMock()
     game_connection = MagicMock()
     game_connection.pretty_current_status = "Maybe Connected"
     game_connection.backend.lock_identifier = None
@@ -72,6 +73,11 @@ async def test_on_game_session_updated(preset_manager, skip_qtbot):
     # Run
     await window.on_game_session_updated(second_session)
     window.update_multiworld_client_status.assert_awaited()
+    network_client.session_self_update.assert_awaited_once_with(
+        game_connection.get_current_inventory.return_value,
+        game_connection.current_status,
+        game_connection.backend.backend_choice,
+    )
 
 
 @pytest.mark.parametrize("in_game", [False, True])
