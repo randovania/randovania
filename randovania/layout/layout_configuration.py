@@ -5,6 +5,7 @@ from typing import List
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.default_database import default_prime2_item_database
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.layout.ammo_configuration import AmmoConfiguration
 from randovania.layout.available_locations import AvailableLocationsConfiguration, RandomizationMode
@@ -87,6 +88,7 @@ class LayoutSafeZone(BitPackDataClass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class LayoutConfiguration(BitPackDataClass):
+    game: RandovaniaGame
     trick_level_configuration: TrickLevelConfiguration
     damage_strictness: LayoutDamageStrictness
     sky_temple_keys: LayoutSkyTempleKeyMode
@@ -116,7 +118,7 @@ class LayoutConfiguration(BitPackDataClass):
     @property
     def as_json(self) -> dict:
         return {
-            "game": "mp2-echoes",
+            "game": self.game.value,
             "trick_level": self.trick_level_configuration.as_json,
             "damage_strictness": self.damage_strictness.value,
             "sky_temple_keys": self.sky_temple_keys.value,
@@ -137,6 +139,7 @@ class LayoutConfiguration(BitPackDataClass):
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
         return LayoutConfiguration(
+            game=RandovaniaGame(json_dict["game"]),
             trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"]),
             damage_strictness=LayoutDamageStrictness(json_dict["damage_strictness"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),

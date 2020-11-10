@@ -1,3 +1,4 @@
+import copy
 import json
 from pathlib import Path
 from typing import Optional
@@ -7,7 +8,7 @@ import slugify
 
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 4
+CURRENT_PRESET_VERSION = 5
 
 
 class InvalidPreset(Exception):
@@ -85,10 +86,64 @@ def _migrate_v3(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v4(preset: dict) -> dict:
+    trick_name_mapping = {
+        0: "Dash",
+        1: "BombJump",
+        2: "SlopeJump",
+        3: "Movement",
+        4: "BSJ",
+        5: "RollJump",
+        6: "UnderwaterDash",
+        7: "AirUnderwater",
+        8: "OoB",
+        10: "SAnoSJ",
+        11: "WallBoost",
+        12: "EnemyHop",
+        13: "Combat",
+        15: "InstantMorph",
+        26: "InvisibleObjects",
+        27: "StandableTerrain",
+        28: "TerminalFall",
+        29: "BoostJump",
+        30: "EDash",
+        31: "BomblessSlot",
+        32: "ScanPost",
+        33: "ScrewAttackTunnels",
+        34: "Knowledge",
+        35: "SeekerlessLocks",
+    }
+
+    preset["layout_configuration"]["game"] = "prime2"
+
+    trick_level = preset["layout_configuration"]["trick_level"]
+    global_level = trick_level.pop("global_level")
+
+    trick_level["minimal_logic"] = global_level == "minimal-logic"
+    specific_levels = {
+        trick_name_mapping[int(index)]: level
+        for index, level in trick_level["specific_levels"].items()
+    }
+    if global_level == "minimal-logic":
+        specific_levels = {}
+    elif global_level == "beginner":
+        for trick in ["BombJump", "Knowledge", "Movement", "ScanPost", "SAnoSJ"]:
+            specific_levels[trick] = "beginner"
+    else:
+        for trick in trick_name_mapping.values():
+            if trick not in specific_levels:
+                specific_levels[trick] = global_level
+
+    trick_level["specific_levels"] = specific_levels
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
     3: _migrate_v3,
+    4: _migrate_v4,
 }
 
 
@@ -146,6 +201,7 @@ class VersionedPreset:
                 self._converted = True
             except (ValueError, KeyError) as e:
                 self.exception = InvalidPreset(e)
+                raise
 
     def get_preset(self) -> Preset:
         self.ensure_converted()

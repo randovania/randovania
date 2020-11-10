@@ -2,7 +2,6 @@ import dataclasses
 import datetime
 from typing import List, Dict, Optional
 
-from randovania.layout.preset import Preset
 from randovania.layout.preset_migration import VersionedPreset
 from randovania.network_common.session_state import GameSessionState
 
@@ -15,10 +14,16 @@ class GameSessionListEntry:
     state: GameSessionState
     num_players: int
     creator: str
+    creation_date: datetime.datetime
+
+    def __post_init__(self):
+        tzinfo = self.creation_date.tzinfo
+        assert tzinfo is not None and tzinfo.utcoffset(self.creation_date) is not None
 
     @classmethod
     def from_json(cls, data: dict) -> "GameSessionListEntry":
         data["state"] = GameSessionState(data["state"])
+        data["creation_date"] = datetime.datetime.fromisoformat(data["creation_date"])
         return GameSessionListEntry(**data)
 
 
@@ -28,6 +33,7 @@ class PlayerSessionEntry:
     name: str
     row: Optional[int]
     admin: bool
+    connection_state: str
 
     @classmethod
     def from_json(cls, data) -> "PlayerSessionEntry":
@@ -36,6 +42,7 @@ class PlayerSessionEntry:
             name=data["name"],
             row=data["row"],
             admin=data["admin"],
+            connection_state=data["connection_state"],
         )
 
     @property

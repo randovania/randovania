@@ -4,8 +4,9 @@ import struct
 from asyncio import StreamReader, StreamWriter
 from typing import List, Optional
 
+from randovania.game_connection.backend_choice import GameBackendChoice
 from randovania.game_connection.connection_backend import ConnectionBackend, MemoryOperation
-from randovania.game_connection.connection_base import ConnectionStatus
+from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_description.world import World
 
 
@@ -92,8 +93,16 @@ class NintendontBackend(ConnectionBackend):
         self._ip = ip
 
     @property
+    def ip(self):
+        return self._ip
+
+    @property
     def lock_identifier(self) -> Optional[str]:
         return None
+
+    @property
+    def backend_choice(self) -> GameBackendChoice:
+        return GameBackendChoice.NINTENDONT
 
     # Game Backend Stuff
     async def _connect(self) -> bool:
@@ -153,18 +162,18 @@ class NintendontBackend(ConnectionBackend):
         try:
             for request in requests:
                 data = request.build_request_data()
-                self.logger.info(f"Sending {data} to {self._ip, self._port}.")
+                self.logger.debug(f"Sending {data.hex()} to {self._ip, self._port}.")
                 self._socket.writer.write(data)
                 await self._socket.writer.drain()
                 if request.output_bytes > 0:
                     response = await self._socket.reader.read(1024)
-                    self.logger.info(f"Received {response}.")
+                    self.logger.debug(f"Received {response.hex()}.")
                     all_responses.append(response)
                 else:
                     all_responses.append(b"")
 
         except OSError as e:
-            self.logger.info(f"Unable to connect to {self._ip}:{self._port}: {e}")
+            self.logger.warning(f"Unable to connect to {self._ip}:{self._port}: {e}")
             self._socket = None
             self._socket_error = e
             raise RuntimeError("Unable to connect") from e
@@ -211,16 +220,16 @@ class NintendontBackend(ConnectionBackend):
         return "Nintendont"
 
     @property
-    def current_status(self) -> ConnectionStatus:
+    def current_status(self) -> GameConnectionStatus:
         if self._socket is None:
-            return ConnectionStatus.Disconnected
+            return GameConnectionStatus.Disconnected
 
         if self.patches is None:
-            return ConnectionStatus.WrongGame
+            return GameConnectionStatus.UnknownGame
 
         if self._world is None:
-            return ConnectionStatus.TitleScreen
+            return GameConnectionStatus.TitleScreen
         elif not self.checking_for_collected_index:
-            return ConnectionStatus.TrackerOnly
+            return GameConnectionStatus.TrackerOnly
         else:
-            return ConnectionStatus.InGame
+            return GameConnectionStatus.InGame

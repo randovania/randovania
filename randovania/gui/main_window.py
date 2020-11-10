@@ -1,6 +1,8 @@
 import dataclasses
 import functools
 import json
+import os
+import platform
 from functools import partial
 from typing import Optional, List
 
@@ -13,6 +15,7 @@ from asyncqt import asyncSlot
 
 from randovania import VERSION
 from randovania.game_description import default_database
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.node import LogbookNode, LoreType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
@@ -135,6 +138,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
+        self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.action_login_window.triggered.connect(self._action_login_window)
 
         self.generate_seed_tab = GenerateSeedTab(self, self, options)
@@ -524,11 +528,65 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
-        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection())
+        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
         self.auto_tracker_window.show()
+
+    def _on_menu_action_previously_generated_games(self):
+        path = self._options.data_dir.joinpath("game_history")
+        if platform.system() == "Windows":
+            os.startfile(path)
+        else:
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Game History",
+                                        f"Previously generated games can be found at:\n{path}",
+                                        QtWidgets.QMessageBox.Ok, self)
+            box.setTextInteractionFlags(Qt.TextSelectableByMouse)
+            box.show()
 
     def _update_hints_text(self):
         game_description = default_database.default_prime2_game_description()
+        item_database = default_database.default_prime2_item_database()
+
+        rows = []
+
+        for item in item_database.major_items.values():
+            rows.append((
+                item.name,
+                item.item_category.hint_details[1],
+                item.item_category.general_details[1],
+                item.broad_category.hint_details[1],
+            ))
+
+        from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_NAMES
+        for dark_temple_key in DARK_TEMPLE_KEY_NAMES:
+            rows.append((
+                dark_temple_key.format("").strip(),
+                ItemCategory.TEMPLE_KEY.hint_details[1],
+                ItemCategory.TEMPLE_KEY.general_details[1],
+                ItemCategory.KEY.hint_details[1],
+            ))
+
+        rows.append((
+            "Sky Temple Key",
+            ItemCategory.SKY_TEMPLE_KEY.hint_details[1],
+            ItemCategory.SKY_TEMPLE_KEY.general_details[1],
+            ItemCategory.KEY.hint_details[1],
+        ))
+
+        for item in item_database.ammo.values():
+            rows.append((
+                item.name,
+                ItemCategory.EXPANSION.hint_details[1],
+                ItemCategory.EXPANSION.general_details[1],
+                item.broad_category.hint_details[1],
+            ))
+
+        self.hint_item_names_tree_widget.setRowCount(len(rows))
+        for i, elements in enumerate(rows):
+            for j, element in enumerate(elements):
+                self.hint_item_names_tree_widget.setItem(i, j, QtWidgets.QTableWidgetItem(element))
+
+        for i in range(4):
+            self.hint_item_names_tree_widget.resizeColumnToContents(i)
 
         number_for_hint_type = {
             hint_type: i + 1

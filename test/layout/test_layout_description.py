@@ -24,7 +24,7 @@ def test_load_multiworld(test_files_dir):
 
     # Assert
     as_json = result.as_json
-    del input_data["info"]["permalink"]
-    del as_json["info"]["permalink"]
+    del input_data["info"]
+    del as_json["info"]
 
     assert as_json == input_data

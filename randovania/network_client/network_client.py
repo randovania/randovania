@@ -1,10 +1,11 @@
 import asyncio
 import base64
 import hashlib
+import json
 import logging
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict, Any
 
 import aiofiles
 import aiohttp.client_exceptions
@@ -13,6 +14,9 @@ import socketio
 import socketio.exceptions
 
 import randovania
+from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.game_connection.connection_base import InventoryItem, GameConnectionStatus
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.network_client.game_session import GameSessionListEntry, GameSessionEntry, User
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.error import decode_error, InvalidSession
@@ -50,6 +54,7 @@ class NetworkClient:
     _connect_task: Optional[asyncio.Task] = None
     _restore_session_task: Optional[asyncio.Task] = None
     _connect_error: Optional[str] = None
+    _last_self_update: Any = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -261,8 +266,9 @@ class NetworkClient:
     async def leave_game_session(self, permanent: bool):
         if permanent:
             await self.session_admin_player(self._current_user.id, SessionAdminUserAction.KICK, None)
-        await self._emit_with_result("disconnect_game_session")
+        await self._emit_with_result("disconnect_game_session", self._current_game_session.id)
         self._current_game_session = None
+        self._last_self_update = None
 
     async def session_admin_global(self, action: SessionAdminGlobalAction, arg):
         return await self._emit_with_result("game_session_admin_session",
@@ -271,6 +277,21 @@ class NetworkClient:
     async def session_admin_player(self, user_id: int, action: SessionAdminUserAction, arg):
         return await self._emit_with_result("game_session_admin_player",
                                             (self._current_game_session.id, user_id, action.value, arg))
+
+    async def session_self_update(self,
+                                  inventory: Dict[ItemResourceInfo, InventoryItem],
+                                  state: GameConnectionStatus, backend: GameBackendChoice):
+
+        inventory_json = json.dumps([
+            {"index": resource.index, "amount": item.amount, "capacity": item.capacity}
+            for resource, item in inventory.items()
+        ])
+        state_string = f"{state.pretty_text} ({backend.pretty_text})"
+
+        if self._last_self_update != state_string:
+            await self._emit_with_result("game_session_self_update",
+                                         (self._current_game_session.id, inventory_json, state_string))
+            self._last_self_update = state_string
 
     @property
     def current_user(self) -> Optional[User]:

@@ -91,6 +91,10 @@ class GameSession(BaseModel):
     def layout_description(self, description: Optional[LayoutDescription]):
         self.layout_description_json = json.dumps(description.as_json) if description is not None else None
 
+    @property
+    def creation_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)
+
     def create_list_entry(self):
         return {
             "id": self.id,
@@ -99,6 +103,7 @@ class GameSession(BaseModel):
             "state": self.state.value,
             "num_players": len(self.players),
             "creator": self.creator.name,
+            "creation_date": self.creation_datetime.astimezone(datetime.timezone.utc).isoformat(),
         }
 
     def create_session_entry(self):
@@ -119,6 +124,7 @@ class GameSession(BaseModel):
 
             message = (f"{location_to_name[provider]} found {target.pickup.name} "
                        f"for {location_to_name[receiver]}.")
+
             return {
                 "message": message,
                 "time": time.astimezone(datetime.timezone.utc).isoformat(),
@@ -144,12 +150,7 @@ class GameSession(BaseModel):
             "name": self.name,
             "state": self.state.value,
             "players": [
-                {
-                    "id": membership.user.id,
-                    "name": membership.user.name,
-                    "row": membership.row,
-                    "admin": membership.admin,
-                }
+                membership.as_json
                 for membership in self.players
             ],
             "presets": [
@@ -186,7 +187,19 @@ class GameSessionMembership(BaseModel):
     row = peewee.IntegerField(null=True)
     admin = peewee.BooleanField()
     join_date = peewee.DateTimeField(default=_datetime_now)
+    connection_state = peewee.TextField(null=True)
     inventory = peewee.TextField(null=True)
+
+    @property
+    def as_json(self):
+        return {
+            "id": self.user.id,
+            "name": self.user.name,
+            "row": self.row,
+            "admin": self.admin,
+            "inventory": self.inventory,
+            "connection_state": self.connection_state,
+        }
 
     @property
     def effective_name(self) -> str:

@@ -2,9 +2,10 @@ import copy
 import dataclasses
 import logging
 import struct
-from typing import Optional, List, Dict, NamedTuple
+from typing import Optional, List, Dict
 
-from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, ConnectionStatus
+from randovania.game_connection.backend_choice import GameBackendChoice
+from randovania.game_connection.connection_base import ConnectionBase, InventoryItem, GameConnectionStatus
 from randovania.game_description import data_reader
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -81,7 +82,11 @@ class ConnectionBackend(ConnectionBase):
         self._permanent_pickups = []
 
     @property
-    def current_status(self) -> ConnectionStatus:
+    def current_status(self) -> GameConnectionStatus:
+        raise NotImplementedError()
+
+    @property
+    def backend_choice(self) -> GameBackendChoice:
         raise NotImplementedError()
 
     @property

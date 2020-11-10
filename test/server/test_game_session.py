@@ -28,11 +28,22 @@ def test_setup_app():
     game_session.setup_app(MagicMock())
 
 
-def test_list_game_sessions(clean_database):
-    # Setup
+def test_game_session_defaults_to_now(clean_database):
     someone = database.User.create(name="Someone")
     database.GameSession.create(name="Debug", num_teams=1, creator=someone)
-    database.GameSession.create(name="Other", num_teams=2, creator=someone)
+
+    session: database.GameSession = database.GameSession.get_by_id(1)
+    assert (datetime.datetime.now(datetime.timezone.utc) - session.creation_datetime) < datetime.timedelta(seconds=5)
+
+
+def test_list_game_sessions(clean_database):
+    # Setup
+    utc = datetime.timezone.utc
+    someone = database.User.create(name="Someone")
+    database.GameSession.create(name="Debug", num_teams=1, creator=someone,
+                                creation_date=datetime.datetime(2020, 10, 2, 10, 20, tzinfo=utc))
+    database.GameSession.create(name="Other", num_teams=2, creator=someone,
+                                creation_date=datetime.datetime(2020, 1, 20, 5, 2, tzinfo=utc))
     state = GameSessionState.SETUP.value
 
     # Run
@@ -40,8 +51,10 @@ def test_list_game_sessions(clean_database):
 
     # Assert
     assert result == [
-        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone'},
-        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone'},
+        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone',
+         'creation_date': '2020-10-02T10:20:00+00:00'},
+        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone',
+         'creation_date': '2020-01-20T05:02:00+00:00'},
     ]
 
 
@@ -61,7 +74,8 @@ def test_create_game_session(clean_database, preset_manager):
         'id': 1,
         'state': GameSessionState.SETUP.value,
         'name': 'My Room',
-        'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0}],
+        'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0, 'inventory': None,
+                     'connection_state': 'Online, Unknown'}],
         'presets': [preset_manager.default_preset.as_json],
         'actions': [],
         'seed_hash': None,
@@ -82,7 +96,8 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
 
     session = database.GameSession.create(name="The Session", password=None, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
-    database.GameSessionMembership.create(user=user2, session=session, row=0, admin=True)
+    database.GameSessionMembership.create(user=user2, session=session, row=0, admin=True,
+                                          connection_state="Online, Badass")
 
     # Run
     result = game_session.join_game_session(sio, 1, None)
@@ -94,8 +109,10 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'state': GameSessionState.SETUP.value,
         'name': 'The Session',
         'players': [
-            {'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0},
-            {'admin': False, 'id': 1234, 'name': 'The Name', 'row': None},
+            {'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0, 'inventory': None,
+             'connection_state': 'Online, Badass'},
+            {'admin': False, 'id': 1234, 'name': 'The Name', 'row': None, 'inventory': None,
+             'connection_state': 'Online, Unknown'},
         ],
         'actions': [],
         'presets': [{}],
@@ -763,8 +780,10 @@ def test_game_session_request_update(clean_database, mocker):
     user2 = database.User.create(id=1235, name="Other")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1,
                                           layout_description_json="{}")
-    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
-    database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True,
+                                          connection_state="Something")
+    database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False,
+                                          connection_state="Game")
     database.GameSessionTeamAction.create(session=session, provider_row=1, provider_location_index=0, receiver_row=0,
                                           time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
 
@@ -782,12 +801,16 @@ def test_game_session_request_update(clean_database, mocker):
                 "name": "The Name",
                 "row": 0,
                 "admin": True,
+                'inventory': None,
+                'connection_state': 'Something',
             },
             {
                 "id": 1235,
                 "name": "Other",
                 "row": 1,
                 "admin": False,
+                'inventory': None,
+                'connection_state': 'Game',
             },
         ],
         "presets": [],

@@ -4,7 +4,6 @@ import flask
 from flask_socketio import ConnectionRefusedError
 
 import randovania
-from randovania.interface_common.update_checker import strict_version_for_version_string, strict_current_version
 from randovania.server import game_session, user_session, database
 from randovania.server.server_app import ServerApp
 
@@ -70,11 +69,14 @@ def create_app():
 
     @sio.sio.server.on("disconnect")
     def disconnect(sid):
+        connected_clients.dec()
+
         sio_environ = sio.get_server().environ
-        num_clients = len(sio_environ)
-        if sid in sio_environ:
-            num_clients -= 1
-        connected_clients.set(num_clients)
         app.logger.info(f"Client at {sio_environ[sid]['REMOTE_ADDR']} disconnected.")
+
+        session = sio.get_server().get_session(sid)
+        app.logger.info(f"Session {session}")
+        if "user-id" in session:
+            game_session.report_user_disconnected(sio, session["user-id"], app.logger)
 
     return app
