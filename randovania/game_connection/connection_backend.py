@@ -32,9 +32,6 @@ class MemoryOperation:
         return 0
 
     def validate_byte_sizes(self):
-        if self.read_byte_count is not None and self.read_byte_count > 60:
-            raise ValueError(f"Attempting to read {self.read_byte_count} bytes, which is more than the allowed 60.")
-
         if (self.write_bytes is not None
                 and self.read_byte_count is not None
                 and len(self.write_bytes) != self.read_byte_count):

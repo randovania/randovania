@@ -51,6 +51,11 @@ class RequestBatch:
     def output_bytes(self):
         return self.num_read_bytes + self.num_validator_bytes
 
+    def is_compatible_with(self, holder: SocketHolder):
+        return (len(self.addresses) < holder.max_addresses
+                and self.output_bytes <= holder.max_output
+                and self.input_bytes <= holder.max_input)
+
     def add_op(self, op: MemoryOperation):
         if op.address not in self.addresses:
             self.addresses.append(op.address)
@@ -137,20 +142,41 @@ class NintendontBackend(ConnectionBackend):
             requests.append(current_batch)
             current_batch = RequestBatch()
 
+        processes_ops = []
+        max_write_size = self._socket.max_input - 20
         for op in ops:
             if op.byte_count == 0:
                 continue
             op.validate_byte_sizes()
 
+            if op.read_byte_count is None and (op.write_bytes is not None
+                                               and len(op.write_bytes) > max_write_size):
+
+                for offset in range(0, len(op.write_bytes), max_write_size):
+                    if op.offset is None:
+                        address = op.address + offset
+                        op_offset = None
+                    else:
+                        address = op.address
+                        op_offset = op.offset + offset
+                    processes_ops.append(MemoryOperation(
+                        address=address,
+                        offset=op_offset,
+                        write_bytes=op.write_bytes[offset:min(offset + max_write_size, len(op.write_bytes))],
+                    ))
+            else:
+                processes_ops.append(op)
+
+        for op in processes_ops:
             experimental = current_batch.copy()
             experimental.add_op(op)
 
-            if (len(experimental.addresses) >= self._socket.max_addresses
-                    or experimental.output_bytes > self._socket.max_output
-                    or experimental.input_bytes > self._socket.max_input):
+            if not experimental.is_compatible_with(self._socket):
                 _new_request()
 
             current_batch.add_op(op)
+            if not current_batch.is_compatible_with(self._socket):
+                raise ValueError(f"Request {op} is not compatible with current server.")
 
         # Finish the last batch
         _new_request()
