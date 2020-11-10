@@ -7,13 +7,13 @@ from randovania.game_connection.nintendont_backend import NintendontBackend, Soc
 
 
 @pytest.fixture(name="backend")
-def dolphin_backend():
+def nintendont_backend():
     backend = NintendontBackend("localhost")
     return backend
 
 
 @pytest.mark.asyncio
-async def test_perform_memory_operations(backend):
+async def test_perform_memory_operations(backend: NintendontBackend):
     backend._socket = MagicMock()
     backend._socket.max_input = 120
     backend._socket.max_output = 100
@@ -41,6 +41,34 @@ async def test_perform_memory_operations(backend):
     ])
     assert result == [b"A" * 50, b"B" * 30, b"C" * 50, None, None]
     backend._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
+
+
+@pytest.mark.asyncio
+async def test_perform_single_giant_memory_operation(backend: NintendontBackend):
+    backend._socket = MagicMock()
+    backend._socket.max_input = 120
+    backend._socket.max_output = 100
+    backend._socket.max_addresses = 8
+    backend._socket.writer.drain = AsyncMock()
+    backend._socket.reader.read = AsyncMock(side_effect=[
+        b"\x01",
+        b"\x01",
+    ])
+
+    # Run
+    result = await backend._perform_single_memory_operations(
+        MemoryOperation(0x1000, write_bytes=b"1" * 200),
+    )
+
+    # Assert
+    backend._socket.writer.drain.assert_has_awaits([call(), call()])
+    backend._socket.writer.write.assert_has_calls([
+        call(b'\x00\x01\x01\x01\x00\x00\x10\x00' + b'\x40\x64' + (b"1" * 100)),
+        call(b'\x00\x01\x01\x01\x00\x00\x10\x64' + b'\x40\x64' + (b"1" * 100)),
+    ])
+    assert result is None
+    backend._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
+
 
 
 @pytest.mark.asyncio
