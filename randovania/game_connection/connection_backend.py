@@ -342,18 +342,26 @@ class ConnectionBackend(ConnectionBase):
             return
 
         message = self.message_queue.pop(0)
-        encoded_message = message.encode("utf-16_be")[:self.patches.string_display.max_message_size]
+        overhead_size = 6  # 2 bytes for an extra char to differentiate sizes
+        encoded_message = message.encode("utf-16_be")[:self.patches.string_display.max_message_size - overhead_size]
 
         # The game doesn't handle very well a string at the same address with same size being
         # displayed multiple times
         if len(encoded_message) == self._last_message_size:
             encoded_message += b'\x00 '
-
         self._last_message_size = len(encoded_message)
+
+        # Add the null terminator
+        encoded_message += b"\x00\x00"
+        if len(encoded_message) & 3:
+            # Ensure the size is a multiple of 4
+            num_to_align = (len(encoded_message) | 3) - len(encoded_message) + 1
+            encoded_message += b"\x00" * num_to_align
+
         await self._perform_memory_operations([
             # The message string
             MemoryOperation(self.patches.string_display.message_receiver_string_ref,
-                            write_bytes=encoded_message + b"\x00\x00"),
+                            write_bytes=encoded_message),
 
             # Notify game to display message
             MemoryOperation(has_message_address, write_bytes=b"\x01"),

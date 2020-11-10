@@ -146,11 +146,11 @@ ALL_VERSIONS_PATCHES = [
         game_state_pointer=0x80418eb8,
         string_display=StringDisplayPatchAddresses(
             update_hint_state=0x80038020,
-            message_receiver_string_ref=0x803a6380,
+            message_receiver_string_ref=0x803bd118,
             wstring_constructor=0x802ff3dc,
             display_hud_memo=0x8006b3c8,
             cstate_manager_global=0x803db6e0,
-            max_message_size=0x58,
+            max_message_size=200,
         ),
         health_capacity=HealthCapacityAddresses(
             base_health_capacity=0x8041abe4,
@@ -178,11 +178,11 @@ ALL_VERSIONS_PATCHES = [
         game_state_pointer=0x8041A19C,
         string_display=StringDisplayPatchAddresses(
             update_hint_state=0x80038194,
-            message_receiver_string_ref=0x803a680a,
+            message_receiver_string_ref=0x803be378,
             wstring_constructor=0x802ff734,
             display_hud_memo=0x8006b504,
             cstate_manager_global=0x803dc900,
-            max_message_size=0x58,
+            max_message_size=200,
         ),
         health_capacity=HealthCapacityAddresses(
             base_health_capacity=0x8041bedc,
