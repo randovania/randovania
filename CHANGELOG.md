@@ -299,6 +299,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Judgment Drop, method of reaching the portal with Space Jump and Single Room Out of Bounds (Expert and above).
 
+-   Main Research, method of fighting Caretaker Drone without Bombs (Expert and above).
+
 -   Reactor Core, method of reaching the item with only Space Jump (Expert and above).
 
 -   Sanctuary Entrance, method to reach the cannon to the item with only Morph Ball, Spider Ball, and Power Bombs (Advanced and above).
