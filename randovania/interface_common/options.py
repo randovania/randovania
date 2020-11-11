@@ -56,6 +56,7 @@ _SERIALIZER_FOR_FIELD = {
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
     "nintendont_ip": Serializer(identity, str),
+    "tracking_inventory": Serializer(identity, bool),
 }
 
 
@@ -93,6 +94,7 @@ class Options:
     _displayed_alerts: Optional[Set[InfoAlert]] = None
     _game_backend: Optional[GameBackendChoice] = None
     _nintendont_ip: Optional[str] = None
+    _tracking_inventory: Optional[bool] = None
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
@@ -220,6 +222,7 @@ class Options:
         self._dark_mode = None
         self._game_backend = None
         self._nintendont_ip = None
+        self._tracking_inventory = None
 
     # Files paths
     @property
@@ -304,6 +307,14 @@ class Options:
     @nintendont_ip.setter
     def nintendont_ip(self, value: Optional[str]):
         self._edit_field("nintendont_ip", value)
+
+    @property
+    def tracking_inventory(self) -> bool:
+        return _return_with_default(self._tracking_inventory, lambda: True)
+
+    @tracking_inventory.setter
+    def tracking_inventory(self, value: bool):
+        self._edit_field("tracking_inventory", value)
 
     @property
     def displayed_alerts(self):

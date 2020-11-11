@@ -7,6 +7,7 @@ import sys
 from argparse import ArgumentParser
 from pathlib import Path
 
+import typing
 from PySide2 import QtCore
 from PySide2.QtWidgets import QApplication, QMessageBox
 from asyncqt import asyncClose
@@ -76,6 +77,9 @@ async def display_window_for(app, options, command: str, args):
 
 
 def create_backend(debug_game_backend: bool, options):
+    from randovania.interface_common.options import Options
+    options = typing.cast(Options, options)
+
     if debug_game_backend:
         from randovania.gui.debug_backend_window import DebugBackendWindow
         backend = DebugBackendWindow()
@@ -89,6 +93,7 @@ def create_backend(debug_game_backend: bool, options):
             backend = NintendontBackend(options.nintendont_ip)
         else:
             backend = DolphinBackend()
+
     return backend
 
 
@@ -165,6 +170,7 @@ async def qt_main(app: QApplication, data_dir: Path, args):
 
     backend = create_backend(args.debug_game_backend, options)
     app.game_connection = GameConnection(backend)
+    app.game_connection.tracking_inventory = options.tracking_inventory
 
     @asyncClose
     async def _on_last_window_closed():
