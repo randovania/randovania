@@ -118,6 +118,10 @@ class ConnectionBackend(ConnectionBase):
     def checking_for_collected_index(self, value):
         self._checking_for_collected_index = value
 
+    @ConnectionBase.tracking_inventory.setter
+    def tracking_inventory(self, value: bool):
+        self._tracking_inventory = value
+
     # Game Backend Stuff
     async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
         raise NotImplementedError()
@@ -174,6 +178,17 @@ class ConnectionBackend(ConnectionBase):
     def get_current_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         return self._inventory
 
+    async def _read_item(self, item: ItemResourceInfo) -> InventoryItem:
+        player_state_pointer = self._get_player_state_pointer()
+
+        op_result = await self._perform_single_memory_operations(MemoryOperation(
+            address=player_state_pointer,
+            read_byte_count=8,
+            offset=_powerup_offset(item.index),
+        ))
+
+        return InventoryItem(*struct.unpack(">II", op_result))
+
     async def _get_inventory(self) -> Dict[ItemResourceInfo, InventoryItem]:
         player_state_pointer = self._get_player_state_pointer()
 
@@ -194,35 +209,29 @@ class ConnectionBackend(ConnectionBase):
 
         return inventory
 
-    async def _update_inventory(self, new_inventory: Dict[ItemResourceInfo, InventoryItem]):
+    async def _perform_write_inventory(self, changed_items: Dict[ItemResourceInfo, InventoryItem]):
         player_state_pointer = self._get_player_state_pointer()
-        current_inventory = self.get_current_inventory()
-
-        changed_items = {item for item in self.game.resource_database.item
-                         if new_inventory[item] != current_inventory[item]}
-        if not changed_items:
-            return
 
         memory_ops = []
         for item in self.game.resource_database.item:
             if item in changed_items:
                 memory_ops.append(MemoryOperation(
                     address=player_state_pointer,
-                    write_bytes=struct.pack(">II", *new_inventory[item]),
+                    write_bytes=struct.pack(">II", *changed_items[item]),
                     read_byte_count=8,
                     offset=_powerup_offset(item.index),
                 ))
                 self.logger.debug(f"Setting {item.long_name} to "
-                                  f"{new_inventory[item].amount}/{new_inventory[item].capacity} "
+                                  f"{changed_items[item].amount}/{changed_items[item].capacity} "
                                   f"({memory_ops[-1].write_bytes.hex()})")
 
         # Suit Model
         dark_suit = self.game.resource_database.get_item(13)
         light_suit = self.game.resource_database.get_item(14)
         if dark_suit in changed_items or light_suit in changed_items:
-            if new_inventory[light_suit].capacity > 0:
+            if changed_items[light_suit].capacity > 0:
                 new_suit = 2
-            elif new_inventory[dark_suit].capacity > 0:
+            elif changed_items[dark_suit].capacity > 0:
                 new_suit = 1
             else:
                 new_suit = 0
@@ -241,8 +250,8 @@ class ConnectionBackend(ConnectionBase):
                 MemoryOperation(self.patches.health_capacity.energy_tank_capacity, read_byte_count=4),
             ])
             current_health, base_health_capacity, energy_tank_capacity = struct.unpack(">fff", b"".join(health_data))
-            new_health = new_inventory[energy_tank].amount * energy_tank_capacity + base_health_capacity
-            if new_inventory[energy_tank] < current_inventory[energy_tank]:
+            new_health = changed_items[energy_tank].amount * energy_tank_capacity + base_health_capacity
+            if changed_items[energy_tank] < changed_items[energy_tank]:
                 new_health = min(new_health, current_health)
 
             memory_ops.append(MemoryOperation(
@@ -254,28 +263,52 @@ class ConnectionBackend(ConnectionBase):
 
         # FIXME: check if the value read is what we expected, and then re-writes if needed
         result = await self._perform_memory_operations(memory_ops)
-        self._inventory = new_inventory
+        return changed_items
+
+    async def _write_item(self, item: ItemResourceInfo, value: InventoryItem):
+        await self._perform_write_inventory({item: value})
+
+    async def _update_inventory(self, new_inventory: Dict[ItemResourceInfo, InventoryItem]):
+        current_inventory = self.get_current_inventory()
+
+        changed_items = {item: new_inventory[item]
+                         for item in self.game.resource_database.item
+                         if new_inventory[item] != current_inventory[item]}
+        if changed_items:
+            new_inventory.update(await self._perform_write_inventory(changed_items))
+            self._inventory = new_inventory
 
     # Multiworld
     async def _check_for_collected_index(self):
         multiworld_magic_item = self.game.resource_database.multiworld_magic_item
         item_percentage = self.game.resource_database.item_percentage
 
-        current_inventory = self.get_current_inventory()
-        new_inventory = copy.copy(current_inventory)
+        new_magic_item = None
+        current_inventory = None
+        new_inventory = None
 
-        magic_inv = current_inventory[multiworld_magic_item]
+        if self._tracking_inventory:
+            current_inventory = self.get_current_inventory()
+            new_inventory = copy.copy(current_inventory)
+            magic_inv = current_inventory[multiworld_magic_item]
+        else:
+            magic_inv = await self._read_item(multiworld_magic_item)
+
         magic_capacity = magic_inv.capacity
-
         if magic_inv.amount > 0:
             self.logger.info(f"_check_for_collected_index: magic item was at {magic_inv.amount}/{magic_capacity}")
             magic_capacity -= magic_inv.amount
-            new_inventory[multiworld_magic_item] = InventoryItem(0, magic_inv.capacity - magic_inv.amount)
+            new_magic_item = InventoryItem(0, magic_inv.capacity - magic_inv.amount)
             await self._emit_location_collected(magic_inv.amount - 1)
 
         if self._pickups_to_give or magic_capacity < len(self._permanent_pickups):
             self.logger.info(f"_check_for_collected_index: {len(self._pickups_to_give)} pickups to give, "
                              f"{len(self._permanent_pickups)} permanent pickups, magic {magic_capacity}")
+
+            if current_inventory is None:
+                current_inventory = await self._get_inventory()
+                self._inventory = current_inventory
+                new_inventory = copy.copy(current_inventory)
 
             inventory_resources: CurrentResources = {
                 item: inv_item.capacity
@@ -299,9 +332,14 @@ class ConnectionBackend(ConnectionBase):
                 new_inventory[item] = InventoryItem(min(new_amount, new_capacity, item.max_capacity),
                                                     min(new_capacity, item.max_capacity))
 
-            new_inventory[multiworld_magic_item] = InventoryItem(0, len(self._permanent_pickups))
+            new_magic_item = InventoryItem(0, len(self._permanent_pickups))
 
-        await self._update_inventory(new_inventory)
+        if new_magic_item is not None:
+            if new_inventory is not None:
+                new_inventory[multiworld_magic_item] = new_magic_item
+                await self._update_inventory(new_inventory)
+            else:
+                await self._write_item(multiworld_magic_item, new_magic_item)
 
     def send_pickup(self, pickup: PickupEntry):
         self._pickups_to_give.append(pickup)
@@ -367,3 +405,16 @@ class ConnectionBackend(ConnectionBase):
 
         self.logger.info(f"_send_message_from_queue: sent '{message}' to game. "
                          f"{len(self.message_queue)} messages left.")
+
+    async def update_current_inventory(self):
+        self._inventory = await self._get_inventory()
+
+    async def _interact_with_game(self, dt):
+        await self._update_current_world()
+        if self._world is not None:
+            await self._send_message_from_queue(dt)
+            if self._tracking_inventory:
+                await self.update_current_inventory()
+
+            if self.checking_for_collected_index:
+                await self._check_for_collected_index()

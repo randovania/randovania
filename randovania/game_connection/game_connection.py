@@ -35,6 +35,7 @@ class GameConnection(QObject, ConnectionBase):
         self.backend.set_location_collected_listener(self._emit_location_collected)
         self.backend.checking_for_collected_index = self._location_collected_listener is not None
         self.backend.set_permanent_pickups(self._permanent_pickups)
+        self.backend.tracking_inventory = self.tracking_inventory
         self._notify_status()
 
     async def start(self):
@@ -87,3 +88,8 @@ class GameConnection(QObject, ConnectionBase):
             await self._location_collected_listener(location)
         else:
             self.display_message("Pickup not sent, Randovania is not connected to a session.")
+
+    @ConnectionBase.tracking_inventory.setter
+    def tracking_inventory(self, value: bool):
+        self._tracking_inventory = value
+        self.backend.tracking_inventory = value
