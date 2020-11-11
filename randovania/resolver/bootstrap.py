@@ -3,9 +3,9 @@ from typing import Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase, find_resource_info_with_long_name
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
-    add_resource_gain_to_current_resources, add_resources_into_another
+    add_resource_gain_to_current_resources
 from randovania.layout.layout_configuration import LayoutConfiguration, LayoutElevators
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver import debug
@@ -125,27 +125,6 @@ def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "St
         del initial_resources[resource]
 
     return starting_state
-
-
-def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
-                                         elevators: LayoutElevators,
-                                         ) -> CurrentResources:
-    """
-
-    :param resource_database:
-    :param translator_configuration:
-    :return:
-    """
-    events = [
-        ("Vanilla GFMC Compound Translator Gate", False),
-        ("Vanilla Torvus Temple Translator Gate", False),
-        ("Vanilla Great Temple Emerald Translator Gate", elevators == LayoutElevators.VANILLA),
-    ]
-
-    return {
-        find_resource_info_with_long_name(resource_database.misc, name): 1 if active else 0
-        for name, active in events
-    }
 
 
 def version_resources_for_game(resource_database: ResourceDatabase) -> CurrentResources:
