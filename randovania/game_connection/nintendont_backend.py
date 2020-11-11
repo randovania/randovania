@@ -151,7 +151,8 @@ class NintendontBackend(ConnectionBackend):
 
             if op.read_byte_count is None and (op.write_bytes is not None
                                                and len(op.write_bytes) > max_write_size):
-
+                self.logger.debug(f"Operation had {len(op.write_bytes)} bytes, "
+                                  f"above the limit of {max_write_size}. Splitting.")
                 for offset in range(0, len(op.write_bytes), max_write_size):
                     if op.offset is None:
                         address = op.address + offset

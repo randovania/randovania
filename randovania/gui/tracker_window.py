@@ -33,7 +33,7 @@ def _load_previous_state(persistence_path: Path,
     try:
         with previous_layout_path.open() as previous_layout_file:
             previous_layout = LayoutConfiguration.from_json_dict(json.load(previous_layout_file))
-    except (FileNotFoundError, TypeError, KeyError, json.JSONDecodeError):
+    except (FileNotFoundError, TypeError, KeyError, ValueError, json.JSONDecodeError):
         return None
 
     if previous_layout != layout_configuration:
