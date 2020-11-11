@@ -154,34 +154,64 @@ async def test_check_for_collected_index_nothing(backend):
     await backend._check_for_collected_index()
 
     # Assert
-    backend._update_inventory.assert_awaited_once_with(backend._inventory)
+    backend._update_inventory.assert_not_awaited()
 
 
 @pytest.mark.asyncio
-async def test_check_for_collected_index_location_collected(backend):
+async def test_check_for_collected_index_location_collected_tracking(backend):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.tracking_inventory = True
     backend._inventory = {
         backend.game.resource_database.multiworld_magic_item: InventoryItem(10, 10)
     }
-    backend._emit_location_collected = AsyncMock()
+    backend._read_item = AsyncMock()
+    backend._write_item = AsyncMock()
     backend._update_inventory = AsyncMock()
-
+    backend._emit_location_collected = AsyncMock()
     # Run
     await backend._check_for_collected_index()
 
     # Assert
     backend._emit_location_collected.assert_awaited_once_with(9)
+    backend._read_item.assert_not_awaited()
+    backend._write_item.assert_not_awaited()
     backend._update_inventory.assert_awaited_once_with({
         backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)
     })
 
 
 @pytest.mark.asyncio
-async def test_check_for_collected_index_receive_items(backend):
+async def test_check_for_collected_index_location_collected_no_tracking(backend):
     # Setup
     backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.tracking_inventory = False
+    backend._inventory = None
+    backend._read_item = AsyncMock(return_value=InventoryItem(10, 10))
+    backend._write_item = AsyncMock()
     backend._update_inventory = AsyncMock()
+    backend._emit_location_collected = AsyncMock()
+
+    # Run
+    await backend._check_for_collected_index()
+
+    # Assert
+    backend._emit_location_collected.assert_awaited_once_with(9)
+    backend._update_inventory.assert_not_awaited()
+    backend._read_item.assert_awaited_once_with(backend.game.resource_database.multiworld_magic_item)
+    backend._write_item.assert_awaited_once_with(backend.game.resource_database.multiworld_magic_item,
+                                                 InventoryItem(0, 0))
+
+
+@pytest.mark.parametrize("tracking", [False, True])
+@pytest.mark.asyncio
+async def test_check_for_collected_index_receive_items(backend, tracking: bool):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend.tracking_inventory = tracking
+    backend._update_inventory = AsyncMock()
+    backend._read_item = AsyncMock(return_value=InventoryItem(0, 0))
+    backend._write_item = AsyncMock()
 
     resource = backend.game.resource_database.energy_tank
     pickup = PickupEntry("Pickup", 0, ItemCategory.MISSILE, ItemCategory.MISSILE, (
@@ -189,20 +219,30 @@ async def test_check_for_collected_index_receive_items(backend):
                              ((resource, resource.max_capacity),),
                              ),
     ))
-    backend._inventory = {
+    inventory = {
         backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 0),
         backend.game.resource_database.energy_tank: InventoryItem(1, 1),
     }
+    backend._get_inventory = AsyncMock(return_value=inventory)
+    if tracking:
+        backend._inventory = inventory
+    else:
+        backend._inventory = None
     backend._permanent_pickups = [pickup]
 
     # Run
     await backend._check_for_collected_index()
 
     # Assert
+    if tracking:
+        backend._read_item.assert_not_awaited()
+    else:
+        backend._read_item.assert_awaited_once_with(backend.game.resource_database.multiworld_magic_item)
     backend._update_inventory.assert_awaited_once_with({
         backend.game.resource_database.multiworld_magic_item: InventoryItem(0, 1),
         backend.game.resource_database.energy_tank: InventoryItem(resource.max_capacity, resource.max_capacity),
     })
+    backend._write_item.assert_not_awaited()
 
 
 @pytest.mark.asyncio

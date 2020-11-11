@@ -101,13 +101,7 @@ class DolphinBackend(ConnectionBackend):
             self._test_still_hooked()
             return
 
-        await self._update_current_world()
-        if self._world is not None:
-            await self._send_message_from_queue(dt)
-            self._inventory = await self._get_inventory()
-
-            if self.checking_for_collected_index:
-                await self._check_for_collected_index()
+        await self._interact_with_game(dt)
 
     @property
     def name(self) -> str:
