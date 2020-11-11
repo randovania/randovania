@@ -462,6 +462,9 @@ Asset id: 3098756660
           Any of the following:
               Morph Ball Bomb
               Power Bomb ≥ 3 and Knowledge (Beginner)
+          Any of the following:
+              Enabled Allow Vanilla Seeker Launcher
+              Seeker Launcher and Missile ≥ 5
 
 > Morph Ball Door to Path of Honor; Heals? False
   * Morph Ball Door to Path of Honor/Morph Ball Door to Hall of Honored Dead
@@ -4500,7 +4503,7 @@ Asset id: 1090496759
 > Door to Main Reactor; Heals? False; Spawn Point
   * Dark Door to Main Reactor/Door to Storage D
   > Pickup (Dark Beam)
-      Trivial
+      Enabled Door Randomizer or Enabled Allow Vanilla Dark Beam or Shoot Dark Beam
 
 > Pickup (Dark Beam); Heals? False
   * Pickup 52; Major Location? True
@@ -4970,7 +4973,9 @@ Asset id: 1385574326
 > Door to Feeding Pit; Heals? False; Spawn Point
   * Light Door to Feeding Pit/Door to Ing Cache 1
   > Event - Agon Wastes Ing Cache 1 Pickup
-      Dark World Damage ≥ 7
+      All of the following:
+          Dark World Damage ≥ 7
+          Enabled Door Randomizer or Enabled Allow Vanilla Light Beam or Shoot Light Beam
 
 > Event - Agon Wastes Ing Cache 1 Pickup; Heals? False
   * Event Agon Wastes Ing Cache 1 Pickup
@@ -6386,7 +6391,9 @@ Asset id: 2761578287
   > Pickup 2 (Dark Torvus Key 1)
       Dark World Damage ≥ 15 and Activate Safe Zone and Use Screw Attack (Space Jump)
   > Central Safe Zone
-      Dark World Damage ≥ 5 and Activate Safe Zone
+      All of the following:
+          Dark World Damage ≥ 5 and Activate Safe Zone
+          Boost Ball or Enabled Allow Vanilla Boost Ball
 
 > Pickup (Boost Ball); Heals? False
   * Pickup 75; Major Location? True
@@ -7976,7 +7983,7 @@ Asset id: 2527519102
 > Door to Main Hydrochamber; Heals? False; Spawn Point
   * Normal Door to Main Hydrochamber/Door to Hydrochamber Storage
   > Event - Hydrochamber Storage Item
-      Trivial
+      Gravity Boost or Enabled Allow Vanilla Gravity Boost
 
 > Pickup (Gravity Boost); Heals? False
   * Pickup 92; Major Location? True
@@ -9956,6 +9963,9 @@ Asset id: 1378173793
               Use Screw Attack (Space Jump)
               Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
               Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          Any of the following:
+              Enabled Allow Vanilla Screw Attack or Use Screw Attack (Space Jump)
+              Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
   > Above Bomb Slot
       Before Vault Bridge
 
@@ -10020,7 +10030,9 @@ Asset id: 1378173793
 > Event - Vault Bomb Slot; Heals? False
   * Event Vault Bomb Slot
   > Pickup (Screw Attack)
-      Trivial
+      Any of the following:
+          Enabled Allow Vanilla Screw Attack or Use Screw Attack (Space Jump)
+          Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
 
 > Front of Bomb Slot; Heals? False
   > Event - Vault Bomb Slot
@@ -10693,14 +10705,6 @@ Asset id: 1564082177
 
 > Portal from Hive Summit; Heals? False
   * No Return Portal to Hive Summit/Portal to Aerie
-  > Event - Dark Samus 2
-      Any of the following:
-          All of the following:
-              Normal Damage ≥ 50
-              Any of the following:
-                  Dark Visor
-                  Echo Visor and Combat (Beginner)
-          Invisible Objects (Advanced) and Normal Damage ≥ 100
   > Event - Aerie Pickup
       All of the following:
           After Dark Samus 2
@@ -10710,17 +10714,17 @@ Asset id: 1564082177
               Movement (Beginner) and Use Screw Attack (No Space Jump)
   > Bottom Floor
       After Dark Samus 2
+  > Before Dark Samus
+      All of the following:
+          Before Dark Samus 2
+          Echo Visor or Enabled Allow Vanilla Echo Visor
 
 > Dock to Aerie Access; Heals? False; Spawn Point
   * Other Door to Aerie Access/Dock to Aerie
-  > Event - Dark Samus 2
-      Any of the following:
-          All of the following:
-              Normal Damage ≥ 50
-              Any of the following:
-                  Dark Visor
-                  Echo Visor and Combat (Beginner)
-          Invisible Objects (Advanced) and Normal Damage ≥ 100
+  > Before Dark Samus
+      All of the following:
+          Before Dark Samus 2
+          Echo Visor or Enabled Allow Vanilla Echo Visor
 
 > Pickup (Echo Visor); Heals? False
   * Pickup 118; Major Location? True
@@ -10730,7 +10734,7 @@ Asset id: 1564082177
 > Elevator to Sanctuary Fortress - Aerie Transport Station; Heals? False
   * Teleporter to Sanctuary Fortress - Aerie Transport Station
   > Bottom Floor
-      Trivial
+      After Dark Samus 2
 
 > Event - Dark Samus 2; Heals? False
   * Event Dark Samus 2
@@ -10749,6 +10753,16 @@ Asset id: 1564082177
       Morph Ball Bomb and Movement (Expert) and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
   > Elevator to Sanctuary Fortress - Aerie Transport Station
       Echo Visor and After Aerie Pickup
+
+> Before Dark Samus; Heals? False
+  > Event - Dark Samus 2
+      Any of the following:
+          All of the following:
+              Normal Damage ≥ 50
+              Any of the following:
+                  Dark Visor
+                  Echo Visor and Combat (Beginner)
+          Invisible Objects (Advanced) and Normal Damage ≥ 100
 
 ----------------
 Hive Summit
