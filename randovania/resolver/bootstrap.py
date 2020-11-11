@@ -54,7 +54,7 @@ _events_for_vanilla_item_loss_from_ship = {
 }
 
 
-def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
+def trick_resources_for_configuration(configuration: TrickLevelConfiguration,
                                       resource_database: ResourceDatabase,
                                       ) -> CurrentResources:
     """
@@ -71,10 +71,6 @@ def static_resources_for_layout_logic(configuration: TrickLevelConfiguration,
         else:
             level = configuration.level_for_trick(trick)
         static_resources[trick] = level.as_number
-
-    # Room Rando
-    room_rando = find_resource_info_with_long_name(resource_database.misc, "Room Randomizer")
-    static_resources[room_rando] = 0
 
     return static_resources
 
@@ -152,6 +148,30 @@ def _create_vanilla_translator_resources(resource_database: ResourceDatabase,
     }
 
 
+def version_resources_for_game(resource_database: ResourceDatabase) -> CurrentResources:
+    # All version differences are patched out from the game
+    return {
+        resource: 1 if resource.long_name == "NTSC" else 0
+        for resource in resource_database.version
+    }
+
+
+def misc_resources_for_configuration(configuration: LayoutConfiguration,
+                                     resource_database: ResourceDatabase) -> CurrentResources:
+    enabled_resources = {
+        # Allow Vanilla X
+        19, 20, 21, 22, 23, 24, 25
+    }
+    if configuration.elevators == LayoutElevators.VANILLA:
+        # Vanilla Great Temple Emerald Translator Gate
+        enabled_resources.add(18)
+
+    return {
+        resource: 1 if resource.index in enabled_resources else 0
+        for resource in resource_database.misc
+    }
+
+
 def logic_bootstrap(configuration: LayoutConfiguration,
                     game: GameDescription,
                     patches: GamePatches,
@@ -178,17 +198,13 @@ def logic_bootstrap(configuration: LayoutConfiguration,
                                              major_items_config.progressive_suit,
                                              )
 
-    static_resources = static_resources_for_layout_logic(configuration.trick_level_configuration,
+    static_resources = trick_resources_for_configuration(configuration.trick_level_configuration,
                                                          game.resource_database)
+    static_resources.update(version_resources_for_game(game.resource_database))
+    static_resources.update(misc_resources_for_configuration(configuration, game.resource_database))
 
-    add_resources_into_another(starting_state.resources, static_resources)
-    add_resources_into_another(starting_state.resources,
-                               _create_vanilla_translator_resources(game.resource_database,
-                                                                    configuration.elevators))
-
-    # All version differences are patched out from the game
-    starting_state.resources[find_resource_info_with_long_name(game.resource_database.version,
-                                                               "NTSC")] = 1
+    for resource, quantity in static_resources.items():
+        starting_state.resources[resource] = quantity
 
     game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
