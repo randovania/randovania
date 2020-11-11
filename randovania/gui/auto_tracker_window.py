@@ -44,6 +44,8 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
         self.game_connection_setup = GameConnectionSetup(self, self.game_connection_tool, self.connection_status_label,
                                                          self.game_connection, options)
+        self.force_update_button.setEnabled(not options.tracking_inventory)
+        self.force_update_button.clicked.connect(self.on_force_update_button)
 
         self._update_timer = QTimer(self)
         self._update_timer.setInterval(100)
@@ -73,6 +75,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
     @asyncSlot()
     async def _on_timer_update(self):
         try:
+            self.force_update_button.setEnabled(not self.game_connection.tracking_inventory)
             current_status = self.game_connection.current_status
             if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
                 inventory = self.game_connection.get_current_inventory()
@@ -192,3 +195,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
              find_resource("Sky Temple Key 4"), find_resource("Sky Temple Key 5"), find_resource("Sky Temple Key 6"),
              find_resource("Sky Temple Key 7"), find_resource("Sky Temple Key 8"), find_resource("Sky Temple Key 9"),)
         ))
+
+    @asyncSlot()
+    async def on_force_update_button(self):
+        await self.game_connection.backend.update_current_inventory()

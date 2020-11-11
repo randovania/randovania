@@ -35,10 +35,17 @@ class GameConnectionSetup:
         self.upload_nintendont_action = QtWidgets.QAction(self.tool)
         self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
         self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
+        self.track_items = QtWidgets.QAction(self.tool)
+        self.track_items.setText("Tracking items")
+        self.track_items.setCheckable(True)
+        self.track_items.setChecked(options.tracking_inventory)
+        self.track_items.triggered.connect(self.on_track_items)
 
         self.game_connection_menu.addAction(self.use_dolphin_backend)
         self.game_connection_menu.addAction(self.use_nintendont_backend)
         self.game_connection_menu.addAction(self.upload_nintendont_action)
+        self.game_connection_menu.addSeparator()
+        self.game_connection_menu.addAction(self.track_items)
 
         self.tool.setMenu(self.game_connection_menu)
 
@@ -106,3 +113,9 @@ class GameConnectionSetup:
             box.setText(f"Error uploading to Wii: {e}")
         finally:
             box.button(QtWidgets.QMessageBox.Ok).setEnabled(True)
+
+    def on_track_items(self):
+        track_items = self.track_items.isChecked()
+        with self.options as options:
+            options.tracking_inventory = track_items
+        self.game_connection.tracking_inventory = track_items
