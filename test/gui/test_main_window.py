@@ -165,3 +165,18 @@ def test_on_menu_action_previously_generated_games(default_main_window, mocker, 
     else:
         mock_start_file.assert_not_called()
         mock_message_box.return_value.show.assert_called_once()
+
+
+@pytest.mark.asyncio
+async def test_on_menu_action_map_tracker(default_main_window, mocker):
+    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
+                                       return_value=QDialog.Accepted)
+    default_main_window.open_map_tracker = MagicMock()
+    preset = next(default_main_window.preset_manager.all_presets)
+
+    # Run
+    await default_main_window._on_menu_action_map_tracker()
+
+    # Assert
+    mock_execute_dialog.assert_awaited_once()
+    default_main_window.open_map_tracker.assert_called_once_with(preset.get_preset().layout_configuration)
