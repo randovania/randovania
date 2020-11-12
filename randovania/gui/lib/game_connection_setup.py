@@ -1,3 +1,5 @@
+from typing import Optional
+
 import wiiload
 from PySide2 import QtWidgets
 from asyncqt import asyncSlot
@@ -23,33 +25,33 @@ class GameConnectionSetup:
         self.game_connection.Updated.connect(self.on_game_connection_updated)
         self.tool.setText("Configure backend")
 
+        def _create_check(text: str, on_triggered, default: Optional[bool] = None):
+            action = QtWidgets.QAction(self.tool)
+            action.setText(text)
+            action.setCheckable(True)
+            if default is not None:
+                action.setChecked(default)
+            action.triggered.connect(on_triggered)
+            return action
+
         self.game_connection_menu = QtWidgets.QMenu(self.tool)
 
-        self.use_dolphin_backend = QtWidgets.QAction(self.tool)
-        self.use_dolphin_backend.setText("Dolphin")
-        self.use_dolphin_backend.setCheckable(True)
-        self.use_dolphin_backend.triggered.connect(self.on_use_dolphin_backend)
-        self.use_nintendont_backend = QtWidgets.QAction(self.tool)
-        self.use_nintendont_backend.setCheckable(True)
-        self.use_nintendont_backend.triggered.connect(self.on_use_nintendont_backend)
+        self.use_dolphin_backend = _create_check("Dolphin", self.on_use_dolphin_backend)
+        self.use_nintendont_backend = _create_check("", self.on_use_nintendont_backend)
         self.upload_nintendont_action = QtWidgets.QAction(self.tool)
         self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
         self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
-        self.track_items = QtWidgets.QAction(self.tool)
-        self.track_items.setText("Tracking items")
-        self.track_items.setCheckable(True)
-        self.track_items.setChecked(options.tracking_inventory)
-        self.track_items.triggered.connect(self.on_track_items)
-        self.displaying_messages = QtWidgets.QAction(self.tool)
-        self.displaying_messages.setText("Display ingame received item messages")
-        self.displaying_messages.setCheckable(True)
-        self.displaying_messages.setChecked(options.displaying_messages)
-        self.displaying_messages.triggered.connect(self.on_displaying_messages)
+        self.connect_to_game = _create_check("Connect to the game", self.on_connect_to_game, True)
+        self.track_items = _create_check("Automatically track inventory",
+                                         self.on_track_items, options.tracking_inventory)
+        self.displaying_messages = _create_check("Display in-game messages for received items",
+                                                 self.on_displaying_messages, options.displaying_messages)
 
         self.game_connection_menu.addAction(self.use_dolphin_backend)
         self.game_connection_menu.addAction(self.use_nintendont_backend)
         self.game_connection_menu.addAction(self.upload_nintendont_action)
         self.game_connection_menu.addSeparator()
+        self.game_connection_menu.addAction(self.connect_to_game)
         self.game_connection_menu.addAction(self.track_items)
         self.game_connection_menu.addAction(self.displaying_messages)
 
@@ -125,6 +127,10 @@ class GameConnectionSetup:
             box.setText(f"Error uploading to Wii: {e}")
         finally:
             box.button(QtWidgets.QMessageBox.Ok).setEnabled(True)
+
+    def on_connect_to_game(self):
+        connect_to_game = self.connect_to_game.isChecked()
+        self.game_connection.backend.set_connection_enabled(connect_to_game)
 
     def on_track_items(self):
         track_items = self.track_items.isChecked()
