@@ -86,6 +86,9 @@ class DebugBackendWindow(ConnectionBackend, Ui_DebugBackendWindow):
         return "Debug"
 
     async def update(self, dt: float):
+        if not self._enabled:
+            return
+        
         if not await self._identify_game():
             return
 

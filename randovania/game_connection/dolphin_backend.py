@@ -94,6 +94,9 @@ class DolphinBackend(ConnectionBackend):
             self.dolphin.un_hook()
 
     async def update(self, dt: float):
+        if not self._enabled:
+            return
+
         if self._ensure_hooked():
             return
 
