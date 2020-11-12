@@ -70,6 +70,7 @@ class ConnectionBackend(ConnectionBase):
     _checking_for_collected_index: bool = False
     _games: Dict[RandovaniaGame, GameDescription]
     _inventory: Dict[ItemResourceInfo, InventoryItem]
+    _enabled: bool = True
 
     # Messages
     message_queue: List[str]
@@ -125,6 +126,11 @@ class ConnectionBackend(ConnectionBase):
     @ConnectionBase.displaying_messages.setter
     def displaying_messages(self, value: bool):
         self._displaying_messages = value
+
+    def set_connection_enabled(self, value: bool):
+        self._enabled = value
+        if not value:
+            self.patches = None
 
     # Game Backend Stuff
     async def _perform_memory_operations(self, ops: List[MemoryOperation]) -> List[Optional[bytes]]:
