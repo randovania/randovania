@@ -75,7 +75,7 @@ def create_app():
         connected_clients.dec()
         sio_environ = sio.get_server().environ
 
-        forwarded_for = sio_environ.get('HTTP_X_FORWARDED_FOR')
+        forwarded_for = sio_environ[sid].get('HTTP_X_FORWARDED_FOR')
         app.logger.info(f"Client at {sio_environ[sid]['REMOTE_ADDR']} ({forwarded_for}) disconnected.")
 
         session = sio.get_server().get_session(sid)
