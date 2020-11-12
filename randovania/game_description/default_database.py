@@ -8,6 +8,7 @@ from randovania.game_description.data_reader import read_resource_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item import item_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 
 
@@ -33,6 +34,11 @@ def _read_database_in_path(path: Path) -> item_database.ItemDatabase:
 
 
 @functools.lru_cache()
+def default_prime1_item_database() -> item_database.ItemDatabase:
+    return _read_database_in_path(get_data_path().joinpath("item_database", "prime1"))
+
+
+@functools.lru_cache()
 def default_prime2_item_database() -> item_database.ItemDatabase:
     return _read_database_in_path(get_data_path().joinpath("item_database", "prime2"))
 
@@ -40,6 +46,17 @@ def default_prime2_item_database() -> item_database.ItemDatabase:
 @functools.lru_cache()
 def default_prime3_item_database() -> item_database.ItemDatabase:
     return _read_database_in_path(get_data_path().joinpath("item_database", "prime3"))
+
+
+def item_database_for_game(game: RandovaniaGame):
+    if game == RandovaniaGame.PRIME1:
+        return default_prime1_item_database()
+    elif game == RandovaniaGame.PRIME2:
+        return default_prime2_item_database()
+    elif game == RandovaniaGame.PRIME3:
+        return default_prime3_item_database()
+    else:
+        raise ValueError(f"Unknown game: {game}")
 
 
 @functools.lru_cache()

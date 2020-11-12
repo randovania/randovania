@@ -1,3 +1,4 @@
+import copy
 import dataclasses
 import hashlib
 import math
@@ -179,12 +180,17 @@ class BitPackDataClass(BitPackValue):
 
             item = getattr(self, field.name)
             if reference is not None:
-                is_different = item != getattr(reference, field.name)
+                reference_item = getattr(reference, field.name)
+                is_different = item != reference_item
                 yield from encode_bool(is_different)
                 if not is_different:
                     continue
+            else:
+                reference_item = None
 
-            yield from _get_bit_pack_value_for(item).bit_pack_encode(field.metadata)
+            field_meta = dict(**field.metadata)
+            field_meta["reference"] = reference_item
+            yield from _get_bit_pack_value_for(item).bit_pack_encode(field_meta)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
@@ -197,11 +203,16 @@ class BitPackDataClass(BitPackValue):
 
             should_decode = True
             if reference is not None:
+                reference_item = getattr(reference, field.name)
                 if not decode_bool(decoder):
-                    item = getattr(reference, field.name)
+                    item = reference_item
                     should_decode = False
+            else:
+                reference_item = None
 
             if should_decode:
+                field_meta = dict(**field.metadata)
+                field_meta["reference"] = reference_item
                 item = _get_bit_pack_value_for_type(field.type).bit_pack_unpack(decoder, field.metadata)
 
             args[field.name] = item

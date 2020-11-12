@@ -4,6 +4,7 @@ from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataClass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_description import default_database
 from randovania.game_description.default_database import default_prime2_item_database
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
@@ -113,7 +114,7 @@ class LayoutConfiguration(BitPackDataClass):
 
     @property
     def game_data(self) -> dict:
-        return default_data.decode_default_prime2()
+        return default_data.read_json_then_binary(self.game)[1]
 
     @property
     def as_json(self) -> dict:
@@ -138,22 +139,19 @@ class LayoutConfiguration(BitPackDataClass):
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutConfiguration":
+        game = RandovaniaGame(json_dict["game"])
+        item_database = default_database.item_database_for_game(game)
         return LayoutConfiguration(
-            game=RandovaniaGame(json_dict["game"]),
-            trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"]),
+            game=game,
+            trick_level_configuration=TrickLevelConfiguration.from_json(json_dict["trick_level"], game),
             damage_strictness=LayoutDamageStrictness(json_dict["damage_strictness"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
             starting_location=StartingLocation.from_json(json_dict["starting_location"]),
             available_locations=AvailableLocationsConfiguration.from_json(json_dict["available_locations"]),
-            major_items_configuration=MajorItemsConfiguration.from_json(
-                json_dict["major_items_configuration"],
-                default_prime2_item_database(),
-            ),
-            ammo_configuration=AmmoConfiguration.from_json(
-                json_dict["ammo_configuration"],
-                default_prime2_item_database(),
-            ),
+            major_items_configuration=MajorItemsConfiguration.from_json(json_dict["major_items_configuration"],
+                                                                        item_database),
+            ammo_configuration=AmmoConfiguration.from_json(json_dict["ammo_configuration"], item_database),
             translator_configuration=TranslatorConfiguration.from_json(json_dict["translator_configuration"]),
             hints=HintConfiguration.from_json(json_dict["hints"]),
             beam_configuration=BeamConfiguration.from_json(json_dict["beam_configuration"]),
