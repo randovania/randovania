@@ -2,6 +2,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.games.game import RandovaniaGame
 from randovania.layout.trick_level import TrickLevelConfiguration
 
 
@@ -19,7 +20,8 @@ from randovania.layout.trick_level import TrickLevelConfiguration
 def _configuration_with_data(request, mocker, echoes_game_description):
     tricks = echoes_game_description.resource_database.trick[:14]
     mocker.patch("randovania.layout.trick_level._all_tricks", return_value=tricks)
-    return request.param["encoded"], TrickLevelConfiguration.from_json(request.param["json"])
+    return request.param["encoded"], TrickLevelConfiguration.from_json(request.param["json"],
+                                                                       game=RandovaniaGame.PRIME2)
 
 
 def test_decode(configuration_with_data):
@@ -28,7 +30,9 @@ def test_decode(configuration_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = TrickLevelConfiguration.bit_pack_unpack(decoder, {})
+    result = TrickLevelConfiguration.bit_pack_unpack(decoder, {
+        "reference": TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2),
+    })
 
     # Assert
     assert result == expected
@@ -48,7 +52,8 @@ def test_encode(configuration_with_data):
 
 
 def test_encode_no_tricks_are_removed():
-    from_json = TrickLevelConfiguration.from_json({"minimal_logic": False, "specific_levels": {"Dash": "no-tricks"}})
+    from_json = TrickLevelConfiguration.from_json({"minimal_logic": False, "specific_levels": {"Dash": "no-tricks"}},
+                                                  game=RandovaniaGame.PRIME2)
 
     encoded = bitpacking._pack_encode_results([
         (value_argument, value_format)
@@ -58,6 +63,7 @@ def test_encode_no_tricks_are_removed():
     assert encoded == b'\x00\x00\x00\x00'
 
     decoder = BitPackDecoder(encoded)
-    decoded = TrickLevelConfiguration.bit_pack_unpack(decoder, {})
+    decoded = TrickLevelConfiguration.bit_pack_unpack(
+        decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.PRIME2), })
 
     assert decoded.specific_levels == {}
