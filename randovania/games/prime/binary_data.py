@@ -239,7 +239,8 @@ ConstructNode = Struct(
     name=CString("utf8"),
     heal=Flag,
     coordinates=OptionalValue(ConstructNodeCoordinates),
-    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5, logbook=6),
+    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, translator_gate=5,
+                             logbook=6, player_ship=7),
     data=Switch(
         lambda this: this.node_type,
         {
@@ -273,6 +274,9 @@ ConstructNode = Struct(
                 string_asset_id=VarInt,
                 lore_type=ConstructLoreType,
                 extra=VarInt,
+            ),
+            "player_ship": Struct(
+                is_unlocked=ConstructRequirement,
             )
         }
     )
