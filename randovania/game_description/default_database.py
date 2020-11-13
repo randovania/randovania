@@ -18,7 +18,11 @@ def default_prime2_resource_database() -> ResourceDatabase:
 
 
 def default_prime2_game_description() -> GameDescription:
-    return data_reader.decode_data(default_data.decode_default_prime2())
+    return game_description_for(RandovaniaGame.PRIME2)
+
+
+def game_description_for(game: RandovaniaGame) -> GameDescription:
+    return data_reader.decode_data(default_data.read_json_then_binary(game)[1])
 
 
 def _read_database_in_path(path: Path) -> item_database.ItemDatabase:
