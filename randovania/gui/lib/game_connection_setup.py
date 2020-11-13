@@ -1,3 +1,5 @@
+from typing import Optional
+
 import wiiload
 from PySide2 import QtWidgets
 from asyncqt import asyncSlot
@@ -8,7 +10,7 @@ from randovania.game_connection.dolphin_backend import DolphinBackend
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_connection.nintendont_backend import NintendontBackend
 from randovania.gui.lib import async_dialog
-from randovania.interface_common.options import Options
+from randovania.interface_common.options import Options, InfoAlert
 
 
 class GameConnectionSetup:
@@ -23,29 +25,35 @@ class GameConnectionSetup:
         self.game_connection.Updated.connect(self.on_game_connection_updated)
         self.tool.setText("Configure backend")
 
+        def _create_check(text: str, on_triggered, default: Optional[bool] = None):
+            action = QtWidgets.QAction(self.tool)
+            action.setText(text)
+            action.setCheckable(True)
+            if default is not None:
+                action.setChecked(default)
+            action.triggered.connect(on_triggered)
+            return action
+
         self.game_connection_menu = QtWidgets.QMenu(self.tool)
 
-        self.use_dolphin_backend = QtWidgets.QAction(self.tool)
-        self.use_dolphin_backend.setText("Dolphin")
-        self.use_dolphin_backend.setCheckable(True)
-        self.use_dolphin_backend.triggered.connect(self.on_use_dolphin_backend)
-        self.use_nintendont_backend = QtWidgets.QAction(self.tool)
-        self.use_nintendont_backend.setCheckable(True)
-        self.use_nintendont_backend.triggered.connect(self.on_use_nintendont_backend)
+        self.use_dolphin_backend = _create_check("Dolphin", self.on_use_dolphin_backend)
+        self.use_nintendont_backend = _create_check("", self.on_use_nintendont_backend)
         self.upload_nintendont_action = QtWidgets.QAction(self.tool)
         self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
         self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
-        self.track_items = QtWidgets.QAction(self.tool)
-        self.track_items.setText("Tracking items")
-        self.track_items.setCheckable(True)
-        self.track_items.setChecked(options.tracking_inventory)
-        self.track_items.triggered.connect(self.on_track_items)
+        self.connect_to_game = _create_check("Connect to the game", self.on_connect_to_game, True)
+        self.track_items = _create_check("Automatically track inventory",
+                                         self.on_track_items, options.tracking_inventory)
+        self.displaying_messages = _create_check("Display in-game messages for received items",
+                                                 self.on_displaying_messages, options.displaying_messages)
 
         self.game_connection_menu.addAction(self.use_dolphin_backend)
         self.game_connection_menu.addAction(self.use_nintendont_backend)
         self.game_connection_menu.addAction(self.upload_nintendont_action)
         self.game_connection_menu.addSeparator()
+        self.game_connection_menu.addAction(self.connect_to_game)
         self.game_connection_menu.addAction(self.track_items)
+        self.game_connection_menu.addAction(self.displaying_messages)
 
         self.tool.setMenu(self.game_connection_menu)
 
@@ -87,6 +95,12 @@ class GameConnectionSetup:
         if await async_dialog.execute_dialog(dialog) == dialog.Accepted:
             new_ip = dialog.textValue()
             if new_ip != "":
+                if not self.options.is_alert_displayed(InfoAlert.NINTENDONT_UNSTABLE):
+                    await async_dialog.warning(self.parent, "Nintendont Limitation",
+                                               "Warning: The Nintendont integration isn't perfect and is known to "
+                                               "crash.")
+                    self.options.mark_alert_as_displayed(InfoAlert.NINTENDONT_UNSTABLE)
+
                 with self.options as options:
                     options.nintendont_ip = new_ip
                     options.game_backend = GameBackendChoice.NINTENDONT
@@ -114,8 +128,18 @@ class GameConnectionSetup:
         finally:
             box.button(QtWidgets.QMessageBox.Ok).setEnabled(True)
 
+    def on_connect_to_game(self):
+        connect_to_game = self.connect_to_game.isChecked()
+        self.game_connection.backend.set_connection_enabled(connect_to_game)
+
     def on_track_items(self):
         track_items = self.track_items.isChecked()
         with self.options as options:
             options.tracking_inventory = track_items
         self.game_connection.tracking_inventory = track_items
+
+    def on_displaying_messages(self):
+        displaying_messages = self.displaying_messages.isChecked()
+        with self.options as options:
+            options.displaying_messages = displaying_messages
+        self.game_connection.displaying_messages = displaying_messages

@@ -38,6 +38,7 @@ class InventoryItem(NamedTuple):
 class ConnectionBase:
     _location_collected_listener: Optional[Callable[[int], Awaitable[None]]] = None
     _tracking_inventory: bool = True
+    _displaying_messages: bool = True
 
     @property
     def current_status(self) -> GameConnectionStatus:
@@ -65,3 +66,7 @@ class ConnectionBase:
     @property
     def tracking_inventory(self) -> bool:
         return self._tracking_inventory
+
+    @property
+    def displaying_messages(self) -> bool:
+        return self._displaying_messages

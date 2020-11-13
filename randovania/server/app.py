@@ -64,19 +64,21 @@ def create_app():
             raise ConnectionRefusedError(f"Incompatible client version '{client_app_version}', "
                                          f"expected '{server_version}'")
 
-        connected_clients.set(len(sio.get_server().environ))
-        app.logger.info(f"Client at {environ['REMOTE_ADDR']} with "
-                        f"version {client_app_version} connected, while server is {server_version}")
+        connected_clients.inc()
+
+        forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
+        app.logger.info(f"Client at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
+                        f"version {client_app_version} connected.")
 
     @sio.sio.server.on("disconnect")
     def disconnect(sid):
         connected_clients.dec()
-
         sio_environ = sio.get_server().environ
-        app.logger.info(f"Client at {sio_environ[sid]['REMOTE_ADDR']} disconnected.")
+
+        forwarded_for = sio_environ[sid].get('HTTP_X_FORWARDED_FOR')
+        app.logger.info(f"Client at {sio_environ[sid]['REMOTE_ADDR']} ({forwarded_for}) disconnected.")
 
         session = sio.get_server().get_session(sid)
-        app.logger.info(f"Session {session}")
         if "user-id" in session:
             game_session.report_user_disconnected(sio, session["user-id"], app.logger)
 

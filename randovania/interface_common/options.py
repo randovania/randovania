@@ -21,6 +21,7 @@ class InfoAlert(Enum):
     FAQ = "faq"
     MULTI_ENERGY_ALERT = "multi-energy-alert"
     MULTIWORLD_FAQ = "multi-faq"
+    NINTENDONT_UNSTABLE = "nintendont-unstable"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -57,6 +58,7 @@ _SERIALIZER_FOR_FIELD = {
     "game_backend": Serializer(lambda it: it.value, GameBackendChoice),
     "nintendont_ip": Serializer(identity, str),
     "tracking_inventory": Serializer(identity, bool),
+    "displaying_messages": Serializer(identity, bool),
 }
 
 
@@ -95,6 +97,7 @@ class Options:
     _game_backend: Optional[GameBackendChoice] = None
     _nintendont_ip: Optional[str] = None
     _tracking_inventory: Optional[bool] = None
+    _displaying_messages: Optional[bool] = None
 
     def __init__(self, data_dir: Path):
         self._data_dir = data_dir
@@ -223,6 +226,7 @@ class Options:
         self._game_backend = None
         self._nintendont_ip = None
         self._tracking_inventory = None
+        self._displaying_messages = None
 
     # Files paths
     @property
@@ -315,6 +319,14 @@ class Options:
     @tracking_inventory.setter
     def tracking_inventory(self, value: bool):
         self._edit_field("tracking_inventory", value)
+
+    @property
+    def displaying_messages(self):
+        return _return_with_default(self._displaying_messages, lambda: True)
+
+    @displaying_messages.setter
+    def displaying_messages(self, value):
+        self._edit_field("displaying_messages", value)
 
     @property
     def displayed_alerts(self):

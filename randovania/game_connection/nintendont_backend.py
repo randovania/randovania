@@ -231,6 +231,9 @@ class NintendontBackend(ConnectionBackend):
         return result
 
     async def update(self, dt: float):
+        if not self._enabled:
+            return
+        
         if not await self._connect():
             return
 
