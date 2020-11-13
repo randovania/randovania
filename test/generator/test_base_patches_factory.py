@@ -12,6 +12,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import find_resource_info_with_long_name
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.games.game import RandovaniaGame
 from randovania.generator import base_patches_factory
 from randovania.layout.layout_configuration import LayoutElevators
 from randovania.layout.translator_configuration import LayoutTranslatorRequirement
@@ -206,13 +207,14 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     rng = MagicMock()
     game = MagicMock()
     layout_configuration = MagicMock()
+    layout_configuration.game = RandovaniaGame.PRIME2
     mock_replace: MagicMock = mocker.patch("dataclasses.replace")
 
-    patches = [
+    patches = ([
         game.create_game_patches.return_value,
         mock_replace.return_value,
         mock_add_elevator_connections_to_patches.return_value,
-    ]
+    ])
     patches.append(patches[-1].assign_gate_assignment.return_value)
     patches.append(patches[-1].assign_starting_location.return_value)
 

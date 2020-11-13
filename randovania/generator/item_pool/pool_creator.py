@@ -1,8 +1,10 @@
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import add_resources_into_another
+from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
 from randovania.generator.item_pool.dark_temple_keys import add_dark_temple_keys
+from randovania.generator.item_pool.energy_cells import add_energy_cells
 from randovania.generator.item_pool.major_items import add_major_items
 from randovania.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
 from randovania.layout.layout_configuration import LayoutConfiguration
@@ -36,12 +38,17 @@ def calculate_pool_results(layout_configuration: LayoutConfiguration,
                                          layout_configuration.ammo_configuration,
                                          layout_configuration.major_items_configuration.calculate_provided_ammo()))
 
-    # Adding Dark Temple Keys to pool
-    _extend_pool_results(base_results, add_dark_temple_keys(resource_database))
+    if layout_configuration.game == RandovaniaGame.PRIME2:
+        # Adding Dark Temple Keys to pool
+        _extend_pool_results(base_results, add_dark_temple_keys(resource_database))
 
-    # Adding Sky Temple Keys to pool
-    _extend_pool_results(base_results,
-                         add_sky_temple_key_distribution_logic(resource_database,
-                                                               layout_configuration.sky_temple_keys))
+        # Adding Sky Temple Keys to pool
+        _extend_pool_results(base_results,
+                             add_sky_temple_key_distribution_logic(resource_database,
+                                                                   layout_configuration.sky_temple_keys))
+
+    elif layout_configuration.game == RandovaniaGame.PRIME3:
+        # Adding Energy Cells to pool
+        _extend_pool_results(base_results, add_energy_cells(resource_database))
 
     return base_results
