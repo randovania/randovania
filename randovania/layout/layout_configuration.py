@@ -147,7 +147,7 @@ class LayoutConfiguration(BitPackDataClass):
             damage_strictness=LayoutDamageStrictness(json_dict["damage_strictness"]),
             sky_temple_keys=LayoutSkyTempleKeyMode(json_dict["sky_temple_keys"]),
             elevators=LayoutElevators(json_dict["elevators"]),
-            starting_location=StartingLocation.from_json(json_dict["starting_location"]),
+            starting_location=StartingLocation.from_json(json_dict["starting_location"], game),
             available_locations=AvailableLocationsConfiguration.from_json(json_dict["available_locations"]),
             major_items_configuration=MajorItemsConfiguration.from_json(json_dict["major_items_configuration"],
                                                                         item_database),
