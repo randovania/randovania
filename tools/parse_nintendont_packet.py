@@ -42,7 +42,7 @@ def main():
         if bool(op_byte & 0x80):
             operation_pretty.append(f"read {byte_count} bytes")
 
-        address = addresses[op_byte & 0x8]
+        address = addresses[op_byte & 0x7]
         address_text = f"0x{address:08x}"
 
         # Has offset
