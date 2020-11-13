@@ -242,3 +242,8 @@ class LogbookNode(ResourceNode):
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources) -> ResourceGain:
         yield self.resource(), 1
+
+
+@dataclasses.dataclass(frozen=True)
+class PlayerShipNode(Node):
+    is_unlocked: Requirement
