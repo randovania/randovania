@@ -315,3 +315,30 @@ async def test_update_current_world_present(backend):
 
     # Assert
     assert backend._world is world
+
+
+@pytest.mark.parametrize("has_light_suit", [False, True])
+@pytest.mark.asyncio
+async def test_perform_write_inventory_dark_suit(backend, echoes_game_description, has_light_suit):
+    # Setup
+    backend.patches = dol_patcher.ALL_VERSIONS_PATCHES[0]
+    backend._perform_memory_operations = AsyncMock()
+    dark_suit = echoes_game_description.resource_database.get_item(13)
+    light_suit = echoes_game_description.resource_database.get_item(14)
+    changed_items = {dark_suit: InventoryItem(1, 1)}
+    if has_light_suit:
+        backend._inventory = {light_suit: InventoryItem(1, 1)}
+    else:
+        backend._inventory = {}
+
+    # Run
+    await backend._perform_write_inventory(changed_items)
+
+    # Assert
+    backend._perform_memory_operations.assert_awaited_once()
+    write_op = backend._perform_memory_operations.mock_calls[0].args[0]
+    assert write_op[1] == MemoryOperation(
+        address=2151533548,
+        offset=84,
+        write_bytes=b"\x00\x00\x00\x02" if has_light_suit else b"\x00\x00\x00\x01",
+    )

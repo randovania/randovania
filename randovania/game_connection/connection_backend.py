@@ -65,6 +65,17 @@ def _add_pickup_to_resources(pickup: PickupEntry, inventory: CurrentResources) -
     )
 
 
+def _capacity_for(item: ItemResourceInfo,
+                  changed_items: Dict[ItemResourceInfo, InventoryItem],
+                  inventory: Dict[ItemResourceInfo, InventoryItem]):
+    if item in changed_items:
+        return changed_items[item].capacity
+    elif item in inventory:
+        return inventory[item].capacity
+    else:
+        return 0
+
+
 class ConnectionBackend(ConnectionBase):
     patches: Optional[PatchesForVersion] = None
     _checking_for_collected_index: bool = False
@@ -239,9 +250,9 @@ class ConnectionBackend(ConnectionBase):
         dark_suit = self.game.resource_database.get_item(13)
         light_suit = self.game.resource_database.get_item(14)
         if dark_suit in changed_items or light_suit in changed_items:
-            if changed_items[light_suit].capacity > 0:
+            if _capacity_for(light_suit, changed_items, self._inventory) > 0:
                 new_suit = 2
-            elif changed_items[dark_suit].capacity > 0:
+            elif _capacity_for(dark_suit, changed_items, self._inventory) > 0:
                 new_suit = 1
             else:
                 new_suit = 0
