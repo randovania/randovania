@@ -6,6 +6,7 @@ from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceQuantity
+from randovania.games.prime import corruption_items
 from randovania.games.prime.echoes_items import DARK_TEMPLE_KEY_MODEL, DARK_TEMPLE_KEY_NAMES, DARK_TEMPLE_KEY_ITEMS, \
     SKY_TEMPLE_KEY_MODEL, SKY_TEMPLE_KEY_ITEMS, USELESS_PICKUP_MODEL, USELESS_PICKUP_ITEM
 from randovania.layout.major_item_state import MajorItemState
@@ -196,6 +197,25 @@ def create_sky_temple_key(key_number: int,
         item_category=ItemCategory.SKY_TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
         probability_offset=3,
+    )
+
+
+def create_energy_cell(cell_index: int,
+                       resource_database: ResourceDatabase,
+                       ) -> PickupEntry:
+    return PickupEntry(
+        name=f"Energy Cell {cell_index + 1}",
+        resources=(
+            ConditionalResources(None, None, tuple([
+                (resource_database.get_item(corruption_items.ENERGY_CELL_ITEMS[cell_index]), 1),
+                (resource_database.get_item(corruption_items.ENERGY_CELL_TOTAL_ITEM), 1),
+                (resource_database.item_percentage, 1),
+            ])),
+        ),
+        model_index=corruption_items.ENERGY_CELL_MODEL,
+        item_category=ItemCategory.TEMPLE_KEY,
+        broad_category=ItemCategory.KEY,
+        probability_offset=0,
     )
 
 

@@ -1,0 +1,163 @@
+{
+    "schema_version": 6,
+    "name": "Corruption Preset",
+    "description": "Corruption lol",
+    "base_preset_name": null,
+    "patcher_configuration": {
+        "menu_mod": true,
+        "warp_to_start": true,
+        "varia_suit_damage": 6.0,
+        "dark_suit_damage": 1.2,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm"
+    },
+    "layout_configuration": {
+        "game": "prime3",
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {
+            }
+        },
+        "damage_strictness": 1.5,
+        "sky_temple_keys": 9,
+        "elevators": "vanilla",
+        "starting_location": [
+            "G.F.S. Valhalla/Docking Bay 5"
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "major_items_configuration": {
+            "items_state": {
+                "Power Beam": {"num_included_in_starting_items": 1},
+                "Plasma Beam": {"num_shuffled_pickups": 1},
+                "Nova Beam": {"num_shuffled_pickups": 1},
+                "Charge Beam": {"num_included_in_starting_items": 1},
+                "Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [5]
+                },
+                "Ice Missile": {"num_shuffled_pickups": 1},
+                "Seeker Missile": {"num_shuffled_pickups": 1},
+                "Grapple Lasso": {"num_shuffled_pickups": 1},
+                "Grapple Swing": {"num_shuffled_pickups": 1},
+                "Grapple Voltage": {"num_shuffled_pickups": 1},
+                "Combat Visor": {"num_included_in_starting_items": 1},
+                "Scan Visor": {"num_included_in_starting_items": 1},
+                "Command Visor": {"num_included_in_starting_items": 1},
+                "X-Ray Visor": {"num_shuffled_pickups": 1},
+                "Space Jump Boots": {"num_included_in_starting_items": 1},
+                "Screw Attack": {"num_shuffled_pickups": 1},
+                "Hazard Shield": {"num_shuffled_pickups": 1},
+                "Energy Tank": {"num_shuffled_pickups": 14},
+                "Morph Ball": {"num_included_in_starting_items": 1},
+                "Morph Ball Bombs": {"num_included_in_starting_items": 1},
+                "Boost Ball": {"num_shuffled_pickups": 1},
+                "Spider Ball": {"num_shuffled_pickups": 1},
+                "Hypermode": {"num_shuffled_pickups": 1},
+                "Hyper Missile": {"num_shuffled_pickups": 1},
+                "Hyper Ball": {"num_shuffled_pickups": 1},
+                "Hyper Grapple": {"num_shuffled_pickups": 1},
+                "Ship Grapple": {"num_shuffled_pickups": 1},
+                "Ship Missile": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [3]
+                }
+            },
+            "progressive_suit": true,
+            "progressive_grapple": false,
+            "minimum_random_starting_items": 0,
+            "maximum_random_starting_items": 0
+        },
+        "ammo_configuration": {
+            "maximum_ammo": {
+                "4": 255,
+                "45": 11
+            },
+            "items_state": {
+                "Missile Expansion": {
+                    "variance": 0,
+                    "pickup_count": 49,
+                    "requires_major_item": true
+                },
+                "Ship Missile Expansion": {
+                    "variance": 0,
+                    "pickup_count": 8,
+                    "requires_major_item": true
+                }
+            }
+        },
+        "translator_configuration": {
+            "translator_requirement": {
+                "0": "violet",
+                "1": "amber",
+                "2": "violet",
+                "3": "violet",
+                "4": "amber",
+                "5": "violet",
+                "6": "emerald",
+                "7": "violet",
+                "8": "amber",
+                "9": "emerald",
+                "10": "amber",
+                "11": "amber",
+                "12": "emerald",
+                "13": "emerald",
+                "14": "emerald",
+                "15": "cobalt",
+                "16": "cobalt"
+            }
+        },
+        "hints": {
+            "item_hints": true,
+            "sky_temple_keys": "precise"
+        },
+        "beam_configuration": {
+            "power": {
+                "item_index": 0,
+                "ammo_a": -1,
+                "ammo_b": -1,
+                "uncharged_cost": 0,
+                "charged_cost": 0,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 0
+            },
+            "dark": {
+                "item_index": 1,
+                "ammo_a": 45,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "light": {
+                "item_index": 2,
+                "ammo_a": 46,
+                "ammo_b": -1,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            },
+            "annihilator": {
+                "item_index": 3,
+                "ammo_a": 46,
+                "ammo_b": 45,
+                "uncharged_cost": 1,
+                "charged_cost": 5,
+                "combo_missile_cost": 5,
+                "combo_ammo_cost": 30
+            }
+        },
+        "skip_final_bosses": false,
+        "energy_per_tank": 100.0,
+        "safe_zone": {
+            "fully_heal": true,
+            "prevents_dark_aether": true,
+            "heal_per_second": 1.0
+        },
+        "split_beam_ammo": true
+    }
+}

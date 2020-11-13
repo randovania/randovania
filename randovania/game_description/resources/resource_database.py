@@ -65,12 +65,15 @@ class ResourceDatabase(NamedTuple):
 
     @property
     def item_percentage(self) -> ItemResourceInfo:
+        # FIXME: varies per database
         return self.get_by_type_and_index(ResourceType.ITEM, 47)
 
     @property
     def energy_tank(self) -> ItemResourceInfo:
+        # FIXME: varies per database
         return self.get_by_type_and_index(ResourceType.ITEM, 42)
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
+        # FIXME: varies per database
         return self.get_item(74)

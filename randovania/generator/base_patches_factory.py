@@ -16,6 +16,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.generator import elevator_distributor
 from randovania.interface_common.enum_lib import iterate_enum
 from randovania.layout.layout_configuration import LayoutElevators, LayoutConfiguration
@@ -166,23 +167,22 @@ def add_default_hints_to_patches(rng: Random,
                                                              HintItemPrecision.BROAD_CATEGORY),
                                                PickupIndex(node.hint_index)))
 
-    # TODO: this should be a flag in PickupNode
-    indices_with_hint = [
-        (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
-        (PickupIndex(43), HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
-        (PickupIndex(79), HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
-        (PickupIndex(115), HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
-    ]
     all_logbook_assets = [node.resource()
                           for node in world_list.all_nodes
                           if isinstance(node, LogbookNode)
                           and node.resource() not in patches.hints
                           and node.lore_type.holds_generic_hint]
 
-    rng.shuffle(indices_with_hint)
     rng.shuffle(all_logbook_assets)
 
     # The 4 guaranteed hints
+    indices_with_hint = [
+        (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
+        (PickupIndex(43), HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
+        (PickupIndex(79), HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
+        (PickupIndex(115), HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
+    ]
+    rng.shuffle(indices_with_hint)
     for index, location_type in indices_with_hint:
         if not all_logbook_assets:
             break
@@ -209,11 +209,14 @@ def add_default_hints_to_patches(rng: Random,
 
 
 def create_game_specific(configuration: LayoutConfiguration, game: GameDescription) -> EchoesGameSpecific:
-    return EchoesGameSpecific(
-        energy_per_tank=configuration.energy_per_tank,
-        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
-        beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
-    )
+    if configuration.game == RandovaniaGame.PRIME2:
+        return EchoesGameSpecific(
+            energy_per_tank=configuration.energy_per_tank,
+            safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
+            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database),
+        )
+    else:
+        return game.game_specific
 
 
 def create_base_patches(configuration: LayoutConfiguration,
@@ -233,15 +236,16 @@ def create_base_patches(configuration: LayoutConfiguration,
     patches = add_elevator_connections_to_patches(configuration, rng, patches)
 
     # Gates
-    patches = patches.assign_gate_assignment(
-        gate_assignment_for_configuration(configuration, game.resource_database, rng))
+    if configuration.game == RandovaniaGame.PRIME2:
+        patches = patches.assign_gate_assignment(
+            gate_assignment_for_configuration(configuration, game.resource_database, rng))
 
     # Starting Location
     patches = patches.assign_starting_location(
         starting_location_for_configuration(configuration, game, rng))
 
     # Hints
-    if rng is not None:
+    if rng is not None and configuration.game == RandovaniaGame.PRIME2:
         patches = add_default_hints_to_patches(rng, patches, game.world_list, num_joke=2)
 
     return patches

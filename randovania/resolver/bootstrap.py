@@ -100,12 +100,10 @@ def _add_minimal_logic_initial_resources(resources: CurrentResources,
 
 
 def calculate_starting_state(game: GameDescription, patches: GamePatches) -> "State":
-    # TODO: is this fast start?
-    initial_game_state = game.initial_states["Default"]
-
     starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
     initial_resources = copy.copy(patches.starting_items)
 
+    initial_game_state = game.initial_states.get("Default")
     if initial_game_state is not None:
         add_resource_gain_to_current_resources(initial_game_state, initial_resources)
 
