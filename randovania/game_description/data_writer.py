@@ -104,7 +104,7 @@ def write_item_resource(resource: ItemResourceInfo) -> dict:
         "long_name": resource.long_name,
         "short_name": resource.short_name,
         "max_capacity": resource.max_capacity,
-        "custom_memory_offset": resource.custom_memory_offset,
+        "extra": resource.extra,
     }
 
 
