@@ -6,7 +6,7 @@ from randovania.game_description.area import Area
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.dock import DockConnection
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode
+from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world import World
@@ -177,6 +177,9 @@ class WorldList:
                 # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
                 print("Teleporter is broken!", node)
                 yield None, Requirement.impossible()
+
+        if isinstance(node, PlayerShipNode):
+            pass
 
     def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, Requirement]]:
         """
