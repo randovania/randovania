@@ -5,16 +5,15 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.generator.item_pool import PoolResults, pickup_creator
 
 
-def add_dark_temple_keys(resource_database: ResourceDatabase,
-                         ) -> PoolResults:
+def add_energy_cells(resource_database: ResourceDatabase,
+                     ) -> PoolResults:
     """
     :param resource_database:
     :return:
     """
     item_pool: List[PickupEntry] = []
 
-    for temple_index in range(3):
-        for i in range(3):
-            item_pool.append(pickup_creator.create_dark_temple_key(i, temple_index, resource_database))
+    for i in range(9):
+        item_pool.append(pickup_creator.create_energy_cell(i, resource_database))
 
     return PoolResults(item_pool, {}, {})

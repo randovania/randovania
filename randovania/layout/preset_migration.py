@@ -1,4 +1,3 @@
-import copy
 import json
 from pathlib import Path
 from typing import Optional
@@ -8,7 +7,7 @@ import slugify
 
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 5
+CURRENT_PRESET_VERSION = 6
 
 
 class InvalidPreset(Exception):
@@ -139,11 +138,56 @@ def _migrate_v4(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v5(preset: dict) -> dict:
+    excluded_item = {
+        "include_copy_in_original_location": False,
+        "num_shuffled_pickups": 0,
+        "num_included_in_starting_items": 0,
+        "included_ammo": [],
+        "allowed_as_random_starting_item": True
+    }
+    included_item = {
+        **excluded_item,
+        "num_included_in_starting_items": 1
+    }
+    shuffled_item = {
+        **excluded_item,
+        "num_shuffled_pickups": 1,
+    }
+
+    default_items_state = {
+        "Progressive Suit": {**excluded_item, "num_shuffled_pickups": 2},
+        "Dark Beam": {**shuffled_item, "included_ammo": [50]},
+        "Light Beam": {**shuffled_item, "included_ammo": [50]},
+        "Annihilator Beam": {**shuffled_item, "included_ammo": [0, 0]},
+        "Power Bomb": {**shuffled_item, "included_ammo": [2]},
+        "Progressive Grapple": {**excluded_item, "num_shuffled_pickups": 2},
+        "Missile Launcher": {**shuffled_item, "included_ammo": [5]},
+        "Seeker Launcher": {**shuffled_item, "included_ammo": [5]},
+        "Energy Tank": {**excluded_item, "num_shuffled_pickups": 14},
+    }
+
+    for item in ["Combat Visor", "Scan Visor", "Varia Suit", "Power Beam", "Charge Beam", "Morph Ball"]:
+        default_items_state[item] = included_item
+    for item in ["Dark Visor", "Echo Visor", "Morph Ball Bomb", "Boost Ball", "Spider Ball", "Space Jump Boots",
+                 "Gravity Boost", "Super Missile", "Sunburst", "Darkburst", "Sonic Boom", "Violet Translator",
+                 "Amber Translator", "Emerald Translator", "Cobalt Translator"]:
+        default_items_state[item] = shuffled_item
+
+    major_items = preset["layout_configuration"]["major_items_configuration"]["items_state"]
+    for item in default_items_state.keys():
+        if item not in major_items:
+            major_items[item] = default_items_state[item]
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
     3: _migrate_v3,
     4: _migrate_v4,
+    5: _migrate_v5,
 }
 
 
