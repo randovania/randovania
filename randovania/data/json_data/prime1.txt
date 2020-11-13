@@ -213,12 +213,12 @@ Asset id: 3289414871
 > Dock to Transport to Magmoor Caverns West; Heals? False
   * Normal Door to Transport to Magmoor Caverns West/Dock to Shoreline Entrance
   > Dock to Phendrana Shorelines
-      Missile or Charge Beam
+      Missile or Charge Beam ≥ 3
 
 > Dock to Phendrana Shorelines; Heals? False
   * Normal Door to Phendrana Shorelines/Dock to Shoreline Entrance
   > Dock to Transport to Magmoor Caverns West
-      Missile or Charge Beam
+      Missile ≥ 3 or Charge Beam
 
 ----------------
 Phendrana Shorelines
@@ -265,7 +265,7 @@ Asset id: 4146616697
   > Pickup (Missile Behind Ice)
       Plasma Beam
   > Pickup (Spider Track Missile)
-      Missile and Scan Visor and Super Missile and Morph Ball and Spider Ball
+      Scan Visor and Morph Ball and Spider Ball and Shoot Super Missile
 
 > Pickup (Missile Behind Ice); Heals? False
   * Pickup 35; Major Location? False
@@ -283,12 +283,20 @@ Asset id: 2245653401
 > Dock to Chozo Ice Temple; Heals? False
   * Normal Door to Chozo Ice Temple/Dock to Temple Entryway
   > Dock to Phendrana Shorelines
-      Plasma Beam or Missile or Charge Beam
+      Any of the following:
+          Plasma Beam or Missile
+          All of the following:
+              Charge Beam
+              Power Beam or Wave Beam
 
 > Dock to Phendrana Shorelines; Heals? False
   * Normal Door to Phendrana Shorelines/Dock to Temple Entryway
   > Dock to Chozo Ice Temple
-      Plasma Beam or Missile or Charge Beam
+      Any of the following:
+          Plasma Beam or Missile
+          All of the following:
+              Charge Beam
+              Power Beam or Wave Beam
 
 ----------------
 Save Station B
@@ -346,30 +354,32 @@ Chozo Ice Temple
 Asset id: 1716909342
 > Dock to Temple Entryway; Heals? False
   * Normal Door to Temple Entryway/Dock to Chozo Ice Temple
-  > Pickup (Artifact of Sun)
-      Plasma Beam and Morph Ball Bomb and Space Jump Boots and Morph Ball
-  > Event (Chozo Ice Temple Bomb Slot)
-      Morph Ball Bomb and Space Jump Boots and Morph Ball
+  > Front of Bomb Slot
+      Space Jump Boots
 
 > Dock to Chapel Tunnel; Heals? False
   * Normal Door to Chapel Tunnel/Dock to Chozo Ice Temple
-  > Dock to Temple Entryway
+  > Front of Bomb Slot
       After Chozo Ice Temple Bomb Slot
-  > Pickup (Artifact of Sun)
-      Plasma Beam and Missile and Morph Ball Bomb and Morph Ball and After Chozo Ice Temple Bomb Slot
 
 > Pickup (Artifact of Sun); Heals? False
   * Pickup 37; Major Location? True
-  > Dock to Temple Entryway
-      Morph Ball
-  > Dock to Chapel Tunnel
+  > Front of Bomb Slot
       Morph Ball
 
 > Event (Chozo Ice Temple Bomb Slot); Heals? False
+  > Front of Bomb Slot
+      Trivial
+
+> Front of Bomb Slot; Heals? False
   > Dock to Temple Entryway
       Trivial
   > Dock to Chapel Tunnel
-      Trivial
+      After Chozo Ice Temple Bomb Slot
+  > Pickup (Artifact of Sun)
+      Plasma Beam and Space Jump Boots and Morph Ball
+  > Event (Chozo Ice Temple Bomb Slot)
+      Missile and Morph Ball Bomb and Morph Ball
 
 ----------------
 Ice Ruins West
@@ -377,17 +387,11 @@ Asset id: 3006924320
 > Dock to Ruins Entryway; Heals? False
   * Normal Door to Ruins Entryway/Dock to Ice Ruins West
   > Dock to Courtyard Entryway
-      All of the following:
-          Space Jump Boots
-          Any of the following:
-              Missile
-              Power Beam and Charge Beam and Super Missile
+      Missile and Space Jump Boots
   > Dock to Canyon Entryway
       Trivial
   > Pickup (Power Bomb)
-      All of the following:
-          Plasma Beam and Space Jump Boots
-          Missile or Super Missile
+      Plasma Beam and Missile and Space Jump Boots
 
 > Dock to Courtyard Entryway; Heals? False
   * Wave Door to Courtyard Entryway/Dock to Ice Ruins West
@@ -477,10 +481,13 @@ Asset id: 1086671081
   * Wave Door to Chapel Tunnel/Dock to Chapel of the Elders
   > Pickup (Wave Beam)
       Any of the following:
-          Missile
+          Missile ≥ 25
           All of the following:
               Morph Ball
-              Morph Ball Bomb or Power Bomb
+              Any of the following:
+                  Morph Ball Bomb
+                  Power Bomb and Combat (Beginner)
+          Missile ≥ 17 and Combat (Beginner)
 
 > Pickup (Wave Beam); Heals? False
   * Pickup 41; Major Location? True
@@ -494,7 +501,7 @@ Asset id: 421627757
   * Normal Door to Courtyard Entryway/Dock to Ruined Courtyard
   > Dock to Save Station A
       All of the following:
-          Missile and Space Jump Boots and Morph Ball
+          Space Jump Boots and Morph Ball
           Any of the following:
               Spider Ball
               Morph Ball Bomb and Boost Ball
@@ -507,7 +514,7 @@ Asset id: 421627757
       Space Jump Boots
   > Dock to Quarantine Access
       All of the following:
-          Wave Beam and Super Missile and Space Jump Boots
+          Wave Beam and Space Jump Boots and Shoot Super Missile
           Thermal Visor or Invisible Objects (Beginner)
   > Pickup (Energy Tank)
       Morph Ball Bomb and Space Jump Boots and Morph Ball
@@ -517,14 +524,14 @@ Asset id: 421627757
   > Dock to Courtyard Entryway
       Trivial
   > Dock to Save Station A
-      Missile and Space Jump Boots
+      Space Jump Boots
 
 > Dock to Quarantine Access; Heals? False
   * Normal Door to Quarantine Access/Dock to Ruined Courtyard
   > Dock to Courtyard Entryway
       Trivial
   > Dock to Save Station A
-      Missile and Space Jump Boots
+      Space Jump Boots
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 42; Major Location? False
@@ -537,12 +544,12 @@ Asset id: 2718594133
 > Dock to Canyon Entryway; Heals? False
   * Normal Door to Canyon Entryway/Dock to Phendrana Canyon
   > Pickup (Boost Ball)
-      Space Jump Boots
+      Scan Visor or Space Jump Boots
 
 > Pickup (Boost Ball); Heals? False
   * Pickup 43; Major Location? True
   > Dock to Canyon Entryway
-      Boost Ball
+      Space Jump Boots or Boost Ball
 
 ----------------
 Save Station A
@@ -654,11 +661,9 @@ Asset id: 1880625556
       Trivial
 
 > Dock to Quarantine Monitor; Heals? False
-  * Normal Door to Quarantine Monitor/Dock to Quarantine Cave
-  > Dock to North Quarantine Tunnel
-      Morph Ball
+  * Morph Ball Door to Quarantine Monitor/Dock to Quarantine Cave
   > Dock to South Quarantine Tunnel
-      Morph Ball
+      Grapple Beam
   > Event (Thardus)
       Trivial
 
@@ -691,7 +696,7 @@ Asset id: 1139067941
   > Dock to Hydra Lab Entryway
       After Research Lab Hydra Barrier Lowered
   > Pickup (Missile)
-      Power Beam and Charge Beam and Super Missile
+      Shoot Super Missile
 
 > Event (Research Lab Hydra Barrier Lowered); Heals? False
   * Event Research Lab Hydra Barrier Lowered
@@ -720,7 +725,7 @@ Asset id: 3538349
 Quarantine Monitor
 Asset id: 563191901
 > Dock to Quarantine Cave; Heals? False
-  * Normal Door to Quarantine Cave/Dock to Quarantine Monitor
+  * Morph Ball Door to Quarantine Cave/Dock to Quarantine Monitor
   > Pickup (Missile)
       Trivial
 
@@ -740,7 +745,7 @@ Asset id: 935047996
 > Dock to Research Lab Hydra; Heals? False
   * Wave Door to Research Lab Hydra/Dock to Observatory Access
   > Dock to Observatory
-      Space Jump Boots
+      Trivial
 
 ----------------
 Transport to Magmoor Caverns South
@@ -749,13 +754,13 @@ Asset id: 3708487481
   * Ice Door to Transport Access/Dock to Transport to Magmoor Caverns South
   > Dock to South Quarantine Tunnel
       Morph Ball
-  > Elevator - Transport to Phendrana Drifts South
-      Scan Visor
 
 > Dock to South Quarantine Tunnel; Heals? False
   * Wave Door to South Quarantine Tunnel/Dock to Transport to Magmoor Caverns South
   > Dock to Transport Access
       Morph Ball and Spider Ball
+  > Elevator - Transport to Phendrana Drifts South
+      Scan Visor
 
 > Elevator - Transport to Phendrana Drifts South; Heals? False
   * Teleporter to Magmoor Caverns - Transport to Phendrana Drifts South
@@ -770,7 +775,7 @@ Asset id: 1068802894
   > Dock to Save Station D
       Space Jump Boots and After Observatory Activated
   > Event (Observatory Activated)
-      Scan Visor and Morph Ball Bomb and Space Jump Boots and Morph Ball and Boost Ball and Before Research Core Power Outage and Before Observatory Activated
+      Scan Visor and Morph Ball Bomb and Space Jump Boots and Morph Ball and Boost Ball and Before Research Core Power Outage
 
 > Dock to West Tower Entrance; Heals? False
   * Wave Door to West Tower Entrance/Dock to Observatory
@@ -998,23 +1003,13 @@ Asset id: 1282373491
 > Dock to Frost Cave Access; Heals? False
   * Wave Door to Frost Cave Access/Dock to Frost Cave
   > Dock to Save Station C
-      All of the following:
-          Space Jump Boots
-          Any of the following:
-              Missile
-              Power Beam and Charge Beam and Super Missile
+      Missile and Space Jump Boots
   > Dock to Upper Edge Tunnel
       All of the following:
           Space Jump Boots
-          Any of the following:
-              Missile or Grapple Beam
-              Power Beam and Charge Beam and Super Missile
+          Missile or Grapple Beam
   > Pickup (Missile)
-      All of the following:
-          Grapple Beam
-          Any of the following:
-              Missile
-              Power Beam and Charge Beam and Super Missile
+      Missile and Grapple Beam
 
 > Dock to Upper Edge Tunnel; Heals? False
   * Wave Door to Upper Edge Tunnel/Dock to Frost Cave
@@ -1024,19 +1019,13 @@ Asset id: 1282373491
 > Pickup (Missile); Heals? False
   * Pickup 51; Major Location? False
   > Dock to Save Station C
-      All of the following:
-          Space Jump Boots and Gravity Suit
-          Any of the following:
-              Missile
-              Power Beam and Charge Beam and Super Missile
+      Missile and Space Jump Boots and Gravity Suit
   > Dock to Frost Cave Access
       Space Jump Boots and Gravity Suit
   > Dock to Upper Edge Tunnel
       All of the following:
           Space Jump Boots and Gravity Suit
-          Any of the following:
-              Missile or Grapple Beam
-              Power Beam and Charge Beam and Super Missile
+          Missile or Grapple Beam
 
 ----------------
 Hunter Cave
@@ -1046,33 +1035,20 @@ Asset id: 516396314
   > Dock to Lower Edge Tunnel
       Any of the following:
           Space Jump Boots
-          All of the following:
-              Grapple Beam
-              Any of the following:
-                  Missile
-                  Power Beam and Charge Beam and Super Missile
+          Missile ≥ 3 and Grapple Beam
   > Dock to Chamber Access
       Trivial
 
 > Dock to Lower Edge Tunnel; Heals? False
   * Wave Door to Lower Edge Tunnel/Dock to Hunter Cave
   > Dock to Hunter Cave Access
-      All of the following:
-          Grapple Beam and Space Jump Boots
-          Any of the following:
-              Missile
-              Power Beam and Charge Beam and Super Missile
+      Missile ≥ 3 and Grapple Beam and Space Jump Boots
   > Dock to Chamber Access
-      All of the following:
-          Grapple Beam and Space Jump Boots
-          Any of the following:
-              Missile
-              Power Beam and Charge Beam and Super Missile
+      Missile ≥ 3 and Grapple Beam and Space Jump Boots
   > Dock to Lake Tunnel
       Any of the following:
-          Missile
+          Missile ≥ 3
           Space Jump Boots and Gravity Suit
-          Power Beam and Charge Beam and Super Missile
 
 > Dock to Chamber Access; Heals? False
   * Wave Door to Chamber Access/Dock to Hunter Cave
@@ -1105,7 +1081,7 @@ Asset id: 3639150045
 > Dock to Research Core; Heals? False
   * Wave Door to Research Core/Dock to Research Core Access
   > Dock to Research Lab Aether
-      Space Jump Boots
+      Trivial
 
 > Dock to Research Lab Aether; Heals? False
   * Wave Door to Research Lab Aether/Dock to Research Core Access
@@ -1207,7 +1183,6 @@ Asset id: 565493750
       Any of the following:
           Missile
           Power Bomb and Morph Ball
-          Power Beam and Charge Beam and Super Missile
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 52; Major Location? False
@@ -1234,7 +1209,7 @@ Asset id: 1423896872
   > Dock to Storage Cave
       Power Bomb and Grapple Beam and Space Jump Boots and Morph Ball
   > Dock to Security Cave
-      Grapple Beam and Space Jump Boots and Morph Ball
+      Grapple Beam and Space Jump Boots
 
 > Dock to Storage Cave; Heals? False
   * Plasma Door to Storage Cave/Dock to Phendrana's Edge
@@ -1242,11 +1217,11 @@ Asset id: 1423896872
       Power Bomb and Morph Ball
 
 > Dock to Security Cave; Heals? False
-  * Normal Door to Security Cave/Dock to Phendrana's Edge
+  * Morph Ball Door to Security Cave/Dock to Phendrana's Edge
   > Dock to Lower Edge Tunnel
-      Morph Ball
+      Trivial
   > Dock to Upper Edge Tunnel
-      Morph Ball
+      Trivial
   > Dock to Storage Cave
       Power Bomb and Morph Ball
 
@@ -1292,7 +1267,7 @@ Asset id: 4157096768
 Security Cave
 Asset id: 1016369381
 > Dock to Phendrana's Edge; Heals? False
-  * Normal Door to Phendrana's Edge/Dock to Security Cave
+  * Morph Ball Door to Phendrana's Edge/Dock to Security Cave
   > Pickup (Power Bomb)
       Trivial
 
@@ -1740,10 +1715,8 @@ Asset id: 2758909034
                       Space Jump Boots and Heated Rooms Damage ≥ 539
   > Pickup (Artifact of Nature)
       Any of the following:
-          All of the following:
-              Grapple Beam and Heat-Resisting Suit
-              Missile or Shoot Super Missile
-          Missile and Space Jump Boots and Heated Rooms Damage ≥ 161
+          Missile ≥ 2 and Grapple Beam and Heat-Resisting Suit
+          Missile ≥ 2 and Space Jump Boots and Heated Rooms Damage ≥ 161
           Space Jump Boots and Heated Rooms Damage ≥ 145 and Shoot Super Missile
 
 > Dock to Pit Tunnel; Heals? False
@@ -1766,10 +1739,9 @@ Asset id: 2758909034
       All of the following:
           Space Jump Boots and Morph Ball
           Any of the following:
-              Missile and Morph Ball Bomb and Heated Rooms Damage ≥ 404
+              Missile ≥ 2 and Morph Ball Bomb and Heated Rooms Damage ≥ 404
               Morph Ball Bomb and Heated Rooms Damage ≥ 430 and Shoot Super Missile
               Missile and Power Bomb ≥ 2 and Heated Rooms Damage ≥ 479
-              Power Bomb ≥ 2 and Heated Rooms Damage ≥ 494 and Shoot Super Missile
 
 > Pickup (Artifact of Nature); Heals? False
   * Pickup 90; Major Location? True
@@ -1790,20 +1762,24 @@ Asset id: 3660499860
 > Dock to Triclops Pit; Heals? False
   * Normal Door to Triclops Pit/Dock to Pit Tunnel
   > Dock to Lava Lake
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Heated Rooms Damage ≥ 95
-              Boost Ball and Heated Rooms Damage ≥ 91
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Heated Rooms Damage ≥ 95
+                  Boost Ball and Heated Rooms Damage ≥ 91
+          Space Jump Boots and Heated Rooms Damage ≥ 91
 
 > Dock to Lava Lake; Heals? False
   * Normal Door to Lava Lake/Dock to Pit Tunnel
   > Dock to Triclops Pit
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Heated Rooms Damage ≥ 86
-              Boost Ball and Heated Rooms Damage ≥ 72
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Heated Rooms Damage ≥ 86
+                  Boost Ball and Heated Rooms Damage ≥ 72
+          Space Jump Boots and Heated Rooms Damage ≥ 91
 
 ----------------
 Triclops Pit
@@ -2536,7 +2512,7 @@ Asset id: 2507085138
 > Dock to Security Access A; Heals? False
   * Ice Door to Security Access A/Dock to Mine Security Station
   > Dock to Security Access B
-      Wave Beam and Space Jump Boots
+      Wave Beam
   > Dock to Storage Depot A
       Wave Beam and Scan Visor and Power Bomb and Morph Ball
 
@@ -2602,7 +2578,7 @@ Asset id: 2718040532
 > Dock to Mine Security Station; Heals? False
   * Wave Door to Mine Security Station/Dock to Security Access B
   > Dock to Elite Research
-      Space Jump Boots
+      Trivial
 
 ----------------
 Storage Depot A
@@ -2701,7 +2677,7 @@ Asset id: 3305828730
   > Dock to Maintenance Tunnel
       Trivial
   > Dock to Ventilation Shaft
-      Space Jump Boots and After Elite Control Barriers Lowered
+      After Elite Control Barriers Lowered
   > Event (Elite Control Barriers Lowered)
       Scan Visor
 
@@ -2853,7 +2829,7 @@ Asset id: 4111966698
 > Dock to Central Dynamo; Heals? False
   * Ice Door to Central Dynamo/Dock to Dynamo Access
   > Dock to Omega Research
-      Space Jump Boots
+      Trivial
 
 > Dock to Omega Research; Heals? False
   * Ice Door to Omega Research/Dock to Dynamo Access
