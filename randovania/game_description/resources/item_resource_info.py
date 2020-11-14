@@ -8,7 +8,7 @@ class ItemResourceInfo(NamedTuple):
     long_name: str
     short_name: str
     max_capacity: int
-    custom_memory_offset: Optional[int]
+    extra: Optional[int]
 
     def __str__(self):
         return self.long_name
