@@ -456,6 +456,11 @@
                 "index": 33,
                 "long_name": "Parasite Queen Defeated",
                 "short_name": "Event33"
+            },
+            {
+                "index": 34,
+                "long_name": "Phazon Mines Save Station A Barrier Opened",
+                "short_name": "Event34"
             }
         ],
         "tricks": [
@@ -15475,13 +15480,59 @@
                             "connections": {
                                 "Save Station": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 34,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event (Save Station A Barrier Opened)": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
                         {
                             "name": "Save Station",
                             "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Dock to Main Quarry": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 34,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event (Save Station A Barrier Opened)",
+                            "heal": false,
                             "coordinates": null,
                             "node_type": "generic",
                             "connections": {
@@ -17984,7 +18035,7 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 9,
+                                                "index": 13,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -18042,43 +18093,98 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 27,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 },
                                 "Event (Security Drone Defeated)": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 9,
+                                                "type": 1,
+                                                "index": 27,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "and",
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
                                             "data": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 2,
-                                                        "index": 2,
+                                                        "type": 0,
+                                                        "index": 13,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 4,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 4,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 2,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
+                                        }
+                                    ]
+                                },
+                                "Event (Central Dynamo Bendezium Destroyed)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -18146,37 +18252,51 @@
                                     ]
                                 },
                                 "Event (Security Drone Defeated)": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 9,
+                                                "index": 15,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 2,
-                                                        "index": 2,
+                                                        "type": 0,
+                                                        "index": 13,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 4,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 2,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 4,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -27907,6 +28027,20 @@
                                                 "index": 8,
                                                 "amount": 1,
                                                 "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Flaahgra": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": true
                                             }
                                         }
                                     ]

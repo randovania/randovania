@@ -2440,9 +2440,15 @@ Asset id: 907887024
 > Dock to Main Quarry; Heals? True
   * Wave Door to Main Quarry/Dock to Save Station Mines A
   > Save Station
-      Trivial
+      After Phazon Mines Save Station A Barrier Opened
+  > Event (Save Station A Barrier Opened)
+      Scan Visor
 
 > Save Station; Heals? True; Spawn Point
+  > Dock to Main Quarry
+      After Phazon Mines Save Station A Barrier Opened
+
+> Event (Save Station A Barrier Opened); Heals? False
   > Dock to Main Quarry
       Trivial
 
@@ -2876,17 +2882,21 @@ Asset id: 4272124642
       After Security Drone Defeated
   > Event (Security Drone Defeated)
       Any of the following:
-          Thermal Visor
+          X-Ray Visor
           Combat (Beginner) and Invisible Objects (Beginner)
 
 > Dock to Quarantine Access A; Heals? False
   * Ice Door to Quarantine Access A/Dock to Central Dynamo
   > Dock to Save Station Mines B
-      After Security Drone Defeated
+      After Security Drone Defeated and After Central Dynamo Bendezium Destroyed
   > Event (Security Drone Defeated)
-      Any of the following:
-          Thermal Visor
-          Combat (Beginner) and Invisible Objects (Beginner)
+      All of the following:
+          Space Jump Boots and After Central Dynamo Bendezium Destroyed
+          Any of the following:
+              X-Ray Visor
+              Combat (Beginner) and Invisible Objects (Beginner)
+  > Event (Central Dynamo Bendezium Destroyed)
+      Power Bomb and Morph Ball
 
 > Dock to Save Station Mines B; Heals? False
   * Ice Door to Save Station Mines B/Dock to Central Dynamo
@@ -2895,9 +2905,11 @@ Asset id: 4272124642
   > Dock to Quarantine Access A
       After Security Drone Defeated and After Central Dynamo Bendezium Destroyed
   > Event (Security Drone Defeated)
-      Any of the following:
-          Thermal Visor
-          Combat (Beginner) and Invisible Objects (Beginner)
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              X-Ray Visor
+              Combat (Beginner) and Invisible Objects (Beginner)
   > Event (Central Dynamo Bendezium Destroyed)
       Power Bomb and Morph Ball and After Security Drone Defeated
 
@@ -4715,6 +4727,8 @@ Asset id: 2584347627
   * Normal Door to Sun Tower Access/Dock to Sunchamber
   > Dock to Sunchamber Access
       After Chozo Ghosts (Sunchamber)
+  > Event - Flaahgra
+      Before Flaahgra
   > Event - Chozo Ghosts
       After Activate Sunchamber Chozo Ghosts layer
 
