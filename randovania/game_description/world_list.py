@@ -179,7 +179,9 @@ class WorldList:
                 yield None, Requirement.impossible()
 
         if isinstance(node, PlayerShipNode):
-            pass
+            for other_node in self.all_nodes:
+                if isinstance(other_node, PlayerShipNode) and other_node != node:
+                    yield other_node, other_node.is_unlocked
 
     def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, Requirement]]:
         """
