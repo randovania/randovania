@@ -2601,7 +2601,7 @@
                     "name": "Docking Hub Alpha",
                     "in_dark_aether": false,
                     "asset_id": 1594033074927626820,
-                    "default_node_index": null,
+                    "default_node_index": 3,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -2671,7 +2671,11 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Door to Hub Access": {
                                     "type": "and",
@@ -3318,7 +3322,7 @@
                     "name": "Cargo Dock A",
                     "in_dark_aether": false,
                     "asset_id": 6692819360230093549,
-                    "default_node_index": null,
+                    "default_node_index": 3,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3381,7 +3385,11 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Dock to Conduit A": {
                                     "type": "and",
@@ -3539,7 +3547,7 @@
                     "name": "Cargo Dock B",
                     "in_dark_aether": false,
                     "asset_id": 12327360187860907075,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3588,7 +3596,16 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 136,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Room Center": {
                                     "type": "resource",
@@ -5575,7 +5592,7 @@
                     "name": "Cliffside Airdock",
                     "in_dark_aether": false,
                     "asset_id": 2349002151496990705,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -5603,7 +5620,11 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Dock to Gateway Hall": {
                                     "type": "and",
@@ -8869,7 +8890,7 @@
                     "name": "Hangar Bay",
                     "in_dark_aether": false,
                     "asset_id": 12448241480574438186,
-                    "default_node_index": null,
+                    "default_node_index": 7,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -9119,7 +9140,16 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 35,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Dock to Ruined Shrine": {
                                     "type": "and",
@@ -9549,7 +9579,7 @@
                     "name": "Thorn Jungle Airdock",
                     "in_dark_aether": false,
                     "asset_id": 16131448128382991283,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -9577,7 +9607,11 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Dock to Overgrown Ruins": {
                                     "type": "and",
@@ -9716,7 +9750,7 @@
                     "name": "Fiery Airdock",
                     "in_dark_aether": false,
                     "asset_id": 11708287702197177006,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -9744,7 +9778,11 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Dock to Imperial Hall": {
                                     "type": "and",
@@ -12089,7 +12127,7 @@
                     "name": "Landing Site Delta",
                     "in_dark_aether": false,
                     "asset_id": 12972775391902806082,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -12117,7 +12155,30 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 57,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": 1,
+                                            "index": 46,
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            },
                             "connections": {
                                 "Dock to Core Access": {
                                     "type": "and",
@@ -12297,7 +12358,7 @@
                     "name": "Main Docking Bay",
                     "in_dark_aether": false,
                     "asset_id": 4133901881028310574,
-                    "default_node_index": null,
+                    "default_node_index": 3,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -12389,7 +12450,11 @@
                             "name": "Samus Ship (Catch.)",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Dock to Main Docking Access": {
                                     "type": "or",
@@ -18337,7 +18402,7 @@
                     "name": "SkyTown Federation Landing Site",
                     "in_dark_aether": false,
                     "asset_id": 18200553231954089224,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -18379,7 +18444,16 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 97,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Dock to Landing Access": {
                                     "type": "and",
@@ -18819,7 +18893,7 @@
                     "name": "Landing Site Alpha",
                     "in_dark_aether": false,
                     "asset_id": 13146584938063573409,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -18882,7 +18956,11 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Dock to Scrapvault Lift": {
                                     "type": "and",
@@ -20646,7 +20724,7 @@
                     "name": "Landing Site Bravo",
                     "in_dark_aether": false,
                     "asset_id": 4408585131827753141,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -20674,7 +20752,11 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "and",
+                                "data": []
+                            },
                             "connections": {
                                 "Dock to Lift Hub Access": {
                                     "type": "and",
@@ -21977,7 +22059,7 @@
                     "name": "Transit Station Leviathan",
                     "in_dark_aether": false,
                     "asset_id": 9997664456677642630,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22054,7 +22136,16 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 12,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Dock to Transit Tunnel P70": {
                                     "type": "resource",
@@ -23523,7 +23614,7 @@
                     "name": "Landing Site Charlie",
                     "in_dark_aether": false,
                     "asset_id": 65874966404189819,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23578,7 +23669,16 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 125,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Dock to Phazon Mine Entry": {
                                     "type": "and",
@@ -23831,7 +23931,7 @@
                     "name": "Landing Site Delta",
                     "in_dark_aether": false,
                     "asset_id": 9593588872354674734,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23859,7 +23959,16 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 111,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Dock to Core Access": {
                                     "type": "template",
@@ -24092,7 +24201,7 @@
                     "name": "Landing Site",
                     "in_dark_aether": false,
                     "asset_id": 9591507280945991101,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -24136,7 +24245,16 @@
                             "name": "Samus Ship",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 112,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Dock to Entry Canyon": {
                                     "type": "and",
