@@ -665,7 +665,7 @@ Asset id: 1880625556
   > Dock to South Quarantine Tunnel
       Grapple Beam and Morph Ball
   > Event (Thardus)
-      Trivial
+      Morph Ball
 
 > Event (Thardus); Heals? False
   * Event Thardus
@@ -2460,9 +2460,7 @@ Asset id: 3345300114
   > Dock to Mine Security Station
       Trivial
   > Pickup (Missile)
-      All of the following:
-          Power Bomb and Morph Ball
-          X-Ray Visor or Invisible Objects (Beginner)
+      Power Bomb and Morph Ball
 
 > Dock to Mine Security Station; Heals? False
   * Ice Door to Mine Security Station/Dock to Security Access A
@@ -2510,18 +2508,25 @@ Asset id: 2507085138
   * Ice Door to Security Access A/Dock to Mine Security Station
   > Dock to Security Access B
       Wave Beam
-  > Dock to Storage Depot A
-      Wave Beam and Scan Visor and Power Bomb and Morph Ball
 
 > Dock to Security Access B; Heals? False
   * Wave Door to Security Access B/Dock to Mine Security Station
   > Dock to Security Access A
-      Wave Beam
+      After Mine Security Station Barrier Opened
+  > Dock to Storage Depot A
+      After Mine Security Station Barrier Opened
+  > Event (Mine Security Station Barrier Opened)
+      Scan Visor and Power Bomb and Morph Ball
 
 > Dock to Storage Depot A; Heals? False
   * Plasma Door to Storage Depot A/Dock to Mine Security Station
-  > Dock to Security Access A
-      Wave Beam
+  > Dock to Security Access B
+      After Mine Security Station Barrier Opened
+
+> Event (Mine Security Station Barrier Opened); Heals? False
+  * Event Mine Security Station Barrier Opened
+  > Dock to Security Access B
+      Trivial
 
 ----------------
 Research Access
@@ -2593,21 +2598,15 @@ Elite Research
 Asset id: 2325199700
 > Dock to Research Access; Heals? False
   * Ice Door to Research Access/Dock to Elite Research
-  > Dock to Security Access B
+  > Top Floor
       After Rock Wall in Elite Research Destroyed
-  > Pickup (Missile)
-      Scan Visor and Morph Ball and Boost Ball and After Rock Wall in Elite Research Destroyed
 
 > Dock to Security Access B; Heals? False; Spawn Point
   * Ice Door to Security Access B/Dock to Elite Research
-  > Dock to Research Access
-      Scan Visor and Space Jump Boots and After Rock Wall in Elite Research Destroyed
-  > Event (Rock Wall in Elite Research Destroyed)
-      Scan Visor and Space Jump Boots and Morph Ball and Boost Ball
-  > Pickup (Missile)
-      Scan Visor and Space Jump Boots and Morph Ball and Boost Ball
   > Pickup (Artifact of Warrior)
       Power Bomb and Morph Ball and After Security Drone Defeated
+  > Top Floor
+      Scan Visor and Space Jump Boots
 
 > Event (Rock Wall in Elite Research Destroyed); Heals? False
   * Event Rock Wall in Elite Research Destroyed
@@ -2616,13 +2615,27 @@ Asset id: 2325199700
 
 > Pickup (Missile); Heals? False
   * Pickup 78; Major Location? False
-  > Dock to Security Access B
-      Trivial
+  > Top Floor
+      Space Jump Boots
 
 > Pickup (Artifact of Warrior); Heals? False
   * Pickup 77; Major Location? True
   > Dock to Security Access B
       Trivial
+
+> Top Floor; Heals? False
+  > Dock to Research Access
+      After Rock Wall in Elite Research Destroyed
+  > Dock to Security Access B
+      Trivial
+  > Event (Rock Wall in Elite Research Destroyed)
+      All of the following:
+          Scan Visor and Morph Ball and Boost Ball
+          Morph Ball Bomb or Power Bomb
+  > Pickup (Missile)
+      All of the following:
+          Scan Visor and Space Jump Boots and Morph Ball and Boost Ball
+          Morph Ball Bomb or Power Bomb
 
 ----------------
 Elevator A
@@ -2705,7 +2718,7 @@ Asset id: 2423298732
   > Dock to Elite Control
       Morph Ball and Boost Ball
   > Pickup (Energy Tank)
-      Scan Visor and Morph Ball Bomb and Power Bomb and Morph Ball
+      Scan Visor and Power Bomb and Morph Ball
 
 > Dock to Elite Control; Heals? False; Spawn Point
   * Ice Door to Elite Control/Dock to Ventilation Shaft
@@ -2732,9 +2745,7 @@ Asset id: 2905505465
   > Dock to Processing Center Access
       Trivial
   > Pickup (Missile)
-      All of the following:
-          Power Bomb and Morph Ball
-          Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
+      Power Bomb and Morph Ball
 
 > Dock to Processing Center Access; Heals? False
   * Plasma Door to Processing Center Access/Dock to Phazon Processing Center
