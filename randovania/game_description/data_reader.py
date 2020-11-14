@@ -37,7 +37,7 @@ def read_resource_info(data: Dict, resource_type: ResourceType) -> SimpleResourc
 
 def read_item_resource_info(data: Dict) -> ItemResourceInfo:
     return ItemResourceInfo(data["index"], data["long_name"],
-                            data["short_name"], data["max_capacity"], data.get("custom_memory_offset"))
+                            data["short_name"], data["max_capacity"], data.get("extra"))
 
 
 def read_trick_resource_info(data: Dict) -> TrickResourceInfo:

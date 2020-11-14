@@ -153,7 +153,7 @@ ConstructItemResourceInfo = Struct(
     long_name=CString("utf8"),
     short_name=CString("utf8"),
     max_capacity=Int32ub,
-    custom_memory_offset=OptionalValue(Int32ub),
+    extra=OptionalValue(Int32ub),
 )
 
 ConstructTrickResourceInfo = Struct(
