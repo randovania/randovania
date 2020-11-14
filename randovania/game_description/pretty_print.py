@@ -4,7 +4,7 @@ from randovania.game_description.area import Area
 from randovania.game_description.dock import DockType
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, DockNode, TeleporterNode, PickupNode, EventNode, TranslatorGateNode, \
-    LogbookNode, LoreType
+    LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, RequirementAnd, RequirementOr, \
     RequirementTemplate, Requirement
 from randovania.game_description.resources.resource_type import ResourceType
@@ -102,6 +102,14 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
         if node.lore_type == LoreType.LUMINOTH_LORE:
             message = f" ({node.required_translator.long_name})"
         return f"Logbook {node.lore_type.long_name}{message} for {node.string_asset_id:x}"
+
+    elif isinstance(node, PlayerShipNode):
+        unlocked_pretty = list(pretty_print_requirement(node.is_unlocked))
+        if len(unlocked_pretty) > 1:
+            unlocked_by = "Complex requirement"
+        else:
+            unlocked_by = unlocked_pretty[0][1]
+        return f"Player Ship (Unlocked by {unlocked_by})"
 
     return ""
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
-    <height>450</height>
+    <width>556</width>
+    <height>475</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -225,12 +225,17 @@
        <string>Logbook</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>Player Ship</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -682,6 +687,56 @@
           </size>
          </property>
         </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_player_ship">
+      <attribute name="title">
+       <string>Player Ship</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="player_ship_layout">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="player_ship_unlocked_button">
+         <property name="text">
+          <string>Edit unlocked by</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="player_ship_unlocked_group">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="player_ship_unlocked_layout">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
