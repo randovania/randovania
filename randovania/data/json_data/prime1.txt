@@ -2610,7 +2610,7 @@ Asset id: 2325199700
 
 > Event (Rock Wall in Elite Research Destroyed); Heals? False
   * Event Rock Wall in Elite Research Destroyed
-  > Dock to Research Access
+  > Top Floor
       Trivial
 
 > Pickup (Missile); Heals? False
@@ -2631,7 +2631,9 @@ Asset id: 2325199700
   > Event (Rock Wall in Elite Research Destroyed)
       All of the following:
           Scan Visor and Morph Ball and Boost Ball
-          Morph Ball Bomb or Power Bomb
+          Any of the following:
+              Morph Ball Bomb
+              Power Bomb and Knowledge (Beginner)
   > Pickup (Missile)
       All of the following:
           Scan Visor and Space Jump Boots and Morph Ball and Boost Ball
@@ -2866,8 +2868,6 @@ Asset id: 961790803
       Scan Visor and After Omega Pirate Defeated
   > Event (Omega Pirate Defeated)
       X-Ray Visor and Have all Beams
-  > Pickup (Phazon Suit)
-      After Omega Pirate Defeated
 
 > Dock to Processing Center Access; Heals? False
   * Plasma Door to Processing Center Access/Dock to Elite Quarters
@@ -2876,7 +2876,7 @@ Asset id: 961790803
 
 > Event (Omega Pirate Defeated); Heals? False
   * Event Omega Pirate Defeated
-  > Dock to Elite Quarters Access
+  > Pickup (Phazon Suit)
       Trivial
 
 > Pickup (Phazon Suit); Heals? False
@@ -2899,30 +2899,26 @@ Asset id: 4272124642
 > Dock to Quarantine Access A; Heals? False
   * Ice Door to Quarantine Access A/Dock to Central Dynamo
   > Dock to Save Station Mines B
-      After Security Drone Defeated and After Central Dynamo Bendezium Destroyed
+      Power Bomb and Morph Ball and After Security Drone Defeated
   > Event (Security Drone Defeated)
       All of the following:
-          Space Jump Boots and After Central Dynamo Bendezium Destroyed
+          Power Bomb and Space Jump Boots and Morph Ball
           Any of the following:
               X-Ray Visor
               Combat (Beginner) and Invisible Objects (Beginner)
-  > Event (Central Dynamo Bendezium Destroyed)
-      Power Bomb and Morph Ball
 
 > Dock to Save Station Mines B; Heals? False
   * Ice Door to Save Station Mines B/Dock to Central Dynamo
   > Dock to Dynamo Access
       Space Jump Boots and After Security Drone Defeated
   > Dock to Quarantine Access A
-      After Security Drone Defeated and After Central Dynamo Bendezium Destroyed
+      Power Bomb and Morph Ball and After Security Drone Defeated
   > Event (Security Drone Defeated)
       All of the following:
           Space Jump Boots
           Any of the following:
               X-Ray Visor
               Combat (Beginner) and Invisible Objects (Beginner)
-  > Event (Central Dynamo Bendezium Destroyed)
-      Power Bomb and Morph Ball and After Security Drone Defeated
 
 > Event (Security Drone Defeated); Heals? False; Spawn Point
   * Event Security Drone Defeated
@@ -2933,11 +2929,6 @@ Asset id: 4272124642
   * Pickup 84; Major Location? True
   > Dock to Save Station Mines B
       Trivial
-
-> Event (Central Dynamo Bendezium Destroyed); Heals? False
-  * Event Central Dynamo Bendezium Destroyed
-  > Dock to Save Station Mines B
-      After Security Drone Defeated
 
 ----------------
 Elite Quarters Access
@@ -2970,7 +2961,7 @@ Asset id: 1522461728
 > Dock to Metroid Quarantine A; Heals? False
   * Wave Door to Metroid Quarantine A/Dock to Quarantine Access A
   > Dock to Central Dynamo
-      After Central Dynamo Bendezium Destroyed
+      Trivial
 
 ----------------
 Save Station Mines B
@@ -2989,10 +2980,8 @@ Metroid Quarantine B
 Asset id: 3141205070
 > Dock to Quarantine Access B; Heals? False; Spawn Point
   * Plasma Door to Quarantine Access B/Dock to Metroid Quarantine B
-  > Dock to Save Station Mines C
-      Grapple Beam and Space Jump Boots and Morph Ball and Spider Ball and After Metroid Quarantine B Barrier Lowered
-  > Event (Metroid Quarantine B Barrier Lowered)
-      Scan Visor and Grapple Beam and Space Jump Boots and Morph Ball and Spider Ball
+  > Front of Barrier
+      Grapple Beam and Space Jump Boots and Morph Ball and Spider Ball
 
 > Dock to Elite Quarters Access; Heals? False
   * Plasma Door to Elite Quarters Access/Dock to Metroid Quarantine B
@@ -3001,12 +2990,12 @@ Asset id: 3141205070
 
 > Dock to Save Station Mines C; Heals? False
   * Plasma Door to Save Station Mines C/Dock to Metroid Quarantine B
-  > Dock to Quarantine Access B
-      Space Jump Boots and After Metroid Quarantine B Barrier Lowered
   > Dock to Elite Quarters Access
       Trivial
   > Pickup (Missile)
       Shoot Super Missile
+  > Front of Barrier
+      After Metroid Quarantine B Barrier Lowered
 
 > Pickup (Missile); Heals? False
   * Pickup 85; Major Location? False
@@ -3015,44 +3004,55 @@ Asset id: 3141205070
 
 > Event (Metroid Quarantine B Barrier Lowered); Heals? False
   * Event Metroid Quarantine B Barrier Lowered
+  > Front of Barrier
+      Trivial
+
+> Front of Barrier; Heals? False
   > Dock to Quarantine Access B
       Space Jump Boots
+  > Dock to Save Station Mines C
+      After Metroid Quarantine B Barrier Lowered
+  > Event (Metroid Quarantine B Barrier Lowered)
+      Scan Visor
 
 ----------------
 Metroid Quarantine A
 Asset id: 4211416922
 > Dock to Quarantine Access A; Heals? False; Spawn Point
   * Wave Door to Quarantine Access A/Dock to Metroid Quarantine A
-  > Dock to Elevator Access B
+  > Event (Metroid Quarantine A Barrier Lowered)
+      Scan Visor
+  > Front of Spider Track
       All of the following:
-          Morph Ball Bomb and Space Jump Boots and Morph Ball and Spider Ball and After Metroid Quarantine A Barrier Lowered
-          Thermal Visor or X-Ray Visor or Invisible Objects (Intermediate)
-  > Pickup (Missile)
-      All of the following:
-          Power Bomb and Space Jump Boots and Morph Ball and Spider Ball and After Metroid Quarantine A Barrier Lowered
+          Space Jump Boots
           Thermal Visor or X-Ray Visor or Invisible Objects (Intermediate)
 
 > Dock to Elevator Access B; Heals? False
   * Ice Door to Elevator Access B/Dock to Metroid Quarantine A
-  > Dock to Quarantine Access A
-      Space Jump Boots and After Metroid Quarantine A Barrier Lowered
-  > Pickup (Missile)
-      All of the following:
-          Power Bomb and Morph Ball and Spider Ball
-          Morph Ball Bomb or Space Jump Boots
-          Thermal Visor or X-Ray Visor or Invisible Objects (Intermediate)
-  > Event (Metroid Quarantine A Barrier Lowered)
-      Scan Visor
+  > Front of Spider Track
+      Space Jump Boots
 
 > Pickup (Missile); Heals? False
   * Pickup 86; Major Location? False
-  > Dock to Quarantine Access A
-      Space Jump Boots and After Metroid Quarantine A Barrier Lowered
+  > Front of Spider Track
+      All of the following:
+          Space Jump Boots
+          Power Beam or Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
 
 > Event (Metroid Quarantine A Barrier Lowered); Heals? False
   * Event Metroid Quarantine A Barrier Lowered
   > Dock to Quarantine Access A
       Trivial
+
+> Front of Spider Track; Heals? False
+  > Dock to Quarantine Access A
+      Space Jump Boots and After Metroid Quarantine A Barrier Lowered
+  > Dock to Elevator Access B
+      Morph Ball Bomb and Morph Ball and Spider Ball
+  > Pickup (Missile)
+      All of the following:
+          Power Bomb ≥ 2 and Space Jump Boots and Morph Ball and Spider Ball
+          Thermal Visor or X-Ray Visor or Invisible Objects (Intermediate)
 
 ----------------
 Quarantine Access B
