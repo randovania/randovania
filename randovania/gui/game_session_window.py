@@ -288,21 +288,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
-        if self.network_client.current_user.id not in self._game_session.players:
-            super().closeEvent(event)
-            self.has_closed = True
-            return
+        user_response = QMessageBox.Cancel
 
-        user_response = await async_dialog.warning(
-            self,
-            "Leaving Game Session",
-            ("Do you want to also leave the session?\n\n"
-             "Yes: Leave permanently, freeing a spot for others.\n"
-             "No: Close the window, but stay in the session. You can rejoin later.\n"
-             "Cancel: Do nothing\n"),
-            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
-            QMessageBox.No
-        )
+        is_kicked = self.network_client.current_user.id not in self._game_session.players
+        if not is_kicked:
+            user_response = await async_dialog.warning(
+                self,
+                "Leaving Game Session",
+                ("Do you want to also leave the session?\n\n"
+                 "Yes: Leave permanently, freeing a spot for others.\n"
+                 "No: Close the window, but stay in the session. You can rejoin later.\n"
+                 "Cancel: Do nothing\n"),
+                QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
+                QMessageBox.No
+            )
+
         if user_response == QMessageBox.Cancel:
             event.ignore()
             return
@@ -311,7 +311,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.network_client.GameSessionUpdated.disconnect(self.on_game_session_updated)
 
         try:
-            if user_response == QMessageBox.Yes or not self.network_client.connection_state.is_disconnected:
+            if user_response == QMessageBox.Yes or (not is_kicked and
+                                                    not self.network_client.connection_state.is_disconnected):
                 await self.network_client.leave_game_session(user_response == QMessageBox.Yes)
         finally:
             super().closeEvent(event)
