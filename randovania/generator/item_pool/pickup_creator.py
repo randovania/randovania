@@ -215,7 +215,7 @@ def create_energy_cell(cell_index: int,
         model_index=corruption_items.ENERGY_CELL_MODEL,
         item_category=ItemCategory.TEMPLE_KEY,
         broad_category=ItemCategory.KEY,
-        probability_offset=0,
+        probability_offset=0.25,
     )
 
 
