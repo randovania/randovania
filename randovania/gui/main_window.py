@@ -414,10 +414,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         dialog = QtWidgets.QInputDialog(self)
         dialog.setWindowTitle("Map Tracker")
         dialog.setLabelText("Select preset used for the tracker.")
-        dialog.setComboBoxItems([
-            preset.name
-            for preset in self._preset_manager.all_presets
-        ])
+        dialog.setComboBoxItems([preset.name for preset in self._preset_manager.all_presets])
+        dialog.setTextValue(self._options.selected_preset_name)
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.Accepted:
             preset = self._preset_manager.preset_for_name(dialog.textValue())
