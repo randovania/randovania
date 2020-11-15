@@ -45,7 +45,7 @@ class StartingLocation(BitPackValue):
 
     @property
     def as_json(self) -> list:
-        world_list = default_database.default_prime2_game_description().world_list
+        world_list = default_database.game_description_for(self.game).world_list
         return list(sorted(
             world_list.area_name(world_list.area_by_area_location(location), separator="/",
                                  distinguish_dark_aether=False)
