@@ -4497,7 +4497,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 2,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Munitions Locker": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -4791,7 +4796,12 @@
                             "coordinates": null,
                             "node_type": "event",
                             "event_index": 127,
-                            "connections": {}
+                            "connections": {
+                                "Dock to Repair Bay": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -5338,7 +5348,7 @@
                     "name": "Control Room",
                     "in_dark_aether": false,
                     "asset_id": 1605782415930376157,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -5385,7 +5395,8 @@
                             "name": "Event - Valhalla Leviathan Code",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 131,
                             "connections": {
                                 "Dock to Control Room Access": {
                                     "type": "and",
