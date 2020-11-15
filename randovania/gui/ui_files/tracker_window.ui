@@ -21,106 +21,7 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QScrollArea" name="pickups_scroll_area">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>285</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="pickups_scroll_contents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>283</width>
-         <height>419</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="pickup_box_layout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QGroupBox" name="upgrades_box">
-          <property name="title">
-           <string>Upgrades</string>
-          </property>
-          <layout class="QGridLayout" name="upgrades_layout"/>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="translators_box">
-          <property name="title">
-           <string>Translators</string>
-          </property>
-          <layout class="QGridLayout" name="translators_layout"/>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="expansions_box">
-          <property name="title">
-           <string>Expansions</string>
-          </property>
-          <layout class="QGridLayout" name="expansions_layout"/>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="keys_box">
-          <property name="title">
-           <string>Keys</string>
-          </property>
-          <layout class="QGridLayout" name="keys_layout"/>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="events_box">
-          <property name="title">
-           <string>Events</string>
-          </property>
-          <layout class="QVBoxLayout" name="events_layout"/>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="4">
-     <widget class="QLabel" name="configuration_label">
-      <property name="text">
-       <string>Trick Level: ???; Elevators: Vanilla; Item Loss: ???</string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1" colspan="3">
+    <item row="2" column="1" colspan="3">
      <widget class="QGroupBox" name="location_box">
       <property name="title">
        <string>Current location: </string>
@@ -155,7 +56,7 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="4">
+    <item row="2" column="4">
      <widget class="QGroupBox" name="actions_box">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -189,11 +90,284 @@
       </layout>
      </widget>
     </item>
+    <item row="0" column="0" colspan="4">
+     <widget class="QLabel" name="configuration_label">
+      <property name="text">
+       <string>Trick Level: ???; Elevators: Vanilla; Item Loss: ???</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="4">
      <widget class="QPushButton" name="undo_last_action_button">
       <property name="text">
        <string>Undo last action</string>
       </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QTabWidget" name="tab_widget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>290</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>290</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_inventory">
+       <attribute name="title">
+        <string>Inventory</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="tab_inventory_layout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QScrollArea" name="pickups_scroll_area">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>285</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>0</number>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="pickups_scroll_contents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>285</width>
+             <height>394</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="pickup_box_layout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QGroupBox" name="upgrades_box">
+              <property name="title">
+               <string>Upgrades</string>
+              </property>
+              <layout class="QGridLayout" name="upgrades_layout"/>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="translators_box">
+              <property name="title">
+               <string>Translators</string>
+              </property>
+              <layout class="QGridLayout" name="translators_layout"/>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="expansions_box">
+              <property name="title">
+               <string>Expansions</string>
+              </property>
+              <layout class="QGridLayout" name="expansions_layout"/>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="keys_box">
+              <property name="title">
+               <string>Keys</string>
+              </property>
+              <layout class="QGridLayout" name="keys_layout"/>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="events_box">
+              <property name="title">
+               <string>Events</string>
+              </property>
+              <layout class="QVBoxLayout" name="events_layout"/>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_elevators">
+       <attribute name="title">
+        <string>Elevators</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="tab_elevators_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QScrollArea" name="elevators_scroll_area">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>285</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="elevators_scroll_contents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>285</width>
+             <height>394</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="elevators_scroll_layout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_translator_gate">
+       <attribute name="title">
+        <string>Translator Gate</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="tab_translator_gate_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QScrollArea" name="translator_gate_scroll_area">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="translator_gate_scroll_contents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>284</width>
+             <height>392</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="translator_gate_scroll_layout">
+            <property name="leftMargin">
+             <number>3</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>3</number>
+            </property>
+            <property name="bottomMargin">
+             <number>3</number>
+            </property>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
