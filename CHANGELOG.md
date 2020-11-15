@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.0] - 2020-10-??
+## [2.0.0] - 2020-11-15
 
 This version is dedicated to SpaghettiToastBook, a great member of our community who sadly lost her life this year.
 
