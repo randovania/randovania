@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: The map tracker now supports random elevators, translator gates and starting location.
+
 -   Fixed: Multiworld sessions should no longer occasionally duplicate messages.
 
 ## [2.0.0] - 2020-11-15
