@@ -1,3 +1,4 @@
+import collections
 from functools import partial
 from typing import List, Dict, Optional
 
@@ -198,8 +199,6 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if game_description == self._pickup_spoiler_current_game:
             return
 
-        world_to_group = {}
-
         for groups in self._pickup_spoiler_world_to_group.values():
             groups.deleteLater()
 
@@ -207,48 +206,50 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.pickup_spoiler_show_all_button.currently_show_all = True
         self.pickup_spoiler_buttons.clear()
 
-        for world in game_description.world_list.worlds:
-            for is_dark_world in [False, True]:
-                group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
-                group_box.setTitle(world.correct_name(is_dark_world))
-                vertical_layout = QVBoxLayout(group_box)
-                vertical_layout.setContentsMargins(8, 4, 8, 4)
-                vertical_layout.setSpacing(2)
-                group_box.vertical_layout = vertical_layout
-
-                vertical_layout.horizontal_layouts = []
-                world_to_group[world.correct_name(is_dark_world)] = group_box
-                self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
-
-        self._pickup_spoiler_world_to_group = world_to_group
+        self._pickup_spoiler_world_to_group = {}
+        nodes_in_world = collections.defaultdict(list)
 
         for world, area, node in game_description.world_list.all_worlds_areas_nodes:
-            if not isinstance(node, PickupNode):
+            if isinstance(node, PickupNode):
+                world_name = world.correct_name(area.in_dark_aether)
+                nodes_in_world[world_name].append((f"{area.name} - {node.name}", node.pickup_index))
                 continue
 
-            group_box = world_to_group[world.correct_name(area.in_dark_aether)]
-            horizontal_layout = QHBoxLayout()
-            horizontal_layout.setSpacing(2)
+        for world_name in sorted(nodes_in_world.keys()):
+            group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
+            group_box.setTitle(world_name)
+            vertical_layout = QVBoxLayout(group_box)
+            vertical_layout.setContentsMargins(8, 4, 8, 4)
+            vertical_layout.setSpacing(2)
+            group_box.vertical_layout = vertical_layout
 
-            label = QLabel(group_box)
-            label.setText(game_description.world_list.node_name(node))
-            horizontal_layout.addWidget(label)
-            horizontal_layout.label = label
+            vertical_layout.horizontal_layouts = []
+            self._pickup_spoiler_world_to_group[world_name] = group_box
+            self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
 
-            push_button = QPushButton(group_box)
-            push_button.setFlat(True)
-            push_button.setText("Hidden")
-            push_button.item_is_hidden = True
-            push_button.pickup_index = node.pickup_index
-            push_button.clicked.connect(partial(self._toggle_pickup_spoiler, push_button))
-            push_button.item_name = "Nothing was Set, ohno"
-            push_button.row = horizontal_layout
-            horizontal_layout.addWidget(push_button)
-            horizontal_layout.button = push_button
-            self.pickup_spoiler_buttons.append(push_button)
+            for area_name, pickup_index in sorted(nodes_in_world[world_name], key=lambda it: it[0]):
+                horizontal_layout = QHBoxLayout()
+                horizontal_layout.setSpacing(2)
 
-            group_box.vertical_layout.addLayout(horizontal_layout)
-            group_box.vertical_layout.horizontal_layouts.append(horizontal_layout)
+                label = QLabel(group_box)
+                label.setText(area_name)
+                horizontal_layout.addWidget(label)
+                horizontal_layout.label = label
+
+                push_button = QPushButton(group_box)
+                push_button.setFlat(True)
+                push_button.setText("Hidden")
+                push_button.item_is_hidden = True
+                push_button.pickup_index = pickup_index
+                push_button.clicked.connect(partial(self._toggle_pickup_spoiler, push_button))
+                push_button.item_name = "Nothing was Set, ohno"
+                push_button.row = horizontal_layout
+                horizontal_layout.addWidget(push_button)
+                horizontal_layout.button = push_button
+                self.pickup_spoiler_buttons.append(push_button)
+
+                group_box.vertical_layout.addLayout(horizontal_layout)
+                group_box.vertical_layout.horizontal_layouts.append(horizontal_layout)
 
     def create_history_item(self, node):
         button = QRadioButton(self.layout_history_content)
