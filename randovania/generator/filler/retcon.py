@@ -171,6 +171,9 @@ class PlayerState:
         self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
 
+    def __repr__(self):
+        return f"Player {self.index}"
+
     def update_for_new_state(self):
         self._advance_pickup_index_seen_count()
         self._advance_scan_asset_seen_count()
@@ -245,7 +248,7 @@ class PlayerState:
 
         if debug.debug_level() > 1:
             for action, weight in actions_weights.items():
-                print("{} - {}".format(action.name, weight))
+                print("({}) {} - {}".format(type(action).__name__, action.name, weight))
 
         return actions_weights
 
@@ -537,7 +540,7 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
                             ):
     if debug.debug_level() > 0:
         if debug.debug_level() > 1:
-            extra = ", pickups_left: {}".format([pickup.name for pickup in pickups_left])
+            extra = ", pickups_left: {}".format(sorted(set(pickup.name for pickup in pickups_left)))
         else:
             extra = ""
 
@@ -549,6 +552,12 @@ def print_retcon_loop_start(current_uncollected: UncollectedState,
             len(current_uncollected.resources),
             extra
         ))
+
+        if debug.debug_level() > 2:
+            print("\nCurrent reach:")
+            for node in reach.nodes:
+                print("[{!s:>5}, {!s:>5}] {}".format(reach.is_reachable_node(node), reach.is_safe_node(node),
+                                                     game.world_list.node_name(node)))
 
 
 def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: GameDescription,
@@ -583,9 +592,4 @@ def print_new_resources(game: GameDescription,
             if count == 1:
                 node = find_node_with_resource(index, world_list.all_nodes)
                 print("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))
-
-                if debug.debug_level() > 2:
-                    paths = reach.shortest_path_from(node)
-                    path = paths.get(reach.state.node, [])
-                    print([node.name for node in path])
         print("")
