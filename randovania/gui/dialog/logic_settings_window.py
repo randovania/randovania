@@ -399,7 +399,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 group_box = QGroupBox(self.starting_locations_contents)
                 world_check = QtWidgets.QCheckBox(group_box)
                 world_check.setText(world.correct_name(is_dark_world))
-                world_check.setTristate(True)
+                world_check.world_asset_id = world.world_asset_id
+                world_check.is_dark_world = is_dark_world
+                world_check.stateChanged.connect(functools.partial(self._on_check_starting_world, world_check))
+                #world_check.setTristate(True)
                 vertical_layout = QVBoxLayout(group_box)
                 vertical_layout.setContentsMargins(8, 4, 8, 4)
                 vertical_layout.setSpacing(2)
@@ -438,6 +441,18 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 editor.layout_configuration.starting_location.ensure_has_location(check.area_location,
                                                                                   check.isChecked())
             )
+
+    def _on_check_starting_world(self, check, _):
+        world_list = self.game_description.world_list
+        world = world_list.world_by_asset_id(check.world_asset_id)
+        world_areas = [world_list.area_to_area_location(area)
+                       for area in world.areas if check.is_dark_world == area.in_dark_aether]
+        with self._editor as editor:
+            for area in world_areas:
+                editor.set_layout_configuration_field(
+                    "starting_location",
+                    editor.layout_configuration.starting_location.ensure_has_location(area, check.isChecked())
+                )
 
     def _starting_location_on_select_ship(self):
         with self._editor as editor:
