@@ -32,7 +32,7 @@ Dock Weaknesses
   * (4) Ice Missile Blast Shield; Blast Shield? True
       Missile and Ice Missile
 
-  * (5) Seeler Missiles Blast Shield; Blast Shield? True
+  * (5) Seeker Missiles Blast Shield; Blast Shield? True
       Missile ≥ 5 and Seeker Missile
 
   * (6) Grapple Lasso Blast Shield; Blast Shield? True
@@ -593,7 +593,7 @@ Asset id: 12327360187860907075
       Trivial
 
 > Dock to Generator B Access; Heals? False
-  * Seeler Missiles Blast Shield to Generator B Access/Dock to Cargo Dock B
+  * Seeker Missiles Blast Shield to Generator B Access/Dock to Cargo Dock B
   > Room Center
       Trivial
 
@@ -1300,7 +1300,7 @@ Asset id: 3467893814575167461
   > Dock to Reliquary II
       After Gateway Tunnel Orb
   > Base Floor
-      After Gateway Orange Lock and After Gateway Blue Lock
+      After Gateway Orange Lock and After Gateway Green Lock
   > Event - Tunnel Orb
       Grapple Lasso
 
@@ -1312,10 +1312,10 @@ Asset id: 3467893814575167461
   > Dock to Reliquary II
       Use Screw Attack (Space Jump)
   > Tunnel Room
-      After Gateway Orange Lock and After Gateway Blue Lock
+      After Gateway Orange Lock and After Gateway Green Lock
   > Event - Orange Lock
       Trivial
-  > Event - Blue Lock
+  > Event - Green Lock
       Grapple Lasso and After Gateway Orange Lock
 
 > Event - Orange Lock; Heals? False
@@ -1323,8 +1323,8 @@ Asset id: 3467893814575167461
   > Base Floor
       Trivial
 
-> Event - Blue Lock; Heals? False
-  * Event Gateway Blue Lock
+> Event - Green Lock; Heals? False
+  * Event Gateway Green Lock
   > Base Floor
       Trivial
 
@@ -2253,7 +2253,9 @@ Asset id: 691790544662692104
   > Dock to Refinery Access
       Plasma Beam
   > Dock to Gel Purification Site
-      After Gel Refinery Site Pipe
+      Any of the following:
+          After Gel Refinery Site Pipe
+          Power Beam and Morph Ball Bombs and Space Jump Boots and Morph Ball
   > Dock to Main Lift
       Trivial
 
@@ -2282,28 +2284,33 @@ Asset id: 15732414849243282895
   * Ice Missile Blast Shield to Gel Purification Site/Dock to Gel Hall
   > Dock to Save Station A
       Ice Missile or Normal Damage
+  > Event - Falling Platform
+      Charge Beam or Melt Objects (Plasma or Nova)
 
 > Dock to Gel Processing Site; Heals? False
   * Ice Missile Blast Shield to Gel Processing Site/Dock to Gel Hall
-  > Falling Platform
-      Trivial
+  > Event - Falling Platform
+      Charge Beam or Melt Objects (Plasma or Nova)
 
 > Dock to Save Station A; Heals? False
   * Normal Door to Save Station A/Dock to Gel Hall
-  > Falling Platform
-      Trivial
+  > Event - Falling Platform
+      Charge Beam or Melt Objects (Plasma or Nova)
 
 > Pickup (Missile Expansion - Ledge); Heals? False
   * Pickup 20; Major Location? False
-  > Falling Platform
-      Ice Missile or Normal Damage
+  > Event - Falling Platform
+      All of the following:
+          After Gell Hall Falling Platform
+          Ice Missile or Normal Damage
 
 > Pickup (Missile Expansion - Falling Platform); Heals? False
   * Pickup 21; Major Location? False
-  > Falling Platform
+  > Event - Falling Platform
       Trivial
 
-> Falling Platform; Heals? False
+> Event - Falling Platform; Heals? False
+  * Event Gell Hall Falling Platform
   > Dock to Gel Purification Site
       Ice Missile or Use Screw Attack (Space Jump)
   > Dock to Gel Processing Site
@@ -2405,7 +2412,7 @@ Asset id: 15414731845526197010
   > Dock to Gel Hall
       After Gel Processing Site Pillar
   > Event - Raise Pillar
-      Grapple Lasso
+      Grapple Lasso and Morph Ball Bombs and Space Jump Boots and Morph Ball
 
 > Dock to Gel Hall; Heals? False
   * Normal Door to Gel Hall/Dock to Gel Processing Site
@@ -2469,7 +2476,7 @@ Asset id: 11307336868361004418
   > Dock to Temple Access
       Trivial
   > Dock to Imperial Hall
-      Ice Missile
+      Ice Missile and Morph Ball
 
 > Dock to Temple Access; Heals? False
   * Normal Door to Temple Access/Dock to Gel Cavern
@@ -2479,7 +2486,7 @@ Asset id: 11307336868361004418
 > Dock to Imperial Hall; Heals? False
   * Morph Ball Door to Imperial Hall/Dock to Gel Cavern
   > Dock to Cavern Entry
-      Ice Missile
+      Ice Missile and Morph Ball
 
 ----------------
 Temple Reservoir

@@ -530,7 +530,7 @@
             },
             {
                 "index": 23,
-                "long_name": "Gateway Blue Lock",
+                "long_name": "Gateway Green Lock",
                 "short_name": "Event23"
             },
             {
@@ -1047,9 +1047,93 @@
                 "index": 136,
                 "long_name": "Cargo Dock B Unlocked",
                 "short_name": "Event136"
+            },
+            {
+                "index": 137,
+                "long_name": "Gell Hall Falling Platform",
+                "short_name": "Event137"
             }
         ],
-        "tricks": [],
+        "tricks": [
+            {
+                "index": 0,
+                "long_name": "Combat/Scan Dash",
+                "short_name": "Dash",
+                "description": "By locking onto an enemy or scan point and strafing left or right, Samus' momentum can be maintainted. This is useful in crossing gaps."
+            },
+            {
+                "index": 1,
+                "long_name": "Bomb Jump",
+                "short_name": "BombJump",
+                "description": "By chaining multiple bombs, you can reach heights you wouldn't otherwise. Higher difficulties of this trick can involve horizontal movement, unmorphing in air, extremely precise bomb placements and timing.<br /><a href='https://wiki.metroidprime.run/wiki/Bomb_Jump'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 2,
+                "long_name": "Slope Jump",
+                "short_name": "SlopeJump",
+                "description": "Jumping against a slope grants extra height when jumping, allowing access to ledges that are out of reach.<br /><a href='https://wiki.metroidprime.run/wiki/Slope_Jump'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 3,
+                "long_name": "Knowledge",
+                "short_name": "Knowledge",
+                "description": "This trick covers breakable objects that one wouldn't expect to be broken with certain items, such as Super Missiles to break Transport A Access rubble, Light Crystals with Screw Attack, or Power Bomb gates with Screw Attack."
+            },
+            {
+                "index": 4,
+                "long_name": "Movement",
+                "short_name": "Movement",
+                "description": "A broad category for non-obvious movement which can't easily be classified using other tricks."
+            },
+            {
+                "index": 5,
+                "long_name": "Bomb Space Jump",
+                "short_name": "BSJ",
+                "description": "Bomb Jumping and unmorphing backwards to a wall or forwards from an overhang to get an instant unmorph, then jumping within 2/5 of a second after leaving the ground gives a height boost to reach higher ledges.<br /><a href='https://wiki.metroidprime.run/wiki/Bomb_Space_Jump'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 6,
+                "long_name": "Roll Jump",
+                "short_name": "RollJump",
+                "description": "Rolling off a ledge, getting an instant unmorph, and jumping within 2/5 of a second after unmorphing grants speed and horizontal distance. This is useful in crossing gaps such as Watch Station Access.<br /><a href='https://wiki.metroidprime.run/wiki/Roll_Jump'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 7,
+                "long_name": "Boost Jump",
+                "short_name": "BoostJump",
+                "description": "Similar to a Roll Jump, except it does not require a ledge, and it requires Boost Ball. By morphing and barely tapping left or right on the stick, the camera desyncs from Samus. By boosting and jumping within the 2/5 of a second window, great distances can be covered.<br /><a href='https://wiki.metroidprime.run/wiki/Boost_Jump'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 8,
+                "long_name": "Instant Morph",
+                "short_name": "InstantMorph",
+                "description": "Morphing near a wall or a ceiling can cause Samus to be morphed without the animation, allowing access to Morph Ball tunnels from the back, or entering a tunnel unintended.<br /><a href='https://wiki.metroidprime.run/wiki/Instant_Morph/Unmorph'>Check the wiki for more details.</a>"
+            },
+            {
+                "index": 9,
+                "long_name": "Invisible Objects",
+                "short_name": "InvisibleObjects",
+                "description": "Objects that normally need visors to be seen or accessed without the required visor, such as Dark Visor platforms or Quadraxis without Echo Visor, can be possible in logic depending on the difficulty."
+            },
+            {
+                "index": 10,
+                "long_name": "Standable Terrain",
+                "short_name": "StandableTerrain",
+                "description": "Some parts of the terrain can be abused and stood on, allowing access to certain areas otherwise unreachable."
+            },
+            {
+                "index": 11,
+                "long_name": "Terminal Fall Abuse",
+                "short_name": "TerminalFall",
+                "description": "Some terminal fall triggers can be used to warp to certain sections of a room, such as Watch Station Access or Grand Windchamber."
+            },
+            {
+                "index": 12,
+                "long_name": "Single Room Out of Bounds",
+                "short_name": "OoB",
+                "description": "Traveling outside the room boundaries to gain access to areas/rooms otherwise unreachable given the circumstances. Currently only used for single-room traversal.<br /><a href='https://wiki.metroidprime.run/wiki/Out_of_Bounds'>Check the wiki for more details.</a>"
+            }
+        ],
         "damage": [
             {
                 "index": 1,
@@ -6579,7 +6663,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Event - Blue Lock": {
+                                "Event - Green Lock": {
                                     "type": "and",
                                     "data": [
                                         {
@@ -6618,7 +6702,7 @@
                             }
                         },
                         {
-                            "name": "Event - Blue Lock",
+                            "name": "Event - Green Lock",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "event",
@@ -10346,13 +10430,59 @@
                                     ]
                                 },
                                 "Dock to Gel Purification Site": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 52,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 52,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 0,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 "Dock to Main Lift": {
                                     "type": "and",
@@ -10498,6 +10628,24 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Event - Falling Platform": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -10516,9 +10664,23 @@
                             "dock_type": 0,
                             "dock_weakness_index": 4,
                             "connections": {
-                                "Falling Platform": {
-                                    "type": "and",
-                                    "data": []
+                                "Event - Falling Platform": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -10537,9 +10699,23 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Falling Platform": {
-                                    "type": "and",
-                                    "data": []
+                                "Event - Falling Platform": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -10551,26 +10727,40 @@
                             "pickup_index": 20,
                             "major_location": false,
                             "connections": {
-                                "Falling Platform": {
-                                    "type": "or",
+                                "Event - Falling Platform": {
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 5,
+                                                "type": 1,
+                                                "index": 137,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 3,
-                                                "index": 1,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 3,
+                                                        "index": 1,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -10584,17 +10774,18 @@
                             "pickup_index": 21,
                             "major_location": false,
                             "connections": {
-                                "Falling Platform": {
+                                "Event - Falling Platform": {
                                     "type": "and",
                                     "data": []
                                 }
                             }
                         },
                         {
-                            "name": "Falling Platform",
+                            "name": "Event - Falling Platform",
                             "heal": false,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "event",
+                            "event_index": 137,
                             "connections": {
                                 "Dock to Gel Purification Site": {
                                     "type": "or",
@@ -11052,13 +11243,45 @@
                                     }
                                 },
                                 "Event - Raise Pillar": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -11290,13 +11513,27 @@
                                     "data": []
                                 },
                                 "Dock to Imperial Hall": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 5,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -11337,13 +11574,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Cavern Entry": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 5,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
