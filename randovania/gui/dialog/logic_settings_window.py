@@ -397,12 +397,19 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         for row, world in enumerate(game_description.world_list.worlds):
             for column, is_dark_world in enumerate([False, True]):
                 group_box = QGroupBox(self.starting_locations_contents)
-                group_box.setTitle(world.correct_name(is_dark_world))
+                world_check = QtWidgets.QCheckBox(group_box)
+                world_check.setText(world.correct_name(is_dark_world))
+                world_check.setTristate(True)
                 vertical_layout = QVBoxLayout(group_box)
                 vertical_layout.setContentsMargins(8, 4, 8, 4)
                 vertical_layout.setSpacing(2)
                 vertical_layout.setAlignment(QtCore.Qt.AlignTop)
+                separator = QtWidgets.QFrame()
+                separator.setFrameShape(QtWidgets.QFrame.HLine)
+                separator.setFrameShadow(QtWidgets.QFrame.Sunken)
                 group_box.vertical_layout = vertical_layout
+                group_box.vertical_layout.addWidget(world_check)
+                group_box.vertical_layout.addWidget(separator)
 
                 world_to_group[world.correct_name(is_dark_world)] = group_box
                 self.starting_locations_layout.addWidget(group_box, row, column)
