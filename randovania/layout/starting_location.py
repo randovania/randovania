@@ -74,3 +74,13 @@ class StartingLocation(BitPackValue):
             new_locations.remove(area_location)
 
         return StartingLocation.with_elements(iter(new_locations))
+
+    def ensure_has_locations(self, area_locations: list, enabled: bool) -> "StartingLocation":
+        new_locations = set(self.locations)
+        for area_location in area_locations:
+            if enabled:
+                new_locations.add(area_location)
+            elif area_location in new_locations:
+                new_locations.remove(area_location)
+        return StartingLocation.with_elements(iter(new_locations))
+
