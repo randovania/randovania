@@ -1064,8 +1064,13 @@
             },
             {
                 "index": 137,
-                "long_name": "Gell Hall Falling Platform",
+                "long_name": "Gel Hall Falling Platform",
                 "short_name": "Event137"
+            },
+            {
+                "index": 138,
+                "long_name": "Temple Hall Gel Falls Activated",
+                "short_name": "Event138"
             }
         ],
         "tricks": [
@@ -9905,7 +9910,7 @@
                     "name": "Main Lift",
                     "in_dark_aether": false,
                     "asset_id": 9934831212540578712,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -9924,13 +9929,27 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Upper Area": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 53,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 53,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -9977,11 +9996,105 @@
                             "connections": {
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 35,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 38,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 "Upper Area": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 35,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 38,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -10006,13 +10119,27 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Warp Site Alpha": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 53,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 53,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Dock to Corrupted Pool": {
                                     "type": "resource",
@@ -10024,8 +10151,13 @@
                                     }
                                 },
                                 "Dock to Gel Refinery Site": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Ice Tunnel": {
                                     "type": "template",
@@ -10052,7 +10184,7 @@
                     "name": "Imperial Hall",
                     "in_dark_aether": false,
                     "asset_id": 4215957264467390882,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -10101,20 +10233,48 @@
                                     "data": []
                                 },
                                 "Pickup (Missile Expansion)": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 7,
+                                                "index": 32,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 7,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 16,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -10144,9 +10304,73 @@
                                         "negate": false
                                     }
                                 },
-                                "Event - Fuel Gel Walls": {
+                                "Dock to Refinery Access": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 51,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Fuel Gel Walls": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -10222,7 +10446,7 @@
                     "name": "Refinery Access",
                     "in_dark_aether": false,
                     "asset_id": 12195253720064854680,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -10241,8 +10465,50 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Dock to Gel Refinery Site": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 1,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -10262,8 +10528,50 @@
                             "dock_weakness_index": 1,
                             "connections": {
                                 "Dock to Imperial Hall": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 1,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -10273,7 +10581,7 @@
                     "name": "Gel Refinery Site",
                     "in_dark_aether": false,
                     "asset_id": 691790544662692104,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -10433,63 +10741,113 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 1,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 32,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 10,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 12,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 4,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
                                 "Dock to Gel Purification Site": {
-                                    "type": "or",
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 52,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Dock to Main Lift": {
+                                    "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 52,
+                                                "type": 0,
+                                                "index": 15,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 32,
+                                                        "index": 3,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Melt Objects (Plasma or Nova)"
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
+                                                        "type": 2,
                                                         "index": 10,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 15,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 0,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -10498,9 +10856,32 @@
                                         }
                                     ]
                                 },
-                                "Dock to Main Lift": {
+                                "Pickup (Missile Expansion)": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -10523,7 +10904,7 @@
                     "name": "Gel Purification Site",
                     "in_dark_aether": false,
                     "asset_id": 14145904616390261937,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -10602,7 +10983,7 @@
                     "name": "Gel Hall",
                     "in_dark_aether": false,
                     "asset_id": 15732414849243282895,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -10770,7 +11151,7 @@
                                                     "data": {
                                                         "type": 3,
                                                         "index": 1,
-                                                        "amount": 1,
+                                                        "amount": 20,
                                                         "negate": false
                                                     }
                                                 }
@@ -10853,7 +11234,7 @@
                     "name": "Corrupted Pool",
                     "in_dark_aether": false,
                     "asset_id": 4196997332781103286,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -10959,7 +11340,7 @@
                     "name": "Temple of Bryyo",
                     "in_dark_aether": false,
                     "asset_id": 13296637487518400273,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11061,15 +11442,6 @@
                                         }
                                     ]
                                 },
-                                "Pickup (Ice Missile)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 3,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
                                 "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": [
@@ -11083,8 +11455,45 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Phazite (X-Ray and Nova)"
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 14,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 9,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 },
@@ -11143,7 +11552,7 @@
                             "node_type": "event",
                             "event_index": 3,
                             "connections": {
-                                "Above Ground": {
+                                "Pickup (Ice Missile)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -11168,7 +11577,7 @@
                     "name": "Temple Hall",
                     "in_dark_aether": false,
                     "asset_id": 8718899405848025583,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11187,13 +11596,50 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Temple Generator": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 5,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 138,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -11213,13 +11659,63 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Temple Reservoir": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 5,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 138,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Temple Hall Falls Activated",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 138,
+                            "connections": {
+                                "Dock to Temple Reservoir": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -11229,7 +11725,7 @@
                     "name": "Gel Processing Site",
                     "in_dark_aether": false,
                     "asset_id": 15414731845526197010,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11338,7 +11834,7 @@
                     "name": "Save Station A",
                     "in_dark_aether": false,
                     "asset_id": 6190253681364271262,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11405,7 +11901,7 @@
                     "name": "Temple Generator",
                     "in_dark_aether": false,
                     "asset_id": 17919508762406024111,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11424,13 +11920,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Event - Leviathan Shield": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 44,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 13,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 45,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -11453,7 +11963,7 @@
                     "name": "Cavern Entry",
                     "in_dark_aether": false,
                     "asset_id": 7770467369003576485,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11504,7 +12014,7 @@
                     "name": "Gel Cavern",
                     "in_dark_aether": false,
                     "asset_id": 11307336868361004418,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11618,7 +12128,7 @@
                     "name": "Temple Reservoir",
                     "in_dark_aether": false,
                     "asset_id": 6515839134538815411,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11707,7 +12217,7 @@
                     "name": "Temple Access",
                     "in_dark_aether": false,
                     "asset_id": 17784744952251613582,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11758,7 +12268,7 @@
                     "name": "Warp Site Alpha",
                     "in_dark_aether": false,
                     "asset_id": 4474147916478522354,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11791,6 +12301,24 @@
                                         {
                                             "type": "template",
                                             "data": "Melt Objects (Plasma or Nova)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 },
@@ -11848,7 +12376,7 @@
                     "name": "Warp Site Bravo",
                     "in_dark_aether": false,
                     "asset_id": 9245834436705857859,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -11890,7 +12418,7 @@
                     "name": "Hall of Remembrance",
                     "in_dark_aether": false,
                     "asset_id": 6915612318130423578,
-                    "default_node_index": null,
+                    "default_node_index": 8,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -12086,7 +12614,7 @@
                     "name": "Imperial Crypt",
                     "in_dark_aether": false,
                     "asset_id": 17976174099400013428,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -12105,8 +12633,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Imperial Caverns": {
-                                    "type": "template",
-                                    "data": "Use Screw Attack (Space Jump)"
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 59,
+                                                "amount": 1,
+                                                "negate": true
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -12138,8 +12680,22 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 59,
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -12153,8 +12709,54 @@
                                     }
                                 },
                                 "Event - Ice Floor": {
-                                    "type": "template",
-                                    "data": "Melt Objects (Plasma or Nova)"
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 35,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 36,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -12221,7 +12823,7 @@
                     "name": "Tower",
                     "in_dark_aether": false,
                     "asset_id": 10429003070780375168,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -12242,6 +12844,56 @@
                                 "Dock to Hall of Remembrance (Lower)": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Pickup (Energy Tank)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 5,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 8,
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -12284,6 +12936,24 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -12309,7 +12979,7 @@
                     "name": "Imperial Caverns",
                     "in_dark_aether": false,
                     "asset_id": 10980580650394598183,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -12372,8 +13042,54 @@
                                     }
                                 },
                                 "Event - Ice Floors": {
-                                    "type": "template",
-                                    "data": "Melt Objects (Plasma or Nova)"
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "template",
+                                            "data": "Melt Objects (Plasma or Nova)"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 35,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 36,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 3,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
