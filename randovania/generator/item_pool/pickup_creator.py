@@ -37,7 +37,9 @@ def create_major_item(item: MajorItem,
         resources = []
 
         if base_resource is not None:
-            resources.append((resource_database.get_item(base_resource), 1))
+            # FIXME: hacky quantity for Hazard Shield
+            quantity = 5 if item.name == "Hazard Shield" else 1
+            resources.append((resource_database.get_item(base_resource), quantity))
 
         for ammo_index, ammo_count in zip(ammo.temporaries if temporary_ammo else item.ammo_index,
                                           state.included_ammo):
