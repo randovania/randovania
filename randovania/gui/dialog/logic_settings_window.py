@@ -468,11 +468,10 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         world_areas = [world_list.area_to_area_location(area)
                        for area in world.areas if check.is_dark_world == area.in_dark_aether]
         with self._editor as editor:
-            for area in world_areas:
-                editor.set_layout_configuration_field(
-                    "starting_location",
-                    editor.layout_configuration.starting_location.ensure_has_location(area, check.isChecked())
-                )
+            editor.set_layout_configuration_field(
+                "starting_location",
+                editor.layout_configuration.starting_location.ensure_has_locations(world_areas, check.isChecked())
+            )
 
     def _starting_location_on_select_ship(self):
         with self._editor as editor:
