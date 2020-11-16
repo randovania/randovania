@@ -6,8 +6,9 @@ from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPus
     QApplication, QDialog, QAction, QMenu
 from asyncqt import asyncSlot
 
-from randovania.game_description import data_reader
+from randovania.game_description import data_reader, default_database
 from randovania.game_description.default_database import default_prime2_game_description
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
 from randovania.games.prime import patcher_file
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
@@ -58,6 +59,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     _options: Options
     _window_manager: Optional[WindowManager]
     _player_names: Dict[int, str]
+    _pickup_spoiler_current_game: Optional[GameDescription] = None
 
     def __init__(self, window_manager: Optional[WindowManager], options: Options):
         super().__init__()
@@ -66,6 +68,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
 
         self._history_items = []
         self.pickup_spoiler_buttons = []
+        self._pickup_spoiler_world_to_group = {}
         self._options = options
         self._window_manager = window_manager
 
@@ -92,6 +95,8 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.export_iso_button.clicked.connect(self._export_iso)
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
+        self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
+        self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
         self.player_index_combo.activated.connect(self._update_current_player)
         self.CloseEvent.connect(self.stop_background_process)
 
@@ -102,9 +107,6 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
 
         # Cosmetic
         self.customize_user_preferences_button.clicked.connect(self._open_user_preferences_dialog)
-
-        # Keep the Layout Description visualizer ready, but invisible.
-        self._create_pickup_spoilers()
 
     @property
     def current_player_index(self) -> int:
@@ -192,17 +194,18 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._window_manager.open_map_tracker(current_preset.layout_configuration)
 
     # Layout Visualization
-    def _create_pickup_spoiler_combobox(self):
-        self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
+    def _create_pickup_spoilers(self, game_description: GameDescription):
+        if game_description == self._pickup_spoiler_current_game:
+            return
 
-    def _create_pickup_spoilers(self):
-        self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
-        self.pickup_spoiler_show_all_button.currently_show_all = True
-
-        self._create_pickup_spoiler_combobox()
-
-        game_description = default_prime2_game_description()
         world_to_group = {}
+
+        for groups in self._pickup_spoiler_world_to_group.values():
+            groups.deleteLater()
+
+        self._pickup_spoiler_current_game = game_description
+        self.pickup_spoiler_show_all_button.currently_show_all = True
+        self.pickup_spoiler_buttons.clear()
 
         for world in game_description.world_list.worlds:
             for is_dark_world in [False, True]:
@@ -216,6 +219,8 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                 vertical_layout.horizontal_layouts = []
                 world_to_group[world.correct_name(is_dark_world)] = group_box
                 self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
+
+        self._pickup_spoiler_world_to_group = world_to_group
 
         for world, area, node in game_description.world_list.all_worlds_areas_nodes:
             if not isinstance(node, PickupNode):
@@ -310,6 +315,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
                 for pickup in patches.pickup_assignment.values()
             }
             game_description = data_reader.decode_data(preset.layout_configuration.game_data)
+            self._create_pickup_spoilers(game_description)
             starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 
             extra_items = patcher_file.additional_starting_items(preset.layout_configuration,
