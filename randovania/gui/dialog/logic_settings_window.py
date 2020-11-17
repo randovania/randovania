@@ -58,6 +58,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     _combo_for_gate: Dict[TranslatorGate, QComboBox]
     _location_pool_for_node: Dict[PickupNode, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
+    _starting_location_for_world: Dict[str, QtWidgets.QCheckBox]
     _slider_for_trick: Dict[TrickResourceInfo, QtWidgets.QSlider]
     _editor: PresetEditor
     world_list: WorldList
@@ -149,10 +150,25 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
 
         self._during_batch_check_update = True
         for world in self.game_description.world_list.worlds:
-            for area in world.areas:
-                if area.valid_starting_location:
-                    is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
-                    self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
+            for is_dark_world in [False, True]:
+                all_areas = True
+                no_areas = True
+                areas = [area for area in world.areas if area.in_dark_aether == is_dark_world]
+                correct_name = world.correct_name(is_dark_world)
+                for area in areas:
+                    if area.valid_starting_location:
+                        is_checked = AreaLocation(world.world_asset_id, area.area_asset_id) in starting_locations
+                        if is_checked:
+                            no_areas = False
+                        else:
+                            all_areas = False
+                        self._starting_location_for_area[area.area_asset_id].setChecked(is_checked)
+                if all_areas:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.Checked)
+                elif no_areas:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.Unchecked)
+                else:
+                    self._starting_location_for_world[correct_name].setCheckState(Qt.PartiallyChecked)
         self._during_batch_check_update = False
 
         # Location Pool
@@ -392,20 +408,32 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
     def setup_starting_area_elements(self):
         game_description = self.game_description
         world_to_group = {}
+        self._starting_location_for_world = {}
         self._starting_location_for_area = {}
 
         for row, world in enumerate(game_description.world_list.worlds):
             for column, is_dark_world in enumerate([False, True]):
                 group_box = QGroupBox(self.starting_locations_contents)
-                group_box.setTitle(world.correct_name(is_dark_world))
+                world_check = QtWidgets.QCheckBox(group_box)
+                world_check.setText(world.correct_name(is_dark_world))
+                world_check.world_asset_id = world.world_asset_id
+                world_check.is_dark_world = is_dark_world
+                world_check.stateChanged.connect(functools.partial(self._on_check_starting_world, world_check))
+                world_check.setTristate(True)
                 vertical_layout = QVBoxLayout(group_box)
                 vertical_layout.setContentsMargins(8, 4, 8, 4)
                 vertical_layout.setSpacing(2)
                 vertical_layout.setAlignment(QtCore.Qt.AlignTop)
+                separator = QtWidgets.QFrame()
+                separator.setFrameShape(QtWidgets.QFrame.HLine)
+                separator.setFrameShadow(QtWidgets.QFrame.Sunken)
                 group_box.vertical_layout = vertical_layout
+                group_box.vertical_layout.addWidget(world_check)
+                group_box.vertical_layout.addWidget(separator)
 
                 world_to_group[world.correct_name(is_dark_world)] = group_box
                 self.starting_locations_layout.addWidget(group_box, row, column)
+                self._starting_location_for_world[world.correct_name(is_dark_world)] = world_check
 
         for world in game_description.world_list.worlds:
             for area in sorted(world.areas, key=lambda a: a.name):
@@ -430,6 +458,19 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
                 "starting_location",
                 editor.layout_configuration.starting_location.ensure_has_location(check.area_location,
                                                                                   check.isChecked())
+            )
+
+    def _on_check_starting_world(self, check, _):
+        if self._during_batch_check_update:
+            return
+        world_list = self.game_description.world_list
+        world = world_list.world_by_asset_id(check.world_asset_id)
+        world_areas = [world_list.area_to_area_location(area)
+                       for area in world.areas if check.is_dark_world == area.in_dark_aether]
+        with self._editor as editor:
+            editor.set_layout_configuration_field(
+                "starting_location",
+                editor.layout_configuration.starting_location.ensure_has_locations(world_areas, check.isChecked())
             )
 
     def _starting_location_on_select_ship(self):
