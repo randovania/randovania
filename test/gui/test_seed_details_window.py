@@ -1,8 +1,9 @@
 import pytest
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock, call
 
 from randovania.gui.seed_details_window import SeedDetailsWindow
+from randovania.layout.layout_description import LayoutDescription
 
 
 @pytest.mark.asyncio
@@ -27,7 +28,7 @@ async def test_export_iso(skip_qtbot, mocker):
     window.run_in_background_thread.assert_called_once()
 
 
-def test_update_layout_description(skip_qtbot, mocker):
+def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     # Setup
     mock_describer = mocker.patch("randovania.gui.lib.preset_describer.describe", return_value=["a", "b", "c", "d"])
     mock_merge = mocker.patch("randovania.gui.lib.preset_describer.merge_categories", return_value="<description>")
@@ -39,6 +40,7 @@ def test_update_layout_description(skip_qtbot, mocker):
     description.permalink.spoiler = False
 
     window = SeedDetailsWindow(None, options)
+    skip_qtbot.addWidget(window)
 
     # Run
     window.update_layout_description(description)
@@ -49,3 +51,18 @@ def test_update_layout_description(skip_qtbot, mocker):
         call(["a", "c"]),
         call(["b", "d"]),
     ])
+
+
+def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
+
+    # Run
+    window = SeedDetailsWindow(None, MagicMock())
+    skip_qtbot.addWidget(window)
+    window.update_layout_description(description)
+
+    # Assert
+    assert len(window.pickup_spoiler_buttons) == 119
+    assert window.pickup_spoiler_show_all_button.text() == "Show All"
+    skip_qtbot.mouseClick(window.pickup_spoiler_show_all_button, QtCore.Qt.LeftButton)
+    assert window.pickup_spoiler_show_all_button.text() == "Hide All"
