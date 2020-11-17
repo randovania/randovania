@@ -5,6 +5,7 @@ import pytest
 from PySide2 import QtWidgets
 from mock import MagicMock, AsyncMock, ANY
 
+from randovania.generator import base_patches_factory
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.layout.permalink import Permalink
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction
@@ -411,3 +412,46 @@ async def test_finish_session(window, accept, mocker):
                                                                             None)
     else:
         window.network_client.session_admin_global.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_save_iso(window, mocker, preset_manager, echoes_game_description):
+    mock_input_dialog = mocker.patch("randovania.gui.game_session_window.GameInputDialog")
+    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
+                                       return_value=QtWidgets.QDialog.Accepted)
+    mock_unpack_iso: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.unpack_iso")
+    mock_apply_patcher: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.apply_patcher_file")
+    mock_pack_iso: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.pack_iso")
+
+    window._game_session = MagicMock()
+    window._game_session.players[window.network_client.current_user.id].is_observer = False
+    window._game_session.players[window.network_client.current_user.id].row = 0
+    window._game_session.presets = {0: preset_manager.default_preset}
+    layout_configuration = preset_manager.default_preset.get_preset().layout_configuration
+    window.network_client.session_admin_player = AsyncMock()
+
+    def run_in_background_thread(work, *args):
+        work(MagicMock())
+
+    window.run_in_background_thread = MagicMock(side_effect=run_in_background_thread)
+
+    # Run
+    await window.save_iso()
+
+    # Assert
+    mock_execute_dialog.assert_awaited_once_with(mock_input_dialog.return_value)
+    mock_unpack_iso.assert_called_once_with(
+        input_iso=mock_input_dialog.return_value.input_file,
+        options=window._options,
+        progress_update=ANY
+    )
+    mock_apply_patcher.assert_called_once_with(
+        patcher_file=window.network_client.session_admin_player.return_value,
+        game_specific=base_patches_factory.create_game_specific(layout_configuration, echoes_game_description),
+        shareable_hash=window._game_session.seed_hash,
+        options=window._options,
+        progress_update=ANY,
+    )
+    mock_pack_iso.assert_called_once_with(output_iso=mock_input_dialog.return_value.output_file,
+                                          options=window._options,
+                                          progress_update=ANY)
