@@ -334,7 +334,7 @@
             },
             {
                 "index": 48,
-                "long_name": "CannonBall",
+                "long_name": "Cannon Ball",
                 "short_name": "CannonBall",
                 "max_capacity": 1,
                 "extra": 2070581050
@@ -415,6 +415,20 @@
                 "short_name": "Stat_TinCanCurrentScore",
                 "max_capacity": 1,
                 "extra": 951995458
+            },
+            {
+                "index": 1000,
+                "long_name": "Missile Launcher",
+                "short_name": "MissileLauncher",
+                "max_capacity": 1,
+                "extra": null
+            },
+            {
+                "index": 1001,
+                "long_name": "Ship Missile Launcher",
+                "short_name": "ShipMissileLauncher",
+                "max_capacity": 1,
+                "extra": null
             }
         ],
         "events": [
@@ -19704,7 +19718,12 @@
                             "node_type": "pickup",
                             "pickup_index": 80,
                             "major_location": false,
-                            "connections": {}
+                            "connections": {
+                                "Door to Processing Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Pickup (Energy Cell)",
