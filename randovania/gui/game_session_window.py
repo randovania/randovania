@@ -12,6 +12,7 @@ from asyncqt import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import data_reader
+from randovania.generator import base_patches_factory
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.logic_settings_window import LogicSettingsWindow
@@ -987,10 +988,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         configuration = self._game_session.presets[membership.row].get_preset().layout_configuration
         game = data_reader.decode_data(configuration.game_data)
-        game_specific = dataclasses.replace(
-            game.game_specific,
-            energy_per_tank=configuration.energy_per_tank,
-            beam_configurations=configuration.beam_configuration.create_game_specific(game.resource_database))
+        game_specific = base_patches_factory.create_game_specific(configuration, game)
 
         input_file = dialog.input_file
         output_file = dialog.output_file
