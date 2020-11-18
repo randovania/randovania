@@ -326,7 +326,34 @@ def test_game_session_admin_player_switch_is_observer(clean_database, flask_app,
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
-def test_game_session_admin_kick_last(clean_database, mocker):
+def test_game_session_admin_player_include_in_session(clean_database, flask_app, mock_emit_session_update):
+    users = [
+        database.User.create(id=1234 + 1000 * i, name=f"The {i}")
+        for i in range(4)
+    ]
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=users[0])
+    for i in range(4):
+        database.GameSessionPreset.create(session=session, row=i, preset="{}")
+
+    database.GameSessionMembership.create(user=users[0], session=session, row=0, admin=True)
+    database.GameSessionMembership.create(user=users[1], session=session, row=2, admin=False)
+    database.GameSessionMembership.create(user=users[2], session=session, row=1, admin=False)
+    database.GameSessionMembership.create(user=users[3], session=session, row=None, admin=False)
+    sio = MagicMock()
+    sio.get_current_user.return_value = users[0]
+
+    # Run
+    with flask_app.test_request_context():
+        game_session.game_session_admin_player(sio, 1, 4234, SessionAdminUserAction.SWITCH_IS_OBSERVER.value, None)
+
+    # Assert
+    membership = database.GameSessionMembership.get(user=users[3], session=session)
+    assert not membership.is_observer
+    assert membership.row == 3
+    mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
+
+
+def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
     mock_emit = mocker.patch("flask_socketio.emit")
 
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
@@ -338,7 +365,8 @@ def test_game_session_admin_kick_last(clean_database, mocker):
                                           time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
 
     # Run
-    game_session.game_session_admin_player(sio, 1, 1234, SessionAdminUserAction.KICK.value, None)
+    with flask_app.test_request_context():
+        game_session.game_session_admin_player(sio, 1, 1234, SessionAdminUserAction.KICK.value, None)
 
     # Assert
     for table in [database.GameSession, database.GameSessionPreset,
@@ -378,6 +406,7 @@ def test_game_session_admin_player_move(clean_database, flask_app, mock_emit_ses
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
 def test_game_session_admin_player_patcher_file(mock_layout_description: PropertyMock,
                                                 mock_create_patcher_file: MagicMock,
+                                                flask_app,
                                                 clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Brother")
@@ -393,7 +422,8 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     cosmetic = CosmeticPatches(open_map=False)
 
     # Run
-    result = game_session.game_session_admin_player(sio, 1, 1234, "create_patcher_file", cosmetic.as_json)
+    with flask_app.test_request_context():
+        result = game_session.game_session_admin_player(sio, 1, 1234, "create_patcher_file", cosmetic.as_json)
 
     # Assert
     mock_create_patcher_file.assert_called_once_with(
@@ -408,7 +438,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     assert result is mock_create_patcher_file.return_value
 
 
-def test_game_session_admin_session_delete_session(mock_emit_session_update: MagicMock, clean_database):
+def test_game_session_admin_session_delete_session(mock_emit_session_update: MagicMock, flask_app, clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
@@ -416,7 +446,8 @@ def test_game_session_admin_session_delete_session(mock_emit_session_update: Mag
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_SESSION.value, None)
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_SESSION.value, None)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -424,7 +455,7 @@ def test_game_session_admin_session_delete_session(mock_emit_session_update: Mag
 
 
 def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMock,
-                                               clean_database, preset_manager):
+                                               clean_database, flask_app, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
@@ -432,7 +463,8 @@ def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMo
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, "create_row", preset_manager.default_preset.as_json)
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, "create_row", preset_manager.default_preset.as_json)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -440,7 +472,7 @@ def test_game_session_admin_session_create_row(mock_emit_session_update: MagicMo
 
 
 def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMock,
-                                               clean_database, preset_manager):
+                                               clean_database, flask_app, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
@@ -453,8 +485,9 @@ def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMo
     preset_manager.default_preset.ensure_converted()
 
     # Run
-    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_ROW.value,
-                                            (1, preset_manager.default_preset.as_json))
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_ROW.value,
+                                                (1, preset_manager.default_preset.as_json))
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -464,7 +497,7 @@ def test_game_session_admin_session_change_row(mock_emit_session_update: MagicMo
 
 
 def test_game_session_admin_session_delete_row(mock_emit_session_update: MagicMock,
-                                               clean_database, preset_manager):
+                                               clean_database, flask_app, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
@@ -474,7 +507,8 @@ def test_game_session_admin_session_delete_row(mock_emit_session_update: MagicMo
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_ROW.value, 1)
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_ROW.value, 1)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -483,7 +517,8 @@ def test_game_session_admin_session_delete_row(mock_emit_session_update: MagicMo
 
 @pytest.mark.parametrize("not_last_row", [False, True])
 def test_game_session_admin_session_delete_row_invalid(mock_emit_session_update,
-                                                       clean_database, preset_manager, not_last_row):
+                                                       clean_database, preset_manager,
+                                                       flask_app, not_last_row):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionPreset.create(session=session, row=0, preset="{}")
@@ -499,7 +534,7 @@ def test_game_session_admin_session_delete_row_invalid(mock_emit_session_update,
         expected_num_rows = 1
 
     # Run
-    with pytest.raises(InvalidAction) as e:
+    with pytest.raises(InvalidAction) as e, flask_app.test_request_context():
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DELETE_ROW.value, 0)
 
     # Assert
@@ -510,7 +545,7 @@ def test_game_session_admin_session_delete_row_invalid(mock_emit_session_update,
 
 @pytest.mark.parametrize("case", ["to_false", "to_true_free", "to_true_busy"])
 def test_game_session_admin_session_update_layout_generation(mock_emit_session_update: MagicMock,
-                                                             clean_database, case):
+                                                             clean_database, flask_app, case):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
@@ -530,7 +565,7 @@ def test_game_session_admin_session_update_layout_generation(mock_emit_session_u
             expected_user = user1
 
     # Run
-    with expectation:
+    with expectation, flask_app.test_request_context():
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value,
                                                 case != "to_false")
 
@@ -543,7 +578,7 @@ def test_game_session_admin_session_update_layout_generation(mock_emit_session_u
 
 
 def test_game_session_admin_session_change_layout_description(clean_database, preset_manager, mock_emit_session_update,
-                                                              mocker):
+                                                              mocker, flask_app):
     mock_verify_no_layout_description = mocker.patch("randovania.server.game_session._verify_no_layout_description",
                                                      autospec=True)
     mock_from_json_dict: MagicMock = mocker.patch(
@@ -570,8 +605,9 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     layout_description.permalink.presets = {i: new_preset for i in (0, 1)}
 
     # Run
-    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
-                                            "layout_description_json")
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
+                                                "layout_description_json")
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -584,7 +620,8 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     assert [preset.preset for preset in new_session.presets] == [new_json] * 2
 
 
-def test_game_session_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database):
+def test_game_session_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database,
+                                                              flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           generation_in_progress=user1,
@@ -594,8 +631,9 @@ def test_game_session_admin_session_remove_layout_description(mock_emit_session_
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
-                                            None)
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
+                                                None)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -605,7 +643,7 @@ def test_game_session_admin_session_remove_layout_description(mock_emit_session_
 
 @pytest.mark.parametrize("other_user", [False, True])
 def test_game_session_admin_session_change_layout_description_invalid(mock_emit_session_update: MagicMock,
-                                                                      clean_database, other_user):
+                                                                      clean_database, other_user, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
@@ -620,7 +658,7 @@ def test_game_session_admin_session_change_layout_description_invalid(mock_emit_
         expected_message = "Not waiting for a layout."
 
     # Run
-    with pytest.raises(InvalidAction, match=expected_message):
+    with pytest.raises(InvalidAction, match=expected_message), flask_app.test_request_context():
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
                                                 "layout_description_json")
 
@@ -630,7 +668,7 @@ def test_game_session_admin_session_change_layout_description_invalid(mock_emit_
 
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
-def test_game_session_admin_session_download_layout_description(mock_layout_description: PropertyMock,
+def test_game_session_admin_session_download_layout_description(mock_layout_description: PropertyMock, flask_app,
                                                                 clean_database, mock_emit_session_update):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
@@ -640,8 +678,10 @@ def test_game_session_admin_session_download_layout_description(mock_layout_desc
     sio.get_current_user.return_value = user1
 
     # Run
-    result = game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
-                                                     None)
+    with flask_app.test_request_context():
+        result = game_session.game_session_admin_session(sio, 1,
+                                                         SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
+                                                         None)
 
     # Assert
     mock_emit_session_update.assert_not_called()
@@ -651,7 +691,8 @@ def test_game_session_admin_session_download_layout_description(mock_layout_desc
 
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
 def test_game_session_admin_session_download_layout_description_no_spoiler(mock_layout_description: PropertyMock,
-                                                                           clean_database, mock_emit_session_update):
+                                                                           clean_database, mock_emit_session_update,
+                                                                           flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="layout_description_json")
@@ -661,7 +702,7 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
     mock_layout_description.return_value.permalink.spoiler = False
 
     # Run
-    with pytest.raises(InvalidAction):
+    with pytest.raises(InvalidAction), flask_app.test_request_context():
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
                                                 None)
 
@@ -673,7 +714,8 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
 @patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
 def test_game_session_admin_session_start_session(mock_session_description: PropertyMock,
                                                   mock_emit_session_update,
-                                                  clean_database, preset_manager):
+                                                  clean_database, preset_manager,
+                                                  flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1,
                                           layout_description_json="{}")
@@ -683,7 +725,8 @@ def test_game_session_admin_session_start_session(mock_session_description: Prop
     sio.get_current_user.return_value = user1
 
     # Run
-    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.START_SESSION.value, None)
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.START_SESSION.value, None)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -692,7 +735,8 @@ def test_game_session_admin_session_start_session(mock_session_description: Prop
 
 @pytest.mark.parametrize("starting_state", [GameSessionState.SETUP, GameSessionState.IN_PROGRESS,
                                             GameSessionState.FINISHED])
-def test_game_session_admin_session_finish_session(clean_database, mock_emit_session_update, starting_state):
+def test_game_session_admin_session_finish_session(clean_database, mock_emit_session_update, starting_state,
+                                                   flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=starting_state, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
@@ -704,7 +748,7 @@ def test_game_session_admin_session_finish_session(clean_database, mock_emit_ses
         expectation = contextlib.nullcontext()
 
     # Run
-    with expectation:
+    with expectation, flask_app.test_request_context():
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.FINISH_SESSION.value, None)
 
     # Assert
@@ -716,7 +760,7 @@ def test_game_session_admin_session_finish_session(clean_database, mock_emit_ses
         assert database.GameSession.get_by_id(1).state == GameSessionState.FINISHED
 
 
-def test_game_session_admin_session_reset_session(clean_database):
+def test_game_session_admin_session_reset_session(clean_database, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
@@ -724,11 +768,11 @@ def test_game_session_admin_session_reset_session(clean_database):
     sio.get_current_user.return_value = user1
 
     # Run
-    with pytest.raises(InvalidAction):
+    with pytest.raises(InvalidAction), flask_app.test_request_context():
         game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.RESET_SESSION.value, None)
 
 
-def test_game_session_admin_session_change_password(clean_database, mock_emit_session_update):
+def test_game_session_admin_session_change_password(clean_database, mock_emit_session_update, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
     database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
@@ -737,37 +781,38 @@ def test_game_session_admin_session_change_password(clean_database, mock_emit_se
     expected_password = 'da92cfbc5e318c64e33dc1b0501e5db214cea0e2a5cecabf90269f32f8eaa15f'
 
     # Run
-    game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_PASSWORD.value, "the_password")
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_PASSWORD.value, "the_password")
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
     assert database.GameSession.get_by_id(1).password == expected_password
 
 
-def test_change_row_missing_arguments():
-    with pytest.raises(InvalidAction):
+def test_change_row_missing_arguments(flask_app):
+    with pytest.raises(InvalidAction), flask_app.test_request_context():
         game_session._change_row(MagicMock(), MagicMock(), (5,))
 
 
-def test_verify_in_setup(clean_database):
+def test_verify_in_setup(clean_database, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1,
                                           layout_description_json="{}")
 
-    with pytest.raises(InvalidAction):
+    with pytest.raises(InvalidAction), flask_app.test_request_context():
         game_session._verify_in_setup(session)
 
 
-def test_verify_no_layout_description(clean_database):
+def test_verify_no_layout_description(clean_database, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=user1,
                                           layout_description_json="{}")
 
-    with pytest.raises(InvalidAction):
+    with pytest.raises(InvalidAction), flask_app.test_request_context():
         game_session._verify_in_setup(session)
 
 
-def test_game_session_request_update(clean_database, mocker):
+def test_game_session_request_update(clean_database, mocker, flask_app):
     mock_layout = mocker.patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
     target = mock_layout.return_value.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
     target.pickup.name = "The Pickup"
@@ -788,7 +833,8 @@ def test_game_session_request_update(clean_database, mocker):
                                           time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
 
     # Run
-    result = game_session.game_session_request_update(MagicMock(), 1)
+    with flask_app.test_request_context():
+        result = game_session.game_session_request_update(MagicMock(), 1)
 
     # Assert
     assert result == {
