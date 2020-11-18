@@ -326,6 +326,33 @@ def test_game_session_admin_player_switch_is_observer(clean_database, flask_app,
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
+def test_game_session_admin_player_include_in_session(clean_database, flask_app, mock_emit_session_update):
+    users = [
+        database.User.create(id=1234 + 1000 * i, name=f"The {i}")
+        for i in range(4)
+    ]
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.IN_PROGRESS, creator=users[0])
+    for i in range(4):
+        database.GameSessionPreset.create(session=session, row=i, preset="{}")
+
+    database.GameSessionMembership.create(user=users[0], session=session, row=0, admin=True)
+    database.GameSessionMembership.create(user=users[1], session=session, row=2, admin=False)
+    database.GameSessionMembership.create(user=users[2], session=session, row=1, admin=False)
+    database.GameSessionMembership.create(user=users[3], session=session, row=None, admin=False)
+    sio = MagicMock()
+    sio.get_current_user.return_value = users[0]
+
+    # Run
+    with flask_app.test_request_context():
+        game_session.game_session_admin_player(sio, 1, 4234, SessionAdminUserAction.SWITCH_IS_OBSERVER.value, None)
+
+    # Assert
+    membership = database.GameSessionMembership.get(user=users[3], session=session)
+    assert not membership.is_observer
+    assert membership.row == 3
+    mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
+
+
 def test_game_session_admin_kick_last(clean_database, flask_app, mocker):
     mock_emit = mocker.patch("flask_socketio.emit")
 
