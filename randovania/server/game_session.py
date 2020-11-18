@@ -348,16 +348,13 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
 
 def _find_empty_row(session: GameSession) -> int:
-    empty_row = 0
-    for possible_slot in GameSessionMembership.non_observer_members(session):
-        if empty_row != possible_slot.row:
-            break
-        else:
-            empty_row += 1
+    possible_rows = set(range(session.num_rows))
+    for member in GameSessionMembership.non_observer_members(session):
+        possible_rows.remove(member.row)
 
-    if empty_row >= session.num_rows:
-        raise InvalidAction("Session is full")
-    return empty_row
+    for empty_row in sorted(possible_rows):
+        return empty_row
+    raise InvalidAction("Session is full")
 
 
 def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg):
