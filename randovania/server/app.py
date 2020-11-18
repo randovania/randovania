@@ -1,3 +1,5 @@
+from distutils.version import StrictVersion
+from enum import Enum
 from logging.config import dictConfig
 
 import flask
@@ -6,6 +8,27 @@ from flask_socketio import ConnectionRefusedError
 import randovania
 from randovania.server import game_session, user_session, database
 from randovania.server.server_app import ServerApp
+
+
+class ClientVersionCheck(Enum):
+    STRICT = "strict"
+    MATCH_MAJOR_MINOR = "match-major-minor"
+    IGNORE = "ignore"
+
+
+def check_client_version(version_checking: ClientVersionCheck, client_version: str, server_version: str):
+    if version_checking == ClientVersionCheck.STRICT:
+        if server_version != client_version:
+            raise ConnectionRefusedError(f"Incompatible client version '{client_version}', "
+                                         f"expected '{server_version}'")
+    elif version_checking == ClientVersionCheck.MATCH_MAJOR_MINOR:
+        server = StrictVersion(server_version.split(".dev")[0])
+        client = StrictVersion(client_version.split(".dev")[0])
+        if server.version[:2] != client.version[:2]:
+            shorter_client = "{}.{}".format(*client.version[:2])
+            shorter_server = "{}.{}".format(*server.version[:2])
+            raise ConnectionRefusedError(f"Incompatible client version '{shorter_client}', "
+                                         f"expected '{shorter_server}'")
 
 
 def create_app():
@@ -34,7 +57,7 @@ def create_app():
     app.config["DISCORD_CLIENT_SECRET"] = configuration["server_config"]["discord_client_secret"]
     app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"  # Redirect URI.
     app.config["FERNET_KEY"] = configuration["server_config"]["fernet_key"].encode("ascii")
-    app.config["STRICT_CLIENT_VERSION"] = configuration["server_config"]["strict_client_version"]
+    version_checking = ClientVersionCheck(configuration["server_config"]["client_version_checking"])
 
     database.db.init(configuration["server_config"]['database_path'])
     database.db.connect(reuse_if_open=True)
@@ -60,10 +83,7 @@ def create_app():
             raise ConnectionRefusedError("unknown client version")
 
         client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
-        if app.config["STRICT_CLIENT_VERSION"] and server_version != client_app_version:
-            raise ConnectionRefusedError(f"Incompatible client version '{client_app_version}', "
-                                         f"expected '{server_version}'")
-
+        check_client_version(version_checking, client_app_version, server_version)
         connected_clients.inc()
 
         forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
