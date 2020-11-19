@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import platform
 import shutil
 import subprocess
@@ -37,7 +38,13 @@ async def get_nintendont_releases(session: aiohttp.ClientSession):
 
 
 async def download_nintendont():
-    async with aiohttp.ClientSession() as session:
+    headers = None
+    if "GITHUB_TOKEN" in os.environ:
+        headers = {
+            "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"
+        }
+
+    async with aiohttp.ClientSession(headers=headers) as session:
         print("Fetching list of Nintendont releases.")
         releases = await get_nintendont_releases(session)
         latest_release = releases[0]
