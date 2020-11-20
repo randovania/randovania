@@ -14,7 +14,7 @@ async def post_to_discord():
     commit_hash = git_result[0].split()[1]
 
     message = ""
-    for line in git_result[3:]:
+    for line in git_result[4:]:
         if line.startswith("diff --git"):
             break
         else:
