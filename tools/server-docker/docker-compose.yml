@@ -1,0 +1,24 @@
+version: "3.3"
+
+networks:
+  web:
+    external: true
+
+services:
+  randovania:
+    image: "randovania/server:${VERSION}"
+    volumes:
+      - "${DATA_PATH}:/data"
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.randovania.rule=Host(`${DOMAIN}`) && PathPrefix(`${PATH_PREFIX}`)"
+      - "traefik.http.routers.randovania.entrypoints=websecure"
+      - "traefik.http.routers.randovania.tls.certresolver=myresolver"
+      - "traefik.http.routers.randovania.middlewares=randovania_stripprefix"
+      - "traefik.http.middlewares.randovania_stripprefix.stripprefix.prefixes=${PATH_PREFIX}"
+      - "traefik.http.services.randovania.loadbalancer.server.port=5000"
+
+    networks:
+      - web
+    restart: always

@@ -81,10 +81,14 @@ async def main():
             default_data.read_json_then_binary(game)[1],
             _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"))
 
+    if os.getenv("PRODUCTION", "false") == "true":
+        server_suffix = "randovania"
+    else:
+        server_suffix = "randovania-staging"
     configuration = {
         "discord_client_id": 618134325921316864,
-        "server_address": "https://randovania.metroidprime.run/randovania",
-        "socketio_path": "/randovania/socket.io",
+        "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
+        "socketio_path": f"/{server_suffix}/socket.io",
     }
     with _ROOT_FOLDER.joinpath("randovania", "data", "configuration.json").open("w") as config_release:
         json.dump(configuration, config_release)
