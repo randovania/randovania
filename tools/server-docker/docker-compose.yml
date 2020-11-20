@@ -12,12 +12,12 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.randovania.rule=Host(`${DOMAIN}`) && PathPrefix(`${PATH_PREFIX}`)"
-      - "traefik.http.routers.randovania.entrypoints=websecure"
-      - "traefik.http.routers.randovania.tls.certresolver=myresolver"
-      - "traefik.http.routers.randovania.middlewares=randovania_stripprefix"
-      - "traefik.http.middlewares.randovania_stripprefix.stripprefix.prefixes=${PATH_PREFIX}"
-      - "traefik.http.services.randovania.loadbalancer.server.port=5000"
+      - "traefik.http.routers.${PATH_PREFIX}.rule=Host(`${DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)"
+      - "traefik.http.routers.${PATH_PREFIX}.entrypoints=websecure"
+      - "traefik.http.routers.${PATH_PREFIX}.tls.certresolver=myresolver"
+      - "traefik.http.routers.${PATH_PREFIX}.middlewares=${PATH_PREFIX}_stripprefix"
+      - "traefik.http.middlewares.${PATH_PREFIX}_stripprefix.stripprefix.prefixes=/${PATH_PREFIX}"
+      - "traefik.http.services.${PATH_PREFIX}.loadbalancer.server.port=5000"
 
     networks:
       - web

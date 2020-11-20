@@ -48,12 +48,12 @@ async def main():
     new_env["DOCKER_HOST"] = f"ssh://root@{remote_host}"
     new_env["DOMAIN"] = remote_host
     if server_environment == "production":
-        new_env["PATH_PREFIX"] = "/randovania"
+        new_env["PATH_PREFIX"] = "randovania"
         new_env["DATA_PATH"] = "/var/randovania/production/data"
         new_env["VERSION"] = os.environ["GITHUB_REF"].split("/")[-1]
 
     elif server_environment == "staging":
-        new_env["PATH_PREFIX"] = "/randovania-staging"
+        new_env["PATH_PREFIX"] = "randovania-staging"
         new_env["DATA_PATH"] = "/var/randovania/staging/data"
         new_env["VERSION"] = "sha-{}".format(os.environ["GITHUB_SHA"][:8])
     else:
