@@ -776,7 +776,7 @@ Asset id: 15622764306970326849
   > Door to Hangar A Access
       After Docking Bay 5 Gate
   > Pickup (Energy Cell)
-      Trivial
+      Morph Ball
   > Event - Docking Bay 5 Gate
       Energy Cells Total
 
@@ -788,7 +788,7 @@ Asset id: 15622764306970326849
 ----------------
 Hangar A Access
 Asset id: 5398996635579069682
-> Door to Docking Bay 5; Heals? False
+> Door to Docking Bay 5; Heals? False; Spawn Point
   * Normal Door to Docking Bay 5/Door to Hangar A Access
   > Door to Repair Bay
       Grapple Swing or Use Screw Attack (Space Jump)
@@ -801,12 +801,20 @@ Asset id: 5398996635579069682
 ----------------
 Repair Bay
 Asset id: 10896162079835248148
-> Door to Hangar A Access; Heals? False
+> Door to Hangar A Access; Heals? False; Spawn Point
   * Normal Door to Hangar A Access/Door to Repair Bay
   > Door to Stairwell
-      Trivial
+      Any of the following:
+          Charge Beam or Missile
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  HyperModeTank or Use Screw Attack (Space Jump)
+                  All of the following:
+                      Morph Ball
+                      Morph Ball Bombs or Boost Ball
   > Door to Security Station
-      Trivial
+      Space Jump Boots
 
 > Door to Stairwell; Heals? False
   * Normal Door to Stairwell/Door to Repair Bay
@@ -821,7 +829,7 @@ Asset id: 10896162079835248148
 ----------------
 Junction A
 Asset id: 7652878551953536007
-> Door to Port Observation Deck; Heals? False
+> Door to Port Observation Deck; Heals? False; Spawn Point
   * Normal Door to Port Observation Deck/Door to Junction A
   > Door to Munitions Locker
       Trivial
@@ -841,14 +849,14 @@ Asset id: 7652878551953536007
 ----------------
 Security Access
 Asset id: 2123213449889105147
-> Door to MedLab Alpha (Door); Heals? False
+> Door to MedLab Alpha; Heals? False
   * Normal Door to MedLab Alpha/Door to Security Access
   > Door to Security Station
       Trivial
 
-> Door to Security Station; Heals? False
+> Door to Security Station; Heals? False; Spawn Point
   * Normal Door to Security Station/Door to Security Access
-  > Door to MedLab Alpha (Door)
+  > Door to MedLab Alpha
       Trivial
   > Door to Auxiliary Lift
       Trivial
@@ -858,22 +866,41 @@ Asset id: 2123213449889105147
   > Door to Security Station
       Trivial
 
-> Door to MedLab Alpha (Tunnel); Heals? False
+> Morph Ball Door to MedLab Alpha; Heals? False
   * Morph Ball Door to MedLab Alpha/Morph Ball Door to Security Access
   > Door to Security Station
-      Trivial
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bombs
+              All of the following:
+                  Knowledge (Beginner)
+                  Any of the following:
+                      Boost Ball
+                      HyperModeTank and Hyper Ball
 
 ----------------
 Aurora Chamber
 Asset id: 6410596230384865511
-> Door to Aurora Access; Heals? False
+> Door to Aurora Access; Heals? False; Spawn Point
   * Normal Door to Aurora Access/Door to Aurora Chamber
   > Door to Control Room Access
-      After Metroid Hatcher (Valhalla)
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  After Metroid Hatcher (Valhalla)
+                  Morph Ball and Boost Ball and Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
+          Terminal Fall Abuse (Beginner) and Use Screw Attack (Space Jump)
   > Event - Metroid Hatcher
       All of the following:
-          Missile and Energy Cells Total ≥ 5
-          Grapple Lasso or Shoot Phazite (X-Ray and Nova)
+          Energy Cells Total ≥ 9
+          Any of the following:
+              Grapple Lasso
+              All of the following:
+                  Nova Beam
+                  X-Ray Visor or Knowledge (Intermediate)
+          Charge Beam or Missile
 
 > Door to Control Room Access; Heals? False
   * Normal Door to Control Room Access/Door to Aurora Chamber
@@ -893,12 +920,17 @@ Asset id: 7569990525320728426
   > Door to Repair Bay
       Trivial
 
-> Door to Repair Bay; Heals? False
+> Door to Repair Bay; Heals? False; Spawn Point
   * Normal Door to Repair Bay/Door to Stairwell
   > Door to Weapons Cache
-      After Stairwell Ramps
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              After Stairwell Ramps
+              Morph Ball and Bomb/Spring Space Jump (Beginner)
+              Slope Jump (Beginner) and Use Screw Attack (Space Jump)
   > Event - Stairwell Ramps
-      Plasma Beam and Energy Cells Total ≥ 3
+      Plasma Beam and Energy Cells Total ≥ 9
 
 > Event - Stairwell Ramps; Heals? False
   * Event Stairwell Ramps
@@ -908,7 +940,7 @@ Asset id: 7569990525320728426
 ----------------
 Weapons Cache
 Asset id: 13634659891990625058
-> Door to Stairwell; Heals? False
+> Door to Stairwell; Heals? False; Spawn Point
   * Normal Door to Stairwell/Door to Weapons Cache
   > Pickup (Missile Expansion)
       Trivial
@@ -921,7 +953,7 @@ Asset id: 13634659891990625058
 ----------------
 Munitions Locker
 Asset id: 7265233133801437908
-> Door to Junction A; Heals? False
+> Door to Junction A; Heals? False; Spawn Point
   * Normal Door to Junction A/Door to Munitions Locker
   > Pickup (Energy Tank)
       Trivial
@@ -934,10 +966,10 @@ Asset id: 7265233133801437908
 ----------------
 Xenoresearch Lab
 Asset id: 6078741217337776665
-> Door to Port Observation Deck; Heals? False
+> Door to Port Observation Deck; Heals? False; Spawn Point
   * Normal Door to Port Observation Deck/Door to Xenoresearch Lab
   > Morph Ball Door to Ventilation Shaft
-      Missile and Grapple Lasso and Energy Cells Total ≥ 2
+      Missile and Grapple Lasso and Energy Cells Total ≥ 9 and Morph Ball
 
 > Morph Ball Door to Ventilation Shaft; Heals? False
   * Morph Ball Door to Ventilation Shaft/Morph Ball Door to Xenoresearch Lab
@@ -948,26 +980,28 @@ Asset id: 2774000464172079912
 > Morph Ball Door to MedLab Alpha; Heals? False
   * Morph Ball Door to MedLab Alpha/Morph Ball Door to Ventilation Shaft
 
-> Morph Ball Door to Xenoresearch Lab; Heals? False
+> Morph Ball Door to Xenoresearch Lab; Heals? False; Spawn Point
   * Morph Ball Door to Xenoresearch Lab/Morph Ball Door to Ventilation Shaft
   > Morph Ball Door to MedLab Alpha
-      Trivial
+      Morph Ball
 
 ----------------
 MedLab Alpha
 Asset id: 4052690289582601366
 > Morph Ball Door to Security Access; Heals? False
-  * Morph Ball Door to Security Access/Door to MedLab Alpha (Tunnel)
+  * Morph Ball Door to Security Access/Morph Ball Door to MedLab Alpha
+  > Pickup (Ship Missile Expansion)
+      Morph Ball Bombs and Morph Ball
 
-> Door to Security Access; Heals? False
-  * Morph Ball Door to Security Access/Door to MedLab Alpha (Door)
+> Door to Security Access; Heals? False; Spawn Point
+  * Morph Ball Door to Security Access/Door to MedLab Alpha
   > Pickup (Missile Expansion)
-      Missile and Grapple Lasso
+      Missile ≥ 3 and Grapple Lasso and Morph Ball
 
 > Morph Ball Door to Ventilation Shaft; Heals? False
   * Morph Ball Door to Ventilation Shaft/Morph Ball Door to MedLab Alpha
   > Pickup (Ship Missile Expansion)
-      Trivial
+      Morph Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 14; Major Location? False
@@ -977,7 +1011,9 @@ Asset id: 4052690289582601366
 > Pickup (Ship Missile Expansion); Heals? False
   * Pickup 15; Major Location? False
   > Morph Ball Door to Security Access
-      Trivial
+      Morph Ball Bombs and Morph Ball
+  > Morph Ball Door to Ventilation Shaft
+      Morph Ball
 
 ----------------
 Security Station
@@ -985,12 +1021,24 @@ Asset id: 7055596259548820837
 > Door to Security Access; Heals? False
   * Normal Door to Security Access/Door to Security Station
   > Door to Repair Bay
-      Trivial
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Charge Beam or Missile ≥ 2 or Morph Ball Bombs
+              All of the following:
+                  Knowledge (Beginner)
+                  Screw Attack or Boost Ball
 
-> Door to Repair Bay; Heals? False
+> Door to Repair Bay; Heals? False; Spawn Point
   * Normal Door to Repair Bay/Door to Security Station
   > Door to Security Access
-      Trivial
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Charge Beam or Missile ≥ 2 or Morph Ball Bombs
+              All of the following:
+                  Knowledge (Beginner)
+                  Screw Attack or Boost Ball
 
 ----------------
 Auxiliary Lift
@@ -1000,29 +1048,29 @@ Asset id: 17479488334200413695
   > Door to Security Access
       After Auxiliary Lift Elevator
   > Pickup (Missile Expansion)
-      Trivial
+      Morph Ball
 
-> Door to Security Access; Heals? False
+> Door to Security Access; Heals? False; Spawn Point
   * Normal Door to Security Access/Door to Auxiliary Lift
   > Door to Port Observation Deck
       After Auxiliary Lift Elevator
-  > Event - Elevator
-      Grapple Lasso and Energy Cells Total ≥ 2
+  > Event - Activate Elevator
+      Grapple Lasso and Energy Cells Total ≥ 9
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 16; Major Location? False
   > Door to Port Observation Deck
       Trivial
 
-> Event - Elevator; Heals? False
+> Event - Activate Elevator; Heals? False
   * Event Auxiliary Lift Elevator
-  > Door to Port Observation Deck
+  > Door to Security Access
       Trivial
 
 ----------------
 Aurora Access
 Asset id: 1129937930833845921
-> Door to Junction A; Heals? False
+> Door to Junction A; Heals? False; Spawn Point
   * Nova Door to Junction A/Door to Aurora Access
   > Door to Aurora Chamber
       Trivial
@@ -1038,7 +1086,7 @@ Asset id: 1605782415930376157
 > Door to Control Room Access; Heals? False; Spawn Point
   * Normal Door to Control Room Access/Door to Control Room
   > Event - Valhalla Leviathan Code
-      Grapple Voltage and X-Ray Visor
+      X-Ray Visor and Use Grapple Voltage (Lasso and Voltage)
 
 > Event - Valhalla Leviathan Code; Heals? False
   * Event Valhalla Levithan Code
@@ -1050,34 +1098,40 @@ Port Observation Deck
 Asset id: 13201618045565515280
 > Door to Xenoresearch Lab; Heals? False
   * Normal Door to Xenoresearch Lab/Door to Port Observation Deck
-  > Door to Auxiliary Lift
+  > Room Center
       After Port Observation Deck Seeker Wall
 
 > Door to Junction A; Heals? False
   * Normal Door to Junction A/Door to Port Observation Deck
-  > Door to Auxiliary Lift
+  > Room Center
       Trivial
 
 > Door to Auxiliary Lift; Heals? False
   * Normal Door to Auxiliary Lift/Door to Port Observation Deck
-  > Door to Xenoresearch Lab
-      After Port Observation Deck Seeker Wall
-  > Door to Junction A
-      After Port Observation Deck Door Lock
-  > Event - Energy Cell Door Lock
-      Energy Cells Total ≥ 3
-  > Event - Seeker Wall
-      Missile ≥ 5 and Seeker Missile
+  > Room Center
+      Morph Ball
 
 > Event - Energy Cell Door Lock; Heals? False
   * Event Port Observation Deck Door Lock
-  > Door to Auxiliary Lift
+  > Room Center
       Trivial
 
 > Event - Seeker Wall; Heals? False
   * Event Port Observation Deck Seeker Wall
-  > Door to Auxiliary Lift
+  > Room Center
       Trivial
+
+> Room Center; Heals? False; Spawn Point
+  > Door to Xenoresearch Lab
+      After Port Observation Deck Seeker Wall
+  > Door to Junction A
+      After Port Observation Deck Door Lock
+  > Door to Auxiliary Lift
+      Morph Ball
+  > Event - Energy Cell Door Lock
+      Energy Cells Total ≥ 9
+  > Event - Seeker Wall
+      Missile ≥ 4 and Seeker Missile
 
 ----------------
 Control Room Access
@@ -1087,7 +1141,7 @@ Asset id: 16574561510686353296
   > Door to Control Room
       Trivial
 
-> Door to Control Room; Heals? False
+> Door to Control Room; Heals? False; Spawn Point
   * Normal Door to Control Room/Door to Control Room Access
   > Door to Aurora Chamber
       Trivial
@@ -1294,7 +1348,7 @@ Asset id: 8374398449894515797
 ----------------
 Hillside Vista
 Asset id: 13902157786380317936
-> Door to Grand Court; Heals? False
+> Door to Grand Court; Heals? False; Spawn Point
   * Normal Door to Grand Court/Door to Hillside Vista
   > Pickup (Missile Expansion)
       Morph Ball Bombs and Morph Ball
@@ -1564,7 +1618,7 @@ Asset id: 6613311822671481119
   > Room Center
       Trivial
 
-> Room Center; Heals? False
+> Room Center; Heals? False; Spawn Point
   > Door to Generator Hall North
       After Jungle Generator Ship Missile Attempt
   > Door to Field Access
@@ -1696,12 +1750,16 @@ Asset id: 18145373112260209818
 > Door to Fuel Gel Pool; Heals? False
   * Normal Door to Fuel Gel Pool/Door to Hidden Court Hall
   > Door to Hidden Court
-      Trivial
+      Any of the following:
+          Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+          Space Jump Boots and Morph Ball
 
-> Door to Hidden Court; Heals? False
+> Door to Hidden Court; Heals? False; Spawn Point
   * Plasma Door to Hidden Court/Door to Hidden Court Hall
   > Door to Fuel Gel Pool
-      Trivial
+      Any of the following:
+          Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+          Space Jump Boots and Morph Ball
 
 ----------------
 Reliquary II
@@ -1815,7 +1873,7 @@ Asset id: 5590909670361746944
   > Door to Thorn Jungle Airdock
       After Overgrown Ruins Barrier
 
-> Door to Thorn Jungle Airdock; Heals? False
+> Door to Thorn Jungle Airdock; Heals? False; Spawn Point
   * Normal Door to Thorn Jungle Airdock/Door to Overgrown Ruins
   > Door to Ancient Courtyard
       After Overgrown Ruins Barrier
@@ -1840,7 +1898,7 @@ Asset id: 5590909670361746944
 ----------------
 Ruined Shrine
 Asset id: 18426339925276965129
-> Door to Hidden Court; Heals? False
+> Door to Hidden Court; Heals? False; Spawn Point
   * Normal Door to Hidden Court/Door to Ruined Shrine
   > Door to Hangar Bay
       All of the following:
@@ -1900,7 +1958,7 @@ Asset id: 17231991603182176876
   > Room Center
       Trivial
 
-> Door to Enlightened Walkway; Heals? False
+> Door to Enlightened Walkway; Heals? False; Spawn Point
   * Normal Door to Enlightened Walkway/Door to Jousting Field
   > Room Center
       Trivial
@@ -1940,7 +1998,7 @@ Asset id: 17945996104959776291
   > Event - Bridge (Jungleside)
       Morph Ball and Boost Ball
 
-> Door to Colossus Vista; Heals? False
+> Door to Colossus Vista; Heals? False; Spawn Point
   * Normal Door to Colossus Vista/Door to Machineworks Bridge
   > Room Center
       After Machineworks Bridge Cliffside
@@ -1986,7 +2044,7 @@ Asset id: 5310258251750100868
   > Event - Lift Battery
       Use Ship Grapple (Command Visor and Ship Grapple)
 
-> Door to North Jungle Hall; Heals? False
+> Door to North Jungle Hall; Heals? False; Spawn Point
   * Normal Door to North Jungle Hall/Door to North Jungle Court
   > Door to Generator Hall North
       After North Jungle Court Turret
@@ -2049,7 +2107,7 @@ Asset id: 4895313609509491506
   > Door to Auxiliary Dynamo
       Trivial
 
-> Door to Auxiliary Dynamo; Heals? False
+> Door to Auxiliary Dynamo; Heals? False; Spawn Point
   * Normal Door to Auxiliary Dynamo/Door to North Jungle Hall
   > Door to North Jungle Court
       Trivial
@@ -2070,7 +2128,7 @@ Asset id: 1872319291341539278
 ----------------
 South Jungle Hall
 Asset id: 4037774779061798319
-> Door to Auxiliary Dynamo; Heals? False
+> Door to Auxiliary Dynamo; Heals? False; Spawn Point
   * Normal Door to Auxiliary Dynamo/Door to South Jungle Hall
   > Door to South Jungle Court
       Trivial
@@ -2257,7 +2315,7 @@ Asset id: 8404374826148145183
           Grapple Lasso
           Charge Beam or Missile ≥ 3
 
-> Door to South Jungle Hall; Heals? False
+> Door to South Jungle Hall; Heals? False; Spawn Point
   * Normal Door to South Jungle Hall/Door to South Jungle Court
   > Door to Generator Hall South
       After South Jungle Court Turret
@@ -2831,7 +2889,7 @@ Asset id: 6915612318130423578
   > Pickup (Ship Missile Expansion)
       Use Screw Attack (Space Jump)
 
-> Pickup (Screw Attack); Heals? False
+> Pickup (Screw Attack); Heals? False; Spawn Point
   * Pickup 48; Major Location? True
   > Event - Hall of Remembrance Item
       Trivial
@@ -2857,7 +2915,7 @@ Asset id: 6915612318130423578
   > Event - Unlock Door
       Grapple Lasso
 
-> Event - Hall of Remembrance Item; Heals? False; Spawn Point
+> Event - Hall of Remembrance Item; Heals? False
   * Event Hall of Remembrance Item
   > Door to Imperial Crypt (Lower)
       Use Screw Attack (Space Jump)
