@@ -1,1 +1,1 @@
-venv\Scripts\python -m randovania gui --custom-network-storage network-storage --debug-game-backend main
+venv\Scripts\python -m randovania --configuration tools/dev-server-configuration.json gui --custom-network-storage network-storage --debug-game-backend main
