@@ -33,14 +33,14 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 ### Dependencies
 
-* [Python 3.7 64-bit](https://www.python.org/downloads/release/python-376/)
+* [Python 3.9 64-bit](https://www.python.org/ftp/python/3.9.0/python-3.9.0-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
 ### Setup
 
 1. Clone this repository
 2. Open a terminal in the repository root
-3. Create a virtual environment: `py -3.7 -m venv venv`
+3. Create a virtual environment: `py -3.9 -m venv venv`
 4. Activate the virtual environment `venv\scripts\activate`
 5. Install pip/setuptools: `python -m pip install --upgrade -r requirements-setuptools.txt`
 6. Install requirements: `python -m pip install --upgrade -r requirements.txt`

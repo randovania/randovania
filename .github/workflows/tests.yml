@@ -15,27 +15,27 @@ jobs:
       matrix:
         include:
           - os: 'ubuntu-latest'
-            python: '3.7'
+            python: '3.9'
             executable: false
             name: 'Linux'
 
           - os: 'macos-latest'
-            python: '3.7'
+            python: '3.9'
             executable: false
             name: 'macOS'
 
           - os: 'macos-latest'
-            python: '3.7.7'
+            python: '3.9'
             executable: true
             name: 'macOS Executable'
 
           - os: 'windows-latest'
-            python: '3.7'
+            python: '3.9'
             executable: false
             name: 'Windows'
 
           - os: 'windows-latest'
-            python: '3.7.7'
+            python: '3.9'
             executable: true
             name: 'Windows Executable'
 
@@ -151,7 +151,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.7
+          python-version: 3.9
 
       - name: Get pip cache dir
         id: pip-cache
