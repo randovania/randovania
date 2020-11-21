@@ -8,20 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.1] - 2020-11-??
+## [2.0.2] - 2020-11-21
+
+-   Added: Starting locations tab has checkboxes to easily select all locations in an area
 
 -   Added: The map tracker now supports random elevators, translator gates and starting location.
 
 -   Changed: The pickup spoiler in game details is now sorted.
 
 -   Fixed: Multiworld sessions should no longer occasionally duplicate messages.
-
--   Added: Starting locations tab has checkboxes to easily select all locations in an area
     
 -   Fixed: Custom safe zone healing should now work in multiworld sessions.
 
 -   Fixed: Occasional error with switching an observer into a player.
 
+## [2.0.1] - Skipped
 
 ## [2.0.0] - 2020-11-15
 
