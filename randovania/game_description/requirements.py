@@ -1,3 +1,4 @@
+import dataclasses
 from functools import lru_cache
 from math import ceil
 from typing import NamedTuple, Optional, Iterable, FrozenSet, Iterator, Tuple, List, Type, Union
@@ -261,7 +262,8 @@ def _expand_items(items: Tuple[Requirement, ...],
     return expanded
 
 
-class ResourceRequirement(NamedTuple, Requirement):
+@dataclasses.dataclass(frozen=True)
+class ResourceRequirement(Requirement):
     resource: ResourceInfo
     amount: int
     negate: bool

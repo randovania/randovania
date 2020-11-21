@@ -79,7 +79,7 @@ setup(
     ],
     extras_require={
         "gui": [
-            'PySide2>=5.12,<5.15',
+            'PySide2>=5.15,<5.16',
             'appdirs',
             'asyncqt',
             'async-wiiload',
