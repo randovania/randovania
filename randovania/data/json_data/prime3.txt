@@ -23,6 +23,12 @@ Templates
               Bomb/Spring Space Jump (Beginner)
               Morph Ball Bombs and Bomb Jump (Beginner)
 
+* Use Ship Missile (Command Visor and Ship Missile):
+      Command Visor and Ship Missile
+
+* Use Ship Grapple (Command Visor and Ship Grapple):
+      Command Visor and Ship Grapple
+
 ====================
 Dock Weaknesses
 
@@ -1290,29 +1296,41 @@ Hillside Vista
 Asset id: 13902157786380317936
 > Door to Grand Court; Heals? False
   * Normal Door to Grand Court/Door to Hillside Vista
-  > Door to Reliquary I
-      After Hillside Vista Statue
   > Pickup (Missile Expansion)
-      Trivial
-  > Event - Statue
-      Grapple Lasso
+      Morph Ball Bombs and Morph Ball
+  > Front of Statue
+      Any of the following:
+          Grapple Swing or Use Screw Attack (Space Jump)
+          Morph Ball Bombs and Morph Ball
 
 > Door to Reliquary I; Heals? False
   * Normal Door to Reliquary I/Door to Hillside Vista
-  > Door to Grand Court
-      All of the following:
-          After Hillside Vista Statue
-          Grapple Swing or Use Screw Attack (Space Jump)
+  > Front of Statue
+      After Hillside Vista Statue
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 28; Major Location? False
-  > Door to Grand Court
+  > Front of Statue
       Trivial
 
 > Event - Statue; Heals? False
   * Event Hillside Vista Statue
-  > Door to Reliquary I
+  > Front of Statue
       Trivial
+
+> Front of Statue; Heals? False
+  > Door to Grand Court
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          All of the following:
+              Grapple Swing
+              Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+  > Door to Reliquary I
+      After Hillside Vista Statue
+  > Event - Statue
+      All of the following:
+          Grapple Lasso
+          Charge Beam or Missile
 
 ----------------
 Gateway
@@ -1529,7 +1547,7 @@ Asset id: 6613311822671481119
 > Door to Generator Hall North; Heals? False
   * Normal Door to Generator Hall North/Door to Jungle Generator
   > Room Center
-      Trivial
+      After Jungle Generator Ship Missile Attempt
 
 > Door to Field Access; Heals? False
   * Normal Door to Field Access/Door to Jungle Generator
@@ -1539,7 +1557,7 @@ Asset id: 6613311822671481119
 > Door to Generator Hall South; Heals? False
   * Normal Door to Generator Hall South/Door to Jungle Generator
   > Room Center
-      Trivial
+      After Jungle Generator Ship Missile Attempt
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 32; Major Location? False
@@ -1556,9 +1574,9 @@ Asset id: 6613311822671481119
   > Pickup (Missile Expansion)
       Trivial
   > Event - Leviathan Shield
-      Ship Missile and After Jungle Generator Ship Missile Attempt and After North Jungle Court Turret
+      After Jungle Generator Ship Missile Attempt and After North Jungle Court Turret and Use Ship Missile (Command Visor and Ship Missile)
   > Event - Ship Missile Attempt
-      Ship Missile
+      Use Ship Missile (Command Visor and Ship Missile)
 
 > Event - Leviathan Shield; Heals? False
   * Event Jungle Leviathan Shield Generator
@@ -1629,7 +1647,7 @@ Asset id: 14006603351279167667
       Trivial
   > Pickup (Energy Cell)
       All of the following:
-          Command Visor and Ship Grapple and After North Jungle Court Battery
+          After North Jungle Court Battery and Use Ship Grapple (Command Visor and Ship Grapple)
           Any of the following:
               Space Jump Boots
               Movement (Beginner) and Use Screw Attack (No Space Jump)
@@ -1754,14 +1772,14 @@ Asset id: 2559164233122714372
 Ancient Courtyard
 Asset id: 15861154386655212106
 > Door to Overgrown Ruins; Heals? False; Spawn Point
-  * Normal Door to Overgrown Ruins/Door to Ancient Courtyard (Door)
+  * Normal Door to Overgrown Ruins/Door to Ancient Courtyard
   > Door to Enlightened Walkway
       After Ancient Courtyard Halfpipe Wall
   > Event - Halfpipe Wall
-      Grapple Lasso and Command Visor and Ship Missile
+      Grapple Lasso and Use Ship Missile (Command Visor and Ship Missile)
 
 > Morph Ball Door to Overgrown Ruins; Heals? False
-  * Morph Ball Door to Overgrown Ruins/Door to Ancient Courtyard (Tunnel)
+  * Morph Ball Door to Overgrown Ruins/Morph Ball Door to Ancient Courtyard
   > Event - Overgrown Ruins Barrier
       Morph Ball
 
@@ -1792,24 +1810,27 @@ Asset id: 15861154386655212106
 ----------------
 Overgrown Ruins
 Asset id: 5590909670361746944
-> Door to Ancient Courtyard (Door); Heals? False
+> Door to Ancient Courtyard; Heals? False
   * Normal Door to Ancient Courtyard/Door to Overgrown Ruins
   > Door to Thorn Jungle Airdock
       After Overgrown Ruins Barrier
 
 > Door to Thorn Jungle Airdock; Heals? False
   * Normal Door to Thorn Jungle Airdock/Door to Overgrown Ruins
-  > Door to Ancient Courtyard (Door)
+  > Door to Ancient Courtyard
       After Overgrown Ruins Barrier
-  > Door to Ancient Courtyard (Tunnel)
-      Trivial
+  > Morph Ball Door to Ancient Courtyard
+      All of the following:
+          Morph Ball
+          Charge Beam or Missile ≥ 2
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
   > Door to Vault
       Trivial
 
-> Door to Ancient Courtyard (Tunnel); Heals? False
+> Morph Ball Door to Ancient Courtyard; Heals? False
   * Morph Ball Door to Ancient Courtyard/Morph Ball Door to Overgrown Ruins
   > Door to Thorn Jungle Airdock
-      Trivial
+      Morph Ball
 
 > Door to Vault; Heals? False
   * Missile Blast Shield to Vault/Door to Overgrown Ruins
@@ -1822,19 +1843,30 @@ Asset id: 18426339925276965129
 > Door to Hidden Court; Heals? False
   * Normal Door to Hidden Court/Door to Ruined Shrine
   > Door to Hangar Bay
-      Grapple Swing or Use Screw Attack (Space Jump)
+      All of the following:
+          Any of the following:
+              Use Screw Attack (Space Jump)
+              All of the following:
+                  Grapple Swing
+                  Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+              Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Intermediate)
+          Charge Beam or Missile ≥ 3
   > Pickup (Energy Tank)
-      Trivial
+      Morph Ball Bombs and Morph Ball
 
 > Door to Hangar Bay; Heals? False
   * Normal Door to Hangar Bay/Door to Ruined Shrine
   > Door to Hidden Court
-      Trivial
+      Charge Beam or Missile
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 37; Major Location? False
   > Door to Hidden Court
-      Trivial
+      Any of the following:
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+          All of the following:
+              Grapple Swing
+              Charge Beam or Missile
 
 ----------------
 Burrow
@@ -1865,20 +1897,38 @@ Jousting Field
 Asset id: 17231991603182176876
 > Door to Field Access; Heals? False
   * Normal Door to Field Access/Door to Jousting Field
-  > Event - Korakk
-      Grapple Lasso
+  > Room Center
+      Trivial
 
 > Door to Enlightened Walkway; Heals? False
   * Normal Door to Enlightened Walkway/Door to Jousting Field
-  > Event - Korakk
-      Grapple Lasso
+  > Room Center
+      Trivial
 
 > Event - Korakk; Heals? False
   * Event Korakk
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
   > Door to Field Access
-      Trivial
+      After Korakk
   > Door to Enlightened Walkway
-      Trivial
+      After Korakk
+  > Event - Korakk
+      Any of the following:
+          All of the following:
+              Grapple Lasso and Morph Ball
+              Any of the following:
+                  Morph Ball Bombs
+                  HyperModeTank and Hyper Ball and Knowledge (Beginner)
+              Any of the following:
+                  Charge Beam or Missile ≥ 5
+                  Grapple Voltage and Knowledge (Beginner) and Normal Damage ≥ 150
+          Morph Ball and HyperModeTank and Hyper Ball and Knowledge (Intermediate) and Normal Damage ≥ 300
+          All of the following:
+              Nova Beam
+              X-Ray Visor or Knowledge (Intermediate)
 
 ----------------
 Machineworks Bridge
@@ -1888,14 +1938,14 @@ Asset id: 17945996104959776291
   > Room Center
       After Machineworks Bridge Jungleside
   > Event - Bridge (Jungleside)
-      Boost Ball
+      Morph Ball and Boost Ball
 
 > Door to Colossus Vista; Heals? False
   * Normal Door to Colossus Vista/Door to Machineworks Bridge
   > Room Center
       After Machineworks Bridge Cliffside
   > Event - Bridge (Cliffside)
-      Boost Ball
+      Morph Ball and Boost Ball
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 39; Major Location? False
@@ -1927,31 +1977,37 @@ Asset id: 5310258251750100868
   * Normal Door to Generator Hall North/Door to North Jungle Court
   > Door to North Jungle Hall
       After North Jungle Court Turret
+  > Door to Machineworks Bridge
+      Space Jump Boots and Morph Ball and After North Jungle Court Battery
+  > Event - Destroy Turret
+      All of the following:
+          Grapple Lasso and Space Jump Boots
+          Charge Beam or Missile ≥ 3
+  > Event - Lift Battery
+      Use Ship Grapple (Command Visor and Ship Grapple)
 
 > Door to North Jungle Hall; Heals? False
   * Normal Door to North Jungle Hall/Door to North Jungle Court
   > Door to Generator Hall North
       After North Jungle Court Turret
-  > Door to Machineworks Bridge
-      After North Jungle Court Battery
   > Event - Destroy Turret
-      Grapple Lasso
-  > Event - Lift Battery
-      Ship Grapple
+      All of the following:
+          Grapple Lasso and Space Jump Boots
+          Charge Beam or Missile ≥ 3
 
 > Door to Machineworks Bridge; Heals? False
   * Normal Door to Machineworks Bridge/Door to North Jungle Court
-  > Door to North Jungle Hall
-      After North Jungle Court Battery
+  > Door to Generator Hall North
+      Morph Ball and After North Jungle Court Battery
 
 > Event - Destroy Turret; Heals? False
   * Event North Jungle Court Turret
-  > Door to North Jungle Hall
+  > Door to Generator Hall North
       Trivial
 
 > Event - Lift Battery; Heals? False
   * Event North Jungle Court Battery
-  > Door to North Jungle Hall
+  > Door to Generator Hall North
       Trivial
 
 ----------------
@@ -2116,7 +2172,7 @@ Asset id: 8112010450000786492
   > Pickup (Ship Missile Expansion)
       After Colossus Vista Golem Head
   > Event - Place Golem Head
-      Command Visor and Ship Grapple and After Fuel Gel Pool Golem Head
+      After Fuel Gel Pool Golem Head and Use Ship Grapple (Command Visor and Ship Grapple)
 
 > Door to Machineworks Bridge; Heals? False
   * Normal Door to Machineworks Bridge/Door to Colossus Vista
@@ -2159,7 +2215,7 @@ Asset id: 2580753232084104741
 > Room Center; Heals? False
   > Door to Burrow
       Any of the following:
-          Space Jump Boots and After Hall of the Golems - Plasma Beam Golem
+          Space Jump Boots and After Hall of the Golems - Ice Missile Golem
           Bomb/Spring Space Jump (Intermediate) and Use Screw Attack (Space Jump)
   > Door to Hangar Bay Hall
       Trivial
@@ -2172,7 +2228,7 @@ Asset id: 2580753232084104741
   > Event - Plasma Beam Golem
       Plasma Beam and Morph Ball Bombs and Morph Ball
   > Event - Ice Missile Golem
-      Ice Missile and Morph Ball Bombs and Space Jump Boots and Morph Ball
+      Missile and Ice Missile and Morph Ball Bombs and Space Jump Boots and Morph Ball
 
 > Event - Grapple Voltage Golem; Heals? False
   * Event Hall of the Golems - Grapple Voltage Golem
@@ -2197,12 +2253,18 @@ Asset id: 8404374826148145183
   > Door to South Jungle Hall
       After South Jungle Court Turret
   > Event - Destroy Turret
-      Grapple Lasso
+      All of the following:
+          Grapple Lasso
+          Charge Beam or Missile ≥ 3
 
 > Door to South Jungle Hall; Heals? False
   * Normal Door to South Jungle Hall/Door to South Jungle Court
   > Door to Generator Hall South
       After South Jungle Court Turret
+  > Event - Destroy Turret
+      All of the following:
+          Grapple Lasso
+          Charge Beam or Missile ≥ 3
 
 > Event - Destroy Turret; Heals? False
   > Door to Generator Hall South
@@ -2289,13 +2351,13 @@ Asset id: 9934831212540578712
           Morph Ball
           Any of the following:
               Morph Ball Bombs
-              HyperModeTank and Hyper Ball
+              HyperModeTank and Hyper Ball and Knowledge (Beginner)
   > Upper Area
       All of the following:
           Morph Ball
           Any of the following:
               Morph Ball Bombs
-              HyperModeTank and Hyper Ball
+              HyperModeTank and Hyper Ball and Knowledge (Beginner)
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 17; Major Location? False
@@ -2370,16 +2432,12 @@ Asset id: 12195253720064854680
 > Door to Imperial Hall; Heals? False
   * Plasma Door to Imperial Hall/Door to Refinery Access
   > Door to Gel Refinery Site
-      Any of the following:
-          Space Jump Boots
-          Morph Ball Bombs and Morph Ball and Bomb Jump (Beginner)
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Gel Refinery Site; Heals? False; Spawn Point
   * Plasma Door to Gel Refinery Site/Door to Refinery Access
   > Door to Imperial Hall
-      Any of the following:
-          Space Jump Boots
-          Morph Ball Bombs and Morph Ball and Bomb Jump (Beginner)
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Gel Refinery Site
@@ -2457,9 +2515,7 @@ Asset id: 15732414849243282895
 > Door to Gel Purification Site; Heals? False
   * Ice Missile Blast Shield to Gel Purification Site/Door to Gel Hall
   > Door to Save Station A
-      Ice Missile or Normal Damage
-  > Event - Falling Platform
-      Plasma Beam or Charge Beam
+      Ice Missile or Normal Damage ≥ 20
 
 > Door to Gel Processing Site; Heals? False; Spawn Point
   * Ice Missile Blast Shield to Gel Processing Site/Door to Gel Hall
@@ -2474,9 +2530,7 @@ Asset id: 15732414849243282895
 > Pickup (Missile Expansion - Ledge); Heals? False
   * Pickup 20; Major Location? False
   > Event - Falling Platform
-      All of the following:
-          After Gel Hall Falling Platform
-          Ice Missile or Normal Damage ≥ 20
+      Space Jump Boots and After Gel Hall Falling Platform
 
 > Pickup (Missile Expansion - Falling Platform); Heals? False
   * Pickup 21; Major Location? False
@@ -2488,13 +2542,19 @@ Asset id: 15732414849243282895
   > Door to Gel Purification Site
       Ice Missile or Use Screw Attack (Space Jump)
   > Door to Gel Processing Site
-      Trivial
+      Space Jump Boots
   > Door to Save Station A
       Trivial
   > Pickup (Missile Expansion - Ledge)
-      Ice Missile
-  > Pickup (Missile Expansion - Falling Platform)
-      Trivial
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              Ice Missile
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Screw Attack and Boost Ball and Bomb/Spring Space Jump (Intermediate)
+                      Suit Type ≥ 4 and Bomb/Spring Space Jump (Advanced)
 
 ----------------
 Corrupted Pool
@@ -2503,7 +2563,7 @@ Asset id: 4196997332781103286
   * Normal Door to Main Lift/Door to Corrupted Pool
   > Door to Gel Processing Site
       All of the following:
-          After Corrupted Pool Phazon Vines
+          After Hangar Bay Ship Upgrade or After Corrupted Pool Phazon Vines
           Grapple Swing or Use Screw Attack (Space Jump)
   > Event - Phazon Vines
       HyperModeTank
@@ -2511,7 +2571,7 @@ Asset id: 4196997332781103286
 > Door to Gel Processing Site; Heals? False
   * Normal Door to Gel Processing Site/Door to Corrupted Pool
   > Door to Main Lift
-      After Corrupted Pool Phazon Vines
+      After Hangar Bay Ship Upgrade or After Corrupted Pool Phazon Vines
 
 > Event - Phazon Vines; Heals? False
   * Event Corrupted Pool Phazon Vines
@@ -2539,7 +2599,7 @@ Asset id: 13296637487518400273
 > Pickup (Missile Expansion); Heals? False
   * Pickup 22; Major Location? False
   > Above Ground
-      Suit Type ≥ 4
+      Trivial
 
 > Above Ground; Heals? False
   > Door to Temple Access
@@ -2553,7 +2613,7 @@ Asset id: 13296637487518400273
   > Event - Rundas
       Grapple Lasso
   > Event - Turret
-      Grapple Lasso and Ship Missile and After Hangar Bay Ship Upgrade
+      Command Visor and After Hangar Bay Ship Upgrade and Use Ship Missile (Command Visor and Ship Missile)
 
 > Event - Rundas; Heals? False
   * Event Rundas
@@ -2633,7 +2693,7 @@ Asset id: 17919508762406024111
 > Door to Temple Hall; Heals? False; Spawn Point
   * Normal Door to Temple Hall/Door to Temple Generator
   > Event - Leviathan Shield
-      Command Visor and Ship Missile
+      Use Ship Missile (Command Visor and Ship Missile)
 
 > Event - Leviathan Shield; Heals? False
   * Event Fire Leviathan Shield Generator
@@ -2661,7 +2721,13 @@ Asset id: 11307336868361004418
   > Door to Temple Access
       Trivial
   > Door to Imperial Hall
-      Missile and Ice Missile and Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Missile and Ice Missile
+              All of the following:
+                  Movement (Intermediate)
+                  Screw Attack or Boost Ball
 
 > Door to Temple Access; Heals? False
   * Normal Door to Temple Access/Door to Gel Cavern
@@ -2671,7 +2737,13 @@ Asset id: 11307336868361004418
 > Door to Imperial Hall; Heals? False
   * Morph Ball Door to Imperial Hall/Door to Gel Cavern
   > Door to Cavern Entry
-      Missile and Ice Missile and Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Missile and Ice Missile
+              All of the following:
+                  Movement (Intermediate)
+                  Screw Attack or Boost Ball
 
 ----------------
 Temple Reservoir
@@ -2890,9 +2962,7 @@ Asset id: 2952866055994706679
 > Door to Landing Site Delta; Heals? False; Spawn Point
   * Normal Door to Landing Site Delta/Door to Core Access
   > Door to Bryyo Leviathan Core
-      Any of the following:
-          Charge Beam
-          HyperModeTank and HyperModeBeam
+      Charge Beam
 
 > Door to Bryyo Leviathan Core; Heals? False
   * Normal Door to Bryyo Leviathan Core/Door to Core Access
