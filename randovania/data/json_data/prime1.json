@@ -465,7 +465,12 @@
             {
                 "index": 35,
                 "long_name": "Mine Security Station Barrier Opened",
-                "short_name": "Event34"
+                "short_name": "Event35"
+            },
+            {
+                "index": 36,
+                "long_name": "Main Ventilation Shaft Section B Conduit Activated",
+                "short_name": "Event36"
             }
         ],
         "tricks": [
@@ -22070,7 +22075,7 @@
                     "name": "Main Ventilation Shaft Section B",
                     "in_dark_aether": false,
                     "asset_id": 2949963832,
-                    "default_node_index": 0,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22113,7 +22118,30 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "and",
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 36,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Main Ventilation Shaft Section B Conduit Activated": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
                                             "data": [
                                                 {
                                                     "type": "resource",
@@ -22127,8 +22155,8 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 2,
+                                                        "type": 2,
+                                                        "index": 4,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -22136,6 +22164,19 @@
                                             ]
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Main Ventilation Shaft Section B Conduit Activated",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 36,
+                            "connections": {
+                                "Dock to Main Ventilation Shaft Section C": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }

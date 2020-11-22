@@ -3629,15 +3629,24 @@ Asset id: 620277747
 ----------------
 Main Ventilation Shaft Section B
 Asset id: 2949963832
-> Dock to Main Ventilation Shaft Section A; Heals? False; Spawn Point
+> Dock to Main Ventilation Shaft Section A; Heals? False
   * Normal Door to Main Ventilation Shaft Section A/Dock to Main Ventilation Shaft Section B
   > Dock to Main Ventilation Shaft Section C
       Trivial
 
-> Dock to Main Ventilation Shaft Section C; Heals? False
+> Dock to Main Ventilation Shaft Section C; Heals? False; Spawn Point
   * Normal Door to Main Ventilation Shaft Section C/Dock to Main Ventilation Shaft Section B
   > Dock to Main Ventilation Shaft Section A
-      Wave Beam and Thermal Visor
+      After Main Ventilation Shaft Section B Conduit Activated
+  > Event - Main Ventilation Shaft Section B Conduit Activated
+      All of the following:
+          Wave Beam
+          Thermal Visor or Invisible Objects (Beginner)
+
+> Event - Main Ventilation Shaft Section B Conduit Activated; Heals? False
+  * Event Main Ventilation Shaft Section B Conduit Activated
+  > Dock to Main Ventilation Shaft Section C
+      Trivial
 
 ----------------
 Transport to Chozo Ruins East
