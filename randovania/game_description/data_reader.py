@@ -6,7 +6,7 @@ from randovania.game_description.dock import DockWeakness, DockType, DockWeaknes
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation
+    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \
     RequirementOr, RequirementAnd, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageReduction, DamageResourceInfo
@@ -276,6 +276,11 @@ class WorldReader:
                                    lore_type,
                                    required_translator,
                                    hint_index)
+
+            elif node_type == "player_ship":
+                return PlayerShipNode(name, heal, location, self.generic_index,
+                                      read_requirement(data["is_unlocked"], self.resource_database))
+
             else:
                 raise Exception(f"Unknown type: {node_type}")
 

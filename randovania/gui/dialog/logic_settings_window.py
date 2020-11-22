@@ -13,6 +13,7 @@ from randovania.game_description.node import PickupNode
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
 from randovania.gui.game_patches_window import GamePatchesWindow
@@ -74,7 +75,8 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         self._main_rules = MainRulesWindow(editor)
         self._game_patches = GamePatchesWindow(editor)
 
-        self.game_description = default_database.default_prime2_game_description()
+        self.game_enum = RandovaniaGame.PRIME2
+        self.game_description = default_database.game_description_for(self.game_enum)
         self.world_list = self.game_description.world_list
         self.resource_database = self.game_description.resource_database
 
@@ -477,7 +479,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.set_layout_configuration_field(
                 "starting_location",
-                StartingLocation.with_elements([self.game_description.starting_location])
+                StartingLocation.with_elements([self.game_description.starting_location], self.game_enum)
             )
 
     def _starting_location_on_select_save_station(self):
@@ -488,7 +490,7 @@ class LogicSettingsWindow(QDialog, Ui_LogicSettingsWindow):
         with self._editor as editor:
             editor.set_layout_configuration_field(
                 "starting_location",
-                StartingLocation.with_elements(save_stations)
+                StartingLocation.with_elements(save_stations, self.game_enum)
             )
 
     # Location Pool

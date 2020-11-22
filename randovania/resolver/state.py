@@ -81,7 +81,7 @@ class State:
                      self.resource_database)
 
     def _energy_for(self, resources: CurrentResources) -> int:
-        energy_per_tank = self.patches.game_specific.energy_per_tank
+        energy_per_tank = self.patches.game_specific.energy_per_tank if self.patches.game_specific is not None else 100
         return (energy_per_tank - 1) + (energy_per_tank * resources.get(self.resource_database.energy_tank, 0))
 
     @property
