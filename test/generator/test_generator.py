@@ -30,7 +30,7 @@ def test_create_patches(mock_random: MagicMock,
     permalink.get_preset.side_effect = lambda i: presets[i]
 
     # Run
-    result = generator._async_create_description(permalink, status_update)
+    result = generator._async_create_description(permalink, status_update, 0)
 
     # Assert
     mock_random.assert_called_once_with(permalink.as_str)
