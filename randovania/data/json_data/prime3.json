@@ -1076,6 +1076,16 @@
                 "index": 139,
                 "long_name": "Gateway Bridge Destroyed",
                 "short_name": "Event139"
+            },
+            {
+                "index": 140,
+                "long_name": "Cargo Hub Grapple Lasso Rubble Removed",
+                "short_name": "Event140"
+            },
+            {
+                "index": 141,
+                "long_name": "Docking Hub Alpha Gate Unlocked",
+                "short_name": "Event141"
             }
         ],
         "tricks": [
@@ -2854,8 +2864,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Samus Ship": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 141,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -2882,6 +2897,56 @@
                                         {
                                             "type": "template",
                                             "data": "Use Screw Attack (Space Jump)"
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 11,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -2896,8 +2961,13 @@
                             "major_location": true,
                             "connections": {
                                 "Samus Ship": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 141,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -2912,8 +2982,13 @@
                             },
                             "connections": {
                                 "Door to Hub Access": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 141,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Pickup (Missile Expansion)": {
                                     "type": "or",
@@ -2930,10 +3005,82 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 11,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
                                 "Pickup (Grapple Lasso)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 141,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Event - Gate Opened": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Gate Opened",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 141,
+                            "connections": {
+                                "Samus Ship": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -2945,7 +3092,7 @@
                     "name": "Generator A Access",
                     "in_dark_aether": false,
                     "asset_id": 6925347865352032548,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -2964,8 +3111,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Generator A": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -2985,8 +3146,22 @@
                             "dock_weakness_index": 6,
                             "connections": {
                                 "Door to Cargo Dock A": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -2996,7 +3171,7 @@
                     "name": "Maintenance Station",
                     "in_dark_aether": false,
                     "asset_id": 10152623521318090708,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3019,13 +3194,27 @@
                                     "data": []
                                 },
                                 "Pickup (Missile Expansion)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 5,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 5,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -3070,7 +3259,7 @@
                     "name": "Generator B Access",
                     "in_dark_aether": false,
                     "asset_id": 4637236059703335555,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3089,8 +3278,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Generator B": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -3110,8 +3304,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Cargo Dock B": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -3121,7 +3320,7 @@
                     "name": "Generator C Access",
                     "in_dark_aether": false,
                     "asset_id": 1937326665165249525,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3139,7 +3338,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Generator C": {
+                                "Save Station": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3160,9 +3359,53 @@
                             "dock_type": 0,
                             "dock_weakness_index": 6,
                             "connections": {
+                                "Save Station": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Save Station",
+                            "heal": true,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
                                 "Door to Cargo Dock C": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Door to Generator C": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -3172,7 +3415,7 @@
                     "name": "Substation East",
                     "in_dark_aether": false,
                     "asset_id": 2833670306022051974,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3191,12 +3434,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Cargo Hub": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Pickup (Energy Tank)": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -3216,12 +3460,22 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Conduit A": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Pickup (Energy Tank)": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -3233,10 +3487,6 @@
                             "pickup_index": 6,
                             "major_location": false,
                             "connections": {
-                                "Door to Conduit A": {
-                                    "type": "and",
-                                    "data": []
-                                },
                                 "Door to Cargo Hub": {
                                     "type": "and",
                                     "data": []
@@ -3249,7 +3499,7 @@
                     "name": "Hub Access",
                     "in_dark_aether": false,
                     "asset_id": 2999231136728408916,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3300,7 +3550,7 @@
                     "name": "Conduit A",
                     "in_dark_aether": false,
                     "asset_id": 8077796705327002140,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3321,15 +3571,6 @@
                                 "Door to Substation East": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Door to Cargo Dock A": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 4,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
                                 }
                             }
                         },
@@ -3351,6 +3592,10 @@
                                 "Door to Munitions Storage": {
                                     "type": "and",
                                     "data": []
+                                },
+                                "Door to Cargo Dock A": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -3369,14 +3614,9 @@
                             "dock_type": 0,
                             "dock_weakness_index": 3,
                             "connections": {
-                                "Door to Munitions Storage": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 4,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Door to Substation East": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
@@ -3386,7 +3626,7 @@
                     "name": "Substation West",
                     "in_dark_aether": false,
                     "asset_id": 14723609494777816936,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3430,8 +3670,13 @@
                                     "data": []
                                 },
                                 "Pickup (Missile Expansion)": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -3443,7 +3688,7 @@
                             "pickup_index": 7,
                             "major_location": false,
                             "connections": {
-                                "Door to Cargo Hub": {
+                                "Door to Conduit B": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3455,7 +3700,7 @@
                     "name": "Conduit B",
                     "in_dark_aether": false,
                     "asset_id": 12525204153859996508,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3473,6 +3718,10 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Door to Cargo Dock B": {
+                                    "type": "and",
+                                    "data": []
+                                },
                                 "Door to Data Storage": {
                                     "type": "and",
                                     "data": []
@@ -3494,7 +3743,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Data Storage": {
+                                "Door to Substation West": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3518,10 +3767,6 @@
                                 "Door to Substation West": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Door to Cargo Dock B": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         }
@@ -3531,7 +3776,7 @@
                     "name": "Generator A",
                     "in_dark_aether": false,
                     "asset_id": 15200271536650763937,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3634,13 +3879,27 @@
                                     "data": []
                                 },
                                 "Pickup (Missile Expansion)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 34,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 34,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -3650,7 +3909,7 @@
                     "name": "Conduit C",
                     "in_dark_aether": false,
                     "asset_id": 4303576798079005251,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3701,7 +3960,7 @@
                     "name": "Generator B",
                     "in_dark_aether": false,
                     "asset_id": 12849086301409571765,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3720,13 +3979,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Pickup (Energy Cell)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 16,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "Event - Metroid Hatcher": {
                                     "type": "or",
@@ -3741,8 +4014,41 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Phazite (X-Ray and Nova)"
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 14,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 9,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -3924,7 +4230,7 @@
                     "name": "Cargo Hub",
                     "in_dark_aether": false,
                     "asset_id": 3044064450317642212,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -3942,7 +4248,30 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "East Branch": {
+                                "Door to Hub Access": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 140,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Door to Tower Elevator": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3963,7 +4292,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Center Area": {
+                                "Door to Hub Access": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -3984,9 +4313,115 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Center Area": {
+                                "Door to Substation East": {
                                     "type": "and",
-                                    "data": []
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 140,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Door to Substation West": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Door to Maintenance Station": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 7,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 10,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 3,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 33,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Event - Lasso Rubble Removed": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -4005,7 +4440,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 6,
                             "connections": {
-                                "Center Area": {
+                                "Door to Hub Access": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -4026,7 +4461,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "East Branch": {
+                                "Door to Substation East": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -4040,77 +4475,22 @@
                             "pickup_index": 10,
                             "major_location": false,
                             "connections": {
-                                "Center Area": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "East Branch",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Door to Substation East": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Door to Tower Elevator": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Center Area": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            "name": "Center Area",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Door to Substation West": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 1,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
                                 "Door to Hub Access": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Door to Maintenance Station": {
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Lasso Rubble Removed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 140,
+                            "connections": {
+                                "Door to Hub Access": {
                                     "type": "and",
                                     "data": []
-                                },
-                                "Pickup (Missile Expansion)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "East Branch": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
                                 }
                             }
                         }
@@ -4120,7 +4500,7 @@
                     "name": "Generator C",
                     "in_dark_aether": false,
                     "asset_id": 8948533108801763587,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -4138,24 +4518,38 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Door to Generator Shaft": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 10,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                "Dock to Generator Shaft": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
                         {
-                            "name": "Door to Generator Shaft",
+                            "name": "Dock to Generator Shaft",
                             "heal": false,
                             "coordinates": {
-                                "x": 5.0067901611328125e-06,
-                                "y": 9.5367431640625e-07,
-                                "z": -13.361884117126465
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": -13.36
                             },
                             "node_type": "dock",
                             "dock_index": 1,
@@ -4176,7 +4570,7 @@
                     "name": "Cargo Dock C",
                     "in_dark_aether": false,
                     "asset_id": 4520873215787484216,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -4227,7 +4621,7 @@
                     "name": "Munitions Storage",
                     "in_dark_aether": false,
                     "asset_id": 12238001536709546537,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -4244,7 +4638,24 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Map Station": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Map Station",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Conduit A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -4252,7 +4663,7 @@
                     "name": "Data Storage",
                     "in_dark_aether": false,
                     "asset_id": 17529742819100867999,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -4269,7 +4680,24 @@
                             "connected_dock_index": 2,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Lore Scans": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Lore Scans",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Conduit B": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 },
@@ -4277,11 +4705,11 @@
                     "name": "Generator Shaft",
                     "in_dark_aether": false,
                     "asset_id": 2389417385720268120,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
-                            "name": "Door to Generator C",
+                            "name": "Dock to Generator C",
                             "heal": false,
                             "coordinates": {
                                 "x": 0.0,
@@ -4308,7 +4736,7 @@
                             "node_type": "event",
                             "event_index": 2,
                             "connections": {
-                                "Door to Generator C": {
+                                "Dock to Generator C": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -4320,7 +4748,7 @@
                     "name": "Tower Elevator",
                     "in_dark_aether": false,
                     "asset_id": 130975251460127249,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -4371,7 +4799,7 @@
                     "name": "Control Tower",
                     "in_dark_aether": false,
                     "asset_id": 1413887626178850213,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -4388,7 +4816,24 @@
                             "connected_dock_index": 1,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Dark Samus Cutscene": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Dark Samus Cutscene",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
+                                "Door to Tower Elevator": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         }
                     ]
                 }
@@ -5162,7 +5607,7 @@
                                                                     "type": "resource",
                                                                     "data": {
                                                                         "type": 2,
-                                                                        "index": 3,
+                                                                        "index": 9,
                                                                         "amount": 2,
                                                                         "negate": false
                                                                     }
@@ -11455,7 +11900,7 @@
                                                             "type": "resource",
                                                             "data": {
                                                                 "type": 2,
-                                                                "index": 3,
+                                                                "index": 9,
                                                                 "amount": 2,
                                                                 "negate": false
                                                             }
