@@ -64,7 +64,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.teleporter_destination_world_combo.addItem("{0.name} ({0.dark_name})".format(world), userData=world)
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
 
-        for event in game.resource_database.event:
+        for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
             self.event_resource_combo.addItem(event.long_name, event)
         if self.event_resource_combo.count() == 0:
             self.event_resource_combo.addItem("No events in database", None)
