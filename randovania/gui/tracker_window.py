@@ -229,7 +229,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def _refresh_for_new_action(self):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
-        self.location_box.setTitle("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
+        self.current_location_label.setText("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
         self.update_locations_tree_for_reachable_nodes()
 
     def _add_new_action(self, node: Node):
