@@ -357,49 +357,60 @@ Asset id: 1594033074927626820
 > Door to Hub Access; Heals? False
   * Normal Door to Hub Access/Door to Docking Hub Alpha
   > Samus Ship
-      Trivial
+      After Docking Hub Alpha Gate Unlocked
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 3; Major Location? False
   > Samus Ship
-      Grapple Swing or Use Screw Attack (Space Jump)
+      Any of the following:
+          Grapple Swing or Use Screw Attack (Space Jump)
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
 
 > Pickup (Grapple Lasso); Heals? False
   * Pickup 4; Major Location? True
   > Samus Ship
-      Trivial
+      After Docking Hub Alpha Gate Unlocked
 
 > Samus Ship; Heals? True; Spawn Point
   * Player Ship (Unlocked by Trivial)
   > Door to Hub Access
-      Trivial
+      After Docking Hub Alpha Gate Unlocked
   > Pickup (Missile Expansion)
-      Grapple Swing or Use Screw Attack (Space Jump)
+      Any of the following:
+          Grapple Swing or Use Screw Attack (Space Jump)
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
   > Pickup (Grapple Lasso)
+      After Docking Hub Alpha Gate Unlocked
+  > Event - Gate Opened
+      Trivial
+
+> Event - Gate Opened; Heals? False
+  * Event Docking Hub Alpha Gate Unlocked
+  > Samus Ship
       Trivial
 
 ----------------
 Generator A Access
 Asset id: 6925347865352032548
-> Door to Cargo Dock A; Heals? False
+> Door to Cargo Dock A; Heals? False; Spawn Point
   * Normal Door to Cargo Dock A/Door to Generator A Access
   > Door to Generator A
-      Trivial
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Generator A; Heals? False
   * Grapple Lasso Blast Shield to Generator A/Door to Generator A Access
   > Door to Cargo Dock A
-      Trivial
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Maintenance Station
 Asset id: 10152623521318090708
-> Door to Cargo Hub; Heals? False
+> Door to Cargo Hub; Heals? False; Spawn Point
   * Normal Door to Cargo Hub/Door to Maintenance Station
   > Door to Conduit C
       Trivial
   > Pickup (Missile Expansion)
-      Ice Missile
+      Missile and Ice Missile
 
 > Door to Conduit C; Heals? False
   * Normal Door to Conduit C/Door to Maintenance Station
@@ -414,28 +425,34 @@ Asset id: 10152623521318090708
 ----------------
 Generator B Access
 Asset id: 4637236059703335555
-> Door to Cargo Dock B; Heals? False
+> Door to Cargo Dock B; Heals? False; Spawn Point
   * Normal Door to Cargo Dock B/Door to Generator B Access
   > Door to Generator B
-      Trivial
+      Morph Ball
 
 > Door to Generator B; Heals? False
   * Normal Door to Generator B/Door to Generator B Access
   > Door to Cargo Dock B
-      Trivial
+      Morph Ball
 
 ----------------
 Generator C Access
 Asset id: 1937326665165249525
 > Door to Cargo Dock C; Heals? False
   * Normal Door to Cargo Dock C/Door to Generator C Access
-  > Door to Generator C
+  > Save Station
       Trivial
 
 > Door to Generator C; Heals? False
   * Grapple Lasso Blast Shield to Generator C/Door to Generator C Access
+  > Save Station
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+
+> Save Station; Heals? True; Spawn Point
   > Door to Cargo Dock C
       Trivial
+  > Door to Generator C
+      Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 ----------------
 Substation East
@@ -443,28 +460,24 @@ Asset id: 2833670306022051974
 > Door to Conduit A; Heals? False
   * Normal Door to Conduit A/Door to Substation East
   > Door to Cargo Hub
-      Trivial
-  > Pickup (Energy Tank)
-      Trivial
+      Morph Ball
 
-> Door to Cargo Hub; Heals? False
+> Door to Cargo Hub; Heals? False; Spawn Point
   * Normal Door to Cargo Hub/Door to Substation East
   > Door to Conduit A
-      Trivial
+      Morph Ball
   > Pickup (Energy Tank)
-      Trivial
+      Morph Ball
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 6; Major Location? False
-  > Door to Conduit A
-      Trivial
   > Door to Cargo Hub
       Trivial
 
 ----------------
 Hub Access
 Asset id: 2999231136728408916
-> Door to Docking Hub Alpha; Heals? False
+> Door to Docking Hub Alpha; Heals? False; Spawn Point
   * Normal Door to Docking Hub Alpha/Door to Hub Access
   > Door to Cargo Hub
       Trivial
@@ -481,18 +494,18 @@ Asset id: 8077796705327002140
   * Normal Door to Munitions Storage/Door to Conduit A
   > Door to Substation East
       Trivial
-  > Door to Cargo Dock A
-      Missile
 
-> Door to Substation East; Heals? False
+> Door to Substation East; Heals? False; Spawn Point
   * Normal Door to Substation East/Door to Conduit A
   > Door to Munitions Storage
+      Trivial
+  > Door to Cargo Dock A
       Trivial
 
 > Door to Cargo Dock A; Heals? False
   * Missile Blast Shield to Cargo Dock A/Door to Conduit A
-  > Door to Munitions Storage
-      Missile
+  > Door to Substation East
+      Trivial
 
 ----------------
 Substation West
@@ -502,42 +515,42 @@ Asset id: 14723609494777816936
   > Door to Cargo Hub
       Trivial
 
-> Door to Cargo Hub; Heals? False
+> Door to Cargo Hub; Heals? False; Spawn Point
   * Normal Door to Cargo Hub/Door to Substation West
   > Door to Conduit B
       Trivial
   > Pickup (Missile Expansion)
-      Trivial
+      Morph Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 7; Major Location? False
-  > Door to Cargo Hub
+  > Door to Conduit B
       Trivial
 
 ----------------
 Conduit B
 Asset id: 12525204153859996508
-> Door to Substation West; Heals? False
+> Door to Substation West; Heals? False; Spawn Point
   * Normal Door to Substation West/Door to Conduit B
+  > Door to Cargo Dock B
+      Trivial
   > Door to Data Storage
       Trivial
 
 > Door to Cargo Dock B; Heals? False
   * Normal Door to Cargo Dock B/Door to Conduit B
-  > Door to Data Storage
+  > Door to Substation West
       Trivial
 
 > Door to Data Storage; Heals? False
   * Ice Missile Blast Shield to Data Storage/Door to Conduit B
   > Door to Substation West
       Trivial
-  > Door to Cargo Dock B
-      Trivial
 
 ----------------
 Generator A
 Asset id: 15200271536650763937
-> Door to Generator A Access; Heals? False
+> Door to Generator A Access; Heals? False; Spawn Point
   * Normal Door to Generator A Access/Door to Generator A
 
 ----------------
@@ -565,7 +578,7 @@ Asset id: 6692819360230093549
   > Door to Generator A Access
       Trivial
   > Pickup (Missile Expansion)
-      Spider Ball
+      Morph Ball and Spider Ball
 
 ----------------
 Conduit C
@@ -575,7 +588,7 @@ Asset id: 4303576798079005251
   > Door to Maintenance Station
       Trivial
 
-> Door to Maintenance Station; Heals? False
+> Door to Maintenance Station; Heals? False; Spawn Point
   * Normal Door to Maintenance Station/Door to Conduit C
   > Door to Cargo Dock C
       Trivial
@@ -583,12 +596,16 @@ Asset id: 4303576798079005251
 ----------------
 Generator B
 Asset id: 12849086301409571765
-> Door to Generator B Access; Heals? False
+> Door to Generator B Access; Heals? False; Spawn Point
   * Normal Door to Generator B Access/Door to Generator B
   > Pickup (Energy Cell)
-      After Metroid Hatcher (Norion)
+      Morph Ball and After Metroid Hatcher (Norion)
   > Event - Metroid Hatcher
-      Grapple Lasso or Shoot Phazite (X-Ray and Nova)
+      Any of the following:
+          Grapple Lasso
+          All of the following:
+              Nova Beam
+              X-Ray Visor or Invisible Objects (Intermediate)
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 9; Major Location? False
@@ -638,64 +655,63 @@ Cargo Hub
 Asset id: 3044064450317642212
 > Door to Substation East; Heals? False
   * Normal Door to Substation East/Door to Cargo Hub
-  > East Branch
+  > Door to Hub Access
+      Morph Ball and After Cargo Hub Grapple Lasso Rubble Removed
+  > Door to Tower Elevator
       Trivial
 
 > Door to Substation West; Heals? False
   * Normal Door to Substation West/Door to Cargo Hub
-  > Center Area
+  > Door to Hub Access
       Trivial
 
-> Door to Hub Access; Heals? False
+> Door to Hub Access; Heals? False; Spawn Point
   * Normal Door to Hub Access/Door to Cargo Hub
-  > Center Area
-      Trivial
+  > Door to Substation East
+      Morph Ball and After Cargo Hub Grapple Lasso Rubble Removed
+  > Door to Substation West
+      Plasma Beam
+  > Door to Maintenance Station
+      Grapple Lasso
+  > Pickup (Missile Expansion)
+      All of the following:
+          Grapple Lasso and Morph Ball
+          Any of the following:
+              Morph Ball Bombs
+              Boost Ball and Knowledge (Beginner)
+  > Event - Lasso Rubble Removed
+      Grapple Lasso
 
 > Door to Maintenance Station; Heals? False
   * Grapple Lasso Blast Shield to Maintenance Station/Door to Cargo Hub
-  > Center Area
+  > Door to Hub Access
       Trivial
 
 > Door to Tower Elevator; Heals? False
   * Normal Door to Tower Elevator/Door to Cargo Hub
-  > East Branch
+  > Door to Substation East
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 10; Major Location? False
-  > Center Area
-      Trivial
-
-> East Branch; Heals? False
-  > Door to Substation East
-      Trivial
-  > Door to Tower Elevator
-      Trivial
-  > Center Area
-      Grapple Lasso
-
-> Center Area; Heals? False
-  > Door to Substation West
-      Plasma Beam
   > Door to Hub Access
       Trivial
-  > Door to Maintenance Station
+
+> Event - Lasso Rubble Removed; Heals? False
+  * Event Cargo Hub Grapple Lasso Rubble Removed
+  > Door to Hub Access
       Trivial
-  > Pickup (Missile Expansion)
-      Grapple Lasso
-  > East Branch
-      Grapple Lasso
 
 ----------------
 Generator C
 Asset id: 8948533108801763587
-> Door to Generator C Access; Heals? False
+> Door to Generator C Access; Heals? False; Spawn Point
   * Normal Door to Generator C Access/Door to Generator C
-  > Door to Generator Shaft
-      Morph Ball Bombs
+  > Dock to Generator Shaft
+      Morph Ball Bombs and Morph Ball
 
-> Door to Generator Shaft; Heals? False
-  * Normal Door to Generator Shaft/Door to Generator C
+> Dock to Generator Shaft; Heals? False
+  * Normal Door to Generator Shaft/Dock to Generator C
   > Door to Generator C Access
       Trivial
 
@@ -707,7 +723,7 @@ Asset id: 4520873215787484216
   > Door to Conduit C
       Trivial
 
-> Door to Conduit C; Heals? False
+> Door to Conduit C; Heals? False; Spawn Point
   * Normal Door to Conduit C/Door to Cargo Dock C
   > Door to Generator C Access
       Trivial
@@ -715,32 +731,44 @@ Asset id: 4520873215787484216
 ----------------
 Munitions Storage
 Asset id: 12238001536709546537
-> Door to Conduit A; Heals? False
+> Door to Conduit A; Heals? False; Spawn Point
   * Normal Door to Conduit A/Door to Munitions Storage
+  > Map Station
+      Trivial
+
+> Map Station; Heals? False
+  > Door to Conduit A
+      Trivial
 
 ----------------
 Data Storage
 Asset id: 17529742819100867999
-> Door to Conduit B; Heals? False
+> Door to Conduit B; Heals? False; Spawn Point
   * Normal Door to Conduit B/Door to Data Storage
+  > Lore Scans
+      Trivial
+
+> Lore Scans; Heals? False
+  > Door to Conduit B
+      Trivial
 
 ----------------
 Generator Shaft
 Asset id: 2389417385720268120
-> Door to Generator C; Heals? False
-  * Normal Door to Generator C/Door to Generator Shaft
+> Dock to Generator C; Heals? False; Spawn Point
+  * Normal Door to Generator C/Dock to Generator Shaft
   > Event - Meta Ridley
       Trivial
 
 > Event - Meta Ridley; Heals? False
   * Event Meta Ridley
-  > Door to Generator C
+  > Dock to Generator C
       Trivial
 
 ----------------
 Tower Elevator
 Asset id: 130975251460127249
-> Door to Cargo Hub; Heals? False
+> Door to Cargo Hub; Heals? False; Spawn Point
   * Normal Door to Cargo Hub/Door to Tower Elevator
   > Door to Control Tower
       Trivial
@@ -753,8 +781,14 @@ Asset id: 130975251460127249
 ----------------
 Control Tower
 Asset id: 1413887626178850213
-> Door to Tower Elevator; Heals? False
+> Door to Tower Elevator; Heals? False; Spawn Point
   * Normal Door to Tower Elevator/Door to Control Tower
+  > Dark Samus Cutscene
+      Trivial
+
+> Dark Samus Cutscene; Heals? False
+  > Door to Tower Elevator
+      Trivial
 
 ====================
 G.F.S. Valhalla
@@ -899,7 +933,7 @@ Asset id: 6410596230384865511
               Grapple Lasso
               All of the following:
                   Nova Beam
-                  X-Ray Visor or Knowledge (Intermediate)
+                  X-Ray Visor or Invisible Objects (Intermediate)
           Charge Beam or Missile
 
 > Door to Control Room Access; Heals? False
@@ -1986,7 +2020,7 @@ Asset id: 17231991603182176876
           Morph Ball and HyperModeTank and Hyper Ball and Knowledge (Intermediate) and Normal Damage ≥ 300
           All of the following:
               Nova Beam
-              X-Ray Visor or Knowledge (Intermediate)
+              X-Ray Visor or Invisible Objects (Intermediate)
 
 ----------------
 Machineworks Bridge
