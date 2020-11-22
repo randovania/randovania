@@ -4,6 +4,7 @@ from pathlib import Path
 from randovania.games.prime import claris_randomizer
 from randovania.generator import generator
 from randovania.interface_common.cosmetic_patches import CosmeticPatches
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 
@@ -29,6 +30,7 @@ def randomize_command_logic(args):
                                    backup_files_path=args.backup_files,
                                    progress_update=lambda x, _: status_update(x),
                                    game_root=args.game_files,
+                                   players_config=PlayersConfiguration(0, {0: "You"})
                                    )
 
 
