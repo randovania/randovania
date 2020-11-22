@@ -1,7 +1,10 @@
+import collections
+
 import pytest
 from PySide2 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock, call
 
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.seed_details_window import SeedDetailsWindow
 from randovania.layout.layout_description import LayoutDescription
 
@@ -66,3 +69,29 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
     assert window.pickup_spoiler_show_all_button.text() == "Show All"
     skip_qtbot.mouseClick(window.pickup_spoiler_show_all_button, QtCore.Qt.LeftButton)
     assert window.pickup_spoiler_show_all_button.text() == "Hide All"
+
+
+@pytest.mark.asyncio
+async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description):
+    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+
+    window = SeedDetailsWindow(None, MagicMock())
+    window.player_index_combo.addItem("Current", 0)
+    skip_qtbot.addWidget(window)
+
+    collections.namedtuple("MockPickup", ["name"])
+    target = MagicMock()
+    target.pickup.name = "Boost Ball"
+
+    patches = corruption_game_description.create_game_patches()
+    for i in range(100):
+        patches.pickup_assignment[PickupIndex(i)] = target
+
+    window.layout_description = MagicMock()
+    window.layout_description.all_patches = {0: patches}
+
+    # Run
+    await window._show_dialog_for_prime3_layout()
+
+    # Assert
+    mock_execute_dialog.assert_awaited_once()
