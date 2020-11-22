@@ -5,7 +5,7 @@ from randovania.game_description.dock import DockWeaknessDatabase, DockWeakness
 from randovania.game_description.echoes_game_specific import EchoesBeamConfiguration, EchoesGameSpecific
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType
+    TranslatorGateNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate
 from randovania.game_description.resources.damage_resource_info import DamageResourceInfo
@@ -269,6 +269,10 @@ def write_node(node: Node) -> dict:
             data["extra"] = node.hint_index
         else:
             data["extra"] = 0
+
+    elif isinstance(node, PlayerShipNode):
+        data["node_type"] = "player_ship"
+        data["is_unlocked"] = write_requirement(node.is_unlocked)
 
     else:
         raise Exception("Unknown node class: {}".format(node))

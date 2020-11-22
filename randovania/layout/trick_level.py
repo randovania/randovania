@@ -6,8 +6,10 @@ from typing import List, Dict, Iterator, Tuple, Optional
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackValue, BitPackDecoder
-from randovania.game_description import default_database
+from randovania.game_description import data_reader
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.games.game import RandovaniaGame
+from randovania.games.prime import default_data
 from randovania.interface_common.enum_lib import iterate_enum
 
 
@@ -49,32 +51,32 @@ _PRETTY_TRICK_LEVEL_NAME = {
 }
 
 
-def _all_tricks():
-    return default_database.default_prime2_game_description().resource_database.trick
+def _all_tricks(game_data: dict):
+    resource_database = data_reader.read_resource_database(game_data["resource_database"])
+    return resource_database.trick
 
 
 @dataclasses.dataclass(frozen=True)
 class TrickLevelConfiguration(BitPackValue):
-    minimal_logic: bool = False
-    specific_levels: Dict[str, LayoutTrickLevel] = dataclasses.field(default_factory=dict)
+    minimal_logic: bool
+    specific_levels: Dict[str, LayoutTrickLevel]
+    game: RandovaniaGame
 
     def __post_init__(self):
         for trick, level in self.specific_levels.items():
             if not isinstance(level, LayoutTrickLevel):
                 raise ValueError(f"Invalid level `{level}` for trick {trick}, expected a LayoutTrickLevel")
 
-    @classmethod
-    def default(cls):
-        return cls()
-
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+        game_data = default_data.read_json_then_binary(self.game)[1]
+
         yield from bitpacking.encode_bool(self.minimal_logic)
 
         encodable_levels = list(LayoutTrickLevel)
         encodable_levels.remove(LayoutTrickLevel.NO_TRICKS)
         encodable_levels.remove(LayoutTrickLevel.MINIMAL_LOGIC)
 
-        for trick in sorted(_all_tricks()):
+        for trick in sorted(_all_tricks(game_data)):
             level = self.level_for_trick(trick)
             if level in encodable_levels:
                 yield from bitpacking.encode_bool(True)
@@ -84,6 +86,9 @@ class TrickLevelConfiguration(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+        game = metadata["reference"].game
+        game_data = default_data.read_json_then_binary(game)[1]
+
         minimal_logic = bitpacking.decode_bool(decoder)
 
         encodable_levels = list(LayoutTrickLevel)
@@ -91,11 +96,11 @@ class TrickLevelConfiguration(BitPackValue):
         encodable_levels.remove(LayoutTrickLevel.MINIMAL_LOGIC)
 
         specific_levels = {}
-        for trick in sorted(_all_tricks()):
+        for trick in sorted(_all_tricks(game_data)):
             if bitpacking.decode_bool(decoder):
                 specific_levels[trick.short_name] = decoder.decode_element(encodable_levels)
 
-        return cls(minimal_logic, specific_levels)
+        return cls(minimal_logic, specific_levels, game)
 
     @property
     def pretty_description(self) -> str:
@@ -103,7 +108,7 @@ class TrickLevelConfiguration(BitPackValue):
             return LayoutTrickLevel.MINIMAL_LOGIC.long_name
 
         difficulties = collections.defaultdict(int)
-        for trick in _all_tricks():
+        for trick in _all_tricks(default_data.read_json_then_binary(self.game)[1]):
             difficulties[self.level_for_trick(trick)] += 1
 
         if len(difficulties) == 1:
@@ -130,13 +135,14 @@ class TrickLevelConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict):
+    def from_json(cls, value: dict, game: RandovaniaGame):
         return cls(
             minimal_logic=value["minimal_logic"],
             specific_levels={
                 trick: LayoutTrickLevel(level)
                 for trick, level in value["specific_levels"].items()
             },
+            game=game,
         )
 
     def has_specific_level_for_trick(self, trick: TrickResourceInfo) -> bool:

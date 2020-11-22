@@ -71,6 +71,17 @@ def echoes_game_description(echoes_game_data) -> GameDescription:
 
 
 @pytest.fixture()
+def corruption_game_data() -> dict:
+    return default_data.decode_default_prime3()
+
+
+@pytest.fixture()
+def corruption_game_description(corruption_game_data) -> GameDescription:
+    from randovania.game_description import data_reader
+    return data_reader.decode_data(corruption_game_data)
+
+
+@pytest.fixture()
 def randomizer_data() -> dict:
     return default_data.decode_randomizer_data()
 

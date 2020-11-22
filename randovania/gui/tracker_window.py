@@ -18,6 +18,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -135,6 +136,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         starting_location = None
         needs_starting_location = len(self.layout_configuration.starting_location.locations) > 1
         resource_db = self.game_description.resource_database
+        translator_gates = {}
 
         try:
             pickup_name_to_pickup = {pickup.name: pickup for pickup in self._collected_pickups.keys()}
@@ -153,12 +155,13 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 int(elevator_id): AreaLocation.from_json(location) if location is not None else None
                 for elevator_id, location in previous_state["elevators"].items()
             }
-            translator_gates = {
-                TranslatorGate(int(gate)): (resource_db.get_item(item)
-                                            if item is not None
-                                            else self._undefined_item)
-                for gate, item in previous_state["translator_gates"].items()
-            }
+            if self.layout_configuration.game == RandovaniaGame.PRIME2:
+                translator_gates = {
+                    TranslatorGate(int(gate)): (resource_db.get_item(item)
+                                                if item is not None
+                                                else self._undefined_item)
+                    for gate, item in previous_state["translator_gates"].items()
+                }
         except KeyError:
             return False
 
@@ -399,6 +402,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         world_list = self.game_description.world_list
         resource_db = self.game_description.resource_database
         self._translator_gate_to_combo = {}
+
+        if self.layout_configuration.game != RandovaniaGame.PRIME2:
+            return
 
         gates = {
             f"{area.name} ({node.gate.index})": node.gate

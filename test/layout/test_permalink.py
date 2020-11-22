@@ -51,7 +51,6 @@ def test_decode_invalid(invalid: str):
 @pytest.mark.parametrize("layout", [
     {},
     {
-        "trick_level_configuration": TrickLevelConfiguration(specific_levels={"ScanPost": LayoutTrickLevel.EXPERT}),
         "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
         "elevators": LayoutElevators.TWO_WAY_RANDOMIZED,
     },

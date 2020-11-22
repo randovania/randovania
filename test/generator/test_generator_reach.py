@@ -16,6 +16,7 @@ from randovania.game_description.resources.resource_info import add_resources_in
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import default_data
 from randovania.generator import base_patches_factory, generator
 from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
@@ -168,7 +169,8 @@ def test_reach_size_from_start(echoes_game_description, default_layout_configura
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
         trick_level_configuration=TrickLevelConfiguration(minimal_logic=minimal_logic,
-                                                          specific_levels=specific_levels if not minimal_logic else {}),
+                                                          specific_levels=specific_levels if not minimal_logic else {},
+                                                          game=default_layout_configuration.game),
     )
     player_pool = generator.create_player_pool(Random(15000), layout_configuration, 0)
 

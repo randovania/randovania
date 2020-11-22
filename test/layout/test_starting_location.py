@@ -5,6 +5,7 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.area_location import AreaLocation
+from randovania.games.game import RandovaniaGame
 from randovania.layout.starting_location import StartingLocation
 
 
@@ -25,7 +26,7 @@ def _location_with_data(request, mocker, echoes_game_description):
 
     mocker.patch("randovania.layout.starting_location._areas_list",
                  return_value=list(sorted(areas)))
-    return request.param["encoded"], StartingLocation.from_json(request.param["json"])
+    return request.param["encoded"], StartingLocation.from_json(request.param["json"], RandovaniaGame.PRIME2)
 
 
 def test_decode(location_with_data):
@@ -34,7 +35,8 @@ def test_decode(location_with_data):
 
     # Run
     decoder = BitPackDecoder(data)
-    result = StartingLocation.bit_pack_unpack(decoder, {})
+    result = StartingLocation.bit_pack_unpack(
+        decoder, {"reference": StartingLocation.with_elements([], RandovaniaGame.PRIME2)})
 
     # Assert
     assert result == expected

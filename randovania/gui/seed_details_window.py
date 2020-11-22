@@ -3,19 +3,20 @@ from functools import partial
 from typing import List, Dict, Optional
 
 from PySide2 import QtCore, QtWidgets
+from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
     QApplication, QDialog, QAction, QMenu
 from asyncqt import asyncSlot
 
 from randovania.game_description import data_reader, default_database
-from randovania.game_description.default_database import default_prime2_game_description
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.node import PickupNode
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime import patcher_file
 from randovania.gui.dialog.echoes_user_preferences_dialog import EchoesUserPreferencesDialog
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
-from randovania.gui.lib import preset_describer, async_dialog
+from randovania.gui.lib import preset_describer, async_dialog, common_qt_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
@@ -124,11 +125,43 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
 
+    async def _show_dialog_for_prime3_layout(self):
+        from randovania.games.prime import gollop_corruption_patcher
+
+        patches = self.layout_description.all_patches[self.current_player_index]
+        game = default_database.game_description_for(RandovaniaGame.PRIME3)
+
+        if len(patches.pickup_assignment) != game.world_list.num_pickup_nodes:
+            raise ValueError(f"Layout has {len(patches.pickup_assignment)} pickups, "
+                             f"expected {game.world_list.num_pickup_nodes}.")
+
+        item_names = [
+            patches.pickup_assignment[index].pickup.name
+            for index in sorted(patches.pickup_assignment.keys())
+        ]
+        layout_string = gollop_corruption_patcher.layout_string_for_items(item_names)
+        starting_location = patches.starting_location
+
+        commands = "\n".join([
+            f'set seed="{layout_string}"',
+            f'set "starting_items={gollop_corruption_patcher.starting_items_for(patches.starting_items)}"',
+            f'set "starting_location={gollop_corruption_patcher.starting_location_for(starting_location)}"',
+        ])
+        message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Information, "Commands for patcher",
+                                            commands)
+        common_qt_lib.set_default_window_icon(message_box)
+        message_box.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        QApplication.clipboard().setText(commands)
+        await async_dialog.execute_dialog(message_box)
+
     @asyncSlot()
     async def _export_iso(self):
         layout = self.layout_description
         has_spoiler = layout.permalink.spoiler
         options = self._options
+
+        if layout.permalink.get_preset(self.current_player_index).layout_configuration.game == RandovaniaGame.PRIME3:
+            return await self._show_dialog_for_prime3_layout()
 
         if not options.is_alert_displayed(InfoAlert.FAQ):
             await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information, "FAQ",
