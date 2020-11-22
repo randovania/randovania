@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>932</width>
-    <height>488</height>
+    <width>1040</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,89 +21,13 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="1" colspan="3">
-     <widget class="QGroupBox" name="location_box">
-      <property name="title">
-       <string>Current location: </string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QCheckBox" name="resource_filter_check">
-         <property name="text">
-          <string>Show only resources</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="hide_collected_resources_check">
-         <property name="text">
-          <string>Hide collected resources</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTreeWidget" name="possible_locations_tree">
-         <column>
-          <property name="text">
-           <string>Accessible Locations</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="4">
-     <widget class="QGroupBox" name="actions_box">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="title">
-       <string/>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="actions_title_label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;History of all actions that have been performed.&lt;/p&gt;&lt;p&gt;Press &amp;quot;Undo last action&amp;quot; to remove the last action from the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="actions_list"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="4">
+    <item row="0" column="0" colspan="3">
      <widget class="QLabel" name="configuration_label">
       <property name="text">
        <string>Trick Level: ???; Elevators: Vanilla; Item Loss: ???</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QPushButton" name="undo_last_action_button">
-      <property name="text">
-       <string>Undo last action</string>
       </property>
      </widget>
     </item>
@@ -185,7 +109,7 @@
              <x>0</x>
              <y>0</y>
              <width>285</width>
-             <height>394</height>
+             <height>409</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="pickup_box_layout">
@@ -296,7 +220,7 @@
              <x>0</x>
              <y>0</y>
              <width>285</width>
-             <height>394</height>
+             <height>409</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="elevators_scroll_layout">
@@ -346,7 +270,7 @@
              <x>0</x>
              <y>0</y>
              <width>284</width>
-             <height>392</height>
+             <height>407</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="translator_gate_scroll_layout">
@@ -370,6 +294,115 @@
       </widget>
      </widget>
     </item>
+    <item row="2" column="1" colspan="2">
+     <widget class="QTabWidget" name="map_tab_widget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_text_map">
+       <attribute name="title">
+        <string>Text Map</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="tab_text_map_layout">
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>4</number>
+        </property>
+        <item>
+         <widget class="QCheckBox" name="resource_filter_check">
+          <property name="text">
+           <string>Show only resources</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="hide_collected_resources_check">
+          <property name="text">
+           <string>Hide collected resources</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="current_location_label">
+          <property name="text">
+           <string>Current location:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTreeWidget" name="possible_locations_tree">
+          <column>
+           <property name="text">
+            <string>Accessible Locations</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_graph_map">
+       <attribute name="title">
+        <string>Graph Map</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_actions">
+       <attribute name="title">
+        <string>Actions</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="tab_actions_layout">
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>4</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="undo_last_action_button">
+          <property name="text">
+           <string>Undo last action</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="actions_title_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;History of all actions that have been performed.&lt;/p&gt;&lt;p&gt;Press &amp;quot;Undo last action&amp;quot; to remove the last action from the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="actions_list"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menu_bar">
@@ -377,7 +410,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>932</width>
+     <width>1040</width>
      <height>21</height>
     </rect>
    </property>
