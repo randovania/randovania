@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Added: A very basic visualization of the map to the tracker.
+
 ## [2.0.2] - 2020-11-21
 
 -   Added: Starting locations tab has checkboxes to easily select all locations in an area
