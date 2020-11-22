@@ -73,12 +73,12 @@ jobs:
       
       - name: Install Python packages
         run: |
-          python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements.txt
-          python -m pip install -e . -e ".[gui]" -e ".[server]" -e ".[test]"
+          python -m pip install --use-feature=2020-resolver --upgrade -r requirements-setuptools.txt
+          python -m pip install --use-feature=2020-resolver -r requirements.txt
+          python -m pip install --use-feature=2020-resolver -e . -e ".[gui]" -e ".[server]" -e ".[test]"
 
       - name: Install extra Python packages (Linux)
-        run: python -m pip install -r requirements-xvfb.txt
+        run: python -m pip install --use-feature=2020-resolver -r requirements-xvfb.txt
         if: matrix.os == 'ubuntu-latest'
 
       - name: build py
@@ -168,9 +168,9 @@ jobs:
 
       - name: Install Python packages
         run: |
-          python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements.txt
-          python -m pip install -e .
+          python -m pip install --use-feature=2020-resolver --upgrade -r requirements-setuptools.txt
+          python -m pip install --use-feature=2020-resolver -r requirements.txt
+          python -m pip install --use-feature=2020-resolver -e .
 
       - name: Discord Notifications
         run: python tools/post_discord_webhook.py
