@@ -3721,22 +3721,29 @@ Asset id: 3993592474
 ----------------
 Reactor Access
 Asset id: 4215436672
-> Dock to Cargo Freight Lift to Deck Gamma; Heals? False; Spawn Point
+> Dock to Cargo Freight Lift to Deck Gamma; Heals? False
   * Normal Door to Cargo Freight Lift to Deck Gamma/Dock to Reactor Access
   > Dock to Reactor Core
       Trivial
-  > Dock to Savestation
-      Trivial
 
-> Dock to Reactor Core; Heals? False
+> Dock to Reactor Core; Heals? False; Spawn Point
   * Normal Door to Reactor Core/Dock to Reactor Access
   > Dock to Cargo Freight Lift to Deck Gamma
-      Wave Beam and Thermal Visor
+      After Reactor Access Conduits Activated
   > Dock to Savestation
       Trivial
+  > Event - Reactor Access Conduits Activated
+      All of the following:
+          Wave Beam
+          Thermal Visor or Invisible Objects (Beginner)
 
 > Dock to Savestation; Heals? False
   * Normal Door to Savestation/Dock to Reactor Access
+  > Dock to Reactor Core
+      Trivial
+
+> Event - Reactor Access Conduits Activated; Heals? False
+  * Event Reactor Access Conduits Activated
   > Dock to Reactor Core
       Trivial
 

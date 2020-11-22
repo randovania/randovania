@@ -476,6 +476,11 @@
                 "index": 37,
                 "long_name": "Reactor Core Conduits Activated",
                 "short_name": "Event37"
+            },
+            {
+                "index": 38,
+                "long_name": "Reactor Access Conduits Activated",
+                "short_name": "Event38"
             }
         ],
         "tricks": [
@@ -22568,7 +22573,7 @@
                     "name": "Reactor Access",
                     "in_dark_aether": false,
                     "asset_id": 4215436672,
-                    "default_node_index": 0,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -22587,10 +22592,6 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Reactor Core": {
-                                    "type": "and",
-                                    "data": []
-                                },
-                                "Dock to Savestation": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -22615,7 +22616,34 @@
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "and",
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 38,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Dock to Savestation": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Event - Reactor Access Conduits Activated": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
                                             "data": [
                                                 {
                                                     "type": "resource",
@@ -22629,8 +22657,8 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 2,
+                                                        "type": 2,
+                                                        "index": 4,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -22638,10 +22666,6 @@
                                             ]
                                         }
                                     ]
-                                },
-                                "Dock to Savestation": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
@@ -22659,6 +22683,19 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
+                            "connections": {
+                                "Dock to Reactor Core": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Reactor Access Conduits Activated",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 38,
                             "connections": {
                                 "Dock to Reactor Core": {
                                     "type": "and",
