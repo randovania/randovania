@@ -13,8 +13,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world_list import WorldList
 from randovania.generator import base_patches_factory
-from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, filter_pickup_nodes, \
-    UnableToGenerate
+from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, UnableToGenerate
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.available_locations import RandomizationMode
@@ -37,13 +36,15 @@ def generate_description(permalink: Permalink,
                          status_update: Optional[Callable[[str], None]],
                          validate_after_generation: bool,
                          timeout: Optional[int] = 600,
+                         attempts: int = 15,
                          ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.
     :param permalink:
     :param status_update:
     :param validate_after_generation:
-    :param timeout:
+    :param timeout: Abort generation after this many seconds.
+    :param attempts: Attempt this many generations.
     :return:
     """
     if status_update is None:
@@ -51,7 +52,8 @@ def generate_description(permalink: Permalink,
 
     create_patches_params = {
         "permalink": permalink,
-        "status_update": status_update
+        "status_update": status_update,
+        "attempts": attempts,
     }
 
     def create_failure(message: str):
@@ -132,6 +134,7 @@ def _distribute_remaining_items(rng: Random,
 
 def _async_create_description(permalink: Permalink,
                               status_update: Callable[[str], None],
+                              attempts: int,
                               ) -> LayoutDescription:
     """
     :param permalink:
@@ -145,7 +148,13 @@ def _async_create_description(permalink: Permalink,
         for i in range(permalink.player_count)
     }
 
-    filler_results = _retryable_create_patches(rng, presets, status_update)
+    retrying = tenacity.Retrying(
+        stop=tenacity.stop_after_attempt(attempts),
+        retry=tenacity.retry_if_exception_type(UnableToGenerate),
+        reraise=True
+    )
+
+    filler_results = retrying(_create_pools_and_fill, rng, presets, status_update)
     all_patches = _distribute_remaining_items(rng, filler_results.player_results)
     return LayoutDescription(
         permalink=permalink,
@@ -177,13 +186,10 @@ def create_player_pool(rng: Random, configuration: LayoutConfiguration, player_i
     )
 
 
-@tenacity.retry(stop=tenacity.stop_after_attempt(15),
-                retry=tenacity.retry_if_exception_type(UnableToGenerate),
-                reraise=True)
-def _retryable_create_patches(rng: Random,
-                              presets: Dict[int, Preset],
-                              status_update: Callable[[str], None],
-                              ) -> FillerResults:
+def _create_pools_and_fill(rng: Random,
+                           presets: Dict[int, Preset],
+                           status_update: Callable[[str], None],
+                           ) -> FillerResults:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param rng:
