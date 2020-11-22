@@ -3690,15 +3690,33 @@ Asset id: 1724639367
 ----------------
 Reactor Core
 Asset id: 3993592474
-> Dock to Reactor Access; Heals? False; Spawn Point
+> Dock to Reactor Access; Heals? False
   * Normal Door to Reactor Access/Dock to Reactor Core
-  > Dock to Main Ventilation Shaft Section A
-      Space Jump Boots
+  > Room Bottom
+      Trivial
 
-> Dock to Main Ventilation Shaft Section A; Heals? False
+> Dock to Main Ventilation Shaft Section A; Heals? False; Spawn Point
   * Normal Door to Main Ventilation Shaft Section A/Dock to Reactor Core
+  > Room Bottom
+      Trivial
+
+> Room Bottom; Heals? False
   > Dock to Reactor Access
-      Wave Beam and Thermal Visor and Space Jump Boots
+      All of the following:
+          After Reactor Core Conduits Activated
+          Space Jump Boots or Gravity Suit or Slope Jump (Advanced)
+  > Dock to Main Ventilation Shaft Section A
+      Space Jump Boots or Gravity Suit
+  > Event - Reactor Core Conduits Activated
+      All of the following:
+          Wave Beam
+          Thermal Visor or Invisible Objects (Beginner)
+          Space Jump Boots or Gravity Suit or Slope Jump (Advanced)
+
+> Event - Reactor Core Conduits Activated; Heals? False
+  * Event Reactor Core Conduits Activated
+  > Room Bottom
+      Trivial
 
 ----------------
 Reactor Access
