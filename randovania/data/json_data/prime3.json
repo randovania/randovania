@@ -24109,7 +24109,7 @@
                     "name": "Landing Site C",
                     "in_dark_aether": false,
                     "asset_id": 15514523555396225844,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -24128,8 +24128,13 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Samus Ship": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -24137,11 +24142,25 @@
                             "name": "Samus Ship",
                             "heal": true,
                             "coordinates": null,
-                            "node_type": "generic",
+                            "node_type": "player_ship",
+                            "is_unlocked": {
+                                "type": "resource",
+                                "data": {
+                                    "type": 1,
+                                    "index": 78,
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             "connections": {
                                 "Door to Core Access": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         }
@@ -24151,7 +24170,7 @@
                     "name": "Core Access",
                     "in_dark_aether": false,
                     "asset_id": 9032724980754539885,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -24205,6 +24224,15 @@
                                                 "amount": 5,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -24216,7 +24244,7 @@
                     "name": "Elysian Leviathan Core",
                     "in_dark_aether": false,
                     "asset_id": 17766988414710659705,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -24269,15 +24297,15 @@
                             "pickup_index": 97,
                             "major_location": true,
                             "connections": {
-                                "Door to Core Access": {
+                                "Dock to !!00_seed_outofseed_dead_skytown": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 37,
-                                                "amount": 1,
+                                                "index": 4,
+                                                "amount": 4,
                                                 "negate": false
                                             }
                                         },
@@ -24285,7 +24313,7 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 4,
+                                                "index": 37,
                                                 "amount": 1,
                                                 "negate": false
                                             }
