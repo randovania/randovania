@@ -481,6 +481,16 @@
                 "index": 38,
                 "long_name": "Reactor Access Conduits Activated",
                 "short_name": "Event38"
+            },
+            {
+                "index": 39,
+                "long_name": "Cargo Freight Lift to Deck Gamma Gate Destroyed",
+                "short_name": "Event39"
+            },
+            {
+                "index": 40,
+                "long_name": "Cargo Freight Lift to Deck Gamma Conduits Activated",
+                "short_name": "Event40"
             }
         ],
         "tricks": [
@@ -22728,29 +22738,80 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Dock to Deck Beta Transit Hall": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 21,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Pickup (Energy Tank)": {
                                     "type": "or",
                                     "data": [
                                         {
-                                            "type": "and",
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 39,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Gate Destroyed": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Event - Conduits Activated": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 2,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
                                             "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 21,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 15,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -22763,24 +22824,28 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": 0,
-                                                        "index": 2,
+                                                        "type": 2,
+                                                        "index": 4,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
                                             ]
-                                        }
-                                    ]
-                                },
-                                "Pickup (Energy Tank)": {
-                                    "type": "or",
-                                    "data": [
+                                        },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 4,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 21,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -22818,19 +22883,45 @@
                             "pickup_index": 66,
                             "major_location": false,
                             "connections": {
-                                "Dock to Deck Beta Transit Hall": {
+                                "Dock to Reactor Access": {
                                     "type": "or",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 4,
+                                                "type": 1,
+                                                "index": 39,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         }
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Gate Destroyed",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 39,
+                            "connections": {
+                                "Dock to Reactor Access": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Event - Conduits Activated",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "event",
+                            "event_index": 40,
+                            "connections": {
+                                "Dock to Reactor Access": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
