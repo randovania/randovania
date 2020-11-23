@@ -2031,15 +2031,19 @@ Asset id: 17231991603182176876
               Grapple Lasso and Morph Ball
               Any of the following:
                   Morph Ball Bombs
-                  All of the following:
-                      Knowledge (Beginner)
-                      Any of the following:
-                          Boost Ball
-                          HyperModeTank and Hyper Ball
+                  HyperModeTank and Hyper Ball and Knowledge (Beginner)
               Any of the following:
                   Charge Beam or Missile ≥ 5
                   Grapple Voltage and Knowledge (Beginner) and Normal Damage ≥ 150
-          Morph Ball and HyperModeTank and Hyper Ball and Knowledge (Intermediate) and Normal Damage ≥ 300
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Boost Ball
+                          HyperModeTank and Hyper Ball and Normal Damage ≥ 300
           All of the following:
               Nova Beam
               X-Ray Visor or Invisible Objects (Intermediate)
@@ -2765,6 +2769,8 @@ Asset id: 8718899405848025583
       Any of the following:
           Missile ≥ 3 and Ice Missile and Space Jump Boots and After Temple Hall Gel Falls Activated
           Movement (Beginner) and Use Screw Attack (Space Jump)
+  > Event - Temple Hall Falls Activated
+      Trivial
 
 > Door to Temple Generator; Heals? False
   * Normal Door to Temple Generator/Door to Temple Hall
@@ -3256,7 +3262,7 @@ Asset id: 9894117388493814037
       Trivial
 
 > Door to Save Station A; Heals? False
-  * Ice Missile Blast Shield (Vulnerable to Missiles) to Save Station A/Door to Aurora Lift
+  * Ice Missile Blast Shield to Save Station A/Door to Aurora Lift
   > Door to Aurora Chamber
       Trivial
 
@@ -3967,8 +3973,12 @@ Asset id: 1701256524990864906
   * Ice Missile Blast Shield (Vulnerable to Missiles) to Concourse Access B/Door to Concourse
   > Pickup (Missile Expansion)
       Morph Ball
-  > Top Floor
-      Trivial
+  > 2nd Floor
+      Morph Ball
+  > Event - Bomb Part 2
+      Missile ≥ 4 and Seeker Missile and After Turbine Chamber Bomb Part 1 and Use Ship Grapple (Command Visor and Ship Grapple)
+  > Event - Top Elevator
+      Missile ≥ 4 and Seeker Missile
 
 > Door to Maintenance Shaft CC; Heals? False
   * Plasma Door to Maintenance Shaft CC/Door to Concourse
@@ -3978,8 +3988,6 @@ Asset id: 1701256524990864906
 > Pickup (Missile Expansion); Heals? False
   * Pickup 67; Major Location? False
   > Door to Concourse Access B
-      Morph Ball
-  > Top Floor
       Morph Ball
 
 > 1st Floor; Heals? False
@@ -3993,22 +4001,16 @@ Asset id: 1701256524990864906
 > 2nd Floor; Heals? False
   > Door to Concourse Ventilation
       Charge Beam or Missile ≥ 2
+  > Door to Concourse Access B
+      Any of the following:
+          After Concourse Top Elevator
+          All of the following:
+              Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Advanced)
+              Any of the following:
+                  Boost Ball
+                  Morph Ball Bombs and Screw Attack
   > 1st Floor
       Trivial
-  > Top Floor
-      After Concourse Top Elevator
-
-> Top Floor; Heals? False
-  > Door to Concourse Access B
-      Trivial
-  > Pickup (Missile Expansion)
-      Morph Ball
-  > 2nd Floor
-      Trivial
-  > Event - Bomb Part 2
-      Missile ≥ 4 and Seeker Missile and Ship Grapple and After Turbine Chamber Bomb Part 1
-  > Event - Top Elevator
-      Missile ≥ 4 and Seeker Missile
 
 > Basement; Heals? False
   > Door to Piston Hall
@@ -4022,7 +4024,7 @@ Asset id: 1701256524990864906
 
 > Event - Bomb Part 2; Heals? False
   * Event Concourse Bomb Part 2
-  > Top Floor
+  > Door to Concourse Access B
       Trivial
 
 > Event - Basement Elevator; Heals? False
@@ -4032,7 +4034,7 @@ Asset id: 1701256524990864906
 
 > Event - Top Elevator; Heals? False
   * Event Concourse Top Elevator
-  > Top Floor
+  > Door to Concourse Access B
       Trivial
 
 ----------------
@@ -4065,7 +4067,7 @@ Asset id: 8621618277057489308
 Concourse Access B
 Asset id: 2885109498150538605
 > Door to Concourse; Heals? False
-  * Normal Door to Concourse/Door to Concourse Access B
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Concourse/Door to Concourse Access B
   > Door to Zipline Station Delta
       Trivial
 
