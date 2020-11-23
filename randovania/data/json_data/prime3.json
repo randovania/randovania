@@ -7242,10 +7242,6 @@
                             "pickup_index": 24,
                             "major_location": false,
                             "connections": {
-                                "Door to Gateway": {
-                                    "type": "and",
-                                    "data": []
-                                },
                                 "G.F.S. Theseus Upper Ledge": {
                                     "type": "and",
                                     "data": []
@@ -7377,6 +7373,10 @@
                             "node_type": "generic",
                             "connections": {
                                 "Door to Gateway": {
+                                    "type": "and",
+                                    "data": []
+                                },
+                                "Pickup (Missile Expansion)": {
                                     "type": "and",
                                     "data": []
                                 },
@@ -15204,6 +15204,15 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Falling Platform": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 1,
+                                        "index": 137,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -15222,6 +15231,47 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
+                                "Door to Gel Purification Site": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 4,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Use Screw Attack (Space Jump)"
+                                        }
+                                    ]
+                                },
                                 "Event - Falling Platform": {
                                     "type": "or",
                                     "data": [
@@ -15244,6 +15294,29 @@
                                             }
                                         }
                                     ]
+                                },
+                                "Falling Platform": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 137,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -15255,14 +15328,14 @@
                             "pickup_index": 20,
                             "major_location": false,
                             "connections": {
-                                "Event - Falling Platform": {
+                                "Falling Platform": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 137,
+                                                "type": 0,
+                                                "index": 15,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -15270,8 +15343,8 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 0,
-                                                "index": 15,
+                                                "type": 1,
+                                                "index": 137,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -15288,7 +15361,7 @@
                             "pickup_index": 21,
                             "major_location": false,
                             "connections": {
-                                "Event - Falling Platform": {
+                                "Falling Platform": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -15301,24 +15374,27 @@
                             "node_type": "event",
                             "event_index": 137,
                             "connections": {
-                                "Door to Gel Purification Site": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 5,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Use Screw Attack (Space Jump)"
-                                        }
-                                    ]
+                                "Door to Gel Processing Site": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 15,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
+                                "Door to Save Station A": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
+                        },
+                        {
+                            "name": "Falling Platform",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "generic",
+                            "connections": {
                                 "Door to Gel Processing Site": {
                                     "type": "resource",
                                     "data": {
@@ -15433,6 +15509,10 @@
                                             ]
                                         }
                                     ]
+                                },
+                                "Pickup (Missile Expansion - Falling Platform)": {
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         }
