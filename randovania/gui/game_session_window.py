@@ -677,11 +677,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.reset_session_action.setEnabled(self_is_admin and game_session.state != GameSessionState.SETUP)
 
     def update_session_actions(self):
+        scrollbar = self.history_table_widget.verticalScrollBar()
+        autoscroll = scrollbar.value() == scrollbar.maximum()
         self.history_table_widget.horizontalHeader().setVisible(True)
         self.history_table_widget.setRowCount(len(self._game_session.actions))
         for i, action in enumerate(self._game_session.actions):
             self.history_table_widget.setItem(i, 0, QtWidgets.QTableWidgetItem(action.message))
             self.history_table_widget.setItem(i, 1, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
+        if autoscroll:
+            self.history_table_widget.scrollToBottom()
 
     async def update_multiworld_client_status(self):
         game_session_in_progress = self._game_session.state == GameSessionState.IN_PROGRESS
