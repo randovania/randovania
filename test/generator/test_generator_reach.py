@@ -16,34 +16,27 @@ from randovania.game_description.resources.resource_info import add_resources_in
 from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world import World
 from randovania.game_description.world_list import WorldList
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime import default_data
 from randovania.generator import base_patches_factory, generator
 from randovania.generator.generator_reach import GeneratorReach, filter_reachable, filter_pickup_nodes, \
     reach_with_all_safe_resources, get_collectable_resource_nodes_of_reach, \
     advance_reach_with_possible_unsafe_resources
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 from randovania.layout.trick_level import LayoutTrickLevel, TrickLevelConfiguration
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.state import State, add_pickup_to_state
 
 
-@pytest.fixture(name="test_data")
-def _test_data(default_preset):
-    data = default_data.decode_default_prime2()
-    game = data_reader.decode_data(data)
+def run_bootstrap(preset: Preset):
+    game = data_reader.decode_data(preset.layout_configuration.game_data)
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
-        presets={0: default_preset},
+        presets={0: preset},
     )
-    configuration = permalink.get_preset(0).layout_configuration
-    patches = game.create_game_patches()
-    patches = patches.assign_gate_assignment(base_patches_factory.gate_assignment_for_configuration(
-        configuration, game.resource_database, Random(15000)
-    ))
-    game, state = logic_bootstrap(configuration, game, patches)
+    patches = base_patches_factory.create_base_patches(preset.layout_configuration, Random(15000), game)
+    game, state = logic_bootstrap(preset.layout_configuration, game, patches)
 
     return game, state, permalink
 
@@ -77,8 +70,12 @@ def _compare_actions(first_reach: GeneratorReach,
     return first_actions, second_actions
 
 
-def test_calculate_reach_with_all_pickups(test_data):
-    game, state, permalink = test_data
+@pytest.mark.parametrize("preset_name", [
+    "Starter Preset",  # Echoes
+    pytest.param("Corruption Preset", marks=[pytest.mark.xfail]),  # Corruption
+])
+def test_all_pickups_locations_reachable_with_all_pickups_for_preset(preset_name, preset_manager):
+    game, state, permalink = run_bootstrap(preset_manager.preset_for_name(preset_name).get_preset())
 
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).layout_configuration,
                                                        game.resource_database)
@@ -95,10 +92,8 @@ def test_calculate_reach_with_all_pickups(test_data):
     found_pickups = set(filter_pickup_nodes(filter_reachable(second_reach.nodes, first_reach)))
     all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
 
-    # assert (len(list(first_reach.nodes)), len(first_actions)) == (898, 9)
-    # assert (len(list(second_reach.nodes)), len(second_actions)) == (898, 9)
     pprint.pprint(first_actions)
-    assert all_pickups == found_pickups
+    assert sorted(all_pickups, key=lambda it: it.pickup_index) == sorted(found_pickups, key=lambda it: it.pickup_index)
 
 
 @pytest.mark.parametrize("has_translator", [False, True])
@@ -159,7 +154,8 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     (False, 44, 5),
     (True, 1000, 1000),
 ])
-def test_reach_size_from_start(echoes_game_description, default_layout_configuration, minimal_logic, nodes, safe_nodes):
+def test_reach_size_from_start_echoes(echoes_game_description, default_layout_configuration, minimal_logic, nodes,
+                                      safe_nodes):
     # Setup
     specific_levels = {
         trick.short_name: LayoutTrickLevel.HYPERMODE

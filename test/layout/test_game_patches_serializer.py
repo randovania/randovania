@@ -221,6 +221,7 @@ def test_round_trip_generated_patches(echoes_game_data, default_preset):
             presets={0: preset},
         ),
         status_update=lambda x: None,
+        attempts=0,
     ).all_patches
 
     # Run
