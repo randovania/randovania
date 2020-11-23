@@ -6,18 +6,25 @@ from pathlib import Path
 from random import Random
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
+import matplotlib.pyplot as plt
+import networkx
 from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox
+from matplotlib.axes import Axes
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
 
 from randovania.game_description.area_location import AreaLocation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode
+from randovania.game_description.node import Node, ResourceNode, TranslatorGateNode, TeleporterNode, DockNode
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.resources.translator_gate import TranslatorGate
+from randovania.game_description.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
@@ -55,6 +62,23 @@ def _load_previous_state(persistence_path: Path,
             return json.load(previous_state_file)
     except (FileNotFoundError, json.JSONDecodeError):
         return None
+
+
+class MatplotlibWidget(QtWidgets.QWidget):
+    ax: Axes
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        fig = Figure(figsize=(7, 5), dpi=65, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
+        self.canvas = FigureCanvas(fig)
+        self.toolbar = NavigationToolbar(self.canvas, self)
+        lay = QtWidgets.QVBoxLayout(self)
+        lay.addWidget(self.toolbar)
+        lay.addWidget(self.canvas)
+
+        self.ax = fig.add_subplot(111)
+        self.line, *_ = self.ax.plot([])
 
 
 class TrackerWindow(QMainWindow, Ui_TrackerWindow):
@@ -118,6 +142,14 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.setup_possible_locations_tree()
         self.setup_elevators()
         self.setup_translator_gates()
+
+        self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
+        self.tab_graph_map_layout.addWidget(self.matplot_widget)
+        self._world_to_node_positions = {}
+
+        for world in self.game_description.world_list.worlds:
+            self.graph_map_world_combo.addItem(world.name, world)
+        self.graph_map_world_combo.currentIndexChanged.connect(self.on_graph_map_world_combo)
 
         persistence_path.mkdir(parents=True, exist_ok=True)
         previous_state = _load_previous_state(persistence_path, layout_configuration)
@@ -225,11 +257,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def _pretty_node_name(self, node: Node) -> str:
         world_list = self.game_description.world_list
-        return "{} / {}".format(world_list.nodes_to_area(node).name, node.name)
+        return "{} / {}".format(world_list.area_name(world_list.nodes_to_area(node)), node.name)
 
     def _refresh_for_new_action(self):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
-        self.location_box.setTitle("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
+        self.current_location_label.setText("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
         self.update_locations_tree_for_reachable_nodes()
 
     def _add_new_action(self, node: Node):
@@ -252,15 +284,97 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         if not item.isDisabled() and node is not None and node != self._actions[-1]:
             self._add_new_action(node)
 
-    def update_locations_tree_for_reachable_nodes(self):
-        # Calculate which nodes are in reach right now
+    def _positions_for_world(self, world: World):
+        g = networkx.DiGraph()
+        world_list = self.game_description.world_list
         state = self.state_for_current_configuration()
+
+        for area in world.areas:
+            g.add_node(area)
+
+        for area in world.areas:
+            nearby_areas = set()
+            for node in area.nodes:
+                if isinstance(node, DockNode):
+                    try:
+                        target_node = world_list.resolve_dock_node(node, state.patches)
+                        nearby_areas.add(world_list.nodes_to_area(target_node))
+                    except IndexError as e:
+                        print(f"For {node.name} in {area.name}, received {e}")
+                        continue
+            for other_area in nearby_areas:
+                g.add_edge(area, other_area)
+
+        return networkx.drawing.spring_layout(g)
+
+    def update_matplot_widget(self, nodes_in_reach: Set[Node]):
+        g = networkx.DiGraph()
+        world_list = self.game_description.world_list
+        state = self.state_for_current_configuration()
+
+        world = self.graph_map_world_combo.currentData()
+        for area in world.areas:
+            g.add_node(area)
+
+        for area in world.areas:
+            nearby_areas = set()
+            for node in area.nodes:
+                if node not in nodes_in_reach:
+                    continue
+
+                if isinstance(node, DockNode):
+                    # TODO: respect is_blast_shield: if already opened once, no requirement needed.
+                    # Includes opening form behind with different criteria
+                    try:
+                        target_node = world_list.resolve_dock_node(node, state.patches)
+                        dock_weakness = state.patches.dock_weakness.get((area.area_asset_id, node.dock_index),
+                                                                        node.default_dock_weakness)
+                        if dock_weakness.requirement.satisfied(state.resources, state.energy):
+                            nearby_areas.add(world_list.nodes_to_area(target_node))
+                    except IndexError as e:
+                        print(f"For {node.name} in {area.name}, received {e}")
+                        continue
+
+            for other_area in nearby_areas:
+                g.add_edge(area, other_area)
+
+        self.matplot_widget.ax.clear()
+
+        cf = self.matplot_widget.ax.get_figure()
+        cf.set_facecolor("w")
+
+        if world.world_asset_id not in self._world_to_node_positions:
+            self._world_to_node_positions[world.world_asset_id] = self._positions_for_world(world)
+        pos = self._world_to_node_positions[world.world_asset_id]
+
+        networkx.draw_networkx_nodes(g, pos, ax=self.matplot_widget.ax)
+        networkx.draw_networkx_edges(g, pos, arrows=True, ax=self.matplot_widget.ax)
+        networkx.draw_networkx_labels(g, pos, ax=self.matplot_widget.ax,
+                                      labels={area: area.name for area in world.areas},
+                                      verticalalignment='top')
+
+        self.matplot_widget.ax.set_axis_off()
+
+        plt.draw_if_interactive()
+        self.matplot_widget.canvas.draw()
+
+    def on_graph_map_world_combo(self):
+        nodes_in_reach = self.current_nodes_in_reach(self.state_for_current_configuration())
+        self.update_matplot_widget(nodes_in_reach)
+
+    def current_nodes_in_reach(self, state):
         if state is None:
             nodes_in_reach = set()
         else:
             reach = ResolverReach.calculate_reach(self.logic, state)
             nodes_in_reach = set(reach.nodes)
             nodes_in_reach.add(state.node)
+        return nodes_in_reach
+
+    def update_locations_tree_for_reachable_nodes(self):
+        state = self.state_for_current_configuration()
+        nodes_in_reach = self.current_nodes_in_reach(state)
+        self.update_matplot_widget(nodes_in_reach)
 
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
