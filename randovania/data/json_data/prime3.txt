@@ -1250,8 +1250,6 @@ Asset id: 15814834557214288722
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 24; Major Location? False
-  > Door to Gateway
-      Trivial
   > G.F.S. Theseus Upper Ledge
       Trivial
 
@@ -1269,6 +1267,8 @@ Asset id: 15814834557214288722
 
 > G.F.S. Theseus Upper Ledge; Heals? False
   > Door to Gateway
+      Trivial
+  > Pickup (Missile Expansion)
       Trivial
   > G.F.S. Theseus Lower Ledge
       Trivial
@@ -2616,26 +2616,38 @@ Asset id: 15732414849243282895
   * Ice Missile Blast Shield to Gel Processing Site/Door to Gel Hall
   > Event - Falling Platform
       Plasma Beam or Charge Beam
+  > Falling Platform
+      After Gel Hall Falling Platform
 
 > Door to Save Station A; Heals? False
   * Normal Door to Save Station A/Door to Gel Hall
+  > Door to Gel Purification Site
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          Missile and Ice Missile and Space Jump Boots
   > Event - Falling Platform
       Plasma Beam or Charge Beam
+  > Falling Platform
+      Space Jump Boots and After Gel Hall Falling Platform
 
 > Pickup (Missile Expansion - Ledge); Heals? False
   * Pickup 20; Major Location? False
-  > Event - Falling Platform
+  > Falling Platform
       Space Jump Boots and After Gel Hall Falling Platform
 
 > Pickup (Missile Expansion - Falling Platform); Heals? False
   * Pickup 21; Major Location? False
-  > Event - Falling Platform
+  > Falling Platform
       Trivial
 
 > Event - Falling Platform; Heals? False
   * Event Gel Hall Falling Platform
-  > Door to Gel Purification Site
-      Ice Missile or Use Screw Attack (Space Jump)
+  > Door to Gel Processing Site
+      Space Jump Boots
+  > Door to Save Station A
+      Trivial
+
+> Falling Platform; Heals? False
   > Door to Gel Processing Site
       Space Jump Boots
   > Door to Save Station A
@@ -2650,6 +2662,8 @@ Asset id: 15732414849243282895
                   Any of the following:
                       Screw Attack and Boost Ball and Bomb/Spring Space Jump (Intermediate)
                       Suit Type ≥ 4 and Bomb/Spring Space Jump (Advanced)
+  > Pickup (Missile Expansion - Falling Platform)
+      Trivial
 
 ----------------
 Corrupted Pool
@@ -2883,6 +2897,7 @@ Asset id: 4474147916478522354
       Trivial
 
 > Teleport to Bryyo Ice - Warp Site Bravo; Heals? False; Spawn Point
+  * Teleporter to Bryyo - Ice - Warp Site Bravo
   > Door to Main Lift
       After Warp Site Alpha Wall
 
@@ -2897,6 +2912,7 @@ Asset id: 9245834436705857859
       Trivial
 
 > Teleport to Bryyo Fire - Warp Site Alpha; Heals? False; Spawn Point
+  * Teleporter to Bryyo - Fire - Warp Site Alpha
   > Door to Imperial Caverns
       Trivial
 
@@ -3791,9 +3807,10 @@ Asset id: 1051771406754533733
 > Door to Security Tube; Heals? False
   * Normal Door to Security Tube/Door to Skytram West
   > Skytram to East Skytown - Skytram East
-      Boost Ball
+      Morph Ball and Boost Ball
 
-> Skytram to East Skytown - Skytram East; Heals? False
+> Skytram to East Skytown - Skytram East; Heals? False; Spawn Point
+  * Teleporter to SkyTown, Elysia - Pod - Skytram East
   > Door to Security Tube
       Trivial
 
@@ -3894,7 +3911,8 @@ Asset id: 10057915363412886881
   > Skytram to Skytown - Skytram West
       Trivial
 
-> Skytram to Skytown - Skytram West; Heals? False
+> Skytram to Skytown - Skytram West; Heals? False; Spawn Point
+  * Teleporter to SkyTown, Elysia - Main - Skytram West
   > Door to Concourse Access A
       Trivial
 
@@ -4883,10 +4901,11 @@ Transit Station 1-A
 Asset id: 14633273468387956199
 > Door to Landing Site Alpha; Heals? False
   * Normal Door to Landing Site Alpha/Door to Transit Station 1-A
-  > Tram to Research Facility - Transit Station 1-B
-      Trivial
+  > Train to Research Facility - Transit Station 1-B
+      Scan Visor
 
-> Tram to Research Facility - Transit Station 1-B; Heals? False
+> Train to Research Facility - Transit Station 1-B; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Research - Transit Station 1-B
   > Door to Landing Site Alpha
       Trivial
 
@@ -4895,10 +4914,11 @@ Transit Station 1-B
 Asset id: 2640383633522526
 > Door to Proving Grounds; Heals? False
   * Normal Door to Proving Grounds/Door to Transit Station 1-B
-  > Tram to Research Facility - Transit Station 1-A
-      Trivial
+  > Train to Research Facility - Transit Station 1-A
+      Scan Visor
 
-> Tram to Research Facility - Transit Station 1-A; Heals? False
+> Train to Research Facility - Transit Station 1-A; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Research - Transit Station 1-A
   > Door to Proving Grounds
       Trivial
 
@@ -5037,10 +5057,12 @@ Leads to Command Center
 Leads to Command Center
   > Door to Metroid Creche
       Trivial
-  > Tram to Command Center - Transit Station 3-B
-      Trivial
+  > Train to Command Center - Transit Station 3-B
+      Scan Visor
 
-> Tram to Command Center - Transit Station 3-B; Heals? False
+> Train to Command Center - Transit Station 3-B; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Command - Transit Station 3-B
+Leads to Research Facility
   > Door to Save Station
       Trivial
 
@@ -5319,11 +5341,11 @@ Transit Station 2-A
 Asset id: 1933322814469947092
 > Door to Command Station; Heals? False
   * Normal Door to Command Station/Door to Transit Station 2-A
-  > Door to Transit Station 2-B
-      Trivial
+  > Train to Command Center - Transit Station 2-B
+      Scan Visor
 
-> Door to Transit Station 2-B; Heals? False
-  * Normal Door to Transit Station 2-B/Door to Transit Station 2-A
+> Train to Command Center - Transit Station 2-B; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Command - Transit Station 2-B
   > Door to Command Station
       Trivial
 
@@ -5332,11 +5354,11 @@ Transit Station 2-B
 Asset id: 9768654166807123312
 > Door to Leviathan Access Portal; Heals? False
   * Normal Door to Leviathan Access Portal/Door to Transit Station 2-B
-  > Door to Transit Station 2-A
-      Trivial
+  > Train to Command Center - Transit Station 2-A
+      Scan Visor
 
-> Door to Transit Station 2-A; Heals? False
-  * Normal Door to Transit Station 2-A/Door to Transit Station 2-B
+> Train to Command Center - Transit Station 2-A; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Command - Transit Station 2-A
   > Door to Leviathan Access Portal
       Trivial
 
@@ -5345,11 +5367,11 @@ Leviathan Access Portal
 Asset id: 13825059228540765135
 > Door to Transit Station 2-B; Heals? False
   * Normal Door to Transit Station 2-B/Door to Leviathan Access Portal
-  > Door to Leviathan
-      Grapple Voltage and Morph Ball Bombs
+  > Teleporter to Leviathan
+      Morph Ball Bombs and Morph Ball and Use Grapple Voltage (Lasso and Voltage)
 
-> Door to Leviathan; Heals? False
-  * Normal Door to Leviathan/Door to Leviathan Access Portal
+> Teleporter to Leviathan; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Command - Leviathan
   > Door to Transit Station 2-B
       Trivial
 
@@ -5416,14 +5438,14 @@ Asset id: 9997664456677642630
 ----------------
 Leviathan
 Asset id: 5604040344596242484
-> Door to Leviathan Access Portal; Heals? False
-  * Normal Door to Leviathan Access Portal/Door to Leviathan
+> Teleporter to Leviathan Access Portal; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Command - Leviathan Access Portal
   > Event - Control Leviathan Battleship
       After Valhalla Levithan Code
 
 > Event - Control Leviathan Battleship; Heals? False
   * Event Control Leviathan Battleship
-  > Door to Leviathan Access Portal
+  > Teleporter to Leviathan Access Portal
       Trivial
 
 ----------------
@@ -5528,10 +5550,12 @@ Asset id: 10191943231769975720
 > Door to Lift Hub; Heals? False
   * Normal Door to Lift Hub/Door to Transit Station 3-B
 Leads to Research Facility
-  > Tram to Research Facility - Transit Station 3-A
-      Trivial
+  > Train to Research Facility - Transit Station 3-A
+      Scan Visor
 
-> Tram to Research Facility - Transit Station 3-A; Heals? False
+> Train to Research Facility - Transit Station 3-A; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Research - Transit Station 3-A
+Leads to Command Center
   > Door to Lift Hub
       Trivial
 
@@ -5542,6 +5566,14 @@ Asset id: 12520185503864049660
 > Door to Defense Access; Heals? False
   * Normal Door to Defense Access/Door to Transit Station 4-A
 Leads to Mining Site
+  > Train to Mining Site - Transit Station 4-B
+      Scan Visor
+
+> Train to Mining Site - Transit Station 4-B; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Mines - Transit Station 4-B
+Leads to Command Center
+  > Door to Defense Access
+      Trivial
 
 ----------------
 Defense Access
@@ -5635,10 +5667,22 @@ Asset id: 4566937761378320542
 > Door to Save Station; Heals? False
   * Normal Door to Save Station/Door to Transit Station 4-B
 Leads to Command Center
+  > Door to Phazon Quarry
+      Trivial
 
 > Door to Phazon Quarry; Heals? False
   * Normal Door to Phazon Quarry/Door to Transit Station 4-B
 Leads to Command Center
+  > Door to Save Station
+      Trivial
+  > Train to Command Center - Transit Station 4-A
+      Scan Visor
+
+> Train to Command Center - Transit Station 4-A; Heals? False; Spawn Point
+  * Teleporter to Pirate Homeworld - Command - Transit Station 4-A
+Leads to Mining Site
+  > Door to Phazon Quarry
+      Trivial
 
 ----------------
 Phazon Quarry
