@@ -60,6 +60,11 @@ Dock Weaknesses
   * (8) Permanently Locked; Blast Shield? False
       Impossible
 
+  * (4) Ice Missile Blast Shield (Vulnerable to Missiles); Blast Shield? True
+      All of the following:
+          Missile
+          Ice Missile or Knowledge (Beginner)
+
 > DockType.MORPH_BALL_DOOR
   * (0) Morph Ball Door; Blast Shield? False
       Morph Ball
@@ -367,7 +372,11 @@ Asset id: 1594033074927626820
   > Samus Ship
       Any of the following:
           Grapple Swing or Use Screw Attack (Space Jump)
-          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
+          All of the following:
+              Space Jump Boots and Morph Ball
+              Any of the following:
+                  Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
+                  Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
 
 > Pickup (Grapple Lasso); Heals? False
   * Pickup 4; Major Location? True
@@ -381,7 +390,11 @@ Asset id: 1594033074927626820
   > Pickup (Missile Expansion)
       Any of the following:
           Grapple Swing or Use Screw Attack (Space Jump)
-          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
+          All of the following:
+              Space Jump Boots and Morph Ball
+              Any of the following:
+                  Boost Ball and Bomb/Spring Space Jump (Intermediate) and Terminal Fall Abuse (Intermediate)
+                  Bomb/Spring Space Jump (Advanced) and Terminal Fall Abuse (Advanced)
   > Pickup (Grapple Lasso)
       After Docking Hub Alpha Gate Unlocked
   > Event - Gate Opened
@@ -801,7 +814,7 @@ Asset id: 15622764306970326849
 > Door to Hangar A Access; Heals? False
   * Normal Door to Hangar A Access/Door to Docking Bay 5
   > Samus Ship
-      After Docking Bay 5 Gate
+      Trivial
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 11; Major Location? False
@@ -1092,7 +1105,7 @@ Asset id: 17479488334200413695
   > Door to Port Observation Deck
       After Auxiliary Lift Elevator
   > Event - Activate Elevator
-      Grapple Lasso and Energy Cells Total ≥ 9
+      Grapple Lasso and Energy Cells Total ≥ 4
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 16; Major Location? False
@@ -1166,7 +1179,7 @@ Asset id: 13201618045565515280
   > Door to Auxiliary Lift
       Morph Ball
   > Event - Energy Cell Door Lock
-      Energy Cells Total ≥ 9
+      Energy Cells Total ≥ 7
   > Event - Seeker Wall
       Missile ≥ 4 and Seeker Missile
 
@@ -2018,7 +2031,11 @@ Asset id: 17231991603182176876
               Grapple Lasso and Morph Ball
               Any of the following:
                   Morph Ball Bombs
-                  HyperModeTank and Hyper Ball and Knowledge (Beginner)
+                  All of the following:
+                      Knowledge (Beginner)
+                      Any of the following:
+                          Boost Ball
+                          HyperModeTank and Hyper Ball
               Any of the following:
                   Charge Beam or Missile ≥ 5
                   Grapple Voltage and Knowledge (Beginner) and Normal Damage ≥ 150
@@ -2494,7 +2511,9 @@ Asset id: 4215957264467390882
   > Pickup (Missile Expansion)
       All of the following:
           Space Jump Boots and Morph Ball
-          Grapple Lasso or Screw Attack
+          Any of the following:
+              Grapple Lasso or Screw Attack
+              Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 > Door to Fiery Airdock; Heals? False; Spawn Point
   * Normal Door to Fiery Airdock/Door to Imperial Hall
@@ -3237,7 +3256,7 @@ Asset id: 9894117388493814037
       Trivial
 
 > Door to Save Station A; Heals? False
-  * Ice Missile Blast Shield to Save Station A/Door to Aurora Lift
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Save Station A/Door to Aurora Lift
   > Door to Aurora Chamber
       Trivial
 
@@ -3466,7 +3485,7 @@ Asset id: 2692588651293388340
       Trivial
 
 > Door to Spire Dock; Heals? False
-  * Ice Missile Blast Shield to Spire Dock/Door to Junction
+  * Missile Blast Shield to Spire Dock/Door to Junction
   > Circle Room
       Trivial
 
@@ -3894,7 +3913,7 @@ Asset id: 17325277017676572028
   > Save Station
       Trivial
 
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point
   > Door to Aurora Lift
       Trivial
 
@@ -3932,20 +3951,22 @@ Asset id: 1701256524990864906
 > Door to Concourse Ventilation; Heals? False
   * Normal Door to Concourse Ventilation/Door to Concourse
   > 2nd Floor
-      Trivial
+      Charge Beam or Missile ≥ 2
 
 > Door to Piston Hall; Heals? False
   * Normal Door to Piston Hall/Door to Concourse
   > Basement
       Trivial
 
-> Door to Concourse Access A; Heals? False
+> Door to Concourse Access A; Heals? False; Spawn Point
   * Normal Door to Concourse Access A/Door to Concourse
   > 1st Floor
       Trivial
 
 > Door to Concourse Access B; Heals? False
-  * Normal Door to Concourse Access B/Door to Concourse
+  * Ice Missile Blast Shield (Vulnerable to Missiles) to Concourse Access B/Door to Concourse
+  > Pickup (Missile Expansion)
+      Morph Ball
   > Top Floor
       Trivial
 
@@ -3956,8 +3977,10 @@ Asset id: 1701256524990864906
 
 > Pickup (Missile Expansion); Heals? False
   * Pickup 67; Major Location? False
+  > Door to Concourse Access B
+      Morph Ball
   > Top Floor
-      Trivial
+      Morph Ball
 
 > 1st Floor; Heals? False
   > Door to Concourse Access A
@@ -3969,7 +3992,7 @@ Asset id: 1701256524990864906
 
 > 2nd Floor; Heals? False
   > Door to Concourse Ventilation
-      Trivial
+      Charge Beam or Missile ≥ 2
   > 1st Floor
       Trivial
   > Top Floor
@@ -3979,7 +4002,7 @@ Asset id: 1701256524990864906
   > Door to Concourse Access B
       Trivial
   > Pickup (Missile Expansion)
-      Trivial
+      Morph Ball
   > 2nd Floor
       Trivial
   > Event - Bomb Part 2
@@ -3995,7 +4018,7 @@ Asset id: 1701256524990864906
   > 1st Floor
       After Concourse Basement Elevator
   > Event - Basement Elevator
-      Melt Objects (Plasma or Nova)
+      Plasma Beam
 
 > Event - Bomb Part 2; Heals? False
   * Event Concourse Bomb Part 2
@@ -4343,7 +4366,7 @@ Asset id: 16286467201365456700
   > Door to Gearworks
       Trivial
 
-> Door to Gearworks; Heals? False
+> Door to Gearworks; Heals? False; Spawn Point
   * Normal Door to Gearworks/Door to Broken Lift
   > Door to Turbine Chamber (Bottom)
       Trivial
@@ -4426,23 +4449,29 @@ Asset id: 17446010042417855180
 ----------------
 Chozo Observatory
 Asset id: 2455573103578253675
-> Door to Maintenance Shaft OB; Heals? False
+> Door to Maintenance Shaft OB; Heals? False; Spawn Point
   * Normal Door to Maintenance Shaft OB/Door to Chozo Observatory
   > Door to Observatory Lift
       After Chozo Observatory Elevator
   > Door to Botanica
-      After Chozo Observatory Pillar
+      Any of the following:
+          Space Jump Boots and After Chozo Observatory Pillar
+          Bomb/Spring Space Jump (Beginner) and Use Screw Attack (Space Jump)
   > Event - Scan Elevator
       Trivial
   > Event - Raise Pillar
-      Ship Grapple and Melt Objects (Plasma or Nova)
+      Plasma Beam and Use Ship Grapple (Command Visor and Ship Grapple)
   > Event - Map Data
-      After Chozo Observatory Pillar and Shoot Phazite (X-Ray and Nova)
+      All of the following:
+          Nova Beam and After Chozo Observatory Pillar
+          X-Ray Visor or Invisible Objects (Beginner)
 
 > Door to Observatory Lift; Heals? False
   * Normal Door to Observatory Lift/Door to Chozo Observatory
   > Door to Maintenance Shaft OB
-      After Chozo Observatory Elevator
+      All of the following:
+          After Chozo Observatory Elevator
+          Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
 
 > Door to Botanica; Heals? False
   * Plasma Door to Botanica/Door to Chozo Observatory
@@ -4518,12 +4547,16 @@ Asset id: 18200553231954089224
 ----------------
 Botanica
 Asset id: 8254796686876375149
-> Door to Chozo Observatory; Heals? False
+> Door to Chozo Observatory; Heals? False; Spawn Point
   * Plasma Door to Chozo Observatory/Door to Botanica
   > Door to Save Station B
       Trivial
   > Middle Level
-      Grapple Lasso
+      Any of the following:
+          All of the following:
+              Grapple Lasso
+              Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+          Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Beginner)
 
 > Door to Broken Lift; Heals? False
   * Ice Missile Blast Shield to Broken Lift/Door to Botanica
@@ -4548,7 +4581,17 @@ Asset id: 8254796686876375149
   > Door to Chozo Observatory
       Trivial
   > Door to Broken Lift
-      Grapple Lasso
+      Any of the following:
+          All of the following:
+              Grapple Lasso
+              Space Jump Boots or Bomb Jump (Beginner) or Spring Space Jump (Beginner)
+          Space Jump Boots and Morph Ball and Bomb/Spring Space Jump (Beginner)
+  > Pickup (Missile Expansion)
+      Any of the following:
+          All of the following:
+              Use Screw Attack (Space Jump)
+              Slope Jump (Beginner) or Bomb/Spring Space Jump (Beginner)
+          Space Jump Boots and Morph Ball and Boost Ball and Bomb/Spring Space Jump (Intermediate)
 
 ----------------
 Save Station B
