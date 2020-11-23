@@ -576,12 +576,12 @@
                 "short_name": "WallBoost",
                 "description": "Using Boost Ball, a well timed boost can be used to climb a wall"
             },
-          {
-            "index": 12,
-            "long_name": "R Jump",
-            "short_name": "RJump",
-            "description": "R Jump description"
-          }
+            {
+                "index": 12,
+                "long_name": "R Jump",
+                "short_name": "RJump",
+                "description": "R Jump description"
+            }
         ],
         "damage": [
             {
@@ -25307,6 +25307,38 @@
                             "pickup_index": 71,
                             "major_location": true,
                             "connections": {
+                                "Dock to Life Grove Tunnel": {
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 15,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 8,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 2,
+                                                "index": 12,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                },
                                 "Behind PB wall": {
                                     "type": "or",
                                     "data": [
@@ -25404,29 +25436,20 @@
                             "node_type": "generic",
                             "connections": {
                                 "Dock to Life Grove Tunnel": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
-                                            "type": "and",
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 0,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
                                             "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 0,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 13,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -25435,6 +25458,47 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 16,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 6,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 9,
+                                                                "amount": 3,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 0,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -25463,35 +25527,35 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 13,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
                                     ]
                                 },
                                 "Pickup (Artifact of Chozo)": {
-                                    "type": "or",
+                                    "type": "and",
                                     "data": [
                                         {
-                                            "type": "and",
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 16,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 18,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
                                             "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 16,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -25505,7 +25569,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": 0,
-                                                        "index": 18,
+                                                        "index": 7,
                                                         "amount": 1,
                                                         "negate": false
                                                     }
