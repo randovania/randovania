@@ -1614,6 +1614,48 @@
                     "type": "or",
                     "data": []
                 }
+            },
+            {
+                "index": 4,
+                "name": "Ice Missile Blast Shield (Vulnerable to Missiles)",
+                "is_blast_door": true,
+                "requirement": {
+                    "type": "and",
+                    "data": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": 0,
+                                "index": 4,
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 5,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 2,
+                                        "index": 3,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         ],
         "portal": [],
@@ -2952,31 +2994,64 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 33,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 5,
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 11,
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 33,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 11,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 11,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -3060,31 +3135,64 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 33,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 5,
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 2,
-                                                        "index": 11,
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 0,
+                                                                        "index": 33,
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 11,
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 5,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": 2,
+                                                                        "index": 11,
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -4899,13 +5007,8 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Samus Ship": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 126,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": []
                                 }
                             }
                         },
@@ -6554,7 +6657,7 @@
                                             "data": {
                                                 "type": 0,
                                                 "index": 22,
-                                                "amount": 9,
+                                                "amount": 4,
                                                 "negate": false
                                             }
                                         }
@@ -6843,7 +6946,7 @@
                                     "data": {
                                         "type": 0,
                                         "index": 22,
-                                        "amount": 9,
+                                        "amount": 7,
                                         "negate": false
                                     }
                                 },
@@ -11766,29 +11869,48 @@
                                                                 {
                                                                     "type": "resource",
                                                                     "data": {
-                                                                        "type": 0,
-                                                                        "index": 38,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
-                                                                        "type": 0,
-                                                                        "index": 35,
-                                                                        "amount": 1,
-                                                                        "negate": false
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "type": "resource",
-                                                                    "data": {
                                                                         "type": 2,
                                                                         "index": 3,
                                                                         "amount": 1,
                                                                         "negate": false
                                                                     }
+                                                                },
+                                                                {
+                                                                    "type": "or",
+                                                                    "data": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": 0,
+                                                                                "index": 33,
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": [
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 0,
+                                                                                        "index": 35,
+                                                                                        "amount": 1,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "resource",
+                                                                                    "data": {
+                                                                                        "type": 0,
+                                                                                        "index": 38,
+                                                                                        "amount": 1,
+                                                                                        "negate": false
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
                                                                 }
                                                             ]
                                                         }
@@ -14436,6 +14558,29 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 33,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 5,
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -18396,7 +18541,7 @@
                             "name": "Door to Save Station A",
                             "heal": false,
                             "coordinates": {
-                                "x": -0.0,
+                                "x": 0.0,
                                 "y": 35.33,
                                 "z": 44.5
                             },
@@ -19420,7 +19565,7 @@
                             "heal": false,
                             "coordinates": {
                                 "x": 57.85,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 4.5
                             },
                             "node_type": "dock",
@@ -19428,7 +19573,7 @@
                             "connected_area_asset_id": 2782037876215597956,
                             "connected_dock_index": 2,
                             "dock_type": 0,
-                            "dock_weakness_index": 4,
+                            "dock_weakness_index": 3,
                             "connections": {
                                 "Circle Room": {
                                     "type": "and",
@@ -21286,7 +21431,7 @@
                     "name": "Save Station A",
                     "in_dark_aether": false,
                     "asset_id": 17325277017676572028,
-                    "default_node_index": null,
+                    "default_node_index": 1,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -21434,7 +21579,7 @@
                     "name": "Concourse",
                     "in_dark_aether": false,
                     "asset_id": 1701256524990864906,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -21453,8 +21598,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "2nd Floor": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -21504,8 +21668,8 @@
                             "name": "Door to Concourse Access B",
                             "heal": false,
                             "coordinates": {
-                                "x": 35.327484130859375,
-                                "y": -9.5367431640625e-07,
+                                "x": 35.33,
+                                "y": -0.0,
                                 "z": 25.0
                             },
                             "node_type": "dock",
@@ -21513,8 +21677,17 @@
                             "connected_area_asset_id": 2885109498150538605,
                             "connected_dock_index": 0,
                             "dock_type": 0,
-                            "dock_weakness_index": 0,
+                            "dock_weakness_index": 4,
                             "connections": {
+                                "Pickup (Missile Expansion)": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Top Floor": {
                                     "type": "and",
                                     "data": []
@@ -21550,9 +21723,23 @@
                             "pickup_index": 67,
                             "major_location": false,
                             "connections": {
+                                "Door to Concourse Access B": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
                                 "Top Floor": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -21588,8 +21775,27 @@
                             "node_type": "generic",
                             "connections": {
                                 "Door to Concourse Ventilation": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 },
                                 "1st Floor": {
                                     "type": "and",
@@ -21617,8 +21823,13 @@
                                     "data": []
                                 },
                                 "Pickup (Missile Expansion)": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 32,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "2nd Floor": {
                                     "type": "and",
@@ -21714,8 +21925,13 @@
                                     }
                                 },
                                 "Event - Basement Elevator": {
-                                    "type": "template",
-                                    "data": "Melt Objects (Plasma or Nova)"
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 1,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -23193,7 +23409,7 @@
                     "name": "Broken Lift",
                     "in_dark_aether": false,
                     "asset_id": 16286467201365456700,
-                    "default_node_index": null,
+                    "default_node_index": 2,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23599,7 +23815,7 @@
                     "name": "Chozo Observatory",
                     "in_dark_aether": false,
                     "asset_id": 2455573103578253675,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23627,13 +23843,50 @@
                                     }
                                 },
                                 "Door to Botanica": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 84,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 1,
+                                                        "index": 84,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 "Event - Scan Elevator": {
                                     "type": "and",
@@ -23643,17 +23896,17 @@
                                     "type": "and",
                                     "data": [
                                         {
+                                            "type": "template",
+                                            "data": "Use Ship Grapple (Command Visor and Ship Grapple)"
+                                        },
+                                        {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 44,
+                                                "index": 1,
                                                 "amount": 1,
                                                 "negate": false
                                             }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "Melt Objects (Plasma or Nova)"
                                         }
                                     ]
                                 },
@@ -23670,8 +23923,41 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Shoot Phazite (X-Ray and Nova)"
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 2,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 14,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 9,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
@@ -23693,13 +23979,36 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Door to Maintenance Shaft OB": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 1,
-                                        "index": 83,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 1,
+                                                "index": 83,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -23953,7 +24262,7 @@
                     "name": "Botanica",
                     "in_dark_aether": false,
                     "asset_id": 8254796686876375149,
-                    "default_node_index": null,
+                    "default_node_index": 0,
                     "valid_starting_location": true,
                     "nodes": [
                         {
@@ -23976,13 +24285,73 @@
                                     "data": []
                                 },
                                 "Middle Level": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 7,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -24061,13 +24430,151 @@
                                     "data": []
                                 },
                                 "Door to Broken Lift": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 7,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 0,
+                                                                "index": 15,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Bomb Jump (Beginner) or Spring Space Jump (Beginner)"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "Pickup (Missile Expansion)": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 5,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": 2,
+                                                                "index": 2,
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 15,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 32,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 0,
+                                                        "index": 33,
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": 2,
+                                                        "index": 5,
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             }
                         }
