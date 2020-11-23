@@ -848,11 +848,6 @@
                 "short_name": "Event91"
             },
             {
-                "index": 92,
-                "long_name": "Xenoresearch Energy Cell Room Seeker Gate",
-                "short_name": "Event92"
-            },
-            {
                 "index": 93,
                 "long_name": "Xenoresearch Power Outage",
                 "short_name": "Event93"
@@ -22709,87 +22704,15 @@
                             "pickup_index": 69,
                             "major_location": true,
                             "connections": {
-                                "Energy Cell Room": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Pickup (Energy Cell)",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "pickup",
-                            "pickup_index": 70,
-                            "major_location": false,
-                            "connections": {
-                                "Event - Xenoresearch Power Outage": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Energy Cell Room",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "generic",
-                            "connections": {
-                                "Pickup (Seeker Missile)": {
-                                    "type": "and",
-                                    "data": [
-                                        {
-                                            "type": "or",
-                                            "data": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 4,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": 0,
-                                                        "index": 3,
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 93,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                "Pickup (Energy Cell)": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 7,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
-                                },
-                                "Event - Energy Cell Seeker Gate": {
+                                "Central Hallways": {
                                     "type": "and",
                                     "data": [
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 93,
-                                                "amount": 1,
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 5,
                                                 "negate": false
                                             }
                                         },
@@ -22801,35 +22724,36 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "Pickup (Energy Cell)",
+                            "heal": false,
+                            "coordinates": null,
+                            "node_type": "pickup",
+                            "pickup_index": 70,
+                            "major_location": false,
+                            "connections": {
+                                "Pickup (Seeker Missile)": {
+                                    "type": "or",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 3,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
                                                 "index": 4,
-                                                "amount": 5,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                "Central Hallways": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 93,
-                                                "amount": 1,
-                                                "negate": true
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 92,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -22845,7 +22769,7 @@
                             "node_type": "event",
                             "event_index": 93,
                             "connections": {
-                                "Energy Cell Room": {
+                                "Pickup (Energy Cell)": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -22859,19 +22783,6 @@
                             "event_index": 91,
                             "connections": {
                                 "Door to Xenoresearch B Lift": {
-                                    "type": "and",
-                                    "data": []
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Energy Cell Seeker Gate",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 92,
-                            "connections": {
-                                "Energy Cell Room": {
                                     "type": "and",
                                     "data": []
                                 }
@@ -22892,28 +22803,14 @@
                                         "negate": false
                                     }
                                 },
-                                "Energy Cell Room": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 93,
-                                                "amount": 1,
-                                                "negate": true
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 1,
-                                                "index": 92,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                "Event - Xenoresearch Power Outage": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 7,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 },
                                 "Event - Seeker Gate": {
                                     "type": "and",
