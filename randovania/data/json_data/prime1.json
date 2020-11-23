@@ -483,11 +483,6 @@
                 "short_name": "Event38"
             },
             {
-                "index": 39,
-                "long_name": "Cargo Freight Lift to Deck Gamma Gate Destroyed",
-                "short_name": "Event39"
-            },
-            {
                 "index": 40,
                 "long_name": "Cargo Freight Lift to Deck Gamma Conduits Activated",
                 "short_name": "Event40"
@@ -23951,22 +23946,8 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 39,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                "Event - Gate Destroyed": {
-                                    "type": "or",
-                                    "data": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
                                                 "type": 0,
-                                                "index": 10,
+                                                "index": 4,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -23975,7 +23956,7 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": 0,
-                                                "index": 4,
+                                                "index": 10,
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -24074,26 +24055,22 @@
                                         {
                                             "type": "resource",
                                             "data": {
-                                                "type": 1,
-                                                "index": 39,
+                                                "type": 0,
+                                                "index": 4,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 10,
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         }
                                     ]
-                                }
-                            }
-                        },
-                        {
-                            "name": "Event - Gate Destroyed",
-                            "heal": false,
-                            "coordinates": null,
-                            "node_type": "event",
-                            "event_index": 39,
-                            "connections": {
-                                "Dock to Reactor Access": {
-                                    "type": "and",
-                                    "data": []
                                 }
                             }
                         },
