@@ -1421,6 +1421,29 @@
                         }
                     }
                 ]
+            },
+            "Enter Hypermode": {
+                "type": "and",
+                "data": [
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 20,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    {
+                        "type": "resource",
+                        "data": {
+                            "type": 0,
+                            "index": 35,
+                            "amount": 1,
+                            "negate": false
+                        }
+                    }
+                ]
             }
         }
     },
@@ -17767,22 +17790,8 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 35,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 36,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
                                         }
                                     ]
                                 }
@@ -24181,7 +24190,12 @@
                             "connected_dock_index": 0,
                             "dock_type": 0,
                             "dock_weakness_index": 0,
-                            "connections": {}
+                            "connections": {
+                                "Door to Landing Site C": {
+                                    "type": "and",
+                                    "data": []
+                                }
+                            }
                         },
                         {
                             "name": "Door to Landing Site C",
@@ -24257,13 +24271,8 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Event - Helios": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 35,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "template",
+                                    "data": "Enter Hypermode"
                                 }
                             }
                         },
@@ -29640,13 +29649,8 @@
                                     "type": "and",
                                     "data": [
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 35,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Enter Hypermode"
                                         },
                                         {
                                             "type": "template",
