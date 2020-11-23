@@ -4226,29 +4226,17 @@ Asset id: 17636479515754825573
 
 > Pickup (Seeker Missile); Heals? False
   * Pickup 69; Major Location? True
-  > Energy Cell Room
-      Trivial
+  > Central Hallways
+      Missile ≥ 5 and Seeker Missile
 
 > Pickup (Energy Cell); Heals? False
   * Pickup 70; Major Location? False
-  > Event - Xenoresearch Power Outage
-      Trivial
-
-> Energy Cell Room; Heals? False
   > Pickup (Seeker Missile)
-      All of the following:
-          After Xenoresearch Power Outage
-          Charge Beam or Missile
-  > Pickup (Energy Cell)
-      Grapple Lasso
-  > Event - Energy Cell Seeker Gate
-      Missile ≥ 5 and Seeker Missile and After Xenoresearch Power Outage
-  > Central Hallways
-      After Xenoresearch Energy Cell Room Seeker Gate or Before Xenoresearch Power Outage
+      Charge Beam or Missile
 
 > Event - Xenoresearch Power Outage; Heals? False
   * Event Xenoresearch Power Outage
-  > Energy Cell Room
+  > Pickup (Energy Cell)
       Trivial
 
 > Event - Seeker Gate; Heals? False
@@ -4256,16 +4244,11 @@ Asset id: 17636479515754825573
   > Door to Xenoresearch B Lift
       Trivial
 
-> Event - Energy Cell Seeker Gate; Heals? False
-  * Event Xenoresearch Energy Cell Room Seeker Gate
-  > Energy Cell Room
-      Trivial
-
 > Central Hallways; Heals? False
   > Door to Xenoresearch B Lift
       After Xenoresearch B Seeker Gate
-  > Energy Cell Room
-      After Xenoresearch Energy Cell Room Seeker Gate or Before Xenoresearch Power Outage
+  > Event - Xenoresearch Power Outage
+      Grapple Lasso
   > Event - Seeker Gate
       Missile ≥ 5 and Seeker Missile
 
