@@ -20905,13 +20905,27 @@
                             "dock_weakness_index": 0,
                             "connections": {
                                 "Skytram to East Skytown - Skytram East": {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": 0,
-                                        "index": 33,
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                                    "type": "and",
+                                    "data": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 32,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": 0,
+                                                "index": 33,
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         },
@@ -25614,14 +25628,19 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Tram to Research Facility - Transit Station 1-B": {
-                                    "type": "and",
-                                    "data": []
+                                "Train to Research Facility - Transit Station 1-B": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 12,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
                         {
-                            "name": "Tram to Research Facility - Transit Station 1-B",
+                            "name": "Train to Research Facility - Transit Station 1-B",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "teleporter",
@@ -25662,14 +25681,19 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Tram to Research Facility - Transit Station 1-A": {
-                                    "type": "and",
-                                    "data": []
+                                "Train to Research Facility - Transit Station 1-A": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 12,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
                         {
-                            "name": "Tram to Research Facility - Transit Station 1-A",
+                            "name": "Train to Research Facility - Transit Station 1-A",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "teleporter",
@@ -26256,8 +26280,13 @@
                                     "data": []
                                 },
                                 "Train to Command Center - Transit Station 3-B": {
-                                    "type": "and",
-                                    "data": []
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 12,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
@@ -27371,7 +27400,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Train to Transit Station 2-B": {
+                                "Train to Command Center - Transit Station 2-B": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -27383,7 +27412,7 @@
                             }
                         },
                         {
-                            "name": "Train to Transit Station 2-B",
+                            "name": "Train to Command Center - Transit Station 2-B",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "teleporter",
@@ -27424,7 +27453,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Train to Transit Station 2-A": {
+                                "Train to Command Center - Transit Station 2-A": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -27436,7 +27465,7 @@
                             }
                         },
                         {
-                            "name": "Train to Transit Station 2-A",
+                            "name": "Train to Command Center - Transit Station 2-A",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "teleporter",
@@ -27499,22 +27528,8 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 7,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": 0,
-                                                "index": 9,
-                                                "amount": 1,
-                                                "negate": false
-                                            }
+                                            "type": "template",
+                                            "data": "Use Grapple Voltage (Lasso and Voltage)"
                                         }
                                     ]
                                 }
@@ -28279,14 +28294,19 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Tram to Research Facility - Transit Station 3-A": {
-                                    "type": "and",
-                                    "data": []
+                                "Train to Research Facility - Transit Station 3-A": {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": 0,
+                                        "index": 12,
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             }
                         },
                         {
-                            "name": "Tram to Research Facility - Transit Station 3-A",
+                            "name": "Train to Research Facility - Transit Station 3-A",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "teleporter",
@@ -28327,7 +28347,7 @@
                             "dock_type": 0,
                             "dock_weakness_index": 0,
                             "connections": {
-                                "Transport to Mining Site": {
+                                "Train to Mining Site - Transit Station 4-B": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -28339,7 +28359,7 @@
                             }
                         },
                         {
-                            "name": "Transport to Mining Site",
+                            "name": "Train to Mining Site - Transit Station 4-B",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "teleporter",
@@ -28741,7 +28761,7 @@
                                     "type": "and",
                                     "data": []
                                 },
-                                "Transport to Command Center": {
+                                "Train to Command Center - Transit Station 4-A": {
                                     "type": "resource",
                                     "data": {
                                         "type": 0,
@@ -28753,7 +28773,7 @@
                             }
                         },
                         {
-                            "name": "Transport to Command Center",
+                            "name": "Train to Command Center - Transit Station 4-A",
                             "heal": false,
                             "coordinates": null,
                             "node_type": "teleporter",
