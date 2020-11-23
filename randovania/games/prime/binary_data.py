@@ -259,7 +259,7 @@ ConstructNode = Struct(
             "teleporter": Struct(
                 destination_world_asset_id=VarInt,
                 destination_area_asset_id=VarInt,
-                teleporter_instance_id=VarInt,
+                teleporter_instance_id=OptionalValue(VarInt),
                 scan_asset_id=OptionalValue(VarInt),
                 keep_name_when_vanilla=Flag,
                 editable=Flag,
