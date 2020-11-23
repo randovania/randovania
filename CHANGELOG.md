@@ -8,7 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-   Changed: Multiworld session history now auto-scrolls to the bottom
+
 -   Added: A very basic visualization of the map to the tracker.
+
 
 ## [2.0.2] - 2020-11-21
 
