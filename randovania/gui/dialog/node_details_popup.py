@@ -163,7 +163,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         world = self.game.world_list.world_by_asset_id(node.default_connection.world_asset_id)
         area = world.area_by_asset_id(node.default_connection.area_asset_id)
 
-        self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id))
+        self.teleporter_instance_id_edit.setText(hex(node.teleporter_instance_id)
+                                                 if node.teleporter_instance_id is not None else "")
         self.teleporter_destination_world_combo.setCurrentIndex(self.teleporter_destination_world_combo.findData(world))
         refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
         self.teleporter_destination_area_combo.setCurrentIndex(self.teleporter_destination_area_combo.findData(area))
@@ -300,11 +301,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == TeleporterNode:
+            instance_id = self.teleporter_instance_id_edit.text()
             scan_asset_id = self.teleporter_scan_asset_id_edit.text()
 
             return TeleporterNode(
                 name, heal, location, index,
-                int(self.teleporter_instance_id_edit.text(), 0),
+                int(instance_id, 0) if instance_id != "" else None,
                 AreaLocation(self.teleporter_destination_world_combo.currentData().world_asset_id,
                              self.teleporter_destination_area_combo.currentData().area_asset_id),
                 int(scan_asset_id, 0) if scan_asset_id != "" else None,
